@@ -71,6 +71,83 @@ from .automated_runbook_executor import (
     RunbookDefinition,
     ExecutionStatus
 )
+from .service_mesh_integration import (
+    ServiceMeshIntegration,
+    ServiceNode,
+    ServiceDependency,
+    ServiceMeshAlert,
+    TraceSpan,
+    ServiceHealthStatus,
+    TrafficDirection,
+    CircuitBreakerState,
+    get_service_mesh_integration,
+    create_service_mesh_integration
+)
+from .external_vendor_alerting import (
+    ExternalVendorAlerting,
+    VendorEndpoint,
+    VendorHealthCheck,
+    SLAMetrics,
+    VendorAlert,
+    VendorType,
+    ServiceStatus,
+    SLABreachSeverity,
+    get_external_vendor_alerting,
+    create_external_vendor_alerting
+)
+from .compliance_incident_handler import (
+    ComplianceIncidentHandler,
+    ComplianceIncident,
+    ComplianceRequirement,
+    AuditEntry,
+    ComplianceAlert,
+    ComplianceFramework,
+    IncidentSeverity as ComplianceIncidentSeverity,
+    ComplianceStatus,
+    DataType,
+    get_compliance_incident_handler,
+    create_compliance_incident_handler
+)
+from .crisis_communication_manager import (
+    CrisisCommunicationManager,
+    CrisisEvent,
+    CrisisMessage,
+    StakeholderGroup,
+    SocialMediaPost,
+    CrisisLevel,
+    CommunicationChannel,
+    StakeholderType,
+    MessageType,
+    get_crisis_communication_manager,
+    create_crisis_communication_manager
+)
+from .incident_lifecycle_tracker import (
+    IncidentLifecycleTracker,
+    IncidentTimeline,
+    StateTransition,
+    ResourceAllocation,
+    LifecycleMetrics,
+    IncidentState,
+    StateTransitionTrigger,
+    ResourceType,
+    IncidentPriority,
+    get_incident_lifecycle_tracker,
+    create_incident_lifecycle_tracker
+)
+from .pagerduty_metrics_collector import (
+    PagerDutyMetricsCollector,
+    MetricDefinition,
+    MetricDataPoint,
+    MetricSeries,
+    TeamPerformanceMetrics,
+    BusinessImpactMetrics,
+    AlertFatigueAnalysis,
+    MetricType,
+    MetricGranularity,
+    MetricStatus,
+    get_pagerduty_metrics_collector,
+    create_pagerduty_metrics_collector
+)
 
 __all__ = [
     # Core PagerDuty Integration
@@ -129,7 +206,84 @@ __all__ = [
     'RunbookExecutor',
     'ActionType',
     'RunbookDefinition',
-    'ExecutionStatus'
+    'ExecutionStatus',
+    
+    # Service Mesh Integration
+    'ServiceMeshIntegration',
+    'ServiceNode',
+    'ServiceDependency',
+    'ServiceMeshAlert',
+    'TraceSpan',
+    'ServiceHealthStatus',
+    'TrafficDirection',
+    'CircuitBreakerState',
+    'get_service_mesh_integration',
+    'create_service_mesh_integration',
+    
+    # External Vendor Alerting
+    'ExternalVendorAlerting',
+    'VendorEndpoint',
+    'VendorHealthCheck',
+    'SLAMetrics',
+    'VendorAlert',
+    'VendorType',
+    'ServiceStatus',
+    'SLABreachSeverity',
+    'get_external_vendor_alerting',
+    'create_external_vendor_alerting',
+    
+    # Compliance Incident Handler
+    'ComplianceIncidentHandler',
+    'ComplianceIncident',
+    'ComplianceRequirement',
+    'AuditEntry',
+    'ComplianceAlert',
+    'ComplianceFramework',
+    'ComplianceIncidentSeverity',
+    'ComplianceStatus',
+    'DataType',
+    'get_compliance_incident_handler',
+    'create_compliance_incident_handler',
+    
+    # Crisis Communication Manager
+    'CrisisCommunicationManager',
+    'CrisisEvent',
+    'CrisisMessage',
+    'StakeholderGroup',
+    'SocialMediaPost',
+    'CrisisLevel',
+    'CommunicationChannel',
+    'StakeholderType',
+    'MessageType',
+    'get_crisis_communication_manager',
+    'create_crisis_communication_manager',
+    
+    # Incident Lifecycle Tracker
+    'IncidentLifecycleTracker',
+    'IncidentTimeline',
+    'StateTransition',
+    'ResourceAllocation',
+    'LifecycleMetrics',
+    'IncidentState',
+    'StateTransitionTrigger',
+    'ResourceType',
+    'IncidentPriority',
+    'get_incident_lifecycle_tracker',
+    'create_incident_lifecycle_tracker',
+    
+    # PagerDuty Metrics Collector
+    'PagerDutyMetricsCollector',
+    'MetricDefinition',
+    'MetricDataPoint',
+    'MetricSeries',
+    'TeamPerformanceMetrics',
+    'BusinessImpactMetrics',
+    'AlertFatigueAnalysis',
+    'MetricType',
+    'MetricGranularity',
+    'MetricStatus',
+    'get_pagerduty_metrics_collector',
+    'create_pagerduty_metrics_collector'
 ]
 
 # Module metadata
