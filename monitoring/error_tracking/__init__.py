@@ -74,6 +74,46 @@ from .multi_format_content_error_analyzer import (
     content_analyzer
 )
 
+from .creator_collaboration_error_intelligence import (
+    CreatorCollaborationErrorIntelligence,
+    CollaborationErrorEvent,
+    CollaborationType,
+    CollaborationErrorCategory,
+    CollaborationSeverity,
+    CollaborationErrorPattern,
+    creator_collaboration_intelligence
+)
+
+from .monetization_error_detection_system import (
+    MonetizationErrorDetectionSystem,
+    MonetizationErrorEvent,
+    MonetizationChannel,
+    MonetizationErrorType,
+    MonetizationSeverity,
+    MonetizationHealthMetrics,
+    monetization_detection_system
+)
+
+from .creator_tier_error_orchestrator import (
+    CreatorTierErrorOrchestrator,
+    TierErrorEvent,
+    CreatorTier,
+    CreatorSpecialization,
+    TierErrorPriority,
+    ErrorEscalationLevel,
+    tier_orchestrator
+)
+
+from .real_time_error_response_automation import (
+    RealTimeErrorResponseAutomation,
+    AutomationRule,
+    AutomationExecution,
+    AutomationTrigger,
+    AutomationAction,
+    AutomationSeverity,
+    real_time_automation
+)
+
 __all__ = [
     # Core components
     'SentryErrorTracker',
@@ -131,5 +171,41 @@ __all__ = [
     'ContentFormat',
     'ContentProcessingStage',
     'ContentErrorSeverity',
-    'content_analyzer'
+    'content_analyzer',
+    
+    # Creator Collaboration Intelligence
+    'CreatorCollaborationErrorIntelligence',
+    'CollaborationErrorEvent',
+    'CollaborationType',
+    'CollaborationErrorCategory',
+    'CollaborationSeverity',
+    'CollaborationErrorPattern',
+    'creator_collaboration_intelligence',
+    
+    # Monetization Error Detection
+    'MonetizationErrorDetectionSystem',
+    'MonetizationErrorEvent',
+    'MonetizationChannel',
+    'MonetizationErrorType',
+    'MonetizationSeverity',
+    'MonetizationHealthMetrics',
+    'monetization_detection_system',
+    
+    # Creator Tier Error Orchestrator
+    'CreatorTierErrorOrchestrator',
+    'TierErrorEvent',
+    'CreatorTier',
+    'CreatorSpecialization',
+    'TierErrorPriority',
+    'ErrorEscalationLevel',
+    'tier_orchestrator',
+    
+    # Real-Time Error Response Automation
+    'RealTimeErrorResponseAutomation',
+    'AutomationRule',
+    'AutomationExecution',
+    'AutomationTrigger',
+    'AutomationAction',
+    'AutomationSeverity',
+    'real_time_automation'
 ]
