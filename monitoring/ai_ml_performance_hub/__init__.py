@@ -1,16 +1,28 @@
 """
-🤖 AI/ML Performance Hub - Surveillance Intelligence Artificielle
-=================================================================
+🤖 AI/ML Performance Hub - Surveillance Intelligence Artificielle Enterprise
+============================================================================
 
-Hub spécialisé pour la surveillance performance des modèles IA/ML.
-Monitoring avancé, détection anomalies et optimisation automatique.
+Hub spécialisé ultra-avancé pour la surveillance performance des modèles IA/ML Creator Economy.
+Monitoring enterprise, détection anomalies, optimisation automatique, analytics prédictifs.
+
+⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+TOUS DROITS RÉSERVÉS
+
+🚨 PROTECTION INTELLECTUELLE:
+- Code propriétaire de Fahed Mlaiel
+- Utilisation commerciale INTERDITE sans autorisation écrite
+- Reverse engineering STRICTEMENT INTERDIT
+- Distribution INTERDITE sans licence explicite
+- Violation = Poursuites judiciaires automatiques
 
 Architecture: monitoring/ai_ml_performance_hub/ (NIVEAU 2)
-Responsabilité: Performance IA, monitoring modèles ML, optimisation
-
-© 2025 Fahed Mlaiel - Architecture Monitoring Propriétaire Ultra-Avancée
+Responsabilité: Performance IA enterprise, monitoring modèles ML, optimisation Creator Economy
+Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Audio + DevOps
 """
 
+# Core orchestrator
 from .index import (
     AIMLPerformanceHub,
     ModelMetrics,
@@ -18,13 +30,119 @@ from .index import (
     InferenceLatencyOptimizer
 )
 
+# Critical Priority Components
+from .model_inference_performance_monitor import (
+    ModelInferencePerformanceMonitor,
+    InferenceMetrics,
+    ThroughputMetrics,
+    ResourceUtilization,
+    CreatorTier,
+    ContentModality,
+    InferenceType
+)
+
+from .gpu_utilization_analyzer import (
+    GPUUtilizationAnalyzer,
+    GPUDevice,
+    GPUWorkload,
+    GPUPerformanceMetrics,
+    CreatorGPUUsage,
+    GPUType,
+    WorkloadType
+)
+
+from .latency_distribution_analyzer import (
+    LatencyDistributionAnalyzer,
+    LatencyMeasurement,
+    LatencyDistribution,
+    SLACompliance,
+    LatencyAnomalyAlert,
+    LatencyComponent,
+    GeographicRegion,
+    ServiceType
+)
+
+from .throughput_capacity_monitor import (
+    ThroughputCapacityMonitor,
+    ThroughputMetrics,
+    CapacityMetrics,
+    CreatorUsageMetrics,
+    AutoScalingTrigger,
+    PeakLoadAnalysis,
+    LoadPattern
+)
+
+from .model_drift_detection_engine import (
+    ModelDriftDetectionEngine,
+    DriftMeasurement,
+    DriftAlert,
+    ModelBehaviorPattern,
+    RetrainingRecommendation,
+    DriftType,
+    DriftSeverity,
+    DetectionMethod,
+    FeatureStatistics
+)
+
 __all__ = [
+    # Core orchestrator
     'AIMLPerformanceHub',
     'ModelMetrics',
     'ModelPerformanceAlert',
-    'InferenceLatencyOptimizer'
+    'InferenceLatencyOptimizer',
+    
+    # Model Inference Performance Monitor
+    'ModelInferencePerformanceMonitor',
+    'InferenceMetrics',
+    'ThroughputMetrics',
+    'ResourceUtilization',
+    
+    # GPU Utilization Analyzer
+    'GPUUtilizationAnalyzer',
+    'GPUDevice',
+    'GPUWorkload',
+    'GPUPerformanceMetrics',
+    'CreatorGPUUsage',
+    'GPUType',
+    'WorkloadType',
+    
+    # Latency Distribution Analyzer
+    'LatencyDistributionAnalyzer',
+    'LatencyMeasurement',
+    'LatencyDistribution',
+    'SLACompliance',
+    'LatencyAnomalyAlert',
+    'LatencyComponent',
+    'GeographicRegion',
+    
+    # Throughput Capacity Monitor
+    'ThroughputCapacityMonitor',
+    'CapacityMetrics',
+    'CreatorUsageMetrics',
+    'AutoScalingTrigger',
+    'PeakLoadAnalysis',
+    'LoadPattern',
+    
+    # Model Drift Detection Engine
+    'ModelDriftDetectionEngine',
+    'DriftMeasurement',
+    'DriftAlert',
+    'ModelBehaviorPattern',
+    'RetrainingRecommendation',
+    'DriftType',
+    'DriftSeverity',
+    'DetectionMethod',
+    'FeatureStatistics',
+    
+    # Common enums
+    'CreatorTier',
+    'ContentModality',
+    'InferenceType',
+    'ServiceType'
 ]
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
+__status__ = "Production-Ready Enterprise"
+__architecture__ = "AI/ML Performance Hub Creator Economy"
