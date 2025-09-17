@@ -76,6 +76,33 @@ from .memory_optimizer import (
     create_memory_optimizer
 )
 
+from .cpu_optimizer import (
+    CPUOptimizer,
+    CPUTier,
+    OptimizationMode,
+    CPUMetrics,
+    CPUConfig,
+    create_cpu_optimizer
+)
+
+from .network_optimizer import (
+    NetworkOptimizer,
+    NetworkTier,
+    CompressionLevel,
+    NetworkMetrics,
+    NetworkConfig,
+    create_network_optimizer
+)
+
+from .cache_optimizer import (
+    CacheOptimizer,
+    CacheStrategy,
+    CacheTier,
+    CacheMetrics,
+    CacheConfig,
+    create_cache_optimizer
+)
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -88,17 +115,26 @@ class PerformanceSuite:
     def __init__(self, 
                  latency_config: Optional[LatencyConfig] = None,
                  throughput_config: Optional[ThroughputConfig] = None,
-                 memory_config: Optional[MemoryConfig] = None):
+                 memory_config: Optional[MemoryConfig] = None,
+                 cpu_config: Optional[CPUConfig] = None,
+                 network_config: Optional[NetworkConfig] = None,
+                 cache_config: Optional[CacheConfig] = None):
         
         # Configurations par défaut si non spécifiées
         self.latency_config = latency_config or LatencyConfig()
         self.throughput_config = throughput_config or ThroughputConfig()
         self.memory_config = memory_config or MemoryConfig()
+        self.cpu_config = cpu_config or CPUConfig()
+        self.network_config = network_config or NetworkConfig()
+        self.cache_config = cache_config or CacheConfig()
         
         # Optimiseurs
         self.latency_optimizer = None
         self.throughput_enhancer = None
         self.memory_optimizer = None
+        self.cpu_optimizer = None
+        self.network_optimizer = None
+        self.cache_optimizer = None
         
         self.is_running = False
     
@@ -113,11 +149,17 @@ class PerformanceSuite:
         self.latency_optimizer = ConnectionLatencyOptimizer(self.latency_config)
         self.throughput_enhancer = ThroughputEnhancer(self.throughput_config)
         self.memory_optimizer = MemoryOptimizer(self.memory_config)
+        self.cpu_optimizer = CPUOptimizer(self.cpu_config)
+        self.network_optimizer = NetworkOptimizer(self.network_config)
+        self.cache_optimizer = CacheOptimizer(self.cache_config)
         
         # Démarrage coordonné
         await self.latency_optimizer.start()
         await self.throughput_enhancer.start()
         await self.memory_optimizer.start()
+        await self.cpu_optimizer.start()
+        await self.network_optimizer.start()
+        await self.cache_optimizer.start()
         
         self.is_running = True
         logger.info("✅ Performance Suite démarrée avec succès")
@@ -136,6 +178,12 @@ class PerformanceSuite:
             await self.throughput_enhancer.stop()
         if self.memory_optimizer:
             await self.memory_optimizer.stop()
+        if self.cpu_optimizer:
+            await self.cpu_optimizer.stop()
+        if self.network_optimizer:
+            await self.network_optimizer.stop()
+        if self.cache_optimizer:
+            await self.cache_optimizer.stop()
         
         self.is_running = False
         logger.info("✅ Performance Suite arrêtée")
@@ -155,6 +203,15 @@ class PerformanceSuite:
         
         if self.memory_optimizer:
             metrics['memory'] = self.memory_optimizer.get_metrics()
+        
+        if self.cpu_optimizer:
+            metrics['cpu'] = self.cpu_optimizer.get_metrics()
+        
+        if self.network_optimizer:
+            metrics['network'] = self.network_optimizer.get_metrics()
+        
+        if self.cache_optimizer:
+            metrics['cache'] = self.cache_optimizer.get_metrics()
         
         # Calcul score performance global
         metrics['performance_score'] = self._calculate_performance_score(metrics)
@@ -279,6 +336,30 @@ __all__ = [
     'MemoryPool',
     'ConnectionMemoryManager',
     'create_memory_optimizer',
+    
+    # CPU Optimization
+    'CPUOptimizer',
+    'CPUTier',
+    'OptimizationMode',
+    'CPUMetrics',
+    'CPUConfig',
+    'create_cpu_optimizer',
+    
+    # Network Optimization
+    'NetworkOptimizer',
+    'NetworkTier',
+    'CompressionLevel',
+    'NetworkMetrics',
+    'NetworkConfig',
+    'create_network_optimizer',
+    
+    # Cache Optimization
+    'CacheOptimizer',
+    'CacheStrategy',
+    'CacheTier',
+    'CacheMetrics',
+    'CacheConfig',
+    'create_cache_optimizer',
     
     # Performance Suite
     'PerformanceSuite',
