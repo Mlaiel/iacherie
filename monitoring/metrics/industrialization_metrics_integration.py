@@ -45,45 +45,49 @@ except ImportError:
                 if not hasattr(self, 'data'):
                     raise ValueError("Invalid request")
                 return {}
-            
-                    # Process request
-                    result = await self._handle_get_current_metrics_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_kpi_results_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_kpi_results failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    return {"status": "success", "data": result}
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_performance_summary_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_performance_summary failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    result = await self._handle_get_current_metrics_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
+
+        async def get_current_metrics(self, data):
+            """Get current metrics"""
+            try:
+                # Process request
+                result = await self._handle_get_current_metrics_request(data)
+        
+                # Return response
+                return {"status": "success", "data": result}
+            except Exception as e:
+                return {"status": "error", "error": str(e)}
+
+        async def get_kpi_results(self, data):
+            """Get KPI results"""
+            try:
+                # Request validation
+                if not data:
+                    raise ValueError("Invalid request")
+        
+                # Process request
+                result = await self._handle_get_kpi_results_request(data)
+        
+                # Return response
+                return {"status": "success", "data": result}
+            except Exception as e:
+                logger.error(f"API handler get_kpi_results failed: {e}")
+                return {"status": "error", "message": str(e)}
+
+        async def get_performance_summary(self, data):
+            """Get performance summary"""
+            try:
+                # Request validation
+                if not data:
+                    raise ValueError("Invalid request")
+        
+                # Process request
+                result = await self._handle_get_performance_summary_request(data)
+        
+                # Return response
+                return {"status": "success", "data": result}
+            except Exception as e:
+                logger.error(f"API handler get_performance_summary failed: {e}")
+                return {"status": "error", "message": str(e)}
             
                 except Exception as e:
                     logger.error(f"API handler get_current_metrics failed: {e}")
