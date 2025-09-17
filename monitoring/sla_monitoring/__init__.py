@@ -12,6 +12,8 @@ from .revenue_monetization_sla import RevenueMonetizationSLA, RevenueMetric, Mon
 from .content_processing_sla import ContentProcessingSLA, ContentProcessingMetric, ContentProcessingSLATargets, content_processing_sla
 from .collaboration_platform_sla import CollaborationPlatformSLA, CollaborationMetric, CollaborationSLATargets, collaboration_platform_sla
 from .api_performance_sla import APIPerformanceSLA, APIPerformanceMetric, APIPerformanceSLATargets, api_performance_sla
+from .multi_platform_distribution_sla import MultiPlatformDistributionSLA, DistributionMetric, MultiPlatformDistributionSLATargets, multi_platform_distribution_sla
+from .infrastructure_health_sla import InfrastructureHealthSLA, InfrastructureMetric, InfrastructureHealthSLATargets, infrastructure_health_sla
 
 __all__ = [
     # Core SLA Tracking
@@ -31,4 +33,10 @@ __all__ = [
     
     # API Performance SLA
     'APIPerformanceSLA', 'APIPerformanceMetric', 'APIPerformanceSLATargets', 'api_performance_sla',
+    
+    # Multi-Platform Distribution SLA
+    'MultiPlatformDistributionSLA', 'DistributionMetric', 'MultiPlatformDistributionSLATargets', 'multi_platform_distribution_sla',
+    
+    # Infrastructure Health SLA
+    'InfrastructureHealthSLA', 'InfrastructureMetric', 'InfrastructureHealthSLATargets', 'infrastructure_health_sla',
 ]
