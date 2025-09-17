@@ -24,9 +24,28 @@ from datetime import datetime, timedelta
 
 # Optional Redis imports for enterprise environment
 try:
-    import redis.asyncio as redis
-    from redis.asyncio.sentinel import Sentinel
+    # Import Redis library directly from site-packages
+    import sys
+    import importlib
+    # Temporarily remove the local redis module from the path
+    original_path = sys.path[:]
+    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    
+    redis_module = importlib.import_module('redis')
+    # For Redis 5.x, async is typically in redis.asyncio or use redis directly
+    if hasattr(redis_module, 'asyncio'):
+        redis = redis_module.asyncio
+        from redis.asyncio.sentinel import Sentinel
+    else:
+        # Use redis directly for async operations
+        redis = redis_module
+        from redis.sentinel import Sentinel
+    
     import aiohttp
+    
+    # Restore original path
+    sys.path = original_path
     REDIS_AVAILABLE = True
 except ImportError:
     # Fallback pour environnement sans Redis
