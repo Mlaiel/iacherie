@@ -804,7 +804,612 @@ Update model baseline if performance is good"""
             return ModelHealth.WARNING
 
 
-# Export the main classes
+# ===============================================================================
+# CREATOR ECONOMY AI MONITORING ENHANCEMENTS
+# ===============================================================================
+# Enhanced AI monitoring specifically designed for Creator Economy business logic
+# Added by: Fahed Mlaiel (mlaiel@live.de) - Creator Economy AI Intelligence
+# ===============================================================================
+
+class CreatorAIModelType(Enum):
+    """Creator Economy specific AI model types"""
+    
+    # Content Analysis Models
+    CONTENT_QUALITY_SCORER = "content_quality_scorer"
+    CREATOR_CONTENT_CLASSIFIER = "creator_content_classifier"
+    MULTI_FORMAT_CONTENT_ANALYZER = "multi_format_content_analyzer"
+    
+    # Creator Intelligence Models
+    CREATOR_TIER_PREDICTOR = "creator_tier_predictor"
+    CREATOR_ENGAGEMENT_PREDICTOR = "creator_engagement_predictor"
+    CREATOR_REVENUE_FORECASTER = "creator_revenue_forecaster"
+    CREATOR_CHURN_PREDICTOR = "creator_churn_predictor"
+    
+    # Content Protection Models
+    COPYRIGHT_INFRINGEMENT_DETECTOR = "copyright_infringement_detector"
+    WATERMARK_INTEGRITY_CHECKER = "watermark_integrity_checker"
+    CONTENT_AUTHENTICITY_VERIFIER = "content_authenticity_verifier"
+    DEEPFAKE_DETECTOR = "deepfake_detector"
+    
+    # Collaboration Models
+    CREATOR_MATCHING_ENGINE = "creator_matching_engine"
+    COLLABORATION_SUCCESS_PREDICTOR = "collaboration_success_predictor"
+    CREATOR_COMPATIBILITY_SCORER = "creator_compatibility_scorer"
+    
+    # Monetization Models
+    REVENUE_OPTIMIZATION_ENGINE = "revenue_optimization_engine"
+    PRICING_RECOMMENDATION_MODEL = "pricing_recommendation_model"
+    MONETIZATION_OPPORTUNITY_DETECTOR = "monetization_opportunity_detector"
+    
+    # SEO & Distribution Models
+    SEO_PERFORMANCE_PREDICTOR = "seo_performance_predictor"
+    CONTENT_VIRALITY_PREDICTOR = "content_virality_predictor"
+    PLATFORM_PERFORMANCE_OPTIMIZER = "platform_performance_optimizer"
+    
+    # Gamification Models
+    CREATOR_ACHIEVEMENT_TRACKER = "creator_achievement_tracker"
+    GAMIFICATION_ENGAGEMENT_OPTIMIZER = "gamification_engagement_optimizer"
+
+
+@dataclass
+class CreatorAIMetrics:
+    """Extended AI metrics for Creator Economy specific models"""
+    model_id: str
+    model_type: CreatorAIModelType
+    creator_id: Optional[str]
+    creator_type: Optional[str]
+    timestamp: datetime
+    
+    # Creator-specific performance metrics
+    creator_satisfaction_score: float = 0.0
+    content_format_accuracy: Dict[str, float] = field(default_factory=dict)
+    cross_creator_correlation: float = 0.0
+    business_value_generated: float = 0.0
+    creator_tier_prediction_accuracy: float = 0.0
+    
+    # Content protection metrics
+    copyright_detection_precision: float = 0.0
+    false_positive_rate: float = 0.0
+    content_authenticity_score: float = 0.0
+    watermark_detection_rate: float = 0.0
+    
+    # Collaboration metrics
+    matching_success_rate: float = 0.0
+    collaboration_outcome_accuracy: float = 0.0
+    creator_compatibility_precision: float = 0.0
+    
+    # Monetization metrics
+    revenue_prediction_accuracy: float = 0.0
+    pricing_optimization_impact: float = 0.0
+    monetization_conversion_rate: float = 0.0
+    
+    # Multi-format content metrics
+    audio_processing_accuracy: float = 0.0
+    video_analysis_precision: float = 0.0
+    image_classification_accuracy: float = 0.0
+    text_sentiment_accuracy: float = 0.0
+    
+    # Platform-specific metrics
+    platform_performance_scores: Dict[str, float] = field(default_factory=dict)
+    cross_platform_consistency: float = 0.0
+    seo_optimization_effectiveness: float = 0.0
+
+
+class CreatorAIAlertManager:
+    """
+    Enhanced AI Alert Manager with Creator Economy specific monitoring
+    
+    Extends the base AI monitoring with Creator-focused intelligence including:
+    - Creator-specific model performance tracking
+    - Multi-format content analysis monitoring
+    - Creator tier prediction accuracy
+    - Content protection AI effectiveness
+    - Collaboration algorithm performance
+    - Monetization model optimization
+    """
+    
+    def __init__(self, ai_alert_manager: AIAlertManager):
+        self.base_manager = ai_alert_manager
+        self.creator_metrics_history: Dict[str, List[CreatorAIMetrics]] = {}
+        self.creator_model_baselines: Dict[str, Dict[str, float]] = {}
+        
+        # Creator Economy specific thresholds
+        self.creator_thresholds = {
+            # Creator satisfaction thresholds
+            "creator_satisfaction_critical": 6.0,  # Below 6/10
+            "creator_satisfaction_warning": 7.5,   # Below 7.5/10
+            
+            # Content format accuracy thresholds
+            "audio_accuracy_critical": 0.85,
+            "video_accuracy_critical": 0.80,
+            "image_accuracy_critical": 0.90,
+            "text_accuracy_critical": 0.92,
+            
+            # Business impact thresholds
+            "business_value_drop_critical": 0.20,    # 20% drop
+            "revenue_prediction_accuracy_warning": 0.80,
+            "tier_prediction_accuracy_warning": 0.85,
+            
+            # Content protection thresholds
+            "copyright_detection_precision_critical": 0.95,
+            "false_positive_rate_critical": 0.05,    # 5% max
+            "authenticity_score_critical": 0.90,
+            
+            # Collaboration thresholds
+            "matching_success_rate_warning": 0.70,
+            "compatibility_precision_warning": 0.75,
+            
+            # Multi-platform thresholds
+            "cross_platform_consistency_warning": 0.80,
+            "seo_effectiveness_warning": 0.75
+        }
+        
+        self._initialize_creator_ai_rules()
+        logger.info("CreatorAIAlertManager initialized with Creator Economy enhancements")
+    
+    def _initialize_creator_ai_rules(self):
+        """Initialize Creator Economy specific AI alert rules"""
+        
+        # Creator Satisfaction AI Model Performance
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_satisfaction_critical",
+            name="Creator Satisfaction AI Model Underperforming",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.CRITICAL,
+            expression="creator_satisfaction_score < 6.0",
+            threshold={
+                "satisfaction_threshold": 6.0,
+                "creator_sample_size": 50,
+                "evaluation_window": "24h"
+            },
+            duration="2h",
+            escalation_levels=[
+                {"level": 1, "delay": "1h", "channels": ["email", "slack"]},
+                {"level": 2, "delay": "4h", "channels": ["email", "slack", "phone"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "business_impact": "high",
+                "affected_creators": "all_tiers"
+            }
+        ))
+        
+        # Multi-Format Content Analysis Performance
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_multiformat_degradation",
+            name="Multi-Format Content Analysis Degradation",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.WARNING,
+            expression="min(audio_accuracy, video_accuracy, image_accuracy) < 0.85",
+            threshold={
+                "min_format_accuracy": 0.85,
+                "affected_formats_threshold": 2,
+                "content_volume_minimum": 100
+            },
+            duration="1h",
+            escalation_levels=[
+                {"level": 1, "delay": "2h", "channels": ["email", "slack"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "content_formats": ["audio", "video", "image", "text"],
+                "creator_impact": "content_quality"
+            }
+        ))
+        
+        # Creator Tier Prediction Accuracy
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_tier_prediction_warning",
+            name="Creator Tier Prediction Accuracy Drop",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.WARNING,
+            expression="creator_tier_prediction_accuracy < 0.85",
+            threshold={
+                "tier_accuracy_threshold": 0.85,
+                "business_impact_threshold": "medium",
+                "creator_count_minimum": 200
+            },
+            duration="3h",
+            escalation_levels=[
+                {"level": 1, "delay": "4h", "channels": ["email", "slack"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "business_function": "tier_management",
+                "sla_impact": "creator_experience"
+            }
+        ))
+        
+        # Content Protection AI Performance
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_content_protection_critical",
+            name="Critical Content Protection AI Performance",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.CRITICAL,
+            expression="copyright_detection_precision < 0.95 OR false_positive_rate > 0.05",
+            threshold={
+                "copyright_precision_min": 0.95,
+                "false_positive_max": 0.05,
+                "creator_ip_risk": "high"
+            },
+            duration="30m",
+            escalation_levels=[
+                {"level": 1, "delay": "15m", "channels": ["email", "slack", "phone"]},
+                {"level": 2, "delay": "1h", "channels": ["email", "slack", "phone", "legal"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "legal_impact": "high",
+                "creator_protection": "ip_rights"
+            }
+        ))
+        
+        # Collaboration Algorithm Performance
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_collaboration_warning",
+            name="Creator Collaboration AI Performance Warning",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.WARNING,
+            expression="matching_success_rate < 0.70 OR compatibility_precision < 0.75",
+            threshold={
+                "matching_success_min": 0.70,
+                "compatibility_precision_min": 0.75,
+                "collaboration_volume_min": 50
+            },
+            duration="4h",
+            escalation_levels=[
+                {"level": 1, "delay": "6h", "channels": ["email", "slack"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "business_function": "creator_collaboration",
+                "community_impact": "partnership_success"
+            }
+        ))
+        
+        # Revenue Prediction Model Performance
+        self.base_manager.alert_manager.add_alert_rule(AlertRule(
+            rule_id="creator_ai_revenue_prediction_warning",
+            name="Creator Revenue Prediction Accuracy Warning",
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            severity=AlertSeverity.WARNING,
+            expression="revenue_prediction_accuracy < 0.80",
+            threshold={
+                "revenue_accuracy_min": 0.80,
+                "business_impact_assessment": "medium",
+                "creator_tier_affected": "all"
+            },
+            duration="6h",
+            escalation_levels=[
+                {"level": 1, "delay": "8h", "channels": ["email", "slack"]}
+            ],
+            custom_metadata={
+                "creator_economy_specific": True,
+                "business_function": "monetization",
+                "financial_impact": "revenue_forecasting"
+            }
+        ))
+        
+        logger.info("Creator Economy AI alert rules initialized")
+    
+    async def evaluate_creator_ai_metrics(self, metrics: CreatorAIMetrics) -> List[IntelligentAlert]:
+        """Evaluate Creator Economy specific AI metrics and trigger alerts"""
+        triggered_alerts = []
+        
+        # Store metrics for trend analysis
+        if metrics.model_id not in self.creator_metrics_history:
+            self.creator_metrics_history[metrics.model_id] = []
+        
+        self.creator_metrics_history[metrics.model_id].append(metrics)
+        
+        # Keep only recent metrics (last 1000 entries per model)
+        if len(self.creator_metrics_history[metrics.model_id]) > 1000:
+            self.creator_metrics_history[metrics.model_id] = \
+                self.creator_metrics_history[metrics.model_id][-1000:]
+        
+        try:
+            # Check Creator Satisfaction Score
+            if metrics.creator_satisfaction_score < self.creator_thresholds["creator_satisfaction_critical"]:
+                alert = await self._create_creator_satisfaction_alert(metrics, "critical")
+                triggered_alerts.append(alert)
+            elif metrics.creator_satisfaction_score < self.creator_thresholds["creator_satisfaction_warning"]:
+                alert = await self._create_creator_satisfaction_alert(metrics, "warning")
+                triggered_alerts.append(alert)
+            
+            # Check Multi-Format Content Analysis
+            format_accuracies = [
+                metrics.audio_processing_accuracy,
+                metrics.video_analysis_precision,
+                metrics.image_classification_accuracy,
+                metrics.text_sentiment_accuracy
+            ]
+            min_format_accuracy = min(f for f in format_accuracies if f > 0)
+            
+            if min_format_accuracy < 0.85:
+                alert = await self._create_multiformat_degradation_alert(metrics)
+                triggered_alerts.append(alert)
+            
+            # Check Content Protection Performance
+            if (metrics.copyright_detection_precision < self.creator_thresholds["copyright_detection_precision_critical"] or
+                metrics.false_positive_rate > self.creator_thresholds["false_positive_rate_critical"]):
+                alert = await self._create_content_protection_alert(metrics)
+                triggered_alerts.append(alert)
+            
+            # Check Collaboration Algorithm Performance
+            if (metrics.matching_success_rate < self.creator_thresholds["matching_success_rate_warning"] or
+                metrics.creator_compatibility_precision < self.creator_thresholds["compatibility_precision_warning"]):
+                alert = await self._create_collaboration_performance_alert(metrics)
+                triggered_alerts.append(alert)
+            
+            # Check Revenue Prediction Accuracy
+            if metrics.revenue_prediction_accuracy < self.creator_thresholds["revenue_prediction_accuracy_warning"]:
+                alert = await self._create_revenue_prediction_alert(metrics)
+                triggered_alerts.append(alert)
+            
+            # Check Creator Tier Prediction
+            if metrics.creator_tier_prediction_accuracy < self.creator_thresholds["tier_prediction_accuracy_warning"]:
+                alert = await self._create_tier_prediction_alert(metrics)
+                triggered_alerts.append(alert)
+            
+            return triggered_alerts
+            
+        except Exception as e:
+            logger.error(f"Error evaluating Creator AI metrics: {e}")
+            return []
+    
+    async def _create_creator_satisfaction_alert(self, metrics: CreatorAIMetrics, severity: str) -> IntelligentAlert:
+        """Create alert for creator satisfaction score issues"""
+        return IntelligentAlert(
+            alert_id=f"creator_satisfaction_{severity}_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id=f"creator_ai_satisfaction_{severity}",
+            title=f"Creator Satisfaction AI Model {'Critical' if severity == 'critical' else 'Warning'}",
+            description=f"Creator satisfaction prediction model showing {severity} performance: "
+                       f"Score {metrics.creator_satisfaction_score:.2f} "
+                       f"(threshold: {self.creator_thresholds[f'creator_satisfaction_{severity}']:.1f})",
+            severity=AlertSeverity.CRITICAL if severity == "critical" else AlertSeverity.WARNING,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "creator_id": metrics.creator_id,
+                "creator_type": metrics.creator_type,
+                "satisfaction_score": metrics.creator_satisfaction_score,
+                "business_impact": "creator_experience",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def _create_multiformat_degradation_alert(self, metrics: CreatorAIMetrics) -> IntelligentAlert:
+        """Create alert for multi-format content analysis degradation"""
+        format_scores = {
+            "audio": metrics.audio_processing_accuracy,
+            "video": metrics.video_analysis_precision,
+            "image": metrics.image_classification_accuracy,
+            "text": metrics.text_sentiment_accuracy
+        }
+        
+        return IntelligentAlert(
+            alert_id=f"multiformat_degradation_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id="creator_ai_multiformat_degradation",
+            title="Multi-Format Content Analysis Performance Degradation",
+            description=f"Content analysis showing degraded performance across formats: {format_scores}",
+            severity=AlertSeverity.WARNING,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "format_accuracies": format_scores,
+                "creator_id": metrics.creator_id,
+                "business_impact": "content_quality",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def _create_content_protection_alert(self, metrics: CreatorAIMetrics) -> IntelligentAlert:
+        """Create alert for content protection AI performance issues"""
+        return IntelligentAlert(
+            alert_id=f"content_protection_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id="creator_ai_content_protection_critical",
+            title="Critical Content Protection AI Performance Issue",
+            description=f"Content protection AI showing critical performance: "
+                       f"Copyright precision: {metrics.copyright_detection_precision:.3f}, "
+                       f"False positive rate: {metrics.false_positive_rate:.3f}",
+            severity=AlertSeverity.CRITICAL,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "copyright_precision": metrics.copyright_detection_precision,
+                "false_positive_rate": metrics.false_positive_rate,
+                "authenticity_score": metrics.content_authenticity_score,
+                "business_impact": "ip_protection",
+                "legal_risk": "high",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def _create_collaboration_performance_alert(self, metrics: CreatorAIMetrics) -> IntelligentAlert:
+        """Create alert for collaboration algorithm performance issues"""
+        return IntelligentAlert(
+            alert_id=f"collaboration_performance_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id="creator_ai_collaboration_warning",
+            title="Creator Collaboration AI Performance Warning",
+            description=f"Collaboration matching algorithm underperforming: "
+                       f"Success rate: {metrics.matching_success_rate:.3f}, "
+                       f"Compatibility precision: {metrics.creator_compatibility_precision:.3f}",
+            severity=AlertSeverity.WARNING,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "matching_success_rate": metrics.matching_success_rate,
+                "compatibility_precision": metrics.creator_compatibility_precision,
+                "business_impact": "creator_collaboration",
+                "community_impact": "partnership_success",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def _create_revenue_prediction_alert(self, metrics: CreatorAIMetrics) -> IntelligentAlert:
+        """Create alert for revenue prediction accuracy issues"""
+        return IntelligentAlert(
+            alert_id=f"revenue_prediction_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id="creator_ai_revenue_prediction_warning",
+            title="Creator Revenue Prediction Accuracy Warning",
+            description=f"Revenue prediction model accuracy below threshold: "
+                       f"{metrics.revenue_prediction_accuracy:.3f} "
+                       f"(threshold: {self.creator_thresholds['revenue_prediction_accuracy_warning']:.2f})",
+            severity=AlertSeverity.WARNING,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "revenue_accuracy": metrics.revenue_prediction_accuracy,
+                "pricing_impact": metrics.pricing_optimization_impact,
+                "business_impact": "monetization",
+                "financial_risk": "medium",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def _create_tier_prediction_alert(self, metrics: CreatorAIMetrics) -> IntelligentAlert:
+        """Create alert for creator tier prediction accuracy issues"""
+        return IntelligentAlert(
+            alert_id=f"tier_prediction_{metrics.model_id}_{int(metrics.timestamp.timestamp())}",
+            rule_id="creator_ai_tier_prediction_warning",
+            title="Creator Tier Prediction Accuracy Warning",
+            description=f"Creator tier prediction accuracy below threshold: "
+                       f"{metrics.creator_tier_prediction_accuracy:.3f} "
+                       f"(threshold: {self.creator_thresholds['tier_prediction_accuracy_warning']:.2f})",
+            severity=AlertSeverity.WARNING,
+            category=AlertCategory.AI_ML,
+            alert_type=AlertType.ACCURACY_DEGRADATION,
+            timestamp=metrics.timestamp,
+            source="CreatorAIAlertManager",
+            affected_resources=[metrics.model_id],
+            metadata={
+                "model_type": metrics.model_type.value,
+                "tier_accuracy": metrics.creator_tier_prediction_accuracy,
+                "business_impact": "tier_management",
+                "sla_impact": "creator_experience",
+                "creator_economy_specific": True
+            }
+        )
+    
+    async def get_creator_ai_model_health(self, model_id: str) -> Dict[str, Any]:
+        """Get comprehensive health status for Creator Economy AI models"""
+        if model_id not in self.creator_metrics_history:
+            return {"status": "unknown", "message": "No metrics available"}
+        
+        recent_metrics = self.creator_metrics_history[model_id][-10:]  # Last 10 metrics
+        
+        if not recent_metrics:
+            return {"status": "unknown", "message": "No recent metrics"}
+        
+        latest_metrics = recent_metrics[-1]
+        
+        # Calculate health score based on Creator Economy specific factors
+        health_factors = {
+            "creator_satisfaction": latest_metrics.creator_satisfaction_score / 10.0,
+            "content_protection": min(latest_metrics.copyright_detection_precision, 
+                                    1.0 - latest_metrics.false_positive_rate),
+            "collaboration_performance": (latest_metrics.matching_success_rate + 
+                                        latest_metrics.creator_compatibility_precision) / 2.0,
+            "revenue_accuracy": latest_metrics.revenue_prediction_accuracy,
+            "tier_accuracy": latest_metrics.creator_tier_prediction_accuracy,
+            "multiformat_performance": statistics.mean([
+                latest_metrics.audio_processing_accuracy,
+                latest_metrics.video_analysis_precision,
+                latest_metrics.image_classification_accuracy,
+                latest_metrics.text_sentiment_accuracy
+            ]) if any([latest_metrics.audio_processing_accuracy,
+                      latest_metrics.video_analysis_precision,
+                      latest_metrics.image_classification_accuracy,
+                      latest_metrics.text_sentiment_accuracy]) else 0.8
+        }
+        
+        # Calculate weighted health score
+        weights = {
+            "creator_satisfaction": 0.25,
+            "content_protection": 0.20,
+            "collaboration_performance": 0.15,
+            "revenue_accuracy": 0.15,
+            "tier_accuracy": 0.15,
+            "multiformat_performance": 0.10
+        }
+        
+        health_score = sum(health_factors[factor] * weights[factor] 
+                          for factor in health_factors if health_factors[factor] > 0)
+        
+        # Determine health status
+        if health_score >= 0.9:
+            status = "excellent"
+        elif health_score >= 0.8:
+            status = "good"
+        elif health_score >= 0.7:
+            status = "fair"
+        elif health_score >= 0.6:
+            status = "poor"
+        else:
+            status = "critical"
+        
+        return {
+            "status": status,
+            "health_score": health_score,
+            "health_factors": health_factors,
+            "model_type": latest_metrics.model_type.value,
+            "creator_economy_optimized": True,
+            "last_updated": latest_metrics.timestamp.isoformat(),
+            "recommendations": self._get_creator_ai_recommendations(health_factors, latest_metrics)
+        }
+    
+    def _get_creator_ai_recommendations(self, health_factors: Dict[str, float], metrics: CreatorAIMetrics) -> List[str]:
+        """Get recommendations for improving Creator Economy AI model performance"""
+        recommendations = []
+        
+        if health_factors["creator_satisfaction"] < 0.7:
+            recommendations.append("Retrain creator satisfaction model with recent feedback data")
+        
+        if health_factors["content_protection"] < 0.9:
+            recommendations.append("Enhance content protection algorithms with latest threat patterns")
+        
+        if health_factors["collaboration_performance"] < 0.7:
+            recommendations.append("Update creator matching algorithms with collaboration outcome data")
+        
+        if health_factors["revenue_accuracy"] < 0.8:
+            recommendations.append("Incorporate latest market trends into revenue prediction model")
+        
+        if health_factors["tier_accuracy"] < 0.85:
+            recommendations.append("Recalibrate creator tier prediction with updated business metrics")
+        
+        if health_factors["multiformat_performance"] < 0.8:
+            recommendations.append("Optimize multi-format content analysis for Creator Economy use cases")
+        
+        return recommendations
+
+
+# Export the enhanced classes
 __all__ = [
     "AIAlertManager",
     "ModelMetrics", 
@@ -812,5 +1417,9 @@ __all__ = [
     "DriftDetectionResult",
     "AIModelType",
     "DriftType",
-    "ModelHealth"
+    "ModelHealth",
+    # Creator Economy AI enhancements
+    "CreatorAIModelType",
+    "CreatorAIMetrics",
+    "CreatorAIAlertManager"
 ]
