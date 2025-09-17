@@ -483,6 +483,8 @@ class RecommendationEngineProfiler:
             data_loading_time=data_loading_time,
             model_inference_time=model_inference_time,
             postprocessing_time=postprocessing_time,
+            memory_usage=0,  # TODO: Implement memory monitoring
+            cpu_usage=0.0,   # TODO: Implement CPU monitoring
             cache_hit=cache_hit,
             model_size=model_size,
             num_candidates=num_candidates,

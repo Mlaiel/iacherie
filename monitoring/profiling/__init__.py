@@ -99,11 +99,11 @@ from .cache_profiler import (
     create_cache_profiler
 )
 
-# Performance profiler (existing)
-try:
-    from .performance_profiler import *
-except ImportError:
-    pass  # Original profiler may not be available
+# Performance profiler (existing) - temporarily disabled due to syntax error
+# try:
+#     from .performance_profiler import *
+# except ImportError:
+#     pass  # Original profiler may not be available
 
 # Version information
 __version__ = "1.0.0"
