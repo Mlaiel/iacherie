@@ -48,6 +48,80 @@ try:
 except ImportError:
     AnalyticsProcessor = PipelineStage = DataFormat = None
 
+# Import new orchestration modules - Phase 1: Content & Revenue
+try:
+    from .content_production_orchestrator import (
+        ContentProductionOrchestrator, ContentFormat, ContentStatus, 
+        QualityCheckStatus, PublishingPlatform
+    )
+except ImportError:
+    ContentProductionOrchestrator = ContentFormat = ContentStatus = None
+    QualityCheckStatus = PublishingPlatform = None
+
+try:
+    from .revenue_orchestration_engine import (
+        RevenueOrchestrationEngine, RevenueModel, PaymentProvider,
+        PaymentStatus, RevenueStreamStatus, TaxRegion
+    )
+except ImportError:
+    RevenueOrchestrationEngine = RevenueModel = PaymentProvider = None
+    PaymentStatus = RevenueStreamStatus = TaxRegion = None
+
+try:
+    from .gamification_orchestrator import (
+        GamificationOrchestrator, AchievementType, AchievementTier,
+        ChallengeType, ChallengeStatus, LeaderboardType, RewardType
+    )
+except ImportError:
+    GamificationOrchestrator = AchievementType = AchievementTier = None
+    ChallengeType = ChallengeStatus = LeaderboardType = RewardType = None
+
+try:
+    from .marketing_campaign_orchestrator import (
+        MarketingCampaignOrchestrator, CampaignType, CampaignStatus,
+        ChannelType, AudienceSegment, MessageType, PersonalizationLevel
+    )
+except ImportError:
+    MarketingCampaignOrchestrator = CampaignType = CampaignStatus = None
+    ChannelType = AudienceSegment = MessageType = PersonalizationLevel = None
+
+# Import new orchestration modules - Phase 2: Security & Performance
+try:
+    from .security_orchestration_platform import (
+        SecurityOrchestrationPlatform, ThreatLevel, IncidentType,
+        IncidentStatus, ComplianceFramework, SecurityAction, AccessLevel
+    )
+except ImportError:
+    SecurityOrchestrationPlatform = ThreatLevel = IncidentType = None
+    IncidentStatus = ComplianceFramework = SecurityAction = AccessLevel = None
+
+try:
+    from .deployment_orchestration_controller import (
+        DeploymentOrchestrationController, Environment, DeploymentStrategy,
+        DeploymentStatus, ServiceType, InfrastructureProvider, HealthCheckType
+    )
+except ImportError:
+    DeploymentOrchestrationController = Environment = DeploymentStrategy = None
+    DeploymentStatus = ServiceType = InfrastructureProvider = HealthCheckType = None
+
+try:
+    from .performance_optimization_orchestrator import (
+        PerformanceOptimizationOrchestrator, MetricType, OptimizationStrategy,
+        AlertSeverity, ResourceType
+    )
+except ImportError:
+    PerformanceOptimizationOrchestrator = MetricType = OptimizationStrategy = None
+    AlertSeverity = ResourceType = None
+
+try:
+    from .quality_assurance_orchestrator import (
+        QualityAssuranceOrchestrator, TestType, TestStatus,
+        QualityGateStatus, SeverityLevel, QualityMetric
+    )
+except ImportError:
+    QualityAssuranceOrchestrator = TestType = TestStatus = None
+    QualityGateStatus = SeverityLevel = QualityMetric = None
+
 __version__ = "2.0.0"
 __author__ = "Ainflue Enterprise Team"
 
@@ -55,11 +129,24 @@ logger = logging.getLogger(__name__)
 
 # Enterprise service registry for orchestration layer
 ORCHESTRATION_SERVICES: Dict[str, str] = {
+    # Core orchestration services (existing)
     "workflow_orchestrator": "WorkflowOrchestrator",
     "business_intelligence": "BusinessIntelligenceService",
     "automation_engine": "AutomationEngine",
     "collaboration_hub": "CollaborationHub",
-    "analytics_processor": "AnalyticsProcessor"
+    "analytics_processor": "AnalyticsProcessor",
+    
+    # Phase 1: Content & Revenue orchestration
+    "content_production_orchestrator": "ContentProductionOrchestrator",
+    "revenue_orchestration_engine": "RevenueOrchestrationEngine",
+    "gamification_orchestrator": "GamificationOrchestrator",
+    "marketing_campaign_orchestrator": "MarketingCampaignOrchestrator",
+    
+    # Phase 2: Security & Performance orchestration
+    "security_orchestration_platform": "SecurityOrchestrationPlatform",
+    "deployment_orchestration_controller": "DeploymentOrchestrationController",
+    "performance_optimization_orchestrator": "PerformanceOptimizationOrchestrator",
+    "quality_assurance_orchestrator": "QualityAssuranceOrchestrator"
 }
 
 async def initialize_orchestration_services() -> Dict[str, Any]:
@@ -77,11 +164,24 @@ async def initialize_orchestration_services() -> Dict[str, Any]:
     try:
         logger.info("Orchestration services module structure validated")
         initialized_services = {
+            # Core services
             "workflow_orchestrator": "WorkflowOrchestrator",
             "business_intelligence": "BusinessIntelligenceService",
             "automation_engine": "AutomationEngine",
             "collaboration_hub": "CollaborationHub",
-            "analytics_processor": "AnalyticsProcessor"
+            "analytics_processor": "AnalyticsProcessor",
+            
+            # Phase 1: Content & Revenue services
+            "content_production_orchestrator": "ContentProductionOrchestrator",
+            "revenue_orchestration_engine": "RevenueOrchestrationEngine",
+            "gamification_orchestrator": "GamificationOrchestrator",
+            "marketing_campaign_orchestrator": "MarketingCampaignOrchestrator",
+            
+            # Phase 2: Security & Performance services
+            "security_orchestration_platform": "SecurityOrchestrationPlatform",
+            "deployment_orchestration_controller": "DeploymentOrchestrationController",
+            "performance_optimization_orchestrator": "PerformanceOptimizationOrchestrator",
+            "quality_assurance_orchestrator": "QualityAssuranceOrchestrator"
         }
     except Exception as e:
         logger.error(f"Failed to initialize orchestration services: {str(e)}")
@@ -109,11 +209,34 @@ async def health_check_orchestration() -> Dict[str, str]:
     return health_status
 
 __all__ = [
+    # Core orchestration services
     "WorkflowOrchestrator", "ModelType", "ModelStatus",
     "BusinessIntelligenceService", "DataSource", "DashboardType", 
     "AutomationEngine", "DeploymentStage", "DevOpsOperation",
     "CollaborationHub", "CollaborationType", "ProjectStatus",
     "AnalyticsProcessor", "PipelineStage", "DataFormat",
+    
+    # Phase 1: Content & Revenue orchestration
+    "ContentProductionOrchestrator", "ContentFormat", "ContentStatus", 
+    "QualityCheckStatus", "PublishingPlatform",
+    "RevenueOrchestrationEngine", "RevenueModel", "PaymentProvider",
+    "PaymentStatus", "RevenueStreamStatus", "TaxRegion",
+    "GamificationOrchestrator", "AchievementType", "AchievementTier",
+    "ChallengeType", "ChallengeStatus", "LeaderboardType", "RewardType",
+    "MarketingCampaignOrchestrator", "CampaignType", "CampaignStatus",
+    "ChannelType", "AudienceSegment", "MessageType", "PersonalizationLevel",
+    
+    # Phase 2: Security & Performance orchestration
+    "SecurityOrchestrationPlatform", "ThreatLevel", "IncidentType",
+    "IncidentStatus", "ComplianceFramework", "SecurityAction", "AccessLevel",
+    "DeploymentOrchestrationController", "Environment", "DeploymentStrategy",
+    "DeploymentStatus", "ServiceType", "InfrastructureProvider", "HealthCheckType",
+    "PerformanceOptimizationOrchestrator", "MetricType", "OptimizationStrategy",
+    "AlertSeverity", "ResourceType",
+    "QualityAssuranceOrchestrator", "TestType", "TestStatus",
+    "QualityGateStatus", "SeverityLevel", "QualityMetric",
+    
+    # Utility functions
     "initialize_orchestration_services",
     "health_check_orchestration",
     "ORCHESTRATION_SERVICES"
