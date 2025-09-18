@@ -28,6 +28,14 @@ from .adaptive_controller import RedisAdaptiveController, AdaptationConfig, Adap
 from .ml_optimization_engine import RedisMLOptimizationEngine, OptimizationConfig, OptimizationObjective, OptimizationAlgorithm
 from .anomaly_detection_orchestrator import RedisAnomalyDetectionOrchestrator, AnomalyConfig, AnomalyDetection, AnomalyType, AnomalySeverity
 from .pattern_recognition_manager import RedisPatternRecognitionManager, PatternConfig, Pattern, PatternType, PatternConfidence
+from .behavior_analysis_orchestrator import RedisBehaviorAnalysisOrchestrator, BehaviorAnalysisConfig, BehaviorEvent, BehaviorPattern, BehaviorSegment, BehaviorInsight, BehaviorPrediction, BehaviorType, BehaviorState, AnalysisScope, BehaviorInsightType
+from .decision_engine import RedisDecisionEngine, DecisionEngineConfig, Decision, DecisionContext, DecisionCriteria, DecisionOption, DecisionEvaluation, DecisionRule, DecisionType, DecisionPriority, DecisionStatus, DecisionStrategy, ConfidenceLevel
+
+# Analytics Orchestration Modules - NEW JANUARY 2025
+from .real_time_analytics_manager import RedisRealTimeAnalyticsManager, RealTimeAnalyticsConfig, AnalyticsEvent, MetricDefinition, AnalyticsResult, AnalyticsAlert, DashboardWidget as AnalyticsDashboardWidget, AnalyticsType, MetricType, AggregationType, AlertSeverity
+from .reporting_orchestrator import RedisReportingOrchestrator, ReportingOrchestratorConfig, ReportTemplate, ReportSchedule, ReportExecution, ReportDataSource, ReportVisualization, ReportType, ReportFormat, ReportFrequency, ReportStatus
+from .dashboard_orchestrator import RedisDashboardOrchestrator, DashboardOrchestratorConfig, Dashboard, DashboardWidget, DashboardLayout, DashboardTheme, DashboardSession, DashboardType, WidgetType, LayoutType, RefreshMode, ThemeType
+from .kpi_monitoring_manager import RedisKPIMonitoringManager, KPIMonitoringConfig, KPIDefinition, KPIMeasurement, KPIAlert, KPITrend, KPIReport, KPIThreshold, KPICategory, KPIType, KPIStatus, ThresholdType, AlertLevel
 
 # Security Orchestration Modules - NEW JANUARY 2025
 from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestratorConfig, SecurityLevel, ThreatLevel, SecurityEvent, AccessLevel, SecurityPolicy, SecurityThreat, AccessControlEntry, SecurityMetrics
@@ -56,6 +64,14 @@ __all__ = [
     "RedisMLOptimizationEngine",
     "RedisAnomalyDetectionOrchestrator",
     "RedisPatternRecognitionManager",
+    "RedisBehaviorAnalysisOrchestrator",
+    "RedisDecisionEngine",
+    
+    # Analytics Orchestration Components - NEW JANUARY 2025
+    "RedisRealTimeAnalyticsManager",
+    "RedisReportingOrchestrator",
+    "RedisDashboardOrchestrator",
+    "RedisKPIMonitoringManager",
     
     # Security Orchestration Components - NEW JANUARY 2025
     "RedisSecurityOrchestrator",
@@ -76,6 +92,14 @@ __all__ = [
     "OptimizationConfig",
     "AnomalyConfig",
     "PatternConfig",
+    "BehaviorAnalysisConfig",
+    "DecisionEngineConfig",
+    
+    # Analytics Configuration Classes - NEW JANUARY 2025
+    "RealTimeAnalyticsConfig",
+    "ReportingOrchestratorConfig",
+    "DashboardOrchestratorConfig", 
+    "KPIMonitoringConfig",
     
     # Security Configuration Classes - NEW JANUARY 2025
     "SecurityOrchestratorConfig",
@@ -100,6 +124,35 @@ __all__ = [
     "AnomalySeverity",
     "PatternType",
     "PatternConfidence",
+    "BehaviorType",
+    "BehaviorState",
+    "AnalysisScope",
+    "BehaviorInsightType",
+    "DecisionType",
+    "DecisionPriority",
+    "DecisionStatus",
+    "DecisionStrategy",
+    "ConfidenceLevel",
+    
+    # Analytics Enums and Types - NEW JANUARY 2025
+    "AnalyticsType",
+    "MetricType", 
+    "AggregationType",
+    "AlertSeverity",
+    "ReportType",
+    "ReportFormat",
+    "ReportFrequency",
+    "ReportStatus",
+    "DashboardType",
+    "WidgetType",
+    "LayoutType",
+    "RefreshMode",
+    "ThemeType",
+    "KPICategory",
+    "KPIType",
+    "KPIStatus",
+    "ThresholdType",
+    "AlertLevel",
     
     # Result Classes - NEW
     "PredictionResult",
@@ -107,6 +160,37 @@ __all__ = [
     "AdaptationRule",
     "AnomalyDetection",
     "Pattern",
+    "BehaviorEvent",
+    "BehaviorPattern",
+    "BehaviorSegment", 
+    "BehaviorInsight",
+    "BehaviorPrediction",
+    "Decision",
+    "DecisionContext",
+    "DecisionCriteria",
+    "DecisionOption",
+    "DecisionEvaluation",
+    "DecisionRule",
+    
+    # Analytics Result Classes - NEW JANUARY 2025
+    "AnalyticsEvent",
+    "MetricDefinition",
+    "AnalyticsResult", 
+    "AnalyticsAlert",
+    "ReportTemplate",
+    "ReportSchedule",
+    "ReportExecution",
+    "Dashboard",
+    "DashboardWidget",
+    "DashboardLayout",
+    "DashboardTheme",
+    "DashboardSession",
+    "KPIDefinition",
+    "KPIMeasurement",
+    "KPIAlert",
+    "KPITrend",
+    "KPIReport",
+    "KPIThreshold",
     
     # Factory Functions
     "create_enterprise_orchestration"
