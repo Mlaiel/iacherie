@@ -31,6 +31,12 @@ from .performance_metrics_storage import PerformanceMetricsStorage, PerformanceC
 from .conversion_tracking_storage import ConversionTrackingStorage, ConversionConfig, create_conversion_tracking_storage
 from .business_intelligence_storage import BusinessIntelligenceStorage, BusinessIntelligenceConfig, create_business_intelligence_storage
 
+# Creator Economy Storage Modules (Phase 3 - ✅ Complete - 4/8)
+from .creator_content_storage import CreatorContentStorage, CreatorContentConfig, ContentMetadata, create_creator_content_storage
+from .collaboration_data_storage import CollaborationDataStorage, CollaborationConfig, CollaborationProject, create_collaboration_data_storage
+from .monetization_storage_engine import MonetizationStorageEngine, MonetizationConfig, MonetizationTransaction, create_monetization_storage_engine
+from .seo_optimization_storage import SEOOptimizationStorage, SEOOptimizationConfig, ContentSEOProfile, create_seo_optimization_storage
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -76,7 +82,25 @@ __all__ = [
     "create_content_analytics_storage",
     "create_performance_metrics_storage",
     "create_conversion_tracking_storage",
-    "create_business_intelligence_storage"
+    "create_business_intelligence_storage",
+    
+    # Creator Economy Storage (Phase 3 - ✅ Complete - 4/8)
+    "CreatorContentStorage",
+    "CollaborationDataStorage", 
+    "MonetizationStorageEngine",
+    "SEOOptimizationStorage",
+    "CreatorContentConfig",
+    "CollaborationConfig",
+    "MonetizationConfig",
+    "SEOOptimizationConfig",
+    "ContentMetadata",
+    "CollaborationProject",
+    "MonetizationTransaction",
+    "ContentSEOProfile",
+    "create_creator_content_storage",
+    "create_collaboration_data_storage",
+    "create_monetization_storage_engine",
+    "create_seo_optimization_storage"
 ]
 
 async def create_enterprise_storage(
