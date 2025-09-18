@@ -12,6 +12,9 @@ from .xml_sitemap_generator import XMLSitemapGenerator, SitemapManager
 from .core_web_vitals_optimizer import CoreWebVitalsOptimizer, PerformanceMonitor
 from .image_technical_optimizer import ImageTechnicalOptimizer, ImageOptimizationManager
 from .technical_performance_monitor import TechnicalPerformanceMonitor, PerformanceMonitoringManager
+from .mobile_technical_seo import MobileTechnicalSEO, MobileOptimizationManager
+from .internationalization_manager import InternationalizationManager, GlobalExpansionManager
+from .url_structure_optimizer import URLStructureOptimizer, URLArchitectureManager
 
 __all__ = [
     "SchemaMarkupGenerator",
@@ -24,5 +27,11 @@ __all__ = [
     "ImageTechnicalOptimizer",
     "ImageOptimizationManager",
     "TechnicalPerformanceMonitor",
-    "PerformanceMonitoringManager"
+    "PerformanceMonitoringManager",
+    "MobileTechnicalSEO",
+    "MobileOptimizationManager",
+    "InternationalizationManager",
+    "GlobalExpansionManager",
+    "URLStructureOptimizer",
+    "URLArchitectureManager"
 ]
