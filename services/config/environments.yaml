@@ -1,0 +1,372 @@
+# Multi-Environment Configuration
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Version: 1.0.0 Enterprise Creator Economy Platform
+# ⚠️ AVERTISSEMENT LÉGAL: Configuration propriétaire - Utilisation commerciale interdite sans autorisation
+
+# Development Environment
+development:
+  environment_name: "development"
+  debug_mode: true
+  hot_reload: true
+  
+  application:
+    log_level: "DEBUG"
+    cors_enabled: true
+    api_docs_enabled: true
+    profiling_enabled: true
+    
+  database:
+    postgresql:
+      host: "localhost"
+      port: 5432
+      database: "ainflue_creator_dev"
+      username: "ainflue_dev"
+      password: "dev_password_123"
+      pool_size: 5
+      max_overflow: 10
+      echo_sql: true
+      
+    redis:
+      host: "localhost"
+      port: 6379
+      db: 0
+      password: null
+      max_connections: 10
+      
+    mongodb:
+      uri: "mongodb://localhost:27017/ainflue_content_dev"
+      max_pool_size: 10
+      
+  external_services:
+    mock_mode: true
+    mock_responses: true
+    timeout_seconds: 5
+    
+  ai_services:
+    openai:
+      api_key: "${OPENAI_DEV_API_KEY}"
+      model: "gpt-3.5-turbo"
+      max_tokens: 1000
+      rate_limit: 100
+      
+    anthropic:
+      api_key: "${ANTHROPIC_DEV_API_KEY}"
+      model: "claude-3-haiku"
+      max_tokens: 1000
+      
+  storage:
+    local_path: "/tmp/ainflue_dev"
+    max_storage_gb: 10
+    cleanup_days: 7
+    
+  security:
+    jwt_secret: "dev-secret-key-not-for-production"
+    encryption_enabled: false
+    rate_limiting_enabled: false
+    
+  monitoring:
+    metrics_enabled: true
+    tracing_enabled: true
+    health_checks: true
+
+# Staging Environment
+staging:
+  environment_name: "staging"
+  debug_mode: false
+  hot_reload: false
+  
+  application:
+    log_level: "INFO"
+    cors_enabled: true
+    api_docs_enabled: true
+    profiling_enabled: false
+    
+  database:
+    postgresql:
+      host: "${STAGING_DB_HOST}"
+      port: 5432
+      database: "ainflue_creator_staging"
+      username: "${STAGING_DB_USER}"
+      password: "${STAGING_DB_PASSWORD}"
+      pool_size: 15
+      max_overflow: 25
+      echo_sql: false
+      ssl_mode: "require"
+      
+    redis:
+      host: "${STAGING_REDIS_HOST}"
+      port: 6379
+      db: 0
+      password: "${STAGING_REDIS_PASSWORD}"
+      max_connections: 50
+      ssl_enabled: true
+      
+    mongodb:
+      uri: "${STAGING_MONGO_URI}"
+      max_pool_size: 25
+      ssl_enabled: true
+      
+  external_services:
+    mock_mode: false
+    timeout_seconds: 30
+    retry_attempts: 3
+    
+  ai_services:
+    openai:
+      api_key: "${OPENAI_STAGING_API_KEY}"
+      model: "gpt-4"
+      max_tokens: 2000
+      rate_limit: 500
+      
+    anthropic:
+      api_key: "${ANTHROPIC_STAGING_API_KEY}"
+      model: "claude-3-sonnet"
+      max_tokens: 2000
+      
+    google:
+      project_id: "${GOOGLE_AI_STAGING_PROJECT}"
+      location: "us-central1"
+      model: "gemini-pro"
+      
+  storage:
+    aws_s3:
+      bucket_name: "ainflue-staging-content"
+      region: "eu-west-1"
+      encryption: true
+      
+  security:
+    jwt_secret: "${STAGING_JWT_SECRET}"
+    encryption_enabled: true
+    rate_limiting_enabled: true
+    audit_logging: true
+    
+  monitoring:
+    metrics_enabled: true
+    tracing_enabled: true
+    health_checks: true
+    alerting_enabled: true
+    
+  performance:
+    cache_ttl: 300
+    connection_timeout: 10
+    request_timeout: 30
+
+# Production Environment
+production:
+  environment_name: "production"
+  debug_mode: false
+  hot_reload: false
+  
+  application:
+    log_level: "WARN"
+    cors_enabled: false
+    api_docs_enabled: false
+    profiling_enabled: false
+    
+  database:
+    postgresql:
+      host: "${PROD_DB_HOST}"
+      port: 5432
+      database: "ainflue_creator_prod"
+      username: "${PROD_DB_USER}"
+      password: "${PROD_DB_PASSWORD}"
+      pool_size: 50
+      max_overflow: 100
+      echo_sql: false
+      ssl_mode: "require"
+      read_replicas:
+        - "${PROD_DB_READ_REPLICA_1}"
+        - "${PROD_DB_READ_REPLICA_2}"
+        
+    redis:
+      cluster_mode: true
+      nodes:
+        - "${PROD_REDIS_NODE_1}:6379"
+        - "${PROD_REDIS_NODE_2}:6379"
+        - "${PROD_REDIS_NODE_3}:6379"
+      password: "${PROD_REDIS_PASSWORD}"
+      max_connections: 200
+      ssl_enabled: true
+      
+    mongodb:
+      uri: "${PROD_MONGO_URI}"
+      max_pool_size: 100
+      ssl_enabled: true
+      replica_set: "ainflue-rs"
+      
+  external_services:
+    mock_mode: false
+    timeout_seconds: 60
+    retry_attempts: 5
+    circuit_breaker_enabled: true
+    
+  ai_services:
+    openai:
+      api_key: "${OPENAI_PROD_API_KEY}"
+      model: "gpt-4-turbo"
+      max_tokens: 4000
+      rate_limit: 2000
+      
+    anthropic:
+      api_key: "${ANTHROPIC_PROD_API_KEY}"
+      model: "claude-3-opus"
+      max_tokens: 4000
+      
+    google:
+      project_id: "${GOOGLE_AI_PROD_PROJECT}"
+      location: "us-central1"
+      model: "gemini-pro"
+      
+  storage:
+    aws_s3:
+      bucket_name: "ainflue-prod-content"
+      region: "eu-west-1"
+      encryption: true
+      versioning: true
+      lifecycle_policy: true
+      
+    cdn:
+      cloudfront_domain: "cdn.ainflue.com"
+      cache_policy: "creator_optimized"
+      
+  security:
+    jwt_secret: "${PROD_JWT_SECRET}"
+    encryption_enabled: true
+    rate_limiting_enabled: true
+    audit_logging: true
+    intrusion_detection: true
+    vulnerability_scanning: true
+    
+  monitoring:
+    metrics_enabled: true
+    tracing_enabled: true
+    health_checks: true
+    alerting_enabled: true
+    sla_monitoring: true
+    
+  performance:
+    cache_ttl: 3600
+    connection_timeout: 30
+    request_timeout: 120
+    auto_scaling: true
+    
+  backup:
+    enabled: true
+    frequency: "daily"
+    retention_days: 90
+    encryption: true
+    offsite_backup: true
+
+# Testing Environment
+testing:
+  environment_name: "testing"
+  debug_mode: true
+  
+  application:
+    log_level: "DEBUG"
+    test_mode: true
+    mock_external_services: true
+    
+  database:
+    postgresql:
+      host: "localhost"
+      port: 5433
+      database: "ainflue_creator_test"
+      username: "ainflue_test"
+      password: "test_password"
+      pool_size: 2
+      
+    redis:
+      host: "localhost"
+      port: 6380
+      db: 15
+      
+    mongodb:
+      uri: "mongodb://localhost:27018/ainflue_content_test"
+      max_pool_size: 5
+      
+  security:
+    jwt_secret: "test-secret-key"
+    encryption_enabled: false
+    rate_limiting_enabled: false
+    
+  testing:
+    unit_test_timeout: 30
+    integration_test_timeout: 300
+    e2e_test_timeout: 600
+    parallel_execution: true
+    coverage_threshold: 80
+    
+  ci_cd:
+    build_timeout: 1800
+    test_timeout: 3600
+    deploy_timeout: 600
+
+# Environment Selection
+active_environment: "${ENVIRONMENT:-development}"
+
+# Environment-specific Feature Flags
+feature_flags:
+  development:
+    new_ai_models: true
+    experimental_features: true
+    debug_endpoints: true
+    
+  staging:
+    new_ai_models: true
+    experimental_features: false
+    debug_endpoints: false
+    
+  production:
+    new_ai_models: false
+    experimental_features: false
+    debug_endpoints: false
+    
+  testing:
+    new_ai_models: true
+    experimental_features: true
+    debug_endpoints: true
+
+# Cross-Environment Settings
+global_settings:
+  timezone: "UTC"
+  default_language: "en"
+  supported_languages: ["en", "fr", "de", "ar", "es", "pt"]
+  
+  creator_limits:
+    development:
+      max_uploads_per_day: 100
+      max_file_size_mb: 500
+      
+    staging:
+      max_uploads_per_day: 1000
+      max_file_size_mb: 1000
+      
+    production:
+      max_uploads_per_day: 10000
+      max_file_size_mb: 2000
+      
+  compliance:
+    gdpr_enabled: true
+    ccpa_enabled: true
+    data_retention_days: 2555
+    
+# Environment Validation
+validation:
+  required_env_vars:
+    development: []
+    staging: 
+      - "STAGING_DB_HOST"
+      - "STAGING_DB_PASSWORD"
+      - "STAGING_JWT_SECRET"
+    production:
+      - "PROD_DB_HOST"
+      - "PROD_DB_PASSWORD" 
+      - "PROD_JWT_SECRET"
+      - "OPENAI_PROD_API_KEY"
+      
+  health_checks:
+    database_connection: true
+    redis_connection: true
+    external_service_connectivity: true
+    storage_accessibility: true
