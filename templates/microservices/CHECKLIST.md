@@ -135,15 +135,22 @@ Collaboration & Gamification → SEO → Distribution
 
 ## ✅ ÉTAT ACTUEL - COMPOSANTS IMPLÉMENTÉS
 
-### **🚀 Microservice Template (100%)**
-- [x] FastAPI microservice enterprise avec TypeScript
-- [x] Inter-service communication Redis Streams
-- [x] Circuit breaker pattern résilience
-- [x] Health checks et readiness probes
-- [x] Prometheus metrics collection
-- [x] Message handling avec retry logic
-- [x] Service discovery integration
-- [x] Rate limiting et middleware CORS/GZip
+### **🚀 Core Infrastructure (100%)**
+- [x] **base_microservice.py** - Abstract base with lifecycle, health monitoring, metrics (550 lignes)
+- [x] **service_factory.py** - Dynamic service creation, dependency injection (570 lignes)
+- [x] **communication_manager.py** - Multi-protocol communication, circuit breakers (700 lignes)
+- [x] **circuit_breaker.py** - Enterprise resilience patterns, exponential backoff (600 lignes)
+- [x] **metrics_collector.py** - Prometheus integration, system/business metrics (680 lignes)
+
+### **🎯 Core Service Templates (75%)**
+- [x] **rest_api_template.py** - Enterprise FastAPI REST API avec caching, rate limiting (600 lignes)
+- [x] **graphql_api_template.py** - Strawberry GraphQL avec subscriptions, WebSocket (620 lignes)
+- [x] **grpc_service_template.py** - High-performance gRPC avec streaming, reflection (590 lignes)
+- [x] **websocket_service_template.py** - Real-time WebSocket avec rooms, broadcasting (860 lignes)
+- [x] **background_worker_template.py** - Celery-based worker avec monitoring, retry logic (640 lignes)
+- [ ] **cron_job_template.py** - Scheduled task service with persistence, monitoring
+- [ ] **event_processor_template.py** - Event-driven processor with Kafka, batch processing
+- [ ] **data_pipeline_template.py** - ETL pipeline with parallel processing, validation
 
 ---
 
