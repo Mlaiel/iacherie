@@ -27,6 +27,9 @@ if TYPE_CHECKING:
     from .performance_monitor import PerformanceMonitor
     from .circuit_breaker import CircuitBreaker
     from .rate_limiter import RateLimiter
+    from .resource_optimizer import ResourceOptimizer
+    from .memory_profiler import MemoryProfiler
+    from .cpu_optimizer import CPUOptimizer
 
 __all__ = [
     "CacheManager",
@@ -34,11 +37,17 @@ __all__ = [
     "PerformanceMonitor",
     "CircuitBreaker", 
     "RateLimiter",
+    "ResourceOptimizer",
+    "MemoryProfiler",
+    "CPUOptimizer",
     "CacheManagerFactory",
     "MetricsCollectorFactory",
     "PerformanceMonitorFactory",
     "CircuitBreakerFactory",
-    "RateLimiterFactory"
+    "RateLimiterFactory",
+    "ResourceOptimizerFactory",
+    "MemoryProfilerFactory",
+    "CPUOptimizerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -58,6 +67,15 @@ def __getattr__(name: str):
     elif name == "RateLimiter":
         from .rate_limiter import RateLimiter
         return RateLimiter
+    elif name == "ResourceOptimizer":
+        from .resource_optimizer import ResourceOptimizer
+        return ResourceOptimizer
+    elif name == "MemoryProfiler":
+        from .memory_profiler import MemoryProfiler
+        return MemoryProfiler
+    elif name == "CPUOptimizer":
+        from .cpu_optimizer import CPUOptimizer
+        return CPUOptimizer
     elif name == "CacheManagerFactory":
         from .cache_manager import CacheManagerFactory
         return CacheManagerFactory
