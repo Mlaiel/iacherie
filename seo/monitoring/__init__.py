@@ -90,6 +90,31 @@ from .target_performance_tracker import (
     ProgressTrend,
     AlertType
 )
+from .automated_reporting_engine import (
+    AutomatedReportingEngine,
+    ReportTemplate,
+    ReportSchedule,
+    ReportExecution,
+    ReportDistribution,
+    ReportType,
+    ReportFormat,
+    DeliveryMethod,
+    ReportFrequency,
+    ReportStatus
+)
+from .revenue_impact_monitor import (
+    RevenueImpactMonitor,
+    RevenueMetric,
+    ConversionEvent,
+    RevenueAttribution,
+    ROICalculation,
+    RevenueImpactAlert,
+    MonetizationOpportunity,
+    RevenueSource,
+    ConversionType,
+    AttributionModel,
+    ImpactSeverity
+)
 
 __all__ = [
     # Core Monitoring
@@ -159,5 +184,30 @@ __all__ = [
     "TargetPeriod",
     "GoalStatus",
     "ProgressTrend",
-    "AlertType"
+    "AlertType",
+    
+    # Automated Reporting Engine
+    "AutomatedReportingEngine",
+    "ReportTemplate",
+    "ReportSchedule",
+    "ReportExecution",
+    "ReportDistribution",
+    "ReportType",
+    "ReportFormat",
+    "DeliveryMethod",
+    "ReportFrequency",
+    "ReportStatus",
+    
+    # Revenue Impact Monitor
+    "RevenueImpactMonitor",
+    "RevenueMetric",
+    "ConversionEvent",
+    "RevenueAttribution",
+    "ROICalculation",
+    "RevenueImpactAlert",
+    "MonetizationOpportunity",
+    "RevenueSource",
+    "ConversionType",
+    "AttributionModel",
+    "ImpactSeverity"
 ]
