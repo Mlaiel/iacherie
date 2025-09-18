@@ -1,0 +1,442 @@
+"""
+Cloud Environment Configuration
+==============================
+
+Cloud-specific configuration for major cloud providers (AWS, Azure, GCP)
+with cloud-native services, auto-scaling, and managed services integration.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Cloud Environment Settings
+environment:
+  name: "cloud"
+  debug: false
+  testing: false
+  hot_reload: false
+  profiling_enabled: false
+  cloud_native: true
+  managed_services: true
+  
+# Performance Settings (Cloud-optimized)
+performance:
+  # Cloud-optimized performance targets
+  cache_operations_p95: 1
+  database_operations_p95: 25  # Faster with managed DB
+  file_operations_p95: 50     # Cloud storage optimization
+  
+  # Memory settings for cloud instances
+  memory:
+    max_heap_size_mb: 1024    # Larger cloud instances
+    gc_strategy: "g1gc"
+    gc_threshold: 0.7
+    
+  # CPU settings for cloud
+  cpu:
+    max_worker_threads: 16    # More powerful cloud instances
+    enable_cpu_affinity: false
+    
+# Security Settings (Cloud security)
+security:
+  # Cloud-grade encryption
+  encryption:
+    symmetric_algorithm: "AES-256-GCM"
+    asymmetric_algorithm: "RSA-4096"
+    key_rotation_days: 30
+    kdf_iterations: 100000
+    
+    # Cloud KMS integration
+    use_cloud_kms: true
+    kms_key_id: "${CLOUD_KMS_KEY_ID}"
+    
+  # Cloud authentication
+  authentication:
+    jwt_algorithm: "RS256"
+    access_token_expire_minutes: 15
+    refresh_token_expire_days: 7
+    max_login_attempts: 3
+    require_mfa: true
+    password_min_length: 12
+    
+    # Cloud identity integration
+    oauth_providers:
+      - google
+      - microsoft
+      - aws_cognito
+      
+  # Cloud validation
+  validation:
+    max_input_size: 5242880   # 5MB
+    scan_for_xss: true
+    scan_for_sql_injection: true
+    scan_for_nosql_injection: true
+    check_file_headers: true
+    
+    # Cloud security scanning
+    use_cloud_security_scanner: true
+    
+# Database Settings (Cloud managed)
+database:
+  # Cloud managed database
+  provider: "${CLOUD_PROVIDER:-aws}"
+  
+  # AWS RDS
+  aws_rds:
+    instance_class: "db.r5.large"
+    engine: "postgres"
+    engine_version: "14.9"
+    multi_az: true
+    backup_retention_days: 30
+    
+  # Azure Database
+  azure_database:
+    sku_name: "GP_Gen5_2"
+    tier: "GeneralPurpose"
+    backup_retention_days: 35
+    
+  # GCP Cloud SQL
+  gcp_cloudsql:
+    tier: "db-standard-2"
+    backup_start_time: "02:00"
+    binary_log_enabled: true
+    
+  # Connection settings
+  pool_size: 20
+  max_overflow: 30
+  pool_timeout: 10
+  
+# Cache Settings (Cloud managed)
+cache:
+  # Cloud cache configuration
+  l1_max_size: 2000
+  l1_ttl_seconds: 300
+  l2_ttl_seconds: 3600
+  
+  # Cloud managed Redis
+  provider: "${CLOUD_PROVIDER:-aws}"
+  
+  # AWS ElastiCache
+  aws_elasticache:
+    node_type: "cache.r6g.large"
+    num_cache_nodes: 3
+    engine_version: "6.2"
+    
+  # Azure Cache for Redis
+  azure_redis:
+    sku_name: "Standard"
+    sku_family: "C"
+    sku_capacity: 2
+    
+  # GCP Memorystore
+  gcp_memorystore:
+    tier: "standard"
+    memory_size_gb: 4
+    
+# Storage Settings (Cloud storage)
+storage:
+  # Cloud object storage
+  object_storage:
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS S3
+    aws_s3:
+      bucket_name: "${AWS_S3_BUCKET}"
+      region: "${AWS_REGION}"
+      storage_class: "STANDARD_IA"
+      versioning_enabled: true
+      encryption_enabled: true
+      
+    # Azure Blob Storage
+    azure_blob:
+      account_name: "${AZURE_STORAGE_ACCOUNT}"
+      container_name: "${AZURE_CONTAINER}"
+      tier: "Cool"
+      
+    # GCP Cloud Storage
+    gcp_storage:
+      bucket_name: "${GCP_STORAGE_BUCKET}"
+      location: "${GCP_REGION}"
+      storage_class: "NEARLINE"
+      
+# Logging Configuration (Cloud logging)
+logging:
+  level: "INFO"
+  format: "json"
+  enable_console: true
+  enable_file: false
+  structured_logging: true
+  
+  # Cloud logging services
+  cloud_logging:
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS CloudWatch
+    aws_cloudwatch:
+      log_group: "/aws/lambda/ainflue"
+      retention_days: 90
+      
+    # Azure Monitor
+    azure_monitor:
+      workspace_id: "${AZURE_LOG_WORKSPACE_ID}"
+      
+    # GCP Cloud Logging
+    gcp_logging:
+      project_id: "${GCP_PROJECT_ID}"
+      
+# File Management (Cloud storage)
+file_management:
+  max_file_size_mb: 100     # Larger with cloud storage
+  temp_directory: "/tmp/ainflue"
+  scan_for_malware: true
+  enable_optimization: true
+  
+  # Cloud CDN integration
+  cdn:
+    enabled: true
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS CloudFront
+    aws_cloudfront:
+      distribution_id: "${AWS_CLOUDFRONT_DISTRIBUTION_ID}"
+      
+    # Azure CDN
+    azure_cdn:
+      profile_name: "${AZURE_CDN_PROFILE}"
+      endpoint_name: "${AZURE_CDN_ENDPOINT}"
+      
+    # GCP Cloud CDN
+    gcp_cdn:
+      url_map: "${GCP_URL_MAP}"
+      
+# Rate Limiting (Cloud-scale)
+rate_limiting:
+  default_rpm: 60
+  burst_rpm: 120
+  enable_per_user_limits: true
+  enable_ip_blocking: true
+  
+  # Cloud rate limiting services
+  cloud_rate_limiting:
+    enabled: true
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+# Monitoring (Cloud monitoring)
+monitoring:
+  enable_prometheus: true
+  metrics_retention_days: 90
+  cpu_threshold: 70.0
+  memory_threshold: 75.0
+  disk_threshold: 85.0
+  
+  # Cloud monitoring services
+  cloud_monitoring:
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS CloudWatch
+    aws_cloudwatch:
+      namespace: "Ainflue/Production"
+      detailed_monitoring: true
+      
+    # Azure Monitor
+    azure_monitor:
+      application_insights: true
+      
+    # GCP Cloud Monitoring
+    gcp_monitoring:
+      project_id: "${GCP_PROJECT_ID}"
+      
+# Auto-scaling (Cloud auto-scaling)
+autoscaling:
+  enabled: true
+  
+  # Application auto-scaling
+  application:
+    min_instances: 2
+    max_instances: 20
+    target_cpu_utilization: 70
+    scale_up_cooldown: 300
+    scale_down_cooldown: 600
+    
+  # Database auto-scaling
+  database:
+    enabled: true
+    min_capacity: 2
+    max_capacity: 16
+    target_cpu_utilization: 70
+    
+# Load Balancing (Cloud load balancers)
+load_balancing:
+  enabled: true
+  
+  # Application Load Balancer
+  application_lb:
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS Application Load Balancer
+    aws_alb:
+      scheme: "internet-facing"
+      type: "application"
+      ip_address_type: "ipv4"
+      
+    # Azure Application Gateway
+    azure_appgw:
+      sku_name: "WAF_v2"
+      tier: "WAF_v2"
+      
+    # GCP Cloud Load Balancer
+    gcp_lb:
+      load_balancing_scheme: "EXTERNAL"
+      
+# Creator Economy (Cloud-scale)
+creator_economy:
+  # Content processing with cloud services
+  content_processing:
+    enable_async_processing: true
+    max_processing_time_seconds: 300
+    enable_preview_generation: true
+    
+    # Cloud AI services
+    ai_processing:
+      provider: "${CLOUD_PROVIDER:-aws}"
+      
+      # AWS AI services
+      aws_ai:
+        rekognition_enabled: true
+        transcribe_enabled: true
+        comprehend_enabled: true
+        
+      # Azure Cognitive Services
+      azure_ai:
+        computer_vision_enabled: true
+        speech_to_text_enabled: true
+        text_analytics_enabled: true
+        
+      # GCP AI services
+      gcp_ai:
+        vision_api_enabled: true
+        speech_to_text_enabled: true
+        natural_language_enabled: true
+        
+  # Cloud collaboration
+  collaboration:
+    max_collaborators: 15     # More with cloud scale
+    enable_real_time_features: true
+    
+  # Cloud monetization
+  monetization:
+    test_mode: false
+    commission_rate: 0.15
+    minimum_payout: 10.0
+    
+    # Payment processing
+    payment_processing:
+      cloud_integration: true
+      
+# API Gateway (Cloud API management)
+api_gateway:
+  enabled: true
+  provider: "${CLOUD_PROVIDER:-aws}"
+  
+  # AWS API Gateway
+  aws_api_gateway:
+    type: "REST"
+    stage_name: "prod"
+    throttling_rate: 1000
+    throttling_burst: 2000
+    
+  # Azure API Management
+  azure_apim:
+    sku_name: "Standard"
+    publisher_name: "Ainflue"
+    
+  # GCP Cloud Endpoints
+  gcp_endpoints:
+    service_name: "ainflue-api"
+    
+# Security (Cloud security)
+cloud_security:
+  # Web Application Firewall
+  waf:
+    enabled: true
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+    # AWS WAF
+    aws_waf:
+      web_acl_name: "ainflue-waf"
+      
+    # Azure Web Application Firewall
+    azure_waf:
+      policy_name: "ainflue-waf-policy"
+      
+    # GCP Cloud Armor
+    gcp_armor:
+      security_policy: "ainflue-security-policy"
+      
+  # DDoS Protection
+  ddos_protection:
+    enabled: true
+    
+  # SSL/TLS Management
+  ssl_management:
+    auto_renewal: true
+    provider: "${CLOUD_PROVIDER:-aws}"
+    
+# Backup and Disaster Recovery (Cloud)
+backup:
+  enabled: true
+  
+  # Automated backups
+  automated_backups:
+    frequency: "daily"
+    retention_days: 30
+    cross_region: true
+    
+  # Disaster recovery
+  disaster_recovery:
+    rto_minutes: 60          # Recovery Time Objective
+    rpo_minutes: 15          # Recovery Point Objective
+    multi_region: true
+    
+# Cost Optimization (Cloud)
+cost_optimization:
+  # Resource optimization
+  resource_optimization:
+    enable_spot_instances: true
+    enable_reserved_instances: true
+    auto_shutdown_dev_resources: true
+    
+  # Cost monitoring
+  cost_monitoring:
+    budget_alerts: true
+    cost_anomaly_detection: true
+    
+# Compliance (Cloud compliance)
+compliance:
+  # Compliance frameworks
+  frameworks:
+    gdpr: true
+    hipaa: true
+    soc2: true
+    iso27001: true
+    
+  # Cloud compliance services
+  cloud_compliance:
+    config_compliance: true
+    security_compliance: true
+    
+# Multi-Cloud Configuration
+multi_cloud:
+  enabled: false            # Can be enabled for multi-cloud deployments
+  
+  # Primary and secondary clouds
+  primary_cloud: "aws"
+  secondary_cloud: "azure"
+  
+  # Data replication
+  cross_cloud_replication: false

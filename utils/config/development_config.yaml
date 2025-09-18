@@ -1,0 +1,233 @@
+"""
+Development Environment Configuration
+====================================
+
+Development-specific configuration with debugging features enabled,
+relaxed security for faster development, and comprehensive logging.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Development Environment Settings
+environment:
+  name: "development"
+  debug: true
+  testing: false
+  hot_reload: true
+  profiling_enabled: true
+  
+# Performance Settings (Relaxed for Development)
+performance:
+  # Relaxed performance targets for development
+  cache_operations_p95: 5    # 5ms vs 1ms in production
+  database_operations_p95: 100  # 100ms vs 50ms in production
+  file_operations_p95: 200   # 200ms vs 100ms in production
+  
+  # Memory settings optimized for development
+  memory:
+    max_heap_size_mb: 256    # Lower memory usage
+    gc_strategy: "mark_and_sweep"  # Simpler GC for debugging
+    
+  # CPU settings for development
+  cpu:
+    max_worker_threads: 4    # Fewer threads for easier debugging
+    enable_cpu_affinity: false  # Disable for flexibility
+    
+# Security Settings (Relaxed for Development)  
+security:
+  # Relaxed encryption for faster development
+  encryption:
+    symmetric_algorithm: "AES-256-GCM"
+    key_rotation_days: 365   # Longer rotation period
+    kdf_iterations: 10000    # Fewer iterations for speed
+    
+  # Simplified authentication for development
+  authentication:
+    jwt_algorithm: "HS256"
+    access_token_expire_minutes: 60  # Longer token life
+    refresh_token_expire_days: 7
+    max_login_attempts: 10   # More lenient
+    require_mfa: false       # Disabled for convenience
+    password_min_length: 6   # Shorter for testing
+    
+  # Relaxed validation for development
+  validation:
+    max_input_size: 52428800  # 50MB for large dev files
+    scan_for_xss: false      # Disabled for speed
+    scan_for_sql_injection: false
+    scan_for_nosql_injection: false
+    check_file_headers: false
+    
+# Database Settings (Development)
+database:
+  # Development database connection
+  url: "${AINFLUE_DEV_DATABASE_URL:-postgresql://localhost:5432/ainflue_dev}"
+  pool_size: 5             # Smaller pool for development
+  max_overflow: 5
+  pool_timeout: 60         # Longer timeout for debugging
+  echo_sql: true           # Enable SQL logging
+  
+  # Development-specific settings
+  auto_create_tables: true
+  drop_tables_on_startup: false
+  seed_test_data: true
+  
+# Cache Settings (Development)
+cache:
+  # Smaller cache for development
+  l1_max_size: 500
+  l1_ttl_seconds: 60       # Shorter TTL for testing
+  l2_ttl_seconds: 300
+  
+  # Redis connection for development
+  redis_url: "${AINFLUE_DEV_REDIS_URL:-redis://localhost:6379/0}"
+  enable_compression: false # Disabled for debugging
+  
+# Logging Configuration (Verbose for Development)
+logging:
+  level: "DEBUG"
+  format: "detailed"
+  enable_console: true
+  enable_file: true
+  file_path: "logs/development.log"
+  structured_logging: true
+  include_trace: true
+  log_sql_queries: true
+  
+# File Management (Relaxed for Development)
+file_management:
+  max_file_size_mb: 200    # Larger files for testing
+  temp_directory: "/tmp/ainflue_dev"
+  scan_for_malware: false  # Disabled for speed
+  enable_optimization: false
+  
+  # Extended allowed extensions for development
+  allowed_extensions:
+    - ".txt"
+    - ".md" 
+    - ".pdf"
+    - ".doc"
+    - ".docx"
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".gif"
+    - ".webp"
+    - ".mp4"
+    - ".avi"
+    - ".mov"
+    - ".mp3"
+    - ".wav"
+    - ".json"
+    - ".yaml"
+    - ".yml"
+    - ".csv"
+    
+# Rate Limiting (Relaxed for Development)
+rate_limiting:
+  default_rpm: 1000        # High limit for testing
+  burst_rpm: 2000
+  enable_per_user_limits: false
+  
+# Monitoring (Development Focus)
+monitoring:
+  enable_prometheus: true
+  metrics_retention_days: 7  # Shorter retention
+  cpu_threshold: 90.0      # Higher thresholds
+  memory_threshold: 90.0
+  disk_threshold: 95.0
+  
+  # Development-specific monitoring
+  enable_debug_metrics: true
+  enable_query_monitoring: true
+  enable_cache_monitoring: true
+  
+# Creator Economy (Development Features)
+creator_economy:
+  # Content processing for development
+  content_processing:
+    enable_async_processing: false  # Synchronous for debugging
+    max_processing_time_seconds: 600
+    enable_preview_generation: true
+    
+  # Development collaboration features
+  collaboration:
+    max_collaborators: 5
+    enable_real_time_features: true
+    websocket_url: "ws://localhost:8000/ws"
+    
+  # Development monetization (test mode)
+  monetization:
+    test_mode: true
+    commission_rate: 0.05    # Lower rate for testing
+    minimum_payout: 1.0      # Lower minimum for testing
+    
+# Feature Flags (Development)
+features:
+  new_ui_enabled: true
+  beta_features_enabled: true
+  experimental_ai_enabled: true
+  debug_panel_enabled: true
+  hot_reload_enabled: true
+  
+# Development Tools Integration
+development_tools:
+  # Code reloading
+  enable_auto_reload: true
+  watch_directories:
+    - "utils"
+    - "api"
+    - "services"
+    
+  # Debugging
+  enable_debugger: true
+  debug_port: 5678
+  
+  # Testing
+  enable_test_routes: true
+  mock_external_services: true
+  
+# External Services (Development/Mock)
+external_services:
+  # AI Services (Mock in development)
+  openai:
+    api_key: "${OPENAI_API_KEY_DEV:-mock_key}"
+    model: "gpt-3.5-turbo"
+    mock_responses: true
+    
+  # Payment Services (Test mode)
+  stripe:
+    publishable_key: "${STRIPE_DEV_PUBLISHABLE_KEY:-pk_test_mock}"
+    secret_key: "${STRIPE_DEV_SECRET_KEY:-sk_test_mock}"
+    webhook_secret: "${STRIPE_DEV_WEBHOOK_SECRET:-whsec_test_mock}"
+    
+  # Email Services (Mock in development)
+  sendgrid:
+    api_key: "${SENDGRID_DEV_API_KEY:-mock_key}"
+    mock_emails: true
+    save_emails_to_file: true
+    
+# API Configuration (Development)
+api:
+  # CORS settings for development
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+    - "http://127.0.0.1:3000"
+  
+  # API limits for development
+  request_timeout: 300      # Longer timeout for debugging
+  max_request_size: 104857600  # 100MB for large dev uploads
+  
+# Security Headers (Relaxed for Development)
+security_headers:
+  content_security_policy: "default-src 'self' 'unsafe-inline' 'unsafe-eval'"
+  x_frame_options: "SAMEORIGIN"
+  x_content_type_options: "nosniff"
+  strict_transport_security: false  # Disabled for HTTP development
