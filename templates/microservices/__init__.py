@@ -41,122 +41,80 @@ from .microservice_template import (
     MessageType,
     ServiceMessage,
     ServiceConfig,
-    HealthStatus
+    HealthStatus,
+    BaseMicroserviceTemplate
 )
 
+# Core infrastructure components (existing)
 from .base_microservice import BaseMicroservice
 from .service_factory import ServiceFactory
 from .communication_manager import CommunicationManager
-from .discovery_client import DiscoveryClient
+# from .discovery_client import DiscoveryClient  # TODO: Implement
 from .circuit_breaker import CircuitBreaker
 from .metrics_collector import MetricsCollector
-from .health_checker import HealthChecker
-from .config_manager import ConfigManager
-from .security_manager import SecurityManager
-from .message_broker import MessageBroker
-from .event_dispatcher import EventDispatcher
-from .saga_coordinator import SagaCoordinator
-from .service_registry import ServiceRegistry
-from .load_balancer import LoadBalancer
-from .performance_monitor import PerformanceMonitor
-from .deployment_manager import DeploymentManager
-from .testing_framework import TestingFramework
+# from .health_checker import HealthChecker  # TODO: Implement
+# from .config_manager import ConfigManager  # TODO: Implement
+# from .security_manager import SecurityManager  # TODO: Implement
+# from .message_broker import MessageBroker  # TODO: Implement
+# from .event_dispatcher import EventDispatcher  # TODO: Implement
+# from .saga_coordinator import SagaCoordinator  # TODO: Implement
+# from .service_registry import ServiceRegistry  # TODO: Implement
+# from .load_balancer import LoadBalancer  # TODO: Implement
+# from .performance_monitor import PerformanceMonitor  # TODO: Implement
+# from .deployment_manager import DeploymentManager  # TODO: Implement
+# from .testing_framework import TestingFramework  # TODO: Implement
 
-# Core Service Templates
+# Core Service Templates (existing)
 from .core_services import (
     RestApiTemplate,
     GraphqlApiTemplate,
     GrpcServiceTemplate,
     WebsocketServiceTemplate,
     BackgroundWorkerTemplate,
-    CronJobTemplate,
-    EventProcessorTemplate,
-    DataPipelineTemplate
+    # CronJobTemplate,  # TODO: Implement
+    # EventProcessorTemplate,  # TODO: Implement
+    # DataPipelineTemplate  # TODO: Implement
 )
 
-# Communication Templates
+# Communication Templates (partially implemented)
 from .communication import (
     MessageQueueTemplate,
     EventBusTemplate,
-    SagaOrchestratorTemplate,
-    CircuitBreakerTemplate,
+    # SagaOrchestratorTemplate,  # TODO: Complete implementation
+    # CircuitBreakerTemplate,  # TODO: Complete implementation
     ApiGatewayTemplate,
-    ServiceMeshTemplate,
-    LoadBalancerTemplate,
-    RateLimiterTemplate
+    # ServiceMeshTemplate,  # TODO: Complete implementation
+    # LoadBalancerTemplate,  # TODO: Complete implementation
+    # RateLimiterTemplate  # TODO: Complete implementation
 )
 
-# Discovery Templates
-from .discovery import (
-    ServiceRegistryTemplate,
-    ServiceDiscoveryTemplate,
-    ConsulIntegrationTemplate,
-    EtcdIntegrationTemplate,
-    EurekaIntegrationTemplate,
-    KubernetesDiscoveryTemplate,
-    DnsDiscoveryTemplate,
-    HealthCheckTemplate
-)
-
-# Monitoring Templates
-from .monitoring import (
-    MetricsCollectorTemplate,
-    TracingInterceptorTemplate,
-    LoggingHandlerTemplate,
-    AlertManagerTemplate,
-    DashboardExporterTemplate,
-    PerformanceProfilerTemplate,
-    ErrorTrackerTemplate,
-    AuditLoggerTemplate
-)
-
-# Security Templates
-from .security import (
-    JwtAuthTemplate,
-    Oauth2ServiceTemplate,
-    RbacMiddlewareTemplate,
-    EncryptionServiceTemplate,
-    KeyManagementTemplate,
-    SecurityGatewayTemplate,
-    AuditServiceTemplate,
-    ComplianceCheckerTemplate
-)
-
-# Data Templates
-from .data import (
-    DatabaseServiceTemplate,
-    CacheServiceTemplate,
-    SearchServiceTemplate,
-    FileStorageTemplate,
-    BackupServiceTemplate,
-    DataSyncTemplate,
-    MigrationServiceTemplate,
-    ReplicationTemplate
-)
-
-# Creator Economy Templates
+# Creator Economy Templates (partially implemented)
 from .creator_economy import (
     CreatorServiceTemplate,
-    ContentProcessingTemplate,
-    CollaborationServiceTemplate,
-    MonetizationServiceTemplate,
-    AnalyticsServiceTemplate,
-    DistributionServiceTemplate,
-    SeoServiceTemplate,
-    GamificationServiceTemplate
+    # ContentProcessingTemplate,  # TODO: Implement
+    # CollaborationServiceTemplate,  # TODO: Implement
+    # MonetizationServiceTemplate,  # TODO: Implement
+    # AnalyticsServiceTemplate,  # TODO: Implement
+    # DistributionServiceTemplate,  # TODO: Implement
+    # SeoServiceTemplate,  # TODO: Implement
+    # GamificationServiceTemplate  # TODO: Implement
 )
 
+# All other template categories are TODO - commenting out for now
+# Discovery Templates
+# from .discovery import (...)
+
+# Monitoring Templates  
+# from .monitoring import (...)
+
+# Security Templates
+# from .security import (...)
+
+# Data Templates
+# from .data import (...)
+
 # Performance Templates
-from .performance import (
-    CachingStrategyTemplate,
-    ConnectionPoolTemplate,
-    AsyncProcessorTemplate,
-    BatchProcessorTemplate,
-    StreamProcessorTemplate,
-    MemoryOptimizerTemplate,
-    CpuOptimizerTemplate,
-    IoOptimizerTemplate
-)
+# from .performance import (...)
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -170,103 +128,27 @@ __all__ = [
     "ServiceMessage",
     "ServiceConfig",
     "HealthStatus",
+    "BaseMicroserviceTemplate",
     
-    # Infrastructure Components
+    # Infrastructure Components (existing)
     "BaseMicroservice",
     "ServiceFactory",
     "CommunicationManager",
-    "DiscoveryClient",
     "CircuitBreaker",
     "MetricsCollector",
-    "HealthChecker",
-    "ConfigManager",
-    "SecurityManager",
-    "MessageBroker",
-    "EventDispatcher",
-    "SagaCoordinator",
-    "ServiceRegistry",
-    "LoadBalancer",
-    "PerformanceMonitor",
-    "DeploymentManager",
-    "TestingFramework",
     
-    # Core Service Templates
+    # Core Service Templates (existing)
     "RestApiTemplate",
     "GraphqlApiTemplate", 
     "GrpcServiceTemplate",
     "WebsocketServiceTemplate",
     "BackgroundWorkerTemplate",
-    "CronJobTemplate",
-    "EventProcessorTemplate",
-    "DataPipelineTemplate",
     
-    # Communication Templates
+    # Communication Templates (partially implemented)
     "MessageQueueTemplate",
     "EventBusTemplate",
-    "SagaOrchestratorTemplate",
-    "CircuitBreakerTemplate",
     "ApiGatewayTemplate",
-    "ServiceMeshTemplate",
-    "LoadBalancerTemplate",
-    "RateLimiterTemplate",
     
-    # Discovery Templates
-    "ServiceRegistryTemplate",
-    "ServiceDiscoveryTemplate",
-    "ConsulIntegrationTemplate",
-    "EtcdIntegrationTemplate",
-    "EurekaIntegrationTemplate",
-    "KubernetesDiscoveryTemplate",
-    "DnsDiscoveryTemplate",
-    "HealthCheckTemplate",
-    
-    # Monitoring Templates
-    "MetricsCollectorTemplate",
-    "TracingInterceptorTemplate",
-    "LoggingHandlerTemplate",
-    "AlertManagerTemplate",
-    "DashboardExporterTemplate",
-    "PerformanceProfilerTemplate",
-    "ErrorTrackerTemplate",
-    "AuditLoggerTemplate",
-    
-    # Security Templates
-    "JwtAuthTemplate",
-    "Oauth2ServiceTemplate",
-    "RbacMiddlewareTemplate",
-    "EncryptionServiceTemplate",
-    "KeyManagementTemplate",
-    "SecurityGatewayTemplate",
-    "AuditServiceTemplate",
-    "ComplianceCheckerTemplate",
-    
-    # Data Templates
-    "DatabaseServiceTemplate",
-    "CacheServiceTemplate", 
-    "SearchServiceTemplate",
-    "FileStorageTemplate",
-    "BackupServiceTemplate",
-    "DataSyncTemplate",
-    "MigrationServiceTemplate",
-    "ReplicationTemplate",
-    
-    # Creator Economy Templates
+    # Creator Economy Templates (partially implemented)
     "CreatorServiceTemplate",
-    "ContentProcessingTemplate",
-    "CollaborationServiceTemplate",
-    "MonetizationServiceTemplate",
-    "AnalyticsServiceTemplate",
-    "DistributionServiceTemplate",
-    "SeoServiceTemplate",
-    "GamificationServiceTemplate",
-    
-    # Performance Templates
-    "CachingStrategyTemplate",
-    "ConnectionPoolTemplate",
-    "AsyncProcessorTemplate",
-    "BatchProcessorTemplate",
-    "StreamProcessorTemplate",
-    "MemoryOptimizerTemplate",
-    "CpuOptimizerTemplate",
-    "IoOptimizerTemplate"
 ]
