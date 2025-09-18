@@ -889,10 +889,107 @@ class MultiModalDatasetManager(EnterpriseDatasetManager):
         """Spatial alignment of multi-modal data"""
         return {"alignment_type": "spatial", "spatial_correlation": 0.9}
 
+class DatasetOrchestrator:
+    """
+    🎯 Dataset Orchestrator Enterprise
+    
+    Coordonne toutes les opérations datasets à travers les différents gestionnaires
+    et fournit une interface unifiée pour l'ensemble du module datasets.
+    """
+    
+    def __init__(self):
+        self.dataset_manager = EnterpriseDatasetManager()
+        self.multimodal_manager = MultiModalDatasetManager()
+        self.operation_history = []
+        
+    async def initialize(self) -> OperationResult:
+        """Initialise l'orchestrateur et tous ses composants"""
+        try:
+            # Initialisation gestionnaire principal
+            await self.dataset_manager.initialize()
+            
+            # Initialisation gestionnaire multimodal
+            await self.multimodal_manager.initialize()
+            
+            logger.info("Dataset Orchestrator initialized successfully")
+            return OperationResult(
+                success=True,
+                message="Dataset Orchestrator initialized",
+                operation_id="orch_init_" + datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+            )
+        except Exception as e:
+            logger.error(f"Failed to initialize Dataset Orchestrator: {e}")
+            return OperationResult(
+                success=False,
+                message=f"Orchestrator initialization failed: {e}",
+                error=str(e)
+            )
+    
+    async def orchestrate_dataset_operation(self, 
+                                          operation_type: str,
+                                          dataset_config: 'DatasetConfig',
+                                          **kwargs) -> OperationResult:
+        """Orchestre une opération dataset spécifique"""
+        
+        operation_id = f"orch_{operation_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        
+        try:
+            if operation_type == "create":
+                result = await self.dataset_manager.create_dataset(dataset_config, **kwargs)
+            elif operation_type == "load":
+                result = await self.dataset_manager.load_dataset(dataset_config.dataset_id, **kwargs)
+            elif operation_type == "validate":
+                result = await self.dataset_manager.validate_dataset(dataset_config.dataset_id, **kwargs)
+            elif operation_type == "multimodal_create":
+                result = await self.multimodal_manager.create_multimodal_dataset(dataset_config, **kwargs)
+            else:
+                raise ValueError(f"Unknown operation type: {operation_type}")
+            
+            # Enregistrement historique
+            self.operation_history.append({
+                "operation_id": operation_id,
+                "operation_type": operation_type,
+                "dataset_id": dataset_config.dataset_id,
+                "timestamp": datetime.utcnow().isoformat(),
+                "success": result.success
+            })
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Orchestration failed for {operation_type}: {e}")
+            return OperationResult(
+                success=False,
+                message=f"Operation {operation_type} failed",
+                error=str(e),
+                operation_id=operation_id
+            )
+    
+    async def get_orchestrator_statistics(self) -> Dict[str, Any]:
+        """Retourne les statistiques de l'orchestrateur"""
+        
+        total_operations = len(self.operation_history)
+        successful_operations = sum(1 for op in self.operation_history if op["success"])
+        
+        operation_types = {}
+        for op in self.operation_history:
+            op_type = op["operation_type"]
+            operation_types[op_type] = operation_types.get(op_type, 0) + 1
+        
+        return {
+            "total_operations": total_operations,
+            "successful_operations": successful_operations,
+            "success_rate": successful_operations / total_operations if total_operations > 0 else 0,
+            "operation_types": operation_types,
+            "last_operation": self.operation_history[-1]["timestamp"] if self.operation_history else None
+        }
+
+
 # Export main classes
 __all__ = [
     'EnterpriseDatasetManager',
     'MultiModalDatasetManager',
+    'DatasetOrchestrator',
     'DatasetInfo',
     'OperationResult',
     'OperationStatus',
