@@ -44,6 +44,15 @@ from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestrat
 from .threat_response_manager import RedisThreatResponseManager, ThreatResponseConfig, IncidentSeverity, IncidentStatus, ResponseAction, ThreatCategory, Incident, ResponsePlaybook, ThreatIntelligence, ResponseMetrics
 from .compliance_orchestrator import RedisComplianceOrchestrator, ComplianceOrchestratorConfig, ComplianceFramework, ComplianceStatus, DataClassification, RetentionPolicy, AuditAction, ComplianceRule, ComplianceViolation, AuditRecord, DataGovernancePolicy, ComplianceReport, ComplianceMetrics
 
+# Multi-Cloud Orchestration Modules - NEW JANUARY 2025
+from .cloud_orchestrator import CloudOrchestrator, CloudOrchestratorConfig, CloudResource, DeploymentTemplate, CloudMetrics, CloudCredentials, CloudProvider, ResourceType, DeploymentStrategy, ResourceStatus, CloudProviderInterface, AWSProvider, create_cloud_orchestrator
+from .multi_region_manager import MultiRegionManager, MultiRegionManagerConfig, RegionConfiguration, RegionMetrics, DataReplicationConfig, GlobalEndpoint, TrafficDistribution, Region, RegionStatus, ReplicationStrategy, LoadBalancingMethod, TrafficRoutingPolicy, LatencyCalculator, RegionHealthChecker, DataReplicationManager, GlobalLoadBalancer, create_multi_region_manager
+from .hybrid_cloud_orchestrator import HybridCloudOrchestrator, HybridCloudOrchestratorConfig, HybridEnvironment, Workload, ConnectivityConfig, MigrationPlan, WorkloadPlacementEngine, MigrationEngine, CloudEnvironment, ConnectivityType, WorkloadType, MigrationStrategy, ComplianceLevel, create_hybrid_cloud_orchestrator
+
+# Creator Economy Orchestration Modules - NEW JANUARY 2025
+from .content_pipeline_manager import ContentPipelineManager, ContentPipelineConfig, ContentItem, ContentMetadata, ProcessingJob, ContentProcessor, VideoProcessor, AudioProcessor, ImageProcessor, CollaborationProcessor, ContentType, ContentFormat, ProcessingStatus, QualityLevel, ContentCategory, create_content_pipeline_manager
+from .monetization_orchestrator import MonetizationOrchestrator, MonetizationOrchestratorConfig, CreatorProfile, Transaction, Payout, RevenueAnalytics, PaymentProviderInterface, StripeProvider, CryptoProvider, RevenueOptimizationEngine, PaymentProvider, CryptoCurrency, RevenueStream, PayoutFrequency, TransactionStatus, create_monetization_orchestrator
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
