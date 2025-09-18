@@ -2,6 +2,10 @@
 🔥 ORCHESTRATION LAYER - ENTERPRISE WORKFLOW AINFLUE
 Ultra-advanced workflow orchestration with distributed architecture
 Author: Fahed Mlaiel <mlaiel@live.de>
+
+⚠️ PROPRIETARY CODE - TOUS DROITS RÉSERVÉS
+Commercial use forbidden without written authorization
+Reverse engineering strictly prohibited
 """
 
 import asyncio
@@ -39,7 +43,107 @@ try:
 except ImportError as e:
     print(f"Automation engine import warning: {e}")
 
-# Enterprise exports - only available classes
+try:
+    from .scheduler_core import (
+        SchedulerCore,
+        TaskPriority,
+        TaskStatus,
+        ScheduledTask as CoreScheduledTask,
+        ResourceManager,
+        PriorityTaskQueue,
+        ThreadPoolManager,
+        create_enterprise_scheduler_core
+    )
+except ImportError as e:
+    print(f"Scheduler core import warning: {e}")
+
+try:
+    from .event_coordinator import (
+        EventCoordinator,
+        EventType as CoordEventType,
+        EventPriority as CoordEventPriority,
+        WorkflowEvent as CoordWorkflowEvent,
+        EventHandler as CoordEventHandler,
+        EventRouter,
+        EnterpriseEventBus,
+        create_enterprise_event_coordinator
+    )
+except ImportError as e:
+    print(f"Event coordinator import warning: {e}")
+
+try:
+    from .orchestration_optimizer import (
+        OrchestrationOptimizer,
+        OptimizationStrategy,
+        WorkflowPattern,
+        OptimizationMetrics,
+        PerformanceAnalyzer,
+        WorkflowProfiler,
+        OptimizationEngine,
+        create_enterprise_orchestration_optimizer
+    )
+except ImportError as e:
+    print(f"Orchestration optimizer import warning: {e}")
+
+try:
+    from .workflow_compiler import (
+        WorkflowCompiler,
+        WorkflowDefinition,
+        WorkflowDefinitionFormat,
+        CompilationTarget,
+        ValidationLevel,
+        CompilationResult,
+        WorkflowParser,
+        DependencyAnalyzer,
+        CodeGenerator,
+        create_enterprise_workflow_compiler
+    )
+except ImportError as e:
+    print(f"Workflow compiler import warning: {e}")
+
+try:
+    from .distributed_coordinator import (
+        DistributedCoordinator,
+        ClusterNode,
+        NodeStatus,
+        ConsensusAlgorithm,
+        ClusterManager,
+        ConsensusEngine,
+        DistributedLockManager
+    )
+except ImportError as e:
+    print(f"Distributed coordinator import warning: {e}")
+
+try:
+    from .circuit_breaker import (
+        CircuitBreaker,
+        CircuitState,
+        CircuitBreakerConfig,
+        FailureDetector,
+        RecoveryMonitor,
+        CircuitStateManager,
+        CircuitBreakerOpenError,
+        create_enterprise_circuit_breaker
+    )
+except ImportError as e:
+    print(f"Circuit breaker import warning: {e}")
+
+try:
+    from .retry_coordinator import (
+        RetryCoordinator,
+        RetryStrategy,
+        RetryConfig,
+        RetryStrategyManager,
+        BackoffCalculator,
+        RetryMonitor,
+        RetryExhaustedException,
+        retry,
+        create_enterprise_retry_coordinator
+    )
+except ImportError as e:
+    print(f"Retry coordinator import warning: {e}")
+
+# Enterprise exports - comprehensive orchestration suite
 __all__ = [
     # Core orchestration (if available)
     "WorkflowOrchestrator",
