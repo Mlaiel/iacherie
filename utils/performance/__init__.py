@@ -30,6 +30,13 @@ if TYPE_CHECKING:
     from .resource_optimizer import ResourceOptimizer
     from .memory_profiler import MemoryProfiler
     from .cpu_optimizer import CPUOptimizer
+    from .disk_optimizer import DiskOptimizer
+    from .network_optimizer import NetworkOptimizer
+    from .database_optimizer import DatabaseOptimizer
+    from .compression_manager import CompressionManager
+    from .load_balancer import LoadBalancer
+    from .thread_pool_manager import ThreadPoolManager
+    from .async_optimizer import AsyncOptimizer
 
 __all__ = [
     "CacheManager",
@@ -40,6 +47,13 @@ __all__ = [
     "ResourceOptimizer",
     "MemoryProfiler",
     "CPUOptimizer",
+    "DiskOptimizer",
+    "NetworkOptimizer",
+    "DatabaseOptimizer",
+    "CompressionManager",
+    "LoadBalancer",
+    "ThreadPoolManager",
+    "AsyncOptimizer",
     "CacheManagerFactory",
     "MetricsCollectorFactory",
     "PerformanceMonitorFactory",
@@ -47,7 +61,14 @@ __all__ = [
     "RateLimiterFactory",
     "ResourceOptimizerFactory",
     "MemoryProfilerFactory",
-    "CPUOptimizerFactory"
+    "CPUOptimizerFactory",
+    "DiskOptimizerFactory",
+    "NetworkOptimizerFactory",
+    "DatabaseOptimizerFactory",
+    "CompressionManagerFactory",
+    "LoadBalancerFactory",
+    "ThreadPoolManagerFactory",
+    "AsyncOptimizerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -76,6 +97,27 @@ def __getattr__(name: str):
     elif name == "CPUOptimizer":
         from .cpu_optimizer import CPUOptimizer
         return CPUOptimizer
+    elif name == "DiskOptimizer":
+        from .disk_optimizer import DiskOptimizer
+        return DiskOptimizer
+    elif name == "NetworkOptimizer":
+        from .network_optimizer import NetworkOptimizer
+        return NetworkOptimizer
+    elif name == "DatabaseOptimizer":
+        from .database_optimizer import DatabaseOptimizer
+        return DatabaseOptimizer
+    elif name == "CompressionManager":
+        from .compression_manager import CompressionManager
+        return CompressionManager
+    elif name == "LoadBalancer":
+        from .load_balancer import LoadBalancer
+        return LoadBalancer
+    elif name == "ThreadPoolManager":
+        from .thread_pool_manager import ThreadPoolManager
+        return ThreadPoolManager
+    elif name == "AsyncOptimizer":
+        from .async_optimizer import AsyncOptimizer
+        return AsyncOptimizer
     elif name == "CacheManagerFactory":
         from .cache_manager import CacheManagerFactory
         return CacheManagerFactory
