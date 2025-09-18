@@ -28,6 +28,10 @@ if TYPE_CHECKING:
     from .cache_manager import CacheManager
     from .security_manager import SecurityManager
     from .performance_monitor import PerformanceMonitor
+    from .api_client import APIClient
+    from .validator import Validator
+    from .event_manager import EventManager
+    from .config_manager import ConfigManager
 
 __all__ = [
     "DataProcessor",
@@ -39,6 +43,10 @@ __all__ = [
     "CacheManager",
     "SecurityManager", 
     "PerformanceMonitor",
+    "APIClient",
+    "Validator",
+    "EventManager",
+    "ConfigManager",
     "DataProcessorFactory",
     "FileManagerFactory",
     "DateTimeHandlerFactory", 
@@ -47,7 +55,11 @@ __all__ = [
     "WorkflowEngineFactory",
     "CacheManagerFactory",
     "SecurityManagerFactory",
-    "PerformanceMonitorFactory"
+    "PerformanceMonitorFactory",
+    "APIClientFactory",
+    "ValidatorFactory",
+    "EventManagerFactory",
+    "ConfigManagerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -79,6 +91,18 @@ def __getattr__(name: str):
     elif name == "PerformanceMonitor":
         from .performance_monitor import PerformanceMonitor
         return PerformanceMonitor
+    elif name == "APIClient":
+        from .api_client import APIClient
+        return APIClient
+    elif name == "Validator":
+        from .validator import Validator
+        return Validator
+    elif name == "EventManager":
+        from .event_manager import EventManager
+        return EventManager
+    elif name == "ConfigManager":
+        from .config_manager import ConfigManager
+        return ConfigManager
     elif name == "DataProcessorFactory":
         from .data_processor import DataProcessorFactory
         return DataProcessorFactory
@@ -106,5 +130,17 @@ def __getattr__(name: str):
     elif name == "PerformanceMonitorFactory":
         from .performance_monitor import PerformanceMonitorFactory
         return PerformanceMonitorFactory
+    elif name == "APIClientFactory":
+        from .api_client import APIClientFactory
+        return APIClientFactory
+    elif name == "ValidatorFactory":
+        from .validator import ValidatorFactory
+        return ValidatorFactory
+    elif name == "EventManagerFactory":
+        from .event_manager import EventManagerFactory
+        return EventManagerFactory
+    elif name == "ConfigManagerFactory":
+        from .config_manager import ConfigManagerFactory
+        return ConfigManagerFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
