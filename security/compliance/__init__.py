@@ -104,6 +104,17 @@ from .data_classification_manager import (
     CREATOR_DATA_CLASSIFICATIONS
 )
 
+from .third_party_compliance_monitor import (
+    ThirdPartyComplianceMonitor,
+    VendorProfile,
+    ComplianceAssessment,
+    SLAMonitoring,
+    VendorRiskLevel,
+    ComplianceStatus as VendorComplianceStatus,
+    CertificationType,
+    CreatorVendorManager
+)
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -117,6 +128,7 @@ __all__ = [
     "ComplianceMonitor",
     "PolicyEnforcer",
     "ReportingEngine",
+    "ThirdPartyComplianceMonitor",
     
     # Specialized components
     "GDPRMonitor",
@@ -125,6 +137,7 @@ __all__ = [
     "ConsentType",
     "LegalBasis",
     "DataSubjectRight",
+    "CreatorVendorManager",
     
     # Data structures
     "AuditTrail",
@@ -137,6 +150,9 @@ __all__ = [
     "SecurityPolicy",
     "CompliancePolicy",
     "ComplianceReport",
+    "VendorProfile",
+    "ComplianceAssessment",
+    "SLAMonitoring",
     
     # Results and responses
     "AuditReport",
@@ -151,6 +167,9 @@ __all__ = [
     "ComplianceFramework",
     "ComplianceScore",
     "EnforcementAction",
+    "VendorRiskLevel",
+    "VendorComplianceStatus",
+    "CertificationType",
     
     # Templates and requirements
     "PolicyTemplate",
