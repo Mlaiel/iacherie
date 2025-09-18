@@ -26,6 +26,11 @@ from .legal_compliance_engine import LegalComplianceEngine
 from .brand_protection_suite import BrandProtectionSuite
 from .audit_trail_manager import AuditTrailManager
 
+# Phase 2: Analytics & Strategy
+from .executive_analytics_dashboard import ExecutiveAnalyticsDashboard
+from .enterprise_strategy_engine import EnterpriseStrategyEngine
+from .data_governance_platform import DataGovernancePlatform
+
 __all__ = [
     # Core Governance
     "SEOGovernanceFramework",
@@ -34,5 +39,10 @@ __all__ = [
     "EnterpriseSecurityManager",
     "LegalComplianceEngine", 
     "BrandProtectionSuite",
-    "AuditTrailManager"
+    "AuditTrailManager",
+    
+    # Analytics & Strategy
+    "ExecutiveAnalyticsDashboard",
+    "EnterpriseStrategyEngine",
+    "DataGovernancePlatform"
 ]
