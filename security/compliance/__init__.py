@@ -62,6 +62,48 @@ from .reporting_engine import (
     ReportScheduler
 )
 
+# New enterprise compliance modules
+from .sox_compliance_engine import (
+    SOXComplianceEngine,
+    SOXControl,
+    SOXTestResult,
+    ExecutiveCertification,
+    FinancialProcess,
+    SOXControlType,
+    SOXSection,
+    ControlEffectiveness,
+    CreatorRevenueSOXControls
+)
+
+from .pci_dss_validator import (
+    PCIDSSValidator,
+    PCIDSSControl,
+    CardholderDataElement,
+    VulnerabilityAssessment,
+    NetworkSegment,
+    PaymentTransaction,
+    PCIDSSRequirement,
+    ComplianceLevel,
+    VulnerabilitySeverity,
+    NetworkSegmentType,
+    CreatorPaymentPCICompliance
+)
+
+from .data_classification_manager import (
+    DataClassificationManager,
+    DataElement,
+    ClassificationRule,
+    DLPPolicy,
+    RetentionSchedule,
+    ClassificationResult,
+    DLPViolation,
+    DataClassificationLevel,
+    DataCategory,
+    RetentionPeriod,
+    DLPAction,
+    CREATOR_DATA_CLASSIFICATIONS
+)
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
