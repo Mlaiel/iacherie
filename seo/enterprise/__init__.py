@@ -31,6 +31,18 @@ from .executive_analytics_dashboard import ExecutiveAnalyticsDashboard
 from .enterprise_strategy_engine import EnterpriseStrategyEngine
 from .data_governance_platform import DataGovernancePlatform
 
+# Phase 3: Infrastructure & Deployment
+from .multi_tenant_orchestrator import MultiTenantOrchestrator
+from .integration_hub_enterprise import IntegrationHubEnterprise
+from .performance_optimization_center import PerformanceOptimizationCenter
+from .global_deployment_manager import GlobalDeploymentManager
+
+# Phase 4: Monitoring & Services
+from .enterprise_alerting_system import EnterpriseAlertingSystem
+from .ai_governance_framework import AIGovernanceFramework
+from .enterprise_service_catalog import EnterpriseServiceCatalog
+from .enterprise_backup_recovery import EnterpriseBackupRecovery
+
 __all__ = [
     # Core Governance
     "SEOGovernanceFramework",
@@ -44,5 +56,17 @@ __all__ = [
     # Analytics & Strategy
     "ExecutiveAnalyticsDashboard",
     "EnterpriseStrategyEngine",
-    "DataGovernancePlatform"
+    "DataGovernancePlatform",
+    
+    # Infrastructure & Deployment
+    "MultiTenantOrchestrator",
+    "IntegrationHubEnterprise", 
+    "PerformanceOptimizationCenter",
+    "GlobalDeploymentManager",
+    
+    # Monitoring & Services
+    "EnterpriseAlertingSystem",
+    "AIGovernanceFramework",
+    "EnterpriseServiceCatalog",
+    "EnterpriseBackupRecovery"
 ]
