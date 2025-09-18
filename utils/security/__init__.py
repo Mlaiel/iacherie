@@ -24,6 +24,14 @@ if TYPE_CHECKING:
     from .security_scanner import SecurityScanner
     from .password_manager import PasswordManager
     from .audit_logger import AuditLogger
+    from .threat_detector import ThreatDetector
+    from .vulnerability_scanner import VulnerabilityScanner
+    from .access_control import AccessControl
+    from .session_manager import SessionManager
+    from .intrusion_detection import IntrusionDetection
+    from .compliance_checker import ComplianceChecker
+    from .data_protection import DataProtection
+    from .security_headers import SecurityHeaders
 
 __all__ = [
     "EncryptionEngine",
@@ -32,12 +40,28 @@ __all__ = [
     "SecurityScanner",
     "PasswordManager",
     "AuditLogger",
+    "ThreatDetector",
+    "VulnerabilityScanner",
+    "AccessControl",
+    "SessionManager",
+    "IntrusionDetection",
+    "ComplianceChecker",
+    "DataProtection",
+    "SecurityHeaders",
     "EncryptionEngineFactory",
     "AuthenticationUtilsFactory",
     "ValidationEngineFactory",
     "SecurityScannerFactory", 
     "PasswordManagerFactory",
-    "AuditLoggerFactory"
+    "AuditLoggerFactory",
+    "ThreatDetectorFactory",
+    "VulnerabilityScannerFactory",
+    "AccessControlFactory",
+    "SessionManagerFactory",
+    "IntrusionDetectionFactory",
+    "ComplianceCheckerFactory",
+    "DataProtectionFactory",
+    "SecurityHeadersFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -60,6 +84,30 @@ def __getattr__(name: str):
     elif name == "AuditLogger":
         from .audit_logger import AuditLogger
         return AuditLogger
+    elif name == "ThreatDetector":
+        from .threat_detector import ThreatDetector
+        return ThreatDetector
+    elif name == "VulnerabilityScanner":
+        from .vulnerability_scanner import VulnerabilityScanner
+        return VulnerabilityScanner
+    elif name == "AccessControl":
+        from .access_control import AccessControl
+        return AccessControl
+    elif name == "SessionManager":
+        from .session_manager import SessionManager
+        return SessionManager
+    elif name == "IntrusionDetection":
+        from .intrusion_detection import IntrusionDetection
+        return IntrusionDetection
+    elif name == "ComplianceChecker":
+        from .compliance_checker import ComplianceChecker
+        return ComplianceChecker
+    elif name == "DataProtection":
+        from .data_protection import DataProtection
+        return DataProtection
+    elif name == "SecurityHeaders":
+        from .security_headers import SecurityHeaders
+        return SecurityHeaders
     elif name == "EncryptionEngineFactory":
         from .encryption_engine import EncryptionEngineFactory
         return EncryptionEngineFactory
@@ -78,5 +126,29 @@ def __getattr__(name: str):
     elif name == "AuditLoggerFactory":
         from .audit_logger import AuditLoggerFactory
         return AuditLoggerFactory
+    elif name == "ThreatDetectorFactory":
+        from .threat_detector import ThreatDetectorFactory
+        return ThreatDetectorFactory
+    elif name == "VulnerabilityScannerFactory":
+        from .vulnerability_scanner import VulnerabilityScannerFactory
+        return VulnerabilityScannerFactory
+    elif name == "AccessControlFactory":
+        from .access_control import AccessControlFactory
+        return AccessControlFactory
+    elif name == "SessionManagerFactory":
+        from .session_manager import SessionManagerFactory
+        return SessionManagerFactory
+    elif name == "IntrusionDetectionFactory":
+        from .intrusion_detection import IntrusionDetectionFactory
+        return IntrusionDetectionFactory
+    elif name == "ComplianceCheckerFactory":
+        from .compliance_checker import ComplianceCheckerFactory
+        return ComplianceCheckerFactory
+    elif name == "DataProtectionFactory":
+        from .data_protection import DataProtectionFactory
+        return DataProtectionFactory
+    elif name == "SecurityHeadersFactory":
+        from .security_headers import SecurityHeadersFactory
+        return SecurityHeadersFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
