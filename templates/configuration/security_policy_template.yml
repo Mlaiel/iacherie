@@ -1,0 +1,954 @@
+# Security Policy Template - Ainflue Creator Economy Platform
+# ============================================================
+#
+# 🎯 SECURITY EXPERT + DEVOPS ENGINEER + COMPLIANCE SPECIALIST
+# Lead: Fahed Mlaiel (mlaiel@live.de)
+#
+# Enterprise security policies for Creator Economy Platform:
+# - Pod Security Standards and Policies
+# - Network Security Policies  
+# - RBAC and Access Control
+# - Content Protection and IP Security
+# - Creator Economy specific security
+# - Compliance and audit policies
+#
+# ⚠️ INTELLECTUAL PROPERTY PROTECTION:
+# ==========================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS
+#
+# 🚨 PROTECTION INTELLECTUELLE:
+# - Code propriétaire de Fahed Mlaiel
+# - Utilisation commerciale INTERDITE sans autorisation écrite
+# - Reverse engineering STRICTEMENT INTERDIT
+# - Distribution INTERDITE sans licence explicite
+# - Violation = Poursuites judiciaires automatiques
+#
+# Created: 2025-01-18
+# Version: 1.0.0
+
+# ==============================================================================
+# POD SECURITY POLICY
+# ==============================================================================
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-creator-economy-psp
+  namespace: ainflue-platform
+  labels:
+    app: security-policy
+    component: pod-security
+    environment: production
+    business-unit: creator-economy
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName:  'runtime/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default'
+spec:
+  # Privilege and access controls
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities: []
+  
+  # Host controls
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  hostPorts: []
+  
+  # Volume controls
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+    - 'csi'
+  allowedHostPaths: []
+  
+  # File system controls
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  
+  # Read-only root filesystem
+  readOnlyRootFilesystem: true
+  
+  # Security contexts
+  allowedProcMountTypes:
+    - Default
+  
+  # Runtime security
+  runtimeClass:
+    allowedRuntimeClassNames:
+      - kata
+      - gvisor
+    defaultRuntimeClassName: kata
+---
+# ==============================================================================
+# POD SECURITY STANDARDS (Pod Security Admission)
+# ==============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-platform
+  labels:
+    # Pod Security Standards enforcement
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    # Creator Economy labels
+    business-unit: creator-economy
+    security-level: enterprise
+    compliance: gdpr
+    data-classification: confidential
+  annotations:
+    # Security policies version
+    pod-security.kubernetes.io/enforce-version: v1.28
+    pod-security.kubernetes.io/audit-version: v1.28
+    pod-security.kubernetes.io/warn-version: v1.28
+---
+# ==============================================================================
+# RBAC CONFIGURATION
+# ==============================================================================
+
+# Cluster Role for Creator Economy Services
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ainflue-creator-economy-role
+  labels:
+    app: rbac
+    component: cluster-role
+    business-unit: creator-economy
+rules:
+# Pods permissions
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods/status"]
+  verbs: ["get"]
+
+# Services permissions
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["endpoints"]
+  verbs: ["get", "list", "watch"]
+
+# ConfigMaps and Secrets (limited)
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+  resourceNames: ["creator-platform-config", "ai-processor-config", "collaboration-config"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+  resourceNames: ["creator-platform-secrets", "ai-processor-secrets"]
+
+# Metrics access
+- apiGroups: ["metrics.k8s.io"]
+  resources: ["pods", "nodes"]
+  verbs: ["get", "list"]
+
+# Custom Resource Definitions for Creator Economy
+- apiGroups: ["ainflue.com"]
+  resources: ["creators", "contents", "collaborations", "monetizations"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+# Service Account for Creator Platform
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: creator-platform-sa
+  namespace: ainflue-platform
+  labels:
+    app: creator-platform
+    component: service-account
+    business-unit: creator-economy
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformRole
+automountServiceAccountToken: true
+---
+# Cluster Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ainflue-creator-economy-binding
+  labels:
+    app: rbac
+    component: cluster-role-binding
+    business-unit: creator-economy
+subjects:
+- kind: ServiceAccount
+  name: creator-platform-sa
+  namespace: ainflue-platform
+- kind: ServiceAccount
+  name: ai-processor-sa
+  namespace: ainflue-platform
+- kind: ServiceAccount
+  name: collaboration-sa
+  namespace: ainflue-platform
+- kind: ServiceAccount
+  name: monetization-sa
+  namespace: ainflue-platform
+roleRef:
+  kind: ClusterRole
+  name: ainflue-creator-economy-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# Role for Monetization Service (Higher Privileges)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: monetization-service-role
+  namespace: ainflue-platform
+  labels:
+    app: rbac
+    component: role
+    service: monetization
+    security-level: high
+rules:
+# Payment processing secrets access
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+  resourceNames: ["stripe-api-keys", "paypal-credentials", "square-credentials"]
+
+# Payment audit logs
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create"]
+
+# Service mesh configuration
+- apiGroups: ["networking.istio.io"]
+  resources: ["virtualservices", "destinationrules"]
+  verbs: ["get", "list", "watch"]
+---
+# Service Account for Monetization Service
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: monetization-sa
+  namespace: ainflue-platform
+  labels:
+    app: monetization-service
+    component: service-account
+    security-level: high
+    compliance: pci-dss
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformMonetizationRole
+automountServiceAccountToken: true
+---
+# Role Binding for Monetization Service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: monetization-service-binding
+  namespace: ainflue-platform
+  labels:
+    app: rbac
+    component: role-binding
+    service: monetization
+subjects:
+- kind: ServiceAccount
+  name: monetization-sa
+  namespace: ainflue-platform
+roleRef:
+  kind: Role
+  name: monetization-service-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# ==============================================================================
+# NETWORK SECURITY POLICIES
+# ==============================================================================
+
+# Default Deny All Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ainflue-platform
+  labels:
+    app: network-policy
+    component: default-deny
+    security-level: enterprise
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+# Creator Platform Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: creator-platform-netpol
+  namespace: ainflue-platform
+  labels:
+    app: network-policy
+    component: creator-platform
+    business-unit: creator-economy
+spec:
+  podSelector:
+    matchLabels:
+      app: creator-platform
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Allow traffic from API Gateway
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8000
+  
+  # Allow traffic from Load Balancer
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 8000
+  
+  # Allow metrics collection
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+  
+  egress:
+  # Allow connection to PostgreSQL
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+    ports:
+    - protocol: TCP
+      port: 5432
+  
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  
+  # Allow connection to AI Processing Service
+  - to:
+    - podSelector:
+        matchLabels:
+          app: ai-processor
+    ports:
+    - protocol: TCP
+      port: 8000
+  
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow HTTPS to external services
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+---
+# AI Processing Network Policy (Restricted)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ai-processor-netpol
+  namespace: ainflue-platform
+  labels:
+    app: network-policy
+    component: ai-processor
+    security-level: high
+spec:
+  podSelector:
+    matchLabels:
+      app: ai-processor
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Only allow traffic from Creator Platform
+  - from:
+    - podSelector:
+        matchLabels:
+          app: creator-platform
+    ports:
+    - protocol: TCP
+      port: 8000
+  
+  # Allow metrics collection
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 9090
+  
+  egress:
+  # Allow connection to AI model storage
+  - to:
+    - podSelector:
+        matchLabels:
+          app: model-storage
+    ports:
+    - protocol: TCP
+      port: 9000  # MinIO/S3
+  
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow HTTPS to AI services (HuggingFace, OpenAI, etc.)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+---
+# Monetization Service Network Policy (Highest Security)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monetization-service-netpol
+  namespace: ainflue-platform
+  labels:
+    app: network-policy
+    component: monetization
+    security-level: critical
+    compliance: pci-dss
+spec:
+  podSelector:
+    matchLabels:
+      app: monetization-service
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Only allow traffic from Creator Platform with specific source
+  - from:
+    - podSelector:
+        matchLabels:
+          app: creator-platform
+    - namespaceSelector:
+        matchLabels:
+          name: istio-system
+    ports:
+    - protocol: TCP
+      port: 8000
+  
+  egress:
+  # Allow connection to PostgreSQL for transaction logs
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgresql
+    ports:
+    - protocol: TCP
+      port: 5432
+  
+  # Allow DNS resolution
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow HTTPS to payment providers (Stripe, PayPal, etc.)
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    # Restrict to known payment provider IPs
+    namespaceSelector: {}
+---
+# ==============================================================================
+# SECURITY CONTEXTS AND ADMISSION CONTROLLERS
+# ==============================================================================
+
+# Security Context Constraints for Creator Economy Workloads
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: ainflue-creator-economy-scc
+  labels:
+    app: security-context
+    component: constraints
+    business-unit: creator-economy
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivileged: false
+allowPrivilegeEscalation: false
+allowedCapabilities: []
+defaultAddCapabilities: []
+requiredDropCapabilities:
+- ALL
+allowedFlexVolumes: []
+fsGroup:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+readOnlyRootFilesystem: true
+runAsUser:
+  type: MustRunAsNonRoot
+supplementalGroups:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+users:
+- system:serviceaccount:ainflue-platform:creator-platform-sa
+- system:serviceaccount:ainflue-platform:ai-processor-sa
+- system:serviceaccount:ainflue-platform:collaboration-sa
+groups: []
+---
+# ==============================================================================
+# OPEN POLICY AGENT (OPA) GATEKEEPER POLICIES
+# ==============================================================================
+
+# Constraint Template for Creator Economy Security
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: ainfluecreatoreconomysecurity
+  labels:
+    app: opa-gatekeeper
+    component: constraint-template
+    business-unit: creator-economy
+spec:
+  crd:
+    spec:
+      names:
+        kind: AinfluecreatoreconomySecurity
+      validation:
+        type: object
+        properties:
+          requiredLabels:
+            type: array
+            items:
+              type: string
+          allowedServiceAccounts:
+            type: array
+            items:
+              type: string
+          maxReplicas:
+            type: integer
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package ainfluecreatoreconomysecurity
+        
+        violation[{"msg": msg}] {
+          # Ensure Creator Economy workloads have required labels
+          required_labels := input.parameters.requiredLabels
+          provided_labels := input.review.object.metadata.labels
+          missing := required_labels[_]
+          not provided_labels[missing]
+          msg := sprintf("Missing required label: %v", [missing])
+        }
+        
+        violation[{"msg": msg}] {
+          # Ensure service accounts are from allowed list
+          sa := input.review.object.spec.serviceAccountName
+          allowed := input.parameters.allowedServiceAccounts
+          not sa in allowed
+          msg := sprintf("Service account %v is not allowed", [sa])
+        }
+        
+        violation[{"msg": msg}] {
+          # Limit maximum replicas for cost control
+          replicas := input.review.object.spec.replicas
+          max_replicas := input.parameters.maxReplicas
+          replicas > max_replicas
+          msg := sprintf("Replica count %v exceeds maximum of %v", [replicas, max_replicas])
+        }
+---
+# Creator Economy Security Constraint
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: AinfluecreatoreconomySecurity
+metadata:
+  name: creator-economy-security
+  labels:
+    app: opa-gatekeeper
+    component: constraint
+    business-unit: creator-economy
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps"]
+        kinds: ["Deployment"]
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["ainflue-platform"]
+  parameters:
+    requiredLabels:
+      - "app"
+      - "business-unit"
+      - "security-level"
+    allowedServiceAccounts:
+      - "creator-platform-sa"
+      - "ai-processor-sa"
+      - "collaboration-sa"
+      - "monetization-sa"
+      - "api-gateway-sa"
+    maxReplicas: 50
+---
+# ==============================================================================
+# FALCO SECURITY MONITORING RULES
+# ==============================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: falco-creator-economy-rules
+  namespace: ainflue-platform
+  labels:
+    app: falco
+    component: rules
+    business-unit: creator-economy
+data:
+  creator_economy_rules.yaml: |
+    # Creator Economy specific security rules
+    
+    # Rule: Detect privilege escalation attempts
+    - rule: Creator Economy Privilege Escalation
+      desc: Detect attempts to escalate privileges in Creator Economy workloads
+      condition: >
+        spawned_process and container and
+        k8s_ns = "ainflue-platform" and
+        (proc.name in (sudo, su, doas) or
+         proc.args contains "privilege" or
+         proc.args contains "escalate")
+      output: >
+        Privilege escalation attempt detected in Creator Economy workload
+        (user=%user.name container=%container.name pod=%k8s.pod.name
+         command=%proc.cmdline)
+      priority: HIGH
+      tags: [creator-economy, privilege-escalation, security]
+    
+    # Rule: Detect unauthorized network connections
+    - rule: Creator Economy Unauthorized Network Connection
+      desc: Detect unauthorized outbound network connections
+      condition: >
+        outbound and container and
+        k8s_ns = "ainflue-platform" and
+        not fd.sip in (creator_economy_allowed_ips) and
+        not fd.sport in (80, 443, 53, 5432, 6379)
+      output: >
+        Unauthorized network connection from Creator Economy workload
+        (container=%container.name pod=%k8s.pod.name dest=%fd.sip:%fd.sport
+         command=%proc.cmdline)
+      priority: MEDIUM
+      tags: [creator-economy, network, unauthorized]
+    
+    # Rule: Detect file system modifications
+    - rule: Creator Economy File System Modification
+      desc: Detect unauthorized file system modifications
+      condition: >
+        open_write and container and
+        k8s_ns = "ainflue-platform" and
+        fd.typechar = 'f' and
+        (fd.name startswith "/etc" or
+         fd.name startswith "/usr/bin" or
+         fd.name startswith "/bin")
+      output: >
+        Unauthorized file modification in Creator Economy workload
+        (container=%container.name pod=%k8s.pod.name file=%fd.name
+         command=%proc.cmdline)
+      priority: HIGH
+      tags: [creator-economy, filesystem, modification]
+    
+    # Rule: Detect crypto mining activities
+    - rule: Creator Economy Crypto Mining Detection
+      desc: Detect potential cryptocurrency mining activities
+      condition: >
+        spawned_process and container and
+        k8s_ns = "ainflue-platform" and
+        (proc.name in (xmrig, minerd, cpuminer, ethminer) or
+         proc.args contains "mining" or
+         proc.args contains "stratum" or
+         proc.args contains "pool")
+      output: >
+        Potential crypto mining activity detected in Creator Economy workload
+        (container=%container.name pod=%k8s.pod.name command=%proc.cmdline)
+      priority: CRITICAL
+      tags: [creator-economy, crypto-mining, security]
+    
+    # Rule: Detect payment processing anomalies
+    - rule: Creator Economy Payment Processing Anomaly
+      desc: Detect unusual payment processing activities
+      condition: >
+        spawned_process and container and
+        k8s_pod_label_app = "monetization-service" and
+        (proc.args contains "transfer" or
+         proc.args contains "payment" or
+         proc.args contains "transaction") and
+        proc.args contains amount and
+        not proc.pname in (payment_processor_binaries)
+      output: >
+        Unusual payment processing activity detected
+        (container=%container.name pod=%k8s.pod.name command=%proc.cmdline)
+      priority: HIGH
+      tags: [creator-economy, monetization, anomaly]
+    
+    # List of allowed IPs for Creator Economy services
+    - list: creator_economy_allowed_ips
+      items: [
+        "10.0.0.0/8",      # VPC CIDR
+        "172.16.0.0/12",   # Docker networks
+        "8.8.8.8",         # Google DNS
+        "1.1.1.1",         # Cloudflare DNS
+        "api.stripe.com",  # Payment processing
+        "api.paypal.com",  # Payment processing
+        "api.openai.com",  # AI services
+        "huggingface.co"   # AI models
+      ]
+    
+    # List of allowed payment processor binaries
+    - list: payment_processor_binaries
+      items: [
+        "python3",
+        "node",
+        "stripe-cli",
+        "paypal-processor"
+      ]
+---
+# ==============================================================================
+# IMAGE SECURITY POLICIES
+# ==============================================================================
+
+# Image Policy Webhook Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: image-security-policy
+  namespace: ainflue-platform
+  labels:
+    app: image-security
+    component: policy
+    business-unit: creator-economy
+data:
+  policy.yaml: |
+    # Creator Economy Image Security Policy
+    apiVersion: v1alpha1
+    kind: ImagePolicy
+    metadata:
+      name: creator-economy-image-policy
+    spec:
+      # Allowed registries
+      allowedRegistries:
+        - "ghcr.io/ainflue"
+        - "docker.io/library"  # Official images only
+        - "quay.io/prometheus"
+        - "gcr.io/istio-release"
+      
+      # Denied registries
+      deniedRegistries:
+        - "docker.io/*"  # Block user images from Docker Hub
+        - "*.ru"         # Block Russian registries
+        - "*.cn"         # Block Chinese registries
+      
+      # Image signing requirements
+      signingRequirements:
+        - registry: "ghcr.io/ainflue"
+          keyPath: "/etc/cosign/cosign.pub"
+          required: true
+      
+      # Vulnerability scanning
+      vulnerabilityPolicy:
+        maxSeverity: "HIGH"
+        allowedCVEs: []
+        denyUnscanned: true
+      
+      # License compliance
+      licensePolicy:
+        allowedLicenses:
+          - "MIT"
+          - "Apache-2.0"
+          - "BSD-3-Clause"
+        deniedLicenses:
+          - "GPL-3.0"
+          - "AGPL-3.0"
+      
+      # Content trust
+      contentTrust:
+        enabled: true
+        notaryURL: "https://notary.ainflue.com"
+---
+# ==============================================================================
+# RUNTIME SECURITY
+# ==============================================================================
+
+# AppArmor Profile for Creator Economy Containers
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: creator-economy-apparmor-profile
+  namespace: ainflue-platform
+  labels:
+    app: apparmor
+    component: profile
+    business-unit: creator-economy
+data:
+  creator-economy-profile: |
+    #include <tunables/global>
+    
+    profile creator-economy-profile flags=(attach_disconnected,mediate_deleted) {
+      #include <abstractions/base>
+      #include <abstractions/nameservice>
+      #include <abstractions/openssl>
+      
+      # Allow network access
+      network inet tcp,
+      network inet udp,
+      network inet6 tcp,
+      network inet6 udp,
+      
+      # Allow file access (read-only for most paths)
+      /usr/local/bin/python3 ix,
+      /usr/bin/node ix,
+      /app/** r,
+      /tmp/** rw,
+      /var/tmp/** rw,
+      
+      # Deny dangerous operations
+      deny /proc/sys/kernel/** w,
+      deny /sys/** w,
+      deny mount,
+      deny umount,
+      deny pivot_root,
+      deny chroot,
+      
+      # Creator Economy specific allowances
+      /app/content/** rw,
+      /app/uploads/** rw,
+      /app/logs/** w,
+      
+      # AI processing specific
+      /dev/nvidia* rw,
+      /usr/local/cuda/** r,
+      
+      # Monetization service restrictions
+      owner /app/monetization/secure/** rw,
+      deny /app/monetization/keys/** w,
+    }
+---
+# ==============================================================================
+# SECRET MANAGEMENT
+# ==============================================================================
+
+# External Secrets Operator Configuration
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
+metadata:
+  name: creator-economy-secret-store
+  namespace: ainflue-platform
+  labels:
+    app: external-secrets
+    component: secret-store
+    business-unit: creator-economy
+spec:
+  provider:
+    aws:
+      service: SecretsManager
+      region: us-east-1
+      auth:
+        jwt:
+          serviceAccountRef:
+            name: external-secrets-sa
+---
+# External Secret for Database Credentials
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: database-credentials
+  namespace: ainflue-platform
+  labels:
+    app: external-secrets
+    component: database-credentials
+    business-unit: creator-economy
+spec:
+  refreshInterval: 15m
+  secretStoreRef:
+    name: creator-economy-secret-store
+    kind: SecretStore
+  target:
+    name: database-credentials
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        username: "{{ .username | toString }}"
+        password: "{{ .password | toString }}"
+        host: "{{ .host | toString }}"
+        database: "{{ .database | toString }}"
+  data:
+  - secretKey: username
+    remoteRef:
+      key: ainflue/database/postgresql
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: ainflue/database/postgresql
+      property: password
+  - secretKey: host
+    remoteRef:
+      key: ainflue/database/postgresql
+      property: host
+  - secretKey: database
+    remoteRef:
+      key: ainflue/database/postgresql
+      property: database
