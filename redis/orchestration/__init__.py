@@ -36,6 +36,17 @@ from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestrat
 from .threat_response_manager import RedisThreatResponseManager, ThreatResponseConfig, IncidentSeverity, IncidentStatus, ResponseAction, ThreatCategory, Incident, ResponsePlaybook, ThreatIntelligence, ResponseMetrics
 from .compliance_orchestrator import RedisComplianceOrchestrator, ComplianceOrchestratorConfig, ComplianceFramework, ComplianceStatus, DataClassification, RetentionPolicy, AuditAction, ComplianceRule, ComplianceViolation, AuditRecord, DataGovernancePolicy, ComplianceReport, ComplianceMetrics
 
+# Analytics Orchestration Modules - NEW JANUARY 2025
+from .real_time_analytics_manager import RedisRealTimeAnalyticsManager
+from .dashboard_orchestrator import RedisDashboardOrchestrator
+from .business_intelligence_orchestrator import RedisBusinessIntelligenceOrchestrator
+from .reporting_orchestrator import RedisReportingOrchestrator
+
+# Creator Economy Orchestration Modules - NEW JANUARY 2025
+from .content_pipeline_manager import RedisContentPipelineManager
+from .collaboration_orchestrator import RedisCollaborationOrchestrator
+from .monetization_orchestrator import RedisMonetizationOrchestrator
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -65,6 +76,17 @@ __all__ = [
     "RedisSecurityOrchestrator",
     "RedisThreatResponseManager", 
     "RedisComplianceOrchestrator",
+    
+    # Analytics Orchestration Components - NEW JANUARY 2025
+    "RedisRealTimeAnalyticsManager",
+    "RedisDashboardOrchestrator",
+    "RedisBusinessIntelligenceOrchestrator",
+    "RedisReportingOrchestrator",
+    
+    # Creator Economy Orchestration Components - NEW JANUARY 2025
+    "RedisContentPipelineManager",
+    "RedisCollaborationOrchestrator",
+    "RedisMonetizationOrchestrator",
     
     # Configuration Classes
     "ClusterOrchestratorConfig",
