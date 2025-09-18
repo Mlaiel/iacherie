@@ -66,30 +66,48 @@ except ImportError:
         def __init__(self):
             self.placeholder = True
 
-# Placeholder classes for modules not yet implemented
-class IntegrationConfig:
-    def __init__(self):
-        self.placeholder = True
+# Import newly implemented configuration modules
+try:
+    from .integration_config import IntegrationConfig
+except ImportError:
+    class IntegrationConfig:
+        def __init__(self):
+            self.placeholder = True
 
-class CreatorConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .creator_config import CreatorConfig
+except ImportError:
+    class CreatorConfig:
+        def __init__(self):
+            self.placeholder = True
 
-class MonetizationConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .monetization_config import MonetizationConfig
+except ImportError:
+    class MonetizationConfig:
+        def __init__(self):
+            self.placeholder = True
 
-class CollaborationConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .collaboration_config import CollaborationConfig
+except ImportError:
+    class CollaborationConfig:
+        def __init__(self):
+            self.placeholder = True
 
-class DistributionConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .distribution_config import DistributionConfig
+except ImportError:
+    class DistributionConfig:
+        def __init__(self):
+            self.placeholder = True
 
-class ComplianceConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .compliance_config import ComplianceConfig
+except ImportError:
+    class ComplianceConfig:
+        def __init__(self):
+            self.placeholder = True
 
 __version__ = "4.0.0"
 __author__ = "Fahed Mlaiel"
@@ -125,13 +143,9 @@ class WorkflowConfigManager:
             if PerformanceConfig:
                 self.configs['performance'] = PerformanceConfig()
             
-            # Initialize placeholder configurations
-            self.configs['scaling'] = ScalingConfig()
+            # Initialize newly implemented configurations
             self.configs['integration'] = IntegrationConfig()
-            
-            # Initialize creator economy configurations
             self.configs['creator'] = CreatorConfig()
-            self.configs['ai'] = AIConfig() if AIConfig and not hasattr(AIConfig(), 'placeholder') else AIConfig()
             self.configs['monetization'] = MonetizationConfig()
             self.configs['collaboration'] = CollaborationConfig()
             self.configs['distribution'] = DistributionConfig()
