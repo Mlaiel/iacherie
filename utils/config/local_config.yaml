@@ -1,0 +1,322 @@
+"""
+Local Development Configuration
+==============================
+
+Local development-specific configuration for individual developer
+workstations with maximum flexibility and debugging capabilities.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Local Environment Settings
+environment:
+  name: "local"
+  debug: true
+  testing: false
+  hot_reload: true
+  profiling_enabled: true
+  developer_mode: true
+  
+# Performance Settings (Optimized for local development)
+performance:
+  # Relaxed performance for local development
+  cache_operations_p95: 10
+  database_operations_p95: 500   # Very relaxed for local DB
+  file_operations_p95: 1000
+  
+  # Memory settings for local development
+  memory:
+    max_heap_size_mb: 256
+    gc_strategy: "serial"       # Simple GC for debugging
+    gc_threshold: 0.9
+    
+  # CPU settings for local development
+  cpu:
+    max_worker_threads: 2       # Conservative for local
+    enable_cpu_affinity: false
+    
+# Security Settings (Minimal for local development)
+security:
+  # Minimal encryption for local development
+  encryption:
+    symmetric_algorithm: "AES-256-GCM"
+    key_rotation_days: 9999     # No rotation locally
+    kdf_iterations: 1000        # Fast for local
+    
+  # Simplified authentication for local
+  authentication:
+    jwt_algorithm: "HS256"
+    access_token_expire_minutes: 480  # 8 hours for convenience
+    refresh_token_expire_days: 30
+    max_login_attempts: 999     # No lockout locally
+    require_mfa: false
+    password_min_length: 4      # Minimal for local testing
+    
+  # Minimal validation for local
+  validation:
+    max_input_size: 104857600   # 100MB for local testing
+    scan_for_xss: false
+    scan_for_sql_injection: false
+    scan_for_nosql_injection: false
+    check_file_headers: false
+    
+# Database Settings (Local)
+database:
+  # Local database connection
+  url: "${AINFLUE_LOCAL_DATABASE_URL:-sqlite:///./local_ainflue.db}"
+  pool_size: 1                # Single connection locally
+  max_overflow: 1
+  pool_timeout: 300           # Long timeout for debugging
+  echo_sql: true              # Enable SQL logging
+  
+  # Local-specific settings
+  auto_create_tables: true
+  drop_tables_on_startup: false
+  seed_test_data: true        # Enable test data locally
+  
+# Cache Settings (Local)
+cache:
+  # Minimal cache for local development
+  l1_max_size: 100
+  l1_ttl_seconds: 30          # Short TTL for testing
+  l2_ttl_seconds: 300
+  
+  # Local Redis or in-memory cache
+  redis_url: "${AINFLUE_LOCAL_REDIS_URL:-redis://localhost:6379/1}"
+  enable_compression: false   # Disabled for debugging
+  
+# Logging Configuration (Verbose for local)
+logging:
+  level: "DEBUG"              # Maximum verbosity
+  format: "colored"           # Colored output for console
+  enable_console: true
+  enable_file: true
+  file_path: "logs/local.log"
+  structured_logging: false   # Simple format for readability
+  include_trace: true         # Full trace for debugging
+  log_sql_queries: true
+  
+  # Local-specific logging
+  log_level_overrides:
+    "sqlalchemy.engine": "INFO"
+    "urllib3.connectionpool": "WARNING"
+    
+# File Management (Relaxed for local)
+file_management:
+  max_file_size_mb: 500       # Large files for local testing
+  temp_directory: "./tmp/local"
+  scan_for_malware: false     # Disabled locally
+  enable_optimization: false  # Disabled for debugging
+  
+  # All file types allowed locally
+  allowed_extensions: "*"     # Allow all file types
+  blocked_extensions: []      # No blocking locally
+  
+# Rate Limiting (Disabled for local)
+rate_limiting:
+  default_rpm: 999999         # Unlimited locally
+  burst_rpm: 999999
+  enable_per_user_limits: false
+  enable_ip_blocking: false
+  
+# Monitoring (Minimal for local)
+monitoring:
+  enable_prometheus: false    # Disabled locally
+  metrics_retention_days: 1
+  cpu_threshold: 100.0        # No alerts locally
+  memory_threshold: 100.0
+  disk_threshold: 100.0
+  
+  # Local monitoring features
+  enable_debug_toolbar: true
+  enable_query_profiler: true
+  enable_memory_profiler: true
+  
+# Creator Economy (Local development)
+creator_economy:
+  # Content processing for local
+  content_processing:
+    enable_async_processing: false  # Synchronous for debugging
+    max_processing_time_seconds: 900  # 15 minutes for debugging
+    enable_preview_generation: true
+    save_intermediate_files: true    # Keep files for debugging
+    
+  # Local collaboration features
+  collaboration:
+    max_collaborators: 3
+    enable_real_time_features: true
+    websocket_url: "ws://localhost:8000/ws"
+    enable_collaboration_debug: true
+    
+  # Local monetization (test mode)
+  monetization:
+    test_mode: true
+    commission_rate: 0.0        # No commission locally
+    minimum_payout: 0.01
+    mock_payments: true
+    
+# Feature Flags (Local)
+features:
+  new_ui_enabled: true
+  beta_features_enabled: true
+  experimental_ai_enabled: true
+  debug_panel_enabled: true
+  hot_reload_enabled: true
+  developer_tools_enabled: true
+  
+# External Services (Mocked/Local for development)
+external_services:
+  # AI Services (Mocked locally)
+  openai:
+    api_key: "${OPENAI_API_KEY_LOCAL:-mock_key}"
+    model: "gpt-3.5-turbo"
+    mock_responses: true        # Default to mock
+    save_responses: true        # Save for debugging
+    
+  # Payment Services (Test mode)
+  stripe:
+    publishable_key: "${STRIPE_LOCAL_PUBLISHABLE_KEY:-pk_test_local}"
+    secret_key: "${STRIPE_LOCAL_SECRET_KEY:-sk_test_local}"
+    webhook_secret: "${STRIPE_LOCAL_WEBHOOK_SECRET:-whsec_test_local}"
+    
+  # Email Services (File-based locally)
+  sendgrid:
+    api_key: "${SENDGRID_LOCAL_API_KEY:-mock_key}"
+    mock_emails: true
+    save_emails_to_file: true
+    email_output_directory: "./tmp/emails"
+    
+# API Configuration (Local)
+api:
+  # Open CORS for local development
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:3001"
+    - "http://localhost:8080"
+    - "http://127.0.0.1:3000"
+    - "http://0.0.0.0:3000"
+  
+  # Relaxed API limits for local
+  request_timeout: 600        # 10 minutes for debugging
+  max_request_size: 1073741824  # 1GB for local testing
+  
+# Developer Tools Configuration
+developer_tools:
+  # Hot reloading
+  hot_reload:
+    enabled: true
+    watch_directories:
+      - "utils"
+      - "api"
+      - "services"
+      - "frontend/src"
+    ignore_patterns:
+      - "*.pyc"
+      - "*.log"
+      - "__pycache__"
+      - "node_modules"
+      
+  # Debugging
+  debugger:
+    enabled: true
+    port: 5678
+    host: "localhost"
+    
+  # Code reloading
+  auto_reload:
+    enabled: true
+    extra_files:
+      - "config.yaml"
+      - ".env"
+      
+# Local Development Servers
+local_servers:
+  # API server
+  api_server:
+    host: "localhost"
+    port: 8000
+    auto_reload: true
+    
+  # Frontend dev server
+  frontend_server:
+    host: "localhost"  
+    port: 3000
+    proxy_api: true
+    
+  # Database server
+  database_server:
+    host: "localhost"
+    port: 5432
+    
+# Testing Configuration (Local)
+testing:
+  # Local testing settings
+  run_tests_on_save: false     # Can be enabled per developer
+  test_coverage_threshold: 70  # Lower threshold locally
+  auto_fix_formatting: true
+  
+# Mock Services Configuration
+mock_services:
+  # Enable mock services for local development
+  enable_all_mocks: true
+  
+  # Specific service mocks
+  payment_service: true
+  email_service: true
+  ai_service: true
+  sms_service: true
+  
+  # Mock data generation
+  generate_mock_data: true
+  mock_data_count: 100
+  
+# Security Headers (Relaxed for local)
+security_headers:
+  content_security_policy: "default-src * 'unsafe-inline' 'unsafe-eval'"
+  x_frame_options: "ALLOWALL"
+  x_content_type_options: "nosniff"
+  strict_transport_security: false
+  
+# Local Database Seeding
+database_seeding:
+  # Seed data for local development
+  enabled: true
+  seed_users: true
+  seed_content: true
+  seed_transactions: false    # Usually not needed locally
+  
+  # Seed data configuration
+  user_count: 10
+  content_count: 50
+  
+# Error Handling (Local)
+error_handling:
+  # Show detailed errors locally
+  show_error_details: true
+  enable_error_pages: true
+  log_full_stack_traces: true
+  
+# Local Environment Variables
+local_env_vars:
+  # Default local environment variables
+  AINFLUE_ENV: "local"
+  FLASK_ENV: "development"
+  DEBUG: "true"
+  
+# Resource Usage (Local)
+resources:
+  # Conservative resource usage for local development
+  cpu_limit: "1000m"          # 1 CPU core
+  memory_limit: "1Gi"         # 1GB memory
+  disk_limit: "5Gi"           # 5GB disk
+  
+# Backup Configuration (Minimal for local)
+backup:
+  enabled: false              # Usually not needed locally
+  local_backup_directory: "./backups"
