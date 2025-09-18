@@ -52,20 +52,26 @@ try:
 except ImportError:
     PerformanceConfig = None
 
-# Placeholder classes for modules not yet implemented
-class ScalingConfig:
-    def __init__(self):
-        self.placeholder = True
+try:
+    from .scaling_config import ScalingConfig
+except ImportError:
+    class ScalingConfig:
+        def __init__(self):
+            self.placeholder = True
 
+try:
+    from .ai_config import AIConfig
+except ImportError:
+    class AIConfig:
+        def __init__(self):
+            self.placeholder = True
+
+# Placeholder classes for modules not yet implemented
 class IntegrationConfig:
     def __init__(self):
         self.placeholder = True
 
 class CreatorConfig:
-    def __init__(self):
-        self.placeholder = True
-
-class AIConfig:
     def __init__(self):
         self.placeholder = True
 
@@ -125,7 +131,7 @@ class WorkflowConfigManager:
             
             # Initialize creator economy configurations
             self.configs['creator'] = CreatorConfig()
-            self.configs['ai'] = AIConfig()
+            self.configs['ai'] = AIConfig() if AIConfig and not hasattr(AIConfig(), 'placeholder') else AIConfig()
             self.configs['monetization'] = MonetizationConfig()
             self.configs['collaboration'] = CollaborationConfig()
             self.configs['distribution'] = DistributionConfig()
