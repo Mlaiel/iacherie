@@ -28,6 +28,8 @@ from .adaptive_controller import RedisAdaptiveController, AdaptationConfig, Adap
 from .ml_optimization_engine import RedisMLOptimizationEngine, OptimizationConfig, OptimizationObjective, OptimizationAlgorithm
 from .anomaly_detection_orchestrator import RedisAnomalyDetectionOrchestrator, AnomalyConfig, AnomalyDetection, AnomalyType, AnomalySeverity
 from .pattern_recognition_manager import RedisPatternRecognitionManager, PatternConfig, Pattern, PatternType, PatternConfidence
+from .behavior_analysis_orchestrator import RedisBehaviorAnalysisOrchestrator, BehaviorAnalysisConfig, BehaviorEvent, BehaviorPattern, BehaviorSegment, BehaviorInsight, BehaviorPrediction, BehaviorType, BehaviorState, AnalysisScope, BehaviorInsightType
+from .decision_engine import RedisDecisionEngine, DecisionEngineConfig, Decision, DecisionContext, DecisionCriteria, DecisionOption, DecisionEvaluation, DecisionRule, DecisionType, DecisionPriority, DecisionStatus, DecisionStrategy, ConfidenceLevel
 
 # Security Orchestration Modules - NEW JANUARY 2025
 from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestratorConfig, SecurityLevel, ThreatLevel, SecurityEvent, AccessLevel, SecurityPolicy, SecurityThreat, AccessControlEntry, SecurityMetrics
@@ -56,6 +58,8 @@ __all__ = [
     "RedisMLOptimizationEngine",
     "RedisAnomalyDetectionOrchestrator",
     "RedisPatternRecognitionManager",
+    "RedisBehaviorAnalysisOrchestrator",
+    "RedisDecisionEngine",
     
     # Security Orchestration Components - NEW JANUARY 2025
     "RedisSecurityOrchestrator",
@@ -76,6 +80,8 @@ __all__ = [
     "OptimizationConfig",
     "AnomalyConfig",
     "PatternConfig",
+    "BehaviorAnalysisConfig",
+    "DecisionEngineConfig",
     
     # Security Configuration Classes - NEW JANUARY 2025
     "SecurityOrchestratorConfig",
@@ -100,6 +106,15 @@ __all__ = [
     "AnomalySeverity",
     "PatternType",
     "PatternConfidence",
+    "BehaviorType",
+    "BehaviorState",
+    "AnalysisScope",
+    "BehaviorInsightType",
+    "DecisionType",
+    "DecisionPriority",
+    "DecisionStatus",
+    "DecisionStrategy",
+    "ConfidenceLevel",
     
     # Result Classes - NEW
     "PredictionResult",
@@ -107,6 +122,17 @@ __all__ = [
     "AdaptationRule",
     "AnomalyDetection",
     "Pattern",
+    "BehaviorEvent",
+    "BehaviorPattern",
+    "BehaviorSegment", 
+    "BehaviorInsight",
+    "BehaviorPrediction",
+    "Decision",
+    "DecisionContext",
+    "DecisionCriteria",
+    "DecisionOption",
+    "DecisionEvaluation",
+    "DecisionRule",
     
     # Factory Functions
     "create_enterprise_orchestration"
