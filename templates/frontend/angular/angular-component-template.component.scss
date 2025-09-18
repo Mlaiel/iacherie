@@ -1,0 +1,798 @@
+/**
+ * 🅰️ Angular Component Styles - Ainflue Creator Economy
+ * 
+ * @fileoverview Styles enterprise pour composant Angular
+ * @version 1.0.0
+ * @author Fahed Mlaiel <mlaiel@live.de>
+ * 
+ * ⚠️ PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE
+ * © 2025 Fahed Mlaiel - Tous droits réservés
+ * Utilisation commerciale interdite sans autorisation écrite
+ */
+
+// ============================================================================
+// CSS VARIABLES
+// ============================================================================
+
+:root {
+  --angular-color-primary: #3b82f6;
+  --angular-color-secondary: #6b7280;
+  --angular-color-success: #10b981;
+  --angular-color-warning: #f59e0b;
+  --angular-color-error: #ef4444;
+  --angular-color-background: #ffffff;
+  --angular-color-surface: #f9fafb;
+  --angular-color-border: #e5e7eb;
+  --angular-color-text: #111827;
+  --angular-color-text-secondary: #6b7280;
+  
+  --angular-spacing-xs: 0.25rem;
+  --angular-spacing-sm: 0.5rem;
+  --angular-spacing-md: 1rem;
+  --angular-spacing-lg: 1.5rem;
+  --angular-spacing-xl: 2rem;
+  
+  --angular-border-radius-sm: 0.375rem;
+  --angular-border-radius-md: 0.5rem;
+  --angular-border-radius-lg: 0.75rem;
+  
+  --angular-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --angular-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --angular-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  --angular-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ============================================================================
+// MIXINS
+// ============================================================================
+
+@mixin angular-focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+  border-color: var(--angular-color-primary);
+}
+
+@mixin angular-button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--angular-spacing-sm);
+  padding: var(--angular-spacing-sm) var(--angular-spacing-lg);
+  border: 1px solid transparent;
+  border-radius: var(--angular-border-radius-sm);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--angular-transition);
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  &:focus {
+    @include angular-focus-ring;
+  }
+}
+
+@mixin angular-input-base {
+  width: 100%;
+  padding: var(--angular-spacing-sm) var(--angular-spacing-md);
+  border: 1px solid var(--angular-color-border);
+  border-radius: var(--angular-border-radius-sm);
+  background: var(--angular-color-background);
+  color: var(--angular-color-text);
+  transition: var(--angular-transition);
+  
+  &::placeholder {
+    color: var(--angular-color-text-secondary);
+  }
+  
+  &:focus {
+    @include angular-focus-ring;
+  }
+  
+  &:disabled {
+    background: var(--angular-color-surface);
+    color: var(--angular-color-text-secondary);
+    cursor: not-allowed;
+  }
+}
+
+// ============================================================================
+// HOST COMPONENT
+// ============================================================================
+
+.angular-component-template-host {
+  display: block;
+  width: 100%;
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+.angular-component-template {
+  background: var(--angular-color-background);
+  border: 1px solid var(--angular-color-border);
+  border-radius: var(--angular-border-radius-lg);
+  box-shadow: var(--angular-shadow-sm);
+  transition: var(--angular-transition);
+  
+  // Size variants
+  &--small {
+    padding: var(--angular-spacing-sm);
+    font-size: 0.875rem;
+  }
+  
+  &--medium {
+    padding: var(--angular-spacing-md);
+    font-size: 1rem;
+  }
+  
+  &--large {
+    padding: var(--angular-spacing-lg);
+    font-size: 1.125rem;
+  }
+  
+  // Color variants
+  &--primary {
+    border-color: var(--angular-color-primary);
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+  }
+  
+  &--secondary {
+    border-color: var(--angular-color-secondary);
+  }
+  
+  &--success {
+    border-color: var(--angular-color-success);
+    background: rgb(16 185 129 / 0.05);
+  }
+  
+  &--warning {
+    border-color: var(--angular-color-warning);
+    background: rgb(245 158 11 / 0.05);
+  }
+  
+  &--error {
+    border-color: var(--angular-color-error);
+    background: rgb(239 68 68 / 0.05);
+  }
+  
+  // State variants
+  &--loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
+  &:hover:not(.angular-component-template--disabled):not(.angular-component-template--loading) {
+    box-shadow: var(--angular-shadow-md);
+    transform: translateY(-1px);
+  }
+  
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+  }
+}
+
+// ============================================================================
+// HEADER
+// ============================================================================
+
+.angular-component-template__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--angular-spacing-lg);
+  padding-bottom: var(--angular-spacing-md);
+  border-bottom: 1px solid var(--angular-color-border);
+}
+
+.angular-component-template__title-section {
+  flex: 1;
+}
+
+.angular-component-template__title {
+  margin: 0 0 var(--angular-spacing-xs) 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--angular-color-text);
+  line-height: 1.25;
+}
+
+.angular-component-template__subtitle {
+  color: var(--angular-color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.angular-component-template__header-actions {
+  display: flex;
+  gap: var(--angular-spacing-sm);
+  align-items: center;
+}
+
+// ============================================================================
+// LOADING STATE
+// ============================================================================
+
+.angular-component-template__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--angular-spacing-xl);
+  text-align: center;
+}
+
+.angular-component-template__spinner {
+  margin-bottom: var(--angular-spacing-md);
+}
+
+.angular-component-template__spinner-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--angular-color-primary);
+  animation: angular-spin 1s linear infinite;
+  
+  circle {
+    animation: angular-dash 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes angular-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes angular-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+.angular-component-template__loading-text {
+  color: var(--angular-color-text-secondary);
+  font-size: 0.875rem;
+}
+
+// ============================================================================
+// ERROR STATE
+// ============================================================================
+
+.angular-component-template__error {
+  display: flex;
+  gap: var(--angular-spacing-md);
+  padding: var(--angular-spacing-lg);
+  background: rgb(239 68 68 / 0.05);
+  border: 1px solid rgb(239 68 68 / 0.2);
+  border-radius: var(--angular-border-radius-md);
+}
+
+.angular-component-template__error-icon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--angular-color-error);
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.angular-component-template__error-content {
+  flex: 1;
+}
+
+.angular-component-template__error-title {
+  margin: 0 0 var(--angular-spacing-xs) 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--angular-color-error);
+}
+
+.angular-component-template__error-message {
+  margin: 0 0 var(--angular-spacing-md) 0;
+  color: var(--angular-color-text-secondary);
+  line-height: 1.5;
+}
+
+.angular-component-template__retry-button {
+  @include angular-button-base;
+  background: var(--angular-color-error);
+  color: white;
+  
+  &:hover:not(:disabled) {
+    background: rgb(220 38 38);
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================================
+// CONTENT
+// ============================================================================
+
+.angular-component-template__content {
+  outline: none;
+  
+  &:focus {
+    box-shadow: inset 0 0 0 2px var(--angular-color-primary);
+    border-radius: var(--angular-border-radius-sm);
+  }
+}
+
+.angular-component-template__default-content {
+  padding: var(--angular-spacing-lg);
+  text-align: center;
+  color: var(--angular-color-text-secondary);
+}
+
+// ============================================================================
+// INTERACTIVE SECTION
+// ============================================================================
+
+.angular-component-template__interactive-section {
+  margin-top: var(--angular-spacing-lg);
+}
+
+// ============================================================================
+// FORM
+// ============================================================================
+
+.angular-component-template__form {
+  margin-bottom: var(--angular-spacing-lg);
+}
+
+.angular-component-template__form-group {
+  margin-bottom: var(--angular-spacing-md);
+}
+
+.angular-component-template__label {
+  display: block;
+  margin-bottom: var(--angular-spacing-xs);
+  font-weight: 500;
+  color: var(--angular-color-text);
+}
+
+.angular-component-template__input {
+  @include angular-input-base;
+  
+  &--error {
+    border-color: var(--angular-color-error);
+    box-shadow: 0 0 0 3px rgb(239 68 68 / 0.1);
+  }
+}
+
+.angular-component-template__form-error {
+  margin-top: var(--angular-spacing-xs);
+  color: var(--angular-color-error);
+  font-size: 0.875rem;
+  
+  div {
+    margin-bottom: var(--angular-spacing-xs);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.angular-component-template__submit-button {
+  @include angular-button-base;
+  background: var(--angular-color-primary);
+  color: white;
+  
+  &:hover:not(:disabled) {
+    background: rgb(37 99 235);
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================================================
+// LIST
+// ============================================================================
+
+.angular-component-template__list-section {
+  margin-top: var(--angular-spacing-lg);
+}
+
+.angular-component-template__list-title {
+  margin: 0 0 var(--angular-spacing-md) 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--angular-color-text);
+}
+
+.angular-component-template__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--angular-color-border);
+  border-radius: var(--angular-border-radius-md);
+  overflow: hidden;
+}
+
+.angular-component-template__list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--angular-spacing-md);
+  border-bottom: 1px solid var(--angular-color-border);
+  background: var(--angular-color-background);
+  cursor: pointer;
+  transition: var(--angular-transition);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:hover {
+    background: var(--angular-color-surface);
+  }
+  
+  &:focus {
+    @include angular-focus-ring;
+    background: var(--angular-color-surface);
+  }
+  
+  &--selected {
+    background: rgb(59 130 246 / 0.1);
+    border-color: var(--angular-color-primary);
+  }
+  
+  &--highlighted {
+    background: rgb(245 158 11 / 0.1);
+  }
+}
+
+.angular-component-template__item-content {
+  flex: 1;
+}
+
+.angular-component-template__item-title {
+  margin: 0 0 var(--angular-spacing-xs) 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--angular-color-text);
+}
+
+.angular-component-template__item-description {
+  margin: 0 0 var(--angular-spacing-xs) 0;
+  color: var(--angular-color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.angular-component-template__item-metadata {
+  display: flex;
+  gap: var(--angular-spacing-md);
+  flex-wrap: wrap;
+}
+
+.angular-component-template__metadata-item {
+  font-size: 0.75rem;
+  color: var(--angular-color-text-secondary);
+  
+  strong {
+    color: var(--angular-color-text);
+  }
+}
+
+.angular-component-template__item-actions {
+  display: flex;
+  gap: var(--angular-spacing-sm);
+}
+
+.angular-component-template__action-button {
+  @include angular-button-base;
+  padding: var(--angular-spacing-xs) var(--angular-spacing-sm);
+  background: var(--angular-color-secondary);
+  color: white;
+  font-size: 0.75rem;
+  
+  &:hover:not(:disabled) {
+    background: rgb(75 85 99);
+    transform: translateY(-1px);
+  }
+  
+  &--danger {
+    background: var(--angular-color-error);
+    
+    &:hover:not(:disabled) {
+      background: rgb(220 38 38);
+    }
+  }
+}
+
+// ============================================================================
+// PAGINATION
+// ============================================================================
+
+.angular-component-template__pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--angular-spacing-md);
+  padding: var(--angular-spacing-md);
+  background: var(--angular-color-surface);
+  border-radius: var(--angular-border-radius-sm);
+}
+
+.angular-component-template__pagination-button {
+  @include angular-button-base;
+  padding: var(--angular-spacing-xs) var(--angular-spacing-md);
+  background: var(--angular-color-primary);
+  color: white;
+  font-size: 0.875rem;
+  
+  &:hover:not(:disabled) {
+    background: rgb(37 99 235);
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    background: var(--angular-color-secondary);
+  }
+}
+
+.angular-component-template__pagination-info {
+  font-size: 0.875rem;
+  color: var(--angular-color-text-secondary);
+}
+
+// ============================================================================
+// FOOTER
+// ============================================================================
+
+.angular-component-template__footer {
+  margin-top: var(--angular-spacing-lg);
+  padding-top: var(--angular-spacing-md);
+  border-top: 1px solid var(--angular-color-border);
+}
+
+.angular-component-template__default-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.angular-component-template__footer-text {
+  margin: 0;
+  color: var(--angular-color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.angular-component-template__footer-actions {
+  display: flex;
+  gap: var(--angular-spacing-sm);
+}
+
+.angular-component-template__footer-button {
+  @include angular-button-base;
+  
+  &--secondary {
+    background: var(--angular-color-background);
+    color: var(--angular-color-text);
+    border-color: var(--angular-color-border);
+    
+    &:hover:not(:disabled) {
+      background: var(--angular-color-surface);
+      border-color: var(--angular-color-secondary);
+    }
+  }
+  
+  &--primary {
+    background: var(--angular-color-primary);
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background: rgb(37 99 235);
+    }
+  }
+}
+
+// ============================================================================
+// ACCESSIBILITY
+// ============================================================================
+
+.angular-component-template__live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN
+// ============================================================================
+
+@media (max-width: 768px) {
+  .angular-component-template__header {
+    flex-direction: column;
+    gap: var(--angular-spacing-md);
+  }
+  
+  .angular-component-template__default-footer {
+    flex-direction: column;
+    gap: var(--angular-spacing-md);
+    text-align: center;
+  }
+  
+  .angular-component-template__list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--angular-spacing-sm);
+  }
+  
+  .angular-component-template__item-actions {
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+  
+  .angular-component-template__pagination {
+    flex-direction: column;
+    gap: var(--angular-spacing-sm);
+    text-align: center;
+  }
+  
+  .angular-component-template__item-metadata {
+    flex-direction: column;
+    gap: var(--angular-spacing-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .angular-component-template {
+    &--small { padding: var(--angular-spacing-xs); }
+    &--medium { padding: var(--angular-spacing-sm); }
+    &--large { padding: var(--angular-spacing-md); }
+  }
+  
+  .angular-component-template__header {
+    margin-bottom: var(--angular-spacing-md);
+    padding-bottom: var(--angular-spacing-sm);
+  }
+  
+  .angular-component-template__title {
+    font-size: 1.25rem;
+  }
+  
+  .angular-component-template__item-actions {
+    justify-content: center;
+  }
+}
+
+// ============================================================================
+// DARK MODE SUPPORT
+// ============================================================================
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --angular-color-background: #1f2937;
+    --angular-color-surface: #374151;
+    --angular-color-border: #4b5563;
+    --angular-color-text: #f9fafb;
+    --angular-color-text-secondary: #d1d5db;
+  }
+}
+
+// ============================================================================
+// HIGH CONTRAST MODE
+// ============================================================================
+
+@media (prefers-contrast: high) {
+  .angular-component-template {
+    border-width: 2px;
+    
+    &:focus-within {
+      outline: 3px solid;
+      outline-offset: 2px;
+    }
+  }
+  
+  .angular-component-template__input,
+  .angular-component-template__submit-button,
+  .angular-component-template__action-button,
+  .angular-component-template__pagination-button,
+  .angular-component-template__footer-button {
+    border-width: 2px;
+    
+    &:focus {
+      outline: 3px solid;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ============================================================================
+// REDUCED MOTION
+// ============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .angular-component-template,
+  .angular-component-template *,
+  .angular-component-template *::before,
+  .angular-component-template *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ============================================================================
+// PRINT STYLES
+// ============================================================================
+
+@media print {
+  .angular-component-template {
+    box-shadow: none;
+    border: 1px solid #000;
+    background: white !important;
+    color: black !important;
+    page-break-inside: avoid;
+  }
+  
+  .angular-component-template__spinner,
+  .angular-component-template__loading {
+    display: none;
+  }
+  
+  .angular-component-template__action-button,
+  .angular-component-template__pagination-button,
+  .angular-component-template__submit-button,
+  .angular-component-template__retry-button,
+  .angular-component-template__footer-button {
+    display: none;
+  }
+}
+
+/**
+ * 🅰️ STYLES ANGULAR ENTERPRISE:
+ * 
+ * ✅ Design System Cohérent:
+ * - Variables CSS centralisées
+ * - Mixins réutilisables
+ * - Système de couleurs
+ * - Espacements standardisés
+ * 
+ * ✅ Accessibilité WCAG:
+ * - Focus rings visibles
+ * - Contraste suffisant
+ * - Support dark mode
+ * - High contrast mode
+ * - Reduced motion
+ * 
+ * ✅ Responsive Design:
+ * - Mobile-first approach
+ * - Breakpoints adaptés
+ * - Layout flexible
+ * - Typography responsive
+ * 
+ * ✅ Performance:
+ * - CSS optimisé
+ * - Transitions efficaces
+ * - Print styles
+ * - Reduced motion support
+ */
