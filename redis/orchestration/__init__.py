@@ -36,6 +36,8 @@ from .real_time_analytics_manager import RedisRealTimeAnalyticsManager, RealTime
 from .reporting_orchestrator import RedisReportingOrchestrator, ReportingOrchestratorConfig, ReportTemplate, ReportSchedule, ReportExecution, ReportDataSource, ReportVisualization, ReportType, ReportFormat, ReportFrequency, ReportStatus
 from .dashboard_orchestrator import RedisDashboardOrchestrator, DashboardOrchestratorConfig, Dashboard, DashboardWidget, DashboardLayout, DashboardTheme, DashboardSession, DashboardType, WidgetType, LayoutType, RefreshMode, ThemeType
 from .kpi_monitoring_manager import RedisKPIMonitoringManager, KPIMonitoringConfig, KPIDefinition, KPIMeasurement, KPIAlert, KPITrend, KPIReport, KPIThreshold, KPICategory, KPIType, KPIStatus, ThresholdType, AlertLevel
+from .business_intelligence_orchestrator import BusinessIntelligenceOrchestrator, BusinessIntelligenceOrchestratorConfig, BIMetric, BIInsight, BIPrediction, BIReport, BIType, BIDataSource, BIInsightType, BIVisualizationType, create_business_intelligence_orchestrator
+from .insight_generation_manager import InsightGenerationManager, InsightGenerationConfig, Insight, Pattern, Correlation, DataPoint, InsightRule, InsightProcessor, StatisticalInsightProcessor, MachineLearningInsightProcessor, CorrelationInsightProcessor, InsightType, InsightCategory, InsightPriority, InsightConfidence, AnalysisMethod, create_insight_generation_manager
 
 # Security Orchestration Modules - NEW JANUARY 2025
 from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestratorConfig, SecurityLevel, ThreatLevel, SecurityEvent, AccessLevel, SecurityPolicy, SecurityThreat, AccessControlEntry, SecurityMetrics
