@@ -95,21 +95,96 @@ from .creator_economy import (
     # GamificationServiceTemplate  # TODO: Implement
 )
 
-# All other template categories are TODO - commenting out for now
-# Discovery Templates
-# from .discovery import (...)
+# Performance Templates (newly implemented)
+from . import performance
+from .performance import (
+    CachingStrategyTemplate,
+    ConnectionPoolTemplate,
+    AsyncProcessorTemplate,
+    BatchProcessorTemplate,
+    StreamProcessorTemplate,
+    MemoryOptimizerTemplate,
+    CPUOptimizerTemplate,
+    IOOptimizerTemplate
+)
 
-# Monitoring Templates  
-# from .monitoring import (...)
+# Deployment Templates (newly implemented)
+from . import deployment
+from .deployment import (
+    KubernetesDeploymentTemplate,
+    DockerComposeTemplate,
+    HelmChartTemplate,
+    TerraformTemplate,
+    AnsiblePlaybookTemplate,
+    CICDPipelineTemplate,
+    BlueGreenDeploymentTemplate,
+    CanaryDeploymentTemplate
+)
 
-# Security Templates
-# from .security import (...)
+# Testing Templates (newly implemented)
+from . import testing
+from .testing import (
+    UnitTestTemplate,
+    IntegrationTestTemplate,
+    ContractTestTemplate,
+    LoadTestTemplate,
+    ChaosTestTemplate,
+    SecurityTestTemplate,
+    PerformanceTestTemplate,
+    E2ETestTemplate
+)
 
-# Data Templates
-# from .data import (...)
+# Configuration Templates (newly implemented)
+from . import configuration
+from .configuration import (
+    EnvironmentConfigTemplate,
+    FeatureFlagTemplate,
+    SecretsManagerTemplate,
+    ConfigServerTemplate,
+    VaultIntegrationTemplate,
+    ConsulConfigTemplate,
+    K8sConfigMapTemplate,
+    HelmValuesTemplate
+)
 
-# Performance Templates
-# from .performance import (...)
+# Scaling Templates (newly implemented)
+from . import scaling
+from .scaling import (
+    HorizontalScalerTemplate,
+    VerticalScalerTemplate,
+    AutoScalerTemplate,
+    LoadBalancerTemplate,
+    ClusterManagerTemplate,
+    ResourceManagerTemplate,
+    CapacityPlannerTemplate,
+    CostOptimizerTemplate
+)
+
+# Resilience Templates (newly implemented)
+from . import resilience
+from .resilience import (
+    RetryPolicyTemplate,
+    TimeoutHandlerTemplate,
+    BulkheadPatternTemplate,
+    FallbackHandlerTemplate,
+    HealthCircuitTemplate,
+    GracefulShutdownTemplate,
+    DisasterRecoveryTemplate,
+    FailoverTemplate
+)
+
+# Documentation Templates (newly implemented)
+from . import documentation
+from .documentation import (
+    APIDocumentationTemplate,
+    SwaggerGeneratorTemplate,
+    OpenAPISpecTemplate,
+    ServiceCatalogTemplate,
+    ArchitectureDiagramTemplate,
+    RunbookTemplate,
+    TroubleshootingGuideTemplate,
+    DeploymentGuideTemplate
+)
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -146,4 +221,74 @@ __all__ = [
     
     # Creator Economy Templates (partially implemented)
     "CreatorServiceTemplate",
+    
+    # Performance Templates (newly implemented)
+    "CachingStrategyTemplate",
+    "ConnectionPoolTemplate", 
+    "AsyncProcessorTemplate",
+    "BatchProcessorTemplate",
+    "StreamProcessorTemplate",
+    "MemoryOptimizerTemplate",
+    "CPUOptimizerTemplate",
+    "IOOptimizerTemplate",
+    
+    # Deployment Templates (newly implemented)
+    "KubernetesDeploymentTemplate",
+    "DockerComposeTemplate",
+    "HelmChartTemplate",
+    "TerraformTemplate",
+    "AnsiblePlaybookTemplate", 
+    "CICDPipelineTemplate",
+    "BlueGreenDeploymentTemplate",
+    "CanaryDeploymentTemplate",
+    
+    # Testing Templates (newly implemented)
+    "UnitTestTemplate",
+    "IntegrationTestTemplate",
+    "ContractTestTemplate",
+    "LoadTestTemplate",
+    "ChaosTestTemplate",
+    "SecurityTestTemplate",
+    "PerformanceTestTemplate",
+    "E2ETestTemplate",
+    
+    # Configuration Templates (newly implemented)
+    "EnvironmentConfigTemplate",
+    "FeatureFlagTemplate",
+    "SecretsManagerTemplate",
+    "ConfigServerTemplate",
+    "VaultIntegrationTemplate",
+    "ConsulConfigTemplate",
+    "K8sConfigMapTemplate",
+    "HelmValuesTemplate",
+    
+    # Scaling Templates (newly implemented)
+    "HorizontalScalerTemplate",
+    "VerticalScalerTemplate",
+    "AutoScalerTemplate",
+    "LoadBalancerTemplate",
+    "ClusterManagerTemplate",
+    "ResourceManagerTemplate",
+    "CapacityPlannerTemplate",
+    "CostOptimizerTemplate",
+    
+    # Resilience Templates (newly implemented)
+    "RetryPolicyTemplate",
+    "TimeoutHandlerTemplate",
+    "BulkheadPatternTemplate",
+    "FallbackHandlerTemplate",
+    "HealthCircuitTemplate",
+    "GracefulShutdownTemplate",
+    "DisasterRecoveryTemplate",
+    "FailoverTemplate",
+    
+    # Documentation Templates (newly implemented)
+    "APIDocumentationTemplate",
+    "SwaggerGeneratorTemplate",
+    "OpenAPISpecTemplate",
+    "ServiceCatalogTemplate",
+    "ArchitectureDiagramTemplate",
+    "RunbookTemplate",
+    "TroubleshootingGuideTemplate",
+    "DeploymentGuideTemplate",
 ]
