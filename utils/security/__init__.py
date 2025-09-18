@@ -24,6 +24,10 @@ if TYPE_CHECKING:
     from .security_scanner import SecurityScanner
     from .password_manager import PasswordManager
     from .audit_logger import AuditLogger
+    from .threat_detector import ThreatDetector
+    from .vulnerability_scanner import VulnerabilityScanner
+    from .access_control import AccessControl
+    from .session_manager import SessionManager
 
 __all__ = [
     "EncryptionEngine",
@@ -32,12 +36,20 @@ __all__ = [
     "SecurityScanner",
     "PasswordManager",
     "AuditLogger",
+    "ThreatDetector",
+    "VulnerabilityScanner",
+    "AccessControl",
+    "SessionManager",
     "EncryptionEngineFactory",
     "AuthenticationUtilsFactory",
     "ValidationEngineFactory",
     "SecurityScannerFactory", 
     "PasswordManagerFactory",
-    "AuditLoggerFactory"
+    "AuditLoggerFactory",
+    "ThreatDetectorFactory",
+    "VulnerabilityScannerFactory",
+    "AccessControlFactory",
+    "SessionManagerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -60,6 +72,18 @@ def __getattr__(name: str):
     elif name == "AuditLogger":
         from .audit_logger import AuditLogger
         return AuditLogger
+    elif name == "ThreatDetector":
+        from .threat_detector import ThreatDetector
+        return ThreatDetector
+    elif name == "VulnerabilityScanner":
+        from .vulnerability_scanner import VulnerabilityScanner
+        return VulnerabilityScanner
+    elif name == "AccessControl":
+        from .access_control import AccessControl
+        return AccessControl
+    elif name == "SessionManager":
+        from .session_manager import SessionManager
+        return SessionManager
     elif name == "EncryptionEngineFactory":
         from .encryption_engine import EncryptionEngineFactory
         return EncryptionEngineFactory
@@ -78,5 +102,17 @@ def __getattr__(name: str):
     elif name == "AuditLoggerFactory":
         from .audit_logger import AuditLoggerFactory
         return AuditLoggerFactory
+    elif name == "ThreatDetectorFactory":
+        from .threat_detector import ThreatDetectorFactory
+        return ThreatDetectorFactory
+    elif name == "VulnerabilityScannerFactory":
+        from .vulnerability_scanner import VulnerabilityScannerFactory
+        return VulnerabilityScannerFactory
+    elif name == "AccessControlFactory":
+        from .access_control import AccessControlFactory
+        return AccessControlFactory
+    elif name == "SessionManagerFactory":
+        from .session_manager import SessionManagerFactory
+        return SessionManagerFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
