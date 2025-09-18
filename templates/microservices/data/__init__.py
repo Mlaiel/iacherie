@@ -30,15 +30,69 @@ from .data_sync_template import DataSyncTemplate
 from .migration_service_template import MigrationServiceTemplate
 from .replication_template import ReplicationTemplate
 
+# New advanced data management templates
+from .data_management_template import (
+    DataModelTemplate,
+    DataPipelineTemplate,
+    DataValidationTemplate,
+    DataStreamingTemplate,
+    DataWarehouseTemplate,
+    GDPRComplianceTemplate,
+    DataTemplateFactory,
+    DEFAULT_DATA_CONFIG,
+    create_data_service_app
+)
+
+from .pipeline_template import (
+    DataPipelineTemplate as AdvancedDataPipelineTemplate,
+    ETLPipelineTemplate,
+    StreamingPipelineTemplate,
+    DataPipelineOrchestrator,
+    PipelineStatus,
+    ProcessingMode,
+    PipelineConfig,
+    DataSource,
+    DataTransformation,
+    DataDestination,
+    create_data_pipeline_app
+)
+
 __all__ = [
+    # Original templates
     "DatabaseServiceTemplate",
-    "CacheServiceTemplate",
+    "CacheServiceTemplate", 
     "SearchServiceTemplate",
     "FileStorageTemplate",
     "BackupServiceTemplate",
     "DataSyncTemplate",
     "MigrationServiceTemplate",
-    "ReplicationTemplate"
+    "ReplicationTemplate",
+    
+    # Advanced data management
+    "DataModelTemplate",
+    "DataPipelineTemplate",
+    "DataValidationTemplate",
+    "DataStreamingTemplate",
+    "DataWarehouseTemplate",
+    "GDPRComplianceTemplate",
+    "DataTemplateFactory",
+    "create_data_service_app",
+    
+    # Advanced pipelines
+    "AdvancedDataPipelineTemplate",
+    "ETLPipelineTemplate",
+    "StreamingPipelineTemplate",
+    "DataPipelineOrchestrator",
+    "PipelineStatus",
+    "ProcessingMode",
+    "PipelineConfig",
+    "DataSource",
+    "DataTransformation",
+    "DataDestination",
+    "create_data_pipeline_app",
+    
+    # Configuration
+    "DEFAULT_DATA_CONFIG"
 ]
 
 __version__ = "1.0.0"
