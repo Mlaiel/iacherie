@@ -28,6 +28,10 @@ if TYPE_CHECKING:
     from .vulnerability_scanner import VulnerabilityScanner
     from .access_control import AccessControl
     from .session_manager import SessionManager
+    from .intrusion_detection import IntrusionDetection
+    from .compliance_checker import ComplianceChecker
+    from .data_protection import DataProtection
+    from .security_headers import SecurityHeaders
 
 __all__ = [
     "EncryptionEngine",
@@ -40,6 +44,10 @@ __all__ = [
     "VulnerabilityScanner",
     "AccessControl",
     "SessionManager",
+    "IntrusionDetection",
+    "ComplianceChecker",
+    "DataProtection",
+    "SecurityHeaders",
     "EncryptionEngineFactory",
     "AuthenticationUtilsFactory",
     "ValidationEngineFactory",
@@ -49,7 +57,11 @@ __all__ = [
     "ThreatDetectorFactory",
     "VulnerabilityScannerFactory",
     "AccessControlFactory",
-    "SessionManagerFactory"
+    "SessionManagerFactory",
+    "IntrusionDetectionFactory",
+    "ComplianceCheckerFactory",
+    "DataProtectionFactory",
+    "SecurityHeadersFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -84,6 +96,18 @@ def __getattr__(name: str):
     elif name == "SessionManager":
         from .session_manager import SessionManager
         return SessionManager
+    elif name == "IntrusionDetection":
+        from .intrusion_detection import IntrusionDetection
+        return IntrusionDetection
+    elif name == "ComplianceChecker":
+        from .compliance_checker import ComplianceChecker
+        return ComplianceChecker
+    elif name == "DataProtection":
+        from .data_protection import DataProtection
+        return DataProtection
+    elif name == "SecurityHeaders":
+        from .security_headers import SecurityHeaders
+        return SecurityHeaders
     elif name == "EncryptionEngineFactory":
         from .encryption_engine import EncryptionEngineFactory
         return EncryptionEngineFactory
@@ -114,5 +138,17 @@ def __getattr__(name: str):
     elif name == "SessionManagerFactory":
         from .session_manager import SessionManagerFactory
         return SessionManagerFactory
+    elif name == "IntrusionDetectionFactory":
+        from .intrusion_detection import IntrusionDetectionFactory
+        return IntrusionDetectionFactory
+    elif name == "ComplianceCheckerFactory":
+        from .compliance_checker import ComplianceCheckerFactory
+        return ComplianceCheckerFactory
+    elif name == "DataProtectionFactory":
+        from .data_protection import DataProtectionFactory
+        return DataProtectionFactory
+    elif name == "SecurityHeadersFactory":
+        from .security_headers import SecurityHeadersFactory
+        return SecurityHeadersFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
