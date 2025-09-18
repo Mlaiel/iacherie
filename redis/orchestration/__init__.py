@@ -29,6 +29,11 @@ from .ml_optimization_engine import RedisMLOptimizationEngine, OptimizationConfi
 from .anomaly_detection_orchestrator import RedisAnomalyDetectionOrchestrator, AnomalyConfig, AnomalyDetection, AnomalyType, AnomalySeverity
 from .pattern_recognition_manager import RedisPatternRecognitionManager, PatternConfig, Pattern, PatternType, PatternConfidence
 
+# Security Orchestration Modules - NEW JANUARY 2025
+from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestratorConfig, SecurityLevel, ThreatLevel, SecurityEvent, AccessLevel, SecurityPolicy, SecurityThreat, AccessControlEntry, SecurityMetrics
+from .threat_response_manager import RedisThreatResponseManager, ThreatResponseConfig, IncidentSeverity, IncidentStatus, ResponseAction, ThreatCategory, Incident, ResponsePlaybook, ThreatIntelligence, ResponseMetrics
+from .compliance_orchestrator import RedisComplianceOrchestrator, ComplianceOrchestratorConfig, ComplianceFramework, ComplianceStatus, DataClassification, RetentionPolicy, AuditAction, ComplianceRule, ComplianceViolation, AuditRecord, DataGovernancePolicy, ComplianceReport, ComplianceMetrics
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -52,6 +57,11 @@ __all__ = [
     "RedisAnomalyDetectionOrchestrator",
     "RedisPatternRecognitionManager",
     
+    # Security Orchestration Components - NEW JANUARY 2025
+    "RedisSecurityOrchestrator",
+    "RedisThreatResponseManager", 
+    "RedisComplianceOrchestrator",
+    
     # Configuration Classes
     "ClusterOrchestratorConfig",
     "FailoverConfig",
@@ -66,6 +76,11 @@ __all__ = [
     "OptimizationConfig",
     "AnomalyConfig",
     "PatternConfig",
+    
+    # Security Configuration Classes - NEW JANUARY 2025
+    "SecurityOrchestratorConfig",
+    "ThreatResponseConfig",
+    "ComplianceOrchestratorConfig",
     
     # Enums and Types
     "BackupType",
