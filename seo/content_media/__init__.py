@@ -35,6 +35,12 @@ from .photographer_seo_engine import PhotographerSEOEngine
 from .influencer_content_optimizer import InfluencerContentOptimizer
 from .comedian_content_engine import ComedianContentEngine
 
+# Intelligence & Analytics (Phase 2 - Completed)
+from .content_intelligence_hub import ContentIntelligenceHub
+from .platform_integration_manager import PlatformIntegrationManager
+from .content_performance_analytics import ContentPerformanceAnalytics
+from .media_asset_optimizer import MediaAssetOptimizer
+
 __all__ = [
     # Core Engines
     "AudioSEOEngine",
@@ -45,5 +51,11 @@ __all__ = [
     "BloggerContentOptimizer", 
     "PhotographerSEOEngine",
     "InfluencerContentOptimizer",
-    "ComedianContentEngine"
+    "ComedianContentEngine",
+    
+    # Intelligence & Analytics
+    "ContentIntelligenceHub",
+    "PlatformIntegrationManager",
+    "ContentPerformanceAnalytics",
+    "MediaAssetOptimizer"
 ]
