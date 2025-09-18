@@ -1,0 +1,831 @@
+# =====================================================================================
+# Container Security Template - Ainflue Configuration Module
+# =====================================================================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
+# Utilisation commerciale INTERDITE sans autorisation écrite
+# =====================================================================================
+
+version: '3.8'
+
+# =====================================================================================
+# AINFLUE CREATOR ECONOMY - CONTAINER SECURITY CONFIGURATION
+# =====================================================================================
+
+# Networks with security constraints
+networks:
+  # DMZ network for public-facing services
+  dmz_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "false"
+      com.docker.network.bridge.enable_ip_masquerade: "true"
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          ip_range: 172.20.1.0/24
+          gateway: 172.20.0.1
+    labels:
+      - "ainflue.network.type=dmz"
+      - "ainflue.security.level=high"
+      - "ainflue.compliance.pci-dss=enabled"
+
+  # Internal network for backend services
+  internal_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "true"
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/16
+          ip_range: 172.21.1.0/24
+          gateway: 172.21.0.1
+    labels:
+      - "ainflue.network.type=internal"
+      - "ainflue.security.level=maximum"
+      - "ainflue.data.classification=confidential"
+
+  # Database network (isolated)
+  database_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "false"
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.22.0.0/16
+          ip_range: 172.22.1.0/24
+          gateway: 172.22.0.1
+    labels:
+      - "ainflue.network.type=database"
+      - "ainflue.security.level=critical"
+      - "ainflue.encryption=required"
+
+  # Cache network (Redis/Memcached)
+  cache_network:
+    driver: bridge
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.23.0.0/16
+          ip_range: 172.23.1.0/24
+          gateway: 172.23.0.1
+    labels:
+      - "ainflue.network.type=cache"
+      - "ainflue.security.level=high"
+
+# =====================================================================================
+# VOLUMES WITH SECURITY CONFIGURATIONS
+# =====================================================================================
+
+volumes:
+  # Encrypted volumes for sensitive data
+  creator_content_encrypted:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=1G,uid=1000,gid=1000,mode=0700"
+    labels:
+      - "ainflue.volume.type=encrypted"
+      - "ainflue.data.classification=sensitive"
+      - "ainflue.backup.required=true"
+
+  # Database volume with encryption
+  postgres_data_encrypted:
+    driver: local
+    driver_opts:
+      type: none
+      device: /opt/ainflue/data/postgres
+      o: bind,rw,noexec,nosuid,nodev
+    labels:
+      - "ainflue.volume.type=database"
+      - "ainflue.encryption=luks"
+      - "ainflue.backup.frequency=hourly"
+
+  # Redis data with memory protection
+  redis_data_secure:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=512M,uid=999,gid=999,mode=0600"
+    labels:
+      - "ainflue.volume.type=cache"
+      - "ainflue.security.memory_protection=enabled"
+
+  # Log volumes with audit trail
+  audit_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /var/log/ainflue/audit
+      o: bind,ro
+    labels:
+      - "ainflue.volume.type=audit"
+      - "ainflue.compliance.sox=required"
+      - "ainflue.retention.period=7years"
+
+# =====================================================================================
+# SECRETS MANAGEMENT
+# =====================================================================================
+
+secrets:
+  # Database credentials
+  postgres_password:
+    external: true
+    external_name: ainflue_postgres_password_v1
+    labels:
+      - "ainflue.secret.type=database"
+      - "ainflue.secret.rotation=monthly"
+
+  # API keys for creator services
+  openai_api_key:
+    external: true
+    external_name: ainflue_openai_api_key_v1
+    labels:
+      - "ainflue.secret.type=api_key"
+      - "ainflue.secret.provider=openai"
+
+  # JWT signing key
+  jwt_signing_key:
+    external: true
+    external_name: ainflue_jwt_signing_key_v1
+    labels:
+      - "ainflue.secret.type=signing_key"
+      - "ainflue.secret.algorithm=rs256"
+
+  # SSL certificates
+  ssl_certificate:
+    external: true
+    external_name: ainflue_ssl_certificate_v1
+    labels:
+      - "ainflue.secret.type=tls_cert"
+      - "ainflue.secret.validity=90days"
+
+  ssl_private_key:
+    external: true
+    external_name: ainflue_ssl_private_key_v1
+    labels:
+      - "ainflue.secret.type=tls_key"
+      - "ainflue.secret.algorithm=rsa4096"
+
+# =====================================================================================
+# CONFIGS
+# =====================================================================================
+
+configs:
+  # Security configuration
+  security_config:
+    external: true
+    external_name: ainflue_security_config_v1
+    labels:
+      - "ainflue.config.type=security"
+      - "ainflue.config.validation=required"
+
+  # NGINX security configuration
+  nginx_security_conf:
+    external: true
+    external_name: ainflue_nginx_security_v1
+    labels:
+      - "ainflue.config.type=nginx_security"
+      - "ainflue.config.waf=enabled"
+
+  # Application firewall rules
+  modsecurity_rules:
+    external: true
+    external_name: ainflue_modsecurity_rules_v1
+    labels:
+      - "ainflue.config.type=waf_rules"
+      - "ainflue.config.owasp=enabled"
+
+# =====================================================================================
+# SERVICES WITH SECURITY HARDENING
+# =====================================================================================
+
+services:
+
+  # =====================================================================================
+  # REVERSE PROXY WITH WAF (Web Application Firewall)
+  # =====================================================================================
+  
+  reverse_proxy:
+    image: owasp/modsecurity-crs:3.3.4-nginx-202310120947
+    container_name: ainflue_reverse_proxy_secure
+    restart: unless-stopped
+    
+    # Security context
+    user: "nginx:nginx"
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+      - apparmor:docker-nginx
+      - seccomp:@syscalls/networking.json
+    
+    # Capabilities (minimal)
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - CHOWN
+      - SETGID
+      - SETUID
+    
+    # Ports with security binding
+    ports:
+      - "443:443"    # HTTPS only
+      - "127.0.0.1:8080:8080"  # Health check (localhost only)
+    
+    networks:
+      - dmz_network
+      - internal_network
+    
+    # Secrets and configs
+    secrets:
+      - source: ssl_certificate
+        target: /etc/ssl/certs/server.crt
+        mode: 0444
+      - source: ssl_private_key
+        target: /etc/ssl/private/server.key
+        mode: 0400
+    
+    configs:
+      - source: nginx_security_conf
+        target: /etc/nginx/conf.d/security.conf
+        mode: 0444
+      - source: modsecurity_rules
+        target: /etc/modsecurity/custom_rules.conf
+        mode: 0444
+    
+    # Environment variables (security-focused)
+    environment:
+      - NGINX_WORKER_PROCESSES=auto
+      - NGINX_WORKER_CONNECTIONS=1024
+      - MODSEC_RULE_ENGINE=On
+      - MODSEC_REQ_BODY_ACCESS=On
+      - MODSEC_REQ_BODY_LIMIT=13107200
+      - MODSEC_RESP_BODY_ACCESS=On
+      - MODSEC_AUDIT_ENGINE=RelevantOnly
+      - MODSEC_AUDIT_LOG_TYPE=Serial
+      - PARANOIA_LEVEL=2
+      - ANOMALY_INBOUND=5
+      - ANOMALY_OUTBOUND=4
+      - BLOCKING_PARANOIA_LEVEL=2
+    
+    # Temporary filesystems (security)
+    tmpfs:
+      - /tmp:rw,size=100M,mode=1777
+      - /var/cache/nginx:rw,size=100M,mode=0755
+      - /var/run:rw,size=10M,mode=0755
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    labels:
+      - "ainflue.service.type=reverse_proxy"
+      - "ainflue.security.waf=enabled"
+      - "ainflue.security.level=critical"
+      - "ainflue.compliance.pci-dss=required"
+
+  # =====================================================================================
+  # API GATEWAY WITH AUTHENTICATION
+  # =====================================================================================
+  
+  api_gateway:
+    image: kong/kong-gateway:3.4.2-alpine
+    container_name: ainflue_api_gateway_secure
+    restart: unless-stopped
+    
+    # Security context
+    user: "kong:kong"
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 512M
+        reservations:
+          cpus: '0.3'
+          memory: 128M
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:@default
+    
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    
+    ports:
+      - "127.0.0.1:8001:8001"  # Admin API (localhost only)
+      - "8000:8000"            # Proxy
+    
+    networks:
+      - dmz_network
+      - internal_network
+    
+    secrets:
+      - jwt_signing_key
+    
+    environment:
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/opt/kong/kong.yaml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_PROXY_LISTEN=0.0.0.0:8000
+      - KONG_PLUGINS=bundled,jwt,rate-limiting,cors,request-size-limiting
+      - KONG_LOG_LEVEL=notice
+      - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
+      - KONG_REAL_IP_HEADER=X-Forwarded-For
+      - KONG_REAL_IP_RECURSIVE=on
+    
+    tmpfs:
+      - /tmp:rw,size=50M,mode=1777
+      - /var/run:rw,size=10M,mode=0755
+    
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=api_gateway"
+      - "ainflue.security.auth=jwt"
+      - "ainflue.security.rate_limiting=enabled"
+
+  # =====================================================================================
+  # APPLICATION SERVICE (HARDENED)
+  # =====================================================================================
+  
+  app_service:
+    image: ainflue/creator-platform:${APP_VERSION:-latest}
+    container_name: ainflue_app_secure
+    restart: unless-stopped
+    
+    # Security context
+    user: "1000:1000"  # Non-root user
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:@profiles/default.json
+      - apparmor:docker-default
+    
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    
+    networks:
+      - internal_network
+      - database_network
+      - cache_network
+    
+    secrets:
+      - postgres_password
+      - openai_api_key
+      - jwt_signing_key
+    
+    configs:
+      - security_config
+    
+    environment:
+      - NODE_ENV=production
+      - APP_ENV=${ENVIRONMENT:-production}
+      - LOG_LEVEL=info
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - OPENAI_API_KEY_FILE=/run/secrets/openai_api_key
+      - JWT_SIGNING_KEY_FILE=/run/secrets/jwt_signing_key
+      - SECURITY_CONFIG_FILE=/security_config
+      - MAX_REQUEST_SIZE=10MB
+      - RATE_LIMIT_WINDOW=900000
+      - RATE_LIMIT_MAX=100
+      - SESSION_TIMEOUT=3600
+      - BCRYPT_ROUNDS=12
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://app.ainflue.com}
+    
+    volumes:
+      - creator_content_encrypted:/app/uploads:rw
+      - audit_logs:/app/logs:ro
+    
+    tmpfs:
+      - /tmp:rw,size=100M,mode=1777
+      - /app/cache:rw,size=200M,mode=0755
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    
+    labels:
+      - "ainflue.service.type=application"
+      - "ainflue.security.level=high"
+      - "ainflue.data.encryption=required"
+
+  # =====================================================================================
+  # DATABASE (POSTGRESQL WITH SECURITY)
+  # =====================================================================================
+  
+  postgres_secure:
+    image: postgres:15.4-alpine
+    container_name: ainflue_postgres_secure
+    restart: unless-stopped
+    
+    # Security context
+    user: "postgres:postgres"
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:@profiles/postgres.json
+    
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    
+    networks:
+      - database_network
+    
+    secrets:
+      - postgres_password
+    
+    environment:
+      - POSTGRES_DB=ainflue_production
+      - POSTGRES_USER=ainflue
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=scram-sha-256
+      - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    
+    volumes:
+      - postgres_data_encrypted:/var/lib/postgresql/data:rw
+    
+    tmpfs:
+      - /tmp:rw,size=100M,mode=1777
+      - /run:rw,size=10M,mode=0755
+      - /var/run/postgresql:rw,size=10M,mode=0755
+    
+    command: >
+      postgres
+      -c ssl=on
+      -c ssl_cert_file=/var/lib/postgresql/server.crt
+      -c ssl_key_file=/var/lib/postgresql/server.key
+      -c ssl_ciphers='ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384'
+      -c ssl_prefer_server_ciphers=on
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_checkpoints=on
+      -c log_lock_waits=on
+      -c log_temp_files=0
+      -c log_autovacuum_min_duration=0
+      -c log_error_verbosity=default
+      -c log_line_prefix='%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '
+      -c log_statement=ddl
+      -c log_min_duration_statement=1000
+      -c shared_preload_libraries='pg_stat_statements'
+      -c max_connections=200
+      -c shared_buffers=512MB
+      -c effective_cache_size=1536MB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ainflue -d ainflue_production"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=database"
+      - "ainflue.security.encryption=tde"
+      - "ainflue.backup.schedule=hourly"
+
+  # =====================================================================================
+  # REDIS CACHE (SECURED)
+  # =====================================================================================
+  
+  redis_secure:
+    image: redis:7.2.1-alpine
+    container_name: ainflue_redis_secure
+    restart: unless-stopped
+    
+    # Security context
+    user: "redis:redis"
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:@profiles/redis.json
+    
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    
+    networks:
+      - cache_network
+    
+    volumes:
+      - redis_data_secure:/data:rw
+    
+    tmpfs:
+      - /tmp:rw,size=50M,mode=1777
+    
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD}
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 400mb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 60
+      --timeout 300
+      --tcp-backlog 511
+      --bind 0.0.0.0
+      --protected-mode yes
+      --port 6379
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --rdbcompression yes
+      --rdbchecksum yes
+      --stop-writes-on-bgsave-error yes
+      --dir /data
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=cache"
+      - "ainflue.security.auth=required"
+      - "ainflue.data.persistence=enabled"
+
+  # =====================================================================================
+  # SECURITY MONITORING (FALCO)
+  # =====================================================================================
+  
+  security_monitor:
+    image: falcosecurity/falco:0.36.1
+    container_name: ainflue_security_monitor
+    restart: unless-stopped
+    
+    privileged: true  # Required for kernel monitoring
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    
+    networks:
+      - internal_network
+    
+    volumes:
+      - /var/run/docker.sock:/host/var/run/docker.sock:ro
+      - /dev:/host/dev:ro
+      - /proc:/host/proc:ro
+      - /boot:/host/boot:ro
+      - /lib/modules:/host/lib/modules:ro
+      - /usr:/host/usr:ro
+      - /etc:/host/etc:ro
+      - audit_logs:/var/log/falco:rw
+    
+    environment:
+      - FALCO_LOG_LEVEL=INFO
+      - FALCO_LOG_FORMAT=json
+      - FALCO_GRPC_ENABLED=true
+      - FALCO_GRPC_BIND_ADDRESS=0.0.0.0:5060
+      - FALCO_OUTPUT_TIMEOUT=2000
+    
+    command: /usr/bin/falco --pidfile=/var/run/falco.pid
+    
+    healthcheck:
+      test: ["CMD", "pgrep", "falco"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=security_monitor"
+      - "ainflue.security.monitoring=runtime"
+      - "ainflue.compliance.required=true"
+
+  # =====================================================================================
+  # LOG AGGREGATION (FLUENTD)
+  # =====================================================================================
+  
+  log_aggregator:
+    image: fluent/fluentd:v1.16.2-debian-1.0
+    container_name: ainflue_log_aggregator
+    restart: unless-stopped
+    
+    # Security context
+    user: "fluent:fluent"
+    read_only: true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    
+    cap_drop:
+      - ALL
+    
+    networks:
+      - internal_network
+    
+    volumes:
+      - audit_logs:/fluentd/log:rw
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    
+    tmpfs:
+      - /tmp:rw,size=50M,mode=1777
+      - /fluentd/etc:rw,size=10M,mode=0755
+    
+    environment:
+      - FLUENTD_CONF=fluent.conf
+      - FLUENTD_LOG_LEVEL=info
+    
+    healthcheck:
+      test: ["CMD", "pgrep", "fluentd"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=log_aggregator"
+      - "ainflue.security.audit=enabled"
+      - "ainflue.compliance.logging=required"
+
+# =====================================================================================
+# SECURITY LABELS AND METADATA
+# =====================================================================================
+
+x-security-policy: &security-policy
+  # Container security baseline
+  security_opt:
+    - no-new-privileges:true
+    - seccomp:@profiles/default.json
+    - apparmor:docker-default
+  
+  # Drop all capabilities by default
+  cap_drop:
+    - ALL
+  
+  # Read-only root filesystem
+  read_only: true
+  
+  # Resource limits
+  deploy:
+    resources:
+      limits:
+        pids: 100
+        
+x-monitoring-labels: &monitoring-labels
+  - "ainflue.monitoring.enabled=true"
+  - "ainflue.metrics.endpoint=/metrics"
+  - "ainflue.health.endpoint=/health"
+  - "ainflue.logs.driver=fluentd"
+
+x-backup-labels: &backup-labels
+  - "ainflue.backup.enabled=true"
+  - "ainflue.backup.retention=30d"
+  - "ainflue.backup.encryption=aes256"
+
+x-compliance-labels: &compliance-labels
+  - "ainflue.compliance.pci-dss=required"
+  - "ainflue.compliance.gdpr=required"
+  - "ainflue.compliance.sox=required"
+  - "ainflue.audit.required=true"
+
+# =====================================================================================
+# SECURITY EXTENSIONS AND ANCHORS
+# =====================================================================================
+
+x-creator-security-context: &creator-security-context
+  <<: *security-policy
+  user: "1000:1000"
+  environment:
+    - SECURITY_LEVEL=high
+    - ENCRYPTION_REQUIRED=true
+    - AUDIT_ENABLED=true
+    - SESSION_TIMEOUT=3600
+    - MAX_UPLOAD_SIZE=100MB
+    - CONTENT_SCAN_ENABLED=true
+
+x-database-security-context: &database-security-context
+  <<: *security-policy
+  environment:
+    - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
+    - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
+    - SSL_REQUIRED=true
+    - ENCRYPTION_AT_REST=true
+    - AUDIT_LOGGING=enabled
+
+# =====================================================================================
+# END OF TEMPLATE
+# =====================================================================================
