@@ -1,0 +1,366 @@
+# Database Configuration Enterprise
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Version: 1.0.0 Enterprise Creator Economy Platform  
+# ⚠️ AVERTISSEMENT LÉGAL: Configuration propriétaire - Utilisation commerciale interdite sans autorisation
+
+# PostgreSQL Configuration (Primary Database)
+postgresql:
+  primary:
+    host: "${POSTGRES_HOST:-localhost}"
+    port: "${POSTGRES_PORT:-5432}"
+    database: "${POSTGRES_DB:-ainflue_creator}"
+    username: "${POSTGRES_USER:-ainflue_user}"
+    password: "${POSTGRES_PASSWORD}"
+    
+  connection_pool:
+    min_size: 5
+    max_size: 50
+    max_overflow: 100
+    pool_timeout: 30
+    pool_recycle: 3600
+    pool_pre_ping: true
+    
+  read_replicas:
+    enabled: true
+    hosts:
+      - "${POSTGRES_READ_REPLICA_1}"
+      - "${POSTGRES_READ_REPLICA_2}"
+    load_balancing: "round_robin"
+    fallback_to_primary: true
+    
+  performance:
+    statement_timeout: 30000
+    idle_in_transaction_session_timeout: 60000
+    shared_preload_libraries: "pg_stat_statements"
+    max_connections: 200
+    shared_buffers: "256MB"
+    effective_cache_size: "1GB"
+    
+  monitoring:
+    log_statement: "all"
+    log_duration: true
+    log_slow_queries: true
+    slow_query_threshold: 1000
+    
+  backup:
+    enabled: true
+    method: "pg_dump"
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    retention_days: 30
+    compression: true
+    encryption: true
+    
+  security:
+    ssl_mode: "require"
+    ssl_cert: "/certs/postgresql.crt"
+    ssl_key: "/certs/postgresql.key"
+    ssl_ca: "/certs/ca.crt"
+    
+# Redis Configuration (Cache & Session Store)
+redis:
+  primary:
+    host: "${REDIS_HOST:-localhost}"
+    port: "${REDIS_PORT:-6379}"
+    password: "${REDIS_PASSWORD}"
+    db: 0
+    
+  cluster:
+    enabled: "${REDIS_CLUSTER_ENABLED:-false}"
+    nodes:
+      - "${REDIS_NODE_1:-localhost:6379}"
+      - "${REDIS_NODE_2:-localhost:6380}"
+      - "${REDIS_NODE_3:-localhost:6381}"
+    
+  connection_pool:
+    max_connections: 100
+    retry_on_timeout: true
+    socket_keepalive: true
+    socket_keepalive_options:
+      TCP_KEEPIDLE: 1
+      TCP_KEEPINTVL: 3
+      TCP_KEEPCNT: 5
+      
+  performance:
+    maxmemory: "2gb"
+    maxmemory_policy: "allkeys-lru"
+    timeout: 300
+    tcp_keepalive: 60
+    
+  databases:
+    session_store: 0
+    cache: 1
+    rate_limiting: 2
+    job_queue: 3
+    metrics: 4
+    
+  monitoring:
+    enable_monitoring: true
+    slowlog_max_len: 1000
+    slowlog_log_slower_than: 10000
+    
+  persistence:
+    rdb_enabled: true
+    rdb_filename: "dump.rdb"
+    save_intervals: "900 1 300 10 60 10000"
+    aof_enabled: true
+    aof_filename: "appendonly.aof"
+    
+  security:
+    requirepass: "${REDIS_PASSWORD}"
+    rename_commands:
+      FLUSHDB: ""
+      FLUSHALL: ""
+      CONFIG: "CONFIG_b94a2e4"
+
+# MongoDB Configuration (Content & Media Storage)
+mongodb:
+  primary:
+    uri: "${MONGODB_URI}"
+    database: "${MONGODB_DATABASE:-ainflue_content}"
+    
+  connection:
+    max_pool_size: 100
+    min_pool_size: 5
+    max_idle_time_ms: 30000
+    server_selection_timeout_ms: 30000
+    socket_timeout_ms: 0
+    connect_timeout_ms: 10000
+    
+  replica_set:
+    name: "ainflue-rs"
+    read_preference: "secondaryPreferred"
+    write_concern:
+      w: "majority"
+      j: true
+      wtimeout: 10000
+      
+  collections:
+    content_metadata:
+      indexes:
+        - {"creator_id": 1, "created_at": -1}
+        - {"content_type": 1, "status": 1}
+        - {"tags": 1}
+        - {"collaboration_id": 1}
+      sharding:
+        enabled: true
+        shard_key: {"creator_id": "hashed"}
+        
+    media_files:
+      indexes:
+        - {"file_hash": 1}
+        - {"upload_date": -1}
+        - {"file_type": 1, "file_size": 1}
+      ttl_index:
+        field: "expires_at"
+        expire_after_seconds: 0
+        
+    analytics_events:
+      indexes:
+        - {"timestamp": -1}
+        - {"event_type": 1, "timestamp": -1}
+        - {"user_id": 1, "timestamp": -1}
+      capped_collection:
+        enabled: true
+        size: "10GB"
+        max_documents: 10000000
+        
+  monitoring:
+    profiling_level: 1
+    slow_operation_threshold: 1000
+    
+  security:
+    ssl_enabled: true
+    ssl_cert_file: "/certs/mongodb.pem"
+    ssl_ca_file: "/certs/mongodb-ca.pem"
+    auth_mechanism: "SCRAM-SHA-256"
+
+# Elasticsearch Configuration (Search & Analytics)
+elasticsearch:
+  cluster:
+    name: "ainflue-cluster"
+    hosts:
+      - "${ELASTICSEARCH_HOST_1:-localhost:9200}"
+      - "${ELASTICSEARCH_HOST_2:-localhost:9201}"
+      - "${ELASTICSEARCH_HOST_3:-localhost:9202}"
+      
+  connection:
+    timeout: 30
+    retry_on_timeout: true
+    max_retries: 3
+    sniff_on_start: true
+    sniff_on_connection_fail: true
+    
+  authentication:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    use_ssl: true
+    verify_certs: true
+    ssl_cert: "/certs/elasticsearch.crt"
+    ssl_key: "/certs/elasticsearch.key"
+    
+  indexes:
+    content_search:
+      settings:
+        number_of_shards: 3
+        number_of_replicas: 1
+        refresh_interval: "30s"
+      mappings:
+        properties:
+          title:
+            type: "text"
+            analyzer: "standard"
+          description:
+            type: "text"
+            analyzer: "standard"
+          tags:
+            type: "keyword"
+          creator_id:
+            type: "keyword"
+          created_at:
+            type: "date"
+            
+    analytics_logs:
+      settings:
+        number_of_shards: 5
+        number_of_replicas: 0
+        refresh_interval: "5s"
+      lifecycle:
+        policy: "analytics_policy"
+        rollover_alias: "analytics"
+        
+  monitoring:
+    cluster_health_check: true
+    index_stats_monitoring: true
+    performance_monitoring: true
+
+# ClickHouse Configuration (Analytics & Metrics)
+clickhouse:
+  connection:
+    host: "${CLICKHOUSE_HOST:-localhost}"
+    port: "${CLICKHOUSE_PORT:-9000}"
+    database: "${CLICKHOUSE_DATABASE:-ainflue_analytics}"
+    username: "${CLICKHOUSE_USERNAME}"
+    password: "${CLICKHOUSE_PASSWORD}"
+    
+  cluster:
+    enabled: true
+    cluster_name: "ainflue_cluster"
+    shards:
+      - host: "${CLICKHOUSE_SHARD_1}"
+        replicas: ["${CLICKHOUSE_REPLICA_1_1}", "${CLICKHOUSE_REPLICA_1_2}"]
+      - host: "${CLICKHOUSE_SHARD_2}"
+        replicas: ["${CLICKHOUSE_REPLICA_2_1}", "${CLICKHOUSE_REPLICA_2_2}"]
+        
+  tables:
+    events:
+      engine: "ReplicatedMergeTree"
+      partition_by: "toYYYYMM(timestamp)"
+      order_by: "timestamp, user_id"
+      ttl: "timestamp + INTERVAL 2 YEAR"
+      
+    metrics:
+      engine: "AggregatingMergeTree"
+      partition_by: "toYYYYMMDD(date)"
+      order_by: "date, metric_name"
+      
+  performance:
+    max_memory_usage: "10GB"
+    max_execution_time: 300
+    max_concurrent_queries: 100
+    
+  compression:
+    method: "lz4"
+    level: 1
+
+# Database Migration Configuration
+migrations:
+  postgresql:
+    directory: "/migrations/postgresql"
+    auto_migrate: true
+    backup_before_migration: true
+    
+  mongodb:
+    directory: "/migrations/mongodb"
+    auto_migrate: false
+    
+  elasticsearch:
+    directory: "/migrations/elasticsearch"
+    auto_migrate: true
+
+# Database Monitoring & Alerting
+monitoring:
+  metrics:
+    enabled: true
+    collection_interval: 30
+    retention_days: 90
+    
+  alerts:
+    connection_pool_usage: 80
+    slow_query_threshold: 5000
+    disk_usage_threshold: 85
+    replication_lag_threshold: 60
+    
+  dashboards:
+    grafana_enabled: true
+    custom_dashboards: true
+    
+# Backup & Disaster Recovery
+backup:
+  strategy: "3-2-1"  # 3 copies, 2 different media, 1 offsite
+  
+  postgresql:
+    full_backup_schedule: "0 1 * * 0"  # Weekly full backup
+    incremental_schedule: "0 2 * * 1-6"  # Daily incremental
+    point_in_time_recovery: true
+    
+  mongodb:
+    backup_schedule: "0 3 * * *"  # Daily backup
+    oplog_backup: true
+    
+  redis:
+    backup_schedule: "0 4 * * *"  # Daily backup
+    rdb_backup: true
+    aof_backup: true
+    
+  storage:
+    local_path: "/backups"
+    s3_bucket: "ainflue-db-backups"
+    encryption: true
+    compression: true
+    
+  retention:
+    daily_backups: 30
+    weekly_backups: 12
+    monthly_backups: 12
+    yearly_backups: 7
+
+# Performance Optimization
+optimization:
+  postgresql:
+    enable_parallel_queries: true
+    work_mem: "64MB"
+    maintenance_work_mem: "256MB"
+    checkpoint_completion_target: 0.9
+    
+  redis:
+    enable_lazy_freeing: true
+    active_rehashing: true
+    
+  mongodb:
+    enable_majority_read_concern: true
+    cursor_timeout: 600000
+    
+# Security Configuration
+security:
+  encryption_at_rest: true
+  encryption_in_transit: true
+  
+  access_control:
+    rbac_enabled: true
+    network_restrictions: true
+    audit_logging: true
+    
+  compliance:
+    gdpr_compliance: true
+    data_retention_policies: true
+    right_to_erasure: true
