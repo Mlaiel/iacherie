@@ -60,6 +60,35 @@ from .saml_processor import (
     SAMLSecurityConfig
 )
 
+# New enterprise security components
+from .password_policy_engine import (
+    PasswordPolicyEngine,
+    PasswordAnalysis,
+    PasswordStrength,
+    PasswordPolicyConfig
+)
+
+from .behavioral_analytics_engine import (
+    BehavioralAnalyticsEngine,
+    BehaviorEvent,
+    BehaviorProfile,
+    AnomalyDetection,
+    BehaviorType,
+    AnomalyLevel,
+    RiskScore,
+    BehaviorAnalyticsConfig
+)
+
+from .device_fingerprinting_manager import (
+    DeviceFingerprintingManager,
+    DeviceFingerprint,
+    FingerprintAnalysis,
+    DeviceType,
+    TrustLevel,
+    SecurityEvent,
+    DeviceFingerprintingConfig
+)
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -76,6 +105,11 @@ __all__ = [
     "SAMLProcessor",
     "SecurityMiddleware",
     
+    # New enterprise security components
+    "PasswordPolicyEngine",
+    "BehavioralAnalyticsEngine",
+    "DeviceFingerprintingManager",
+    
     # Enums
     "RiskLevel",
     "AuthenticationMethod",
@@ -84,6 +118,13 @@ __all__ = [
     "BiometricType",
     "OAuth2Provider",
     "SessionSecurityLevel",
+    "PasswordStrength",
+    "BehaviorType",
+    "AnomalyLevel",
+    "RiskScore",
+    "DeviceType",
+    "TrustLevel",
+    "SecurityEvent",
     
     # Data classes
     "AuthenticationChallenge",
@@ -94,10 +135,19 @@ __all__ = [
     "OAuth2Token",
     "SAMLResponse",
     "SAMLAssertion",
+    "PasswordAnalysis",
+    "BehaviorEvent",
+    "BehaviorProfile",
+    "AnomalyDetection",
+    "DeviceFingerprint",
+    "FingerprintAnalysis",
     
     # Configurations
     "OAuth2SecurityConfig",
     "SAMLSecurityConfig",
+    "PasswordPolicyConfig",
+    "BehaviorAnalyticsConfig",
+    "DeviceFingerprintingConfig",
     
     # Exceptions
     "JWTSecurityError",
