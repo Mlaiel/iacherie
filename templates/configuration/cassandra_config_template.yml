@@ -1,0 +1,604 @@
+# Cassandra Configuration Template for Ainflue Platform
+# NoSQL database for time-series data, analytics, and large-scale data storage
+
+# Cluster name - all nodes in a cluster must have the same value
+cluster_name: 'ainflue-cluster'
+
+# Number of tokens randomly assigned to this node on the ring
+num_tokens: 256
+
+# Hinted handoff settings
+hinted_handoff_enabled: true
+max_hint_window_in_ms: 10800000 # 3 hours
+hinted_handoff_throttle_in_kb: 1024
+max_hints_delivery_threads: 2
+hints_flush_period_in_ms: 10000
+max_hints_file_size_in_mb: 128
+hints_compression: LZ4Compressor
+
+# Authentication and authorization
+authenticator: PasswordAuthenticator
+authorizer: CassandraAuthorizer
+role_manager: CassandraRoleManager
+
+# Network encryption
+client_encryption_options:
+    enabled: true
+    optional: false
+    keystore: /etc/cassandra/ssl/keystore.jks
+    keystore_password: ${CASSANDRA_KEYSTORE_PASSWORD}
+    truststore: /etc/cassandra/ssl/truststore.jks
+    truststore_password: ${CASSANDRA_TRUSTSTORE_PASSWORD}
+    protocol: TLS
+    algorithm: SunX509
+    store_type: JKS
+    cipher_suites: [TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA]
+
+server_encryption_options:
+    internode_encryption: all
+    keystore: /etc/cassandra/ssl/keystore.jks
+    keystore_password: ${CASSANDRA_KEYSTORE_PASSWORD}
+    truststore: /etc/cassandra/ssl/truststore.jks
+    truststore_password: ${CASSANDRA_TRUSTSTORE_PASSWORD}
+    protocol: TLS
+    algorithm: SunX509
+    store_type: JKS
+    cipher_suites: [TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA]
+
+# Directories
+data_file_directories:
+    - /var/lib/cassandra/data
+
+commitlog_directory: /var/lib/cassandra/commitlog
+
+saved_caches_directory: /var/lib/cassandra/saved_caches
+
+hints_directory: /var/lib/cassandra/hints
+
+# Commit log settings
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000
+commitlog_segment_size_in_mb: 32
+commitlog_compression:
+    - class_name: LZ4Compressor
+
+# Memory allocation
+memtable_allocation_type: heap_buffers
+memtable_heap_space_in_mb: 2048
+memtable_offheap_space_in_mb: 2048
+
+# Cache settings
+key_cache_size_in_mb: 100
+key_cache_save_period: 14400
+row_cache_size_in_mb: 0
+row_cache_save_period: 0
+counter_cache_size_in_mb: 50
+counter_cache_save_period: 7200
+
+# Disk optimization
+disk_optimization_strategy: ssd
+disk_optimization_estimate_percentile: 0.95
+disk_optimization_page_cross_chance: 0.1
+
+# Compaction
+compaction_throughput_mb_per_sec: 64
+compaction_large_partition_warning_threshold_mb: 1000
+
+concurrent_compactors: 4
+sstable_preemptive_open_interval_in_mb: 50
+
+# Multi-threaded compaction
+concurrent_validations: 1
+concurrent_materialized_view_builders: 1
+
+# Network
+listen_address: ${CASSANDRA_LISTEN_ADDRESS}
+broadcast_address: ${CASSANDRA_BROADCAST_ADDRESS}
+listen_on_broadcast_address: false
+
+start_native_transport: true
+native_transport_port: 9042
+native_transport_allow_older_protocols: true
+native_transport_max_threads: 128
+native_transport_max_frame_size_in_mb: 256
+
+start_rpc: false
+rpc_port: 9160
+rpc_keepalive: true
+rpc_server_type: sync
+
+# Endpoint snitch
+endpoint_snitch: Ec2MultiRegionSnitch
+
+# Dynamic endpoint snitch
+dynamic_snitch_update_interval_in_ms: 100
+dynamic_snitch_reset_interval_in_ms: 600000
+dynamic_snitch_badness_threshold: 0.1
+
+# Request scheduling
+request_scheduler: org.apache.cassandra.scheduler.NoScheduler
+
+# Storage port (for inter-node communication)
+storage_port: 7000
+ssl_storage_port: 7001
+
+# Timeouts
+read_request_timeout_in_ms: 5000
+range_request_timeout_in_ms: 10000
+write_request_timeout_in_ms: 2000
+counter_write_request_timeout_in_ms: 5000
+cas_contention_timeout_in_ms: 1000
+truncate_request_timeout_in_ms: 60000
+request_timeout_in_ms: 10000
+
+# Cross-node timeout
+cross_node_timeout: false
+
+# Streaming socket timeout
+streaming_socket_timeout_in_ms: 86400000
+
+# Phi failure detector
+phi_convict_threshold: 8
+
+# GC grace
+gc_grace_seconds: 864000
+
+# Row and column limits
+max_streaming_retries: 3
+stream_throughput_outbound_megabits_per_sec: 200
+
+# Batch size warnings
+batch_size_warn_threshold_in_kb: 64
+batch_size_fail_threshold_in_kb: 640
+unlogged_batch_across_partitions_warn_threshold: 10
+
+# Incremental backups
+incremental_backups: false
+snapshot_before_compaction: false
+auto_snapshot: true
+
+# Column index
+column_index_size_in_kb: 64
+column_index_cache_size_in_kb: 2
+
+# Memtable flush
+memtable_flush_writers: 4
+
+# Index summary
+index_summary_capacity_in_mb: 100
+index_summary_resize_interval_in_minutes: 60
+
+# Trickle fsync
+trickle_fsync: false
+trickle_fsync_interval_in_kb: 10240
+
+# Windows specific
+windows_timer_interval: 1
+
+# Internode compression
+internode_compression: dc
+
+# Inter-datacenter stream compression
+inter_dc_stream_throughput_outbound_megabits_per_sec: 200
+
+# Commit failure policy
+commit_failure_policy: stop
+
+# Disk failure policy
+disk_failure_policy: stop_paranoid
+
+# JMX
+jmx_port: 7199
+
+# Metrics
+enable_materialized_views: true
+enable_sasi_indexes: true
+
+# Back pressure
+back_pressure_enabled: false
+back_pressure_strategy:
+    class_name: org.apache.cassandra.net.RateBasedBackPressure
+    parameters:
+        high_ratio: 0.90
+        factor: 5
+        flow: FAST
+
+# CDC (Change Data Capture)
+cdc_enabled: false
+cdc_total_space_in_mb: 4096
+cdc_free_space_check_interval_ms: 250
+
+# Networking
+otc_coalescing_strategy: TIMEHORIZON
+otc_coalescing_window_us: 200
+otc_coalescing_enough_coalesced_messages: 8
+
+# Materialized views
+materialized_views_enabled: true
+
+# Prepared statements
+prepared_statements_cache_size_mb: 10
+
+# Thrift
+thrift_prepared_statements_cache_size_mb: 10
+
+# User-defined functions
+enable_user_defined_functions: false
+enable_scripted_user_defined_functions: false
+enable_user_defined_functions_threads: true
+user_defined_function_warn_timeout: 500
+user_defined_function_fail_timeout: 1500
+user_function_timeout_policy: die
+
+# Transparent data encryption
+transparent_data_encryption_options:
+    enabled: false
+    chunk_length_kb: 64
+    cipher: AES/CBC/PKCS5Padding
+    key_alias: testing:1
+    key_provider: 
+      - class_name: org.apache.cassandra.security.JKSKeyProvider
+        parameters: 
+          - keystore: conf/.keystore
+            keystore_password: cassandra
+            store_type: JCEKS
+            key_password: cassandra
+
+# Audit logging
+audit_logging_options:
+    enabled: false
+    logger: BinAuditLogger
+    audit_logs_dir: /var/log/cassandra/audit
+    included_keyspaces: 
+    excluded_keyspaces: system, system_schema, system_virtual_schema
+    included_categories: 
+    excluded_categories: 
+    included_users: 
+    excluded_users: 
+
+---
+# Cassandra Keyspace and Table Definitions for Ainflue
+
+# Create keyspace
+CREATE KEYSPACE IF NOT EXISTS ainflue 
+WITH REPLICATION = {
+    'class': 'NetworkTopologyStrategy',
+    'datacenter1': 3,
+    'datacenter2': 3
+} 
+AND DURABLE_WRITES = true;
+
+USE ainflue;
+
+# User activities table (time-series data)
+CREATE TABLE user_activities (
+    user_id UUID,
+    activity_time TIMESTAMP,
+    activity_type TEXT,
+    activity_data MAP<TEXT, TEXT>,
+    session_id UUID,
+    ip_address INET,
+    user_agent TEXT,
+    platform TEXT,
+    created_at TIMESTAMP,
+    PRIMARY KEY (user_id, activity_time)
+) WITH CLUSTERING ORDER BY (activity_time DESC)
+   AND COMPACTION = {
+       'class': 'TimeWindowCompactionStrategy',
+       'compaction_window_size': 1,
+       'compaction_window_unit': 'DAYS'
+   }
+   AND GC_GRACE_SECONDS = 86400;
+
+# Content performance metrics (time-series)
+CREATE TABLE content_metrics (
+    content_id UUID,
+    metric_time TIMESTAMP,
+    platform TEXT,
+    views BIGINT,
+    likes BIGINT,
+    comments BIGINT,
+    shares BIGINT,
+    engagement_rate DOUBLE,
+    reach BIGINT,
+    impressions BIGINT,
+    click_through_rate DOUBLE,
+    conversion_rate DOUBLE,
+    revenue DECIMAL,
+    PRIMARY KEY ((content_id, platform), metric_time)
+) WITH CLUSTERING ORDER BY (metric_time DESC)
+   AND COMPACTION = {
+       'class': 'TimeWindowCompactionStrategy',
+       'compaction_window_size': 7,
+       'compaction_window_unit': 'DAYS'
+   };
+
+# Campaign analytics (time-series)
+CREATE TABLE campaign_analytics (
+    campaign_id UUID,
+    date_day DATE,
+    hour INT,
+    total_views BIGINT,
+    total_engagement BIGINT,
+    total_reach BIGINT,
+    total_impressions BIGINT,
+    unique_viewers BIGINT,
+    click_through_rate DOUBLE,
+    conversion_rate DOUBLE,
+    cost_per_view DECIMAL,
+    cost_per_engagement DECIMAL,
+    roi DOUBLE,
+    revenue DECIMAL,
+    spend DECIMAL,
+    creator_count INT,
+    content_count INT,
+    PRIMARY KEY (campaign_id, date_day, hour)
+) WITH CLUSTERING ORDER BY (date_day DESC, hour DESC)
+   AND COMPACTION = {
+       'class': 'TimeWindowCompactionStrategy',
+       'compaction_window_size': 30,
+       'compaction_window_unit': 'DAYS'
+   };
+
+# Creator performance tracking
+CREATE TABLE creator_performance (
+    creator_id UUID,
+    period_start DATE,
+    period_end DATE,
+    total_content INT,
+    total_views BIGINT,
+    total_engagement BIGINT,
+    avg_engagement_rate DOUBLE,
+    follower_growth INT,
+    revenue_earned DECIMAL,
+    campaigns_completed INT,
+    brand_rating_avg DOUBLE,
+    top_performing_content LIST<UUID>,
+    platforms SET<TEXT>,
+    categories SET<TEXT>,
+    PRIMARY KEY (creator_id, period_start)
+) WITH CLUSTERING ORDER BY (period_start DESC);
+
+# Real-time engagement events
+CREATE TABLE engagement_events (
+    content_id UUID,
+    event_time TIMESTAMP,
+    user_id UUID,
+    event_type TEXT, -- like, comment, share, view, click
+    event_data MAP<TEXT, TEXT>,
+    user_location TEXT,
+    device_type TEXT,
+    platform TEXT,
+    PRIMARY KEY (content_id, event_time, user_id)
+) WITH CLUSTERING ORDER BY (event_time DESC)
+   AND COMPACTION = {
+       'class': 'TimeWindowCompactionStrategy',
+       'compaction_window_size': 1,
+       'compaction_window_unit': 'DAYS'
+   }
+   AND DEFAULT_TIME_TO_LIVE = 2592000; -- 30 days TTL
+
+# Revenue tracking (time-series)
+CREATE TABLE revenue_tracking (
+    account_id UUID,
+    transaction_time TIMESTAMP,
+    transaction_type TEXT, -- earning, payment, commission, fee
+    amount DECIMAL,
+    currency TEXT,
+    source_type TEXT, -- campaign, collaboration, bonus
+    source_id UUID,
+    payment_method TEXT,
+    payment_status TEXT,
+    metadata MAP<TEXT, TEXT>,
+    PRIMARY KEY (account_id, transaction_time)
+) WITH CLUSTERING ORDER BY (transaction_time DESC);
+
+# Audience demographics (aggregated data)
+CREATE TABLE audience_demographics (
+    creator_id UUID,
+    analysis_date DATE,
+    platform TEXT,
+    age_group TEXT,
+    gender TEXT,
+    location_country TEXT,
+    location_city TEXT,
+    audience_percentage DOUBLE,
+    engagement_rate DOUBLE,
+    growth_rate DOUBLE,
+    PRIMARY KEY ((creator_id, platform), analysis_date, age_group, gender, location_country)
+) WITH CLUSTERING ORDER BY (analysis_date DESC);
+
+# Content recommendations (ML-driven)
+CREATE TABLE content_recommendations (
+    user_id UUID,
+    recommendation_time TIMESTAMP,
+    content_id UUID,
+    score DOUBLE,
+    recommendation_type TEXT, -- trending, personalized, similar, category
+    reason TEXT,
+    category TEXT,
+    creator_id UUID,
+    engagement_predicted DOUBLE,
+    view_probability DOUBLE,
+    PRIMARY KEY (user_id, recommendation_time, content_id)
+) WITH CLUSTERING ORDER BY (recommendation_time DESC, score DESC)
+   AND DEFAULT_TIME_TO_LIVE = 604800; -- 7 days TTL
+
+# Search and discovery events
+CREATE TABLE search_events (
+    user_id UUID,
+    search_time TIMESTAMP,
+    search_query TEXT,
+    search_type TEXT, -- creator, campaign, content, brand
+    results_count INT,
+    clicked_results LIST<UUID>,
+    search_filters MAP<TEXT, TEXT>,
+    session_id UUID,
+    PRIMARY KEY (user_id, search_time)
+) WITH CLUSTERING ORDER BY (search_time DESC)
+   AND DEFAULT_TIME_TO_LIVE = 7776000; -- 90 days TTL
+
+# Notification delivery tracking
+CREATE TABLE notification_delivery (
+    user_id UUID,
+    notification_time TIMESTAMP,
+    notification_id UUID,
+    notification_type TEXT,
+    channel TEXT, -- email, push, sms, in_app
+    delivery_status TEXT, -- sent, delivered, opened, clicked, failed
+    delivery_attempt INT,
+    content_preview TEXT,
+    metadata MAP<TEXT, TEXT>,
+    PRIMARY KEY (user_id, notification_time, notification_id)
+) WITH CLUSTERING ORDER BY (notification_time DESC)
+   AND DEFAULT_TIME_TO_LIVE = 2592000; -- 30 days TTL
+
+---
+# Cassandra Secondary Indexes
+
+# Create indexes for common query patterns
+CREATE INDEX ON user_activities (activity_type);
+CREATE INDEX ON user_activities (session_id);
+CREATE INDEX ON content_metrics (platform);
+CREATE INDEX ON engagement_events (event_type);
+CREATE INDEX ON engagement_events (platform);
+CREATE INDEX ON revenue_tracking (transaction_type);
+CREATE INDEX ON revenue_tracking (source_type);
+CREATE INDEX ON search_events (search_type);
+
+---
+# Cassandra Materialized Views
+
+# Creator performance by category
+CREATE MATERIALIZED VIEW creator_performance_by_category AS
+SELECT creator_id, categories, period_start, avg_engagement_rate, revenue_earned, campaigns_completed
+FROM creator_performance
+WHERE creator_id IS NOT NULL AND period_start IS NOT NULL AND categories IS NOT NULL
+PRIMARY KEY (categories, avg_engagement_rate, creator_id, period_start)
+WITH CLUSTERING ORDER BY (avg_engagement_rate DESC, creator_id ASC, period_start DESC);
+
+# Top performing content by platform
+CREATE MATERIALIZED VIEW top_content_by_platform AS
+SELECT content_id, platform, metric_time, views, engagement_rate
+FROM content_metrics
+WHERE content_id IS NOT NULL AND platform IS NOT NULL AND metric_time IS NOT NULL
+PRIMARY KEY ((platform), views, content_id, metric_time)
+WITH CLUSTERING ORDER BY (views DESC, content_id ASC, metric_time DESC);
+
+---
+# Cassandra User-Defined Functions (UDFs)
+
+# Calculate engagement rate
+CREATE OR REPLACE FUNCTION engagement_rate(likes BIGINT, comments BIGINT, shares BIGINT, views BIGINT)
+CALLED ON NULL INPUT
+RETURNS DOUBLE
+LANGUAGE java AS
+'
+if (views == null || views == 0) return 0.0;
+long totalEngagement = 0L;
+if (likes != null) totalEngagement += likes;
+if (comments != null) totalEngagement += comments;
+if (shares != null) totalEngagement += shares;
+return (double) totalEngagement / views;
+';
+
+# Calculate ROI
+CREATE OR REPLACE FUNCTION calculate_roi(revenue DECIMAL, spend DECIMAL)
+CALLED ON NULL INPUT
+RETURNS DOUBLE
+LANGUAGE java AS
+'
+if (spend == null || spend.equals(java.math.BigDecimal.ZERO)) return 0.0;
+if (revenue == null) return -100.0;
+java.math.BigDecimal roi = revenue.subtract(spend).divide(spend, 4, java.math.RoundingMode.HALF_UP).multiply(new java.math.BigDecimal("100"));
+return roi.doubleValue();
+';
+
+---
+# Cassandra Backup and Restore
+
+#!/bin/bash
+# Backup script for Cassandra
+BACKUP_DIR="/backups/cassandra/$(date +%Y%m%d_%H%M%S)"
+mkdir -p $BACKUP_DIR
+
+# Create snapshot
+nodetool snapshot -t snapshot_$(date +%Y%m%d_%H%M%S) ainflue
+
+# Copy snapshot files
+cp -r /var/lib/cassandra/data/ainflue/*/snapshots/snapshot_$(date +%Y%m%d_%H%M%S)/* $BACKUP_DIR/
+
+# Backup schema
+cqlsh -e "DESCRIBE KEYSPACE ainflue;" > $BACKUP_DIR/schema.cql
+
+# Compress backup
+tar -czf $BACKUP_DIR.tar.gz $BACKUP_DIR
+
+# Upload to S3
+aws s3 cp $BACKUP_DIR.tar.gz s3://ainflue-db-backups/cassandra/
+
+# Clean up local files
+rm -rf $BACKUP_DIR
+rm $BACKUP_DIR.tar.gz
+
+echo "Backup completed and uploaded to S3"
+
+#!/bin/bash
+# Restore script for Cassandra
+BACKUP_FILE=$1
+if [ -z "$BACKUP_FILE" ]; then
+  echo "Usage: $0 <backup_file>"
+  exit 1
+fi
+
+# Stop Cassandra
+systemctl stop cassandra
+
+# Extract backup
+tar -xzf $BACKUP_FILE
+
+# Restore schema
+cqlsh -f schema.cql
+
+# Copy data files
+cp -r snapshot_data/* /var/lib/cassandra/data/ainflue/
+
+# Set permissions
+chown -R cassandra:cassandra /var/lib/cassandra/data
+
+# Start Cassandra
+systemctl start cassandra
+
+# Refresh tables
+nodetool refresh ainflue
+
+echo "Restore completed"
+
+---
+# Cassandra Monitoring Queries
+
+# Check cluster status
+SELECT peer, datacenter, rack, host_id, preferred_ip, release_version 
+FROM system.peers;
+
+# Check keyspace replication
+SELECT keyspace_name, durable_writes, replication 
+FROM system_schema.keyspaces 
+WHERE keyspace_name = 'ainflue';
+
+# Check table statistics
+SELECT keyspace_name, table_name, bloom_filter_fp_chance, 
+       caching, compaction, compression 
+FROM system_schema.tables 
+WHERE keyspace_name = 'ainflue';
+
+# Monitor compaction
+SELECT keyspace, columnfamily, completed_at, id, total 
+FROM system.compaction_history 
+ORDER BY completed_at DESC 
+LIMIT 10;
+
+# Check node info
+SELECT cluster_name, listen_address, native_protocol_version, 
+       partitioner, release_version 
+FROM system.local;
