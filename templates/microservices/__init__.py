@@ -49,20 +49,15 @@ from .microservice_template import (
 from .base_microservice import BaseMicroservice
 from .service_factory import ServiceFactory
 from .communication_manager import CommunicationManager
-# from .discovery_client import DiscoveryClient  # TODO: Implement
 from .circuit_breaker import CircuitBreaker
 from .metrics_collector import MetricsCollector
-# from .health_checker import HealthChecker  # TODO: Implement
-# from .config_manager import ConfigManager  # TODO: Implement
-# from .security_manager import SecurityManager  # TODO: Implement
-# from .message_broker import MessageBroker  # TODO: Implement
-# from .event_dispatcher import EventDispatcher  # TODO: Implement
-# from .saga_coordinator import SagaCoordinator  # TODO: Implement
-# from .service_registry import ServiceRegistry  # TODO: Implement
-# from .load_balancer import LoadBalancer  # TODO: Implement
-# from .performance_monitor import PerformanceMonitor  # TODO: Implement
-# from .deployment_manager import DeploymentManager  # TODO: Implement
-# from .testing_framework import TestingFramework  # TODO: Implement
+
+# Service templates modules
+from . import core_services
+from . import communication
+from . import creator_economy
+from . import discovery_registry
+from . import monitoring
 
 # Core Service Templates (existing)
 from .core_services import (
