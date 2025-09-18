@@ -53,6 +53,43 @@ from .anomaly_detection_engine import (
     DetectionMethod,
     AnomalyStatus
 )
+from .competitive_intelligence_monitor import (
+    CompetitiveIntelligenceMonitor,
+    Competitor,
+    CompetitiveChange,
+    RankingData,
+    ContentAnalysis,
+    MarketShareData,
+    SERPFeature,
+    CompetitorTier,
+    MonitoringScope,
+    AlertPriority,
+    ChangeType
+)
+from .metrics_collection_engine import (
+    MetricsCollectionEngine,
+    DataSourceConfig,
+    MetricDefinition,
+    MetricDataPoint as CollectionMetricDataPoint,
+    CollectionBatch,
+    DataSource,
+    MetricType,
+    DataQuality,
+    ProcessingStatus
+)
+from .target_performance_tracker import (
+    TargetPerformanceTracker,
+    PerformanceGoal,
+    KPIDefinition,
+    ProgressSnapshot,
+    Achievement,
+    ForecastingModel,
+    GoalType,
+    TargetPeriod,
+    GoalStatus,
+    ProgressTrend,
+    AlertType
+)
 
 __all__ = [
     # Core Monitoring
@@ -85,5 +122,42 @@ __all__ = [
     "AnomalyType",
     "AnomalySeverity", 
     "DetectionMethod",
-    "AnomalyStatus"
+    "AnomalyStatus",
+    
+    # Competitive Intelligence Monitor
+    "CompetitiveIntelligenceMonitor",
+    "Competitor",
+    "CompetitiveChange",
+    "RankingData",
+    "ContentAnalysis",
+    "MarketShareData",
+    "SERPFeature",
+    "CompetitorTier",
+    "MonitoringScope",
+    "AlertPriority",
+    "ChangeType",
+    
+    # Metrics Collection Engine
+    "MetricsCollectionEngine",
+    "DataSourceConfig",
+    "MetricDefinition",
+    "CollectionMetricDataPoint",
+    "CollectionBatch",
+    "DataSource",
+    "MetricType",
+    "DataQuality",
+    "ProcessingStatus",
+    
+    # Target Performance Tracker
+    "TargetPerformanceTracker",
+    "PerformanceGoal",
+    "KPIDefinition",
+    "ProgressSnapshot",
+    "Achievement",
+    "ForecastingModel",
+    "GoalType",
+    "TargetPeriod",
+    "GoalStatus",
+    "ProgressTrend",
+    "AlertType"
 ]
