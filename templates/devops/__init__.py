@@ -59,6 +59,39 @@ from .deployment_automation_template import (
     Environment
 )
 
+from .security_scanning_template import (
+    SecurityScanningTemplate,
+    SecurityScanConfig,
+    ScanType,
+    SeverityLevel,
+    create_production_security_config
+)
+
+from .secret_management_template import (
+    SecretManagementTemplate,
+    SecretManagementConfig,
+    SecretBackend,
+    SecretType,
+    create_production_secret_config
+)
+
+from .prometheus_config_template import (
+    PrometheusConfigTemplate,
+    PrometheusConfig,
+    MetricType,
+    ServiceType as PrometheusServiceType,
+    create_production_prometheus_config
+)
+
+from .creator_content_pipeline_template import (
+    CreatorContentPipelineTemplate,
+    CreatorPipelineConfig,
+    ContentType,
+    ProcessingStage,
+    QualityPreset,
+    create_production_pipeline_config
+)
+
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -102,7 +135,34 @@ __all__ = [
     "DeploymentAutomationTemplate",
     "DeploymentStage",
     "DeploymentStrategy",
-    "Environment"
+    "Environment",
+    
+    # Security DevOps
+    "SecurityScanningTemplate",
+    "SecurityScanConfig",
+    "ScanType",
+    "SeverityLevel",
+    "create_production_security_config",
+    
+    "SecretManagementTemplate",
+    "SecretManagementConfig",
+    "SecretBackend",
+    "SecretType",
+    "create_production_secret_config",
+    
+    # Monitoring & Observability
+    "PrometheusConfigTemplate",
+    "PrometheusConfig",
+    "MetricType",
+    "create_production_prometheus_config",
+    
+    # Creator Economy DevOps
+    "CreatorContentPipelineTemplate",
+    "CreatorPipelineConfig",
+    "ContentType",
+    "ProcessingStage",
+    "QualityPreset",
+    "create_production_pipeline_config"
 ]
 
 
