@@ -25,6 +25,9 @@ if TYPE_CHECKING:
     from .text_processor import TextProcessor
     from .media_handler import MediaHandler
     from .workflow_engine import WorkflowEngine
+    from .cache_manager import CacheManager
+    from .security_manager import SecurityManager
+    from .performance_monitor import PerformanceMonitor
 
 __all__ = [
     "DataProcessor",
@@ -33,12 +36,18 @@ __all__ = [
     "TextProcessor",
     "MediaHandler",
     "WorkflowEngine",
+    "CacheManager",
+    "SecurityManager", 
+    "PerformanceMonitor",
     "DataProcessorFactory",
     "FileManagerFactory",
     "DateTimeHandlerFactory", 
     "TextProcessorFactory",
     "MediaHandlerFactory",
-    "WorkflowEngineFactory"
+    "WorkflowEngineFactory",
+    "CacheManagerFactory",
+    "SecurityManagerFactory",
+    "PerformanceMonitorFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -61,6 +70,15 @@ def __getattr__(name: str):
     elif name == "WorkflowEngine":
         from .workflow_engine import WorkflowEngine
         return WorkflowEngine
+    elif name == "CacheManager":
+        from .cache_manager import CacheManager
+        return CacheManager
+    elif name == "SecurityManager":
+        from .security_manager import SecurityManager
+        return SecurityManager
+    elif name == "PerformanceMonitor":
+        from .performance_monitor import PerformanceMonitor
+        return PerformanceMonitor
     elif name == "DataProcessorFactory":
         from .data_processor import DataProcessorFactory
         return DataProcessorFactory
@@ -79,5 +97,14 @@ def __getattr__(name: str):
     elif name == "WorkflowEngineFactory":
         from .workflow_engine import WorkflowEngineFactory
         return WorkflowEngineFactory
+    elif name == "CacheManagerFactory":
+        from .cache_manager import CacheManagerFactory
+        return CacheManagerFactory
+    elif name == "SecurityManagerFactory":
+        from .security_manager import SecurityManagerFactory
+        return SecurityManagerFactory
+    elif name == "PerformanceMonitorFactory":
+        from .performance_monitor import PerformanceMonitorFactory
+        return PerformanceMonitorFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
