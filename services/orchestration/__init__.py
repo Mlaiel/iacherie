@@ -122,6 +122,71 @@ except ImportError:
     QualityAssuranceOrchestrator = TestType = TestStatus = None
     QualityGateStatus = SeverityLevel = QualityMetric = None
 
+try:
+    from .data_pipeline_orchestrator import (
+        DataPipelineOrchestrator, PipelineType, PipelineStatus,
+        DataSource, DataQualityRule, DataFormat
+    )
+except ImportError:
+    DataPipelineOrchestrator = PipelineType = PipelineStatus = None
+    DataSource = DataQualityRule = DataFormat = None
+
+# Import new orchestration modules - Phase 3: Advanced Intelligence & AI
+try:
+    from .ai_model_orchestration_hub import (
+        AIModelOrchestrationHub, ModelType, ModelStatus, TrainingStatus,
+        DeploymentStrategy, DriftType, ModelFramework
+    )
+except ImportError:
+    AIModelOrchestrationHub = ModelType = ModelStatus = TrainingStatus = None
+    DeploymentStrategy = DriftType = ModelFramework = None
+
+try:
+    from .real_time_analytics_orchestrator import (
+        RealTimeAnalyticsOrchestrator, StreamType, ProcessingStatus,
+        AlertSeverity, DashboardType, AggregationWindow, EventType
+    )
+except ImportError:
+    RealTimeAnalyticsOrchestrator = StreamType = ProcessingStatus = None
+    AlertSeverity = DashboardType = AggregationWindow = EventType = None
+
+# Import new orchestration modules - Phase 4: Global & Mobile
+try:
+    from .mobile_experience_orchestrator import (
+        MobileExperienceOrchestrator, MobilePlatform, AppEnvironment,
+        DeploymentStatus, NotificationType, SyncStatus, DeviceType
+    )
+except ImportError:
+    MobileExperienceOrchestrator = MobilePlatform = AppEnvironment = None
+    DeploymentStatus = NotificationType = SyncStatus = DeviceType = None
+
+try:
+    from .global_distribution_orchestrator import (
+        GlobalDistributionOrchestrator, Region, Country, Language,
+        Currency, DeploymentStrategy, ComplianceFramework, ContentType
+    )
+except ImportError:
+    GlobalDistributionOrchestrator = Region = Country = Language = None
+    Currency = DeploymentStrategy = ComplianceFramework = ContentType = None
+
+try:
+    from .event_management_orchestrator import (
+        EventManagementOrchestrator, EventType, EventStatus, EventPlatform,
+        RegistrationStatus, StreamQuality, EventRole, InteractionType
+    )
+except ImportError:
+    EventManagementOrchestrator = EventType = EventStatus = EventPlatform = None
+    RegistrationStatus = StreamQuality = EventRole = InteractionType = None
+
+try:
+    from .integration_orchestration_hub import (
+        IntegrationOrchestrationHub, IntegrationType, IntegrationStatus,
+        AuthenticationType, SyncDirection, RetryStrategy, DataFormat, WebhookEvent
+    )
+except ImportError:
+    IntegrationOrchestrationHub = IntegrationType = IntegrationStatus = None
+    AuthenticationType = SyncDirection = RetryStrategy = DataFormat = WebhookEvent = None
+
 __version__ = "2.0.0"
 __author__ = "Ainflue Enterprise Team"
 
@@ -146,7 +211,18 @@ ORCHESTRATION_SERVICES: Dict[str, str] = {
     "security_orchestration_platform": "SecurityOrchestrationPlatform",
     "deployment_orchestration_controller": "DeploymentOrchestrationController",
     "performance_optimization_orchestrator": "PerformanceOptimizationOrchestrator",
-    "quality_assurance_orchestrator": "QualityAssuranceOrchestrator"
+    "quality_assurance_orchestrator": "QualityAssuranceOrchestrator",
+    "data_pipeline_orchestrator": "DataPipelineOrchestrator",
+    
+    # Phase 3: Advanced Intelligence & AI orchestration
+    "ai_model_orchestration_hub": "AIModelOrchestrationHub",
+    "real_time_analytics_orchestrator": "RealTimeAnalyticsOrchestrator",
+    
+    # Phase 4: Global & Mobile orchestration
+    "mobile_experience_orchestrator": "MobileExperienceOrchestrator",
+    "global_distribution_orchestrator": "GlobalDistributionOrchestrator",
+    "event_management_orchestrator": "EventManagementOrchestrator",
+    "integration_orchestration_hub": "IntegrationOrchestrationHub"
 }
 
 async def initialize_orchestration_services() -> Dict[str, Any]:
@@ -181,7 +257,18 @@ async def initialize_orchestration_services() -> Dict[str, Any]:
             "security_orchestration_platform": "SecurityOrchestrationPlatform",
             "deployment_orchestration_controller": "DeploymentOrchestrationController",
             "performance_optimization_orchestrator": "PerformanceOptimizationOrchestrator",
-            "quality_assurance_orchestrator": "QualityAssuranceOrchestrator"
+            "quality_assurance_orchestrator": "QualityAssuranceOrchestrator",
+            "data_pipeline_orchestrator": "DataPipelineOrchestrator",
+            
+            # Phase 3: Advanced Intelligence & AI services
+            "ai_model_orchestration_hub": "AIModelOrchestrationHub",
+            "real_time_analytics_orchestrator": "RealTimeAnalyticsOrchestrator",
+            
+            # Phase 4: Global & Mobile services
+            "mobile_experience_orchestrator": "MobileExperienceOrchestrator",
+            "global_distribution_orchestrator": "GlobalDistributionOrchestrator",
+            "event_management_orchestrator": "EventManagementOrchestrator",
+            "integration_orchestration_hub": "IntegrationOrchestrationHub"
         }
     except Exception as e:
         logger.error(f"Failed to initialize orchestration services: {str(e)}")
@@ -235,6 +322,24 @@ __all__ = [
     "AlertSeverity", "ResourceType",
     "QualityAssuranceOrchestrator", "TestType", "TestStatus",
     "QualityGateStatus", "SeverityLevel", "QualityMetric",
+    "DataPipelineOrchestrator", "PipelineType", "PipelineStatus",
+    "DataSource", "DataQualityRule", "DataFormat",
+    
+    # Phase 3: Advanced Intelligence & AI orchestration
+    "AIModelOrchestrationHub", "ModelType", "ModelStatus", "TrainingStatus",
+    "DeploymentStrategy", "DriftType", "ModelFramework",
+    "RealTimeAnalyticsOrchestrator", "StreamType", "ProcessingStatus",
+    "AlertSeverity", "DashboardType", "AggregationWindow", "EventType",
+    
+    # Phase 4: Global & Mobile orchestration
+    "MobileExperienceOrchestrator", "MobilePlatform", "AppEnvironment",
+    "DeploymentStatus", "NotificationType", "SyncStatus", "DeviceType",
+    "GlobalDistributionOrchestrator", "Region", "Country", "Language",
+    "Currency", "DeploymentStrategy", "ComplianceFramework", "ContentType",
+    "EventManagementOrchestrator", "EventType", "EventStatus", "EventPlatform",
+    "RegistrationStatus", "StreamQuality", "EventRole", "InteractionType",
+    "IntegrationOrchestrationHub", "IntegrationType", "IntegrationStatus",
+    "AuthenticationType", "SyncDirection", "RetryStrategy", "DataFormat", "WebhookEvent",
     
     # Utility functions
     "initialize_orchestration_services",
