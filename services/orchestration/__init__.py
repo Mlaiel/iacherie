@@ -48,6 +48,43 @@ try:
 except ImportError:
     AnalyticsProcessor = PipelineStage = DataFormat = None
 
+# Import new orchestration modules - Phase 1: Content & Revenue
+try:
+    from .content_production_orchestrator import (
+        ContentProductionOrchestrator, ContentFormat, ContentStatus, 
+        QualityCheckStatus, PublishingPlatform
+    )
+except ImportError:
+    ContentProductionOrchestrator = ContentFormat = ContentStatus = None
+    QualityCheckStatus = PublishingPlatform = None
+
+try:
+    from .revenue_orchestration_engine import (
+        RevenueOrchestrationEngine, RevenueModel, PaymentProvider,
+        PaymentStatus, RevenueStreamStatus, TaxRegion
+    )
+except ImportError:
+    RevenueOrchestrationEngine = RevenueModel = PaymentProvider = None
+    PaymentStatus = RevenueStreamStatus = TaxRegion = None
+
+try:
+    from .gamification_orchestrator import (
+        GamificationOrchestrator, AchievementType, AchievementTier,
+        ChallengeType, ChallengeStatus, LeaderboardType, RewardType
+    )
+except ImportError:
+    GamificationOrchestrator = AchievementType = AchievementTier = None
+    ChallengeType = ChallengeStatus = LeaderboardType = RewardType = None
+
+try:
+    from .marketing_campaign_orchestrator import (
+        MarketingCampaignOrchestrator, CampaignType, CampaignStatus,
+        ChannelType, AudienceSegment, MessageType, PersonalizationLevel
+    )
+except ImportError:
+    MarketingCampaignOrchestrator = CampaignType = CampaignStatus = None
+    ChannelType = AudienceSegment = MessageType = PersonalizationLevel = None
+
 __version__ = "2.0.0"
 __author__ = "Ainflue Enterprise Team"
 
@@ -55,11 +92,18 @@ logger = logging.getLogger(__name__)
 
 # Enterprise service registry for orchestration layer
 ORCHESTRATION_SERVICES: Dict[str, str] = {
+    # Core orchestration services (existing)
     "workflow_orchestrator": "WorkflowOrchestrator",
     "business_intelligence": "BusinessIntelligenceService",
     "automation_engine": "AutomationEngine",
     "collaboration_hub": "CollaborationHub",
-    "analytics_processor": "AnalyticsProcessor"
+    "analytics_processor": "AnalyticsProcessor",
+    
+    # Phase 1: Content & Revenue orchestration (new)
+    "content_production_orchestrator": "ContentProductionOrchestrator",
+    "revenue_orchestration_engine": "RevenueOrchestrationEngine",
+    "gamification_orchestrator": "GamificationOrchestrator",
+    "marketing_campaign_orchestrator": "MarketingCampaignOrchestrator"
 }
 
 async def initialize_orchestration_services() -> Dict[str, Any]:
@@ -77,11 +121,18 @@ async def initialize_orchestration_services() -> Dict[str, Any]:
     try:
         logger.info("Orchestration services module structure validated")
         initialized_services = {
+            # Core services
             "workflow_orchestrator": "WorkflowOrchestrator",
             "business_intelligence": "BusinessIntelligenceService",
             "automation_engine": "AutomationEngine",
             "collaboration_hub": "CollaborationHub",
-            "analytics_processor": "AnalyticsProcessor"
+            "analytics_processor": "AnalyticsProcessor",
+            
+            # Phase 1: Content & Revenue services
+            "content_production_orchestrator": "ContentProductionOrchestrator",
+            "revenue_orchestration_engine": "RevenueOrchestrationEngine",
+            "gamification_orchestrator": "GamificationOrchestrator",
+            "marketing_campaign_orchestrator": "MarketingCampaignOrchestrator"
         }
     except Exception as e:
         logger.error(f"Failed to initialize orchestration services: {str(e)}")
@@ -109,11 +160,24 @@ async def health_check_orchestration() -> Dict[str, str]:
     return health_status
 
 __all__ = [
+    # Core orchestration services
     "WorkflowOrchestrator", "ModelType", "ModelStatus",
     "BusinessIntelligenceService", "DataSource", "DashboardType", 
     "AutomationEngine", "DeploymentStage", "DevOpsOperation",
     "CollaborationHub", "CollaborationType", "ProjectStatus",
     "AnalyticsProcessor", "PipelineStage", "DataFormat",
+    
+    # Phase 1: Content & Revenue orchestration
+    "ContentProductionOrchestrator", "ContentFormat", "ContentStatus", 
+    "QualityCheckStatus", "PublishingPlatform",
+    "RevenueOrchestrationEngine", "RevenueModel", "PaymentProvider",
+    "PaymentStatus", "RevenueStreamStatus", "TaxRegion",
+    "GamificationOrchestrator", "AchievementType", "AchievementTier",
+    "ChallengeType", "ChallengeStatus", "LeaderboardType", "RewardType",
+    "MarketingCampaignOrchestrator", "CampaignType", "CampaignStatus",
+    "ChannelType", "AudienceSegment", "MessageType", "PersonalizationLevel",
+    
+    # Utility functions
     "initialize_orchestration_services",
     "health_check_orchestration",
     "ORCHESTRATION_SERVICES"
