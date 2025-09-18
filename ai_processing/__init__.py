@@ -44,6 +44,36 @@ from .computer_vision_agents import (
     create_computer_vision_app
 )
 
+from .nlp_agents import (
+    SentimentAnalysisAgent,
+    LanguageDetectionAgent,
+    ContentGenerationAgent,
+    NLPOrchestrator,
+    NLPProcessingRequest,
+    NLPProcessingResult,
+    create_nlp_app
+)
+
+from .audio_agents import (
+    SpeechRecognitionAgent,
+    MusicAnalysisAgent,
+    AudioEnhancementAgent,
+    AudioOrchestrator,
+    AudioProcessingRequest,
+    AudioProcessingResult,
+    create_audio_app
+)
+
+from .service_registry import (
+    ServiceRegistryOrchestrator,
+    ServiceInstance,
+    ServiceRegistrationRequest,
+    ServiceDiscoveryRequest,
+    ServiceStatus,
+    ServiceType,
+    create_service_registry_app
+)
+
 # Module exports
 __all__ = [
     # Computer Vision
@@ -56,6 +86,33 @@ __all__ = [
     "CVProcessingRequest",
     "CVProcessingResult",
     "create_computer_vision_app",
+    
+    # Natural Language Processing
+    "SentimentAnalysisAgent",
+    "LanguageDetectionAgent",
+    "ContentGenerationAgent",
+    "NLPOrchestrator",
+    "NLPProcessingRequest",
+    "NLPProcessingResult",
+    "create_nlp_app",
+    
+    # Audio Processing
+    "SpeechRecognitionAgent",
+    "MusicAnalysisAgent",
+    "AudioEnhancementAgent",
+    "AudioOrchestrator",
+    "AudioProcessingRequest",
+    "AudioProcessingResult",
+    "create_audio_app",
+    
+    # Service Registry
+    "ServiceRegistryOrchestrator",
+    "ServiceInstance",
+    "ServiceRegistrationRequest",
+    "ServiceDiscoveryRequest",
+    "ServiceStatus",
+    "ServiceType",
+    "create_service_registry_app",
     
     # Module info
     "__version__",
@@ -76,21 +133,17 @@ SUPPORTED_AI_AGENTS = {
     "nlp": {
         "sentiment_analysis": "BERT-based sentiment analysis",
         "language_detection": "Multi-language detection",
-        "translation": "mT5 translation engine",
-        "summarization": "PEGASUS summarization",
         "content_generation": "GPT-4 content generation"
     },
     "audio": {
         "speech_recognition": "Whisper speech-to-text",
         "music_analysis": "librosa music processing",
-        "audio_enhancement": "AI audio enhancement",
-        "voice_cloning": "Real-time voice cloning"
+        "audio_enhancement": "AI audio enhancement"
     },
-    "optimization": {
-        "seo_optimization": "AI-powered SEO optimization",
-        "engagement_prediction": "ML engagement prediction",
-        "viral_analysis": "Content virality prediction",
-        "thumbnail_generation": "AI thumbnail creation"
+    "service_registry": {
+        "service_discovery": "Consul-based service discovery",
+        "load_balancing": "Intelligent load balancing",
+        "health_monitoring": "Real-time health checks"
     }
 }
 
