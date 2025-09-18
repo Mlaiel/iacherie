@@ -26,6 +26,8 @@ from .performance_optimizer import RedisPerformanceOptimizer, PerformanceConfig
 from .predictive_manager import RedisPredictiveManager, PredictionConfig, PredictionResult, PredictionType, PredictionAccuracy, TimeHorizon
 from .adaptive_controller import RedisAdaptiveController, AdaptationConfig, AdaptationRule, AdaptationResult, AdaptationType, AdaptationStrategy
 from .ml_optimization_engine import RedisMLOptimizationEngine, OptimizationConfig, OptimizationObjective, OptimizationAlgorithm
+from .anomaly_detection_orchestrator import RedisAnomalyDetectionOrchestrator, AnomalyConfig, AnomalyDetection, AnomalyType, AnomalySeverity
+from .pattern_recognition_manager import RedisPatternRecognitionManager, PatternConfig, Pattern, PatternType, PatternConfidence
 
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
@@ -47,6 +49,8 @@ __all__ = [
     "RedisPredictiveManager",
     "RedisAdaptiveController",
     "RedisMLOptimizationEngine",
+    "RedisAnomalyDetectionOrchestrator",
+    "RedisPatternRecognitionManager",
     
     # Configuration Classes
     "ClusterOrchestratorConfig",
@@ -60,6 +64,8 @@ __all__ = [
     "PredictionConfig",
     "AdaptationConfig", 
     "OptimizationConfig",
+    "AnomalyConfig",
+    "PatternConfig",
     
     # Enums and Types
     "BackupType",
@@ -75,11 +81,17 @@ __all__ = [
     "AdaptationStrategy",
     "OptimizationObjective",
     "OptimizationAlgorithm",
+    "AnomalyType",
+    "AnomalySeverity",
+    "PatternType",
+    "PatternConfidence",
     
     # Result Classes - NEW
     "PredictionResult",
     "AdaptationResult",
     "AdaptationRule",
+    "AnomalyDetection",
+    "Pattern",
     
     # Factory Functions
     "create_enterprise_orchestration"
