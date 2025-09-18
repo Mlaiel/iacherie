@@ -307,6 +307,11 @@ class NotificationManager:
 
     async def _initialize_redis(self) -> None:
         """Initialize Redis connection."""
+        if not REDIS_AVAILABLE:
+            self.logger.warning("Redis not available - skipping Redis initialization")
+            self.use_redis = False
+            return
+            
         try:
             self.redis_client = redis.from_url(
                 self.redis_url,
