@@ -140,13 +140,13 @@ class AdaptationResult:
     error_message: Optional[str] = None
     
     # Impact
-    performance_impact: Dict[str, float]
-    predicted_improvement: float
+    performance_impact: Dict[str, float] = field(default_factory=dict)
+    predicted_improvement: float = 0.0
     actual_improvement: Optional[float] = None
     
     # Contexte
-    trigger_reason: str
-    applied_rules: List[str]
+    trigger_reason: str = ""
+    applied_rules: List[str] = field(default_factory=list)
     rollback_available: bool = True
 
 class AdaptationEngine(ABC):

@@ -26,7 +26,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
-import redis
+import redis as redis_client
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
@@ -241,7 +241,7 @@ class ConflictResolver:
 class RealtimeSync:
     """Synchronisation temps réel"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client: redis_client.Redis):
         self.redis_client = redis_client
         self.active_connections: Dict[str, Set[str]] = defaultdict(set)
         self.message_queue: Dict[str, deque] = defaultdict(deque)
@@ -364,7 +364,7 @@ class CollaborationAnalytics:
 class CollaborationOrchestrator:
     """🤝 Orchestrateur de Collaboration Enterprise pour Creators"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client: redis_client.Redis):
         self.redis_client = redis_client
         self.active_sessions: Dict[str, CollaborationSession] = {}
         self.workspaces: Dict[str, CollaborationWorkspace] = {}

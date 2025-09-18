@@ -26,7 +26,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
-import redis
+import redis as redis_client
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 import statistics
@@ -620,7 +620,7 @@ class DistributionScheduler:
 class DistributionOrchestrator:
     """🌐 Orchestrateur de Distribution Multi-Plateformes pour Creators"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client: redis_client.Redis):
         self.redis_client = redis_client
         self.platform_configs: Dict[Platform, PlatformConfig] = {}
         self.platform_apis: Dict[Platform, PlatformAPI] = {}
