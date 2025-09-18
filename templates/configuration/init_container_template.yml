@@ -1,0 +1,798 @@
+# =====================================================================================
+# Init Container Template - Ainflue Configuration Module  
+# =====================================================================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
+# Utilisation commerciale INTERDITE sans autorisation écrite
+# =====================================================================================
+
+version: '3.8'
+
+# =====================================================================================
+# AINFLUE CREATOR ECONOMY - INIT CONTAINERS PATTERNS
+# =====================================================================================
+
+# Networks for initialization
+networks:
+  init_network:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.50.0.0/16
+    labels:
+      - "ainflue.network.type=initialization"
+
+  app_network:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.51.0.0/16
+    labels:
+      - "ainflue.network.type=application"
+
+# Volumes for init data sharing
+volumes:
+  # Shared initialization data
+  init_data:
+    driver: local
+    labels:
+      - "ainflue.volume.type=init_data"
+
+  # Configuration templates
+  config_templates:
+    driver: local
+    labels:
+      - "ainflue.volume.type=config_templates"
+
+  # Database initialization
+  db_init_scripts:
+    driver: local
+    labels:
+      - "ainflue.volume.type=db_scripts"
+
+  # SSL certificates
+  ssl_certificates:
+    driver: local
+    labels:
+      - "ainflue.volume.type=ssl_certs"
+
+  # Application assets
+  app_assets:
+    driver: local
+    labels:
+      - "ainflue.volume.type=app_assets"
+
+# Secrets for initialization
+secrets:
+  # Database admin credentials
+  db_admin_password:
+    external: true
+    external_name: ainflue_db_admin_password_v1
+
+  # SSL certificate generation
+  ssl_ca_key:
+    external: true
+    external_name: ainflue_ssl_ca_key_v1
+
+  # Configuration encryption key
+  config_encryption_key:
+    external: true
+    external_name: ainflue_config_encryption_key_v1
+
+# =====================================================================================
+# SERVICES WITH INIT CONTAINER PATTERNS
+# =====================================================================================
+
+services:
+
+  # =====================================================================================
+  # INIT CONTAINER: DATABASE SCHEMA MIGRATION
+  # =====================================================================================
+  
+  db_migration_init:
+    image: flyway/flyway:9.22.2-alpine
+    hostname: db-migration-init
+    restart: "no"  # Init containers should not restart
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+      restart_policy:
+        condition: none  # Don't restart init containers
+    
+    networks:
+      - init_network
+    
+    volumes:
+      - db_init_scripts:/flyway/sql:ro
+    
+    secrets:
+      - db_admin_password
+    
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://postgres:5432/ainflue_production
+      - FLYWAY_USER=ainflue_admin
+      - FLYWAY_PASSWORD_FILE=/run/secrets/db_admin_password
+      - FLYWAY_LOCATIONS=filesystem:/flyway/sql
+      - FLYWAY_BASELINE_ON_MIGRATE=true
+      - FLYWAY_VALIDATE_ON_MIGRATE=true
+      - FLYWAY_CLEAN_DISABLED=true
+      - FLYWAY_MIXED=true
+      - FLYWAY_GROUP=true
+      - FLYWAY_OUT_OF_ORDER=false
+    
+    command: migrate
+    
+    healthcheck:
+      test: ["CMD", "flyway", "info"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 60s
+    
+    labels:
+      - "ainflue.init.type=database_migration"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=1"
+      - "ainflue.database.migration=flyway"
+
+  # =====================================================================================
+  # INIT CONTAINER: CONFIGURATION TEMPLATING
+  # =====================================================================================
+  
+  config_template_init:
+    image: hairyhenderson/gomplate:v3.11.6-alpine
+    hostname: config-template-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 32M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    volumes:
+      - config_templates:/templates:ro
+      - init_data:/output:rw
+    
+    secrets:
+      - config_encryption_key
+    
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - VERSION=${VERSION:-1.0.0}
+      - DOMAIN=${DOMAIN:-ainflue.com}
+      - DATABASE_HOST=postgres
+      - REDIS_HOST=redis
+      - CONSUL_HOST=consul
+      - CONFIG_ENCRYPTION_KEY_FILE=/run/secrets/config_encryption_key
+    
+    command: >
+      sh -c "
+      echo 'Generating configuration files...'
+      for template in /templates/*.tmpl; do
+        output_file=/output/$(basename $template .tmpl)
+        gomplate -f $template -o $output_file
+        echo 'Generated: $output_file'
+      done
+      echo 'Configuration generation completed'
+      "
+    
+    labels:
+      - "ainflue.init.type=config_templating"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=2"
+      - "ainflue.config.generator=gomplate"
+
+  # =====================================================================================
+  # INIT CONTAINER: SSL CERTIFICATE GENERATION
+  # =====================================================================================
+  
+  ssl_cert_init:
+    image: cfssl/cfssl:1.6.4
+    hostname: ssl-cert-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 32M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    volumes:
+      - ssl_certificates:/certs:rw
+      - config_templates:/config:ro
+    
+    secrets:
+      - ssl_ca_key
+    
+    environment:
+      - CERT_DOMAIN=${DOMAIN:-ainflue.com}
+      - CERT_COUNTRY=US
+      - CERT_STATE=California
+      - CERT_CITY=San Francisco
+      - CERT_ORG=Ainflue
+      - CERT_OU=Infrastructure
+      - CERT_VALIDITY=8760h  # 1 year
+    
+    command: >
+      sh -c "
+      echo 'Generating SSL certificates...'
+      
+      # Generate CA certificate if not exists
+      if [ ! -f /certs/ca.pem ]; then
+        echo 'Generating CA certificate...'
+        cfssl gencert -initca /config/ca-csr.json | cfssljson -bare /certs/ca
+      fi
+      
+      # Generate server certificate
+      echo 'Generating server certificate...'
+      cfssl gencert \
+        -ca=/certs/ca.pem \
+        -ca-key=/run/secrets/ssl_ca_key \
+        -config=/config/ca-config.json \
+        -profile=server \
+        /config/server-csr.json | cfssljson -bare /certs/server
+      
+      # Generate client certificate
+      echo 'Generating client certificate...'
+      cfssl gencert \
+        -ca=/certs/ca.pem \
+        -ca-key=/run/secrets/ssl_ca_key \
+        -config=/config/ca-config.json \
+        -profile=client \
+        /config/client-csr.json | cfssljson -bare /certs/client
+      
+      # Set proper permissions
+      chmod 600 /certs/*.key
+      chmod 644 /certs/*.pem
+      
+      echo 'SSL certificate generation completed'
+      "
+    
+    labels:
+      - "ainflue.init.type=ssl_certificates"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=3"
+      - "ainflue.security.ssl=cfssl"
+
+  # =====================================================================================
+  # INIT CONTAINER: DEPENDENCY CHECK
+  # =====================================================================================
+  
+  dependency_check_init:
+    image: curlimages/curl:8.4.0
+    hostname: dependency-check-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 64M
+        reservations:
+          cpus: '0.05'
+          memory: 16M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    environment:
+      - CHECK_TIMEOUT=300  # 5 minutes
+      - CHECK_INTERVAL=5   # 5 seconds
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+    
+    command: >
+      sh -c "
+      echo 'Checking service dependencies...'
+      
+      check_service() {
+        local host=$1
+        local port=$2
+        local service_name=$3
+        local timeout=$4
+        local interval=$5
+        
+        echo 'Checking $service_name at $host:$port...'
+        elapsed=0
+        while [ $elapsed -lt $timeout ]; do
+          if nc -z $host $port 2>/dev/null; then
+            echo '$service_name is ready!'
+            return 0
+          fi
+          echo '$service_name not ready, waiting...'
+          sleep $interval
+          elapsed=$((elapsed + interval))
+        done
+        echo 'Timeout waiting for $service_name'
+        return 1
+      }
+      
+      # Check PostgreSQL
+      check_service $POSTGRES_HOST $POSTGRES_PORT 'PostgreSQL' $CHECK_TIMEOUT $CHECK_INTERVAL
+      
+      # Check Redis
+      check_service $REDIS_HOST $REDIS_PORT 'Redis' $CHECK_TIMEOUT $CHECK_INTERVAL
+      
+      # Check Consul
+      check_service $CONSUL_HOST $CONSUL_PORT 'Consul' $CHECK_TIMEOUT $CHECK_INTERVAL
+      
+      echo 'All dependencies are ready!'
+      "
+    
+    labels:
+      - "ainflue.init.type=dependency_check"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=4"
+      - "ainflue.healthcheck.dependencies=true"
+
+  # =====================================================================================
+  # INIT CONTAINER: ASSET COMPILATION
+  # =====================================================================================
+  
+  asset_compilation_init:
+    image: node:20.10.0-alpine3.19
+    hostname: asset-compilation-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    volumes:
+      - app_assets:/app/assets:rw
+      - config_templates:/app/config:ro
+    
+    working_dir: /app
+    
+    environment:
+      - NODE_ENV=production
+      - BUILD_TARGET=production
+      - ASSET_PREFIX=${CDN_URL:-/assets}
+      - VERSION=${VERSION:-1.0.0}
+    
+    command: >
+      sh -c "
+      echo 'Starting asset compilation...'
+      
+      # Install dependencies
+      echo 'Installing dependencies...'
+      npm ci --only=production --no-audit --no-fund
+      
+      # Build frontend assets
+      echo 'Building frontend assets...'
+      npm run build:production
+      
+      # Optimize images
+      echo 'Optimizing images...'
+      npm run optimize:images
+      
+      # Generate asset manifest
+      echo 'Generating asset manifest...'
+      npm run manifest:generate
+      
+      # Copy assets to shared volume
+      echo 'Copying assets to shared volume...'
+      cp -r dist/* /app/assets/
+      
+      # Set proper permissions
+      find /app/assets -type f -exec chmod 644 {} \;
+      find /app/assets -type d -exec chmod 755 {} \;
+      
+      echo 'Asset compilation completed'
+      "
+    
+    labels:
+      - "ainflue.init.type=asset_compilation"
+      - "ainflue.init.phase=build"
+      - "ainflue.init.order=5"
+      - "ainflue.build.assets=webpack"
+
+  # =====================================================================================
+  # INIT CONTAINER: CACHE WARMUP
+  # =====================================================================================
+  
+  cache_warmup_init:
+    image: redis:7.2.1-alpine
+    hostname: cache-warmup-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    volumes:
+      - init_data:/data:ro
+    
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CACHE_TTL=3600
+      - WARMUP_TIMEOUT=300
+    
+    command: >
+      sh -c "
+      echo 'Starting cache warmup...'
+      
+      # Wait for Redis to be ready
+      echo 'Waiting for Redis...'
+      while ! redis-cli -h $REDIS_HOST -p $REDIS_PORT ping > /dev/null 2>&1; do
+        echo 'Redis not ready, waiting...'
+        sleep 2
+      done
+      
+      echo 'Redis is ready, starting cache warmup...'
+      
+      # Load configuration cache
+      echo 'Loading configuration cache...'
+      redis-cli -h $REDIS_HOST -p $REDIS_PORT SET 'config:app' '$(cat /data/app.json)' EX $CACHE_TTL
+      
+      # Load reference data
+      echo 'Loading reference data cache...'
+      for file in /data/reference/*.json; do
+        if [ -f '$file' ]; then
+          key='reference:$(basename $file .json)'
+          redis-cli -h $REDIS_HOST -p $REDIS_PORT SET '$key' '$(cat $file)' EX $CACHE_TTL
+        fi
+      done
+      
+      # Load user sessions (if any)
+      echo 'Loading session data cache...'
+      if [ -f '/data/sessions.json' ]; then
+        redis-cli -h $REDIS_HOST -p $REDIS_PORT SET 'sessions:active' '$(cat /data/sessions.json)' EX $CACHE_TTL
+      fi
+      
+      echo 'Cache warmup completed'
+      "
+    
+    labels:
+      - "ainflue.init.type=cache_warmup"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=6"
+      - "ainflue.cache.preload=true"
+
+  # =====================================================================================
+  # INIT CONTAINER: SECRETS VALIDATION
+  # =====================================================================================
+  
+  secrets_validation_init:
+    image: alpine:3.19
+    hostname: secrets-validation-init
+    restart: "no"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 64M
+        reservations:
+          cpus: '0.05'
+          memory: 16M
+      restart_policy:
+        condition: none
+    
+    networks:
+      - init_network
+    
+    secrets:
+      - db_admin_password
+      - ssl_ca_key
+      - config_encryption_key
+    
+    environment:
+      - VALIDATION_MODE=strict
+    
+    command: >
+      sh -c "
+      echo 'Starting secrets validation...'
+      
+      validate_secret() {
+        local secret_file=$1
+        local secret_name=$2
+        local min_length=$3
+        
+        if [ ! -f '$secret_file' ]; then
+          echo 'ERROR: Secret file $secret_name not found at $secret_file'
+          return 1
+        fi
+        
+        local secret_length=$(wc -c < '$secret_file' | tr -d ' ')
+        if [ $secret_length -lt $min_length ]; then
+          echo 'ERROR: Secret $secret_name is too short (minimum $min_length characters)'
+          return 1
+        fi
+        
+        echo 'OK: Secret $secret_name is valid'
+        return 0
+      }
+      
+      # Validate database password
+      validate_secret '/run/secrets/db_admin_password' 'Database Admin Password' 12
+      
+      # Validate SSL CA key
+      validate_secret '/run/secrets/ssl_ca_key' 'SSL CA Key' 1024
+      
+      # Validate config encryption key
+      validate_secret '/run/secrets/config_encryption_key' 'Config Encryption Key' 32
+      
+      echo 'All secrets validation completed successfully'
+      "
+    
+    labels:
+      - "ainflue.init.type=secrets_validation"
+      - "ainflue.init.phase=pre_deployment"
+      - "ainflue.init.order=0"
+      - "ainflue.security.validation=required"
+
+  # =====================================================================================
+  # MAIN APPLICATION (DEPENDS ON INIT CONTAINERS)
+  # =====================================================================================
+  
+  creator_platform_app:
+    image: ainflue/creator-platform:${VERSION:-latest}
+    hostname: creator-platform
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      update_config:
+        parallelism: 1
+        delay: 30s
+        failure_action: rollback
+        order: start-first
+    
+    networks:
+      - app_network
+    
+    ports:
+      - "3000:3000"
+      - "9090:9090"  # Metrics
+    
+    volumes:
+      - init_data:/app/config:ro
+      - ssl_certificates:/app/ssl:ro
+      - app_assets:/app/public:ro
+    
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=creator-platform
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - CONFIG_PATH=/app/config
+      - SSL_CERT_PATH=/app/ssl
+      - ASSETS_PATH=/app/public
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    
+    # Depends on all init containers
+    depends_on:
+      - secrets_validation_init
+      - db_migration_init
+      - config_template_init
+      - ssl_cert_init
+      - dependency_check_init
+      - asset_compilation_init
+      - cache_warmup_init
+    
+    labels:
+      - "ainflue.service.type=application"
+      - "ainflue.service.name=creator-platform"
+      - "ainflue.init.dependencies=all"
+
+# =====================================================================================
+# INIT CONTAINER TEMPLATES AND PATTERNS
+# =====================================================================================
+
+# Standard init container template
+x-init-container: &init-container
+  restart: "no"
+  deploy:
+    restart_policy:
+      condition: none
+  networks:
+    - init_network
+
+# Resource templates for init containers
+x-light-init: &light-init
+  <<: *init-container
+  deploy:
+    resources:
+      limits:
+        cpus: '0.2'
+        memory: 64M
+      reservations:
+        cpus: '0.05'
+        memory: 16M
+
+x-medium-init: &medium-init
+  <<: *init-container
+  deploy:
+    resources:
+      limits:
+        cpus: '0.5'
+        memory: 256M
+      reservations:
+        cpus: '0.1'
+        memory: 64M
+
+x-heavy-init: &heavy-init
+  <<: *init-container
+  deploy:
+    resources:
+      limits:
+        cpus: '2.0'
+        memory: 2G
+      reservations:
+        cpus: '0.5'
+        memory: 512M
+
+# Init container labels
+x-init-labels: &init-labels
+  - "ainflue.container.type=init"
+  - "ainflue.version=${VERSION:-1.0.0}"
+  - "ainflue.environment=${ENVIRONMENT:-production}"
+
+x-pre-deployment-labels: &pre-deployment-labels
+  - "ainflue.init.phase=pre_deployment"
+  - "ainflue.init.required=true"
+
+x-build-labels: &build-labels
+  - "ainflue.init.phase=build"
+  - "ainflue.init.cache=false"
+
+x-validation-labels: &validation-labels
+  - "ainflue.init.phase=validation"
+  - "ainflue.security.check=required"
+
+# =====================================================================================
+# HEALTHCHECK TEMPLATES
+# =====================================================================================
+
+x-init-healthcheck: &init-healthcheck
+  healthcheck:
+    interval: 10s
+    timeout: 30s
+    retries: 5
+    start_period: 60s
+
+x-quick-healthcheck: &quick-healthcheck
+  healthcheck:
+    interval: 5s
+    timeout: 10s
+    retries: 3
+    start_period: 30s
+
+# =====================================================================================
+# INIT PHASES CONFIGURATION
+# =====================================================================================
+
+# Phase 0: Validation (security, secrets, environment)
+x-phase-0: &phase-0
+  labels:
+    - "ainflue.init.phase=validation"
+    - "ainflue.init.order=0"
+
+# Phase 1: Infrastructure (database, storage, networking)
+x-phase-1: &phase-1
+  labels:
+    - "ainflue.init.phase=infrastructure"
+    - "ainflue.init.order=1"
+
+# Phase 2: Configuration (templates, secrets, certificates)
+x-phase-2: &phase-2
+  labels:
+    - "ainflue.init.phase=configuration"
+    - "ainflue.init.order=2"
+
+# Phase 3: Dependencies (external services, APIs)
+x-phase-3: &phase-3
+  labels:
+    - "ainflue.init.phase=dependencies"
+    - "ainflue.init.order=3"
+
+# Phase 4: Build (assets, compilation, optimization)
+x-phase-4: &phase-4
+  labels:
+    - "ainflue.init.phase=build"
+    - "ainflue.init.order=4"
+
+# Phase 5: Preparation (cache warmup, data loading)
+x-phase-5: &phase-5
+  labels:
+    - "ainflue.init.phase=preparation"
+    - "ainflue.init.order=5"
+
+# =====================================================================================
+# CREATOR ECONOMY SPECIFIC INIT PATTERNS
+# =====================================================================================
+
+x-creator-content-init: &creator-content-init
+  environment:
+    - CONTENT_FORMATS=video,audio,image,document
+    - MAX_FILE_SIZE=1GB
+    - PROCESSING_QUEUE=redis
+    - AI_MODELS_PATH=/models
+    - CONTENT_STORAGE=/storage
+
+x-monetization-init: &monetization-init
+  environment:
+    - PAYMENT_GATEWAYS=stripe,paypal,crypto
+    - REVENUE_MODELS=subscription,commission,advertising
+    - TAX_CALCULATION=enabled
+    - BILLING_CYCLES=monthly,yearly
+
+x-protection-init: &protection-init
+  environment:
+    - DRM_ENABLED=true
+    - WATERMARK_ENABLED=true
+    - BLOCKCHAIN_INTEGRATION=enabled
+    - ENCRYPTION_LEVEL=AES256
+
+# =====================================================================================
+# END OF INIT CONTAINER TEMPLATE
+# =====================================================================================

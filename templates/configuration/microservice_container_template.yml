@@ -1,0 +1,875 @@
+# =====================================================================================
+# Microservice Container Template - Ainflue Configuration Module
+# =====================================================================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
+# Utilisation commerciale INTERDITE sans autorisation écrite
+# =====================================================================================
+
+version: '3.8'
+
+# =====================================================================================
+# AINFLUE CREATOR ECONOMY - MICROSERVICES CONTAINER ORCHESTRATION
+# =====================================================================================
+
+# Global network configuration for microservices
+networks:
+  # API Gateway network
+  api_gateway:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/16
+    labels:
+      - "ainflue.network.tier=api"
+      - "ainflue.security.level=high"
+
+  # Service mesh network
+  service_mesh:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.0.0/16
+    labels:
+      - "ainflue.network.tier=mesh"
+      - "ainflue.security.level=maximum"
+
+  # Database tier network
+  data_tier:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.32.0.0/16
+    labels:
+      - "ainflue.network.tier=data"
+      - "ainflue.security.level=critical"
+
+  # Monitoring network
+  monitoring:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.33.0.0/16
+    labels:
+      - "ainflue.network.tier=monitoring"
+
+# Global volumes for microservices
+volumes:
+  # Shared storage for creator content
+  creator_content_shared:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER_IP},rw,nfsvers=4
+      device: :/data/creator_content
+    labels:
+      - "ainflue.volume.type=shared_storage"
+      - "ainflue.volume.backup=enabled"
+
+  # Service discovery data
+  consul_data:
+    driver: local
+    labels:
+      - "ainflue.volume.type=service_discovery"
+
+  # Distributed cache
+  redis_cluster:
+    driver: local
+    labels:
+      - "ainflue.volume.type=distributed_cache"
+
+# Secrets for microservices
+secrets:
+  # Service mesh certificates
+  mesh_ca_cert:
+    external: true
+    external_name: ainflue_mesh_ca_cert_v1
+
+  mesh_server_cert:
+    external: true
+    external_name: ainflue_mesh_server_cert_v1
+
+  mesh_server_key:
+    external: true
+    external_name: ainflue_mesh_server_key_v1
+
+  # Database connection secrets
+  postgres_connection_string:
+    external: true
+    external_name: ainflue_postgres_connection_v1
+
+  # API keys
+  ai_service_api_key:
+    external: true
+    external_name: ainflue_ai_api_key_v1
+
+# =====================================================================================
+# SERVICES DEFINITION
+# =====================================================================================
+
+services:
+
+  # =====================================================================================
+  # API GATEWAY (Kong)
+  # =====================================================================================
+  
+  api_gateway:
+    image: kong/kong-gateway:3.4.2
+    hostname: api-gateway
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      update_config:
+        parallelism: 1
+        delay: 30s
+        failure_action: rollback
+        monitor: 60s
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    
+    networks:
+      - api_gateway
+      - service_mesh
+    
+    ports:
+      - "8000:8000"    # Gateway port
+      - "8443:8443"    # SSL Gateway port
+      - "8001:8001"    # Admin API
+      - "8444:8444"    # SSL Admin API
+    
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=postgres_primary
+      - KONG_PG_DATABASE=kong
+      - KONG_PG_USER=kong
+      - KONG_PG_PASSWORD_FILE=/run/secrets/postgres_connection_string
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+      - KONG_PROXY_LISTEN=0.0.0.0:8000, 0.0.0.0:8443 ssl
+      - KONG_PLUGINS=bundled,jwt,rate-limiting,cors,request-size-limiting,prometheus,zipkin
+      - KONG_LOG_LEVEL=notice
+      - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
+      - KONG_REAL_IP_HEADER=X-Forwarded-For
+      - KONG_NGINX_WORKER_PROCESSES=auto
+    
+    secrets:
+      - postgres_connection_string
+      - mesh_server_cert
+      - mesh_server_key
+    
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=api_gateway"
+      - "ainflue.service.tier=api"
+      - "ainflue.monitoring.prometheus=true"
+      - "ainflue.tracing.zipkin=true"
+
+  # =====================================================================================
+  # USER MANAGEMENT SERVICE
+  # =====================================================================================
+  
+  user_service:
+    image: ainflue/user-service:${VERSION:-latest}
+    hostname: user-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.labels.service_type == business
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+      update_config:
+        parallelism: 2
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+    
+    networks:
+      - service_mesh
+      - data_tier
+    
+    environment:
+      - SERVICE_NAME=user-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3000
+      - DATABASE_URL_FILE=/run/secrets/postgres_connection_string
+      - REDIS_CLUSTER_NODES=redis_cache:6379
+      - JWT_SECRET_FILE=/run/secrets/ai_service_api_key
+      - LOG_LEVEL=info
+      - METRICS_PORT=9090
+      - HEALTH_CHECK_PORT=8080
+      - CONSUL_AGENT=consul:8500
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831
+    
+    secrets:
+      - postgres_connection_string
+      - ai_service_api_key
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    labels:
+      - "ainflue.service.type=user_management"
+      - "ainflue.service.tier=business"
+      - "ainflue.service.database=postgres"
+      - "ainflue.service.cache=redis"
+      - "ainflue.monitoring.prometheus=true"
+      - "ainflue.tracing.jaeger=true"
+
+  # =====================================================================================
+  # CONTENT PROCESSING SERVICE
+  # =====================================================================================
+  
+  content_service:
+    image: ainflue/content-service:${VERSION:-latest}
+    hostname: content-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 5
+      placement:
+        constraints:
+          - node.labels.service_type == processing
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      update_config:
+        parallelism: 1
+        delay: 30s
+        failure_action: rollback
+    
+    networks:
+      - service_mesh
+      - data_tier
+    
+    volumes:
+      - creator_content_shared:/app/content:rw
+    
+    environment:
+      - SERVICE_NAME=content-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3001
+      - DATABASE_URL_FILE=/run/secrets/postgres_connection_string
+      - AI_API_KEY_FILE=/run/secrets/ai_service_api_key
+      - CONTENT_STORAGE_PATH=/app/content
+      - MAX_FILE_SIZE=100MB
+      - SUPPORTED_FORMATS=mp4,mp3,jpg,png,pdf,doc,docx
+      - PROCESSING_QUEUE=redis
+      - CONSUL_AGENT=consul:8500
+    
+    secrets:
+      - postgres_connection_string
+      - ai_service_api_key
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+    
+    labels:
+      - "ainflue.service.type=content_processing"
+      - "ainflue.service.tier=processing"
+      - "ainflue.service.storage=shared"
+      - "ainflue.service.cpu_intensive=true"
+
+  # =====================================================================================
+  # AI ENHANCEMENT SERVICE
+  # =====================================================================================
+  
+  ai_service:
+    image: ainflue/ai-service:${VERSION:-latest}
+    hostname: ai-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.labels.gpu == true
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        parallelism: 1
+        delay: 120s
+        failure_action: rollback
+    
+    networks:
+      - service_mesh
+    
+    volumes:
+      - creator_content_shared:/app/content:ro
+    
+    environment:
+      - SERVICE_NAME=ai-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3002
+      - AI_API_KEY_FILE=/run/secrets/ai_service_api_key
+      - GPU_ENABLED=true
+      - MODEL_CACHE_SIZE=2G
+      - BATCH_SIZE=32
+      - INFERENCE_TIMEOUT=30s
+      - CONSUL_AGENT=consul:8500
+    
+    secrets:
+      - ai_service_api_key
+    
+    # GPU access
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 2
+      start_period: 180s
+    
+    labels:
+      - "ainflue.service.type=ai_enhancement"
+      - "ainflue.service.tier=ai"
+      - "ainflue.service.gpu=required"
+      - "ainflue.service.memory_intensive=true"
+
+  # =====================================================================================
+  # PROTECTION ENGINE SERVICE
+  # =====================================================================================
+  
+  protection_service:
+    image: ainflue/protection-service:${VERSION:-latest}
+    hostname: protection-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.labels.security == high
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 256M
+      update_config:
+        parallelism: 1
+        delay: 60s
+        failure_action: rollback
+    
+    networks:
+      - service_mesh
+      - data_tier
+    
+    environment:
+      - SERVICE_NAME=protection-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3003
+      - DATABASE_URL_FILE=/run/secrets/postgres_connection_string
+      - ENCRYPTION_STRENGTH=AES256
+      - WATERMARK_ENABLED=true
+      - DRM_ENABLED=true
+      - BLOCKCHAIN_INTEGRATION=enabled
+      - CONSUL_AGENT=consul:8500
+    
+    secrets:
+      - postgres_connection_string
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    
+    labels:
+      - "ainflue.service.type=protection_engine"
+      - "ainflue.service.tier=security"
+      - "ainflue.service.encryption=required"
+      - "ainflue.compliance.gdpr=true"
+
+  # =====================================================================================
+  # MONETIZATION SERVICE
+  # =====================================================================================
+  
+  monetization_service:
+    image: ainflue/monetization-service:${VERSION:-latest}
+    hostname: monetization-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.labels.compliance == pci_dss
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+    
+    networks:
+      - service_mesh
+      - data_tier
+    
+    environment:
+      - SERVICE_NAME=monetization-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3004
+      - DATABASE_URL_FILE=/run/secrets/postgres_connection_string
+      - PAYMENT_GATEWAY=stripe
+      - REVENUE_SHARING=enabled
+      - TAX_CALCULATION=automated
+      - BILLING_CYCLE=monthly
+      - CONSUL_AGENT=consul:8500
+    
+    secrets:
+      - postgres_connection_string
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=monetization"
+      - "ainflue.service.tier=business"
+      - "ainflue.compliance.pci_dss=required"
+      - "ainflue.service.financial=true"
+
+  # =====================================================================================
+  # ANALYTICS SERVICE
+  # =====================================================================================
+  
+  analytics_service:
+    image: ainflue/analytics-service:${VERSION:-latest}
+    hostname: analytics-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.labels.service_type == analytics
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    
+    networks:
+      - service_mesh
+      - data_tier
+      - monitoring
+    
+    environment:
+      - SERVICE_NAME=analytics-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3005
+      - DATABASE_URL_FILE=/run/secrets/postgres_connection_string
+      - TIMESERIES_DB=influxdb
+      - REAL_TIME_ANALYTICS=enabled
+      - DATA_RETENTION=90d
+      - CONSUL_AGENT=consul:8500
+    
+    secrets:
+      - postgres_connection_string
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 120s
+    
+    labels:
+      - "ainflue.service.type=analytics"
+      - "ainflue.service.tier=analytics"
+      - "ainflue.service.data_intensive=true"
+
+  # =====================================================================================
+  # NOTIFICATION SERVICE
+  # =====================================================================================
+  
+  notification_service:
+    image: ainflue/notification-service:${VERSION:-latest}
+    hostname: notification-service
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    
+    networks:
+      - service_mesh
+    
+    environment:
+      - SERVICE_NAME=notification-service
+      - SERVICE_VERSION=${VERSION:-1.0.0}
+      - SERVICE_PORT=3006
+      - EMAIL_PROVIDER=sendgrid
+      - SMS_PROVIDER=twilio
+      - PUSH_NOTIFICATIONS=enabled
+      - CONSUL_AGENT=consul:8500
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=notification"
+      - "ainflue.service.tier=communication"
+
+  # =====================================================================================
+  # SERVICE DISCOVERY (Consul)
+  # =====================================================================================
+  
+  consul:
+    image: consul:1.16.2
+    hostname: consul
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    
+    networks:
+      - service_mesh
+    
+    ports:
+      - "8500:8500"    # HTTP
+      - "8600:8600"    # DNS
+    
+    volumes:
+      - consul_data:/consul/data:rw
+    
+    command: >
+      consul agent -server -bootstrap-expect=3 -ui -bind=0.0.0.0 -client=0.0.0.0
+      -retry-join=consul -datacenter=ainflue-dc1
+    
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+      - CONSUL_CLIENT_INTERFACE=eth0
+    
+    healthcheck:
+      test: ["CMD", "consul", "members"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=service_discovery"
+      - "ainflue.service.tier=infrastructure"
+
+  # =====================================================================================
+  # DISTRIBUTED CACHE (Redis Cluster)
+  # =====================================================================================
+  
+  redis_cache:
+    image: redis:7.2.1-alpine
+    hostname: redis-cache
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+    
+    networks:
+      - service_mesh
+    
+    volumes:
+      - redis_cluster:/data:rw
+    
+    command: >
+      redis-server --cluster-enabled yes --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000 --appendonly yes --port 6379
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=cache"
+      - "ainflue.service.tier=data"
+
+  # =====================================================================================
+  # MESSAGE QUEUE (RabbitMQ)
+  # =====================================================================================
+  
+  message_queue:
+    image: rabbitmq:3.12.7-management-alpine
+    hostname: message-queue
+    restart: unless-stopped
+    
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+    
+    networks:
+      - service_mesh
+    
+    ports:
+      - "15672:15672"  # Management UI
+    
+    environment:
+      - RABBITMQ_DEFAULT_USER=ainflue
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+      - RABBITMQ_DEFAULT_VHOST=ainflue
+    
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    labels:
+      - "ainflue.service.type=message_queue"
+      - "ainflue.service.tier=messaging"
+
+  # =====================================================================================
+  # MONITORING (Prometheus)
+  # =====================================================================================
+  
+  prometheus:
+    image: prom/prometheus:v2.47.2
+    hostname: prometheus
+    restart: unless-stopped
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    
+    networks:
+      - monitoring
+      - service_mesh
+    
+    ports:
+      - "9090:9090"
+    
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    labels:
+      - "ainflue.service.type=monitoring"
+      - "ainflue.service.tier=observability"
+
+# =====================================================================================
+# DEPLOYMENT CONFIGURATION
+# =====================================================================================
+
+# Deployment placement constraints
+x-business-services: &business-services
+  placement:
+    constraints:
+      - node.labels.service_type == business
+
+x-processing-services: &processing-services
+  placement:
+    constraints:
+      - node.labels.service_type == processing
+      - node.labels.cpu_optimized == true
+
+x-ai-services: &ai-services
+  placement:
+    constraints:
+      - node.labels.gpu == true
+      - node.labels.memory_optimized == true
+
+x-data-services: &data-services
+  placement:
+    constraints:
+      - node.labels.storage_optimized == true
+
+# Resource templates
+x-small-service: &small-service
+  resources:
+    limits:
+      cpus: '0.5'
+      memory: 256M
+    reservations:
+      cpus: '0.1'
+      memory: 64M
+
+x-medium-service: &medium-service
+  resources:
+    limits:
+      cpus: '1.0'
+      memory: 512M
+    reservations:
+      cpus: '0.2'
+      memory: 128M
+
+x-large-service: &large-service
+  resources:
+    limits:
+      cpus: '2.0'
+      memory: 2G
+    reservations:
+      cpus: '0.5'
+      memory: 512M
+
+# Update configuration
+x-rolling-update: &rolling-update
+  update_config:
+    parallelism: 1
+    delay: 30s
+    failure_action: rollback
+    monitor: 60s
+    max_failure_ratio: 0.1
+
+# Health check template
+x-standard-healthcheck: &standard-healthcheck
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 60s
+
+# =====================================================================================
+# LABELS AND METADATA
+# =====================================================================================
+
+x-common-labels: &common-labels
+  - "ainflue.version=${VERSION:-1.0.0}"
+  - "ainflue.environment=${ENVIRONMENT:-production}"
+  - "ainflue.platform=microservices"
+  - "ainflue.monitoring.enabled=true"
+  - "ainflue.logging.enabled=true"
+  - "ainflue.backup.enabled=true"
+
+x-security-labels: &security-labels
+  - "ainflue.security.scan=required"
+  - "ainflue.security.level=high"
+  - "ainflue.compliance.checked=true"
+
+x-business-labels: &business-labels
+  - "ainflue.business.unit=creator-economy"
+  - "ainflue.cost.center=platform"
+  - "ainflue.revenue.impact=direct"
+
+# =====================================================================================
+# END OF MICROSERVICE TEMPLATE
+# =====================================================================================
