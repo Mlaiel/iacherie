@@ -27,6 +27,16 @@ if TYPE_CHECKING:
     from .performance_monitor import PerformanceMonitor
     from .circuit_breaker import CircuitBreaker
     from .rate_limiter import RateLimiter
+    from .resource_optimizer import ResourceOptimizer
+    from .memory_profiler import MemoryProfiler
+    from .cpu_optimizer import CPUOptimizer
+    from .disk_optimizer import DiskOptimizer
+    from .network_optimizer import NetworkOptimizer
+    from .database_optimizer import DatabaseOptimizer
+    from .compression_manager import CompressionManager
+    from .load_balancer import LoadBalancer
+    from .thread_pool_manager import ThreadPoolManager
+    from .async_optimizer import AsyncOptimizer
 
 __all__ = [
     "CacheManager",
@@ -34,11 +44,31 @@ __all__ = [
     "PerformanceMonitor",
     "CircuitBreaker", 
     "RateLimiter",
+    "ResourceOptimizer",
+    "MemoryProfiler",
+    "CPUOptimizer",
+    "DiskOptimizer",
+    "NetworkOptimizer",
+    "DatabaseOptimizer",
+    "CompressionManager",
+    "LoadBalancer",
+    "ThreadPoolManager",
+    "AsyncOptimizer",
     "CacheManagerFactory",
     "MetricsCollectorFactory",
     "PerformanceMonitorFactory",
     "CircuitBreakerFactory",
-    "RateLimiterFactory"
+    "RateLimiterFactory",
+    "ResourceOptimizerFactory",
+    "MemoryProfilerFactory",
+    "CPUOptimizerFactory",
+    "DiskOptimizerFactory",
+    "NetworkOptimizerFactory",
+    "DatabaseOptimizerFactory",
+    "CompressionManagerFactory",
+    "LoadBalancerFactory",
+    "ThreadPoolManagerFactory",
+    "AsyncOptimizerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -58,6 +88,36 @@ def __getattr__(name: str):
     elif name == "RateLimiter":
         from .rate_limiter import RateLimiter
         return RateLimiter
+    elif name == "ResourceOptimizer":
+        from .resource_optimizer import ResourceOptimizer
+        return ResourceOptimizer
+    elif name == "MemoryProfiler":
+        from .memory_profiler import MemoryProfiler
+        return MemoryProfiler
+    elif name == "CPUOptimizer":
+        from .cpu_optimizer import CPUOptimizer
+        return CPUOptimizer
+    elif name == "DiskOptimizer":
+        from .disk_optimizer import DiskOptimizer
+        return DiskOptimizer
+    elif name == "NetworkOptimizer":
+        from .network_optimizer import NetworkOptimizer
+        return NetworkOptimizer
+    elif name == "DatabaseOptimizer":
+        from .database_optimizer import DatabaseOptimizer
+        return DatabaseOptimizer
+    elif name == "CompressionManager":
+        from .compression_manager import CompressionManager
+        return CompressionManager
+    elif name == "LoadBalancer":
+        from .load_balancer import LoadBalancer
+        return LoadBalancer
+    elif name == "ThreadPoolManager":
+        from .thread_pool_manager import ThreadPoolManager
+        return ThreadPoolManager
+    elif name == "AsyncOptimizer":
+        from .async_optimizer import AsyncOptimizer
+        return AsyncOptimizer
     elif name == "CacheManagerFactory":
         from .cache_manager import CacheManagerFactory
         return CacheManagerFactory
