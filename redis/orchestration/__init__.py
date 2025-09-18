@@ -31,6 +31,12 @@ from .pattern_recognition_manager import RedisPatternRecognitionManager, Pattern
 from .behavior_analysis_orchestrator import RedisBehaviorAnalysisOrchestrator, BehaviorAnalysisConfig, BehaviorEvent, BehaviorPattern, BehaviorSegment, BehaviorInsight, BehaviorPrediction, BehaviorType, BehaviorState, AnalysisScope, BehaviorInsightType
 from .decision_engine import RedisDecisionEngine, DecisionEngineConfig, Decision, DecisionContext, DecisionCriteria, DecisionOption, DecisionEvaluation, DecisionRule, DecisionType, DecisionPriority, DecisionStatus, DecisionStrategy, ConfidenceLevel
 
+# Analytics Orchestration Modules - NEW JANUARY 2025
+from .real_time_analytics_manager import RedisRealTimeAnalyticsManager, RealTimeAnalyticsConfig, AnalyticsEvent, MetricDefinition, AnalyticsResult, AnalyticsAlert, DashboardWidget as AnalyticsDashboardWidget, AnalyticsType, MetricType, AggregationType, AlertSeverity
+from .reporting_orchestrator import RedisReportingOrchestrator, ReportingOrchestratorConfig, ReportTemplate, ReportSchedule, ReportExecution, ReportDataSource, ReportVisualization, ReportType, ReportFormat, ReportFrequency, ReportStatus
+from .dashboard_orchestrator import RedisDashboardOrchestrator, DashboardOrchestratorConfig, Dashboard, DashboardWidget, DashboardLayout, DashboardTheme, DashboardSession, DashboardType, WidgetType, LayoutType, RefreshMode, ThemeType
+from .kpi_monitoring_manager import RedisKPIMonitoringManager, KPIMonitoringConfig, KPIDefinition, KPIMeasurement, KPIAlert, KPITrend, KPIReport, KPIThreshold, KPICategory, KPIType, KPIStatus, ThresholdType, AlertLevel
+
 # Security Orchestration Modules - NEW JANUARY 2025
 from .security_orchestrator import RedisSecurityOrchestrator, SecurityOrchestratorConfig, SecurityLevel, ThreatLevel, SecurityEvent, AccessLevel, SecurityPolicy, SecurityThreat, AccessControlEntry, SecurityMetrics
 from .threat_response_manager import RedisThreatResponseManager, ThreatResponseConfig, IncidentSeverity, IncidentStatus, ResponseAction, ThreatCategory, Incident, ResponsePlaybook, ThreatIntelligence, ResponseMetrics
@@ -61,6 +67,12 @@ __all__ = [
     "RedisBehaviorAnalysisOrchestrator",
     "RedisDecisionEngine",
     
+    # Analytics Orchestration Components - NEW JANUARY 2025
+    "RedisRealTimeAnalyticsManager",
+    "RedisReportingOrchestrator",
+    "RedisDashboardOrchestrator",
+    "RedisKPIMonitoringManager",
+    
     # Security Orchestration Components - NEW JANUARY 2025
     "RedisSecurityOrchestrator",
     "RedisThreatResponseManager", 
@@ -82,6 +94,12 @@ __all__ = [
     "PatternConfig",
     "BehaviorAnalysisConfig",
     "DecisionEngineConfig",
+    
+    # Analytics Configuration Classes - NEW JANUARY 2025
+    "RealTimeAnalyticsConfig",
+    "ReportingOrchestratorConfig",
+    "DashboardOrchestratorConfig", 
+    "KPIMonitoringConfig",
     
     # Security Configuration Classes - NEW JANUARY 2025
     "SecurityOrchestratorConfig",
@@ -116,6 +134,26 @@ __all__ = [
     "DecisionStrategy",
     "ConfidenceLevel",
     
+    # Analytics Enums and Types - NEW JANUARY 2025
+    "AnalyticsType",
+    "MetricType", 
+    "AggregationType",
+    "AlertSeverity",
+    "ReportType",
+    "ReportFormat",
+    "ReportFrequency",
+    "ReportStatus",
+    "DashboardType",
+    "WidgetType",
+    "LayoutType",
+    "RefreshMode",
+    "ThemeType",
+    "KPICategory",
+    "KPIType",
+    "KPIStatus",
+    "ThresholdType",
+    "AlertLevel",
+    
     # Result Classes - NEW
     "PredictionResult",
     "AdaptationResult",
@@ -133,6 +171,26 @@ __all__ = [
     "DecisionOption",
     "DecisionEvaluation",
     "DecisionRule",
+    
+    # Analytics Result Classes - NEW JANUARY 2025
+    "AnalyticsEvent",
+    "MetricDefinition",
+    "AnalyticsResult", 
+    "AnalyticsAlert",
+    "ReportTemplate",
+    "ReportSchedule",
+    "ReportExecution",
+    "Dashboard",
+    "DashboardWidget",
+    "DashboardLayout",
+    "DashboardTheme",
+    "DashboardSession",
+    "KPIDefinition",
+    "KPIMeasurement",
+    "KPIAlert",
+    "KPITrend",
+    "KPIReport",
+    "KPIThreshold",
     
     # Factory Functions
     "create_enterprise_orchestration"
