@@ -42,7 +42,7 @@ export interface NotificationMessage {
   isRead?: boolean;
 }
 
-// === ENHANCED WEBSOCKET HOOK ===
+// === ENHANCED WEBSOCKET HOOK WITH AUTHENTICATION ===
 
 export function useWebSocket(url: string, options: WebSocketOptions = {}) {
   const {
@@ -79,16 +79,19 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
 
     try {
       const wsUrl = new URL(url);
-      if (authToken) {
-        wsUrl.searchParams.set('token', authToken);
+      
+      // ✅ ENHANCED AUTHENTICATION - Add auth token to WebSocket URL
+      const currentAuthToken = authToken || (typeof window !== 'undefined' ? localStorage.getItem('access_token') : null);
+      if (currentAuthToken) {
+        wsUrl.searchParams.set('token', currentAuthToken);
       }
 
-      console.log(`🔌 Connecting to WebSocket: ${wsUrl.toString()}`);
+      console.log(`🔌 Connecting to authenticated WebSocket: ${wsUrl.toString()}`);
       
       ws.current = new WebSocket(wsUrl.toString(), protocols);
 
       ws.current.onopen = () => {
-        console.log('✅ WebSocket connected');
+        console.log('✅ WebSocket connected with authentication');
         setState(prev => ({ 
           ...prev, 
           isConnected: true, 
@@ -114,6 +117,24 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
       ws.current.onmessage = (event) => {
         try {
           const message = JSON.parse(event.data);
+          
+          // ✅ ENHANCED SECURITY - Handle authentication errors
+          if (message.type === 'auth_error' || message.type === 'unauthorized') {
+            console.error('❌ WebSocket authentication failed:', message);
+            setState(prev => ({ 
+              ...prev, 
+              error: 'Authentication failed',
+              isConnected: false,
+              isConnecting: false 
+            }));
+            
+            // Trigger logout event
+            window.dispatchEvent(new CustomEvent('auth:logout', { 
+              detail: { reason: 'websocket_auth_failed' } 
+            }));
+            return;
+          }
+
           setState(prev => ({ ...prev, lastMessage: message }));
         } catch (error) {
           console.error('❌ Failed to parse WebSocket message:', error);
@@ -129,6 +150,15 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
         }));
 
         stopHeartbeat();
+
+        // Handle authentication-related closures
+        if (event.code === 1008 || event.code === 4001) {
+          console.error('❌ WebSocket closed due to authentication failure');
+          window.dispatchEvent(new CustomEvent('auth:logout', { 
+            detail: { reason: 'websocket_auth_expired' } 
+          }));
+          return;
+        }
 
         if (autoReconnect && event.code !== 1000 && state.connectionAttempts < reconnectAttempts) {
           scheduleReconnect();
@@ -179,7 +209,7 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
     if (reconnectTimer.current) return;
 
     const delay = Math.min(reconnectInterval * Math.pow(2, state.connectionAttempts), 30000);
-    console.log(`⏰ Scheduling reconnect in ${delay}ms`);
+    console.log(`⏰ Scheduling authenticated reconnect in ${delay}ms`);
 
     reconnectTimer.current = setTimeout(() => {
       reconnectTimer.current = null;
@@ -192,7 +222,11 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
 
     heartbeatTimer.current = setInterval(() => {
       if (ws.current?.readyState === WebSocket.OPEN) {
-        ws.current.send(JSON.stringify({ type: 'ping', timestamp: Date.now() }));
+        ws.current.send(JSON.stringify({ 
+          type: 'ping', 
+          timestamp: Date.now(),
+          authenticated: true 
+        }));
       }
     }, heartbeatInterval);
   }, [heartbeatInterval]);
@@ -206,7 +240,13 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
 
   const sendMessage = useCallback((message: any) => {
     if (ws.current?.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify(message));
+      // ✅ ENHANCED SECURITY - Add authentication info to messages
+      const authenticatedMessage = {
+        ...message,
+        timestamp: Date.now(),
+        authenticated: true
+      };
+      ws.current.send(JSON.stringify(authenticatedMessage));
       return true;
     } else {
       messageQueue.current.push(message);
@@ -220,6 +260,15 @@ export function useWebSocket(url: string, options: WebSocketOptions = {}) {
       disconnect();
     };
   }, [url]);
+
+  // ✅ ENHANCED AUTHENTICATION - Reconnect when auth token changes
+  useEffect(() => {
+    if (state.isConnected) {
+      console.log('🔄 Auth token changed, reconnecting WebSocket...');
+      disconnect();
+      setTimeout(() => connect(), 1000); // Brief delay before reconnecting
+    }
+  }, [authToken]);
 
   return {
     ...state,
