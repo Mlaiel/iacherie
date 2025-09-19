@@ -161,12 +161,22 @@ interface DevOpsState {
 export default function DevOpsMonitoringDashboard() {
   // ✅ REAL API INTEGRATION - Enhanced state with real data fetching
   const [state, setState] = useState<DevOpsState>({
-    metrics: null,
+    metrics: {
+      timestamp: new Date(),
+      cpu: { usage: 0, cores: 8, temperature: 45, frequency: 3.2 },
+      memory: { used: 0, total: 16, available: 16, swap: 0 },
+      disk: { used: 0, total: 1000, iops: 0, throughput: 0 },
+      network: { inbound: 0, outbound: 0, latency: 0, packets: 0 }
+    },
     services: [],
     deployments: [],
     alerts: [],
     alertRules: [],
-    topology: null,
+    topology: {
+      nodes: [],
+      connections: [],
+      clusters: []
+    },
     isMonitoring: true,
     lastUpdate: new Date()
   });
@@ -220,20 +230,25 @@ export default function DevOpsMonitoringDashboard() {
           }
         };
 
+        // Generate services data
+        const servicesData = await generateServiceHealthFromAPI(dashboardData);
+
         // Update state with real data
         setState(prev => ({
           ...prev,
           metrics: realMetrics,
-          services: await generateServiceHealthFromAPI(dashboardData),
+          services: servicesData,
           alerts: dashboardData.alerts?.map(alert => ({
             id: alert.id,
-            type: alert.type as 'info' | 'warning' | 'error',
-            service: 'API',
+            rule: alert.title || 'System Alert',
+            severity: alert.type === 'critical' ? 'critical' : 
+                     alert.type === 'warning' ? 'high' : 'medium',
             message: alert.message,
             timestamp: new Date(alert.timestamp),
-            acknowledged: alert.isRead || false,
-            severity: alert.type === 'error' ? 'critical' : 
-                     alert.type === 'warning' ? 'high' : 'medium'
+            status: alert.isRead ? 'acknowledged' : 'active',
+            source: 'System',
+            value: 0,
+            threshold: 0
           })) || [],
           lastUpdate: new Date()
         }));

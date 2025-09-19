@@ -1168,6 +1168,6 @@ interface FileAnalysisResult {
 }
 
 // Singleton instance
-export const threatDetectionSystem = new AdvancedThreatDetectionSystem();
+export const threatDetectionSystem = new ThreatDetectionSystem();
 
-export default AdvancedThreatDetectionSystem;
+export default ThreatDetectionSystem;
