@@ -1,0 +1,739 @@
+# Ainflue Platform Helm Chart Values
+# ===================================
+#
+# Complete configuration for enterprise Kubernetes deployment
+# Supports multiple environments, advanced deployment strategies,
+# auto-scaling, security, monitoring, and disaster recovery.
+#
+# Author: Expert Team - DevOps Engineer Role
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# License: Proprietary - Unauthorized use strictly prohibited.
+
+# Global configuration
+global:
+  # Image configuration
+  imageRegistry: ghcr.io
+  imagePullSecrets:
+    - name: ainflue-registry-secret
+  
+  # Environment settings
+  environment: production
+  region: us-east-1
+  
+  # Security settings
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 2000
+  
+  # Storage classes
+  storageClass: gp3-csi
+  persistentVolume:
+    reclaimPolicy: Retain
+
+# Application configuration
+app:
+  name: ainflue-platform
+  version: "1.0.0"
+  
+  # Resource naming
+  nameOverride: ""
+  fullnameOverride: ""
+  
+  # Labels and annotations
+  commonLabels:
+    app.kubernetes.io/name: ainflue
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: helm
+  
+  commonAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+
+# Backend API Service
+backend:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: ainflue/backend
+    tag: "1.0.0"
+    pullPolicy: Always
+  
+  # Deployment strategy
+  deploymentStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  
+  # Replica configuration
+  replicaCount: 3
+  
+  # Auto-scaling
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+      scaleUp:
+        stabilizationWindowSeconds: 0
+        policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+  
+  # Resource limits
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+  
+  # Environment variables
+  env:
+    - name: ENVIRONMENT
+      value: "production"
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: MAX_WORKERS
+      value: "4"
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: ainflue-secrets
+          key: database-url
+    - name: REDIS_URL
+      valueFrom:
+        secretKeyRef:
+          name: ainflue-secrets
+          key: redis-url
+    - name: JWT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: ainflue-secrets
+          key: jwt-secret
+  
+  # Health checks
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8000
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 2
+  
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
+
+# Frontend Service
+frontend:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: ainflue/frontend
+    tag: "1.0.0"
+    pullPolicy: Always
+  
+  # Replica configuration
+  replicaCount: 2
+  
+  # Auto-scaling
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+  
+  # Resource limits
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 3000
+
+# AI Engine Service
+aiEngine:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: ainflue/ai-engine
+    tag: "1.0.0"
+    pullPolicy: Always
+  
+  # Replica configuration
+  replicaCount: 2
+  
+  # Resource limits (GPU required)
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+      nvidia.com/gpu: 1
+    limits:
+      memory: "8Gi"
+      cpu: "4000m"
+      nvidia.com/gpu: 1
+  
+  # Node selection for GPU nodes
+  nodeSelector:
+    node-type: gpu
+  
+  # Tolerations for GPU nodes
+  tolerations:
+    - key: "nvidia.com/gpu"
+      operator: "Exists"
+      effect: "NoSchedule"
+  
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8001
+
+# Background Workers
+workers:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: ainflue/worker
+    tag: "1.0.0"
+    pullPolicy: Always
+  
+  # Worker types
+  types:
+    general:
+      replicaCount: 3
+      command: ["celery", "worker", "-A", "core.celery", "--loglevel=info", "--concurrency=4"]
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "250m"
+        limits:
+          memory: "1Gi"
+          cpu: "500m"
+    
+    ai_processing:
+      replicaCount: 2
+      command: ["celery", "worker", "-A", "core.celery", "--loglevel=info", "--concurrency=2", "-Q", "ai_processing"]
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "500m"
+          nvidia.com/gpu: 1
+        limits:
+          memory: "4Gi"
+          cpu: "2000m"
+          nvidia.com/gpu: 1
+    
+    audio_processing:
+      replicaCount: 2
+      command: ["celery", "worker", "-A", "core.celery", "--loglevel=info", "--concurrency=2", "-Q", "audio_processing"]
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "1000m"
+
+# Scheduler (Celery Beat)
+scheduler:
+  enabled: true
+  
+  # Image configuration
+  image:
+    repository: ainflue/worker
+    tag: "1.0.0"
+    pullPolicy: Always
+  
+  # Only one replica for scheduler
+  replicaCount: 1
+  
+  # Command
+  command: ["celery", "beat", "-A", "core.celery", "--loglevel=info"]
+  
+  # Resource limits
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+# Database configuration
+postgresql:
+  enabled: true
+  
+  # Authentication
+  auth:
+    postgresPassword: "CHANGE_ME_IN_PRODUCTION"
+    username: "ainflue_admin"
+    password: "CHANGE_ME_IN_PRODUCTION"
+    database: "ainflue"
+  
+  # Architecture
+  architecture: replication
+  
+  # Primary configuration
+  primary:
+    persistence:
+      enabled: true
+      size: 100Gi
+      storageClass: gp3-csi
+    
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "4Gi"
+        cpu: "2000m"
+    
+    # PostgreSQL configuration
+    pgHbaConfiguration: |
+      local all all trust
+      host all all localhost trust
+      host all all 0.0.0.0/0 md5
+    
+    postgresqlConfiguration:
+      max_connections: 200
+      shared_buffers: 256MB
+      effective_cache_size: 1GB
+      maintenance_work_mem: 64MB
+      checkpoint_completion_target: 0.9
+      wal_buffers: 16MB
+      default_statistics_target: 100
+      random_page_cost: 1.1
+      effective_io_concurrency: 200
+      work_mem: 4MB
+      min_wal_size: 1GB
+      max_wal_size: 4GB
+  
+  # Read replicas
+  readReplicas:
+    replicaCount: 2
+    persistence:
+      enabled: true
+      size: 100Gi
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
+
+# Redis configuration
+redis:
+  enabled: true
+  
+  # Architecture
+  architecture: replication
+  
+  # Authentication
+  auth:
+    enabled: true
+    password: "CHANGE_ME_IN_PRODUCTION"
+  
+  # Master configuration
+  master:
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: gp3-csi
+    
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "125m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+    
+    # Redis configuration
+    configuration: |
+      maxmemory 512mb
+      maxmemory-policy allkeys-lru
+      save 900 1
+      save 300 10
+      save 60 10000
+  
+  # Replica configuration
+  replica:
+    replicaCount: 2
+    persistence:
+      enabled: true
+      size: 20Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "125m"
+      limits:
+        memory: "512Mi"
+        cpu: "250m"
+
+# MongoDB configuration
+mongodb:
+  enabled: true
+  
+  # Architecture
+  architecture: replicaset
+  
+  # Authentication
+  auth:
+    enabled: true
+    rootPassword: "CHANGE_ME_IN_PRODUCTION"
+    username: "ainflue_admin"
+    password: "CHANGE_ME_IN_PRODUCTION"
+    database: "ainflue"
+  
+  # Replica set configuration
+  replicaSet:
+    name: "ainflue-rs"
+    replicas:
+      primary: 1
+      secondary: 2
+      arbiter: 1
+  
+  # Persistence
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClass: gp3-csi
+  
+  # Resources
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+
+# Elasticsearch configuration
+elasticsearch:
+  enabled: true
+  
+  # Cluster configuration
+  replicas: 3
+  minimumMasterNodes: 2
+  
+  # Resources
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+  
+  # Persistence
+  persistence:
+    enabled: true
+    size: 30Gi
+  
+  # JVM settings
+  esJavaOpts: "-Xmx1g -Xms1g"
+
+# Ingress configuration
+ingress:
+  enabled: true
+  
+  # Ingress class
+  className: "nginx"
+  
+  # Annotations
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  
+  # Hosts configuration
+  hosts:
+    - host: api.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: backend
+    - host: app.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: frontend
+    - host: ai.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: aiEngine
+  
+  # TLS configuration
+  tls:
+    - secretName: ainflue-tls
+      hosts:
+        - api.ainflue.com
+        - app.ainflue.com
+        - ai.ainflue.com
+
+# Monitoring configuration
+monitoring:
+  # Prometheus
+  prometheus:
+    enabled: true
+    
+    # Service monitor
+    serviceMonitor:
+      enabled: true
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: ainflue
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+    
+    # Prometheus rules
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: AinflueHighCPU
+          expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) > 0.8
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage detected"
+        
+        - alert: AinflueHighMemory
+          expr: (container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes{namespace="ainflue"}) > 0.9
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage detected"
+        
+        - alert: AinfluePodCrashLooping
+          expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod is crash looping"
+  
+  # Grafana
+  grafana:
+    enabled: true
+    
+    # Admin credentials
+    adminPassword: "CHANGE_ME_IN_PRODUCTION"
+    
+    # Dashboards
+    dashboards:
+      enabled: true
+      
+    # Data sources
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server:80
+        access: proxy
+        isDefault: true
+
+# Security configuration
+security:
+  # Pod Security Standards
+  podSecurityStandards:
+    enforce: restricted
+    audit: restricted
+    warn: restricted
+  
+  # Network Policies
+  networkPolicies:
+    enabled: true
+    
+    # Default deny all
+    defaultDenyAll: true
+    
+    # Allow specific traffic
+    allowRules:
+      - name: allow-backend-to-database
+        from:
+          - namespaceSelector:
+              matchLabels:
+                app.kubernetes.io/name: ainflue
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/component: backend
+        to:
+          - namespaceSelector:
+              matchLabels:
+                app.kubernetes.io/name: ainflue
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/component: database
+        ports:
+          - protocol: TCP
+            port: 5432
+  
+  # RBAC
+  rbac:
+    enabled: true
+    
+    # Service accounts
+    serviceAccounts:
+      backend:
+        create: true
+        name: ainflue-backend
+        automountServiceAccountToken: false
+      
+      workers:
+        create: true
+        name: ainflue-workers
+        automountServiceAccountToken: false
+  
+  # Security contexts
+  securityContexts:
+    pod:
+      runAsNonRoot: true
+      runAsUser: 1000
+      fsGroup: 2000
+      seccompProfile:
+        type: RuntimeDefault
+    
+    container:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
+      capabilities:
+        drop:
+          - ALL
+
+# Backup and disaster recovery
+backup:
+  enabled: true
+  
+  # Backup schedule
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  
+  # Retention policy
+  retention:
+    daily: 7
+    weekly: 4
+    monthly: 12
+  
+  # Storage configuration
+  storage:
+    type: s3
+    bucket: "ainflue-backups"
+    region: "us-east-1"
+    
+  # Backup targets
+  targets:
+    postgresql:
+      enabled: true
+      databases:
+        - ainflue
+    
+    mongodb:
+      enabled: true
+      databases:
+        - ainflue
+    
+    redis:
+      enabled: true
+    
+    application:
+      enabled: true
+      paths:
+        - /app/data
+        - /app/uploads
+
+# Testing and validation
+testing:
+  enabled: false  # Enable only in testing environments
+  
+  # Test configurations
+  smokeTests:
+    enabled: true
+    image: ainflue/test-runner:latest
+    
+  performanceTests:
+    enabled: false
+    image: ainflue/performance-tests:latest
+    
+  securityTests:
+    enabled: false
+    image: ainflue/security-scanner:latest
+
+# Environment-specific overrides
+environments:
+  staging:
+    backend:
+      replicaCount: 1
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "125m"
+        limits:
+          memory: "512Mi"
+          cpu: "250m"
+    
+    postgresql:
+      primary:
+        persistence:
+          size: 20Gi
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "125m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+      readReplicas:
+        replicaCount: 0
+  
+  production:
+    # Use default values for production

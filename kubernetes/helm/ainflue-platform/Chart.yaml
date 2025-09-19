@@ -1,0 +1,85 @@
+apiVersion: v2
+name: ainflue-platform
+description: |
+  Advanced Kubernetes Helm Chart for Ainflue Platform
+  
+  Complete enterprise deployment with:
+  - Multi-environment support (staging, production)
+  - Advanced deployment strategies (blue-green, canary, rolling)
+  - Auto-scaling and resource optimization
+  - Security hardening and compliance
+  - Monitoring and observability
+  - Disaster recovery and backup automation
+  
+  Author: Expert Team - DevOps Engineer Role
+  Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+  License: Proprietary - Unauthorized use strictly prohibited.
+
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.25.0"
+
+home: https://ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+    url: https://github.com/Mlaiel
+
+keywords:
+  - ai
+  - content-protection
+  - monetization
+  - enterprise
+  - microservices
+  - devops
+
+annotations:
+  category: AI/ML Platform
+  licenses: Proprietary
+  images: |
+    - name: backend
+      image: ainflue/backend:1.0.0
+    - name: frontend
+      image: ainflue/frontend:1.0.0
+    - name: ai-engine
+      image: ainflue/ai-engine:1.0.0
+    - name: worker
+      image: ainflue/worker:1.0.0
+
+dependencies:
+  - name: postgresql
+    version: "12.x.x"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: "18.x.x"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: mongodb
+    version: "14.x.x"
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+  - name: elasticsearch
+    version: "19.x.x"
+    repository: https://helm.elastic.co
+    condition: elasticsearch.enabled
+  - name: prometheus
+    version: "25.x.x"
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: monitoring.prometheus.enabled
+  - name: grafana
+    version: "7.x.x"
+    repository: https://grafana.github.io/helm-charts
+    condition: monitoring.grafana.enabled
+  - name: nginx-ingress
+    version: "4.x.x"
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress.nginx.enabled
+  - name: cert-manager
+    version: "1.x.x"
+    repository: https://charts.jetstack.io
+    condition: security.certManager.enabled
