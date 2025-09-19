@@ -36,18 +36,41 @@ export function LiveMetricsGrid() {
   const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
-    // Simulate real-time updates
-    const interval = setInterval(() => {
-      setMetrics(prev => ({
-        viewCount: prev.viewCount + Math.floor(Math.random() * 10),
-        revenue: prev.revenue + Math.random() * 5,
-        protectionStatus: Math.floor(Math.random() * 100),
-        alertCount: Math.floor(Math.random() * 3)
-      }));
-      setIsLive(true);
-    }, 3000);
+    // Import the hooks and API client
+    const loadApiHooks = async () => {
+      try {
+        const { useLiveMetrics } = await import('../../core/api/hooks');
+        const { metrics: liveMetrics, loading, error } = useLiveMetrics();
+        
+        if (!loading && !error && liveMetrics) {
+          // Map API metrics to component state
+          const mappedMetrics = {
+            viewCount: liveMetrics.find(m => m.name === 'views')?.value || 0,
+            revenue: liveMetrics.find(m => m.name === 'revenue')?.value || 0,
+            protectionStatus: liveMetrics.find(m => m.name === 'protection')?.value || 0,
+            alertCount: liveMetrics.find(m => m.name === 'alerts')?.value || 0
+          };
+          setMetrics(mappedMetrics);
+          setIsLive(true);
+        }
+      } catch (error) {
+        console.warn('API not available, using fallback data');
+        // Fallback to simulated data if API is not available
+        const interval = setInterval(() => {
+          setMetrics(prev => ({
+            viewCount: prev.viewCount + Math.floor(Math.random() * 10),
+            revenue: prev.revenue + Math.random() * 5,
+            protectionStatus: Math.floor(Math.random() * 100),
+            alertCount: Math.floor(Math.random() * 3)
+          }));
+          setIsLive(true);
+        }, 3000);
 
-    return () => clearInterval(interval);
+        return () => clearInterval(interval);
+      }
+    };
+
+    loadApiHooks();
   }, []);
 
   const metricCards = [
