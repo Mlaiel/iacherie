@@ -131,45 +131,8 @@ from .fraud_prevention_processor import (
 )
 
 # ============================================================
-# LEGACY PROCESSORS (Kept for backward compatibility)
+# ADDITIONAL SPECIALIZED PROCESSORS  
 # ============================================================
-
-from .stripe import (
-    StripeConnectProcessor,
-    StripeConnectAccount as LegacyStripeAccount,
-    StripePaymentIntent,
-    StripeAccountType as LegacyAccountType,
-    StripeCapability
-)
-
-from .paypal_business import (
-    PayPalBusinessProcessor,
-    PayPalMerchantAccount as LegacyPayPalAccount,
-    PayPalOrder as LegacyPayPalOrder,
-    PayPalPayout as LegacyPayPalPayout,
-    PayPalEnvironment as LegacyPayPalEnvironment,
-    PayPalAccountType,
-    PayPalPaymentMethod
-)
-
-from .wise_multi_currency import (
-    WiseMultiCurrencyProcessor,
-    WiseProfile as LegacyWiseProfile,
-    WiseAccount as LegacyWiseAccount,
-    WiseExchangeRate,
-    WiseTransfer as LegacyWiseTransfer,
-    WiseCurrency,
-    WiseEnvironment as LegacyWiseEnvironment,
-    WiseAccountType,
-    TransferPurpose
-)
-
-from .crypto_payments import (
-    CryptoPaymentsProcessor,
-    CryptoCurrency as LegacyCryptoCurrency,
-    CryptoTransaction,
-    CryptoWallet as LegacyCryptoWallet
-)
 
 from .revenue_recovery import (
     RevenueRecoveryProcessor,
@@ -536,109 +499,100 @@ def get_processor_info(processor_name: str):
 
 # Export all processors and utilities
 __all__ = [
-    # Stripe Connect
-    'StripeConnectProcessor',
-    'StripeConnectAccount', 
-    'StripePaymentIntent',
-    'StripeAccountType',
-    'StripeCapability',
+    # Enterprise Consolidated Processors
+    'StripeEnterpriseProcessor',
+    'PayPalEnterpriseProcessor', 
+    'WiseEnterpriseProcessor',
+    'CryptoBlockchainProcessor',
+    'CreatorMonetizationProcessor',
+    'MarketplaceOrchestrator',
+    'PaymentWorkflowEngine',
+    'FraudPreventionProcessor',
     
-    # PayPal Business
-    'PayPalBusinessProcessor',
+    # Stripe Enterprise Types
+    'StripeConnectAccount',
+    'PaymentIntent',
+    'Subscription',
+    'Dispute',
+    'StripeAccountType',
+    'PaymentIntentStatus',
+    'SubscriptionStatus',
+    'DisputeStatus',
+    
+    # PayPal Enterprise Types
     'PayPalMerchantAccount',
     'PayPalOrder',
     'PayPalPayout',
+    'PayPalSubscription',
     'PayPalEnvironment',
-    'PayPalAccountType',
-    'PayPalPaymentMethod',
+    'PayPalOrderStatus',
+    'PayPalPayoutStatus',
+    'RiskLevel',
     
-    # Wise Multi-Currency
-    'WiseMultiCurrencyProcessor',
+    # Wise Enterprise Types
     'WiseProfile',
     'WiseAccount',
-    'WiseExchangeRate',
+    'ExchangeRate',
     'WiseTransfer',
-    'WiseCurrency',
     'WiseEnvironment',
-    'WiseAccountType',
-    'TransferPurpose',
+    'TransferStatus',
+    'AccountType',
+    'CurrencyCode',
+    'ComplianceStatus',
     
-    # Cryptocurrency
-    'CryptoPaymentsProcessor',
+    # Crypto Blockchain Types
     'CryptoWallet',
-    'CryptoTransaction',
-    'CryptoExchangeRate',
-    'CryptoCurrency',
+    'BlockchainTransaction',
+    'NFTAsset',
+    'SmartContract',
     'BlockchainNetwork',
-    'TransactionStatus',
+    'CryptoCurrency',
     'WalletType',
+    'NFTType',
+    'SmartContractType',
     
-    # Revenue Recovery
+    # Creator Monetization Types
+    'CreatorProfile',
+    'CreatorContent',
+    'RevenueTransaction',
+    'CreatorAnalytics',
+    'CreatorType',
+    'RevenueStream',
+    'ContentType',
+    
+    # Marketplace Types
+    'MarketplaceParticipant',
+    'MarketplaceTransaction',
+    'EscrowAccount',
+    'MarketplaceDispute',
+    'MarketplaceType',
+    'EscrowStatus',
+    
+    # Workflow Types
+    'WorkflowDefinition',
+    'WorkflowExecution',
+    'WorkflowStep',
+    'WorkflowStatus',
+    'WorkflowStepType',
+    
+    # Fraud Prevention Types
+    'FraudAnalysis',
+    'FraudPattern',
+    'ThreatIntelligence',
+    'FraudRiskLevel',
+    'FraudType',
+    'FraudAction',
+    
+    # Specialized Processors
     'RevenueRecoveryProcessor',
-    'RecoveryCase',
-    'DunningCampaign',
-    'RecoveryAttempt',
-    'RecoveryType',
-    'RecoveryStatus',
-    'RecoveryStrategy',
-    'DunningLevel',
-    
-    # Automated Licensing
     'AutomatedLicensingProcessor',
-    'LicenseAgreement',
-    'UsageReport',
-    'RoyaltyDistribution',
-    'RevenueShare',
-    'LicenseType',
-    'UsageType',
-    'RoyaltyType',
-    'LicenseStatus',
-    
-    # Tax Compliance
     'TaxComplianceProcessor',
-    'TaxRate',
-    'TaxableTransaction',
-    'TaxCalculation',
-    'TaxRemittance',
-    'TaxType',
-    'TaxJurisdiction',
-    'TransactionCategory',
-    
-    # Dispute Resolution
     'DisputeResolutionProcessor',
-    'DisputeCase',
-    'Evidence',
-    'DisputeMessage',
-    'DisputeType',
-    'DisputeStatus',
-    'DisputeResolution',
-    'EvidenceType',
-    
-    # Payout Scheduler
     'PayoutSchedulerProcessor',
-    'PayoutSchedule',
-    'ScheduledPayout',
-    'PayoutBatch',
-    'PayoutFrequency',
-    'PayoutStatus',
-    'PayoutMethod',
-    
-    # Financial Reporting
     'FinancialReportingProcessor',
-    'FinancialReport',
-    'ReportSchedule',
-    'FinancialMetric',
-    'ReportFilter',
-    'ReportType',
-    'ReportFormat',
-    'MetricType',
-    'ReportFrequency',
     
-    # Utility functions
-    'PAYMENT_PROCESSORS',
-    'get_processor',
-    'list_processors',
-    'get_processor_info'
+    # Utilities
+    'ProcessorFactory'
 ]
 
 
