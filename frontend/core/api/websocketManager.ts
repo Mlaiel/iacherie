@@ -466,9 +466,15 @@ interface WebSocketProviderProps {
 
 export function WebSocketProvider({ children, config }: WebSocketProviderProps) {
   const wsHook = useWebSocket({ ...config, autoConnect: false });
+  const wsManagerRef = useRef<WebSocketManager | null>(null);
+
+  // Initialize WebSocket manager
+  useEffect(() => {
+    wsManagerRef.current = new WebSocketManager(config);
+  }, [config]);
 
   const value: WebSocketContextValue = {
-    wsManager: wsManager.current,
+    wsManager: wsManagerRef.current,
     connectionState: wsHook.connectionState,
     connect: wsHook.connect,
     disconnect: wsHook.disconnect,
