@@ -1,0 +1,63 @@
+# Creator Economy RBAC Manifests
+# Type: pod_security_policies
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Generated for Ainflue Creator Economy Platform
+
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ainflue-creator-economy
+    security-level: restricted
+  name: ainflue-restricted
+spec:
+  allowPrivilegeEscalation: false
+  fsGroup:
+    rule: RunAsAny
+  privileged: false
+  readOnlyRootFilesystem: true
+  requiredDropCapabilities:
+  - ALL
+  runAsUser:
+    rule: MustRunAsNonRoot
+  seLinux:
+    rule: RunAsAny
+  volumes:
+  - configMap
+  - emptyDir
+  - projected
+  - secret
+  - downwardAPI
+  - persistentVolumeClaim
+
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ainflue-creator-economy
+    security-level: ai-processing
+  name: ainflue-ai-privileged
+spec:
+  allowPrivilegeEscalation: false
+  allowedCapabilities:
+  - SYS_ADMIN
+  allowedHostPaths:
+  - pathPrefix: /dev/nvidia
+    readOnly: false
+  fsGroup:
+    rule: RunAsAny
+  privileged: false
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  volumes:
+  - configMap
+  - emptyDir
+  - projected
+  - secret
+  - downwardAPI
+  - persistentVolumeClaim
+  - hostPath
+

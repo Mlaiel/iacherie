@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Ainflue Creator Economy Platform - production Environment
+Outputs:
+  CDNDomain:
+    Description: CloudFront Distribution Domain
+    Value:
+      Fn::GetAtt:
+      - ContentCDN
+      - DomainName
+  ContentBucketName:
+    Description: Creator Content Storage Bucket
+    Value:
+      Ref: ContentStorageBucket
+  DatabaseEndpoint:
+    Description: Creator Database Endpoint
+    Value:
+      Fn::GetAtt:
+      - CreatorDatabase
+      - Endpoint.Address
+  EKSClusterEndpoint:
+    Description: EKS Cluster API Endpoint
+    Value:
+      Fn::GetAtt:
+      - EKSCluster
+      - Endpoint
+Parameters:
+  Environment:
+    AllowedValues:
+    - development
+    - staging
+    - production
+    Default: production
+    Type: String
+  InstanceType:
+    Default: t3.large
+    Type: String
+Resources:
+  ContentCDN:
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+        - DomainName:
+            Fn::GetAtt:
+            - ContentStorageBucket
+            - DomainName
+          Id: S3Origin
+          S3OriginConfig:
+            OriginAccessIdentity:
+              Ref: CloudFrontOAI
+        PriceClass: PriceClass_All
+    Type: AWS::CloudFront::Distribution
+  ContentStorageBucket:
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      BucketName: ainflue-creator-content-production
+      LifecycleConfiguration:
+        Rules:
+        - Status: Enabled
+          Transitions:
+          - StorageClass: STANDARD_IA
+            TransitionInDays: 30
+          - StorageClass: GLACIER
+            TransitionInDays: 90
+      VersioningConfiguration:
+        Status: Enabled
+    Type: AWS::S3::Bucket
+  CreatorDatabase:
+    Properties:
+      AllocatedStorage: 1000
+      DBInstanceClass: db.r5.xlarge
+      DBInstanceIdentifier: ainflue-creator-db-production
+      DBSubnetGroupName:
+        Ref: DatabaseSubnetGroup
+      Engine: postgres
+      EngineVersion: '15.3'
+      MultiAZ: true
+      StorageType: gp3
+      VPCSecurityGroups:
+      - Ref: DatabaseSecurityGroup
+    Type: AWS::RDS::DBInstance
+  EKSCluster:
+    Properties:
+      Name: ainflue-creator-production
+      ResourcesVpcConfig:
+        EndpointConfigPrivate: true
+        EndpointConfigPublic: true
+        SubnetIds:
+        - Ref: PrivateSubnet1
+        - Ref: PrivateSubnet2
+      RoleArn:
+        Ref: EKSServiceRole
+      Version: '1.28'
+    Type: AWS::EKS::Cluster
+  RedisCluster:
+    Properties:
+      CacheNodeType: cache.r6g.large
+      CacheSubnetGroupName:
+        Ref: CacheSubnetGroup
+      Engine: redis
+      NumCacheNodes: 3
+      VpcSecurityGroupIds:
+      - Ref: CacheSecurityGroup
+    Type: AWS::ElastiCache::CacheCluster
+  VPC:
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+      - Key: Name
+        Value: ainflue-vpc-production
+    Type: AWS::EC2::VPC
