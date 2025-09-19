@@ -558,4 +558,5 @@ export function useApi<T>(
 
 // Export enhanced API client and services
 export { apiClient, analyticsApi };
-export type { WebSocketOptions, WebSocketState, NotificationMessage, MetricData, DashboardData };
+
+// Types are already exported with their declarations above

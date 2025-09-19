@@ -313,12 +313,5 @@ const analyticsApi = new AnalyticsApiService();
 
 export default analyticsApi;
 export { AnalyticsApiService };
-export type {
-  MetricData,
-  TimeSeriesData,
-  AnalyticsQuery,
-  DashboardData,
-  AlertData,
-  PerformanceMetrics,
-  ContentAnalytics
-};
+
+// Types are already exported with their declarations above

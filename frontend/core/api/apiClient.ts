@@ -262,4 +262,5 @@ if (typeof window !== 'undefined') {
 
 export default apiClient;
 export { ApiClient };
-export type { ApiClientConfig, ApiResponse, ApiError };
+
+// Types are already exported with their declarations above

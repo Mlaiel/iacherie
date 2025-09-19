@@ -33,10 +33,11 @@ from collections import defaultdict, deque
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 
-# Optional Redis imports for enterprise environment
+# Optional Redis imports for enterprise environment  
 try:
-    import aioredis
+    import redis.asyncio as aioredis_async
     REDIS_AVAILABLE = True
+    aioredis = aioredis_async
 except ImportError:
     # Fallback pour environnement sans Redis
     REDIS_AVAILABLE = False
