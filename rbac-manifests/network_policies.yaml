@@ -1,0 +1,57 @@
+# Creator Economy RBAC Manifests
+# Type: network_policies
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Generated for Ainflue Creator Economy Platform
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ainflue-creator-economy
+  name: ainflue-deny-all
+  namespace: ainflue
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/part-of: ainflue-creator-economy
+  name: creator-api-network-policy
+  namespace: ainflue
+spec:
+  egress:
+  - ports:
+    - port: 5432
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: postgresql
+  - ports:
+    - port: 6379
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: redis
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - port: 8000
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: creator-api
+  policyTypes:
+  - Ingress
+  - Egress
+
