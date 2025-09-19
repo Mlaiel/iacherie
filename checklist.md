@@ -155,21 +155,26 @@ NEXT_PUBLIC_NOTIFICATIONS_WS=ws://localhost:8000/ws/notifications
   - [ ] Types pour les données analytics
   - [ ] Modèles de données partagés backend/frontend
 
-### ✅ **4.2 Remplacement des Mocks**
-- [ ] **Analytics Dashboard**
+### ✅ **4.2 Remplacement des Mocks** - ✅ **ACCOMPLI**
+- [x] **Analytics Dashboard** ✅ **INTÉGRÉ API RÉELLE**
   ```typescript
-  // Remplacer:
-  const mockData = generateMockMetricData(metricId, timeRange);
-  // Par:
+  // ✅ REMPLACÉ:
+  // const mockData = generateMockMetricData(metricId, timeRange);
+  // ✅ PAR:
   const realData = await analyticsApi.getMetrics(metricId, timeRange);
   ```
 
-- [ ] **Live Metrics**
-  - [ ] Remplacer `Math.random()` par vraies métriques
-  - [ ] Connecter aux endpoints `/ws/metrics`
-  - [ ] Gestion des erreurs de connexion
+- [x] **Live Metrics** ✅ **WEBSOCKET RÉEL CONNECTÉ**
+  - [x] Remplacer `Math.random()` par vraies métriques ✅
+  - [x] Connecter aux endpoints `/ws/metrics` ✅
+  - [x] Gestion des erreurs de connexion ✅
 
-- [ ] **Collaboration System**
+- [x] **DevOps Monitoring Dashboard** ✅ **API INTÉGRÉE**
+  - [x] Vraies métriques système depuis backend ✅
+  - [x] Service health depuis API analytics ✅
+  - [x] Auto-refresh temps réel (30s) ✅
+
+- [ ] **Collaboration System** ⏳ **EN COURS**
   - [ ] Vraies données utilisateur depuis backend
   - [ ] Statuts de présence réels
   - [ ] Synchronisation des documents

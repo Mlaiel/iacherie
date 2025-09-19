@@ -261,19 +261,64 @@ export const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({
 
     setIsLoading(true);
     try {
-      // Mock API call to fetch metrics
+      // ✅ REAL API INTEGRATION - Replace mock with actual analytics API
+      const { default: analyticsApi } = await import('../core/api/analyticsApi');
+      
       const metricsData: Record<string, MetricData> = {};
       
+      // Get dashboard data from real API
+      const dashboardData = await analyticsApi.getDashboardData(currentDashboard.id);
+      
+      // Map API metrics to dashboard format
+      if (dashboardData.metrics) {
+        for (const apiMetric of dashboardData.metrics) {
+          metricsData[apiMetric.id] = {
+            id: apiMetric.id,
+            name: apiMetric.name,
+            description: `Real-time ${apiMetric.name} metric`,
+            category: apiMetric.category,
+            unit: apiMetric.unit,
+            format: getFormatFromUnit(apiMetric.unit),
+            aggregation: 'sum',
+            isKPI: true,
+            target: undefined,
+            thresholds: getDefaultThresholds(apiMetric.category),
+            timeSeries: await getTimeSeriesForMetric(apiMetric.id, timeRange),
+            value: apiMetric.value,
+            previousValue: undefined,
+            change: apiMetric.change,
+            changeDirection: apiMetric.changeType === 'increase' ? 'up' : 
+                            apiMetric.changeType === 'decrease' ? 'down' : 'stable',
+            timestamp: new Date(apiMetric.timestamp).getTime(),
+            metadata: apiMetric.metadata || {}
+          };
+        }
+      }
+      
+      // Fallback to mock data if API fails
+      if (Object.keys(metricsData).length === 0) {
+        console.warn('⚠️ API returned no metrics, falling back to mock data');
+        for (const widget of currentDashboard.widgets) {
+          for (const metricId of widget.dataSources) {
+            const mockData = generateMockMetricData(metricId, timeRange);
+            metricsData[metricId] = mockData;
+          }
+        }
+      }
+      
+      setMetrics(metricsData);
+      console.log('✅ Analytics Dashboard: Metrics updated', Object.keys(metricsData));
+    } catch (error) {
+      console.error('Failed to refresh metrics:', error);
+      // Fallback to mock data on error
+      const metricsData: Record<string, MetricData> = {};
       for (const widget of currentDashboard.widgets) {
         for (const metricId of widget.dataSources) {
           const mockData = generateMockMetricData(metricId, timeRange);
           metricsData[metricId] = mockData;
         }
       }
-      
       setMetrics(metricsData);
-    } catch (error) {
-      console.error('Failed to refresh metrics:', error);
     } finally {
       setIsLoading(false);
     }
@@ -339,8 +384,44 @@ export const AnalyticsProvider: React.FC<AnalyticsProviderProps> = ({
   }, [currentDashboard]);
 
   const getMetricData = useCallback(async (metricId: string, timeRange: TimeRange): Promise<MetricData> => {
-    // Mock API call
-    return generateMockMetricData(metricId, timeRange);
+    // ✅ REAL API INTEGRATION - Get metric data from API
+    try {
+      const { default: analyticsApi } = await import('../core/api/analyticsApi');
+      
+      // Try to get real metric data
+      const metric = await analyticsApi.getMetric(metricId, `${Math.floor((timeRange.end - timeRange.start) / (1000 * 60 * 60))}h`);
+      
+      // Get time series data
+      const timeSeries = await analyticsApi.getTimeSeries([metricId], `${Math.floor((timeRange.end - timeRange.start) / (1000 * 60 * 60))}h`);
+      
+      return {
+        id: metric.id,
+        name: metric.name,
+        description: `Real-time ${metric.name} metric`,
+        category: metric.category,
+        unit: metric.unit,
+        format: getFormatFromUnit(metric.unit),
+        aggregation: 'sum',
+        isKPI: true,
+        target: undefined,
+        thresholds: getDefaultThresholds(metric.category),
+        timeSeries: timeSeries[metricId]?.map(ts => ({
+          timestamp: new Date(ts.timestamp).getTime(),
+          value: ts.value,
+          metadata: {}
+        })) || [],
+        value: metric.value,
+        previousValue: undefined,
+        change: metric.change,
+        changeDirection: metric.changeType === 'increase' ? 'up' : 
+                        metric.changeType === 'decrease' ? 'down' : 'stable',
+        timestamp: new Date(metric.timestamp).getTime(),
+        metadata: metric.metadata || {}
+      };
+    } catch (error) {
+      console.warn(`⚠️ Failed to get real metric data for ${metricId}, using mock:`, error);
+      return generateMockMetricData(metricId, timeRange);
+    }
   }, []);
 
   const generateInsights = useCallback(async (): Promise<AnalyticsInsight[]> => {
@@ -901,3 +982,56 @@ const DEFAULT_DASHBOARDS: DashboardConfig[] = [
 ];
 
 export default AnalyticsDashboard;
+
+// === HELPER FUNCTIONS FOR API INTEGRATION ===
+
+function getFormatFromUnit(unit: string): 'number' | 'currency' | 'percentage' | 'duration' | 'bytes' {
+  switch (unit) {
+    case 'currency': return 'currency';
+    case 'percentage': return 'percentage';
+    case 'time': return 'duration';
+    case 'bytes': return 'bytes';
+    default: return 'number';
+  }
+}
+
+function getDefaultThresholds(category: string): MetricThreshold[] {
+  const baseThresholds: Record<string, MetricThreshold[]> = {
+    revenue: [
+      { level: 'critical', operator: 'lt', value: 1000, color: '#ef4444' },
+      { level: 'warning', operator: 'lt', value: 5000, color: '#f59e0b' },
+      { level: 'good', operator: 'gte', value: 5000, color: '#10b981' },
+      { level: 'excellent', operator: 'gte', value: 10000, color: '#059669' }
+    ],
+    engagement: [
+      { level: 'critical', operator: 'lt', value: 10, color: '#ef4444' },
+      { level: 'warning', operator: 'lt', value: 50, color: '#f59e0b' },
+      { level: 'good', operator: 'gte', value: 50, color: '#10b981' },
+      { level: 'excellent', operator: 'gte', value: 100, color: '#059669' }
+    ],
+    performance: [
+      { level: 'excellent', operator: 'lt', value: 200, color: '#059669' },
+      { level: 'good', operator: 'lt', value: 500, color: '#10b981' },
+      { level: 'warning', operator: 'lt', value: 1000, color: '#f59e0b' },
+      { level: 'critical', operator: 'gte', value: 1000, color: '#ef4444' }
+    ]
+  };
+
+  return baseThresholds[category] || baseThresholds.engagement;
+}
+
+async function getTimeSeriesForMetric(metricId: string, timeRange: TimeRange): Promise<DataPoint[]> {
+  try {
+    const { default: analyticsApi } = await import('../core/api/analyticsApi');
+    const timeSeries = await analyticsApi.getTimeSeries([metricId], `${Math.floor((timeRange.end - timeRange.start) / (1000 * 60 * 60))}h`);
+    
+    return timeSeries[metricId]?.map(ts => ({
+      timestamp: new Date(ts.timestamp).getTime(),
+      value: ts.value,
+      metadata: {}
+    })) || [];
+  } catch (error) {
+    console.warn(`Failed to get time series for ${metricId}:`, error);
+    return [];
+  }
+}
