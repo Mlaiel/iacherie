@@ -154,8 +154,10 @@ try:
     from .routes.auth import router as auth_router
     from .routes.analytics import router as analytics_router
     from .routes.health import router as health_router
+    from .routes.audio import router as audio_router
+    from .routes.ml import router as ml_router
     NEW_ROUTES_AVAILABLE = True
-    logger.info("✅ New authentication, analytics and health routes imported successfully")
+    logger.info("✅ All new routes imported successfully (auth, analytics, health, audio, ml)")
 except ImportError as e:
     logger.warning(f"New routes not available: {e}")
     NEW_ROUTES_AVAILABLE = False
@@ -692,13 +694,17 @@ Orchestration Layer → Microservices → Data Layer
                 self.app.include_router(auth_router, prefix="", tags=["🔑 Authentication"])
                 self.app.include_router(analytics_router, prefix="", tags=["📊 Analytics"])
                 self.app.include_router(health_router, prefix="", tags=["💚 Health"])
+                self.app.include_router(audio_router, prefix="", tags=["🎵 Audio"])
+                self.app.include_router(ml_router, prefix="", tags=["🤖 Machine Learning"])
                 
                 self.api_registry["core_services"] = {
                     "auth": "/auth",
                     "analytics": "/analytics",
-                    "health": "/health"
+                    "health": "/health",
+                    "audio": "/audio",
+                    "ml": "/ml"
                 }
-                logger.info("✅ Authentication, Analytics and Health routes included")
+                logger.info("✅ All core service routes included (auth, analytics, health, audio, ml)")
             except Exception as e:
                 logger.warning(f"New routes failed to load: {e}")
         
