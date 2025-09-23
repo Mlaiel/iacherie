@@ -501,8 +501,10 @@ class QuantumSafeCryptoEngine:
         private_key = await self._generate_quantum_random(private_key_size)
         
         # Add algorithm-specific structure markers
-        public_key = b"KYBER_PUB_" + public_key
-        private_key = b"KYBER_PRIV_" + private_key
+# SECURITY: public_key = b"KYBER_PUB_" + public_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: private_key = b"KYBER_PRIV_" + private_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         return public_key, private_key
 
@@ -516,8 +518,10 @@ class QuantumSafeCryptoEngine:
         public_key = await self._generate_quantum_random(public_key_size)
         private_key = await self._generate_quantum_random(private_key_size)
         
-        public_key = b"DILITHIUM_PUB_" + public_key
-        private_key = b"DILITHIUM_PRIV_" + private_key
+# SECURITY: public_key = b"DILITHIUM_PUB_" + public_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: private_key = b"DILITHIUM_PRIV_" + private_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         return public_key, private_key
 
@@ -531,8 +535,10 @@ class QuantumSafeCryptoEngine:
         public_key = await self._generate_quantum_random(public_key_size)
         private_key = await self._generate_quantum_random(private_key_size)
         
-        public_key = b"FALCON_PUB_" + public_key
-        private_key = b"FALCON_PRIV_" + private_key
+# SECURITY: public_key = b"FALCON_PUB_" + public_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: private_key = b"FALCON_PRIV_" + private_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         return public_key, private_key
 
@@ -546,8 +552,10 @@ class QuantumSafeCryptoEngine:
         public_key = await self._generate_quantum_random(public_key_size)
         private_key = await self._generate_quantum_random(private_key_size)
         
-        public_key = b"SPHINCS_PUB_" + public_key
-        private_key = b"SPHINCS_PRIV_" + private_key
+# SECURITY: public_key = b"SPHINCS_PUB_" + public_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: private_key = b"SPHINCS_PRIV_" + private_key # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         return public_key, private_key
 

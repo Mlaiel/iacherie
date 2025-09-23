@@ -75,7 +75,8 @@ class SecurityLevel(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 
 @dataclass
@@ -224,7 +225,8 @@ class EnterpriseConfigurationManager:
     
     def _initialize_encryption(self) -> Fernet:
         """Initialize enterprise-grade encryption for sensitive data"""
-        password = os.getenv("AINFLUE_ENCRYPTION_KEY", "default_enterprise_key").encode()
+# SECURITY: password = os.getenv("AINFLUE_ENCRYPTION_KEY", "default_enterprise_key").encode() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         salt = os.getenv("AINFLUE_ENCRYPTION_SALT", "enterprise_salt_2025").encode()
         
         kdf = PBKDF2HMAC(

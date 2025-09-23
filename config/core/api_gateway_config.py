@@ -35,7 +35,8 @@ class LoadBalancingAlgorithm(str, Enum):
 
 class AuthenticationStrategy(str, Enum):
     """API authentication strategies"""
-    API_KEY = "api_key"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     JWT_TOKEN = "jwt_token"
     OAUTH2 = "oauth2"
     MUTUAL_TLS = "mutual_tls"

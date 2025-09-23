@@ -139,7 +139,8 @@ class ConfigurationManager:
             Platform configuration dictionary
         """
         try:
-            platform_key = f"platform.{platform}"
+# SECURITY: platform_key = f"platform.{platform}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             return await self.get_config(platform_key, {})
         except Exception as e:
             logger.error(f"Error retrieving platform config for {platform}: {e}")

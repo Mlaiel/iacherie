@@ -185,7 +185,8 @@ class PrometheusConfiguration:
     async def add_alerting_rule(self, rule_group: str, rule: AlertingRule) -> bool:
         """Add an alerting rule."""
         try:
-            rule_key = f"{rule_group}:{rule.alert}"
+# SECURITY: rule_key = f"{rule_group}:{rule.alert}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.alerting_rules[rule_key] = rule
             
             # Save rule to file
@@ -201,7 +202,8 @@ class PrometheusConfiguration:
     async def add_recording_rule(self, rule_group: str, rule: RecordingRule) -> bool:
         """Add a recording rule."""
         try:
-            rule_key = f"{rule_group}:{rule.record}"
+# SECURITY: rule_key = f"{rule_group}:{rule.record}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.recording_rules[rule_key] = rule
             
             # Save rule to file

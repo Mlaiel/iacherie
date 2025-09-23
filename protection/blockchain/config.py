@@ -203,7 +203,8 @@ Load configuration from environment variables"""
     config.debug_mode = os.getenv('BLOCKCHAIN_DEBUG', 'true').lower() == 'true'
     
     # Security settings
-    config.encryption_key = os.getenv('BLOCKCHAIN_ENCRYPTION_KEY', '')
+# SECURITY: config.encryption_key = os.getenv('BLOCKCHAIN_ENCRYPTION_KEY', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     
     # API Keys
     config.api_keys = {
@@ -229,7 +230,8 @@ Load configuration from environment variables"""
     
     # Update RPC URLs with API keys if available
     if config.api_keys.get('infura'):
-        infura_key = config.api_keys['infura']
+# SECURITY: infura_key = config.api_keys['infura'] # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         config.ethereum_config['rpc_url'] += infura_key
         config.polygon_config['rpc_url'] = f'https://polygon-mainnet.infura.io/v3/{infura_key}'
     

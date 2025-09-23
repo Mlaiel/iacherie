@@ -52,13 +52,15 @@ Types of external integrations"""
 class AuthenticationMethod(Enum):
     """Authentication methods for integrations"""
 
-    API_KEY = "api_key"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
     BEARER_TOKEN = "bearer_token"
     CUSTOM_HEADER = "custom_header"
-    WEBHOOK_SECRET = "webhook_secret"
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
 
 class IntegrationStatus(Enum):

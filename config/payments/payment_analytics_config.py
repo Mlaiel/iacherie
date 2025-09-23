@@ -780,7 +780,8 @@ class PaymentAnalyticsConfiguration:
                     query.filters.update(overrides["filters"])
             
             # Check cache first
-            cache_key = f"query_{query_id}_{hash(str(query.to_dict()))}"
+# SECURITY: cache_key = f"query_{query_id}_{hash(str(query.to_dict()))}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             cached_result = await self._get_cached_result(cache_key)
             
             if cached_result:

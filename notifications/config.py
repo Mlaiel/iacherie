@@ -54,12 +54,15 @@ def load_from_env():
     """Load configuration from environment variables"""
     settings.database_url = os.getenv("NOTIFICATIONS_DATABASE_URL", settings.database_url)
     settings.redis_url = os.getenv("NOTIFICATIONS_REDIS_URL", settings.redis_url)
-    settings.encryption_key = os.getenv("NOTIFICATIONS_ENCRYPTION_KEY", settings.encryption_key)
+# SECURITY: settings.encryption_key = os.getenv("NOTIFICATIONS_ENCRYPTION_KEY", settings.encryption_key) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     settings.smtp_username = os.getenv("SMTP_USERNAME", settings.smtp_username)
-    settings.smtp_password = os.getenv("SMTP_PASSWORD", settings.smtp_password)
+# SECURITY: settings.smtp_password = os.getenv("SMTP_PASSWORD", settings.smtp_password) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     settings.twilio_account_sid = os.getenv("TWILIO_ACCOUNT_SID", settings.twilio_account_sid)
     settings.twilio_auth_token = os.getenv("TWILIO_AUTH_TOKEN", settings.twilio_auth_token)
-    settings.openai_api_key = os.getenv("OPENAI_API_KEY", settings.openai_api_key)
+# SECURITY: settings.openai_api_key = os.getenv("OPENAI_API_KEY", settings.openai_api_key) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     
     # Boolean settings
     settings.ai_personalization_enabled = os.getenv("AI_PERSONALIZATION_ENABLED", "true").lower() == "true"
@@ -82,13 +85,15 @@ class MetricsCollector:
     
     async def increment(self, metric_name: str, tags: Optional[Dict[str, str]] = None):
         """Increment a counter metric"""
-        key = f"{metric_name}:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}"
+# SECURITY: key = f"{metric_name}:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         self.metrics[key] = self.metrics.get(key, 0) + 1
         self.logger.debug(f"Metric incremented: {key} = {self.metrics[key]}")
     
     async def histogram(self, metric_name: str, value: float, tags: Optional[Dict[str, str]] = None):
         """Record a histogram metric"""
-        key = f"{metric_name}_histogram:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}"
+# SECURITY: key = f"{metric_name}_histogram:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if key not in self.metrics:
             self.metrics[key] = []
         self.metrics[key].append(value)

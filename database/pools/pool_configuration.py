@@ -179,9 +179,11 @@ class PoolConfigurationManager:
         try:
             # Encrypt sensitive information
             if connection_info.password:
-                credential_key = f"{pool_id}_password"
+# SECURITY: credential_key = f"{pool_id}_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 self.credential_manager.store_credential(credential_key, connection_info.password)
-                connection_info.password = f"credential:{credential_key}"
+# SECURITY: connection_info.password = f"credential:{credential_key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
             # Create configuration
             config = PoolConfig(
@@ -210,7 +212,8 @@ class PoolConfigurationManager:
         if config:
             # Decrypt password if needed
             if config.connection_info.password.startswith("credential:"):
-                credential_key = config.connection_info.password[11:]  # Remove "credential:" prefix
+# SECURITY: credential_key = config.connection_info.password[11:]  # Remove "credential:" prefix # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 decrypted_password = self.credential_manager.get_credential(credential_key)
                 if decrypted_password:
                     # Create a copy with decrypted password

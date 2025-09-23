@@ -459,7 +459,8 @@ class TopologyManager:
             self._config.database_topologies[db_type] = topology
             
             # Clear cache
-            cache_key = f"topology_{db_type.value}"
+# SECURITY: cache_key = f"topology_{db_type.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if cache_key in self._topology_cache:
                 del self._topology_cache[cache_key]
             

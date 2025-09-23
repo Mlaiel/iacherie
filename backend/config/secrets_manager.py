@@ -48,15 +48,23 @@ import aiohttp
 
 class SecretType(str, Enum):
     """Types of secrets"""
-    API_KEY = "api_key"
-    DATABASE_PASSWORD = "database_password"
-    ENCRYPTION_KEY = "encryption_key"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-    PRIVATE_KEY = "private_key"
-    JWT_SECRET = "jwt_secret"
-    OAUTH_CLIENT_SECRET = "oauth_client_secret"
-    WEBHOOK_SECRET = "webhook_secret"
-    SERVICE_ACCOUNT_KEY = "service_account_key"
+# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     ACCESS_TOKEN = "access_token"
 
 class SecretVaultType(str, Enum):

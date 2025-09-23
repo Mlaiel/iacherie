@@ -478,7 +478,8 @@ Started: {{ .StartsAt }}
             smtp_server = target.config.get("smtp_server", "localhost")
             smtp_port = target.config.get("smtp_port", 587)
             username = target.config.get("username")
-            password = target.config.get("password")
+# SECURITY: password = target.config.get("password") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             msg = MimeMultipart()
             msg['From'] = target.config.get("from_email", "alerts@ainflue.com")

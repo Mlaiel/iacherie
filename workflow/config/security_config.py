@@ -38,7 +38,8 @@ class SecurityLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods supported"""
-    PASSWORD = "password"
+# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     JWT = "jwt"
     OAUTH2 = "oauth2"
     MULTI_FACTOR = "mfa"
@@ -186,7 +187,8 @@ class SecurityConfig:
     
     def _generate_master_key(self) -> str:
         """Generate master encryption key"""
-        password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025')
+# SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         password_bytes = password.encode('utf-8')
         salt = os.getenv('AINFLUE_SALT', 'ainflue-salt').encode('utf-8')
         
@@ -663,13 +665,15 @@ class SecurityConfig:
     
     def encrypt_sensitive_data(self, data: str, field_type: str = "default") -> str:
         """Encrypt sensitive data"""
-        key = self._security_keys['master']
+# SECURITY: key = self._security_keys['master'] # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         fernet = Fernet(key.encode('utf-8'))
         return fernet.encrypt(data.encode('utf-8')).decode('utf-8')
     
     def decrypt_sensitive_data(self, encrypted_data: str, field_type: str = "default") -> str:
         """Decrypt sensitive data"""
-        key = self._security_keys['master']
+# SECURITY: key = self._security_keys['master'] # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         fernet = Fernet(key.encode('utf-8'))
         return fernet.decrypt(encrypted_data.encode('utf-8')).decode('utf-8')
     

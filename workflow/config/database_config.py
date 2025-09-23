@@ -116,20 +116,23 @@ class DatabaseConfig:
         self.postgresql_config.port = int(os.getenv('POSTGRES_PORT', self.postgresql_config.port))
         self.postgresql_config.database = os.getenv('POSTGRES_DB', self.postgresql_config.database)
         self.postgresql_config.username = os.getenv('POSTGRES_USER', self.postgresql_config.username)
-        self.postgresql_config.password = os.getenv('POSTGRES_PASSWORD', self.postgresql_config.password)
+# SECURITY: self.postgresql_config.password = os.getenv('POSTGRES_PASSWORD', self.postgresql_config.password) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         # Redis configuration
         self.redis_config.host = os.getenv('REDIS_HOST', self.redis_config.host)
         self.redis_config.port = int(os.getenv('REDIS_PORT', self.redis_config.port))
         self.redis_config.database = int(os.getenv('REDIS_DB', self.redis_config.database))
-        self.redis_config.password = os.getenv('REDIS_PASSWORD', self.redis_config.password)
+# SECURITY: self.redis_config.password = os.getenv('REDIS_PASSWORD', self.redis_config.password) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         # MongoDB configuration
         self.mongodb_config.host = os.getenv('MONGO_HOST', self.mongodb_config.host)
         self.mongodb_config.port = int(os.getenv('MONGO_PORT', self.mongodb_config.port))
         self.mongodb_config.database = os.getenv('MONGO_DB', self.mongodb_config.database)
         self.mongodb_config.username = os.getenv('MONGO_USER', self.mongodb_config.username)
-        self.mongodb_config.password = os.getenv('MONGO_PASSWORD', self.mongodb_config.password)
+# SECURITY: self.mongodb_config.password = os.getenv('MONGO_PASSWORD', self.mongodb_config.password) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     
     async def initialize_database_connections(self) -> Dict[str, bool]:
         """

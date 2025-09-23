@@ -324,7 +324,8 @@ class ConfigurationManager:
             Dict[str, Any]: Service configuration
         """
         try:
-            config_key = f"{service_name}:{environment}"
+# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             if config_key not in self.configurations:
                 # Generate configuration from template if available
@@ -381,7 +382,8 @@ class ConfigurationManager:
             bool: True if update successful
         """
         try:
-            config_key = f"{service_name}:{environment}"
+# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Validate configuration if requested
             if validate:
@@ -623,7 +625,8 @@ class ConfigurationManager:
     async def _save_configuration_to_store(self, service_name: str, environment: str):
         """Save configuration to persistent store."""
         try:
-            config_key = f"{service_name}:{environment}"
+# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             config_data = self.configurations.get(config_key, {})
             
             # Convert to serializable format

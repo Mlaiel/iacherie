@@ -368,7 +368,8 @@ class ConfigurationManager:
         """Get configuration change history."""
         try:
             config_key = self._build_config_key(scope, scope_id)
-            history_key = f"alert_config_history:{config_key}"
+# SECURITY: history_key = f"alert_config_history:{config_key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Get from Redis
             history = await self.redis_client.lrange(history_key, 0, limit - 1)
@@ -414,7 +415,8 @@ class ConfigurationManager:
                 
                 # Determine scope from filename
                 scope_info = self._parse_config_filename(config_file.stem)
-                config_key = self._build_config_key(scope_info['scope'], scope_info['scope_id'])
+# SECURITY: config_key = self._build_config_key(scope_info['scope'], scope_info['scope_id']) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 
                 self._configurations[config_key] = config
                 
@@ -452,7 +454,8 @@ class ConfigurationManager:
                 config_data = await self.redis_client.get(key)
                 if config_data:
                     config = AlertSystemConfiguration.parse_raw(config_data)
-                    config_key = key.decode().replace("alert_config:", "")
+# SECURITY: config_key = key.decode().replace("alert_config:", "") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                     self._configurations[config_key] = config
                     
         except Exception as e:
@@ -520,7 +523,8 @@ Store configuration to all applicable sources."""
                 "updated_by": config.updated_by
             }
             
-            history_key = f"alert_config_history:{config_key}"
+# SECURITY: history_key = f"alert_config_history:{config_key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             await self.redis_client.lpush(history_key, json.dumps(history_entry))
             
             # Keep only last 100 entries

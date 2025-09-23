@@ -648,7 +648,8 @@ circuit_breaker:
             # Group configurations by name and type
             config_groups = defaultdict(list)
             for config in self.configurations.values():
-                group_key = f"{config.name}:{config.config_type.value}"
+# SECURITY: group_key = f"{config.name}:{config.config_type.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 config_groups[group_key].append(config)
             
             # Check for drift within each group

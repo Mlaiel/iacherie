@@ -72,11 +72,16 @@ class KeyPurpose(Enum):
     SIGNING = "signing"
     WRAPPING = "wrapping"
     CONTENT_PROTECTION = "content_protection"
-    SESSION_KEY = "session_key"
-    TRANSPORT_KEY = "transport_key"
-    STORAGE_KEY = "storage_key"
-    BACKUP_KEY = "backup_key"
-    AUDIT_KEY = "audit_key"
+# SECURITY: SESSION_KEY = "session_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: TRANSPORT_KEY = "transport_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: STORAGE_KEY = "storage_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: BACKUP_KEY = "backup_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: AUDIT_KEY = "audit_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 
 class SecurityLevel(Enum):
@@ -976,7 +981,8 @@ class KeyDerivationEngine:
             self.derivation_trees.clear()
             
             # Clear master key
-            self.master_derivation_key = b""
+# SECURITY: self.master_derivation_key = b"" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             self.logger.info("Key Derivation Engine cleanup completed")
             

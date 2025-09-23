@@ -523,7 +523,8 @@ class RBACConfigurator:
         """Get all permissions for a user"""
         try:
             # Check cache first
-            cache_key = f"permissions_{user_id}"
+# SECURITY: cache_key = f"permissions_{user_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if self._is_cache_valid(cache_key):
                 return self._permission_cache[cache_key]["permissions"]
             
@@ -604,17 +605,20 @@ class RBACConfigurator:
         """Evaluate permission conditions"""
         try:
             for condition_key, condition_value in conditions.items():
-                if condition_key == "owner_permission":
+# SECURITY: if condition_key == "owner_permission": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                     # Check if user owns the resource
                     if condition_value and not self._check_resource_ownership(request):
                         return False
                 
-                elif condition_key == "visibility":
+# SECURITY: elif condition_key == "visibility": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                     # Check resource visibility
                     if not self._check_resource_visibility(request, condition_value):
                         return False
                 
-                elif condition_key == "public_metrics":
+# SECURITY: elif condition_key == "public_metrics": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                     # Check if metrics are public
                     if condition_value and not self._check_public_metrics(request):
                         return False

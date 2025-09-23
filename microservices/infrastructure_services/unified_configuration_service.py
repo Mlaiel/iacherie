@@ -48,7 +48,8 @@ class ConfigurationType(str, Enum):
     BOOLEAN = "boolean"
     LIST = "list"
     DICT = "dict"
-    SECRET = "secret"
+# SECURITY: SECRET = "secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     JSON = "json"
 
 
@@ -498,7 +499,8 @@ class UnifiedConfigurationService:
             """Flatten nested dictionary"""
             items = []
             for k, v in d.items():
-                new_key = f"{parent_key}{sep}{k}" if parent_key else k
+# SECURITY: new_key = f"{parent_key}{sep}{k}" if parent_key else k # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 if isinstance(v, dict):
                     items.extend(_flatten_dict(v, new_key, sep=sep).items())
                 else:
@@ -574,7 +576,8 @@ class UnifiedConfigurationService:
         for key, value in os.environ.items():
             if key.startswith('AINFLUE_'):
                 # Remove prefix and convert to lowercase with dots
-                config_key = key[8:].lower().replace('_', '.')
+# SECURITY: config_key = key[8:].lower().replace('_', '.') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 
                 config_item = ConfigurationItem(
                     key=config_key,

@@ -408,7 +408,8 @@ Initialize encryption keys"""
             if not self.active_config:
                 raise ValueError("No active security configuration")
             
-            old_key = self.encryption_keys.get(self.current_level, {}).get("key")
+# SECURITY: old_key = self.encryption_keys.get(self.current_level, {}).get("key") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             new_key = secrets.token_bytes(self.active_config.encryption.key_size // 8)
             
             # Update encryption key

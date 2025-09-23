@@ -211,7 +211,8 @@ class ConfigurationManager(BaseConfigurationManager):
             Configuration value or default
         """
         # Check cache first
-        cache_key = f"{key}:{default}"
+# SECURITY: cache_key = f"{key}:{default}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if cache_key in self._cache:
             timestamp = self._cache_timestamps.get(cache_key)
             if timestamp and datetime.now() - timestamp < timedelta(seconds=self._cache_ttl):

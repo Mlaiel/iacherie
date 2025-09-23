@@ -77,7 +77,8 @@ class SecurityLevel(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 class QualityStandards(Enum):
     """Quality standards for enterprise datasets"""

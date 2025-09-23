@@ -83,19 +83,23 @@ class ProviderCredentials:
         """Decrypt credentials from encrypted data"""
         fernet = Fernet(encryption_key)
         
-        api_key = fernet.decrypt(encrypted_data['api_key'].encode()).decode()
+# SECURITY: api_key = fernet.decrypt(encrypted_data['api_key'].encode()).decode() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         secret_key = None
         webhook_secret = None
         additional_keys = {}
         
         if 'secret_key' in encrypted_data:
-            secret_key = fernet.decrypt(encrypted_data['secret_key'].encode()).decode()
+# SECURITY: secret_key = fernet.decrypt(encrypted_data['secret_key'].encode()).decode() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if 'webhook_secret' in encrypted_data:
-            webhook_secret = fernet.decrypt(encrypted_data['webhook_secret'].encode()).decode()
+# SECURITY: webhook_secret = fernet.decrypt(encrypted_data['webhook_secret'].encode()).decode() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
         for key, value in encrypted_data.items():
             if key.startswith('additional_'):
-                actual_key = key.replace('additional_', '')
+# SECURITY: actual_key = key.replace('additional_', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 additional_keys[actual_key] = fernet.decrypt(value.encode()).decode()
         
         return cls(

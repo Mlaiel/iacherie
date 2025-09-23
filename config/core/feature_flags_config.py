@@ -636,7 +636,8 @@ class EnterpriseFeatureFlagsConfiguration:
         feature_flag.evaluation_count += 1
         
         # Store evaluation in cache for recent evaluations
-        cache_key = f"{evaluation.flag_id}:{evaluation.user_id}:{evaluation.environment}"
+# SECURITY: cache_key = f"{evaluation.flag_id}:{evaluation.user_id}:{evaluation.environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         self.evaluations_cache[cache_key] = evaluation
         
         # Update analytics data

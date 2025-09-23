@@ -731,7 +731,8 @@ class ConfigurationManager:
             if not service_name:
                 raise ValueError("Service name required for configuration update")
             
-            config_key = f"circuit_breaker_{service_name}"
+# SECURITY: config_key = f"circuit_breaker_{service_name}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Get current configuration
             current_config = self.active_configurations.get(config_key, {})

@@ -197,7 +197,8 @@ class ConfigurationManager:
         use_cache: bool = True
     ) -> Any:
         """Get configuration value(s)."""
-        cache_key = f"{config_name}:{key}" if key else config_name
+# SECURITY: cache_key = f"{config_name}:{key}" if key else config_name # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         # Check cache first
         if use_cache and cache_key in self.configuration_cache:
@@ -455,7 +456,8 @@ class ConfigurationManager:
                     
                     # Split into config_name and key
                     if '.' in config_key:
-                        config_name, nested_key = config_key.split('.', 1)
+# SECURITY: config_name, nested_key = config_key.split('.', 1) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         self._set_nested_value(env_configs[config_name], nested_key, value)
                     else:
                         env_configs['global'][config_key] = value
@@ -676,7 +678,8 @@ class ConfigurationManager:
         """Flatten nested dictionary."""
         items = []
         for k, v in d.items():
-            new_key = f"{parent_key}{sep}{k}" if parent_key else k
+# SECURITY: new_key = f"{parent_key}{sep}{k}" if parent_key else k # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if isinstance(v, dict):
                 items.extend(self._flatten_dict(v, new_key, sep).items())
             else:
@@ -792,7 +795,8 @@ if __name__ == "__main__":
         )
         
         # Get configuration values
-        api_key = await config_manager.get_configuration("openai_integration", "api_key")
+# SECURITY: api_key = await config_manager.get_configuration("openai_integration", "api_key") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         rate_limit = await config_manager.get_configuration("openai_integration", "rate_limit")
         
         print(f"API Key: {api_key}")

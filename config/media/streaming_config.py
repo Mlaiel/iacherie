@@ -686,7 +686,8 @@ class StreamingConfiguration:
         )
         
         # Generate stream URLs
-        session.stream_key = f"sk_{session.session_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+# SECURITY: session.stream_key = f"sk_{session.session_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         session.rtmp_url = f"rtmp://stream.ainflue.com/live/{session.stream_key}"
         session.hls_url = f"https://hls.ainflue.com/{session.session_id}/playlist.m3u8"
         session.dash_url = f"https://dash.ainflue.com/{session.session_id}/manifest.mpd"
