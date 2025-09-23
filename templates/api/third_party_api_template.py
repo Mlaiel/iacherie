@@ -35,7 +35,15 @@ import uuid
 from abc import ABC, abstractmethod
 
 from pydantic import BaseModel, validator, Field
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Column, String, DateTime, Boolean, Integer, Text, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB

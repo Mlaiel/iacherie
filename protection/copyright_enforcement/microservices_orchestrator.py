@@ -45,7 +45,15 @@ from enum import Enum
 import concurrent.futures
 from contextlib import asynccontextmanager
 import aiohttp
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import aiokafka
 from kafka import KafkaProducer, KafkaConsumer
 import consul

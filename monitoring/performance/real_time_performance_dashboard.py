@@ -19,7 +19,15 @@ import time
 import asyncio
 import json
 import websockets
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta

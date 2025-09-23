@@ -33,7 +33,15 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import aiohttp
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np

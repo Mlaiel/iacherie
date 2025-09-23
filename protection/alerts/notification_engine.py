@@ -89,10 +89,24 @@ Abstract base class for notification providers."""
     async def send(
         self,
         recipients: List[str],
-        try:
-            logger.info(f"Executing send")
+        message: str,
+        priority: str = "normal"
+    ) -> bool:
+        """
+        Envoie une notification aux destinataires spécifiés
+        
+        Args:
+            recipients: Liste des destinataires
+            message: Message à envoyer
+            priority: Priorité de la notification
             
-            # Implementation for send
+        Returns:
+            bool: True si l'envoi a réussi
+        """
+        try:
+            logger.info(f"Executing send notification to {len(recipients)} recipients")
+            
+            # Implementation for send notification
             # TODO: Add specific business logic here
             
             result = None  # Replace with actual implementation

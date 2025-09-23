@@ -64,7 +64,15 @@ except ImportError:
     ASYNCPG_AVAILABLE = False
 
 try:
+    # Safe Redis import with Python 3.12 compatibility
+try:
     import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
     REDIS_AVAILABLE = True
 except ImportError:
     aioredis = None

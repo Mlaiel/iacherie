@@ -41,7 +41,7 @@ except ImportError:
     websockets = None
 
 # Use our compatibility wrapper for aioredis
-from ..utils import aioredis, REDIS_AVAILABLE
+from ..utils.redis_compat import aioredis, REDIS_AVAILABLE, REDIS_AVAILABLE
 
 # Optional pydantic import with fallback
 try:

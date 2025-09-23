@@ -27,7 +27,15 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 # import websockets  # Not available in environment
-# import aioredis  # Not available in environment
+# # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")  # Not available in environment
 from collections import deque, defaultdict
 import uuid
 

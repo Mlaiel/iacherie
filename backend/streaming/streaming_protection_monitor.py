@@ -31,7 +31,15 @@ import uuid
 import hashlib
 import numpy as np
 import cv2
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 import imagehash
 from PIL import Image

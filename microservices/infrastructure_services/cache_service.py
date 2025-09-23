@@ -410,7 +410,15 @@ class RedisCacheBackend(CacheBackendInterface):
         """Ensure Redis connection"""
         if self.redis is None:
             try:
-                import aioredis
+                # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
                 self.redis = await aioredis.from_url(self.redis_url, db=self.db)
             except ImportError:
                 logger.error("aioredis library not available")

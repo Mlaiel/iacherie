@@ -14,6 +14,19 @@ from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from enum import Enum
 
+# Import TimeSeriesData from monitoring module
+try:
+    from monitoring.intelligence.predictive_intelligence_forecasting_engine import TimeSeriesData
+except ImportError:
+    # Fallback TimeSeriesData definition
+    @dataclass
+    class TimeSeriesData:
+        """Time series data point"""
+        timestamp: datetime
+        value: float
+        metric_name: str
+        metadata: Dict[str, Any] = field(default_factory=dict)
+
 
 class DashboardType(Enum):
     """Types de tableaux de bord"""

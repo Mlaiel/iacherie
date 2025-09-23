@@ -831,7 +831,15 @@ async def create_collaboration_intelligence(redis_url: Optional[str] = None,
     redis_client = None
     if redis_url:
         try:
-            import aioredis
+            # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
             redis_client = await aioredis.from_url(redis_url)
         except Exception as e:
             logger.warning(f"Impossible de se connecter à Redis: {e}")
