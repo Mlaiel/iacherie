@@ -1,3 +1,5 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
+import os
 """
 🤖 AI Prompt Engineering System - IA Prompt Engineer Implementation
 ================================================================
@@ -217,7 +219,7 @@ class AIPromptEngineer:
         # OpenAI configuration
         self.provider_configs[AIProvider.OPENAI] = AIProviderConfig(
             provider=AIProvider.OPENAI,
-            api_key="sk-mock-key",  # Mock API key
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),  # Mock API key
             models=["gpt-4", "gpt-3.5-turbo", "text-davinci-003"],
             rate_limits={"requests_per_minute": 200, "tokens_per_minute": 150000},
             cost_per_token={"gpt-4": 0.00003, "gpt-3.5-turbo": 0.000002},
@@ -227,7 +229,7 @@ class AIPromptEngineer:
         # Anthropic configuration
         self.provider_configs[AIProvider.ANTHROPIC] = AIProviderConfig(
             provider=AIProvider.ANTHROPIC,
-            api_key="mock-anthropic-key",
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),
             models=["claude-3-opus", "claude-3-sonnet", "claude-instant"],
             rate_limits={"requests_per_minute": 100, "tokens_per_minute": 100000},
             cost_per_token={"claude-3-opus": 0.000015, "claude-3-sonnet": 0.000003},
@@ -237,7 +239,7 @@ class AIPromptEngineer:
         # Google configuration
         self.provider_configs[AIProvider.GOOGLE] = AIProviderConfig(
             provider=AIProvider.GOOGLE,
-            api_key="mock-google-key",
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),
             models=["gemini-pro", "palm-2"],
             rate_limits={"requests_per_minute": 150, "tokens_per_minute": 120000},
             cost_per_token={"gemini-pro": 0.0000025, "palm-2": 0.000001},

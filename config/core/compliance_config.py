@@ -56,7 +56,8 @@ class DataClassification(str, Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: TOP_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 @dataclass

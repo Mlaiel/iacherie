@@ -29,14 +29,14 @@ class MonitoringConfig(BaseSettings):
     
     # Configuration des alertes
     alerts_enabled: bool = Field(default=True, env="ALERTS_ENABLED")
-    alert_manager_url: str = Field(default="http://alertmanager:9093", env="ALERTMANAGER_URL")
+    alert_manager_url: str = Field(default="https://alertmanager:9093", env="ALERTMANAGER_URL")
     
     # Configuration des dashboards
     grafana_enabled: bool = Field(default=True, env="GRAFANA_ENABLED")
-    grafana_url: str = Field(default="http://grafana:3000", env="GRAFANA_URL")
+    grafana_url: str = Field(default="https://grafana:3000", env="GRAFANA_URL")
     
     # Configuration Prometheus
-    prometheus_url: str = Field(default="http://prometheus:9090", env="PROMETHEUS_URL")
+    prometheus_url: str = Field(default="https://prometheus:9090", env="PROMETHEUS_URL")
     prometheus_retention: str = Field(default="30d", env="PROMETHEUS_RETENTION")
     
     # Configuration Elasticsearch
@@ -46,7 +46,7 @@ class MonitoringConfig(BaseSettings):
     
     # Configuration Jaeger
     jaeger_enabled: bool = Field(default=True, env="JAEGER_ENABLED")
-    jaeger_endpoint: str = Field(default="http://jaeger:14268/api/traces", env="JAEGER_ENDPOINT")
+    jaeger_endpoint: str = Field(default="https://jaeger:14268/api/traces", env="JAEGER_ENDPOINT")
     
     class Config:
         env_file = ".env"

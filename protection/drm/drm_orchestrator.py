@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔐 Ultra-Advanced DRM Orchestrator - Multi-Expert Architecture  
 ===============================================================
 

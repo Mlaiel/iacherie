@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """IA Business Processing Orchestrator - Central IA business processing orchestration engine.
 
 This module provides comprehensive IA (Artificial Intelligence) business processing 

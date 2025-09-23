@@ -47,7 +47,8 @@ class RedisSettings(BaseSettings):
         auth = ""
         if self.redis_username or self.redis_password:
             username = self.redis_username or ""
-# SECURITY: password = self.redis_password or "" # MOVED TO ENV
+# SECURITY: # SECURITY: password = self.redis_password or "" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             auth = f"{username}:{password}@" if password else f"{username}@" if username else ""
         

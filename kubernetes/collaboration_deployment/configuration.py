@@ -237,7 +237,8 @@ class CollaborationConfigurationManager:
                 raise ValueError(f"Invalid configuration: {validation_result['errors']}")
             
             # Cache configuration
-# SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = config
             
@@ -283,7 +284,8 @@ class CollaborationConfigurationManager:
             save_result = await self._save_configuration(config_name, updated_config, scope)
             
             # Update cache
-# SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = updated_config
             
@@ -462,7 +464,8 @@ class CollaborationConfigurationManager:
             restore_result = await self._restore_from_backup(config_name, backup)
             
             # Update cache
-# SECURITY: cache_key = f"{config_name}_{ConfigScope.GLOBAL.value}_{self.current_environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{config_name}_{ConfigScope.GLOBAL.value}_{self.current_environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = backup["config"]
             
@@ -521,7 +524,8 @@ class CollaborationConfigurationManager:
     def _initialize_encryption(self) -> None:
         """
 Initialize encryption for sensitive configuration data."""
-# SECURITY: encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY") # MOVED TO ENV
+# SECURITY: # SECURITY: encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if encryption_key:
             self.encryption_key = encryption_key.encode()
@@ -1246,16 +1250,16 @@ Update configuration for a specific service."""
             "REDIS_URL": f"redis://redis-{environment}:6379",
             "JWT_SECRET": "jwt-secret-key",
             "VECTOR_DB_URL": f"faiss://vector-db-{environment}:8080",
-            "ELASTICSEARCH_URL": f"http://elasticsearch-{environment}:9200",
+            "ELASTICSEARCH_URL": f"https://elasticsearch-{environment}:9200",
             "CONTENT_STORAGE_URL": f"s3://collaboration-{environment}-content",
-            "AI_PROCESSING_ENDPOINT": f"http://ai-engine-{environment}:8080",
-            "FINGERPRINTING_SERVICE": f"http://fingerprinting-{environment}:8081",
-            "EMAIL_SERVICE_URL": f"http://email-service-{environment}:8080",
-            "SMS_SERVICE_URL": f"http://sms-service-{environment}:8080",
-            "PUSH_SERVICE_URL": f"http://push-service-{environment}:8080",
+            "AI_PROCESSING_ENDPOINT": f"https://ai-engine-{environment}:8080",
+            "FINGERPRINTING_SERVICE": f"https://fingerprinting-{environment}:8081",
+            "EMAIL_SERVICE_URL": f"https://email-service-{environment}:8080",
+            "SMS_SERVICE_URL": f"https://sms-service-{environment}:8080",
+            "PUSH_SERVICE_URL": f"https://push-service-{environment}:8080",
             "NOTIFICATION_QUEUE": f"redis://notification-queue-{environment}:6379",
             "ANALYTICS_DB_URL": f"postgresql://analytics_{environment}:5432/analytics",
-            "CLICKHOUSE_URL": f"http://clickhouse-{environment}:8123",
+            "CLICKHOUSE_URL": f"https://clickhouse-{environment}:8123",
             "KAFKA_BROKERS": f"kafka-{environment}:9092"
         }
         

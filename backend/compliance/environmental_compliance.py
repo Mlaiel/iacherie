@@ -245,7 +245,8 @@ class CarbonFootprintCompliance:
         location = activity.get('location', 'EU')
         
         # Sélection du facteur d'émission approprié
-# SECURITY: emission_factor_key = f"{activity_type}_{location.lower()}" # MOVED TO ENV
+# SECURITY: # SECURITY: emission_factor_key = f"{activity_type}_{location.lower()}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if emission_factor_key not in self.emission_factors:
             emission_factor_key = activity_type

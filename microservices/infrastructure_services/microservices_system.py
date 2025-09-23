@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🏗️ Advanced Microservices Architecture System - Microservices Architect Implementation
 ====================================================================================

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🎮 GPU Utilization Analyzer - Enterprise AI/ML Performance Hub
 =============================================================

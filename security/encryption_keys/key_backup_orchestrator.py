@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Enterprise Key Backup Orchestrator
 Created by: Senior Engineering Team (DevOps + DBA + Security + ML + Microservices + IA Prompt Engineer)
@@ -233,7 +234,8 @@ class AWSBackupProvider(BackupProvider_Interface):
                 key_data = await self._compress_backup(key_data)
             
             # Upload
-# SECURITY: object_key = f"keys/{key_id}/{datetime.now().isoformat()}.backup" # MOVED TO ENV
+# SECURITY: # SECURITY: object_key = f"keys/{key_id}/{datetime.now().isoformat()}.backup" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             await asyncio.get_event_loop().run_in_executor(
@@ -579,7 +581,8 @@ class CreatorBackupPolicyEngine:
         """Get best matching policy for creator"""
         try:
             # Check cache first
-# SECURITY: cache_key = f"{creator_id}_{hash(json.dumps(creator_metadata, sort_keys=True))}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{creator_id}_{hash(json.dumps(creator_metadata, sort_keys=True))}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             if cache_key in self.creator_policy_cache:
                 return self.creator_policy_cache[cache_key]

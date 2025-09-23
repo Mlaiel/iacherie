@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """PostgreSQL Event Repository - Optimized Implementation
 
 High-performance PostgreSQL repository with advanced features like

@@ -40,7 +40,7 @@ class ContractStandard(str, Enum):
 
 class ContractCategory(str, Enum):
     """Contract categories"""
-    TOKEN = "token"
+    TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     NFT = "nft"
     DEFI = "defi"
     GOVERNANCE = "governance"

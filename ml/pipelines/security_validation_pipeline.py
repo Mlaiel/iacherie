@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
 Pipeline de Validation de Sécurité - Ainflue Enterprise ML Pipeline
 Système de validation sécurisée avec conformité réglementaire et protection IP

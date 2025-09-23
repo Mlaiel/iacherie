@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Kubernetes Health Integration - Enterprise Health Monitoring
 ============================================================

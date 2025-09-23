@@ -1,3 +1,4 @@
+import os
 """Webhook Manager Integration - Centralized Webhook Processing
 ============================================================
 
@@ -936,7 +937,7 @@ if __name__ == "__main__":
             stripe_endpoint = await webhook_manager.register_webhook_endpoint(
                 url="https://api.ainflue.com/webhooks/stripe",
                 source=WebhookSource.STRIPE,
-                secret="whsec_test_secret",
+                secret= os.getenv("SECRET", "CHANGE_ME"),
                 event_types=[EventType.PAYMENT_COMPLETED, EventType.PAYMENT_FAILED]
             )
             print(f"Stripe endpoint registered: {stripe_endpoint.endpoint_id}")

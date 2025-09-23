@@ -1,3 +1,4 @@
+import os
 """System Integration - IA Influencer Agent Platform
 =================================================
 
@@ -382,7 +383,7 @@ class SystemIntegrator:
             integration_type=IntegrationType.PAYMENT_PROCESSOR,
             endpoint_url="https://api.stripe.com/v1",
             credentials=IntegrationCredentials(
-                api_key="sk_test_...",
+                api_key= os.getenv("API_KEY", "CHANGE_ME"),
                 custom_config={"webhook_secret": "whsec_..."}
             ),
             rate_limit={"requests_per_minute": 100}
@@ -395,9 +396,9 @@ class SystemIntegrator:
             integration_type=IntegrationType.SOCIAL_PLATFORM,
             endpoint_url="https://www.googleapis.com/youtube/v3",
             credentials=IntegrationCredentials(
-                api_key="AIza...",
+                api_key= os.getenv("API_KEY", "CHANGE_ME"),
                 client_id="client_id",
-                client_secret="client_secret"
+                client_secret= os.getenv("SECRET", "CHANGE_ME")
             ),
             rate_limit={"requests_per_day": 10000}
         )
@@ -409,7 +410,7 @@ class SystemIntegrator:
             endpoint_url="https://api.spotify.com/v1",
             credentials=IntegrationCredentials(
                 client_id="spotify_client_id",
-                client_secret="spotify_client_secret"
+                client_secret= os.getenv("SECRET", "CHANGE_ME")
             ),
             rate_limit={"requests_per_second": 10}
         )
@@ -421,7 +422,7 @@ class SystemIntegrator:
             integration_type=IntegrationType.CLOUD_STORAGE,
             endpoint_url="https://s3.amazonaws.com",
             credentials=IntegrationCredentials(
-                api_key="AKIA...",
+                api_key= os.getenv("API_KEY", "CHANGE_ME"),
                 secret_key="secret...",
                 custom_config={"region": "us-east-1", "bucket": "ainflue-storage"}
             )

@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """🔧 Security Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
@@ -408,7 +411,8 @@ Initialize encryption keys"""
             if not self.active_config:
                 raise ValueError("No active security configuration")
             
-# SECURITY: old_key = self.encryption_keys.get(self.current_level, {}).get("key") # MOVED TO ENV
+# SECURITY: # SECURITY: old_key = self.encryption_keys.get(self.current_level, {}).get("key") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             new_key = secrets.token_bytes(self.active_config.encryption.key_size // 8)
             

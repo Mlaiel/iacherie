@@ -54,13 +54,16 @@ class ConfigurationEnvironment(Enum):
 
 class SecretType(Enum):
     """Secret types"""
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
     TOKEN = "token"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 @dataclass
@@ -370,7 +373,8 @@ class ConfigurationManager:
         try:
             watcher_id = f"{key}-{environment.value}-{id(callback)}"
             
-# SECURITY: watcher_key = f"{key}:{environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: watcher_key = f"{key}:{environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             if watcher_key not in self.active_watchers:
                 self.active_watchers[watcher_key] = []
@@ -598,7 +602,8 @@ class ConfigurationManager:
         config_item: Optional[ConfigurationItem]
     ):
         """Notify configuration watchers"""
-# SECURITY: watcher_key = f"{key}:{environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: watcher_key = f"{key}:{environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         if watcher_key in self.active_watchers:

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Enterprise PostgreSQL Database Manager
 Advanced database management, optimization and monitoring for IA Influencer Agent
 

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Edge Inference Optimizer - Edge Computing Inference Optimization for Mobile and IoT
 Author: Fahed Mlaiel (mlaiel@live.de) - ML Engineer

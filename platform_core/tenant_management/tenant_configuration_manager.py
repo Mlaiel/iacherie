@@ -538,7 +538,8 @@ class TenantConfigurationManager:
                         continue
                     
                     # Extraction de la clé originale
-# SECURITY: original_key = key.split(':', 2)[-1] # MOVED TO ENV
+# SECURITY: # SECURITY: original_key = key.split(':', 2)[-1] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     
                     # Déchiffrement si nécessaire
@@ -1016,7 +1017,8 @@ class TenantConfigurationManager:
                 if message['type'] == 'message':
                     try:
                         data = json.loads(message['data'])
-# SECURITY: key = data['key'] # MOVED TO ENV
+# SECURITY: # SECURITY: key = data['key'] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         
                         # Invalidation du cache local

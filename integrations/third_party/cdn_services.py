@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🌐 CDN Services Integration - Enterprise Content Delivery Network
 Global Content Distribution & Performance Optimization Platform

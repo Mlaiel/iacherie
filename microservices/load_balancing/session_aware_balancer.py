@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🔗 SESSION-AWARE LOAD BALANCER - ENTERPRISE STICKY SESSIONS
 Load balancer session-aware avec sticky sessions intelligent

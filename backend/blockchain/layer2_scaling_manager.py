@@ -1,3 +1,5 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
+import os
 """Layer 2 Scaling Manager - IA-Influencer-Agent Platform
 
 Enterprise Layer 2 scaling solutions management system for optimizing transaction
@@ -209,7 +211,7 @@ class Layer2Manager:
                 rpc_url="https://polygon-rpc.com",
                 chain_id=137,
                 bridge_contract="0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-                native_token="MATIC",
+                native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=2.1,
                 finality_time=10,
                 max_tps=7000,
@@ -226,7 +228,7 @@ class Layer2Manager:
                 rpc_url="https://arb1.arbitrum.io/rpc",
                 chain_id=42161,
                 bridge_contract="0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-                native_token="ETH",
+                native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=0.26,
                 finality_time=5,
                 max_tps=4000,
@@ -243,7 +245,7 @@ class Layer2Manager:
                 rpc_url="https://mainnet.optimism.io",
                 chain_id=10,
                 bridge_contract="0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-                native_token="ETH",
+                native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=2.0,
                 finality_time=10,
                 max_tps=2000,
@@ -260,7 +262,7 @@ class Layer2Manager:
                 rpc_url="https://mainnet.era.zksync.io",
                 chain_id=324,
                 bridge_contract="0x32400084C286CF3E17e7B677ea9583e60a000324",
-                native_token="ETH",
+                native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=1.0,
                 finality_time=60,  # Proof generation time
                 max_tps=2000,
@@ -277,7 +279,7 @@ class Layer2Manager:
                 rpc_url="https://mainnet.base.org",
                 chain_id=8453,
                 bridge_contract="0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-                native_token="ETH",
+                native_token= os.getenv("TOKEN", "CHANGE_ME"),
                 avg_block_time=2.0,
                 finality_time=12,
                 max_tps=1000,

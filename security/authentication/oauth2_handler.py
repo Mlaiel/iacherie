@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 🔐 OAuth2 Handler - Enterprise Security Module
@@ -48,7 +49,7 @@ class OAuth2GrantType(Enum):
     AUTHORIZATION_CODE = "authorization_code"
     IMPLICIT = "implicit"
     CLIENT_CREDENTIALS = "client_credentials"
-    REFRESH_TOKEN = "refresh_token"
+    REFRESH_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 @dataclass
 class OAuth2SecurityConfig:

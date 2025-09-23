@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 📱 Social Optimizer - Enterprise Social Media Optimization Engine
 Consolidated: social_media_format_optimizer.py + audience_targeting_processor.py

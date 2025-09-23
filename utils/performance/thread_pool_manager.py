@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Thread Pool Manager - Enterprise Performance Module
 ===================================================

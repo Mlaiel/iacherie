@@ -141,7 +141,8 @@ class AIKeywordDiscovery:
             config: Configuration dictionary with API keys and settings
         """
         self.config = config or {}
-# SECURITY: self.openai_api_key = self.config.get('openai_api_key') # MOVED TO ENV
+# SECURITY: # SECURITY: self.openai_api_key = self.config.get('openai_api_key') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         self.model_name = self.config.get('model_name', 'sentence-transformers/all-MiniLM-L6-v2')
         self.spacy_model = self.config.get('spacy_model', 'en_core_web_sm')
@@ -357,7 +358,8 @@ class AIKeywordDiscovery:
         Returns:
             TrendingKeywords with trend analysis
         """
-# SECURITY: cache_key = f"{industry}_{timeframe}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{industry}_{timeframe}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if cache_key in self._trend_cache:
             return self._trend_cache[cache_key]

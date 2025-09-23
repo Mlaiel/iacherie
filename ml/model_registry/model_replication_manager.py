@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔄 Model Replication Manager - Enterprise ML Infrastructure
 ===========================================================
 Module: ml/model_registry/model_replication_manager.py

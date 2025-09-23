@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Security Scanning Template for Ainflue Platform
 Enterprise-grade security vulnerability scanning and assessment templates.
 

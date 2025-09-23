@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """AI Protection Orchestrator
 
 Central intelligence coordination system for AI-powered content protection.

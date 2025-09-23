@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🌐 Federated Learning Engine - Privacy-Preserving Distributed ML
 ===============================================================
 Module: ml/training/federated_learning_engine.py

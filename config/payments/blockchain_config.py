@@ -37,9 +37,9 @@ class BlockchainNetwork(str, Enum):
 
 class ContractType(str, Enum):
     """Smart contract types"""
-    ERC20_TOKEN = "erc20_token"
+    ERC20_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     ERC721_NFT = "erc721_nft"
-    ERC1155_MULTI_TOKEN = "erc1155_multi_token"
+    ERC1155_MULTI_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     PAYMENT_CONTRACT = "payment_contract"
     ESCROW_CONTRACT = "escrow_contract"
     STAKING_CONTRACT = "staking_contract"

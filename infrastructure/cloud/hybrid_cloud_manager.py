@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🏗️ Ainflue Infrastructure - Hybrid Cloud Manager
 Enterprise hybrid cloud deployment coordination for Ainflue platform.

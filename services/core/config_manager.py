@@ -634,7 +634,8 @@ class ConfigManager:
         for key, value in os.environ.items():
             for prefix in prefixes:
                 if key.startswith(prefix):
-# SECURITY: config_key = key[len(prefix):].lower().replace('_', '.') # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = key[len(prefix):].lower().replace('_', '.') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     env_configs[config_key] = value
                     break
@@ -653,7 +654,8 @@ class ConfigManager:
             redis_configs = {}
             
             for key in keys:
-# SECURITY: config_key = key.decode().replace("config:", "") # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = key.decode().replace("config:", "") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 value = await self.redis_client.get(key)
                 if value:
@@ -811,7 +813,8 @@ class ConfigManager:
             keys = await self.redis_client.keys("config:*")
             
             for key in keys:
-# SECURITY: config_key = key.decode().replace("config:", "") # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = key.decode().replace("config:", "") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 redis_value = await self.redis_client.get(key)
                 

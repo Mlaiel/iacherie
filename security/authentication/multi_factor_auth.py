@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 🔒 Multi-Factor Authentication Engine - Enterprise Security
@@ -42,11 +43,11 @@ class RiskLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Available authentication methods"""
-    PASSWORD = "password"
+    PASSWORD = os.getenv("PASSWORD", "CHANGE_ME")
     SMS_OTP = "sms_otp"
     EMAIL_OTP = "email_otp"
     TOTP = "totp"
-    HARDWARE_TOKEN = "hardware_token"
+    HARDWARE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BIOMETRIC = "biometric"
     PUSH_NOTIFICATION = "push_notification"
     BACKUP_CODES = "backup_codes"

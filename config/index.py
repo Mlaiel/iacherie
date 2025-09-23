@@ -143,9 +143,11 @@ class ConfigurationSecurity(Enum):
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
-# SECURITY: SECRET = "secret" # MOVED TO ENV
+# SECURITY: # SECURITY: SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: TOP_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 class ConfigurationStatus(Enum):
@@ -206,7 +208,8 @@ class ConfigurationEncryption:
             return
         
         self.enabled = True
-# SECURITY: self.master_key = master_key or os.getenv("CONFIG_MASTER_KEY") # MOVED TO ENV
+# SECURITY: # SECURITY: self.master_key = master_key or os.getenv("CONFIG_MASTER_KEY") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         if not self.master_key:
@@ -563,7 +566,8 @@ class EnterpriseConfigurationManager:
             return
         
         try:
-# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             cached_configs = await asyncio.get_event_loop().run_in_executor(
                 None, 
@@ -797,7 +801,8 @@ class EnterpriseConfigurationManager:
         # Save to Redis
         if self.redis_client:
             try:
-# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 value_data = {
                     "value": config_value.value,
@@ -834,7 +839,8 @@ class EnterpriseConfigurationManager:
         # Remove from Redis
         if self.redis_client:
             try:
-# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 await asyncio.get_event_loop().run_in_executor(
                     None,
@@ -914,22 +920,26 @@ class EnterpriseConfigurationManager:
                 match = True
                 
                 for filter_key, filter_value in filter_by.items():
-# SECURITY: if filter_key == "environment": # MOVED TO ENV
+# SECURITY: # SECURITY: if filter_key == "environment": # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         if config_value.metadata.environment.value != filter_value:
                             match = False
                             break
-# SECURITY: elif filter_key == "source": # MOVED TO ENV
+# SECURITY: # SECURITY: elif filter_key == "source": # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         if config_value.metadata.source.value != filter_value:
                             match = False
                             break
-# SECURITY: elif filter_key == "security_level": # MOVED TO ENV
+# SECURITY: # SECURITY: elif filter_key == "security_level": # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         if config_value.metadata.security_level.value != filter_value:
                             match = False
                             break
-# SECURITY: elif filter_key == "encrypted": # MOVED TO ENV
+# SECURITY: # SECURITY: elif filter_key == "encrypted": # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         if config_value.encrypted != filter_value:
                             match = False

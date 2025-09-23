@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🚀 Notification Template Engine - AI Personalization Enterprise
 ================================================================
 Module: platform_core/notifications/notification_template_engine.py

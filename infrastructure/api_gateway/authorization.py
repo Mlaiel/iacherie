@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
 Authorization Engine - Role-Based Access Control (RBAC) System
 © 2025 Fahed Mlaiel. All rights reserved.

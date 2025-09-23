@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔍 Feature Discovery Engine - Automated ML Feature Engineering
 ================================================================
 Module: ml/feature_stores/feature_discovery_engine.py

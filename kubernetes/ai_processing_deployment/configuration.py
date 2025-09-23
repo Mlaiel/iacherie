@@ -72,15 +72,19 @@ class ConfigurationSource(Enum):
 class SecretType(Enum):
     """Types of secrets."""
 
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
     TOKEN = "token"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 

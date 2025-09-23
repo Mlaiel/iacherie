@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Data Processing Pipeline - Enterprise ETL/ELT Data Pipeline Layer
 ===============================================================

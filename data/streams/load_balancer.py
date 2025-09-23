@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Load Balancer for IA Influencer Agent Platform
 =============================================
 

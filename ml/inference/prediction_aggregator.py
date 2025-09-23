@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🎯 Prediction Aggregator - Enterprise ML Infrastructure
 =======================================================
 Module: ml/inference/prediction_aggregator.py

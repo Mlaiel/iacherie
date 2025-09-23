@@ -102,15 +102,20 @@ class ConfigScope(Enum):
 class SecretType(Enum):
     """Secret type enumeration."""
     DATABASE_URL = "database_url"
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 @dataclass
@@ -800,7 +805,8 @@ class ConfigManager:
                 # Save to Redis if configured
                 if self.redis_client:
                     try:
-# SECURITY: redis_key = f"{self.config.redis_key_prefix}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: redis_key = f"{self.config.redis_key_prefix}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                         await self.redis_client.set(redis_key, json.dumps(value))
                     except Exception as e:
@@ -923,7 +929,8 @@ class ConfigManager:
     
     def get_creator_config(self, creator_id: str, key: str, default: Any = None) -> Any:
         """Get creator-specific configuration."""
-# SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return self.get(creator_key, default)
     
@@ -935,7 +942,8 @@ class ConfigManager:
         save_to_file: bool = False
     ) -> bool:
         """Set creator-specific configuration."""
-# SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.set(creator_key, value, save_to_file)
     
@@ -979,7 +987,8 @@ class ConfigManager:
     
     def get_integration_config(self, integration_name: str) -> Dict[str, Any]:
         """Get integration configuration."""
-# SECURITY: base_key = f"integrations.{integration_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: base_key = f"integrations.{integration_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         return {

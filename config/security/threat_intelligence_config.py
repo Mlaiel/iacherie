@@ -33,7 +33,8 @@ class IOCType(str, Enum):
     URL = "url"
     FILE_HASH = "file_hash"
     EMAIL_ADDRESS = "email_address"
-# SECURITY: REGISTRY_KEY = "registry_key" # MOVED TO ENV
+# SECURITY: # SECURITY: REGISTRY_KEY = "registry_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     PROCESS_NAME = "process_name"
     CERTIFICATE = "certificate"

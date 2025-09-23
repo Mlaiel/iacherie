@@ -1,3 +1,4 @@
+import os
 """
 🔐 QUANTUM SECURITY ENGINE - Sécurité Quantique Consolidée 🔐
 =============================================================
@@ -96,7 +97,7 @@ class PrivacyLevel(Enum):
     INTERNAL = "internal_use_only"
     CONFIDENTIAL = "confidential_information"
     RESTRICTED = "restricted_access"
-    TOP_SECRET = "top_secret_classification"
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
     QUANTUM_PROTECTED = "quantum_protected_data"
 
 class AccessLevel(Enum):

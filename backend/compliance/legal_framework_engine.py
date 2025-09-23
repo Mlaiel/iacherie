@@ -1,3 +1,4 @@
+import os
 """
 Legal Framework Engine - Enterprise Legal Compliance Management
 
@@ -78,7 +79,7 @@ class IntellectualPropertyType(Enum):
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
-    TRADE_SECRET = "trade_secret"
+    TRADE_SECRET = os.getenv("SECRET", "CHANGE_ME")
     LICENSING = "licensing"
     FAIR_USE = "fair_use"
 

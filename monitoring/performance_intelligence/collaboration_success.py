@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🤝 Collaboration Success Metrics - Advanced Partnership Analytics & Community Growth Intelligence
 ==============================================================================================
 

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Streaming CDN Manager - Unified Content Delivery & Distribution System
 =====================================================================
 

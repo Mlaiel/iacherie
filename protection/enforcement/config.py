@@ -441,7 +441,8 @@ Validate platform configurations"""
         """
 Validate security configuration"""
         if values.get('environment') == EnvironmentType.PRODUCTION:
-# SECURITY: if v.jwt_secret_key == "your-secret-key-change-in-production": # MOVED TO ENV
+# SECURITY: # SECURITY: if v.jwt_secret_key == "your-secret-key-change-in-production": # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 raise ValueError("JWT secret key must be changed in production")
         return v

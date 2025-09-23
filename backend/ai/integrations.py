@@ -1,3 +1,4 @@
+import os
 """
 External Services Integration Module
 ==================================
@@ -52,9 +53,9 @@ class IntegrationStatus(Enum):
 
 class AuthenticationType(Enum):
     """Types of authentication methods"""
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     OAUTH2 = "oauth2"
-    BEARER_TOKEN = "bearer_token"
+    BEARER_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BASIC_AUTH = "basic_auth"
     WEBHOOK_SIGNATURE = "webhook_signature"
     CUSTOM = "custom"

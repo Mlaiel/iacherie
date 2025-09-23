@@ -92,7 +92,8 @@ class InfrastructureConfigurationManager:
         
         # Security settings
         self.encrypt_secrets = self.config.get("encrypt_secrets", True)
-# SECURITY: self.secret_key = self.config.get("secret_key", "default-key") # MOVED TO ENV
+# SECURITY: # SECURITY: self.secret_key = self.config.get("secret_key", "default-key") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         # Validation settings

@@ -1,3 +1,4 @@
+import os
 """Language APIs - External API Integrations and Management Engine
 ================================================================================
 Module: backend/languages/language_apis.py
@@ -772,7 +773,7 @@ class LanguageAPIManager:
         # Google Translate
         google_creds = APICredentials(
             provider=APIProvider.GOOGLE_TRANSLATE,
-            api_key="placeholder_key",
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),
             endpoint="https://translation.googleapis.com/language/translate/v2"
         )
         

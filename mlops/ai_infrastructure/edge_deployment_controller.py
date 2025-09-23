@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🚀 Edge Deployment Controller Enterprise
 MLOps Platform - Contrôleur de déploiement edge pour inférence distribuée globale

@@ -437,7 +437,8 @@ class CacheConfiguration:
         cache = self.cache_instances[CacheLevel.L1]
         if self.l1_config.eviction_policy == EvictionPolicy.LRU:
             # Remove oldest accessed entry
-# SECURITY: oldest_key = min(cache.keys(), key=lambda k: cache[k].get('last_access', 0)) # MOVED TO ENV
+# SECURITY: # SECURITY: oldest_key = min(cache.keys(), key=lambda k: cache[k].get('last_access', 0)) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             del cache[oldest_key]
         self.metrics[CacheLevel.L1].eviction_count += 1

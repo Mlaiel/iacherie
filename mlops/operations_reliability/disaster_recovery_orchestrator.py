@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🛡️ Disaster Recovery Orchestrator - Enterprise Creator Economy
 ================================================================

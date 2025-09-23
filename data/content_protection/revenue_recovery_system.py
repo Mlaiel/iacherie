@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 💰 Revenue Recovery System - Monetization + Recovery + Optimization
 ===================================================================

@@ -1034,7 +1034,8 @@ class MultiTenantKeyIsolator:
             self.cross_tenant_requests.clear()
             
             # Clear master key
-# SECURITY: self.master_tenant_key = b"" # MOVED TO ENV
+# SECURITY: # SECURITY: self.master_tenant_key = b"" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             self.logger.info("Multi Tenant Key Isolator cleanup completed")

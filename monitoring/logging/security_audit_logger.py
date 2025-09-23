@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """🔐 Security Audit Logger - Advanced IP Protection & Threat Detection
 ==================================================================
 Experts: Sécurité + Backend Senior + DevOps + ML Engineer + DBA

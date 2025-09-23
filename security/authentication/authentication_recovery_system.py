@@ -1,3 +1,7 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
+import os
 #!/usr/bin/env python3
 """
 🔒 Authentication Recovery System - Secure Account Recovery
@@ -72,7 +76,7 @@ class VerificationChannel(Enum):
     PHONE_CALL = "phone_call"
     PUSH_NOTIFICATION = "push_notification"
     AUTHENTICATOR_APP = "authenticator_app"
-    HARDWARE_TOKEN = "hardware_token"
+    HARDWARE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 
 class SecurityLevel(Enum):

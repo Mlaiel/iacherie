@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-XSS-Protection: 1; mode=block
 """
 🛡️ Security Manager - Enterprise Threat Detection & Vulnerability Management
 

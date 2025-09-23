@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Machine Learning Processor - ML-driven Data Processing
 ========================================================
 

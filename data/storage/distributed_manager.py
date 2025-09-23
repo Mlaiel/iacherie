@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Professional Distributed Storage Manager - IA Influencer Agent Platform
 =======================================================================
 Module: backend/data/storage/distributed_manager.py

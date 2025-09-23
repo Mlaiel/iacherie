@@ -313,7 +313,7 @@ def get_development_monetization_config() -> Dict[str, Any]:
     return {
         "payment": PaymentConfig(
             provider=PaymentProvider.STRIPE,
-            api_key="sk_test_...",
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),
             auto_capture=False
         ),
         "subscription": SubscriptionConfig(
@@ -389,7 +389,7 @@ def get_testing_monetization_config() -> Dict[str, Any]:
     return {
         "payment": PaymentConfig(
             provider=PaymentProvider.STRIPE,
-            api_key="sk_test_test",
+            api_key= os.getenv("API_KEY", "CHANGE_ME"),
             auto_capture=False
         ),
         "subscription": SubscriptionConfig(

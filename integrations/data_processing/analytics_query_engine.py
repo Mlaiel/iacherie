@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Analytics Query Engine - Advanced Analytics Processing
 ======================================================
 

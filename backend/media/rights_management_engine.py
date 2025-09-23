@@ -1,3 +1,4 @@
+import os
 """Rights Management Engine - Comprehensive Digital Rights Management
 ================================================================
 
@@ -73,7 +74,7 @@ class RightsType(Enum):
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
-    TRADE_SECRET = "trade_secret"
+    TRADE_SECRET = os.getenv("SECRET", "CHANGE_ME")
     PUBLICITY = "publicity"
     PERFORMANCE = "performance"
     MECHANICAL = "mechanical"

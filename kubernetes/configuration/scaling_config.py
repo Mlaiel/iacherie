@@ -535,7 +535,8 @@ Initialize scaling configuration manager"""
     async def _is_in_cooldown(self, service_name: str, policy_name: str) -> bool:
         """
 Check if scaling action is in cooldown period"""
-# SECURITY: key = f"{service_name}:{policy_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: key = f"{service_name}:{policy_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if key in self.cooldown_timers:
             return datetime.now() < self.cooldown_timers[key]
@@ -601,7 +602,8 @@ Check if scaling action is in cooldown period"""
                 
                 if success:
                     # Set cooldown timer
-# SECURITY: cooldown_key = f"{service_name}:{policy.name}" # MOVED TO ENV
+# SECURITY: # SECURITY: cooldown_key = f"{service_name}:{policy.name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     self.cooldown_timers[cooldown_key] = datetime.now() + timedelta(seconds=policy.cooldown_seconds)
                     

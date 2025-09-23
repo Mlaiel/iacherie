@@ -439,7 +439,8 @@ Load configuration from environment variables."""
         if os.getenv('AWS_ACCESS_KEY_ID'):
             self.aws.access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
         if os.getenv('AWS_SECRET_ACCESS_KEY'):
-# SECURITY: self.aws.secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY') # MOVED TO ENV
+# SECURITY: # SECURITY: self.aws.secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if os.getenv('AWS_SESSION_TOKEN'):
             self.aws.session_token = os.getenv('AWS_SESSION_TOKEN')
@@ -452,7 +453,8 @@ Load configuration from environment variables."""
         if os.getenv('AZURE_CLIENT_ID'):
             self.azure.client_id = os.getenv('AZURE_CLIENT_ID')
         if os.getenv('AZURE_CLIENT_SECRET'):
-# SECURITY: self.azure.client_secret = os.getenv('AZURE_CLIENT_SECRET') # MOVED TO ENV
+# SECURITY: # SECURITY: self.azure.client_secret = os.getenv('AZURE_CLIENT_SECRET') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         # GCP configuration

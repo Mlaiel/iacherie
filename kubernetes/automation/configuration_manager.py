@@ -44,17 +44,22 @@ class ConfigType(Enum):
 
 class SecretType(Enum):
     """Secret types"""
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
     OAUTH_TOKEN = "oauth_token"
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -1044,7 +1049,8 @@ class ConfigurationManager(BaseComponent):
         """Retrieve and decrypt secret value"""
         
         # Check cache first
-# SECURITY: cache_key = f"{environment}:{secret_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{environment}:{secret_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         if cache_key in self.secret_cache:
             return self.secret_cache[cache_key]['value']
@@ -1224,7 +1230,8 @@ class ConfigurationManager(BaseComponent):
                 await self._store_secret(secret_name, new_value, environment, secret_def)
                 
                 # Clear cache
-# SECURITY: cache_key = f"{environment}:{secret_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{environment}:{secret_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 if cache_key in self.secret_cache:
                     del self.secret_cache[cache_key]

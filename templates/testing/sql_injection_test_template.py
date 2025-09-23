@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🛡️ SQL INJECTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 =================================================================

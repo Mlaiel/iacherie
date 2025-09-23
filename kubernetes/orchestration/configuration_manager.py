@@ -103,15 +103,18 @@ class ConfigType(Enum):
 class SecretType(Enum):
     """Secret types."""
 
-# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     TOKEN = "token"
     CERTIFICATE = "certificate"
     DATABASE_CONNECTION = "database_connection"
     OAUTH_CLIENT = "oauth_client"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -347,7 +350,8 @@ Get default platform configurations."""
                 
                 # Set platform configurations
                 for service_name, config_data in self.platform_configs.items():
-# SECURITY: config_key = f"platform.{service_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"platform.{service_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     
                     # Adjust configuration based on environment

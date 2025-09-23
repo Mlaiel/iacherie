@@ -661,7 +661,8 @@ class EnterpriseEnvironmentConfiguration:
     def get_secret(self, secret_name: str, environment: Optional[str] = None) -> Optional[str]:
         """Get decrypted secret value"""
         target_env = environment or self.current_environment
-# SECURITY: secret_key = f"{target_env}-{secret_name}" # MOVED TO ENV
+# SECURITY: # SECURITY: secret_key = f"{target_env}-{secret_name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         if secret_key in self.secrets:

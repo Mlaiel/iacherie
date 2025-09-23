@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Crisis Communication Manager for PagerDuty - Ainflue Platform
 Public communication and stakeholder notification during incidents

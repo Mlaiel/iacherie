@@ -477,7 +477,8 @@ class TaxCalculationConfiguration:
                 tax_amount = tax_rate.calculate_tax(calculation_result.base_amount)
                 
                 if tax_amount > 0:
-# SECURITY: tax_key = f"{tax_rate.tax_type.value}_{tax_rate.tax_category.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: tax_key = f"{tax_rate.tax_type.value}_{tax_rate.tax_category.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     calculation_result.tax_breakdown[tax_key] = tax_amount
                     calculation_result.total_tax += tax_amount

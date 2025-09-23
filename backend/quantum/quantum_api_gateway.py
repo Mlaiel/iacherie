@@ -1,3 +1,5 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
+import os
 """
 🌐 QUANTUM API GATEWAY - Passerelle API Quantique 🌐
 ====================================================
@@ -76,7 +78,7 @@ class LoadBalancingStrategy(Enum):
 class AuthenticationType(Enum):
     """Types d'authentification"""
     NONE = "none"
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     JWT = "jwt"
     OAUTH2 = "oauth2"
     QUANTUM_SIGNATURE = "quantum_signature"

@@ -27,21 +27,27 @@ logger = logging.getLogger(__name__)
 
 class SecretType(Enum):
     """Types de secrets"""
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     TOKEN = "token"
     CERTIFICATE = "certificate"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     DATABASE_CREDENTIAL = "database_credential"
     SERVICE_ACCOUNT = "service_account"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 class SecretStatus(Enum):

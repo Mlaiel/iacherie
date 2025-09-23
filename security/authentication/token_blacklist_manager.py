@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 🔒 Token Blacklist Manager - Real-Time Token Security
@@ -42,7 +43,7 @@ class BlacklistReason(Enum):
     SECURITY_BREACH = "security_breach"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     POLICY_VIOLATION = "policy_violation"
-    EXPIRED_TOKEN = "expired_token"
+    EXPIRED_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     REVOKED_PERMISSION = "revoked_permission"
     ACCOUNT_SUSPENDED = "account_suspended"
     ADMIN_ACTION = "admin_action"
@@ -52,12 +53,12 @@ class BlacklistReason(Enum):
 
 class TokenType(Enum):
     """Types of tokens"""
-    ACCESS_TOKEN = "access_token"
-    REFRESH_TOKEN = "refresh_token"
-    ID_TOKEN = "id_token"
-    SESSION_TOKEN = "session_token"
-    API_TOKEN = "api_token"
-    TEMPORARY_TOKEN = "temporary_token"
+    ACCESS_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    REFRESH_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    ID_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    SESSION_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    API_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    TEMPORARY_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 
 class BlacklistScope(Enum):

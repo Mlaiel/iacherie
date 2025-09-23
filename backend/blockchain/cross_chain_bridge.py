@@ -1,3 +1,4 @@
+import os
 """Cross-Chain Bridge Manager - IA-Influencer-Agent Platform
 
 Enterprise cross-chain bridge management system for seamless asset transfers
@@ -66,10 +67,10 @@ class TransferStatus(Enum):
 
 class AssetType(Enum):
     """Types of assets that can be bridged"""
-    NATIVE_TOKEN = "native_token"
-    ERC20_TOKEN = "erc20_token"
+    NATIVE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    ERC20_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     NFT = "nft"
-    WRAPPED_TOKEN = "wrapped_token"
+    WRAPPED_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 # =============================================================================
 # DATA CLASSES

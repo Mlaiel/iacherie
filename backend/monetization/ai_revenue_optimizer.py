@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🤖 AI Revenue Optimizer - Intelligent Revenue Optimization & Pricing Engine
 ===========================================================================

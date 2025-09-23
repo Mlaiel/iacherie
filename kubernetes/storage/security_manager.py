@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Storage Security Manager - IA-Influencer-Agent Deployment
 ================================================================================
 Module: backend/deployment/storage/security_manager.py

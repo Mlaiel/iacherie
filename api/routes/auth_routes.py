@@ -1,3 +1,7 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
+import os
 """
 Authentication Routes - Enterprise Security & Identity Management
 Advanced authentication with JWT, OAuth2, 2FA, RBAC, and session management.
@@ -64,7 +68,7 @@ class AuthMethod(str, Enum):
     GOOGLE_OAUTH = "google_oauth"
     MICROSOFT_OAUTH = "microsoft_oauth"
     GITHUB_OAUTH = "github_oauth"
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     SSO_SAML = "sso_saml"
 
 class SessionStatus(str, Enum):

@@ -35,20 +35,26 @@ class SecretType(Enum):
     """
 Secret types"""
 
-# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     DATABASE_CREDENTIAL = "database_credential"
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     OAUTH_TOKEN = "oauth_token"
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 class RotationStrategy(Enum):
@@ -772,7 +778,8 @@ Generate password according to policy"""
         if not chars:
             chars = string.ascii_letters + string.digits
         
-# SECURITY: password = ''.join(secrets.choice(chars) for _ in range(policy.min_length)) # MOVED TO ENV
+# SECURITY: # SECURITY: password = ''.join(secrets.choice(chars) for _ in range(policy.min_length)) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return password
     

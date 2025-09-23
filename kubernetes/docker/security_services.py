@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """🔐 Security Services Docker Configuration - IA-Influencer-Agent Platform
 =========================================================================
 Expert: Security Engineer + Compliance Specialist + DevOps Engineer

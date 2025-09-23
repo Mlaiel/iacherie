@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Enterprise Database Manager for MLOps
 DBA + Lead Dev IA implementation with advanced metadata management and lineage tracking
