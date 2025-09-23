@@ -27,7 +27,15 @@ from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from enum import Enum
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from aiohttp import web, WSMsgType
 import aiohttp_cors
 from jinja2 import Environment, BaseLoader, FileSystemLoader
@@ -2263,7 +2271,15 @@ class StatusDashboard:
 # Example usage
 async def create_status_dashboard_example():
     """Example of creating and running a status dashboard"""
+    # Safe Redis import with Python 3.12 compatibility
+try:
     import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
     
     # Initialize Redis client
     redis_client = await aioredis.create_redis_pool('redis://localhost:6379')

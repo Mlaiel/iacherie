@@ -50,7 +50,15 @@ from dataclasses import dataclass, asdict, field
 from enum import Enum, IntEnum
 import concurrent.futures
 from pathlib import Path
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import psycopg2
 from contextlib import asynccontextmanager
 import traceback

@@ -1554,7 +1554,15 @@ from dataclasses import dataclass
 import re
 import ipaddress
 
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_, or_, func, desc
 from pydantic import BaseModel, Field, validator
@@ -6578,7 +6586,15 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import uuid
 import re
 from cryptography.hazmat.primitives import hashes, serialization
@@ -15270,7 +15286,15 @@ import asyncio
 import logging
 import json
 import uuid
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import asyncpg
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -16945,7 +16969,15 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from ipaddress import ip_address, AddressValueError
 import structlog
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import motor.motor_asyncio
 from cryptography.fernet import Fernet
 
@@ -21919,7 +21951,15 @@ import hashlib
 import secrets
 import base64
 from collections import defaultdict
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import asyncpg
 from prometheus_client import Counter, Histogram, Gauge, Summary
 import structlog
@@ -22910,7 +22950,15 @@ from fastapi import Request, Response, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import geoip2.database
 import geoip2.errors
 from user_agents import parse as parse_user_agent
@@ -26817,7 +26865,15 @@ import base64
 import hmac
 import time
 from collections import defaultdict, deque
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import asyncpg
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding, ed25519
@@ -29328,7 +29384,15 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional, Callable
 from pathlib import Path
 import structlog
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import geoip2.database
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -35172,7 +35236,15 @@ from dataclasses import dataclass
 import re
 import ipaddress
 
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_, or_, func, desc
 from pydantic import BaseModel, Field, validator
@@ -38761,7 +38833,15 @@ from dataclasses import dataclass
 import re
 import ipaddress
 
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_, or_, func, desc
 from pydantic import BaseModel, Field, validator
@@ -43872,7 +43952,15 @@ class DependencyInjectionFactory(AbstractFactory):
         from ..session.redis_storage import RedisSessionStorage
         
         if redis_client is None:
-            import aioredis
+            # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
             redis_client = aioredis.from_url("redis://localhost:6379")
         
         return RedisSessionStorage(redis_client, **kwargs)
@@ -44287,7 +44375,15 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from contextlib import asynccontextmanager
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import pymongo
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
@@ -47949,7 +48045,15 @@ import asyncio_throttle
 
 # Database security
 import asyncpg
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 
 # Compliance frameworks
 from dataclasses import dataclass
@@ -67403,7 +67507,15 @@ from datetime import datetime, timedelta
 import hashlib
 import socket
 import ssl
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import asyncpg
 from pathlib import Path
 

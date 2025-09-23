@@ -20,7 +20,15 @@ import time
 from urllib.parse import urljoin, urlparse
 
 import aiohttp
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete, and_, or_, func
 from pydantic import BaseModel, Field, validator, HttpUrl, AnyHttpUrl

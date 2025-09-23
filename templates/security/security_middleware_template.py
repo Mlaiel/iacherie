@@ -24,7 +24,15 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from fastapi import Request, Response, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette.middleware.base import BaseHTTPMiddleware

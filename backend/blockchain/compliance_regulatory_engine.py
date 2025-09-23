@@ -20,7 +20,15 @@ from typing import Any, Dict, List, Optional, Set, Tuple, Union, AsyncGenerator
 from uuid import uuid4, UUID
 
 import aiohttp
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from cryptography.fernet import Fernet
 from sqlalchemy import Column, String, DateTime, JSON, Boolean, Float
 from sqlalchemy.ext.asyncio import AsyncSession

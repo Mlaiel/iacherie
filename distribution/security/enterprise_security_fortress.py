@@ -36,7 +36,15 @@ from email_validator import validate_email, EmailNotValidError
 import user_agents
 
 # Rate limiting and monitoring
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 from collections import defaultdict
 
 class SecurityLevel(Enum):

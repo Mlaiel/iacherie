@@ -22,7 +22,15 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple, Union, Callable
 from urllib.parse import urlparse
 
-import aioredis
+# Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
 import cryptography
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization

@@ -30,7 +30,15 @@ from .alert_models import (
 )
 
 # Use our compatibility wrapper for redis
-from ..utils import aioredis as redis, REDIS_AVAILABLE
+from ..utils # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}") as redis, REDIS_AVAILABLE
 
 # Optional pydantic with fallback
 try:

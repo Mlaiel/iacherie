@@ -23,7 +23,15 @@ from typing import Dict, List, Optional, Any, Union, BinaryIO
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 import aiofiles
-# import aioredis  # Disabled for Python 3.12 compatibility
+# # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")  # Disabled for Python 3.12 compatibility
 from pathlib import Path
 import hashlib
 import uuid

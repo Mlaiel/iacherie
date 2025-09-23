@@ -12,9 +12,25 @@ from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
-# Try to import aioredis with compatibility handling
+# Try to # Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}") with compatibility handling
+try:
+    # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
     REDIS_AVAILABLE = True
     logger.info("aioredis imported successfully")
 except (ImportError, TypeError) as e:

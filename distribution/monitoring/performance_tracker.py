@@ -299,9 +299,25 @@ class PerformanceTracker:
         # Connect to Redis if URL provided
         if self.redis_url:
             try:
-                # Try to import aioredis if available
+                # Try to # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}") if available
                 try:
-                    import aioredis
+                    # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
                     self.redis_client = aioredis.from_url(self.redis_url)
                     await self.redis_client.ping()
                     logger.info("Connected to Redis for metrics storage")

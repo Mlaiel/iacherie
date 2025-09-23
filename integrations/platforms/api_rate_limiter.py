@@ -91,7 +91,15 @@ Intelligent rate limiting for platform APIs"""
         """Async context manager entry"""
         if self.redis_url and REDIS_AVAILABLE:
             try:
-                import aioredis  # Import here to avoid module-level issues
+                # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")  # Import here to avoid module-level issues
                 self.redis_client = await aioredis.from_url(self.redis_url)
                 logger.info("Rate limiter connected to Redis")
             except Exception as e:
@@ -217,7 +225,15 @@ Intelligent rate limiting for platform APIs"""
             if not REDIS_AVAILABLE:
                 return await self._check_memory_rate_limit(key, rule)
                 
-            import aioredis  # Import here to avoid module-level issues
+            # Safe Redis import with Python 3.12 compatibility
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError) as e:
+    # Handle Python 3.12 TimeoutError duplicate base class issue
+    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")  # Import here to avoid module-level issues
             
             now = int(time.time())
             window_start = now - rule.time_window
