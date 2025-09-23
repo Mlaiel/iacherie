@@ -142,7 +142,8 @@ class DistributedConfigStore:
                                environment: str = "production") -> Dict[str, Any]:
         """Obtenir la configuration d'un service"""
         try:
-# SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             # Vérifier le cache
@@ -180,7 +181,8 @@ class DistributedConfigStore:
                                environment: str = "production") -> bool:
         """Mettre à jour la configuration d'un service"""
         try:
-# SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             # Sauvegarder la version précédente

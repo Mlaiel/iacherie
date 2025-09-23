@@ -324,7 +324,8 @@ class ConfigurationManager:
             Dict[str, Any]: Service configuration
         """
         try:
-# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             if config_key not in self.configurations:
@@ -382,7 +383,8 @@ class ConfigurationManager:
             bool: True if update successful
         """
         try:
-# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             # Validate configuration if requested
@@ -625,7 +627,8 @@ class ConfigurationManager:
     async def _save_configuration_to_store(self, service_name: str, environment: str):
         """Save configuration to persistent store."""
         try:
-# SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"{service_name}:{environment}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             config_data = self.configurations.get(config_key, {})
             

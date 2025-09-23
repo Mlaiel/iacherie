@@ -774,7 +774,8 @@ class QuantumConfigManager:
         env_config = {}
         for key, value in os.environ.items():
             if key.startswith("QUANTUM_"):
-# SECURITY: config_key = key.replace("QUANTUM_", "").lower() # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = key.replace("QUANTUM_", "").lower() # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 env_config[config_key] = value
         return env_config

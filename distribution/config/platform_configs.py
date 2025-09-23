@@ -439,7 +439,8 @@ class PlatformConfigManager:
             if "refresh_token" in auth_data:
                 config.auth.refresh_token = auth_data["refresh_token"]
             if "api_key" in auth_data:
-# SECURITY: config.auth.api_key = auth_data["api_key"] # MOVED TO ENV
+# SECURITY: # SECURITY: config.auth.api_key = auth_data["api_key"] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     
     def validate_content_for_platform(

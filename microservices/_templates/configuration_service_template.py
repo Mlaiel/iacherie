@@ -94,14 +94,17 @@ class ConfigurationSource(Enum):
 
 class SecretType(Enum):
     """Types of secrets."""
-# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
     TOKEN = "token"
     DATABASE_URL = "database_url"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 class ConfigurationServiceTemplate(EnterpriseServiceBase):
@@ -253,7 +256,8 @@ class ConfigurationServiceTemplate(EnterpriseServiceBase):
                                decrypt: bool = True) -> Any:
         """Get configuration value with decryption."""
         try:
-# SECURITY: config_key = f"{environment}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"{environment}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             config_entry = self.configurations.get(config_key)
@@ -291,7 +295,8 @@ class ConfigurationServiceTemplate(EnterpriseServiceBase):
                                tags: Optional[List[str]] = None) -> None:
         """Set configuration value with encryption."""
         try:
-# SECURITY: config_key = f"{environment}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: config_key = f"{environment}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             # Encrypt if needed
@@ -506,11 +511,13 @@ class ConfigurationServiceTemplate(EnterpriseServiceBase):
     async def _setup_encryption(self, encryption_config: Dict[str, Any]) -> None:
         """Setup encryption for sensitive configurations."""
         if 'key' in encryption_config:
-# SECURITY: self.encryption_key = encryption_config['key'].encode() # MOVED TO ENV
+# SECURITY: # SECURITY: self.encryption_key = encryption_config['key'].encode() # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         else:
             # Generate encryption key from password
-# SECURITY: password = encryption_config.get('password', 'default_key').encode() # MOVED TO ENV
+# SECURITY: # SECURITY: password = encryption_config.get('password', 'default_key').encode() # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             salt = encryption_config.get('salt', b'salt_').encode()
             
@@ -754,7 +761,8 @@ class ConfigurationServiceTemplate(EnterpriseServiceBase):
     
     async def _notify_watchers(self, config_key: str, value: Any) -> None:
         """Notify configuration watchers."""
-# SECURITY: key = config_key.split(':', 1)[1] if ':' in config_key else config_key # MOVED TO ENV
+# SECURITY: # SECURITY: key = config_key.split(':', 1)[1] if ':' in config_key else config_key # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         if key in self.watchers:

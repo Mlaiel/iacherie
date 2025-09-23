@@ -36,7 +36,8 @@ Kubernetes resource types"""
     DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
-# SECURITY: SECRET = "Secret" # MOVED TO ENV
+# SECURITY: # SECURITY: SECRET = "Secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     INGRESS = "Ingress"
     PVC = "PersistentVolumeClaim"

@@ -305,9 +305,11 @@ class APIKeyManager:
         else:
             # Private keys have secret component
             secret_bytes = secrets.token_bytes(self.key_length)
-# SECURITY: secret = f"{self.secret_prefix}{base64.urlsafe_b64encode(secret_bytes).decode().rstrip('=')}" # MOVED TO ENV
+# SECURITY: # SECURITY: secret = f"{self.secret_prefix}{base64.urlsafe_b64encode(secret_bytes).decode().rstrip('=')}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: api_key = f"{key_id}.{secret}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: api_key = f"{key_id}.{secret}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         return key_id, api_key
@@ -389,13 +391,15 @@ class APIKeyManager:
         encrypted_data = self._encrypt_key_data(key_data)
         
         # Store in Redis
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         await self.redis.setex(key_storage_key, 86400 * 365, encrypted_data)  # 1 year TTL
         
         # Store key lookup (for validation)
         key_hash = hashlib.sha256(api_key.encode()).hexdigest()
-# SECURITY: lookup_key = f"api_key_lookup:{key_hash}" # MOVED TO ENV
+# SECURITY: # SECURITY: lookup_key = f"api_key_lookup:{key_hash}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         await self.redis.setex(lookup_key, 86400 * 365, key_id)
         
@@ -450,7 +454,8 @@ class APIKeyManager:
         try:
             # Get key ID from lookup
             key_hash = hashlib.sha256(api_key.encode()).hexdigest()
-# SECURITY: lookup_key = f"api_key_lookup:{key_hash}" # MOVED TO ENV
+# SECURITY: # SECURITY: lookup_key = f"api_key_lookup:{key_hash}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             key_id = await self.redis.get(lookup_key)
             
@@ -460,7 +465,8 @@ class APIKeyManager:
             key_id = key_id.decode('utf-8')
             
             # Get key data
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             encrypted_data = await self.redis.get(key_storage_key)
             
@@ -529,7 +535,8 @@ class APIKeyManager:
         current_day = current_time // 86400
         
         # Check minute limit
-# SECURITY: minute_key = f"rate_limit:minute:{key_id}:{current_minute}" # MOVED TO ENV
+# SECURITY: # SECURITY: minute_key = f"rate_limit:minute:{key_id}:{current_minute}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         minute_count = await self.redis.get(minute_key)
         minute_count = int(minute_count) if minute_count else 0
@@ -542,7 +549,8 @@ class APIKeyManager:
             )
         
         # Check hour limit
-# SECURITY: hour_key = f"rate_limit:hour:{key_id}:{current_hour}" # MOVED TO ENV
+# SECURITY: # SECURITY: hour_key = f"rate_limit:hour:{key_id}:{current_hour}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         hour_count = await self.redis.get(hour_key)
         hour_count = int(hour_count) if hour_count else 0
@@ -555,7 +563,8 @@ class APIKeyManager:
             )
         
         # Check day limit
-# SECURITY: day_key = f"rate_limit:day:{key_id}:{current_day}" # MOVED TO ENV
+# SECURITY: # SECURITY: day_key = f"rate_limit:day:{key_id}:{current_day}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         day_count = await self.redis.get(day_key)
         day_count = int(day_count) if day_count else 0
@@ -582,7 +591,8 @@ class APIKeyManager:
         now = datetime.utcnow()
         
         # Update key data with last used timestamp
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         encrypted_data = await self.redis.get(key_storage_key)
         
@@ -596,7 +606,8 @@ class APIKeyManager:
             await self.redis.setex(key_storage_key, 86400 * 365, updated_encrypted_data)
         
         # Update usage statistics
-# SECURITY: stats_key = f"api_key_stats:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: stats_key = f"api_key_stats:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         current_time = int(time.time())
         current_hour = current_time // 3600
@@ -615,7 +626,8 @@ class APIKeyManager:
     
     async def get_api_key_info(self, key_id: str) -> APIKeyResponse:
         """Get API key information"""
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         encrypted_data = await self.redis.get(key_storage_key)
         
@@ -647,7 +659,8 @@ class APIKeyManager:
     
     async def get_usage_stats(self, key_id: str) -> APIKeyUsageStats:
         """Get API key usage statistics"""
-# SECURITY: stats_key = f"api_key_stats:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: stats_key = f"api_key_stats:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         stats_data = await self.redis.hgetall(stats_key)
         
@@ -700,7 +713,8 @@ class APIKeyManager:
     ) -> KeyRotationResponse:
         """Rotate API key with grace period"""
         # Get existing key data
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         encrypted_data = await self.redis.get(key_storage_key)
         
@@ -710,7 +724,8 @@ class APIKeyManager:
         old_key_data = self._decrypt_key_data(encrypted_data.decode('utf-8'))
         
         # Generate new key
-# SECURITY: new_key_id, new_api_key = self._generate_key_pair(KeyType(old_key_data["key_type"])) # MOVED TO ENV
+# SECURITY: # SECURITY: new_key_id, new_api_key = self._generate_key_pair(KeyType(old_key_data["key_type"])) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         # Create new key data
@@ -727,13 +742,15 @@ class APIKeyManager:
         
         # Store new key
         new_encrypted_data = self._encrypt_key_data(new_key_data)
-# SECURITY: new_key_storage_key = f"api_key:{new_key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: new_key_storage_key = f"api_key:{new_key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         await self.redis.setex(new_key_storage_key, 86400 * 365, new_encrypted_data)
         
         # Store new key lookup
         new_key_hash = hashlib.sha256(new_api_key.encode()).hexdigest()
-# SECURITY: new_lookup_key = f"api_key_lookup:{new_key_hash}" # MOVED TO ENV
+# SECURITY: # SECURITY: new_lookup_key = f"api_key_lookup:{new_key_hash}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         await self.redis.setex(new_lookup_key, 86400 * 365, new_key_id)
         
@@ -785,7 +802,8 @@ class APIKeyManager:
     
     async def _revoke_key(self, key_id: str, reason: str) -> bool:
         """Internal method to revoke key"""
-# SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV
+# SECURITY: # SECURITY: key_storage_key = f"api_key:{key_id}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         encrypted_data = await self.redis.get(key_storage_key)
         
@@ -868,7 +886,8 @@ async def get_current_api_key(
 ) -> Dict[str, Any]:
     """FastAPI dependency to validate API key"""
     # Get API key from header or query parameter
-# SECURITY: api_key = request.headers.get("X-API-Key") or request.query_params.get("api_key") # MOVED TO ENV
+# SECURITY: # SECURITY: api_key = request.headers.get("X-API-Key") or request.query_params.get("api_key") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     
     if not api_key:

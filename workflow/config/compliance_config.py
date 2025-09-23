@@ -49,7 +49,8 @@ class DataClassification(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 class AuditLevel(Enum):

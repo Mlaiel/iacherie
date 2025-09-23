@@ -219,7 +219,8 @@ class ServiceRegistry:
             self.registered_services[service_name].append(endpoint)
         
         # Initialize health status
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         self.service_health[service_name][endpoint_key] = True
         self.last_health_check[service_name][endpoint_key] = datetime.now()
@@ -246,7 +247,8 @@ class ServiceRegistry:
                 removed_endpoint = endpoints.pop(i)
                 
                 # Remove health status
-# SECURITY: endpoint_key = f"{host}:{port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{host}:{port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 if endpoint_key in self.service_health[service_name]:
                     del self.service_health[service_name][endpoint_key]
@@ -268,7 +270,8 @@ class ServiceRegistry:
         
         healthy_endpoints = []
         for endpoint in self.registered_services[service_name]:
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             is_healthy = self.service_health[service_name].get(endpoint_key, False)
             
@@ -280,7 +283,8 @@ class ServiceRegistry:
     async def health_check_service(self, service_name: str, endpoint: ServiceEndpoint) -> bool:
         """Perform health check on service endpoint"""
         try:
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             if self.config.health_check_type == HealthCheckType.HTTP:
@@ -314,7 +318,8 @@ class ServiceRegistry:
             
         except Exception as e:
             logging.warning(f"Health check failed for {service_name} at {endpoint.host}:{endpoint.port}: {e}")
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.service_health[service_name][endpoint_key] = False
             return False
@@ -438,7 +443,8 @@ class LoadBalancer:
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             connections = self.connection_counts[service_name].get(endpoint_key, 0)
             
@@ -457,7 +463,8 @@ class LoadBalancer:
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             response_times = self.response_times[service_name].get(endpoint_key, [])
             
@@ -477,7 +484,8 @@ class LoadBalancer:
         if service_name not in self.connection_counts:
             self.connection_counts[service_name] = {}
         
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         current_connections = self.connection_counts[service_name].get(endpoint_key, 0)
         self.connection_counts[service_name][endpoint_key] = current_connections + 1
@@ -485,7 +493,8 @@ class LoadBalancer:
     def record_request_end(self, service_name: str, endpoint: ServiceEndpoint, 
                           response_time_ms: float, success: bool) -> None:
         """Record request completion"""
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         # Update connection count
@@ -516,7 +525,8 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             return False
         
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         circuit_breaker = self.circuit_breakers[service_name].get(endpoint_key)
         
@@ -527,7 +537,8 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             self.circuit_breakers[service_name] = {}
         
-# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# SECURITY: # SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
         if endpoint_key not in self.circuit_breakers[service_name]:

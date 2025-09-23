@@ -48,22 +48,30 @@ import aiohttp
 
 class SecretType(str, Enum):
     """Types of secrets"""
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV
+# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     ACCESS_TOKEN = "access_token"
 

@@ -38,7 +38,8 @@ class SecurityLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication methods supported"""
-# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     JWT = "jwt"
     OAUTH2 = "oauth2"
@@ -187,7 +188,8 @@ class SecurityConfig:
     
     def _generate_master_key(self) -> str:
         """Generate master encryption key"""
-# SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         password_bytes = password.encode('utf-8')
         salt = os.getenv('AINFLUE_SALT', 'ainflue-salt').encode('utf-8')
@@ -665,14 +667,16 @@ class SecurityConfig:
     
     def encrypt_sensitive_data(self, data: str, field_type: str = "default") -> str:
         """Encrypt sensitive data"""
-# SECURITY: key = self._security_keys['master'] # MOVED TO ENV
+# SECURITY: # SECURITY: key = self._security_keys['master'] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         fernet = Fernet(key.encode('utf-8'))
         return fernet.encrypt(data.encode('utf-8')).decode('utf-8')
     
     def decrypt_sensitive_data(self, encrypted_data: str, field_type: str = "default") -> str:
         """Decrypt sensitive data"""
-# SECURITY: key = self._security_keys['master'] # MOVED TO ENV
+# SECURITY: # SECURITY: key = self._security_keys['master'] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         fernet = Fernet(key.encode('utf-8'))
         return fernet.decrypt(encrypted_data.encode('utf-8')).decode('utf-8')

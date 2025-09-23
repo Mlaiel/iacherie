@@ -132,7 +132,8 @@ class InvalidationStrategy(str, Enum):
 
 class InvalidationScope(str, Enum):
     """Invalidation scope"""
-# SECURITY: SINGLE_KEY = "single_key" # MOVED TO ENV
+# SECURITY: # SECURITY: SINGLE_KEY = "single_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     PATTERN = "pattern"
     TAG_BASED = "tag_based"

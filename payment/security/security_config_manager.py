@@ -47,21 +47,28 @@ class ConfigEnvironment(Enum):
 
 class SecretType(Enum):
     """Types de secrets"""
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: PAYMENT_GATEWAY_KEY = "payment_gateway_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: PAYMENT_GATEWAY_KEY = "payment_gateway_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     THIRD_PARTY_TOKEN = "third_party_token"
     CERTIFICATE = "certificate"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -72,7 +79,8 @@ class ConfigSource(Enum):
     VAULT = "vault"
     DATABASE = "database"
     REMOTE_CONFIG = "remote_config"
-# SECURITY: KUBERNETES_SECRET = "kubernetes_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: KUBERNETES_SECRET = "kubernetes_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -215,7 +223,8 @@ class SecretManager:
             )
             
             # Stocker
-# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.secrets[storage_key] = secret_config
             
@@ -231,7 +240,8 @@ class SecretManager:
                             environment: ConfigEnvironment) -> Optional[str]:
         """Récupérer un secret"""
         try:
-# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             if storage_key not in self.secrets:
@@ -266,7 +276,8 @@ class SecretManager:
                           new_value: Optional[str] = None) -> bool:
         """Rotation d'un secret"""
         try:
-# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# SECURITY: # SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             if storage_key not in self.secrets:
@@ -1103,7 +1114,8 @@ class SecurityConfigManager:
             
             for storage_key in rotation_needed:
                 if storage_key.startswith(f"{env.value}:"):
-# SECURITY: secret_key = storage_key.split(":", 1)[1] # MOVED TO ENV
+# SECURITY: # SECURITY: secret_key = storage_key.split(":", 1)[1] # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     
                     result = await self.secret_manager.rotate_secret(secret_key, env)

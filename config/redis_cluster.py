@@ -275,84 +275,97 @@ class CacheManager:
     # API Response Caching
     async def cache_api_response(self, endpoint: str, params: Dict, response: Any, ttl: int = 300):
         """Cache API response for 5 minutes by default"""
-# SECURITY: key = self.cache._generate_key("api", endpoint, **params) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("api", endpoint, **params) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, response, ttl)
     
     async def get_cached_api_response(self, endpoint: str, params: Dict) -> Optional[Any]:
         """Get cached API response"""
-# SECURITY: key = self.cache._generate_key("api", endpoint, **params) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("api", endpoint, **params) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
     # Validation Results Caching
     async def cache_validation_result(self, content_hash: str, validation_type: str, result: Any, ttl: int = 1800):
         """Cache validation result for 30 minutes"""
-# SECURITY: key = self.cache._generate_key("validation", f"{content_hash}_{validation_type}") # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("validation", f"{content_hash}_{validation_type}") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, result, ttl)
     
     async def get_cached_validation_result(self, content_hash: str, validation_type: str) -> Optional[Any]:
         """Get cached validation result"""
-# SECURITY: key = self.cache._generate_key("validation", f"{content_hash}_{validation_type}") # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("validation", f"{content_hash}_{validation_type}") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
     # AI Model Results Caching
     async def cache_ai_result(self, model_name: str, input_hash: str, result: Any, ttl: int = 3600):
         """Cache AI model result for 1 hour"""
-# SECURITY: key = self.cache._generate_key("ai", f"{model_name}_{input_hash}") # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("ai", f"{model_name}_{input_hash}") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, result, ttl)
     
     async def get_cached_ai_result(self, model_name: str, input_hash: str) -> Optional[Any]:
         """Get cached AI model result"""
-# SECURITY: key = self.cache._generate_key("ai", f"{model_name}_{input_hash}") # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("ai", f"{model_name}_{input_hash}") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
     # User Session Caching
     async def cache_user_session(self, user_id: str, session_data: Dict, ttl: int = 7200):
         """Cache user session for 2 hours"""
-# SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, session_data, ttl)
     
     async def get_user_session(self, user_id: str) -> Optional[Dict]:
         """Get user session data"""
-# SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
     async def invalidate_user_session(self, user_id: str) -> bool:
         """Invalidate user session"""
-# SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("session", user_id) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.delete(key)
     
     # Content Metadata Caching
     async def cache_content_metadata(self, content_id: str, metadata: Dict, ttl: int = 86400):
         """Cache content metadata for 24 hours"""
-# SECURITY: key = self.cache._generate_key("content", content_id) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("content", content_id) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, metadata, ttl)
     
     async def get_content_metadata(self, content_id: str) -> Optional[Dict]:
         """Get cached content metadata"""
-# SECURITY: key = self.cache._generate_key("content", content_id) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("content", content_id) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
     # Analytics Caching
     async def cache_analytics_data(self, query_hash: str, data: Any, ttl: int = 1800):
         """Cache analytics data for 30 minutes"""
-# SECURITY: key = self.cache._generate_key("analytics", query_hash) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("analytics", query_hash) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.set(key, data, ttl)
     
     async def get_cached_analytics_data(self, query_hash: str) -> Optional[Any]:
         """Get cached analytics data"""
-# SECURITY: key = self.cache._generate_key("analytics", query_hash) # MOVED TO ENV
+# SECURITY: # SECURITY: key = self.cache._generate_key("analytics", query_hash) # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         return await self.cache.get(key)
     
@@ -373,7 +386,8 @@ def create_cache_instance() -> tuple[DistributedCache, CacheManager]:
     
     # Get configuration from environment
     cluster_nodes = os.getenv("REDIS_CLUSTER_NODES", "localhost:6379").split(",")
-# SECURITY: password = os.getenv("REDIS_PASSWORD") # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv("REDIS_PASSWORD") # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     max_connections = int(os.getenv("REDIS_MAX_CONNECTIONS", "100"))
     
@@ -429,7 +443,8 @@ def cache_result(ttl: int = 3600, namespace: str = "general"):
             # Generate cache key from function name and arguments
             key_data = f"{func.__name__}:{str(args)}:{json.dumps(kwargs, sort_keys=True)}"
             key_hash = hashlib.md5(key_data.encode()).hexdigest()[:12]
-# SECURITY: cache_key = f"ainflue:{namespace}:{key_hash}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"ainflue:{namespace}:{key_hash}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             # Try to get from cache

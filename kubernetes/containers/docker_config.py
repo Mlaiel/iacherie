@@ -695,7 +695,8 @@ Professional Docker image builder with advanced features"""
                 )
                 
                 # Cache build result
-# SECURITY: cache_key = f"{config.image}:{config.tag}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"{config.image}:{config.tag}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 self.build_cache[cache_key] = build_result
                 

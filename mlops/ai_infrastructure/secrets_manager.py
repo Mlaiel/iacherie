@@ -25,21 +25,27 @@ logger = logging.getLogger(__name__)
 
 class SecretType(Enum):
     """Types of secrets"""
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     ACCESS_TOKEN = "access_token"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CONNECTION_STRING = "connection_string"
     SERVICE_ACCOUNT = "service_account"
-# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: LICENSE_KEY = "license_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: LICENSE_KEY = "license_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -128,7 +134,8 @@ class EncryptionManager:
     
     def _generate_master_key(self) -> bytes:
         """Generate a new master encryption key"""
-# SECURITY: password = os.environ.get("AINFLUE_SECRET_KEY", "default-secret-key").encode() # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.environ.get("AINFLUE_SECRET_KEY", "default-secret-key").encode() # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         salt = os.environ.get("AINFLUE_SECRET_SALT", "default-salt").encode()
         
@@ -732,7 +739,8 @@ class SecretsManager:
         
         for key, value in updates.items():
             if hasattr(metadata, key):
-# SECURITY: if key == "rotation_status" and isinstance(value, RotationStatus): # MOVED TO ENV
+# SECURITY: # SECURITY: if key == "rotation_status" and isinstance(value, RotationStatus): # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                     setattr(metadata, key, value)
                 elif key in ["expires_at", "last_rotated"] and isinstance(value, datetime):

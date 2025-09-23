@@ -72,15 +72,20 @@ class KeyPurpose(Enum):
     SIGNING = "signing"
     WRAPPING = "wrapping"
     CONTENT_PROTECTION = "content_protection"
-# SECURITY: SESSION_KEY = "session_key" # MOVED TO ENV
+# SECURITY: # SECURITY: SESSION_KEY = "session_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: TRANSPORT_KEY = "transport_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: STORAGE_KEY = "storage_key" # MOVED TO ENV
+# SECURITY: # SECURITY: TRANSPORT_KEY = "transport_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: BACKUP_KEY = "backup_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: AUDIT_KEY = "audit_key" # MOVED TO ENV
+# SECURITY: # SECURITY: STORAGE_KEY = "storage_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: BACKUP_KEY = "backup_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: AUDIT_KEY = "audit_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -981,7 +986,8 @@ class KeyDerivationEngine:
             self.derivation_trees.clear()
             
             # Clear master key
-# SECURITY: self.master_derivation_key = b"" # MOVED TO ENV
+# SECURITY: # SECURITY: self.master_derivation_key = b"" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             
             self.logger.info("Key Derivation Engine cleanup completed")

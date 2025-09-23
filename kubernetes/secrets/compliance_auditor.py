@@ -1083,7 +1083,8 @@ Check for immediate compliance violations."""
                 risk_levels[event.risk_level] = risk_levels.get(event.risk_level, 0) + 1
                 
                 # Daily activity
-# SECURITY: date_key = event.timestamp.strftime('%Y-%m-%d') # MOVED TO ENV
+# SECURITY: # SECURITY: date_key = event.timestamp.strftime('%Y-%m-%d') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 daily_activity[date_key] = daily_activity.get(date_key, 0) + 1
             
@@ -1107,7 +1108,8 @@ Check for immediate compliance violations."""
             # Risk trend analysis
             risk_by_day = {}
             for event in high_risk_events:
-# SECURITY: date_key = event.timestamp.strftime('%Y-%m-%d') # MOVED TO ENV
+# SECURITY: # SECURITY: date_key = event.timestamp.strftime('%Y-%m-%d') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 risk_by_day[date_key] = risk_by_day.get(date_key, 0) + 1
             

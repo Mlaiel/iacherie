@@ -166,7 +166,8 @@ class ServiceMeshConfigurator:
     def register_service(self, service_config: ServiceConfig) -> bool:
         """Register a service in the mesh"""
         try:
-# SECURITY: service_key = f"{service_config.namespace}/{service_config.name}" # MOVED TO ENV
+# SECURITY: # SECURITY: service_key = f"{service_config.namespace}/{service_config.name}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.services[service_key] = service_config
             
@@ -759,9 +760,11 @@ class ServiceMeshConfigurator:
             
             # Validate traffic routes
             for route in self.traffic_routes:
-# SECURITY: source_key = f"default/{route.source_service}" # MOVED TO ENV
+# SECURITY: # SECURITY: source_key = f"default/{route.source_service}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: dest_key = f"default/{route.destination_service}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: dest_key = f"default/{route.destination_service}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 
                 if source_key not in self.services:

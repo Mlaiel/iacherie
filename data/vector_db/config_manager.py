@@ -246,7 +246,8 @@ class ConfigManager:
         """
         try:
             # Check cache first
-# SECURITY: cache_key = f"config_{self.config_path}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"config_{self.config_path}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             if not force_reload and cache_key in self._config_cache:
                 cached_config, cached_time = self._config_cache[cache_key]

@@ -827,7 +827,8 @@ Compare two configurations and return list of changes"""
         """
 Cache current configuration"""
         if self.current_config:
-# SECURITY: cache_key = f"config_{self.environment.value}" # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"config_{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             self.config_cache[cache_key] = {
                 'config': self.current_config,

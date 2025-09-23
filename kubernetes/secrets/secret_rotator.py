@@ -34,19 +34,25 @@ class RotationStrategy(Enum):
     """
 Secret rotation strategies."""
 
-# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: API_KEY = "api_key" # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# SECURITY: # SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
-# SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     WEBHOOK_TOKEN = "webhook_token"
-# SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV
+# SECURITY: # SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 
 
@@ -625,22 +631,26 @@ Generate service account credentials."""
 Validate generated secret meets requirements."""
         try:
             if strategy == RotationStrategy.DATABASE_PASSWORD:
-# SECURITY: password = secret_data.get('password', '') # MOVED TO ENV
+# SECURITY: # SECURITY: password = secret_data.get('password', '') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 return len(password) >= 12 and any(c.isdigit() for c in password)
                 
             elif strategy == RotationStrategy.API_KEY:
-# SECURITY: api_key = secret_data.get('api_key', '') # MOVED TO ENV
+# SECURITY: # SECURITY: api_key = secret_data.get('api_key', '') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 return len(api_key) >= 32
                 
             elif strategy == RotationStrategy.JWT_SECRET:
-# SECURITY: jwt_secret = secret_data.get('jwt_secret', '') # MOVED TO ENV
+# SECURITY: # SECURITY: jwt_secret = secret_data.get('jwt_secret', '') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 return len(jwt_secret) >= 32
                 
             elif strategy == RotationStrategy.ENCRYPTION_KEY:
-# SECURITY: encryption_key = secret_data.get('encryption_key', '') # MOVED TO ENV
+# SECURITY: # SECURITY: encryption_key = secret_data.get('encryption_key', '') # MOVED TO ENV # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 return len(encryption_key) >= 32
                 
