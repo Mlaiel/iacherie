@@ -131,7 +131,7 @@ class ConfigValidationSchema:
     def _creator_economy_schema(self) -> Dict:
         """Schema JSON pour configuration Creator Economy"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["version", "metadata", "creator_metrics", "tier_differentiation"],
             "properties": {
@@ -210,7 +210,7 @@ class ConfigValidationSchema:
     def _prometheus_schema(self) -> Dict:
         """Schema JSON pour configuration Prometheus"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["global", "scrape_configs"],
             "properties": {
@@ -255,7 +255,7 @@ class ConfigValidationSchema:
     def _grafana_schema(self) -> Dict:
         """Schema JSON pour configuration Grafana"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["version", "dashboards"],
             "properties": {
@@ -292,7 +292,7 @@ class ConfigValidationSchema:
     def _alertmanager_schema(self) -> Dict:
         """Schema JSON pour configuration AlertManager"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["global", "receivers", "route", "groups"],
             "properties": {
@@ -351,7 +351,7 @@ class ConfigValidationSchema:
     def _ai_ml_schema(self) -> Dict:
         """Schema JSON pour configuration AI/ML"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["version", "ml_monitoring"],
             "properties": {
@@ -403,7 +403,7 @@ class ConfigValidationSchema:
     def _content_protection_schema(self) -> Dict:
         """Schema JSON pour configuration protection contenu"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["version", "protection_monitoring"],
             "properties": {
@@ -428,7 +428,7 @@ class ConfigValidationSchema:
     def _monetization_schema(self) -> Dict:
         """Schema JSON pour configuration monétisation"""
         return {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "https://json-schema.org/draft-07/schema#",
             "type": "object",
             "required": ["version", "monetization_tracking"],
             "properties": {
@@ -467,28 +467,28 @@ class ConfigValidationSchema:
     
     # Schémas simplifiés pour les autres types (pour économiser l'espace)
     def _collaboration_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _seo_performance_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _distribution_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _gamification_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _creator_tier_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version", "tier_monitoring"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version", "tier_monitoring"]}
     
     def _multi_format_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _security_compliance_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _performance_optimization_schema(self) -> Dict:
-        return {"$schema": "http://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
+        return {"$schema": "https://json-schema.org/draft-07/schema#", "type": "object", "required": ["version"]}
     
     def _initialize_business_rules(self) -> Dict[ConfigType, List[callable]]:
         """Initialisation des règles métier par type de configuration"""

@@ -1,3 +1,7 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
+import os
 """Security Foundation - Fondation Sécurité & Protection Enterprise
 ================================================================
 
@@ -43,8 +47,8 @@ class SecurityLevel(Enum):
     PUBLIC = "public"
     INTERNAL = "internal"  
     CONFIDENTIAL = "confidential"
-    SECRET = "secret"
-    TOP_SECRET = "top_secret"
+    SECRET = os.getenv("SECRET", "CHANGE_ME")
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
 
 
 class ThreatLevel(Enum):

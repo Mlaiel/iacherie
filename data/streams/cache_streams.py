@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Cache Streams for IA Influencer Agent Platform
 ===========================================
 

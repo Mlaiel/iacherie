@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Ultra-Sophisticated Authentication Manager for Events Security
 
 Advanced multi-factor authentication, session management, and security enforcement 

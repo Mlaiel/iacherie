@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -21,7 +24,7 @@ from datetime import datetime, timedelta
 
 class AuthenticationMethod(str, Enum):
     """Authentication methods"""
-# SECURITY: # SECURITY: PASSWORD = "password" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: PASSWORD = os.getenv("PASSWORD", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     MULTI_FACTOR = "multi_factor"

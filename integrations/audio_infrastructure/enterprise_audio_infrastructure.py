@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🎵 Enterprise Audio Infrastructure - Multi-Expert Production Implementation
 ===========================================================================
 

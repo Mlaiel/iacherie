@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Microservices Orchestrator for MLOps
 Microservices + Lead Dev IA implementation with distributed architecture

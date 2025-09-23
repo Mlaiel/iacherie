@@ -1,3 +1,4 @@
+import os
 """Advanced API Manager - External API Integration and Management System
 =====================================================================
 
@@ -55,8 +56,8 @@ class HTTPMethod(str, Enum):
 class APIAuthType(str, Enum):
     """API authentication types."""
     NONE = "none"
-    API_KEY = "api_key"
-    BEARER_TOKEN = "bearer_token"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
+    BEARER_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BASIC_AUTH = "basic_auth"
     OAUTH2 = "oauth2"
     CUSTOM = "custom"

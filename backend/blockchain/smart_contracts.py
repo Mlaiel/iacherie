@@ -1,3 +1,4 @@
+import os
 """Smart Contracts Management Module - IA-Influencer-Agent Platform
 
 This module provides smart contract management functionality for the backend layer,
@@ -41,7 +42,7 @@ class ContractType(Enum):
     CONTENT_LICENSING = "content_licensing"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
-    GOVERNANCE_TOKEN = "governance_token"
+    GOVERNANCE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     STAKING_REWARDS = "staking_rewards"
     MARKETPLACE = "marketplace"
     ESCROW = "escrow"

@@ -1,3 +1,4 @@
+import os
 """Enterprise Single Sign-On (SSO) System
 ======================================
 
@@ -76,7 +77,7 @@ class MFAMethod(Enum):
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
-    HARDWARE_TOKEN = "hardware_token"
+    HARDWARE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BIOMETRIC = "biometric"
     PUSH_NOTIFICATION = "push"
 

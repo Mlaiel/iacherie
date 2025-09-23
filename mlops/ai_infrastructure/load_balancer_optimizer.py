@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 ⚖️ Load Balancer Optimizer Enterprise
 MLOps Platform - Optimiseur de load balancer avec algorithmes ML-aware

@@ -48,7 +48,7 @@ import aiohttp
 
 class SecretType(str, Enum):
     """Types of secrets"""
-# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 # SECURITY: # SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV # MOVED TO ENV
@@ -61,19 +61,19 @@ class SecretType(str, Enum):
 # SECURITY: # SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: JWT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: OAUTH_CLIENT_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-# SECURITY: # SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: WEBHOOK_SECRET = os.getenv("SECRET", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
 # SECURITY: # SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-    ACCESS_TOKEN = "access_token"
+    ACCESS_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 class SecretVaultType(str, Enum):
     """Secret vault types"""

@@ -1,3 +1,4 @@
+import os
 """
 🌐 Multi-Platform Distribution - Cross-Platform Revenue Distribution System
 ==========================================================================
@@ -70,8 +71,8 @@ class MultiPlatformDistributionEngine:
         self.platforms = {
             Platform.YOUTUBE: PlatformConfig(
                 platform=Platform.YOUTUBE,
-                api_key="youtube_api_key",
-                api_secret="youtube_secret",
+                api_key= os.getenv("API_KEY", "CHANGE_ME"),
+                api_secret= os.getenv("SECRET", "CHANGE_ME"),
                 revenue_share=Decimal('0.55'),  # YouTube takes 45%
                 auto_sync=True,
                 supported_formats=["video", "audio"],
@@ -79,8 +80,8 @@ class MultiPlatformDistributionEngine:
             ),
             Platform.SPOTIFY: PlatformConfig(
                 platform=Platform.SPOTIFY,
-                api_key="spotify_api_key", 
-                api_secret="spotify_secret",
+                api_key= os.getenv("API_KEY", "CHANGE_ME"), 
+                api_secret= os.getenv("SECRET", "CHANGE_ME"),
                 revenue_share=Decimal('0.70'),  # Spotify takes 30%
                 auto_sync=True,
                 supported_formats=["audio"],

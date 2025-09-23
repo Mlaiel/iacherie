@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """⚡ Model Synchronization Engine - Enterprise ML Infrastructure
 ==============================================================
 Module: ml/model_registry/model_synchronization_engine.py

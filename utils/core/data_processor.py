@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Data Processor - Core Utilities Level 1
 =====================================

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """Database Migration Manager
 Handles database schema migrations, data migrations, and version control

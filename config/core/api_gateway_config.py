@@ -35,10 +35,10 @@ class LoadBalancingAlgorithm(str, Enum):
 
 class AuthenticationStrategy(str, Enum):
     """API authentication strategies"""
-# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-    JWT_TOKEN = "jwt_token"
+    JWT_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     OAUTH2 = "oauth2"
     MUTUAL_TLS = "mutual_tls"
     HMAC_SIGNATURE = "hmac_signature"

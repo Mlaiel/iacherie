@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Ainflue Platform - Multimedia Optimization - Bandwidth Optimization
 Professional bandwidth optimization for multimedia content delivery

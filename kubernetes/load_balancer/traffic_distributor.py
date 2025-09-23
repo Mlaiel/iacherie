@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Traffic Distributor for Load Balancer
 
 Intelligent traffic distribution system for the IA Influencer Agent platform,

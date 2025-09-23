@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Error Recovery Orchestrator - Ainflue Platform
 Automated Error Recovery & Self-Healing System

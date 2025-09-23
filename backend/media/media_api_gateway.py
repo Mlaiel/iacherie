@@ -1,3 +1,5 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
+import os
 """Media API Gateway - Advanced API Gateway & Service Orchestration System
 ========================================================================
 
@@ -74,7 +76,7 @@ logger = logging.getLogger(__name__)
 class AuthMethod(Enum):
     """Authentication methods"""
     JWT = "jwt"
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     OAUTH2 = "oauth2"
     BASIC = "basic"
     NONE = "none"

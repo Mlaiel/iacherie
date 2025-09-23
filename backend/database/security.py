@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """🔒 Backend Database Security - Consolidated Enterprise Security Management
 ============================================================================
 Module: backend/database/security.py

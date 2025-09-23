@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🚀 Platform Core Subscription - Usage Forecasting Engine
 ===========================================================
 Module: backend/platform_core/subscription/usage_forecasting_engine.py

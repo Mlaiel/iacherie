@@ -83,7 +83,7 @@ class DataClassification(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
 
 class VaultSecurity(Enum):
     """Niveaux de sécurité du coffre"""

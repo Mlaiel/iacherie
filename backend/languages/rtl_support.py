@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """RTL Support - Advanced Right-to-Left Language Processing Engine
 ================================================================================
 Module: backend/languages/rtl_support.py

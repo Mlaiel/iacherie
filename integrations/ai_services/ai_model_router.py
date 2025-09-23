@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """AI Model Router - Intelligent AI Service Selection and Routing System
 ====================================================================
 

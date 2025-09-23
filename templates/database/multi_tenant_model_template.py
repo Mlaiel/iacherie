@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🏢 MULTI-TENANT MODEL TEMPLATE - DBA EXPERT IMPLEMENTATION
 ===========================================================

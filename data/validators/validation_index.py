@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Validation Index - Central Validator Registry and Routing System
 ===================================================================
 

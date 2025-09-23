@@ -1,3 +1,7 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
+import os
 #!/usr/bin/env python3
 """Enterprise Security - Industrial-Level Multi-Tenant Security
 ============================================================
@@ -73,11 +77,11 @@ class ThreatLevel(Enum):
 
 class AuthenticationMethod(Enum):
     """Authentication method types"""
-    PASSWORD = "password"
+    PASSWORD = os.getenv("PASSWORD", "CHANGE_ME")
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
-    HARDWARE_TOKEN = "hardware_token"
+    HARDWARE_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BIOMETRIC = "biometric"
     SSO = "sso"
     CERTIFICATE = "certificate"

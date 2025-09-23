@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🛡️ Failover Automation System - Enterprise Creator Economy
 ============================================================

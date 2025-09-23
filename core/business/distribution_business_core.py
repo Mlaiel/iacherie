@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Distribution Business Core - Advanced Distribution Business Logic Core
 

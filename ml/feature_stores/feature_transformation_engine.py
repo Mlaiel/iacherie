@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔧 Feature Transformation Engine - Enterprise ML Infrastructure
 ================================================================
 Module: ml/feature_stores/feature_transformation_engine.py

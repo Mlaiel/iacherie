@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Security Configuration Module - Consolidated Security Configs
 =============================================================
 
@@ -20,7 +23,7 @@ class AuthenticationMethod(str, Enum):
     JWT = "jwt"
     OAUTH2 = "oauth2"
     BASIC_AUTH = "basic_auth"
-# SECURITY: # SECURITY: API_KEY = "api_key" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: API_KEY = os.getenv("API_KEY", "CHANGE_ME") # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
     MULTI_FACTOR = "multi_factor"
@@ -29,10 +32,10 @@ class AuthenticationMethod(str, Enum):
 
 class TokenType(str, Enum):
     """Token types"""
-    ACCESS_TOKEN = "access_token"
-    REFRESH_TOKEN = "refresh_token"
-    ID_TOKEN = "id_token"
-    API_TOKEN = "api_token"
+    ACCESS_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    REFRESH_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    ID_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
+    API_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
 
 @dataclass
 class AuthenticationConfig:

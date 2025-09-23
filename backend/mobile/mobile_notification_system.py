@@ -1,3 +1,4 @@
+import os
 """Mobile Push Notifications Service
 ====================================
 
@@ -750,7 +751,7 @@ if __name__ == "__main__":
         async with service:
             # Register a device
             device = await service.register_device(
-                token="sample_device_token",
+                token= os.getenv("TOKEN", "CHANGE_ME"),
                 platform=Platform.ANDROID,
                 user_id="user123",
                 device_id="device456"

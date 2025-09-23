@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Database Connection Pool Manager
 Advanced connection pooling and load balancing for high availability
 

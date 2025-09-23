@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 🔐 HSM Integration Manager - Hardware Security Module Enterprise Integration
@@ -50,7 +51,7 @@ class HSMType(Enum):
     """Hardware Security Module types."""
     NETWORK_ATTACHED = "network_attached"
     PCIE_CARD = "pcie_card"
-    USB_TOKEN = "usb_token"
+    USB_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     CLOUD_HSM = "cloud_hsm"
     DEDICATED_HSM = "dedicated_hsm"
 

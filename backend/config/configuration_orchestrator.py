@@ -379,7 +379,7 @@ class ConfigurationValidator:
         
         # Check for environment-specific requirements
         if 'url' in key.lower() and isinstance(value, str):
-            if not (value.startswith('http://') or value.startswith('https://')):
+            if not (value.startswith('https://') or value.startswith('https://')):
                 result["errors"].append(f"Invalid URL format for key '{key}': {value}")
                 result["valid"] = False
 

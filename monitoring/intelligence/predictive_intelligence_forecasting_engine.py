@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Predictive Intelligence Forecasting Engine
 ==========================================
 

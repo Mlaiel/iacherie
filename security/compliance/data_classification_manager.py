@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 ⚖️ Data Classification Manager - Enterprise Information Governance Module
@@ -50,7 +51,7 @@ class DataClassificationLevel(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
 
 class DataCategory(Enum):
     """Categories of data for classification"""

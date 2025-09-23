@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Load Balancer - Request Distribution Management for Marketplace
 ================================================================
 

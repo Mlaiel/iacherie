@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Message Routing Intelligence Module
 
 Intelligent message routing with load balancing and failover automation

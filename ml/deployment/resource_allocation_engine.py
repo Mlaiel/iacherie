@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """⚡ Resource Allocation Engine - Enterprise ML Infrastructure
 ===========================================================
 Module: ml/deployment/resource_allocation_engine.py

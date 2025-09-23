@@ -1250,16 +1250,16 @@ Update configuration for a specific service."""
             "REDIS_URL": f"redis://redis-{environment}:6379",
             "JWT_SECRET": "jwt-secret-key",
             "VECTOR_DB_URL": f"faiss://vector-db-{environment}:8080",
-            "ELASTICSEARCH_URL": f"http://elasticsearch-{environment}:9200",
+            "ELASTICSEARCH_URL": f"https://elasticsearch-{environment}:9200",
             "CONTENT_STORAGE_URL": f"s3://collaboration-{environment}-content",
-            "AI_PROCESSING_ENDPOINT": f"http://ai-engine-{environment}:8080",
-            "FINGERPRINTING_SERVICE": f"http://fingerprinting-{environment}:8081",
-            "EMAIL_SERVICE_URL": f"http://email-service-{environment}:8080",
-            "SMS_SERVICE_URL": f"http://sms-service-{environment}:8080",
-            "PUSH_SERVICE_URL": f"http://push-service-{environment}:8080",
+            "AI_PROCESSING_ENDPOINT": f"https://ai-engine-{environment}:8080",
+            "FINGERPRINTING_SERVICE": f"https://fingerprinting-{environment}:8081",
+            "EMAIL_SERVICE_URL": f"https://email-service-{environment}:8080",
+            "SMS_SERVICE_URL": f"https://sms-service-{environment}:8080",
+            "PUSH_SERVICE_URL": f"https://push-service-{environment}:8080",
             "NOTIFICATION_QUEUE": f"redis://notification-queue-{environment}:6379",
             "ANALYTICS_DB_URL": f"postgresql://analytics_{environment}:5432/analytics",
-            "CLICKHOUSE_URL": f"http://clickhouse-{environment}:8123",
+            "CLICKHOUSE_URL": f"https://clickhouse-{environment}:8123",
             "KAFKA_BROKERS": f"kafka-{environment}:9092"
         }
         

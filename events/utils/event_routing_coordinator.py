@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Event Routing Coordinator - Intelligent for Ainflue Platform
 
 Intelligent event routing coordinator with dynamic routing rules,

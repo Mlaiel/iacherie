@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔄 Database Operations - Consolidated Enterprise Data Operations
 ================================================================
 Module: database/database_operations.py

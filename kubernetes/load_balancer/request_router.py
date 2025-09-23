@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Advanced Request Router for IA Influencer Agent Platform
 
 Provides intelligent request routing with microservices orchestration,

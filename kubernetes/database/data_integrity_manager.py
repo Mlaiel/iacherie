@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Data Integrity Manager
 Advanced data validation and integrity management for IA Influencer Agent
 

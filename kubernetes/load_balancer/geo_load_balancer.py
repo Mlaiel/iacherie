@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Geographic Load Balancer for IA Influencer Agent Platform
 
 Provides intelligent geographic traffic distribution for optimal performance

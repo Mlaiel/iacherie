@@ -1,3 +1,4 @@
+import os
 """
 Distribution Routes - Multi-Platform Distribution & Publishing API
 Enterprise distribution system supporting 35+ platforms with automated publishing and analytics.
@@ -398,8 +399,8 @@ async def get_connected_platforms(
             platform_id="youtube",
             account_id="UC_demo_channel_123",
             account_name="Demo Creator Channel",
-            access_token="ya29.a0Ae4lvC123...",
-            refresh_token="1//0ABC123...",
+            access_token= os.getenv("TOKEN", "CHANGE_ME"),
+            refresh_token= os.getenv("TOKEN", "CHANGE_ME"),
             token_expires_at=datetime.utcnow() + timedelta(hours=1),
             permissions=["upload", "analytics", "manage"],
             status=PlatformStatus.ACTIVE,
@@ -411,7 +412,7 @@ async def get_connected_platforms(
             platform_id="instagram",
             account_id="demo_creator_ig",
             account_name="Demo Creator",
-            access_token="IGQVJXabc123...",
+            access_token= os.getenv("TOKEN", "CHANGE_ME"),
             permissions=["publish", "insights"],
             status=PlatformStatus.ACTIVE,
             connected_at=datetime.utcnow() - timedelta(days=15),
@@ -422,7 +423,7 @@ async def get_connected_platforms(
             platform_id="spotify",
             account_id="demo_artist_spotify",
             account_name="Demo Artist",
-            access_token="BQC123abc...",
+            access_token= os.getenv("TOKEN", "CHANGE_ME"),
             permissions=["upload", "analytics"],
             status=PlatformStatus.ACTIVE,
             connected_at=datetime.utcnow() - timedelta(days=45),

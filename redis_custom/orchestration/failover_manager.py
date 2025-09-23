@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """
 Redis Failover Coordination Engine - Ainflue Platform

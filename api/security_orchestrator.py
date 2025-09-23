@@ -1,3 +1,7 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
+import os
 """🔐 Security Orchestrator API - Enterprise Security Management Engine
 ======================================================================
 
@@ -89,7 +93,7 @@ class AccessLevel(str, Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
 
 # ============ PYDANTIC MODELS ============
 

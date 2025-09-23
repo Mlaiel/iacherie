@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Enterprise Database Replication Manager
 Advanced replication, high availability and disaster recovery
 

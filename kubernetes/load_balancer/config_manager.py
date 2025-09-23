@@ -272,7 +272,7 @@ http {
         {% for service_name, service in services.items() %}
         {% if service.enabled %}
         location /{{ service_name }}/ {
-            proxy_pass http://{{ service_name }}_backend;
+            proxy_pass https://{{ service_name }}_backend;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

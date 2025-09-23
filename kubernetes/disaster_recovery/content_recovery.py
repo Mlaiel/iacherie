@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """IA Influencer Agent - Content Recovery System
 Enterprise-grade content recovery and restoration for multi-format creator platform
 

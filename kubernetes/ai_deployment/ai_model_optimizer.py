@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """AI Model Optimizer
 Enterprise model optimization and acceleration service
 

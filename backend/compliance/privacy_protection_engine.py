@@ -69,7 +69,7 @@ class DataCategory(Enum):
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
-    TOP_SECRET = "top_secret"
+    TOP_SECRET = os.getenv("SECRET", "CHANGE_ME")
 
 
 class ConsentType(Enum):

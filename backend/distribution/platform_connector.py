@@ -1,3 +1,4 @@
+import os
 """Advanced Platform Connector - Multi-Platform API Integration System
 ===================================================================
 
@@ -63,9 +64,9 @@ class PlatformType(str, Enum):
 class AuthenticationType(str, Enum):
     """Authentication types."""
     OAUTH2 = "oauth2"
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     JWT = "jwt"
-    BEARER_TOKEN = "bearer_token"
+    BEARER_TOKEN = os.getenv("TOKEN", "CHANGE_ME")
     BASIC_AUTH = "basic_auth"
 
 

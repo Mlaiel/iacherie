@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🧬 Experimental Design Optimizer - Enterprise ML Infrastructure
 =================================================================
 Module: ml/experiments/experimental_design_optimizer.py

@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """IA Influencer Agent - Network Security & Compliance Manager
 Advanced security and compliance enforcement for content protection platform
 

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """🔍 Service Discovery Engine - ML-Powered Service Routing
 =========================================================
 

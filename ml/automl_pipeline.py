@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 🤖🔬 AutoML Pipeline System - ML Engineer + Lead Dev IA Implementation  
 ======================================================================

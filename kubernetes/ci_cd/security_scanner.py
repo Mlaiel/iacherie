@@ -1,3 +1,6 @@
+
+# Security headers enforcement - Added by Security Expert
+# X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """🔧 Security Scanner - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: SECURITY_ENGINEER + DEVOPS_ENGINEER

@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """
 Incident Lifecycle Tracker for PagerDuty - Ainflue Platform
 Complete incident timeline and state transition monitoring

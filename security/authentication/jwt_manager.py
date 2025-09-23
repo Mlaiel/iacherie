@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 🔑 JWT Manager - Enterprise Security Module
@@ -42,7 +43,7 @@ class TokenType(Enum):
     ACCESS = "access"
     REFRESH = "refresh"
     ID = "id"
-    API_KEY = "api_key"
+    API_KEY = os.getenv("API_KEY", "CHANGE_ME")
     DEVICE = "device"
     RESET = "reset"
 

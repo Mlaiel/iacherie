@@ -1,3 +1,4 @@
+# WARNING: Potential SQL injection risk - use parameterized queries
 """Streaming Adaptive Controller - Unified Quality & Resource Adaptation System
 ==============================================================================
 

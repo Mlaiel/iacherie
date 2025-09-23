@@ -69,7 +69,7 @@ class CurrencyType(str, Enum):
     """Currency types"""
     FIAT = "fiat"                          # Fiat currency (EUR, USD, etc.)
     CRYPTO = "crypto"                      # Cryptocurrency
-    TOKEN = "token"                        # Platform token
+    TOKEN = os.getenv("TOKEN", "CHANGE_ME")                        # Platform token
     POINTS = "points"                      # Reward points
     CREDITS = "credits"                    # Platform credits
 
