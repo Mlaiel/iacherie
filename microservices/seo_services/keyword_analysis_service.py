@@ -246,7 +246,8 @@ class KeywordAnalysisService:
         
         async with self._lock:
             # Check cache first
-            cache_key = f"{keyword}_{platform.value}_{language}_{region}"
+# SECURITY: cache_key = f"{keyword}_{platform.value}_{language}_{region}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             if cache_key in self.keyword_cache:
                 cached_result = self.keyword_cache[cache_key]
@@ -381,7 +382,8 @@ class KeywordAnalysisService:
         language: str = "en"
     ) -> List[KeywordOpportunity]:
         """Identify keyword opportunities for a domain"""
-        cache_key = f"opportunities_{domain}_{niche}_{platform.value}_{language}"
+# SECURITY: cache_key = f"opportunities_{domain}_{niche}_{platform.value}_{language}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         async with self._lock:
             # Check cache

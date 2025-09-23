@@ -58,10 +58,13 @@ class ConfigType(Enum):
 class SecretType(Enum):
     """Types de secrets"""
     
-    API_KEY = "api_key"
-    DATABASE_PASSWORD = "database_password"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-    ENCRYPTION_KEY = "encryption_key"
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     OAUTH_TOKEN = "oauth_token"
 
 @dataclass

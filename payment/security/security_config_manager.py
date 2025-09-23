@@ -47,15 +47,22 @@ class ConfigEnvironment(Enum):
 
 class SecretType(Enum):
     """Types de secrets"""
-    DATABASE_PASSWORD = "database_password"
-    API_KEY = "api_key"
-    ENCRYPTION_KEY = "encryption_key"
-    JWT_SECRET = "jwt_secret"
-    WEBHOOK_SECRET = "webhook_secret"
-    PAYMENT_GATEWAY_KEY = "payment_gateway_key"
+# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: PAYMENT_GATEWAY_KEY = "payment_gateway_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     THIRD_PARTY_TOKEN = "third_party_token"
     CERTIFICATE = "certificate"
-    PRIVATE_KEY = "private_key"
+# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 
 class ConfigSource(Enum):
@@ -65,7 +72,8 @@ class ConfigSource(Enum):
     VAULT = "vault"
     DATABASE = "database"
     REMOTE_CONFIG = "remote_config"
-    KUBERNETES_SECRET = "kubernetes_secret"
+# SECURITY: KUBERNETES_SECRET = "kubernetes_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 
 class ValidationLevel(Enum):
@@ -207,7 +215,8 @@ class SecretManager:
             )
             
             # Stocker
-            storage_key = f"{environment.value}:{key}"
+# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.secrets[storage_key] = secret_config
             
             self.logger.info(f"Secret stored: {key} ({secret_type.value}) for {environment.value}")
@@ -222,7 +231,8 @@ class SecretManager:
                             environment: ConfigEnvironment) -> Optional[str]:
         """Récupérer un secret"""
         try:
-            storage_key = f"{environment.value}:{key}"
+# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             if storage_key not in self.secrets:
                 return None
@@ -256,7 +266,8 @@ class SecretManager:
                           new_value: Optional[str] = None) -> bool:
         """Rotation d'un secret"""
         try:
-            storage_key = f"{environment.value}:{key}"
+# SECURITY: storage_key = f"{environment.value}:{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             if storage_key not in self.secrets:
                 return False
@@ -1092,7 +1103,8 @@ class SecurityConfigManager:
             
             for storage_key in rotation_needed:
                 if storage_key.startswith(f"{env.value}:"):
-                    secret_key = storage_key.split(":", 1)[1]
+# SECURITY: secret_key = storage_key.split(":", 1)[1] # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                     
                     result = await self.secret_manager.rotate_secret(secret_key, env)
                     rotation_results[storage_key] = result

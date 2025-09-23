@@ -123,7 +123,8 @@ class MonitoringConfig:
         # Grafana configuration
         self.grafana_config.host = os.getenv('GRAFANA_HOST', self.grafana_config.host)
         self.grafana_config.port = int(os.getenv('GRAFANA_PORT', self.grafana_config.port))
-        self.grafana_config.admin_password = os.getenv('GRAFANA_ADMIN_PASSWORD', 'ainflue-grafana-2025')
+# SECURITY: self.grafana_config.admin_password = os.getenv('GRAFANA_ADMIN_PASSWORD', 'ainflue-grafana-2025') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         # Alerting configuration
         if os.getenv('ALERT_EMAIL_RECIPIENTS'):

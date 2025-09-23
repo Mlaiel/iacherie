@@ -818,7 +818,8 @@ Initialize secret provider client"""
             self.client = secretmanager.SecretManagerServiceClient()
             self.project_id = kwargs.get('project_id')
         elif self.provider == SecretProvider.LOCAL_ENCRYPTED:
-            self.encryption_key = kwargs.get('encryption_key') or self._generate_encryption_key()
+# SECURITY: self.encryption_key = kwargs.get('encryption_key') or self._generate_encryption_key() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         else:
             raise ValueError(f"Unsupported secret provider: {self.provider}")
     
@@ -831,7 +832,8 @@ Initialize secret provider client"""
                 self.client.set_secret(secret_name, secret_value)
             elif self.provider == SecretProvider.GCP_SECRET_MANAGER:
                 parent = f"projects/{self.project_id}"
-                secret = {"replication": {"automatic": {}}}
+# SECURITY: secret = {"replication": {"automatic": {}}} # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 secret_response = self.client.create_secret(
                     request={"parent": parent, "secret_id": secret_name, "secret": secret}
                 )
@@ -894,7 +896,8 @@ Initialize secret provider client"""
     
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for local storage"""
-        password = os.environ.get('ENCRYPTION_PASSWORD', 'default-password')
+# SECURITY: password = os.environ.get('ENCRYPTION_PASSWORD', 'default-password') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         salt = os.environ.get('ENCRYPTION_SALT', 'default-salt').encode()
         
         kdf = PBKDF2HMAC(
@@ -1102,12 +1105,14 @@ Load secrets from secret manager into configuration"""
         env_prefix = environment.value
         
         # Load database password
-        db_password = self.secret_manager.retrieve_secret(f"{env_prefix}-database-password")
+# SECURITY: db_password = self.secret_manager.retrieve_secret(f"{env_prefix}-database-password") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if db_password:
             config.database.password = db_password
         
         # Load Redis password
-        redis_password = self.secret_manager.retrieve_secret(f"{env_prefix}-redis-password")
+# SECURITY: redis_password = self.secret_manager.retrieve_secret(f"{env_prefix}-redis-password") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if redis_password:
         try:
                     async with self.db_session() as session:

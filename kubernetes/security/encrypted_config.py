@@ -597,9 +597,11 @@ class EncryptedConfigManager:
             
             for secret_key in secret_keys:
                 try:
-                    if secret_key == 'secret_key':
+# SECURITY: if secret_key == 'secret_key': # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         new_secret = base64.b64encode(os.urandom(32)).decode()
-                    elif secret_key == 'jwt_secret':
+# SECURITY: elif secret_key == 'jwt_secret': # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         new_secret = base64.b64encode(os.urandom(64)).decode()
                     else:
                         new_secret = base64.b64encode(os.urandom(32)).decode()

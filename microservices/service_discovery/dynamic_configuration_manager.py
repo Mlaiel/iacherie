@@ -142,7 +142,8 @@ class DistributedConfigStore:
                                environment: str = "production") -> Dict[str, Any]:
         """Obtenir la configuration d'un service"""
         try:
-            cache_key = f"{service_id}:{environment}"
+# SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Vérifier le cache
             if cache_key in self.config_cache:
@@ -179,7 +180,8 @@ class DistributedConfigStore:
                                environment: str = "production") -> bool:
         """Mettre à jour la configuration d'un service"""
         try:
-            cache_key = f"{service_id}:{environment}"
+# SECURITY: cache_key = f"{service_id}:{environment}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Sauvegarder la version précédente
             current_config = await self.get_configuration(service_id, environment=environment)

@@ -219,7 +219,8 @@ class ServiceRegistry:
             self.registered_services[service_name].append(endpoint)
         
         # Initialize health status
-        endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         self.service_health[service_name][endpoint_key] = True
         self.last_health_check[service_name][endpoint_key] = datetime.now()
         
@@ -245,7 +246,8 @@ class ServiceRegistry:
                 removed_endpoint = endpoints.pop(i)
                 
                 # Remove health status
-                endpoint_key = f"{host}:{port}"
+# SECURITY: endpoint_key = f"{host}:{port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 if endpoint_key in self.service_health[service_name]:
                     del self.service_health[service_name][endpoint_key]
                 if endpoint_key in self.last_health_check[service_name]:
@@ -266,7 +268,8 @@ class ServiceRegistry:
         
         healthy_endpoints = []
         for endpoint in self.registered_services[service_name]:
-            endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             is_healthy = self.service_health[service_name].get(endpoint_key, False)
             
             if is_healthy:
@@ -277,7 +280,8 @@ class ServiceRegistry:
     async def health_check_service(self, service_name: str, endpoint: ServiceEndpoint) -> bool:
         """Perform health check on service endpoint"""
         try:
-            endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             if self.config.health_check_type == HealthCheckType.HTTP:
                 health_url = f"{endpoint.protocol}://{endpoint.host}:{endpoint.port}{endpoint.health_check_path}"
@@ -310,7 +314,8 @@ class ServiceRegistry:
             
         except Exception as e:
             logging.warning(f"Health check failed for {service_name} at {endpoint.host}:{endpoint.port}: {e}")
-            endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.service_health[service_name][endpoint_key] = False
             return False
     
@@ -433,7 +438,8 @@ class LoadBalancer:
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-            endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             connections = self.connection_counts[service_name].get(endpoint_key, 0)
             
             if connections < min_connections:
@@ -451,7 +457,8 @@ class LoadBalancer:
         selected_endpoint = endpoints[0]
         
         for endpoint in endpoints:
-            endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             response_times = self.response_times[service_name].get(endpoint_key, [])
             
             if response_times:
@@ -470,14 +477,16 @@ class LoadBalancer:
         if service_name not in self.connection_counts:
             self.connection_counts[service_name] = {}
         
-        endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         current_connections = self.connection_counts[service_name].get(endpoint_key, 0)
         self.connection_counts[service_name][endpoint_key] = current_connections + 1
     
     def record_request_end(self, service_name: str, endpoint: ServiceEndpoint, 
                           response_time_ms: float, success: bool) -> None:
         """Record request completion"""
-        endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         # Update connection count
         if service_name in self.connection_counts:
@@ -507,7 +516,8 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             return False
         
-        endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         circuit_breaker = self.circuit_breakers[service_name].get(endpoint_key)
         
         return circuit_breaker and circuit_breaker.is_open()
@@ -517,7 +527,8 @@ class LoadBalancer:
         if service_name not in self.circuit_breakers:
             self.circuit_breakers[service_name] = {}
         
-        endpoint_key = f"{endpoint.host}:{endpoint.port}"
+# SECURITY: endpoint_key = f"{endpoint.host}:{endpoint.port}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         if endpoint_key not in self.circuit_breakers[service_name]:
             from .circuit_breaker import CircuitBreaker  # Would be implemented

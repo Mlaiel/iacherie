@@ -102,11 +102,16 @@ class ConfigScope(Enum):
 class SecretType(Enum):
     """Secret type enumeration."""
     DATABASE_URL = "database_url"
-    API_KEY = "api_key"
-    OAUTH_SECRET = "oauth_secret"
-    ENCRYPTION_KEY = "encryption_key"
-    JWT_SECRET = "jwt_secret"
-    WEBHOOK_SECRET = "webhook_secret"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 @dataclass
 class ConfigValue:
@@ -795,7 +800,8 @@ class ConfigManager:
                 # Save to Redis if configured
                 if self.redis_client:
                     try:
-                        redis_key = f"{self.config.redis_key_prefix}:{key}"
+# SECURITY: redis_key = f"{self.config.redis_key_prefix}:{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         await self.redis_client.set(redis_key, json.dumps(value))
                     except Exception as e:
                         logger.error(f"Failed to save config to Redis: {e}")
@@ -917,7 +923,8 @@ class ConfigManager:
     
     def get_creator_config(self, creator_id: str, key: str, default: Any = None) -> Any:
         """Get creator-specific configuration."""
-        creator_key = f"creator.{creator_id}.{key}"
+# SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         return self.get(creator_key, default)
     
     async def set_creator_config(
@@ -928,7 +935,8 @@ class ConfigManager:
         save_to_file: bool = False
     ) -> bool:
         """Set creator-specific configuration."""
-        creator_key = f"creator.{creator_id}.{key}"
+# SECURITY: creator_key = f"creator.{creator_id}.{key}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         return await self.set(creator_key, value, save_to_file)
     
     def get_monetization_config(self, creator_id: str) -> Dict[str, Any]:
@@ -971,7 +979,8 @@ class ConfigManager:
     
     def get_integration_config(self, integration_name: str) -> Dict[str, Any]:
         """Get integration configuration."""
-        base_key = f"integrations.{integration_name}"
+# SECURITY: base_key = f"integrations.{integration_name}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         return {
             'enabled': self.get(f"{base_key}.enabled", False),

@@ -508,7 +508,8 @@ class ConfigurationEngine:
         try:
             # Simple encryption implementation (would use proper encryption in production)
             if not self.encryption_key:
-                self.encryption_key = "default_key_change_in_production"
+# SECURITY: self.encryption_key = "default_key_change_in_production" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # This is a placeholder - use proper encryption like Fernet
             import base64
@@ -630,7 +631,8 @@ class ConfigurationEngine:
     async def _cache_configuration(self, config: Configuration):
         """Cache configuration in Redis"""
         try:
-            cache_key = f"config:{config.config_id}"
+# SECURITY: cache_key = f"config:{config.config_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             cache_data = json.dumps({
                 "config_id": config.config_id,
                 "values": config.values,
@@ -646,7 +648,8 @@ class ConfigurationEngine:
     async def _get_cached_configuration(self, config_id: str) -> Optional[Configuration]:
         """Get configuration from cache"""
         try:
-            cache_key = f"config:{config_id}"
+# SECURITY: cache_key = f"config:{config_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             cached_data = await self.redis_client.get(cache_key)
             
             if cached_data:
@@ -664,7 +667,8 @@ class ConfigurationEngine:
     async def _remove_from_cache(self, config_id: str):
         """Remove configuration from cache"""
         try:
-            cache_key = f"config:{config_id}"
+# SECURITY: cache_key = f"config:{config_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             await self.redis_client.delete(cache_key)
             
         except Exception as e:

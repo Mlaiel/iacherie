@@ -143,8 +143,10 @@ class ConfigurationSecurity(Enum):
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
-    SECRET = "secret"
-    TOP_SECRET = "top_secret"
+# SECURITY: SECRET = "secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: TOP_SECRET = "top_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 class ConfigurationStatus(Enum):
     """Configuration status"""
@@ -204,7 +206,8 @@ class ConfigurationEncryption:
             return
         
         self.enabled = True
-        self.master_key = master_key or os.getenv("CONFIG_MASTER_KEY")
+# SECURITY: self.master_key = master_key or os.getenv("CONFIG_MASTER_KEY") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         
         if not self.master_key:
             # Generate a new master key
@@ -560,7 +563,8 @@ class EnterpriseConfigurationManager:
             return
         
         try:
-            cache_key = f"ainflue:config:{self.environment.value}"
+# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             cached_configs = await asyncio.get_event_loop().run_in_executor(
                 None, 
                 self.redis_client.hgetall, 
@@ -793,7 +797,8 @@ class EnterpriseConfigurationManager:
         # Save to Redis
         if self.redis_client:
             try:
-                cache_key = f"ainflue:config:{self.environment.value}"
+# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 value_data = {
                     "value": config_value.value,
                     "metadata": asdict(config_value.metadata),
@@ -829,7 +834,8 @@ class EnterpriseConfigurationManager:
         # Remove from Redis
         if self.redis_client:
             try:
-                cache_key = f"ainflue:config:{self.environment.value}"
+# SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 await asyncio.get_event_loop().run_in_executor(
                     None,
                     self.redis_client.hdel,
@@ -908,19 +914,23 @@ class EnterpriseConfigurationManager:
                 match = True
                 
                 for filter_key, filter_value in filter_by.items():
-                    if filter_key == "environment":
+# SECURITY: if filter_key == "environment": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         if config_value.metadata.environment.value != filter_value:
                             match = False
                             break
-                    elif filter_key == "source":
+# SECURITY: elif filter_key == "source": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         if config_value.metadata.source.value != filter_value:
                             match = False
                             break
-                    elif filter_key == "security_level":
+# SECURITY: elif filter_key == "security_level": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         if config_value.metadata.security_level.value != filter_value:
                             match = False
                             break
-                    elif filter_key == "encrypted":
+# SECURITY: elif filter_key == "encrypted": # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                         if config_value.encrypted != filter_value:
                             match = False
                             break

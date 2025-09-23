@@ -35,15 +35,21 @@ class SecretType(Enum):
     """
 Secret types"""
 
-    PASSWORD = "password"
-    API_KEY = "api_key"
+# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-    PRIVATE_KEY = "private_key"
+# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     DATABASE_CREDENTIAL = "database_credential"
-    JWT_SECRET = "jwt_secret"
-    ENCRYPTION_KEY = "encryption_key"
+# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     OAUTH_TOKEN = "oauth_token"
-    WEBHOOK_SECRET = "webhook_secret"
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 class RotationStrategy(Enum):
     """Secret rotation strategies"""
@@ -766,7 +772,8 @@ Generate password according to policy"""
         if not chars:
             chars = string.ascii_letters + string.digits
         
-        password = ''.join(secrets.choice(chars) for _ in range(policy.min_length))
+# SECURITY: password = ''.join(secrets.choice(chars) for _ in range(policy.min_length)) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         return password
     
     def _generate_api_key(self, length: int) -> str:

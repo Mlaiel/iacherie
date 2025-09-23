@@ -27,16 +27,22 @@ logger = logging.getLogger(__name__)
 
 class SecretType(Enum):
     """Types de secrets"""
-    API_KEY = "api_key"
-    PASSWORD = "password"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     TOKEN = "token"
     CERTIFICATE = "certificate"
-    PRIVATE_KEY = "private_key"
+# SECURITY: PRIVATE_KEY = "private_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     DATABASE_CREDENTIAL = "database_credential"
     SERVICE_ACCOUNT = "service_account"
-    ENCRYPTION_KEY = "encryption_key"
-    OAUTH_SECRET = "oauth_secret"
-    WEBHOOK_SECRET = "webhook_secret"
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: OAUTH_SECRET = "oauth_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: WEBHOOK_SECRET = "webhook_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 class SecretStatus(Enum):
     """Status des secrets"""

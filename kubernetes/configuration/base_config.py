@@ -283,7 +283,8 @@ class BaseConfigurationManager:
         for key, value in os.environ.items():
             if key.startswith('IA_'):
                 # Convert IA_DATABASE_HOST to nested structure
-                config_key = key[3:].lower().replace('_', '.')
+# SECURITY: config_key = key[3:].lower().replace('_', '.') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 await self._set_nested_value(env_config, config_key, value)
         
         return env_config

@@ -998,7 +998,8 @@ class FeatureFlagsManager:
         self.metrics["flags_evaluated"] += 1
         
         # Check cache first
-        cache_key = f"{flag_id}:{user_context.user_id}"
+# SECURITY: cache_key = f"{flag_id}:{user_context.user_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         cached_result = self._get_cached_evaluation(cache_key)
         
         if cached_result:

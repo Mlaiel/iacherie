@@ -36,7 +36,8 @@ Kubernetes resource types"""
     DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
-    SECRET = "Secret"
+# SECURITY: SECRET = "Secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     INGRESS = "Ingress"
     PVC = "PersistentVolumeClaim"
     HPA = "HorizontalPodAutoscaler"

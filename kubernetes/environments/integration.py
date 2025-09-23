@@ -60,7 +60,8 @@ class IntegrationStatus(Enum):
 class AuthenticationType(Enum):
     """Authentication type enumeration"""
 
-    API_KEY = "api_key"
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"

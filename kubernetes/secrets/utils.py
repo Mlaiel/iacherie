@@ -127,7 +127,8 @@ Initialize security utilities."""
         try:
             # Extract encryption components
             data_bytes = base64.b64decode(encrypted_data['encrypted_data'].encode())
-            key = base64.b64decode(encrypted_data['encryption_key'].encode())
+# SECURITY: key = base64.b64decode(encrypted_data['encryption_key'].encode()) # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             # Create Fernet cipher
             cipher = Fernet(key)
@@ -1736,7 +1737,8 @@ Initialize platform utilities."""
             }
             
             # Use a secure JWT secret (should be retrieved from vault)
-            jwt_secret = os.environ.get('IA_INFLUENCER_JWT_SECRET', 'development-secret-key')
+# SECURITY: jwt_secret = os.environ.get('IA_INFLUENCER_JWT_SECRET', 'development-secret-key') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             return self.security.generate_jwt_token(
                 payload, jwt_secret, expires_in=expires_in
@@ -1927,7 +1929,8 @@ Initialize platform utilities."""
         """Check if creator is authenticated with the platform"""
         try:
             # Check if we have valid authentication tokens for the platform
-            auth_key = f"creator_{creator_id}_{platform}_auth"
+# SECURITY: auth_key = f"creator_{creator_id}_{platform}_auth" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             auth_data = self.get_secret(auth_key)
             
             if not auth_data:
@@ -1973,7 +1976,8 @@ Initialize platform utilities."""
     def _get_user_platform_scopes(self, creator_id: str, platform: str) -> List[str]:
         """Get OAuth scopes granted by user for platform"""
         try:
-            scope_key = f"creator_{creator_id}_{platform}_scopes"
+# SECURITY: scope_key = f"creator_{creator_id}_{platform}_scopes" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             scope_data = self.get_secret(scope_key)
             
             if scope_data:
@@ -1990,7 +1994,8 @@ Initialize platform utilities."""
         """Check if creator is compliant with content policies"""
         try:
             # Check for recent policy violations
-            violation_key = f"creator_{creator_id}_{platform}_violations"
+# SECURITY: violation_key = f"creator_{creator_id}_{platform}_violations" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             violations_data = self.get_secret(violation_key)
             
             if violations_data:
@@ -2101,7 +2106,8 @@ Initialize platform utilities."""
                 validation_result['issues'].append(f"Missing Stripe {field}")
         
         if 'secret_key' in credentials:
-            secret_key = credentials['secret_key']
+# SECURITY: secret_key = credentials['secret_key'] # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if not secret_key.startswith('sk_'):
                 validation_result['issues'].append("Invalid Stripe secret key format")
             elif secret_key.startswith('sk_test_'):

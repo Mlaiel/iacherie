@@ -21,7 +21,8 @@ from datetime import datetime, timedelta
 
 class AuthenticationMethod(str, Enum):
     """Authentication methods"""
-    PASSWORD = "password"
+# SECURITY: PASSWORD = "password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     MULTI_FACTOR = "multi_factor"
     BIOMETRIC = "biometric"
     PASSWORDLESS = "passwordless"

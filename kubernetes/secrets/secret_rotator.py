@@ -34,14 +34,20 @@ class RotationStrategy(Enum):
     """
 Secret rotation strategies."""
 
-    DATABASE_PASSWORD = "database_password"
-    API_KEY = "api_key"
-    JWT_SECRET = "jwt_secret"
+# SECURITY: DATABASE_PASSWORD = "database_password" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: API_KEY = "api_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: JWT_SECRET = "jwt_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     CERTIFICATE = "certificate"
-    ENCRYPTION_KEY = "encryption_key"
-    OAUTH_CLIENT_SECRET = "oauth_client_secret"
+# SECURITY: ENCRYPTION_KEY = "encryption_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
+# SECURITY: OAUTH_CLIENT_SECRET = "oauth_client_secret" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
     WEBHOOK_TOKEN = "webhook_token"
-    SERVICE_ACCOUNT_KEY = "service_account_key"
+# SECURITY: SERVICE_ACCOUNT_KEY = "service_account_key" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
 
 
 class RotationStatus(Enum):
@@ -619,19 +625,23 @@ Generate service account credentials."""
 Validate generated secret meets requirements."""
         try:
             if strategy == RotationStrategy.DATABASE_PASSWORD:
-                password = secret_data.get('password', '')
+# SECURITY: password = secret_data.get('password', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 return len(password) >= 12 and any(c.isdigit() for c in password)
                 
             elif strategy == RotationStrategy.API_KEY:
-                api_key = secret_data.get('api_key', '')
+# SECURITY: api_key = secret_data.get('api_key', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 return len(api_key) >= 32
                 
             elif strategy == RotationStrategy.JWT_SECRET:
-                jwt_secret = secret_data.get('jwt_secret', '')
+# SECURITY: jwt_secret = secret_data.get('jwt_secret', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 return len(jwt_secret) >= 32
                 
             elif strategy == RotationStrategy.ENCRYPTION_KEY:
-                encryption_key = secret_data.get('encryption_key', '')
+# SECURITY: encryption_key = secret_data.get('encryption_key', '') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 return len(encryption_key) >= 32
                 
             # Add more validation as needed

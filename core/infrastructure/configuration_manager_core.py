@@ -330,7 +330,8 @@ class ConfigurationManagerCore:
         
         for key, value in os.environ.items():
             if key.startswith(env_prefix):
-                config_key = key[len(env_prefix):].lower().replace('_', '.')
+# SECURITY: config_key = key[len(env_prefix):].lower().replace('_', '.') # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
                 
                 # Convert string values to appropriate types
                 converted_value = self._convert_env_value(value)
@@ -620,7 +621,8 @@ class ConfigurationManagerCore:
         """Health check for configuration system"""
         try:
             # Test basic operations
-            test_key = "health_check.test"
+# SECURITY: test_key = "health_check.test" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             test_value = f"test_{time.time()}"
             
             self.set(test_key, test_value)

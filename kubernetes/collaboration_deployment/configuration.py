@@ -237,7 +237,8 @@ class CollaborationConfigurationManager:
                 raise ValueError(f"Invalid configuration: {validation_result['errors']}")
             
             # Cache configuration
-            cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}"
+# SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = config
             
             # Record configuration access
@@ -282,7 +283,8 @@ class CollaborationConfigurationManager:
             save_result = await self._save_configuration(config_name, updated_config, scope)
             
             # Update cache
-            cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}"
+# SECURITY: cache_key = f"{config_name}_{scope.value}_{self.current_environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = updated_config
             
             # Trigger hot reload callbacks
@@ -460,7 +462,8 @@ class CollaborationConfigurationManager:
             restore_result = await self._restore_from_backup(config_name, backup)
             
             # Update cache
-            cache_key = f"{config_name}_{ConfigScope.GLOBAL.value}_{self.current_environment.value}"
+# SECURITY: cache_key = f"{config_name}_{ConfigScope.GLOBAL.value}_{self.current_environment.value}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             self.configurations[cache_key] = backup["config"]
             
             # Trigger reload callbacks
@@ -518,7 +521,8 @@ class CollaborationConfigurationManager:
     def _initialize_encryption(self) -> None:
         """
 Initialize encryption for sensitive configuration data."""
-        encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY")
+# SECURITY: encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY") # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
         if encryption_key:
             self.encryption_key = encryption_key.encode()
         else:

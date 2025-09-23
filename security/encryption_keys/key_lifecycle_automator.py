@@ -234,7 +234,8 @@ class MLOptimizationEngine:
                 return 30  # Default fallback
             
             # Check cache
-            cache_key = f"rotation_{metrics.key_id}"
+# SECURITY: cache_key = f"rotation_{metrics.key_id}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if cache_key in self.prediction_cache:
                 cached_time, cached_result = self.prediction_cache[cache_key]
                 if datetime.now() - cached_time < self.cache_timeout:

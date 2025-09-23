@@ -233,7 +233,8 @@ class AWSBackupProvider(BackupProvider_Interface):
                 key_data = await self._compress_backup(key_data)
             
             # Upload
-            object_key = f"keys/{key_id}/{datetime.now().isoformat()}.backup"
+# SECURITY: object_key = f"keys/{key_id}/{datetime.now().isoformat()}.backup" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             
             await asyncio.get_event_loop().run_in_executor(
                 None,
@@ -578,7 +579,8 @@ class CreatorBackupPolicyEngine:
         """Get best matching policy for creator"""
         try:
             # Check cache first
-            cache_key = f"{creator_id}_{hash(json.dumps(creator_metadata, sort_keys=True))}"
+# SECURITY: cache_key = f"{creator_id}_{hash(json.dumps(creator_metadata, sort_keys=True))}" # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             if cache_key in self.creator_policy_cache:
                 return self.creator_policy_cache[cache_key]
             

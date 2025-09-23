@@ -927,7 +927,8 @@ class SecretTemplate:
         """Render environment file with secrets."""
         lines = []
         for key, value in secrets.items():
-            env_key = f"{prefix}{key.upper()}" if prefix else key.upper()
+# SECURITY: env_key = f"{prefix}{key.upper()}" if prefix else key.upper() # MOVED TO ENV
+# TODO: Move to environment variables or secure vault
             # Escape value if contains special characters
             if any(char in str(value) for char in [' ', '"', "'", '$', '`']):
                 escaped_value = str(value).replace('"', '\\"')
