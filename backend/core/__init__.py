@@ -150,12 +150,12 @@ try:
 except ImportError as e:
     logger.warning(f"Content Processing Engine import failed: {e}")
 
-# Enhanced Business Logic Core
+# Business Logic Core
 try:
-    from .enhanced_business_logic_core import *
-    logger.info("Enhanced Business Logic Core loaded successfully")
+    from .business_logic_core import *
+    logger.info("Business Logic Core loaded successfully")
 except ImportError as e:
-    logger.warning(f"Enhanced Business Logic Core import failed: {e}")
+    logger.warning(f"Business Logic Core import failed: {e}")
 
 # Enterprise Monetization Engine
 try:

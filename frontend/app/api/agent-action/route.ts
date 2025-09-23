@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { agentId, action } = body;
     
-    const response = await fetch(`http://localhost:8000/agents/${agentId}/${action}`, {
+    const response = await fetch(`http://localhost:8000/ai-agents/${agentId}/${action}`, {
       method: 'POST'
     });
     

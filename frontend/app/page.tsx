@@ -88,8 +88,32 @@ export default function HomePage() {
 
         {/* Navigation Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link href="/test" className="block">
+          <Link href="/real-platform" className="block">
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
+              <div className="flex items-center">
+                <span className="text-3xl mr-4">🚀</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Platform Réel</h3>
+                  <p className="text-gray-600 text-sm">Dashboard temps réel du backend</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/ai-orchestrator" className="block">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-purple-500">
+              <div className="flex items-center">
+                <span className="text-3xl mr-4">🤖</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">53+ Agents IA</h3>
+                  <p className="text-gray-600 text-sm">Orchestrateur d'agents IA</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/test" className="block">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-green-500">
               <div className="flex items-center">
                 <span className="text-3xl mr-4">🧪</span>
                 <div>

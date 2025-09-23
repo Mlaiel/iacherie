@@ -511,10 +511,10 @@ Initialize professional image watermarking system"""
             'spatial': self._embed_spatial
         }
         self.strength_settings = {
-            WatermarkStrength.LOW: {'alpha': 0.1, 'quality': 95},
+            WatermarkStrength.LIGHT: {'alpha': 0.1, 'quality': 95},
             WatermarkStrength.MEDIUM: {'alpha': 0.3, 'quality': 90},
-            WatermarkStrength.HIGH: {'alpha': 0.5, 'quality': 85},
-            WatermarkStrength.EXTREME: {'alpha': 0.8, 'quality': 80}
+            WatermarkStrength.STRONG: {'alpha': 0.5, 'quality': 85},
+            WatermarkStrength.MAXIMUM: {'alpha': 0.8, 'quality': 80}
         }
         self.supported_formats = ['png', 'jpg', 'jpeg', 'bmp', 'tiff']
         self.logger.info("ImageWatermarker initialized with multiple embedding methods")
@@ -683,6 +683,89 @@ Initialize professional image watermarking system"""
             for i in range(8):
                 bits.append((byte >> (7 - i)) & 1)
         return bits
+    
+    def _embed_lsb(self, image_data: bytes, watermark_data: bytes, strength: WatermarkStrength) -> bytes:
+        """Embed watermark using LSB (Least Significant Bit) method"""
+        try:
+            # Simulation de l'algorithme LSB
+            self.logger.info("Embedding watermark using LSB method")
+            
+            # Simuler l'insertion LSB
+            watermarked_data = bytearray(image_data)
+            if len(watermark_data) < len(watermarked_data):
+                for i, byte in enumerate(watermark_data):
+                    if i < len(watermarked_data):
+                        # Modifier le bit de poids faible
+                        watermarked_data[i] = (watermarked_data[i] & 0xFE) | (byte & 0x01)
+            
+            return bytes(watermarked_data)
+            
+        except Exception as e:
+            self.logger.error(f"LSB embedding failed: {e}")
+            return image_data
+    
+    def _embed_dct(self, image_data: bytes, watermark_data: bytes, strength: WatermarkStrength) -> bytes:
+        """Embed watermark using DCT (Discrete Cosine Transform) method"""
+        try:
+            self.logger.info("Embedding watermark using DCT method")
+            # Simulation de l'algorithme DCT
+            return image_data  # Retourner les données originales pour la simulation
+            
+        except Exception as e:
+            self.logger.error(f"DCT embedding failed: {e}")
+            return image_data
+    
+    def _embed_dwt(self, image_data: bytes, watermark_data: bytes, strength: WatermarkStrength) -> bytes:
+        """Embed watermark using DWT (Discrete Wavelet Transform) method"""
+        try:
+            self.logger.info("Embedding watermark using DWT method")
+            # Simulation de l'algorithme DWT
+            return image_data  # Retourner les données originales pour la simulation
+            
+        except Exception as e:
+            self.logger.error(f"DWT embedding failed: {e}")
+            return image_data
+    
+    def _embed_spatial(self, image_data: bytes, watermark_data: bytes, strength: WatermarkStrength) -> bytes:
+        """Embed watermark using spatial domain method"""
+        try:
+            self.logger.info("Embedding watermark using spatial domain method")
+            # Simulation de l'algorithme spatial
+            return image_data  # Retourner les données originales pour la simulation
+            
+        except Exception as e:
+            self.logger.error(f"Spatial embedding failed: {e}")
+            return image_data
+    
+    def _embed_lsb(self, image_data: bytes, watermark_data: bytes, strength: 'WatermarkStrength') -> bytes:
+        """Embed watermark using LSB (Least Significant Bit) method"""
+        try:
+            self.logger.info("Embedding watermark using LSB method")
+            # Simulate LSB embedding
+            return image_data + b"_lsb_watermark"
+        except Exception as e:
+            self.logger.error(f"LSB embedding failed: {e}")
+            return image_data
+    
+    def _embed_dct(self, image_data: bytes, watermark_data: bytes, strength: 'WatermarkStrength') -> bytes:
+        """Embed watermark using DCT (Discrete Cosine Transform) method"""
+        try:
+            self.logger.info("Embedding watermark using DCT method")
+            # Simulate DCT embedding
+            return image_data + b"_dct_watermark"
+        except Exception as e:
+            self.logger.error(f"DCT embedding failed: {e}")
+            return image_data
+    
+    def _embed_dwt(self, image_data: bytes, watermark_data: bytes, strength: 'WatermarkStrength') -> bytes:
+        """Embed watermark using DWT (Discrete Wavelet Transform) method"""
+        try:
+            self.logger.info("Embedding watermark using DWT method")
+            # Simulate DWT embedding
+            return image_data + b"_dwt_watermark"
+        except Exception as e:
+            self.logger.error(f"DWT embedding failed: {e}")
+            return image_data
 
 
 class TextWatermarker:
@@ -868,6 +951,70 @@ Convertit des données en liste de bits"""
             for i in range(8):
                 bits.append((byte >> (7 - i)) & 1)
         return bits
+    
+    def _embed_invisible_unicode(self, text: str, watermark_data: bytes, strength: WatermarkStrength) -> str:
+        """Embed watermark using invisible Unicode characters"""
+        try:
+            self.logger.info("Embedding watermark using invisible Unicode method")
+            
+            # Simulation : ajouter des caractères Unicode invisibles
+            watermarked_text = text
+            if len(watermark_data) > 0:
+                # Insérer des caractères invisibles basés sur les données du watermark
+                for i, byte in enumerate(watermark_data[:10]):  # Limiter à 10 bytes
+                    if i < len(text):
+                        if byte & 1:  # Si le bit de poids faible est 1
+                            watermarked_text = watermarked_text[:i] + '\u200B' + watermarked_text[i:]
+            
+            return watermarked_text
+            
+        except Exception as e:
+            self.logger.error(f"Invisible Unicode embedding failed: {e}")
+            return text
+    
+    def _embed_semantic_modification(self, text: str, watermark_data: bytes, strength: WatermarkStrength) -> str:
+        """Embed watermark using semantic modifications"""
+        try:
+            self.logger.info("Embedding watermark using semantic modification method")
+            # Simulation : retourner le texte original pour l'instant
+            return text
+            
+        except Exception as e:
+            self.logger.error(f"Semantic modification embedding failed: {e}")
+            return text
+    
+    def _embed_linguistic_steganography(self, text: str, watermark_data: bytes, strength: WatermarkStrength) -> str:
+        """Embed watermark using linguistic steganography"""
+        try:
+            self.logger.info("Embedding watermark using linguistic steganography method")
+            # Simulation : retourner le texte original pour l'instant
+            return text
+            
+        except Exception as e:
+            self.logger.error(f"Linguistic steganography embedding failed: {e}")
+            return text
+    
+    def _embed_whitespace_encoding(self, text: str, watermark_data: bytes, strength: WatermarkStrength) -> str:
+        """Embed watermark using whitespace encoding"""
+        try:
+            self.logger.info("Embedding watermark using whitespace encoding method")
+            
+            # Simulation : encoder dans les espaces
+            watermarked_text = text
+            if len(watermark_data) > 0:
+                # Remplacer certains espaces simples par des espaces doubles basés sur le watermark
+                words = text.split(' ')
+                for i, byte in enumerate(watermark_data[:len(words)-1]):
+                    if i < len(words) - 1:
+                        if byte & 1:  # Si le bit de poids faible est 1
+                            words[i] = words[i] + ' '  # Double espace
+                watermarked_text = ' '.join(words)
+            
+            return watermarked_text
+            
+        except Exception as e:
+            self.logger.error(f"Whitespace encoding embedding failed: {e}")
+            return text
 
 
 class WatermarkingService:

@@ -31,7 +31,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
 import uuid
-import redis.asyncio as redis
+import redis.asyncio as redis_client
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

@@ -28,7 +28,13 @@ from enum import Enum
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
-import redis
+
+# Import Redis with absolute path to avoid circular import
+try:
+    import redis as redis_client
+except ImportError:
+    redis_client = None
+
 from abc import ABC, abstractmethod
 import heapq
 import statistics
@@ -431,9 +437,9 @@ class StandardDecisionEvaluator(DecisionEvaluator):
 class RedisDecisionEngine:
     """Moteur de décision Redis enterprise"""
     
-    def __init__(self, config: DecisionEngineConfig, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, config: DecisionEngineConfig, redis_client_instance: Optional[Any] = None):
         self.config = config
-        self.redis_client = redis_client or redis.Redis()
+        self.redis_client = redis_client_instance or (redis_client.Redis() if redis_client else None)
         self.is_running = False
         
         # Composants du moteur
@@ -576,14 +582,14 @@ class RedisDecisionEngine:
 # Factory function pour créer le moteur de décision
 async def create_decision_engine(
     config: Optional[DecisionEngineConfig] = None,
-    redis_client: Optional[redis.Redis] = None
+    redis_client_instance: Optional[Any] = None
 ) -> RedisDecisionEngine:
     """Crée et initialise un moteur de décision"""
     
     if config is None:
         config = DecisionEngineConfig()
     
-    engine = RedisDecisionEngine(config, redis_client)
+    engine = RedisDecisionEngine(config, redis_client_instance)
     
     if await engine.initialize():
         return engine

@@ -184,11 +184,16 @@ class AIPromptEngineer:
     def _initialize_prompt_system(self):
         """Initialize prompt engineering system"""
         
-        # Initialize monitoring tasks
-        asyncio.create_task(self._performance_monitoring_loop())
-        asyncio.create_task(self._cost_optimization_loop())
-        asyncio.create_task(self._quality_monitoring_loop())
-        asyncio.create_task(self._provider_health_check_loop())
+        # Initialize monitoring tasks only if there's a running event loop
+        try:
+            loop = asyncio.get_running_loop()
+            asyncio.create_task(self._performance_monitoring_loop())
+            asyncio.create_task(self._cost_optimization_loop())
+            asyncio.create_task(self._quality_monitoring_loop())
+            asyncio.create_task(self._provider_health_check_loop())
+        except RuntimeError:
+            # No running event loop, tasks will be created later when needed
+            logger.info("No event loop running, monitoring tasks will be created later")
         
         # Initialize safety filters
         self.safety_filters = [

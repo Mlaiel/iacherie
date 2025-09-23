@@ -28,7 +28,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
-import redis
+import redis as redis_lib
 from collections import deque, defaultdict
 import statistics
 import math
@@ -167,9 +167,9 @@ class RealTimeAnalyticsConfig:
 class RedisRealTimeAnalyticsManager:
     """Gestionnaire d'analytics en temps réel Redis enterprise"""
     
-    def __init__(self, config: RealTimeAnalyticsConfig, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, config: RealTimeAnalyticsConfig, redis_client: Optional[redis_lib.Redis] = None):
         self.config = config
-        self.redis_client = redis_client or redis.Redis()
+        self.redis_client = redis_client or redis_lib.Redis()
         self.is_running = False
         
         # Composants internes

@@ -81,7 +81,7 @@ class WebhookSubscription:
 
 
 @dataclass
-class WebhookEvent:
+class WebhookEventData:
     """Webhook event data"""
     event_id: str
     subscription_id: str
@@ -199,7 +199,7 @@ class EventProcessor:
         self.event_handlers[event_type].append(handler)
         logger.info(f"Registered handler for {event_type}")
     
-    async def process_event(self, webhook_event: WebhookEvent) -> bool:
+    async def process_event(self, webhook_event: WebhookEventData) -> bool:
         """Process a webhook event"""
         try:
             webhook_event.processing_status = EventProcessingStatus.PROCESSING
@@ -260,7 +260,7 @@ class EventProcessor:
         """Stop event processing loop"""
         self.is_processing = False
     
-    async def queue_event(self, webhook_event: WebhookEvent) -> None:
+    async def queue_event(self, webhook_event: WebhookEventData) -> None:
         """Queue event for processing"""
         await self.processing_queue.put(webhook_event)
 
@@ -445,7 +445,7 @@ class PlatformWebhookService:
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.subscriptions: Dict[str, WebhookSubscription] = {}
-        self.events: Dict[str, WebhookEvent] = {}
+        self.events: Dict[str, WebhookEventData] = {}
         self.event_processor = EventProcessor()
         self.delivery_manager = WebhookDeliveryManager()
         self.is_running = False
@@ -598,7 +598,7 @@ class PlatformWebhookService:
                         continue
                 
                 # Create webhook event
-                webhook_event = WebhookEvent(
+                webhook_event = WebhookEventData(
                     event_id=str(uuid.uuid4()),
                     subscription_id=subscription.subscription_id,
                     platform_id=platform_id,

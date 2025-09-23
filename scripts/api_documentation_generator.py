@@ -49,7 +49,8 @@ class APIDocumentationGenerator:
             ],
             "ml_endpoints": [
                 "ml/**/*.py",
-                "ai_processing/**/*.py",
+                "backend/ai/**/*.py",
+                "core/ai/**/*.py",
                 "models/**/*.py"
             ]
         }

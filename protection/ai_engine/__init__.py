@@ -38,7 +38,16 @@ import json
 from contextlib import asynccontextmanager
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import redis
+
+# Import Redis using wrapper to avoid circular import with local redis module
+try:
+    from utils.redis_client_wrapper import create_redis_client, REDIS_AVAILABLE
+    redis_available = REDIS_AVAILABLE
+except ImportError:
+    create_redis_client = None
+    redis_available = False
+    redis_available = False
+
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 import prometheus_client
@@ -139,8 +148,19 @@ class EnterpriseAIProtectionEngine:
         self.active_requests = 0
         self.performance_metrics = {}
         
-        # Initialize Redis connection
-        self.redis_client = redis.from_url(config.redis_url, decode_responses=True)
+        # Initialize Redis connection using wrapper
+        if redis_available and create_redis_client:
+            try:
+                # Parse Redis URL to extract connection parameters
+                url_parts = config.redis_url.replace('redis://', '').split(':')
+                host = url_parts[0] if len(url_parts) > 0 else 'localhost'
+                port = int(url_parts[1]) if len(url_parts) > 1 else 6379
+                self.redis_client = create_redis_client(host=host, port=port, decode_responses=True)
+            except Exception as e:
+                logger.warning(f"Failed to create Redis client: {e}")
+                self.redis_client = None
+        else:
+            self.redis_client = None
         
         # Initialize database engine
         self.db_engine = create_async_engine(config.postgres_url, echo=False)

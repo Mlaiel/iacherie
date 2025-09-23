@@ -28,7 +28,12 @@ from enum import Enum
 from datetime import datetime, timedelta
 from decimal import Decimal
 import uuid
-import redis
+
+# Import Redis with absolute path to avoid circular import
+try:
+    import redis as redis_client
+except ImportError:
+    redis_client = None
 from sklearn.ensemble import RandomForestClassifier, IsolationForest
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -179,9 +184,9 @@ class BehaviorAnalysisConfig:
 class RedisBehaviorAnalysisOrchestrator:
     """Orchestrateur d'analyse comportementale Redis enterprise"""
     
-    def __init__(self, config: BehaviorAnalysisConfig, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, config: BehaviorAnalysisConfig, redis_client_instance: Optional[Any] = None):
         self.config = config
-        self.redis_client = redis_client or redis.Redis()
+        self.redis_client = redis_client_instance or (redis_client.Redis() if redis_client else None)
         self.is_running = False
         self.analysis_tasks = {}
         self.behavior_models = {}
@@ -1267,14 +1272,14 @@ class RedisBehaviorAnalysisOrchestrator:
 # Factory function pour créer l'orchestrateur
 async def create_behavior_analysis_orchestrator(
     config: Optional[BehaviorAnalysisConfig] = None,
-    redis_client: Optional[redis.Redis] = None
+    redis_client_instance: Optional[Any] = None
 ) -> RedisBehaviorAnalysisOrchestrator:
     """Crée et initialise un orchestrateur d'analyse comportementale"""
     
     if config is None:
         config = BehaviorAnalysisConfig()
     
-    orchestrator = RedisBehaviorAnalysisOrchestrator(config, redis_client)
+    orchestrator = RedisBehaviorAnalysisOrchestrator(config, redis_client_instance)
     
     if await orchestrator.initialize():
         return orchestrator

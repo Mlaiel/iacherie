@@ -217,6 +217,14 @@ try:
 except ImportError as e:
     HAS_ANALYTICS_SERVICES = False
     logger.warning(f"⚠️ Analytics services not available: {e}")
+    
+    # Fallback implementations
+    class RealTimeAnalyticsService:
+        async def get_real_time_stats(self): return {"status": "analytics_unavailable"}
+    class PredictiveAnalyticsService:
+        async def generate_predictions(self): return {"predictions": []}
+    class BusinessIntelligenceService:
+        async def get_business_insights(self): return {"insights": {}}
 
 # Content Services
 try:

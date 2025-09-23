@@ -6,7 +6,7 @@ export async function POST(
 ) {
   try {
     const agentId = params.id;
-    const response = await fetch(`http://localhost:8000/agents/${agentId}/start`, {
+    const response = await fetch(`http://localhost:8000/ai-agents/${agentId}/start`, {
       method: 'POST'
     });
     

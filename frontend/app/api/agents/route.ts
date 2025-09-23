@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const response = await fetch('http://localhost:8000/agents');
+    const response = await fetch('http://localhost:8000/ai-agents');
     
     if (response.ok) {
       const data = await response.json();

@@ -172,13 +172,13 @@ class AIOrchestrator:
         self.models["content_classifier_v1"] = ContentClassificationModelV1()
         self.model_metrics["content_classifier_v1"] = AIModelMetrics("content_classifier_v1")
         
-        # Enhanced Sentiment Analysis
-        self.models["sentiment_enhanced"] = EnhancedSentimentAnalyzer()
-        self.model_metrics["sentiment_enhanced"] = AIModelMetrics("sentiment_enhanced")
+        # Sentiment Analysis
+        self.models["sentiment_analyzer"] = SentimentAnalyzer()
+        self.model_metrics["sentiment_analyzer"] = AIModelMetrics("sentiment_analyzer")
         
-        # Advanced Trend Predictor
-        self.models["trend_predictor_advanced"] = AdvancedTrendPredictor()
-        self.model_metrics["trend_predictor_advanced"] = AIModelMetrics("trend_predictor_advanced")
+        # Trend Predictor
+        self.models["trend_predictor"] = TrendPredictor()
+        self.model_metrics["trend_predictor"] = AIModelMetrics("trend_predictor")
         
         # Copyright Detection System
         self.models["copyright_detector"] = CopyrightDetectionSystem()
@@ -188,7 +188,7 @@ class AIOrchestrator:
         self.models["quality_assessor"] = ContentQualityAssessor()
         self.model_metrics["quality_assessor"] = AIModelMetrics("quality_assessor")
         
-        logger.info(f"Initialized {len(self.models)} advanced AI models")
+        logger.info(f"Initialized {len(self.models)} AI models")
 
     async def process_content_ensemble(
         self,
