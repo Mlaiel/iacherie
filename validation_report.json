@@ -6,7 +6,7 @@
     "warnings": 5,
     "overall_score": 93.25757575757575,
     "success_rate": 92.42424242424242,
-    "execution_time_seconds": 0.38797426223754883
+    "execution_time_seconds": 0.366835355758667
   },
   "category_summaries": {
     "Python Imports": {
@@ -627,7 +627,7 @@
       "expert_role": "S\u00e9curit\u00e9",
       "status": "pass",
       "score": 100.0,
-      "details": "Security files: 63, Config files: 17",
+      "details": "Security files: 64, Config files: 17",
       "issues": [],
       "recommendations": []
     },
@@ -692,7 +692,7 @@
       "expert_role": "Audio Engineer",
       "status": "pass",
       "score": 100.0,
-      "details": "Audio processing files: 114, Audio content score: 120",
+      "details": "Audio processing files: 115, Audio content score: 140",
       "issues": [],
       "recommendations": []
     },
@@ -720,5 +720,5 @@
     }
   ],
   "critical_issues": [],
-  "timestamp": "2025-09-23T13:03:41.618523"
+  "timestamp": "2025-09-23T13:08:24.831504"
 }
