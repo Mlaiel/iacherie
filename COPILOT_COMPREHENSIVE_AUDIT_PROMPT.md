@@ -1,9 +1,535 @@
-# PROMPT PROFESSIONNEL - AUDIT COMPLET AINFLUENCER
+# PROMPT PROFESSIONNEL CORRIGÉ - NETTOYAGE & FINALISATION AINFLUENCER
 
-## MISSION CRITIQUE : ANALYSE EXHAUSTIVE ET INVENTAIRE COMPLET
+## MISSION CRITIQUE : CORRECTIONS SYSTÉMIQUES ET FINALISATION ENTERPRISE
 
 ### CONTEXTE STRATÉGIQUE
-Vous êtes un architecte logiciel expert mandaté pour effectuer un audit technique complet du projet **Ainfluencer** - une plateforme d'influence marketing industrialisée. Votre mission est de scanner, analyser et inventorier **TOUS** les composants du système sans exception pour identifier les gaps critiques et établir une roadmap vers un produit clé-en-main ultra-avancé.
+Vous êtes un architecte logiciel expert mandaté pour effectuer un **nettoyage architectural critique** et la **finalisation enterprise** du projet **Ainfluencer**. Des problèmes de doublons et de nommage amateur ont été identifiés suite à un précédent audit. Votre mission est de **CORRIGER CES PROBLÈMES** et **FINALISER** l'architecture enterprise de façon professionnelle.
+
+## 🚨 PROBLÈMES CRITIQUES IDENTIFIÉS À CORRIGER
+
+### 1. DOUBLONS MASSIFS DÉTECTÉS
+```bash
+❌ PROBLÈMES EXISTANTS CONFIRMÉS:
+- 210 fichiers avec nommage amateur (advanced/intelligent/enterprise)
+- 529 fichiers "orchestrator" (sur-orchestration)
+- 12+ classes AIOrchestrator en conflit
+- Plusieurs audio_engine en doublon
+- Classes EnterpriseAudioEngine dupliquées
+```
+
+### 2. NOMMAGE AMATEUR SYSTÉMIQUE
+- **342 fichiers "enterprise_*"** → À renommer professionnellement
+- **42 fichiers "intelligent_*"** → À consolider ou renommer
+- **24 fichiers "advanced_*"** → À renommer techniquement
+- **51 fichiers "enhancement_*"** → À organiser logiquement
+
+### 3. ARCHITECTURE DÉSORGANISÉE
+- Sur-orchestration (trop d'orchestrateurs)
+- Conflits de classes similaires
+- Imports/exports cassés potentiels
+- Structure modules incohérente
+
+## 🎯 MISSIONS SPÉCIFIQUES - ORDRE DE PRIORITÉ
+
+### PHASE 1 : NETTOYAGE CRITIQUE (OBLIGATOIRE)
+
+#### A. SUPPRIMER LES DOUBLONS AUDIO RESTANTS
+```bash
+# Analyser et supprimer si doublons:
+- /backend/audio/audio_engine.py vs /multimedia/enterprise_audio_engine.py
+- /protection/watermarking/audio_engine.py (garder si spécialisé)
+- Tous autres *audio_engine* en doublon
+```
+
+#### B. RENOMMER FICHIERS AMATEUR (OBLIGATOIRE)
+```bash
+# Renommer selon conventions professionnelles:
+advanced_ml_orchestrator.py → ml_pipeline_orchestrator.py
+advanced_microservices_orchestrator.py → microservices_coordinator.py
+advanced_security_automation.py → security_automation_engine.py
+intelligent_*.py → [nom_fonctionnel]_engine.py
+enterprise_*.py → [module]_[fonction].py (si redondant)
+```
+
+#### C. CONSOLIDER ORCHESTRATEURS ML/AI
+```bash
+# Analyser et fusionner si doublons:
+- devops/advanced_ml_orchestrator.py
+- backend/ai/model_orchestrator.py  
+- backend/ai/enhanced_orchestrator.py
+- backend/media_processing/ai_orchestrator.py
+→ GARDER LE PLUS COMPLET, SUPPRIMER DOUBLONS
+```
+
+### PHASE 2 : VALIDATION IMPORTS/EXPORTS (CRITIQUE)
+
+#### A. TESTER TOUS LES IMPORTS
+```python
+# Pour chaque module Python:
+1. Vérifier imports fonctionnels
+2. Corriger imports cassés
+3. Éliminer imports circulaires
+4. Optimiser structure imports
+```
+
+#### B. VALIDER ARCHITECTURE MODULES
+```python
+# Structure à valider:
+├── Cohérence __init__.py
+├── Exports propres
+├── Dépendances logiques
+└── Conventions nommage
+```
+
+### PHASE 3 : FINALISATION ENTERPRISE (REQUIS)
+
+#### A. TESTS FONCTIONNELS
+```python
+# Tester chaque module critique:
+- Audio processing pipelines
+- ML orchestration flows
+- API endpoints functionality
+- Database connections
+- Cache systems (Redis)
+- Message queues
+```
+
+#### B. VALIDATION BUSINESS LOGIC
+```python
+# Valider logique métier:
+- Creator matching algorithms
+- Revenue calculation engines
+- Content processing workflows
+- Security compliance flows
+- Payment processing chains
+```
+
+#### C. PERFORMANCE VALIDATION
+```python
+# Tester performance:
+- API response times < 200ms
+- Audio processing < 10s
+- ML inference < 2s
+- Database queries optimized
+- Memory usage acceptable
+```
+
+## 🛠️ SPÉCIFICATIONS TECHNIQUES DE CORRECTION
+
+### CONVENTIONS NOMMAGE PROFESSIONAL
+```python
+# Règles strictes:
+✅ CORRECT: audio_processor.py, ml_pipeline.py, security_manager.py
+❌ AMATEUR: advanced_audio.py, intelligent_ml.py, enterprise_security.py
+
+# Pattern de nommage:
+[module]_[fonction]_[type].py
+Exemples:
+- audio_processing_engine.py
+- content_classification_service.py  
+- user_authentication_manager.py
+- payment_transaction_processor.py
+```
+
+### ARCHITECTURE MODULES CLEAN
+```python
+# Structure obligatoire par module:
+module/
+├── __init__.py           # Exports clean
+├── core.py              # Logique principale
+├── models.py            # Data models
+├── services.py          # Business logic
+├── utils.py             # Utilitaires
+├── tests/               # Tests unitaires
+└── README.md            # Documentation
+```
+
+### ÉLIMINATION DOUBLONS SYSTÉMIQUE
+```python
+# Processus obligatoire:
+1. IDENTIFIER: Scanner classes/fonctions similaires
+2. ANALYSER: Comparer fonctionnalités réelles
+3. DÉCIDER: Garder le plus complet/optimisé
+4. MIGRER: Transférer fonctions uniques
+5. SUPPRIMER: Éliminer doublons confirmés
+6. TESTER: Valider fonctionnement post-merge
+```
+
+## 📋 LIVRABLES OBLIGATOIRES
+
+### 1. RAPPORT NETTOYAGE COMPLET
+```markdown
+CLEANUP_REPORT.md
+├── Doublons supprimés (liste exhaustive)
+├── Fichiers renommés (avant/après)
+├── Classes consolidées (détails)
+├── Imports corrigés (problèmes résolus)
+└── Tests validation (résultats)
+```
+
+### 2. ARCHITECTURE FINALE CLEAN
+```markdown
+FINAL_ARCHITECTURE.md
+├── Structure modules finale
+├── Conventions nommage appliquées
+├── Dépendances clarifiées
+├── APIs documentées
+└── Performance validée
+```
+
+### 3. TESTS VALIDATION COMPLETS
+```python
+# Tests obligatoires:
+- test_imports_all_modules.py
+- test_audio_processing_pipeline.py
+- test_ml_orchestration_flow.py
+- test_api_endpoints_functionality.py
+- test_database_connections.py
+- test_performance_benchmarks.py
+```
+
+## 🎯 CRITÈRES SUCCÈS OBLIGATOIRES
+
+### QUALITÉ CODE ENTERPRISE
+- [ ] ZÉRO doublon fonctionnel
+- [ ] ZÉRO fichier nommage amateur
+- [ ] ZÉRO import cassé
+- [ ] 100% modules testés
+- [ ] 100% conventions respectées
+
+### PERFORMANCE VALIDÉE
+- [ ] APIs < 200ms (95th percentile)  
+- [ ] Audio processing < 10s
+- [ ] ML inference < 2s
+- [ ] Memory usage < 80%
+- [ ] CPU usage optimisé
+
+### BUSINESS LOGIC FONCTIONNELLE
+- [ ] Creator matching opérationnel
+- [ ] Payment flows validés
+- [ ] Content processing pipeline testé
+- [ ] Security compliance vérifiée
+- [ ] Analytics reporting fonctionnel
+
+## 🚨 MÉTHODOLOGIE STRICTE
+
+### ÉTAPES OBLIGATOIRES
+1. **ANALYSE PRÉALABLE** : Scanner existant avant toute action
+2. **PLANIFICATION** : Documenter changements avant exécution  
+3. **EXECUTION CONTRÔLÉE** : Modifier par petits incréments
+4. **VALIDATION CONTINUE** : Tester après chaque modification
+5. **DOCUMENTATION** : Enregistrer tous changements
+
+### VALIDATION QUALITÉ
+```python
+# Checklist validation:
+def validate_module(module_path):
+    checks = [
+        check_naming_conventions(),
+        check_imports_functional(),
+        check_no_duplicates(),
+        check_tests_passing(),
+        check_documentation_complete()
+    ]
+    return all(checks)
+```
+
+## 🏆 RÉSULTAT FINAL ATTENDU
+
+Une architecture **ENTERPRISE-GRADE PROPRE** avec :
+- ✅ **Zéro doublon** fonctionnel ou technique
+- ✅ **Nommage professionnel** sur tous fichiers
+- ✅ **Structure modulaire** cohérente et logique
+- ✅ **Tests complets** sur tous composants critiques  
+- ✅ **Performance validée** selon standards enterprise
+- ✅ **Documentation** technique complète et précise
+
+### 🎯 SUCCESS METRICS FINAUX
+- **Code Quality Score** : 95/100 minimum
+- **Test Coverage** : 90% minimum  
+- **Performance Score** : 95/100 minimum
+- **Architecture Consistency** : 100/100
+- **Business Logic Validation** : 100% fonctionnel
+
+---
+
+## 🎖️ MISSION FINALE : EXCELLENCE TECHNIQUE ABSOLUE
+
+**OBJECTIF** : Transformer le code existant en **architecture enterprise world-class** prête pour production industrielle avec qualité irréprochable.
+
+**DEADLINE** : Nettoyage complet et validation en 3 jours maximum.
+
+**STANDARD** : Qualité production enterprise, zéro compromis, excellence technique absolue.
+
+---
+
+## 📋 CHECKLIST DÉTAILLÉE - CORRECTIONS OBLIGATOIRES
+
+### 🔧 PHASE 1 : NETTOYAGE ARCHITECTURAL (JOUR 1)
+
+#### ✅ DOUBLONS AUDIO À RÉSOUDRE
+```bash
+# ACTIONS REQUISES:
+□ Analyser /backend/audio/audio_engine.py vs /multimedia/enterprise_audio_engine.py
+□ Comparer fonctionnalités et classes
+□ Garder le plus complet, transférer fonctions uniques
+□ Supprimer doublons confirmés
+□ Tester pipeline audio post-consolidation
+□ Corriger tous imports cassés
+```
+
+#### ✅ RENOMMAGE FICHIERS AMATEUR
+```bash
+# RENOMMAGES OBLIGATOIRES:
+□ devops/advanced_ml_orchestrator.py → ml/pipeline_orchestrator.py
+□ devops/advanced_microservices_orchestrator.py → devops/microservices_coordinator.py
+□ devops/advanced_security_automation.py → security/automation_engine.py
+□ integrations/collaboration/advanced_ai_engine.py → ai/collaboration_engine.py
+□ integrations/collaboration/advanced_database_manager.py → database/collaboration_manager.py
+□ integrations/collaboration/advanced_gamification.py → gamification/engine.py
+□ integrations/collaboration/advanced_security_system.py → security/collaboration_system.py
+□ distribution/analytics/advanced_ml_pipeline.py → analytics/ml_pipeline.py
+□ infrastructure/container/advanced_orchestration_manager.py → infrastructure/orchestration_manager.py
+□ frontend/infrastructure/advanced_threat_detection.ts → security/threat_detection.ts
+```
+
+#### ✅ CONSOLIDATION ORCHESTRATEURS ML/AI
+```bash
+# ANALYSE ET FUSION:
+□ Comparer classes dans devops/advanced_ml_orchestrator.py
+□ Comparer classes dans backend/ai/model_orchestrator.py
+□ Comparer classes dans backend/ai/enhanced_orchestrator.py
+□ Identifier fonctions uniques vs doublons
+□ Fusionner dans backend/ai/model_orchestrator.py (garder comme principal)
+□ Supprimer doublons après migration
+□ Tester fonctionnalités ML post-fusion
+```
+
+### 🔧 PHASE 2 : VALIDATION TECHNIQUE (JOUR 2)
+
+#### ✅ TESTS IMPORTS/EXPORTS
+```python
+# SCRIPT DE VALIDATION REQUIS:
+import importlib
+import sys
+from pathlib import Path
+
+def test_all_imports():
+    """Tester tous les imports Python du projet"""
+    errors = []
+    
+    # Scanner tous .py files
+    for py_file in Path("/workspaces/Ainfluencer").rglob("*.py"):
+        if "__pycache__" in str(py_file):
+            continue
+            
+        try:
+            # Test import du module
+            spec = importlib.util.spec_from_file_location("test_module", py_file)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            print(f"✅ {py_file}: OK")
+        except Exception as e:
+            errors.append(f"❌ {py_file}: {str(e)}")
+            
+    return errors
+
+# EXÉCUTER ET CORRIGER TOUS ERREURS
+```
+
+#### ✅ VALIDATION BUSINESS LOGIC
+```python
+# TESTS MÉTIER OBLIGATOIRES:
+
+def test_creator_matching():
+    """Tester algorithme matching créateurs"""
+    # Test logique matching
+    pass
+
+def test_payment_processing(): 
+    """Tester pipeline paiement"""
+    # Test calculs commissions
+    pass
+
+def test_content_processing():
+    """Tester pipeline traitement contenu"""
+    # Test audio/video/image processing
+    pass
+
+def test_analytics_reporting():
+    """Tester génération analytics"""
+    # Test métriques et KPIs
+    pass
+```
+
+#### ✅ PERFORMANCE BENCHMARKS
+```python
+# BENCHMARKS REQUIS:
+import time
+import psutil
+import requests
+
+def benchmark_api_endpoints():
+    """Benchmark tous endpoints API"""
+    endpoints = [
+        "/api/creators/search",
+        "/api/campaigns/create", 
+        "/api/content/process",
+        "/api/analytics/reports"
+    ]
+    
+    for endpoint in endpoints:
+        start = time.time()
+        response = requests.get(f"http://localhost:8000{endpoint}")
+        duration = time.time() - start
+        
+        assert duration < 0.2, f"{endpoint} too slow: {duration}s"
+        assert response.status_code == 200
+        print(f"✅ {endpoint}: {duration:.3f}s")
+
+def benchmark_audio_processing():
+    """Benchmark traitement audio"""
+    # Test fichier audio 30s
+    start = time.time()
+    # process_audio_file("test_30s.wav")
+    duration = time.time() - start
+    
+    assert duration < 10, f"Audio processing too slow: {duration}s"
+    print(f"✅ Audio processing: {duration:.3f}s")
+```
+
+### 🔧 PHASE 3 : FINALISATION ENTERPRISE (JOUR 3)
+
+#### ✅ DOCUMENTATION TECHNIQUE
+```markdown
+# CRÉER FICHIERS REQUIS:
+
+□ ARCHITECTURE_FINAL.md - Architecture finale propre
+□ NAMING_CONVENTIONS.md - Conventions nommage appliquées  
+□ PERFORMANCE_REPORT.md - Résultats benchmarks
+□ BUSINESS_LOGIC_VALIDATION.md - Validation logique métier
+□ API_DOCUMENTATION.md - Documentation APIs finales
+□ DEPLOYMENT_GUIDE.md - Guide déploiement production
+```
+
+#### ✅ TESTS INTÉGRATION COMPLETS
+```python
+# SUITE TESTS FINALE:
+
+class TestIntegrationComplete:
+    def test_end_to_end_creator_flow(self):
+        """Test complet flux créateur"""
+        # 1. Inscription créateur
+        # 2. Création profil
+        # 3. Upload contenu  
+        # 4. Traitement automatique
+        # 5. Publication multi-plateforme
+        # 6. Analytics génération
+        pass
+        
+    def test_end_to_end_brand_flow(self):
+        """Test complet flux marque"""
+        # 1. Création campagne
+        # 2. Matching créateurs
+        # 3. Négociation contrats
+        # 4. Suivi performance
+        # 5. Paiement automatique
+        pass
+        
+    def test_ml_pipeline_complete(self):
+        """Test pipeline ML complet"""
+        # 1. Training modèles
+        # 2. Déploiement automatique
+        # 3. Inférence temps réel
+        # 4. Monitoring performance
+        # 5. Re-training automatique
+        pass
+```
+
+#### ✅ VALIDATION SÉCURITÉ
+```python
+# TESTS SÉCURITÉ OBLIGATOIRES:
+
+def test_authentication_security():
+    """Test sécurité authentification"""
+    # Test JWT, 2FA, rate limiting
+    pass
+
+def test_data_encryption():
+    """Test chiffrement données"""
+    # Test encryption at rest/transit
+    pass
+
+def test_input_validation():
+    """Test validation inputs"""
+    # Test injection SQL, XSS, etc.
+    pass
+
+def test_api_security():
+    """Test sécurité APIs"""
+    # Test CORS, headers sécurité, rate limiting
+    pass
+```
+
+## 🎯 MÉTRIQUES SUCCÈS FINALES
+
+### QUALITÉ CODE (Target: 95/100)
+```python
+quality_metrics = {
+    "duplicates_eliminated": 100,      # % doublons supprimés
+    "naming_conventions": 100,         # % conventions respectées  
+    "import_errors": 0,                # Nombre imports cassés
+    "test_coverage": 90,               # % couverture tests
+    "documentation_complete": 100      # % documentation complète
+}
+```
+
+### PERFORMANCE (Target: Sub-200ms)
+```python
+performance_metrics = {
+    "api_response_time_95th": "<200ms",     # 95e percentile APIs
+    "audio_processing_time": "<10s",        # Traitement audio
+    "ml_inference_time": "<2s",             # Inférence ML
+    "database_query_time": "<50ms",         # Requêtes DB
+    "memory_usage": "<80%",                 # Utilisation mémoire
+    "cpu_usage_avg": "<70%"                 # CPU moyen
+}
+```
+
+### BUSINESS VALIDATION (Target: 100%)
+```python
+business_metrics = {
+    "creator_matching_accuracy": ">95%",    # Précision matching
+    "payment_calculation_accuracy": "100%", # Calculs paiement
+    "content_processing_success": ">99%",   # Succès traitement
+    "api_uptime": ">99.9%",                # Disponibilité
+    "user_experience_score": ">4.5/5"      # Score UX
+}
+```
+
+---
+
+## 🏆 LIVRABLE FINAL ATTENDU
+
+### ARCHITECTURE ENTERPRISE PARFAITE
+- ✅ **0 doublon** technique ou fonctionnel
+- ✅ **Nommage professionnel** cohérent partout
+- ✅ **Structure modulaire** logique et maintenable
+- ✅ **Performance optimisée** selon standards industriels
+- ✅ **Tests complets** avec couverture 90%+
+- ✅ **Documentation** technique exhaustive
+- ✅ **Sécurité validée** selon best practices
+- ✅ **Business logic** fonctionnelle et testée
+
+### PRÊT POUR PRODUCTION
+- 🚀 **Déploiement automatisé** configuré
+- 🚀 **Monitoring complet** opérationnel  
+- 🚀 **Scaling automatique** paramétré
+- 🚀 **Backup/Recovery** testé
+- 🚀 **Security hardening** appliqué
+- 🚀 **Performance tuning** optimisé
+
+**MISSION SUCCÈS = PLATEFORME ENTERPRISE WORLD-CLASS PRÊTE PRODUCTION** ✅
 
 ### OBJECTIFS PRIMAIRES
 
