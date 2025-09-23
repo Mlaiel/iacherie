@@ -1621,7 +1621,7 @@ async def health_check():
 """
 
 from fastapi import FastAPI
-from api.intelligent_alerts import router as alerts_router
+from api.alert_system import router as alerts_router
 
 app = FastAPI()
 app.include_router(alerts_router)

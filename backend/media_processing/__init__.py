@@ -111,7 +111,7 @@ from .enhancement_pipeline import (
 # Legacy support for transition period
 try:
     from .ai_content_orchestrator import AIContentOrchestrator, get_orchestrator
-    from .intelligent_content_analyzer import IntelligentContentAnalyzer, get_content_analyzer
+    from .content_analyzer import IntelligentContentAnalyzer, get_content_analyzer
     from .multimodal_ai_processor import MultimodalAIProcessor, get_multimodal_processor
     _LEGACY_AI_AVAILABLE = True
 except ImportError:
@@ -148,7 +148,7 @@ from .content_intelligence_engine import ContentIntelligenceEngine, get_intellig
 from .ai_enhancement_pipeline import AIEnhancementPipeline, get_enhancement_pipeline
 from .smart_quality_optimizer import SmartQualityOptimizer, get_quality_optimizer
 from .content_classification_ai import ContentClassificationAI, get_classification_ai
-from .intelligent_metadata_extractor import IntelligentMetadataExtractor, get_metadata_extractor
+from .metadata_extractor import IntelligentMetadataExtractor, get_metadata_extractor
 
 # New enterprise components - Phase 4: SEO & Distribution Pipeline
 from .seo_metadata_processor import SEOMetadataProcessor, get_seo_processor

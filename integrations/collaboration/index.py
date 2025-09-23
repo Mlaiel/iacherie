@@ -18,7 +18,7 @@ from .revenue_sharing import RevenueSharing
 from .enterprise_collaboration_gateway import EnterpriseCollaborationGateway
 from .collaboration_security import CollaborationSecurityManager
 from .notification_orchestrator import NotificationOrchestrator
-from .advanced_gamification import AdvancedGamificationEngine
+from .gamification_engine import AdvancedGamificationEngine
 from .ai_conflict_resolution import AIConflictResolutionSystem
 
 # Configuration logique métier Ainflue - UPDATED with Phase 2 components

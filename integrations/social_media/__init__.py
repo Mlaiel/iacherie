@@ -11,7 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 from .social_graph_analyzer import SocialGraphAnalyzer
 
 try:
-    from .advanced_analytics import AdvancedSocialAnalytics, ViralityScore, InfluencerProfile
+    from .analytics import AdvancedSocialAnalytics, ViralityScore, InfluencerProfile
 except ImportError:
     AdvancedSocialAnalytics = None
     ViralityScore = None

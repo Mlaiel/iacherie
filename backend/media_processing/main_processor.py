@@ -230,7 +230,7 @@ class MainProcessor:
             try:
                 from .ai_content_orchestrator import AIContentOrchestrator
                 from .multimodal_ai_processor import MultimodalAIProcessor
-                from .intelligent_content_analyzer import IntelligentContentAnalyzer
+                from .content_analyzer import IntelligentContentAnalyzer
                 
                 self._processors.update({
                     'ai_orchestrator': AIContentOrchestrator(),

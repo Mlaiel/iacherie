@@ -191,7 +191,7 @@ from .ai_streaming_processor import (
     create_ai_streaming_processor
 )
 
-from .intelligent_streaming_optimizer import (
+from .streaming_optimizer import (
     IntelligentStreamingOptimizer,
     OptimizationType,
     OptimizationStrategy,

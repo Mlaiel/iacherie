@@ -115,7 +115,7 @@ from .ia_business_processing_orchestrator import (
     get_ia_business_processing_orchestrator
 )
 
-from .intelligent_workflow_coordinator import (
+from .workflow_coordinator import (
     IntelligentWorkflowCoordinator,
     WorkflowCoordinationType,
     CoordinationStrategy,

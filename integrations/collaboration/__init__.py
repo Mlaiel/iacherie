@@ -30,7 +30,7 @@ from .revenue_sharing import RevenueSharing
 from .enterprise_collaboration_gateway import EnterpriseCollaborationGateway
 from .collaboration_security import CollaborationSecurityManager
 from .notification_orchestrator import NotificationOrchestrator
-from .advanced_gamification import AdvancedGamificationEngine
+from .gamification_engine import AdvancedGamificationEngine
 from .ai_conflict_resolution import AIConflictResolutionSystem
 from .workflow_automation import WorkflowAutomationEngine
 from .collaboration_marketplace import CollaborationMarketplace
@@ -40,10 +40,10 @@ from .enterprise_reporting import EnterpriseReportingEngine
 
 # NEW ADVANCED ENTERPRISE MODULES (Expert Implementation)
 from .performance_optimizer import PerformanceOptimizer, performance_optimizer
-from .advanced_security_system import AdvancedSecurityManager, security_manager
-from .advanced_ai_engine import AdvancedAIEngine, ai_engine
-from .advanced_audio_engine import AdvancedAudioEngine, audio_engine
-from .advanced_database_manager import AdvancedDatabaseManager, db_manager
+from .security_system import AdvancedSecurityManager, security_manager
+from .ai_engine import AdvancedAIEngine, ai_engine
+# NOTE: Audio engine consolidated to multimedia/unified_audio_engine.py
+from .database_manager import AdvancedDatabaseManager, db_manager
 
 __all__ = [
     # Core Collaboration Components
@@ -74,14 +74,14 @@ __all__ = [
     'PerformanceOptimizer',
     'AdvancedSecurityManager', 
     'AdvancedAIEngine',
-    'AdvancedAudioEngine',
+    # 'AdvancedAudioEngine',  # Moved to multimedia/unified_audio_engine.py
     'AdvancedDatabaseManager',
     
     # Global instances for easy access
     'performance_optimizer',
     'security_manager',
     'ai_engine',
-    'audio_engine',
+    # 'audio_engine',  # Use multimedia/unified_audio_engine.py instead
     'db_manager'
 ]
 

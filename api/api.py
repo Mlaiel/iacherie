@@ -56,7 +56,7 @@ except ImportError as e:
 # Import specialized APIs with error handling
 try:
     from .enterprise_monetization_api import app as monetization_app
-    from .intelligent_alerts import router as alerts_router
+    from .alert_system import router as alerts_router
     from .validation_endpoints import router as validation_router
     SPECIALIZED_APIS_AVAILABLE = True
 except ImportError as e:
