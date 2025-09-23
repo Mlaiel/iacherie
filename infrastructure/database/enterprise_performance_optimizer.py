@@ -29,6 +29,7 @@ Features:
 import asyncio
 import logging
 import json
+import os
 import time
 import statistics
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -834,7 +835,7 @@ if __name__ == "__main__":
             host="localhost",
             port=5432,
             username="postgres",
-            password="password"
+            password=os.getenv("DB_PASSWORD", "secure_password_from_env")
         )
         
         # Test connection (mock)
