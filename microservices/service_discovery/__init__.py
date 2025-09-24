@@ -6,7 +6,7 @@
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
 **Copyright**: ©2025 Ainflue Platform - Tous droits réservés
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
+AVERTISSEMENT PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ====================================================
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 - Email: mlaiel@live.de  

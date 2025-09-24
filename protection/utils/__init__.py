@@ -7,7 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .redis_compat # Safe Redis import with Python 3.12 compatibility
+from .redis_compat import * # Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True
