@@ -13,7 +13,7 @@
 #### 1.1 Hugging Face API 🆓 **RECOMMANDÉ**
 ```env
 # Variables d'environnement
-HUGGINGFACE_API_KEY=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+HUGGINGFACE_API_KEY=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
 HUGGINGFACE_MODEL=gpt2-large
 ```
 - **Endpoint:** `https://api-inference.huggingface.co/models/gpt2`
@@ -25,7 +25,7 @@ HUGGINGFACE_MODEL=gpt2-large
 #### 1.2 Google Gemini Free Tier 🆓
 ```env
 # Variables d'environnement  
-GOOGLE_GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GOOGLE_GEMINI_API_KEY=AIzaSyDJnBaaDrVk-nthKu3q6VEpnqVonhPGe_4
 GOOGLE_GEMINI_MODEL=gemini-pro
 ```
 - **Gratuit:** 15 requests/minute, 1M tokens/jour
@@ -35,7 +35,7 @@ GOOGLE_GEMINI_MODEL=gemini-pro
 
 #### 1.3 Cohere Free Tier 🆓
 ```env
-COHERE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+COHERE_API_KEY=nAJZFzbtiRM3sDEPISFLVL6l3Law9hxoiutAFcWT
 ```
 - **Gratuit:** 100 requests/minute, 1000 requests/mois
 - **Endpoint:** `https://api.cohere.ai/v1/generate`
@@ -48,9 +48,9 @@ COHERE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 #### 2.1 YouTube Data API v3 🆓 **EXCELLENT**
 ```env
-YOUTUBE_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-YOUTUBE_CLIENT_ID=xxxxx.apps.googleusercontent.com
-YOUTUBE_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxx
+YOUTUBE_API_KEY=AIzaSyDZmVYU65zQDbtmSa8egSOuFAaRwpcSYn4
+YOUTUBE_CLIENT_ID=329063366855-v3s5vcac3oopnev9kh81skkfoe43ijed.apps.googleusercontent.com
+YOUTUBE_CLIENT_SECRET=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
 ```
 - **Gratuit:** 10,000 quota units/jour (largement suffisant)
 - **Fonctionnalités:** Upload, analytics, gestion de chaîne
@@ -69,10 +69,15 @@ TIKTOK_CLIENT_SECRET=xxxxxxxxxxxxxxxxxx
 ```env
 TWITTER_BEARER_TOKEN=AAAAAAAAAAAAAAAAAAAAxxxxxxxxxxxxxxxxxx
 TWITTER_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxx
+TWITTER_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxx
+TWITTER_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 - **Gratuit:** 500,000 tweets/mois (lecture seule)
-- **Limitations:** Pas de publication en gratuit
-- **Inscription:** https://developer.twitter.com/
+- **Limitations:** Pas de publication en gratuit (nécessite plan payant)
+- **Use Cases:** Analytics, recherche de tendances, insights audience
+- **Application Required:** Processus d'approbation Developer Agreement
+- **Documentation:** Voir `TWITTER_X_API_USE_CASE.md` pour use cases détaillés
+- **Inscription:** https://developer.twitter.com/en/portal/dashboard
 
 ---
 
