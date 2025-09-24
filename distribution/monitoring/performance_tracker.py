@@ -302,33 +302,21 @@ class PerformanceTracker:
         # Connect to Redis if URL provided
         if self.redis_url:
             try:
-                # Try to # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}") if available
-                try:
-                    # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
-                    self.redis_client = aioredis.from_url(self.redis_url)
-                    await self.redis_client.ping()
-                    logger.info("Connected to Redis for metrics storage")
-                except ImportError:
-                    logger.warning("aioredis not available, Redis storage disabled")
-                    self.redis_client = None
+                # Safe Redis import with Python 3.12 compatibility
+                import aioredis
+                REDIS_AVAILABLE = True
+            except (ImportError, TypeError) as e:
+                # Handle Python 3.12 TimeoutError duplicate base class issue
+                from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+                import logging
+                logging.warning(f"Using Redis compatibility layer: {e}")
+                
+                self.redis_client = aioredis.from_url(self.redis_url)
+                await self.redis_client.ping()
+                logger.info("Connected to Redis for metrics storage")
             except Exception as e:
                 logger.warning(f"Failed to connect to Redis: {e}")
+                self.redis_client = None
                 self.redis_client = None
         
         self.is_running = True
