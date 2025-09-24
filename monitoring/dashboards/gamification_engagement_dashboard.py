@@ -28,7 +28,7 @@ import json
 import statistics
 from collections import defaultdict, deque
 
-from .enterprise_dashboard_system import (
+from .dashboard_system import (
     EnterpriseDashboardSystem,
     Dashboard,
     DashboardWidget,

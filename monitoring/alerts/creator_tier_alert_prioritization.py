@@ -46,7 +46,7 @@ import statistics
 import json
 from collections import defaultdict
 
-from .intelligent_alert_manager import (
+from .alert_manager import (
     IntelligentAlertManager, AlertCategory, AlertSeverity, 
     AlertType, AlertRule, IntelligentAlert
 )

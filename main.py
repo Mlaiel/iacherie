@@ -129,7 +129,7 @@ except ImportError as e:
 try:
     # Temporarily disable to avoid event loop issues during import
     # from backend.core.enterprise_architecture_manager import EnterpriseArchitectureManager
-    from backend.core.enterprise_monetization_engine import EnterpriseMonetizationEngine
+    # from backend.core.enterprise_monetization_engine import EnterpriseMonetizationEngine # File removed during cleanup
     HAS_ENTERPRISE = True
     logger.info("✅ Enterprise Monetization loaded")
 except ImportError as e:

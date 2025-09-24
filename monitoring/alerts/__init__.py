@@ -12,7 +12,7 @@ and automated escalation across all platform components.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """# Core alert management
-from .intelligent_alert_manager import (
+from .alert_manager import (
     IntelligentAlertManager,
     AlertCategory,
     AlertSeverity,

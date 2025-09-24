@@ -221,6 +221,9 @@ class PerformanceThreshold:
                 return AlertLevel.WARNING
         
         return AlertLevel.INFO
+    
+    def to_dict(self):
+        return {
             "name": self.name,
             "value": self.value,
             "type": self.metric_type.value,

@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from enum import Enum
 import statistics
 
-from .intelligent_alert_manager import (
+from .alert_manager import (
     IntelligentAlertManager, AlertCategory, AlertSeverity, 
     AlertType, AlertRule, IntelligentAlert
 )
