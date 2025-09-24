@@ -43,7 +43,7 @@ import json
 from contextlib import asynccontextmanager
 
 # Import existing alert managers
-from .intelligent_alert_manager import IntelligentAlertManager, AlertCategory, AlertSeverity
+from .alert_manager import IntelligentAlertManager, AlertCategory, AlertSeverity
 from .alert_coordinator import AlertCoordinator, SystemHealthStatus
 from .business_alerts import BusinessAlertManager
 from .technical_alerts import TechnicalAlertManager

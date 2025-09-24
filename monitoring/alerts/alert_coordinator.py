@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from enum import Enum
 import json
 
-from .intelligent_alert_manager import IntelligentAlertManager, AlertCategory, AlertSeverity, IntelligentAlert
+from .alert_manager import IntelligentAlertManager, AlertCategory, AlertSeverity, IntelligentAlert
 from .business_alerts import BusinessAlertManager, BusinessMetrics
 from .technical_alerts import TechnicalAlertManager, TechnicalMetrics, SecurityEvent
 from .ai_alerts import AIAlertManager, ModelMetrics

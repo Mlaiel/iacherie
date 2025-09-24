@@ -17,7 +17,7 @@ from enum import Enum
 import statistics
 import json
 
-from .intelligent_alert_manager import (
+from .alert_manager import (
     IntelligentAlertManager, AlertCategory, AlertSeverity, 
     AlertType, AlertRule, IntelligentAlert
 )
