@@ -1,92 +1,14 @@
 {
-  "name": "@ainflue/frontend-platform",
-  "version": "2.0.0",
-  "description": "Ainflue Professional Frontend Platform - Multi-Format Content Creation & AI-Powered Distribution",
-  "private": true,
+  "name": "ainfluencer-frontend",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "node server.js",
-    "dev:next": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "start": "next start -p 3001"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@headlessui/react": "^1.7.17",
-    "@heroicons/react": "^2.2.0",
-    "@hookform/resolvers": "^3.3.2",
-    "@mui/material": "^5.18.0",
-    "@reduxjs/toolkit": "^2.8.2",
-    "@types/node": "^20.10.5",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
-    "@types/socket.io-client": "^1.4.36",
-    "@types/ws": "^8.18.1",
-    "autoprefixer": "^10.4.16",
-    "axios": "^1.6.2",
-    "clsx": "^2.1.1",
-    "http-proxy-middleware": "^3.0.5",
-    "i18next": "^23.16.8",
-    "lucide-react": "^0.294.0",
-    "next": "^14.2.32",
-    "postcss": "^8.4.32",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.48.2",
-    "react-hot-toast": "^2.6.0",
-    "react-i18next": "^13.5.0",
-    "react-redux": "^9.2.0",
-    "recharts": "^2.8.0",
-    "socket.io-client": "^4.8.1",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^3.3.6",
-    "typescript": "^5.3.3",
-    "ws": "^8.18.3",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7",
-    "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.5.1",
-    "@types/jest": "^29.5.8",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.0.4",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/$1"
-    },
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": [
-        "babel-jest",
-        {
-          "presets": [
-            "next/babel"
-          ]
-        }
-      ]
-    },
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts",
-      "!src/app/layout.tsx"
-    ]
-  },
-  "author": "Fahed Mlaiel <mlaiel@live.de>",
-  "license": "PROPRIETARY",
-  "engines": {
-    "node": ">=18.0.0"
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }
