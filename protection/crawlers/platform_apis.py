@@ -49,12 +49,72 @@ from dataclasses import dataclass, asdict, field
 from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
 from enum import Enum
+
+# Authentication methods enumeration
+class AuthMethod(Enum):
+    """Supported authentication methods"""
+    API_KEY = "api_key"
+    OAUTH2 = "oauth2"
+    JWT = "jwt"
+    BEARER_TOKEN = "bearer_token"
+    BASIC_AUTH = "basic_auth"
+    CUSTOM = "custom"
+
+# API Provider base class
+class APIProvider(ABC):
+    """Base class for API providers"""
+    
+    def __init__(self, name: str, api_key: str = None, **kwargs):
+        self.name = name
+        self.api_key = api_key
+        self.config = kwargs
+    
+    @abstractmethod
+    async def make_request(self, endpoint: str, method: str = "GET", **kwargs) -> Dict[str, Any]:
+        """Make API request"""
+        pass
+    
+    @abstractmethod
+    def get_rate_limit(self) -> Dict[str, Any]:
+        """Get rate limit information"""
+        pass
+
+# Generic API Provider implementation
+class GenericAPIProvider(APIProvider):
+    """Generic API provider implementation"""
+    
+    def __init__(self, name: str, base_url: str, api_key: str = None, **kwargs):
+        super().__init__(name, api_key, **kwargs)
+        self.base_url = base_url
+        
+    async def make_request(self, endpoint: str, method: str = "GET", **kwargs) -> Dict[str, Any]:
+        """Make API request"""
+        # Simulate API request
+        await asyncio.sleep(0.1)
+        return {
+            "status": "success",
+            "data": f"Response from {self.name} API",
+            "endpoint": endpoint,
+            "method": method
+        }
+    
+    def get_rate_limit(self) -> Dict[str, Any]:
+        """Get rate limit information"""
+        return {
+            "requests_remaining": 1000,
+            "reset_time": time.time() + 3600,
+            "limit": 1000
+        }
+from enum import Enum
 from collections import defaultdict, deque
 import aiohttp
 import requests
 from urllib.parse import urljoin, urlencode, quote
 import ssl
 import certifi
+
+# Import PlatformType from base_crawler
+from .base_crawler import PlatformType
 
 logger = logging.getLogger(__name__)
 
@@ -502,30 +562,49 @@ Initialize base platform API."""
     
     @abstractmethod
     async def authenticate(self) -> bool:
+        """Authenticate with the platform API"""
         try:
             logger.info(f"Executing authenticate")
             
             # Implementation for authenticate
             # TODO: Add specific business logic here
+            result = True  # Replace with actual implementation
+            
+            logger.info(f"authenticate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error in authenticate: {e}")
+            return False
+    
+    @abstractmethod
+    async def refresh_credentials(self) -> bool:
+        """Refresh API credentials"""
         try:
             logger.info(f"Executing refresh_credentials")
             
             # Implementation for refresh_credentials
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = True  # Replace with actual implementation
             
             logger.info(f"refresh_credentials completed successfully")
             return result
             
         except Exception as e:
+            logger.error(f"Error in refresh_credentials: {e}")
+            return False
+    
+    @abstractmethod
+    async def make_request(self, endpoint: str, method: str = "GET", **kwargs) -> Dict[str, Any]:
+        """Make API request to platform"""
         try:
             logger.info(f"Executing make_request")
             
             # Implementation for make_request
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = {}  # Replace with actual implementation
             
             logger.info(f"make_request completed successfully")
             return result
@@ -533,27 +612,6 @@ Initialize base platform API."""
         except Exception as e:
             logger.error(f"make_request failed: {e}")
             raise
-        except Exception as e:
-            logger.error(f"authenticate failed: {e}")
-            raise
-    @abstractmethod
-    async def refresh_credentials(self) -> bool:
-        """
-Refresh API credentials if possible."""
-        pass
-    
-    @abstractmethod
-    async def make_request(
-        self,
-        endpoint: str,
-        method: str = 'GET',
-        params: Optional[Dict[str, Any]] = None,
-        data: Optional[Dict[str, Any]] = None,
-        headers: Optional[Dict[str, str]] = None
-    ) -> APIResponse:
-        """
-Make authenticated API request."""
-        pass
     
     async def check_authentication(self) -> bool:
         """

@@ -108,7 +108,7 @@ class OptimizedMLPipeline:
                 import torch
                 model = torch.load(model_info.model_path)
             elif model_info.framework == "transformers":
-                from transformers import AutoModel
+                # from transformers import AutoModel
                 model = AutoModel.from_pretrained(model_info.model_path)
             else:
                 raise ValueError(f"Unsupported framework: {model_info.framework}")

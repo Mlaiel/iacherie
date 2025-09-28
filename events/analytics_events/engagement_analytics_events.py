@@ -27,7 +27,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import torch
 import torch.nn as nn
-from transformers import pipeline
+# from transformers import pipeline
 
 from .base_analytics_events import BaseAnalyticsEventHandler, AnalyticsEvent, EventCategory
 

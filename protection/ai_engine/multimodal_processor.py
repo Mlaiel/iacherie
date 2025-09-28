@@ -52,14 +52,14 @@ import prometheus_client
 from prometheus_client import Counter, Histogram, Gauge
 
 # Advanced AI/ML Libraries
-from transformers import (
+# from transformers import (
     CLIPProcessor, CLIPModel, CLIPVisionModel, CLIPTextModel,
     WhisperProcessor, WhisperForConditionalGeneration,
     RobertaTokenizer, RobertaForSequenceClassification,
     AutoTokenizer, AutoModelForSequenceClassification,
     pipeline, AutoFeatureExtractor
 )
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 import timm
 
 # Specialized Audio Processing
@@ -213,7 +213,7 @@ class EnterpriseMultiModalProcessor:
             self.models['vit'].eval()
             
             # Sentence Transformer for semantic embeddings
-            self.models['sentence_transformer'] = SentenceTransformer('all-mpnet-base-v2')
+            self.models['sentence_transformer'] = get_sentence_transformer('all-mpnet-base-v2')
             
             # RoBERTa for advanced NLP
             self.models['roberta'] = RobertaForSequenceClassification.from_pretrained(

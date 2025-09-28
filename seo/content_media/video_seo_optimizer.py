@@ -29,7 +29,7 @@ try:
     import numpy as np
     from PIL import Image, ImageStat
     import moviepy.editor as mp
-    from transformers import pipeline
+    # from transformers import pipeline
     import speech_recognition as sr
     from pydub import AudioSegment
     import pytesseract

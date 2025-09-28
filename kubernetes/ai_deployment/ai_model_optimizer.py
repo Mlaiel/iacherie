@@ -30,10 +30,11 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torchvision
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 import onnx
 import onnxruntime as ort
-from transformers import AutoModel, AutoTokenizer
+# from transformers import AutoModel, AutoTokenizer
 import tensorrt as trt
 import intel_extension_for_pytorch as ipex
 from openvino.runtime import Core
@@ -788,7 +789,11 @@ class AIModelOptimizer:
                 result["accuracy_retention"] = 0.95
             
             elif framework == "tensorflow":
-                import tensorflow_model_optimization as tfmot
+                tf = get_tensorflow()
+                try:
+                    import tensorflow_model_optimization as tfmot
+                except ImportError:
+                    tfmot = None
                 
                 model = tf.keras.models.load_model(model_path)
                 

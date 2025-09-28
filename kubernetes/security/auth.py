@@ -30202,7 +30202,8 @@ from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import DBSCAN
 from sklearn.feature_extraction.text import TfidfVectorizer
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 # Compliance and reporting
 import xml.etree.ElementTree as ET
@@ -54576,7 +54577,8 @@ import base64
 from PIL import Image
 import face_recognition
 import numpy as np
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from sklearn.ensemble import IsolationForest
 import joblib
 import redis

@@ -13,6 +13,7 @@ from .alert_models import *
 from .base_models import *
 from .security_models import *
 from .monitoring_models import *
+from .notification_models import *
 
 __all__ = [
     # Alert models
@@ -46,5 +47,42 @@ __all__ = [
     
     # Monitoring models
     "MonitoringSession",
-    "MonitoringMetrics"
+    "MonitoringMetrics",
+    
+    # Notification models
+    "NotificationType",
+    "NotificationPriority", 
+    "NotificationStatus",
+    "DeliveryStatus",
+    "NotificationRecipient",
+    "NotificationTemplate",
+    "NotificationRequest",
+    "NotificationResponse",
+    "NotificationLog",
+    "NotificationHistory",
+    "NotificationPreferences",
+    "NotificationChannel",
+    "NotificationStats",
+    "NotificationBatch",
+    "NotificationRule",
+    "FingerprintResult",
+    "SimilarityMatch"
 ]
+
+# Add missing FingerprintResult class
+class FingerprintResult:
+    """Result of fingerprinting operation."""
+    
+    def __init__(self, fingerprint_id=None, hash_value=None, metadata=None):
+        self.fingerprint_id = fingerprint_id
+        self.hash_value = hash_value
+        self.metadata = metadata or {}
+
+# Add missing SimilarityMatch class
+class SimilarityMatch:
+    """Similarity match result."""
+    
+    def __init__(self, match_id=None, similarity_score=0.0, metadata=None):
+        self.match_id = match_id
+        self.similarity_score = similarity_score
+        self.metadata = metadata or {}

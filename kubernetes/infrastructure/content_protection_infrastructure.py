@@ -30,11 +30,12 @@ import uuid
 try:
     import cv2
     import torch
-    import tensorflow as tf
-    from transformers import CLIPModel, CLIPProcessor
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from transformers import CLIPModel, CLIPProcessor
     import chromaprint
     import essentia.standard as es
-    from sentence_transformers import SentenceTransformer
+    # from sentence_transformers import SentenceTransformer
 except ImportError as e:
     logging.warning(f"Some AI/ML dependencies not available: {e}")
 
@@ -351,7 +352,7 @@ class TextFingerprintEngine:
     
     def __init__(self):
         try:
-            self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+            self.sentence_model = get_sentence_transformer('all-MiniLM-L6-v2')
         except Exception:
             logger.warning("SentenceTransformer not available")
             self.sentence_model = None

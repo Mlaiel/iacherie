@@ -59,9 +59,9 @@ except ImportError:
     VIDEO_IMAGE_FINGERPRINTING_AVAILABLE = False
 
 try:
-    import transformers
+    # import transformers
     import torch
-    from sentence_transformers import SentenceTransformer
+    # from sentence_transformers import SentenceTransformer
     TEXT_FINGERPRINTING_AVAILABLE = True
 except ImportError:
     TEXT_FINGERPRINTING_AVAILABLE = False
@@ -435,7 +435,7 @@ class TextFingerprintProcessor:
             raise RuntimeError("Text fingerprinting libraries not available")
             
         if self.model is None:
-            self.model = SentenceTransformer(self.model_name)
+            self.model = get_sentence_transformer(self.model_name)
             
     async def process_semantic_vector(self, text_content: str) -> ContentFingerprint:
         """Generate semantic vector fingerprint for text content"""

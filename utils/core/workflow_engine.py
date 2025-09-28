@@ -43,7 +43,7 @@ except ImportError:
     OPENAI_AVAILABLE = False
 
 try:
-    from transformers import pipeline, AutoModel, AutoTokenizer
+    # from transformers import pipeline, AutoModel, AutoTokenizer
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False

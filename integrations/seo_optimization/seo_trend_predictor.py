@@ -31,7 +31,8 @@ import pickle
 
 # ML and forecasting imports
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
     from sklearn.linear_model import LinearRegression, Ridge
     from sklearn.preprocessing import StandardScaler, MinMaxScaler

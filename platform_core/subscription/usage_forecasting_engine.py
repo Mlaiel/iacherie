@@ -54,10 +54,20 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 try:
-    import tensorflow as tf
-    from tensorflow.keras.models import Sequential
-    from tensorflow.keras.layers import LSTM, Dense, Dropout
-    TENSORFLOW_AVAILABLE = True
+    # Import TensorFlow via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
+    if tf_manager.is_available:
+        Sequential = tf.keras.models.Sequential
+        LSTM = tf.keras.layers.LSTM
+        Dense = tf.keras.layers.Dense
+        Dropout = tf.keras.layers.Dropout
+        TENSORFLOW_AVAILABLE = True
+    else:
+        Sequential = None
+        LSTM = Dense = Dropout = None
+        TENSORFLOW_AVAILABLE = False
 except ImportError:
     tf = None
     Sequential = None

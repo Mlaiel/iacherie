@@ -241,7 +241,7 @@ class ContentFormatting(BaseModel):
 
 class DistributionRequest(BaseModel):
     content_id: str = Field(..., description="Content ID to distribute")
-    platforms: List[str] = Field(..., min_items=1, description="Target platforms")
+    platforms: List[str] = Field(..., min_length=1, description="Target platforms")
     schedule_time: Optional[datetime] = None
     auto_optimize: bool = Field(default=True)
     platform_formatting: Dict[str, ContentFormatting] = Field(default_factory=dict)
@@ -326,7 +326,7 @@ class AutoOptimization(BaseModel):
 
 class ScheduleRequest(BaseModel):
     content_id: str = Field(..., description="Content ID to schedule")
-    platforms: List[str] = Field(..., min_items=1)
+    platforms: List[str] = Field(..., min_length=1)
     schedule_times: Dict[str, datetime] = Field(..., description="Platform-specific schedule times")
 
 # ========================================
@@ -664,7 +664,7 @@ async def retry_distribution_job(
 async def optimize_content_for_platforms(
     background_tasks: BackgroundTasks,
     content_id: str = Query(..., description="Content ID to optimize"),
-    platforms: List[str] = Query(..., min_items=1, description="Target platforms"),
+    platforms: List[str] = Query(..., min_length=1, description="Target platforms"),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_distribution_access)
 ):

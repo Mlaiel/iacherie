@@ -78,12 +78,13 @@ except ImportError:
     Image = None
 
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
 except ImportError:
     tf = None
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
 except ImportError:
     pipeline = None
     AutoTokenizer = None

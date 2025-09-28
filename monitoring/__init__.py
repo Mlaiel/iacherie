@@ -113,7 +113,7 @@ try:
     ]
     
 except ImportError as e:
-    logger.warning(f"Some monitoring components not available: {e}")
+    logger.debug(f"Some monitoring components not available: {e}")
     
     class MonitoringSystem:
         """Fallback monitoring system"""

@@ -24,7 +24,7 @@ from .copyright_protection_service import CopyrightProtectionService
 from .dmca_service import DMCAService
 from .licensing_service import LicensingService
 from .watermarking_service import WatermarkingService
-from .fingerprinting_service import FingerprintingService
+from .fingerprinting_service import ContentFingerprintingService
 from .dispute_resolution_service import DisputeResolutionService
 from .fraud_detection_service import FraudDetectionService
 
@@ -36,7 +36,7 @@ __all__ = [
     'DMCAService',
     'LicensingService',
     'WatermarkingService',
-    'FingerprintingService',
+    'ContentFingerprintingService',
     'DisputeResolutionService',
     'FraudDetectionService'
 ]

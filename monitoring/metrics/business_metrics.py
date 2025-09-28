@@ -24,7 +24,7 @@ import logging
 import time
 from typing import Dict, List, Optional, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from enum import Enum
 import json
@@ -434,7 +434,7 @@ Initialize business metrics collector"""
             "metrics_collected": 0,
             "aggregations_computed": 0,
             "alerts_triggered": 0,
-            "start_time": datetime.utcnow()
+            "start_time": datetime.now(timezone.utc)
         }
         
         logger.info("BusinessMetricsCollector initialized successfully")

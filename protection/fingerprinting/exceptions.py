@@ -706,6 +706,29 @@ class NetworkError(FingerprintingBaseException):
             **kwargs
         )
 
+class BatchProcessingError(FingerprintingBaseException):
+    """Exception raised during batch processing operations."""
+    
+    def __init__(self, message: str, batch_id: str = None, failed_count: int = 0, **kwargs):
+        details = {
+            'batch_id': batch_id,
+            'failed_count': failed_count
+        }
+        suggestions = [
+            "Check batch configuration",
+            "Verify input data format",
+            "Monitor resource usage",
+            "Review processing logs"
+        ]
+        super().__init__(
+            message=message,
+            error_code="BATCH_PROCESSING_ERROR",
+            category=ErrorCategory.CONTENT_PROCESSING,
+            details=details,
+            suggestions=suggestions,
+            **kwargs
+        )
+
 # Utility functions for exception handling
 
 def handle_exception(exception: Exception, context: Dict[str, Any] = None) -> FingerprintingBaseException:
@@ -800,6 +823,9 @@ __all__ = [
     
     # Network exceptions
     'TimeoutError', 'NetworkError',
+    
+    # Batch processing exceptions
+    'BatchProcessingError',
     
     # Utility functions
     'handle_exception', 'log_exception'

@@ -24,9 +24,10 @@ import aiohttp
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 import torch
-from transformers import AutoTokenizer, AutoModel
+# from transformers import AutoTokenizer, AutoModel
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import hashlib

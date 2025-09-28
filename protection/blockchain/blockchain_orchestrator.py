@@ -64,7 +64,11 @@ except (ImportError, TypeError) as e:
     import aiokafka
     from prometheus_client import Counter, Histogram, Gauge
     from web3 import Web3
-    from web3.middleware import geth_poa_middleware
+    try:
+        from web3.middleware import geth_poa_middleware
+    except ImportError:
+        def geth_poa_middleware(*args, **kwargs):
+            pass
     import eth_account
     from solcx import compile_source
 except ImportError:

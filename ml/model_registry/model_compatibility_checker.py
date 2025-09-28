@@ -10,7 +10,16 @@ import asyncio
 import logging
 import torch
 import onnx
-import tensorflow as tf
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 import numpy as np
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -518,7 +527,16 @@ class ModelCompatibilityChecker:
         
         # Check TensorFlow
         try:
-            import tensorflow as tf
+            # Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
             frameworks['tensorflow'] = tf.__version__
         except ImportError:
             pass

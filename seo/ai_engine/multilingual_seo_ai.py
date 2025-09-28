@@ -28,7 +28,7 @@ from enum import Enum
 from datetime import datetime
 import re
 import openai
-from transformers import AutoTokenizer, AutoModel, MarianMTModel, MarianTokenizer
+# from transformers import AutoTokenizer, AutoModel, MarianMTModel, MarianTokenizer
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 import pycountry

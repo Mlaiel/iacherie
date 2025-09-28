@@ -2,6 +2,34 @@
 # Enterprise-grade security scanner and hardening automation
 # Author: Fahed Mlaiel (mlaiel@live.de) - Security Specialist Role
 
+FROM alpine:3.19 AS development
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue Security Hardening - Development Environment"
+
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    curl \
+    wget \
+    openssl \
+    ca-certificates \
+    bash \
+    jq \
+    vim \
+    && rm -rf /var/cache/apk/*
+
+RUN addgroup -g 1000 security && \
+    adduser -D -u 1000 -G security -s /bin/bash security
+
+WORKDIR /app
+COPY requirements-security.txt .
+RUN pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir -r requirements-security.txt
+
+USER security
+EXPOSE 8000
+CMD ["python3", "-m", "uvicorn", "hardening.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
 FROM alpine:3.19 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL description="Ainflue Security Hardening - Enterprise security automation"

@@ -33,8 +33,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
 from sklearn.ensemble import RandomForestRegressor
-import tensorflow as tf
-from tensorflow import keras
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+keras = tf.keras
 # Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis

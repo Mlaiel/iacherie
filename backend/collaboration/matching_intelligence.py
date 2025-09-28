@@ -60,14 +60,18 @@ except (ImportError, TypeError) as e:
     from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier
     from sklearn.neural_network import MLPRegressor, MLPClassifier
     from sklearn.model_selection import train_test_split
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     import torch
-    import transformers
+    # import transformers
     from geopy.distance import geodesic
     from geopy.geocoders import Nominatim
     import networkx as nx
     from scipy.spatial.distance import euclidean, manhattan, jaccard
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
 except ImportError as e:
     logging.warning(f"Optional dependency missing: {e}")
 
@@ -793,7 +797,7 @@ class ContentSimilarity:
             
             # Modèle de sentences transformer pour similarité sémantique
             try:
-                self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+                self.sentence_model = get_sentence_transformer('all-MiniLM-L6-v2')
             except:
                 self.sentence_model = None
                 logger.warning("SentenceTransformer non disponible")

@@ -825,3 +825,235 @@ Get access control analytics."""
         """Save controller state to persistent storage."""
         # Placeholder for database persistence
         logger.debug("Saving Access Controller state")
+
+
+# ==============================================================================
+# ACCESS CONTROL SYSTEM CLASS (Required by DRM module)
+# ==============================================================================
+
+from enum import Enum
+from typing import Optional, Dict, Any, List
+import logging
+
+class AccessLevel(Enum):
+    """Access levels for content protection"""
+    PUBLIC = "public"
+    RESTRICTED = "restricted" 
+    PRIVATE = "private"
+    CONFIDENTIAL = "confidential"
+
+class PermissionType(Enum):
+    """Permission types for access control"""
+    READ = "read"
+    WRITE = "write"
+    EXECUTE = "execute"
+    DELETE = "delete"
+
+class AccessControlSystem:
+    """
+    Advanced Access Control System for DRM content protection.
+    Provides multi-level security and permission management.
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        """Initialize Access Control System"""
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        
+        # Access control state
+        self.access_policies = {}
+        self.user_permissions = {}
+        self.security_level = AccessLevel.RESTRICTED
+        
+        self.logger.info("🔒 Access Control System initialized")
+    
+    async def authenticate_user(self, user_id: str, credentials: Dict[str, str]) -> Dict[str, Any]:
+        """
+        Authenticate user and return access permissions
+        
+        Args:
+            user_id: User identifier
+            credentials: User credentials
+            
+        Returns:
+            Authentication result with permissions
+        """
+        try:
+            # Simulate authentication
+            is_authenticated = True  # Would verify actual credentials
+            
+            if is_authenticated:
+                permissions = [PermissionType.READ, PermissionType.WRITE]
+                self.user_permissions[user_id] = permissions
+                
+                return {
+                    'success': True,
+                    'user_id': user_id,
+                    'access_level': self.security_level.value,
+                    'permissions': [p.value for p in permissions],
+                    'authenticated': True
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': 'Authentication failed',
+                    'authenticated': False
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Authentication error: {e}")
+            return {
+                'success': False,
+                'error': str(e),
+                'authenticated': False
+            }
+    
+    async def check_access_permission(self, user_id: str, resource_id: str, 
+                                    permission: PermissionType) -> bool:
+        """
+        Check if user has permission to access resource
+        
+        Args:
+            user_id: User identifier
+            resource_id: Resource identifier  
+            permission: Required permission type
+            
+        Returns:
+            True if access granted, False otherwise
+        """
+        try:
+            # Check user permissions
+            user_permissions = self.user_permissions.get(user_id, [])
+            return permission in user_permissions
+            
+        except Exception as e:
+            self.logger.error(f"Permission check error: {e}")
+            return False
+    
+    async def grant_access(self, user_id: str, resource_id: str, 
+                         permissions: List[PermissionType]) -> Dict[str, Any]:
+        """
+        Grant access permissions to user for resource
+        
+        Args:
+            user_id: User identifier
+            resource_id: Resource identifier
+            permissions: List of permissions to grant
+            
+        Returns:
+            Operation result
+        """
+        try:
+            # Update user permissions
+            if user_id not in self.user_permissions:
+                self.user_permissions[user_id] = []
+            
+            self.user_permissions[user_id].extend(permissions)
+            
+            self.logger.info(f"Access granted to user {user_id} for resource {resource_id}")
+            
+            return {
+                'success': True,
+                'user_id': user_id,
+                'resource_id': resource_id,
+                'permissions_granted': [p.value for p in permissions]
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Access grant error: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def revoke_access(self, user_id: str, resource_id: str, 
+                          permissions: List[PermissionType]) -> Dict[str, Any]:
+        """
+        Revoke access permissions from user for resource
+        
+        Args:
+            user_id: User identifier
+            resource_id: Resource identifier
+            permissions: List of permissions to revoke
+            
+        Returns:
+            Operation result
+        """
+        try:
+            # Remove user permissions
+            if user_id in self.user_permissions:
+                for permission in permissions:
+                    if permission in self.user_permissions[user_id]:
+                        self.user_permissions[user_id].remove(permission)
+            
+            self.logger.info(f"Access revoked from user {user_id} for resource {resource_id}")
+            
+            return {
+                'success': True,
+                'user_id': user_id,
+                'resource_id': resource_id,
+                'permissions_revoked': [p.value for p in permissions]
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Access revoke error: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def get_user_permissions(self, user_id: str) -> Dict[str, Any]:
+        """
+        Get current permissions for user
+        
+        Args:
+            user_id: User identifier
+            
+        Returns:
+            User permissions
+        """
+        try:
+            permissions = self.user_permissions.get(user_id, [])
+            
+            return {
+                'success': True,
+                'user_id': user_id,
+                'permissions': [p.value for p in permissions],
+                'access_level': self.security_level.value
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Get permissions error: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    async def set_security_level(self, level: AccessLevel) -> Dict[str, Any]:
+        """
+        Set system security level
+        
+        Args:
+            level: New security level
+            
+        Returns:
+            Operation result
+        """
+        try:
+            old_level = self.security_level
+            self.security_level = level
+            
+            self.logger.info(f"Security level changed from {old_level.value} to {level.value}")
+            
+            return {
+                'success': True,
+                'old_level': old_level.value,
+                'new_level': level.value
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Set security level error: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }

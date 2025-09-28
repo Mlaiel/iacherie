@@ -56,9 +56,12 @@ from skimage.feature import local_binary_pattern
 from skimage.measure import compare_ssim
 
 # Text Processing Imports
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 import spacy
-from sentence_transformers import SentenceTransformer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -307,7 +310,7 @@ class MultiModalFingerprintingEngine:
         """Initialize AI model for advanced similarity detection"""
         try:
             # Load pre-trained multi-modal model
-            # self.ai_model = SentenceTransformer('clip-ViT-B-32')
+            # self.ai_model = get_sentence_transformer('clip-ViT-B-32')
             logger.info("AI model initialized for cross-modal similarity")
             return True
         except Exception as e:
@@ -923,7 +926,7 @@ class TextPlagiarismEngine:
         """Initialize text plagiarism engine"""
         try:
             # Initialize models (placeholder)
-            # self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
+            # self.sentence_transformer = get_sentence_transformer('all-MiniLM-L6-v2')
             logger.info("Text Plagiarism Engine initialized")
             return True
         except Exception as e:

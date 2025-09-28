@@ -23,7 +23,7 @@ from PIL import Image, ImageEnhance
 import cv2
 import librosa
 import soundfile as sf
-from transformers import (
+# from transformers import (
     AutoTokenizer, AutoModel, AutoProcessor,
     CLIPModel, CLIPProcessor,
     BlipProcessor, BlipForConditionalGeneration,

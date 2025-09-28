@@ -33,7 +33,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import IsolationForest
 import spacy
-from transformers import pipeline
+# from transformers import pipeline
 from pydantic import BaseModel, Field, validator
 import openai
 import tiktoken

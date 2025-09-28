@@ -36,7 +36,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from textblob import TextBlob
 import networkx as nx
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
 
 

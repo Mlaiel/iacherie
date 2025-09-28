@@ -34,14 +34,26 @@ try:
     import torch
     import torch.nn as nn
     import torchvision.transforms as transforms
-    from transformers import CLIPProcessor, CLIPModel, CLIPVisionModel
+    # from transformers import CLIPProcessor, CLIPModel, CLIPVisionModel
     from sklearn.cluster import KMeans
     from scipy.spatial.distance import cosine, euclidean
     from skimage import feature, measure, filters
     import matplotlib.pyplot as plt
     from colorthief import ColorThief
+    IMAGE_DEPS_AVAILABLE = True
 except ImportError as e:
     logging.warning(f"Some image dependencies not available: {e}")
+    IMAGE_DEPS_AVAILABLE = False
+    # Mock PIL Image for compatibility
+    class MockImage:
+        class Image:
+            pass
+        @staticmethod
+        def open(path):
+            return MockImage.Image()
+        class Resampling:
+            LANCZOS = 1
+    Image = MockImage
 
 from ..models import FingerprintResult, SimilarityMatch
 
@@ -509,23 +521,12 @@ class TraditionalFeatureExtractor:
         
         # Combine hashes
         if hash_components:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-        if hash_components:
-            combined_string = "|".join(hash_components)
-            return hashlib.md5(combined_string.encode()).hexdigest()
+            try:
+                combined_string = "|".join(hash_components)
+                return hashlib.md5(combined_string.encode()).hexdigest()
+            except Exception as e:
+                logger.error(f"Hash combination failed: {e}")
+                return ""
         
         return ""
 

@@ -187,7 +187,8 @@ class ModelLoader:
                     return None
             elif model_version.model_type == "tensorflow":
                 try:
-                    import tensorflow as tf
+                    from core.tensorflow_singleton import get_tensorflow
+                    tf = get_tensorflow()
                     return tf.keras.models.load_model(str(model_path))
                 except ImportError:
                     logger.warning("TensorFlow not available for model loading")

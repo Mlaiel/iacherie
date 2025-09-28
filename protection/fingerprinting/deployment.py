@@ -559,20 +559,7 @@ class KubernetesManager:
                         "type": condition.type,
                         "status": condition.status,
                         "reason": condition.reason
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+                    }
                     for condition in (deployment.status.conditions or [])
                 ]
             }
@@ -694,13 +681,8 @@ class DeploymentOrchestrator:
             # 3. Deploy application services
             services_deployed = await self._deploy_services()
             if not services_deployed:
-        try:
-            logger.info(f"Executing _deploy_infrastructure")
-            
-            # Implementation for _deploy_infrastructure
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+                logger.error("Failed to deploy services")
+                return False
             
             logger.info(f"_deploy_infrastructure completed successfully")
             return result
@@ -754,26 +736,9 @@ class DeploymentOrchestrator:
                     ports=[8080],
                     environment_vars={
                         "DATABASE_URL": f"postgresql://fp_user:secure_password@fingerprinting-db:5432/fingerprinting",
-        try:
-            logger.info(f"Executing _deploy_services")
-            
-            # Implementation for _deploy_services
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_deploy_services completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_deploy_services failed: {e}")
-            raise
-            cpu_request="200m",
-            cpu_limit="1000m",
-            memory_request="512Mi",
-            memory_limit="2Gi",
-            ports=[9090]
-        )
+                    }
+                )
+            ]
         
         prometheus_deployed = self.k8s_manager.deploy_service(prometheus_config, self.config.namespace)
         
@@ -814,28 +779,30 @@ class DeploymentOrchestrator:
                 )
                 
                 if status["status"] != "running":
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "_deploy_monitoring",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
+                    all_healthy = False
+                    logger.warning(f"Service {service_config.name} is not healthy: {status}")
+                    break
             
-                    # Store metrics
-                    await self._store_metric(metrics)
+            if all_healthy:
+                logger.info("All services are healthy!")
+                return True
             
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric _deploy_monitoring collected")
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection _deploy_monitoring failed: {e}")
-                    return None
+            if attempt < max_retries - 1:
+                logger.info(f"Waiting {retry_interval}s before retry {attempt + 1}/{max_retries}")
+                await asyncio.sleep(retry_interval)
+        
+        logger.error("Deployment health verification failed after all retries")
+        return False
+    
+    def _generate_manifests(self) -> Path:
+        """Generate Kubernetes manifests."""
+        output_path = Path("/tmp/k8s-manifests")
+        output_path.mkdir(exist_ok=True)
+        
+        # Namespace manifest
+        namespace_manifest = {
+            "apiVersion": "v1",
+            "kind": "Namespace",
             "metadata": {
                 "name": self.config.namespace
             }

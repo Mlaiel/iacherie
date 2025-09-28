@@ -23,7 +23,7 @@ from sklearn.preprocessing import StandardScaler
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import AutoTokenizer, AutoModel
+# from transformers import AutoTokenizer, AutoModel
 from pydantic import BaseModel, Field, validator
 
 from ai.base_agent import BaseAIAgent

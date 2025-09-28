@@ -183,8 +183,8 @@ class RevenueReport(BaseModel):
 class CreatorProfile(BaseModel):
     creator_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     stage_name: str = Field(..., min_length=1, max_length=100)
-    genres: List[str] = Field(..., min_items=1, max_items=10)
-    skills: List[str] = Field(..., min_items=1, max_items=20)
+    genres: List[str] = Field(..., min_length=1, max_items=10)
+    skills: List[str] = Field(..., min_length=1, max_items=20)
     skill_levels: Dict[str, SkillLevel]
     bio: str = Field(..., max_length=1000)
     location: Optional[str] = None
@@ -200,8 +200,8 @@ class CollaborationRequest(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., max_length=2000)
     collaboration_type: CollaborationType
-    genres: List[str] = Field(..., min_items=1)
-    required_skills: List[str] = Field(..., min_items=1)
+    genres: List[str] = Field(..., min_length=1)
+    required_skills: List[str] = Field(..., min_length=1)
     budget_range: Optional[Dict[str, float]] = None
     timeline: Dict[str, str]
     location_requirement: Optional[str] = None
@@ -248,7 +248,7 @@ class SimilaritySearchRequest(BaseModel):
 # Protection Models
 class ProtectionScanRequest(BaseModel):
     content_id: str
-    scan_platforms: List[str] = Field(..., min_items=1)
+    scan_platforms: List[str] = Field(..., min_length=1)
     scan_depth: str = Field(default="standard", pattern="^(basic|standard|deep|comprehensive)$")
     notification_settings: Optional[Dict[str, bool]] = None
 
@@ -281,7 +281,7 @@ class LicensingDeal(BaseModel):
 class WebhookEndpoint(BaseModel):
     endpoint_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     url: str = Field(..., pattern=r"^https?://.*")
-    events: List[str] = Field(..., min_items=1)
+    events: List[str] = Field(..., min_length=1)
     secret: Optional[str] = None
     is_active: bool = Field(default=True)
     retry_policy: Optional[Dict[str, Any]] = None

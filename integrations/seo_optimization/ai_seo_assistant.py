@@ -27,10 +27,11 @@ from urllib.parse import urlparse
 
 # ML/AI Imports
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     import torch
-    import transformers
-    from transformers import AutoTokenizer, AutoModel
+    # import transformers
+    # from transformers import AutoTokenizer, AutoModel
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.cluster import KMeans
     import nltk

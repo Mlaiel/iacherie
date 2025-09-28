@@ -222,7 +222,7 @@ Result of similarity comparison between content items."""
     algorithm_used: SimilarityAlgorithm
     match_details: Dict[str, Any] = Field(default_factory=dict)
     confidence: float = Field(..., ge=0.0, le=1.0)
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    extra_data: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     # Detailed similarity scores by component
@@ -325,11 +325,11 @@ Query for similarity search operations."""
     user_id_filter: Optional[int] = None
     date_range_start: Optional[datetime] = None
     date_range_end: Optional[datetime] = None
-    metadata_filters: Optional[Dict[str, Any]] = None
+    extra_data_filters: Optional[Dict[str, Any]] = None
     
     # Search options
     include_self: bool = False
-    include_metadata: bool = True
+    include_extra_data: bool = True
     include_scores_breakdown: bool = False
 
 class SimilaritySearchResult(BaseModel):
@@ -366,8 +366,8 @@ Database model for storing fingerprint results."""
     fingerprint_data = Column(JSON, nullable=False)
     hash_value = Column(String(64), nullable=False, index=True)
     
-    # Metadata (stored as JSON)
-    metadata = Column(JSON)
+    # Extra data (stored as JSON)
+    extra_data = Column(JSON)
     
     # Processing information
     processing_time = Column(DateTime, nullable=False)
@@ -403,7 +403,7 @@ Database model for storing similarity matches."""
     match_details = Column(JSON)
     component_scores = Column(JSON)
     match_regions = Column(JSON)
-    metadata = Column(JSON)
+    extra_data = Column(JSON)
     
     # Timestamps
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow, index=True)

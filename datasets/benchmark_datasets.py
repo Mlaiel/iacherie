@@ -57,7 +57,10 @@ except ImportError:
     HAS_PYTORCH = False
 
 try:
-    import tensorflow as tf
+    # Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     HAS_TENSORFLOW = True
 except ImportError:
     HAS_TENSORFLOW = False

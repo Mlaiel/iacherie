@@ -36,6 +36,66 @@ RUN python -m venv /opt/venv && \
 COPY . .
 
 # ==================================================
+# Development stage
+FROM python:3.11-slim as development
+
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue - AI-Powered Content Protection & Monetization Platform - Development"
+
+# Set development environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ENVIRONMENT=development
+ENV DEBUG=true
+
+# Install development dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    wget \
+    git \
+    libpq-dev \
+    libsndfile1-dev \
+    pkg-config \
+    vim \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create development user
+RUN groupadd --gid 1000 ainflue && \
+    useradd --uid 1000 --gid ainflue --shell /bin/bash --create-home ainflue
+
+WORKDIR /app
+
+# Copy and install requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir debugpy pytest pytest-asyncio
+
+# Copy source code
+COPY --chown=ainflue:ainflue . .
+
+# Create necessary directories
+RUN mkdir -p \
+    /app/data/faiss_indexes \
+    /app/storage \
+    /app/logs \
+    /app/tmp \
+    /app/uploads \
+    && chown -R ainflue:ainflue /app
+
+USER ainflue
+
+EXPOSE 8000 8001 8765 5678
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+# ==================================================
 # Production stage
 FROM python:3.11-slim as production
 

@@ -19,7 +19,20 @@ import time
 import hashlib
 from concurrent.futures import ThreadPoolExecutor
 
-from .faiss_store import FaissVectorStore, IndexType, SearchResult, IndexStats
+try:
+    from .faiss_store import FaissVectorStore, IndexType, SearchResult, IndexStats
+    FAISS_AVAILABLE = True
+except ImportError:
+    # Mock classes for compatibility
+    class FaissVectorStore:
+        pass
+    class IndexType:
+        pass
+    class SearchResult:
+        pass
+    class IndexStats:
+        pass
+    FAISS_AVAILABLE = False
 from .embeddings import EmbeddingType, EmbeddingResult
 from .similarity_search import SearchEngine, SimilarityResult, SearchConfiguration, SimilarityMetric
 import numpy as np

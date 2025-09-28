@@ -718,40 +718,31 @@ Get transaction type for action."""
             raise
     
     def get_contract_info(self, contract_address: str) -> Optional[Dict[str, Any]]:
-        """Execute business logic for {func_name}"""
-                try:
-                    logger.info(f"Executing {func_name}")
+        """Get contract information."""
+        try:
+            logger.info(f"Getting contract info for {contract_address}")
             
-                    # Input validation
-                    if data is None:
-                        raise ValueError("Input data is required")
+            # Input validation
+            if not contract_address:
+                raise ValueError("Contract address is required")
             
-                    # Initialize execution context
-                    execution_start = datetime.utcnow()
+            # Initialize execution context
+            execution_start = datetime.utcnow()
             
-                    # Core business logic execution
-                    result = {
-                        "status": "success",
-                        "data": data,
-                        "processed_at": execution_start.isoformat(),
-                        "function": "{func_name}"
-                    }
+            # Core business logic execution
+            result = {
+                "status": "success", 
+                "contract_address": contract_address,
+                "processed_at": execution_start.isoformat(),
+                "function": "get_contract_info"
+            }
             
-                    # Apply business rules if available
-                    if hasattr(self, 'business_rules'):
-                        for rule in self.business_rules:
-                            result = self._apply_business_rule(result, rule)
+            # Return contract info
+            return result
             
-                    # Log execution metrics
-                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
-                    result["execution_time"] = execution_time
-            
-                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
-                    return result
-            
-                except Exception as e:
-                    logger.error(f"{func_name} failed: {e}")
-                    raise
+        except Exception as e:
+            logger.error(f"get_contract_info failed: {e}")
+            return None
     def get_transaction_history(
         self,
         contract_address: Optional[str] = None,

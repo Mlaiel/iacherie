@@ -35,19 +35,88 @@ import jinja2
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, insert
 from pydantic import BaseModel, Field, validator, EmailStr
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+# Selenium imports with fallbacks
+try:
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.chrome.options import Options
+    SELENIUM_AVAILABLE = True
+except ImportError:
+    SELENIUM_AVAILABLE = False
+    class webdriver:
+        class Chrome:
+            def __init__(self, *args, **kwargs): pass
+            def get(self, url): pass
+            def quit(self): pass
+        class ChromeOptions:
+            def __init__(self): pass
+            def add_argument(self, arg): pass
+    
+    class By:
+        CLASS_NAME = 'class name'
+        ID = 'id'
+        TAG_NAME = 'tag name'
+    
+    class Options:
+        def __init__(self): pass
+        def add_argument(self, arg): pass
 import requests
 from bs4 import BeautifulSoup
 
-from ...core.database import get_async_session
-from ...core.config import get_settings
-from ...utils.security import encrypt_sensitive_data, decrypt_sensitive_data
-from ...utils.email import EmailService
-from ...utils.cache import CacheManager
-from ...models.content_protection import DMCANotice, ViolationCase
-from .legal_automation import EvidenceCollector
+# Core imports with fallbacks
+try:
+    from backend.core.database import get_async_session
+except ImportError:
+    def get_async_session():
+        return None
+
+try:
+    from backend.core.config import get_settings
+except ImportError:
+    def get_settings():
+        return {"api_keys": {}}
+
+try:
+    from backend.utils.security import encrypt_sensitive_data, decrypt_sensitive_data
+except ImportError:
+    def encrypt_sensitive_data(data):
+        return data
+    def decrypt_sensitive_data(data):
+        return data
+
+try:
+    from backend.utils.email import EmailService
+except ImportError:
+    class EmailService:
+        def __init__(self, *args, **kwargs): pass
+        def send_email(self, *args, **kwargs): return True
+
+try:
+    from backend.utils.cache import CacheManager
+except ImportError:
+    class CacheManager:
+        def __init__(self, *args, **kwargs): pass
+        def get(self, key): return None
+        def set(self, key, value, ttl=None): pass
+
+# Models imports with fallbacks  
+try:
+    from protection.models.content_protection import DMCANotice, ViolationCase
+except ImportError:
+    class DMCANotice:
+        def __init__(self, **kwargs):
+            self.__dict__.update(kwargs)
+    
+    class ViolationCase:
+        def __init__(self, **kwargs):
+            self.__dict__.update(kwargs)
+
+try:
+    from protection.copyright_enforcement.legal_automation import EvidenceCollector
+except ImportError:
+    class EvidenceCollector:
+        def __init__(self, *args, **kwargs): pass
+        def collect_evidence(self, *args, **kwargs): return {}
 
 logger = logging.getLogger(__name__)
 
@@ -164,8 +233,8 @@ class DMCATemplate:
     template_content: str
     template_version: str
     required_fields: List[str]
-    optional_fields: List[str] = field(default_factory=list)
     submission_method: SubmissionMethod
+    optional_fields: List[str] = field(default_factory=list)
     submission_endpoint: Optional[str] = None
     api_credentials_required: bool = False
     form_automation_config: Optional[Dict[str, Any]] = None
@@ -545,9 +614,9 @@ Email: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 
 SWORN STATEMENTS:
-✓ I have a good faith belief that the use is not authorized
-✓ This information is accurate under penalty of perjury
-✓ I am authorized to act on behalf of the copyright owner
+[✓] I have a good faith belief that the use is not authorized
+[✓] This information is accurate under penalty of perjury
+[✓] I am authorized to act on behalf of the copyright owner
 
 Signature: {{ electronic_signature }}
 Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
@@ -690,14 +759,16 @@ Sincerely,
                 errors=[f"Validation error: {str(e)}"]
             )
 
-I have a good faith belief that the use of this material is not authorized by the copyright owner, its agent, or the law.
+# Legal statements template text:
+# I have a good faith belief that the use of this material is not authorized by the copyright owner, its agent, or the law.
+# I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or authorized to act on behalf of the copyright owner.
 
-I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or authorized to act on behalf of the copyright owner.
-
-Electronic Signature: {{ signature }}
-Contact Information: {{ contact_email }}
-Date: {{ submission_date }}
-            """.strip(),
+    def _get_youtube_template(self):
+        """Get YouTube DMCA template"""
+        return DMCATemplate(
+            platform="youtube",
+            template_name="youtube_dmca",
+            template_content="YouTube DMCA Template Content",
             required_fields=[
                 "copyright_owner", "original_work_title", "violation_url", 
                 "content_type", "description", "contact_email", "signature"
@@ -774,10 +845,10 @@ TikTok URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Description: {{ description }}
 
-LEGAL CERTIFICATIONS:
-✓ I have good faith belief the use is not authorized
-✓ Information provided is accurate under penalty of perjury  
-✓ I am authorized to act for the copyright owner
+# LEGAL CERTIFICATIONS:
+# ✓ I have good faith belief the use is not authorized
+# ✓ Information provided is accurate under penalty of perjury  
+# ✓ I am authorized to act for the copyright owner
 
 Contact Information: {{ contact_email }}
 Electronic Signature: {{ signature }}

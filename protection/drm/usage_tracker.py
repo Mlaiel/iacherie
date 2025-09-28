@@ -39,6 +39,16 @@ from decimal import Decimal
 
 logger = logging.getLogger(__name__)
 
+class UsageType(Enum):
+    """Types of content usage for DRM tracking"""
+    STREAM = "stream"
+    DOWNLOAD = "download"
+    VIEW = "view"
+    PLAY = "play"
+    SHARE = "share"
+    SYNC = "sync"
+    BROADCAST = "broadcast"
+
 class UsageEventType(str, Enum):
     """
 Types of content usage events."""

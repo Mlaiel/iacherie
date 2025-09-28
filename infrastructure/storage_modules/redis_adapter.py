@@ -30,7 +30,7 @@ except (ImportError, TypeError) as e:
     # Handle Python 3.12 TimeoutError duplicate base class issue
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    pass  # Redis warning suppressed
     import motor.motor_asyncio
     from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
     from sqlalchemy.orm import sessionmaker

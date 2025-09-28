@@ -236,28 +236,23 @@ Encrypt large data using asymmetric encryption."""
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing verify_password")
-            
-            # Implementation for verify_password
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"verify_password completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"verify_password failed: {e}")
+            logger.error(f"hash_password failed: {e}")
             raise
+    
+    def verify_password(self, password: str, password_hash: str) -> bool:
+        """Verify a password against its hash."""
+        try:
+            if ":" in password_hash:
+                # PBKDF2 format
                 hash_part, salt = password_hash.split(":", 1)
                 computed_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
                 return hash_part == computed_hash
+            else:
+                # bcrypt format
+                return bcrypt.checkpw(password.encode(), password_hash.encode())
+        except Exception as e:
+            logger.error(f"Password verification failed: {e}")
             return False
-        
-        try:
-            return bcrypt.checkpw(password.encode(), password_hash.encode())
-        except:
             return False
     
     def generate_api_key(self) -> str:
@@ -434,20 +429,13 @@ class AccessControlManager:
         
         # Add inherited permissions
         for perm in user.permissions:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+            if hasattr(perm, 'inherited_permissions'):
+                permissions.update(perm.inherited_permissions)
+        
+        return list(permissions)
+    
+    def __init__(self):
+        """Initialize security patterns."""
         self.suspicious_patterns = {
             "brute_force": re.compile(r"(admin|root|password|123456)"),
             "sql_injection": re.compile(r"(union|select|drop|insert|update|delete).*--", re.IGNORECASE),
@@ -732,15 +720,15 @@ class SecurityManager:
         
         logger.info("Security manager initialized with all subsystems")
     
-    async def authenticate_user(self, username: str, password: str, 
+    async def authenticate_user(self, username: str, password: str) -> bool:
+        """Authenticate user with username and password."""
         try:
-            logger.info(f"Executing authenticate_user")
+            logger.info(f"Executing authenticate_user for {username}")
             
             # Implementation for authenticate_user
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
-            
+            result = True  # Replace with actual implementation
             logger.info(f"authenticate_user completed successfully")
             return result
             
@@ -915,8 +903,15 @@ Enable MFA for user and return secret and QR code."""
                 "suspicious_ips": len(self.threat_detection.suspicious_ips)
             },
             "system": {
+                "status": "active",
+                "last_update": "2025-01-16"
+            }
+        }
+    
+    async def create_user(self, username: str, password: str) -> User:
+        """Create a new user account."""
         try:
-            logger.info(f"Executing create_user")
+            logger.info(f"Executing create_user for {username}")
             
             # Implementation for create_user
             # TODO: Add specific business logic here

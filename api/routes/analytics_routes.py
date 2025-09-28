@@ -82,7 +82,7 @@ class EngagementMetric(str, Enum):
 # ========================================
 
 class AnalyticsQuery(BaseModel):
-    metric_types: List[MetricType] = Field(..., min_items=1)
+    metric_types: List[MetricType] = Field(..., min_length=1)
     time_range: TimeRange = Field(default=TimeRange.MONTH)
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None

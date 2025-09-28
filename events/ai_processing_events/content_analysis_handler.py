@@ -25,7 +25,7 @@ from PIL import Image
 import librosa
 import cv2
 import torch
-from transformers import pipeline
+# from transformers import pipeline
 
 # Core imports
 from ..core.base_event_handler import BaseEventHandler

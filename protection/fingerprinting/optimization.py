@@ -802,9 +802,12 @@ Generate optimization recommendations based on performance."""
         self.gpu_accelerator.clear_cache()
         self.cache.clear()
 
+# Create alias for CacheOptimizer (compatibility)
+CacheOptimizer = IntelligentCache
+
 # Export main classes
 __all__ = [
     'PerformanceOptimizer', 'OptimizationConfig', 'OptimizationLevel',
-    'GPUAccelerator', 'IntelligentCache', 'MemoryManager', 'ProcessingPipeline',
+    'GPUAccelerator', 'IntelligentCache', 'CacheOptimizer', 'MemoryManager', 'ProcessingPipeline',
     'ResourceProfile', 'ResourceType'
 ]

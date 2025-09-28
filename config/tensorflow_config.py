@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+"""
+🔧 TensorFlow Configuration Silencer
+===================================
+
+Supprime les warnings TensorFlow pour une expérience utilisateur optimale.
+
+Author: Fahed Mlaiel (mlaiel@live.de)
+"""
+
+import os
+import logging
+import warnings
+
+def configure_tensorflow_silence():
+    """Configure TensorFlow pour supprimer tous les warnings"""
+    
+    # Variables d'environnement TensorFlow
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Supprime tous les logs TF
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''   # Désactive CUDA explicitement
+    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' # Désactive oneDNN warnings
+    os.environ['TF_DISABLE_SEGMENT_REDUCTION_OP_DETERMINISM_EXCEPTIONS'] = '1'
+    
+    # Supprime les warnings de deprecation
+    warnings.filterwarnings('ignore', category=FutureWarning)
+    warnings.filterwarnings('ignore', category=DeprecationWarning)
+    warnings.filterwarnings('ignore', category=UserWarning)
+    
+    # Configure le logging TensorFlow
+    try:
+        # Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
+        tf.get_logger().setLevel(logging.ERROR)
+        tf.autograph.set_verbosity(0)
+        tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+    except ImportError:
+        pass
+    
+    # Configure le logging général
+    logging.getLogger('tensorflow').setLevel(logging.ERROR)
+    logging.getLogger('absl').setLevel(logging.ERROR)
+
+# Auto-configuration au import
+configure_tensorflow_silence()

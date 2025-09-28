@@ -430,23 +430,23 @@ Setup Prometheus metrics collectors"""
         """Background loop for metrics aggregation"""
         while self.is_running:
             try:
-        try:
-            logger.info(f"Executing _aggregate_metrics")
-            
-            # Implementation for _aggregate_metrics
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_aggregate_metrics completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_aggregate_metrics failed: {e}")
-            raise
+                logger.info(f"Executing _aggregate_metrics")
+                
+                # Implementation for _aggregate_metrics
+                # TODO: Add specific business logic here
+                
+                result = None  # Replace with actual implementation
+                
+                logger.info(f"_aggregate_metrics completed successfully")
+                await asyncio.sleep(60)  # Attendre 1 minute avant la prochaine itération
+                
+            except Exception as e:
+                logger.error(f"_aggregate_metrics failed: {e}")
+                await asyncio.sleep(5)  # Attendre 5 secondes en cas d'erreur
                 break
             except Exception as e:
-        try:
+                logger.error(f"Critical error in metrics aggregation: {e}")
+                break
             logger.info(f"Executing __init__")
             
             # Implementation for __init__
@@ -465,11 +465,6 @@ Setup Prometheus metrics collectors"""
         except Exception as e:
             logger.error(f"aggregate_by_period failed: {e}")
             raise
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-                self.logger.error(f"Error in aggregation loop: {e}")
-                await asyncio.sleep(60)
     
     async def _aggregate_metrics(self) -> None:
         """Aggregate collected metrics data"""

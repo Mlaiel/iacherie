@@ -37,7 +37,7 @@ from PIL import Image
 import librosa
 import hashlib
 import base64
-from transformers import AutoModel, AutoTokenizer, CLIPModel, CLIPProcessor
+# from transformers import AutoModel, AutoTokenizer, CLIPModel, CLIPProcessor
 import faiss
 import redis
 from kubernetes import client, config
@@ -53,7 +53,7 @@ import uvloop
 from prometheus_client import Counter, Histogram, Gauge
 import imagehash
 import essentia.standard as es
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 
 
 class FingerprintType(Enum):
@@ -798,7 +798,7 @@ Load existing FAISS indexes from storage"""
         """Generate semantic fingerprint for text"""
         try:
             # Load sentence transformer model
-            model = SentenceTransformer('all-MiniLM-L6-v2')
+            model = get_sentence_transformer('all-MiniLM-L6-v2')
             
             # Generate embedding
             embedding = model.encode(text_content)

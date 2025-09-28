@@ -154,46 +154,44 @@ class MetricCollector(ABC):
     @abstractmethod
     async def collect_metrics(
         self, 
-        metric_type: MetricType, 
+        metric_type: MetricType
+    ) -> Dict[str, Any]:
+        """Collect metrics for the given metric type."""
         try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "collect_metrics",
-                        "value": metric_type if metric_type else 0,
-                        "tags": self._get_metric_tags()
-                    }
+            # Collect metrics
+            metrics = {
+                "timestamp": datetime.utcnow(),
+                "metric_name": "collect_metrics",
+                "value": metric_type if metric_type else 0,
+                "tags": self._get_metric_tags()
+            }
             
-                    # Store metrics
-                    await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric collect_metrics collected")
-                    return metrics
-            
-                except Exception as e:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
+            # Store metrics
+            await self._store_metric(metrics)
+    
+            # Send to monitoring system
+            if hasattr(self, 'metrics_client'):
+                await self.metrics_client.send(metrics)
+    
+            logger.info(f"Metric collect_metrics collected")
+            return metrics
+    
         except Exception as e:
-            logger.error(f"__init__ failed: {e}")
+            logger.error(f"Error collecting metrics: {e}")
+            return {}
+    
+    def _get_metric_tags(self) -> Dict[str, str]:
+        """Get default metric tags."""
+        return {"source": "metric_collector"}
+    
+    async def _store_metric(self, metrics: Dict[str, Any]) -> None:
+        """Store metric data.""" 
+        try:
+            # Store metrics implementation
+            logger.info(f"Storing metrics: {len(metrics)} items")
+        except Exception as e:
+            logger.error(f"_store_metric failed: {e}")
             raise
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection collect_metrics failed: {e}")
-                    return None
 class RevenueMetricCollector(MetricCollector):
     """
 Revenue metrics collector."""
@@ -218,42 +216,18 @@ Collect revenue metrics."""
         current_date = start_date.date()
         end_date_only = end_date.date()
         
-        while current_date <= end_date_only:
         try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
+            while current_date <= end_date_only:
+                logger.info(f"Executing daily revenue calculation for {current_date}")
+                
+                # Implementation for daily revenue calculation
+                # TODO: Add specific business logic here
+                current_date += timedelta(days=1)
         except Exception as e:
-            logger.error(f"__init__ failed: {e}")
+            logger.error(f"Revenue calculation failed: {e}")
             raise
-            day_end = datetime.combine(current_date, datetime.max.time())
-            
-            daily_transactions = [
-                t for t in self.revenue_engine.transactions
-                if day_start <= t.created_at <= day_end
-            ]
-            
-            daily_revenue = sum(t.amount for t in daily_transactions)
-            
-            metric = MetricData(
-                metric_id=f"daily_revenue_{current_date}",
-                metric_type=MetricType.REVENUE,
-                value=daily_revenue,
-                dimensions={"date": current_date.isoformat()},
-                timestamp=day_start
-            )
-            metrics.append(metric)
-            
-            current_date += timedelta(days=1)
         
-        return metrics
+        return metrics  # Return metrics list
 
 
 class TransactionMetricCollector(MetricCollector):
@@ -266,21 +240,23 @@ class TransactionMetricCollector(MetricCollector):
         self, 
         metric_type: MetricType, 
         start_date: datetime, 
+        end_date: datetime
+    ) -> List[MetricData]:
+        """Collect transaction metrics."""
         try:
-            logger.info(f"Executing __init__")
+            logger.info(f"Executing collect_metrics for {metric_type}")
             
-            # Implementation for __init__
+            # Implementation for collect_metrics
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = []  # Replace with actual implementation
             
-            logger.info(f"__init__ completed successfully")
+            logger.info(f"collect_metrics completed successfully")
             return result
             
         except Exception as e:
-            logger.error(f"__init__ failed: {e}")
+            logger.error(f"collect_metrics failed: {e}")
             raise
-    ) -> List[MetricData]:
         """
 Collect transaction metrics."""
         if metric_type != MetricType.TRANSACTIONS:

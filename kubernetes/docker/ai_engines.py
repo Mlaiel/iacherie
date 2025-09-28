@@ -493,8 +493,8 @@ import os
 import sys
 import argparse
 from pathlib import Path
-from transformers import AutoModel, AutoTokenizer, AutoProcessor
-from sentence_transformers import SentenceTransformer
+# from transformers import AutoModel, AutoTokenizer, AutoProcessor
+from core.sentence_transformers_singleton import get_sentence_transformer
 import torch
 import logging
 
@@ -578,7 +578,7 @@ def download_models(cache_dir: str):
     for model_name in sentence_models:
         try:
             logger.info(f"Downloading sentence transformer {model_name}...")
-            model = SentenceTransformer(model_name, cache_folder=cache_dir)
+            model = get_sentence_transformer(model_name, cache_folder=cache_dir)
             logger.info(f"✅ Downloaded sentence transformer {model_name}")
             del model
         except Exception as e:

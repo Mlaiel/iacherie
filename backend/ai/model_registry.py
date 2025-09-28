@@ -48,7 +48,8 @@ except ImportError:
     PYTORCH_AVAILABLE = False
 
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False

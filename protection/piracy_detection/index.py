@@ -53,7 +53,15 @@ from prometheus_client import Counter, Histogram, Gauge
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-import tensorflow as tf
+# Utilisation du gestionnaire TensorFlow centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 import torch
 from cryptography.fernet import Fernet
 import aiokafka

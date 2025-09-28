@@ -38,6 +38,15 @@ from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
+class RevenueModel(str, Enum):
+    """Revenue models for licensing."""
+    FLAT_FEE = "flat_fee"
+    PERCENTAGE = "percentage"
+    TIERED = "tiered"
+    PERFORMANCE_BASED = "performance_based"
+    SUBSCRIPTION = "subscription"
+    PAY_PER_USE = "pay_per_use"
+
 class RevenueType(str, Enum):
     """
 Types of revenue streams."""

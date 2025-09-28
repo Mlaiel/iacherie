@@ -29,7 +29,8 @@ from enum import Enum
 import json
 import uuid
 import numpy as np
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler

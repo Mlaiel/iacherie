@@ -34,6 +34,17 @@ import statistics
 logger = logging.getLogger(__name__)
 
 
+class TransactionStatus(Enum):
+    """Transaction status enumeration"""
+    
+    PENDING = "pending"
+    CONFIRMED = "confirmed"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
+    REVERTED = "reverted"
+    TIMEOUT = "timeout"
+
+
 class MetricType(Enum):
     """
 Types of metrics collected"""
@@ -62,6 +73,25 @@ class Metric:
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
     tags: List[str] = field(default_factory=list)
+
+
+@dataclass 
+class MonitoringAlert:
+    """Monitoring alert class for compatibility"""
+    alert_id: str
+    level: AlertLevel
+    message: str
+    timestamp: datetime = field(default_factory=datetime.now)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            'alert_id': self.alert_id,
+            'level': self.level.value,
+            'message': self.message,
+            'timestamp': self.timestamp.isoformat(),
+            'metadata': self.metadata
+        }
 
 
 @dataclass
@@ -556,11 +586,13 @@ async def get_blockchain_monitor() -> BlockchainMonitor:
 
 
 __all__ = [
+    'TransactionStatus',
     'BlockchainMonitor',
     'MetricsCollector',
     'AlertManager',
     'PerformanceTimer',
     'Metric',
+    'MonitoringAlert',
     'Alert',
     'MetricType',
     'AlertLevel',

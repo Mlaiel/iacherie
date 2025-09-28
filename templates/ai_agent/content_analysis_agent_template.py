@@ -14,7 +14,7 @@ import re
 import hashlib
 
 import numpy as np
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 from langdetect import detect
 import spacy
 from textstat import flesch_reading_ease, flesch_kincaid_grade

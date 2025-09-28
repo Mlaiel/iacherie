@@ -39,8 +39,8 @@ from pathlib import Path
 
 # AI and NLP imports with graceful fallbacks
 try:
-    import transformers
-    from transformers import pipeline
+    # import transformers
+    # from transformers import pipeline
     HAS_TRANSFORMERS = True
 except ImportError:
     HAS_TRANSFORMERS = False

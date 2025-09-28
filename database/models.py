@@ -62,8 +62,8 @@ class BaseModel:
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        self.created_at = datetime.datetime.utcnow()
-        self.updated_at = datetime.datetime.utcnow()
+        self.created_at = datetime.datetime.now(timezone.utc)
+        self.updated_at = datetime.datetime.now(timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -83,7 +83,7 @@ class BaseModel:
         for key, value in kwargs.items():
             if hasattr(self, key):
                 setattr(self, key, value)
-        self.updated_at = datetime.datetime.utcnow()
+        self.updated_at = datetime.datetime.now(timezone.utc)
 
 # SQLAlchemy models (if available)
 if SQLALCHEMY_AVAILABLE:

@@ -48,7 +48,9 @@ except ImportError:
     TORCH_AVAILABLE = False
 
 try:
-    import tensorflow as tf
+        # Import TensorFlow via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     TF_AVAILABLE = True
 except ImportError:
     TF_AVAILABLE = False
@@ -73,7 +75,7 @@ except ImportError:
 try:
     import nltk
     import spacy
-    from transformers import AutoTokenizer
+    # from transformers import AutoTokenizer
     TEXT_AVAILABLE = True
 except ImportError:
     TEXT_AVAILABLE = False

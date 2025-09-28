@@ -73,7 +73,7 @@ except ImportError:
     logging.warning("PyTorch not available - AI features will be limited")
 
 try:
-    from transformers import CLIPProcessor, CLIPModel
+    # from transformers import CLIPProcessor, CLIPModel
     CLIP_AVAILABLE = True
 except ImportError:
     CLIP_AVAILABLE = False

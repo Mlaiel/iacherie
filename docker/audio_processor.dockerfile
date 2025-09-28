@@ -2,6 +2,33 @@
 # High-performance audio processing with AI enhancement
 # Author: Fahed Mlaiel (mlaiel@live.de) - Audio Processing Engineer Role
 
+FROM ubuntu:22.04 AS development
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue Advanced Audio Processor - Development Environment"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsndfile1-dev \
+    libportaudio2 \
+    portaudio19-dev \
+    libasound2-dev \
+    libpulse-dev \
+    python3 \
+    python3-pip \
+    curl \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements-audio.txt .
+RUN pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir -r requirements-audio.txt
+
+EXPOSE 8000
+CMD ["python3", "-m", "uvicorn", "audio.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
 FROM ubuntu:22.04 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL description="Ainflue Advanced Audio Processor - Real-time AI-enhanced audio processing"

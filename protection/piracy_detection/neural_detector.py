@@ -42,7 +42,7 @@ from dataclasses import dataclass
 from enum import Enum
 import cv2
 import librosa
-from transformers import (
+# from transformers import (
     AutoModel, AutoTokenizer, 
     ViTImageProcessor, ViTModel,
     Wav2Vec2Processor, Wav2Vec2Model

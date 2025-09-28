@@ -29,8 +29,7 @@ from .alert_models import (
     AlertMetadata
 )
 
-# Use our compatibility wrapper for redis
-from ..utils # Safe Redis import with Python 3.12 compatibility
+# Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True
@@ -38,7 +37,7 @@ except (ImportError, TypeError) as e:
     # Handle Python 3.12 TimeoutError duplicate base class issue
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
-    logging.warning(f"Using Redis compatibility layer: {e}") as redis, REDIS_AVAILABLE
+    logging.warning(f"Using Redis compatibility layer: {e}")
 
 # Optional pydantic with fallback
 try:
@@ -274,7 +273,7 @@ class AlertManager:
         cache_manager: CacheManager,
         metrics_collector: MetricsCollector,
         celery_app: Celery,
-        redis_client: redis.Redis
+        redis_client: Any = None
     ):
         self.config = config
         self.notification_engine = notification_engine

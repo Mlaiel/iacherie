@@ -65,7 +65,8 @@ except (ImportError, TypeError) as e:
 from sqlalchemy.ext.asyncio import AsyncSession
 import numpy as np
 from sklearn.ensemble import IsolationForest
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 logger = logging.getLogger(__name__)
 

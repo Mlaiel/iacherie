@@ -16,7 +16,7 @@ import re
 
 import torch
 import numpy as np
-from transformers import (
+# from transformers import (
     AutoTokenizer, AutoModelForSequenceClassification,
     pipeline, RobertaTokenizer, RobertaForSequenceClassification
 )

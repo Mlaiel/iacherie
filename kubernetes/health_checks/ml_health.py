@@ -30,8 +30,9 @@ import logging
 
 import numpy as np
 import torch
-import tensorflow as tf
-from transformers import pipeline
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import pipeline
 import faiss
 
 from .core_health import HealthStatus, HealthCheckResult

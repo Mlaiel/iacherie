@@ -114,8 +114,8 @@ class FingerprintingRequest:
 @dataclass
 class MatchingRequest:
     """Content matching request"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     source_fingerprint: ContentFingerprint
+    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     target_fingerprints: List[ContentFingerprint] = field(default_factory=list)
     match_threshold: float = 0.85
     sensitivity: DetectionSensitivity = DetectionSensitivity.STANDARD

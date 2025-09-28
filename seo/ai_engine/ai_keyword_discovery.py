@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
 import re
 import openai
 import torch
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans, DBSCAN
 from sklearn.metrics.pairwise import cosine_similarity

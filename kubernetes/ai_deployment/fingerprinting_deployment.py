@@ -31,8 +31,9 @@ import cv2
 import librosa
 import torch
 import torch.nn as nn
-from transformers import AutoModel, AutoTokenizer
-import tensorflow as tf
+# from transformers import AutoModel, AutoTokenizer
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from PIL import Image
 import imagehash
 from scipy.spatial.distance import cosine

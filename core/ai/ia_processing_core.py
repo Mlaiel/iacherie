@@ -10,7 +10,7 @@ Enterprise-grade AI processing with >99.99% uptime guarantee.
 
 import asyncio
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 from enum import Enum
 from dataclasses import dataclass, field
@@ -113,7 +113,7 @@ class IAProcessingCore:
     with enterprise-grade performance, reliability, and accuracy standards.
     """
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.ai_models: Dict[str, AIModelConfig] = {}
         self.inference_queue: List[InferenceRequest] = []
         self.inference_results: Dict[str, InferenceResult] = {}
@@ -730,7 +730,7 @@ class IAProcessingCore:
                 "pipeline": pipeline_name,
                 "status": "completed",
                 "results": stage_results,
-                "execution_time": datetime.utcnow().isoformat()
+                "execution_time": datetime.now(timezone.utc).isoformat()
             }
             
         except Exception as e:

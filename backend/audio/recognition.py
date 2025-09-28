@@ -42,7 +42,7 @@ warnings.filterwarnings('ignore')
 # Machine Learning imports (would be available in enterprise setup)
 try:
     import torch
-    import transformers
+    # import transformers
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False

@@ -147,7 +147,7 @@ class PerformanceMonitoringCore:
     with enterprise-grade reliability and observability standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
         """Initialize Performance Monitoring Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -693,21 +693,21 @@ class PerformanceMonitoringCore:
         return {
             "cpu.usage.percent": PerformanceThreshold(
                 metric_name="cpu.usage.percent",
-                warning_threshold=80.0,
-                error_threshold=90.0,
-                critical_threshold=95.0
+                warning_threshold=95.0,
+                error_threshold=98.0,
+                critical_threshold=99.0
             ),
             "memory.usage.percent": PerformanceThreshold(
-                metric_name="memory.usage.percent",
-                warning_threshold=80.0,
-                error_threshold=90.0,
-                critical_threshold=95.0
+                metric_name="memory.usage.percent", 
+                warning_threshold=95.0,
+                error_threshold=98.0,
+                critical_threshold=99.0
             ),
             "disk.usage.percent": PerformanceThreshold(
                 metric_name="disk.usage.percent",
-                warning_threshold=80.0,
-                error_threshold=90.0,
-                critical_threshold=95.0
+                warning_threshold=95.0,
+                error_threshold=98.0,
+                critical_threshold=99.0
             ),
             "system.load.1min": PerformanceThreshold(
                 metric_name="system.load.1min",

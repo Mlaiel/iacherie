@@ -43,8 +43,10 @@ from kubernetes import client, config
 import boto3
 import torch
 import torchvision
-import tensorflow as tf
-from transformers import AutoModel, AutoTokenizer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import AutoModel, AutoTokenizer
 import mlflow
 import wandb
 from datetime import datetime
@@ -443,7 +445,8 @@ from pydantic import BaseModel
 import uvicorn
 import numpy as np
 import torch
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from typing import Any, Dict, List
 
 # Configure logging
@@ -472,7 +475,7 @@ async def load_model():
         elif "{model_config.framework.value}" == "tensorflow":
             model = tf.saved_model.load(model_path)
         elif "{model_config.framework.value}" == "huggingface":
-            from transformers import AutoModel, AutoTokenizer
+            # from transformers import AutoModel, AutoTokenizer
             model = AutoModel.from_pretrained(model_path)
             
         logger.info("Model loaded successfully")

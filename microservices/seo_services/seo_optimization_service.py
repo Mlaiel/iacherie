@@ -1010,6 +1010,31 @@ class SEOOptimizationEngine:
         }
 
 
+class SEOOptimizationService:
+    """Main SEO Optimization Service - Entry point for microservice"""
+    
+    def __init__(self):
+        self.engine = SEOOptimizationEngine()
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("✅ SEOOptimizationService initialized successfully")
+    
+    async def optimize_content(self, request: SEORequest) -> SEOOptimization:
+        """Optimize content for SEO"""
+        return await self.engine.optimize_content(request)
+    
+    async def analyze_keywords(self, content: str, platform: ContentPlatform) -> KeywordAnalysis:
+        """Analyze keywords for content"""
+        return await self.engine.keyword_researcher.analyze_keywords(content, platform)
+    
+    async def get_competitors(self, keywords: List[str], platform: ContentPlatform) -> List[Dict[str, Any]]:
+        """Get competitor analysis"""
+        return await self.engine.competitor_analyzer.analyze_competitors(keywords, platform)
+    
+    def get_health_status(self) -> Dict[str, Any]:
+        """Get service health status"""
+        return self.engine.get_health_status()
+
+
 # Export classes for external use
 __all__ = [
     'ContentPlatform',
@@ -1023,5 +1048,6 @@ __all__ = [
     'KeywordResearch',
     'ContentOptimizer',
     'CompetitorAnalyzer',
-    'SEOOptimizationEngine'
+    'SEOOptimizationEngine',
+    'SEOOptimizationService'
 ]

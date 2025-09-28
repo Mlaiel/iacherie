@@ -28,7 +28,7 @@ try:
     from nltk.tokenize import word_tokenize, sent_tokenize
     from nltk.tag import pos_tag
     from nltk.chunk import ne_chunk
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import numpy as np
     import requests

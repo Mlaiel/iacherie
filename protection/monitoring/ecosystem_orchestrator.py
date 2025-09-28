@@ -30,22 +30,8 @@ from datetime import datetime, timedelta
 from enum import Enum
 from collections import defaultdict, deque
 
-# Safe Redis import with Python 3.12 compatibility
-try:
-    # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    logging.warning(f"Using Redis compatibility layer: {e}")
+# Redis import avec support Python 3.12
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel, Field
 import numpy as np
@@ -181,7 +167,7 @@ Initialize the ecosystem orchestrator."""
         
         logger.info("Monitoring Ecosystem Orchestrator initialized")
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client: Any, db_session: Any):
         """Initialize the ecosystem orchestrator with dependencies."""
         try:
             self.redis_client = redis_client

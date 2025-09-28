@@ -80,6 +80,7 @@ __all__ = [
     # Core engines
     "EncryptionEngine",
     "AccessControlEngine", 
+    "AccessControl",  # Alias pour AccessControlEngine
     "ThreatDetector",
     "VulnerabilityScanner",
     "WAFEngine",
@@ -235,4 +236,6 @@ async def get_protection_status() -> Dict[str, Any]:
         }
     except Exception as e:
         logger.error(f"Failed to get protection status: {e}")
-        return {"status": "error", "message": str(e)}
+
+# Alias pour compatibilité
+AccessControl = AccessControlEngine

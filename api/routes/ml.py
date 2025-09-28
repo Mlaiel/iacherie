@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Try to import ML libraries
 try:
     import torch
-    import transformers
+    # import transformers
     ML_AVAILABLE = True
 except ImportError:
     logger.warning("ML libraries not available. Install torch and transformers.")

@@ -79,7 +79,8 @@ except ImportError:
     lgb = None
 
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     from keras.models import Sequential
     from keras.layers import Dense, LSTM, Dropout, BatchNormalization
 except ImportError:

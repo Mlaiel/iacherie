@@ -48,10 +48,28 @@ except ImportError:
         
         @staticmethod
         def disk_io_counters():
-        try:
-            logger.info(f"Executing net_connections")
-            
-            # Implementation for net_connections
+            try:
+                logger.info(f"Executing disk_io_counters")
+                
+                # Implementation for disk_io_counters
+                from collections import namedtuple
+                DiskIO = namedtuple('DiskIO', ['read_bytes', 'write_bytes'])
+                return DiskIO(read_bytes=1000000, write_bytes=2000000)
+            except Exception as e:
+                logger.error(f"disk_io_counters failed: {e}")
+                return None
+        
+        @staticmethod
+        def net_connections():
+            try:
+                logger.info(f"Executing net_connections")
+                
+                # Implementation for net_connections
+                return []
+            except Exception as e:
+                logger.error(f"net_connections failed: {e}")
+                return []
+        
         @staticmethod
         def pids():
             """Mock process IDs list"""
@@ -62,67 +80,58 @@ except ImportError:
         @staticmethod  
         def num_threads():
             """Mock number of threads"""
-            import random
-            # Return realistic thread count 
-            return 50 + random.randint(0, 150)
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"info completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"info failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"pids completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"pids failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"net_connections completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"net_connections failed: {e}")
-            raise
+            try:
+                import random
+                # Return realistic thread count 
+                return 50 + random.randint(0, 150)
+            except Exception as e:
+                logger.error(f"num_threads failed: {e}")
+                return 50
+    
+    def process_request(self, data):
         try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
+            # Request validation
+            if not data:
+                raise ValueError("Invalid request")
             
-                    # Process request
-                    result = await self._handle_getloadavg_request(data)
+            # Process request
+            result = self._handle_getloadavg_request(data)
             
-                    # Return response
-                    return {"status": "success", "data": result}
+            # Return response
+            return {"status": "success", "data": result}
             
-                except Exception as e:
-                    logger.error(f"API handler getloadavg failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            return Network()
+        except Exception as e:
+            logger.error(f"API handler getloadavg failed: {e}")
+            return {"status": "error", "message": str(e)}
+    
+    def _handle_getloadavg_request(self, data):
+        """Handle getloadavg request"""
+        try:
+            # Mock implementation
+            import random
+            return [random.uniform(0.1, 2.0) for _ in range(3)]
+        except Exception as e:
+            logger.error(f"getloadavg failed: {e}")
+            return [0.5, 0.7, 0.9]
         
-        @staticmethod
-        def disk_io_counters():
-            class DiskIO:
-                read_bytes = 500000000
-                write_bytes = 300000000
-            return DiskIO()
-        
-        @staticmethod
-        def getloadavg():
-            return (1.5, 1.2, 1.0)
-        
-        @staticmethod
-        def net_connections():
-            return [f"conn_{i}" for i in range(150)]
-        
-        @staticmethod
-        def pids():
-            return [i for i in range(200)]
+    @staticmethod
+    def disk_io_counters():
+        class DiskIO:
+            read_bytes = 500000000
+            write_bytes = 300000000
+        return DiskIO()
+    
+    @staticmethod
+    def getloadavg():
+        return (1.5, 1.2, 1.0)
+    
+    @staticmethod
+    def net_connections():
+        return [f"conn_{i}" for i in range(150)]
+    
+    @staticmethod
+    def pids():
+        return [i for i in range(200)]
         
         @staticmethod
         def process_iter(attrs=None):

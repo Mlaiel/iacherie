@@ -35,7 +35,8 @@ import jwt
 from cryptography.fernet import Fernet
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from prometheus_client import Counter, Histogram, Gauge
 import structlog
 from concurrent.futures import ThreadPoolExecutor

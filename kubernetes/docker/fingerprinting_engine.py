@@ -534,8 +534,8 @@ import os
 import sys
 import argparse
 from pathlib import Path
-from transformers import AutoModel, AutoTokenizer, AutoProcessor, AutoFeatureExtractor
-from sentence_transformers import SentenceTransformer
+# from transformers import AutoModel, AutoTokenizer, AutoProcessor, AutoFeatureExtractor
+# from sentence_transformers import SentenceTransformer
 import torch
 import logging
 
@@ -655,7 +655,7 @@ def download_fingerprinting_models(cache_dir: str):
     for model_name in sentence_models:
         try:
             logger.info(f"Downloading sentence transformer {model_name}...")
-            model = SentenceTransformer(model_name, cache_folder=str(sentence_path))
+            model = get_sentence_transformer(model_name, cache_folder=str(sentence_path))
             logger.info(f"✅ Downloaded sentence transformer {model_name}")
             del model
         except Exception as e:

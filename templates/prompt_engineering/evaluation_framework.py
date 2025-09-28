@@ -29,7 +29,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat import flesch_reading_ease, flesch_kincaid_grade
 import openai
-from transformers import pipeline
+# from transformers import pipeline
 from pydantic import BaseModel, Field, validator
 
 from core.config import get_settings

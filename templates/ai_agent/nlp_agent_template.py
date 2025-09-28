@@ -13,7 +13,7 @@ from enum import Enum
 import numpy as np
 from pydantic import BaseModel, Field, validator
 import spacy
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 import torch
 from textblob import TextBlob
 

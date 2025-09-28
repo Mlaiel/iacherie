@@ -5,15 +5,9 @@
  * Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
  */
 
-import React from 'react';
-import { 
-  ChartBarIcon, 
-  ShieldCheckIcon, 
-  CloudArrowUpIcon,
-  CurrencyDollarIcon,
-  UsersIcon,
-  CogIcon 
-} from '@heroicons/react/24/outline';
+import React, { useState, useEffect } from 'react';
+import { ArrowUpIcon, ArrowDownIcon, ChartBarIcon, ShieldCheckIcon, CurrencyDollarIcon, DocumentTextIcon, CloudArrowUpIcon, UsersIcon, CogIcon } from '@heroicons/react/24/outline';
+import { toConsistentLocaleString, formatCurrency } from '../../../utils/formatters';
 
 interface DashboardStats {
   totalContent: number;
@@ -62,9 +56,9 @@ const CreatorDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Content</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.totalContent.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-gray-900">{toConsistentLocaleString(stats?.totalContent || 0)}</p>
             </div>
-            <CloudArrowUpIcon className="h-12 w-12 text-blue-500" />
+            <ArrowUpIcon className="h-12 w-12 text-blue-500" />
           </div>
         </div>
 
@@ -72,7 +66,7 @@ const CreatorDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Protected Files</p>
-              <p className="text-2xl font-bold text-gray-900">{stats?.protectedFiles.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-gray-900">{toConsistentLocaleString(stats?.protectedFiles || 0)}</p>
             </div>
             <ShieldCheckIcon className="h-12 w-12 text-green-500" />
           </div>
@@ -82,7 +76,7 @@ const CreatorDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
-              <p className="text-2xl font-bold text-gray-900">${stats?.monthlyRevenue.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-gray-900">{formatCurrency(stats?.monthlyRevenue || 0)}</p>
             </div>
             <CurrencyDollarIcon className="h-12 w-12 text-yellow-500" />
           </div>
@@ -146,7 +140,7 @@ const CreatorDashboard: React.FC = () => {
         {/* Upload Center */}
         <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
           <div className="flex items-center mb-4">
-            <CloudArrowUpIcon className="h-8 w-8 text-indigo-600 mr-3" />
+            <ArrowUpIcon className="h-8 w-8 text-indigo-600 mr-3" />
             <h3 className="text-lg font-semibold text-gray-900">Upload Content</h3>
           </div>
           <p className="text-gray-600 mb-4">Upload and process new content with AI protection.</p>

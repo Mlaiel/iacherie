@@ -42,8 +42,11 @@ import numpy as np
 # Core dependencies for enterprise fingerprinting
 try:
     import torch
-    import transformers
-    from sentence_transformers import SentenceTransformer
+    # import transformers
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
     DEEP_LEARNING_AVAILABLE = True
 except ImportError:
     DEEP_LEARNING_AVAILABLE = False
@@ -501,7 +504,7 @@ class ConsolidatedFingerprintingEngine:
                     # Modèle BERT pour texte
                     if 'bert_model' not in self._model_cache:
                         self.logger.info("📝 Chargement modèle BERT...")
-                        self._model_cache['bert_model'] = SentenceTransformer('all-MiniLM-L6-v2')
+                        self._model_cache['bert_model'] = get_sentence_transformer('all-MiniLM-L6-v2')
                         
                 except Exception as e:
                     self.logger.warning(f"⚠️ Modèles ML non disponibles: {str(e)}")

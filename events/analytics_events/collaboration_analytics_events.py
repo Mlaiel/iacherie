@@ -27,7 +27,7 @@ from sklearn.preprocessing import StandardScaler
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import pipeline
+# from transformers import pipeline
 
 from ...core.events.base_event import BaseEvent, BaseEventHandler
 from ...core.cache import CacheManager

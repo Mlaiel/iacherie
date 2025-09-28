@@ -42,27 +42,21 @@ except ImportError:
                 return metrics
             except Exception as e:
                 # Request validation
-                if not hasattr(self, 'data'):
-                    raise ValueError("Invalid request")
-                return {}
-            
+                try:
+                    if not hasattr(self, 'data'):
+                        raise ValueError("Invalid request")
+                    
+                    result = await self._handle_get_current_metrics_request(data)
+                    # Return response
+                    return {"status": "success", "data": result}
+                    
                 except Exception as e:
                     logger.error(f"API handler get_performance_summary failed: {e}")
                     return {"status": "error", "message": str(e)}
-                    result = await self._handle_get_current_metrics_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
             
                 except Exception as e:
                     logger.error(f"API handler get_current_metrics failed: {e}")
                     return {"status": "error", "message": str(e)}
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
-            
-                    # Store metrics
-                    await self._store_metric(metrics)
             
                     # Send to monitoring system
                     if hasattr(self, 'metrics_client'):

@@ -21,7 +21,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.cluster import KMeans
 import torch
 import torch.nn as nn
-from transformers import AutoModel, AutoTokenizer
+# from transformers import AutoModel, AutoTokenizer
 from pydantic import BaseModel, Field, validator
 
 from ai.base_agent import BaseAIAgent

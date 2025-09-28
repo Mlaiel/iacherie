@@ -32,7 +32,11 @@ from abc import ABC, abstractmethod
 import mlflow
 import mlflow.sklearn
 import mlflow.pytorch
-import mlflow.tensorflow
+# MLflow TensorFlow imports avec protection
+try:
+    import mlflow.tensorflow
+except ImportError:
+    mlflow = None
 from mlflow.tracking import MlflowClient
 import optuna
 import scikit_learn
@@ -51,8 +55,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
-import tensorflow as tf
-from tensorflow import keras
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# keras sera accessible via tf.keras
 
 # AI Provider integrations
 import openai

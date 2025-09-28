@@ -1121,6 +1121,22 @@ class CollaborationMatchingCore:
         # Executor for parallel processing
         self._executor = ThreadPoolExecutor(max_workers=6)
     
+    async def initialize(self):
+        """Initialize the collaboration matching core system"""
+        try:
+            # Initialize marketplace engine
+            await self.marketplace.initialize() if hasattr(self.marketplace, 'initialize') else None
+            
+            # Initialize gamification engine  
+            await self.gamification.initialize() if hasattr(self.gamification, 'initialize') else None
+            
+            logger.info("✅ Collaboration Matching Core initialized successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Collaboration Matching Core initialization failed: {e}")
+            return False
+    
     async def create_collaboration(
         self,
         creator_id: str,

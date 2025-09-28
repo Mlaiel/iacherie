@@ -33,8 +33,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
-import tensorflow as tf
-from transformers import AutoTokenizer, AutoModel, pipeline
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import AutoTokenizer, AutoModel, pipeline
 
 # Time series and advanced analytics
 from scipy import stats

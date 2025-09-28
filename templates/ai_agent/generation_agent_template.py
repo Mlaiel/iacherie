@@ -15,7 +15,7 @@ import asyncio
 import json
 
 import torch
-from transformers import (
+# from transformers import (
     AutoTokenizer, AutoModelForCausalLM, AutoModelForSeq2SeqLM,
     pipeline, GPT2LMHeadModel, T5ForConditionalGeneration
 )

@@ -19,7 +19,7 @@ import numpy as np
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
 import asyncio
-from transformers import (
+# from transformers import (
     CLIPProcessor, CLIPModel,
     WhisperProcessor, WhisperForConditionalGeneration,
     RobertaTokenizer, RobertaForSequenceClassification,

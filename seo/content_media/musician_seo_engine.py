@@ -57,7 +57,7 @@ try:
     from mutagen.mp4 import MP4
     import spotipy
     from spotipy.oauth2 import SpotifyClientCredentials
-    from transformers import pipeline
+    # from transformers import pipeline
     import requests
     from PIL import Image
     import base64

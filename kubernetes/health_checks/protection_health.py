@@ -375,7 +375,7 @@ class ProtectionServiceHealthChecker:
                 warnings.append("NLTK not available for text processing")
             
             try:
-                from transformers import AutoTokenizer, AutoModel
+                # from transformers import AutoTokenizer, AutoModel
                 details["libraries_available"]["transformers"] = "available"
             except ImportError:
                 warnings.append("transformers not available for text embeddings")

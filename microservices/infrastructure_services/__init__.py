@@ -25,7 +25,12 @@ __all__ = [
     "AlertingService",
     "ConfigurationWatcher",
     "ResourceMonitoringService",
-    "ServiceDependencyTracker"
+    "ServiceDependencyTracker",
+    "ServiceDiscovery",
+    "ServiceRegistry",
+    "ServiceInfo",
+    "ServiceEndpoint",
+    "get_service_discovery"
 ]
 
 __version__ = "1.0.0"

@@ -47,9 +47,10 @@ except ImportError:
     logging.warning("⚠️ Scikit-learn not available - AI prediction features limited")
 
 try:
-    import tensorflow as tf
-    from tensorflow import keras
-    from tensorflow.keras import layers
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # keras sera accessible via tf.keras
+    # layers sera accessible via tf.keras.layers
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False

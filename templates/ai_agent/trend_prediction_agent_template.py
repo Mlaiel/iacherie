@@ -22,7 +22,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.model_selection import TimeSeriesSplit
 import torch
 import torch.nn as nn
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 from pydantic import BaseModel, Field, validator
 import scipy.stats as stats
 

@@ -26,7 +26,7 @@ from PIL import Image, ImageFilter
 import librosa
 import torch
 import torchvision.transforms as transforms
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 from sklearn.ensemble import IsolationForest
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity

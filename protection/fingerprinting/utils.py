@@ -41,7 +41,34 @@ import torch
 import torch.nn.functional as F
 from scipy.spatial.distance import hamming, jaccard
 from scipy import signal
-import faiss
+try:
+    import faiss
+    FAISS_AVAILABLE = True
+except ImportError:
+    FAISS_AVAILABLE = False
+    # Mock faiss for compatibility
+    class MockFaiss:
+        class Index:
+            pass
+        class IndexFlatIP:
+            def __init__(self, dimension):
+                self.dimension = dimension
+        class IndexFlatL2:
+            def __init__(self, dimension):
+                self.dimension = dimension
+        class IndexIVFFlat:
+            def __init__(self, quantizer, dimension, n_lists):
+                self.dimension = dimension
+        class IndexHNSWFlat:
+            def __init__(self, dimension, m):
+                self.dimension = dimension
+        @staticmethod
+        def write_index(index, filepath):
+            pass
+        @staticmethod
+        def read_index(filepath):
+            return MockFaiss.Index()
+    faiss = MockFaiss()
 
 from .models import ContentType, ProcessingMetrics, QualityMetrics
 

@@ -30,8 +30,17 @@ import logging
 import numpy as np
 import torch
 import torch.nn as nn
-import tensorflow as tf
-from transformers import (
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
+# from transformers import (
     AutoTokenizer, AutoModel, pipeline,
     CLIPProcessor, CLIPModel
 )
@@ -48,7 +57,7 @@ import pickle
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 import openai
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert, update
@@ -168,7 +177,7 @@ Ultra-advanced AI-powered content analysis engine"""
 Initialize all AI models"""
         try:
             # Text analysis models
-            self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
+            self.sentence_transformer = get_sentence_transformer('all-MiniLM-L6-v2')
             self.nlp_model = spacy.load('en_core_web_sm')
             
             # Multimodal CLIP model

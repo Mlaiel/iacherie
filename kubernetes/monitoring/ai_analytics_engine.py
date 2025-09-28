@@ -29,7 +29,8 @@ from sklearn.ensemble import IsolationForest, RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from collections import deque, defaultdict
 # Safe Redis import with Python 3.12 compatibility
 try:

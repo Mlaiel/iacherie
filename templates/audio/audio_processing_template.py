@@ -46,8 +46,8 @@ import websockets
 import uvloop
 import torch
 import torchaudio
-import transformers
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
+# import transformers
+# from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import whisper
 import openai
 import pyloudnorm as pyln

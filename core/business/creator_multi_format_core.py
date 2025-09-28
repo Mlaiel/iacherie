@@ -93,7 +93,7 @@ class CreatorMultiFormatCore:
     with enterprise-grade performance and reliability standards.
     """
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.processing_queue: List[ContentProcessingRequest] = []
         self.business_rules: Dict[CreatorType, Dict[str, Any]] = {}

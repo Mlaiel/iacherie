@@ -22,7 +22,7 @@ import json
 
 try:
     import openai
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import spacy
     from textstat import flesch_reading_ease, flesch_kincaid_grade

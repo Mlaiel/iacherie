@@ -23,7 +23,7 @@ import os
 
 import httpx
 import torch
-from transformers import (
+# from transformers import (
     AutoTokenizer, AutoModelForCausalLM, AutoModelForSeq2SeqLM,
     AutoModelForSequenceClassification, AutoModelForQuestionAnswering,
     pipeline, Pipeline

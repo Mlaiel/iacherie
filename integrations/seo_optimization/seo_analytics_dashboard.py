@@ -37,7 +37,8 @@ try:
     from plotly.subplots import make_subplots
     import dash
     from dash import dcc, html, Input, Output, callback
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     from sklearn.linear_model import LinearRegression
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.preprocessing import StandardScaler

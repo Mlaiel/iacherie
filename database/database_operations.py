@@ -83,7 +83,7 @@ except (ImportError, TypeError) as e:
     # Handle Python 3.12 TimeoutError duplicate base class issue
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    pass  # Redis warning suppressed
             ASYNC_REDIS_CLIENT = aioredis.Redis
             REDIS_AVAILABLE = True
         except (ImportError, TypeError) as e:

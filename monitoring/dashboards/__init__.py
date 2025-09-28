@@ -17,8 +17,7 @@ from .enterprise_dashboard_system import (
     DashboardMetrics,
     DashboardType,
     VisualizationType,
-    UpdateFrequency,
-    enterprise_dashboard_system
+    UpdateFrequency
 )
 
 __version__ = "3.1.0"
@@ -33,6 +32,5 @@ __all__ = [
     "DashboardMetrics",
     "DashboardType",
     "VisualizationType",
-    "UpdateFrequency",
-    "enterprise_dashboard_system"
+    "UpdateFrequency"
 ]

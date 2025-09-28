@@ -51,9 +51,12 @@ import xml.etree.ElementTree as ET
 
 # AI and ML Libraries
 import openai
-from transformers import pipeline
+# from transformers import pipeline
 import spacy
-from sentence_transformers import SentenceTransformer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 
 # Security and Compliance
 from cryptography.fernet import Fernet
@@ -236,7 +239,7 @@ class DocumentMLAnalyzer:
         
         # Initialize ML models
         try:
-            self.sentence_transformer = SentenceTransformer(config.sentence_transformer_model)
+            self.sentence_transformer = get_sentence_transformer(config.sentence_transformer_model)
             self.nlp = spacy.load(config.spacy_model)
             self.sentiment_analyzer = pipeline("sentiment-analysis")
             self.text_classifier = pipeline("text-classification")

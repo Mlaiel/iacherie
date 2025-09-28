@@ -41,7 +41,7 @@ except ImportError:
     SKLEARN_AVAILABLE = False
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     TRANSFORMERS_AVAILABLE = True
 except ImportError:

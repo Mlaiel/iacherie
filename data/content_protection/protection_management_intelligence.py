@@ -33,7 +33,7 @@ from sqlalchemy import Column, String, Integer, DateTime, Text, Boolean, Float
 
 # AI/ML Imports
 import numpy as np
-from transformers import pipeline
+# from transformers import pipeline
 import torch
 
 # Database & Storage

@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import numpy as np
 import faiss
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 import openai
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -121,7 +121,7 @@ class KnowledgeBaseManager:
     
     def __init__(self, openai_api_key: str, embedding_model: str = "all-MiniLM-L6-v2"):
         self.openai_api_key = openai_api_key
-        self.embedding_model = SentenceTransformer(embedding_model)
+        self.embedding_model = get_sentence_transformer(embedding_model)
         self.articles: Dict[str, KnowledgeArticle] = {}
         self.vector_index = None
         self.article_vectors = []

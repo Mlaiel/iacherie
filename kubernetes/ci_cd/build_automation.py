@@ -756,11 +756,16 @@ class AdvancedBuildOptimizer:
             for model_file in model_files:
                 if model_file.endswith('.h5'):
                     # TensorFlow model compression
-                    import tensorflow as tf
+                    from core.tensorflow_singleton import get_tensorflow
+                    tf = get_tensorflow()
                     model = tf.keras.models.load_model(model_file)
                     
                     # Apply weight pruning
-                    import tensorflow_model_optimization as tfmot
+                    try:
+                        import tensorflow_model_optimization as tfmot
+                    except ImportError:
+                        tfmot = None
+                        logger.warning("tensorflow_model_optimization not available, skipping optimization")
                     prune_low_magnitude = tfmot.sparsity.keras.prune_low_magnitude
                     pruning_params = {
                         'pruning_schedule': tfmot.sparsity.keras.PolynomialDecay(
@@ -786,7 +791,8 @@ class AdvancedBuildOptimizer:
         try:
             for model_file in model_files:
                 if model_file.endswith('.h5'):
-                    import tensorflow as tf
+                    from core.tensorflow_singleton import get_tensorflow
+                    tf = get_tensorflow()
                     
                     # Convert to TensorFlow Lite with quantization
                     converter = tf.lite.TFLiteConverter.from_saved_model(model_file)

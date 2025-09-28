@@ -28,9 +28,13 @@ import librosa
 import cv2
 from PIL import Image
 import torch
-import tensorflow as tf
-from transformers import pipeline as hf_pipeline
-from sentence_transformers import SentenceTransformer
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import pipeline as hf_pipeline
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 import imagehash
 import essentia.standard as es
 from prometheus_client import Counter, Histogram, Gauge
@@ -142,7 +146,7 @@ Initialize processing pipeline."""
 Initialize AI models for different content types."""
         try:
             # Text embedding model
-            self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
+            self.text_model = get_sentence_transformer('all-MiniLM-L6-v2')
             
             # Audio processing components
             self.audio_components = {

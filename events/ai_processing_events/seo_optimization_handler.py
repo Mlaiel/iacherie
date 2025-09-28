@@ -37,7 +37,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.sentiment import SentimentIntensityAnalyzer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import spacy
 from textstat import flesch_reading_ease, flesch_kincaid_grade
 

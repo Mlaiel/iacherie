@@ -39,7 +39,7 @@ from pathlib import Path
 import nltk
 from textblob import TextBlob
 import spacy
-from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+# from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 import torch
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import langdetect

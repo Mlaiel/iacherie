@@ -38,11 +38,12 @@ from pathlib import Path
 import uuid
 
 import torch
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 import numpy as np
 import onnx
 import onnxruntime as ort
-from transformers import AutoModel, AutoTokenizer, AutoConfig
+# from transformers import AutoModel, AutoTokenizer, AutoConfig
 import joblib
 from prometheus_client import Counter, Histogram, Gauge
 import redis

@@ -51,7 +51,7 @@ try:
     import textstat
     from langdetect import detect, LangDetectError
     import spacy
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     ADVANCED_FEATURES = True
 except ImportError as e:

@@ -66,7 +66,7 @@ except ImportError:
     logging.warning("spaCy not available - professional NLP features will be limited")
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
@@ -428,7 +428,7 @@ except ImportError:
     logging.warning("NLTK not available - some text processing features will be limited")
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     TRANSFORMERS_AVAILABLE = True
 except ImportError:

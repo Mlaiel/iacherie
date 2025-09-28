@@ -26,7 +26,7 @@ import unicodedata
 # Core imports for text processing
 try:
     import torch
-    from transformers import AutoTokenizer, AutoModel, pipeline
+    # from transformers import AutoTokenizer, AutoModel, pipeline
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.metrics.pairwise import cosine_similarity
     from sklearn.decomposition import LatentDirichletAllocation
@@ -200,8 +200,11 @@ class TextFingerprintingSystem:
         try:
             # Initialize embedding model
             if self.config.embedding_model:
-                from sentence_transformers import SentenceTransformer
-                self.embedding_model = SentenceTransformer(self.config.embedding_model)
+                # Import avec gestionnaire TensorFlow singleton
+                from core.tensorflow_singleton import get_tensorflow
+                tf = get_tensorflow()
+                # from sentence_transformers import SentenceTransformer
+                self.embedding_model = get_sentence_transformer(self.config.embedding_model)
                 self.logger.info("Sentence transformer model loaded successfully")
             
             # Initialize sentiment analyzer

@@ -74,7 +74,7 @@ except ImportError:
     logging.warning("PyTorch not available - using simplified AI processing")
 
 try:
-    from transformers import pipeline, AutoModel, AutoTokenizer
+    # from transformers import pipeline, AutoModel, AutoTokenizer
     HAS_TRANSFORMERS = True
 except ImportError:
     HAS_TRANSFORMERS = False

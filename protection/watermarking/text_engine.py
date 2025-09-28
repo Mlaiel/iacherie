@@ -52,8 +52,7 @@ import hashlib
 import hmac
 import secrets
 from abc import ABC, abstractmethod
-try:
-    # Safe Redis import with Python 3.12 compatibility
+# Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True
@@ -62,6 +61,8 @@ except (ImportError, TypeError) as e:
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
     logging.warning(f"Using Redis compatibility layer: {e}")
+
+try:
     import aiokafka
     from prometheus_client import Counter, Histogram, Gauge
 except ImportError:

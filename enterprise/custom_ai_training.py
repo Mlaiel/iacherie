@@ -37,8 +37,8 @@ import torch
 import torch.nn as torch_nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset, random_split
-import transformers
-from transformers import (
+# import transformers
+# from transformers import (
     AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
     TrainingArguments, Trainer, EarlyStoppingCallback
 )

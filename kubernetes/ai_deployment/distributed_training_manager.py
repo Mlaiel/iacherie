@@ -29,14 +29,15 @@ import numpy as np
 import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 import horovod.torch as hvd
 import ray
 from ray import train
 from ray.train import ScalingConfig, RunConfig
 from ray.train.torch import TorchTrainer
 import wandb
-from transformers import Trainer, TrainingArguments
+# from transformers import Trainer, TrainingArguments
 
 logger = logging.getLogger(__name__)
 

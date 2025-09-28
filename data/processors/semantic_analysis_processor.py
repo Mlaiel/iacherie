@@ -52,7 +52,7 @@ except ImportError:
 
 try:
     import torch
-    from transformers import (
+    # from transformers import (
         AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
         pipeline, BertTokenizer, BertModel
     )

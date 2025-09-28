@@ -34,8 +34,9 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingClassifier
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from scipy import stats
-import tensorflow as tf
-from transformers import pipeline
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import pipeline
 
 logger = logging.getLogger(__name__)
 

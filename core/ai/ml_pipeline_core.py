@@ -10,7 +10,7 @@ Enterprise-grade ML pipeline with >99.99% uptime guarantee.
 
 import asyncio
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 from enum import Enum
 from dataclasses import dataclass, field
@@ -144,7 +144,7 @@ class MLPipelineCore:
     performance and reliability standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
         """Initialize ML Pipeline Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -232,7 +232,7 @@ class MLPipelineCore:
         config = self.pipeline_configs[pipeline_id]
         execution = PipelineExecution(
             pipeline_id=pipeline_id,
-            started_at=datetime.utcnow()
+            started_at=datetime.now(timezone.utc)
         )
         
         try:
@@ -327,7 +327,7 @@ class MLPipelineCore:
                 execution.progress = 100.0
                 
             # Calculate total duration
-            execution.completed_at = datetime.utcnow()
+            execution.completed_at = datetime.now(timezone.utc)
             execution.duration = (
                 execution.completed_at - execution.started_at
             ).total_seconds()
@@ -337,7 +337,7 @@ class MLPipelineCore:
         except Exception as e:
             execution.status = PipelineStatus.FAILED
             execution.errors.append(f"Pipeline execution error: {e}")
-            execution.completed_at = datetime.utcnow()
+            execution.completed_at = datetime.now(timezone.utc)
             execution.duration = (
                 execution.completed_at - execution.started_at
             ).total_seconds()
@@ -351,7 +351,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Data loading stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             dataset_config = config.dataset_config
@@ -379,7 +379,7 @@ class MLPipelineCore:
                 data_types={col: str(dtype) for col, dtype in data.dtypes.items()}
             )
             
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -396,7 +396,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -409,7 +409,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Data validation stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             if not self.data_validation_enabled:
@@ -456,7 +456,7 @@ class MLPipelineCore:
             elif quality_level == DataQuality.POOR:
                 warnings.append("Data quality is poor, consider data cleaning")
                 
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": len(errors) == 0,
@@ -477,7 +477,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -490,7 +490,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Data preprocessing stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             data = pipeline_data["dataset"].copy()
@@ -547,7 +547,7 @@ class MLPipelineCore:
                 scaler = MinMaxScaler()
                 data[numerical_columns] = scaler.fit_transform(data[numerical_columns])
                 
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -566,7 +566,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -579,7 +579,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Feature engineering stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             data = pipeline_data["dataset"].copy()
@@ -610,7 +610,7 @@ class MLPipelineCore:
             if feature_creation.get("interaction_features", False):
                 data = self._create_interaction_features(data, metadata.target_column)
                 
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -627,7 +627,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -640,7 +640,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Model training stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             data = pipeline_data["dataset"]
@@ -682,7 +682,7 @@ class MLPipelineCore:
             model_path = self.model_storage_path / f"model_{execution.execution_id}.joblib"
             joblib.dump(model, model_path)
             
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             metrics.training_time = duration
             
             return {
@@ -707,7 +707,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -720,7 +720,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Model validation stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             model = pipeline_data["model"]
@@ -743,7 +743,7 @@ class MLPipelineCore:
             performance_threshold = validation_config.get("performance_threshold", 0.7)
             is_valid = cv_scores.mean() >= performance_threshold
             
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": is_valid,
@@ -757,7 +757,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -770,7 +770,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Hyperparameter tuning stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             if not self.hyperparameter_tuning_enabled:
@@ -783,7 +783,7 @@ class MLPipelineCore:
             # Hyperparameter tuning implementation would go here
             # For now, return the existing model
             
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -796,7 +796,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -809,7 +809,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Model evaluation stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             model_metrics = pipeline_data["model_metrics"]
@@ -828,7 +828,7 @@ class MLPipelineCore:
             # Store final metrics
             execution.metrics = model_metrics
             
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -845,7 +845,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,
@@ -858,7 +858,7 @@ class MLPipelineCore:
     ) -> Dict[str, Any]:
         """Model deployment stage"""
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         try:
             performance_tier = pipeline_data["performance_tier"]
@@ -878,7 +878,7 @@ class MLPipelineCore:
                 # Deployment logic would go here
                 deployment_info = {
                     "deployed": True,
-                    "deployment_time": datetime.utcnow().isoformat(),
+                    "deployment_time": datetime.now(timezone.utc).isoformat(),
                     "model_version": execution.execution_id,
                     "endpoint": f"/api/models/{execution.execution_id}/predict"
                 }
@@ -887,7 +887,7 @@ class MLPipelineCore:
                 execution.artifacts["model_path"] = model_path
                 execution.artifacts["deployment_info"] = json.dumps(deployment_info)
                 
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             
             return {
                 "success": True,
@@ -903,7 +903,7 @@ class MLPipelineCore:
             }
             
         except Exception as e:
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             return {
                 "success": False,
                 "duration": duration,

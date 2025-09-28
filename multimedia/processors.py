@@ -31,7 +31,7 @@ from PIL import Image, ImageEnhance, ImageFilter, ExifTags
 import ffmpeg
 from moviepy import VideoFileClip
 import speech_recognition as sr
-from transformers import pipeline
+# from transformers import pipeline
 
 from .formats import ContentFormat, AudioFormat, VideoFormat, ImageFormat, SupportedFormats
 from ..core.exceptions import ProcessingError, UnsupportedFormatError

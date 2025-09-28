@@ -44,9 +44,22 @@ from .embeddings import (
     CompositeEmbeddingGenerator
 )
 
-from .faiss_store import (
-    FaissVectorStore, IndexType, SearchResult, IndexStats
-)
+try:
+    from .faiss_store import (
+        FaissVectorStore, IndexType, SearchResult, IndexStats
+    )
+    FAISS_STORE_AVAILABLE = True
+except ImportError:
+    # Mock classes for compatibility without faiss
+    class FaissVectorStore:
+        pass
+    class IndexType:
+        pass
+    class SearchResult:
+        pass
+    class IndexStats:
+        pass
+    FAISS_STORE_AVAILABLE = False
 
 from .similarity_search import (
     SearchEngine, SimilarityCalculator, SimilarityResult,

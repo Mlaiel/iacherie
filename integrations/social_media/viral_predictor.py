@@ -50,7 +50,7 @@ import xgboost as xgb
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 
 # Computer vision
 import cv2

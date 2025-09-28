@@ -34,7 +34,17 @@ import mlflow
 import mlflow.sklearn
 import mlflow.pytorch
 try:
-    import mlflow.tensorflow
+    # MLflow TensorFlow imports avec protection via singleton
+    try:
+        from core.tensorflow_singleton import get_tensorflow
+        # Initialiser TensorFlow via singleton avant mlflow.tensorflow
+        tf = get_tensorflow()
+        if tf:
+            import mlflow.tensorflow
+        else:
+            mlflow = None
+    except ImportError:
+        mlflow = None
 except ImportError:
     # TensorFlow not available, tensorflow model support will be limited
     pass

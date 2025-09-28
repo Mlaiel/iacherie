@@ -218,7 +218,7 @@ class SessionInfo(BaseModel):
 class APIKeyRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=100, description="API key name")
     description: Optional[str] = Field(None, max_length=500)
-    permissions: List[str] = Field(..., min_items=1, description="API key permissions")
+    permissions: List[str] = Field(..., min_length=1, description="API key permissions")
     expires_at: Optional[datetime] = Field(None, description="Optional expiration date")
 
 class APIKeyResponse(BaseModel):

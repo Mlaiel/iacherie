@@ -41,7 +41,7 @@ try:
     from sklearn.decomposition import PCA
     import community as community_louvain
     from gensim.models import Word2Vec
-    from transformers import pipeline
+    # from transformers import pipeline
 except ImportError as e:
     logging.warning(f"Optional network dependency missing: {e}")
 

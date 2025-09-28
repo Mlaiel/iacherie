@@ -121,7 +121,7 @@ class ContentFormatCore:
     reliability, and quality standards. Supports audio, video, image, text processing.
     """
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.processing_tasks: Dict[str, ContentProcessingTask] = {}
         self.format_processors: Dict[str, Any] = {}
         self.quality_standards: Dict[str, Dict[str, Any]] = {}

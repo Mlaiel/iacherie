@@ -28,7 +28,7 @@ try:
     from scipy.spatial.distance import cosine
     import torch
     import torchaudio
-    from transformers import Wav2Vec2Processor, Wav2Vec2Model
+    # from transformers import Wav2Vec2Processor, Wav2Vec2Model
 except ImportError as e:
     logging.error(f"Required audio dependencies not installed: {e}")
 

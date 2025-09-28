@@ -79,7 +79,7 @@ except ImportError:
     sr = MockSpeechRecognition()
 
 try:
-    from transformers import (
+    # from transformers import (
         Wav2Vec2ForCTC, Wav2Vec2Processor, 
         WhisperProcessor, WhisperForConditionalGeneration,
         pipeline

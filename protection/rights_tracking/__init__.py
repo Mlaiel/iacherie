@@ -173,16 +173,6 @@ class RightsHolder:
         except Exception as e:
             logger.error(f"to_dict failed: {e}")
             raise
-            'holder_id': self.holder_id,
-            'name': self.name,
-            'type': self.type,
-            'email': self.email,
-            'address': self.address,
-            'tax_id': self.tax_id,
-            'performing_rights_org': self.performing_rights_org,
-            'contact_person': self.contact_person,
-            'legal_representative': self.legal_representative
-        }
 
 
 @dataclass

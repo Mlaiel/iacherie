@@ -34,7 +34,7 @@ import io
 try:
     import torch
     import torch.nn as nn
-    from transformers import AutoTokenizer, AutoModel
+    # from transformers import AutoTokenizer, AutoModel
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False

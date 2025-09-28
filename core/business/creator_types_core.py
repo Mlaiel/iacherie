@@ -626,7 +626,8 @@ class ComedianCore:
 class CreatorTypesCore:
     """Main Creator Types Core Management System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
+        self.level = level
         self.version = "2.1.0"
         self.cores = {
             CreatorType.MUSICIAN: MusicianCore(),

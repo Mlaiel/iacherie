@@ -51,7 +51,10 @@ except ImportError:
     logging.warning("ChromaDB not available - Chroma backend disabled")
 
 try:
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
 except ImportError:
     SentenceTransformer = None
     logging.warning("SentenceTransformers not available - text embeddings limited")
@@ -385,7 +388,7 @@ class VectorDBManager:
             raise ValueError(f"Unsupported backend: {self.backend_type}")
         
         # Initialize embedding model
-        self.embedding_model = SentenceTransformer(self.embedding_model_name)
+        self.embedding_model = get_sentence_transformer(self.embedding_model_name)
         self.embedding_dimension = self.embedding_model.get_sentence_embedding_dimension()
         
         # Index registry

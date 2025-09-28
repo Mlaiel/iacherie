@@ -87,10 +87,19 @@ class ContentMetadata:
         try:
             logger.info(f"Executing to_dict")
             
-            # Implementation for to_dict
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            result = {
+                'content_id': self.content_id,
+                'original_filename': self.original_filename,
+                'mime_type': self.mime_type,
+                'file_size': self.file_size,
+                'content_hash': self.content_hash,
+                'encryption_key': self.encryption_key,
+                'creator_address': self.creator_address,
+                'creation_timestamp': self.creation_timestamp.isoformat(),
+                'storage_class': self.storage_class.value,
+                'access_permissions': self.access_permissions,
+                'tags': self.tags
+            }
             
             logger.info(f"to_dict completed successfully")
             return result
@@ -98,18 +107,6 @@ class ContentMetadata:
         except Exception as e:
             logger.error(f"to_dict failed: {e}")
             raise
-            'content_id': self.content_id,
-            'original_filename': self.original_filename,
-            'mime_type': self.mime_type,
-            'file_size': self.file_size,
-            'content_hash': self.content_hash,
-            'encryption_key': self.encryption_key,
-            'creator_address': self.creator_address,
-            'creation_timestamp': self.creation_timestamp.isoformat(),
-            'storage_class': self.storage_class.value,
-            'access_permissions': self.access_permissions,
-            'tags': self.tags
-        }
 
 
 @dataclass
@@ -291,20 +288,6 @@ Professional IPFS client for distributed storage"""
             params = {'arg': ipfs_hash}
             
             async with self.session.post(url, params=params) as response:
-        try:
-            logger.info(f"Executing __aexit__")
-            
-            # Implementation for __aexit__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__aexit__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__aexit__ failed: {e}")
-            raise
                 if response.status == 200:
                     self.pinned_hashes.discard(ipfs_hash)
                     logger.info(f"Content unpinned: {ipfs_hash}")
@@ -576,6 +559,57 @@ class HyperledgerFabricClient:
             return None
 
 
+class DLTManager:
+    """Enterprise DLT manager for content protection and verification"""
+    
+    def __init__(self, config: Dict[str, Any]):
+        self.config = config
+        self.ledger_manager = DistributedLedgerManager(config)
+        self.stored_records: Dict[str, LedgerRecord] = {}
+        
+    async def store_content_record(
+        self,
+        content_hash: str,
+        creator: str,
+        metadata: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Store content record on distributed ledger"""
+        try:
+            record_id = f"record_{content_hash}_{int(datetime.now().timestamp())}"
+            
+            record = LedgerRecord(
+                record_id=record_id,
+                content_hash=content_hash,
+                timestamp=datetime.now(),
+                creator=creator,
+                network=DLTNetwork.IPFS,
+                metadata=metadata
+            )
+            
+            self.stored_records[record_id] = record
+            
+            return {
+                'record_id': record_id,
+                'status': 'stored',
+                'network': DLTNetwork.IPFS.value,
+                'timestamp': record.timestamp.isoformat()
+            }
+        except Exception as e:
+            raise DLTStorageError(f"Content record storage failed: {e}")
+            
+    async def verify_content_integrity(self, record_id: str) -> Dict[str, Any]:
+        """Verify content integrity on ledger"""
+        if record_id in self.stored_records:
+            record = self.stored_records[record_id]
+            return {
+                'record_id': record_id,
+                'verified': True,
+                'content_hash': record.content_hash,
+                'creator': record.creator
+            }
+        return {'record_id': record_id, 'verified': False}
+
+
 class DistributedLedgerManager:
     """Unified manager for all DLT operations"""
     
@@ -729,6 +763,29 @@ Initialize all DLT clients"""
             return None
 
 
+@dataclass
+class LedgerRecord:
+    """Record stored in the distributed ledger"""
+    record_id: str
+    content_hash: str
+    timestamp: datetime
+    creator: str
+    network: DLTNetwork
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    verification_status: bool = False
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            'record_id': self.record_id,
+            'content_hash': self.content_hash,
+            'timestamp': self.timestamp.isoformat(),
+            'creator': self.creator,
+            'network': self.network.value,
+            'metadata': self.metadata,
+            'verification_status': self.verification_status
+        }
+
+
 # Export classes
 __all__ = [
     'DLTNetwork',
@@ -738,5 +795,11 @@ __all__ = [
     'IPFSClient',
     'ArweaveClient',
     'HyperledgerFabricClient',
-    'DistributedLedgerManager'
+    'HyperledgerClient',
+    'DLTManager',
+    'DistributedLedgerManager',
+    'LedgerRecord'
 ]
+
+# Alias for backward compatibility
+HyperledgerClient = HyperledgerFabricClient

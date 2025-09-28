@@ -94,6 +94,16 @@ class RoyaltyType(Enum):
 
 
 @dataclass
+class NFTCreationConfig:
+    """Configuration for NFT creation"""
+    contract_address: str
+    gas_limit: int = 500000
+    gas_price: Optional[int] = None
+    royalty_percentage: float = 0.0
+    metadata_uri: Optional[str] = None
+
+
+@dataclass
 class NFTMetadata:
     """Comprehensive NFT metadata"""
     name: str
@@ -649,15 +659,169 @@ List NFT for sale on marketplace"""
         return True
 
 
+class RarityCalculator:
+    """Calculates NFT rarity scores based on trait frequencies"""
+    
+    def __init__(self):
+        self.trait_frequencies: Dict[str, Dict[str, int]] = {}
+        self.total_nfts = 0
+        
+    def add_nft_traits(self, traits: Dict[str, Any]) -> None:
+        """Add NFT traits for rarity calculation"""
+        self.total_nfts += 1
+        
+        for trait_type, trait_value in traits.items():
+            if trait_type not in self.trait_frequencies:
+                self.trait_frequencies[trait_type] = {}
+            
+            trait_str = str(trait_value)
+            if trait_str not in self.trait_frequencies[trait_type]:
+                self.trait_frequencies[trait_type][trait_str] = 0
+            
+            self.trait_frequencies[trait_type][trait_str] += 1
+            
+    def calculate_rarity_score(self, traits: Dict[str, Any]) -> float:
+        """Calculate rarity score for NFT traits"""
+        if self.total_nfts == 0:
+            return 0.0
+            
+        total_score = 0.0
+        
+        for trait_type, trait_value in traits.items():
+            trait_str = str(trait_value)
+            if (trait_type in self.trait_frequencies and 
+                trait_str in self.trait_frequencies[trait_type]):
+                
+                frequency = self.trait_frequencies[trait_type][trait_str]
+                rarity_score = 1.0 / (frequency / self.total_nfts)
+                total_score += rarity_score
+                
+        return total_score
+        
+    def get_rarity_rank(self, traits: Dict[str, Any]) -> int:
+        """Get rarity rank (1 = most rare)"""
+        score = self.calculate_rarity_score(traits)
+        # Simplified ranking - in real implementation would compare against all NFTs
+        return max(1, int(100 - score))
+
+
+class CollectionManager:
+    """Manages NFT collections and their metadata"""
+    
+    def __init__(self, web3_provider: str, private_key: str):
+        self.web3 = Web3(Web3.HTTPProvider(web3_provider))
+        self.account = Account.from_key(private_key)
+        self.collections: Dict[str, Any] = {}
+        self.rarity_calculator = RarityCalculator()
+        
+    async def create_collection(
+        self,
+        name: str,
+        symbol: str,
+        description: str,
+        max_supply: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Create a new NFT collection"""
+        try:
+            collection_data = {
+                'name': name,
+                'symbol': symbol,
+                'description': description,
+                'max_supply': max_supply,
+                'created_at': datetime.now().isoformat(),
+                'total_minted': 0
+            }
+            
+            # Generate collection ID
+            collection_id = hashlib.sha256(f"{name}_{symbol}".encode()).hexdigest()[:16]
+            self.collections[collection_id] = collection_data
+            
+            return {
+                'collection_id': collection_id,
+                'contract_address': f"0x{collection_id}",
+                'metadata': collection_data
+            }
+        except Exception as e:
+            raise NFTMintingError(f"Collection creation failed: {e}")
+            
+    async def get_collection(self, collection_id: str) -> Dict[str, Any]:
+        """Get collection information"""
+        return self.collections.get(collection_id, {})
+        
+    async def list_collections(self) -> List[Dict[str, Any]]:
+        """List all collections"""
+        return list(self.collections.values())
+
+
+class NFTManager:
+    """Main NFT management class for orchestrating all NFT operations"""
+    
+    def __init__(
+        self,
+        web3_provider: str,
+        private_key: str,
+        default_contract_address: Optional[str] = None
+    ):
+        self.web3 = Web3(Web3.HTTPProvider(web3_provider))
+        self.account = Account.from_key(private_key)
+        self.default_contract_address = default_contract_address
+        self.minter = NFTMinter(self.web3, self.account)
+        self.collection_manager = CollectionManager(web3_provider, private_key)
+        
+    async def mint_nft(
+        self,
+        content_hash: str,
+        metadata: NFTMetadata,
+        recipient: str,
+        royalty_info: Optional[RoyaltyInfo] = None
+    ) -> str:
+        """Mint a new NFT"""
+        try:
+            return await self.minter.mint_nft(
+                content_hash=content_hash,
+                metadata=metadata,
+                recipient=recipient,
+                royalty_info=royalty_info
+            )
+        except Exception as e:
+            raise NFTMintingError(f"Failed to mint NFT: {e}")
+            
+    async def transfer_nft(
+        self,
+        token_id: int,
+        from_address: str,
+        to_address: str
+    ) -> str:
+        """Transfer NFT between addresses"""
+        try:
+            # Implementation would go here
+            return f"transfer_{token_id}_{from_address}_{to_address}"
+        except Exception as e:
+            raise NFTTransferError(f"Failed to transfer NFT: {e}")
+            
+    async def get_nft_info(self, token_id: int) -> Dict[str, Any]:
+        """Get NFT information"""
+        return {
+            'token_id': token_id,
+            'owner': '0x123...',
+            'metadata': {},
+            'royalties': {}
+        }
+
+
 # Export classes
 __all__ = [
     'NFTStandard',
     'NFTMarketplace',
     'ContentType',
     'RoyaltyType',
+    'NFTCreationConfig',
     'NFTMetadata',
     'RoyaltyInfo',
     'NFTContract',
     'NFTMinter',
-    'MarketplaceIntegration'
+    'MarketplaceIntegration',
+    'RarityCalculator',
+    'CollectionManager',
+    'NFTManager'
 ]

@@ -34,7 +34,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from transformers import AutoModel, AutoTokenizer
+# from transformers import AutoModel, AutoTokenizer
 import optuna
 
 from backend.core.config import get_settings

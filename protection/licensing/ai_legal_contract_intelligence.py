@@ -40,10 +40,19 @@ import uuid
 from abc import ABC, abstractmethod
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import spacy

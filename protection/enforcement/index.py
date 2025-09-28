@@ -52,7 +52,16 @@ import psycopg2
 from prometheus_client import Counter, Histogram, Gauge
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import tensorflow as tf
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 from cryptography.fernet import Fernet
 import aiokafka
 from celery import Celery

@@ -2,6 +2,38 @@
 # Advanced AI service coordination and multi-provider management
 # Author: Fahed Mlaiel (mlaiel@live.de) - Lead Developer IA Role
 
+FROM python:3.11-slim AS development
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue AI Orchestration Hub - Development Environment"
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    wget \
+    git \
+    libgomp1 \
+    libomp-dev \
+    libopenblas-dev \
+    liblapack-dev \
+    ocl-icd-opencl-dev \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libglib2.0-0 \
+    libsndfile1-dev \
+    portaudio19-dev \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements-ai.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-ai.txt
+
+EXPOSE 8000 8888 6006
+CMD ["python", "-m", "uvicorn", "ai_hub.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
 FROM python:3.11-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL description="Ainflue AI Orchestration Hub - Advanced AI service coordination"

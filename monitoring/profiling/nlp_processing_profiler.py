@@ -288,7 +288,7 @@ class NLPProcessingProfiler:
         
         # Check transformers
         try:
-            import transformers
+            # import transformers
             libraries['transformers'] = True
         except ImportError:
             libraries['transformers'] = False

@@ -25,7 +25,7 @@ import json
 import numpy as np
 import torch
 import torch.nn as nn
-import transformers
+# import transformers
 import librosa
 import spacy
 from pathlib import Path

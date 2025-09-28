@@ -28,7 +28,7 @@ from enum import Enum
 from datetime import datetime
 import re
 import openai
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity

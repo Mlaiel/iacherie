@@ -34,7 +34,7 @@ import lightgbm as lgb
 import joblib
 import sqlite3
 import openai
-from transformers import AutoTokenizer, AutoModel
+# from transformers import AutoTokenizer, AutoModel
 import torch
 import radon.complexity as radon_complexity
 from radon.metrics import mi_visit, h_visit

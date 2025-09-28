@@ -74,6 +74,16 @@ class PaymentStatus(Enum):
     EXPIRED = "expired"
 
 
+class PaymentMethod(Enum):
+    """Supported payment methods"""
+    
+    CRYPTOCURRENCY = "crypto"
+    CREDIT_CARD = "credit_card"
+    BANK_TRANSFER = "bank_transfer"
+    PAYPAL = "paypal"
+    STRIPE = "stripe"
+
+
 class ServiceTier(Enum):
     """Service tiers for content protection"""
 
@@ -81,6 +91,25 @@ class ServiceTier(Enum):
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     PREMIUM = "premium"
+
+
+@dataclass
+class PaymentConfig:
+    """Configuration for payment processing"""
+    enabled_currencies: List[SupportedCryptocurrency] = field(default_factory=list)
+    confirmation_blocks: Dict[str, int] = field(default_factory=dict)
+    gas_limit: int = 21000
+    timeout_minutes: int = 30
+    webhook_url: Optional[str] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            'enabled_currencies': [c.value for c in self.enabled_currencies],
+            'confirmation_blocks': self.confirmation_blocks,
+            'gas_limit': self.gas_limit,
+            'timeout_minutes': self.timeout_minutes,
+            'webhook_url': self.webhook_url
+        }
 
 
 @dataclass
@@ -138,51 +167,37 @@ Cryptocurrency payment request"""
             
             result = None  # Replace with actual implementation
             
+            result = {
+                'request_id': self.request_id,
+                'user_id': self.user_id,
+                'service_type': self.service_type,
+                'service_tier': self.service_tier.value,
+                'amount_usd': str(self.amount_usd),
+                'cryptocurrency': self.cryptocurrency.value,
+                'amount_crypto': str(self.amount_crypto),
+                'recipient_address': self.recipient_address,
+                'payment_address': self.payment_address,
+                'created_at': self.created_at.isoformat(),
+                'expires_at': self.expires_at.isoformat(),
+                'status': self.status.value,
+                'transaction_hash': self.transaction_hash,
+                'block_number': self.block_number,
+                'confirmation_count': self.confirmation_count,
+                'required_confirmations': self.required_confirmations,
+                'metadata': self.metadata
+            }
+            
             logger.info(f"to_dict completed successfully")
             return result
             
         except Exception as e:
             logger.error(f"to_dict failed: {e}")
             raise
-            'request_id': self.request_id,
-            'user_id': self.user_id,
-            'service_type': self.service_type,
-            'service_tier': self.service_tier.value,
-            'amount_usd': str(self.amount_usd),
-            'cryptocurrency': self.cryptocurrency.value,
-            'amount_crypto': str(self.amount_crypto),
-            'recipient_address': self.recipient_address,
-            'payment_address': self.payment_address,
-            'created_at': self.created_at.isoformat(),
-            'expires_at': self.expires_at.isoformat(),
-            'status': self.status.value,
-            'transaction_hash': self.transaction_hash,
-            'block_number': self.block_number,
-            'confirmation_count': self.confirmation_count,
-            'required_confirmations': self.required_confirmations,
-            'metadata': self.metadata
-        }
 
 
 class PriceOracle:
-    """
-Cryptocurrency price oracle for real-time rates"""
+    """Cryptocurrency price oracle for real-time rates"""
     
-    def __init__(self, api_keys: Dict[str, str]):
-        try:
-            logger.info(f"Executing __aexit__")
-            
-            # Implementation for __aexit__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__aexit__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__aexit__ failed: {e}")
-            raise
     def __init__(self, api_keys: Dict[str, str]):
         self.api_keys = api_keys
         self.price_cache: Dict[str, Tuple[Decimal, datetime]] = {}
@@ -645,13 +660,164 @@ Create a new payment request"""
             return {'slow': Decimal('0'), 'standard': Decimal('0'), 'fast': Decimal('0')}
 
 
+class TransactionMonitor:
+    """Monitors blockchain transactions and their status"""
+    
+    def __init__(self, web3_provider: str):
+        self.web3 = Web3(Web3.HTTPProvider(web3_provider))
+        self.monitored_transactions: Dict[str, Dict[str, Any]] = {}
+        
+    def add_transaction(self, tx_hash: str, payment_request_id: str) -> None:
+        """Add transaction to monitoring"""
+        self.monitored_transactions[tx_hash] = {
+            'payment_request_id': payment_request_id,
+            'status': 'pending',
+            'confirmations': 0,
+            'created_at': datetime.now().isoformat()
+        }
+        
+    def check_transaction_status(self, tx_hash: str) -> Dict[str, Any]:
+        """Check transaction status on blockchain"""
+        try:
+            tx_receipt = self.web3.eth.get_transaction_receipt(tx_hash)
+            if tx_receipt:
+                block_number = tx_receipt.blockNumber
+                current_block = self.web3.eth.block_number
+                confirmations = current_block - block_number
+                
+                status = 'confirmed' if confirmations >= 6 else 'pending'
+                
+                return {
+                    'status': status,
+                    'confirmations': confirmations,
+                    'block_number': block_number,
+                    'gas_used': tx_receipt.gasUsed
+                }
+        except Exception:
+            pass
+            
+        return {'status': 'not_found', 'confirmations': 0}
+        
+    def get_all_monitored_transactions(self) -> Dict[str, Dict[str, Any]]:
+        """Get all monitored transactions"""
+        return self.monitored_transactions
+
+
+class WalletManager:
+    """Manages cryptocurrency wallets and addresses"""
+    
+    def __init__(self, private_key: Optional[str] = None):
+        if private_key:
+            self.account = Account.from_key(private_key)
+        else:
+            self.account = Account.create()
+        self.wallets: Dict[str, Dict[str, Any]] = {}
+        
+    def create_wallet(self, wallet_name: str) -> Dict[str, str]:
+        """Create a new wallet"""
+        new_account = Account.create()
+        wallet_data = {
+            'address': new_account.address,
+            'private_key': new_account.privateKey.hex(),
+            'created_at': datetime.now().isoformat()
+        }
+        self.wallets[wallet_name] = wallet_data
+        
+        return {
+            'wallet_name': wallet_name,
+            'address': new_account.address,
+            'public_key': f"0x{new_account.publicKey.hex()}"
+        }
+        
+    def get_wallet(self, wallet_name: str) -> Optional[Dict[str, Any]]:
+        """Get wallet information"""
+        return self.wallets.get(wallet_name)
+        
+    def list_wallets(self) -> List[str]:
+        """List all wallet names"""
+        return list(self.wallets.keys())
+        
+    def get_balance(self, address: str, web3_instance: Web3) -> Decimal:
+        """Get wallet balance"""
+        try:
+            balance_wei = web3_instance.eth.get_balance(address)
+            balance_eth = web3_instance.from_wei(balance_wei, 'ether')
+            return Decimal(str(balance_eth))
+        except Exception:
+            return Decimal('0')
+
+
+class PaymentGateway:
+    """Main payment gateway for processing all types of payments"""
+    
+    def __init__(self, api_keys: Dict[str, str]):
+        self.crypto_processor = CryptoPaymentProcessor(api_keys)
+        self.wallet_manager = WalletManager()
+        self.supported_methods = [PaymentMethod.CRYPTOCURRENCY]
+        
+    async def process_payment(
+        self,
+        payment_request: PaymentRequest,
+        payment_method: PaymentMethod
+    ) -> Dict[str, Any]:
+        """Process payment through appropriate gateway"""
+        try:
+            if payment_method == PaymentMethod.CRYPTOCURRENCY:
+                return await self.crypto_processor.process_payment(
+                    payment_request,
+                    SupportedCryptocurrency.ETHEREUM
+                )
+            else:
+                raise CryptoPaymentError(f"Payment method {payment_method} not supported")
+        except Exception as e:
+            raise CryptoPaymentError(f"Payment gateway error: {e}")
+
+
+class CryptoPaymentProcessor:
+    """Main processor for cryptocurrency payments"""
+    
+    def __init__(self, api_keys: Dict[str, str]):
+        self.oracle = PriceOracle(api_keys)
+        self.processor = PaymentProcessor()
+        
+    async def process_payment(
+        self,
+        payment_request: PaymentRequest,
+        cryptocurrency: SupportedCryptocurrency
+    ) -> Dict[str, Any]:
+        """Process a cryptocurrency payment"""
+        try:
+            # Get current price
+            async with self.oracle:
+                price = await self.oracle.get_price(cryptocurrency)
+                
+            # Calculate crypto amount
+            crypto_amount = payment_request.amount_usd / price
+            
+            return {
+                'payment_id': payment_request.request_id,
+                'crypto_amount': str(crypto_amount),
+                'price_usd': str(price),
+                'status': 'pending'
+            }
+        except Exception as e:
+            logger.error(f"Payment processing failed: {e}")
+            raise CryptoPaymentError(f"Payment processing failed: {e}")
+
+
 # Export classes
 __all__ = [
     'SupportedCryptocurrency',
     'PaymentStatus',
+    'PaymentMethod',
     'ServiceTier',
+    'PaymentConfig',
     'PaymentRate',
     'PaymentRequest',
     'PriceOracle',
-    'PaymentProcessor'
+    'PaymentProcessor',
+    'TransactionMonitor',
+    'WalletManager',
+    'PaymentGateway',
+    'CryptoPaymentProcessor'
 ]

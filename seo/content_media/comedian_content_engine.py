@@ -46,7 +46,7 @@ from pathlib import Path
 import statistics
 
 try:
-    from transformers import pipeline
+    # from transformers import pipeline
     import requests
     from textblob import TextBlob
     import nltk

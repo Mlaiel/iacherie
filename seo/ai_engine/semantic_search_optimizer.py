@@ -27,7 +27,8 @@ from enum import Enum
 from datetime import datetime
 import re
 import torch
-from transformers import AutoTokenizer, AutoModel, pipeline
+# Import transformers via singleton pour éviter les conflits TensorFlow
+from core.transformers_singleton import get_auto_tokenizer, get_auto_model, get_pipeline
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -135,9 +136,14 @@ class SemanticSearchOptimizer:
     async def initialize_models(self) -> None:
         """Initialize transformer and NLP models asynchronously."""
         try:
-            # Load transformer model for embeddings
-            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModel.from_pretrained(self.model_name)
+            # Load transformer model for embeddings via singleton
+            AutoTokenizer = get_auto_tokenizer()
+            AutoModel = get_auto_model()
+            if AutoTokenizer and AutoModel:
+                self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+                self.model = AutoModel.from_pretrained(self.model_name)
+            else:
+                raise ImportError("Transformers non disponible")
             
             # Load spaCy for entity extraction
             self.nlp = spacy.load(self.spacy_model)

@@ -29,8 +29,9 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
-from transformers import AutoModel, AutoTokenizer
-import tensorflow as tf
+# from transformers import AutoModel, AutoTokenizer
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import PCA

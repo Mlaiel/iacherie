@@ -70,7 +70,7 @@ except ImportError:
     np = None
 
 try:
-    from sentence_transformers import SentenceTransformer
+    from core.sentence_transformers_singleton import get_sentence_transformer
     SENTENCE_TRANSFORMERS_AVAILABLE = True
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False

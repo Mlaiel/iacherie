@@ -218,7 +218,7 @@ class RealTimeMetricsCollector:
                      labels: Dict[str, str] = None, timestamp: datetime.datetime = None):
         """Record a metric measurement"""
         if timestamp is None:
-            timestamp = datetime.datetime.utcnow()
+            timestamp = datetime.datetime.now(timezone.utc)
         
         metric = MetricSnapshot(
             metric_name=metric_name,
@@ -241,7 +241,7 @@ class RealTimeMetricsCollector:
             "execution_time": execution_time,
             "rows_affected": rows_affected,
             "connection_id": connection_id,
-            "timestamp": datetime.datetime.utcnow()
+            "timestamp": datetime.datetime.now(timezone.utc)
         }
         
         self.query_times.append(query_metric)
@@ -254,7 +254,7 @@ class RealTimeMetricsCollector:
     def record_connection_event(self, event_type: str, connection_id: str, 
                               pool_size: int = None, active_connections: int = None):
         """Record connection pool events"""
-        timestamp = datetime.datetime.utcnow()
+        timestamp = datetime.datetime.now(timezone.utc)
         
         event = {
             "event_type": event_type,
@@ -375,7 +375,7 @@ class BusinessIntelligenceEngine:
         
         analytics = {
             "creator_id": creator_id,
-            "generated_at": datetime.datetime.utcnow().isoformat(),
+            "generated_at": datetime.datetime.now(timezone.utc).isoformat(),
             "time_range": {
                 "start": time_range[0].isoformat() if time_range else None,
                 "end": time_range[1].isoformat() if time_range else None
@@ -427,7 +427,7 @@ class BusinessIntelligenceEngine:
             return self.analytics_cache[cache_key]
         
         analytics = {
-            "generated_at": datetime.datetime.utcnow().isoformat(),
+            "generated_at": datetime.datetime.now(timezone.utc).isoformat(),
             "aggregation_period": aggregation.value,
             "time_range": {
                 "start": time_range[0].isoformat() if time_range else None,
@@ -476,16 +476,16 @@ class BusinessIntelligenceEngine:
     
     async def generate_performance_report(self, time_range: Tuple[datetime.datetime, datetime.datetime] = None) -> PerformanceReport:
         """Generate comprehensive performance report"""
-        report_id = f"perf_report_{datetime.datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        report_id = f"perf_report_{datetime.datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         if not time_range:
-            end_time = datetime.datetime.utcnow()
+            end_time = datetime.datetime.now(timezone.utc)
             start_time = end_time - datetime.timedelta(hours=1)
             time_range = (start_time, end_time)
         
         report = PerformanceReport(
             report_id=report_id,
-            generated_at=datetime.datetime.utcnow(),
+            generated_at=datetime.datetime.now(timezone.utc),
             time_range={"start": time_range[0], "end": time_range[1]}
         )
         
@@ -527,7 +527,7 @@ class BusinessIntelligenceEngine:
             report.alerts.append({
                 "type": "error",
                 "message": f"Report generation failed: {e}",
-                "timestamp": datetime.datetime.utcnow().isoformat()
+                "timestamp": datetime.datetime.now(timezone.utc).isoformat()
             })
             return report
     
@@ -538,7 +538,7 @@ class BusinessIntelligenceEngine:
             predictions = {
                 "prediction_type": prediction_type,
                 "time_horizon_days": time_horizon,
-                "generated_at": datetime.datetime.utcnow().isoformat(),
+                "generated_at": datetime.datetime.now(timezone.utc).isoformat(),
                 "confidence_level": 0.85
             }
             
@@ -616,12 +616,12 @@ class BusinessIntelligenceEngine:
         if not expiry:
             return False
         
-        return datetime.datetime.utcnow() < expiry
+        return datetime.datetime.now(timezone.utc) < expiry
     
     def _cache_result(self, cache_key: str, result: Any, minutes: int = 15):
         """Cache analytics result"""
         self.analytics_cache[cache_key] = result
-        self.cache_expiry[cache_key] = datetime.datetime.utcnow() + datetime.timedelta(minutes=minutes)
+        self.cache_expiry[cache_key] = datetime.datetime.now(timezone.utc) + datetime.timedelta(minutes=minutes)
     
     # Database analytics methods (simplified implementations)
     async def _analyze_creator_content(self, conn, creator_id: str, time_range: Tuple) -> Dict[str, Any]:
@@ -830,12 +830,12 @@ def get_analytics_engine(connection_manager=None) -> BusinessIntelligenceEngine:
 # Convenience functions
 async def track_event(event_type: AnalyticsEventType, event_data: Dict[str, Any], **kwargs) -> str:
     """Convenience function to track analytics event"""
-    event_id = f"event_{datetime.datetime.utcnow().strftime('%Y%m%d_%H%M%S_%f')}"
+    event_id = f"event_{datetime.datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')}"
     
     event = AnalyticsEvent(
         event_id=event_id,
         event_type=event_type,
-        timestamp=datetime.datetime.utcnow(),
+        timestamp=datetime.datetime.now(timezone.utc),
         event_data=event_data,
         **kwargs
     )

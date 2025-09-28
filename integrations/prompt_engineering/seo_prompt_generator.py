@@ -39,7 +39,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from textblob import TextBlob
 import spacy
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import openai
 from anthropic import Anthropic
 import google.generativeai as genai

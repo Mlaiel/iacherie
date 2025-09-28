@@ -36,17 +36,25 @@ from .exceptions import BatchProcessingError, ResourceError
 logger = logging.getLogger(__name__)
 
 class ProcessingPriority(Enum):
-    """
-Processing priority levels."""
+    """Processing priority levels."""
 
     LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
 
+class BatchJobStatus(Enum):
+    """Batch job status enumeration."""
+    
+    PENDING = "pending"
+    RUNNING = "running" 
+    COMPLETED = "completed"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
+    PAUSED = "paused"
+
 class ResourceAllocation(Enum):
-    """
-Resource allocation strategies."""
+    """Resource allocation strategies."""
 
     CONSERVATIVE = "conservative"
     BALANCED = "balanced"
@@ -82,6 +90,32 @@ Individual processing task within a batch."""
     attempts: int = 0
     last_error: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class BatchJob:
+    """
+Batch job definition for processing operations."""
+    job_id: str
+    tasks: List[ProcessingTask] = field(default_factory=list)
+    config: BatchConfig = field(default_factory=BatchConfig)
+    status: ProcessingStatus = ProcessingStatus.PENDING
+    created_at: datetime = field(default_factory=datetime.utcnow)
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    user_id: int = 0
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def add_task(self, task: ProcessingTask) -> None:
+        """Add a task to the batch job."""
+        self.tasks.append(task)
+    
+    def get_pending_tasks(self) -> List[ProcessingTask]:
+        """Get all pending tasks in the job."""
+        return [task for task in self.tasks if task.attempts == 0]
+    
+    def get_failed_tasks(self) -> List[ProcessingTask]:
+        """Get all failed tasks that need retry."""
+        return [task for task in self.tasks if task.last_error and task.attempts < 3]
 
 @dataclass
 class BatchProgress:
@@ -599,6 +633,6 @@ Cancel a running batch job."""
 
 # Export main classes
 __all__ = [
-    'BatchProcessor', 'BatchConfig', 'ProcessingTask', 'BatchProgress',
-    'ProcessingPriority', 'ResourceAllocation', 'ResourceMonitor', 'AdaptiveBatchSizer'
+    'BatchProcessor', 'BatchConfig', 'ProcessingTask', 'BatchJob', 'BatchProgress',
+    'ProcessingPriority', 'BatchJobStatus', 'ResourceAllocation', 'ResourceMonitor', 'AdaptiveBatchSizer'
 ]

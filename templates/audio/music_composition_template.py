@@ -82,7 +82,7 @@ except ImportError:
     music21 = MockMusic21()
 
 try:
-    from transformers import GPT2LMHeadModel, GPT2Tokenizer
+    # from transformers import GPT2LMHeadModel, GPT2Tokenizer
 except ImportError:
     # Mock for transformers
     class MockTransformers:

@@ -28,10 +28,159 @@ from googleapiclient.errors import HttpError
 import requests
 import json
 import time
+from enum import Enum
 
 from .base_crawler import BasePlatformCrawler, CrawlResult, CrawlerStatus
 
 logger = logging.getLogger(__name__)
+
+@dataclass
+class YouTubeConfig:
+    """
+    🎬 YouTube Crawler Configuration
+    ===============================
+    
+    Enterprise-grade configuration for YouTube content crawling and monitoring.
+    Supports YouTube Data API v3, Selenium automation, and advanced analytics.
+    
+    Features:
+    - YouTube Data API v3 integration with quota management
+    - Selenium WebDriver automation with anti-detection
+    - Advanced video analytics and trend detection
+    - Channel monitoring and subscriber tracking
+    - Content similarity detection and duplicate identification
+    - Real-time live stream monitoring
+    - Automated playlist management
+    - Comment sentiment analysis
+    - Engagement rate optimization
+    - Revenue and monetization tracking
+    """
+    
+    # API Configuration
+    youtube_api_key: str = "YOUR_YOUTUBE_API_V3_KEY"
+    quota_limit: int = 10000
+    requests_per_second: int = 10
+    max_results_per_search: int = 50
+    
+    # Search and Discovery
+    default_search_order: str = "relevance"  # relevance, date, rating, viewCount, title
+    video_duration_filter: str = "any"  # any, short, medium, long
+    safe_search: str = "moderate"  # none, moderate, strict
+    region_code: str = "US"
+    language: str = "en"
+    
+    # Content Analysis
+    enable_transcript_extraction: bool = True
+    enable_comment_analysis: bool = True
+    enable_thumbnail_analysis: bool = True
+    enable_audio_fingerprinting: bool = True
+    enable_video_fingerprinting: bool = True
+    
+    # Selenium Configuration
+    enable_selenium_fallback: bool = True
+    selenium_headless: bool = True
+    selenium_timeout: int = 30
+    selenium_implicit_wait: int = 10
+    selenium_page_load_timeout: int = 60
+    
+    # Browser Settings
+    user_agent: str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    enable_proxy_rotation: bool = False
+    proxy_list: List[str] = None
+    enable_cookie_management: bool = True
+    
+    # Rate Limiting and Anti-Detection
+    min_delay_between_requests: float = 1.0
+    max_delay_between_requests: float = 3.0
+    random_delay_enabled: bool = True
+    enable_user_agent_rotation: bool = True
+    enable_ip_rotation: bool = False
+    
+    # Channel Monitoring
+    enable_channel_tracking: bool = True
+    track_subscriber_changes: bool = True
+    track_video_uploads: bool = True
+    track_playlist_updates: bool = True
+    monitor_live_streams: bool = True
+    
+    # Analytics and Metrics
+    enable_engagement_tracking: bool = True
+    track_view_velocity: bool = True
+    track_comment_sentiment: bool = True
+    track_like_dislike_ratio: bool = True
+    enable_trend_analysis: bool = True
+    
+    # Content Protection
+    enable_copyright_detection: bool = True
+    enable_duplicate_detection: bool = True
+    similarity_threshold: float = 0.85
+    enable_watermark_detection: bool = True
+    
+    # Export and Storage
+    export_format: str = "json"  # json, csv, xml
+    enable_metadata_export: bool = True
+    enable_thumbnail_download: bool = False
+    enable_video_download: bool = False
+    storage_path: str = "./youtube_data"
+    
+    # Notification Settings
+    enable_notifications: bool = True
+    webhook_url: Optional[str] = None
+    email_notifications: bool = False
+    slack_webhook: Optional[str] = None
+    
+    # Advanced Features
+    enable_ai_analysis: bool = True
+    enable_sentiment_analysis: bool = True
+    enable_keyword_extraction: bool = True
+    enable_category_prediction: bool = True
+    enable_monetization_analysis: bool = True
+    
+    # Error Handling
+    max_retries: int = 3
+    retry_delay: float = 5.0
+    enable_error_logging: bool = True
+    continue_on_error: bool = True
+    
+    # Performance Optimization
+    enable_caching: bool = True
+    cache_duration_hours: int = 24
+    enable_parallel_processing: bool = True
+    max_concurrent_requests: int = 5
+    
+    # Quality Assurance
+    verify_video_availability: bool = True
+    check_age_restrictions: bool = True
+    filter_private_videos: bool = True
+    minimum_video_duration: int = 0  # seconds
+    maximum_video_duration: int = 0  # seconds (0 = no limit)
+    
+    def __post_init__(self):
+        """Post-initialization validation and setup."""
+        if self.proxy_list is None:
+            self.proxy_list = []
+        
+        # Validate API key format
+        if not self.youtube_api_key or self.youtube_api_key == "YOUR_YOUTUBE_API_V3_KEY":
+            logger.warning("YouTube API key not configured - API features will be disabled")
+        
+        # Validate rate limits
+        if self.requests_per_second <= 0:
+            self.requests_per_second = 1
+        
+        # Validate delays
+        if self.min_delay_between_requests > self.max_delay_between_requests:
+            self.max_delay_between_requests = self.min_delay_between_requests
+        
+        # Create storage directory
+        import os
+        os.makedirs(self.storage_path, exist_ok=True)
+        
+        logger.info(f"YouTube crawler configuration initialized")
+        logger.info(f"API features: {'enabled' if self.youtube_api_key != 'YOUR_YOUTUBE_API_V3_KEY' else 'disabled'}")
+        logger.info(f"Selenium fallback: {'enabled' if self.enable_selenium_fallback else 'disabled'}")
+        logger.info(f"Content analysis: {'enabled' if self.enable_transcript_extraction else 'disabled'}")
+        logger.info(f"Storage path: {self.storage_path}")
 
 @dataclass
 class YouTubeVideoInfo:
@@ -53,6 +202,449 @@ YouTube video information structure."""
     video_url: str
     download_url: Optional[str] = None
     metadata: Dict[str, Any] = None
+
+@dataclass
+class YouTubeVideoData:
+    """
+    🎬 YouTube Video Data Structure
+    ==============================
+    
+    Enterprise-grade YouTube video data structure for content analysis,
+    monitoring, and protection. Supports advanced analytics and metadata.
+    """
+    
+    # Basic Video Info
+    video_id: str
+    title: str
+    description: str
+    url: str
+    thumbnail_url: str
+    
+    # Channel Information
+    channel_id: str
+    channel_name: str
+    channel_url: str
+    channel_subscriber_count: int = 0
+    
+    # Video Statistics
+    view_count: int = 0
+    like_count: int = 0
+    dislike_count: int = 0
+    comment_count: int = 0
+    share_count: int = 0
+    
+    # Temporal Data
+    published_at: datetime = None
+    duration: str = "00:00:00"
+    duration_seconds: int = 0
+    crawled_at: datetime = None
+    
+    # Content Analysis
+    category_id: str = ""
+    category_name: str = ""
+    tags: List[str] = None
+    language: str = ""
+    default_audio_language: str = ""
+    
+    # Engagement Metrics
+    engagement_rate: float = 0.0
+    view_velocity: float = 0.0  # views per hour
+    comment_engagement_rate: float = 0.0
+    like_ratio: float = 0.0
+    
+    # Content Classification
+    content_type: str = ""  # music, education, entertainment, etc.
+    is_live: bool = False
+    is_premiere: bool = False
+    is_shorts: bool = False
+    is_age_restricted: bool = False
+    
+    # Video Quality
+    quality_levels: List[str] = None  # 144p, 240p, 360p, 480p, 720p, 1080p, etc.
+    has_captions: bool = False
+    caption_languages: List[str] = None
+    
+    # Monetization
+    is_monetized: bool = False
+    has_ads: bool = False
+    sponsor_segments: List[Dict[str, Any]] = None
+    
+    # Content Protection
+    copyright_claims: List[Dict[str, Any]] = None
+    content_fingerprint: str = ""
+    audio_fingerprint: str = ""
+    similarity_score: float = 0.0
+    
+    # Technical Metadata
+    video_codec: str = ""
+    audio_codec: str = ""
+    file_size: int = 0
+    bitrate: int = 0
+    frame_rate: float = 0.0
+    
+    # Advanced Analytics
+    sentiment_score: float = 0.0  # -1 to 1
+    trending_score: float = 0.0
+    virality_index: float = 0.0
+    predicted_performance: Dict[str, float] = None
+    
+    # Geographic Data
+    country_restrictions: List[str] = None
+    view_geography: Dict[str, int] = None
+    
+    # API Metadata
+    etag: str = ""
+    privacy_status: str = "public"  # public, unlisted, private
+    upload_status: str = "processed"
+    license: str = "youtube"
+    
+    # Additional Data
+    custom_metadata: Dict[str, Any] = None
+    processing_notes: List[str] = None
+    error_info: Dict[str, Any] = None
+    
+    def __post_init__(self):
+        """Post-initialization processing."""
+        if self.tags is None:
+            self.tags = []
+        if self.quality_levels is None:
+            self.quality_levels = []
+        if self.caption_languages is None:
+            self.caption_languages = []
+        if self.sponsor_segments is None:
+            self.sponsor_segments = []
+        if self.copyright_claims is None:
+            self.copyright_claims = []
+        if self.predicted_performance is None:
+            self.predicted_performance = {}
+        if self.country_restrictions is None:
+            self.country_restrictions = []
+        if self.view_geography is None:
+            self.view_geography = {}
+        if self.custom_metadata is None:
+            self.custom_metadata = {}
+        if self.processing_notes is None:
+            self.processing_notes = []
+        if self.error_info is None:
+            self.error_info = {}
+        if self.crawled_at is None:
+            self.crawled_at = datetime.utcnow()
+        
+        # Calculate engagement rate if metrics available
+        if self.view_count > 0:
+            total_engagement = self.like_count + self.comment_count + self.share_count
+            self.engagement_rate = (total_engagement / self.view_count) * 100
+        
+        # Calculate like ratio
+        if self.like_count > 0 or self.dislike_count > 0:
+            self.like_ratio = self.like_count / (self.like_count + self.dislike_count)
+        
+        # Detect if it's YouTube Shorts
+        if self.duration_seconds <= 60 and "#shorts" in self.description.lower():
+            self.is_shorts = True
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary."""
+        return {
+            'video_id': self.video_id,
+            'title': self.title,
+            'description': self.description,
+            'url': self.url,
+            'thumbnail_url': self.thumbnail_url,
+            'channel_id': self.channel_id,
+            'channel_name': self.channel_name,
+            'channel_url': self.channel_url,
+            'channel_subscriber_count': self.channel_subscriber_count,
+            'view_count': self.view_count,
+            'like_count': self.like_count,
+            'dislike_count': self.dislike_count,
+            'comment_count': self.comment_count,
+            'share_count': self.share_count,
+            'published_at': self.published_at.isoformat() if self.published_at else None,
+            'duration': self.duration,
+            'duration_seconds': self.duration_seconds,
+            'crawled_at': self.crawled_at.isoformat() if self.crawled_at else None,
+            'category_id': self.category_id,
+            'category_name': self.category_name,
+            'tags': self.tags,
+            'language': self.language,
+            'default_audio_language': self.default_audio_language,
+            'engagement_rate': self.engagement_rate,
+            'view_velocity': self.view_velocity,
+            'comment_engagement_rate': self.comment_engagement_rate,
+            'like_ratio': self.like_ratio,
+            'content_type': self.content_type,
+            'is_live': self.is_live,
+            'is_premiere': self.is_premiere,
+            'is_shorts': self.is_shorts,
+            'is_age_restricted': self.is_age_restricted,
+            'quality_levels': self.quality_levels,
+            'has_captions': self.has_captions,
+            'caption_languages': self.caption_languages,
+            'is_monetized': self.is_monetized,
+            'has_ads': self.has_ads,
+            'sponsor_segments': self.sponsor_segments,
+            'copyright_claims': self.copyright_claims,
+            'content_fingerprint': self.content_fingerprint,
+            'audio_fingerprint': self.audio_fingerprint,
+            'similarity_score': self.similarity_score,
+            'video_codec': self.video_codec,
+            'audio_codec': self.audio_codec,
+            'file_size': self.file_size,
+            'bitrate': self.bitrate,
+            'frame_rate': self.frame_rate,
+            'sentiment_score': self.sentiment_score,
+            'trending_score': self.trending_score,
+            'virality_index': self.virality_index,
+            'predicted_performance': self.predicted_performance,
+            'country_restrictions': self.country_restrictions,
+            'view_geography': self.view_geography,
+            'etag': self.etag,
+            'privacy_status': self.privacy_status,
+            'upload_status': self.upload_status,
+            'license': self.license,
+            'custom_metadata': self.custom_metadata,
+            'processing_notes': self.processing_notes,
+            'error_info': self.error_info
+        }
+
+@dataclass
+class YouTubeChannelData:
+    """
+    🎬 YouTube Channel Data Structure
+    ================================
+    
+    Enterprise-grade YouTube channel data structure for comprehensive
+    channel analysis, monitoring, and content strategy.
+    """
+    
+    # Basic Channel Info
+    channel_id: str
+    title: str
+    description: str
+    url: str
+    custom_url: str = ""
+    
+    # Channel Thumbnails
+    thumbnail_url: str = ""
+    banner_url: str = ""
+    
+    # Statistics
+    subscriber_count: int = 0
+    video_count: int = 0
+    view_count: int = 0
+    total_watch_time_hours: float = 0.0
+    
+    # Temporal Data
+    published_at: datetime = None
+    crawled_at: datetime = None
+    
+    # Channel Classification
+    category: str = ""
+    content_type: str = ""
+    channel_type: str = "normal"  # normal, music, gaming, news, etc.
+    
+    # Geographic & Language
+    country: str = ""
+    default_language: str = ""
+    supported_languages: List[str] = None
+    
+    # Content Analysis
+    upload_frequency: str = ""  # daily, weekly, monthly, etc.
+    average_video_length: float = 0.0  # seconds
+    most_popular_content: str = ""
+    content_categories: List[str] = None
+    
+    # Engagement Metrics
+    average_views_per_video: float = 0.0
+    engagement_rate: float = 0.0
+    subscriber_growth_rate: float = 0.0
+    
+    # Monetization
+    is_monetized: bool = False
+    has_channel_memberships: bool = False
+    has_super_chat: bool = False
+    merchandise_shelf: bool = False
+    
+    # Verification & Features
+    is_verified: bool = False
+    has_custom_thumbnail: bool = False
+    has_live_streaming: bool = False
+    has_shorts: bool = False
+    
+    # Channel Analytics
+    trending_videos: List[str] = None  # video IDs
+    top_performing_videos: List[str] = None
+    collaboration_channels: List[str] = None
+    
+    # Social Media Links
+    social_links: Dict[str, str] = None
+    
+    # Content Protection
+    copyright_strikes: int = 0
+    community_guidelines_strikes: int = 0
+    
+    # API Metadata
+    etag: str = ""
+    privacy_status: str = "public"
+    
+    # Additional Data
+    custom_metadata: Dict[str, Any] = None
+    processing_notes: List[str] = None
+    error_info: Dict[str, Any] = None
+    
+    def __post_init__(self):
+        """Post-initialization processing."""
+        if self.supported_languages is None:
+            self.supported_languages = []
+        if self.content_categories is None:
+            self.content_categories = []
+        if self.trending_videos is None:
+            self.trending_videos = []
+        if self.top_performing_videos is None:
+            self.top_performing_videos = []
+        if self.collaboration_channels is None:
+            self.collaboration_channels = []
+        if self.social_links is None:
+            self.social_links = {}
+        if self.custom_metadata is None:
+            self.custom_metadata = {}
+        if self.processing_notes is None:
+            self.processing_notes = []
+        if self.error_info is None:
+            self.error_info = {}
+        if self.crawled_at is None:
+            self.crawled_at = datetime.utcnow()
+        
+        # Calculate engagement rate
+        if self.subscriber_count > 0 and self.video_count > 0:
+            self.average_views_per_video = self.view_count / self.video_count
+            self.engagement_rate = (self.average_views_per_video / self.subscriber_count) * 100
+
+@dataclass
+class YouTubeAnalytics:
+    """
+    📊 YouTube Analytics Data Structure
+    ==================================
+    
+    Advanced analytics data for YouTube content and channels,
+    including performance metrics, trends, and insights.
+    """
+    
+    # Basic Identifiers
+    entity_id: str  # video_id or channel_id
+    entity_type: str  # "video" or "channel"
+    analytics_date: datetime
+    
+    # Performance Metrics
+    views: int = 0
+    impressions: int = 0
+    click_through_rate: float = 0.0
+    watch_time_minutes: float = 0.0
+    average_view_duration: float = 0.0
+    
+    # Engagement Metrics
+    likes: int = 0
+    dislikes: int = 0
+    comments: int = 0
+    shares: int = 0
+    subscribers_gained: int = 0
+    subscribers_lost: int = 0
+    
+    # Traffic Sources
+    traffic_sources: Dict[str, int] = None
+    
+    # Demographics
+    age_demographics: Dict[str, float] = None  # age ranges and percentages
+    gender_demographics: Dict[str, float] = None
+    geographic_distribution: Dict[str, int] = None
+    
+    # Device & Platform
+    device_types: Dict[str, int] = None
+    operating_systems: Dict[str, int] = None
+    
+    # Revenue Data (if available)
+    estimated_revenue: float = 0.0
+    rpm: float = 0.0  # revenue per mille
+    cpm: float = 0.0  # cost per mille
+    
+    # Content Performance
+    audience_retention: List[float] = None  # retention curve
+    top_moments: List[Dict[str, Any]] = None
+    
+    # Additional Insights
+    custom_analytics: Dict[str, Any] = None
+    
+    def __post_init__(self):
+        """Post-initialization processing."""
+        if self.traffic_sources is None:
+            self.traffic_sources = {}
+        if self.age_demographics is None:
+            self.age_demographics = {}
+        if self.gender_demographics is None:
+            self.gender_demographics = {}
+        if self.geographic_distribution is None:
+            self.geographic_distribution = {}
+        if self.device_types is None:
+            self.device_types = {}
+        if self.operating_systems is None:
+            self.operating_systems = {}
+        if self.audience_retention is None:
+            self.audience_retention = []
+        if self.top_moments is None:
+            self.top_moments = []
+        if self.custom_analytics is None:
+            self.custom_analytics = {}
+
+class YouTubeContentType(str, Enum):
+    """
+    🎬 YouTube Content Types
+    =======================
+    
+    Enumeration of different YouTube content types for classification
+    and content strategy optimization.
+    """
+    
+    # Video Types
+    MUSIC = "music"
+    GAMING = "gaming"
+    EDUCATION = "education"
+    ENTERTAINMENT = "entertainment"
+    NEWS = "news"
+    SPORTS = "sports"
+    TECHNOLOGY = "technology"
+    LIFESTYLE = "lifestyle"
+    TRAVEL = "travel"
+    FOOD = "food"
+    BEAUTY = "beauty"
+    FASHION = "fashion"
+    FITNESS = "fitness"
+    COMEDY = "comedy"
+    DOCUMENTARY = "documentary"
+    ANIMATION = "animation"
+    
+    # Format Types
+    SHORTS = "shorts"
+    LIVE_STREAM = "live_stream"
+    PREMIERE = "premiere"
+    PODCAST = "podcast"
+    TUTORIAL = "tutorial"
+    REVIEW = "review"
+    VLOG = "vlog"
+    UNBOXING = "unboxing"
+    REACTION = "reaction"
+    COMPILATION = "compilation"
+    
+    # Business Types
+    CORPORATE = "corporate"
+    MARKETING = "marketing"
+    PRODUCT_DEMO = "product_demo"
+    WEBINAR = "webinar"
+    INTERVIEW = "interview"
+    
+    # Other
+    OTHER = "other"
+    UNKNOWN = "unknown"
 
 @dataclass
 class YouTubeChannelInfo:

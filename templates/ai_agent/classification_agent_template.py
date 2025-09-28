@@ -24,7 +24,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from pydantic import BaseModel, Field, validator
 
 from ai.base_agent import BaseAIAgent

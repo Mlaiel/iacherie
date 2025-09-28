@@ -40,7 +40,7 @@ import soundfile as sf
 # AI/ML for Content Analysis
 import torch
 import torchvision.transforms as transforms
-from transformers import pipeline
+# from transformers import pipeline
 
 # Database & Storage
 import redis

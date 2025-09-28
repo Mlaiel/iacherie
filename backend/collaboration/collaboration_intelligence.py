@@ -42,8 +42,9 @@ try:
     from sklearn.decomposition import PCA
     from sklearn.neural_network import MLPClassifier, MLPRegressor
     import xgboost as xgb
-    import tensorflow as tf
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import networkx as nx
     from gensim.models import Word2Vec, Doc2Vec

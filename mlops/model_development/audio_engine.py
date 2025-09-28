@@ -34,7 +34,8 @@ except ImportError:
     warnings.warn("scipy not available. Signal processing will be limited.")
 
 try:
-    import tensorflow as tf
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     TF_AVAILABLE = True
 except ImportError:
     TF_AVAILABLE = False

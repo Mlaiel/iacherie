@@ -1,0 +1,94 @@
+/**
+ * 🤖 AI GENERATION API - REAL AI SERVICES ONLY
+ * NO SIMULATION - DIRECT CONNECTION TO REAL BACKEND
+ * Author: Fahed Mlaiel
+ */
+
+import { NextRequest, NextResponse } from 'next/server';
+
+const BACKEND_URL = 'http://localhost:8000';
+
+export async function POST(request: NextRequest) {
+  try {
+    const { prompt, type, options } = await request.json();
+    
+    console.log('🔥 REAL AI CONNECTION - NO SIMULATION - 53 Real Agents');
+    
+    if (!prompt) {
+      return NextResponse.json(
+        { success: false, error: 'Prompt is required' },
+        { status: 400 }
+      );
+    }
+
+    // DIRECT CONNECTION TO REAL BACKEND - NO SIMULATION
+    const backendResponse = await fetch(`${BACKEND_URL}/ai-agents`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'generate',
+        prompt,
+        type: type || 'content-generation',
+        options: options || {}
+      })
+    });
+
+    if (!backendResponse.ok) {
+      const errorText = await backendResponse.text();
+      throw new Error(`Backend error ${backendResponse.status}: ${errorText}`);
+    }
+
+    const realResult = await backendResponse.json();
+    
+    console.log('✅ Real AI result received from 53+ agents backend');
+    
+    return NextResponse.json({
+      success: true,
+      data: realResult.data || realResult,
+      source: realResult.source || '53+ Real AI Agents Backend',
+      status: realResult.status || '✅ REAL AI GENERATED',
+      timestamp: new Date().toISOString(),
+      no_simulation: true
+    });
+
+  } catch (error) {
+    console.error('❌ Real AI connection failed:', error);
+    
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: `Real AI backend connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: 'NO SIMULATION PROVIDED - Only real AI services supported',
+        timestamp: new Date().toISOString()
+      },
+      { status: 503 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    console.log('🔗 Fetching real AI services from backend...');
+    
+    const response = await fetch(`${BACKEND_URL}/ai-agents`);
+    
+    if (response.ok) {
+      const realServices = await response.json();
+      return NextResponse.json({
+        success: true,
+        data: realServices,
+        source: 'Real AI Services Backend'
+      });
+    }
+  } catch (error) {
+    console.error('Real AI services unavailable:', error);
+  }
+
+  return NextResponse.json(
+    { 
+      success: false, 
+      error: 'Real AI services temporarily unavailable - NO SIMULATION'
+    },
+    { status: 503 }
+  );
+}

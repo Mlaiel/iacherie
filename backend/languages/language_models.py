@@ -29,11 +29,14 @@ from pathlib import Path
 
 try:
     import torch
-    from transformers import (
+    # from transformers import (
         AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
         pipeline, BertTokenizer, BertModel
     )
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
@@ -346,7 +349,7 @@ class LanguageModelEngine:
         
         try:
             if model_type == ModelType.SENTENCE_TRANSFORMER:
-                model = SentenceTransformer(model_name)
+                model = get_sentence_transformer(model_name)
                 tokenizer = None
             else:
                 tokenizer = AutoTokenizer.from_pretrained(model_name)

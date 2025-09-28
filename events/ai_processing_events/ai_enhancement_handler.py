@@ -20,7 +20,7 @@ import numpy as np
 from enum import Enum
 import torch
 import torch.nn.functional as F
-from transformers import pipeline, AutoModel, AutoTokenizer
+# from transformers import pipeline, AutoModel, AutoTokenizer
 
 # AI and ML imports
 import cv2

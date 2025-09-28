@@ -1150,24 +1150,24 @@ Initialize analytics engine."""
             
             # Implementation for _aggregate_metrics
             # TODO: Add specific business logic here
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess__update_prediction_models_input(data)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__update_prediction_models_result(result)
-            
-                    logger.info(f"AI processing _update_prediction_models completed")
-                    return final_result
-            
-                except Exception as e:
+            try:
+                # AI model processing
+                if not hasattr(self, 'model') or self.model is None:
+                    raise RuntimeError("AI model not initialized")
+        
+                # Preprocess input
+                processed_input = await self._preprocess__update_prediction_models_input(data)
+        
+                # Run inference
+                result = await self.model.predict(processed_input)
+        
+                # Postprocess result
+                final_result = await self._postprocess__update_prediction_models_result(result)
+        
+                logger.info(f"AI processing _update_prediction_models completed")
+                return final_result
+        
+            except Exception as e:
                     logger.error(f"AI processing _update_prediction_models failed: {e}")
                     raise
             return result

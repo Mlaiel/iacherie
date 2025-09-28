@@ -64,7 +64,9 @@ except ImportError:
     SKLEARN_AVAILABLE = False
 
 try:
-    import tensorflow as tf
+        # Utilisation du gestionnaire TensorFlow centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
     import keras
     TENSORFLOW_AVAILABLE = True
 except ImportError:

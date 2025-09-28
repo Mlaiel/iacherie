@@ -44,7 +44,8 @@ import aiohttp
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 logger = logging.getLogger(__name__)
 

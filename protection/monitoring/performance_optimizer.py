@@ -56,13 +56,15 @@ from datetime import datetime, timedelta
 from enum import Enum
 from collections import defaultdict, deque
 
-# Use our compatibility wrapper for aioredis
-from ..utils # Safe Redis import with Python 3.12 compatibility
+# Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True
 except (ImportError, TypeError) as e:
     # Handle Python 3.12 TimeoutError duplicate base class issue
+    from ..utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
+    import logging
+    logging.warning(f"Using Redis compatibility layer: {e}")
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
     logging.warning(f"Using Redis compatibility layer: {e}"), REDIS_AVAILABLE
@@ -218,7 +220,7 @@ class PerformanceOptimizer:
     def __init__(
         self,
         config: Dict[str, Any],
-        redis_client: Optional[aioredis.Redis] = None,
+        redis_client: Optional[Any] = None,
         db_session: Optional[AsyncSession] = None
     ):
         """
@@ -2030,7 +2032,7 @@ class PerformanceOptimizer:
     def __init__(
         self,
         config: Dict[str, Any],
-        redis_client: Optional[aioredis.Redis] = None,
+        redis_client: Optional[Any] = None,
         db_session: Optional[AsyncSession] = None
     ):
         """

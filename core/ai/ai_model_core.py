@@ -10,7 +10,7 @@ Enterprise-grade AI model management with >99.99% uptime guarantee.
 
 import asyncio
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 from enum import Enum
 from dataclasses import dataclass, field
@@ -117,7 +117,8 @@ class AIModelCore:
     monitoring, and optimization with enterprise-grade reliability.
     """
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
+        self.level = level
         self.models: Dict[str, ModelConfiguration] = {}
         self.deployments: Dict[str, ModelDeployment] = {}
         self.model_registry: Dict[str, Any] = {}
@@ -125,7 +126,7 @@ class AIModelCore:
         self.auto_scaling_rules: Dict[str, Dict[str, Any]] = {}
         self.initialized = False
         
-        logger.info("AI Model Core initialized")
+        logger.info(f"AI Model Core initialized - Level: {level}")
     
     async def initialize(self) -> bool:
         """Initialize the AI model management system"""
@@ -628,7 +629,7 @@ class AIModelCore:
                 },
                 "performance_metrics": self.performance_metrics,
                 "uptime_guarantee": ">99.99%",
-                "last_updated": datetime.utcnow().isoformat()
+                "last_updated": datetime.now(timezone.utc).isoformat()
             }
             
         except Exception as e:

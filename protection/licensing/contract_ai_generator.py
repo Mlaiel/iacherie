@@ -34,10 +34,10 @@ import hashlib
 from pathlib import Path
 import re
 import nltk
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
 import openai
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 
 logger = logging.getLogger(__name__)
 
@@ -162,7 +162,7 @@ Initialize AI contract generator with configuration."""
             )
             
             # Sentence embedding model for clause similarity
-            self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+            self.sentence_model = get_sentence_transformer('all-MiniLM-L6-v2')
             
             # Legal document classifier
             self.document_classifier = pipeline(

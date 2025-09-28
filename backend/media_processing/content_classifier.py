@@ -41,7 +41,7 @@ import structlog
 try:
     import torch
     import torch.nn.functional as F
-    from transformers import (
+    # from transformers import (
         AutoModel, AutoTokenizer, AutoProcessor,
         CLIPModel, CLIPProcessor,
         pipeline, AutoImageProcessor,
@@ -50,7 +50,10 @@ try:
     import cv2
     from PIL import Image, ExifTags
     import librosa
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
     import spacy
     _AI_AVAILABLE = True
 except ImportError:

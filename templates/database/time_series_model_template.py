@@ -42,9 +42,10 @@ import statsmodels.api as sm
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from statsmodels.tsa.seasonal import seasonal_decompose
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# Sequential sera accessible via tf.keras.models.Sequential
+# LSTM, Dense, Dropout seront accessibles via tf.keras.layers
 import joblib
 import warnings
 warnings.filterwarnings('ignore')

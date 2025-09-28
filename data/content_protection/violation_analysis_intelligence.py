@@ -36,7 +36,7 @@ from pydantic import BaseModel, Field
 # AI/ML Imports
 import torch
 import torch.nn as nn
-from transformers import pipeline
+# from transformers import pipeline
 from sklearn.cluster import DBSCAN, KMeans
 from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.preprocessing import StandardScaler

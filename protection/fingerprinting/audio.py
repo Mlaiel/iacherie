@@ -36,9 +36,15 @@ try:
     from sklearn.preprocessing import StandardScaler
     import torch
     import torch.nn as nn
-    from transformers import Wav2Vec2Model, Wav2Vec2Processor
+    # from transformers import Wav2Vec2Model, Wav2Vec2Processor
+    AUDIO_DEPS_AVAILABLE = True
 except ImportError as e:
     logging.warning(f"Some audio dependencies not available: {e}")
+    AUDIO_DEPS_AVAILABLE = False
+    # Mock chromaprint for compatibility
+    class MockChromaprint:
+        ALGORITHM_DEFAULT = 1
+    chromaprint = MockChromaprint()
 
 from ..models import FingerprintResult, SimilarityMatch
 
@@ -65,7 +71,7 @@ class ChromaprintExtractor:
     """
 Advanced Chromaprint fingerprinting with extended features."""
     
-    def __init__(self, algorithm: int = chromaprint.ALGORITHM_DEFAULT):
+    def __init__(self, algorithm: int = 1):  # Default algorithm value
         self.algorithm = algorithm
         self.duration_threshold = 30.0  # Minimum 30 seconds for reliable fingerprint
         

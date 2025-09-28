@@ -22,7 +22,7 @@ from enum import Enum
 import json
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import numpy as np
     from sklearn.feature_extraction.text import TfidfVectorizer

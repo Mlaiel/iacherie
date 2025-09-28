@@ -29,7 +29,7 @@ try:
     from pydub import AudioSegment
     from pydub.utils import which
     import speech_recognition as sr
-    from transformers import pipeline
+    # from transformers import pipeline
     import mutagen
     from mutagen.id3 import ID3, TIT2, TPE1, TALB, TDRC, TCON, COMM, TXXX
     from mutagen.mp3 import MP3

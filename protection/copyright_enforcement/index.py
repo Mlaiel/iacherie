@@ -81,7 +81,7 @@ import httpx
 # AI/ML Enterprise imports
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel
+# from transformers import AutoTokenizer, AutoModel
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import cv2

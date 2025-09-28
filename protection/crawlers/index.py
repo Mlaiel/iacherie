@@ -85,7 +85,7 @@ import httpx
 # AI/ML Enterprise imports
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier, IsolationForest
 from sklearn.metrics.pairwise import cosine_similarity
@@ -267,15 +267,23 @@ CRAWLER_MONITORING_CONFIG = {
 }
 
 # ⚙️ DEVOPS - Prometheus Metrics for Enterprise Crawler Monitoring
-crawler_requests_total = Counter(
-    'crawler_system_requests_total',
-    'Total number of crawler requests',
+try:
+    # Clear any existing metrics to avoid duplication
+    from prometheus_client import CollectorRegistry, REGISTRY
+    REGISTRY._collector_to_names.clear()
+    REGISTRY._names_to_collectors.clear()
+except:
+    pass
+
+crawler_system_requests_total = Counter(
+    'crawler_enterprise_requests_total',
+    'Total number of crawler requests by platform',
     ['platform', 'content_type', 'status', 'crawler_type']
 )
 
-crawler_processing_time = Histogram(
-    'crawler_system_processing_seconds',
-    'Time spent processing crawler requests',
+crawler_system_processing_time = Histogram(
+    'crawler_enterprise_processing_seconds',
+    'Time spent processing crawler requests by platform',
     ['platform', 'complexity', 'stage']
 )
 

@@ -15,8 +15,22 @@ import numpy as np
 from abc import ABC, abstractmethod
 import aiohttp
 import torch
-import tensorflow as tf
-from transformers import pipeline, AutoTokenizer, AutoModel
+
+# Import TensorFlow via singleton pour éviter les conflits
+from core.tensorflow_singleton import get_tensorflow
+
+def _get_tensorflow_models():
+    """Initialise TensorFlow et les modèles de manière sécurisée"""
+    tf = get_tensorflow()
+    # Import transformers seulement après l'initialisation TensorFlow
+    # from transformers import pipeline, AutoTokenizer, AutoModel
+    return tf, pipeline, AutoTokenizer, AutoModel
+
+# Initialiser les modules de manière paresseuse pour éviter les conflits
+_tf = None
+_pipeline = None 
+_AutoTokenizer = None
+_AutoModel = None
 
 # Enterprise AI Configuration
 @dataclass
@@ -217,8 +231,13 @@ class AudienceIntelligenceAgent(AIAgent):
     def _load_models(self):
         """Load ML models for audience analysis"""
         try:
+            # Initialiser TensorFlow et transformers de manière sécurisée
+            global _tf, _pipeline, _AutoTokenizer, _AutoModel
+            if _tf is None:
+                _tf, _pipeline, _AutoTokenizer, _AutoModel = _get_tensorflow_models()
+            
             # Load sentiment analysis model
-            self.ml_models['sentiment'] = pipeline("sentiment-analysis")
+            self.ml_models['sentiment'] = _pipeline("sentiment-analysis")
             
             # Load demographic prediction model (mock)
             self.ml_models['demographics'] = None

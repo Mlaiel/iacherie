@@ -49,7 +49,7 @@ from enum import Enum
 from collections import defaultdict, deque
 
 # Use compatibility wrapper for aioredis
-from ..utils # Safe Redis import with Python 3.12 compatibility
+# Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True
@@ -104,8 +104,8 @@ except ImportError:
 
 # Optional TensorFlow imports with fallbacks
 try:
-    from tensorflow.keras.models import Sequential
-    from tensorflow.keras.layers import LSTM, Dense, Dropout
+    # Sequential sera accessible via tf.keras.models.Sequential
+    # LSTM, Dense, Dropout seront accessibles via tf.keras.layers
     TENSORFLOW_AVAILABLE = True
 except ImportError:
     TENSORFLOW_AVAILABLE = False

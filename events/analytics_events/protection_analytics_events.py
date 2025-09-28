@@ -27,7 +27,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.ensemble import IsolationForest
 import torch
 import torch.nn.functional as F
-from transformers import CLIPModel, CLIPProcessor
+# from transformers import CLIPModel, CLIPProcessor
 
 from ...core.events.base_event import BaseEvent, BaseEventHandler
 from ...core.cache import CacheManager

@@ -43,7 +43,7 @@ except ImportError:
 
 try:
     import torch
-    from transformers import AutoTokenizer, AutoModel, pipeline
+    # from transformers import AutoTokenizer, AutoModel, pipeline
 except ImportError:
     torch = None
     AutoTokenizer = None

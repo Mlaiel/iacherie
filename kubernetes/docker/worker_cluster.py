@@ -900,8 +900,8 @@ mkdir -p /app/models/{text,audio,image,video}
 # Download text models
 echo "📝 Downloading text processing models..."
 python -c "
-from transformers import AutoTokenizer, AutoModel
-from sentence_transformers import SentenceTransformer
+# from transformers import AutoTokenizer, AutoModel
+# from sentence_transformers import SentenceTransformer
 
 # Download BERT for text analysis
 tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -910,7 +910,7 @@ tokenizer.save_pretrained('/app/models/text/bert-base-uncased')
 model.save_pretrained('/app/models/text/bert-base-uncased')
 
 # Download sentence transformers
-st_model = SentenceTransformer('all-MiniLM-L6-v2')
+st_model = get_sentence_transformer('all-MiniLM-L6-v2')
 st_model.save('/app/models/text/sentence-transformers')
 
 print('✅ Text models downloaded')
@@ -929,7 +929,7 @@ print('✅ Audio models ready')
 # Download image models
 echo "🖼️ Downloading image processing models..."
 python -c "
-from transformers import CLIPProcessor, CLIPModel
+# from transformers import CLIPProcessor, CLIPModel
 
 # Download CLIP for image analysis
 processor = CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32')

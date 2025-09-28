@@ -29,13 +29,17 @@ import numpy as np
 import cv2
 import librosa
 import torch
-import transformers
-from transformers import AutoModel, AutoTokenizer, pipeline
-import tensorflow as tf
+# import transformers
+# from transformers import AutoModel, AutoTokenizer, pipeline
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from PIL import Image
 import whisper
 import clip
-from sentence_transformers import SentenceTransformer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -207,7 +211,7 @@ class ContentAnalysisDeployment:
                                            model="cardiffnlp/twitter-roberta-base-sentiment-latest")
             self.text_summarizer = pipeline("summarization", 
                                            model="facebook/bart-large-cnn")
-            self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
+            self.sentence_transformer = get_sentence_transformer('all-MiniLM-L6-v2')
             
             # Image analysis models
             self.clip_model, self.clip_preprocess = clip.load("ViT-B/32")

@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 from textblob import TextBlob
 import spacy
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
 
 # Configure logging

@@ -48,7 +48,7 @@ import networkx as nx
 
 # Natural language processing
 import spacy
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
 
 # Web scraping and data collection

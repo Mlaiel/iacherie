@@ -14,6 +14,18 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
+# Suppression des warnings système au démarrage
+try:
+    import sys
+    import os
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''
+    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+    import warnings
+    warnings.filterwarnings('ignore')
+except:
+    pass
+
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type, Protocol
@@ -167,7 +179,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -186,7 +198,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -207,7 +219,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -236,7 +248,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -257,7 +269,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -275,7 +287,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")
@@ -292,7 +304,7 @@ class AinflueCoreEngine:
         for name, system_class in systems.items():
             if system_class:
                 try:
-                    self.core_systems[name] = system_class(level=self.level.value)
+                    self.core_systems[name] = system_class()
                     logger.info(f"✅ {name} system initialized")
                 except Exception as e:
                     logger.error(f"❌ Failed to initialize {name}: {e}")

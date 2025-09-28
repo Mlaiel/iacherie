@@ -9,7 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from pydantic import BaseModel, Field
 from enum import Enum
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 import asyncio
 import uuid
 import hashlib
@@ -110,7 +110,7 @@ class FingerprintRequest(BaseModel):
     content_id: str = Field(..., description="Content identifier")
     creator_id: str = Field(..., description="Creator identifier")
     content_type: ContentType = Field(..., description="Content type")
-    fingerprint_types: List[FingerprintType] = Field(..., min_items=1, description="Fingerprinting algorithms")
+    fingerprint_types: List[FingerprintType] = Field(..., min_length=1, description="Fingerprinting algorithms")
     content_url: Optional[str] = Field(None, description="Content URL")
     content_data: Optional[bytes] = Field(None, description="Content binary data")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Content metadata")

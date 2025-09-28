@@ -35,15 +35,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
-# Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+# Redis import avec support Python 3.12
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import monitoring components
@@ -520,7 +513,7 @@ Initialize the API gateway."""
                     error=str(e)
                 )
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client: Any, db_session: Any):
         """Initialize the API gateway."""
         self.redis_client = redis_client
         self.db_session = db_session

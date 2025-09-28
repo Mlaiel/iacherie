@@ -41,7 +41,7 @@ import structlog
 try:
     import torch
     import torch.nn.functional as F
-    from transformers import (
+    # from transformers import (
         AutoModel, AutoTokenizer, AutoProcessor,
         CLIPModel, CLIPProcessor,
         WhisperProcessor, WhisperForConditionalGeneration

@@ -36,8 +36,8 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 import torchaudio
 import torchvision
-import transformers
-from transformers import AutoTokenizer, AutoModel
+# import transformers
+# from transformers import AutoTokenizer, AutoModel
 import cv2
 import librosa
 from PIL import Image

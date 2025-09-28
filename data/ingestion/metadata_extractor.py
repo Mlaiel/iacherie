@@ -41,7 +41,7 @@ import docx
 import magic
 
 # AI and NLP libraries  
-from transformers import pipeline
+# from transformers import pipeline
 import spacy
 from langdetect import detect
 import textstat

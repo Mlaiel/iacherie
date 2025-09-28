@@ -67,7 +67,7 @@ except ImportError:
     models = TorchStub()
 
 try:
-    from transformers import (
+    # from transformers import (
         pipeline, AutoTokenizer, AutoModel,
         CLIPProcessor, CLIPModel,
         ViTImageProcessor, ViTForImageClassification
@@ -103,7 +103,10 @@ except ImportError:
     spacy = None
 
 try:
-    import tensorflow as tf
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 except ImportError:
     tf = None
 

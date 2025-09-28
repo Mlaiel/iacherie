@@ -44,9 +44,13 @@ import essentia.standard as es
 import chromaprint
 import imagehash
 import torch
-import tensorflow as tf
-from transformers import CLIPProcessor, CLIPModel, BertTokenizer, BertModel
-from sentence_transformers import SentenceTransformer
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import CLIPProcessor, CLIPModel, BertTokenizer, BertModel
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 import faiss
 from prometheus_client import Counter, Histogram, Gauge
 
@@ -884,7 +888,7 @@ class TextFingerprintEngine:
         """
 Initialize text fingerprinting engine."""
         # Load pre-trained models
-        self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
+        self.sentence_transformer = get_sentence_transformer('all-MiniLM-L6-v2')
         self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.bert_model = BertModel.from_pretrained('bert-base-uncased')
         

@@ -51,7 +51,7 @@ try:
     from PIL.ExifTags import TAGS
     import cv2
     import numpy as np
-    from transformers import pipeline, BlipProcessor, BlipForConditionalGeneration
+    # from transformers import pipeline, BlipProcessor, BlipForConditionalGeneration
     from colorthief import ColorThief
     import requests
     from io import BytesIO

@@ -127,11 +127,11 @@ Smart contract definition."""
 class DigitalRightsNFT:
     """NFT representing digital rights."""
     nft_id: str
-    token_id: Optional[int] = None
-    contract_address: Optional[str] = None
     content_id: str
     owner_address: str
     creator_address: str
+    token_id: Optional[int] = None
+    contract_address: Optional[str] = None
     network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     metadata_uri: Optional[str] = None
     rights_data: Dict[str, Any] = field(default_factory=dict)

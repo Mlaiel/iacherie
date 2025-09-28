@@ -82,7 +82,7 @@ import httpx
 # AI/ML Enterprise imports
 import torch
 import torch.nn as nn
-from transformers import AutoTokenizer, AutoModel, pipeline
+# from transformers import AutoTokenizer, AutoModel, pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier, IsolationForest
 from sklearn.metrics.pairwise import cosine_similarity
@@ -100,7 +100,19 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 # Enhanced imports for alert system
 import redis.asyncio as redis
 from celery import Celery
-import aiokafka
+
+# Fallback import for aiokafka
+try:
+    import aiokafka
+except ImportError:
+    class aiokafka:
+        """Fallback aiokafka module for testing"""
+        class AIOKafkaProducer:
+            def __init__(self, *args, **kwargs): pass
+            async def start(self): pass
+            async def stop(self): pass
+            async def send(self, *args, **kwargs): return None
+
 from sqlalchemy import select, update, delete, text
 from websockets.exceptions import ConnectionClosed
 

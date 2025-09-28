@@ -42,6 +42,9 @@ from pymongo import MongoClient, ASCENDING, DESCENDING
 from motor.motor_asyncio import AsyncIOMotorClient
 import redis.asyncio as redis
 
+# Import SocialPlatform enum
+from backend.integrations.social_media_hub import SocialPlatform
+
 # 🧠 ML: Advanced analytics and machine learning
 import pandas as pd
 import numpy as np

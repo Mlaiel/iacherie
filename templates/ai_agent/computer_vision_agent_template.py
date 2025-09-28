@@ -19,7 +19,7 @@ import cv2
 from PIL import Image, ImageEnhance, ImageFilter
 import torch
 import torchvision.transforms as transforms
-from transformers import pipeline, AutoModel, AutoTokenizer
+# from transformers import pipeline, AutoModel, AutoTokenizer
 from pydantic import BaseModel, Field, validator
 
 from ai.base_agent import BaseAIAgent

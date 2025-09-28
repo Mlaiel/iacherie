@@ -572,7 +572,8 @@ async def load_model():
             import joblib
             model = joblib.load("model.pkl")
         elif MODEL_FRAMEWORK.lower() in ["tensorflow", "tf"]:
-            import tensorflow as tf
+            from core.tensorflow_singleton import get_tensorflow
+            tf = get_tensorflow()
             model = tf.keras.models.load_model("model")
         elif MODEL_FRAMEWORK.lower() in ["pytorch", "torch"]:
             import torch
@@ -612,7 +613,8 @@ def predict(data: List[Dict[str, Any]]) -> List[Any]:
                 predictions = model.predict(np.array(data))
         
         elif MODEL_FRAMEWORK.lower() in ["tensorflow", "tf"]:
-            import tensorflow as tf
+            from core.tensorflow_singleton import get_tensorflow
+            tf = get_tensorflow()
             # Convert to tensor
             if isinstance(data[0], dict):
                 df = pd.DataFrame(data)

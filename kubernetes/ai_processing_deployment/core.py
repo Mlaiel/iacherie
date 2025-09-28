@@ -26,8 +26,9 @@ import yaml
 from kubernetes import client, config
 from prometheus_client import Counter, Histogram, Gauge
 import torch
-import tensorflow as tf
-from transformers import pipeline
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from transformers import pipeline
 import redis
 import psycopg2
 from sqlalchemy import create_engine
@@ -230,7 +231,7 @@ Load video fingerprinting model."""
     def _load_image_model(self, model_path: str, config: Dict[str, Any]):
         """
 Load image fingerprinting model."""
-        from transformers import CLIPProcessor, CLIPModel
+        # from transformers import CLIPProcessor, CLIPModel
         import imagehash
         from PIL import Image
         
@@ -247,11 +248,14 @@ Load image fingerprinting model."""
     
     def _load_text_model(self, model_path: str, config: Dict[str, Any]):
         """Load text fingerprinting model."""
-        from transformers import AutoModel, AutoTokenizer
-        from sentence_transformers import SentenceTransformer
+        # from transformers import AutoModel, AutoTokenizer
+        # Import avec gestionnaire TensorFlow singleton
+        from core.tensorflow_singleton import get_tensorflow
+        tf = get_tensorflow()
+        # from sentence_transformers import SentenceTransformer
         
         # Load sentence transformer for text embeddings
-        model = SentenceTransformer('all-MiniLM-L6-v2')
+        model = get_sentence_transformer('all-MiniLM-L6-v2')
         
         return {
             'embedding_model': model,

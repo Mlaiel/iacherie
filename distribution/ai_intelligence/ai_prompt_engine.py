@@ -23,17 +23,21 @@ import openai
 import anthropic
 import cohere
 import torch
-import transformers
-from transformers import pipeline, AutoTokenizer, AutoModel
-import sentence_transformers
-from sentence_transformers import SentenceTransformer
+# import transformers
+# from transformers import pipeline, AutoTokenizer, AutoModel
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# import sentence_transformers
+# from sentence_transformers import SentenceTransformer
 import spacy
 
 # ML and optimization
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 class PromptType(Enum):
     """Types of AI prompts"""
@@ -125,7 +129,7 @@ class PromptOptimizer:
         }
         
         # Load NLP models
-        self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.sentence_model = get_sentence_transformer('all-MiniLM-L6-v2')
         self.nlp = None
         try:
             self.nlp = spacy.load("en_core_web_sm")

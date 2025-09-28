@@ -37,7 +37,7 @@ except ImportError:
     TORCH_AVAILABLE = False
 
 try:
-    from transformers import pipeline, Wav2Vec2Processor, Wav2Vec2ForCTC
+    # from transformers import pipeline, Wav2Vec2Processor, Wav2Vec2ForCTC
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False

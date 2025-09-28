@@ -104,7 +104,7 @@ class ProcessingRequest(BaseModel):
     """Content processing request"""
     content_id: str = Field(..., description="Content identifier")
     creator_id: str = Field(..., description="Creator identifier")
-    processing_types: List[ProcessingType] = Field(..., min_items=1, description="Processing operations")
+    processing_types: List[ProcessingType] = Field(..., min_length=1, description="Processing operations")
     priority: ProcessingPriority = Field(default=ProcessingPriority.NORMAL)
     quality: ProcessingQuality = Field(default=ProcessingQuality.STANDARD)
     parameters: Dict[str, Any] = Field(default_factory=dict, description="Processing parameters")
@@ -958,6 +958,43 @@ class ContentProcessingOrchestrator:
         }
 
 
+class ContentProcessingService:
+    """Main Content Processing Service - Entry point for microservice"""
+    
+    def __init__(self):
+        self.orchestrator = ContentProcessingOrchestrator()
+        self.logger = logging.getLogger(__name__)
+        
+        # Start queue processing in background
+        asyncio.create_task(self.orchestrator.process_queue())
+        
+        self.logger.info("✅ ContentProcessingService initialized successfully")
+    
+    async def process_content(self, request: ProcessingRequest) -> ProcessingResponse:
+        """Process content with specified operations"""
+        return await self.orchestrator.submit_processing_job(request)
+    
+    async def get_job_status(self, job_id: str) -> Optional[ProcessingJob]:
+        """Get processing job status"""
+        return await self.orchestrator.get_job_status(job_id)
+    
+    async def cancel_job(self, job_id: str) -> bool:
+        """Cancel processing job"""
+        return await self.orchestrator.cancel_job(job_id)
+    
+    def get_health_status(self) -> Dict[str, Any]:
+        """Get service health status"""
+        return {
+            "service": "ContentProcessingService",
+            "status": "healthy",
+            "active_jobs": len(self.orchestrator.active_jobs),
+            "queued_jobs": len(self.orchestrator.processing_queue),
+            "completed_jobs": len(self.orchestrator.completed_jobs),
+            "engines": list(self.orchestrator.processing_engines.keys()),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+
 # Export classes for external use
 __all__ = [
     'ProcessingType',
@@ -972,5 +1009,6 @@ __all__ = [
     'AudioProcessingEngine',
     'VideoProcessingEngine',
     'TextProcessingEngine',
-    'ContentProcessingOrchestrator'
+    'ContentProcessingOrchestrator',
+    'ContentProcessingService'
 ]

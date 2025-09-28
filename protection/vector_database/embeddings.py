@@ -21,13 +21,13 @@ from pathlib import Path
 try:
     import torch
     import torch.nn as nn
-    from sentence_transformers import SentenceTransformer
+    from core.sentence_transformers_singleton import get_sentence_transformer
     TORCH_AVAILABLE = True
 except ImportError:
     TORCH_AVAILABLE = False
 
 try:
-    from transformers import CLIPProcessor, CLIPModel
+    # from transformers import CLIPProcessor, CLIPModel
     CLIP_AVAILABLE = True
 except ImportError:
     CLIP_AVAILABLE = False
@@ -375,7 +375,7 @@ class TextEmbeddingGenerator:
         if TORCH_AVAILABLE and config.get('use_sentence_transformers', True):
             try:
                 model_name = config.get('sentence_model', 'all-MiniLM-L6-v2')
-                self.sentence_model = SentenceTransformer(model_name)
+                self.sentence_model = get_sentence_transformer(model_name)
                 self.logger.info(f"SentenceTransformer model '{model_name}' loaded")
             except Exception as e:
                 self.logger.warning(f"Failed to load SentenceTransformer: {e}")

@@ -32,8 +32,23 @@ import re
 from pathlib import Path
 import aiohttp
 from web3 import Web3
-from web3.middleware import geth_poa_middleware
-import ipfshttpclient
+try:
+    from web3.middleware import geth_poa_middleware
+except ImportError:
+    # Fallback for older web3 versions
+    def geth_poa_middleware(*args, **kwargs):
+        pass
+
+try:
+    import ipfshttpclient
+except ImportError:
+    # Fallback for missing ipfshttpclient
+    class MockIPFSClient:
+        def add(self, *args, **kwargs):
+            return {'Hash': 'QmMockHash123'}
+        def cat(self, *args, **kwargs):
+            return b'mock data'
+    ipfshttpclient = type('MockModule', (), {'connect': lambda *args, **kwargs: MockIPFSClient()})
 from eth_utils import is_address, to_checksum_address
 from eth_typing import ChecksumAddress, HexStr
 

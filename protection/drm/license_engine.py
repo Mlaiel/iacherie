@@ -820,3 +820,29 @@ Retrieve audit trail entries."""
         """Save engine state to persistent storage."""
         # Placeholder for database persistence
         logger.debug("Saving License Engine state")
+
+
+# ==============================================================================
+# LICENSE STATUS ENUM (Required by DRM module)
+# ==============================================================================
+
+from enum import Enum
+
+class LicenseStatus(Enum):
+    """License status enumeration for DRM license management"""
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    SUSPENDED = "suspended"
+    REVOKED = "revoked"
+    PENDING = "pending"
+    TRIAL = "trial"
+
+class UsageType(Enum):
+    """Types of content usage for DRM tracking"""
+    STREAM = "stream"
+    DOWNLOAD = "download"
+    VIEW = "view"
+    PLAY = "play"
+    SHARE = "share"
+    SYNC = "sync"
+    BROADCAST = "broadcast"

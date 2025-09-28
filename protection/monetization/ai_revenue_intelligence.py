@@ -36,7 +36,16 @@ import json
 import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
-import tensorflow as tf
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
 import torch
 import torch.nn as nn
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
@@ -45,7 +54,7 @@ from sklearn.model_selection import train_test_split
 import xgboost as xgb
 import joblib
 import pickle
-from transformers import pipeline
+# from transformers import pipeline
 import openai
 
 logger = logging.getLogger(__name__)

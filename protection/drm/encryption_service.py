@@ -49,6 +49,15 @@ import jwt
 
 logger = logging.getLogger(__name__)
 
+class EncryptionLevel(Enum):
+    """Data encryption security levels."""
+    NONE = "none"
+    BASIC = "basic" 
+    STANDARD = "standard"
+    HIGH = "high"
+    MILITARY = "military"
+    QUANTUM_RESISTANT = "quantum_resistant"
+
 class EncryptionAlgorithm(str, Enum):
     """
 Supported encryption algorithms."""
@@ -782,7 +791,9 @@ Decrypt content using quantum-resistant algorithms."""
 
     async def derive_key_from_password(
         self,
-        password: str,
+        password: str
+    ):
+        """Derive encryption key from password"""
         try:
             logger.info(f"Executing derive_key_from_password")
             

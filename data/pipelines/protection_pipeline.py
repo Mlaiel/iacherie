@@ -29,7 +29,7 @@ from enum import Enum
 
 import numpy as np
 import torch
-from transformers import CLIPProcessor, CLIPModel
+# from transformers import CLIPProcessor, CLIPModel
 import cv2
 import librosa
 from sklearn.metrics.pairwise import cosine_similarity

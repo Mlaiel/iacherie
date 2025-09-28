@@ -45,7 +45,7 @@ import json
 from pathlib import Path
 import pickle
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from transformers import AutoTokenizer, AutoModel
+# from transformers import AutoTokenizer, AutoModel
 import cv2
 import librosa
 

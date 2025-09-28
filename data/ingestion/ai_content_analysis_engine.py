@@ -44,10 +44,13 @@ import hashlib
 # AI and ML libraries
 try:
     import torch
-    import transformers
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # import transformers
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import openai
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
 except ImportError as e:
     logging.warning(f"AI libraries not fully available: {e}")
 

@@ -31,7 +31,7 @@ from sklearn.decomposition import PCA
 from sklearn.feature_extraction.text import TfidfVectorizer
 import joblib
 import openai
-from transformers import pipeline
+# from transformers import pipeline
 import torch
 
 # Configure logging

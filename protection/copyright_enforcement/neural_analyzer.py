@@ -38,8 +38,16 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import tensorflow as tf
-from transformers import AutoTokenizer, AutoModel, pipeline
+# Utilisation du gestionnaire TensorFlow centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
+# from transformers import AutoTokenizer, AutoModel, pipeline
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, asdict
@@ -56,7 +64,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import spacy
 import nltk
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 import faiss
 import pickle
 import redis.asyncio as redis
@@ -216,7 +224,7 @@ class EnterpriseNeuralAnalyzer:
         logger.info("Loading transformer models...")
         
         # Sentence transformer for embeddings
-        self.models['sentence_transformer'] = SentenceTransformer(
+        self.models['sentence_transformer'] = get_sentence_transformer(
             self.config.transformer_model,
             device=self.device
         )

@@ -46,7 +46,8 @@ import numpy as np
 from PIL import Image
 import cv2
 import librosa
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 logger = logging.getLogger(__name__)
 

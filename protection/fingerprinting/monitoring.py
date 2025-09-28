@@ -775,8 +775,11 @@ Get overall system health status."""
             'uptime_seconds': time.time() - getattr(self, 'start_time', time.time())
         }
 
+# Create alias for AlertManager (compatibility)
+AlertManager = AlertingSystem
+
 # Export main classes
 __all__ = [
-    'FingerprintingMonitor', 'MetricsCollector', 'AlertingSystem', 'AnalyticsEngine',
+    'FingerprintingMonitor', 'MetricsCollector', 'AlertingSystem', 'AlertManager', 'AnalyticsEngine',
     'MonitoringDashboard', 'MetricType', 'AlertLevel', 'Alert', 'PerformanceReport'
 ]

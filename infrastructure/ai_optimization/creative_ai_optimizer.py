@@ -27,7 +27,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 import torch
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

@@ -24,7 +24,8 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.profiler
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import psutil
 import GPUtil

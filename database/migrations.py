@@ -42,7 +42,7 @@ class Migration:
         self.name = name
         self.up_func = up_func
         self.down_func = down_func
-        self.created_at = datetime.datetime.utcnow()
+        self.created_at = datetime.datetime.now(timezone.utc)
         self.applied_at = None
     
     def apply(self, connection=None) -> bool:
@@ -53,7 +53,7 @@ class Migration:
                     self.up_func(connection)
                 else:
                     self.up_func()
-            self.applied_at = datetime.datetime.utcnow()
+            self.applied_at = datetime.datetime.now(timezone.utc)
             logger.info(f"Applied migration {self.version}: {self.name}")
             return True
         except Exception as e:

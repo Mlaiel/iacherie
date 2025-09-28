@@ -244,7 +244,8 @@ Validate fingerprint quality and generate report."""
         return report
     
     async def _run_validation_rule(self, 
-                                 rule: ValidationRule,
+                                 rule: ValidationRule) -> ValidationResult:
+        """Run a single validation rule."""
         try:
             logger.info(f"Executing _run_validation_rule")
             
@@ -258,14 +259,15 @@ Validate fingerprint quality and generate report."""
             
         except Exception as e:
             logger.error(f"_run_validation_rule failed: {e}")
-            raise
-            rule_id=rule.rule_id,
-            status=status,
-            score=score,
-            threshold=rule.threshold,
-            message=message,
-            details=details
-        )
+            # Return a failed validation result
+            return ValidationResult(
+                rule_id=rule.rule_id,
+                status=ValidationStatus.FAILED,
+                score=0.0,
+                threshold=rule.threshold,
+                message=f"Validation failed: {str(e)}",
+                details={"error": str(e)}
+            )
     
     async def _validate_completeness(self, 
                                    fingerprint: FingerprintResult,

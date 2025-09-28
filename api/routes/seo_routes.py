@@ -110,7 +110,7 @@ class ContentOptimization(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
     content_body: str = Field(..., min_length=100)
-    target_keywords: List[str] = Field(..., min_items=1, max_items=20)
+    target_keywords: List[str] = Field(..., min_length=1, max_items=20)
     content_type: ContentType
     target_audience: Optional[str] = None
     target_location: str = Field(default="global")
@@ -172,9 +172,9 @@ class SEOStrategy(BaseModel):
     strategy_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=1000)
-    target_keywords: List[str] = Field(..., min_items=1)
+    target_keywords: List[str] = Field(..., min_length=1)
     target_audience: str = Field(..., min_length=1, max_length=200)
-    content_pillars: List[str] = Field(..., min_items=1)
+    content_pillars: List[str] = Field(..., min_length=1)
     timeline_weeks: int = Field(..., ge=1, le=52)
     expected_outcomes: Dict[str, Any] = Field(default_factory=dict)
     action_items: List[Dict[str, Any]] = Field(default_factory=list)
@@ -548,7 +548,7 @@ async def analyze_content_seo(
 async def generate_meta_tags(
     content_title: str = Query(..., min_length=1, max_length=200),
     content_description: str = Query(..., min_length=50, max_length=500),
-    target_keywords: List[str] = Query(..., min_items=1, max_items=5),
+    target_keywords: List[str] = Query(..., min_length=1, max_items=5),
     content_type: ContentType = Query(default=ContentType.BLOG_POST),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_seo_access)
@@ -654,7 +654,7 @@ async def get_rankings(
 @router.post("/rankings/track")
 async def add_keyword_tracking(
     background_tasks: BackgroundTasks,
-    keywords: List[str] = Query(..., min_items=1, max_items=50),
+    keywords: List[str] = Query(..., min_length=1, max_items=50),
     search_engine: SearchEngine = Query(default=SearchEngine.GOOGLE),
     location: str = Query(default="US"),
     current_user: Dict = Depends(get_current_user),

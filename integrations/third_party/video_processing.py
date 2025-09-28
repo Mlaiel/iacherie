@@ -55,10 +55,13 @@ from ultralytics import YOLO
 
 # AI and ML Libraries
 import openai
-from transformers import pipeline, AutoProcessor, AutoModel
+# from transformers import pipeline, AutoProcessor, AutoModel
 import torch
 import clip
-from sentence_transformers import SentenceTransformer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
 
 # Audio Processing
 import librosa

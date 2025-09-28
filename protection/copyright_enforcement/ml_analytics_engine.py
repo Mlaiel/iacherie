@@ -42,8 +42,17 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset, TensorDataset
-import tensorflow as tf
-from tensorflow import keras
+# Import TensorFlow via gestionnaire centralisé
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.tf
+except ImportError:
+    # TensorFlow importé via gestionnaire centralisé
+    from core.tensorflow_singleton import get_tensorflow
+    tf_manager = get_tensorflow()
+    tf = tf_manager.get_tf() if tf_manager.is_available else None
+# keras sera accessible via tf.keras (imported via protection)
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression, Ridge
@@ -55,7 +64,7 @@ from sklearn.metrics import classification_report, confusion_matrix, roc_auc_sco
 import xgboost as xgb
 import lightgbm as lgb
 from catboost import CatBoostClassifier
-from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification, Trainer, TrainingArguments
+# from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification, Trainer, TrainingArguments
 import optuna
 from typing import Dict, List, Optional, Any, Tuple, Set, Union, Callable
 from datetime import datetime, timezone, timedelta

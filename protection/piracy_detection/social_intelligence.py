@@ -58,7 +58,7 @@ except (ImportError, TypeError) as e:
     logging.warning(f"Using Redis compatibility layer: {e}")
 from textblob import TextBlob
 import spacy
-from transformers import pipeline, AutoTokenizer, AutoModel
+# from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
 import matplotlib.pyplot as plt
 import seaborn as sns

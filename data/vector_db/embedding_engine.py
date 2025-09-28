@@ -28,9 +28,12 @@ import pickle
 from concurrent.futures import ThreadPoolExecutor
 
 # Text embedding imports
-from sentence_transformers import SentenceTransformer
-import transformers
-from transformers import AutoModel, AutoTokenizer
+# Import avec gestionnaire TensorFlow singleton
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
+# from sentence_transformers import SentenceTransformer
+# import transformers
+# from transformers import AutoModel, AutoTokenizer
 
 # Audio processing imports
 import librosa
@@ -155,7 +158,7 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
         self.max_length = config.get('max_length', 512)
         
         # Load sentence transformer model
-        self.sentence_model = SentenceTransformer(self.model_name)
+        self.sentence_model = get_sentence_transformer(self.model_name)
         self.sentence_model.to(self.device)
         
         # Load BERT model for additional features

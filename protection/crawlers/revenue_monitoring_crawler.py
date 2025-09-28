@@ -82,6 +82,99 @@ class RevenueStatus(str, Enum):
     BLOCKED = "blocked"
 
 @dataclass
+class RevenueData:
+    """Revenue data structure for comprehensive tracking."""
+    platform: str
+    content_id: str
+    total_revenue: Decimal
+    currency: str = "USD"
+    period_start: datetime = None
+    period_end: datetime = None
+    revenue_status: RevenueStatus = RevenueStatus.ACTIVE_EARNING
+    monetization_details: Dict[str, Any] = field(default_factory=dict)
+    loss_potential: Optional[Decimal] = None
+    recovery_status: Optional[str] = None
+    tracking_timestamp: datetime = field(default_factory=datetime.utcnow)
+
+@dataclass  
+class UnauthorizedUsage:
+    """Unauthorized usage tracking data structure."""
+    content_id: str
+    platform: str
+    unauthorized_url: str
+    detection_timestamp: datetime = field(default_factory=datetime.utcnow)
+    usage_type: str = "unknown"
+    estimated_loss: Optional[Decimal] = None
+    infringer_info: Dict[str, Any] = field(default_factory=dict)
+    takedown_status: str = "pending"
+    evidence_collected: List[str] = field(default_factory=list)
+    legal_action_taken: bool = False
+
+@dataclass
+class FinancialAnalytics:
+    """Financial analytics data structure."""
+    platform: str
+    period_start: datetime
+    period_end: datetime
+    total_revenue: Decimal = Decimal("0.00")
+    total_loss: Decimal = Decimal("0.00")
+    currency: str = "USD"
+    engagement_metrics: Dict[str, Any] = field(default_factory=dict)
+    trend_analysis: Dict[str, Any] = field(default_factory=dict)
+    revenue_streams: Dict[str, Decimal] = field(default_factory=dict)
+    loss_breakdown: Dict[str, Decimal] = field(default_factory=dict)
+    recovery_potential: Optional[Decimal] = None
+    roi_metrics: Dict[str, float] = field(default_factory=dict)
+    comparative_analysis: Dict[str, Any] = field(default_factory=dict)
+
+class PlatformRevenueAPI:
+    """Platform revenue API integration class."""
+    
+    def __init__(self, platform: str, api_key: str = None):
+        self.platform = platform
+        self.api_key = api_key
+        self.session = None
+        self.rate_limit_info = {}
+        
+    async def get_revenue_data(self, content_id: str, period: str = "month") -> Optional[RevenueData]:
+        """Get revenue data for specific content."""
+        try:
+            # Mock implementation for revenue data retrieval
+            return RevenueData(
+                platform=self.platform,
+                content_id=content_id,
+                total_revenue=Decimal("0.00"),
+                currency="USD"
+            )
+        except Exception as e:
+            print(f"Error getting revenue data: {e}")
+            return None
+            
+    async def detect_unauthorized_usage(self, content_id: str) -> List[UnauthorizedUsage]:
+        """Detect unauthorized usage of content."""
+        try:
+            # Mock implementation for unauthorized usage detection
+            return []
+        except Exception as e:
+            print(f"Error detecting unauthorized usage: {e}")
+            return []
+
+    async def get_financial_analytics(self, period: str = "month") -> Optional[FinancialAnalytics]:
+        """Get comprehensive financial analytics."""
+        try:
+            # Mock implementation for financial analytics
+            return FinancialAnalytics(
+                platform=self.platform,
+                period_start=datetime.utcnow(),
+                period_end=datetime.utcnow(),
+                total_revenue=Decimal("0.00"),
+                currency="USD"
+            )
+        except Exception as e:
+            print(f"Error getting financial analytics: {e}")
+            return None
+
+@dataclass
 class RevenueMetrics:
     """Advanced revenue metrics structure."""
     platform: str

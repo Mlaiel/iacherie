@@ -41,7 +41,7 @@ try:
     import torch
     import torch.nn as nn
     import torch.nn.functional as F
-    from transformers import (
+    # from transformers import (
         CLIPModel, CLIPProcessor, CLIPTokenizer,
         AutoModel, AutoTokenizer,
         WhisperProcessor, WhisperForConditionalGeneration
@@ -49,7 +49,10 @@ try:
     import cv2
     from PIL import Image
     import librosa
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
     _AI_AVAILABLE = True
 except ImportError:
     _AI_AVAILABLE = False
@@ -137,7 +140,7 @@ class TextFeatureExtractor:
             )
         
         try:
-            self.model = SentenceTransformer(self.model_name)
+            self.model = get_sentence_transformer(self.model_name)
             self.model.to(self.device)
             logger.info(f"Text feature extractor initialized: {self.model_name}")
         except Exception as e:

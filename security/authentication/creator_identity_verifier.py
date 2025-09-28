@@ -36,7 +36,8 @@ import pytesseract
 # ML imports for document validation and deepfake detection
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 
 class VerificationStatus(Enum):

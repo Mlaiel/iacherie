@@ -19,11 +19,11 @@ from enum import Enum
 import asyncpg
 from datetime import datetime
 import torch
-from transformers import (
+# from transformers import (
     AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
     BertTokenizer, BertModel, pipeline
 )
-from sentence_transformers import SentenceTransformer
+from core.sentence_transformers_singleton import get_sentence_transformer
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
@@ -134,7 +134,7 @@ class BERTContentAnalyzer:
             self.models['bert-base'] = BertModel.from_pretrained('bert-base-uncased').to(self.device)
             
             # Sentence-BERT for semantic similarity
-            self.models['sentence-bert'] = SentenceTransformer('all-MiniLM-L6-v2')
+            self.models['sentence-bert'] = get_sentence_transformer('all-MiniLM-L6-v2')
             
             # Classification models
             self.models['sentiment'] = pipeline(

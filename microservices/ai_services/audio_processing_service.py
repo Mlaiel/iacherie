@@ -767,8 +767,30 @@ class AudioProcessingOrchestrator:
         }
 
 
+class AudioProcessingService:
+    """Main Audio Processing Service class"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.orchestrator = AudioProcessingOrchestrator()
+        self.logger.info("✅ AudioProcessingService initialized")
+    
+    async def process_audio(self, request: AudioProcessingRequest) -> AudioProcessingResponse:
+        """Process audio with specified requirements"""
+        return await self.orchestrator.process_audio_request(request)
+    
+    async def get_analysis_result(self, request_id: str) -> Dict[str, Any]:
+        """Get analysis result by request ID"""
+        return await self.orchestrator.get_processing_result(request_id)
+    
+    def get_health_status(self) -> Dict[str, Any]:
+        """Get service health status"""
+        return self.orchestrator.get_service_health()
+
+
 # Export classes for external use
 __all__ = [
+    'AudioProcessingService',
     'AudioFormat',
     'AudioQuality',
     'AudioProcessingType',

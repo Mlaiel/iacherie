@@ -6,7 +6,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001',
     NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8765',
     NEXT_PUBLIC_ANALYTICS_WS: process.env.NEXT_PUBLIC_ANALYTICS_WS || 'ws://localhost:8000/ws/dashboards',
     NEXT_PUBLIC_NOTIFICATIONS_WS: process.env.NEXT_PUBLIC_NOTIFICATIONS_WS || 'ws://localhost:8000/ws/notifications',
@@ -36,11 +36,17 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      // Main API proxy
+      // AI API proxy vers le bon port
       {
-        source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*',
+        source: '/api/ai/:path*',
+        destination: 'http://localhost:8001/api/ai/:path*',
       },
+      // Monitoring API proxy
+      {
+        source: '/api/monitoring/:path*',
+        destination: 'http://localhost:8001/api/monitoring/:path*',
+      },
+      // Les téléchargements /api/download/* utilisent notre route locale
       // Analytics API proxy
       {
         source: '/analytics/:path*',

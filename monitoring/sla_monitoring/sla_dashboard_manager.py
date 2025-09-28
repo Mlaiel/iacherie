@@ -138,14 +138,16 @@ class SLADashboardManager:
             )
         ]
         
-        self.create_dashboard(
-            "executive_overview",
-            "Executive SLA Overview",
-            DashboardType.EXECUTIVE,
-            "High-level SLA compliance and system health overview for executives",
-            executive_widgets,
-            ["executives", "management"]
-        )
+        # Dashboard sera créé de manière asynchrone lors du premier accès
+        self._dashboard_configs = {
+            "executive_overview": {
+                "title": "Executive SLA Overview",
+                "dashboard_type": DashboardType.EXECUTIVE,
+                "description": "High-level SLA compliance and system health overview for executives",
+                "widgets": executive_widgets,
+                "permissions": ["executives", "management"]
+            }
+        }
         
         # Operational Dashboard Template
         operational_widgets = [
@@ -181,14 +183,13 @@ class SLADashboardManager:
             )
         ]
         
-        self.create_dashboard(
-            "operational_monitoring",
-            "Operational SLA Monitoring",
-            DashboardType.OPERATIONAL,
-            "Real-time operational metrics and alerting dashboard",
-            operational_widgets,
-            ["operations", "engineering", "devops"]
-        )
+        self._dashboard_configs["operational_monitoring"] = {
+            "title": "Operational SLA Monitoring", 
+            "dashboard_type": DashboardType.OPERATIONAL,
+            "description": "Real-time operational metrics and alerting dashboard",
+            "widgets": operational_widgets,
+            "permissions": ["operations", "engineering", "devops"]
+        }
         
     async def create_dashboard(self, dashboard_id: str, name: str, 
                              dashboard_type: DashboardType, description: str,

@@ -37,7 +37,7 @@ try:
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.metrics.pairwise import cosine_similarity
     from sklearn.cluster import KMeans
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import spacy
     from PIL import Image, ImageDraw, ImageFont
     import cv2

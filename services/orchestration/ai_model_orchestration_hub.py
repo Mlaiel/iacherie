@@ -45,7 +45,14 @@ try:
     from pydantic import BaseModel, Field, validator
     import mlflow
     import torch
-    import tensorflow as tf
+    # Import avec gestionnaire TensorFlow singleton
+try:
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    print("✅ TensorFlow chargé via singleton")
+except ImportError:
+    tf = None
+    print("⚠️ TensorFlow indisponible")
     import numpy as np
     from sklearn.metrics import accuracy_score, precision_score, recall_score
     import joblib

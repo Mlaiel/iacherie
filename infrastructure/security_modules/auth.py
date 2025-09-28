@@ -30830,7 +30830,8 @@ from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import DBSCAN
 from sklearn.feature_extraction.text import TfidfVectorizer
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 
 # Compliance and reporting
 import xml.etree.ElementTree as ET
@@ -55237,7 +55238,8 @@ import base64
 from PIL import Image
 import face_recognition
 import numpy as np
-import tensorflow as tf
+from core.tensorflow_singleton import get_tensorflow
+tf = get_tensorflow()
 from sklearn.ensemble import IsolationForest
 import joblib
 import redis
@@ -60687,9 +60689,9 @@ class SecurityRuleSchema(BaseSecuritySchema):
     category: str = Field(..., description="Catégorie de la règle")
     
     # Configuration de la règle
-    conditions: List[SecurityRuleCondition] = Field(..., min_items=1)
+    conditions: List[SecurityRuleCondition] = Field(..., min_length=1)
     conditions_logic: str = Field(default="AND", description="Logique entre conditions")
-    actions: List[SecurityRuleAction] = Field(..., min_items=1)
+    actions: List[SecurityRuleAction] = Field(..., min_length=1)
     
     # Configuration d'activation
     enabled: bool = Field(default=True)
@@ -60798,11 +60800,11 @@ class AlertConfigSchema(BaseSecuritySchema):
     description: str = Field(..., max_length=500)
     
     # Configuration des canaux
-    channels: Dict[str, AlertChannelConfig] = Field(..., min_items=1)
+    channels: Dict[str, AlertChannelConfig] = Field(..., min_length=1)
     default_channel: str = Field(..., description="Canal par défaut")
     
     # Configuration des templates
-    templates: Dict[SecurityLevel, AlertTemplate] = Field(..., min_items=1)
+    templates: Dict[SecurityLevel, AlertTemplate] = Field(..., min_length=1)
     
     # Configuration de l'escalade
     escalation_enabled: bool = Field(default=True)
@@ -60859,7 +60861,7 @@ class ResourcePermission(BaseModel):
     
     resource_type: str = Field(..., description="Type de ressource")
     resource_id: Optional[str] = Field(None, description="ID spécifique de la ressource")
-    permissions: List[PermissionType] = Field(..., min_items=1)
+    permissions: List[PermissionType] = Field(..., min_length=1)
     conditions: List[SecurityRuleCondition] = Field(default_factory=list)
     
     # Métadonnées temporelles
@@ -60885,7 +60887,7 @@ class RoleDefinition(BaseModel):
     
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., max_length=500)
-    permissions: List[ResourcePermission] = Field(..., min_items=1)
+    permissions: List[ResourcePermission] = Field(..., min_length=1)
     inherits_from: List[str] = Field(default_factory=list, description="Rôles hérités")
     
     # Configuration
@@ -60908,7 +60910,7 @@ class PermissionSchema(BaseSecuritySchema):
     description: str = Field(..., max_length=500)
     
     # Définition des rôles
-    roles: Dict[str, RoleDefinition] = Field(..., min_items=1)
+    roles: Dict[str, RoleDefinition] = Field(..., min_length=1)
     default_role: str = Field(..., description="Rôle par défaut")
     
     # Configuration RBAC

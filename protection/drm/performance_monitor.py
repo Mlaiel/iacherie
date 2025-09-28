@@ -42,6 +42,23 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
+class MetricCategory(Enum):
+    """Performance metric categories."""
+    SYSTEM = "system"
+    NETWORK = "network"
+    DATABASE = "database"
+    SECURITY = "security"
+    USER = "user"
+    BUSINESS = "business"
+
+class AlertLevel(Enum):
+    """Alert severity levels."""
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+    EMERGENCY = "emergency"
+
 class MetricType(str, Enum):
     """
 Types of performance metrics."""

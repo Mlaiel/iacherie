@@ -9,7 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 from typing import Dict, List, Any, Optional, Union, Tuple
 from pydantic import BaseModel, Field
 from enum import Enum
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import asyncio
 import uuid
 import json
@@ -83,7 +83,7 @@ class CopyrightRegistration(BaseModel):
     protection_territories: List[str] = Field(default_factory=list, description="Protected territories")
     licensing_terms: Dict[str, Any] = Field(default_factory=dict, description="Licensing information")
     status: ProtectionStatus = Field(default=ProtectionStatus.PENDING)
-    registered_at: datetime = Field(default_factory=datetime.utcnow)
+    registered_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     expires_at: Optional[datetime] = Field(None, description="Protection expiry date")
 
 
@@ -183,7 +183,7 @@ class CopyrightProtectionEngine:
             copyright_notice = self._generate_copyright_notice(
                 request.creator_id, 
                 request.title,
-                datetime.utcnow().year
+                datetime.now(timezone.utc).year
             )
             
             # Create fingerprints if fingerprinting service available
@@ -200,7 +200,7 @@ class CopyrightProtectionEngine:
                 creator_id=request.creator_id,
                 title=request.title,
                 content_type="multimedia",  # Would determine from content
-                creation_date=datetime.utcnow(),
+                creation_date=datetime.now(timezone.utc),
                 copyright_notice=copyright_notice,
                 protection_level=request.protection_level,
                 fingerprint_ids=fingerprint_ids,
@@ -297,7 +297,7 @@ class CopyrightProtectionEngine:
                 target_url=violation.violating_url,
                 legal_basis=legal_basis,
                 notice_text=notice_text,
-                deadline=datetime.utcnow() + timedelta(days=7)  # 7-day response period
+                deadline=datetime.now(timezone.utc) + timedelta(days=7)  # 7-day response period
             )
             
             # Execute enforcement action
@@ -661,17 +661,48 @@ class SoundCloudPlatformConnector(PlatformConnector):
 
 
 # Export classes for external use
+class CopyrightProtectionService:
+    """Main Copyright Protection Service"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.protection_engine = CopyrightProtectionEngine()
+        self.logger.info("✅ CopyrightProtectionService initialized")
+    
+    async def protect_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Protect content with copyright monitoring"""
+        try:
+            return await self.protection_engine.register_content(
+                content_data.get("content_id", str(uuid.uuid4())),
+                content_data.get("title", ""),
+                content_data.get("creator_id", ""),
+                content_data.get("content_type", "text"),
+                content_data.get("content_data", b"")
+            )
+        except Exception as e:
+            self.logger.error(f"Content protection failed: {str(e)}")
+            return {"success": False, "error": str(e)}
+    
+    def get_health_status(self) -> Dict[str, Any]:
+        """Get service health status"""
+        return {
+            "service": "CopyrightProtectionService",
+            "status": "healthy",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+
+
 __all__ = [
     'ProtectionStatus',
-    'ViolationType',
+    'ViolationType', 
     'EnforcementAction',
-    'ProtectionLevel',
-    'CopyrightRegistration',
+    'ContentFingerprint',
     'ViolationDetection',
     'EnforcementAction',
     'ProtectionRequest',
     'MonitoringAlert',
     'CopyrightProtectionEngine',
+    'CopyrightProtectionService',
     'PlatformConnector',
     'YouTubePlatformConnector',
     'InstagramPlatformConnector',

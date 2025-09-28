@@ -22,7 +22,10 @@ try:
     import librosa
     import cv2
     from PIL import Image
-    from sentence_transformers import SentenceTransformer
+    # Import avec gestionnaire TensorFlow singleton
+    from core.tensorflow_singleton import get_tensorflow
+    tf = get_tensorflow()
+    # from sentence_transformers import SentenceTransformer
     import torch
     DETECTION_AVAILABLE = True
 except ImportError:
@@ -104,7 +107,7 @@ class CopyrightDetector:
         
         if DETECTION_AVAILABLE and enable_deep_learning:
             try:
-                self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
+                self.text_model = get_sentence_transformer('all-MiniLM-L6-v2')
                 logger.info("Text similarity model loaded")
             except Exception as e:
                 logger.warning(f"Failed to load text model: {e}")

@@ -52,7 +52,7 @@ try:
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.decomposition import PCA, LatentDirichletAllocation
     from sklearn.metrics.pairwise import cosine_similarity
-    from transformers import pipeline, AutoTokenizer, AutoModel
+    # from transformers import pipeline, AutoTokenizer, AutoModel
     import torch
     import networkx as nx
     from textblob import TextBlob

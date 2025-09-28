@@ -238,7 +238,8 @@ class LocalInferenceEngine:
             return torch.cuda.is_available() and self.enable_gpu
         except ImportError:
             try:
-                import tensorflow as tf
+                from core.tensorflow_singleton import get_tensorflow
+                tf = get_tensorflow()
                 return len(tf.config.list_physical_devices('GPU')) > 0 and self.enable_gpu
             except ImportError:
                 return False
@@ -567,7 +568,8 @@ class LocalInferenceEngine:
     async def _load_tensorflow_model(self, config: ModelConfig) -> Any:
         """Load TensorFlow model."""
         try:
-            import tensorflow as tf
+            from core.tensorflow_singleton import get_tensorflow
+            tf = get_tensorflow()
             model = tf.saved_model.load(config.model_path)
             return model
         except ImportError:
@@ -596,7 +598,7 @@ class LocalInferenceEngine:
     async def _load_huggingface_model(self, config: ModelConfig) -> Any:
         """Load HuggingFace model."""
         try:
-            from transformers import AutoModel, AutoTokenizer
+            # from transformers import AutoModel, AutoTokenizer
             
             model = AutoModel.from_pretrained(config.model_path)
             tokenizer = AutoTokenizer.from_pretrained(config.model_path)
@@ -690,7 +692,8 @@ class LocalInferenceEngine:
     async def _run_tensorflow_inference(self, model: Any, input_data: Any) -> Any:
         """Run TensorFlow inference."""
         try:
-            import tensorflow as tf
+            from core.tensorflow_singleton import get_tensorflow
+            tf = get_tensorflow()
             if isinstance(input_data, np.ndarray):
                 input_tensor = tf.constant(input_data)
             else:

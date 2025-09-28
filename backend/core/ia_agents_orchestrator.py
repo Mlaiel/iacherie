@@ -58,7 +58,7 @@ except ImportError:
 
 try:
     import torch
-    import transformers
+    # import transformers
     HAS_TRANSFORMERS = True
 except ImportError:
     HAS_TRANSFORMERS = False

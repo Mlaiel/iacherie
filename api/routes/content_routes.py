@@ -163,7 +163,7 @@ class ContentProtectionRequest(BaseModel):
 
 class ContentDistributionRequest(BaseModel):
     content_id: str
-    platforms: List[str] = Field(..., min_items=1)
+    platforms: List[str] = Field(..., min_length=1)
     schedule_time: Optional[datetime] = None
     platform_specific_metadata: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
     auto_optimize: bool = Field(default=True)

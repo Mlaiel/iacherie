@@ -36,7 +36,15 @@ from decimal import Decimal
 from pydantic import BaseModel, Field, validator
 import web3
 from eth_account import Account
-from web3.middleware import geth_poa_middleware
+try:
+    from web3.middleware import geth_poa_middleware
+except ImportError:
+    # Fallback for newer web3 versions
+    try:
+        from web3 import middleware as web3_middleware
+        geth_poa_middleware = getattr(web3_middleware, 'geth_poa_middleware', None)
+    except:
+        geth_poa_middleware = None
 
 
 logger = logging.getLogger(__name__)

@@ -11,7 +11,7 @@ import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field, asdict
 from enum import Enum
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import uuid
 import json
 import hashlib
@@ -102,7 +102,7 @@ class FraudAnalysisResult:
     confidence: float
     reasons: List[str]
     additional_checks_required: List[str] = field(default_factory=list)
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 @dataclass
@@ -115,7 +115,7 @@ class FraudRule:
     condition: str  # Rule condition logic
     risk_weight: float  # Weight in overall risk calculation
     is_active: bool = True
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class FraudDetectionEngine(ABC):
@@ -487,7 +487,7 @@ class FraudDetectionService:
         if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserProfile(
                 user_id=user_id,
-                registration_date=datetime.utcnow()
+                registration_date=datetime.now(timezone.utc)
             )
         
         return self.user_profiles[user_id]
@@ -539,7 +539,7 @@ class FraudDetectionService:
         else:
             # New device
             self.device_fingerprints[device_fingerprint] = {
-                "first_seen": datetime.utcnow(),
+                "first_seen": datetime.now(timezone.utc),
                 "transaction_count": 0,
                 "fraud_count": 0
             }

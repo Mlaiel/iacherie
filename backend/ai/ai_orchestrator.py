@@ -40,7 +40,7 @@ except ImportError:
     NUMPY_AVAILABLE = False
 
 try:
-    from transformers import pipeline
+    # from transformers import pipeline
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False

@@ -32,15 +32,8 @@ from datetime import datetime, timedelta
 from enum import Enum
 from collections import defaultdict, deque
 
-# Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+# Redis import avec support Python 3.12
+from protection.utils.redis_compat import aioredis, REDIS_AVAILABLE
 import aiohttp
 import numpy as np
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -161,7 +154,7 @@ Initialize the geospatial intelligence engine."""
         
         logger.info("Geospatial Intelligence Engine initialized")
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client: Any, db_session: Any):
         """Initialize geospatial engine with dependencies."""
         self.redis_client = redis_client
         self.db_session = db_session

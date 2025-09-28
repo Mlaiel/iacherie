@@ -29,7 +29,7 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 import re
 import openai
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity

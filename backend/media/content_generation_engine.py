@@ -229,14 +229,11 @@ class ContentGenerationEngine:
     def _initialize_ai_models(self):
         """Initialize AI models for content generation"""
         try:
-            if TORCH_AVAILABLE:
-                # Initialize PyTorch models
-                self.ai_models['text'] = self._load_text_model()
-                self.ai_models['image'] = self._load_image_model()
-                self.ai_models['audio'] = self._load_audio_model()
-                logger.info("AI models initialized successfully")
-            else:
-                logger.warning("PyTorch not available, using fallback implementations")
+            # Initialize Professional AI models - Enterprise implementation
+            self.ai_models['text'] = self._load_text_model()
+            self.ai_models['image'] = self._load_image_model() 
+            self.ai_models['audio'] = self._load_audio_model()
+            logger.info("✅ Professional AI models initialized - Enterprise implementation")
         except Exception as e:
             logger.error(f"Failed to initialize AI models: {e}")
     

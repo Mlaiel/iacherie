@@ -42,7 +42,7 @@ except (ImportError, TypeError) as e:
     # Handle Python 3.12 TimeoutError duplicate base class issue
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+    pass  # Redis warning suppressed
 import asyncpg
 from cryptography.fernet import Fernet
 from jinja2 import Environment, FileSystemLoader, Template

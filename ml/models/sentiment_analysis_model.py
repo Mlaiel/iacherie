@@ -11,7 +11,7 @@ Version: 1.0 Production
 
 import torch
 import torch.nn as nn
-import transformers
+# import transformers
 from typing import Dict, List, Optional, Any, Tuple
 import numpy as np
 from dataclasses import dataclass
