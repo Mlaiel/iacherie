@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Dashboard Layouts
+ * IA Chérie Desktop Renderer - Dashboard Layouts
  * Responsive dashboard layout system
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 """
-Database Configuration for Ainflue Distribution Platform
+Database Configuration for IA Chérie Distribution Platform
 
 This module provides comprehensive database configuration and optimization
 settings for the distribution platform's data layer.
@@ -163,7 +163,7 @@ class DatabaseConfiguration:
             'host': os.getenv('DB_HOST', 'localhost'),
             'port': int(os.getenv('DB_PORT', '5432')),
             'database': os.getenv('DB_NAME', 'ainflue_distribution'),
-            'username': os.getenv('DB_USER', 'ainflue'),
+            'username': os.getenv('DB_USER', 'iacherie'),
             'password': os.getenv('DB_PASSWORD', ''),
             'ssl_mode': os.getenv('DB_SSL_MODE', 'prefer'),
             'ssl_cert': os.getenv('DB_SSL_CERT', ''),
@@ -217,7 +217,7 @@ class DatabaseConfiguration:
             'username': os.getenv('ES_USER', ''),
             'password': os.getenv('ES_PASSWORD', ''),
             'ssl': os.getenv('ES_SSL', 'false').lower() == 'true',
-            'index_prefix': os.getenv('ES_INDEX_PREFIX', 'ainflue'),
+            'index_prefix': os.getenv('ES_INDEX_PREFIX', 'iacherie'),
             'number_of_shards': int(os.getenv('ES_SHARDS', '3')),
             'number_of_replicas': int(os.getenv('ES_REPLICAS', '1'))
         }

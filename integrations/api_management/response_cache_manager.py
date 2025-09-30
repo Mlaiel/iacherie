@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Enterprise - Response Cache Manager
+🚀 IA Chérie Enterprise - Response Cache Manager
 Enterprise response caching with intelligent invalidation and optimization
 
 🎯 BUSINESS LOGIC INTEGRATION:
@@ -13,7 +13,7 @@ Enterprise response caching with intelligent invalidation and optimization
 
 👨‍💻 AUTHOR: Fahed Mlaiel (mlaiel@live.de)
 📧 CONTACT: mlaiel@live.de  
-🏢 ENTERPRISE: Ainflue Platform
+🏢 ENTERPRISE: IA Chérie Platform
 📅 CREATED: 2025
 🔒 LICENSE: PROPRIETARY - All Rights Reserved
 
@@ -613,11 +613,11 @@ class ResponseCacheManager:
         self.platform_cache_strategies: Dict[str, CacheStrategy] = {}
         self.content_type_strategies: Dict[str, CacheStrategy] = {}
         
-        # Initialize Ainflue-specific caching rules
+        # Initialize IA Chérie-specific caching rules
         self._initialize_ainflue_caching()
     
     def _initialize_ainflue_caching(self) -> None:
-        """Initialize Ainflue business logic caching rules"""
+        """Initialize IA Chérie business logic caching rules"""
         
         # Creator-specific cache warming rules
         self.cache_warmer.add_warming_rule({
@@ -878,7 +878,7 @@ class ResponseCacheManager:
         # Ensure minimum and maximum bounds
         return max(300, min(base_ttl, 86400))  # 5 minutes to 24 hours
     
-    async def _compress_value(self, value: Any) -> Tuple[Optional[Any], CompressionAlgorithm]:
+    async def _compress_value(self, value: Any) -> tuple[Optional[Any], CompressionAlgorithm]:
         """Compress cache value if beneficial"""
         try:
             if isinstance(value, (dict, list)):

@@ -1,6 +1,6 @@
 """
 AI Metrics Collector Service - Enterprise AI Performance Monitoring
-Ainflue Platform - Microservices Architecture
+IA Chérie Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """

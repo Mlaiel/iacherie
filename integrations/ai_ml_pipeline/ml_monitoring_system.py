@@ -1,4 +1,4 @@
-"""📊 Enterprise ML Monitoring System - Ainflue AI/ML Pipeline
+"""📊 Enterprise ML Monitoring System - IA Chérie AI/ML Pipeline
 ============================================================
 
 Production ML monitoring with drift detection, performance tracking,
@@ -147,8 +147,8 @@ class DriftDetectionResult:
     statistical_test: str
     p_value: float
     detected_at: datetime
-    reference_period: Tuple[datetime, datetime]
-    current_period: Tuple[datetime, datetime]
+    reference_period: tuple[datetime, datetime]
+    current_period: tuple[datetime, datetime]
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -523,7 +523,7 @@ class EnterpriseMLMonitoringSystem:
             raise
     
     async def get_creator_monitoring_dashboard(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific monitoring dashboard for Ainflue platform"""
+        """Get creator-specific monitoring dashboard for IA Chérie platform"""
         try:
             # Get time ranges
             now = datetime.utcnow()
@@ -877,7 +877,7 @@ class EnterpriseMLMonitoringSystem:
     
     def _create_prometheus_metric(self, metric_def: MetricDefinition):
         """Create Prometheus metric for monitoring definition"""
-        metric_name = f"ainflue_{metric_def.name.replace(' ', '_').lower()}"
+        metric_name = f"iacherie_{metric_def.name.replace(' ', '_').lower()}"
         
         if metric_def.metric_type == MetricType.LATENCY:
             self.prometheus_metrics[metric_def.metric_id] = Histogram(
@@ -1172,7 +1172,7 @@ class EnterpriseMLMonitoringSystem:
             msg = MIMEMultipart()
             msg['From'] = self.config['smtp_from']
             msg['To'] = self.config['alert_email']
-            msg['Subject'] = f"Ainflue ML Alert - {alert.severity.value.upper()}"
+            msg['Subject'] = f"IA Chérie ML Alert - {alert.severity.value.upper()}"
             
             body = f"""
             Alert Details:

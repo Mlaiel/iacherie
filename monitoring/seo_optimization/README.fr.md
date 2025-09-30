@@ -4,7 +4,7 @@
 
 ## Aperçu
 
-Le Module de Surveillance d'Optimisation SEO fournit un suivi et une optimisation SEO complets sur toutes les principales plateformes où les créateurs Ainflue distribuent leur contenu. Ce module exploite l'analyse alimentée par IA pour optimiser les classements, améliorer les métadonnées, suivre le positionnement concurrentiel et maximiser la visibilité de recherche.
+Le Module de Surveillance d'Optimisation SEO fournit un suivi et une optimisation SEO complets sur toutes les principales plateformes où les créateurs IA Chérie distribuent leur contenu. Ce module exploite l'analyse alimentée par IA pour optimiser les classements, améliorer les métadonnées, suivre le positionnement concurrentiel et maximiser la visibilité de recherche.
 
 ## Composants Principaux
 
@@ -99,5 +99,5 @@ Pour support entreprise et stratégies SEO personnalisées:
 
 ---
 
-**© 2025 Fahed Mlaiel - Plateforme Ainflue**  
+**© 2025 Fahed Mlaiel - Plateforme IA Chérie**  
 **Tous Droits Réservés - Licence Entreprise**

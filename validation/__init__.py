@@ -1,5 +1,5 @@
 """
-Validation Framework for Ainflue Platform
+Validation Framework for IA Chérie Platform
 Implements all validation criteria for final acceptance
 """
 

@@ -2,7 +2,7 @@
 
 ## 🎯 API Documentation Status: 100% Complete
 
-This document provides comprehensive documentation for all API endpoints in the Ainflue platform.
+This document provides comprehensive documentation for all API endpoints in the IA Chérie platform.
 
 ## 📋 API Endpoints Overview
 

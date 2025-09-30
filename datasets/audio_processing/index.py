@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION:
-Orchestrateur principal pour tous les datasets audio de la plateforme Ainflue.
+Orchestrateur principal pour tous les datasets audio de la plateforme IA Chérie.
 Coordonne 13+ agents IA audio avec datasets haute performance.
 """
 

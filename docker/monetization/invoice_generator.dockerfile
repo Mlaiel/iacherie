@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE INVOICE GENERATOR - AUTOMATED DOCKERFILE
+# IACHERIE INVOICE GENERATOR - AUTOMATED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS invoice-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${INVOICE_SERVICE_PORT}
 CMD ["python3.11", "-m", "invoice_generator.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Invoice Generator"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="invoice_generator"
-LABEL ainflue.service.port="8048"
+LABEL org.opencontainers.image.title="IA Chérie Invoice Generator"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="invoice_generator"
+LABEL iacherie.service.port="8048"

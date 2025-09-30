@@ -1,4 +1,4 @@
-# 🚀 Production Deployment Guide - Ainflue Platform
+# 🚀 Production Deployment Guide - IA Chérie Platform
 
 **Document Version:** 1.0 Enterprise  
 **Last Updated:** September 15, 2025  
@@ -13,7 +13,7 @@
 
 ## 🎯 **Deployment Overview**
 
-This guide provides complete instructions for deploying the Ainflue Platform to production environments. The deployment follows enterprise-grade practices with zero-downtime deployment, automated rollbacks, and comprehensive monitoring.
+This guide provides complete instructions for deploying the IA Chérie Platform to production environments. The deployment follows enterprise-grade practices with zero-downtime deployment, automated rollbacks, and comprehensive monitoring.
 
 ### 📋 **Prerequisites**
 
@@ -39,7 +39,7 @@ minimum_requirements:
   network:
     bandwidth: "10Gbps minimum"
     load_balancer: "Application Load Balancer"
-    ssl_certificates: "Wildcard SSL for *.ainflue.com"
+    ssl_certificates: "Wildcard SSL for *.iacherie.com"
 ```
 
 #### **Required Tools**
@@ -92,7 +92,7 @@ provider "aws" {
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
   
-  cluster_name    = "ainflue-production"
+  cluster_name    = "iacherie-production"
   cluster_version = "1.28"
   
   vpc_id     = module.vpc.vpc_id
@@ -108,7 +108,7 @@ module "eks" {
       
       k8s_labels = {
         Environment = "production"
-        Application = "ainflue"
+        Application = "iacherie"
       }
     }
     
@@ -121,7 +121,7 @@ module "eks" {
       
       k8s_labels = {
         Environment = "production"
-        Application = "ainflue"
+        Application = "iacherie"
         NodeType    = "gpu"
       }
     }
@@ -130,7 +130,7 @@ module "eks" {
 
 # RDS PostgreSQL
 resource "aws_db_instance" "main" {
-  identifier = "ainflue-production-db"
+  identifier = "iacherie-production-db"
   
   engine         = "postgres"
   engine_version = "14.9"
@@ -141,7 +141,7 @@ resource "aws_db_instance" "main" {
   storage_type         = "gp3"
   storage_encrypted    = true
   
-  db_name  = "ainflue"
+  db_name  = "iacherie"
   username = var.db_username
   password = var.db_password
   
@@ -153,18 +153,18 @@ resource "aws_db_instance" "main" {
   maintenance_window     = "sun:04:00-sun:05:00"
   
   skip_final_snapshot = false
-  final_snapshot_identifier = "ainflue-production-final-snapshot"
+  final_snapshot_identifier = "iacherie-production-final-snapshot"
   
   tags = {
-    Name        = "ainflue-production-db"
+    Name        = "iacherie-production-db"
     Environment = "production"
   }
 }
 
 # ElastiCache Redis Cluster
 resource "aws_elasticache_replication_group" "main" {
-  replication_group_id       = "ainflue-production-redis"
-  description               = "Redis cluster for Ainflue production"
+  replication_group_id       = "iacherie-production-redis"
+  description               = "Redis cluster for IA Chérie production"
   
   node_type                 = "cache.r5.xlarge"
   port                      = 6379
@@ -181,7 +181,7 @@ resource "aws_elasticache_replication_group" "main" {
   transit_encryption_enabled = true
   
   tags = {
-    Name        = "ainflue-production-redis"
+    Name        = "iacherie-production-redis"
     Environment = "production"
   }
 }
@@ -211,25 +211,25 @@ terraform output
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-production
+  name: iacherie-production
   labels:
-    name: ainflue-production
+    name: iacherie-production
     environment: production
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-monitoring
+  name: iacherie-monitoring
   labels:
-    name: ainflue-monitoring
+    name: iacherie-monitoring
     environment: production
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-ingress
+  name: iacherie-ingress
   labels:
-    name: ainflue-ingress
+    name: iacherie-ingress
     environment: production
 ```
 
@@ -265,7 +265,7 @@ volumeBindingMode: WaitForFirstConsumer
 
 #### **Values Configuration**
 ```yaml
-# helm/ainflue/values-production.yml
+# helm/iacherie/values-production.yml
 global:
   environment: production
   imageRegistry: "your-registry.com"
@@ -278,7 +278,7 @@ replicaCount:
   ai_services: 15
   
 image:
-  repository: ainflue-platform
+  repository: iacherie-platform
   tag: "v1.0.0"
   pullPolicy: IfNotPresent
 
@@ -295,14 +295,14 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
-    - host: api.ainflue.com
+    - host: api.iacherie.com
       paths:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: ainflue-tls
+    - secretName: iacherie-tls
       hosts:
-        - api.ainflue.com
+        - api.iacherie.com
 
 autoscaling:
   enabled: true
@@ -320,13 +320,13 @@ resources:
     memory: 2Gi
 
 database:
-  host: "ainflue-production-db.cluster-xxx.region.rds.amazonaws.com"
+  host: "iacherie-production-db.cluster-xxx.region.rds.amazonaws.com"
   port: 5432
-  name: ainflue
+  name: iacherie
   existingSecret: "database-credentials"
 
 redis:
-  host: "ainflue-production-redis.xxx.cache.amazonaws.com"
+  host: "iacherie-production-redis.xxx.cache.amazonaws.com"
   port: 6379
   existingSecret: "redis-credentials"
 
@@ -345,19 +345,19 @@ security:
 #### **Deployment Commands**
 ```bash
 # Add Helm repository
-helm repo add ainflue-charts https://charts.ainflue.com
+helm repo add iacherie-charts https://charts.iacherie.com
 helm repo update
 
 # Install with production values
-helm install ainflue-production ainflue-charts/ainflue \
-  --namespace ainflue-production \
+helm install iacherie-production iacherie-charts/iacherie \
+  --namespace iacherie-production \
   --values helm/values-production.yml \
   --wait --timeout=600s
 
 # Verify deployment
-kubectl get pods -n ainflue-production
-kubectl get services -n ainflue-production
-kubectl get ingress -n ainflue-production
+kubectl get pods -n iacherie-production
+kubectl get services -n iacherie-production
+kubectl get ingress -n iacherie-production
 ```
 
 ---
@@ -380,7 +380,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@ainflue.com
+    email: admin@iacherie.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -414,20 +414,20 @@ kubectl exec -n vault-system vault-0 -- vault operator unseal <key3>
 ```bash
 # Database credentials
 kubectl create secret generic database-credentials \
-  --namespace ainflue-production \
+  --namespace iacherie-production \
   --from-literal=username=ainflue_user \
   --from-literal=password=<secure_password> \
   --from-literal=host=<db_host>
 
 # Redis credentials
 kubectl create secret generic redis-credentials \
-  --namespace ainflue-production \
+  --namespace iacherie-production \
   --from-literal=password=<redis_password> \
   --from-literal=host=<redis_host>
 
 # Container registry credentials
 kubectl create secret docker-registry registry-secret \
-  --namespace ainflue-production \
+  --namespace iacherie-production \
   --docker-server=your-registry.com \
   --docker-username=<username> \
   --docker-password=<password>
@@ -441,8 +441,8 @@ kubectl create secret docker-registry registry-secret \
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-network-policy
-  namespace: ainflue-production
+  name: iacherie-network-policy
+  namespace: iacherie-production
 spec:
   podSelector: {}
   policyTypes:
@@ -452,11 +452,11 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-ingress
+          name: iacherie-ingress
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-monitoring
+          name: iacherie-monitoring
   egress:
   - to: []
     ports:
@@ -490,12 +490,12 @@ prometheus:
               storage: 100Gi
     
     additionalScrapeConfigs:
-      - job_name: 'ainflue-application'
+      - job_name: 'iacherie-application'
         kubernetes_sd_configs:
           - role: pod
             namespaces:
               names:
-                - ainflue-production
+                - iacherie-production
         relabel_configs:
           - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
             action: keep
@@ -512,20 +512,20 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-      - name: 'ainflue-dashboards'
+      - name: 'iacherie-dashboards'
         orgId: 1
-        folder: 'Ainflue'
+        folder: 'IA Chérie'
         type: file
         disableDeletion: false
         editable: true
         options:
-          path: /var/lib/grafana/dashboards/ainflue
+          path: /var/lib/grafana/dashboards/iacherie
 
 alertmanager:
   config:
     global:
       smtp_smarthost: 'smtp.gmail.com:587'
-      smtp_from: 'alerts@ainflue.com'
+      smtp_from: 'alerts@iacherie.com'
     
     route:
       group_by: ['alertname', 'severity']
@@ -537,8 +537,8 @@ alertmanager:
     receivers:
     - name: 'web.hook'
       email_configs:
-      - to: 'devops@ainflue.com'
-        subject: 'Ainflue Alert: {{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+      - to: 'devops@iacherie.com'
+        subject: 'IA Chérie Alert: {{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
         body: |
           {{ range .Alerts }}
           Alert: {{ .Annotations.summary }}
@@ -551,7 +551,7 @@ alertmanager:
 # Install Prometheus stack
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install prometheus prometheus-community/kube-prometheus-stack \
-  --namespace ainflue-monitoring \
+  --namespace iacherie-monitoring \
   --values monitoring/prometheus-values.yml
 ```
 
@@ -565,7 +565,7 @@ minimumMasterNodes: 2
 
 esConfig:
   elasticsearch.yml: |
-    cluster.name: "ainflue-logs"
+    cluster.name: "iacherie-logs"
     network.host: 0.0.0.0
     discovery.zen.minimum_master_nodes: 2
     discovery.zen.ping.unicast.hosts: elasticsearch-master-headless
@@ -590,17 +590,17 @@ resources:
 # Install Elasticsearch
 helm repo add elastic https://helm.elastic.co
 helm install elasticsearch elastic/elasticsearch \
-  --namespace ainflue-monitoring \
+  --namespace iacherie-monitoring \
   --values monitoring/elasticsearch-values.yml
 
 # Install Kibana
 helm install kibana elastic/kibana \
-  --namespace ainflue-monitoring \
+  --namespace iacherie-monitoring \
   --set elasticsearchHosts="http://elasticsearch-master:9200"
 
 # Install Filebeat
 helm install filebeat elastic/filebeat \
-  --namespace ainflue-monitoring \
+  --namespace iacherie-monitoring \
   --set daemonset.enabled=true
 ```
 
@@ -622,7 +622,7 @@ on:
 
 env:
   REGISTRY: your-registry.com
-  IMAGE_NAME: ainflue-platform
+  IMAGE_NAME: iacherie-platform
 
 jobs:
   security-scan:
@@ -686,20 +686,20 @@ jobs:
       
       - name: Update kubeconfig
         run: |
-          aws eks update-kubeconfig --name ainflue-production --region us-west-2
+          aws eks update-kubeconfig --name iacherie-production --region us-west-2
       
       - name: Deploy to production
         run: |
-          helm upgrade ainflue-production ainflue-charts/ainflue \
-            --namespace ainflue-production \
+          helm upgrade iacherie-production iacherie-charts/iacherie \
+            --namespace iacherie-production \
             --values helm/values-production.yml \
             --set image.tag=${{ github.ref_name }} \
             --wait --timeout=600s
       
       - name: Verify deployment
         run: |
-          kubectl rollout status deployment/ainflue-api -n ainflue-production
-          kubectl get pods -n ainflue-production
+          kubectl rollout status deployment/iacherie-api -n iacherie-production
+          kubectl get pods -n iacherie-production
 ```
 
 ### **2. Database Migration**
@@ -714,13 +714,13 @@ set -e
 echo "Starting database migration..."
 
 # Backup current database
-kubectl exec -n ainflue-production deployment/postgresql -- pg_dump -U postgres ainflue > backup-$(date +%Y%m%d-%H%M%S).sql
+kubectl exec -n iacherie-production deployment/postgresql -- pg_dump -U postgres iacherie > backup-$(date +%Y%m%d-%H%M%S).sql
 
 # Run migrations
-kubectl exec -n ainflue-production deployment/ainflue-api -- python manage.py migrate
+kubectl exec -n iacherie-production deployment/iacherie-api -- python manage.py migrate
 
 # Verify migration
-kubectl exec -n ainflue-production deployment/ainflue-api -- python manage.py showmigrations
+kubectl exec -n iacherie-production deployment/iacherie-api -- python manage.py showmigrations
 
 echo "Database migration completed successfully!"
 ```
@@ -737,11 +737,11 @@ echo "Database migration completed successfully!"
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-health-check
-  namespace: ainflue-production
+  name: iacherie-health-check
+  namespace: iacherie-production
 spec:
   selector:
-    app: ainflue-api
+    app: iacherie-api
   ports:
     - port: 8080
       targetPort: health
@@ -749,14 +749,14 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api
-  namespace: ainflue-production
+  name: iacherie-api
+  namespace: iacherie-production
 spec:
   template:
     spec:
       containers:
       - name: api
-        image: ainflue-platform:latest
+        image: iacherie-platform:latest
         ports:
         - name: health
           containerPort: 8080
@@ -797,7 +797,7 @@ export let options = {
 };
 
 export default function () {
-  let response = http.get('https://api.ainflue.com/health');
+  let response = http.get('https://api.iacherie.com/health');
   check(response, {
     'status is 200': (r) => r.status === 200,
     'response time < 500ms': (r) => r.timings.duration < 500,
@@ -823,14 +823,14 @@ k6 run tests/load-test.js
 # scripts/backup-database.sh
 
 BACKUP_DATE=$(date +%Y%m%d-%H%M%S)
-BACKUP_FILE="ainflue-backup-${BACKUP_DATE}.sql"
+BACKUP_FILE="iacherie-backup-${BACKUP_DATE}.sql"
 
 # Create database backup
-kubectl exec -n ainflue-production deployment/postgresql -- \
-  pg_dump -U postgres -h localhost ainflue > ${BACKUP_FILE}
+kubectl exec -n iacherie-production deployment/postgresql -- \
+  pg_dump -U postgres -h localhost iacherie > ${BACKUP_FILE}
 
 # Upload to S3
-aws s3 cp ${BACKUP_FILE} s3://ainflue-backups/database/
+aws s3 cp ${BACKUP_FILE} s3://iacherie-backups/database/
 
 # Cleanup local file
 rm ${BACKUP_FILE}
@@ -845,7 +845,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: database-backup
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   schedule: "0 2 * * *"  # Daily at 2 AM
   jobTemplate:
@@ -860,17 +860,17 @@ spec:
             - -c
             - |
               pg_dump -h $DB_HOST -U $DB_USER $DB_NAME | \
-              aws s3 cp - s3://ainflue-backups/database/backup-$(date +%Y%m%d-%H%M%S).sql
+              aws s3 cp - s3://iacherie-backups/database/backup-$(date +%Y%m%d-%H%M%S).sql
             env:
             - name: DB_HOST
-              value: "ainflue-production-db.cluster-xxx.region.rds.amazonaws.com"
+              value: "iacherie-production-db.cluster-xxx.region.rds.amazonaws.com"
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: database-credentials
                   key: username
             - name: DB_NAME
-              value: "ainflue"
+              value: "iacherie"
           restartPolicy: OnFailure
 ```
 
@@ -897,19 +897,19 @@ kubectl apply -f k8s/storage-classes.yml
 kubectl apply -f secrets/
 
 # 4. Restore database from backup
-LATEST_BACKUP=$(aws s3 ls s3://ainflue-backups/database/ | sort | tail -n 1 | awk '{print $4}')
-aws s3 cp s3://ainflue-backups/database/${LATEST_BACKUP} restore.sql
-kubectl exec -n ainflue-production deployment/postgresql -- psql -U postgres -c "CREATE DATABASE ainflue;"
-kubectl exec -i -n ainflue-production deployment/postgresql -- psql -U postgres ainflue < restore.sql
+LATEST_BACKUP=$(aws s3 ls s3://iacherie-backups/database/ | sort | tail -n 1 | awk '{print $4}')
+aws s3 cp s3://iacherie-backups/database/${LATEST_BACKUP} restore.sql
+kubectl exec -n iacherie-production deployment/postgresql -- psql -U postgres -c "CREATE DATABASE iacherie;"
+kubectl exec -i -n iacherie-production deployment/postgresql -- psql -U postgres iacherie < restore.sql
 
 # 5. Deploy applications
-helm install ainflue-production ainflue-charts/ainflue \
-  --namespace ainflue-production \
+helm install iacherie-production iacherie-charts/iacherie \
+  --namespace iacherie-production \
   --values helm/values-production.yml
 
 # 6. Verify deployment
-kubectl get pods -n ainflue-production
-curl -f https://api.ainflue.com/health
+kubectl get pods -n iacherie-production
+curl -f https://api.iacherie.com/health
 
 echo "Disaster recovery completed successfully!"
 ```
@@ -922,37 +922,37 @@ echo "Disaster recovery completed successfully!"
 
 ```bash
 # 1. Check all pods are running
-kubectl get pods -n ainflue-production
+kubectl get pods -n iacherie-production
 
 # 2. Verify services are accessible
-kubectl get services -n ainflue-production
+kubectl get services -n iacherie-production
 
 # 3. Check ingress configuration
-kubectl get ingress -n ainflue-production
+kubectl get ingress -n iacherie-production
 
 # 4. Test API endpoints
-curl -f https://api.ainflue.com/health
-curl -f https://api.ainflue.com/v1/status
+curl -f https://api.iacherie.com/health
+curl -f https://api.iacherie.com/v1/status
 
 # 5. Verify SSL certificates
-openssl s_client -connect api.ainflue.com:443 -servername api.ainflue.com
+openssl s_client -connect api.iacherie.com:443 -servername api.iacherie.com
 
 # 6. Check monitoring
-curl -f https://prometheus.ainflue.com/-/healthy
-curl -f https://grafana.ainflue.com/api/health
+curl -f https://prometheus.iacherie.com/-/healthy
+curl -f https://grafana.iacherie.com/api/health
 
 # 7. Verify logging
-kubectl logs -n ainflue-production deployment/ainflue-api --tail=100
+kubectl logs -n iacherie-production deployment/iacherie-api --tail=100
 
 # 8. Run smoke tests
-kubectl run smoke-test --image=ainflue-platform:latest \
+kubectl run smoke-test --image=iacherie-platform:latest \
   --rm -it --restart=Never -- python tests/smoke_test.py
 
 # 9. Check autoscaling
-kubectl get hpa -n ainflue-production
+kubectl get hpa -n iacherie-production
 
 # 10. Verify backup job
-kubectl get cronjobs -n ainflue-production
+kubectl get cronjobs -n iacherie-production
 ```
 
 ### 📊 **Performance Validation**
@@ -962,11 +962,11 @@ kubectl get cronjobs -n ainflue-production
 k6 run tests/load-test.js
 
 # Database performance test
-kubectl exec -n ainflue-production deployment/ainflue-api -- \
+kubectl exec -n iacherie-production deployment/iacherie-api -- \
   python manage.py test_db_performance
 
 # API response time test
-curl -w "@curl-format.txt" -o /dev/null -s https://api.ainflue.com/health
+curl -w "@curl-format.txt" -o /dev/null -s https://api.iacherie.com/health
 ```
 
 ---
@@ -978,36 +978,36 @@ curl -w "@curl-format.txt" -o /dev/null -s https://api.ainflue.com/health
 #### **Pod Startup Issues**
 ```bash
 # Check pod status
-kubectl describe pod <pod-name> -n ainflue-production
+kubectl describe pod <pod-name> -n iacherie-production
 
 # Check logs
-kubectl logs <pod-name> -n ainflue-production --previous
+kubectl logs <pod-name> -n iacherie-production --previous
 
 # Check resource constraints
-kubectl top pods -n ainflue-production
+kubectl top pods -n iacherie-production
 ```
 
 #### **Database Connection Issues**
 ```bash
 # Test database connectivity
-kubectl exec -n ainflue-production deployment/ainflue-api -- \
-  python -c "import psycopg2; psycopg2.connect('host=<db-host> user=<user> password=<pass> dbname=ainflue')"
+kubectl exec -n iacherie-production deployment/iacherie-api -- \
+  python -c "import psycopg2; psycopg2.connect('host=<db-host> user=<user> password=<pass> dbname=iacherie')"
 
 # Check database status
-kubectl exec -n ainflue-production deployment/postgresql -- pg_isready
+kubectl exec -n iacherie-production deployment/postgresql -- pg_isready
 ```
 
 #### **Performance Issues**
 ```bash
 # Check resource usage
 kubectl top nodes
-kubectl top pods -n ainflue-production
+kubectl top pods -n iacherie-production
 
 # Check HPA status
-kubectl describe hpa -n ainflue-production
+kubectl describe hpa -n iacherie-production
 
 # Analyze slow queries
-kubectl exec -n ainflue-production deployment/postgresql -- \
+kubectl exec -n iacherie-production deployment/postgresql -- \
   psql -U postgres -c "SELECT query, mean_time, calls FROM pg_stat_statements ORDER BY mean_time DESC LIMIT 10;"
 ```
 
@@ -1061,7 +1061,7 @@ interface DeploymentSuccess {
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue Deployment Guide License Request"
+**Subject:** "IA Chérie Deployment Guide License Request"
 
 ---
 

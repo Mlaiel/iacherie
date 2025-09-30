@@ -1,4 +1,4 @@
-"""Ainflue Model Deployment Configuration
+"""IA Chérie Model Deployment Configuration
 ======================================
 
 Model deployment configurations for AI/ML model serving, scaling,
@@ -320,7 +320,7 @@ class ModelDeploymentConfiguration:
     def _get_infrastructure_config(self) -> Dict[str, Any]:
         """Get infrastructure configuration"""
         base_config = {
-            "container_registry": "docker.io/ainflue",
+            "container_registry": "docker.io/iacherie",
             "kubernetes_namespace": "ml-models",
             "resource_requirements": {
                 "cpu": "500m",
@@ -484,5 +484,5 @@ __all__ = [
     "model_deployment_config"
 ]
 
-logger.info("🚀 Ainflue Model Deployment Configuration loaded")
+logger.info("🚀 IA Chérie Model Deployment Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

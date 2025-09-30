@@ -1,11 +1,11 @@
 """
-Retry Compliance Manager - Ainflue
+Retry Compliance Manager - IA Chérie
 ==================================
 Manager compliance retry operations.
 Audit trails + regulatory compliance + data protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

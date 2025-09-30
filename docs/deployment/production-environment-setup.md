@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides comprehensive instructions for configuring the Ainflue platform's production environment, including:
+This guide provides comprehensive instructions for configuring the IA Chérie platform's production environment, including:
 
 - **Kubernetes Secrets** for external APIs
 - **Production Environment Variables** for optimal performance
@@ -64,9 +64,9 @@ python3 kubernetes/scripts/production_secrets_manager.py
 #### Secret Structure
 
 Secrets are base64 encoded and stored in Kubernetes secrets:
-- `ainflue-secrets`: Main application secrets
-- `ainflue-external-api-secrets`: External API credentials
-- `ainflue-tls-secret`: TLS certificates
+- `iacherie-secrets`: Main application secrets
+- `iacherie-external-api-secrets`: External API credentials
+- `iacherie-tls-secret`: TLS certificates
 - `docker-registry-secret`: Container registry access
 
 ### 2. Production Environment Variables
@@ -127,22 +127,22 @@ Secrets are base64 encoded and stored in Kubernetes secrets:
 ### Development
 ```bash
 export ENVIRONMENT=development
-export KUBERNETES_NAMESPACE=ainflue-dev
-export MONITORING_NAMESPACE=ainflue-monitoring-dev
+export KUBERNETES_NAMESPACE=iacherie-dev
+export MONITORING_NAMESPACE=iacherie-monitoring-dev
 ```
 
 ### Staging
 ```bash
 export ENVIRONMENT=staging
-export KUBERNETES_NAMESPACE=ainflue-staging
-export MONITORING_NAMESPACE=ainflue-monitoring-staging
+export KUBERNETES_NAMESPACE=iacherie-staging
+export MONITORING_NAMESPACE=iacherie-monitoring-staging
 ```
 
 ### Production
 ```bash
 export ENVIRONMENT=production
-export KUBERNETES_NAMESPACE=ainflue
-export MONITORING_NAMESPACE=ainflue-monitoring
+export KUBERNETES_NAMESPACE=iacherie
+export MONITORING_NAMESPACE=iacherie-monitoring
 ```
 
 ## Advanced Configuration
@@ -161,7 +161,7 @@ python3 kubernetes/scripts/production_secrets_manager.py --rotate
 python3 kubernetes/scripts/monitoring_stack_deployment.py
 
 # Check monitoring status
-kubectl get all -n ainflue-monitoring
+kubectl get all -n iacherie-monitoring
 ```
 
 ### Environment Variable Updates
@@ -175,20 +175,20 @@ python3 kubernetes/scripts/production_environment_manager.py
 
 ### Grafana Dashboard
 ```bash
-kubectl port-forward -n ainflue-monitoring svc/grafana 3000:3000
+kubectl port-forward -n iacherie-monitoring svc/grafana 3000:3000
 # Open: http://localhost:3000
 # Login: admin/admin123
 ```
 
 ### Prometheus Metrics
 ```bash
-kubectl port-forward -n ainflue-monitoring svc/prometheus 9090:9090
+kubectl port-forward -n iacherie-monitoring svc/prometheus 9090:9090
 # Open: http://localhost:9090
 ```
 
 ### Jaeger Tracing
 ```bash
-kubectl port-forward -n ainflue-monitoring svc/jaeger-query 16686:16686
+kubectl port-forward -n iacherie-monitoring svc/jaeger-query 16686:16686
 # Open: http://localhost:16686
 ```
 
@@ -254,20 +254,20 @@ kubectl port-forward -n ainflue-monitoring svc/jaeger-query 16686:16686
 
 1. **Secret Not Found**
    ```bash
-   kubectl get secrets -n ainflue
-   kubectl describe secret ainflue-secrets -n ainflue
+   kubectl get secrets -n iacherie
+   kubectl describe secret iacherie-secrets -n iacherie
    ```
 
 2. **ConfigMap Issues**
    ```bash
-   kubectl get configmaps -n ainflue
-   kubectl describe configmap ainflue-production-config -n ainflue
+   kubectl get configmaps -n iacherie
+   kubectl describe configmap iacherie-production-config -n iacherie
    ```
 
 3. **Monitoring Stack Issues**
    ```bash
-   kubectl get deployments -n ainflue-monitoring
-   kubectl logs -l app=prometheus -n ainflue-monitoring
+   kubectl get deployments -n iacherie-monitoring
+   kubectl logs -l app=prometheus -n iacherie-monitoring
    ```
 
 ### Log Aggregation

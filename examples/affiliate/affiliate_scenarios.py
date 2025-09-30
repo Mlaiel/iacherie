@@ -752,7 +752,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS ENTERPRISE SCENARIOS TERMINÉES!")
-        logger.info("🏢 Enterprise Affiliate Scenarios - Ainflue Platform")
+        logger.info("🏢 Enterprise Affiliate Scenarios - IA Chérie Platform")
         logger.info("=" * 70)
         
         return True

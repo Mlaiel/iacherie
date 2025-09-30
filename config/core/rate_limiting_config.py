@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Rate Limiting Configuration - HIGH PERFORMANCE PROTECTION
+"""IA Chérie Enterprise Rate Limiting Configuration - HIGH PERFORMANCE PROTECTION
 =================================================================================
 
 🚦 ENTERPRISE RATE LIMITING FEATURES:
@@ -88,7 +88,7 @@ class RateLimitingConfiguration:
         # Global settings
         self.global_settings = {
             "default_algorithm": RateLimitAlgorithm.SLIDING_WINDOW,
-            "redis_key_prefix": "ainflue:rate_limit:",
+            "redis_key_prefix": "iacherie:rate_limit:",
             "redis_key_ttl": 3600,
             "enable_metrics": True,
             "enable_alerts": True,
@@ -330,7 +330,7 @@ __all__ = [
     "get_user_rate_limit", "is_rate_limit_enabled", "get_adaptive_settings"
 ]
 
-logger.info("🚦 Ainflue Rate Limiting Configuration initialized")
+logger.info("🚦 IA Chérie Rate Limiting Configuration initialized")
 logger.info(f"📊 User tiers configured: {len(rate_limiting_config.user_tier_limits)}")
 logger.info(f"🔧 Endpoint categories: {len(rate_limiting_config.endpoint_limits)}")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

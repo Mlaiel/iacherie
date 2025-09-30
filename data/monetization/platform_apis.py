@@ -820,7 +820,7 @@ class PlatformAPIs:
     async def _prepare_headers(self, platform: str, credentials: PlatformCredentials) -> Dict[str, str]:
         """Prepare headers for API request"""
         headers = {
-            "User-Agent": "Ainflue-Platform-Integration/1.0",
+            "User-Agent": "IA Chérie-Platform-Integration/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }

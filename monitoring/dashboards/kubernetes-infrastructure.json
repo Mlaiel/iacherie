@@ -46,7 +46,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "kube_pod_info{namespace=\"ainflue\"}",
+            "expr": "kube_pod_info{namespace=\"iacherie\"}",
             "format": "table"
           }
         ],

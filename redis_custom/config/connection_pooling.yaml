@@ -1,4 +1,4 @@
-# ⚡ Redis Connection Pooling Configuration - Ainflue Enterprise
+# ⚡ Redis Connection Pooling Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de) - All Rights Reserved
 # High-Performance Connection Management for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-connection-pooling
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: connection-pooling
     environment: enterprise
     owner: fahed-mlaiel
@@ -289,8 +289,8 @@ data:
       enabled: true
       alert_channels:
         - slack: "#redis-performance"
-        - email: "redis-alerts@ainflue.com"
-        - webhook: "https://monitoring.ainflue.com/webhook"
+        - email: "redis-alerts@iacherie.com"
+        - webhook: "https://monitoring.iacherie.com/webhook"
 
   # ===================================================================================
   # INTELLIGENT CONNECTION MANAGEMENT
@@ -404,7 +404,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-connection-pool-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   optimize_connections.sh: |
     #!/bin/bash

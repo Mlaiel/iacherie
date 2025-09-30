@@ -1,5 +1,5 @@
 """IA Influencer Agent - Windowing Computation Engine
-Advanced Time-Windowed Computations for Ainflue Event Streaming Platform
+Advanced Time-Windowed Computations for IA Chérie Event Streaming Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -49,7 +49,7 @@ class TriggerType(Enum):
 
 
 class AinflueBusinesWindowTypes:
-    """Business-specific window types for Ainflue platform"""
+    """Business-specific window types for IA Chérie platform"""
     
     # Content analytics windows
     CONTENT_ENGAGEMENT_WINDOW = {
@@ -689,7 +689,7 @@ class CollaborationSuccessWindowFunction(WindowFunction):
 
 
 class WindowingComputationEngine:
-    """Main windowing computation engine for Ainflue platform"""
+    """Main windowing computation engine for IA Chérie platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -708,7 +708,7 @@ class WindowingComputationEngine:
         try:
             logger.info("Starting Windowing Computation Engine")
             
-            # Setup default window assigners and functions for Ainflue
+            # Setup default window assigners and functions for IA Chérie
             await self._setup_default_windows()
             
             # Start computation task
@@ -739,7 +739,7 @@ class WindowingComputationEngine:
             raise
     
     async def _setup_default_windows(self):
-        """Setup default window assigners and functions for Ainflue"""
+        """Setup default window assigners and functions for IA Chérie"""
         try:
             # Content engagement windows
             self.window_assigners["content_engagement"] = WindowAssigner(

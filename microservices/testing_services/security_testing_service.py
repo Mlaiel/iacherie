@@ -1,5 +1,5 @@
 """
-Security Testing Service for Ainflue Microservices
+Security Testing Service for IA Chérie Microservices
 Automated security testing and vulnerability assessment
 
 Author: Fahed Mlaiel (mlaiel@live.de)

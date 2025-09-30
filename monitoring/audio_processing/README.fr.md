@@ -1,4 +1,4 @@
-# Monitoring de Traitement Audio - Plateforme Ainflue
+# Monitoring de Traitement Audio - Plateforme IA Chérie
 
 ## Vue d'ensemble
 
@@ -105,5 +105,5 @@ audio_processing/
 
 **Copyright:** © 2025 Fahed Mlaiel. Tous droits réservés.  
 **Contact:** mlaiel@live.de  
-**Projet:** Ainflue Platform - Audio Processing Monitoring  
+**Projet:** IA Chérie Platform - Audio Processing Monitoring  
 **Version:** 3.1.0 Enterprise

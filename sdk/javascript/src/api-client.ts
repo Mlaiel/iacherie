@@ -1,5 +1,5 @@
 /**
- * API Client Implementation for Ainflue JavaScript SDK
+ * API Client Implementation for IA Chérie JavaScript SDK
  * High-level API client with intelligent routing and business logic integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -14,7 +14,7 @@ import { ApiResponse, CreatorProfile, ContentItem, AnalyticsData, AIProcessingRe
 import { AuthenticationError, ValidationError, ErrorHandler } from './errors';
 
 /**
- * Main API Client for Ainflue Platform
+ * Main API Client for IA Chérie Platform
  * Provides business logic integration across the complete Creator workflow
  */
 export class ApiClient {

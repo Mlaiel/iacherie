@@ -1,8 +1,8 @@
-# 🏗️ Ainflue Datasets - Architecture d'Entraînement IA Enterprise
+# 🏗️ IA Chérie Datasets - Architecture d'Entraînement IA Enterprise
 
 ## Infrastructure de Données Professionnelle pour 53 Agents IA
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Licence](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-green.svg)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/tensorflow-2.12+-orange.svg)](https://tensorflow.org)
@@ -38,7 +38,7 @@
 
 ### **📧 Contact Obligatoire pour Autorisation**
 **Email :** mlaiel@live.de  
-**Sujet :** "Demande d'Autorisation - Architecture Datasets Ainflue"  
+**Sujet :** "Demande d'Autorisation - Architecture Datasets IA Chérie"  
 **⚖️ Des actions légales seront prises contre les utilisateurs non autorisés**
 
 ---
@@ -177,7 +177,7 @@ datasets/
 - **📊 Qualité des Données :** 95% de validation qualité automatisée
 - **🔄 Évolutivité :** 10x d'amélioration de la capacité de mise à l'échelle
 
-### **Intégration Plateforme Ainflue**
+### **Intégration Plateforme IA Chérie**
 - **📤 Traitement Upload :** Ingestion et analyse de contenu améliorées
 - **🤖 Traitement IA :** Précision améliorée sur les 53 agents
 - **🛡️ Protection PI :** Fingerprinting et détection avancés
@@ -237,6 +237,6 @@ Cette infrastructure de datasets est **prête pour l'entreprise** et suit les me
 ---
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
-**Module Datasets Plateforme Ainflue**  
+**Module Datasets Plateforme IA Chérie**  
 **Version 1.0 - Confidentiel et Propriétaire**  
 **Architecture Prête pour la Production Entreprise**

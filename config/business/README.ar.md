@@ -1,13 +1,13 @@
-# 🚀 وحدة تكوين الأعمال Ainflue - الإصدار المؤسسي فائق التطور
+# 🚀 وحدة تكوين الأعمال IA Chérie - الإصدار المؤسسي فائق التطور
 
-[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-gold.svg)](https://enterprise.ainflue.com)
-[![ذكاء الأعمال](https://img.shields.io/badge/Business-Intelligence-blue.svg)](https://bi.ainflue.com)
-[![تحسين الإيرادات](https://img.shields.io/badge/Revenue-Optimization-green.svg)](https://revenue.ainflue.com)
-[![اقتصاد المنشئين](https://img.shields.io/badge/Creator-Economy-purple.svg)](https://creators.ainflue.com)
+[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-gold.svg)](https://enterprise.iacherie.com)
+[![ذكاء الأعمال](https://img.shields.io/badge/Business-Intelligence-blue.svg)](https://bi.iacherie.com)
+[![تحسين الإيرادات](https://img.shields.io/badge/Revenue-Optimization-green.svg)](https://revenue.iacherie.com)
+[![اقتصاد المنشئين](https://img.shields.io/badge/Creator-Economy-purple.svg)](https://creators.iacherie.com)
 
 ## 🎯 الملخص التنفيذي
 
-تمثل **وحدة تكوين الأعمال Ainflue** قمة تنسيق اقتصاد المنشئين على مستوى المؤسسات، وتوفر ذكاء أعمال فائق التطور وتحسين الإيرادات وأنظمة تحقيق الدخل للمنشئين. تمكن هذه المجموعة الشاملة العمليات التجارية المستقلة عبر النظم البيئية للمنشئين متعددة المنصات مع أداء على نطاق كمي وموثوقية مؤسسية.
+تمثل **وحدة تكوين الأعمال IA Chérie** قمة تنسيق اقتصاد المنشئين على مستوى المؤسسات، وتوفر ذكاء أعمال فائق التطور وتحسين الإيرادات وأنظمة تحقيق الدخل للمنشئين. تمكن هذه المجموعة الشاملة العمليات التجارية المستقلة عبر النظم البيئية للمنشئين متعددة المنصات مع أداء على نطاق كمي وموثوقية مؤسسية.
 
 ## 🏗️ نظرة عامة على الهندسة المعمارية
 
@@ -476,10 +476,10 @@ scaling = BusinessScalingConfig(
 
 ### الدعم والمجتمع
 
-- 💬 [منتدى مجتمع الأعمال](https://community.ainflue.com/business)
-- 📧 [دعم المؤسسات](mailto:enterprise@ainflue.com)
-- 📞 [دعم الأعمال 24/7](tel:+1-800-AINFLUE)
-- 🎯 [استشارة الأعمال](https://ainflue.com/business-consultation)
+- 💬 [منتدى مجتمع الأعمال](https://community.iacherie.com/business)
+- 📧 [دعم المؤسسات](mailto:enterprise@iacherie.com)
+- 📞 [دعم الأعمال 24/7](tel:+1-800-IACHERIE)
+- 🎯 [استشارة الأعمال](https://iacherie.com/business-consultation)
 
 ## 🔄 التحديثات وخارطة الطريق
 
@@ -503,7 +503,7 @@ scaling = BusinessScalingConfig(
 
 ## 🏆 التميز المؤسسي
 
-**وحدة تكوين الأعمال Ainflue** - تشغيل مستقبل اقتصاد المنشئين مع ذكاء الأعمال فائق التطور وتحسين الإيرادات المستقل والموثوقية على مستوى المؤسسات.
+**وحدة تكوين الأعمال IA Chérie** - تشغيل مستقبل اقتصاد المنشئين مع ذكاء الأعمال فائق التطور وتحسين الإيرادات المستقل والموثوقية على مستوى المؤسسات.
 
 *مبني للتوسع. محسن للأداء. مصمم للنجاح.*
 
@@ -513,4 +513,4 @@ scaling = BusinessScalingConfig(
 
 ---
 
-*© 2025 Ainflue Technologies. جميع الحقوق محفوظة. الإصدار المؤسسي.*
+*© 2025 IA Chérie Technologies. جميع الحقوق محفوظة. الإصدار المؤسسي.*

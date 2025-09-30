@@ -4,7 +4,7 @@ Creator Onboarding System - Enterprise Creator Management
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced creator onboarding and management for Ainflue Platform:
+Advanced creator onboarding and management for IA Chérie Platform:
 - Automated creator verification and KYC
 - Portfolio analysis and scoring
 - Brand partnership matching
@@ -146,7 +146,7 @@ class CreatorOnboardingSystem:
     - Performance analytics and insights
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/creator_config.json"):
+    def __init__(self, config_path: str = "/etc/iacherie/creator_config.json"):
         self.config_path = config_path
         self.creators: Dict[str, CreatorProfile] = {}
         self.portfolios: Dict[str, List[PortfolioItem]] = {}
@@ -741,7 +741,7 @@ async def main():
     """CLI entry point for creator onboarding system"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Creator Onboarding System')
+    parser = argparse.ArgumentParser(description='IA Chérie Creator Onboarding System')
     parser.add_argument('--register', nargs=5, metavar=('EMAIL', 'USERNAME', 'NAME', 'BIO', 'CONTENT_TYPES'), 
                        help='Register new creator')
     parser.add_argument('--add-portfolio', nargs=5, metavar=('CREATOR_ID', 'TITLE', 'DESC', 'TYPE', 'URL'),
@@ -750,7 +750,7 @@ async def main():
     parser.add_argument('--recommendations', metavar='CREATOR_ID', help='Get revenue recommendations')
     parser.add_argument('--analytics', metavar='CREATOR_ID', help='Get creator analytics')
     parser.add_argument('--report', action='store_true', help='Generate creator report')
-    parser.add_argument('--config', default='/etc/ainflue/creator_config.json', help='Configuration file')
+    parser.add_argument('--config', default='/etc/iacherie/creator_config.json', help='Configuration file')
     
     args = parser.parse_args()
     

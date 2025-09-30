@@ -488,7 +488,7 @@ class MessageBrokerHealthMonitor:
             monitoring_data['cluster_status'] = {
                 'nodes_count': 3,
                 'healthy_nodes': 3,
-                'cluster_name': 'ainflue-rabbitmq-cluster'
+                'cluster_name': 'iacherie-rabbitmq-cluster'
             }
             
             monitoring_data['performance_metrics'] = {
@@ -534,7 +534,7 @@ class MessageBrokerHealthMonitor:
             
             monitoring_data['cluster_status'] = {
                 'topics_count': 15,
-                'cluster_id': 'kafka-cluster-ainflue',
+                'cluster_id': 'kafka-cluster-iacherie',
                 'controller_id': 1
             }
             

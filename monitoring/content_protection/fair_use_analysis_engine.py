@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Fair Use Analysis Engine
+IA Chérie Platform - Fair Use Analysis Engine
 ==========================================
 
 Enterprise-grade fair use analysis engine for automated evaluation

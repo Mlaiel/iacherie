@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""🛡️ Security Scorecard - Ainflue Platform
+"""🛡️ Security Scorecard - IA Chérie Platform
 ================================================================
 Expert: SECURITY_ENGINEER + QUALITY_ENGINEER
 Created: 2025-01-XX

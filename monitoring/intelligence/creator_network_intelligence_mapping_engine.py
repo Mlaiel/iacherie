@@ -18,7 +18,7 @@ and creator relationship intelligence across multi-platform ecosystems.
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-Project: Ainflue Creator Economy Intelligence Platform
+Project: IA Chérie Creator Economy Intelligence Platform
 Module: Creator Network Intelligence Mapping Engine
 Version: 1.0.0 Enterprise Production
 License: Proprietary - All Rights Reserved

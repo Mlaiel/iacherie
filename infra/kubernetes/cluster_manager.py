@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Kubernetes Cluster Manager
+# IA Chérie Infrastructure Module - Kubernetes Cluster Manager
 # ========================================================
 # 
-# Enterprise-grade Kubernetes cluster management for Ainflue platform
+# Enterprise-grade Kubernetes cluster management for IA Chérie platform
 # Supports multi-cloud Kubernetes and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -60,7 +60,7 @@ class KubernetesClusterManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.k8s.cluster_manager")
+        logger = logging.getLogger(f"iacherie.infra.k8s.cluster_manager")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -486,16 +486,16 @@ class KubernetesClusterManager:
 
 # Enterprise cluster management utilities
 class AinflueClusterManager:
-    """High-level cluster management for Ainflue platform"""
+    """High-level cluster management for IA Chérie platform"""
     
     def __init__(self, environment: str = "development"):
-        """Initialize Ainflue cluster manager
+        """Initialize IA Chérie cluster manager
         
         Args:
             environment: Deployment environment (development, staging, production)
         """
         self.environment = environment
-        self.logger = logging.getLogger(f"ainflue.infra.cluster_manager")
+        self.logger = logging.getLogger(f"iacherie.infra.cluster_manager")
         
         # Configuration based on environment
         self.config = self._get_environment_config()
@@ -504,8 +504,8 @@ class AinflueClusterManager:
     def _get_environment_config(self) -> ClusterConfig:
         """Get configuration based on environment"""
         base_config = {
-            'cluster_name': f'ainflue-{self.environment}',
-            'namespace': 'ainflue',
+            'cluster_name': f'iacherie-{self.environment}',
+            'namespace': 'iacherie',
             'region': 'us-central1',
             'kubernetes_version': '1.28'
         }
@@ -536,7 +536,7 @@ class AinflueClusterManager:
             )
     
     async def deploy_ainflue_stack(self) -> bool:
-        """Deploy the complete Ainflue application stack
+        """Deploy the complete IA Chérie application stack
         
         Returns:
             bool: True if successful, False otherwise
@@ -546,9 +546,9 @@ class AinflueClusterManager:
             await self.k8s_manager.create_namespace(
                 namespace=self.config.namespace,
                 labels={
-                    'app': 'ainflue',
+                    'app': 'iacherie',
                     'environment': self.environment,
-                    'managed-by': 'ainflue-cluster-manager'
+                    'managed-by': 'iacherie-cluster-manager'
                 }
             )
             
@@ -568,11 +568,11 @@ class AinflueClusterManager:
                     self.logger.error(f"Failed to deploy component: {component}")
                     return False
             
-            self.logger.info("Successfully deployed Ainflue stack")
+            self.logger.info("Successfully deployed IA Chérie stack")
             return True
             
         except Exception as e:
-            self.logger.error(f"Failed to deploy Ainflue stack: {e}")
+            self.logger.error(f"Failed to deploy IA Chérie stack: {e}")
             return False
     
     async def _deploy_component(self, component_name: str) -> bool:
@@ -597,9 +597,9 @@ if __name__ == "__main__":
         # Deploy the stack
         success = await manager.deploy_ainflue_stack()
         if success:
-            print("Ainflue stack deployed successfully")
+            print("IA Chérie stack deployed successfully")
         else:
-            print("Failed to deploy Ainflue stack")
+            print("Failed to deploy IA Chérie stack")
         
         # Get cluster status
         status = await manager.k8s_manager.get_cluster_status()

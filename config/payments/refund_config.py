@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Refund Configuration Module
+"""IA Chérie Refund Configuration Module
 ====================================
 
-Enterprise-grade refund configuration for the Ainflue platform.
+Enterprise-grade refund configuration for the IA Chérie platform.
 Comprehensive refund management with automated processing, compliance tracking,
 multi-reason support, and analytics capabilities.
 

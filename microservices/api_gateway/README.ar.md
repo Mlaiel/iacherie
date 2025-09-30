@@ -1,10 +1,10 @@
-# 🔗 API Gateway Enterprise - Ainflue
+# 🔗 API Gateway Enterprise - IA Chérie
 
 **🚀 بوابة API عالية المستوى للخدمات المصغرة الموزعة**
 
 ## 📋 نظرة عامة
 
-وحدة بوابة API على مستوى المؤسسة لإدارة الوصول والتوجيه والأمان وقابلية المراقبة لهندسة الخدمات المصغرة Ainflue. نقطة دخول واحدة لجميع الخدمات الموزعة مع أنماط متقدمة على مستوى المؤسسة.
+وحدة بوابة API على مستوى المؤسسة لإدارة الوصول والتوجيه والأمان وقابلية المراقبة لهندسة الخدمات المصغرة IA Chérie. نقطة دخول واحدة لجميع الخدمات الموزعة مع أنماط متقدمة على مستوى المؤسسة.
 
 ## 🏗️ الهندسة المعمارية
 
@@ -118,7 +118,7 @@ security_policies:
     burst: 50
     
   cors:
-    allowed_origins: ["https://ainflue.com"]
+    allowed_origins: ["https://iacherie.com"]
     allowed_methods: ["GET", "POST", "PUT", "DELETE"]
     allowed_headers: ["Authorization", "Content-Type"]
 ```
@@ -252,14 +252,14 @@ artillery run tests/stress/gateway_stress.yaml
 
 ### 🆘 الدعم العاجل
 ```yaml
-المسائل الحرجة:         gateway-team@ainflue.com
+المسائل الحرجة:         gateway-team@iacherie.com
 التصعيد:              كبير المهندسين المعماريين (mlaiel@live.de)
 وقت الاستجابة:         < 15 دقيقة للحوادث P0
-التوثيق:             docs.ainflue.com/api-gateway
+التوثيق:             docs.iacherie.com/api-gateway
 ```
 
 ---
 
-**© فهد مليل 2024-2025 - بوابة API مؤسسية Ainflue**  
+**© فهد مليل 2024-2025 - بوابة API مؤسسية IA Chérie**  
 **🔒 ملكية فكرية محمية**  
 **🌍 بوابة جاهزة للإنتاج لـ 65+ منصة**

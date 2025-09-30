@@ -258,7 +258,7 @@ ALERT_RULES = {
 
 ## 🔄 INTÉGRATIONS ENTERPRISE
 
-### **🔗 INTÉGRATIONS AINFLUE**
+### **🔗 INTÉGRATIONS IACHERIE**
 - **Data Pipeline:** Intégration pipelines data
 - **Content Protection:** Intégration protection contenu
 - **ML Models:** Intégration modèles IA
@@ -291,7 +291,7 @@ ALERT_RULES = {
 - [ ] Performance optimisée
 
 ### **✅ VALIDATION BUSINESS**
-- [ ] Logique métier Ainflue respectée
+- [ ] Logique métier IA Chérie respectée
 - [ ] Intégrations modules existants
 - [ ] Workflows qualité automatisés
 - [ ] Monitoring temps réel
@@ -343,4 +343,4 @@ Toute utilisation non autorisée de ce code ou concept sans permission écrite d
 
 ---
 
-*Checklist générée le 9 septembre 2025 - Architecture Quality Module Ainflue*
+*Checklist générée le 9 septembre 2025 - Architecture Quality Module IA Chérie*

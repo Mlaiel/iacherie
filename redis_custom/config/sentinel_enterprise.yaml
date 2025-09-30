@@ -12,7 +12,7 @@
 sentinel_enterprise:
   # Identification
   sentinel_id: "sentinel-enterprise-cluster"
-  cluster_name: "ainflue-redis-enterprise"
+  cluster_name: "iacherie-redis-enterprise"
   environment: "production"
   version: "7.2.0-enterprise"
   
@@ -26,35 +26,35 @@ sentinel_enterprise:
   # Configuration Sentinels
   sentinels:
     sentinel_1:
-      host: "redis-sentinel-1.ainflue.internal"
+      host: "redis-sentinel-1.iacherie.internal"
       port: 26379
       datacenter: "dc-primary"
       zone: "zone-a"
       priority: 100
       
     sentinel_2:
-      host: "redis-sentinel-2.ainflue.internal"
+      host: "redis-sentinel-2.iacherie.internal"
       port: 26379
       datacenter: "dc-primary"
       zone: "zone-b"
       priority: 100
       
     sentinel_3:
-      host: "redis-sentinel-3.ainflue.internal"
+      host: "redis-sentinel-3.iacherie.internal"
       port: 26379
       datacenter: "dc-primary"
       zone: "zone-c"
       priority: 100
       
     sentinel_4:
-      host: "redis-sentinel-4.ainflue.internal"
+      host: "redis-sentinel-4.iacherie.internal"
       port: 26379
       datacenter: "dc-secondary"
       zone: "zone-a"
       priority: 90
       
     sentinel_5:
-      host: "redis-sentinel-5.ainflue.internal"
+      host: "redis-sentinel-5.iacherie.internal"
       port: 26379
       datacenter: "dc-cloud"
       zone: "zone-cloud"
@@ -64,7 +64,7 @@ sentinel_enterprise:
 masters_configuration:
   # Master Instance 1
   ainflue_master_1:
-    host: "redis-master-1.ainflue.internal"
+    host: "redis-master-1.iacherie.internal"
     port: 6379
     quorum: 3
     auth_user: "sentinel_service"
@@ -86,7 +86,7 @@ masters_configuration:
     
   # Master Instance 2
   ainflue_master_2:
-    host: "redis-master-2.ainflue.internal"
+    host: "redis-master-2.iacherie.internal"
     port: 6379
     quorum: 3
     auth_user: "sentinel_service"
@@ -105,7 +105,7 @@ masters_configuration:
     
   # Master Instance 3
   ainflue_master_3:
-    host: "redis-master-3.ainflue.internal"
+    host: "redis-master-3.iacherie.internal"
     port: 6379
     quorum: 3
     auth_user: "sentinel_service"
@@ -287,11 +287,11 @@ notifications:
   handlers:
     email:
       enabled: true
-      smtp_host: "smtp.ainflue.com"
+      smtp_host: "smtp.iacherie.com"
       smtp_port: 587
       recipients:
-        - "ops-team@ainflue.com"
-        - "dba-team@ainflue.com"
+        - "ops-team@iacherie.com"
+        - "dba-team@iacherie.com"
         
     slack:
       enabled: true

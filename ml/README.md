@@ -11,7 +11,7 @@
 
 ## 🎯 **Module Overview**
 
-The ML module provides comprehensive Machine Learning and Artificial Intelligence infrastructure for the Ainflue platform. It orchestrates the complete ML lifecycle from model development to production deployment with enterprise-grade standards.
+The ML module provides comprehensive Machine Learning and Artificial Intelligence infrastructure for the IA Chérie platform. It orchestrates the complete ML lifecycle from model development to production deployment with enterprise-grade standards.
 
 ### **🚀 Business Logic Flow Integration**
 Creator (Musician/Blogger/Photographer/Influencer/Comedian) → Upload Multi-Format → **IA Processing & ML Analysis** → Protection → Collaboration → SEO → Distribution → Monetization

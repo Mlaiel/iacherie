@@ -1,5 +1,5 @@
 """
-BERT Content Analyzer for Ainflue Platform
+BERT Content Analyzer for IA Chérie Platform
 ==========================================
 
 Advanced BERT-based content analysis for semantic SEO optimization.
@@ -19,10 +19,16 @@ from enum import Enum
 import asyncpg
 from datetime import datetime
 import torch
-# from transformers import (
-    AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
-    BertTokenizer, BertModel, pipeline
-)
+
+# Import transformers properly
+try:
+    from transformers import (
+        AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
+        BertTokenizer, BertModel, pipeline
+    )
+    TRANSFORMERS_AVAILABLE = True
+except ImportError:
+    TRANSFORMERS_AVAILABLE = False
 from core.sentence_transformers_singleton import get_sentence_transformer
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity

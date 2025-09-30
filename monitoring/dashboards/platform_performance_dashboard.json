@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Platform Performance Dashboard",
-    "tags": ["ainflue", "platform", "performance", "apis"],
+    "title": "IA Chérie Platform Performance Dashboard",
+    "tags": ["iacherie", "platform", "performance", "apis"],
     "style": "dark",
     "timezone": "browser",
     "editable": true,
@@ -27,7 +27,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "ainflue:platform_api_success_rate:5m{platform=~\"$platform\"} * 100",
+            "expr": "iacherie:platform_api_success_rate:5m{platform=~\"$platform\"} * 100",
             "interval": "",
             "legendFormat": "{{ platform }}",
             "refId": "A",
@@ -88,7 +88,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "ainflue:platform_api_response_time:p95_5m{platform=~\"$platform\"} * 1000",
+            "expr": "iacherie:platform_api_response_time:p95_5m{platform=~\"$platform\"} * 1000",
             "interval": "",
             "legendFormat": "{{ platform }}",
             "refId": "A",
@@ -149,7 +149,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "ainflue:platform_api_rate_limit:utilization{platform=~\"$platform\"}",
+            "expr": "iacherie:platform_api_rate_limit:utilization{platform=~\"$platform\"}",
             "interval": "",
             "legendFormat": "{{ platform }}",
             "refId": "A",
@@ -210,7 +210,7 @@
         "type": "timeseries",
         "targets": [
           {
-            "expr": "ainflue:platform_api_success_rate:5m{platform=~\"$platform\"} * 100",
+            "expr": "iacherie:platform_api_success_rate:5m{platform=~\"$platform\"} * 100",
             "interval": "",
             "legendFormat": "{{ platform }}",
             "refId": "A"
@@ -292,7 +292,7 @@
         "type": "timeseries",
         "targets": [
           {
-            "expr": "ainflue:platform_api_response_time:p95_5m{platform=~\"$platform\"} * 1000",
+            "expr": "iacherie:platform_api_response_time:p95_5m{platform=~\"$platform\"} * 1000",
             "interval": "",
             "legendFormat": "{{ platform }} (P95)",
             "refId": "A"
@@ -376,7 +376,7 @@
         "type": "timeseries",
         "targets": [
           {
-            "expr": "ainflue:crawler_success_rate:5m{platform=~\"$platform\"} * 100",
+            "expr": "iacherie:crawler_success_rate:5m{platform=~\"$platform\"} * 100",
             "interval": "",
             "legendFormat": "{{ platform }} Success Rate",
             "refId": "A"
@@ -458,7 +458,7 @@
         "type": "timeseries",
         "targets": [
           {
-            "expr": "sum by (platform, content_type) (ainflue:crawler_content_found:rate_5m{platform=~\"$platform\"})",
+            "expr": "sum by (platform, content_type) (iacherie:crawler_content_found:rate_5m{platform=~\"$platform\"})",
             "interval": "",
             "legendFormat": "{{ platform }} - {{ content_type }}",
             "refId": "A"
@@ -534,7 +534,7 @@
         "type": "timeseries",
         "targets": [
           {
-            "expr": "ainflue:fingerprinting_accuracy:5m{content_type=~\"$content_type\"} * 100",
+            "expr": "iacherie:fingerprinting_accuracy:5m{content_type=~\"$content_type\"} * 100",
             "interval": "",
             "legendFormat": "{{ content_type }} Accuracy",
             "refId": "A"
@@ -710,7 +710,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "ainflue:fingerprinting_accuracy:5m * 100",
+            "expr": "iacherie:fingerprinting_accuracy:5m * 100",
             "interval": "",
             "legendFormat": "{{ content_type }}",
             "refId": "A",
@@ -771,7 +771,7 @@
         "type": "gauge",
         "targets": [
           {
-            "expr": "avg(ainflue:platform_api_success_rate:5m) * 100",
+            "expr": "avg(iacherie:platform_api_success_rate:5m) * 100",
             "interval": "",
             "legendFormat": "Overall Health",
             "refId": "A"
@@ -835,7 +835,7 @@
             ]
           },
           "datasource": "Prometheus",
-          "definition": "label_values(ainflue:platform_api_success_rate:5m, platform)",
+          "definition": "label_values(iacherie:platform_api_success_rate:5m, platform)",
           "hide": 0,
           "includeAll": true,
           "label": "Platform",
@@ -843,7 +843,7 @@
           "name": "platform",
           "options": [],
           "query": {
-            "query": "label_values(ainflue:platform_api_success_rate:5m, platform)",
+            "query": "label_values(iacherie:platform_api_success_rate:5m, platform)",
             "refId": "StandardVariableQuery"
           },
           "refresh": 1,
@@ -864,7 +864,7 @@
             ]
           },
           "datasource": "Prometheus",
-          "definition": "label_values(ainflue:fingerprinting_accuracy:5m, content_type)",
+          "definition": "label_values(iacherie:fingerprinting_accuracy:5m, content_type)",
           "hide": 0,
           "includeAll": true,
           "label": "Content Type",
@@ -872,7 +872,7 @@
           "name": "content_type",
           "options": [],
           "query": {
-            "query": "label_values(ainflue:fingerprinting_accuracy:5m, content_type)",
+            "query": "label_values(iacherie:fingerprinting_accuracy:5m, content_type)",
             "refId": "StandardVariableQuery"
           },
           "refresh": 1,

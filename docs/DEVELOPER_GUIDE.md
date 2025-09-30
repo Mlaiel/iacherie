@@ -1,4 +1,4 @@
-# 🧑‍💻 Ainflue Platform - Comprehensive Developer Guide
+# 🧑‍💻 IA Chérie Platform - Comprehensive Developer Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Platform Version:** 2.0.0  
@@ -23,7 +23,7 @@
 
 ### High-Level Architecture
 
-Ainflue is built as a modern microservices-based platform with the following core components:
+IA Chérie is built as a modern microservices-based platform with the following core components:
 
 ```mermaid
 graph TB
@@ -161,8 +161,8 @@ graph TB
 #### Clone Repository
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Verify repository structure
 ls -la
@@ -494,7 +494,7 @@ async def process_multiple_contents(content_ids: List[str]) -> List[Dict]:
 
 #### 1. Project Structure
 ```
-ainflue/
+iacherie/
 ├── api/                    # FastAPI application
 │   ├── routers/           # API route definitions
 │   ├── middleware/        # Custom middleware
@@ -1290,8 +1290,8 @@ def debug_environment():
 ```bash
 # Debug container connectivity
 docker ps  # Check running containers
-docker logs ainflue-api  # Check application logs
-docker exec -it ainflue-postgres psql -U postgres  # Connect to database
+docker logs iacherie-api  # Check application logs
+docker exec -it iacherie-postgres psql -U postgres  # Connect to database
 
 # Debug network connectivity
 docker network ls
@@ -2006,7 +2006,7 @@ Create `scripts/dev-setup.sh`:
 
 set -e
 
-echo "Setting up Ainflue development environment..."
+echo "Setting up IA Chérie development environment..."
 
 # Check Python version
 python_version=$(python3 --version | cut -d ' ' -f2 | cut -d '.' -f1,2)
@@ -2071,7 +2071,7 @@ echo "  uvicorn api.asgi:app --reload"
 
 #### Communication Channels
 - **Technical Lead**: Fahed Mlaiel (mlaiel@live.de)
-- **Project Repository**: [GitHub - Mlaiel/Ainflue](https://github.com/Mlaiel/Ainflue)
+- **Project Repository**: [GitHub - Mlaiel/IA Chérie](https://github.com/Mlaiel/IA Chérie)
 - **Issue Tracking**: GitHub Issues for bug reports and feature requests
 - **Code Reviews**: GitHub Pull Requests with mandatory reviews
 
@@ -2125,17 +2125,17 @@ docker-compose exec postgres psql -U postgres    # Database shell
 #### Production Commands
 ```bash
 # Production deployment
-docker build -t ainflue:latest .
-docker run -d --name ainflue-api ainflue:latest
+docker build -t iacherie:latest .
+docker run -d --name iacherie-api iacherie:latest
 
 # Kubernetes deployment
 kubectl apply -f k8s/
-kubectl get pods -n ainflue
-kubectl logs -f deployment/ainflue-api -n ainflue
+kubectl get pods -n iacherie
+kubectl logs -f deployment/iacherie-api -n iacherie
 
 # Monitoring
-kubectl top pods -n ainflue
-kubectl describe pod <pod-name> -n ainflue
+kubectl top pods -n iacherie
+kubectl describe pod <pod-name> -n iacherie
 ```
 
 ### Performance Optimization Tips
@@ -2180,10 +2180,10 @@ This developer guide and all associated code, documentation, and intellectual pr
 ### Contact Information
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Project**: Ainflue Platform - AI-Powered Content Protection and Monetization
+- **Project**: IA Chérie Platform - AI-Powered Content Protection and Monetization
 
 For licensing inquiries, collaboration opportunities, or technical support, please contact the author directly.
 
 ---
 
-*This Developer Guide serves as the comprehensive technical documentation for the Ainflue platform. It should be regularly updated to reflect changes in the codebase, architecture, and development processes.*
+*This Developer Guide serves as the comprehensive technical documentation for the IA Chérie platform. It should be regularly updated to reflect changes in the codebase, architecture, and development processes.*

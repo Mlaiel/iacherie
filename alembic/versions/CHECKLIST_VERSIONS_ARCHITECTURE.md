@@ -1,9 +1,9 @@
-# 📋 CHECKLIST ARCHITECTURE ALEMBIC VERSIONS - AINFLUE PLATFORM
+# 📋 CHECKLIST ARCHITECTURE ALEMBIC VERSIONS - IACHERIE PLATFORM
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
-**Projet :** Ainflue - Plateforme IA Multi-Format pour Créateurs  
+**Projet :** IA Chérie - Plateforme IA Multi-Format pour Créateurs  
 **Date :** 5 Septembre 2025  
-**Dossier :** `/workspaces/Ainflue/alembic/versions/`
+**Dossier :** `/workspaces/IA Chérie/alembic/versions/`
 
 ⚠️ **AVERTISSEMENT LÉGAL STRICT :** Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel. Toute utilisation, copie, vol ou reproduction sans autorisation écrite expresse de Fahed Mlaiel (mlaiel@live.de) est strictement interdite et passible de poursuites judiciaires.
 
@@ -24,7 +24,7 @@
 
 ## 📂 ARCHITECTURE VERSIONS ACTUELLE
 ```
-/workspaces/Ainflue/alembic/versions/
+/workspaces/IA Chérie/alembic/versions/
 ├── __init__.py ✅ (EXISTANT)
 └── d21b3c27ee2c_initial_database_schema_for_ainflue_.py ✅ (EXISTANT - SCHEMA INITIAL)
 ```
@@ -132,7 +132,7 @@
 
 **Contenu requis pour chaque README :**
 ```markdown
-# Ainflue Platform - Database Migrations
+# IA Chérie Platform - Database Migrations
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)
 **Specialized Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -339,4 +339,4 @@ Cette checklist représente l'architecture la plus avancée pour les migrations 
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Ainflue Platform Enterprise
+**Projet :** IA Chérie Platform Enterprise

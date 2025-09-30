@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Discovery & Registry Templates for Ainflue Platform
+Discovery & Registry Templates for IA Chérie Platform
 ==================================================
 
 Production-ready service discovery and registry templates with:

@@ -381,8 +381,8 @@ class ComplianceManagement:
     """
     
     def __init__(self,
-                 evidence_dir: str = "/var/evidence/ainflue",
-                 reports_dir: str = "/var/reports/ainflue/compliance"):
+                 evidence_dir: str = "/var/evidence/iacherie",
+                 reports_dir: str = "/var/reports/iacherie/compliance"):
         """
         Initialise le système de gestion de compliance
         
@@ -1136,8 +1136,8 @@ class ComplianceManagement:
         return hashlib.sha256(data.encode()).hexdigest()
 
 
-def create_compliance_management(evidence_dir: str = "/var/evidence/ainflue",
-                               reports_dir: str = "/var/reports/ainflue/compliance") -> ComplianceManagement:
+def create_compliance_management(evidence_dir: str = "/var/evidence/iacherie",
+                               reports_dir: str = "/var/reports/iacherie/compliance") -> ComplianceManagement:
     """
     Factory function pour créer instance ComplianceManagement
     

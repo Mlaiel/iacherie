@@ -1,9 +1,9 @@
-"""Ainflue Core WebSocket Manager - Real-time Communication Hub
+"""IA Chérie Core WebSocket Manager - Real-time Communication Hub
 ==========================================================
 
 Advanced WebSocket management providing real-time messaging, connection pooling,
 room management, authentication, broadcasting, and scalable real-time features
-for the Ainflue platform.
+for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -316,7 +316,7 @@ class WebSocketManagerCore:
             # Send welcome message
             await self._send_to_connection(connection_id, {
                 "type": "system",
-                "message": "Connected to Ainflue WebSocket",
+                "message": "Connected to IA Chérie WebSocket",
                 "connection_id": connection_id
             })
             

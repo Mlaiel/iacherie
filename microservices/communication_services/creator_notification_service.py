@@ -157,18 +157,18 @@ class CreatorNotificationService:
                 id="welcome_template",
                 name="Welcome New Creator",
                 type=NotificationType.WELCOME,
-                subject_template="Welcome to Ainflue, {creator_name}!",
+                subject_template="Welcome to IA Chérie, {creator_name}!",
                 body_template="Welcome to our creator platform! We're excited to have you join our community.",
                 channels=[NotificationChannel.EMAIL, NotificationChannel.IN_APP],
                 priority=NotificationPriority.HIGH,
                 variables={"creator_name": "string"},
                 localization={
                     "fr": {
-                        "subject": "Bienvenue sur Ainflue, {creator_name}!",
+                        "subject": "Bienvenue sur IA Chérie, {creator_name}!",
                         "body": "Bienvenue sur notre plateforme créateur! Nous sommes ravis de vous avoir dans notre communauté."
                     },
                     "de": {
-                        "subject": "Willkommen bei Ainflue, {creator_name}!",
+                        "subject": "Willkommen bei IA Chérie, {creator_name}!",
                         "body": "Willkommen auf unserer Creator-Plattform! Wir freuen uns, Sie in unserer Community zu haben."
                     }
                 }
@@ -581,7 +581,7 @@ async def example_usage():
         creator_id="creator_123",
         notification_type=NotificationType.WELCOME,
         channels=[NotificationChannel.EMAIL, NotificationChannel.IN_APP],
-        subject="Welcome to Ainflue!",
+        subject="Welcome to IA Chérie!",
         content="Welcome to our creator platform! We're excited to have you join our community.",
         variables={"creator_name": "John Doe"}
     )

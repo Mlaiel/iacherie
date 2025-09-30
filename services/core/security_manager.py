@@ -147,7 +147,7 @@ class EnterpriseSecurityManager:
     ):
         # Initialize logging
         if LOGGING_ENABLED:
-            self.logger = get_logger("security_manager", service_name="ainflue-security")
+            self.logger = get_logger("security_manager", service_name="iacherie-security")
             self.security_logger = self.logger.security
             self.audit_logger = self.logger.audit
         else:
@@ -457,8 +457,8 @@ class EnterpriseSecurityManager:
             "security_level": principal.security_level.value,
             "iat": now.timestamp(),
             "exp": (now + self.token_expiry).timestamp(),
-            "iss": "ainflue-security",
-            "aud": "ainflue-services"
+            "iss": "iacherie-security",
+            "aud": "iacherie-services"
         }
         
         return jwt.encode(payload, self.jwt_secret, algorithm=self.jwt_algorithm)
@@ -470,18 +470,18 @@ class EnterpriseSecurityManager:
         """
         # Mock user data - replace with actual database lookup
         mock_users = {
-            "admin@ainflue.com": {
+            "admin@iacherie.com": {
                 "user_id": "user_001",
                 "password_hash": bcrypt.hashpw(b"admin123!@#", bcrypt.gensalt()),
-                "email": "admin@ainflue.com",
+                "email": "admin@iacherie.com",
                 "roles": ["admin"],
                 "security_level": "secret",
                 "scopes": ["full_access"]
             },
-            "user@ainflue.com": {
+            "user@iacherie.com": {
                 "user_id": "user_002",
                 "password_hash": bcrypt.hashpw(b"user123!@#", bcrypt.gensalt()),
-                "email": "user@ainflue.com",
+                "email": "user@iacherie.com",
                 "roles": ["editor"],
                 "security_level": "internal",
                 "scopes": ["content_access"]

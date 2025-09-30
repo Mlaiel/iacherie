@@ -38,7 +38,7 @@ content_data = {
     'title': 'Amazing Content',
     'description': 'Check out this amazing content!',
     'content_type': 'video',
-    'file_url': 'https://cdn.ainflue.com/content.mp4'
+    'file_url': 'https://cdn.iacherie.com/content.mp4'
 }
 
 sync_result = await sync_to_platform("user_123", "instagram", content_data, SyncOperation.UPLOAD)

@@ -36,7 +36,7 @@ ENCRYPTION_KEY=your-encryption-key-here-32-chars
 # Database Configuration (optional for basic testing)
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_USER=ainflue
+POSTGRES_USER=iacherie
 POSTGRES_PASSWORD=your-db-password
 POSTGRES_DB=ainflue_platform
 
@@ -48,7 +48,7 @@ REDIS_PORT=6379
 
 ```bash
 # Navigate to project directory
-cd /path/to/Ainflue
+cd /path/to/IA Chérie
 
 # Start the development server
 uvicorn api.asgi:app --host 0.0.0.0 --port 8000 --reload

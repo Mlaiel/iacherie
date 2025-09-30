@@ -1,5 +1,5 @@
 # ===========================================
-# SSL/TLS CONFIGURATION - AINFLUE UTILS
+# SSL/TLS CONFIGURATION - IACHERIE UTILS
 # ===========================================
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -50,11 +50,11 @@ ssl_tls:
       
     # Domains and Subdomains
     domains:
-      primary_domain: "ainflue.com"
-      api_domain: "api.ainflue.com"
-      admin_domain: "admin.ainflue.com"
-      cdn_domain: "cdn.ainflue.com"
-      static_domain: "static.ainflue.com"
+      primary_domain: "iacherie.com"
+      api_domain: "api.iacherie.com"
+      admin_domain: "admin.iacherie.com"
+      cdn_domain: "cdn.iacherie.com"
+      static_domain: "static.iacherie.com"
       
     # Certificate Specifications
     specifications:

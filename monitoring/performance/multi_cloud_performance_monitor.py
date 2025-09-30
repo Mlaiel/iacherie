@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 Multi-Cloud Performance Monitor Enterprise
 Advanced multi-cloud performance monitoring for Creator Economy platform

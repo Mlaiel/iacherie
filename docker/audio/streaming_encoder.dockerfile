@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE STREAMING ENCODER - PROFESSIONAL DOCKERFILE
+# IACHERIE STREAMING ENCODER - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Real-time audio streaming encoder with multiple codecs and adaptive bitrate
 # streaming for live broadcasting and high-quality audio distribution.

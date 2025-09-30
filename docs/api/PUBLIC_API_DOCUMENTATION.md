@@ -1,8 +1,8 @@
-# 🚀 Ainflue Public API Documentation
+# 🚀 IA Chérie Public API Documentation
 
 ## Overview
 
-The Ainflue Public API provides developer-friendly access to our AI-powered content protection and monetization platform. This API is specifically designed for:
+The IA Chérie Public API provides developer-friendly access to our AI-powered content protection and monetization platform. This API is specifically designed for:
 
 - **SDK Integration**: Seamless integration with our official SDKs
 - **Developer Tools**: Testing sandbox and development utilities  
@@ -12,8 +12,8 @@ The Ainflue Public API provides developer-friendly access to our AI-powered cont
 ## 🔗 Base URL
 
 ```
-Production: https://api.ainflue.com/api/v1/public
-Staging: https://staging-api.ainflue.com/api/v1/public
+Production: https://api.iacherie.com/api/v1/public
+Staging: https://staging-api.iacherie.com/api/v1/public
 ```
 
 ## 🔑 Authentication
@@ -26,7 +26,7 @@ Authorization: Bearer YOUR_API_KEY
 
 ### Getting an API Key
 
-1. Register at [https://app.ainflue.com](https://app.ainflue.com)
+1. Register at [https://app.iacherie.com](https://app.iacherie.com)
 2. Navigate to Developer Settings
 3. Generate a new API key
 4. Copy and securely store your API key
@@ -181,7 +181,7 @@ Generate fingerprint for content protection.
 {
   "fingerprint_id": "fp_abc123",
   "content_hash": "fp_abc123def456",
-  "algorithm": "ainflue-v1",
+  "algorithm": "iacherie-v1",
   "confidence_score": 0.95,
   "processing_time": 2.1,
   "created_at": "2025-01-09T10:30:00Z",
@@ -204,7 +204,7 @@ Download Python SDK source code.
   "filename": "ainflue_sdk.py",
   "content": "# SDK source code here...",
   "version": "1.0.0",
-  "installation": "pip install ainflue-sdk",
+  "installation": "pip install iacherie-sdk",
   "documentation": "/public/docs"
 }
 ```
@@ -239,7 +239,7 @@ asyncio.run(main())
 ### JavaScript SDK (Coming Soon)
 
 ```javascript
-import { AinflueSdk } from 'ainflue-sdk-js';
+import { AinflueSdk } from 'iacherie-sdk-js';
 
 const sdk = new AinflueSdk({ apiKey: 'your-api-key' });
 
@@ -258,24 +258,24 @@ console.log(`Quality Score: ${result.analysis.quality_score}`);
 
 ```bash
 # Check API health (no auth)
-curl -X GET "https://api.ainflue.com/api/v1/public/health"
+curl -X GET "https://api.iacherie.com/api/v1/public/health"
 
 # Get API info (no auth)
-curl -X GET "https://api.ainflue.com/api/v1/public/info"
+curl -X GET "https://api.iacherie.com/api/v1/public/info"
 
 # Test endpoint in sandbox
-curl -X POST "https://api.ainflue.com/api/v1/public/sandbox/test" \
+curl -X POST "https://api.iacherie.com/api/v1/public/sandbox/test" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"endpoint": "/public/health", "method": "GET"}'
 
 # Analyze content
-curl -X POST "https://api.ainflue.com/api/v1/public/content/analyze" \
+curl -X POST "https://api.iacherie.com/api/v1/public/content/analyze" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "file=@my_audio.mp3"
 
 # Generate fingerprint
-curl -X POST "https://api.ainflue.com/api/v1/public/content/fingerprint" \
+curl -X POST "https://api.iacherie.com/api/v1/public/content/fingerprint" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "file=@my_audio.mp3"
 ```
@@ -337,10 +337,10 @@ test_result = await sdk.post("/public/sandbox/test", {
 
 ## 📞 Support
 
-- **Documentation**: [https://docs.ainflue.com](https://docs.ainflue.com)
-- **API Status**: [https://status.ainflue.com](https://status.ainflue.com)
+- **Documentation**: [https://docs.iacherie.com](https://docs.iacherie.com)
+- **API Status**: [https://status.iacherie.com](https://status.iacherie.com)
 - **Support Email**: [mlaiel@live.de](mailto:mlaiel@live.de)
-- **GitHub Issues**: [https://github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
+- **GitHub Issues**: [https://github.com/Mlaiel/IA Chérie/issues](https://github.com/Mlaiel/IA Chérie/issues)
 
 ## 📅 Changelog
 

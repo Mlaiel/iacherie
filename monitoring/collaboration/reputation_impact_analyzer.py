@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Reputation Impact Analyzer
+IA Chérie Platform - Reputation Impact Analyzer
 =============================================
 
 Enterprise-grade reputation impact analysis for collaboration partnerships,

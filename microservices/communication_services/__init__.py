@@ -2,7 +2,7 @@
 Communication Services Module
 ============================
 
-Enterprise-grade communication and messaging services for Ainflue platform.
+Enterprise-grade communication and messaging services for IA Chérie platform.
 Handles all forms of inter-service communication, notifications, and messaging.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

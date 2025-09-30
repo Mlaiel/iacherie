@@ -1,6 +1,6 @@
 """
 📊 Data Analytics Engine - Moteur d'Analytics Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Moteur d'analytics avancé pour traitement de données massives et insights temps réel.
 Machine Learning intégré avec pipelines automatisés et visualisations interactives.

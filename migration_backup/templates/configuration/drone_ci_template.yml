@@ -1,0 +1,561 @@
+# Drone CI Configuration Template for Ainflue Platform
+# Cloud-native CI/CD pipeline using Drone
+
+kind: pipeline
+type: kubernetes
+name: ainflue-ci-cd
+
+metadata:
+  namespace: drone
+
+# Global settings
+clone:
+  disable: false
+  depth: 0
+
+# Environment variables
+environment:
+  APP_NAME: ainflue
+  DOCKER_REGISTRY: registry.ainflue.com
+  STAGING_NAMESPACE: ainflue-staging
+  PRODUCTION_NAMESPACE: ainflue-production
+
+# Pipeline steps
+steps:
+  # 1. Code Quality and Linting
+  - name: code-quality
+    image: node:18-alpine
+    commands:
+      - npm ci
+      - npm run lint
+      - npm run format:check
+      - npm run type-check
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 2. Security Scanning - Dependencies
+  - name: security-scan-deps
+    image: node:18-alpine
+    commands:
+      - npm audit --audit-level high
+      - npm run security:check
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 3. Secret Scanning
+  - name: secret-scan
+    image: zricethezav/gitleaks:latest
+    commands:
+      - gitleaks detect --source . --verbose --report-format sarif --report-path gitleaks-report.sarif
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 4. Build API Service
+  - name: build-api
+    image: node:18-alpine
+    commands:
+      - cd services/api
+      - npm ci
+      - npm run build
+      - npm run test:unit -- --coverage --reporter=junit --outputFile=test-results.xml
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+      - name: build-cache
+        path: /drone/src/services/api/dist
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 5. Build Web Service
+  - name: build-web
+    image: node:18-alpine
+    commands:
+      - cd services/web
+      - npm ci
+      - npm run build
+      - npm run test:unit -- --coverage --reporter=junit --outputFile=test-results.xml
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+      - name: build-cache
+        path: /drone/src/services/web/dist
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 6. Build ML Service
+  - name: build-ml
+    image: python:3.11-slim
+    commands:
+      - cd services/ml
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
+      - pip install -r requirements-dev.txt
+      - black --check src/
+      - flake8 src/
+      - isort --check-only src/
+      - mypy src/
+      - pytest tests/ --cov=src --cov-report=xml --junit-xml=test-results.xml
+    volumes:
+      - name: pip-cache
+        path: /root/.cache/pip
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 7. Integration Tests
+  - name: integration-tests
+    image: node:18-alpine
+    commands:
+      - npm ci
+      - npm run test:integration
+    environment:
+      DATABASE_URL: postgresql://test_user:test_password@postgres:5432/ainflue_test
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+    depends_on:
+      - build-api
+      - build-web
+      - build-ml
+    when:
+      event:
+        - push
+        - pull_request
+
+  # 8. SonarQube Analysis
+  - name: sonarqube-scan
+    image: sonarqube/sonar-scanner-cli:latest
+    commands:
+      - sonar-scanner
+        -Dsonar.projectKey=ainflue
+        -Dsonar.projectName=Ainflue
+        -Dsonar.sources=.
+        -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**
+        -Dsonar.javascript.lcov.reportPaths=*/coverage/lcov.info
+        -Dsonar.python.coverage.reportPaths=services/ml/coverage.xml
+        -Dsonar.host.url=$SONAR_HOST
+        -Dsonar.login=$SONAR_TOKEN
+    environment:
+      SONAR_HOST:
+        from_secret: sonar_host
+      SONAR_TOKEN:
+        from_secret: sonar_token
+    depends_on:
+      - integration-tests
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  # 9. Build Docker Images
+  - name: build-docker-api
+    image: plugins/docker
+    settings:
+      registry: ${DOCKER_REGISTRY}
+      repo: ${DOCKER_REGISTRY}/ainflue-api
+      context: services/api
+      dockerfile: services/api/Dockerfile
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}
+        - latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    depends_on:
+      - integration-tests
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  - name: build-docker-web
+    image: plugins/docker
+    settings:
+      registry: ${DOCKER_REGISTRY}
+      repo: ${DOCKER_REGISTRY}/ainflue-web
+      context: services/web
+      dockerfile: services/web/Dockerfile
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}
+        - latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    depends_on:
+      - integration-tests
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  - name: build-docker-ml
+    image: plugins/docker
+    settings:
+      registry: ${DOCKER_REGISTRY}
+      repo: ${DOCKER_REGISTRY}/ainflue-ml
+      context: services/ml
+      dockerfile: services/ml/Dockerfile
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}
+        - latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    depends_on:
+      - integration-tests
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  # 10. Container Security Scanning
+  - name: container-security-scan
+    image: aquasec/trivy:latest
+    commands:
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output api-security-report.sarif ${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8}
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output web-security-report.sarif ${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8}
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output ml-security-report.sarif ${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8}
+    depends_on:
+      - build-docker-api
+      - build-docker-web
+      - build-docker-ml
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  # 11. Deploy to Staging
+  - name: deploy-staging
+    image: bitnami/kubectl:latest
+    commands:
+      - echo "$KUBE_CONFIG" | base64 -d > ~/.kube/config
+      - kubectl set image deployment/ainflue-api ainflue-api=${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl set image deployment/ainflue-web ainflue-web=${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl set image deployment/ainflue-ml ainflue-ml=${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl rollout status deployment/ainflue-api --namespace=${STAGING_NAMESPACE} --timeout=300s
+      - kubectl rollout status deployment/ainflue-web --namespace=${STAGING_NAMESPACE} --timeout=300s
+      - kubectl rollout status deployment/ainflue-ml --namespace=${STAGING_NAMESPACE} --timeout=300s
+    environment:
+      KUBE_CONFIG:
+        from_secret: kube_config_staging
+    depends_on:
+      - container-security-scan
+    when:
+      event:
+        - push
+      branch:
+        - develop
+
+  # 12. E2E Tests on Staging
+  - name: e2e-tests-staging
+    image: mcr.microsoft.com/playwright:v1.40.0-focal
+    commands:
+      - npm ci
+      - npx playwright install
+      - export API_BASE_URL="https://api.staging.ainflue.com"
+      - export WEB_BASE_URL="https://staging.ainflue.com"
+      - npm run test:e2e:staging
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+    depends_on:
+      - deploy-staging
+    when:
+      event:
+        - push
+      branch:
+        - develop
+
+  # 13. Performance Tests
+  - name: performance-tests
+    image: grafana/k6:latest
+    commands:
+      - k6 run --vus 50 --duration 5m performance/load-test.js
+      - k6 run --vus 100 --duration 2m performance/stress-test.js
+    environment:
+      API_BASE_URL: https://api.staging.ainflue.com
+    depends_on:
+      - deploy-staging
+    when:
+      event:
+        - push
+      branch:
+        - develop
+
+  # 14. Deploy to Production (Manual Approval Required)
+  - name: deploy-production
+    image: bitnami/kubectl:latest
+    commands:
+      - echo "$KUBE_CONFIG" | base64 -d > ~/.kube/config
+      - kubectl set image deployment/ainflue-api ainflue-api=${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl set image deployment/ainflue-web ainflue-web=${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl set image deployment/ainflue-ml ainflue-ml=${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl rollout status deployment/ainflue-api --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+      - kubectl rollout status deployment/ainflue-web --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+      - kubectl rollout status deployment/ainflue-ml --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+    environment:
+      KUBE_CONFIG:
+        from_secret: kube_config_production
+    depends_on:
+      - container-security-scan
+    when:
+      event:
+        - promote
+      target:
+        - production
+
+  # 15. Production Smoke Tests
+  - name: smoke-tests-production
+    image: node:18-alpine
+    commands:
+      - npm ci
+      - export API_BASE_URL="https://api.ainflue.com"
+      - export WEB_BASE_URL="https://app.ainflue.com"
+      - npm run test:smoke:production
+    volumes:
+      - name: node-cache
+        path: /root/.npm
+    depends_on:
+      - deploy-production
+    when:
+      event:
+        - promote
+      target:
+        - production
+
+  # 16. Slack Notification
+  - name: slack-notification
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: slack_webhook
+      channel: deployments
+      username: drone
+      template: >
+        {{#success build.status}}
+          ✅ *Build #{{build.number}} succeeded!*
+          
+          *Repository:* {{repo.name}}
+          *Branch:* {{build.branch}}
+          *Commit:* {{build.commit}}
+          *Author:* {{build.author}}
+          *Message:* {{build.message}}
+        {{else}}
+          ❌ *Build #{{build.number}} failed!*
+          
+          *Repository:* {{repo.name}}
+          *Branch:* {{build.branch}}
+          *Commit:* {{build.commit}}
+          *Author:* {{build.author}}
+          *Message:* {{build.message}}
+        {{/success}}
+    depends_on:
+      - smoke-tests-production
+    when:
+      status:
+        - success
+        - failure
+
+# Services for integration tests
+services:
+  - name: postgres
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ainflue_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    when:
+      event:
+        - push
+        - pull_request
+
+  - name: redis
+    image: redis:7-alpine
+    when:
+      event:
+        - push
+        - pull_request
+
+# Volumes for caching
+volumes:
+  - name: node-cache
+    temp: {}
+  - name: pip-cache
+    temp: {}
+  - name: build-cache
+    temp: {}
+
+# Node selector for specific nodes
+node_selector:
+  kubernetes.io/arch: amd64
+
+# Resource limits
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 500m
+  limits:
+    memory: 2Gi
+    cpu: 2
+
+---
+# Separate pipeline for nightly security scans
+kind: pipeline
+type: kubernetes
+name: nightly-security-scan
+
+metadata:
+  namespace: drone
+
+trigger:
+  event:
+    - cron
+  cron:
+    - nightly-security
+
+steps:
+  - name: comprehensive-security-scan
+    image: aquasec/trivy:latest
+    commands:
+      - trivy fs --security-checks vuln,config,secret --format sarif --output nightly-security-report.sarif .
+      
+  - name: dependency-check
+    image: owasp/dependency-check:latest
+    commands:
+      - /usr/share/dependency-check/bin/dependency-check.sh --project "Ainflue" --scan . --format JSON --out dependency-check-report.json
+      
+  - name: upload-security-reports
+    image: plugins/s3
+    settings:
+      bucket: ainflue-security-reports
+      access_key:
+        from_secret: aws_access_key_id
+      secret_key:
+        from_secret: aws_secret_access_key
+      region: us-east-1
+      source: "*-report.*"
+      target: "reports/$(date +%Y/%m/%d)/"
+
+---
+# Pipeline for dependency updates
+kind: pipeline
+type: kubernetes
+name: dependency-updates
+
+metadata:
+  namespace: drone
+
+trigger:
+  event:
+    - cron
+  cron:
+    - weekly-deps
+
+steps:
+  - name: update-npm-dependencies
+    image: node:18-alpine
+    commands:
+      - npm update
+      - npm audit fix
+      - git config --global user.email "drone@ainflue.com"
+      - git config --global user.name "Drone CI"
+      - |
+        if [[ $(git status --porcelain) ]]; then
+          git add package*.json
+          git commit -m "chore: update npm dependencies [skip ci]"
+          git push origin ${DRONE_BRANCH}
+        fi
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+
+  - name: update-python-dependencies
+    image: python:3.11-slim
+    commands:
+      - cd services/ml
+      - pip install pip-tools
+      - pip-compile --upgrade requirements.in
+      - pip-compile --upgrade requirements-dev.in
+      - |
+        if [[ $(git status --porcelain) ]]; then
+          git add requirements*.txt
+          git commit -m "chore: update python dependencies [skip ci]"
+          git push origin ${DRONE_BRANCH}
+        fi
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+
+---
+# Pipeline for release management
+kind: pipeline
+type: kubernetes
+name: release
+
+metadata:
+  namespace: drone
+
+trigger:
+  event:
+    - tag
+  ref:
+    - refs/tags/v*
+
+steps:
+  - name: create-release
+    image: plugins/github-release
+    settings:
+      api_key:
+        from_secret: github_token
+      files:
+        - dist/*
+      checksum:
+        - sha256
+      draft: true
+      prerelease: true
+
+  - name: notify-release
+    image: plugins/slack
+    settings:
+      webhook:
+        from_secret: slack_webhook
+      channel: releases
+      template: >
+        🚀 *New release created!*
+        
+        *Version:* {{build.tag}}
+        *Repository:* {{repo.name}}
+        *Author:* {{build.author}}
+    depends_on:
+      - create-release

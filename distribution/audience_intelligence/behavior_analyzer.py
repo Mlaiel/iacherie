@@ -1,5 +1,5 @@
 """
-Advanced Audience Behavior Analysis Engine for Ainflue Distribution Platform
+Advanced Audience Behavior Analysis Engine for IA Chérie Distribution Platform
 
 This module provides sophisticated behavioral analysis capabilities using machine learning
 to understand user patterns, preferences, and engagement behaviors across platforms.

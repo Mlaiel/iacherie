@@ -1,0 +1,449 @@
+# APM (Application Performance Monitoring) Configuration Template for Ainflue Platform
+# Comprehensive configuration for monitoring application performance, errors, and user experience
+
+# APM Server Configuration
+
+# Server settings
+apm-server:
+  # Host and port configuration
+  host: "0.0.0.0:8200"
+  
+  # Maximum event size
+  max_event_size: 307200  # 300KB
+  
+  # Maximum header size
+  max_header_size: 1048576  # 1MB
+  
+  # Read timeout
+  read_timeout: 2s
+  
+  # Write timeout  
+  write_timeout: 2s
+  
+  # Shutdown timeout
+  shutdown_timeout: 5s
+  
+  # Maximum connections
+  max_connections: 0  # unlimited
+  
+  # Response headers
+  response_headers:
+    "Content-Security-Policy": "default-src 'self'"
+    "X-Frame-Options": "DENY"
+    "X-Content-Type-Options": "nosniff"
+
+# APM Agent configurations by language
+
+# Node.js APM Configuration
+nodejs_apm_config: |
+  const apm = require('elastic-apm-node').start({
+    serviceName: '${SERVICE_NAME}',
+    serverUrl: '${APM_SERVER_URL}',
+    secretToken: '${APM_SECRET_TOKEN}',
+    environment: '${ENVIRONMENT}',
+    
+    // Performance monitoring
+    active: true,
+    captureBody: 'all',
+    captureHeaders: true,
+    captureErrorLogStackTraces: 'always',
+    
+    // Transaction settings
+    transactionSampleRate: ${TRANSACTION_SAMPLE_RATE:1.0},
+    transactionMaxSpans: 500,
+    spanFramesMinDuration: '5ms',
+    stackTraceLimit: 50,
+    
+    // Custom configuration for Ainflue
+    serviceNodeName: '${POD_NAME}',
+    globalLabels: {
+      datacenter: '${DATACENTER}',
+      cluster: '${CLUSTER_NAME}',
+      version: '${APP_VERSION}'
+    },
+    
+    // Error filtering
+    errorOnAbortedRequests: true,
+    abortedErrorThreshold: '25s',
+    
+    // Distributed tracing
+    usePathAsTransactionName: false,
+    addPatch: {
+      'pg': true,
+      'redis': true,
+      'mongodb': true,
+      'express': true,
+      'fastify': true
+    },
+    
+    // Custom instrumentation
+    instrument: true,
+    instrumentIncomingHTTPRequests: true,
+    
+    // Logging
+    logLevel: 'info',
+    logger: console,
+    
+    // Custom metrics
+    metricsInterval: '30s',
+    
+    // Security
+    sanitizeFieldNames: ['password', 'passwd', 'pwd', 'secret', 'key', 'token', 'auth', 'credit', 'cc'],
+    
+    // Creator economy specific configuration
+    customInstrumentation: {
+      trackUserInteractions: true,
+      trackBusinessMetrics: true,
+      trackRevenueEvents: true,
+      trackCreatorEngagement: true
+    }
+  });
+  
+  // Custom transaction naming for Creator Economy
+  apm.setTransactionName = function(name) {
+    const transaction = apm.currentTransaction;
+    if (transaction) {
+      transaction.name = name;
+    }
+  };
+  
+  module.exports = apm;
+
+# Python APM Configuration  
+python_apm_config: |
+  import elasticapm
+  from elasticapm.contrib.django.middleware import TracingMiddleware
+  
+  # APM Configuration
+  ELASTIC_APM = {
+      'SERVICE_NAME': '${SERVICE_NAME}',
+      'SERVER_URL': '${APM_SERVER_URL}',
+      'SECRET_TOKEN': '${APM_SECRET_TOKEN}',
+      'ENVIRONMENT': '${ENVIRONMENT}',
+      
+      # Performance settings
+      'TRANSACTION_SAMPLE_RATE': ${TRANSACTION_SAMPLE_RATE:1.0},
+      'TRANSACTION_MAX_SPANS': 500,
+      'SPAN_FRAMES_MIN_DURATION': '5ms',
+      'STACK_TRACE_LIMIT': 50,
+      
+      # Service configuration
+      'SERVICE_NODE_NAME': '${POD_NAME}',
+      'GLOBAL_LABELS': {
+          'datacenter': '${DATACENTER}',
+          'cluster': '${CLUSTER_NAME}',
+          'version': '${APP_VERSION}'
+      },
+      
+      # Error handling
+      'CAPTURE_BODY': 'all',
+      'CAPTURE_HEADERS': True,
+      
+      # Distributed tracing
+      'USE_ELASTIC_EXCEPTHOOK': True,
+      'AUTO_LOG_STACKS': True,
+      
+      # Custom instrumentation
+      'INSTRUMENT': True,
+      'DEBUG': False,
+      
+      # Metrics
+      'METRICS_INTERVAL': '30s',
+      'BREAKDOWN_METRICS': True,
+      
+      # Security
+      'SANITIZE_FIELD_NAMES': ['password', 'passwd', 'pwd', 'secret', 'key', 'token', 'auth'],
+      
+      # Creator economy specific
+      'PROCESSORS': [
+          'elasticapm.processors.sanitize_stacktrace_locals',
+          'elasticapm.processors.sanitize_http_request_cookies',
+          'elasticapm.processors.sanitize_http_headers',
+          'elasticapm.processors.sanitize_http_wsgi_env',
+          'elasticapm.processors.sanitize_http_request_body',
+      ]
+  }
+
+# Go APM Configuration
+go_apm_config: |
+  package main
+  
+  import (
+      "context"
+      "os"
+      
+      "go.elastic.co/apm/v2"
+      "go.elastic.co/apm/v2/module/apmgin/v2"
+      "go.elastic.co/apm/v2/module/apmgorm/v2/drivers/postgres"
+      "go.elastic.co/apm/v2/module/apmredis/v2"
+  )
+  
+  func initAPM() {
+      // APM configuration through environment variables
+      os.Setenv("ELASTIC_APM_SERVICE_NAME", "${SERVICE_NAME}")
+      os.Setenv("ELASTIC_APM_SERVER_URL", "${APM_SERVER_URL}")
+      os.Setenv("ELASTIC_APM_SECRET_TOKEN", "${APM_SECRET_TOKEN}")
+      os.Setenv("ELASTIC_APM_ENVIRONMENT", "${ENVIRONMENT}")
+      os.Setenv("ELASTIC_APM_TRANSACTION_SAMPLE_RATE", "${TRANSACTION_SAMPLE_RATE:1.0}")
+      os.Setenv("ELASTIC_APM_CAPTURE_BODY", "all")
+      os.Setenv("ELASTIC_APM_CAPTURE_HEADERS", "true")
+      os.Setenv("ELASTIC_APM_STACK_TRACE_LIMIT", "50")
+      os.Setenv("ELASTIC_APM_SPAN_FRAMES_MIN_DURATION", "5ms")
+      os.Setenv("ELASTIC_APM_METRICS_INTERVAL", "30s")
+      
+      // Global labels
+      os.Setenv("ELASTIC_APM_GLOBAL_LABELS", "datacenter=${DATACENTER},cluster=${CLUSTER_NAME},version=${APP_VERSION}")
+      
+      // Sanitization
+      os.Setenv("ELASTIC_APM_SANITIZE_FIELD_NAMES", "password,passwd,pwd,secret,key,token,auth")
+  }
+
+# Java APM Configuration
+java_apm_config: |
+  # APM Java Agent configuration
+  -javaagent:/path/to/elastic-apm-agent.jar
+  -Delastic.apm.service_name=${SERVICE_NAME}
+  -Delastic.apm.server_urls=${APM_SERVER_URL}
+  -Delastic.apm.secret_token=${APM_SECRET_TOKEN}
+  -Delastic.apm.environment=${ENVIRONMENT}
+  -Delastic.apm.application_packages=com.ainflue
+  
+  # Performance settings
+  -Delastic.apm.transaction_sample_rate=${TRANSACTION_SAMPLE_RATE:1.0}
+  -Delastic.apm.transaction_max_spans=500
+  -Delastic.apm.span_frames_min_duration=5ms
+  -Delastic.apm.stack_trace_limit=50
+  
+  # Service settings
+  -Delastic.apm.service_node_name=${POD_NAME}
+  -Delastic.apm.global_labels=datacenter=${DATACENTER},cluster=${CLUSTER_NAME},version=${APP_VERSION}
+  
+  # Capture settings
+  -Delastic.apm.capture_body=all
+  -Delastic.apm.capture_headers=true
+  -Delastic.apm.capture_jmx_metrics=true
+  
+  # Instrumentation
+  -Delastic.apm.enable_instrumentations=true
+  -Delastic.apm.trace_methods=com.ainflue.service.*
+  
+  # Metrics
+  -Delastic.apm.metrics_interval=30s
+  -Delastic.apm.breakdown_metrics=true
+  
+  # Security
+  -Delastic.apm.sanitize_field_names=password,passwd,pwd,secret,key,token,auth
+
+# APM Server output configuration
+output.elasticsearch:
+  hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+  username: "${ELASTICSEARCH_USER}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  protocol: "https"
+  ssl.verification_mode: "certificate"
+  ssl.certificate_authorities: ["/etc/ssl/certs/elasticsearch-ca.crt"]
+  
+  # Index configuration
+  indices:
+    - index: "apm-ainflue-%{[observer.version]}-sourcemap"
+      when.contains:
+        processor.event: "sourcemap"
+    - index: "apm-ainflue-%{[observer.version]}-error-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "error"
+    - index: "apm-ainflue-%{[observer.version]}-transaction-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "transaction"
+    - index: "apm-ainflue-%{[observer.version]}-span-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "span"
+    - index: "apm-ainflue-%{[observer.version]}-metric-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "metric"
+    - index: "apm-ainflue-%{[observer.version]}-onboarding-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "onboarding"
+
+# Index lifecycle management
+ilm:
+  enabled: true
+  
+# Templates
+template.settings:
+  index:
+    number_of_shards: 2
+    number_of_replicas: 1
+    refresh_interval: "30s"
+    codec: "best_compression"
+    mapping.total_fields.limit: 2000
+
+# Logging
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/apm-server
+  name: apm-server
+  keepfiles: 7
+  permissions: 0644
+  rotateeverybytes: 10485760
+
+# HTTP settings
+http.enabled: true
+http.host: "0.0.0.0"
+http.port: 5066
+
+# Monitoring
+monitoring:
+  enabled: true
+  elasticsearch:
+    hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+    username: "${ELASTICSEARCH_USER}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+
+# X-Pack settings
+xpack.monitoring.enabled: true
+
+# Custom processors for Ainflue business logic
+processors:
+  - add_host_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+  
+  # Add custom business context
+  - script:
+      lang: javascript
+      source: >
+        function process(event) {
+          // Add creator economy context
+          if (event.Get("service.name") === "ainflue-api") {
+            var url = event.Get("url.original");
+            if (url && url.includes("/api/creators/")) {
+              event.Put("business.context", "creator_management");
+            } else if (url && url.includes("/api/campaigns/")) {
+              event.Put("business.context", "campaign_management");
+            } else if (url && url.includes("/api/payments/")) {
+              event.Put("business.context", "payment_processing");
+            }
+          }
+          
+          // Add performance classification
+          var duration = event.Get("transaction.duration.us");
+          if (duration) {
+            if (duration > 5000000) { // 5 seconds
+              event.Put("performance.classification", "slow");
+            } else if (duration > 1000000) { // 1 second
+              event.Put("performance.classification", "moderate");
+            } else {
+              event.Put("performance.classification", "fast");
+            }
+          }
+        }
+
+# APM Server specific settings
+apm-server.register.ingest.pipeline.enabled: true
+
+# RUM (Real User Monitoring) configuration
+apm-server.rum.enabled: true
+apm-server.rum.event_rate.limit: 300
+apm-server.rum.event_rate.lru_size: 1000
+apm-server.rum.allow_origins: 
+  - "https://*.ainflue.com"
+  - "https://app.ainflue.com"
+  - "https://dashboard.ainflue.com"
+apm-server.rum.source_mapping.enabled: true
+apm-server.rum.source_mapping.cache.expiration: 5m
+apm-server.rum.source_mapping.index_pattern: "apm-*-sourcemap*"
+
+# Sampling configuration
+apm-server.sampling.keep_unsampled: false
+
+# JVM settings for APM Server
+apm-server.jvm.options: |
+  -Xms1g
+  -Xmx1g
+  -XX:+UseG1GC
+  -XX:MaxGCPauseMillis=20
+  -XX:+DisableExplicitGC
+  -Djava.io.tmpdir=/tmp
+
+# Security settings
+apm-server.ssl.enabled: true
+apm-server.ssl.certificate: "/etc/ssl/apm-server/apm-server.crt"
+apm-server.ssl.key: "/etc/ssl/apm-server/apm-server.key"
+apm-server.ssl.client_authentication: "optional"
+
+# API key authentication
+apm-server.api_key.enabled: true
+apm-server.api_key.limit: 100
+
+# Agent configuration
+apm-server.agent.config.cache.expiration: 30s
+
+# Instrumentation settings for different frameworks
+instrumentation_configs:
+  
+  # React/Frontend instrumentation
+  frontend_config: |
+    import { init as initApm } from '@elastic/apm-rum'
+    
+    const apm = initApm({
+      serviceName: 'ainflue-frontend',
+      serverUrl: '${APM_SERVER_URL}',
+      serviceVersion: '${APP_VERSION}',
+      environment: '${ENVIRONMENT}',
+      
+      // Performance monitoring
+      transactionSampleRate: ${TRANSACTION_SAMPLE_RATE:1.0},
+      
+      // User interaction tracking
+      capturePageLoadSpans: true,
+      
+      // Custom configuration for creator dashboard
+      globalLabels: {
+        userType: 'creator',
+        platform: 'web'
+      },
+      
+      // Error handling
+      errorThrottleLimit: 20,
+      errorThrottleInterval: 30000,
+      
+      // Page load metrics
+      pageLoadTraceId: function() {
+        return 'page-load-' + Date.now();
+      },
+      
+      // Custom spans for business actions
+      customSpans: {
+        creatorRegistration: true,
+        campaignCreation: true,
+        contentUpload: true,
+        paymentProcessing: true
+      }
+    })
+    
+    export default apm
+
+  # Mobile app instrumentation (React Native)
+  mobile_config: |
+    import { ElasticApmAgent } from '@elastic/apm-rum-react-native'
+    
+    const apm = new ElasticApmAgent({
+      serviceName: 'ainflue-mobile',
+      serverUrl: '${APM_SERVER_URL}',
+      serviceVersion: '${APP_VERSION}',
+      environment: '${ENVIRONMENT}',
+      
+      // Mobile specific settings
+      transactionSampleRate: 0.5, // Lower sample rate for mobile
+      captureAppLifecycle: true,
+      captureNetworkRequests: true,
+      
+      // User context
+      globalLabels: {
+        platform: 'mobile',
+        deviceType: 'smartphone'
+      }
+    })
+    
+    export default apm

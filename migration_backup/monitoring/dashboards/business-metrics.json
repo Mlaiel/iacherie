@@ -1,0 +1,378 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Ainflue Business Metrics",
+    "tags": ["ainflue", "business", "kpi"],
+    "style": "dark",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Content Uploads",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "increase(content_uploads_total[24h])",
+            "legendFormat": "Daily Uploads"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 100
+                },
+                {
+                  "color": "green",
+                  "value": 500
+                }
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "Copyright Violations Detected",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "increase(copyright_violations_detected_total[24h])",
+            "legendFormat": "Daily Violations"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 10
+                },
+                {
+                  "color": "red",
+                  "value": 50
+                }
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Revenue Generated",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "increase(revenue_generated_total[24h])",
+            "legendFormat": "Daily Revenue"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 1000
+                },
+                {
+                  "color": "green",
+                  "value": 5000
+                }
+              ]
+            },
+            "unit": "currencyUSD"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 4,
+        "title": "Active Users",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "active_users_total",
+            "legendFormat": "Active Users"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 100
+                },
+                {
+                  "color": "green",
+                  "value": 1000
+                }
+              ]
+            },
+            "unit": "short"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": 5,
+        "title": "Content Upload Trends",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(content_uploads_total[1h])",
+            "legendFormat": "Upload Rate/hour"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "yAxes": [
+          {
+            "label": "Uploads per hour",
+            "min": 0
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Revenue Trends",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(revenue_generated_total[1h])",
+            "legendFormat": "Revenue Rate/hour"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "yAxes": [
+          {
+            "label": "Revenue per hour",
+            "min": 0
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Platform Performance",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(ai_processing_duration_seconds_bucket[5m]))",
+            "legendFormat": "AI Processing 95th percentile"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ainflue-api-gateway\"}[5m]))",
+            "legendFormat": "API Gateway 95th percentile"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 16
+        },
+        "yAxes": [
+          {
+            "label": "Response Time (seconds)",
+            "min": 0
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Collaboration Success Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "collaboration_success_rate_percent",
+            "legendFormat": "Success Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "green",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 24
+        }
+      },
+      {
+        "id": 9,
+        "title": "SEO Performance Score",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "seo_performance_score_average",
+            "legendFormat": "Average Score"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "green",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "short",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 24
+        }
+      },
+      {
+        "id": 10,
+        "title": "Platform Availability",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "avg(up{job=~\"ainflue-.*\"}) * 100",
+            "legendFormat": "Service Availability"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 95
+                },
+                {
+                  "color": "green",
+                  "value": 99
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 24
+        }
+      }
+    ],
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "refresh": "1m"
+  }
+}

@@ -1,6 +1,6 @@
 # 🔐 محرك الأمان للتوزيع - منصة الأمان والامتثال للمؤسسات
 
-**نظام أمان على مستوى المؤسسات لمنصة توزيع Ainflue**
+**نظام أمان على مستوى المؤسسات لمنصة توزيع IA Chérie**
 
 ## 🎯 نظرة عامة
 
@@ -137,9 +137,9 @@ python setup_security.py --environment=production
 
 ## 📞 الدعم والاتصال
 
-**فريق الأمان**: security@ainflue.com  
+**فريق الأمان**: security@iacherie.com  
 **الاستجابة للحوادث**: +1-800-SECURITY  
-**مسؤول الامتثال**: compliance@ainflue.com
+**مسؤول الامتثال**: compliance@iacherie.com
 
 ---
 

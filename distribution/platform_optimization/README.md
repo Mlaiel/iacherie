@@ -1,6 +1,6 @@
 # 🎯 Platform Optimization Engine
 
-**Advanced Platform-Specific Optimization System for Ainflue Distribution Platform**
+**Advanced Platform-Specific Optimization System for IA Chérie Distribution Platform**
 
 ## 📖 Overview
 

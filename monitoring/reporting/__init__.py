@@ -1,4 +1,4 @@
-"""Ainflue Reporting Enterprise Module
+"""IA Chérie Reporting Enterprise Module
 =====================================
 
 Enterprise-grade reporting and business intelligence system for Creator Economy.
@@ -555,7 +555,7 @@ __all__ = [
 ]
 
 # Initialize reporting module
-logger.info("🏢 Ainflue Reporting Enterprise Module initialized")
+logger.info("🏢 IA Chérie Reporting Enterprise Module initialized")
 logger.info(f"📊 Version: {__version__}")
 logger.info(f"👤 Author: {__author__}")
 logger.info("⚖️ All rights reserved - Proprietary software")

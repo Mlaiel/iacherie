@@ -1,8 +1,8 @@
-# 🚀 Ainflue Platform Core Analytics
+# 🚀 IA Chérie Platform Core Analytics
 
-[![Niveau Entreprise](https://img.shields.io/badge/Niveau-Entreprise-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Licence](https://img.shields.io/badge/Licence-Commerciale-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Niveau Entreprise](https://img.shields.io/badge/Niveau-Entreprise-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Licence](https://img.shields.io/badge/Licence-Commerciale-red.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **Plateforme d'analytics de niveau entreprise pour l'intelligence complète de l'économie créative, le suivi des performances, l'analytics revenus, l'optimisation contenu, et les insights collaboration.**
 
@@ -20,7 +20,7 @@
 
 ## 🎯 Aperçu
 
-Le module Ainflue Platform Core Analytics est un moteur d'analytics de niveau entreprise conçu spécifiquement pour l'économie créative. Il fournit une intelligence complète sur tous les aspects des opérations commerciales des créateurs, du suivi des performances à l'optimisation des revenus.
+Le module IA Chérie Platform Core Analytics est un moteur d'analytics de niveau entreprise conçu spécifiquement pour l'économie créative. Il fournit une intelligence complète sur tous les aspects des opérations commerciales des créateurs, du suivi des performances à l'optimisation des revenus.
 
 ### Intégration Logique Métier
 ```

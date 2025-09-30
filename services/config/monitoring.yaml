@@ -9,7 +9,7 @@ prometheus:
     scrape_interval: 15s
     evaluation_interval: 15s
     external_labels:
-      cluster: "ainflue-creator"
+      cluster: "iacherie-creator"
       environment: "${ENVIRONMENT}"
       
   rule_files:
@@ -17,7 +17,7 @@ prometheus:
     - "/etc/prometheus/creator_rules/*.yml"
     
   scrape_configs:
-    - job_name: "ainflue-services"
+    - job_name: "iacherie-services"
       static_configs:
         - targets:
           - "localhost:8090"  # Services metrics
@@ -60,8 +60,8 @@ prometheus:
 grafana:
   server:
     http_port: 3000
-    domain: "monitoring.ainflue.com"
-    root_url: "https://monitoring.ainflue.com"
+    domain: "monitoring.iacherie.com"
+    root_url: "https://monitoring.iacherie.com"
     
   security:
     admin_user: "${GRAFANA_ADMIN_USER}"
@@ -82,7 +82,7 @@ grafana:
       enabled: true
       client_id: "${GOOGLE_OAUTH_CLIENT_ID}"
       client_secret: "${GOOGLE_OAUTH_CLIENT_SECRET}"
-      allowed_domains: "ainflue.com"
+      allowed_domains: "iacherie.com"
       
   dashboards:
     default_home_dashboard_path: "/var/lib/grafana/dashboards/creator-overview.json"
@@ -98,7 +98,7 @@ grafana:
       - name: "Elasticsearch"
         type: "elasticsearch"
         url: "http://localhost:9200"
-        database: "ainflue-logs"
+        database: "iacherie-logs"
         
     dashboards:
       - name: "Creator Economy"
@@ -111,7 +111,7 @@ grafana:
 alertmanager:
   global:
     smtp_smarthost: "smtp.gmail.com:587"
-    smtp_from: "alerts@ainflue.com"
+    smtp_from: "alerts@iacherie.com"
     smtp_auth_username: "${SMTP_USERNAME}"
     smtp_auth_password: "${SMTP_PASSWORD}"
     
@@ -140,12 +140,12 @@ alertmanager:
   receivers:
     - name: "default"
       email_configs:
-        - to: "devops@ainflue.com"
-          subject: "Ainflue Alert: {{ .GroupLabels.alertname }}"
+        - to: "devops@iacherie.com"
+          subject: "IA Chérie Alert: {{ .GroupLabels.alertname }}"
           
     - name: "critical-alerts"
       email_configs:
-        - to: "critical@ainflue.com"
+        - to: "critical@iacherie.com"
           subject: "🚨 CRITICAL: {{ .GroupLabels.alertname }}"
           
       slack_configs:
@@ -200,7 +200,7 @@ jaeger:
 # ELK Stack Configuration
 elasticsearch:
   cluster:
-    name: "ainflue-logs"
+    name: "iacherie-logs"
     
   network:
     host: "0.0.0.0"
@@ -245,7 +245,7 @@ logstash:
     mutate:
       add_field:
         environment: "${ENVIRONMENT}"
-        application: "ainflue-creator"
+        application: "iacherie-creator"
         
   output:
     elasticsearch:
@@ -267,19 +267,19 @@ kibana:
 # Application Performance Monitoring
 apm:
   elastic_apm:
-    service_name: "ainflue-creator"
+    service_name: "iacherie-creator"
     environment: "${ENVIRONMENT}"
     server_url: "http://localhost:8200"
     
   new_relic:
     enabled: false
     license_key: "${NEW_RELIC_LICENSE_KEY}"
-    app_name: "Ainflue Creator Platform"
+    app_name: "IA Chérie Creator Platform"
     
   datadog:
     enabled: false
     api_key: "${DATADOG_API_KEY}"
-    service: "ainflue-creator"
+    service: "iacherie-creator"
 
 # Custom Metrics Configuration
 custom_metrics:
@@ -358,20 +358,20 @@ sla:
     
   reporting:
     frequency: "weekly"
-    recipients: ["sre@ainflue.com", "product@ainflue.com"]
+    recipients: ["sre@iacherie.com", "product@iacherie.com"]
 
 # Synthetic Monitoring
 synthetic:
   uptime_checks:
     main_app:
-      url: "https://creator.ainflue.com"
+      url: "https://creator.iacherie.com"
       method: "GET"
       timeout: 10s
       interval: 60s
       locations: ["us-east-1", "eu-west-1", "ap-southeast-1"]
       
     api_health:
-      url: "https://api.ainflue.com/health"
+      url: "https://api.iacherie.com/health"
       method: "GET"
       timeout: 5s
       interval: 30s
@@ -380,7 +380,7 @@ synthetic:
     creator_signup:
       steps:
         - action: "navigate"
-          url: "https://creator.ainflue.com/signup"
+          url: "https://creator.iacherie.com/signup"
         - action: "fill_form"
           selectors:
             email: "#email"
@@ -394,7 +394,7 @@ synthetic:
         - action: "login"
           credentials: "test_user"
         - action: "navigate"
-          url: "https://creator.ainflue.com/upload"
+          url: "https://creator.iacherie.com/upload"
         - action: "upload_file"
           selector: "#file-input"
           file: "test_video.mp4"
@@ -427,14 +427,14 @@ logging:
       
     file:
       enabled: true
-      path: "/var/log/ainflue/app.log"
+      path: "/var/log/iacherie/app.log"
       rotation:
         max_size: "100MB"
         max_files: 10
         
     elasticsearch:
       enabled: true
-      index: "logs-ainflue"
+      index: "logs-iacherie"
       
   structured_logging:
     correlation_id: true

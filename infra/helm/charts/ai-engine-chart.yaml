@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - AI Engine Helm Chart
+# IA Chérie Infrastructure Module - AI Engine Helm Chart
 # =====================================================
 # 
-# Enterprise-grade AI Engine chart for Ainflue platform
+# Enterprise-grade AI Engine chart for IA Chérie platform
 # Supports multiple AI providers, model serving, and inference optimization
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,14 +10,14 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 apiVersion: v2
-name: ainflue-ai-engine
-description: "Enterprise AI Engine for Ainflue platform with multi-provider support"
+name: iacherie-ai-engine
+description: "Enterprise AI Engine for IA Chérie platform with multi-provider support"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
-home: https://ainflue.com
+home: https://iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de
@@ -26,7 +26,7 @@ keywords:
   - machine-learning
   - inference
   - models
-  - ainflue
+  - iacherie
 annotations:
   category: AI/ML
   licenses: Proprietary
@@ -47,7 +47,7 @@ dependencies:
     condition: monitoring.prometheus.enabled
 
 ---
-# Default values for ainflue-ai-engine
+# Default values for iacherie-ai-engine
 # Expert roles implementation in configuration
 
 # **EXPERT ROLES IMPLEMENTATION:**
@@ -70,7 +70,7 @@ global:
 # Image configuration
 image:
   registry: docker.io
-  repository: ainflue/ai-engine
+  repository: iacherie/ai-engine
   tag: "1.0.0"
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -97,14 +97,14 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
   hosts:
-    - host: ai.ainflue.local
+    - host: ai.iacherie.local
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: ai-engine-tls
       hosts:
-        - ai.ainflue.local
+        - ai.iacherie.local
 
 # Resource limits and requests
 resources:
@@ -150,7 +150,7 @@ env:
   - name: ENVIRONMENT
     value: "production"
   - name: REDIS_URL
-    value: "redis://ainflue-redis:6379"
+    value: "redis://iacherie-redis:6379"
   - name: DATABASE_URL
     valueFrom:
       secretKeyRef:
@@ -197,16 +197,16 @@ aiProviders:
   local:
     enabled: true
     models:
-      - ainflue/content-classifier:v1.0
-      - ainflue/sentiment-analyzer:v1.0
-      - ainflue/audio-transcriber:v1.0
+      - iacherie/content-classifier:v1.0
+      - iacherie/sentiment-analyzer:v1.0
+      - iacherie/audio-transcriber:v1.0
 
 # Model serving configuration
 modelServing:
   enabled: true
   storage:
     type: s3
-    bucket: ainflue-ai-models
+    bucket: iacherie-ai-models
     path: /models
   cache:
     enabled: true
@@ -277,7 +277,7 @@ affinity:
         podAffinityTerm:
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: ainflue-ai-engine
+              app.kubernetes.io/name: iacherie-ai-engine
           topologyKey: kubernetes.io/hostname
 
 # Service account
@@ -297,7 +297,7 @@ networkPolicy:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: ainflue
+              name: iacherie
       ports:
         - protocol: TCP
           port: 8001

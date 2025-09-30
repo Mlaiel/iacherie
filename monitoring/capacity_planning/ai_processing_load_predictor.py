@@ -1221,7 +1221,7 @@ async def main():
     print(f"✅ Utilisation GPU: {overview['overall_gpu_utilization']}")
     
     print("\n🎯 AI Processing Load Predictor - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

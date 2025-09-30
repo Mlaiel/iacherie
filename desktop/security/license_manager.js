@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - License Manager
+ * IA Chérie Desktop - License Manager
  * 
  * Advanced license management system for content and software licensing
  * 
@@ -86,22 +86,22 @@ class LicenseManager {
             description: 'Traditional copyright with no permissions granted.'
         });
 
-        this.licenseTemplates.set('ainflue-standard', {
-            name: 'Ainflue Standard License',
-            shortName: 'Ainflue Std',
+        this.licenseTemplates.set('iacherie-standard', {
+            name: 'IA Chérie Standard License',
+            shortName: 'IA Chérie Std',
             permissions: ['private-use', 'modification'],
             conditions: ['include-copyright', 'include-license', 'no-redistribution'],
             limitations: ['commercial-use', 'distribution', 'warranty', 'liability'],
-            description: 'Standard Ainflue platform license for content creators.'
+            description: 'Standard IA Chérie platform license for content creators.'
         });
 
-        this.licenseTemplates.set('ainflue-commercial', {
-            name: 'Ainflue Commercial License',
-            shortName: 'Ainflue Com',
+        this.licenseTemplates.set('iacherie-commercial', {
+            name: 'IA Chérie Commercial License',
+            shortName: 'IA Chérie Com',
             permissions: ['commercial-use', 'modification', 'distribution', 'private-use'],
             conditions: ['include-copyright', 'payment-required'],
             limitations: ['warranty', 'liability'],
-            description: 'Commercial license for business use of Ainflue content.'
+            description: 'Commercial license for business use of IA Chérie content.'
         });
     }
 
@@ -123,7 +123,7 @@ class LicenseManager {
                 licensor: options.licensor || {
                     name: 'Fahed Mlaiel',
                     email: 'mlaiel@live.de',
-                    organization: 'Ainflue'
+                    organization: 'IA Chérie'
                 },
                 licensee: options.licensee || null,
                 subject: options.subject || 'Digital Content',
@@ -494,7 +494,7 @@ class LicenseManager {
             signature,
             algorithm: 'HMAC-SHA256',
             signedAt: new Date().toISOString(),
-            signer: 'Ainflue License Manager'
+            signer: 'IA Chérie License Manager'
         };
     }
 

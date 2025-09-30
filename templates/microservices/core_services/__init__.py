@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Core Services Module for Ainflue Microservices Platform
+Core Services Module for IA Chérie Microservices Platform
 ======================================================
 
 Enterprise-grade core service templates providing:

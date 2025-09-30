@@ -11,7 +11,7 @@ services:
       context: ../..
       dockerfile: docker/protection/fingerprinting_engine.dockerfile
       target: production
-    container_name: ainflue-fingerprinting-engine
+    container_name: iacherie-fingerprinting-engine
     ports:
       - "8021:8021"
     environment:
@@ -37,7 +37,7 @@ services:
       context: ../..
       dockerfile: docker/protection/watermarking_service.dockerfile
       target: production
-    container_name: ainflue-watermarking-service
+    container_name: iacherie-watermarking-service
     ports:
       - "8022:8022"
     environment:

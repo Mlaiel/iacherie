@@ -32,10 +32,10 @@ For this architecture setup, we're creating placeholder documentation.
 
 ### Technical Specifications:
 - All animations optimized for web and desktop use
-- Professional color scheme matching Ainflue branding
+- Professional color scheme matching IA Chérie branding
 - Smooth 60fps for professional appearance
 - Looping animations for continuous operation display
 
 ### Copyright Notice:
-© 2025 Fahed Mlaiel - Ainflue Studio
+© 2025 Fahed Mlaiel - IA Chérie Studio
 All animations are proprietary and protected under international copyright law.

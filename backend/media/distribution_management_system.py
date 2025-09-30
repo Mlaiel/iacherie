@@ -575,7 +575,7 @@ class PlatformAdapter:
                     from PIL import ImageDraw, ImageFont
                     
                     draw = ImageDraw.Draw(img)
-                    watermark_text = "© Ainflue"
+                    watermark_text = "© IA Chérie"
                     
                     # Position watermark at bottom right
                     text_width = len(watermark_text) * 10  # Rough estimate

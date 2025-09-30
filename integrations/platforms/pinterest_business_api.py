@@ -1,5 +1,5 @@
 """
-Pinterest Business API Integration for Ainflue Platform
+Pinterest Business API Integration for IA Chérie Platform
 Enterprise-grade Pinterest creator and visual content management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -191,7 +191,7 @@ class PinterestAd:
 
 class PinterestBusinessAPI(BaseIntegration):
     """
-    Enterprise Pinterest Business API integration for Ainflue platform
+    Enterprise Pinterest Business API integration for IA Chérie platform
     
     Features:
     - Complete Pinterest OAuth 2.0 authentication
@@ -220,7 +220,7 @@ class PinterestBusinessAPI(BaseIntegration):
         # Headers template
         self.headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue/1.0.0"
+            "User-Agent": "IA Chérie/1.0.0"
         }
         
         # Rate limiting
@@ -1144,7 +1144,7 @@ def create_pinterest_business_integration(
     
     return PinterestBusinessAPI(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_pinterest_business_flow():
     """Example Pinterest Business API integration usage"""
     
@@ -1152,7 +1152,7 @@ async def example_pinterest_business_flow():
     pinterest = create_pinterest_business_integration(
         app_id="your_pinterest_app_id",
         app_secret="your_pinterest_app_secret",
-        redirect_uri="https://ainflue.com/auth/pinterest/callback",
+        redirect_uri="https://iacherie.com/auth/pinterest/callback",
         scopes=[
             PinterestScope.READ_PUBLIC,
             PinterestScope.WRITE_PUBLIC,
@@ -1181,8 +1181,8 @@ async def example_pinterest_business_flow():
         # Create board
         # board = await pinterest.create_board(
         #     access_token=access_token,
-        #     name="Ainflue Creations",
-        #     description="Creative content from Ainflue platform",
+        #     name="IA Chérie Creations",
+        #     description="Creative content from IA Chérie platform",
         #     privacy=BoardPrivacy.PUBLIC
         # )
         # print(f"Board created: {board.name}")
@@ -1200,10 +1200,10 @@ async def example_pinterest_business_flow():
         # pin = await pinterest.create_pin(
         #     access_token=access_token,
         #     board_id=board.id,
-        #     title="Amazing Content Created with Ainflue",
+        #     title="Amazing Content Created with IA Chérie",
         #     media_url=media_url,
-        #     description="Check out this stunning visual content created using Ainflue's AI tools!",
-        #     link="https://ainflue.com",
+        #     description="Check out this stunning visual content created using IA Chérie's AI tools!",
+        #     link="https://iacherie.com",
         #     alt_text="Beautiful AI-generated visual content"
         # )
         # print(f"Pin created: {pin.title}")

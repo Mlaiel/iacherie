@@ -783,7 +783,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS PARTNERSHIP INTEGRATION TERMINÉES!")
-        logger.info("🤝 Partnership Integration - Ainflue Platform")
+        logger.info("🤝 Partnership Integration - IA Chérie Platform")
         logger.info("=" * 70)
         
         return True

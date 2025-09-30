@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Data Replication Engine for Multi-Cloud Infrastructure
@@ -248,7 +248,7 @@ class DataReplicationEngine:
                     id="aws_primary",
                     name="AWS Primary Database",
                     provider="aws",
-                    connection_string="dynamodb://us-east-1/ainflue-primary",
+                    connection_string="dynamodb://us-east-1/iacherie-primary",
                     region="us-east-1",
                     is_primary=True,
                     priority=1
@@ -257,7 +257,7 @@ class DataReplicationEngine:
                     id="aws_secondary",
                     name="AWS Secondary Database",
                     provider="aws",
-                    connection_string="dynamodb://us-west-2/ainflue-secondary",
+                    connection_string="dynamodb://us-west-2/iacherie-secondary",
                     region="us-west-2",
                     is_primary=False,
                     priority=2
@@ -275,7 +275,7 @@ class DataReplicationEngine:
                     id="gcp_analytics",
                     name="GCP Analytics Warehouse",
                     provider="gcp",
-                    connection_string="bigquery://ainflue-project/analytics_dataset",
+                    connection_string="bigquery://iacherie-project/analytics_dataset",
                     region="us-central1",
                     is_primary=False,
                     priority=4
@@ -975,11 +975,11 @@ if __name__ == "__main__":
         },
         "gcp": {
             "enabled": True,
-            "project_id": "ainflue-project"
+            "project_id": "iacherie-project"
         },
         "mongodb": {
             "primary": {
-                "connection_string": "mongodb://localhost:27017/ainflue"
+                "connection_string": "mongodb://localhost:27017/iacherie"
             }
         },
         "redis": {

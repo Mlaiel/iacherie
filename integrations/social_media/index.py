@@ -1,12 +1,12 @@
 """
-Social Media Module - Ainflue Integrations
+Social Media Module - IA Chérie Integrations
 =========================================
 Enterprise-grade social media management providing comprehensive analytics,
 audience insights, content scheduling, engagement tracking, and viral
 prediction across major social platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -31,7 +31,7 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise social media management infrastructure for content optimization"
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,

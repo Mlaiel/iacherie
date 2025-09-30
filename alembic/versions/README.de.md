@@ -1,4 +1,4 @@
-# Ainflue Platform - Datenbank-Migrationen
+# IA Chérie Platform - Datenbank-Migrationen
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Spezialisiertes Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## Datenbank-Migrations-Architektur
 
-Dieses Verzeichnis enthält das umfassende Datenbank-Migrationssystem für die Ainflue-Plattform - die weltweit erste KI-gestützte Multi-Format-Creator-Plattform, die Inhaltsschutz, Monetarisierungsoptimierung und Kollaborations-Matching kombiniert.
+Dieses Verzeichnis enthält das umfassende Datenbank-Migrationssystem für die IA Chérie-Plattform - die weltweit erste KI-gestützte Multi-Format-Creator-Plattform, die Inhaltsschutz, Monetarisierungsoptimierung und Kollaborations-Matching kombiniert.
 
 ### Migrations-Übersicht
 
@@ -99,7 +99,7 @@ alembic history
 
 ### Business-Innovation
 
-**Ainflue-Plattform Features:**
+**IA Chérie-Plattform Features:**
 - Multi-Format-Content-Erstellung (Audio, Video, Bild, Text)
 - KI-gestützter Schutz des geistigen Eigentums
 - Automatisierte Umsatzoptimierung und -verteilung
@@ -144,6 +144,6 @@ alembic history
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue Platform - Datenbank-Migrations-Dokumentation**
+**IA Chérie Platform - Datenbank-Migrations-Dokumentation**
 
 Für technischen Support und Migrations-Unterstützung kontaktieren Sie: mlaiel@live.de

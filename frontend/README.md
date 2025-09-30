@@ -1,4 +1,4 @@
-# 🎨 Ainflue Frontend Platform - Enterprise Creator Economy
+# 🎨 IA Chérie Frontend Platform - Enterprise Creator Economy
 
 ## 🏆 Expert Development Team - Multi-Role Architecture
 - **Lead AI Developer**: Fahed Mlaiel - Advanced AI systems, ML orchestration, and intelligent processing
@@ -29,10 +29,10 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Navigate to frontend directory
-cd Ainflue/frontend
+cd IA Chérie/frontend
 
 # Install dependencies
 npm install
@@ -326,9 +326,9 @@ Unauthorized use, reproduction, modification, or distribution is strictly prohib
 
 **Fahed Mlaiel**
 - Email: mlaiel@live.de
-- Project: Ainflue Platform
+- Project: IA Chérie Platform
 - Role: Lead Developer & Owner
 
 ---
 
-© 2024-2025 Fahed Mlaiel - Ainflue Frontend Platform - All Rights Reserved
+© 2024-2025 Fahed Mlaiel - IA Chérie Frontend Platform - All Rights Reserved

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - DNS Management
+# IA Chérie Infrastructure Module - DNS Management
 # =============================================
 # 
-# Enterprise-grade DNS management for Ainflue platform
+# Enterprise-grade DNS management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -139,7 +139,7 @@ class DNSManager:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize DNS manager"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/networking"
+        self.config_path = config_path or "/home/runner/work/IA Chérie/IA Chérie/infra/networking"
         self.zones: Dict[str, DNSZone] = {}
         self.health_checks: Dict[str, HealthCheck] = {}
         self.provider_clients: Dict[DNSProvider, Any] = {}
@@ -152,17 +152,17 @@ class DNSManager:
         self.enable_health_checks = True
         self.default_ttl = 300
         
-        # Ainflue domain configuration
-        self.primary_domain = "ainflue.com"
+        # IA Chérie domain configuration
+        self.primary_domain = "iacherie.com"
         self.subdomains = [
-            "api.ainflue.com",
-            "app.ainflue.com", 
-            "cdn.ainflue.com",
-            "admin.ainflue.com",
-            "auth.ainflue.com",
-            "ai.ainflue.com",
-            "mobile.ainflue.com",
-            "status.ainflue.com"
+            "api.iacherie.com",
+            "app.iacherie.com", 
+            "cdn.iacherie.com",
+            "admin.iacherie.com",
+            "auth.iacherie.com",
+            "ai.iacherie.com",
+            "mobile.iacherie.com",
+            "status.iacherie.com"
         ]
         
         # Initialize DNS manager
@@ -177,7 +177,7 @@ class DNSManager:
             # Initialize provider clients
             self._initialize_provider_clients()
             
-            # Setup Ainflue DNS infrastructure
+            # Setup IA Chérie DNS infrastructure
             self._setup_ainflue_dns()
             
             logger.info("DNS manager initialized")
@@ -300,7 +300,7 @@ class DNSManager:
         return endpoints.get(provider, {})
     
     def _setup_ainflue_dns(self) -> None:
-        """Setup Ainflue DNS infrastructure"""
+        """Setup IA Chérie DNS infrastructure"""
         try:
             # Create primary zone if not exists
             if self.primary_domain not in self.zones:
@@ -318,18 +318,18 @@ class DNSManager:
             if self.enable_health_checks:
                 self._setup_health_checks()
             
-            logger.info("Ainflue DNS infrastructure setup completed")
+            logger.info("IA Chérie DNS infrastructure setup completed")
             
         except Exception as e:
-            logger.error(f"Failed to setup Ainflue DNS: {e}")
+            logger.error(f"Failed to setup IA Chérie DNS: {e}")
             raise
     
     def _setup_essential_records(self) -> None:
-        """Setup essential DNS records for Ainflue"""
+        """Setup essential DNS records for IA Chérie"""
         try:
             primary_zone = self.zones[self.primary_domain]
             
-            # Essential records for Ainflue platform
+            # Essential records for IA Chérie platform
             essential_records = [
                 # Main domain
                 DNSRecord(
@@ -342,7 +342,7 @@ class DNSManager:
                 
                 # API endpoint
                 DNSRecord(
-                    name="api.ainflue.com",
+                    name="api.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.10",
                     ttl=300,
@@ -352,15 +352,15 @@ class DNSManager:
                 
                 # App frontend
                 DNSRecord(
-                    name="app.ainflue.com",
+                    name="app.iacherie.com",
                     record_type=RecordType.CNAME,
-                    value="cdn.ainflue.com",
+                    value="cdn.iacherie.com",
                     ttl=300
                 ),
                 
                 # CDN endpoint
                 DNSRecord(
-                    name="cdn.ainflue.com",
+                    name="cdn.iacherie.com",
                     record_type=RecordType.CNAME,
                     value="d1234567890.cloudfront.net",
                     ttl=3600
@@ -368,7 +368,7 @@ class DNSManager:
                 
                 # Admin panel
                 DNSRecord(
-                    name="admin.ainflue.com",
+                    name="admin.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.20",
                     ttl=300,
@@ -378,7 +378,7 @@ class DNSManager:
                 
                 # Authentication service
                 DNSRecord(
-                    name="auth.ainflue.com",
+                    name="auth.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.30",
                     ttl=300,
@@ -387,7 +387,7 @@ class DNSManager:
                 
                 # AI processing endpoint
                 DNSRecord(
-                    name="ai.ainflue.com",
+                    name="ai.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.40",
                     ttl=300,
@@ -397,7 +397,7 @@ class DNSManager:
                 
                 # Mobile API
                 DNSRecord(
-                    name="mobile.ainflue.com",
+                    name="mobile.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.50",
                     ttl=300
@@ -405,7 +405,7 @@ class DNSManager:
                 
                 # Status page
                 DNSRecord(
-                    name="status.ainflue.com",
+                    name="status.iacherie.com",
                     record_type=RecordType.A,
                     value="203.0.113.60",
                     ttl=300
@@ -415,7 +415,7 @@ class DNSManager:
                 DNSRecord(
                     name=self.primary_domain,
                     record_type=RecordType.MX,
-                    value="10 mail.ainflue.com",
+                    value="10 mail.iacherie.com",
                     ttl=3600
                 ),
                 
@@ -429,9 +429,9 @@ class DNSManager:
                 
                 # DMARC record
                 DNSRecord(
-                    name="_dmarc.ainflue.com",
+                    name="_dmarc.iacherie.com",
                     record_type=RecordType.TXT,
-                    value="v=DMARC1; p=quarantine; rua=mailto:dmarc@ainflue.com",
+                    value="v=DMARC1; p=quarantine; rua=mailto:dmarc@iacherie.com",
                     ttl=3600
                 )
             ]
@@ -452,9 +452,9 @@ class DNSManager:
         try:
             health_checks = [
                 HealthCheck(
-                    name="ainflue-main-health",
+                    name="iacherie-main-health",
                     protocol=HealthCheckProtocol.HTTPS,
-                    endpoint="ainflue.com",
+                    endpoint="iacherie.com",
                     port=443,
                     path="/health",
                     interval=30,
@@ -462,9 +462,9 @@ class DNSManager:
                 ),
                 
                 HealthCheck(
-                    name="ainflue-api-health",
+                    name="iacherie-api-health",
                     protocol=HealthCheckProtocol.HTTPS,
-                    endpoint="api.ainflue.com",
+                    endpoint="api.iacherie.com",
                     port=443,
                     path="/v1/health",
                     interval=15,
@@ -472,9 +472,9 @@ class DNSManager:
                 ),
                 
                 HealthCheck(
-                    name="ainflue-ai-health",
+                    name="iacherie-ai-health",
                     protocol=HealthCheckProtocol.HTTPS,
-                    endpoint="ai.ainflue.com",
+                    endpoint="ai.iacherie.com",
                     port=443,
                     path="/health",
                     interval=30,
@@ -482,9 +482,9 @@ class DNSManager:
                 ),
                 
                 HealthCheck(
-                    name="ainflue-auth-health",
+                    name="iacherie-auth-health",
                     protocol=HealthCheckProtocol.HTTPS,
-                    endpoint="auth.ainflue.com",
+                    endpoint="auth.iacherie.com",
                     port=443,
                     path="/health",
                     interval=20,

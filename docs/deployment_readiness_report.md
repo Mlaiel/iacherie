@@ -40,11 +40,11 @@ kubectl apply -f kubernetes/monitoring/monitoring-stack.yaml
 ### Verification Commands
 ```bash
 # Check pods status
-kubectl get pods -n ainflue-logging
+kubectl get pods -n iacherie-logging
 kubectl get pods -n monitoring
 
 # Port forward for access
-kubectl port-forward -n ainflue-logging service/kibana 5601:5601
+kubectl port-forward -n iacherie-logging service/kibana 5601:5601
 kubectl port-forward -n monitoring service/jaeger 16686:16686
 kubectl port-forward -n monitoring service/grafana 3000:3000
 ```

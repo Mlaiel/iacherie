@@ -198,7 +198,7 @@ class StabilityAIIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout_seconds),
                 headers={
                     'Authorization': f'Bearer {self.config.api_key}',
-                    'User-Agent': 'Ainflue-StabilityAI/1.0',
+                    'User-Agent': 'IA Chérie-StabilityAI/1.0',
                     'Accept': 'application/json'
                 }
             )

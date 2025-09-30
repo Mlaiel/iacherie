@@ -1,5 +1,5 @@
 """
-Microservices Module for Ainflue Platform
+Microservices Module for IA Chérie Platform
 Provides distributed system infrastructure components for microservices architecture.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,7 +19,7 @@ __all__ = [
 ]
 
 class MicroserviceBase:
-    """Base class for all microservices in the Ainflue platform"""
+    """Base class for all microservices in the IA Chérie platform"""
     
     def __init__(self, service_name: str, service_id: str = None):
         self.service_name = service_name

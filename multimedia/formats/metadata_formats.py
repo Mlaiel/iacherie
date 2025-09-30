@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Metadata Formats Management
+IA Chérie Platform - Multimedia Formats - Metadata Formats Management
 Professional metadata format handling and processing for multimedia content
 
 Author: Fahed Mlaiel (mlaiel@live.de)

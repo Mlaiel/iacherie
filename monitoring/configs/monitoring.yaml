@@ -1,6 +1,6 @@
 # Monitoring Configuration Master File
 # =====================================
-# Configuration centralisée pour le système de monitoring Ainflue
+# Configuration centralisée pour le système de monitoring IA Chérie
 # Architecture réorganisée par l'équipe experte Lead Dev IA + Backend Senior + DevOps
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@
 
 # Service Configuration
 service:
-  name: "ainflue-monitoring"
+  name: "iacherie-monitoring"
   version: "2.0.0"
   environment: "${ENVIRONMENT:-production}"
   
@@ -108,7 +108,7 @@ performance:
 logging:
   level: "${LOG_LEVEL:-INFO}"
   format: "json"
-  file: "/var/log/monitoring/ainflue-monitoring.log"
+  file: "/var/log/monitoring/iacherie-monitoring.log"
   
 # Expert Team Signature
 # =====================

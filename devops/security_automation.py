@@ -1109,7 +1109,7 @@ class SecurityAutomation:
         
         # Mock scheduled scanning
         scan_targets = [
-            {"type": "container", "target": "ainflue/api:latest"},
+            {"type": "container", "target": "iacherie/api:latest"},
             {"type": "source", "target": "/app/src"},
             {"type": "infrastructure", "target": "terraform/"}
         ]

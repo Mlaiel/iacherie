@@ -2,7 +2,7 @@
 Geographic Optimization Configurations
 =====================================
 
-Geographic targeting and optimization settings for Ainflue Distribution Platform.
+Geographic targeting and optimization settings for IA Chérie Distribution Platform.
 Handles timezone-aware scheduling, cultural adaptation, and regional compliance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

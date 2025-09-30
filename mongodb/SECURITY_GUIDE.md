@@ -1,8 +1,8 @@
 # MongoDB Security Implementation Guide
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Security Implementation Guide  
 **Version:** 1.0.0  
 **Last Updated:** September 12, 2025  
@@ -95,7 +95,7 @@ class MFAManager:
         # Create TOTP URI for QR code
         totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             name=f"user_{user_id}",
-            issuer_name="Ainflue Platform"
+            issuer_name="IA Chérie Platform"
         )
         
         # Generate QR code
@@ -673,7 +673,7 @@ class ComplianceAuditLogger:
             "gdpr_event_type": event_type,  # consent, access, rectification, erasure, etc.
             "legal_basis": legal_basis,
             "processing_purpose": "platform_operations",
-            "data_controller": "Ainflue Platform",
+            "data_controller": "IA Chérie Platform",
             "retention_justification": "business_operations"
         }
         
@@ -1035,7 +1035,7 @@ class IncidentResponseSystem:
 ## 📞 SUPPORT & CONTACT
 
 **Security Engineering:** Fahed Mlaiel (mlaiel@live.de)  
-**Project:** Ainflue Platform  
+**Project:** IA Chérie Platform  
 **Module:** MongoDB Security Guide  
 **Documentation Version:** 1.0.0  
 

@@ -8,7 +8,7 @@ Real-time threat detection + anomaly detection + attack pattern recognition.
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Threat Detection
+Project: IA Chérie ML Security - Threat Detection
 Version: 1.0 Production
 =======================================================================
 """

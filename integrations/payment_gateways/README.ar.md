@@ -1,4 +1,4 @@
-# 💳 وحدة بوابات الدفع - Ainflue Integrations
+# 💳 وحدة بوابات الدفع - IA Chérie Integrations
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue GDPR Compliance Configuration Module
+"""IA Chérie GDPR Compliance Configuration Module
 ============================================
 
-Enterprise-grade GDPR compliance configuration for the Ainflue platform.
+Enterprise-grade GDPR compliance configuration for the IA Chérie platform.
 Comprehensive GDPR implementation, compliance monitoring, documentation,
 rights management, and regulatory reporting capabilities.
 
@@ -551,7 +551,7 @@ class GDPRComplianceConfiguration:
         
         processing_record = GDPRProcessingRecord(
             record_id=f"processing_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
-            controller_name=processing_details.get("controller_name", "Ainflue Platform"),
+            controller_name=processing_details.get("controller_name", "IA Chérie Platform"),
             controller_contact=processing_details.get("controller_contact", ""),
             dpo_contact=processing_details.get("dpo_contact", ""),
             processing_purposes=processing_details.get("processing_purposes", []),

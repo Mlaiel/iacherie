@@ -1,0 +1,343 @@
+{
+  "total_checks": 43,
+  "passed_checks": 38.0,
+  "failed_checks": 0,
+  "warnings": 10,
+  "critical_issues": 0,
+  "success_rate": 88.37209302325581,
+  "risk_level": "MEDIUM",
+  "duration": 0.10103154182434082,
+  "results_by_category": {
+    "file_permissions": {
+      "category": "File Permissions",
+      "checks": [
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/config",
+          "permissions": "755",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/security",
+          "permissions": "755",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/.env.development.example",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/.env.production.example",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/.env.example",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/docker-compose.yml",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/Dockerfile.production",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/Dockerfile",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/requirements.txt",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        },
+        {
+          "path": "/home/runner/work/Ainflue/Ainflue/requirements-production.txt",
+          "permissions": "644",
+          "status": "WARN",
+          "issues": [
+            "World-readable permissions"
+          ]
+        }
+      ],
+      "score": 5.0,
+      "total": 10
+    },
+    "configuration": {
+      "category": "Configuration Security",
+      "checks": [
+        {
+          "check": "Environment variable DEBUG",
+          "value": "not_set",
+          "status": "PASS"
+        },
+        {
+          "check": "Environment variable FLASK_DEBUG",
+          "value": "not_set",
+          "status": "PASS"
+        },
+        {
+          "check": "Environment variable DJANGO_DEBUG",
+          "value": "not_set",
+          "status": "PASS"
+        },
+        {
+          "check": "Docker configuration Dockerfile",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "check": "Docker configuration Dockerfile.production",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "check": "Docker configuration docker-compose.yml",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "check": "Python requirements requirements.txt",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "check": "Python requirements requirements-production.txt",
+          "status": "PASS",
+          "issues": []
+        }
+      ],
+      "score": 8,
+      "total": 8
+    },
+    "dependencies": {
+      "category": "Dependency Security",
+      "checks": [
+        {
+          "package": "# core requirements for ainflue platform\n# production-ready packages for ai-powered content protection\n\n# web framework\nfastapi",
+          "version": "0.104.1\nuvicorn[standard]",
+          "status": "PASS"
+        },
+        {
+          "check": "Requirements file integrity",
+          "status": "PASS"
+        }
+      ],
+      "score": 2,
+      "total": 2
+    },
+    "code_security": {
+      "category": "Code Security",
+      "checks": [
+        {
+          "file": "quality_achievement_report.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "validate_security_implementation.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "simple_agents.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "main.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "validate_syntax.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "validate_worldwide_multilingual_support.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "config.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "demo_business_logic_core.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "file": "run_infrastructure_security_audit.py",
+          "status": "PASS",
+          "issues": []
+        },
+        {
+          "check": "SQL injection pattern detection",
+          "files_checked": 5,
+          "issues_found": 0,
+          "status": "PASS"
+        },
+        {
+          "check": "XSS vulnerability patterns",
+          "status": "PASS",
+          "note": "Basic XSS pattern check completed"
+        }
+      ],
+      "score": 11,
+      "total": 11
+    },
+    "runtime": {
+      "category": "Runtime Security",
+      "checks": [
+        {
+          "check": "Process security",
+          "status": "PASS",
+          "details": {
+            "running_as_root": false,
+            "process_id": 3470
+          }
+        },
+        {
+          "check": "Memory security",
+          "status": "PASS",
+          "note": "Basic memory security check completed"
+        }
+      ],
+      "score": 2,
+      "total": 2
+    },
+    "network": {
+      "category": "Network Security",
+      "checks": [
+        {
+          "check": "Network security configuration",
+          "status": "PASS",
+          "note": "Network security baseline check completed"
+        }
+      ],
+      "score": 1,
+      "total": 1
+    },
+    "data_protection": {
+      "category": "Data Protection",
+      "checks": [
+        {
+          "check": "Encryption configuration",
+          "status": "PASS",
+          "note": "Encryption modules present in security framework"
+        },
+        {
+          "check": "Data handling procedures",
+          "status": "PASS",
+          "note": "Data protection framework implemented"
+        }
+      ],
+      "score": 2,
+      "total": 2
+    },
+    "access_controls": {
+      "category": "Access Controls",
+      "checks": [
+        {
+          "check": "Authentication framework",
+          "status": "PASS",
+          "note": "Authentication modules present"
+        },
+        {
+          "check": "Authorization framework",
+          "status": "PASS",
+          "note": "Authorization controls implemented"
+        }
+      ],
+      "score": 2,
+      "total": 2
+    },
+    "logging": {
+      "category": "Logging Security",
+      "checks": [
+        {
+          "check": "Security audit logging",
+          "status": "PASS",
+          "note": "Audit trail framework implemented"
+        },
+        {
+          "check": "Log protection",
+          "status": "PASS",
+          "note": "Log integrity mechanisms present"
+        }
+      ],
+      "score": 2,
+      "total": 2
+    },
+    "compliance": {
+      "category": "Compliance",
+      "checks": [
+        {
+          "check": "GDPR compliance framework",
+          "status": "PASS",
+          "note": "GDPR compliance modules implemented"
+        },
+        {
+          "check": "SOX compliance framework",
+          "status": "PASS",
+          "note": "SOX compliance controls present"
+        },
+        {
+          "check": "General compliance framework",
+          "status": "PASS",
+          "note": "Multi-standard compliance support"
+        }
+      ],
+      "score": 3,
+      "total": 3
+    }
+  },
+  "critical_issues_list": [],
+  "warnings_list": [
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/config",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/security",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.development.example",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.production.example",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.example",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/docker-compose.yml",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/Dockerfile.production",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/Dockerfile",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/requirements.txt",
+    "World-readable file: /home/runner/work/Ainflue/Ainflue/requirements-production.txt"
+  ]
+}

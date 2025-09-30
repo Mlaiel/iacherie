@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 User Experience Performance Monitor - Enterprise Performance Monitoring
 Advanced UX performance monitoring for Creator Economy user experience

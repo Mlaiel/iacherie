@@ -2,7 +2,7 @@
 Audience Configuration
 =====================
 
-Advanced audience configuration and segmentation settings for Ainflue Distribution Platform.
+Advanced audience configuration and segmentation settings for IA Chérie Distribution Platform.
 Provides intelligent audience targeting and personalization configurations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

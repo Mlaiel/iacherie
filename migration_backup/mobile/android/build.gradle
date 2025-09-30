@@ -1,0 +1,524 @@
+/*
+ * Ainflue Android Application Build Configuration
+ * 
+ * Advanced mobile content creation platform Gradle build script
+ * Optimized for performance, security, and production deployment
+ * 
+ * Author: Fahed Mlaiel (mlaiel@live.de)
+ * Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+ * 
+ * ⚠️ LEGAL NOTICE: This configuration is the exclusive intellectual property of Fahed Mlaiel.
+ * Any unauthorized use, copying, or distribution is strictly prohibited under
+ * German and international copyright law.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
+
+android {
+    compileSdk 34
+    buildToolsVersion '34.0.0'
+    ndkVersion '25.1.8937393'
+    
+    namespace 'com.ainflue.mobile'
+    
+    defaultConfig {
+        applicationId 'com.ainflue.mobile'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+        
+        // Multi-dex support for large applications
+        multiDexEnabled true
+        
+        // Vector drawable support
+        vectorDrawables.useSupportLibrary = true
+        
+        // Test runner
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        
+        // Proguard test configuration
+        testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        
+        // Native library architecture support
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+        
+        // Build configuration fields
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.ainflue.com"'
+        buildConfigField 'String', 'API_VERSION', '"v1"'
+        buildConfigField 'String', 'APP_AUTHOR', '"Fahed Mlaiel"'
+        buildConfigField 'String', 'APP_AUTHOR_EMAIL', '"mlaiel@live.de"'
+        buildConfigField 'boolean', 'ENABLE_ANALYTICS', 'true'
+        buildConfigField 'boolean', 'ENABLE_CRASHLYTICS', 'true'
+        
+        // Manifest placeholders
+        manifestPlaceholders = [
+            'appAuthRedirectScheme': 'com.ainflue.mobile',
+            'appName': 'Ainflue'
+        ]
+        
+        // External native build (if needed for custom audio/video processing)
+        externalNativeBuild {
+            cmake {
+                cppFlags '-std=c++17', '-frtti', '-fexceptions'
+                abiFilters 'arm64-v8a', 'armeabi-v7a'
+                arguments '-DANDROID_STL=c++_shared'
+            }
+        }
+    }
+    
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release {
+            if (project.hasProperty('AINFLUE_UPLOAD_STORE_FILE')) {
+                storeFile file(AINFLUE_UPLOAD_STORE_FILE)
+                storePassword AINFLUE_UPLOAD_STORE_PASSWORD
+                keyAlias AINFLUE_UPLOAD_KEY_ALIAS
+                keyPassword AINFLUE_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
+    
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            useProguard false
+            signingConfig signingConfigs.debug
+            
+            buildConfigField 'String', 'BUILD_TYPE', '"debug"'
+            buildConfigField 'boolean', 'ENABLE_LOGGING', 'true'
+            buildConfigField 'String', 'API_BASE_URL', '"http://10.0.2.2:8000/api"'
+            
+            // React Native development configuration
+            resValue 'string', 'react_native_dev_server_port', '8081'
+            resValue 'bool', 'flipper_enabled', 'true'
+            
+            // Firebase debug configuration
+            resValue 'string', 'google_app_id', '1:123456789:android:debug'
+        }
+        
+        staging {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            
+            buildConfigField 'String', 'BUILD_TYPE', '"staging"'
+            buildConfigField 'boolean', 'ENABLE_LOGGING', 'true'
+            buildConfigField 'String', 'API_BASE_URL', '"https://staging-api.ainflue.com"'
+            
+            resValue 'string', 'react_native_dev_server_port', '8081'
+            resValue 'bool', 'flipper_enabled', 'false'
+            
+            // Firebase staging configuration
+            resValue 'string', 'google_app_id', '1:123456789:android:staging'
+        }
+        
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            
+            buildConfigField 'String', 'BUILD_TYPE', '"release"'
+            buildConfigField 'boolean', 'ENABLE_LOGGING', 'false'
+            buildConfigField 'String', 'API_BASE_URL', '"https://api.ainflue.com"'
+            
+            resValue 'string', 'react_native_dev_server_port', '8081'
+            resValue 'bool', 'flipper_enabled', 'false'
+            
+            // Firebase production configuration
+            resValue 'string', 'google_app_id', '1:123456789:android:production'
+            
+            // Zipalign and optimization
+            zipAlignEnabled true
+            
+            // Native library optimization
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
+        }
+    }
+    
+    flavorDimensions 'version'
+    productFlavors {
+        free {
+            dimension 'version'
+            applicationIdSuffix '.free'
+            versionNameSuffix '-free'
+            
+            buildConfigField 'boolean', 'IS_PRO_VERSION', 'false'
+            buildConfigField 'int', 'MAX_UPLOAD_SIZE_MB', '100'
+            buildConfigField 'int', 'MAX_STORAGE_GB', '5'
+        }
+        
+        pro {
+            dimension 'version'
+            applicationIdSuffix '.pro'
+            versionNameSuffix '-pro'
+            
+            buildConfigField 'boolean', 'IS_PRO_VERSION', 'true'
+            buildConfigField 'int', 'MAX_UPLOAD_SIZE_MB', '1000'
+            buildConfigField 'int', 'MAX_STORAGE_GB', '100'
+        }
+        
+        enterprise {
+            dimension 'version'
+            applicationIdSuffix '.enterprise'
+            versionNameSuffix '-enterprise'
+            
+            buildConfigField 'boolean', 'IS_PRO_VERSION', 'true'
+            buildConfigField 'boolean', 'IS_ENTERPRISE_VERSION', 'true'
+            buildConfigField 'int', 'MAX_UPLOAD_SIZE_MB', '5000'
+            buildConfigField 'int', 'MAX_STORAGE_GB', '1000'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+    
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+        freeCompilerArgs += [
+            '-opt-in=kotlin.RequiresOptIn',
+            '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+            '-opt-in=kotlinx.coroutines.FlowPreview'
+        ]
+    }
+    
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+        buildConfig true
+        aidl false
+        renderScript false
+        shaders false
+    }
+    
+    dataBinding {
+        enabled = true
+    }
+    
+    viewBinding {
+        enabled = true
+    }
+    
+    packagingOptions {
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libjsc.so'
+        pickFirst '**/libfbjni.so'
+        pickFirst '**/libfolly_json.so'
+        pickFirst '**/libglog.so'
+        
+        // Exclude unnecessary files
+        resources.excludes += [
+            'META-INF/DEPENDENCIES',
+            'META-INF/LICENSE',
+            'META-INF/LICENSE.txt',
+            'META-INF/license.txt',
+            'META-INF/NOTICE',
+            'META-INF/NOTICE.txt',
+            'META-INF/notice.txt',
+            'META-INF/ASL2.0',
+            'META-INF/*.kotlin_module',
+            'kotlin/**',
+            'META-INF/kotlin-stdlib.kotlin_module',
+            'META-INF/kotlin-stdlib-common.kotlin_module',
+            'META-INF/kotlin-stdlib-jdk8.kotlin_module'
+        ]
+    }
+    
+    // External native build configuration
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+    
+    // Lint configuration
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'InvalidPackage'
+        disable 'MissingTranslation'
+        disable 'UnusedResources'
+    }
+    
+    // Testing configuration
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+        animationsDisabled = true
+    }
+    
+    // Bundle configuration
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+}
+
+dependencies {
+    // ================================
+    // CORE ANDROID DEPENDENCIES
+    // ================================
+    
+    // Core Android libraries
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    
+    // Material Design
+    implementation 'com.google.android.material:material:1.11.0'
+    
+    // ViewModel and LiveData
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.7.0'
+    
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.6'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.6'
+    
+    // Room database
+    implementation 'androidx.room:room-runtime:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+    
+    // Work Manager
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    
+    // ================================
+    // KOTLIN AND COROUTINES
+    // ================================
+    
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2'
+    
+    // ================================
+    // NETWORKING AND API
+    // ================================
+    
+    // Retrofit for REST API
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0'
+    
+    // OkHttp for HTTP client
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    
+    // Moshi for JSON parsing
+    implementation 'com.squareup.moshi:moshi:1.15.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.15.0'
+    
+    // ================================
+    // MEDIA AND AUDIO/VIDEO
+    // ================================
+    
+    // ExoPlayer for advanced media playback
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.19.1'
+    
+    // CameraX for advanced camera features
+    implementation 'androidx.camera:camera-camera2:1.3.1'
+    implementation 'androidx.camera:camera-lifecycle:1.3.1'
+    implementation 'androidx.camera:camera-view:1.3.1'
+    implementation 'androidx.camera:camera-extensions:1.3.1'
+    
+    // Image processing
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    kapt 'com.github.bumptech.glide:compiler:4.16.0'
+    
+    // ================================
+    // FIREBASE SERVICES
+    // ================================
+    
+    // Firebase BoM for version management
+    implementation platform('com.google.firebase:firebase-bom:32.7.0')
+    
+    // Firebase Analytics and Crashlytics
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
+    
+    // Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    
+    // Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    
+    // Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    
+    // Firebase Remote Config
+    implementation 'com.google.firebase:firebase-config-ktx'
+    
+    // ================================
+    // SECURITY AND BIOMETRICS
+    // ================================
+    
+    // Biometric authentication
+    implementation 'androidx.biometric:biometric:1.1.0'
+    
+    // Security crypto
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    
+    // ================================
+    // UTILITIES AND HELPERS
+    // ================================
+    
+    // Dependency injection with Hilt
+    implementation 'com.google.dagger:hilt-android:2.48.1'
+    kapt 'com.google.dagger:hilt-compiler:2.48.1'
+    implementation 'androidx.hilt:hilt-work:1.1.0'
+    kapt 'androidx.hilt:hilt-compiler:1.1.0'
+    
+    // Reactive programming
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    
+    // Logging
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+    
+    // Date and time
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.5.0'
+    
+    // Permissions
+    implementation 'com.karumi:dexter:6.2.3'
+    
+    // ================================
+    // REACT NATIVE INTEGRATION
+    // ================================
+    
+    // React Native bridge
+    implementation 'com.facebook.react:react-android:0.72.6'
+    implementation 'com.facebook.react:hermes-android:0.72.6'
+    
+    // ================================
+    // DESUGARING (for older Android versions)
+    // ================================
+    
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    
+    // ================================
+    // TESTING DEPENDENCIES
+    // ================================
+    
+    // Unit testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.2.1'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    testImplementation 'com.google.truth:truth:1.2.0'
+    testImplementation 'androidx.room:room-testing:2.6.1'
+    
+    // Instrumented testing
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation 'androidx.work:work-testing:2.9.0'
+    
+    // Debug dependencies
+    debugImplementation 'com.facebook.flipper:flipper:0.212.0'
+    debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.212.0'
+    debugImplementation 'com.facebook.soloader:soloader:0.10.5'
+    debugImplementation 'androidx.fragment:fragment-testing:1.6.2'
+}
+
+// ================================
+// GOOGLE SERVICES PLUGIN
+// ================================
+apply plugin: 'com.google.gms.google-services'
+
+// ================================
+// CUSTOM TASKS
+// ================================
+
+// Task to copy React Native assets
+task copyReactNativeAssets(type: Copy) {
+    from '../react_native/src/assets'
+    into 'src/main/assets/react_native'
+}
+
+// Task to generate build info
+task generateBuildInfo {
+    doLast {
+        def buildInfoFile = file('src/main/assets/build_info.json')
+        buildInfoFile.parentFile.mkdirs()
+        buildInfoFile.text = """{
+    "buildTime": "${new Date().format('yyyy-MM-dd HH:mm:ss')}",
+    "buildType": "${android.defaultConfig.buildConfigField.BUILD_TYPE}",
+    "versionName": "${android.defaultConfig.versionName}",
+    "versionCode": ${android.defaultConfig.versionCode},
+    "author": "Fahed Mlaiel",
+    "authorEmail": "mlaiel@live.de",
+    "copyright": "© 2025 Fahed Mlaiel. All rights reserved."
+}"""
+    }
+}
+
+// Hook tasks into build process
+preBuild.dependsOn copyReactNativeAssets
+preBuild.dependsOn generateBuildInfo
+
+// ================================
+// PROGUARD CONFIGURATION
+// ================================
+android.applicationVariants.all { variant ->
+    if (variant.buildType.minifyEnabled) {
+        variant.proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro')
+    }
+}

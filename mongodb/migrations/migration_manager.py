@@ -76,12 +76,12 @@ class MigrationManager:
         self._load_builtin_migrations()
     
     def _load_builtin_migrations(self):
-        """Load built-in migrations for Ainflue platform."""
+        """Load built-in migrations for IA Chérie platform."""
         # Initial schema migration
         initial_migration = Migration(
             migration_id="001_initial_schema",
             name="Initial Schema Setup",
-            description="Create initial collections and indexes for Ainflue platform",
+            description="Create initial collections and indexes for IA Chérie platform",
             migration_type=MigrationType.SCHEMA_CHANGE,
             version="1.0.0",
             up_operations=[

@@ -205,7 +205,7 @@ class AnimationEngine {
    */
   injectAnimationCSS() {
     const style = document.createElement('style');
-    style.id = 'ainflue-animation-utilities';
+    style.id = 'iacherie-animation-utilities';
     
     style.textContent = `
       /* Animation utilities */
@@ -795,7 +795,7 @@ class AnimationEngine {
     this.runningAnimations.clear();
     
     // Remove style element
-    const styleElement = document.getElementById('ainflue-animation-utilities');
+    const styleElement = document.getElementById('iacherie-animation-utilities');
     if (styleElement) {
       styleElement.remove();
     }

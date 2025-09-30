@@ -1,10 +1,10 @@
 """
-Ainflue Core Infrastructure - Load Balancer Core
+IA Chérie Core Infrastructure - Load Balancer Core
 ================================================
 
 Enterprise-grade load balancing system with multiple algorithms, health checking,
 sticky sessions, and circuit breaker integration. Provides intelligent traffic
-distribution for all Ainflue core services.
+distribution for all IA Chérie core services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

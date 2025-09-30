@@ -1,4 +1,4 @@
-# 🔐 Ainflue Sicherheitsmodul - Enterprise Grade
+# 🔐 IA Chérie Sicherheitsmodul - Enterprise Grade
 
 ## 🔒 GEISTIGES EIGENTUM - FAHED MLAIEL
 ```
@@ -12,7 +12,7 @@
 
 ## 🚀 Überblick
 
-Das Ainflue Sicherheitsmodul ist ein unternehmenstaugliches Sicherheitsframework, das speziell für Creator Economy Plattformen entwickelt wurde. Es bietet umfassenden Schutz für Musiker, Fotografen, Blogger und andere Content-Ersteller durch erweiterte Bedrohungserkennung, Zugriffskontrolle und Vulnerability-Management.
+Das IA Chérie Sicherheitsmodul ist ein unternehmenstaugliches Sicherheitsframework, das speziell für Creator Economy Plattformen entwickelt wurde. Es bietet umfassenden Schutz für Musiker, Fotografen, Blogger und andere Content-Ersteller durch erweiterte Bedrohungserkennung, Zugriffskontrolle und Vulnerability-Management.
 
 ### 🎯 Hauptfunktionen
 

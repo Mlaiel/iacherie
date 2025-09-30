@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Content Pipeline Tracer Enterprise
+IA Chérie Platform - Content Pipeline Tracer Enterprise
 ==================================================
 
 Advanced content pipeline tracing system for monitoring upload to processing pipeline,

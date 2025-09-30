@@ -89,7 +89,7 @@ class OptimizationRecommendation:
 
 class PartitioningOptimizationManager:
     """
-    Manages intelligent partitioning strategies for Ainflue event storage
+    Manages intelligent partitioning strategies for IA Chérie event storage
     
     Features:
     - Automatic partition creation based on business logic
@@ -116,11 +116,11 @@ class PartitioningOptimizationManager:
             'auto_archive_old_partitions': True
         }
         
-        # Initialize Ainflue business partitioning rules
+        # Initialize IA Chérie business partitioning rules
         self._initialize_business_rules()
     
     def _initialize_business_rules(self):
-        """Initialize Ainflue-specific partitioning rules"""
+        """Initialize IA Chérie-specific partitioning rules"""
         
         # Content events - partition by time and content type
         content_rule = PartitioningRule(
@@ -308,12 +308,12 @@ class PartitioningOptimizationManager:
             # Simulate Elasticsearch index discovery
             mock_indices = [
                 {
-                    'partition_name': 'ainflue-content-events-2025.09',
+                    'partition_name': 'iacherie-content-events-2025.09',
                     'size_bytes': 1024 * 1024 * 600,  # 600MB
                     'strategy': PartitioningStrategy.TIME_BASED
                 },
                 {
-                    'partition_name': 'ainflue-analytics-events-2025.09',
+                    'partition_name': 'iacherie-analytics-events-2025.09',
                     'size_bytes': 1024 * 1024 * 400,  # 400MB
                     'strategy': PartitioningStrategy.TIME_BASED
                 }

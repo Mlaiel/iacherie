@@ -1,4 +1,4 @@
-# ⚡ Module de Configuration Redis Ainflue - Édition Entreprise
+# ⚡ Module de Configuration Redis IA Chérie - Édition Entreprise
 
 [![License](https://img.shields.io/badge/License-Propriétaire-red.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-4.0.0-blue.svg)](VERSION)
@@ -29,7 +29,7 @@
 
 ## 🎯 Aperçu
 
-Le Module de Configuration Redis Ainflue est un système de gestion de configuration **de niveau entreprise** conçu spécifiquement pour la **Plateforme d'Économie des Créateurs**. Il fournit des capacités complètes d'optimisation, de sécurité et de gestion Redis pour supporter **plus de 1,8M opérations par seconde** avec une **latence inférieure à la milliseconde**.
+Le Module de Configuration Redis IA Chérie est un système de gestion de configuration **de niveau entreprise** conçu spécifiquement pour la **Plateforme d'Économie des Créateurs**. Il fournit des capacités complètes d'optimisation, de sécurité et de gestion Redis pour supporter **plus de 1,8M opérations par seconde** avec une **latence inférieure à la milliseconde**.
 
 ### 🏗️ Points Forts de l'Architecture
 

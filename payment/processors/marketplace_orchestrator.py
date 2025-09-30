@@ -837,7 +837,7 @@ class MarketplaceOrchestrator:
                     'id': 'platform',
                     'type': 'platform',
                     'name': 'Platform',
-                    'email': 'platform@ainflue.com',
+                    'email': 'platform@iacherie.com',
                     'split_percentage': 15  # Platform fee
                 },
                 {
@@ -895,7 +895,7 @@ class MarketplaceOrchestrator:
                     'id': 'platform',
                     'type': 'platform',
                     'name': 'Platform',
-                    'email': 'platform@ainflue.com',
+                    'email': 'platform@iacherie.com',
                     'split_percentage': 10  # Platform fee
                 },
                 {

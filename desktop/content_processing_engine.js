@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Processing Engine
+ * IA Chérie Desktop - Content Processing Engine
  * 
  * Local content processing with AI integration and multi-format support
  * 

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE CURRENCY CONVERTER - ADVANCED DOCKERFILE
+# IACHERIE CURRENCY CONVERTER - ADVANCED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for real-time currency conversion supporting
 # 180+ currencies, crypto currencies, and real-time exchange rates.

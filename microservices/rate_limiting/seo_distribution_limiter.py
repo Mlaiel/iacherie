@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Ainflue SEO Distribution Rate Limiter - Multi-Platform Content Distribution
+IA Chérie SEO Distribution Rate Limiter - Multi-Platform Content Distribution
 ============================================================================
 
 Advanced rate limiting system for SEO optimization and multi-platform content
 distribution management. Handles content scheduling, cross-platform syndication,
-SEO compliance, and performance analytics for the Ainflue creator platform.
+SEO compliance, and performance analytics for the IA Chérie creator platform.
 
 Features:
 - Multi-platform distribution rate limiting (YouTube, TikTok, Instagram, Spotify, Apple Music, SoundCloud)
@@ -22,7 +22,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying or distribution prohibited
 
-Project: Ainflue Rate Limiting - SEO Distribution Module
+Project: IA Chérie Rate Limiting - SEO Distribution Module
 Version: 1.0 Production
 """
 

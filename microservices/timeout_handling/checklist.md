@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/timeout_handling/`  
+**Location**: `/workspaces/IA Chérie/microservices/timeout_handling/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Timeout Management  
-**Purpose**: Timeout Handling Enterprise pour gestion résilience microservices Ainflue
+**Purpose**: Timeout Handling Enterprise pour gestion résilience microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -35,13 +35,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Distributed Timeout Manager - Ainflue Enterprise
+Distributed Timeout Manager - IA Chérie Enterprise
 ===============================================
 Manager timeout distribué avec coordination inter-services.
 Support cluster-wide timeout policies et cascading timeout prevention.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chérie Timeout Handling
 Version: 1.0 Production
 """
 
@@ -69,7 +69,7 @@ class TimeoutPriority(Enum):
 
 @dataclass
 class TimeoutConfiguration:
-    """Configuration timeout avec métadonnées business Ainflue"""
+    """Configuration timeout avec métadonnées business IA Chérie"""
     service_name: str
     operation_name: str
     default_timeout: float
@@ -139,7 +139,7 @@ class DistributedTimeoutManager:
         return (business_weight * priority_weight) / load_factor
         
     async def _validate_ainflue_timeout_constraints(self, timeout_config: TimeoutConfiguration) -> bool:
-        """Validation contraintes timeout spécifiques Ainflue business logic."""
+        """Validation contraintes timeout spécifiques IA Chérie business logic."""
 ```
 
 #### 2. `intelligent_timeout_predictor.py` - Prédicteur Timeout Intelligent
@@ -341,7 +341,7 @@ class PerformanceMonitoringEngine:
         - Resource utilization correlation avec timeout performance
         - Cross-service performance dependency analysis
         - Performance optimization recommendations avec cost analysis
-        - Custom performance metrics pour Ainflue business workflows
+        - Custom performance metrics pour IA Chérie business workflows
         """
         
     async def detect_performance_bottlenecks(self, performance_data: PerformanceData) -> BottleneckDetectionResult:
@@ -727,7 +727,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Timeout handling pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Timeout handling pour workflow créateurs → distribution
 - **Code Industriel**: ✅ Distributed + ML intelligent + circuit breaker + business policies
 - **Microservices Resilience**: ✅ Circuit breaker + graceful degradation + performance monitoring
 - **Creator Economy Focus**: ✅ Creator-aware + content processing + collaboration timeouts
@@ -886,4 +886,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module timeout handling enterprise clé en main, distributed timeout management + ML prediction + circuit breaker + business policies + performance monitoring, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module timeout handling enterprise clé en main, distributed timeout management + ML prediction + circuit breaker + business policies + performance monitoring, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

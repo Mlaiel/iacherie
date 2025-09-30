@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Ainflue Viral Optimization Engine uses advanced AI and machine learning to predict, enhance, and maximize the viral potential of content across multiple platforms. This guide explains how to leverage these capabilities to dramatically increase content reach and engagement.
+The IA Chérie Viral Optimization Engine uses advanced AI and machine learning to predict, enhance, and maximize the viral potential of content across multiple platforms. This guide explains how to leverage these capabilities to dramatically increase content reach and engagement.
 
 ## Core Concepts
 

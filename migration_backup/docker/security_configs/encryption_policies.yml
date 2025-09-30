@@ -1,0 +1,10 @@
+# Encryption Policies
+data_at_rest:
+  algorithm: AES256
+  key_management: vault
+data_in_transit:
+  tls_version: "1.3"
+  cipher_suites: ECDHE-ECDSA-AES256-GCM-SHA384
+secrets:
+  encryption: AES256-GCM
+  rotation: 30d

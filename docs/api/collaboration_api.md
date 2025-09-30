@@ -1,6 +1,6 @@
 # Collaboration API Documentation
 
-**Ainflue Platform - Collaboration Management API**  
+**IA Chérie Platform - Collaboration Management API**  
 **Author**: Fahed Mlaiel (mlaiel@live.de)  
 **Version**: 1.0  
 **Date**: January 2025
@@ -12,7 +12,7 @@ The Collaboration API enables content creators to discover, manage, and monetize
 ## Base URL
 
 ```
-https://api.ainflue.com/v1/collaboration
+https://api.iacherie.com/v1/collaboration
 ```
 
 ## Authentication
@@ -362,7 +362,7 @@ Configure webhook endpoints to receive real-time collaboration updates:
 const axios = require('axios');
 
 const ainflueAPI = axios.create({
-  baseURL: 'https://api.ainflue.com/v1',
+  baseURL: 'https://api.iacherie.com/v1',
   headers: {
     'Authorization': `Bearer ${process.env.AINFLUE_API_KEY}`,
     'Content-Type': 'application/json'
@@ -401,7 +401,7 @@ import os
 
 class AinfluCollaborationAPI:
     def __init__(self):
-        self.base_url = "https://api.ainflue.com/v1"
+        self.base_url = "https://api.iacherie.com/v1"
         self.headers = {
             "Authorization": f"Bearer {os.getenv('AINFLUE_API_KEY')}",
             "Content-Type": "application/json"
@@ -469,7 +469,7 @@ X-RateLimit-Reset: 1640995200
 
 **© 2025 Fahed Mlaiel (mlaiel@live.de). All rights reserved.**
 
-This API documentation and the underlying Ainflue platform are protected by copyright and other intellectual property laws. Unauthorized use, reproduction, or distribution is strictly prohibited.
+This API documentation and the underlying IA Chérie platform are protected by copyright and other intellectual property laws. Unauthorized use, reproduction, or distribution is strictly prohibited.
 
 **Contact**: mlaiel@live.de  
-**Legal**: All API usage subject to Ainflue Terms of Service
+**Legal**: All API usage subject to IA Chérie Terms of Service

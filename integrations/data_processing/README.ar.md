@@ -125,9 +125,9 @@ jwt>=1.3.0
 
 ```bash
 # تكوين قاعدة البيانات
-DATABASE_URL=postgresql://user:password@localhost:5432/ainflue
+DATABASE_URL=postgresql://user:password@localhost:5432/iacherie
 REDIS_URL=redis://localhost:6379/0
-MONGODB_URL=mongodb://localhost:27017/ainflue
+MONGODB_URL=mongodb://localhost:27017/iacherie
 
 # بيانات اعتماد السحابة
 AWS_ACCESS_KEY_ID=مفتاح_aws_الخاص_بك
@@ -352,9 +352,9 @@ await manager.monitoring.configure_alerts(alert_rules)
 ## الدعم
 
 للدعم التقني:
-- التوثيق: [docs.ainflue.com](https://docs.ainflue.com)
-- مشاكل GitHub: [github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
-- المجتمع: [community.ainflue.com](https://community.ainflue.com)
+- التوثيق: [docs.iacherie.com](https://docs.iacherie.com)
+- مشاكل GitHub: [github.com/Mlaiel/IA Chérie/issues](https://github.com/Mlaiel/IA Chérie/issues)
+- المجتمع: [community.iacherie.com](https://community.iacherie.com)
 
 ## المساهمة
 
@@ -368,8 +368,8 @@ await manager.monitoring.configure_alerts(alert_rules)
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # إنشاء بيئة افتراضية
 python -m venv venv

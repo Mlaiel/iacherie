@@ -1,11 +1,11 @@
 """
-Distribution - Ainflue Integrations
+Distribution - IA Chérie Integrations
 ===================================
 Point d'entrée principal pour distribution multi-plateformes.
 Orchestration 65+ plateformes avec scheduling intelligent.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chérie Integrations  
 Version: 1.0 Production
 """
 
@@ -17,7 +17,7 @@ from .synchronization_manager import SynchronizationManager
 from .performance_optimizer import PerformanceOptimizer
 from .automated_distribution_pipeline import AutomatedDistributionPipeline
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 DISTRIBUTION_CONFIG = {
     'supported_platforms': 65,
     'platform_categories': {

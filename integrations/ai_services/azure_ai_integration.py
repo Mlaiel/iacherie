@@ -212,7 +212,7 @@ class AzureAIIntegration:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout_seconds),
                 headers={
-                    'User-Agent': 'Ainflue-AzureAI/1.0',
+                    'User-Agent': 'IA Chérie-AzureAI/1.0',
                     'Content-Type': 'application/json'
                 }
             )

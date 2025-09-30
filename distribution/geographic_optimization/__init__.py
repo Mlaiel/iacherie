@@ -1,6 +1,6 @@
 """Geographic Optimization Engine
 
-Geographic targeting and localization optimization system for the Ainflue platform.
+Geographic targeting and localization optimization system for the IA Chérie platform.
 Optimizes content distribution based on geographic regions, cultural preferences,
 and local market dynamics.
 

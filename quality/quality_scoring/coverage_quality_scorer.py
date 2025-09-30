@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Coverage Quality Scoring Engine for Ainflue Platform
+Coverage Quality Scoring Engine for IA Chérie Platform
 ===================================================
 
 AI-powered coverage quality assessment with intelligent scoring algorithms,
@@ -1242,7 +1242,7 @@ if __name__ == "__main__":
         # Perform quality assessment
         assessment_result = await scorer.assess_coverage_quality(
             coverage_data=sample_coverage_data,
-            project_name="Ainflue Platform",
+            project_name="IA Chérie Platform",
             assessment_period="Sprint 15"
         )
         

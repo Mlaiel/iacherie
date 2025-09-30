@@ -1,4 +1,4 @@
-# 🧠 Module IA Configuration Ainflue - Hub Intelligence Artificielle Ultra-Avancé
+# 🧠 Module IA Configuration IA Chérie - Hub Intelligence Artificielle Ultra-Avancé
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org)
@@ -6,7 +6,7 @@
 [![Transformers](https://img.shields.io/badge/🤗%20Transformers-4.30+-yellow.svg)](https://huggingface.co/transformers)
 [![CUDA](https://img.shields.io/badge/CUDA-12.0+-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 Hub d'Orchestration Configuration IA Ultra-Avancé**  
 > Système révolutionnaire de gestion configuration intelligence artificielle avec réseaux neuronaux quantum-scale, optimisation modèles autonome et capacités orchestration IA nouvelle génération.
@@ -15,7 +15,7 @@
 
 ## 🌟 **Aperçu**
 
-Le **Module IA Configuration Ainflue** représente le summum absolu de la technologie gestion configuration intelligence artificielle. Ce système ultra-sophistiqué fournit orchestration configuration IA centralisée, intelligente et adaptive pour l'écosystème IA Ainflue complet, avec capacités niveau quantique qui redéfinissent comment applications IA modernes gèrent configuration modèles, pipelines entraînement et optimisation inférence à échelle sans précédent.
+Le **Module IA Configuration IA Chérie** représente le summum absolu de la technologie gestion configuration intelligence artificielle. Ce système ultra-sophistiqué fournit orchestration configuration IA centralisée, intelligente et adaptive pour l'écosystème IA IA Chérie complet, avec capacités niveau quantique qui redéfinissent comment applications IA modernes gèrent configuration modèles, pipelines entraînement et optimisation inférence à échelle sans précédent.
 
 ### 🏗️ **Architecture IA Quantique**
 
@@ -117,8 +117,8 @@ Ce **système propriétaire orchestration configuration IA ultra-avancé** conti
 
 ```bash
 # Cloner repository configuration IA
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/config/ai
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/config/ai
 
 # Installer dépendances IA
 pip install -r requirements-ai.txt
@@ -146,7 +146,7 @@ ai_config = AIModelConfig()
 
 # Configurer modèle transformer
 transformer_config = {
-    "model_name": "ainflue-quantum-transformer-7b",
+    "model_name": "iacherie-quantum-transformer-7b",
     "architecture": "transformer",
     "attention_heads": 64,
     "hidden_size": 4096,
@@ -169,7 +169,7 @@ training_config = TrainingConfig(
 
 # Configurer optimisation inférence
 inference_config = InferenceConfig(
-    model_path="/models/ainflue-quantum-transformer-7b",
+    model_path="/models/iacherie-quantum-transformer-7b",
     batch_size=1,
     max_tokens=2048,
     temperature=0.7,
@@ -196,7 +196,7 @@ quantum_config = QuantumAIConfig(
 from config.ai import ModelDeploymentConfig
 
 deployment = ModelDeploymentConfig(
-    model_name="ainflue-quantum-transformer-7b",
+    model_name="iacherie-quantum-transformer-7b",
     deployment_target="kubernetes",
     replicas=5,
     auto_scaling=True,
@@ -315,21 +315,21 @@ class QuantumAIConfig:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-models
+  name: iacherie-ai-models
   namespace: ai-production
 spec:
   replicas: 10
   selector:
     matchLabels:
-      app: ainflue-ai
+      app: iacherie-ai
   template:
     metadata:
       labels:
-        app: ainflue-ai
+        app: iacherie-ai
     spec:
       containers:
       - name: ai-inference
-        image: ainflue/ai-models:quantum-v2.0
+        image: iacherie/ai-models:quantum-v2.0
         resources:
           requests:
             memory: "32Gi"
@@ -462,11 +462,11 @@ AI_ETHICS_CONFIG = {
 
 ### 🤝 **Obtenir Support IA**
 
-- **📚 Documentation IA**: [https://docs.ainflue.com/ai](https://docs.ainflue.com/ai)
-- **🧠 Communauté Recherche IA**: [Canal Discord IA](https://discord.gg/ainflue-ai)
-- **🐛 Rapports Bugs IA**: [GitHub Issues IA](https://github.com/Mlaiel/Ainflue/issues/ai)
-- **💡 Propositions Recherche IA**: [Portail Recherche IA](https://research.ainflue.com)
-- **🤖 Hub Modèles IA**: [Hugging Face Ainflue](https://huggingface.co/ainflue)
+- **📚 Documentation IA**: [https://docs.iacherie.com/ai](https://docs.iacherie.com/ai)
+- **🧠 Communauté Recherche IA**: [Canal Discord IA](https://discord.gg/iacherie-ai)
+- **🐛 Rapports Bugs IA**: [GitHub Issues IA](https://github.com/Mlaiel/IA Chérie/issues/ai)
+- **💡 Propositions Recherche IA**: [Portail Recherche IA](https://research.iacherie.com)
+- **🤖 Hub Modèles IA**: [Hugging Face IA Chérie](https://huggingface.co/iacherie)
 
 ### 👨‍🔬 **Leadership Recherche IA**
 
@@ -495,7 +495,7 @@ Nous sommes engagés développer technologie IA qui est:
 
 ---
 
-**🚀 Prêt révolutionner vos capacités IA? Explorez futur intelligence artificielle avec Module Configuration IA Ainflue!**
+**🚀 Prêt révolutionner vos capacités IA? Explorez futur intelligence artificielle avec Module Configuration IA IA Chérie!**
 
 ---
 

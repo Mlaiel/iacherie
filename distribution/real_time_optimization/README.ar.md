@@ -1,6 +1,6 @@
 # ⚡ محرك التحسين في الوقت الفعلي
 
-**محرك متقدم للتحسين في الوقت الفعلي مدعوم بالذكاء الاصطناعي لمنصة Ainflue للتوزيع**
+**محرك متقدم للتحسين في الوقت الفعلي مدعوم بالذكاء الاصطناعي لمنصة IA Chérie للتوزيع**
 
 ## 📖 نظرة عامة
 
@@ -304,7 +304,7 @@ spec:
     spec:
       containers:
       - name: optimization-engine
-        image: ainflue/real-time-optimization:latest
+        image: iacherie/real-time-optimization:latest
         resources:
           requests:
             memory: "4Gi"

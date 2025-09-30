@@ -3,7 +3,7 @@
 
 Enhanced central coordinator for managing all platform API integrations.
 Orchestrates authentication, data synchronization, cross-platform operations,
-and advanced business logic integration for the Ainflue creator economy.
+and advanced business logic integration for the IA Chérie creator economy.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -143,7 +143,7 @@ class PlatformCoordinator:
     """
     Enhanced central coordinator for all platform integrations.
     
-    Provides advanced orchestration for the Ainflue creator economy including:
+    Provides advanced orchestration for the IA Chérie creator economy including:
     - Multi-platform content synchronization with AI optimization
     - Cross-platform analytics and insights
     - Creator collaboration matching and management

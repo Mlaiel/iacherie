@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
 📊 SECURITY AUDIT REPORTS
-Ainflue Platform - Security Audit and Reporting System
+IA Chérie Platform - Security Audit and Reporting System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

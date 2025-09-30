@@ -5,7 +5,7 @@
 =====================================================
 
 Log aggregation enterprise avec structured logging et intelligent analysis.
-Infrastructure robuste d'agrégation de logs pour monitoring des applications Ainflue.
+Infrastructure robuste d'agrégation de logs pour monitoring des applications IA Chérie.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -78,13 +78,13 @@ class LogPattern:
 class LogAnalysisResult:
     """Résultat d'analyse de logs"""
     analysis_id: str
-    time_range: Tuple[datetime, datetime]
+    time_range: tuple[datetime, datetime]
     total_entries: int
     entries_by_level: Dict[LogLevel, int]
     entries_by_service: Dict[str, int]
     detected_patterns: List[LogPattern]
     anomalies: List[Dict[str, Any]]
-    error_trends: Dict[str, List[Tuple[datetime, int]]]
+    error_trends: Dict[str, List[tuple[datetime, int]]]
     recommendations: List[str]
     correlation_insights: Dict[str, Any]
 
@@ -329,7 +329,7 @@ class IntelligentLogAnalysis:
                 sample_messages = [log.message for log in group_logs[:3]]
                 pattern = LogPattern(
                     pattern_id=fingerprint,
-                    pattern_regex=self._generate_pattern_regex(group_logs[0].message),
+                    pattern_pattern=self._generate_pattern_regex(group_logs[0].message),
                     description=self._generate_pattern_description(group_logs),
                     severity=self._calculate_pattern_severity(group_logs),
                     occurrence_count=len(group_logs),
@@ -449,7 +449,7 @@ class LogRetentionManagement:
     async def apply_retention_policy(
         self,
         logs: List[StructuredLogEntry]
-    ) -> Tuple[List[StructuredLogEntry], List[StructuredLogEntry]]:
+    ) -> tuple[List[StructuredLogEntry], List[StructuredLogEntry]]:
         """Applique les politiques de rétention"""
         
         active_logs = []
@@ -648,7 +648,7 @@ class LogAggregation:
         limit: int = 100,
         service_filter: Optional[str] = None,
         level_filter: Optional[LogLevel] = None,
-        time_range: Optional[Tuple[datetime, datetime]] = None
+        time_range: Optional[tuple[datetime, datetime]] = None
     ) -> List[StructuredLogEntry]:
         """Recherche optimisée dans les logs"""
         
@@ -735,7 +735,7 @@ class LogAggregation:
         self,
         logs: List[StructuredLogEntry],
         time_window: timedelta
-    ) -> Dict[str, List[Tuple[datetime, int]]]:
+    ) -> Dict[str, List[tuple[datetime, int]]]:
         """Calcule les tendances d'erreurs par service"""
         
         trends = {}

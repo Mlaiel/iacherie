@@ -2,7 +2,7 @@
 📸 Photographer Portfolio Analytics - Analytics Portfolio Photographes
 ====================================================================
 
-Module analytics spécialisé pour portfolios photographes Ainflue.
+Module analytics spécialisé pour portfolios photographes IA Chérie.
 Analyse performance visuelle, optimisation engagement et tracking commercial.
 
 Fonctionnalités:
@@ -159,7 +159,7 @@ class VisualAnalysis:
 
 
 class PhotographerPortfolioAnalytics:
-    """Analytics portfolio photographes enterprise Ainflue"""
+    """Analytics portfolio photographes enterprise IA Chérie"""
     
     def __init__(self, config):
         self.config = config

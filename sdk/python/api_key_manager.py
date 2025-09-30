@@ -1,4 +1,4 @@
-"""API Key Manager for Ainflue SDK
+"""API Key Manager for IA Chérie SDK
 
 Multi-expert implementation:
 - Security: Secure API key storage, rotation, and validation
@@ -692,7 +692,7 @@ async def example_api_key_usage():
     """Example API key management usage"""
     # Create configuration
     config = APIKeyConfig(
-        key_prefix="ainflue_",
+        key_prefix="iacherie_",
         encryption_key="your-encryption-password",
         default_rate_limit=5000,
         auto_rotation_enabled=True,

@@ -2,7 +2,7 @@
 Security Configuration Module
 ============================
 
-Enterprise-grade security configuration for the Ainflue Distribution Module.
+Enterprise-grade security configuration for the IA Chérie Distribution Module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2024 Fahed Mlaiel. All rights reserved.
@@ -285,7 +285,7 @@ class SecurityMonitoringConfig:
     auto_incident_creation: bool = True
     incident_escalation_enabled: bool = True
     incident_response_team: List[str] = field(default_factory=lambda: [
-        "security@ainflue.com", "incidents@ainflue.com"
+        "security@iacherie.com", "incidents@iacherie.com"
     ])
 
 @dataclass

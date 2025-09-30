@@ -451,7 +451,7 @@ class OfflineStorageService {
     try {
       // Remove all items with our prefix
       const keys = await AsyncStorage.getAllKeys();
-      const ourKeys = keys.filter(key => key.startsWith('ainflue_'));
+      const ourKeys = keys.filter(key => key.startsWith('iacherie_'));
       await AsyncStorage.multiRemove(ourKeys);
 
       // Clear index

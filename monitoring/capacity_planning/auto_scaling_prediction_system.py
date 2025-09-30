@@ -198,7 +198,7 @@ class AutoScalingPredictionSystem:
         self._configure_scaling_strategies()
         self._load_creator_usage_patterns()
         
-        logger.info("⚡ AutoScalingPredictionSystem initialisé - Ainflue Creator Economy")
+        logger.info("⚡ AutoScalingPredictionSystem initialisé - IA Chérie Creator Economy")
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Configuration enterprise par défaut"""
@@ -1121,7 +1121,7 @@ def create_auto_scaling_system(
 # Point d'entrée principal
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("⚡ Initialisation Auto-Scaling Prediction System - Ainflue Creator Economy")
+    print("⚡ Initialisation Auto-Scaling Prediction System - IA Chérie Creator Economy")
     
     system = create_auto_scaling_system(
         enable_predictive=True,
@@ -1153,7 +1153,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['resource_types_monitored']} types ressources")
     
     print("\n🎯 Auto-Scaling Prediction System - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

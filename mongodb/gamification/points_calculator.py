@@ -1,7 +1,7 @@
 """MongoDB Points Calculator
 =========================
 
-Advanced points and scoring system for gamification in the Ainflue platform.
+Advanced points and scoring system for gamification in the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

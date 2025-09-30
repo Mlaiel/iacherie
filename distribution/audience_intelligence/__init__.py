@@ -1,6 +1,6 @@
 """Audience Intelligence Engine
 
-Advanced AI-powered audience analysis and intelligence system for the Ainflue platform.
+Advanced AI-powered audience analysis and intelligence system for the IA Chérie platform.
 Provides deep insights into audience behavior, preferences, and engagement patterns
 using machine learning and real-time analytics.
 

@@ -132,7 +132,7 @@ class PayPalEnterpriseClient:
     """
     Enterprise PayPal API client with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chérie platform business logic:
     - Creator monetization and payouts
     - Marketplace payment processing
     - Subscription billing for creators
@@ -301,7 +301,7 @@ class PayPalEnterpriseClient:
     def _generate_request_id(self) -> str:
         """Generate unique request ID for idempotency."""
         timestamp = str(int(datetime.now().timestamp() * 1000))
-        return f"ainflue-{timestamp}"
+        return f"iacherie-{timestamp}"
 
     async def create_payment(self, request: PaymentRequest) -> PaymentResult:
         """
@@ -532,7 +532,7 @@ class PayPalEnterpriseClient:
             payout_data = {
                 "sender_batch_header": {
                     "sender_batch_id": self._generate_request_id(),
-                    "email_subject": "You have a payment from Ainflue",
+                    "email_subject": "You have a payment from IA Chérie",
                     "email_message": f"Congratulations! You've received a payment for your creative work."
                 },
                 "items": [{
@@ -916,8 +916,8 @@ async def example_creator_monetization():
             amount=29.99,
             currency="USD",
             description="Premium Music Course - Beat Production Masterclass",
-            return_url="https://ainflue.com/payment/success",
-            cancel_url="https://ainflue.com/payment/cancel",
+            return_url="https://iacherie.com/payment/success",
+            cancel_url="https://iacherie.com/payment/cancel",
             creator_id="musician_123",
             creator_type="musician",
             content_id="course_beatprod_001",

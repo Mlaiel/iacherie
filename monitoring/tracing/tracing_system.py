@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Distributed Tracing Enterprise System
+IA Chérie Platform - Distributed Tracing Enterprise System
 ========================================================
 
 Advanced distributed tracing system for comprehensive monitoring of
 audio processing pipelines, business transactions, microservices dependencies,
-and performance optimization across the Ainflue platform.
+and performance optimization across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -113,7 +113,7 @@ class BusinessTransaction:
 
 class AinflueDistributedTracer:
     """
-    Enterprise distributed tracing system for Ainflue platform.
+    Enterprise distributed tracing system for IA Chérie platform.
     
     Features:
     - Audio processing pipeline tracing

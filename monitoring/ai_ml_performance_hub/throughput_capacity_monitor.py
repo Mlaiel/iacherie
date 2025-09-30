@@ -2,7 +2,7 @@
 📈 Throughput Capacity Monitor - Enterprise AI/ML Performance Hub
 ===============================================================
 
-Monitoring capacité débit système ultra-avancé pour Creator Economy Ainflue.
+Monitoring capacité débit système ultra-avancé pour Creator Economy IA Chérie.
 Requests per second tracking, monitoring usage concurrent créateurs, analyse capacité peak load,
 optimisation triggers auto-scaling, métriques throughput contenu multi-modal.
 

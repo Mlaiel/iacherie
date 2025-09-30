@@ -1,10 +1,10 @@
 # ⚙️ Configuration Management Engine - Enterprise Configuration Hub
 
-**Centralized Configuration System for Ainflue Distribution Platform**
+**Centralized Configuration System for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
-The Configuration Management Engine is a comprehensive centralized configuration system that manages all settings, parameters, and configurations across the entire Ainflue distribution ecosystem. This module ensures consistent, secure, and scalable configuration management for 65+ platforms, 53 AI agents, and enterprise-grade operations.
+The Configuration Management Engine is a comprehensive centralized configuration system that manages all settings, parameters, and configurations across the entire IA Chérie distribution ecosystem. This module ensures consistent, secure, and scalable configuration management for 65+ platforms, 53 AI agents, and enterprise-grade operations.
 
 ## 🚀 Key Features
 
@@ -228,9 +228,9 @@ Ready-to-use configurations for:
 - Viral optimization agents
 - Performance monitoring agents
 
-## 🔄 Integration with Ainflue Workflow
+## 🔄 Integration with IA Chérie Workflow
 
-This module provides **configuration backbone** for the complete Ainflue distribution workflow:
+This module provides **configuration backbone** for the complete IA Chérie distribution workflow:
 
 1. **Content Upload** → Upload processing configurations
 2. **AI Processing** → AI agent parameter configurations
@@ -304,6 +304,6 @@ This module provides **configuration backbone** for the complete Ainflue distrib
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE CONFIGURATION MANAGEMENT ENGINE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE CONFIGURATION MANAGEMENT ENGINE**  
 **🔒 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED**  
 **⚠️ ENTERPRISE-GRADE SOLUTION - AUTHORIZED PERSONNEL ONLY**

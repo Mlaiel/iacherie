@@ -2,7 +2,7 @@
 Bulk Scheduler
 =============
 
-Advanced bulk content scheduling engine for Ainflue Distribution Platform.
+Advanced bulk content scheduling engine for IA Chérie Distribution Platform.
 Handles mass content scheduling with intelligent distribution and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,6 +1,6 @@
 """Creator Multi-Format Core - Enterprise Business Logic
 
-Central creator multi-format business logic core for the Ainflue Platform.
+Central creator multi-format business logic core for the IA Chérie Platform.
 Handles multi-format content processing and creator type-specific business logic.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

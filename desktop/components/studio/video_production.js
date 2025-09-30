@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Video Production Suite
+ * IA Chérie Desktop - Video Production Suite
  * 
  * Professional video editing and production tools for content creators
  * Includes timeline editing, effects, transitions, and export capabilities

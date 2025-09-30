@@ -1,10 +1,10 @@
 """
-Ainflue Core Infrastructure - Service Discovery Core
+IA Chérie Core Infrastructure - Service Discovery Core
 ====================================================
 
 Enterprise-grade service discovery and registry system with health checking,
 load balancing integration, and multi-environment support. Provides service
-mesh capabilities for distributed Ainflue architecture.
+mesh capabilities for distributed IA Chérie architecture.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

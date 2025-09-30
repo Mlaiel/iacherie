@@ -224,4 +224,4 @@ Diese Software ist Eigentum von Fahed Mlaiel. Kommerzielle Nutzung ist VERBOTEN 
 
 ---
 
-*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre Ainflue Enterprise-Architektur*
+*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre IA Chérie Enterprise-Architektur*

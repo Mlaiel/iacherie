@@ -1,6 +1,6 @@
 # 🤝 Hub de Collaboration de Créateurs
 
-**Système Avancé de Gestion de Collaboration et de Partenariat de Créateurs pour la Plateforme de Distribution Ainflue**
+**Système Avancé de Gestion de Collaboration et de Partenariat de Créateurs pour la Plateforme de Distribution IA Chérie**
 
 ## 📖 Aperçu
 
@@ -256,10 +256,10 @@ cross_platform_collab = await orchestrator.create_cross_platform_collaboration(
 
 ### 🆘 Support d'Urgence
 - **Hotline Collaboration**: +33 (0) 1 XX XX XX XX
-- **Support Discord**: discord.gg/ainflue-collaboration
-- **Documentation**: docs.ainflue.com/creator-collaboration
+- **Support Discord**: discord.gg/iacherie-collaboration
+- **Documentation**: docs.iacherie.com/creator-collaboration
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Plateforme Ainflue - Hub de Collaboration de Créateurs**
+**Plateforme IA Chérie - Hub de Collaboration de Créateurs**

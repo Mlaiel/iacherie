@@ -346,19 +346,19 @@ major_jurisdictions = [
 # Docker Compose Example
 services:
   legal-core:
-    image: ainflue/legal-core:latest
+    image: iacherie/legal-core:latest
     replicas: 3
     environment:
       - ENVIRONMENT=production
       - SECURITY_LEVEL=enterprise
     
   legal-analytics:
-    image: ainflue/legal-analytics:latest
+    image: iacherie/legal-analytics:latest
     depends_on:
       - legal-core
       
   legal-monitoring:
-    image: ainflue/legal-monitoring:latest
+    image: iacherie/legal-monitoring:latest
     ports:
       - "3000:3000"
 ```

@@ -6,7 +6,7 @@ AI-powered content optimization with 8 specialized quality agents.
 Professional enhancement for video, audio, image, and text content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -207,7 +207,7 @@ class QualityAgent:
         await asyncio.sleep(0.2)  # Simulate processing time
         
         # Generate enhanced content URL
-        enhanced_url = f"https://enhanced-content.ainflue.com/{request.content_id}_enhanced_{self.agent_name}.{self._get_file_extension(request.content_type)}"
+        enhanced_url = f"https://enhanced-content.iacherie.com/{request.content_id}_enhanced_{self.agent_name}.{self._get_file_extension(request.content_type)}"
         
         return enhanced_url
     

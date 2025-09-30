@@ -4,7 +4,7 @@
 
 Complete enterprise observability stack with distributed tracing, metrics
 collection, log aggregation, alerting, and intelligent monitoring for 
-Ainfluencer platform infrastructure.
+IA Chérie platform infrastructure.
 
 Final optimization to reach 100% completion for Backend Senior role.
 

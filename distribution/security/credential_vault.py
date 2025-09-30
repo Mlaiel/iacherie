@@ -1,5 +1,5 @@
 """
-Credential Vault for Ainflue Distribution Platform
+Credential Vault for IA Chérie Distribution Platform
 
 This module provides secure credential storage and management with encryption,
 rotation, and access control for platform API keys and secrets.

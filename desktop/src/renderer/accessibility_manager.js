@@ -81,7 +81,7 @@ class AccessibilityManager {
    */
   setupFocusVisibility() {
     const style = document.createElement('style');
-    style.id = 'ainflue-focus-styles';
+    style.id = 'iacherie-focus-styles';
     
     let focusCSS = '';
     
@@ -392,7 +392,7 @@ class AccessibilityManager {
    */
   injectAccessibilityCSS() {
     const style = document.createElement('style');
-    style.id = 'ainflue-accessibility-utilities';
+    style.id = 'iacherie-accessibility-utilities';
     
     style.textContent = `
       /* Screen reader only content */
@@ -909,12 +909,12 @@ class AccessibilityManager {
     }
 
     // Remove style elements
-    const styleElement = document.getElementById('ainflue-accessibility-utilities');
+    const styleElement = document.getElementById('iacherie-accessibility-utilities');
     if (styleElement) {
       styleElement.remove();
     }
 
-    const focusStyleElement = document.getElementById('ainflue-focus-styles');
+    const focusStyleElement = document.getElementById('iacherie-focus-styles');
     if (focusStyleElement) {
       focusStyleElement.remove();
     }

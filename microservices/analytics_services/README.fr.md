@@ -1,10 +1,10 @@
 # 📊 ANALYTICS SERVICES - SERVICES D'ANALYSE ENTERPRISE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE MICROSERVICES ENTERPRISE**
+**© FAHED MLAIEL 2024-2025 - IACHERIE MICROSERVICES ENTERPRISE**
 
 ## 🎯 Vue d'Ensemble
 
-Module enterprise d'analyse et business intelligence temps réel pour la plateforme Ainflue.
+Module enterprise d'analyse et business intelligence temps réel pour la plateforme IA Chérie.
 Architecture microservices distribuée avec 18+ services spécialisés d'analytics.
 
 ## 🏗️ Architecture des Services
@@ -78,7 +78,7 @@ bi = BusinessIntelligenceService()
 insights = await bi.generate_insights()
 ```
 
-## 🎯 Workflow Ainflue
+## 🎯 Workflow IA Chérie
 
 Integration complète du workflow 7 phases avec analytics:
 1. **Upload & Validation** → Analytics qualité contenu

@@ -1,4 +1,4 @@
-# Ainflue Connectors - Consolidated Platform Architecture
+# IA Chérie Connectors - Consolidated Platform Architecture
 
 **Version:** 2.0 - Complete Consolidated Architecture  
 **Author:** Fahed Mlaiel <mlaiel@live.de>  
@@ -8,7 +8,7 @@
 
 ## 🎯 **Overview**
 
-The Ainflue Connectors module represents a **revolutionary consolidated architecture** that supports **65+ global platforms** across 3 major ecosystems, all implemented in just **8 optimized files**. This architectural innovation demonstrates how massive platform coverage can be achieved while maintaining code efficiency and maintainability.
+The IA Chérie Connectors module represents a **revolutionary consolidated architecture** that supports **65+ global platforms** across 3 major ecosystems, all implemented in just **8 optimized files**. This architectural innovation demonstrates how massive platform coverage can be achieved while maintaining code efficiency and maintainability.
 
 ## 🏗️ **Consolidated Architecture**
 
@@ -143,7 +143,7 @@ request = DistributionRequest(
     content={
         "text": "Hello world!",
         "media": ["image.jpg"],
-        "hashtags": ["#ainflue", "#socialmedia"]
+        "hashtags": ["#iacherie", "#socialmedia"]
     }
 )
 

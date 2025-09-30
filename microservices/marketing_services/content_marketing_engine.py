@@ -1,12 +1,12 @@
 """
-Content Marketing Engine - Ainflue Enterprise
+Content Marketing Engine - IA Chérie Enterprise
 ============================================
 Moteur marketing contenu avec génération IA.
 AI content generation + performance optimization + distribution automation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services - Content Marketing
+Project: IA Chérie Marketing Services - Content Marketing
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

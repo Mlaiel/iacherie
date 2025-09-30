@@ -1,5 +1,5 @@
 """IA Influencer Agent - Kafka Enterprise Producer
-High-Performance Enterprise Kafka Producer for Ainflue Platform
+High-Performance Enterprise Kafka Producer for IA Chérie Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -33,40 +33,40 @@ class CompressionType(Enum):
 
 
 class AinflueBusinesEventTypes:
-    """Business event types for Ainflue platform"""
+    """Business event types for IA Chérie platform"""
     
     # Content Lifecycle Events
-    CONTENT_UPLOAD_STARTED = "ainflue.content.upload.started"
-    CONTENT_UPLOAD_COMPLETED = "ainflue.content.upload.completed"
-    CONTENT_AI_ANALYSIS_REQUESTED = "ainflue.content.ai.analysis.requested"
-    CONTENT_AI_ANALYSIS_COMPLETED = "ainflue.content.ai.analysis.completed"
-    CONTENT_PROTECTION_APPLIED = "ainflue.content.protection.applied"
+    CONTENT_UPLOAD_STARTED = "iacherie.content.upload.started"
+    CONTENT_UPLOAD_COMPLETED = "iacherie.content.upload.completed"
+    CONTENT_AI_ANALYSIS_REQUESTED = "iacherie.content.ai.analysis.requested"
+    CONTENT_AI_ANALYSIS_COMPLETED = "iacherie.content.ai.analysis.completed"
+    CONTENT_PROTECTION_APPLIED = "iacherie.content.protection.applied"
     
     # SEO Optimization Events
-    SEO_OPTIMIZATION_STARTED = "ainflue.seo.optimization.started"
-    SEO_KEYWORDS_GENERATED = "ainflue.seo.keywords.generated"
-    SEO_METADATA_OPTIMIZED = "ainflue.seo.metadata.optimized"
+    SEO_OPTIMIZATION_STARTED = "iacherie.seo.optimization.started"
+    SEO_KEYWORDS_GENERATED = "iacherie.seo.keywords.generated"
+    SEO_METADATA_OPTIMIZED = "iacherie.seo.metadata.optimized"
     
     # Collaboration Events
-    COLLABORATION_MATCH_REQUESTED = "ainflue.collaboration.match.requested"
-    COLLABORATION_MATCH_FOUND = "ainflue.collaboration.match.found"
-    COLLABORATION_REQUEST_SENT = "ainflue.collaboration.request.sent"
-    COLLABORATION_ACCEPTED = "ainflue.collaboration.accepted"
+    COLLABORATION_MATCH_REQUESTED = "iacherie.collaboration.match.requested"
+    COLLABORATION_MATCH_FOUND = "iacherie.collaboration.match.found"
+    COLLABORATION_REQUEST_SENT = "iacherie.collaboration.request.sent"
+    COLLABORATION_ACCEPTED = "iacherie.collaboration.accepted"
     
     # Monetization Events
-    REVENUE_GENERATED = "ainflue.revenue.generated"
-    PAYMENT_PROCESSED = "ainflue.payment.processed"
-    COMMISSION_CALCULATED = "ainflue.commission.calculated"
+    REVENUE_GENERATED = "iacherie.revenue.generated"
+    PAYMENT_PROCESSED = "iacherie.payment.processed"
+    COMMISSION_CALCULATED = "iacherie.commission.calculated"
     
     # Distribution Events
-    DISTRIBUTION_STARTED = "ainflue.distribution.started"
-    PLATFORM_PUBLISHED = "ainflue.platform.published"
-    ENGAGEMENT_TRACKED = "ainflue.engagement.tracked"
+    DISTRIBUTION_STARTED = "iacherie.distribution.started"
+    PLATFORM_PUBLISHED = "iacherie.platform.published"
+    ENGAGEMENT_TRACKED = "iacherie.engagement.tracked"
 
 
 @dataclass
 class KafkaProducerConfig:
-    """Kafka producer configuration optimized for Ainflue"""
+    """Kafka producer configuration optimized for IA Chérie"""
     
     # Bootstrap servers
     bootstrap_servers: List[str] = field(default_factory=lambda: ["localhost:9092"])
@@ -112,13 +112,13 @@ class ProducerMetrics:
 
 
 class AinflueBusinesPartitioner:
-    """Custom partitioner for Ainflue business logic"""
+    """Custom partitioner for IA Chérie business logic"""
     
     def __init__(self, partition_count: int):
         self.partition_count = partition_count
     
     def partition(self, topic: str, key: Optional[str], value: Dict[str, Any]) -> int:
-        """Partition based on Ainflue business logic"""
+        """Partition based on IA Chérie business logic"""
         try:
             # Extract business identifiers
             creator_id = value.get("creator_id")
@@ -224,7 +224,7 @@ class KafkaEnterpriseProducer:
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "payload": payload,
                 "headers": headers or {},
-                "source": "ainflue-platform"
+                "source": "iacherie-platform"
             }
             
             # Determine partition if not specified
@@ -274,7 +274,7 @@ class KafkaEnterpriseProducer:
                                  creator_id: Optional[str] = None,
                                  content_id: Optional[str] = None,
                                  payload: Optional[Dict[str, Any]] = None) -> str:
-        """Send Ainflue business event with proper routing"""
+        """Send IA Chérie business event with proper routing"""
         try:
             # Determine topic based on event type
             topic = self._get_business_topic(business_event_type)
@@ -296,7 +296,7 @@ class KafkaEnterpriseProducer:
                 event_type=business_event_type,
                 payload=enriched_payload,
                 key=key,
-                headers={"business_domain": "ainflue", "event_version": "1.0"}
+                headers={"business_domain": "iacherie", "event_version": "1.0"}
             )
             
         except Exception as e:
@@ -341,17 +341,17 @@ class KafkaEnterpriseProducer:
     def _get_business_topic(self, business_event_type: str) -> str:
         """Determine Kafka topic based on business event type"""
         if "content" in business_event_type.lower():
-            return "ainflue-content-events"
+            return "iacherie-content-events"
         elif "collaboration" in business_event_type.lower():
-            return "ainflue-collaboration-events"
+            return "iacherie-collaboration-events"
         elif "revenue" in business_event_type.lower() or "payment" in business_event_type.lower():
-            return "ainflue-revenue-events"
+            return "iacherie-revenue-events"
         elif "seo" in business_event_type.lower():
-            return "ainflue-seo-events"
+            return "iacherie-seo-events"
         elif "distribution" in business_event_type.lower():
-            return "ainflue-distribution-events"
+            return "iacherie-distribution-events"
         else:
-            return "ainflue-general-events"
+            return "iacherie-general-events"
     
     async def _get_partition(self, topic: str, key: Optional[str], message: Dict[str, Any]) -> int:
         """Get partition for message using custom partitioner"""

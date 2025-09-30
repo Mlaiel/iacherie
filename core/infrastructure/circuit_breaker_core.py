@@ -1,9 +1,9 @@
-"""Ainflue Core Infrastructure - Circuit Breaker Core
+"""IA Chérie Core Infrastructure - Circuit Breaker Core
 ==================================================
 
 Enterprise-grade circuit breaker implementation providing fault tolerance,
 automatic failure detection, service protection, and graceful degradation
-for distributed systems in the Ainflue platform.
+for distributed systems in the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -1,5 +1,5 @@
 """IA Influencer Agent - Real-time Stream Processor
-Complex Event Processing and Real-time Stream Processing for Ainflue Platform
+Complex Event Processing and Real-time Stream Processing for IA Chérie Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -107,7 +107,7 @@ class StreamProcessor(ABC):
 
 
 class ContentUploadStreamProcessor(StreamProcessor):
-    """Processor for Ainflue content upload events"""
+    """Processor for IA Chérie content upload events"""
     
     def __init__(self):
         self.state = {}
@@ -145,7 +145,7 @@ class ContentUploadStreamProcessor(StreamProcessor):
             ai_analysis_event = StreamEvent(
                 event_id=str(uuid4()),
                 stream_name="ai-analysis-requests",
-                event_type="ainflue.content.ai.analysis.requested",
+                event_type="iacherie.content.ai.analysis.requested",
                 payload={
                     "content_id": payload.get("content_id"),
                     "creator_id": creator_id,
@@ -163,7 +163,7 @@ class ContentUploadStreamProcessor(StreamProcessor):
                 trending_event = StreamEvent(
                     event_id=str(uuid4()),
                     stream_name="trending-creators",
-                    event_type="ainflue.creator.trending.detected",
+                    event_type="iacherie.creator.trending.detected",
                     payload={
                         "creator_id": creator_id,
                         "upload_count_24h": self.creator_stats[creator_id]["upload_count"],
@@ -250,7 +250,7 @@ class CollaborationMatchingProcessor(StreamProcessor):
                 match_event = StreamEvent(
                     event_id=str(uuid4()),
                     stream_name="collaboration-matches",
-                    event_type="ainflue.collaboration.match.found",
+                    event_type="iacherie.collaboration.match.found",
                     payload={
                         "requester_id": requester_id,
                         "matched_creator_id": match["creator_id"],
@@ -364,7 +364,7 @@ class RevenueAnalyticsProcessor(StreamProcessor):
             analytics_event = StreamEvent(
                 event_id=str(uuid4()),
                 stream_name="revenue-analytics",
-                event_type="ainflue.revenue.analytics.updated",
+                event_type="iacherie.revenue.analytics.updated",
                 payload={
                     "creator_id": creator_id,
                     "revenue_amount": revenue_amount,
@@ -384,7 +384,7 @@ class RevenueAnalyticsProcessor(StreamProcessor):
                 milestone_event = StreamEvent(
                     event_id=str(uuid4()),
                     stream_name="revenue-milestones",
-                    event_type="ainflue.revenue.milestone.reached",
+                    event_type="iacherie.revenue.milestone.reached",
                     payload={
                         "creator_id": creator_id,
                         "milestone_amount": self._get_milestone_amount(creator_total),
@@ -566,7 +566,7 @@ class RealtimeStreamProcessor:
         try:
             logger.info("Starting Real-time Stream Processor")
             
-            # Initialize default processors for Ainflue
+            # Initialize default processors for IA Chérie
             await self._setup_default_processors()
             
             # Initialize processor states
@@ -606,7 +606,7 @@ class RealtimeStreamProcessor:
             raise
     
     async def _setup_default_processors(self):
-        """Setup default processors for Ainflue platform"""
+        """Setup default processors for IA Chérie platform"""
         try:
             # Content upload processor
             self.processors["content_upload"] = ContentUploadStreamProcessor()
@@ -624,7 +624,7 @@ class RealtimeStreamProcessor:
                 "revenue-events": ["revenue_analytics"]
             }
             
-            logger.info("Setup default processors for Ainflue platform")
+            logger.info("Setup default processors for IA Chérie platform")
             
         except Exception as e:
             logger.error(f"Error setting up default processors: {e}")

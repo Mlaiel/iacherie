@@ -1,10 +1,10 @@
 # ⚙️ Moteur de Gestion de Configuration - Hub de Configuration Entreprise
 
-**Système de Configuration Centralisé pour la Plateforme de Distribution Ainflue**
+**Système de Configuration Centralisé pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Vue d'ensemble
 
-Le Moteur de Gestion de Configuration est un système centralisé complet qui gère tous les paramètres, configurations et réglages dans l'ensemble de l'écosystème de distribution Ainflue. Ce module assure une gestion de configuration cohérente, sécurisée et évolutive pour 65+ plateformes, 53 agents IA et des opérations de niveau entreprise.
+Le Moteur de Gestion de Configuration est un système centralisé complet qui gère tous les paramètres, configurations et réglages dans l'ensemble de l'écosystème de distribution IA Chérie. Ce module assure une gestion de configuration cohérente, sécurisée et évolutive pour 65+ plateformes, 53 agents IA et des opérations de niveau entreprise.
 
 ## 🚀 Fonctionnalités Clés
 
@@ -45,6 +45,6 @@ Le Moteur de Gestion de Configuration est un système centralisé complet qui g�
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - MOTEUR DE GESTION DE CONFIGURATION AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - MOTEUR DE GESTION DE CONFIGURATION IACHERIE**  
 **🔒 LOGICIEL PROPRIÉTAIRE - TOUS DROITS RÉSERVÉS**  
 **⚠️ SOLUTION NIVEAU ENTREPRISE - PERSONNEL AUTORISÉ UNIQUEMENT**

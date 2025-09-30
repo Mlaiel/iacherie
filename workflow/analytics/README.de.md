@@ -1,9 +1,9 @@
 # Analytics Workflows Module
 
-Advanced analytics workflows for the Ainflue Creator Platform.
+Advanced analytics workflows for the IA Chérie Creator Platform.
 
 **Author:** Fahed Mlaiel <mlaiel@live.de>
-**Copyright:** © 2025 Ainflue Platform. All rights reserved.
+**Copyright:** © 2025 IA Chérie Platform. All rights reserved.
 
 ## Overview
 

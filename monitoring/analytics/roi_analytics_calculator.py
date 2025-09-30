@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - ROI Analytics Calculator
-Advanced ROI calculation and analysis for Ainflue creator ecosystem
+Advanced ROI calculation and analysis for IA Chérie creator ecosystem
 Business Analytics + ML Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -116,7 +116,7 @@ class ROIForecast:
 
 class ROIAnalyticsCalculator:
     """
-    💰 Advanced ROI Analytics Calculator for Ainflue Platform
+    💰 Advanced ROI Analytics Calculator for IA Chérie Platform
     
     Comprehensive ROI analysis with:
     - Multi-category ROI tracking and calculation
@@ -1376,7 +1376,7 @@ async def main():
     """Test the ROI analytics calculator"""
     try:
         # Initialize calculator
-        calculator = ROIAnalyticsCalculator("postgresql://user:pass@localhost/ainflue")
+        calculator = ROIAnalyticsCalculator("postgresql://user:pass@localhost/iacherie")
         
         # Record some investments
         await calculator.record_investment(

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Secure Key Transport - Enterprise Cryptographic Key Transport Security System
-Production-grade key transport for Ainflue Creator Economy Platform
+Production-grade key transport for IA Chérie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -168,7 +168,7 @@ class SecureKeyTransport:
     """
     🔐 Secure Key Transport - Enterprise Cryptographic Key Transport System
     
-    Provides comprehensive secure key transport for Ainflue Creator Economy:
+    Provides comprehensive secure key transport for IA Chérie Creator Economy:
     - Multiple secure transport protocols (TLS 1.3, mTLS, HTTPS, etc.)
     - End-to-end encryption with perfect forward secrecy
     - Certificate-based authentication and authorization
@@ -222,7 +222,7 @@ class SecureKeyTransport:
         self.endpoints["production_hsm"] = TransportEndpoint(
             endpoint_id="production_hsm",
             name="Production HSM Cluster",
-            url="https://hsm.ainflue.com:8443/api/v1/keys",
+            url="https://hsm.iacherie.com:8443/api/v1/keys",
             protocol=TransportProtocol.MTLS,
             certificate_path="/etc/ssl/certs/hsm-client.pem",
             private_key_path="/etc/ssl/private/hsm-client.key",
@@ -237,7 +237,7 @@ class SecureKeyTransport:
         self.endpoints["backup_storage"] = TransportEndpoint(
             endpoint_id="backup_storage",
             name="Encrypted Backup Storage",
-            url="https://backup.ainflue.com:9443/keys",
+            url="https://backup.iacherie.com:9443/keys",
             protocol=TransportProtocol.TLS_1_3,
             certificate_path="/etc/ssl/certs/backup-client.pem",
             timeout_seconds=120,
@@ -249,7 +249,7 @@ class SecureKeyTransport:
         self.endpoints["creator_services"] = TransportEndpoint(
             endpoint_id="creator_services",
             name="Creator Services API",
-            url="https://api.ainflue.com:443/v1/creator/keys",
+            url="https://api.iacherie.com:443/v1/creator/keys",
             protocol=TransportProtocol.HTTPS_POST,
             timeout_seconds=30,
             geographic_location="Global",
@@ -260,7 +260,7 @@ class SecureKeyTransport:
         self.endpoints["escrow_service"] = TransportEndpoint(
             endpoint_id="escrow_service",
             name="Emergency Key Escrow",
-            url="https://escrow.ainflue.com:8443/emergency",
+            url="https://escrow.iacherie.com:8443/emergency",
             protocol=TransportProtocol.MTLS,
             certificate_path="/etc/ssl/certs/escrow-client.pem",
             private_key_path="/etc/ssl/private/escrow-client.key",
@@ -295,7 +295,7 @@ class SecureKeyTransport:
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=aiohttp.ClientTimeout(total=self.config.get("default_timeout_seconds", 30)),
-                headers={"User-Agent": "Ainflue-SecureKeyTransport/1.0"}
+                headers={"User-Agent": "IA Chérie-SecureKeyTransport/1.0"}
             )
             
             self.logger.info("Secure transport session initialized")

@@ -15,7 +15,7 @@ VIRAL CONTENT ALERTS ENGINE - ANALYTICS NOTIFICATIONS
 - Prédiction potentiel viral avec machine learning
 - Optimisation distribution pour maximiser viralité
 
-🚀 FONCTIONNALITÉS AINFLUE:
+🚀 FONCTIONNALITÉS IACHERIE:
 - Détection précoce signaux viraux (engagement, partage, vitesse)
 - Alertes multi-plateformes synchronisées
 - Recommandations boost automatiques

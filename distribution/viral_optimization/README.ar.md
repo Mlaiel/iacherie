@@ -187,7 +187,7 @@ spec:
     spec:
       containers:
       - name: viral-optimization
-        image: ainflue/viral-optimization:latest
+        image: iacherie/viral-optimization:latest
         resources:
           requests:
             memory: "2Gi"

@@ -12,7 +12,7 @@ Les utilisateurs sont responsables de la conformité aux lois et réglementation
 RGPD, DMCA et protections de droits d'auteur internationales s'appliquent.
 
 ## Résumé Exécutif
-Infrastructure serveur web Nginx de niveau entreprise fournissant équilibrage de charge haute performance, terminaison SSL, mise en cache intelligente et protection DDoS pour la plateforme créateur IA Ainflue.
+Infrastructure serveur web Nginx de niveau entreprise fournissant équilibrage de charge haute performance, terminaison SSL, mise en cache intelligente et protection DDoS pour la plateforme créateur IA IA Chérie.
 
 ## Vue d'Architecture
 Composant backend niveau 2 gérant tout le routage de trafic HTTP/HTTPS, la gestion d'upstream multi-services, l'optimisation de livraison de contenu et l'application de sécurité à travers tout l'écosystème créateur.
@@ -154,8 +154,8 @@ Composant backend niveau 2 gérant tout le routage de trafic HTTP/HTTPS, la gest
 ### Déploiement Rapide
 ```bash
 # Cloner le référentiel
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/nginx
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/nginx
 
 # Déployer avec Docker
 docker-compose up -d nginx
@@ -182,7 +182,7 @@ systemctl restart nginx
 ### Configuration Certificat SSL
 ```bash
 # Générer certificat Let's Encrypt
-certbot --nginx -d ainflue.com -d www.ainflue.com
+certbot --nginx -d iacherie.com -d www.iacherie.com
 
 # Configurer renouvellement automatique
 echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
@@ -211,9 +211,9 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
 - **Guide Dépannage** : Problèmes courants et solutions
 
 ### Informations de Contact
-- **Support Technique** : support@ainflue.com
-- **Problèmes de Sécurité** : security@ainflue.com
-- **Demandes Business** : business@ainflue.com
+- **Support Technique** : support@iacherie.com
+- **Problèmes de Sécurité** : security@iacherie.com
+- **Demandes Business** : business@iacherie.com
 - **Support d'Urgence** : Support entreprise 24/7 disponible
 
 ## 📄 Licence

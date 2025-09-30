@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Kubernetes deployment manifests for Ainflue platform
+# Enterprise-grade Kubernetes deployment manifests for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,10 +12,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-main-api
-  namespace: ainflue-platform
+  name: iacherie-main-api
+  namespace: iacherie-platform
   labels:
-    app: ainflue-api
+    app: iacherie-api
     component: main-api
     version: v1.0.0
     environment: production
@@ -28,23 +28,23 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
       component: main-api
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
         component: main-api
         version: v1.0.0
     spec:
-      serviceAccountName: ainflue-api-service-account
+      serviceAccountName: iacherie-api-service-account
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-api
-        image: ainflue/platform-api:v1.0.0
+      - name: iacherie-api
+        image: iacherie/platform-api:v1.0.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -57,17 +57,17 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: jwt-secret
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
@@ -82,12 +82,12 @@ spec:
         - name: ENVIRONMENT
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: environment
         - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: log-level
         resources:
           requests:
@@ -124,14 +124,14 @@ spec:
       volumes:
       - name: app-config
         configMap:
-          name: ainflue-config
+          name: iacherie-config
       - name: ssl-certs
         secret:
-          secretName: ainflue-ssl-certs
+          secretName: iacherie-ssl-certs
       - name: temp-storage
         emptyDir: {}
       imagePullSecrets:
-      - name: ainflue-registry-secret
+      - name: iacherie-registry-secret
       nodeSelector:
         kubernetes.io/arch: amd64
         node-type: standard
@@ -150,17 +150,17 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - ainflue-api
+                  - iacherie-api
               topologyKey: kubernetes.io/hostname
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-worker
-  namespace: ainflue-platform
+  name: iacherie-worker
+  namespace: iacherie-platform
   labels:
-    app: ainflue-worker
+    app: iacherie-worker
     component: background-worker
     version: v1.0.0
     environment: production
@@ -168,39 +168,39 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: ainflue-worker
+      app: iacherie-worker
       component: background-worker
   template:
     metadata:
       labels:
-        app: ainflue-worker
+        app: iacherie-worker
         component: background-worker
         version: v1.0.0
     spec:
-      serviceAccountName: ainflue-worker-service-account
+      serviceAccountName: iacherie-worker-service-account
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-worker
-        image: ainflue/platform-worker:v1.0.0
+      - name: iacherie-worker
+        image: iacherie/platform-worker:v1.0.0
         imagePullPolicy: Always
         env:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: CELERY_BROKER_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: celery-broker-url
         - name: WORKER_TYPE
           value: "general"
@@ -220,8 +220,8 @@ spec:
       volumes:
       - name: worker-config
         configMap:
-          name: ainflue-worker-config
+          name: iacherie-worker-config
       - name: temp-storage
         emptyDir: {}
       imagePullSecrets:
-      - name: ainflue-registry-secret
+      - name: iacherie-registry-secret

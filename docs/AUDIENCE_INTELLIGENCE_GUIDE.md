@@ -1,4 +1,4 @@
-# 🧠 AUDIENCE INTELLIGENCE GUIDE - AINFLUE PLATFORM
+# 🧠 AUDIENCE INTELLIGENCE GUIDE - IACHERIE PLATFORM
 **Advanced AI-Powered Audience Analysis and Targeting System**
 
 **Version:** 3.0 (Enterprise Production-Ready)  

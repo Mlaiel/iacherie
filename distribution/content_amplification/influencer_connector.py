@@ -1,5 +1,5 @@
 """
-Influencer Connector for Ainflue Distribution Platform
+Influencer Connector for IA Chérie Distribution Platform
 
 Advanced influencer network integration system that identifies, connects,
 and manages collaborations with influencers for maximum content amplification

@@ -1,0 +1,320 @@
+{
+  "id": "mongodb-performance-dashboard",
+  "title": "MongoDB Performance Dashboard - Ainflue Platform",
+  "tags": ["mongodb", "ainflue", "database", "performance"],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "graphTooltip": 1,
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"],
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+  },
+  "refresh": "30s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "MongoDB Connection Status",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "mongodb_up",
+          "refId": "A",
+          "legendFormat": "MongoDB Up"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {"color": "red", "value": 0},
+              {"color": "green", "value": 1}
+            ]
+          },
+          "mappings": [
+            {"type": "value", "value": "0", "text": "DOWN"},
+            {"type": "value", "value": "1", "text": "UP"}
+          ]
+        }
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+    },
+    {
+      "id": 2,
+      "title": "Operations Per Second",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(mongodb_opcounters_total[5m])",
+          "refId": "A",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "ops/sec",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 6, "y": 0}
+    },
+    {
+      "id": 3,
+      "title": "Query Performance",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "mongodb_mongod_op_latencies_latency{type=\"reads\"}",
+          "refId": "A",
+          "legendFormat": "Read Latency"
+        },
+        {
+          "expr": "mongodb_mongod_op_latencies_latency{type=\"writes\"}",
+          "refId": "B",
+          "legendFormat": "Write Latency"
+        },
+        {
+          "expr": "mongodb_mongod_op_latencies_latency{type=\"commands\"}",
+          "refId": "C",
+          "legendFormat": "Command Latency"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "microseconds",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 18, "y": 0}
+    },
+    {
+      "id": 4,
+      "title": "Active Connections",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "mongodb_connections{state=\"current\"}",
+          "refId": "A",
+          "legendFormat": "Current Connections"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {"color": "green", "value": 0},
+              {"color": "yellow", "value": 800},
+              {"color": "red", "value": 900}
+            ]
+          }
+        }
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 4}
+    },
+    {
+      "id": 5,
+      "title": "Memory Usage",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "mongodb_memory{type=\"resident\"}",
+          "refId": "A",
+          "legendFormat": "Resident Memory"
+        },
+        {
+          "expr": "mongodb_memory{type=\"virtual\"}",
+          "refId": "B",
+          "legendFormat": "Virtual Memory"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "bytes",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 6, "y": 8}
+    },
+    {
+      "id": 6,
+      "title": "Cache Utilization",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "mongodb_mongod_wiredtiger_cache_bytes{type=\"currently in cache\"}",
+          "refId": "A",
+          "legendFormat": "Cache Used"
+        },
+        {
+          "expr": "mongodb_mongod_wiredtiger_cache_bytes{type=\"maximum bytes configured\"}",
+          "refId": "B",
+          "legendFormat": "Cache Max"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "bytes",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 18, "y": 8}
+    },
+    {
+      "id": 7,
+      "title": "Document Operations",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(mongodb_mongod_metrics_document_total[5m])",
+          "refId": "A",
+          "legendFormat": "{{state}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "docs/sec",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+    },
+    {
+      "id": 8,
+      "title": "Replica Set Status",
+      "type": "table",
+      "targets": [
+        {
+          "expr": "mongodb_mongod_replset_member_state",
+          "refId": "A",
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "instance": "Instance",
+              "Value": "State",
+              "name": "Member Name"
+            }
+          }
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+    },
+    {
+      "id": 9,
+      "title": "Index Usage",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(mongodb_mongod_metrics_query_executor_total[5m])",
+          "refId": "A",
+          "legendFormat": "{{state}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "operations/sec",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24}
+    },
+    {
+      "id": 10,
+      "title": "Storage Engine Metrics",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "mongodb_mongod_wiredtiger_transactions_total",
+          "refId": "A",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "transactions",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 24}
+    },
+    {
+      "id": 11,
+      "title": "Network I/O",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(mongodb_network_bytes_total[5m])",
+          "refId": "A",
+          "legendFormat": "{{state}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "bytes/sec",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32}
+    },
+    {
+      "id": 12,
+      "title": "Global Lock",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "mongodb_mongod_global_lock_current_queue",
+          "refId": "A",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "yAxes": [
+        {
+          "label": "operations",
+          "min": 0
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32}
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "type": "query",
+        "query": "label_values(mongodb_up, instance)",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true
+      }
+    ]
+  },
+  "annotations": {
+    "list": [
+      {
+        "name": "Deployments",
+        "datasource": "Prometheus",
+        "enable": true,
+        "expr": "increase(mongodb_mongod_replset_number_of_members[1m])",
+        "iconColor": "green",
+        "textFormat": "MongoDB replica set change"
+      }
+    ]
+  }
+}

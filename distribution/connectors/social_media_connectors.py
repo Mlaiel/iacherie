@@ -3,7 +3,7 @@ Social Media Connectors - Consolidated Platform Connectors
 ========================================================
 
 Comprehensive social media platform connectors supporting all major
-and emerging social platforms for the Ainflue distribution system.
+and emerging social platforms for the IA Chérie distribution system.
 
 Platforms Supported:
 - Major: Instagram, TikTok, YouTube, Facebook, Twitter, LinkedIn, Snapchat

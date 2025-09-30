@@ -1,11 +1,11 @@
 """
-Content Generation - Ainflue Integrations
+Content Generation - IA Chérie Integrations
 =========================================
 Point d'entrée principal pour génération de contenu IA.
 Orchestration des 53 agents IA spécialisés.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chérie Integrations  
 Version: 1.0 Production
 """
 
@@ -39,7 +39,7 @@ try:
 except ImportError:
     QualityEnhancementEngine = None
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 CONTENT_GENERATION_CONFIG = {
     'total_ai_agents': 53,
     'content_types': ['video', 'audio', 'image', 'text', 'remix'],

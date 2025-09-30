@@ -1,12 +1,12 @@
 """
-Marketing Dashboard Engine - Ainflue Enterprise
+Marketing Dashboard Engine - IA Chérie Enterprise
 ==============================================
 Moteur dashboard marketing enterprise avec visualisations temps réel.
 Real-time analytics + interactive dashboards + KPI monitoring + executive reporting.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chérie Marketing Services
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

@@ -1,10 +1,10 @@
-# Copyright Policy - Ainflue Platform
+# Copyright Policy - IA Chérie Platform
 
 **Last Updated: January 2025**
 
 ## 1. Introduction
 
-Ainflue Platform, operated by Fahed Mlaiel ("Company", "we", "us", or "our"), is committed to respecting intellectual property rights and providing robust copyright protection services. This Copyright Policy outlines our approach to copyright compliance, our procedures for handling copyright claims, and our commitment to supporting content creators' rights globally.
+IA Chérie Platform, operated by Fahed Mlaiel ("Company", "we", "us", or "our"), is committed to respecting intellectual property rights and providing robust copyright protection services. This Copyright Policy outlines our approach to copyright compliance, our procedures for handling copyright claims, and our commitment to supporting content creators' rights globally.
 
 ## 2. Our Commitment to Copyright Protection
 
@@ -25,7 +25,7 @@ Our AI-powered platform utilizes advanced technologies including:
 ## 3. DMCA Compliance (United States)
 
 ### 3.1 DMCA Safe Harbor Compliance
-Ainflue complies with the Digital Millennium Copyright Act (DMCA) and maintains Safe Harbor protections through:
+IA Chérie complies with the Digital Millennium Copyright Act (DMCA) and maintains Safe Harbor protections through:
 - Designated DMCA agent registration with the U.S. Copyright Office
 - Expeditious takedown procedures for valid notices
 - Counter-notification processes for disputed claims
@@ -34,7 +34,7 @@ Ainflue complies with the Digital Millennium Copyright Act (DMCA) and maintains 
 ### 3.2 DMCA Agent Information
 **Designated DMCA Agent:**  
 Fahed Mlaiel  
-Email: dmca@ainflue.com  
+Email: dmca@iacherie.com  
 Address: [To be provided upon legal entity establishment]  
 Phone: [To be provided]
 
@@ -286,7 +286,7 @@ Material changes will be communicated through:
 For questions about copyright policy or procedures:
 
 **Copyright Team:**  
-Email: copyright@ainflue.com  
+Email: copyright@iacherie.com  
 Phone: [To be provided]  
 Address: [To be provided]
 
@@ -294,7 +294,7 @@ Address: [To be provided]
 For DMCA takedown notices and counter-notifications:
 
 **DMCA Agent:**  
-Email: dmca@ainflue.com  
+Email: dmca@iacherie.com  
 Fax: [To be provided]  
 Mail: [Physical address to be provided]
 
@@ -302,7 +302,7 @@ Mail: [Physical address to be provided]
 For complex legal matters:
 
 **Legal Counsel:**  
-Email: legal@ainflue.com  
+Email: legal@iacherie.com  
 Phone: [To be provided]
 
 ---

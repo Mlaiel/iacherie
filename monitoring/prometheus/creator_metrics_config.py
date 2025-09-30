@@ -1,8 +1,8 @@
 """
 Creator Metrics Configuration Module
-Configuration métriques spécialisées Creator Economy - Ainflue Platform
+Configuration métriques spécialisées Creator Economy - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -304,7 +304,7 @@ class CreatorMetricsConfig:
             'service_discovery': {
                 'kubernetes': {
                     'enabled': True,
-                    'namespace': 'ainflue-creators',
+                    'namespace': 'iacherie-creators',
                     'service_labels': ['creator-api', 'creator-analytics']
                 },
                 'consul': {
@@ -361,7 +361,7 @@ class CreatorMetricsConfig:
         
         # Configuration pour les métriques créateur
         creator_config = {
-            'job_name': 'ainflue-creator-metrics',
+            'job_name': 'iacherie-creator-metrics',
             'static_configs': [{
                 'targets': ['localhost:8000']
             }],
@@ -372,7 +372,7 @@ class CreatorMetricsConfig:
         # Service discovery Kubernetes si activé
         if self.service_config.get('kubernetes', {}).get('enabled'):
             kubernetes_config = {
-                'job_name': 'ainflue-creator-k8s',
+                'job_name': 'iacherie-creator-k8s',
                 'kubernetes_sd_configs': [{
                     'role': 'pod',
                     'namespaces': {

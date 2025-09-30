@@ -1,5 +1,5 @@
 /**
- * SDK Constants and Enums for Ainflue SDK
+ * SDK Constants and Enums for IA Chérie SDK
  * 
  * Multi-expert implementation:
  * - Lead Dev IA: Intelligent constant organization and optimization
@@ -14,14 +14,14 @@
  * SDK Version and Metadata
  */
 export const SDK_VERSION = '1.0.0';
-export const SDK_NAME = 'Ainflue TypeScript SDK';
+export const SDK_NAME = 'IA Chérie TypeScript SDK';
 export const SDK_USER_AGENT = `${SDK_NAME}/${SDK_VERSION}`;
 
 /**
  * API Configuration Constants
  */
 export const API_CONSTANTS = {
-  DEFAULT_BASE_URL: 'https://api.ainflue.com',
+  DEFAULT_BASE_URL: 'https://api.iacherie.com',
   DEFAULT_TIMEOUT: 30000, // 30 seconds
   DEFAULT_RETRY_ATTEMPTS: 3,
   DEFAULT_RETRY_DELAY: 1000, // 1 second

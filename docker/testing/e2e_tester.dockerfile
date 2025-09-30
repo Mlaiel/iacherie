@@ -1,11 +1,11 @@
 # E2E Tester Service
-# End-to-end testing for Ainflue Platform
+# End-to-end testing for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue E2E Tester - End-to-end testing"
+LABEL description="IA Chérie E2E Tester - End-to-end testing"
 LABEL version="1.0.0"
 
 # Set working directory

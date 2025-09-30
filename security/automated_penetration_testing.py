@@ -1007,7 +1007,7 @@ if __name__ == "__main__":
         # Register a target
         result = await register_security_target(
             "web_app_1", 
-            "https://app.ainfluencer.com", 
+            "https://app.iacherie.com", 
             "web_application"
         )
         print(f"Target registered: {result}")

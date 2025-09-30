@@ -1,7 +1,7 @@
-package ainflue
+package iacherie
 
 /*
-Ainflue SDK for Go
+IA Chérie SDK for Go
 Enterprise-grade Go implementation with concurrent patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -29,7 +29,7 @@ import (
 const (
 	// SDK version and user agent
 	SDKVersion = "1.0.0"
-	UserAgent  = "Ainflue-Go-SDK/" + SDKVersion
+	UserAgent  = "IA Chérie-Go-SDK/" + SDKVersion
 	
 	// Default configuration values
 	DefaultTimeout     = 30 * time.Second
@@ -37,7 +37,7 @@ const (
 	DefaultMaxBodySize = 50 * 1024 * 1024 // 50MB
 )
 
-// Client represents the main Ainflue SDK client
+// Client represents the main IA Chérie SDK client
 // Implementation: Backend Senior + DevOps + Security + Lead Dev IA
 type Client struct {
 	config       *Config
@@ -84,7 +84,7 @@ type RequestOptions struct {
 	Context context.Context
 }
 
-// NewClient creates a new Ainflue SDK client
+// NewClient creates a new IA Chérie SDK client
 // Implementation: Backend Senior + Security + DevOps
 func NewClient(config *Config) (*Client, error) {
 	if config == nil {
@@ -111,7 +111,7 @@ func NewClient(config *Config) (*Client, error) {
 	client.security = NewSecurityValidator(config)
 	client.retryPolicy = NewRetryPolicy(config.MaxRetries)
 	
-	client.logger.Info("Ainflue Go SDK initialized with base URL: %s", config.BaseURL)
+	client.logger.Info("IA Chérie Go SDK initialized with base URL: %s", config.BaseURL)
 	
 	return client, nil
 }
@@ -368,7 +368,7 @@ func (c *Client) Close() error {
 		// Close metrics collector
 		c.metrics.Close()
 		
-		c.logger.Info("Ainflue Go SDK client closed")
+		c.logger.Info("IA Chérie Go SDK client closed")
 	})
 	
 	return nil

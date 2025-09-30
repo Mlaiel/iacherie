@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue CDN Configuration Module
+"""IA Chérie CDN Configuration Module
 ==================================
 
-Enterprise-grade Content Delivery Network (CDN) configuration for the Ainflue platform.
+Enterprise-grade Content Delivery Network (CDN) configuration for the IA Chérie platform.
 Comprehensive CDN management with multi-provider support, edge optimization,
 global distribution, caching strategies, and intelligent routing.
 
@@ -738,7 +738,7 @@ class CDNConfiguration:
             CDNEndpoint(
                 endpoint_id="cf_main",
                 name="Cloudflare Main",
-                domain="cdn.ainflue.com",
+                domain="cdn.iacherie.com",
                 provider=CDNProvider.CLOUDFLARE,
                 regions=["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
                 primary_region="us-east-1",
@@ -814,7 +814,7 @@ class CDNConfiguration:
             distribution_id="main_cdn",
             name="Main Content Distribution",
             description="Primary CDN distribution for all content",
-            origin_domain="origin.ainflue.com",
+            origin_domain="origin.iacherie.com",
             endpoints=main_endpoints,
             primary_endpoint_id="cf_main",
             content_rules=content_rules,
@@ -832,7 +832,7 @@ class CDNConfiguration:
             CDNEndpoint(
                 endpoint_id="bunny_media",
                 name="BunnyCDN Media",
-                domain="media.ainflue.b-cdn.net",
+                domain="media.iacherie.b-cdn.net",
                 provider=CDNProvider.BUNNYCDN,
                 regions=["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
                 primary_region="us-east-1",
@@ -860,7 +860,7 @@ class CDNConfiguration:
             distribution_id="media_cdn",
             name="Media Content Distribution",
             description="Specialized CDN for large media files",
-            origin_domain="media-origin.ainflue.com",
+            origin_domain="media-origin.iacherie.com",
             endpoints=media_endpoints,
             primary_endpoint_id="bunny_media",
             content_rules=media_rules,
@@ -907,7 +907,7 @@ class CDNConfiguration:
         """Get optimal CDN URL for content"""
         
         if distribution_id not in self.distributions:
-            return f"https://default.ainflue.com{path}"
+            return f"https://default.iacherie.com{path}"
         
         distribution = self.distributions[distribution_id]
         return distribution.generate_cdn_url(path, user_region, optimization_params)

@@ -1,4 +1,4 @@
-# 🔐 Authentifizierungs-Modul - Ainflue Integrationen
+# 🔐 Authentifizierungs-Modul - IA Chérie Integrationen
 
 **Expertenteam: Lead Dev KI + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + KI Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Modul-Zweck
 
-Das Authentifizierungsmodul bietet erstklassige Sicherheits- und Authentifizierungsverwaltung für die Ainflue-Plattform. Es liefert umfassende OAuth 2.0/OIDC-Integration, Multi-Faktor-Authentifizierung, JWT-Token-Management, erweiterte Sicherheitsscans und Compliance-Validierung über 65+ integrierte Plattformen.
+Das Authentifizierungsmodul bietet erstklassige Sicherheits- und Authentifizierungsverwaltung für die IA Chérie-Plattform. Es liefert umfassende OAuth 2.0/OIDC-Integration, Multi-Faktor-Authentifizierung, JWT-Token-Management, erweiterte Sicherheitsscans und Compliance-Validierung über 65+ integrierte Plattformen.
 
 ### Kernkomponenten
 

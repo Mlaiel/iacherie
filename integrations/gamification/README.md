@@ -11,7 +11,7 @@
 
 ## 🎯 Enterprise Creator Gamification
 
-Production-ready gamification suite with achievement systems, leaderboards, collaboration matching, and behavioral psychology for creator engagement and retention optimization on the Ainflue platform.
+Production-ready gamification suite with achievement systems, leaderboards, collaboration matching, and behavioral psychology for creator engagement and retention optimization on the IA Chérie platform.
 
 ### 🏆 Core Features
 
@@ -245,7 +245,7 @@ web3>=5.28.0
 #### **Contact**
 For enterprise licensing, custom implementations, or technical support:
 - **Email**: mlaiel@live.de
-- **Project**: Ainflue Creator Platform
+- **Project**: IA Chérie Creator Platform
 - **License**: Proprietary - All Rights Reserved
 
 ---

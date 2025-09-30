@@ -1,8 +1,8 @@
-# 🔒 Module Sécurité - Intégrations Ainflue
+# 🔒 Module Sécurité - Intégrations IA Chérie
 
 ## Système de Sécurité & Protection contre les Menaces Enterprise
 
-**Cybersécurité complète, détection de menaces, surveillance de conformité et systèmes de protection pour la plateforme créateur Ainflue avec intelligence de sécurité avancée alimentée par ML et architecture Zero-Trust.**
+**Cybersécurité complète, détection de menaces, surveillance de conformité et systèmes de protection pour la plateforme créateur IA Chérie avec intelligence de sécurité avancée alimentée par ML et architecture Zero-Trust.**
 
 ---
 
@@ -360,8 +360,8 @@ violations = await drm_manager.detect_violations(
 ### **Configuration Développement**
 ```bash
 # Cloner repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/security
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/security
 
 # Installer dépendances développement
 pip install -r requirements-dev.txt
@@ -392,7 +392,7 @@ Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour détail
 
 ## 🔒 Divulgation Sécurité
 
-Pour vulnérabilités sécurité, merci d'envoyer email à : **security@ainflue.com**
+Pour vulnérabilités sécurité, merci d'envoyer email à : **security@iacherie.com**
 
 **Ne créez pas d'issues publiques pour vulnérabilités sécurité.**
 
@@ -401,7 +401,7 @@ Pour vulnérabilités sécurité, merci d'envoyer email à : **security@ainflue.
 ## 👥 Équipe
 
 **Auteur:** Fahed Mlaiel (mlaiel@live.de)  
-**Projet:** Intégrations Ainflue  
+**Projet:** Intégrations IA Chérie  
 **Version:** 1.0 Production  
 
 ### **Contributeurs Équipe Expert**
@@ -419,10 +419,10 @@ Pour vulnérabilités sécurité, merci d'envoyer email à : **security@ainflue.
 
 ## 📞 Support
 
-- **Documentation:** [https://docs.ainflue.com/security](https://docs.ainflue.com/security)
-- **Issues:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discord:** [Communauté Ainflue](https://discord.gg/ainflue)
-- **Email:** support@ainflue.com
+- **Documentation:** [https://docs.iacherie.com/security](https://docs.iacherie.com/security)
+- **Issues:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- **Discord:** [Communauté IA Chérie](https://discord.gg/iacherie)
+- **Email:** support@iacherie.com
 
 ---
 

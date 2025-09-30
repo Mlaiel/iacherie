@@ -1,11 +1,11 @@
 # Health Check Service
-# Centralized health monitoring for Ainflue Platform
+# Centralized health monitoring for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Health Check - Centralized service health monitoring"
+LABEL description="IA Chérie Health Check - Centralized service health monitoring"
 LABEL version="1.0.0"
 
 # Set working directory

@@ -1,4 +1,4 @@
-"""Ainflue Platform Security Templates Module
+"""IA Chérie Platform Security Templates Module
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

@@ -1,10 +1,10 @@
-# 🔒 Ainflue Infrastructure Security & Compliance
+# 🔒 IA Chérie Infrastructure Security & Compliance
 
 **Enterprise Security Policies and Compliance Framework**
 
 ## 📋 Overview
 
-This document outlines the comprehensive security policies and compliance framework for the Ainflue Infrastructure module, covering security controls, compliance requirements, and enforcement procedures.
+This document outlines the comprehensive security policies and compliance framework for the IA Chérie Infrastructure module, covering security controls, compliance requirements, and enforcement procedures.
 
 ## 🎯 Security Objectives
 
@@ -274,7 +274,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: infrastructure-network-policy
-  namespace: ainflue-system
+  namespace: iacherie-system
 spec:
   podSelector:
     matchLabels:
@@ -286,7 +286,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-system
+          name: iacherie-system
     - podSelector:
         matchLabels:
           app: api-gateway
@@ -320,7 +320,7 @@ apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
   name: infrastructure-peer-auth
-  namespace: ainflue-system
+  namespace: iacherie-system
 spec:
   mtls:
     mode: STRICT
@@ -330,7 +330,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: infrastructure-authz
-  namespace: ainflue-system
+  namespace: iacherie-system
 spec:
   selector:
     matchLabels:
@@ -338,7 +338,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-system/sa/api-gateway"]
+        principals: ["cluster.local/ns/iacherie-system/sa/api-gateway"]
   - to:
     - operation:
         methods: ["GET", "POST"]
@@ -544,7 +544,7 @@ class SIEMIntegration:
         """Send security event to SIEM"""
         event = {
             'timestamp': datetime.utcnow().isoformat(),
-            'source': 'ainflue-infrastructure',
+            'source': 'iacherie-infrastructure',
             'event_type': event_type,
             'severity': severity,
             'details': details,
@@ -568,7 +568,7 @@ class SIEMIntegration:
         params = {
             'query': query,
             'time_range': time_range,
-            'source': 'ainflue-infrastructure'
+            'source': 'iacherie-infrastructure'
         }
         
         try:
@@ -992,20 +992,20 @@ class AutomatedSecurityResponse:
 echo "Starting network penetration testing..."
 
 # Port scanning
-nmap -sS -O -p- infrastructure.ainflue.com
+nmap -sS -O -p- infrastructure.iacherie.com
 
 # Vulnerability scanning
-nessus_scan --target infrastructure.ainflue.com \
+nessus_scan --target infrastructure.iacherie.com \
   --policy "Infrastructure Security Scan" \
   --output /tmp/nessus_results.xml
 
 # Web application testing
-zap-baseline.py -t https://infrastructure.ainflue.com \
+zap-baseline.py -t https://infrastructure.iacherie.com \
   -r /tmp/zap_report.html
 
 # Container security testing
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  -v $PWD:/tmp aquasec/trivy image ainflue/infrastructure-orchestrator:latest
+  -v $PWD:/tmp aquasec/trivy image iacherie/infrastructure-orchestrator:latest
 
 # Kubernetes security testing
 kube-bench run --config-dir /opt/kube-bench/cfg \

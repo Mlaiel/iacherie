@@ -2,7 +2,7 @@
 
 ## 🌟 Aperçu
 
-Le **Module d'Orchestration Backend** est le centre neuronal de la plateforme Ainflue, offrant des capacités d'orchestration ultra-avancées pour la création de contenu multi-format, le traitement alimenté par IA, les flux de travail collaboratifs et la distribution de niveau entreprise sur plusieurs plateformes.
+Le **Module d'Orchestration Backend** est le centre neuronal de la plateforme IA Chérie, offrant des capacités d'orchestration ultra-avancées pour la création de contenu multi-format, le traitement alimenté par IA, les flux de travail collaboratifs et la distribution de niveau entreprise sur plusieurs plateformes.
 
 ## 🎯 Pipeline Logique Métier
 
@@ -117,7 +117,7 @@ portfolio_result = await visual_orchestrator.optimize_portfolio(
 ### Installation
 ```bash
 # Cloner le dépôt
-git clone https://github.com/ainflue/backend-orchestration
+git clone https://github.com/iacherie/backend-orchestration
 cd backend-orchestration
 
 # Installer les dépendances
@@ -206,7 +206,7 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 🎓 Formation & Certification
 
 ### Programmes de Certification
-- **Certification Créateur Ainflue**: Maîtrise plateforme
+- **Certification Créateur IA Chérie**: Maîtrise plateforme
 - **Spécialiste Optimisation IA**: Fonctionnalités IA avancées
 - **Administrateur Entreprise**: Déploiement entreprise
 - **Spécialiste Sécurité**: Configuration sécurité
@@ -235,15 +235,15 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 📞 Support
 
 ### Support Technique
-- **Email**: support@ainflue.com
+- **Email**: support@iacherie.com
 - **Slack**: #backend-orchestration
 - **GitHub Issues**: Rapports bugs et demandes fonctionnalités
-- **Documentation**: https://docs.ainflue.com
+- **Documentation**: https://docs.iacherie.com
 
 ### Support Business
-- **Ventes**: sales@ainflue.com
-- **Partenariats**: partnerships@ainflue.com
-- **Entreprise**: enterprise@ainflue.com
+- **Ventes**: sales@iacherie.com
+- **Partenariats**: partnerships@iacherie.com
+- **Entreprise**: enterprise@iacherie.com
 
 ## ⚖️ Légal & Conformité
 
@@ -293,6 +293,6 @@ Toute copie, distribution ou utilisation non autorisée sans permission écrite 
 
 ---
 
-**Créé avec 💝 par l'équipe Ainflue**
+**Créé avec 💝 par l'équipe IA Chérie**
 
 *Autonomiser les créateurs du monde entier avec la technologie intelligente*

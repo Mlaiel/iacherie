@@ -1,4 +1,4 @@
-# 🌐 Platform Services Enterprise - Ainflue
+# 🌐 Platform Services Enterprise - IA Chérie
 
 **🚀 INTEGRATION SERVICES ENTERPRISE POUR 65+ PLATEFORMES**
 
@@ -197,7 +197,7 @@ authentication:
     - name: "instagram"
       client_id: "${INSTAGRAM_CLIENT_ID}"
       client_secret: "${INSTAGRAM_CLIENT_SECRET}"
-      redirect_uri: "https://ainflue.com/auth/instagram"
+      redirect_uri: "https://iacherie.com/auth/instagram"
       
     - name: "spotify"
       client_id: "${SPOTIFY_CLIENT_ID}"
@@ -236,8 +236,8 @@ await orchestrator.connect_platform("instagram", {
 # Publication cross-platform
 content = {
     "type": "image",
-    "file_url": "https://cdn.ainflue.com/image.jpg",
-    "caption": "Amazing content! #creator #ainflue",
+    "file_url": "https://cdn.iacherie.com/image.jpg",
+    "caption": "Amazing content! #creator #iacherie",
     "tags": ["photography", "lifestyle"]
 }
 
@@ -389,14 +389,14 @@ E-commerce Specialist:        Expert Shopify + Etsy + Marketplace APIs
 
 ### 🆘 Support Urgent
 ```yaml
-Issues Critiques:            platform-team@ainflue.com
+Issues Critiques:            platform-team@iacherie.com
 Escalation:                 Lead Architect (mlaiel@live.de)
 Temps Réponse:              < 20 minutes incidents P0
-Documentation:              docs.ainflue.com/platform-services
+Documentation:              docs.iacherie.com/platform-services
 ```
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - PLATFORM SERVICES ENTERPRISE AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - PLATFORM SERVICES ENTERPRISE IACHERIE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE**  
 **🌍 INTÉGRATION PRODUCTION-READY 65+ PLATEFORMES GLOBALES**

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Workflow Automation Engine - Ainflue Enterprise Collaboration
+Workflow Automation Engine - IA Chérie Enterprise Collaboration
 Intelligent process automation for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -48,7 +48,7 @@ class WorkflowTemplate(Base):
     description = Column(Text)
     category = Column(String(100))
     definition = Column(JSON)  # Workflow nodes and connections
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_active = Column(Boolean, default=True)

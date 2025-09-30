@@ -1,6 +1,6 @@
 # Services Docker Security_Configs
 
-Services Docker professionnels pour la fonctionnalité security_configs de la plateforme Ainflue.
+Services Docker professionnels pour la fonctionnalité security_configs de la plateforme IA Chérie.
 
 ## Aperçu
 
@@ -76,7 +76,7 @@ All services include comprehensive health checks:
 For technical support, contact:
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Platform**: Ainflue Enterprise
+- **Platform**: IA Chérie Enterprise
 
 ## Droits d'auteur
 

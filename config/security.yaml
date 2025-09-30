@@ -1,6 +1,6 @@
 # 🔐 Enterprise Security Configuration
 # Author: Fahed Mlaiel (mlaiel@live.de) - Sécurité Expert
-# Enterprise-grade security settings for Ainflue ML Platform
+# Enterprise-grade security settings for IA Chérie ML Platform
 # ================================================================
 
 # 🔒 Authentication & Authorization
@@ -9,8 +9,8 @@ authentication:
     algorithm: "HS256"
     access_token_expire_minutes: 30
     refresh_token_expire_days: 7
-    issuer: "ainflue-ml-platform"
-    audience: "ainflue-creators"
+    issuer: "iacherie-ml-platform"
+    audience: "iacherie-creators"
   
   oauth2:
     enabled: true
@@ -129,8 +129,8 @@ network:
     
   cors:
     allowed_origins:
-      - "https://ainflue.com"
-      - "https://app.ainflue.com"
+      - "https://iacherie.com"
+      - "https://app.iacherie.com"
     allowed_methods:
       - "GET"
       - "POST"

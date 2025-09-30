@@ -1,13 +1,13 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Marketing Data Warehouse - Ainflue Enterprise
+Marketing Data Warehouse - IA Chérie Enterprise
 ===========================================
 Data warehouse marketing avec analytics avancées et data pipeline.
 Advanced data modeling + ETL pipelines + dimensional modeling + OLAP analytics.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chérie Marketing Services
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

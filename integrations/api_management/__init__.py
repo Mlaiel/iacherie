@@ -1,5 +1,5 @@
 """
-API Management Module - Ainflue Integrations
+API Management Module - IA Chérie Integrations
 ===========================================
 Enterprise API management module providing comprehensive API gateway,
 authentication, load balancing, versioning, metrics, security, rate limiting,
@@ -7,7 +7,7 @@ circuit breaker, retry logic, webhook management, analytics, service discovery,
 and automated testing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 3.0 Enterprise Production - COMPLETE
 """
 
@@ -26,10 +26,10 @@ from .metrics_collector import EnterpriseMetricsCollector
 from .security_manager import EnterpriseSecurityManager
 
 # Enterprise Phase 2 Components (AUTOMATION)
-from .request_transformer import EnterpriseRequestTransformer
-from .response_cache_manager import EnterpriseResponseCacheManager
-from .api_documentation_generator import EnterpriseAPIDocumentationGenerator
-from .health_check_monitor import EnterpriseHealthCheckMonitor
+from .request_transformer import RequestTransformer as EnterpriseRequestTransformer
+from .response_cache_manager import ResponseCacheManager as EnterpriseResponseCacheManager
+from .api_documentation_generator import APIDocumentationGenerator as EnterpriseAPIDocumentationGenerator
+from .health_check_monitor import HealthCheckMonitor as EnterpriseHealthCheckMonitor
 
 # Enterprise Phase 3 Components (ANALYTICS & OPTIMIZATION)
 from .api_analytics_engine import APIAnalyticsEngine
@@ -68,9 +68,9 @@ __all__ = [
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Complete Enterprise API management and gateway for Ainflue platform with multi-expert architecture - ALL PHASES IMPLEMENTED"
+__description__ = "Complete Enterprise API management and gateway for IA Chérie platform with multi-expert architecture - ALL PHASES IMPLEMENTED"
 
-# Configuration logique métier Ainflue - COMPLETE
+# Configuration logique métier IA Chérie - COMPLETE
 AINFLUE_API_MANAGEMENT = {
     'platforms': 65,
     'completion_status': '100% - ALL 18 COMPONENTS IMPLEMENTED',

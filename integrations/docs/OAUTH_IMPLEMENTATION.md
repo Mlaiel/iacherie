@@ -1,6 +1,6 @@
 # OAuth Implementation Guide
 
-## Universal OAuth 2.0 Implementation for Ainflue Integrations
+## Universal OAuth 2.0 Implementation for IA Chérie Integrations
 
 **Author:** Fahed Mlaiel <mlaiel@live.de>  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -9,7 +9,7 @@
 
 ## Overview
 
-The Ainflue OAuth Manager provides a comprehensive, secure, and scalable OAuth 2.0 implementation supporting multiple providers and flows. This guide covers implementation details, security considerations, and best practices.
+The IA Chérie OAuth Manager provides a comprehensive, secure, and scalable OAuth 2.0 implementation supporting multiple providers and flows. This guide covers implementation details, security considerations, and best practices.
 
 ## Supported OAuth Providers
 

@@ -1,4 +1,4 @@
-# 🏗️ Enterprise Microservices Templates - Ainflue Plattform
+# 🏗️ Enterprise Microservices Templates - IA Chérie Plattform
 
 **Expertenteam**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -10,7 +10,7 @@
 
 ## 🎯 Überblick
 
-Enterprise-Grade Microservices-Templates zum Erstellen skalierbarer, produktionsreifer Services mit erweiterten Mustern, Observabilität und eingebauter Resilienz. Diese Templates unterstützen die **Ainflue Creator Economy Platform** Geschäftslogik und bieten industrietaugliche Grundlagen für die schnelle Microservice-Entwicklung.
+Enterprise-Grade Microservices-Templates zum Erstellen skalierbarer, produktionsreifer Services mit erweiterten Mustern, Observabilität und eingebauter Resilienz. Diese Templates unterstützen die **IA Chérie Creator Economy Platform** Geschäftslogik und bieten industrietaugliche Grundlagen für die schnelle Microservice-Entwicklung.
 
 ### 📊 Template-Status (18/18 Dateien - 100% Vollständig) ✅
 
@@ -22,7 +22,7 @@ Enterprise-Grade Microservices-Templates zum Erstellen skalierbarer, produktions
 
 ## 🚀 Architektur-Überblick
 
-### **🌍 AINFLUE GESCHÄFTSLOGIK INTEGRATION**
+### **🌍 IACHERIE GESCHÄFTSLOGIK INTEGRATION**
 ```
 Multi-Format Creators → KI-Verarbeitung → Content-Schutz → Monetarisierung → 
 Kollaboration & Gamification → SEO-Optimierung → Multi-Plattform Distribution
@@ -291,8 +291,8 @@ Dokumentation verfügbar in mehreren Sprachen:
 ### **Technischer Support**
 - **Autor**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Projekt**: Ainflue Creator Economy Platform
-- **Repository**: [Ainflue/microservices](https://github.com/Mlaiel/Ainflue)
+- **Projekt**: IA Chérie Creator Economy Platform
+- **Repository**: [IA Chérie/microservices](https://github.com/Mlaiel/IA Chérie)
 
 ### **Expertenteam Spezialisierungen**
 - **Lead Dev IA**: Template-Architektur und KI-Integration
@@ -313,4 +313,4 @@ Diese Software und alle zugehörigen Templates sind proprietär und vertraulich.
 
 ---
 
-**Gebaut mit ❤️ vom Ainflue Expertenteam für die Creator Economy Platform**
+**Gebaut mit ❤️ vom IA Chérie Expertenteam für die Creator Economy Platform**

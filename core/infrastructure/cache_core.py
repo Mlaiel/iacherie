@@ -1,9 +1,9 @@
-"""Ainflue Core Cache - Enterprise Caching System
+"""IA Chérie Core Cache - Enterprise Caching System
 ============================================
 
 Advanced caching management providing Redis-based distributed caching,
 memory caching, cache invalidation strategies, and performance optimization
-for the Ainflue platform core engine.
+for the IA Chérie platform core engine.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

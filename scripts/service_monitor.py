@@ -4,7 +4,7 @@ Service Monitor - Enterprise Microservice Health Monitoring
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced service monitoring for Ainflue Platform:
+Advanced service monitoring for IA Chérie Platform:
 - Real-time microservice health monitoring
 - Service discovery and registration
 - Performance metrics collection
@@ -105,7 +105,7 @@ class ServiceMonitor:
     - Real-time dashboard data
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/services.json"):
+    def __init__(self, config_path: str = "/etc/iacherie/services.json"):
         self.config_path = config_path
         self.services: Dict[str, ServiceEndpoint] = {}
         self.metrics_history: List[ServiceMetrics] = []
@@ -125,7 +125,7 @@ class ServiceMonitor:
             logger.info(f"Loaded {len(self.services)} services for monitoring")
             
         except FileNotFoundError:
-            # Create default configuration for Ainflue services
+            # Create default configuration for IA Chérie services
             default_services = [
                 {
                     "name": "api-gateway",
@@ -599,14 +599,14 @@ async def main():
     """CLI entry point for service monitor"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Service Monitor')
+    parser = argparse.ArgumentParser(description='IA Chérie Service Monitor')
     parser.add_argument('--monitor', action='store_true', help='Start monitoring')
     parser.add_argument('--duration', type=int, default=3600, help='Monitoring duration (seconds)')
     parser.add_argument('--interval', type=int, default=30, help='Check interval (seconds)')
     parser.add_argument('--status', action='store_true', help='Show current status')
     parser.add_argument('--discover', action='store_true', help='Discover services')
     parser.add_argument('--report', action='store_true', help='Generate health report')
-    parser.add_argument('--config', default='/etc/ainflue/services.json', help='Configuration file')
+    parser.add_argument('--config', default='/etc/iacherie/services.json', help='Configuration file')
     
     args = parser.parse_args()
     

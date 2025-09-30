@@ -1,4 +1,4 @@
-"""Ainflue Core Platform Services - Enterprise Platform Infrastructure
+"""IA Chérie Core Platform Services - Enterprise Platform Infrastructure
 ==================================================================
 
 Core platform services providing API gateways, GraphQL federation,

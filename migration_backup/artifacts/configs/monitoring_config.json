@@ -1,0 +1,437 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Fahed Mlaiel",
+    "contact": "mlaiel@live.de",
+    "created": "2025-01-15", 
+    "license": "Proprietary - Fahed Mlaiel - All Rights Reserved",
+    "warning": "PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Configuration monitoring enterprise protégée"
+  },
+  "monitoring_architecture": {
+    "infrastructure": {
+      "prometheus": {
+        "version": "2.45.0",
+        "retention_period": "15d",
+        "storage_size": "100GB",
+        "scrape_interval": "15s",
+        "evaluation_interval": "15s",
+        "external_labels": {
+          "cluster": "ainflue-production",
+          "replica": "prometheus-main"
+        },
+        "rule_files": [
+          "/etc/prometheus/rules/ainflue-alerts.yml",
+          "/etc/prometheus/rules/infrastructure.yml",
+          "/etc/prometheus/rules/application.yml"
+        ],
+        "scrape_configs": [
+          {
+            "job_name": "ainflue-backend",
+            "static_configs": [
+              {"targets": ["backend:8000"]}
+            ],
+            "metrics_path": "/metrics",
+            "scrape_interval": "5s"
+          },
+          {
+            "job_name": "ainflue-frontend",
+            "static_configs": [
+              {"targets": ["frontend:3000"]}
+            ]
+          },
+          {
+            "job_name": "kubernetes-pods",
+            "kubernetes_sd_configs": [
+              {
+                "role": "pod",
+                "namespaces": {
+                  "names": ["ainflue-production", "ainflue-staging"]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "grafana": {
+        "version": "10.0.0",
+        "admin_user": "admin",
+        "database": {
+          "type": "postgres",
+          "host": "grafana-db:5432",
+          "name": "grafana"
+        },
+        "auth": {
+          "oauth": {
+            "enabled": true,
+            "provider": "oauth2_generic",
+            "scopes": "openid email profile"
+          }
+        },
+        "security": {
+          "admin_password": "${GRAFANA_ADMIN_PASSWORD}",
+          "secret_key": "${GRAFANA_SECRET_KEY}",
+          "disable_gravatar": true,
+          "cookie_secure": true,
+          "cookie_samesite": "strict"
+        }
+      },
+      "alertmanager": {
+        "version": "0.26.0",
+        "global": {
+          "smtp_smarthost": "smtp.ainflue.com:587",
+          "smtp_from": "alerts@ainflue.com"
+        },
+        "route": {
+          "group_by": ["alertname", "cluster", "service"],
+          "group_wait": "10s",
+          "group_interval": "5m",
+          "repeat_interval": "12h",
+          "receiver": "default-receiver"
+        },
+        "receivers": [
+          {
+            "name": "default-receiver",
+            "email_configs": [
+              {
+                "to": "alerts@ainflue.com",
+                "subject": "[AINFLUE ALERT] {{ .GroupLabels.alertname }}",
+                "body": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
+              }
+            ],
+            "slack_configs": [
+              {
+                "api_url": "${SLACK_WEBHOOK_URL}",
+                "channel": "#alerts",
+                "title": "Ainflue Alert: {{ .GroupLabels.alertname }}"
+              }
+            ]
+          },
+          {
+            "name": "critical-receiver",
+            "pagerduty_configs": [
+              {
+                "service_key": "${PAGERDUTY_SERVICE_KEY}",
+                "description": "{{ .GroupLabels.alertname }}: {{ .CommonAnnotations.summary }}"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "application_metrics": {
+      "custom_metrics": {
+        "business_metrics": [
+          {
+            "name": "ainflue_content_uploads_total",
+            "type": "counter",
+            "description": "Total number of content uploads",
+            "labels": ["content_type", "user_tier", "platform"]
+          },
+          {
+            "name": "ainflue_ai_processing_duration_seconds",
+            "type": "histogram",
+            "description": "Time spent processing content with AI agents",
+            "labels": ["agent_type", "content_format", "quality_level"],
+            "buckets": [0.1, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0]
+          },
+          {
+            "name": "ainflue_platform_publications_total",
+            "type": "counter",
+            "description": "Number of publications to platforms",
+            "labels": ["platform", "success", "content_type"]
+          },
+          {
+            "name": "ainflue_revenue_generated",
+            "type": "gauge",
+            "description": "Revenue generated per platform",
+            "labels": ["platform", "revenue_type", "creator_tier"]
+          },
+          {
+            "name": "ainflue_protection_violations_detected",
+            "type": "counter",
+            "description": "IP protection violations detected",
+            "labels": ["violation_type", "platform", "severity"]
+          },
+          {
+            "name": "ainflue_active_users",
+            "type": "gauge",
+            "description": "Currently active users",
+            "labels": ["user_type", "subscription_tier"]
+          },
+          {
+            "name": "ainflue_api_requests_total",
+            "type": "counter",
+            "description": "Total API requests",
+            "labels": ["method", "endpoint", "status_code"]
+          },
+          {
+            "name": "ainflue_api_duration_seconds",
+            "type": "histogram",
+            "description": "API request duration",
+            "labels": ["method", "endpoint"],
+            "buckets": [0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]
+          }
+        ],
+        "infrastructure_metrics": [
+          {
+            "name": "ainflue_database_connections",
+            "type": "gauge",
+            "description": "Database connection pool size",
+            "labels": ["database", "state"]
+          },
+          {
+            "name": "ainflue_queue_length",
+            "type": "gauge",
+            "description": "Message queue length",
+            "labels": ["queue_name", "priority"]
+          },
+          {
+            "name": "ainflue_storage_usage_bytes",
+            "type": "gauge",
+            "description": "Storage usage by type",
+            "labels": ["storage_type", "content_type"]
+          }
+        ]
+      }
+    },
+    "log_aggregation": {
+      "elasticsearch": {
+        "version": "8.8.0",
+        "cluster_name": "ainflue-logs",
+        "node_count": 3,
+        "index_templates": [
+          {
+            "name": "ainflue-application-logs",
+            "pattern": "ainflue-app-*",
+            "settings": {
+              "number_of_shards": 2,
+              "number_of_replicas": 1
+            },
+            "mappings": {
+              "properties": {
+                "@timestamp": {"type": "date"},
+                "level": {"type": "keyword"},
+                "service": {"type": "keyword"},
+                "message": {"type": "text"},
+                "user_id": {"type": "keyword"},
+                "request_id": {"type": "keyword"}
+              }
+            }
+          }
+        ]
+      },
+      "logstash": {
+        "version": "8.8.0",
+        "pipelines": [
+          {
+            "pipeline.id": "ainflue-backend",
+            "path.config": "/usr/share/logstash/pipeline/backend.conf"
+          },
+          {
+            "pipeline.id": "ainflue-frontend", 
+            "path.config": "/usr/share/logstash/pipeline/frontend.conf"
+          }
+        ]
+      },
+      "kibana": {
+        "version": "8.8.0",
+        "elasticsearch_hosts": ["http://elasticsearch:9200"],
+        "server_name": "kibana.ainflue.internal",
+        "dashboards": [
+          "ainflue-application-overview",
+          "ainflue-performance-metrics",
+          "ainflue-error-analysis",
+          "ainflue-user-behavior"
+        ]
+      }
+    },
+    "tracing": {
+      "jaeger": {
+        "version": "1.47.0",
+        "strategy": "production",
+        "collector": {
+          "endpoints": ["http://jaeger-collector:14268"]
+        },
+        "sampling": {
+          "default_strategy": {
+            "type": "probabilistic",
+            "param": 0.1
+          },
+          "per_service_strategies": [
+            {
+              "service": "ainflue-ai-processing",
+              "type": "probabilistic", 
+              "param": 1.0
+            },
+            {
+              "service": "ainflue-api-gateway",
+              "type": "probabilistic",
+              "param": 0.5
+            }
+          ]
+        }
+      },
+      "opentelemetry": {
+        "enabled": true,
+        "collector_endpoint": "http://otel-collector:4317",
+        "exporters": ["jaeger", "prometheus"],
+        "service_name": "ainflue-platform"
+      }
+    },
+    "health_checks": {
+      "kubernetes_probes": {
+        "liveness_probe": {
+          "http_get": {
+            "path": "/health/live",
+            "port": 8000
+          },
+          "initial_delay_seconds": 30,
+          "period_seconds": 10,
+          "timeout_seconds": 5,
+          "failure_threshold": 3
+        },
+        "readiness_probe": {
+          "http_get": {
+            "path": "/health/ready",
+            "port": 8000
+          },
+          "initial_delay_seconds": 5,
+          "period_seconds": 5,
+          "timeout_seconds": 3,
+          "failure_threshold": 3
+        },
+        "startup_probe": {
+          "http_get": {
+            "path": "/health/startup",
+            "port": 8000
+          },
+          "initial_delay_seconds": 10,
+          "period_seconds": 10,
+          "timeout_seconds": 5,
+          "failure_threshold": 30
+        }
+      },
+      "custom_health_checks": [
+        {
+          "name": "database_connection",
+          "endpoint": "/health/database",
+          "critical": true
+        },
+        {
+          "name": "redis_connection", 
+          "endpoint": "/health/redis",
+          "critical": true
+        },
+        {
+          "name": "ai_services",
+          "endpoint": "/health/ai",
+          "critical": false
+        },
+        {
+          "name": "external_apis",
+          "endpoint": "/health/external",
+          "critical": false
+        }
+      ]
+    }
+  },
+  "alerting_rules": {
+    "critical_alerts": [
+      {
+        "alert": "HighErrorRate",
+        "expr": "rate(ainflue_api_requests_total{status_code=~\"5..\"}[5m]) > 0.1",
+        "for": "5m",
+        "labels": {
+          "severity": "critical"
+        },
+        "annotations": {
+          "summary": "High error rate detected",
+          "description": "Error rate is {{ $value }} errors per second"
+        }
+      },
+      {
+        "alert": "DatabaseDown",
+        "expr": "up{job=\"database\"} == 0",
+        "for": "1m",
+        "labels": {
+          "severity": "critical"
+        },
+        "annotations": {
+          "summary": "Database is down",
+          "description": "Database instance {{ $labels.instance }} is down"
+        }
+      },
+      {
+        "alert": "HighAPILatency",
+        "expr": "histogram_quantile(0.95, rate(ainflue_api_duration_seconds_bucket[5m])) > 0.2",
+        "for": "10m",
+        "labels": {
+          "severity": "warning"
+        },
+        "annotations": {
+          "summary": "High API latency",
+          "description": "95th percentile latency is {{ $value }}s"
+        }
+      }
+    ],
+    "business_alerts": [
+      {
+        "alert": "LowContentUploadRate",
+        "expr": "rate(ainflue_content_uploads_total[1h]) < 10",
+        "for": "30m",
+        "labels": {
+          "severity": "warning"
+        },
+        "annotations": {
+          "summary": "Content upload rate is low",
+          "description": "Only {{ $value }} uploads per hour"
+        }
+      },
+      {
+        "alert": "ProtectionViolationSpike",
+        "expr": "rate(ainflue_protection_violations_detected[5m]) > 5",
+        "for": "2m",
+        "labels": {
+          "severity": "warning"
+        },
+        "annotations": {
+          "summary": "High rate of protection violations",
+          "description": "{{ $value }} violations detected per second"
+        }
+      }
+    ]
+  },
+  "performance_targets": {
+    "api_performance": {
+      "response_time_p95": "<200ms",
+      "response_time_p99": "<500ms", 
+      "error_rate": "<0.1%",
+      "availability": "99.99%"
+    },
+    "ai_processing": {
+      "image_processing": "<30s",
+      "video_processing": "<5min for 1080p",
+      "audio_processing": "<2min",
+      "text_processing": "<5s"
+    },
+    "platform_integration": {
+      "publication_success_rate": ">99%",
+      "publication_latency": "<30s",
+      "api_rate_limit_compliance": "100%"
+    }
+  },
+  "cost_optimization": {
+    "resource_allocation": {
+      "cpu_utilization_target": "70%",
+      "memory_utilization_target": "80%",
+      "storage_utilization_target": "85%"
+    },
+    "auto_scaling": {
+      "enabled": true,
+      "metrics": ["cpu", "memory", "custom_metrics"],
+      "scale_up_threshold": "80%",
+      "scale_down_threshold": "30%",
+      "cooldown_period": "5m"
+    }
+  }
+}

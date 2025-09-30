@@ -1,4 +1,4 @@
-# 🔒 Ainflue Security Templates - Enterprise Creator Protection
+# 🔒 IA Chérie Security Templates - Enterprise Creator Protection
 
 ## ⚠️ LEGAL NOTICE / AVERTISSEMENT LÉGAL
 
@@ -21,7 +21,7 @@
 
 ## 🎯 Overview
 
-The Ainflue Security Templates module provides enterprise-grade security solutions specifically designed for creator economy platforms. This comprehensive suite protects creators' intellectual property, prevents fraud, and ensures secure content distribution while maintaining optimal performance at scale.
+The IA Chérie Security Templates module provides enterprise-grade security solutions specifically designed for creator economy platforms. This comprehensive suite protects creators' intellectual property, prevents fraud, and ensures secure content distribution while maintaining optimal performance at scale.
 
 ### 🏗️ Architecture Highlights
 
@@ -132,8 +132,8 @@ Core infrastructure components for security template management.
 pip install numpy pillow opencv-python librosa soundfile scikit-learn nltk spacy pydantic cryptography
 
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/security
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/security
 ```
 
 ### Basic Usage
@@ -582,6 +582,6 @@ For licensing inquiries, please contact: mlaiel@live.de
 
 ---
 
-**🔒 Ainflue Security Templates - Protecting the Creator Economy**
+**🔒 IA Chérie Security Templates - Protecting the Creator Economy**
 
 *Built with ❤️ by security experts for the creator community*

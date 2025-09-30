@@ -142,10 +142,10 @@ await manager.shutdown()
 ## 📞 Enterprise-Support
 
 **24/7 Ultra-Premium-Support:**
-- **Technisch**: redis-tech@ainflue.enterprise
-- **Sicherheit**: security@ainflue.enterprise
-- **Performance**: performance@ainflue.enterprise
-- **Eskalation**: cto@ainflue.enterprise
+- **Technisch**: redis-tech@iacherie.enterprise
+- **Sicherheit**: security@iacherie.enterprise
+- **Performance**: performance@iacherie.enterprise
+- **Eskalation**: cto@iacherie.enterprise
 
 ---
 

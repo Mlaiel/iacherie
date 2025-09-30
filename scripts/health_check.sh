@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ainflue Platform Health Check Script
+# IA Chérie Platform Health Check Script
 # Comprehensive health monitoring for all platform components
 # 
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +16,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-NAMESPACE="ainflue"
+NAMESPACE="iacherie"
 TIMEOUT=30
 VERBOSE=false
 SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-}"
@@ -106,7 +106,7 @@ check_api_service() {
     
     # Check if pods are running
     local ready_pods
-    ready_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-api --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    ready_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-api --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $ready_pods -eq 0 ]]; then
         record_result "api-pods" "error" "No API pods running"
@@ -115,7 +115,7 @@ check_api_service() {
     
     # Check pod readiness
     local total_pods
-    total_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-api --no-headers 2>/dev/null | wc -l)
+    total_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-api --no-headers 2>/dev/null | wc -l)
     
     if [[ $ready_pods -lt $total_pods ]]; then
         record_result "api-pods" "warning" "$ready_pods/$total_pods API pods ready"
@@ -125,7 +125,7 @@ check_api_service() {
     
     # Check service endpoint
     local service_ip
-    service_ip=$(kubectl get svc ainflue-api -n "$NAMESPACE" -o jsonpath='{.spec.clusterIP}' 2>/dev/null)
+    service_ip=$(kubectl get svc iacherie-api -n "$NAMESPACE" -o jsonpath='{.spec.clusterIP}' 2>/dev/null)
     
     if [[ -n "$service_ip" ]]; then
         # Test health endpoint if possible
@@ -148,7 +148,7 @@ check_databases() {
     
     # PostgreSQL
     local pg_pods
-    pg_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-postgresql --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    pg_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-postgresql --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $pg_pods -gt 0 ]]; then
         record_result "postgresql" "success" "$pg_pods PostgreSQL pods running"
@@ -158,7 +158,7 @@ check_databases() {
     
     # Redis
     local redis_pods
-    redis_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-redis --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    redis_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-redis --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $redis_pods -gt 0 ]]; then
         record_result "redis" "success" "$redis_pods Redis pods running"
@@ -168,7 +168,7 @@ check_databases() {
     
     # MongoDB
     local mongo_pods
-    mongo_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-mongodb --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    mongo_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-mongodb --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $mongo_pods -gt 0 ]]; then
         record_result "mongodb" "success" "$mongo_pods MongoDB pods running"
@@ -182,7 +182,7 @@ check_crawler_service() {
     print_status "Checking crawler service..."
     
     local crawler_pods
-    crawler_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-crawler --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    crawler_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-crawler --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $crawler_pods -gt 0 ]]; then
         record_result "crawler" "success" "$crawler_pods crawler pods running"
@@ -196,7 +196,7 @@ check_analytics_service() {
     print_status "Checking analytics service..."
     
     local analytics_pods
-    analytics_pods=$(kubectl get pods -n "$NAMESPACE" -l app=ainflue-analytics --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
+    analytics_pods=$(kubectl get pods -n "$NAMESPACE" -l app=iacherie-analytics --field-selector=status.phase=Running --no-headers 2>/dev/null | wc -l)
     
     if [[ $analytics_pods -gt 0 ]]; then
         record_result "analytics" "success" "$analytics_pods analytics pods running"
@@ -235,13 +235,13 @@ check_ingress() {
     print_status "Checking ingress configuration..."
     
     local ingress_ready
-    ingress_ready=$(kubectl get ingress -n "$NAMESPACE" ainflue-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null)
+    ingress_ready=$(kubectl get ingress -n "$NAMESPACE" iacherie-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null)
     
     if [[ -n "$ingress_ready" ]]; then
         record_result "ingress" "success" "Ingress has external IP: $ingress_ready"
         
         # Test external endpoint if available
-        if curl -f -m 10 -s "https://api.ainflue.com/health" &> /dev/null; then
+        if curl -f -m 10 -s "https://api.iacherie.com/health" &> /dev/null; then
             record_result "external-access" "success" "External API endpoint accessible"
         else
             record_result "external-access" "warning" "External API endpoint not responding"
@@ -306,7 +306,7 @@ check_events() {
 generate_summary() {
     echo ""
     echo "========================================="
-    echo "     AINFLUE HEALTH CHECK SUMMARY"
+    echo "     IACHERIE HEALTH CHECK SUMMARY"
     echo "========================================="
     echo "Overall Status: $OVERALL_STATUS"
     echo "Check Time: $(date)"
@@ -347,7 +347,7 @@ generate_summary() {
 # Send notifications
 send_notifications() {
     if [[ $OVERALL_STATUS != "healthy" ]]; then
-        local message="Ainflue Health Check Alert - Status: $OVERALL_STATUS"
+        local message="IA Chérie Health Check Alert - Status: $OVERALL_STATUS"
         
         # Slack notification
         if [[ -n "$SLACK_WEBHOOK_URL" ]]; then
@@ -362,7 +362,7 @@ send_notifications() {
     "attachments": [
         {
             "color": "$color",
-            "title": "Ainflue Health Check Alert",
+            "title": "IA Chérie Health Check Alert",
             "fields": [
                 {
                     "title": "Status",
@@ -400,7 +400,7 @@ EOF
         # Email notification (if mail is available)
         if command -v mail &> /dev/null && [[ -n "$EMAIL_RECIPIENTS" ]]; then
             {
-                echo "Subject: Ainflue Health Check Alert - $OVERALL_STATUS"
+                echo "Subject: IA Chérie Health Check Alert - $OVERALL_STATUS"
                 echo ""
                 generate_summary
             } | mail "$EMAIL_RECIPIENTS" || true
@@ -410,7 +410,7 @@ EOF
 
 # Main execution
 main() {
-    echo "🏥 Starting Ainflue Platform Health Check..."
+    echo "🏥 Starting IA Chérie Platform Health Check..."
     echo "Namespace: $NAMESPACE"
     echo "Timestamp: $(date)"
     echo ""
@@ -461,10 +461,10 @@ while [[ $# -gt 0 ]]; do
             cat << EOF
 Usage: $0 [OPTIONS]
 
-Ainflue Platform Health Check Script
+IA Chérie Platform Health Check Script
 
 OPTIONS:
-    -n, --namespace NAME    Kubernetes namespace [default: ainflue]
+    -n, --namespace NAME    Kubernetes namespace [default: iacherie]
     -t, --timeout SECONDS  Timeout for operations [default: 30]
     -v, --verbose          Enable verbose output
     -h, --help             Show this help message

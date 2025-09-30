@@ -1,4 +1,4 @@
-# ⚡ Ainflue Frontend-Vorlagen Enterprise Architektur
+# ⚡ IA Chérie Frontend-Vorlagen Enterprise Architektur
 
 ## ⚠️ SCHUTZ DES GEISTIGEN EIGENTUMS
 > **Exklusive Eigentumsmodule von Fahed Mlaiel (mlaiel@live.de)**  
@@ -21,7 +21,7 @@ Frontend-Sicherheit: XSS/CSRF-Schutz-Experte
 ```
 
 ### **Spezialisierung Creator Economy Platform**
-Ainflue ist eine revolutionäre Plattform für Creator Economy mit:
+IA Chérie ist eine revolutionäre Plattform für Creator Economy mit:
 - **Multi-Format Content Processing** mit IA-Integration
 - **Erweiterte Schutzmaßnahmen** für geistiges Eigentum
 - **Enterprise-Kollaborationstools** für Creators

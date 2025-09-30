@@ -1,8 +1,8 @@
 # Contributing to MongoDB Module
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Database Layer  
 **Version:** 1.0.0  
 **Maintainer:** Fahed Mlaiel (mlaiel@live.de)
@@ -88,8 +88,8 @@ git --version
 #### 📦 Environment Setup
 ```bash
 # Clone the repository (with proper authorization)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mongodb
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mongodb
 
 # Create virtual environment
 python -m venv venv

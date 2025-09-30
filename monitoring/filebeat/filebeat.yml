@@ -1,12 +1,12 @@
 # Filebeat Configuration for Centralized Log Aggregation
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Production-ready log collection for all Ainflue services
+# Production-ready log collection for all IA Chérie services
 
 filebeat.inputs:
   # Kubernetes container logs
   - type: container
     paths:
-      - /var/log/containers/*-ainflue-*.log
+      - /var/log/containers/*-iacherie-*.log
       - /var/log/containers/*-ai-engine-*.log
       - /var/log/containers/*-crawler-*.log
       - /var/log/containers/*-analytics-*.log
@@ -31,7 +31,7 @@ filebeat.inputs:
     # Fields to add
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: container
     fields_under_root: true
     
@@ -46,14 +46,14 @@ filebeat.inputs:
   # Application-specific logs
   - type: log
     paths:
-      - /var/log/ainflue/api/*.log
-      - /var/log/ainflue/ai-engine/*.log
-      - /var/log/ainflue/crawler/*.log
-      - /var/log/ainflue/analytics/*.log
+      - /var/log/iacherie/api/*.log
+      - /var/log/iacherie/ai-engine/*.log
+      - /var/log/iacherie/crawler/*.log
+      - /var/log/iacherie/analytics/*.log
     
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: application
     fields_under_root: true
     
@@ -70,11 +70,11 @@ filebeat.inputs:
   - type: log
     paths:
       - /var/log/nginx/access.log
-      - /var/log/nginx/ainflue-*.log
+      - /var/log/nginx/iacherie-*.log
     
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: nginx_access
       service: nginx
     fields_under_root: true
@@ -86,7 +86,7 @@ filebeat.inputs:
     
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: nginx_error
       service: nginx
     fields_under_root: true
@@ -100,7 +100,7 @@ filebeat.inputs:
     
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: database
     fields_under_root: true
     
@@ -115,7 +115,7 @@ filebeat.inputs:
     
     fields:
       environment: production
-      cluster: ainflue-production
+      cluster: iacherie-production
       log_type: syslog
     fields_under_root: true
 
@@ -229,7 +229,7 @@ processors:
 
 # Output configuration
 output.logstash:
-  hosts: ["logstash.ainflue-monitoring.svc.cluster.local:5044"]
+  hosts: ["logstash.iacherie-monitoring.svc.cluster.local:5044"]
   
   # Load balancing
   loadbalance: true
@@ -250,11 +250,11 @@ output.logstash:
 
 # Alternative direct Elasticsearch output (if not using Logstash)
 #output.elasticsearch:
-#  hosts: ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
-#  index: "ainflue-logs-%{+yyyy.MM.dd}"
+#  hosts: ["elasticsearch.iacherie-monitoring.svc.cluster.local:9200"]
+#  index: "iacherie-logs-%{+yyyy.MM.dd}"
 #  template.enabled: true
-#  template.name: "ainflue-logs"
-#  template.pattern: "ainflue-logs-*"
+#  template.name: "iacherie-logs"
+#  template.pattern: "iacherie-logs-*"
 
 # Logging configuration
 logging.level: info
@@ -268,7 +268,7 @@ logging.files:
 # Monitoring
 monitoring.enabled: true
 monitoring.elasticsearch:
-  hosts: ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+  hosts: ["elasticsearch.iacherie-monitoring.svc.cluster.local:9200"]
   username: "filebeat_monitoring"
   #password: "${ELASTICSEARCH_PASSWORD}"
 
@@ -285,8 +285,8 @@ queue.mem:
 
 # Setup template and ILM
 setup.template.enabled: true
-setup.template.name: "ainflue-logs"
-setup.template.pattern: "ainflue-logs-*"
+setup.template.name: "iacherie-logs"
+setup.template.pattern: "iacherie-logs-*"
 setup.template.settings:
   index:
     number_of_shards: 1
@@ -298,9 +298,9 @@ setup.template.settings:
 
 # ILM (Index Lifecycle Management)
 setup.ilm.enabled: true
-setup.ilm.rollover_alias: "ainflue-logs"
-setup.ilm.pattern: "ainflue-logs-%{now/d}-000001"
-setup.ilm.policy: "ainflue-logs-policy"
+setup.ilm.rollover_alias: "iacherie-logs"
+setup.ilm.pattern: "iacherie-logs-%{now/d}-000001"
+setup.ilm.policy: "iacherie-logs-policy"
 
 # Dashboards
 setup.dashboards.enabled: true
@@ -308,7 +308,7 @@ setup.dashboards.index: ".kibana"
 
 # Kibana configuration
 setup.kibana:
-  host: "kibana.ainflue-monitoring.svc.cluster.local:5601"
+  host: "kibana.iacherie-monitoring.svc.cluster.local:5601"
   
 # Security
 #setup.kibana.username: "filebeat_setup"

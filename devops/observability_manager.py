@@ -300,7 +300,7 @@ class ObservabilityManager:
         self.slis = {
             "availability": SLI(
                 name="availability",
-                service="ainflue-api",
+                service="iacherie-api",
                 metric_query="up",
                 target_value=1.0,
                 current_value=1.0,
@@ -309,7 +309,7 @@ class ObservabilityManager:
             ),
             "latency": SLI(
                 name="latency",
-                service="ainflue-api",
+                service="iacherie-api",
                 metric_query="response_time_p95_ms",
                 target_value=200.0,
                 current_value=150.0,
@@ -318,7 +318,7 @@ class ObservabilityManager:
             ),
             "error_rate": SLI(
                 name="error_rate",
-                service="ainflue-api",
+                service="iacherie-api",
                 metric_query="error_rate_percent",
                 target_value=1.0,
                 current_value=0.5,
@@ -331,7 +331,7 @@ class ObservabilityManager:
         self.slos = {
             "api_availability": SLO(
                 name="api_availability",
-                service="ainflue-api",
+                service="iacherie-api",
                 sli_name="availability",
                 target_percentage=99.9,
                 time_window=2592000,  # 30 days
@@ -341,7 +341,7 @@ class ObservabilityManager:
             ),
             "api_latency": SLO(
                 name="api_latency",
-                service="ainflue-api",
+                service="iacherie-api",
                 sli_name="latency",
                 target_percentage=95.0,
                 time_window=86400,  # 1 day
@@ -450,13 +450,13 @@ class ObservabilityManager:
         self.notification_channels = {
             "slack": {
                 "type": "slack",
-                "webhook_url": "https://hooks.slack.com/ainflue-alerts",
+                "webhook_url": "https://hooks.slack.com/iacherie-alerts",
                 "channel": "#alerts"
             },
             "email": {
                 "type": "email",
                 "smtp_server": "smtp.company.com",
-                "recipients": ["devops@ainflue.com"]
+                "recipients": ["devops@iacherie.com"]
             },
             "pagerduty": {
                 "type": "pagerduty",

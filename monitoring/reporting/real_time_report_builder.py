@@ -1,7 +1,7 @@
 """Real-Time Report Builder - Enterprise Creator Economy Live Reporting
 ======================================================================
 
-Interactive real-time report builder for Ainflue Creator Economy platform.
+Interactive real-time report builder for IA Chérie Creator Economy platform.
 Provides drag-and-drop report design, live data integration, collaborative
 report creation, and instant preview capabilities.
 

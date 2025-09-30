@@ -5,7 +5,7 @@ Security Headers - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade security headers management for Ainflue creator economy platform.
+Enterprise-grade security headers management for IA Chérie creator economy platform.
 CSP, HSTS, and advanced header security with < 1ms operations.
 
 Performance: < 1ms header operations
@@ -939,8 +939,8 @@ class SecurityHeadersFactory:
         config = {
             "security_level": "creator_focused",
             "enable_nonce": True,
-            "creator_content_domains": ["*.ainflue-content.com", "creator-cdn.ainflue.com"],
-            "cdn_domains": ["cdn.ainflue.com", "static.ainflue.com"],
+            "creator_content_domains": ["*.iacherie-content.com", "creator-cdn.iacherie.com"],
+            "cdn_domains": ["cdn.iacherie.com", "static.iacherie.com"],
             "log_level": "INFO"
         }
         return SecurityHeaders(config)
@@ -951,7 +951,7 @@ class SecurityHeadersFactory:
         config = {
             "security_level": "standard",
             "enable_nonce": False,
-            "creator_content_domains": ["localhost:3000", "dev.ainflue.com"],
+            "creator_content_domains": ["localhost:3000", "dev.iacherie.com"],
             "cdn_domains": ["localhost:8080"],
             "log_level": "DEBUG"
         }

@@ -255,9 +255,9 @@ Create default feature flags."""
             app_version="1.0.0",
             min_supported_version="7.0",
             api_endpoints={
-                "base": "https://api.ainflue.com/mobile/v1",
-                "upload": "https://upload.ainflue.com/mobile",
-                "analytics": "https://analytics.ainflue.com/mobile"
+                "base": "https://api.iacherie.com/mobile/v1",
+                "upload": "https://upload.iacherie.com/mobile",
+                "analytics": "https://analytics.iacherie.com/mobile"
             },
             upload_limits={
                 "max_file_size": 100 * 1024 * 1024,  # 100MB
@@ -298,9 +298,9 @@ Create default feature flags."""
             app_version="1.0.0",
             min_supported_version="13.0",
             api_endpoints={
-                "base": "https://api.ainflue.com/mobile/v1",
-                "upload": "https://upload.ainflue.com/mobile",
-                "analytics": "https://analytics.ainflue.com/mobile"
+                "base": "https://api.iacherie.com/mobile/v1",
+                "upload": "https://upload.iacherie.com/mobile",
+                "analytics": "https://analytics.iacherie.com/mobile"
             },
             upload_limits={
                 "max_file_size": 80 * 1024 * 1024,  # 80MB (iOS limit consideration)
@@ -343,9 +343,9 @@ Create default feature flags."""
             app_version="1.0.0",
             min_supported_version="0.68.0",
             api_endpoints={
-                "base": "https://api.ainflue.com/mobile/v1",
-                "upload": "https://upload.ainflue.com/mobile",
-                "analytics": "https://analytics.ainflue.com/mobile"
+                "base": "https://api.iacherie.com/mobile/v1",
+                "upload": "https://upload.iacherie.com/mobile",
+                "analytics": "https://analytics.iacherie.com/mobile"
             },
             upload_limits={
                 "max_file_size": 100 * 1024 * 1024,  # 100MB

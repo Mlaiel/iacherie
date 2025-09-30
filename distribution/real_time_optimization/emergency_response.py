@@ -181,27 +181,27 @@ class EmergencyResponseSystem:
         """Initialize escalation chains for different scenarios"""
         return {
             'content_manager': {
-                'contact': 'content@ainflue.com',
+                'contact': 'content@iacherie.com',
                 'phone': '+1-555-0101',
                 'escalation_time': 15  # minutes
             },
             'marketing_manager': {
-                'contact': 'marketing@ainflue.com',
+                'contact': 'marketing@iacherie.com',
                 'phone': '+1-555-0102',
                 'escalation_time': 30
             },
             'pr_manager': {
-                'contact': 'pr@ainflue.com',
+                'contact': 'pr@iacherie.com',
                 'phone': '+1-555-0103',
                 'escalation_time': 10
             },
             'legal_team': {
-                'contact': 'legal@ainflue.com',
+                'contact': 'legal@iacherie.com',
                 'phone': '+1-555-0104',
                 'escalation_time': 5
             },
             'cmo': {
-                'contact': 'cmo@ainflue.com',
+                'contact': 'cmo@iacherie.com',
                 'phone': '+1-555-0105',
                 'escalation_time': 20
             },

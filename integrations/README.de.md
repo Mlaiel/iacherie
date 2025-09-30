@@ -1,6 +1,6 @@
-# 🔗 Ainflue Integrations Modul - Enterprise Integration Plattform
+# 🔗 IA Chérie Integrations Modul - Enterprise Integration Plattform
 
-![Ainflue Logo](https://img.shields.io/badge/Ainflue-Enterprise%20Plattform-blue?style=for-the-badge)
+![IA Chérie Logo](https://img.shields.io/badge/IA Chérie-Enterprise%20Plattform-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/version-1.0.0-green?style=for-the-badge)
 ![Lizenz](https://img.shields.io/badge/lizenz-Propriet%C3%A4r-red?style=for-the-badge)
 
@@ -120,7 +120,7 @@ Performance-Tracking über Monitoring-Integrationen
 
 ### **Integration-Schichten**
 
-1. **Level 1: Kern-Plattform** - Haupt-Ainflue Anwendung
+1. **Level 1: Kern-Plattform** - Haupt-IA Chérie Anwendung
 2. **Level 2: Integration Hub** - Dieses Modul (zentrale Orchestrierung)
 3. **Level 3: Service-Konnektoren** - Plattform-spezifische Implementierungen
 
@@ -251,8 +251,8 @@ await integration_manager.webhook_manager.register_endpoint(
 ### **Entwicklungs-Setup**
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations
 
 # Entwicklungs-Abhängigkeiten installieren
 pip install -r requirements-dev.txt
@@ -333,4 +333,4 @@ Diese Software ist proprietär und vertraulich. Unbefugte Reproduktion oder Vert
 
 ---
 
-*Mit ❤️ vom Ainflue-Team erstellt | Empowering creators worldwide*
+*Mit ❤️ vom IA Chérie-Team erstellt | Empowering creators worldwide*

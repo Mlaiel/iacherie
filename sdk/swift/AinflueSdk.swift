@@ -3,7 +3,7 @@ import Network
 import CryptoKit
 
 /**
- * Ainflue SDK for iOS/Swift
+ * IA Chérie SDK for iOS/Swift
  * Native iOS implementation with Combine and async/await support
  *
  * Author: Fahed Mlaiel (mlaiel@live.de)
@@ -29,12 +29,12 @@ public class AinflueSdk: ObservableObject {
     @Published public var metrics: SDKMetrics = SDKMetrics()
     
     // MARK: - Constants
-    private static let userAgent = "Ainflue-iOS-SDK/1.0.0"
+    private static let userAgent = "IA Chérie-iOS-SDK/1.0.0"
     private static let defaultTimeout: TimeInterval = 30.0
     
     // MARK: - Initialization
     
-    /// Initialize the Ainflue SDK with configuration
+    /// Initialize the IA Chérie SDK with configuration
     /// Implementation: Mobile + Security + DevOps
     public init(configuration: SdkConfiguration) throws {
         self.configuration = configuration
@@ -53,7 +53,7 @@ public class AinflueSdk: ObservableObject {
         // Setup network monitoring
         self.setupNetworkMonitoring()
         
-        logger.info("Ainflue iOS SDK initialized with base URL: \(configuration.baseURL)")
+        logger.info("IA Chérie iOS SDK initialized with base URL: \(configuration.baseURL)")
     }
     
     // MARK: - HTTP Methods

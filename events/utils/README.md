@@ -1,5 +1,5 @@
 # 🛠️ Events Utils Module - Advanced Event Processing Utilities & Optimization
-**Ainflue Platform - Enterprise Event Utilities Infrastructure**
+**IA Chérie Platform - Enterprise Event Utilities Infrastructure**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise Overview
 
-The **Events Utils Module** provides a comprehensive suite of advanced utilities, optimization tools, and supporting infrastructure for event-driven architecture in the Ainflue platform, specifically designed for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated industrial system delivers enterprise-grade event processing utilities, performance optimization, debugging tools, and comprehensive monitoring capabilities.
+The **Events Utils Module** provides a comprehensive suite of advanced utilities, optimization tools, and supporting infrastructure for event-driven architecture in the IA Chérie platform, specifically designed for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated industrial system delivers enterprise-grade event processing utilities, performance optimization, debugging tools, and comprehensive monitoring capabilities.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -561,7 +561,7 @@ await debugging_inspector.configure_monitoring({
 version: '3.8'
 services:
   event-utils-manager:
-    image: ainflue/event-utils-manager:latest
+    image: iacherie/event-utils-manager:latest
     deploy:
       replicas: 3
       resources:
@@ -580,7 +580,7 @@ services:
       - "8080:8080"
       
   performance-optimizer:
-    image: ainflue/performance-optimizer:latest
+    image: iacherie/performance-optimizer:latest
     deploy:
       replicas: 2
       resources:
@@ -625,7 +625,7 @@ active_creators = Gauge('active_creators_count', 'Number of active creators')
 
 ## 📝 **Summary**
 
-The Events Utils Module represents the pinnacle of event processing utilities and optimization for the Ainflue platform, specifically designed for multi-format content creators. With advanced optimization algorithms, comprehensive monitoring capabilities, and intelligent debugging tools, this module ensures maximum performance, reliability, and scalability for all event-driven workflows while providing deep insights into creator success metrics.
+The Events Utils Module represents the pinnacle of event processing utilities and optimization for the IA Chérie platform, specifically designed for multi-format content creators. With advanced optimization algorithms, comprehensive monitoring capabilities, and intelligent debugging tools, this module ensures maximum performance, reliability, and scalability for all event-driven workflows while providing deep insights into creator success metrics.
 
 **🎯 Mission:** Deliver the world's most advanced event processing utilities for content creators, enabling optimal performance, intelligent optimization, and comprehensive monitoring across the entire creator ecosystem.
 

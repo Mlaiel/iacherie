@@ -669,7 +669,7 @@ Calculate user distribution across platforms"""
             self.data_connections = {
                 'primary_db': {
                     'type': 'postgresql',
-                    'connection_string': 'postgresql://ainflue:password@localhost:5432/ainflue_metrics',
+                    'connection_string': 'postgresql://iacherie:password@localhost:5432/ainflue_metrics',
                     'pool_size': 20,
                     'status': 'simulated'  # In production would be 'connected'
                 },

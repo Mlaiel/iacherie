@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +12,7 @@
 """
 Monitoring Infrastructure Module
 
-Enterprise monitoring and observability infrastructure for Ainflue platform.
+Enterprise monitoring and observability infrastructure for IA Chérie platform.
 Provides comprehensive monitoring, alerting, and observability capabilities.
 """
 

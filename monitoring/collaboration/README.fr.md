@@ -2,7 +2,7 @@
 
 ## Aperçu
 
-Le **Module de Surveillance des Collaborations** est un système de niveau entreprise pour surveiller et optimiser les partenariats de collaboration alimentés par IA sur la plateforme Ainflue. Il fournit des outils complets pour les algorithmes de matching, les prédictions de succès, le suivi ROI et les évaluations de confiance.
+Le **Module de Surveillance des Collaborations** est un système de niveau entreprise pour surveiller et optimiser les partenariats de collaboration alimentés par IA sur la plateforme IA Chérie. Il fournit des outils complets pour les algorithmes de matching, les prédictions de succès, le suivi ROI et les évaluations de confiance.
 
 ## Fonctionnalités Principales
 

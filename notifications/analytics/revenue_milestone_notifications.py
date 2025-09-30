@@ -1,7 +1,7 @@
 """
 🚀 REVENUE MILESTONE NOTIFICATIONS ENGINE
 ======================================
-Enterprise-grade revenue milestone detection and celebration system for Ainflue Platform.
+Enterprise-grade revenue milestone detection and celebration system for IA Chérie Platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

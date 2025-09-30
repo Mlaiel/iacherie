@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🤖 AI TESTING FRAMEWORK ENTERPRISE - AINFLUE IA INFLUENCER AGENT
+🤖 AI TESTING FRAMEWORK ENTERPRISE - IACHERIE IA INFLUENCER AGENT
 ===============================================================
 
 Framework de testing IA ultra-avancé pour l'écosystème qualité enterprise,

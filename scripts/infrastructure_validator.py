@@ -170,7 +170,7 @@ class InfrastructureValidator:
                 },
                 'database': {
                     'type': 'database',
-                    'endpoint': 'postgresql://localhost:5432/ainflue',
+                    'endpoint': 'postgresql://localhost:5432/iacherie',
                     'expected_response_time': 1.0
                 },
                 'cache': {
@@ -1199,7 +1199,7 @@ async def main():
     """Main function for command-line usage"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Infrastructure Validator')
+    parser = argparse.ArgumentParser(description='IA Chérie Infrastructure Validator')
     parser.add_argument('--config', help='Configuration file path', default='infrastructure_validation.yaml')
     parser.add_argument('--categories', nargs='+', help='Categories to validate', 
                        choices=['security', 'performance', 'availability', 'compliance'])

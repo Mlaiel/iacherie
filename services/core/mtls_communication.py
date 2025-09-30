@@ -181,9 +181,9 @@ class mTLSManager:
                     x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                     x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                     x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                    x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue Enterprise"),
+                    x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chérie Enterprise"),
                     x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Security"),
-                    x509.NameAttribute(NameOID.COMMON_NAME, "Ainflue Enterprise CA"),
+                    x509.NameAttribute(NameOID.COMMON_NAME, "IA Chérie Enterprise CA"),
                 ])
                 
                 ca_cert = x509.CertificateBuilder().subject_name(
@@ -229,7 +229,7 @@ class mTLSManager:
                     x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                     x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                     x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                    x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue Enterprise"),
+                    x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chérie Enterprise"),
                     x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Services"),
                     x509.NameAttribute(NameOID.COMMON_NAME, self.config.service_name),
                 ])
@@ -513,7 +513,7 @@ class mTLSManager:
                 headers={
                     'X-Service-Name': self.config.service_name,
                     'X-mTLS-Version': '1.0',
-                    'User-Agent': f'Ainflue-Service/{self.config.service_name}'
+                    'User-Agent': f'IA Chérie-Service/{self.config.service_name}'
                 }
             )
             

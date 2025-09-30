@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # =================================================================
-# Ainflue Platform Deployment Script
+# IA Chérie Platform Deployment Script
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Description: Complete automated deployment for Ainflue Platform
+# Description: Complete automated deployment for IA Chérie Platform
 # Usage: ./scripts/deploy.sh [environment] [options]
 # =================================================================
 
@@ -22,9 +22,9 @@ NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 ENVIRONMENT="${1:-production}"
-NAMESPACE="ainflue"
-MONITORING_NAMESPACE="ainflue-monitoring"
-DOCKER_REGISTRY="${DOCKER_REGISTRY:-docker.io/ainflue}"
+NAMESPACE="iacherie"
+MONITORING_NAMESPACE="iacherie-monitoring"
+DOCKER_REGISTRY="${DOCKER_REGISTRY:-docker.io/iacherie}"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
 KUBECONFIG="${KUBECONFIG:-$HOME/.kube/config}"
 
@@ -68,12 +68,12 @@ show_usage() {
     cat << EOF
 Usage: $0 [OPTIONS]
 
-Ainflue Platform Deployment Script
+IA Chérie Platform Deployment Script
 
 OPTIONS:
     -e, --environment ENV    Target environment (production|staging|development) [default: production]
-    -n, --namespace NAME     Kubernetes namespace [default: ainflue]
-    -r, --registry URL       Docker registry URL [default: registry.ainflue.com]
+    -n, --namespace NAME     Kubernetes namespace [default: iacherie]
+    -r, --registry URL       Docker registry URL [default: registry.iacherie.com]
     -t, --tag TAG           Docker image tag [default: latest]
     -d, --dry-run           Perform a dry run without making changes
     -s, --skip-tests        Skip running tests before deployment
@@ -238,10 +238,10 @@ build_images() {
     print_status "Building Docker images..."
     
     local images=(
-        "ainflue/platform:$IMAGE_TAG"
-        "ainflue/crawler:$IMAGE_TAG"
-        "ainflue/analytics:$IMAGE_TAG"
-        "ainflue/ai-engine:$IMAGE_TAG"
+        "iacherie/platform:$IMAGE_TAG"
+        "iacherie/crawler:$IMAGE_TAG"
+        "iacherie/analytics:$IMAGE_TAG"
+        "iacherie/ai-engine:$IMAGE_TAG"
     )
     
     for image in "${images[@]}"; do
@@ -269,10 +269,10 @@ push_images() {
     fi
     
     local images=(
-        "ainflue/platform:$IMAGE_TAG"
-        "ainflue/crawler:$IMAGE_TAG"
-        "ainflue/analytics:$IMAGE_TAG"
-        "ainflue/ai-engine:$IMAGE_TAG"
+        "iacherie/platform:$IMAGE_TAG"
+        "iacherie/crawler:$IMAGE_TAG"
+        "iacherie/analytics:$IMAGE_TAG"
+        "iacherie/ai-engine:$IMAGE_TAG"
     )
     
     for image in "${images[@]}"; do
@@ -345,10 +345,10 @@ wait_for_deployment() {
     print_status "Waiting for deployment to be ready..."
     
     local deployments=(
-        "ainflue-api"
-        "ainflue-crawler"
-        "ainflue-analytics"
-        "ainflue-ai-engine"
+        "iacherie-api"
+        "iacherie-crawler"
+        "iacherie-analytics"
+        "iacherie-ai-engine"
     )
     
     for deployment in "${deployments[@]}"; do
@@ -372,9 +372,9 @@ run_health_checks() {
     # Get service endpoint
     local api_endpoint
     if [[ $ENVIRONMENT == "production" ]]; then
-        api_endpoint="https://api.ainflue.com"
+        api_endpoint="https://api.iacherie.com"
     elif [[ $ENVIRONMENT == "staging" ]]; then
-        api_endpoint="https://staging-api.ainflue.com"
+        api_endpoint="https://staging-api.iacherie.com"
     else
         api_endpoint="http://localhost:8000"
     fi
@@ -425,7 +425,7 @@ send_notification() {
     "attachments": [
         {
             "color": "$color",
-            "title": "Ainflue Deployment Notification",
+            "title": "IA Chérie Deployment Notification",
             "fields": [
                 {
                     "title": "Environment",
@@ -467,10 +467,10 @@ rollback_deployment() {
     print_error "Deployment failed. Initiating rollback..."
     
     local deployments=(
-        "ainflue-api"
-        "ainflue-crawler"
-        "ainflue-analytics"
-        "ainflue-ai-engine"
+        "iacherie-api"
+        "iacherie-crawler"
+        "iacherie-analytics"
+        "iacherie-ai-engine"
     )
     
     for deployment in "${deployments[@]}"; do
@@ -490,7 +490,7 @@ cleanup() {
     print_status "Cleaning up..."
     
     # Remove temporary files
-    rm -f /tmp/ainflue-deploy-*
+    rm -f /tmp/iacherie-deploy-*
     
     # Logout from Docker registry
     docker logout "$DOCKER_REGISTRY" &> /dev/null || true
@@ -498,7 +498,7 @@ cleanup() {
 
 # Main deployment function
 main() {
-    print_status "Starting Ainflue Platform Deployment"
+    print_status "Starting IA Chérie Platform Deployment"
     print_status "Environment: $ENVIRONMENT"
     print_status "Namespace: $NAMESPACE"
     print_status "Image Tag: $IMAGE_TAG"
@@ -548,8 +548,8 @@ Deployed At:    $deployment_time
 🔗 Useful Commands:
 • View pods:        kubectl get pods -n $NAMESPACE
 • View services:    kubectl get svc -n $NAMESPACE
-• View logs:        kubectl logs -f deployment/ainflue-api -n $NAMESPACE
-• Scale deployment: kubectl scale deployment ainflue-api --replicas=5 -n $NAMESPACE
+• View logs:        kubectl logs -f deployment/iacherie-api -n $NAMESPACE
+• Scale deployment: kubectl scale deployment iacherie-api --replicas=5 -n $NAMESPACE
 
 📧 Support: mlaiel@live.de
 © 2025 Fahed Mlaiel. All rights reserved.

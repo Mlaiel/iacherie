@@ -1,5 +1,5 @@
 """
-Organic Reach Maximizer for Ainflue Distribution Platform
+Organic Reach Maximizer for IA Chérie Distribution Platform
 
 Advanced organic reach optimization system using AI-powered content optimization,
 timing strategies, and engagement algorithms to maximize content visibility

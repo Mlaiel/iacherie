@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/service_registry/`  
+**Location**: `/workspaces/IA Chérie/microservices/service_registry/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Service Registry  
-**Purpose**: Service Registry Enterprise pour gestion microservices Ainflue
+**Purpose**: Service Registry Enterprise pour gestion microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -35,13 +35,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Distributed Registry Core - Ainflue Enterprise
+Distributed Registry Core - IA Chérie Enterprise
 ==============================================
 Core registry distribué avec consensus, réplication et haute disponibilité.
 Support multi-nœuds avec consistent hashing et failover automatique.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Registry
+Project: IA Chérie Service Registry
 Version: 1.0 Production
 """
 
@@ -72,7 +72,7 @@ class ServiceStatus(Enum):
 
 @dataclass
 class ServiceInstance:
-    """Instance de service avec métadonnées complètes Ainflue"""
+    """Instance de service avec métadonnées complètes IA Chérie"""
     service_id: str
     service_name: str
     host: str
@@ -117,7 +117,7 @@ class DistributedRegistryCore:
         - Service versioning avec backward compatibility
         - Health check integration avec auto-deregistration
         - Service mesh sidecar coordination
-        - Business domain classification pour Ainflue workflows
+        - Business domain classification pour IA Chérie workflows
         - Geographic placement avec datacenter awareness
         - Load balancing weight calculation
         - Service dependency mapping
@@ -148,7 +148,7 @@ class DistributedRegistryCore:
         return hashlib.sha256(placement_key.encode()).hexdigest()
         
     async def _validate_ainflue_business_constraints(self, instance: ServiceInstance) -> bool:
-        """Validation contraintes métier Ainflue pour enregistrement."""
+        """Validation contraintes métier IA Chérie pour enregistrement."""
 ```
 
 #### 2. `service_discovery_engine.py` - Moteur Discovery Avancé
@@ -399,7 +399,7 @@ class SecurityPolicyEngine:
 ```python
 class ContentServiceRegistry:
     """
-    Registry spécialisé pour services contenu Ainflue.
+    Registry spécialisé pour services contenu IA Chérie.
     Content-aware registration + media processing service discovery + creator workflows.
     """
     
@@ -435,7 +435,7 @@ class ContentServiceRegistry:
 ```python
 class AIServiceOrchestration:
     """
-    Orchestration services IA/ML pour Ainflue.
+    Orchestration services IA/ML pour IA Chérie.
     GPU scheduling + model serving + inference optimization + AI workflow management.
     """
     
@@ -713,7 +713,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Service registry pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Service registry pour workflow créateurs → distribution
 - **Code Industriel**: ✅ Distributed + ML intelligent + security + analytics
 - **Microservices Registry**: ✅ Service mesh + discovery + health monitoring
 - **Creator Economy Focus**: ✅ Content-aware + collaboration + monetization registry
@@ -780,7 +780,7 @@ Chaque README doit contenir:
 6. `security_policy_engine.py` - Security policies avec compliance monitoring
 
 ### **🎯 PHASE 2 - SERVICE LIFECYCLE MANAGEMENT **
-7. `content_service_registry.py` - Registry services contenu Ainflue
+7. `content_service_registry.py` - Registry services contenu IA Chérie
 8. `ai_service_orchestration.py` - Orchestration services IA/ML
 9. `creator_service_coordination.py` - Coordination services créateurs
 10. `monetization_service_registry.py` - Registry services monétisation
@@ -851,4 +851,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module service registry enterprise clé en main, distributed registry + ML discovery + security + analytics + health monitoring, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module service registry enterprise clé en main, distributed registry + ML discovery + security + analytics + health monitoring, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

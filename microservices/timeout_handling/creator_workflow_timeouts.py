@@ -1,11 +1,11 @@
 """
-Creator Workflow Timeouts - Ainflue Enterprise
+Creator Workflow Timeouts - IA Chérie Enterprise
 =============================================
 Timeout management spécialisé pour workflows créateurs.
 Creator-centric timeouts + content processing + collaboration timeouts.
 
 Author: Fahed Mlaiel (mlaiel@live.de)  
-Project: Ainflue Timeout Handling
+Project: IA Chérie Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -66,7 +66,7 @@ class CreatorWorkflowTimeouts:
     def __init__(self):
         self.is_initialized = False
         
-        # Ainflue creator-specific timeout patterns
+        # IA Chérie creator-specific timeout patterns
         self.creator_timeout_patterns = {
             'content_upload': {
                 'audio_upload': {

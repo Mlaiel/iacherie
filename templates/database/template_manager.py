@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-⚡ Ainflue Database Template Manager - Enterprise Grade
+⚡ IA Chérie Database Template Manager - Enterprise Grade
 
 🚨 PROTECTION PROPRIÉTÉ INTELLECTUELLE:
 © 2025 Fahed Mlaiel <mlaiel@live.de>

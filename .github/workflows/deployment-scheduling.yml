@@ -3,7 +3,7 @@
 # Manages deployment scheduling with maintenance windows and automated deployments
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Project: Ainflue Platform Production Deployment
+# Project: IA Chérie Platform Production Deployment
 
 name: 📅 Deployment Scheduling & Maintenance Windows
 
@@ -175,7 +175,7 @@ jobs:
 
           # Check monitoring systems
           echo "📊 Checking monitoring systems availability..."
-          if curl -f --max-time 10 "https://prometheus.ainflue.com/-/healthy" >/dev/null 2>&1; then
+          if curl -f --max-time 10 "https://prometheus.iacherie.com/-/healthy" >/dev/null 2>&1; then
             echo "✅ Prometheus is healthy"
           else
             echo "⚠️ Prometheus health check failed"
@@ -195,7 +195,7 @@ jobs:
         with:
           event_type: 'maintenance-start'
           environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           additional_info: |
             {
               "maintenance_duration": "${{ env.MAINTENANCE_DURATION }}",
@@ -262,7 +262,7 @@ jobs:
         with:
           event_type: 'maintenance-complete'
           environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           additional_info: |
             {
               "deployment_status": "success",

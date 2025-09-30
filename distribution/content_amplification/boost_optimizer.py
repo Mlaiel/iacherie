@@ -1,5 +1,5 @@
 """
-Boost Optimizer for Ainflue Content Amplification Module
+Boost Optimizer for IA Chérie Content Amplification Module
 
 This module provides advanced optimization for paid content boosts,
 managing budget allocation and performance maximization across platforms.

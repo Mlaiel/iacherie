@@ -1,4 +1,4 @@
-# 🤝 Collaboration - Ainflue Integrations
+# 🤝 Collaboration - IA Chérie Integrations
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -139,7 +139,7 @@ SUPPORTED_PLATFORMS = {
 
 ## 🎯 AI Agents Integration
 
-Intégration avec les **53 agents IA spécialisés** Ainflue:
+Intégration avec les **53 agents IA spécialisés** IA Chérie:
 
 ### **Content Generation Agents (12)**
 - Style analysis pour matching

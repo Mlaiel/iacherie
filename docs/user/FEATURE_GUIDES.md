@@ -1,8 +1,8 @@
-# 🎯 Ainflue Feature Guides
+# 🎯 IA Chérie Feature Guides
 
 ## Comprehensive Feature Documentation
 
-**Platform:** Ainflue AI-Powered Content Protection & Monetization  
+**Platform:** IA Chérie AI-Powered Content Protection & Monetization  
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Last Updated:** September 2025
@@ -696,7 +696,7 @@ Setup Requirements:
     "confidence": 0.95,
     "violator_url": "https://youtube.com/watch?v=abc123",
     "evidence": {
-      "screenshot_url": "https://evidence.ainflue.com/screenshot_456.png",
+      "screenshot_url": "https://evidence.iacherie.com/screenshot_456.png",
       "metadata": {
         "upload_date": "2025-09-03T08:15:00Z",
         "views": 1250,
@@ -963,4 +963,4 @@ Security Auditing:
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Proprietary and Confidential - Unauthorized use is strictly prohibited.**
 
-*This feature guide is regularly updated with new capabilities and enhancements. Check [https://docs.ainflue.com/features](https://docs.ainflue.com/features) for the latest feature documentation.*
+*This feature guide is regularly updated with new capabilities and enhancements. Check [https://docs.iacherie.com/features](https://docs.iacherie.com/features) for the latest feature documentation.*

@@ -1,5 +1,5 @@
 """IA Influencer Agent - Schema Evolution Registry
-Schema Evolution and Compatibility Management for Ainflue Event Streaming
+Schema Evolution and Compatibility Management for IA Chérie Event Streaming
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -228,7 +228,7 @@ class CompatibilityCheck:
 
 
 class AinflueBusinesSchemas:
-    """Predefined schema templates for Ainflue business events"""
+    """Predefined schema templates for IA Chérie business events"""
     
     CONTENT_UPLOAD_SCHEMA = {
         "type": "object",
@@ -509,7 +509,7 @@ class CompatibilityChecker:
 
 
 class SchemaEvolutionRegistry:
-    """Main registry for managing schema evolution in Ainflue platform"""
+    """Main registry for managing schema evolution in IA Chérie platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -518,15 +518,15 @@ class SchemaEvolutionRegistry:
         self.validator = SchemaValidator()
         self.compatibility_checker = CompatibilityChecker()
         
-        # Initialize with Ainflue business schemas
+        # Initialize with IA Chérie business schemas
         self._initialize_business_schemas()
     
     def _initialize_business_schemas(self):
-        """Initialize with predefined Ainflue business schemas"""
+        """Initialize with predefined IA Chérie business schemas"""
         try:
             # Content upload schema
             content_schema = SchemaVersion(
-                schema_id="ainflue.content.upload",
+                schema_id="iacherie.content.upload",
                 version=1,
                 schema_content=AinflueBusinesSchemas.CONTENT_UPLOAD_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
@@ -536,11 +536,11 @@ class SchemaEvolutionRegistry:
                 description="Schema for content upload events",
                 tags=["content", "upload", "core"]
             )
-            self.schemas["ainflue.content.upload"].append(content_schema)
+            self.schemas["iacherie.content.upload"].append(content_schema)
             
             # Revenue event schema
             revenue_schema = SchemaVersion(
-                schema_id="ainflue.revenue.event",
+                schema_id="iacherie.revenue.event",
                 version=1,
                 schema_content=AinflueBusinesSchemas.REVENUE_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
@@ -550,11 +550,11 @@ class SchemaEvolutionRegistry:
                 description="Schema for revenue and payment events",
                 tags=["revenue", "payment", "finance"]
             )
-            self.schemas["ainflue.revenue.event"].append(revenue_schema)
+            self.schemas["iacherie.revenue.event"].append(revenue_schema)
             
             # Collaboration event schema
             collaboration_schema = SchemaVersion(
-                schema_id="ainflue.collaboration.event",
+                schema_id="iacherie.collaboration.event",
                 version=1,
                 schema_content=AinflueBusinesSchemas.COLLABORATION_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
@@ -564,9 +564,9 @@ class SchemaEvolutionRegistry:
                 description="Schema for collaboration events",
                 tags=["collaboration", "creator", "matching"]
             )
-            self.schemas["ainflue.collaboration.event"].append(collaboration_schema)
+            self.schemas["iacherie.collaboration.event"].append(collaboration_schema)
             
-            logger.info("Initialized Ainflue business schemas")
+            logger.info("Initialized IA Chérie business schemas")
             
         except Exception as e:
             logger.error(f"Error initializing business schemas: {e}")

@@ -60,7 +60,7 @@ log() {
 show_header() {
     echo -e "${PURPLE}${BOLD}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║                  🚀 AINFLUE DEPLOYMENT AUTOMATION               ║"
+    echo "║                  🚀 IACHERIE DEPLOYMENT AUTOMATION               ║"
     echo "║                                                                  ║"
     echo "║      Multi-platform Desktop Build & Distribution System         ║"
     echo "║                                                                  ║"
@@ -354,7 +354,7 @@ create_release_notes() {
     local release_notes_file="${BUILD_DIR}/RELEASE_NOTES_${version}.md"
     
     cat > "$release_notes_file" << EOF
-# Ainflue Desktop v${version}
+# IA Chérie Desktop v${version}
 
 **Release Date**: $(date '+%Y-%m-%d')
 **Environment**: ${ENVIRONMENT}
@@ -413,15 +413,15 @@ setup_auto_update() {
   "releaseDate": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "platforms": {
     "win32": {
-      "url": "https://releases.ainflue.com/desktop/v${version}/Ainflue-Setup-${version}.exe",
+      "url": "https://releases.iacherie.com/desktop/v${version}/IA Chérie-Setup-${version}.exe",
       "sha256": "$(sha256sum "${BUILD_DIR}/"*Setup*.exe 2>/dev/null | cut -d' ' -f1 || echo 'TBD')"
     },
     "darwin": {
-      "url": "https://releases.ainflue.com/desktop/v${version}/Ainflue-${version}.dmg",
+      "url": "https://releases.iacherie.com/desktop/v${version}/IA Chérie-${version}.dmg",
       "sha256": "$(sha256sum "${BUILD_DIR}/"*.dmg 2>/dev/null | cut -d' ' -f1 || echo 'TBD')"
     },
     "linux": {
-      "url": "https://releases.ainflue.com/desktop/v${version}/Ainflue-${version}.AppImage",
+      "url": "https://releases.iacherie.com/desktop/v${version}/IA Chérie-${version}.AppImage",
       "sha256": "$(sha256sum "${BUILD_DIR}/"*.AppImage 2>/dev/null | cut -d' ' -f1 || echo 'TBD')"
     }
   }
@@ -551,7 +551,7 @@ main() {
     local start_time=$(date +%s)
     local version=$(get_build_version)
     
-    log "INFO" "🚀 Starting deployment for Ainflue Desktop v${version}"
+    log "INFO" "🚀 Starting deployment for IA Chérie Desktop v${version}"
     log "INFO" "🎯 Target platform: $TARGET_PLATFORM"
     log "INFO" "🌍 Environment: $ENVIRONMENT"
     log "INFO" "🔐 Code signing: $ENABLE_SIGNING"
@@ -604,7 +604,7 @@ main() {
     echo "╔══════════════════════════════════════════════════════════════════╗"
     echo "║                    ✅ DEPLOYMENT SUCCESSFUL                      ║"
     echo "║                                                                  ║"
-    echo "║  Ainflue Desktop v${version} built for: $TARGET_PLATFORM        ║"
+    echo "║  IA Chérie Desktop v${version} built for: $TARGET_PLATFORM        ║"
     echo "║  Environment: $ENVIRONMENT                                       ║"
     echo "║  Build time: ${duration} seconds                                 ║"
     echo "║  Output: ${BUILD_DIR}                                            ║"

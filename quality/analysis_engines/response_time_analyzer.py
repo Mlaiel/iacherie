@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Response Time Analyzer - Ainflue Quality Platform
+Response Time Analyzer - IA Chérie Quality Platform
 ===============================================
 
 Enterprise-grade response time analysis and performance monitoring system.

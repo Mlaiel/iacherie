@@ -1,6 +1,6 @@
 """
 🚀 VIRAL POTENTIAL ALERTS
-Ainflue Platform - Viral Content Detection System
+IA Chérie Platform - Viral Content Detection System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

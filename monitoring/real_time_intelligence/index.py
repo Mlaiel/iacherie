@@ -104,7 +104,7 @@ class TrendDetector:
 
 
 class RealTimeIntelligence:
-    """Intelligence temps réel enterprise Ainflue"""
+    """Intelligence temps réel enterprise IA Chérie"""
     
     def __init__(self, config):
         self.config = config

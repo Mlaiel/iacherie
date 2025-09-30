@@ -651,7 +651,7 @@ class NotificationPreferenceManager:
             token = str(uuid.uuid4())
             await self.redis.setex(f"unsubscribe_token:{token}", 7 * 24 * 3600, json.dumps(unsubscribe_data))
             
-            base_url = self.config.get('unsubscribe_base_url', 'https://app.ainflue.com/unsubscribe')
+            base_url = self.config.get('unsubscribe_base_url', 'https://app.iacherie.com/unsubscribe')
             return f"{base_url}?token={token}"
             
         except Exception as e:

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Postman Collection Generator for Ainflue API
+Postman Collection Generator for IA Chérie API
 
 This script generates comprehensive Postman collections from the OpenAPI specification
-to enable easy testing and development with the Ainflue API.
+to enable easy testing and development with the IA Chérie API.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved.
@@ -60,7 +60,7 @@ class PostmanCollectionGenerator:
                         "exec": [
                             "// Global pre-request script",
                             "if (!pm.environment.get('base_url')) {",
-                            "    pm.environment.set('base_url', 'https://api.ainflue.com/v1');",
+                            "    pm.environment.set('base_url', 'https://api.iacherie.com/v1');",
                             "}",
                             "",
                             "// Set request timestamp",
@@ -93,7 +93,7 @@ class PostmanCollectionGenerator:
             "variable": [
                 {
                     "key": "base_url",
-                    "value": "https://api.ainflue.com/v1",
+                    "value": "https://api.iacherie.com/v1",
                     "type": "string"
                 },
                 {
@@ -129,7 +129,7 @@ This collection uses Bearer token authentication. The token is automatically set
 
 ### Required Environment Variables:
 
-- `base_url`: API base URL (default: https://api.ainflue.com/v1)
+- `base_url`: API base URL (default: https://api.iacherie.com/v1)
 - `test_email`: Your test account email
 - `test_password`: Your test account password
 - `api_key`: Your API key (alternative to JWT)
@@ -543,7 +543,7 @@ Generated on: {datetime.now().isoformat()}
             "values": [
                 {
                     "key": "base_url",
-                    "value": servers[0]['url'] if servers else "https://api.ainflue.com/v1",
+                    "value": servers[0]['url'] if servers else "https://api.iacherie.com/v1",
                     "enabled": True,
                     "type": "default"
                 },
@@ -633,12 +633,12 @@ def main():
         environment = generator.generate_environment()
         
         # Save collection
-        collection_path = os.path.join(script_dir, 'ainflue-api-collection.json')
+        collection_path = os.path.join(script_dir, 'iacherie-api-collection.json')
         with open(collection_path, 'w', encoding='utf-8') as f:
             json.dump(collection, f, indent=2, ensure_ascii=False)
         
         # Save environment
-        environment_path = os.path.join(script_dir, 'ainflue-api-environment.json')
+        environment_path = os.path.join(script_dir, 'iacherie-api-environment.json')
         with open(environment_path, 'w', encoding='utf-8') as f:
             json.dump(environment, f, indent=2, ensure_ascii=False)
         

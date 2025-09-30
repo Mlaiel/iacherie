@@ -1,5 +1,5 @@
 """
-Dependency Fallbacks for Ainflue Platform
+Dependency Fallbacks for IA Chérie Platform
 Provides basic functionality when optional dependencies are missing.
 """
 

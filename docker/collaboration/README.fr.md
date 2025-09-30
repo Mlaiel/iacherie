@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le module Services de Collaboration fournit des capacités de correspondance de collaboration alimentées par l'IA et d'orchestration de projets de niveau entreprise pour la plateforme Ainflue. Ce module permet aux créateurs de se découvrir, se connecter et collaborer grâce à des algorithmes de correspondance intelligents et une gestion automatisée des flux de travail.
+Le module Services de Collaboration fournit des capacités de correspondance de collaboration alimentées par l'IA et d'orchestration de projets de niveau entreprise pour la plateforme IA Chérie. Ce module permet aux créateurs de se découvrir, se connecter et collaborer grâce à des algorithmes de correspondance intelligents et une gestion automatisée des flux de travail.
 
 ## Architecture
 
@@ -44,8 +44,8 @@ Ce module contient 11 services Docker spécialisés pour la gestion de collabora
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/collaboration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/collaboration
 
 # Démarrer les services de collaboration
 docker-compose -f docker-compose.collaboration.yml up -d
@@ -170,4 +170,4 @@ Copyright (c) 2025 Fahed Mlaiel. Tous droits réservés.
 
 Pour le support technique et les questions :
 - Email : mlaiel@live.de
-- GitHub Issues : https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues : https://github.com/Mlaiel/IA Chérie/issues

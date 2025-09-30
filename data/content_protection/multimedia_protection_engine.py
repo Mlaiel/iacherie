@@ -3,7 +3,7 @@
 =================================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/multimedia_protection_engine.py
+Module: /workspaces/IA Chérie/data/content_protection/multimedia_protection_engine.py
 Expert Team: Lead Dev IA + Multimedia Expert + Computer Vision + Audio Processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)

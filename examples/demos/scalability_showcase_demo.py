@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enterprise Scalability Showcase Demo for Ainflue Platform
+Enterprise Scalability Showcase Demo for IA Chérie Platform
 =========================================================
 
 Demonstrates high-performance enterprise features, scalability capabilities,

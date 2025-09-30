@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Logging Configuration Module
+"""IA Chérie Logging Configuration Module
 =======================================
 
-Enterprise-grade logging configuration for the Ainflue platform.
+Enterprise-grade logging configuration for the IA Chérie platform.
 Handles structured logging, log aggregation, log rotation, security logging,
 audit trails, and comprehensive monitoring across all system components.
 
@@ -222,7 +222,7 @@ class LoggingConfiguration:
         self.performance_config = PerformanceLoggingConfig()
         
         # Log directories
-        self.log_dir = Path("/var/log/ainflue")
+        self.log_dir = Path("/var/log/iacherie")
         self.log_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize loggers
@@ -279,7 +279,7 @@ class LoggingConfiguration:
             return handler
         
         elif destination == LogDestination.FILE:
-            log_file = self.log_dir / "ainflue.log"
+            log_file = self.log_dir / "iacherie.log"
             handler = logging.handlers.RotatingFileHandler(
                 log_file,
                 maxBytes=self._parse_size(self.rotation_config.max_file_size),
@@ -311,7 +311,7 @@ class LoggingConfiguration:
     def _setup_specific_loggers(self):
         """Setup specific loggers for different components"""
         # Security logger
-        security_logger = logging.getLogger('ainflue.security')
+        security_logger = logging.getLogger('iacherie.security')
         security_handler = logging.handlers.RotatingFileHandler(
             self.log_dir / "security.log",
             maxBytes=self._parse_size("50MB"),
@@ -323,7 +323,7 @@ class LoggingConfiguration:
         self.loggers['security'] = security_logger
         
         # Audit logger
-        audit_logger = logging.getLogger('ainflue.audit')
+        audit_logger = logging.getLogger('iacherie.audit')
         audit_handler = logging.handlers.RotatingFileHandler(
             self.log_dir / "audit.log",
             maxBytes=self._parse_size("100MB"),
@@ -335,7 +335,7 @@ class LoggingConfiguration:
         self.loggers['audit'] = audit_logger
         
         # Performance logger
-        performance_logger = logging.getLogger('ainflue.performance')
+        performance_logger = logging.getLogger('iacherie.performance')
         performance_handler = logging.handlers.RotatingFileHandler(
             self.log_dir / "performance.log",
             maxBytes=self._parse_size("200MB"),
@@ -347,7 +347,7 @@ class LoggingConfiguration:
         self.loggers['performance'] = performance_logger
         
         # Business logger
-        business_logger = logging.getLogger('ainflue.business')
+        business_logger = logging.getLogger('iacherie.business')
         business_handler = logging.handlers.RotatingFileHandler(
             self.log_dir / "business.log",
             maxBytes=self._parse_size("500MB"),
@@ -359,7 +359,7 @@ class LoggingConfiguration:
         self.loggers['business'] = business_logger
         
         # AI/ML logger
-        ai_logger = logging.getLogger('ainflue.ai')
+        ai_logger = logging.getLogger('iacherie.ai')
         ai_handler = logging.handlers.RotatingFileHandler(
             self.log_dir / "ai.log",
             maxBytes=self._parse_size("1GB"),
@@ -374,7 +374,7 @@ class LoggingConfiguration:
         """Get specific logger by name"""
         if name in self.loggers:
             return self.loggers[name]
-        return logging.getLogger(f'ainflue.{name}')
+        return logging.getLogger(f'iacherie.{name}')
     
     def get_complete_config(self) -> Dict[str, Any]:
         """Get complete logging configuration"""

@@ -212,7 +212,7 @@ class AIOperationsIntegration:
 > This DevOps architecture is the EXCLUSIVE intellectual property of **Fahed Mlaiel** (mlaiel@live.de). Any reproduction, modification, distribution or theft of idea/concept/code without PERSONAL written authorization is **STRICTLY FORBIDDEN** and will be prosecuted.
 
 ## 🎯 Enterprise DevOps Automation
-Production-ready DevOps automation suite with CI/CD, Infrastructure as Code, monitoring, DevSecOps, and MLOps integration for the Ainflue creator platform.
+Production-ready DevOps automation suite with CI/CD, Infrastructure as Code, monitoring, DevSecOps, and MLOps integration for the IA Chérie creator platform.
 
 ### 🏗️ Core Components
 - **CI/CD Pipelines**: Multi-environment deployment automation
@@ -266,9 +266,9 @@ Production-ready DevOps automation suite with CI/CD, Infrastructure as Code, mon
 
 ---
 
-## 🚀 INTÉGRATION LOGIQUE MÉTIER AINFLUE
+## 🚀 INTÉGRATION LOGIQUE MÉTIER IACHERIE
 
-### DevOps Pipeline Ainflue-Specific
+### DevOps Pipeline IA Chérie-Specific
 ```mermaid
 graph LR
     A[Creator Upload] --> B[CI/CD Trigger]
@@ -303,10 +303,10 @@ graph LR
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ainflue-devops
+  name: iacherie-devops
 spec:
   source:
-    repoURL: https://github.com/Mlaiel/Ainflue
+    repoURL: https://github.com/Mlaiel/IA Chérie
     path: deployments/production
     targetRevision: main
   destination:
@@ -346,26 +346,26 @@ module "ainflue_infrastructure" {
 ```yaml
 # Jenkins Pipeline
 pipeline {
-    agent { kubernetes { label 'ainflue-agent' } }
+    agent { kubernetes { label 'iacherie-agent' } }
     
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t ainflue:${BUILD_NUMBER} .'
-                sh 'docker push registry.ainflue.com/ainflue:${BUILD_NUMBER}'
+                sh 'docker build -t iacherie:${BUILD_NUMBER} .'
+                sh 'docker push registry.iacherie.com/iacherie:${BUILD_NUMBER}'
             }
         }
         
         stage('Security Scan') {
             steps {
-                sh 'trivy image ainflue:${BUILD_NUMBER}'
-                sh 'sonar-scanner -Dsonar.projectKey=ainflue'
+                sh 'trivy image iacherie:${BUILD_NUMBER}'
+                sh 'sonar-scanner -Dsonar.projectKey=iacherie'
             }
         }
         
         stage('Deploy to Staging') {
             steps {
-                sh 'helm upgrade --install ainflue-staging ./helm --set image.tag=${BUILD_NUMBER}'
+                sh 'helm upgrade --install iacherie-staging ./helm --set image.tag=${BUILD_NUMBER}'
             }
         }
         
@@ -380,7 +380,7 @@ pipeline {
             steps {
                 script {
                     def approval = input message: 'Deploy to production?', ok: 'Deploy'
-                    sh 'helm upgrade --install ainflue-prod ./helm --set image.tag=${BUILD_NUMBER}'
+                    sh 'helm upgrade --install iacherie-prod ./helm --set image.tag=${BUILD_NUMBER}'
                 }
             }
         }
@@ -492,4 +492,4 @@ pipeline {
 
 ---
 
-*Checklist créée par l'équipe d'experts Ainflue sous la direction de **Fahed Mlaiel** - Propriété intellectuelle protégée*
+*Checklist créée par l'équipe d'experts IA Chérie sous la direction de **Fahed Mlaiel** - Propriété intellectuelle protégée*

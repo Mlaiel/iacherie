@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "Database Schemas - Ainflue Enterprise",
+    "name": "Database Schemas - IA Chérie Enterprise",
     "version": "1.0.0",
     "author": "Fahed Mlaiel",
     "created": "2025-12-15",
@@ -441,7 +441,7 @@
     "purpose": "Search and log aggregation",
     "indexes": {
       "content_search": {
-        "name": "ainflue-content-search",
+        "name": "iacherie-content-search",
         "mappings": {
           "properties": {
             "id": {"type": "keyword"},
@@ -461,8 +461,8 @@
         }
       },
       "application_logs": {
-        "name": "ainflue-logs-*",
-        "template_pattern": "ainflue-logs-*",
+        "name": "iacherie-logs-*",
+        "template_pattern": "iacherie-logs-*",
         "mappings": {
           "properties": {
             "@timestamp": {"type": "date"},
@@ -479,7 +479,7 @@
           "number_of_shards": 5,
           "number_of_replicas": 1,
           "index.lifecycle.name": "logs-policy",
-          "index.lifecycle.rollover_alias": "ainflue-logs"
+          "index.lifecycle.rollover_alias": "iacherie-logs"
         }
       }
     }
@@ -523,7 +523,7 @@
   "backup_strategy": {
     "postgresql": {
       "method": "continuous_archiving",
-      "wal_archive": "s3://ainflue-backups/wal/",
+      "wal_archive": "s3://iacherie-backups/wal/",
       "base_backup_frequency": "daily",
       "retention": "30 days",
       "encryption": "AES-256"
@@ -578,6 +578,6 @@
     "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
     "license": "Proprietary - Unauthorized use prohibited",
     "classification": "CONFIDENTIAL",
-    "contact": "legal@ainflue.enterprise"
+    "contact": "legal@iacherie.enterprise"
   }
 }

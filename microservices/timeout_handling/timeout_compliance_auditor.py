@@ -129,7 +129,7 @@ class TimeoutComplianceAuditor:
         self.compliance_cache: Dict[str, Dict[str, Any]] = {}
         self.is_initialized = False
         
-        # Ainflue-specific compliance requirements
+        # IA Chérie-specific compliance requirements
         self.ainflue_compliance_config = {
             'financial_services': {
                 'frameworks': [ComplianceFramework.SOX, ComplianceFramework.PCI_DSS],

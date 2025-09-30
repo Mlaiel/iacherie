@@ -1,4 +1,4 @@
-"""📈 Creator Engagement Health Intelligence | Ainflue Enterprise
+"""📈 Creator Engagement Health Intelligence | IA Chérie Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

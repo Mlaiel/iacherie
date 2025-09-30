@@ -1,4 +1,4 @@
-"""📈 Coverage Orchestrator - Ainflue Platform
+"""📈 Coverage Orchestrator - IA Chérie Platform
 ================================================================
 Expert: TESTING_ARCHITECT + QUALITY_ENGINEER + DEVOPS_ENGINEER
 Created: 2025-01-XX

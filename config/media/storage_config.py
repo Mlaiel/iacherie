@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Storage Configuration Module
+"""IA Chérie Storage Configuration Module
 ======================================
 
-Enterprise-grade storage configuration for the Ainflue platform.
+Enterprise-grade storage configuration for the IA Chérie platform.
 Comprehensive storage management with multi-cloud support, hierarchical storage,
 automated lifecycle management, backup strategies, and intelligent tiering.
 
@@ -739,7 +739,7 @@ class StorageConfiguration:
             name="AWS S3 Primary",
             provider=StorageProvider.AWS_S3,
             region="us-east-1",
-            bucket_name="ainflue-primary",
+            bucket_name="iacherie-primary",
             storage_class=StorageClass.STANDARD,
             tier=StorageTier.HOT,
             priority=9
@@ -751,7 +751,7 @@ class StorageConfiguration:
             name="AWS S3 Backup",
             provider=StorageProvider.AWS_S3,
             region="us-west-2",
-            bucket_name="ainflue-backup",
+            bucket_name="iacherie-backup",
             storage_class=StorageClass.STANDARD_IA,
             tier=StorageTier.WARM,
             priority=7
@@ -762,7 +762,7 @@ class StorageConfiguration:
             endpoint_id="r2_archive",
             name="Cloudflare R2 Archive",
             provider=StorageProvider.CLOUDFLARE_R2,
-            bucket_name="ainflue-archive",
+            bucket_name="iacherie-archive",
             storage_class=StorageClass.STANDARD,
             tier=StorageTier.COOL,
             priority=6
@@ -773,7 +773,7 @@ class StorageConfiguration:
             endpoint_id="local_temp",
             name="Local Temporary Storage",
             provider=StorageProvider.LOCAL_FILESYSTEM,
-            path_prefix="/tmp/ainflue",
+            path_prefix="/tmp/iacherie",
             storage_class=StorageClass.STANDARD,
             tier=StorageTier.HOT,
             priority=5

@@ -239,7 +239,7 @@ ANTHROPIC_API_KEY=your_anthropic_key
 GOOGLE_AI_API_KEY=your_google_ai_key
 
 # Database Configuration
-MONGODB_URL=mongodb://localhost:27017/ainflue
+MONGODB_URL=mongodb://localhost:27017/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Performance Configuration
@@ -355,8 +355,8 @@ INTELLIGENCE_CONFIG = {
 
 ```bash
 # Clone repository (authorized access only)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/intelligence
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/intelligence
 
 # Install dependencies
 pip install -r requirements.txt
@@ -376,13 +376,13 @@ python index.py
 
 ```bash
 # Build Docker image
-docker build -t ainflue-intelligence .
+docker build -t iacherie-intelligence .
 
 # Deploy with Kubernetes
 kubectl apply -f deployment/
 
 # Monitor deployment
-kubectl get pods -l app=ainflue-intelligence
+kubectl get pods -l app=iacherie-intelligence
 ```
 
 ## 📚 Documentation

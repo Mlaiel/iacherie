@@ -2,7 +2,7 @@
 
 /**
  * Development Server für Dev Container Support
- * Ainflue Frontend Platform
+ * IA Chérie Frontend Platform
  */
 
 const express = require('express')
@@ -25,7 +25,7 @@ app.prepare().then(() => {
   server.get('/health', (req, res) => {
     res.json({ 
       status: 'healthy', 
-      service: 'Ainflue Frontend',
+      service: 'IA Chérie Frontend',
       timestamp: new Date().toISOString(),
       port: PORT,
       backend: API_URL
@@ -50,7 +50,7 @@ app.prepare().then(() => {
       console.error('❌ Server start error:', err)
       throw err
     }
-    console.log(`🚀 Ainflue Frontend Server ready on http://0.0.0.0:${PORT}`)
+    console.log(`🚀 IA Chérie Frontend Server ready on http://0.0.0.0:${PORT}`)
     console.log(`🔗 Backend API: ${API_URL}`)
     console.log(`🌐 External access: https://shiny-lamp-r6j79jw765vf544g-3000.app.github.dev`)
     console.log(`✅ Health check: http://0.0.0.0:${PORT}/health`)

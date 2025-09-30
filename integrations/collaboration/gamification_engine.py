@@ -1,11 +1,11 @@
 """
-Advanced Gamification Engine - Ainflue Integrations
+Advanced Gamification Engine - IA Chérie Integrations
 =================================================
 Comprehensive engagement and motivation system for creator collaborations.
 Features 200+ badges, leaderboards, XP system, and community building.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chérie Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -366,7 +366,7 @@ class AdvancedGamificationEngine:
                 description=badge_def["description"],
                 category=badge_def["category"],
                 rarity=badge_def["rarity"],
-                icon_url=f"https://ainflue.com/badges/{badge_def['name'].lower().replace(' ', '_')}.png",
+                icon_url=f"https://iacherie.com/badges/{badge_def['name'].lower().replace(' ', '_')}.png",
                 xp_reward=badge_def["xp_reward"],
                 requirements=badge_def["requirements"]
             )
@@ -398,7 +398,7 @@ class AdvancedGamificationEngine:
                 description=description,
                 category=category,
                 rarity=rarity,
-                icon_url=f"https://ainflue.com/badges/{name.lower().replace(' ', '_')}.png",
+                icon_url=f"https://iacherie.com/badges/{name.lower().replace(' ', '_')}.png",
                 xp_reward=self._calculate_badge_xp(rarity),
                 requirements={"custom": True}
             )
@@ -470,7 +470,7 @@ class AdvancedGamificationEngine:
                 category=skill_def["category"],
                 max_level=skill_def["max_level"],
                 levels=levels,
-                icon_url=f"https://ainflue.com/skills/{skill_def['name'].lower().replace(' ', '_')}.png"
+                icon_url=f"https://iacherie.com/skills/{skill_def['name'].lower().replace(' ', '_')}.png"
             )
             self.skill_trees[skill_id] = skill_tree
     

@@ -1,4 +1,4 @@
-"""Event Lifecycle Manager - Complete Management for Ainflue Events
+"""Event Lifecycle Manager - Complete Management for IA Chérie Events
 
 Comprehensive event lifecycle management with state tracking,
 automated workflows, and business process orchestration.
@@ -69,7 +69,7 @@ class LifecycleRule:
 
 class EventLifecycleManager:
     """
-    Comprehensive event lifecycle manager for Ainflue platform
+    Comprehensive event lifecycle manager for IA Chérie platform
     Manages state transitions, automated workflows, and business processes
     """
     
@@ -82,10 +82,10 @@ class EventLifecycleManager:
         self._initialize_default_rules()
         self._initialize_default_handlers()
         
-        logger.info("EventLifecycleManager initialized for Ainflue platform")
+        logger.info("EventLifecycleManager initialized for IA Chérie platform")
     
     def _initialize_default_rules(self):
-        """Initialize default lifecycle rules for Ainflue events"""
+        """Initialize default lifecycle rules for IA Chérie events"""
         
         # Content lifecycle rule
         content_rule = LifecycleRule(

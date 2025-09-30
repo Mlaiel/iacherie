@@ -71,7 +71,7 @@ class SubstackAPIError(Exception):
 
 class SubstackAPI:
     """
-    Comprehensive Substack API integration for Ainflue platform.
+    Comprehensive Substack API integration for IA Chérie platform.
     
     Features:
     - Newsletter publishing and management

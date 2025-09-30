@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🤖 Enterprise Notification Personalization Engine - Ainflue Platform Core
+🤖 Enterprise Notification Personalization Engine - IA Chérie Platform Core
 AI-driven notification personalization with ML content optimization
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform

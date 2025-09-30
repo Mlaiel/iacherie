@@ -1,0 +1,518 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-api
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api
+    version: v1
+    component: backend-api
+    part-of: ainflue-platform
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ainflue-api
+        version: v1
+        component: backend-api
+        part-of: ainflue-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-api-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-api
+        image: ainflue/api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: METRICS_PORT
+          value: "8090"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: jwt-secret
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: aws-region
+        - name: S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: s3-bucket
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ainflue-api-config
+      - name: temp-storage
+        emptyDir: {}
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        node.kubernetes.io/instance-type: t3.medium
+      tolerations:
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-api
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-ai-engine
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-ai-engine
+    version: v1
+    component: ai-processing
+    part-of: ainflue-platform
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ainflue-ai-engine
+        version: v1
+        component: ai-processing
+        part-of: ainflue-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-ai-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-ai-engine
+        image: ainflue/ai-engine:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: METRICS_PORT
+          value: "8090"
+        - name: MODEL_PATH
+          value: "/models"
+        - name: GPU_ENABLED
+          value: "true"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: openai-api-key
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+            nvidia.com/gpu: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: model-storage
+          mountPath: /models
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: ai-models-pvc
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 10Gi
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        node.kubernetes.io/instance-type: g4dn.xlarge
+        accelerator: nvidia-tesla-t4
+      tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: accelerator
+                operator: In
+                values:
+                - nvidia-tesla-t4
+                - nvidia-tesla-v100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-mobile-api
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-mobile-api
+    version: v1
+    component: mobile-backend
+    part-of: ainflue-platform
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ainflue-mobile-api
+        version: v1
+        component: mobile-backend
+        part-of: ainflue-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-mobile-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-mobile-api
+        image: ainflue/mobile-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: METRICS_PORT
+          value: "8090"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: PUSH_NOTIFICATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: push-notification-key
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ainflue-mobile-config
+      - name: temp-storage
+        emptyDir: {}
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        node.kubernetes.io/instance-type: t3.medium
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-mobile-api
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-worker
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-worker
+    version: v1
+    component: background-worker
+    part-of: ainflue-platform
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ainflue-worker
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ainflue-worker
+        version: v1
+        component: background-worker
+        part-of: ainflue-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-worker-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-worker
+        image: ainflue/worker:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: ENV
+          value: "production"
+        - name: METRICS_PORT
+          value: "8090"
+        - name: WORKER_CONCURRENCY
+          value: "4"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: aws-region
+        - name: S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: s3-bucket
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: metrics
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 5Gi
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        node.kubernetes.io/instance-type: t3.large
+      tolerations:
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 300

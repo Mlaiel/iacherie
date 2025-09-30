@@ -11,10 +11,10 @@ volumes:
   audio_files:
     driver: nfs
     driver_opts:
-      addr: nfs.ainflue.com
+      addr: nfs.iacherie.com
       
 backup_storage:
-  s3_bucket: ainflue-backups
+  s3_bucket: iacherie-backups
   retention_policy: 30d
   encryption: AES256
   

@@ -1,8 +1,8 @@
-# 🛡️ Ainflue Platform Security Hardening Guide
+# 🛡️ IA Chérie Platform Security Hardening Guide
 
 ## 📋 Executive Summary
 
-This comprehensive security hardening guide provides detailed procedures for securing the Ainflue AI-powered content protection and monetization platform. These hardening measures ensure robust protection against cyber threats, maintain compliance with industry standards, and protect creator content and user data.
+This comprehensive security hardening guide provides detailed procedures for securing the IA Chérie AI-powered content protection and monetization platform. These hardening measures ensure robust protection against cyber threats, maintain compliance with industry standards, and protect creator content and user data.
 
 ## 🎯 Security Hardening Objectives
 
@@ -51,7 +51,7 @@ sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config
-echo "AllowUsers ainflue-admin" >> /etc/ssh/sshd_config
+echo "AllowUsers iacherie-admin" >> /etc/ssh/sshd_config
 echo "Protocol 2" >> /etc/ssh/sshd_config
 echo "MaxAuthTries 3" >> /etc/ssh/sshd_config
 echo "ClientAliveInterval 300" >> /etc/ssh/sshd_config
@@ -237,7 +237,7 @@ CMD ["node", "server.js"]
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-restricted
+  name: iacherie-restricted
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -270,11 +270,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-network-policy
+  name: iacherie-network-policy
 spec:
   podSelector:
     matchLabels:
-      app: ainflue
+      app: iacherie
   policyTypes:
   - Ingress
   - Egress
@@ -309,17 +309,17 @@ spec:
 # nginx-security.conf - NGINX security hardening
 server {
     listen 80;
-    server_name ainflue.com www.ainflue.com;
+    server_name iacherie.com www.iacherie.com;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name ainflue.com www.ainflue.com;
+    server_name iacherie.com www.iacherie.com;
 
     # SSL Configuration
-    ssl_certificate /etc/ssl/certs/ainflue.com.crt;
-    ssl_certificate_key /etc/ssl/private/ainflue.com.key;
+    ssl_certificate /etc/ssl/certs/iacherie.com.crt;
+    ssl_certificate_key /etc/ssl/private/iacherie.com.key;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
     ssl_prefer_server_ciphers off;
@@ -572,18 +572,18 @@ CREATE ROLE ainflue_app_user WITH LOGIN PASSWORD 'strong_random_password';
 CREATE ROLE ainflue_readonly WITH LOGIN PASSWORD 'strong_random_password';
 
 -- Grant minimal privileges
-GRANT CONNECT ON DATABASE ainflue TO ainflue_app_user;
+GRANT CONNECT ON DATABASE iacherie TO ainflue_app_user;
 GRANT USAGE ON SCHEMA public TO ainflue_app_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ainflue_app_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO ainflue_app_user;
 
 -- Read-only access for analytics
-GRANT CONNECT ON DATABASE ainflue TO ainflue_readonly;
+GRANT CONNECT ON DATABASE iacherie TO ainflue_readonly;
 GRANT USAGE ON SCHEMA public TO ainflue_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO ainflue_readonly;
 
 -- Revoke public access
-REVOKE ALL ON DATABASE ainflue FROM PUBLIC;
+REVOKE ALL ON DATABASE iacherie FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 
 -- Enable row level security
@@ -664,8 +664,8 @@ host    all             all             127.0.0.1/32            scram-sha-256
 host    all             all             ::1/128                 scram-sha-256
 
 # Application connections
-hostssl ainflue         ainflue_app_user 10.0.0.0/16           scram-sha-256
-hostssl ainflue         ainflue_readonly 10.0.0.0/16           scram-sha-256
+hostssl iacherie         ainflue_app_user 10.0.0.0/16           scram-sha-256
+hostssl iacherie         ainflue_readonly 10.0.0.0/16           scram-sha-256
 
 # Deny all other connections
 host    all             all             0.0.0.0/0               reject
@@ -690,12 +690,12 @@ db.createUser({
 })
 
 // Create application user
-use ainflue
+use iacherie
 db.createUser({
   user: "ainflue_app",
   pwd: "strong_app_password",
   roles: [
-    { role: "readWrite", db: "ainflue" }
+    { role: "readWrite", db: "iacherie" }
   ]
 })
 
@@ -704,7 +704,7 @@ db.createUser({
   user: "ainflue_readonly",
   pwd: "strong_readonly_password",
   roles: [
-    { role: "read", db: "ainflue" }
+    { role: "read", db: "iacherie" }
   ]
 })
 ```
@@ -841,17 +841,17 @@ class User(db.Model):
 openssl genrsa -out ca-key.pem 4096
 
 # Generate CA certificate
-openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem -subj "/C=US/ST=CA/L=San Francisco/O=Ainflue/CN=Ainflue CA"
+openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem -subj "/C=US/ST=CA/L=San Francisco/O=IA Chérie/CN=IA Chérie CA"
 
 # Generate server private key
 openssl genrsa -out server-key.pem 4096
 
 # Generate server certificate signing request
-openssl req -subj "/C=US/ST=CA/L=San Francisco/O=Ainflue/CN=ainflue.com" -sha256 -new -key server-key.pem -out server.csr
+openssl req -subj "/C=US/ST=CA/L=San Francisco/O=IA Chérie/CN=iacherie.com" -sha256 -new -key server-key.pem -out server.csr
 
 # Create extensions file for server certificate
 cat > server-extfile.cnf <<EOF
-subjectAltName = DNS:ainflue.com,DNS:www.ainflue.com,DNS:api.ainflue.com
+subjectAltName = DNS:iacherie.com,DNS:www.iacherie.com,DNS:api.iacherie.com
 extendedKeyUsage = serverAuth
 EOF
 
@@ -862,7 +862,7 @@ openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem 
 openssl genrsa -out client-key.pem 4096
 
 # Generate client certificate signing request
-openssl req -subj "/C=US/ST=CA/L=San Francisco/O=Ainflue/CN=client" -new -key client-key.pem -out client.csr
+openssl req -subj "/C=US/ST=CA/L=San Francisco/O=IA Chérie/CN=client" -new -key client-key.pem -out client.csr
 
 # Create extensions file for client certificate
 echo extendedKeyUsage = clientAuth > client-extfile.cnf
@@ -887,7 +887,7 @@ echo "SSL certificates generated successfully"
 #### ELK Stack Security Configuration
 ```yaml
 # elasticsearch.yml - Elasticsearch security configuration
-cluster.name: ainflue-security
+cluster.name: iacherie-security
 node.name: security-node-1
 
 network.host: 0.0.0.0
@@ -996,7 +996,7 @@ condition:
 actions:
   send_email:
     email:
-      to: ["security@ainflue.com"]
+      to: ["security@iacherie.com"]
       subject: "Security Alert: Potential Attack Detected"
       body: |
         Security alert triggered at {{ctx.execution_time}}.
@@ -1139,7 +1139,7 @@ class SecurityOrchestrator:
     def __init__(self):
         self.celery = Celery('security_tasks')
         self.threat_intel_api = "https://api.threatintel.com"
-        self.siem_api = "https://siem.ainflue.com/api"
+        self.siem_api = "https://siem.iacherie.com/api"
     
     def analyze_security_event(self, event):
         """Analyze security event and determine response"""

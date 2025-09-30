@@ -249,7 +249,7 @@ class EventManagerConfig:
     
     # Redis configuration for distributed events
     redis_url: Optional[str] = None
-    redis_channel_prefix: str = "ainflue:events"
+    redis_channel_prefix: str = "iacherie:events"
 
 EventHandler = Callable[[Event], Union[None, bool, Dict[str, Any], asyncio.Future]]
 
@@ -431,7 +431,7 @@ class WebhookManager:
                 # Prepare headers
                 headers = webhook.headers.copy()
                 headers['Content-Type'] = 'application/json'
-                headers['User-Agent'] = 'Ainflue-Webhook/1.0'
+                headers['User-Agent'] = 'IA Chérie-Webhook/1.0'
                 headers['X-Event-ID'] = event.id
                 headers['X-Event-Type'] = event.type.value
                 

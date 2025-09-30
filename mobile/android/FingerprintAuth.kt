@@ -1,5 +1,5 @@
 /**
- * Ainflue Fingerprint Authentication - Biometric Security Service
+ * IA Chérie Fingerprint Authentication - Biometric Security Service
  * 
  * Advanced biometric authentication system for content creators
  * Supports fingerprint, face recognition, and secure authentication
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.Manifest
 import android.content.Context
@@ -38,7 +38,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 /**
- * Professional Biometric Authentication Service for Ainflue Platform
+ * Professional Biometric Authentication Service for IA Chérie Platform
  * 
  * Features:
  * - Fingerprint authentication
@@ -85,7 +85,7 @@ class FingerprintAuth(private val context: Context) {
      * Biometric authentication configuration
      */
     data class BiometricConfig(
-        val title: String = "Authenticate with Ainflue",
+        val title: String = "Authenticate with IA Chérie",
         val subtitle: String = "Use your biometric to access your account",
         val description: String = "Place your finger on the sensor or look at the camera",
         val negativeButtonText: String = "Use Password",

@@ -5,7 +5,7 @@
 ==========================================================
 
 Distributed tracing enterprise avec OpenTelemetry et cross-service correlation.
-Infrastructure robuste de traçage distribué pour monitoring des pipelines Ainflue.
+Infrastructure robuste de traçage distribué pour monitoring des pipelines IA Chérie.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -491,7 +491,7 @@ class DistributedTracing:
         creator_content: Dict[str, Any],
         pipeline_context: Dict[str, Any]
     ) -> TraceAnalysis:
-        """Trace complet du pipeline Ainflue avec correlation de services"""
+        """Trace complet du pipeline IA Chérie avec correlation de services"""
         
         # Démarrage trace racine
         root_span = await self.start_trace(

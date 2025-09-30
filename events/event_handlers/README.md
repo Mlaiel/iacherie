@@ -1,6 +1,6 @@
 # Event Handlers Enterprise Module
 
-**Professional Event Processing System for Ainflue Platform**
+**Professional Event Processing System for IA Chérie Platform**
 
 **Lead Architect:** Fahed Mlaiel (mlaiel@live.de)  
 **Expert Team:** Lead Dev AI + Senior Backend + ML Engineer + DBA + Security + Microservices + Audio + DevOps + AI Prompt Engineer

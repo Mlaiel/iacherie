@@ -1,11 +1,11 @@
 # Chaos Engineering Service
-# Fault injection and resilience testing for Ainflue Platform
+# Fault injection and resilience testing for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Chaos Engineering - Fault injection and resilience testing"
+LABEL description="IA Chérie Chaos Engineering - Fault injection and resilience testing"
 LABEL version="1.0.0"
 
 # Set working directory

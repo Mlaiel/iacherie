@@ -1,4 +1,4 @@
-# 🚀 Module d'Entraînement ML - Ainflue Enterprise
+# 🚀 Module d'Entraînement ML - IA Chérie Enterprise
 
 **Équipe Expert** : Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -10,11 +10,11 @@
 
 ## 🎯 APERÇU DU MODULE
 
-**Emplacement** : `/workspaces/Ainflue/ml/training/`  
+**Emplacement** : `/workspaces/IA Chérie/ml/training/`  
 **Architecture** : Backend Niveau 3 (Maximum) | Entraînement ML Enterprise  
-**Objectif** : Infrastructure d'Entraînement ML Avancée pour l'Économie des Créateurs Ainflue
+**Objectif** : Infrastructure d'Entraînement ML Avancée pour l'Économie des Créateurs IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs Multi-formats → Traitement IA → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution Multi-plateformes
@@ -33,7 +33,7 @@ Collaboration & Gamification → SEO → Distribution Multi-plateformes
 ### **🌳 ARBRE ARCHITECTURAL COMPLET**
 
 ```
-/workspaces/Ainflue/ml/training/
+/workspaces/IA Chérie/ml/training/
 ├── __init__.py                                # [EXISTANT] Initialisation du module
 ├── index.py                                   # [CRÉÉ] Orchestrateur principal & factory
 ├── training_orchestration_engine.py          # [EXISTANT] Coordinateur pipeline entraînement
@@ -188,7 +188,7 @@ Collaboration & Gamification → SEO → Distribution Multi-plateformes
 
 ## 🔧 POINTS D'INTÉGRATION
 
-### **🤝 Intégration Plateforme Ainflue**
+### **🤝 Intégration Plateforme IA Chérie**
 - **Pipeline de Traitement Contenu** - Déploiement de modèle transparent
 - **Inférence Temps Réel** - Service de modèle à faible latence
 - **Dashboard Créateur** - Visibilité du progrès d'entraînement
@@ -272,4 +272,4 @@ federated_model = await fed_engine.train_collaborative_model(
 **Date** : 16 septembre 2025  
 **Version** : 1.0 Production
 
-> **🎯 OBJECTIF** : Infrastructure d'entraînement ML enterprise pour l'Économie des Créateurs Ainflue, supportant l'entraînement de contenu multi-modal, l'apprentissage distribué, les capacités AutoML, et l'intégration d'intelligence business avec code industriel prêt pour production conforme aux spécifications Ainflue.
+> **🎯 OBJECTIF** : Infrastructure d'entraînement ML enterprise pour l'Économie des Créateurs IA Chérie, supportant l'entraînement de contenu multi-modal, l'apprentissage distribué, les capacités AutoML, et l'intégration d'intelligence business avec code industriel prêt pour production conforme aux spécifications IA Chérie.

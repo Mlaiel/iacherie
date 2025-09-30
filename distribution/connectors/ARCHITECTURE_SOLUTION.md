@@ -5,14 +5,14 @@
 **PROBLÈME IDENTIFIÉ**: 
 - Limite technique: 18 fichiers maximum par dossier backend
 - Besoin métier: 40+ connecteurs de plateformes selon cahier des charges
-- Logique Ainflue: Support multi-plateforme complet pour créateurs
+- Logique IA Chérie: Support multi-plateforme complet pour créateurs
 
 ## 🎯 SOLUTION ARCHITECTURALE RECOMMANDÉE: HYBRID CONSOLIDATION
 
 ### **Architecture Consolidée par Catégorie Business**
 
 ```
-/workspaces/Ainflue/distribution/connectors/
+/workspaces/IA Chérie/distribution/connectors/
 ├── __init__.py                          # [1] Module initialization
 ├── index.py                             # [2] Service entry point
 ├── platform_manager.py                 # [3] Main platform orchestrator
@@ -80,7 +80,7 @@ class SocialMediaConnectors:
 
 ### ✅ **Conformité Business**
 - **40+ plateformes supportées** ✅ CAHIER DES CHARGES RESPECTÉ
-- **Logique métier Ainflue** ✅ MULTI-PLATEFORME COMPLET
+- **Logique métier IA Chérie** ✅ MULTI-PLATEFORME COMPLET
 - **Extensibilité** ✅ NOUVEAUX CONNECTEURS FACILES À AJOUTER
 
 ### ✅ **Performance & Maintenance**
@@ -112,7 +112,7 @@ Cette solution respecte **TOUTES** vos contraintes :
 - ✅ **18 fichiers maximum** (limite technique)
 - ✅ **3 niveaux de profondeur** (limite architecture)
 - ✅ **Support complet multi-plateforme** (besoin business)
-- ✅ **Logique métier Ainflue** (cahier des charges)
+- ✅ **Logique métier IA Chérie** (cahier des charges)
 - ✅ **Extensibilité future** (croissance plateforme)
 
 **RECOMMANDATION**: Procéder avec cette architecture consolidée pour respecter les contraintes techniques tout en satisfaisant les besoins business complets.

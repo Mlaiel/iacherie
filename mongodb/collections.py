@@ -1,7 +1,7 @@
 """MongoDB Collections Management
 ==============================
 
-Advanced collection management for the Ainflue platform including collection
+Advanced collection management for the IA Chérie platform including collection
 creation, validation, schema management, and data operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -307,7 +307,7 @@ def get_collection_manager(connection: Optional[MongoDBConnection] = None) -> Mo
         _default_manager = MongoDBCollectionManager(connection)
     return _default_manager
 
-# Predefined schemas for Ainflue platform collections
+# Predefined schemas for IA Chérie platform collections
 AINFLUE_SCHEMAS = {
     "users": CollectionSchema(
         name="users",

@@ -1,4 +1,4 @@
-# 🛡️ Security Guidelines - Ainflue Platform
+# 🛡️ Security Guidelines - IA Chérie Platform
 
 **Document Version:** 1.0 Enterprise  
 **Last Updated:** September 15, 2025  
@@ -13,7 +13,7 @@
 
 ## 🎯 **Security Overview**
 
-The Ainflue Platform implements enterprise-grade security following industry best practices and compliance standards. Our security architecture provides multiple layers of protection for data, infrastructure, and user privacy.
+The IA Chérie Platform implements enterprise-grade security following industry best practices and compliance standards. Our security architecture provides multiple layers of protection for data, infrastructure, and user privacy.
 
 ### 🔐 **Security Principles**
 
@@ -471,24 +471,24 @@ threat_intelligence:
 incident_response_team:
   incident_commander:
     responsibilities: ["overall response coordination", "communication"]
-    contact: "security-lead@ainflue.com"
-    backup: "cto@ainflue.com"
+    contact: "security-lead@iacherie.com"
+    backup: "cto@iacherie.com"
     
   security_analyst:
     responsibilities: ["threat analysis", "containment actions"]
-    contact: "security-team@ainflue.com"
+    contact: "security-team@iacherie.com"
     
   system_administrator:
     responsibilities: ["system isolation", "recovery actions"]
-    contact: "devops-team@ainflue.com"
+    contact: "devops-team@iacherie.com"
     
   legal_counsel:
     responsibilities: ["regulatory compliance", "external communication"]
-    contact: "legal@ainflue.com"
+    contact: "legal@iacherie.com"
     
   communication_lead:
     responsibilities: ["stakeholder communication", "public relations"]
-    contact: "communications@ainflue.com"
+    contact: "communications@iacherie.com"
 ```
 
 #### **Response Procedures**
@@ -496,7 +496,7 @@ incident_response_team:
 incident_phases:
   detection:
     automated_alerts: "SIEM and monitoring systems"
-    manual_reporting: "security@ainflue.com"
+    manual_reporting: "security@iacherie.com"
     escalation_criteria: "defined severity levels"
     
   containment:
@@ -718,7 +718,7 @@ security_policies:
     approval: "CISO and executive leadership"
     
   acceptable_use_policy:
-    scope: "all users of Ainflue systems"
+    scope: "all users of IA Chérie systems"
     training: "mandatory annual training"
     violations: "disciplinary action"
     
@@ -761,7 +761,7 @@ risk_management:
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue Security Guidelines License Request"
+**Subject:** "IA Chérie Security Guidelines License Request"
 
 ---
 

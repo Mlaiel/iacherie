@@ -1,4 +1,4 @@
-# Ainflue Enterprise Integration Management Suite (Deutsch)
+# IA Chérie Enterprise Integration Management Suite (Deutsch)
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Expertenteam:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 Enterprise Integration Orchestrierung Überblick
 
-Das **Ainflue Management Modul** bietet eine umfassende Enterprise-Grade Integration Orchestrierungs-Suite, die fortschrittliche KI/ML-Funktionen, robuste Sicherheit, Echtzeit-Monitoring und prädiktive Analytik kombiniert, um komplexe Multi-Plattform Creator Economy Workflows zu verwalten.
+Das **IA Chérie Management Modul** bietet eine umfassende Enterprise-Grade Integration Orchestrierungs-Suite, die fortschrittliche KI/ML-Funktionen, robuste Sicherheit, Echtzeit-Monitoring und prädiktive Analytik kombiniert, um komplexe Multi-Plattform Creator Economy Workflows zu verwalten.
 
 ### 🏗️ Kern-Architektur Komponenten
 
@@ -342,7 +342,7 @@ Diese Enterprise Integration Management Suite stellt bedeutendes geistiges Eigen
 Für kommerzielle Lizenzierungsmöglichkeiten, Enterprise-Support oder maßgeschneiderte Implementierungen wenden Sie sich bitte an:
 - **Email:** mlaiel@live.de
 - **Ersteller:** Fahed Mlaiel
-- **Unternehmen:** Ainflue Enterprise Solutions
+- **Unternehmen:** IA Chérie Enterprise Solutions
 
 ### Mitwirkung
 Dies ist eine proprietäre Enterprise-Lösung. Für Kooperationsmöglichkeiten oder Partnerschaftsanfragen wenden Sie sich bitte über offizielle Kanäle.

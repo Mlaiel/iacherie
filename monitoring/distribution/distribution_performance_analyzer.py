@@ -1,6 +1,6 @@
 """
 🌍 MONITORING DISTRIBUTION - Distribution Performance Analyzer
-Advanced distribution performance analysis and optimization for Ainflue platform
+Advanced distribution performance analysis and optimization for IA Chérie platform
 Performance Engineer + DevOps Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -119,7 +119,7 @@ class CapacityForecast:
 
 class DistributionPerformanceAnalyzer:
     """
-    🌍 Advanced Distribution Performance Analyzer for Ainflue Platform
+    🌍 Advanced Distribution Performance Analyzer for IA Chérie Platform
     
     Enterprise-grade performance analysis with:
     - Real-time performance monitoring across all distribution channels

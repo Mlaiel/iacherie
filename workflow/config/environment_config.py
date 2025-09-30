@@ -1,5 +1,5 @@
 """
-🌍 ENVIRONMENT CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🌍 ENVIRONMENT CONFIGURATION - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced environment management with automatic configuration switching
 Performance Target: < 1ms configuration loading
@@ -101,8 +101,8 @@ class EnvironmentConfig:
                 max_memory_mb=1536,
                 max_concurrent_requests=500
             ),
-            allowed_hosts=["staging.ainflue.com", "*.staging.ainflue.com"],
-            cors_origins=["https://staging.ainflue.com"],
+            allowed_hosts=["staging.iacherie.com", "*.staging.iacherie.com"],
+            cors_origins=["https://staging.iacherie.com"],
             database_pool_size=8,
             redis_pool_size=15,
             api_rate_limit=500,
@@ -121,8 +121,8 @@ class EnvironmentConfig:
                 max_network_mbps=10000,
                 max_concurrent_requests=2000
             ),
-            allowed_hosts=["ainflue.com", "*.ainflue.com", "api.ainflue.com"],
-            cors_origins=["https://ainflue.com", "https://app.ainflue.com"],
+            allowed_hosts=["iacherie.com", "*.iacherie.com", "api.iacherie.com"],
+            cors_origins=["https://iacherie.com", "https://app.iacherie.com"],
             database_pool_size=20,
             redis_pool_size=30,
             api_rate_limit=2000,

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    LaunchScreen.storyboard - iOS Launch Screen Interface
+    Ainflue Professional Content Creation Platform
+    
+    Author: Fahed Mlaiel (mlaiel@live.de)
+    Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+    
+    Team Specialties:
+    - Lead AI Developer + Backend Senior + ML Engineer
+    - Database Administrator + Security Expert
+    - Microservices Architect + Audio Processing Specialist
+    - DevOps Engineer + IA Prompt Engineer
+    
+    ⚠️ STRICT COPYRIGHT NOTICE ⚠️
+    This code is proprietary and confidential to Fahed Mlaiel.
+    Any unauthorized use, copying, modification, or distribution
+    without explicit written permission is strictly prohibited.
+    Violations will result in legal action.
+    Contact: mlaiel@live.de for licensing inquiries.
+-->
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <!-- Background Gradient View -->
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gradient-background">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" name="LaunchBackgroundColor"/>
+                            </view>
+                            
+                            <!-- Main Logo Container -->
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="logo-container">
+                                <rect key="frame" x="96.5" y="326" width="200" height="200"/>
+                                <subviews>
+                                    <!-- App Logo -->
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="app-logo">
+                                        <rect key="frame" x="25" y="25" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="logo-width"/>
+                                            <constraint firstAttribute="height" constant="150" id="logo-height"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="app-logo" firstAttribute="centerX" secondItem="logo-container" secondAttribute="centerX" id="logo-center-x"/>
+                                    <constraint firstItem="app-logo" firstAttribute="centerY" secondItem="logo-container" secondAttribute="centerY" id="logo-center-y"/>
+                                    <constraint firstAttribute="width" constant="200" id="container-width"/>
+                                    <constraint firstAttribute="height" constant="200" id="container-height"/>
+                                </constraints>
+                            </view>
+                            
+                            <!-- App Title -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ainflue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="app-title">
+                                <rect key="frame" x="96.5" y="546" width="200" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="bold" pointSize="40"/>
+                                <color key="textColor" name="LaunchTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            
+                            <!-- App Subtitle -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Professional Content Creation" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="app-subtitle">
+                                <rect key="frame" x="46.5" y="604" width="300" height="40"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <color key="textColor" name="LaunchSubtitleColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            
+                            <!-- Loading Indicator -->
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="loading-indicator">
+                                <rect key="frame" x="176" y="684" width="40" height="40"/>
+                                <color key="color" name="LaunchAccentColor"/>
+                            </activityIndicatorView>
+                            
+                            <!-- Copyright Notice -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2025 Fahed Mlaiel - All Rights Reserved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="copyright-label">
+                                <rect key="frame" x="46.5" y="774" width="300" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="regular" pointSize="12"/>
+                                <color key="textColor" name="LaunchCopyrightColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            
+                            <!-- Version Info -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="version-label">
+                                <rect key="frame" x="46.5" y="804" width="300" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                                <color key="textColor" name="LaunchVersionColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" name="LaunchBackgroundColor"/>
+                        <constraints>
+                            <!-- Background Gradient -->
+                            <constraint firstItem="gradient-background" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="gradient-top"/>
+                            <constraint firstItem="gradient-background" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="gradient-leading"/>
+                            <constraint firstAttribute="trailing" secondItem="gradient-background" secondAttribute="trailing" id="gradient-trailing"/>
+                            <constraint firstAttribute="bottom" secondItem="gradient-background" secondAttribute="bottom" id="gradient-bottom"/>
+                            
+                            <!-- Logo Container -->
+                            <constraint firstItem="logo-container" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="logo-container-center-x"/>
+                            <constraint firstItem="logo-container" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="logo-container-center-y"/>
+                            
+                            <!-- App Title -->
+                            <constraint firstItem="app-title" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="title-center-x"/>
+                            <constraint firstItem="app-title" firstAttribute="top" secondItem="logo-container" secondAttribute="bottom" constant="20" id="title-top"/>
+                            <constraint firstItem="app-title" firstAttribute="width" constant="200" id="title-width"/>
+                            
+                            <!-- App Subtitle -->
+                            <constraint firstItem="app-subtitle" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="subtitle-center-x"/>
+                            <constraint firstItem="app-subtitle" firstAttribute="top" secondItem="app-title" secondAttribute="bottom" constant="10" id="subtitle-top"/>
+                            <constraint firstItem="app-subtitle" firstAttribute="width" constant="300" id="subtitle-width"/>
+                            
+                            <!-- Loading Indicator -->
+                            <constraint firstItem="loading-indicator" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="loading-center-x"/>
+                            <constraint firstItem="loading-indicator" firstAttribute="top" secondItem="app-subtitle" secondAttribute="bottom" constant="40" id="loading-top"/>
+                            
+                            <!-- Copyright -->
+                            <constraint firstItem="copyright-label" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="copyright-center-x"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="copyright-label" secondAttribute="bottom" constant="58" id="copyright-bottom"/>
+                            <constraint firstItem="copyright-label" firstAttribute="width" constant="300" id="copyright-width"/>
+                            
+                            <!-- Version -->
+                            <constraint firstItem="version-label" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="version-center-x"/>
+                            <constraint firstItem="version-label" firstAttribute="top" secondItem="copyright-label" secondAttribute="bottom" constant="10" id="version-top"/>
+                            <constraint firstItem="version-label" firstAttribute="width" constant="300" id="version-width"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <!-- App Logo Image -->
+        <image name="AppLogo" width="150" height="150"/>
+        
+        <!-- Named Colors for Theme Support -->
+        <namedColor name="LaunchBackgroundColor">
+            <color red="0.067" green="0.106" blue="0.153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchTextColor">
+            <color red="1.000" green="1.000" blue="1.000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchSubtitleColor">
+            <color red="0.612" green="0.639" blue="0.686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchAccentColor">
+            <color red="0.233" green="0.510" blue="0.961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchCopyrightColor">
+            <color red="0.463" green="0.502" blue="0.561" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchVersionColor">
+            <color red="0.374" green="0.412" blue="0.471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

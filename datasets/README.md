@@ -1,8 +1,8 @@
-# 🏗️ Ainflue Datasets - Enterprise AI Training Architecture
+# 🏗️ IA Chérie Datasets - Enterprise AI Training Architecture
 
 ## Professional Data Infrastructure for 53 AI Agents
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-green.svg)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/tensorflow-2.12+-orange.svg)](https://tensorflow.org)
@@ -38,7 +38,7 @@
 
 ### **📧 Mandatory Contact for Authorization**
 **Email:** mlaiel@live.de  
-**Subject:** "Authorization Request - Ainflue Datasets Architecture"  
+**Subject:** "Authorization Request - IA Chérie Datasets Architecture"  
 **⚖️ Legal action will be taken against unauthorized users**
 
 ---
@@ -177,7 +177,7 @@ datasets/
 - **📊 Data Quality:** 95% automated quality validation
 - **🔄 Scalability:** 10x scaling capacity improvement
 
-### **Ainflue Platform Integration**
+### **IA Chérie Platform Integration**
 - **📤 Upload Processing:** Enhanced content ingestion and analysis
 - **🤖 AI Processing:** Improved accuracy across all 53 agents
 - **🛡️ IP Protection:** Advanced fingerprinting and detection
@@ -237,6 +237,6 @@ This datasets infrastructure is **enterprise-ready** and follows industry best p
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform Datasets Module**  
+**IA Chérie Platform Datasets Module**  
 **Version 1.0 - Confidential and Proprietary**  
 **Enterprise Production-Ready Architecture**

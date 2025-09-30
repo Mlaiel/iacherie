@@ -2,7 +2,7 @@
 =========================
 
 Multi-service synchronization orchestration and coordination system
-for the Ainflue platform enterprise infrastructure.
+for the IA Chérie platform enterprise infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

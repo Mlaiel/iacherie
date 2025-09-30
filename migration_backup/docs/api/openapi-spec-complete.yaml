@@ -1,0 +1,1858 @@
+openapi: 3.0.3
+info:
+  title: Ainflue AI Platform API
+  version: 2.0.0
+  description: |
+    # Ainflue AI Platform API
+    
+    Complete API documentation for the Ainflue AI-powered content protection and monetization platform.
+    
+    ## Features
+    
+    - **Content Protection**: Advanced AI-powered fingerprinting and rights management
+    - **Creator Management**: Comprehensive creator profiles and content management  
+    - **Monetization**: Revenue tracking, licensing, and payment processing
+    - **Analytics**: Real-time analytics and performance metrics
+    - **Multi-platform Support**: Integration with major content platforms
+    - **Security**: Enterprise-grade security and compliance features
+    
+    ## Authentication
+    
+    All API endpoints require authentication using API keys or JWT tokens.
+    
+    ### Authentication Methods
+    
+    1. **Bearer Token (JWT)**: Include `Authorization: Bearer <token>` header
+    2. **API Key**: Include `X-API-Key: <api_key>` header
+    
+    ### Rate Limiting
+    
+    API requests are rate limited by endpoint and authentication level:
+    - **Free Tier**: 1,000 requests/hour
+    - **Pro Tier**: 10,000 requests/hour  
+    - **Enterprise**: Custom limits
+    
+    Rate limit headers are included in all responses:
+    - `X-RateLimit-Limit`: Request limit per window
+    - `X-RateLimit-Remaining`: Requests remaining in current window
+    - `X-RateLimit-Reset`: Time when the rate limit resets
+    
+  contact:
+    name: Ainflue API Support
+    email: mlaiel@live.de
+    url: https://ainflue.com/support
+  license:
+    name: Proprietary
+    url: https://ainflue.com/license
+  termsOfService: https://ainflue.com/terms
+
+servers:
+  - url: https://api.ainflue.com/v1
+    description: Production server
+  - url: https://staging-api.ainflue.com/v1  
+    description: Staging server
+  - url: http://localhost:8000/api/v1
+    description: Development server
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
+paths:
+  # Authentication Endpoints
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: User login
+      description: Authenticate user and return JWT access token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "SecurePassword123!"
+                remember_me:
+                  type: boolean
+                  default: false
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: User registration
+      description: Create new user account
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Refresh JWT token
+      description: Refresh expired JWT token using refresh token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: User logout
+      description: Logout user and invalidate tokens
+      operationId: logout
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Logout successful"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  # Content Management Endpoints
+  /content/upload:
+    post:
+      tags: [Content Management]
+      summary: Upload content
+      description: Upload new content for protection and management
+      operationId: uploadContent
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [files, title]
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  maxItems: 10
+                title:
+                  type: string
+                  maxLength: 255
+                  example: "My New Song"
+                description:
+                  type: string
+                  maxLength: 1000
+                  example: "A beautiful acoustic piece"
+                content_type:
+                  $ref: '#/components/schemas/ContentType'
+                protection_level:
+                  $ref: '#/components/schemas/ProtectionLevel'
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  maxItems: 20
+                  example: ["music", "acoustic", "indie"]
+                license_type:
+                  $ref: '#/components/schemas/LicenseType'
+      responses:
+        '201':
+          description: Content uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentUploadResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '413':
+          $ref: '#/components/responses/PayloadTooLargeError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+
+  /content/{content_id}:
+    get:
+      tags: [Content Management]
+      summary: Get content details
+      description: Retrieve detailed information about specific content
+      operationId: getContent
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: Content details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+
+    put:
+      tags: [Content Management] 
+      summary: Update content
+      description: Update content metadata and settings
+      operationId: updateContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentUpdate'
+      responses:
+        '200':
+          description: Content updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+
+    delete:
+      tags: [Content Management]
+      summary: Delete content
+      description: Permanently delete content and all associated data
+      operationId: deleteContent
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Content deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+
+  /content/{content_id}/analyze:
+    post:
+      tags: [Content Management, AI Processing]
+      summary: Analyze content
+      description: Run AI analysis on uploaded content for protection and classification
+      operationId: analyzeContent
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                analysis_types:
+                  type: array
+                  items:
+                    type: string
+                    enum: [fingerprint, metadata, quality, similarity, content_recognition]
+                  example: ["fingerprint", "metadata"]
+                options:
+                  type: object
+                  properties:
+                    deep_analysis:
+                      type: boolean
+                      default: false
+                    generate_thumbnail:
+                      type: boolean
+                      default: true
+      responses:
+        '200':
+          description: Analysis completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentAnalysisResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+
+  # AI Fingerprinting Endpoints
+  /fingerprinting/generate:
+    post:
+      tags: [AI Fingerprinting]
+      summary: Generate content fingerprint
+      description: Generate AI-powered fingerprint for content protection
+      operationId: generateFingerprint
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content_id]
+              properties:
+                content_id:
+                  type: string
+                  format: uuid
+                fingerprint_types:
+                  type: array
+                  items:
+                    type: string
+                    enum: [audio_hash, visual_hash, text_hash, metadata_hash]
+                  example: ["audio_hash"]
+                options:
+                  type: object
+                  properties:
+                    precision_level:
+                      type: string
+                      enum: [low, medium, high, ultra]
+                      default: medium
+      responses:
+        '201':
+          description: Fingerprint generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FingerprintResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /fingerprinting/compare:
+    post:
+      tags: [AI Fingerprinting]
+      summary: Compare content fingerprints
+      description: Compare two content fingerprints for similarity detection
+      operationId: compareFingerprints
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fingerprint1, fingerprint2]
+              properties:
+                fingerprint1:
+                  type: string
+                fingerprint2:  
+                  type: string
+                comparison_type:
+                  type: string
+                  enum: [exact, similarity, segments]
+                  default: similarity
+                threshold:
+                  type: number
+                  minimum: 0.0
+                  maximum: 1.0
+                  default: 0.8
+      responses:
+        '200':
+          description: Comparison completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FingerprintComparisonResponse'
+
+  # Content Protection Endpoints
+  /protection/scan:
+    post:
+      tags: [Content Protection]
+      summary: Scan for content violations
+      description: Scan platforms for potential copyright violations
+      operationId: scanForViolations
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content_id]
+              properties:
+                content_id:
+                  type: string
+                  format: uuid
+                platforms:
+                  type: array
+                  items:
+                    type: string
+                    enum: [youtube, tiktok, instagram, spotify, soundcloud, twitter]
+                  example: ["youtube", "tiktok"]
+                scan_depth:
+                  type: string
+                  enum: [shallow, medium, deep]
+                  default: medium
+                notify_on_match:
+                  type: boolean
+                  default: true
+      responses:
+        '202':
+          description: Scan initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponse'
+
+  /protection/violations/{violation_id}:
+    get:
+      tags: [Content Protection]
+      summary: Get violation details
+      description: Get detailed information about a detected violation
+      operationId: getViolation
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: violation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Violation details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViolationDetails'
+
+    patch:
+      tags: [Content Protection]
+      summary: Update violation status
+      description: Update the status and resolution of a violation
+      operationId: updateViolation
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: violation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [acknowledged, disputed, resolved, dismissed]
+                resolution_notes:
+                  type: string
+                  maxLength: 1000
+      responses:
+        '200':
+          description: Violation updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViolationDetails'
+
+  # Monetization Endpoints
+  /monetization/revenue:
+    get:
+      tags: [Monetization]
+      summary: Get revenue reports
+      description: Retrieve revenue reports and analytics
+      operationId: getRevenueReports
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [day, week, month, quarter, year]
+            default: month
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: currency
+          in: query
+          schema:
+            type: string
+            enum: [USD, EUR, GBP, CAD]
+            default: USD
+        - name: content_id
+          in: query
+          description: Filter by specific content
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Revenue report retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevenueReport'
+
+  /monetization/licenses:
+    get:
+      tags: [Monetization]
+      summary: List content licenses
+      description: Get list of content licenses and their status
+      operationId: getContentLicenses
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, expired, pending, cancelled]
+        - name: license_type
+          in: query
+          schema:
+            $ref: '#/components/schemas/LicenseType'
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Licenses retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseListResponse'
+
+    post:
+      tags: [Monetization]
+      summary: Create content license
+      description: Create a new license for content monetization
+      operationId: createLicense
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LicenseCreate'
+      responses:
+        '201':
+          description: License created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License'
+
+  # Analytics Endpoints
+  /analytics/dashboard:
+    get:
+      tags: [Analytics]
+      summary: Get dashboard analytics
+      description: Retrieve key metrics for the analytics dashboard
+      operationId: getDashboardAnalytics
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [24h, 7d, 30d, 90d]
+            default: 30d
+        - name: timezone
+          in: query
+          schema:
+            type: string
+            example: "America/New_York"
+      responses:
+        '200':
+          description: Dashboard analytics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardAnalytics'
+
+  /analytics/content/{content_id}/performance:
+    get:
+      tags: [Analytics]
+      summary: Get content performance metrics
+      description: Get detailed performance analytics for specific content
+      operationId: getContentPerformance
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: metrics
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [views, plays, downloads, revenue, violations, engagement]
+          style: form
+          explode: false
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [hour, day, week, month]
+            default: day
+      responses:
+        '200':
+          description: Content performance metrics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentPerformanceResponse'
+
+  # Collaboration Endpoints
+  /collaboration/projects:
+    get:
+      tags: [Collaboration]
+      summary: List collaboration projects
+      description: Get list of collaboration projects
+      operationId: getCollaborationProjects
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, completed, cancelled, pending]
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: [owner, collaborator, viewer]
+      responses:
+        '200':
+          description: Projects retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectListResponse'
+
+    post:
+      tags: [Collaboration]
+      summary: Create collaboration project
+      description: Create a new collaboration project
+      operationId: createProject
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+      responses:
+        '201':
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  # Health Check Endpoints
+  /health:
+    get:
+      tags: [Health]
+      summary: System health check
+      description: Check the overall health and status of the API system
+      operationId: healthCheck
+      responses:
+        '200':
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: System is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ServiceUnavailableError'
+
+  /health/detailed:
+    get:
+      tags: [Health]
+      summary: Detailed system health check
+      description: Get detailed health information about all system components
+      operationId: detailedHealthCheck
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Detailed health information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedHealthResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for authentication
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication
+
+  schemas:
+    # Authentication Schemas
+    LoginResponse:
+      type: object
+      required: [access_token, token_type, expires_in, user]
+      properties:
+        access_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        refresh_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type:
+          type: string
+          example: "bearer"
+        expires_in:
+          type: integer
+          example: 3600
+        user:
+          $ref: '#/components/schemas/User'
+
+    UserRegistration:
+      type: object
+      required: [email, password, username, profile_type]
+      properties:
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: "SecurePassword123!"
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9_]+$'
+          example: "creator_username"
+        profile_type:
+          type: string
+          enum: [musician, blogger, photographer, influencer, actor, brand, agency]
+          example: "musician"
+        full_name:
+          type: string
+          maxLength: 100
+          example: "John Doe"
+        country:
+          type: string
+          maxLength: 2
+          example: "US"
+        language:
+          type: string
+          maxLength: 5
+          example: "en-US"
+
+    RegistrationResponse:
+      type: object
+      required: [user_id, message, verification_required]
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        message:
+          type: string
+          example: "Registration successful"
+        verification_required:
+          type: boolean
+          example: true
+        verification_email_sent:
+          type: boolean
+          example: true
+
+    TokenResponse:
+      type: object
+      required: [access_token, token_type, expires_in]
+      properties:
+        access_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        token_type:
+          type: string
+          example: "bearer"
+        expires_in:
+          type: integer
+          example: 3600
+
+    User:
+      type: object
+      required: [id, email, username, profile_type, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        username:
+          type: string
+          example: "creator_username"
+        profile_type:
+          type: string
+          enum: [musician, blogger, photographer, influencer, actor, brand, agency]
+        full_name:
+          type: string
+          example: "John Doe"
+        avatar_url:
+          type: string
+          format: uri
+          example: "https://avatars.ainflue.com/user123.jpg"
+        is_verified:
+          type: boolean
+          example: true
+        subscription_tier:
+          type: string
+          enum: [free, pro, enterprise]
+          example: "pro"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+
+    # Content Management Schemas
+    ContentType:
+      type: string
+      enum: [audio, video, image, text, document, mixed]
+      example: "audio"
+
+    ProtectionLevel:
+      type: string
+      enum: [low, medium, high, ultra]
+      example: "high"
+
+    LicenseType:
+      type: string
+      enum: [exclusive, non_exclusive, royalty_free, creative_commons, custom]
+      example: "non_exclusive"
+
+    ContentUploadResponse:
+      type: object
+      required: [content_id, upload_status, processing_eta]
+      properties:
+        content_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        upload_status:
+          type: string
+          enum: [uploaded, processing, completed, failed]
+          example: "uploaded"
+        processing_eta:
+          type: integer
+          description: Estimated processing time in seconds
+          example: 300
+        file_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+        thumbnail_url:
+          type: string
+          format: uri
+        upload_time:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+
+    Content:
+      type: object
+      required: [id, title, content_type, status, creator_id, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        title:
+          type: string
+          example: "My New Song"
+        description:
+          type: string
+          example: "A beautiful acoustic piece"
+        content_type:
+          $ref: '#/components/schemas/ContentType'
+        status:
+          type: string
+          enum: [uploaded, processing, processed, published, archived, deleted]
+          example: "processed"
+        creator_id:
+          type: string
+          format: uuid
+        protection_level:
+          $ref: '#/components/schemas/ProtectionLevel'
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
+        file_size:
+          type: integer
+          description: File size in bytes
+          example: 5242880
+        duration:
+          type: number
+          description: Duration in seconds (for audio/video)
+          example: 180.5
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["music", "acoustic", "indie"]
+        metadata:
+          type: object
+          description: Content-specific metadata
+        fingerprint_id:
+          type: string
+          description: Associated fingerprint ID
+        violation_count:
+          type: integer
+          description: Number of detected violations
+          example: 2
+        revenue_generated:
+          type: number
+          description: Total revenue generated
+          example: 1250.50
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+
+    ContentUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1000
+        protection_level:
+          $ref: '#/components/schemas/ProtectionLevel'
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
+        tags:
+          type: array
+          items:
+            type: string
+          maxItems: 20
+        metadata:
+          type: object
+
+    ContentAnalysisResponse:
+      type: object
+      required: [content_id, analysis_id, status]
+      properties:
+        content_id:
+          type: string
+          format: uuid
+        analysis_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [completed, processing, failed]
+        fingerprint:
+          type: string
+          description: Generated content fingerprint
+        metadata_extracted:
+          type: object
+          description: Extracted metadata
+        quality_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Content quality score
+        protection_recommendations:
+          type: array
+          items:
+            type: string
+        analyzed_at:
+          type: string
+          format: date-time
+
+    # AI Fingerprinting Schemas
+    FingerprintResponse:
+      type: object
+      required: [fingerprint_id, content_id, fingerprint_data]
+      properties:
+        fingerprint_id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        fingerprint_type:
+          type: string
+          enum: [audio_hash, visual_hash, text_hash, metadata_hash]
+        fingerprint_data:
+          type: string
+          description: Base64 encoded fingerprint data
+        precision_level:
+          type: string
+          enum: [low, medium, high, ultra]
+        generated_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+
+    FingerprintComparisonResponse:
+      type: object
+      required: [comparison_id, similarity_score, is_match]
+      properties:
+        comparison_id:
+          type: string
+          format: uuid
+        similarity_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Similarity score between fingerprints
+        is_match:
+          type: boolean
+          description: Whether fingerprints match above threshold
+        match_segments:
+          type: array
+          items:
+            type: object
+            properties:
+              start_time:
+                type: number
+              end_time:
+                type: number
+              similarity:
+                type: number
+        confidence_level:
+          type: string
+          enum: [low, medium, high]
+        compared_at:
+          type: string
+          format: date-time
+
+    # Content Protection Schemas
+    ScanResponse:
+      type: object
+      required: [scan_id, content_id, status]
+      properties:
+        scan_id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [initiated, in_progress, completed, failed]
+        platforms:
+          type: array
+          items:
+            type: string
+        estimated_completion:
+          type: string
+          format: date-time
+        initiated_at:
+          type: string
+          format: date-time
+
+    ViolationDetails:
+      type: object
+      required: [id, content_id, platform, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        platform:
+          type: string
+          enum: [youtube, tiktok, instagram, spotify, soundcloud, twitter]
+        platform_content_id:
+          type: string
+          description: ID of content on the platform
+        platform_content_url:
+          type: string
+          format: uri
+        similarity_score:
+          type: number
+          minimum: 0
+          maximum: 1
+        match_segments:
+          type: array
+          items:
+            type: object
+            properties:
+              start_time:
+                type: number
+              end_time:
+                type: number
+              similarity:
+                type: number
+        status:
+          type: string
+          enum: [detected, acknowledged, disputed, resolved, dismissed]
+        detected_at:
+          type: string
+          format: date-time
+        resolution_notes:
+          type: string
+        actions_taken:
+          type: array
+          items:
+            type: string
+
+    # Monetization Schemas
+    RevenueReport:
+      type: object
+      required: [period_start, period_end, total_revenue, currency]
+      properties:
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+        total_revenue:
+          type: number
+          example: 1250.50
+        currency:
+          type: string
+          example: "USD"
+        revenue_breakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              revenue:
+                type: number
+              transactions:
+                type: integer
+        top_earning_content:
+          type: array
+          items:
+            type: object
+            properties:
+              content_id:
+                type: string
+                format: uuid
+              title:
+                type: string
+              revenue:
+                type: number
+        revenue_sources:
+          type: object
+          properties:
+            licensing:
+              type: number
+            streaming:
+              type: number
+            downloads:
+              type: number
+            advertising:
+              type: number
+
+    License:
+      type: object
+      required: [id, content_id, license_type, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
+        licensee_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [active, expired, pending, cancelled]
+        price:
+          type: number
+          example: 99.99
+        currency:
+          type: string
+          example: "USD"
+        duration_months:
+          type: integer
+          example: 12
+        terms:
+          type: string
+          description: License terms and conditions
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+
+    LicenseCreate:
+      type: object
+      required: [content_id, license_type, price, duration_months]
+      properties:
+        content_id:
+          type: string
+          format: uuid
+        license_type:
+          $ref: '#/components/schemas/LicenseType'
+        licensee_id:
+          type: string
+          format: uuid
+        price:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          default: "USD"
+        duration_months:
+          type: integer
+          minimum: 1
+          maximum: 120
+        terms:
+          type: string
+
+    LicenseListResponse:
+      type: object
+      required: [licenses, pagination]
+      properties:
+        licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/License'
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    # Analytics Schemas
+    DashboardAnalytics:
+      type: object
+      required: [period, total_content, total_revenue, active_violations]
+      properties:
+        period:
+          type: string
+          example: "30d"
+        total_content:
+          type: integer
+          example: 150
+        total_revenue:
+          type: number
+          example: 5250.75
+        active_violations:
+          type: integer
+          example: 12
+        new_content_this_period:
+          type: integer
+          example: 25
+        revenue_change:
+          type: number
+          description: Percentage change from previous period
+          example: 15.5
+        top_platforms:
+          type: array
+          items:
+            type: object
+            properties:
+              platform:
+                type: string
+              violations:
+                type: integer
+              revenue_impact:
+                type: number
+        content_performance:
+          type: object
+          properties:
+            total_views:
+              type: integer
+            total_plays:
+              type: integer
+            total_downloads:
+              type: integer
+        updated_at:
+          type: string
+          format: date-time
+
+    ContentPerformanceResponse:
+      type: object
+      required: [content_id, period, metrics]
+      properties:
+        content_id:
+          type: string
+          format: uuid
+        period:
+          type: string
+        metrics:
+          type: object
+          properties:
+            views:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  count:
+                    type: integer
+            plays:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  count:
+                    type: integer
+            revenue:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  amount:
+                    type: number
+            violations:
+              type: array
+              items:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  count:
+                    type: integer
+
+    # Collaboration Schemas
+    Project:
+      type: object
+      required: [id, name, status, owner_id, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Summer Album Collaboration"
+        description:
+          type: string
+        status:
+          type: string
+          enum: [active, completed, cancelled, pending]
+        owner_id:
+          type: string
+          format: uuid
+        collaborators:
+          type: array
+          items:
+            type: object
+            properties:
+              user_id:
+                type: string
+                format: uuid
+              role:
+                type: string
+                enum: [owner, editor, viewer]
+              permissions:
+                type: array
+                items:
+                  type: string
+        content_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        deadline:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProjectCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1000
+        collaborators:
+          type: array
+          items:
+            type: object
+            properties:
+              user_id:
+                type: string
+                format: uuid
+              role:
+                type: string
+                enum: [editor, viewer]
+        deadline:
+          type: string
+          format: date-time
+
+    ProjectListResponse:
+      type: object
+      required: [projects, pagination]
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        pagination:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    # Health Check Schemas
+    HealthResponse:
+      type: object
+      required: [status, timestamp, version]
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-01-07T10:00:00Z"
+        version:
+          type: string
+          example: "2.0.0"
+        uptime:
+          type: number
+          description: Uptime in seconds
+          example: 3600
+
+    DetailedHealthResponse:
+      type: object
+      required: [status, components, metrics]
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        components:
+          type: object
+          properties:
+            database:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [healthy, degraded, unhealthy]
+                response_time:
+                  type: number
+                connections:
+                  type: integer
+            redis:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [healthy, degraded, unhealthy]
+                memory_usage:
+                  type: number
+            ai_engine:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [healthy, degraded, unhealthy]
+                processing_queue:
+                  type: integer
+            storage:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [healthy, degraded, unhealthy]
+                available_space:
+                  type: number
+        metrics:
+          type: object
+          properties:
+            cpu_usage:
+              type: number
+              minimum: 0
+              maximum: 100
+            memory_usage:
+              type: number
+              minimum: 0
+              maximum: 100
+            disk_usage:
+              type: number
+              minimum: 0
+              maximum: 100
+            active_requests:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    # Common Schemas
+    PaginationInfo:
+      type: object
+      required: [page, limit, total, has_more]
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          example: 1
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 20
+        total:
+          type: integer
+          example: 150
+        has_more:
+          type: boolean
+          example: true
+        total_pages:
+          type: integer
+          example: 8
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              example: "VALIDATION_ERROR"
+            message:
+              type: string
+              example: "The request contains invalid data"
+            details:
+              type: object
+              description: Additional error details
+            field:
+              type: string
+              description: Field that caused the error
+              example: "email"
+            request_id:
+              type: string
+              format: uuid
+              description: Unique request identifier for debugging
+            timestamp:
+              type: string
+              format: date-time
+
+  responses:
+    BadRequestError:
+      description: Bad Request - Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "VALIDATION_ERROR"
+              message: "Invalid input data provided"
+              field: "email"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    UnauthorizedError:
+      description: Unauthorized - Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "AUTHENTICATION_REQUIRED"
+              message: "Valid authentication token is required"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    ForbiddenError:
+      description: Forbidden - Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "INSUFFICIENT_PERMISSIONS"
+              message: "You don't have permission to access this resource"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    NotFoundError:
+      description: Not Found - Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "RESOURCE_NOT_FOUND"
+              message: "The requested resource was not found"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    ConflictError:
+      description: Conflict - Resource already exists or conflict detected
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "RESOURCE_CONFLICT"
+              message: "A resource with this identifier already exists"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    PayloadTooLargeError:
+      description: Payload Too Large - File or request size exceeds limits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "PAYLOAD_TOO_LARGE"
+              message: "File size exceeds maximum allowed limit of 100MB"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    RateLimitError:
+      description: Too Many Requests - Rate limit exceeded
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Request limit per window
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Requests remaining in current window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Time when the rate limit resets (Unix timestamp)
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "RATE_LIMIT_EXCEEDED"
+              message: "Rate limit exceeded. Maximum 1000 requests per hour allowed."
+              details:
+                limit: 1000
+                window: "hour"
+                retry_after: 1800
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    InternalServerError:
+      description: Internal Server Error - Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "INTERNAL_SERVER_ERROR"
+              message: "An unexpected error occurred. Please try again later."
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+    ServiceUnavailableError:
+      description: Service Unavailable - Service temporarily unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: "SERVICE_UNAVAILABLE"
+              message: "Service is temporarily unavailable due to maintenance"
+              request_id: "req_12345"
+              timestamp: "2025-01-07T10:00:00Z"
+
+tags:
+  - name: Authentication
+    description: User authentication and authorization endpoints
+  - name: Content Management
+    description: Content upload, management, and processing endpoints
+  - name: AI Fingerprinting
+    description: AI-powered content fingerprinting and comparison
+  - name: Content Protection
+    description: Content protection and copyright violation detection
+  - name: Monetization
+    description: Revenue tracking, licensing, and payment processing
+  - name: Analytics
+    description: Analytics, reporting, and performance metrics
+  - name: Collaboration
+    description: Creator collaboration and project management
+  - name: Health
+    description: System health check and monitoring endpoints

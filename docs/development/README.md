@@ -1,4 +1,4 @@
-# Ainflue Platform Developer Guide
+# IA Chérie Platform Developer Guide
 
 ## 🚀 Quick Start
 
@@ -13,8 +13,8 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 ```
 
 2. **Run the setup script**
@@ -91,7 +91,7 @@ pre-commit autoupdate
 ## 📚 Project Structure
 
 ```
-Ainflue/
+IA Chérie/
 ├── api/                    # FastAPI application
 │   ├── routes/            # API route handlers
 │   ├── middleware/        # Custom middleware
@@ -243,7 +243,7 @@ MONGODB_HOST=mongodb
 
 1. **Using VSCode**:
    - Set breakpoints in your code
-   - Press F5 or use "Debug Ainflue API" configuration
+   - Press F5 or use "Debug IA Chérie API" configuration
    - The debugger will start and stop at breakpoints
 
 2. **Using command line**:
@@ -589,4 +589,4 @@ refactor: optimize database queries
 
 **Happy Coding! 🎉**
 
-For more information, visit the [project repository](https://github.com/Mlaiel/Ainflue).
+For more information, visit the [project repository](https://github.com/Mlaiel/IA Chérie).

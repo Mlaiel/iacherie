@@ -1,6 +1,6 @@
 """
 🚨 INCIDENT RESPONSE NOTIFICATIONS
-Ainflue Platform - Security Incident Response System
+IA Chérie Platform - Security Incident Response System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

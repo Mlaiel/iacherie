@@ -1,5 +1,5 @@
 """
-Enterprise Alembic Environment Configuration - Ainflue Platform
+Enterprise Alembic Environment Configuration - IA Chérie Platform
 Ultra-advanced database migration management with enterprise features
 
 © 2025 Fahed Mlaiel - All Rights Reserved

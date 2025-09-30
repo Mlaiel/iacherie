@@ -1,4 +1,4 @@
-"""🚀 Enterprise Inference Serving Engine - Ainflue AI/ML Pipeline
+"""🚀 Enterprise Inference Serving Engine - IA Chérie AI/ML Pipeline
 ==================================================================
 
 High-performance model serving with auto-scaling, batching,
@@ -466,7 +466,7 @@ class EnterpriseInferenceServingEngine:
             raise
     
     async def get_serving_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific serving analytics for Ainflue platform"""
+        """Get creator-specific serving analytics for IA Chérie platform"""
         try:
             async with self.db_pool.acquire() as connection:
                 # Get inference statistics
@@ -909,13 +909,13 @@ class EnterpriseInferenceServingEngine:
         
         # Add creator-specific optimizations
         if request.creator_id and request.platform_context:
-            # Platform-specific optimizations for Ainflue creators
+            # Platform-specific optimizations for IA Chérie creators
             processed_output = await self._apply_creator_optimizations(processed_output, request)
         
         return processed_output
     
     async def _apply_creator_optimizations(self, predictions: Dict[str, Any], request: InferenceRequest) -> Dict[str, Any]:
-        """Apply creator-specific optimizations for Ainflue platform"""
+        """Apply creator-specific optimizations for IA Chérie platform"""
         optimized_predictions = predictions.copy()
         
         # Platform-specific optimizations

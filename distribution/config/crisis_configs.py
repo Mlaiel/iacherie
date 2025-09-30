@@ -1,5 +1,5 @@
 """
-Crisis Management Configuration for Ainflue Distribution
+Crisis Management Configuration for IA Chérie Distribution
 Provides comprehensive configuration for crisis detection and response
 
 Author: Fahed Mlaiel (mlaiel@live.de)

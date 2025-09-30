@@ -1,6 +1,6 @@
 """
 Monitoring Module - Alerting System
-Intelligent alerting system for Ainflue Distribution Platform
+Intelligent alerting system for IA Chérie Distribution Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -282,9 +282,9 @@ class AlertingSystem:
                 config={
                     "smtp_host": "smtp.gmail.com",
                     "smtp_port": 587,
-                    "username": "alerts@ainflue.com",
+                    "username": "alerts@iacherie.com",
                     "password": "app_password",
-                    "recipients": ["admin@ainflue.com", "ops@ainflue.com"]
+                    "recipients": ["admin@iacherie.com", "ops@iacherie.com"]
                 }
             ),
             AlertChannel.SLACK: NotificationConfig(
@@ -298,7 +298,7 @@ class AlertingSystem:
             AlertChannel.WEBHOOK: NotificationConfig(
                 channel=AlertChannel.WEBHOOK,
                 config={
-                    "url": "https://api.ainflue.com/alerts/webhook",
+                    "url": "https://api.iacherie.com/alerts/webhook",
                     "headers": {"Authorization": "Bearer token"},
                     "method": "POST"
                 }
@@ -491,7 +491,7 @@ Alert ID: {alert.id}
                     {"title": "Time", "value": alert.timestamp.isoformat(), "short": True},
                     {"title": "Alert ID", "value": alert.id, "short": True}
                 ],
-                "footer": "Ainflue Alerting System",
+                "footer": "IA Chérie Alerting System",
                 "ts": int(alert.timestamp.timestamp())
             }]
         }

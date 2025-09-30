@@ -7,7 +7,7 @@
 **Module:** infrastructure_services  
 **Version:** 4.1.0 Enterprise Production (Consolidated)
 
-[![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/IA Chérie)
 [![Services](https://img.shields.io/badge/services-18%20(consolidated)-blue)](.)
 [![Compliance](https://img.shields.io/badge/compliance-18%20files%20limit-success)](.)
 
@@ -15,7 +15,7 @@
 
 ## 📋 Overview
 
-The Infrastructure Services module provides enterprise-grade infrastructure capabilities that form the backbone of the Ainflue platform. This module has been **consolidated from 25 to 18 services** as part of the Enterprise Architecture Consolidation v4.1.0, providing improved performance, reduced complexity, and strict adherence to file limitations.
+The Infrastructure Services module provides enterprise-grade infrastructure capabilities that form the backbone of the IA Chérie platform. This module has been **consolidated from 25 to 18 services** as part of the Enterprise Architecture Consolidation v4.1.0, providing improved performance, reduced complexity, and strict adherence to file limitations.
 
 ## 🔄 Consolidation Summary
 
@@ -192,13 +192,13 @@ await metrics_service.export_prometheus_metrics()
 
 # Grafana dashboard integration
 await monitoring_service.create_grafana_dashboard(
-    name="Ainflue Infrastructure",
+    name="IA Chérie Infrastructure",
     panels=["cpu_usage", "memory_usage", "request_rate"]
 )
 
 # Datadog integration
 await monitoring_service.send_to_datadog(
-    metric="ainflue.request.duration",
+    metric="iacherie.request.duration",
     value=123.45,
     tags=["service:api", "environment:production"]
 )
@@ -240,10 +240,10 @@ INFRASTRUCTURE_REDIS_URL=redis://localhost:6379
 INFRASTRUCTURE_DB_URL=postgresql://localhost/infrastructure
 METRICS_RETENTION_DAYS=365
 HEALTH_CHECK_INTERVAL=30
-ALERT_WEBHOOK_URL=https://alerts.ainflue.com/webhook
-VAULT_ENDPOINT=https://vault.ainflue.com
+ALERT_WEBHOOK_URL=https://alerts.iacherie.com/webhook
+VAULT_ENDPOINT=https://vault.iacherie.com
 DNS_PROVIDER=route53
-BACKUP_S3_BUCKET=ainflue-backups
+BACKUP_S3_BUCKET=iacherie-backups
 ```
 
 ### Service Configuration
@@ -315,7 +315,7 @@ for service in unhealthy_services:
 ```python
 # Create infrastructure dashboard
 dashboard_config = {
-    "title": "Ainflue Infrastructure",
+    "title": "IA Chérie Infrastructure",
     "panels": [
         {"title": "CPU Usage", "query": "cpu_usage"},
         {"title": "Memory Usage", "query": "memory_usage"},
@@ -338,9 +338,9 @@ await monitoring_service.create_dashboard(dashboard_config)
 
 ### Technical Support
 - **Email**: mlaiel@live.de
-- **Documentation**: [Infrastructure Docs](https://docs.ainflue.com/infrastructure)
-- **Status Page**: [System Status](https://status.ainflue.com)
-- **Monitoring**: [Real-time Metrics](https://metrics.ainflue.com)
+- **Documentation**: [Infrastructure Docs](https://docs.iacherie.com/infrastructure)
+- **Status Page**: [System Status](https://status.iacherie.com)
+- **Monitoring**: [Real-time Metrics](https://metrics.iacherie.com)
 
 ### Emergency Support
 - **24/7 On-Call**: Critical infrastructure issues
@@ -352,7 +352,7 @@ await monitoring_service.create_dashboard(dashboard_config)
 
 ## 📄 License
 
-This module is part of the Ainflue platform and is proprietary software owned by Fahed Mlaiel.
+This module is part of the IA Chérie platform and is proprietary software owned by Fahed Mlaiel.
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Confidential and Proprietary - Enterprise Use Only**

@@ -1,4 +1,4 @@
-"""🏋️ Enterprise Training Orchestrator - Ainflue AI/ML Pipeline
+"""🏋️ Enterprise Training Orchestrator - IA Chérie AI/ML Pipeline
 ==============================================================
 
 Advanced distributed training automation with multi-GPU support,
@@ -620,7 +620,7 @@ class EnterpriseTrainingOrchestrator:
             raise
     
     async def get_training_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific training analytics for Ainflue platform"""
+        """Get creator-specific training analytics for IA Chérie platform"""
         try:
             async with self.db_pool.acquire() as connection:
                 # Get training statistics

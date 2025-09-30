@@ -2,7 +2,7 @@
 =====================================================================
 
 Testing Expert: Testing automation enterprise avec AI-powered quality gates,
-automated test generation et intelligent quality assurance pour Ainflue.
+automated test generation et intelligent quality assurance pour IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de) 
 Date: 16 Septembre 2025
@@ -408,7 +408,7 @@ class TestingAutomationPipeline:
     """
     
     def __init__(self, 
-                 artifacts_dir: str = "/var/artifacts/ainflue/tests",
+                 artifacts_dir: str = "/var/artifacts/iacherie/tests",
                  max_parallel_suites: int = 4,
                  ai_generation: Optional[AITestGeneration] = None):
         """
@@ -1450,7 +1450,7 @@ class TestingAutomationPipeline:
         execution.quality_gates.extend(security_gates)
 
 
-def create_testing_automation_pipeline(artifacts_dir: str = "/var/artifacts/ainflue/tests",
+def create_testing_automation_pipeline(artifacts_dir: str = "/var/artifacts/iacherie/tests",
                                      max_parallel_suites: int = 4,
                                      ai_generation: Optional[AITestGeneration] = None) -> TestingAutomationPipeline:
     """

@@ -1,4 +1,4 @@
-# 🏗️ Enterprise Architecture Overview - Ainflue Platform
+# 🏗️ Enterprise Architecture Overview - IA Chérie Platform
 
 **Document Version:** 1.0 Enterprise  
 **Last Updated:** September 15, 2025  
@@ -15,7 +15,7 @@
 
 ### 🎯 **High-Level Architecture**
 
-Ainflue Platform follows a **microservices-based architecture** with **event-driven communication** and **AI-first design principles**. The system is designed to handle 100,000+ concurrent users while processing multi-format content across 65+ platforms with 53 specialized AI agents.
+IA Chérie Platform follows a **microservices-based architecture** with **event-driven communication** and **AI-first design principles**. The system is designed to handle 100,000+ concurrent users while processing multi-format content across 65+ platforms with 53 specialized AI agents.
 
 ```mermaid
 graph TB
@@ -626,7 +626,7 @@ This architecture is **production-ready** and designed to scale from startup to 
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue Architecture License Request"
+**Subject:** "IA Chérie Architecture License Request"
 
 ---
 

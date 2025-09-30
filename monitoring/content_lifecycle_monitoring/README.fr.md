@@ -25,14 +25,14 @@
 
 ---
 
-## 🎯 **Logique Métier Ainflue**
+## 🎯 **Logique Métier IA Chérie**
 **Pipeline Creator Economy :** Créateurs Multi-format → Traitement IA → Protection IP → SEO Professionnel → Collaboration & Gamification → Distribution Multi-plateformes
 
 ---
 
 ## 🚀 **Vue d'Ensemble Système**
 
-Système de surveillance lifecycle contenu enterprise ultra-avancé pour la plateforme Ainflue Creator Economy. Fournit un monitoring complet temps réel, analytics et optimisation sur l'ensemble du parcours contenu de l'upload à la monétisation.
+Système de surveillance lifecycle contenu enterprise ultra-avancé pour la plateforme IA Chérie Creator Economy. Fournit un monitoring complet temps réel, analytics et optimisation sur l'ensemble du parcours contenu de l'upload à la monétisation.
 
 ### **🏭 Fonctionnalités Architecture Enterprise**
 
@@ -442,7 +442,7 @@ spec:
     spec:
       containers:
       - name: monitoring
-        image: ainflue/content-lifecycle-monitoring:latest
+        image: iacherie/content-lifecycle-monitoring:latest
         ports:
         - containerPort: 8000
         env:
@@ -553,8 +553,8 @@ await monitoring.ai_pipeline_monitor.clear_model_cache()
 
 ### **Configuration Développement**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/content_lifecycle_monitoring
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/content_lifecycle_monitoring
 pip install -r requirements-dev.txt
 ```
 
@@ -613,4 +613,4 @@ Pour demandes de licence, contacter : mlaiel@live.de
 
 ---
 
-*Construit avec ❤️ pour la Creator Economy par Fahed Mlaiel et l'Équipe Enterprise Ainflue*
+*Construit avec ❤️ pour la Creator Economy par Fahed Mlaiel et l'Équipe Enterprise IA Chérie*

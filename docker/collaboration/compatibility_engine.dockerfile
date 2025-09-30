@@ -4,7 +4,7 @@
 
 FROM python:3.12-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Compatibility Engine - Advanced compatibility analysis"
+LABEL description="IA Chérie Compatibility Engine - Advanced compatibility analysis"
 
 WORKDIR /app
 

@@ -1,7 +1,7 @@
-package com.ainflue.sdk.client;
+package com.iacherie.sdk.client;
 
 /**
- * HTTP Client Implementation for Ainflue Java SDK
+ * HTTP Client Implementation for IA Chérie Java SDK
  * Enterprise-grade HTTP client with connection pooling and retry logic
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -10,12 +10,12 @@ package com.ainflue.sdk.client;
  * Expert Implementation by: Backend Senior + DevOps + Security + Lead Dev IA
  */
 
-import com.ainflue.sdk.config.SdkConfiguration;
-import com.ainflue.sdk.exceptions.*;
-import com.ainflue.sdk.models.ApiResponse;
-import com.ainflue.sdk.utils.Logger;
-import com.ainflue.sdk.security.SecurityUtils;
-import com.ainflue.sdk.metrics.RequestMetrics;
+import com.iacherie.sdk.config.SdkConfiguration;
+import com.iacherie.sdk.exceptions.*;
+import com.iacherie.sdk.models.ApiResponse;
+import com.iacherie.sdk.utils.Logger;
+import com.iacherie.sdk.security.SecurityUtils;
+import com.iacherie.sdk.metrics.RequestMetrics;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -137,7 +137,7 @@ public class HttpClientAdapter {
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(Duration.ofMillis(config.getTimeout()))
-                .header("User-Agent", "Ainflue-Java-SDK/1.0.0")
+                .header("User-Agent", "IA Chérie-Java-SDK/1.0.0")
                 .header("Accept", "application/json")
                 .header("X-Request-ID", generateRequestId())
                 .header("X-Timestamp", Instant.now().toString());

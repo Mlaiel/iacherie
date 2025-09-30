@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Revenue Analytics Component
+ * IA Chérie Desktop - Revenue Analytics Component
  * 
  * Advanced revenue tracking and analytics dashboard for content creators
  * Implements real-time monetization insights, forecasting, and optimization

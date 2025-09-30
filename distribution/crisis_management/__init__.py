@@ -1,6 +1,6 @@
 """Crisis Management Engine
 
-Advanced crisis detection, management, and reputation protection system for the Ainflue platform.
+Advanced crisis detection, management, and reputation protection system for the IA Chérie platform.
 Provides real-time crisis monitoring, automated damage control, and reputation recovery
 using AI-powered crisis management protocols.
 

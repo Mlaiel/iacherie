@@ -109,7 +109,7 @@ interface LanguageContextType {
 ### Basic Translation (Backward Compatible)
 ```tsx
 const { t } = useLanguage();
-return <h1>{t('welcome')}</h1>; // "Welcome to Ainflue"
+return <h1>{t('welcome')}</h1>; // "Welcome to IA Chérie"
 ```
 
 ### Module-Specific Translation

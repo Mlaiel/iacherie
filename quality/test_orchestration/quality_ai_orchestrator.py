@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quality AI Orchestrator - Ainflue Quality Platform
+Quality AI Orchestrator - IA Chérie Quality Platform
 ================================================
 
 Enterprise AI-powered quality analysis and prediction system.

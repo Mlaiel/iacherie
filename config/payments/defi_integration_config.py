@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue DeFi Integration Configuration Module
+"""IA Chérie DeFi Integration Configuration Module
 ===============================================
 
-Enterprise-grade DeFi integration configuration for the Ainflue platform.
+Enterprise-grade DeFi integration configuration for the IA Chérie platform.
 Comprehensive decentralized finance protocol integration with yield farming,
 liquidity provision, staking, lending, and advanced DeFi strategies.
 

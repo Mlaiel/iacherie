@@ -1,6 +1,6 @@
 # Platform Integration Guide
 
-**Ainflue Platform - Social Media & Content Platform Integration**  
+**IA Chérie Platform - Social Media & Content Platform Integration**  
 **Author**: Fahed Mlaiel (mlaiel@live.de)  
 **Version**: 1.0  
 **Date**: January 2025
@@ -46,7 +46,7 @@ from googleapiclient.discovery import build
 # OAuth2 configuration
 YOUTUBE_CLIENT_ID = "your_client_id.apps.googleusercontent.com"
 YOUTUBE_CLIENT_SECRET = "your_client_secret"
-YOUTUBE_REDIRECT_URI = "https://app.ainflue.com/auth/youtube/callback"
+YOUTUBE_REDIRECT_URI = "https://app.iacherie.com/auth/youtube/callback"
 
 # Scopes required
 YOUTUBE_SCOPES = [
@@ -104,8 +104,8 @@ def setup_content_id(youtube_service, video_file_path):
             part="snippet,metadata",
             body={
                 "snippet": {
-                    "title": "Ainflue Protected Content",
-                    "description": "Protected by Ainflue AI System"
+                    "title": "IA Chérie Protected Content",
+                    "description": "Protected by IA Chérie AI System"
                 },
                 "metadata": {
                     "type": "VIDEO",
@@ -183,7 +183,7 @@ import requests
 # Instagram Basic Display API
 INSTAGRAM_CLIENT_ID = "your_instagram_app_id"
 INSTAGRAM_CLIENT_SECRET = "your_instagram_app_secret"
-INSTAGRAM_REDIRECT_URI = "https://app.ainflue.com/auth/instagram/callback"
+INSTAGRAM_REDIRECT_URI = "https://app.iacherie.com/auth/instagram/callback"
 
 # Required scopes
 INSTAGRAM_SCOPES = [
@@ -282,7 +282,7 @@ import time
 
 TIKTOK_CLIENT_KEY = "your_tiktok_client_key"
 TIKTOK_CLIENT_SECRET = "your_tiktok_client_secret"
-TIKTOK_REDIRECT_URI = "https://app.ainflue.com/auth/tiktok/callback"
+TIKTOK_REDIRECT_URI = "https://app.iacherie.com/auth/tiktok/callback"
 
 class TikTokIntegration:
     def __init__(self):
@@ -353,7 +353,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 SPOTIFY_CLIENT_ID = "your_spotify_client_id"
 SPOTIFY_CLIENT_SECRET = "your_spotify_client_secret"
-SPOTIFY_REDIRECT_URI = "https://app.ainflue.com/auth/spotify/callback"
+SPOTIFY_REDIRECT_URI = "https://app.iacherie.com/auth/spotify/callback"
 
 # Required scopes for full integration
 SPOTIFY_SCOPES = [
@@ -699,7 +699,7 @@ SPOTIFY_WEBHOOK_SECRET=your_spotify_webhook_secret
 TWITTER_WEBHOOK_SECRET=your_twitter_webhook_secret
 
 # Database Configuration
-DATABASE_URL=postgresql://user:password@localhost:5432/ainflue
+DATABASE_URL=postgresql://user:password@localhost:5432/iacherie
 REDIS_URL=redis://localhost:6379/0
 
 # AI Services
@@ -718,5 +718,5 @@ ENCRYPTION_KEY=your_encryption_key
 This integration guide and all associated code are protected by copyright and other intellectual property laws. Unauthorized use, reproduction, or distribution is strictly prohibited.
 
 **Contact**: mlaiel@live.de  
-**Documentation**: https://docs.ainflue.com/integrations  
-**Support**: https://support.ainflue.com
+**Documentation**: https://docs.iacherie.com/integrations  
+**Support**: https://support.iacherie.com

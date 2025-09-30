@@ -1,5 +1,5 @@
 """
-Cross-Promotion Manager for Ainflue Distribution Platform
+Cross-Promotion Manager for IA Chérie Distribution Platform
 
 Advanced cross-platform promotion orchestration system that coordinates
 content distribution and promotion strategies across multiple platforms

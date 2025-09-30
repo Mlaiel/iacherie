@@ -2,7 +2,7 @@
 ===========================================================================
 
 Optimiseur de streaming audio enterprise avec qualité adaptive, CDN global
-et optimisation réseau pour plateforme Ainflue.
+et optimisation réseau pour plateforme IA Chérie.
 
 Expert Roles Implementation:
 ⚙️ DevOps: CDN integration + infrastructure scaling + monitoring global

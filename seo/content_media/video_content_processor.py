@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Ainflue Video Content Processor - Enterprise SEO Module
+⚡ IA Chérie Video Content Processor - Enterprise SEO Module
 
 🎬 ADVANCED VIDEO CONTENT PROCESSING & SEO OPTIMIZATION
 🎯 SPÉCIALISÉ POUR CRÉATEURS VIDÉO MULTI-PLATEFORMES
@@ -188,16 +188,16 @@ class VideoContentProcessor:
             'processing_workers': 4,
             'cache_ttl': 3600,
             'enable_gpu': True,
-            'cdn_endpoints': ['https://cdn1.ainflue.com', 'https://cdn2.ainflue.com']
+            'cdn_endpoints': ['https://cdn1.iacherie.com', 'https://cdn2.iacherie.com']
         }
 
     def _setup_storage_infrastructure(self):
         """Configuration infrastructure de stockage et CDN"""
         self.storage_config = {
             'temp_dir': Path('/tmp/ainflue_video_processing'),
-            'output_dir': Path('/var/lib/ainflue/processed_videos'),
-            'thumbnails_dir': Path('/var/lib/ainflue/thumbnails'),
-            'cache_dir': Path('/var/cache/ainflue/video_cache')
+            'output_dir': Path('/var/lib/iacherie/processed_videos'),
+            'thumbnails_dir': Path('/var/lib/iacherie/thumbnails'),
+            'cache_dir': Path('/var/cache/iacherie/video_cache')
         }
         
         # Création des répertoires

@@ -1,0 +1,337 @@
+# =============================================================================
+# AINFLUE PLATFORM - OPTIMIZED PRODUCTION DOCKERFILE
+# =============================================================================
+# Multi-stage production Dockerfile with security hardening, vulnerability 
+# scanning, and performance optimizations for enterprise deployment.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+# Build arguments for flexibility
+ARG PYTHON_VERSION=3.11
+ARG DEBIAN_VERSION=slim
+ARG BUILD_ENV=production
+ARG SECURITY_SCAN=false
+
+# =============================================================================
+# STAGE 1: BASE SECURITY & DEPENDENCIES
+# =============================================================================
+FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION} AS base
+
+LABEL stage=base
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue Platform - Base security and dependencies stage"
+LABEL version="1.0.0"
+
+# Security: Set non-interactive frontend to prevent hanging
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Security: Update base image and install security updates
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        # Essential security tools
+        ca-certificates \
+        gnupg \
+        # Build essentials (removed later in production)
+        build-essential \
+        pkg-config \
+        # System libraries for Python packages
+        libpq5 \
+        libpq-dev \
+        libsndfile1 \
+        libsndfile1-dev \
+        libssl-dev \
+        libffi-dev \
+        # Audio/Video processing
+        ffmpeg \
+        libavcodec-dev \
+        libavformat-dev \
+        libswscale-dev \
+        libavutil-dev \
+        # Computer vision libraries
+        libgl1-mesa-glx \
+        libglib2.0-0 \
+        libsm6 \
+        libxext6 \
+        libxrender1 \
+        libgomp1 \
+        libgcc-s1 \
+        # Web scraping support
+        chromium \
+        chromium-driver \
+        # Network and monitoring tools
+        curl \
+        wget \
+        netcat-openbsd \
+        # Clean up in same layer to reduce image size
+        && rm -rf /var/lib/apt/lists/* \
+        && apt-get clean \
+        && apt-get autoremove -y
+
+# Security: Create application user early
+RUN groupadd --gid 10001 ainflue && \
+    useradd --uid 10001 --gid ainflue \
+            --home-dir /home/ainflue \
+            --create-home \
+            --shell /bin/bash \
+            ainflue
+
+# Set environment variables for Chrome/Chromium
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+
+# =============================================================================
+# STAGE 2: PYTHON DEPENDENCIES BUILDER
+# =============================================================================
+FROM base AS dependencies
+
+LABEL stage=dependencies
+LABEL description="Python dependencies installation and optimization"
+
+# Create virtual environment for better isolation
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Upgrade pip and setuptools
+RUN pip install --no-cache-dir --upgrade \
+    pip==23.3.1 \
+    setuptools==68.2.2 \
+    wheel==0.41.2
+
+# Copy requirements files
+WORKDIR /build
+COPY requirements.txt ./
+COPY requirements-production.txt ./
+
+# Install Python dependencies with optimizations
+RUN pip install --no-cache-dir \
+    --prefer-binary \
+    --find-links https://download.pytorch.org/whl/cpu \
+    -r requirements.txt
+
+# Install production-specific requirements if they exist
+RUN if [ -f requirements-production.txt ]; then \
+        pip install --no-cache-dir \
+        --prefer-binary \
+        -r requirements-production.txt; \
+    fi
+
+# Security: Remove pip cache and temporary files
+RUN pip cache purge && \
+    find /opt/venv -name "*.pyc" -delete && \
+    find /opt/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# =============================================================================
+# STAGE 3: SECURITY SCANNER (Optional)
+# =============================================================================
+FROM dependencies AS security-scan
+
+LABEL stage=security-scan
+LABEL description="Security vulnerability scanning stage"
+
+# Install security scanning tools conditionally
+RUN if [ "$SECURITY_SCAN" = "true" ]; then \
+        pip install --no-cache-dir \
+            safety==2.3.4 \
+            bandit==1.7.5 \
+            semgrep==1.45.0; \
+    fi
+
+# Copy source code for security scanning
+COPY . /build/
+
+# Run security scans if enabled
+RUN if [ "$SECURITY_SCAN" = "true" ]; then \
+        echo "=== Running Security Scans ===" && \
+        # Check for known vulnerabilities in dependencies
+        safety check --json --output /build/safety-report.json || true && \
+        # Static analysis security testing
+        bandit -r /build -f json -o /build/bandit-report.json || true && \
+        # SAST scanning
+        semgrep --config=auto /build --json --output=/build/semgrep-report.json || true && \
+        echo "=== Security Scans Complete ==="; \
+    fi
+
+# =============================================================================
+# STAGE 4: APPLICATION BUILDER
+# =============================================================================
+FROM dependencies AS app-builder
+
+LABEL stage=app-builder
+LABEL description="Application code preparation and optimization"
+
+WORKDIR /app
+
+# Copy application source code
+COPY --chown=ainflue:ainflue . .
+
+# Create necessary directories
+RUN mkdir -p \
+    /app/data/faiss_indexes \
+    /app/storage \
+    /app/logs \
+    /app/tmp \
+    /app/uploads \
+    /app/cache \
+    /app/metrics \
+    && chown -R ainflue:ainflue /app
+
+# Compile Python files for better startup performance
+RUN python -m compileall -b . && \
+    find . -name "*.py" -delete 2>/dev/null || true
+
+# =============================================================================
+# STAGE 5: PRODUCTION RUNTIME
+# =============================================================================
+FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION} AS production
+
+LABEL stage=production
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue AI-Powered Content Protection & Monetization Platform"
+LABEL version="1.0.0"
+LABEL org.opencontainers.image.title="Ainflue Platform"
+LABEL org.opencontainers.image.description="Enterprise AI platform for content protection and monetization"
+LABEL org.opencontainers.image.vendor="Fahed Mlaiel"
+LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.documentation="https://github.com/Mlaiel/Ainflue/docs"
+
+# Production environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONPATH=/app \
+    PATH="/opt/venv/bin:$PATH" \
+    DEBIAN_FRONTEND=noninteractive \
+    # Application settings
+    ENVIRONMENT=production \
+    LOG_LEVEL=INFO \
+    # Security settings
+    UMASK=022 \
+    # Performance settings
+    PYTHONOPTIMIZE=2 \
+    # Chrome/Chromium settings
+    CHROME_BIN=/usr/bin/chromium \
+    CHROMEDRIVER_PATH=/usr/bin/chromedriver
+
+# Security: Install only runtime dependencies
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        # Essential runtime libraries
+        ca-certificates \
+        libpq5 \
+        libsndfile1 \
+        libssl3 \
+        libffi8 \
+        # Audio/Video processing runtime
+        ffmpeg \
+        libavcodec59 \
+        libavformat59 \
+        libswscale6 \
+        libavutil57 \
+        # Computer vision runtime
+        libgl1-mesa-glx \
+        libglib2.0-0 \
+        libsm6 \
+        libxext6 \
+        libxrender1 \
+        libgomp1 \
+        # Web scraping runtime
+        chromium \
+        chromium-driver \
+        # Monitoring and health check tools
+        curl \
+        netcat-openbsd \
+        # Process management
+        tini \
+        # Security: Remove build tools and clean up
+        && apt-get remove -y \
+            build-essential \
+            wget \
+        && apt-get autoremove -y \
+        && rm -rf /var/lib/apt/lists/* \
+        && apt-get clean
+
+# Security: Create non-root user with minimal privileges
+RUN groupadd --gid 10001 ainflue && \
+    useradd --uid 10001 --gid ainflue \
+            --home-dir /home/ainflue \
+            --create-home \
+            --shell /bin/bash \
+            ainflue
+
+# Copy virtual environment from dependencies stage
+COPY --from=dependencies /opt/venv /opt/venv
+
+# Set working directory
+WORKDIR /app
+
+# Copy application from builder stage with proper ownership
+COPY --from=app-builder --chown=ainflue:ainflue /app /app
+
+# Security: Set proper file permissions
+RUN chmod -R 755 /app && \
+    chmod -R 777 /app/data /app/storage /app/logs /app/tmp /app/uploads /app/cache /app/metrics && \
+    chown -R ainflue:ainflue /app
+
+# Security: Copy security reports if they were generated
+COPY --from=security-scan /build/*-report.json /app/security-reports/ 2>/dev/null || true
+
+# Create startup script with proper signal handling
+RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "=== Ainflue Platform Starting ==="\n\
+echo "Environment: $ENVIRONMENT"\n\
+echo "Python version: $(python --version)"\n\
+echo "Working directory: $(pwd)"\n\
+echo "User: $(whoami)"\n\
+echo "==================================="\n\
+\n\
+# Health check endpoint setup\n\
+python -c "from main import app; print(\"Application loaded successfully\")" || exit 1\n\
+\n\
+# Start application with proper signal handling\n\
+exec python -m uvicorn main:app \\\n\
+    --host 0.0.0.0 \\\n\
+    --port 8000 \\\n\
+    --workers ${WORKERS:-4} \\\n\
+    --worker-class uvicorn.workers.UvicornWorker \\\n\
+    --access-log \\\n\
+    --log-level ${LOG_LEVEL:-info} \\\n\
+    --proxy-headers \\\n\
+    --forwarded-allow-ips="*"\n\
+' > /app/start.sh && chmod +x /app/start.sh
+
+# Switch to non-root user
+USER ainflue
+
+# Security: Set secure umask
+RUN echo "umask 022" >> /home/ainflue/.bashrc
+
+# Expose application port
+EXPOSE 8000
+
+# Security labels for container scanning
+LABEL security.scan.enabled=true \
+      security.hardened=true \
+      security.non-root=true \
+      security.no-cache=true \
+      security.minimal-attack-surface=true
+
+# Health check with comprehensive validation
+HEALTHCHECK --interval=30s \
+            --timeout=15s \
+            --start-period=60s \
+            --retries=3 \
+            CMD curl -f http://localhost:8000/health \
+                && python -c "import sys; import psutil; print(f'Memory: {psutil.virtual_memory().percent}%'); sys.exit(0 if psutil.virtual_memory().percent < 90 else 1)" \
+                || exit 1
+
+# Use tini for proper signal handling
+ENTRYPOINT ["tini", "--"]
+
+# Start application
+CMD ["/app/start.sh"]

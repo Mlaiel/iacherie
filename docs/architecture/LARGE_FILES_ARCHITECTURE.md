@@ -1,7 +1,7 @@
 # 📚 Large Files Architecture Documentation
 
 ## Overview
-This document provides architecture documentation for the largest files in the Ainflue platform (20,000+ lines), explaining their structure, purpose, and optimization strategies for 1B+ user scalability.
+This document provides architecture documentation for the largest files in the IA Chérie platform (20,000+ lines), explaining their structure, purpose, and optimization strategies for 1B+ user scalability.
 
 ## 🏗️ Large File Analysis
 
@@ -373,4 +373,4 @@ edge_computing:
 **© 2025 Fahed Mlaiel. All rights reserved.**
 **Contact**: mlaiel@live.de
 
-This architecture documentation provides the foundation for scaling the Ainflue platform to 1B+ users while maintaining optimal performance across all large file components.
+This architecture documentation provides the foundation for scaling the IA Chérie platform to 1B+ users while maintaining optimal performance across all large file components.

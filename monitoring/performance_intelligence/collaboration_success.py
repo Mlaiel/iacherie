@@ -3,7 +3,7 @@
 ==============================================================================================
 
 Comprehensive collaboration tracking, partnership analysis, and community growth measurement system 
-for the Ainflue platform. Monitors creator partnerships, collaboration success rates, network effects,
+for the IA Chérie platform. Monitors creator partnerships, collaboration success rates, network effects,
 and community engagement across all content types and creator segments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

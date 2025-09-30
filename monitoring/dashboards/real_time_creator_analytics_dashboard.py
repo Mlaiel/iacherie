@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Real-Time Creator Analytics Dashboard
+IA Chérie Platform - Real-Time Creator Analytics Dashboard
 =======================================================
 
 Enterprise real-time analytics dashboard for Creator Economy with streaming
@@ -399,7 +399,7 @@ class RealTimeCreatorAnalyticsDashboard:
                 creator_id=creator_id,
                 metadata={
                     "content_type": "video",
-                    "platform": "ainflue",
+                    "platform": "iacherie",
                     "region": "global"
                 }
             )

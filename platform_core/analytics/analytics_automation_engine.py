@@ -1,10 +1,10 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 Ce module contient des algorithmes propriétaires ultra-confidentiels pour l'automatisation 
-des analytics et l'intelligence décisionnelle de la plateforme Ainflue Creator Economy.
+des analytics et l'intelligence décisionnelle de la plateforme IA Chérie Creator Economy.
 
 Analytics Automation Engine - Enterprise-grade analytics automation
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -1086,7 +1086,7 @@ async def validate_multi_role_implementation():
             'name': 'Send Report Notification',
             'parameters': {
                 'channels': ['email', 'slack'],
-                'recipients': ['admin@ainflue.com'],
+                'recipients': ['admin@iacherie.com'],
                 'message': 'Daily analytics report is ready'
             }
         }],

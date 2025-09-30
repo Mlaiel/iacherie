@@ -1103,9 +1103,9 @@ async def demonstrate_ai_legal_generation():
     )
     
     dmca_variables = {
-        'copyright_owner_name': 'Ainflue Legal Department',
+        'copyright_owner_name': 'IA Chérie Legal Department',
         'copyright_owner_address': '123 Legal Street, Suite 100, Legal City, LC 12345',
-        'copyright_owner_email': 'legal@ainflue.com',
+        'copyright_owner_email': 'legal@iacherie.com',
         'copyright_owner_phone': '+1-555-LEGAL-01',
         'work_title': 'Proprietary AI Algorithm Documentation',
         'work_description': 'Technical documentation and source code for AI-powered legal compliance system',

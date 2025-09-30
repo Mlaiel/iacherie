@@ -1,5 +1,5 @@
 """
-🚀 Ainflue Examples - Ultra-Advanced Comprehensive Example Orchestrator
+🚀 IA Chérie Examples - Ultra-Advanced Comprehensive Example Orchestrator
 ===========================================================================
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +22,7 @@ prosecution under applicable law.
 
 DESCRIPTION:
 ============
-Ultra-sophisticated examples orchestrator for the Ainflue platform, designed 
+Ultra-sophisticated examples orchestrator for the IA Chérie platform, designed 
 specifically for multi-format content creators (musicians, bloggers, photographers, 
 influencers, comedians). This production-ready system provides comprehensive 
 examples, demonstrations, showcases, and workflows for all platform capabilities 

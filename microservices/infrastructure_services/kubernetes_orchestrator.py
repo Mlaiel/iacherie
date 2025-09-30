@@ -1,5 +1,5 @@
 """
-🚀 Kubernetes Orchestrator for Ainflue Microservices
+🚀 Kubernetes Orchestrator for IA Chérie Microservices
 🎖️ Multi-Expert Implementation: DevOps + Microservices + Security + Backend Senior
 
 Enterprise Kubernetes deployment with:
@@ -94,7 +94,7 @@ class KubernetesOrchestrator:
     
     def __init__(self, environment: DeploymentEnvironment = DeploymentEnvironment.PRODUCTION):
         self.environment = environment
-        self.namespace = f"ainflue-{environment.value}"
+        self.namespace = f"iacherie-{environment.value}"
         self.output_dir = Path(f"kubernetes/{environment.value}")
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
@@ -112,11 +112,11 @@ class KubernetesOrchestrator:
                 "name": self.namespace,
                 "labels": {
                     "environment": self.environment.value,
-                    "project": "ainflue",
+                    "project": "iacherie",
                     "managed-by": "enterprise-orchestrator"
                 },
                 "annotations": {
-                    "description": f"Ainflue microservices - {self.environment.value}",
+                    "description": f"IA Chérie microservices - {self.environment.value}",
                     "contact": "mlaiel@live.de"
                 }
             },
@@ -624,7 +624,7 @@ class KubernetesOrchestrator:
         return saved_files
     
     def deploy_ainflue_microservices(self) -> Dict[str, List[str]]:
-        """Deploy all Ainflue microservices"""
+        """Deploy all IA Chérie microservices"""
         deployed_files = {}
         
         # Generate namespace first
@@ -639,7 +639,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="api-gateway",
                 service_type=ServiceType.API_GATEWAY,
-                image="ainflue/api-gateway:latest",
+                image="iacherie/api-gateway:latest",
                 port=8080,
                 environment=self.environment,
                 replicas=3,
@@ -651,7 +651,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="content-upload-service",
                 service_type=ServiceType.CONTENT_SERVICE,
-                image="ainflue/content-upload:latest",
+                image="iacherie/content-upload:latest",
                 port=8001,
                 environment=self.environment,
                 replicas=3,
@@ -660,7 +660,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="content-processing-service",
                 service_type=ServiceType.CONTENT_SERVICE,
-                image="ainflue/content-processing:latest",
+                image="iacherie/content-processing:latest",
                 port=8002,
                 environment=self.environment,
                 replicas=4,
@@ -671,7 +671,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="ai-inference-service",
                 service_type=ServiceType.AI_SERVICE,
-                image="ainflue/ai-inference:latest",
+                image="iacherie/ai-inference:latest",
                 port=8003,
                 environment=self.environment,
                 replicas=3,
@@ -682,7 +682,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="ai-orchestration-service",
                 service_type=ServiceType.AI_SERVICE,
-                image="ainflue/ai-orchestration:latest",
+                image="iacherie/ai-orchestration:latest",
                 port=8004,
                 environment=self.environment,
                 replicas=2,
@@ -691,7 +691,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="auth-service",
                 service_type=ServiceType.SECURITY_SERVICE,
-                image="ainflue/auth-service:latest",
+                image="iacherie/auth-service:latest",
                 port=8005,
                 environment=self.environment,
                 replicas=3,
@@ -700,7 +700,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="authz-service",
                 service_type=ServiceType.SECURITY_SERVICE,
-                image="ainflue/authz-service:latest",
+                image="iacherie/authz-service:latest",
                 port=8006,
                 environment=self.environment,
                 replicas=2,
@@ -709,7 +709,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="creator-workflow-service",
                 service_type=ServiceType.BUSINESS_SERVICE,
-                image="ainflue/creator-workflow:latest",
+                image="iacherie/creator-workflow:latest",
                 port=8007,
                 environment=self.environment,
                 replicas=3,
@@ -718,7 +718,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="platform-sync-service",
                 service_type=ServiceType.PLATFORM_SERVICE,
-                image="ainflue/platform-sync:latest",
+                image="iacherie/platform-sync:latest",
                 port=8008,
                 environment=self.environment,
                 replicas=2,
@@ -727,7 +727,7 @@ class KubernetesOrchestrator:
             MicroserviceConfig(
                 name="analytics-service",
                 service_type=ServiceType.ANALYTICS_SERVICE,
-                image="ainflue/analytics:latest",
+                image="iacherie/analytics:latest",
                 port=8009,
                 environment=self.environment,
                 replicas=2,

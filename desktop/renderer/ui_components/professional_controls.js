@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Professional Controls
+ * IA Chérie Desktop Renderer - Professional Controls
  * Professional interface controls and components
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

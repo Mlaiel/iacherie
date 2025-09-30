@@ -1,4 +1,4 @@
-"""🎯 ENTERPRISE QUALITY ASSURANCE MODULE - AINFLUE PLATFORM
+"""🎯 ENTERPRISE QUALITY ASSURANCE MODULE - IACHERIE PLATFORM
 ================================================================
 
 Point d'entrée principal pour l'écosystème de contrôle qualité enterprise
@@ -61,7 +61,7 @@ async def run_enterprise_quality_analysis(project_path=None, environment="develo
 def get_package_info():
     """Get package information"""
     return {
-        "name": "Ainflue Enterprise Quality Assurance",
+        "name": "IA Chérie Enterprise Quality Assurance",
         "version": __version__,
         "description": "Enterprise quality assurance orchestration system",
         "author": __author__,
@@ -74,6 +74,6 @@ def get_package_info():
             "Scoring qualité IA prédictif",
             "Validation compliance enterprise",
             "Reporting executive multi-niveaux",
-            "Intégration workflow créateurs Ainflue"
+            "Intégration workflow créateurs IA Chérie"
         ]
     }

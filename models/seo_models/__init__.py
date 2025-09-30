@@ -170,14 +170,14 @@ class SearchOptimizationModel:
     @staticmethod
     def generate_meta_tags(content_data: Dict[str, Any]) -> Dict[str, Any]:
         return {
-            "title": f"{content_data.get('title', 'Content')} | Ainflue Platform",
-            "description": f"Discover {content_data.get('title', 'amazing content')} on Ainflue - The premier platform for content creators and monetization.",
+            "title": f"{content_data.get('title', 'Content')} | IA Chérie Platform",
+            "description": f"Discover {content_data.get('title', 'amazing content')} on IA Chérie - The premier platform for content creators and monetization.",
             "keywords": content_data.get("keywords", ["content", "creation", "monetization"]),
             "og_title": content_data.get('title', 'Content'),
-            "og_description": f"Experience {content_data.get('title', 'content')} on Ainflue platform",
+            "og_description": f"Experience {content_data.get('title', 'content')} on IA Chérie platform",
             "og_image": content_data.get('thumbnail', '/default-og-image.jpg'),
             "twitter_card": "summary_large_image",
-            "canonical_url": f"https://ainflue.com/content/{content_data.get('id', '')}",
+            "canonical_url": f"https://iacherie.com/content/{content_data.get('id', '')}",
             "generated_at": datetime.utcnow().isoformat()
         }
 
@@ -270,10 +270,10 @@ class MultilingualSEOModel:
             "content_id": content_id,
             "optimized_languages": languages,
             "hreflang_tags": {
-                "en": f"https://ainflue.com/en/content/{content_id}",
-                "de": f"https://ainflue.com/de/content/{content_id}",
-                "fr": f"https://ainflue.com/fr/content/{content_id}",
-                "ar": f"https://ainflue.com/ar/content/{content_id}"
+                "en": f"https://iacherie.com/en/content/{content_id}",
+                "de": f"https://iacherie.com/de/content/{content_id}",
+                "fr": f"https://iacherie.com/fr/content/{content_id}",
+                "ar": f"https://iacherie.com/ar/content/{content_id}"
             },
             "localized_keywords": {
                 "en": ["content creation", "monetization"],
@@ -378,8 +378,8 @@ class VisibilityTrackingModel:
                 "negative_mentions": 8
             },
             "ranking_positions": {
-                "ainflue": {"position": 1, "featured_snippet": True},
-                "ainflue platform": {"position": 2, "featured_snippet": False}
+                "iacherie": {"position": 1, "featured_snippet": True},
+                "iacherie platform": {"position": 2, "featured_snippet": False}
             },
             "monitoring_alerts": [],
             "tracked_at": datetime.utcnow().isoformat()
@@ -600,16 +600,16 @@ async def seo_and_discovery_workflow(content_data: Dict[str, Any]) -> Dict[str, 
         
         # Mobile optimization check
         mobile_optimization = MobileSEOModel.analyze_mobile_performance(
-            f"https://ainflue.com/content/{content_data.get('id', 'sample')}"
+            f"https://iacherie.com/content/{content_data.get('id', 'sample')}"
         )
         workflow_result["mobile_optimization"] = mobile_optimization
         
         # SEO analytics setup
-        seo_analytics = SEOAnalyticsModel.track_organic_traffic("ainflue.com")
+        seo_analytics = SEOAnalyticsModel.track_organic_traffic("iacherie.com")
         workflow_result["seo_analytics"] = seo_analytics
         
         # Visibility tracking setup
-        brand_visibility = VisibilityTrackingModel.track_brand_visibility(["ainflue", "content platform"])
+        brand_visibility = VisibilityTrackingModel.track_brand_visibility(["iacherie", "content platform"])
         workflow_result["brand_visibility"] = brand_visibility
         
         workflow_result["status"] = "completed"

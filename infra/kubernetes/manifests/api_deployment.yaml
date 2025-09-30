@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,13 +13,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api
-  namespace: ainflue-platform
+  name: iacherie-api
+  namespace: iacherie-platform
   labels:
-    app: ainflue-api
+    app: iacherie-api
     version: v1
     component: backend-api
-    part-of: ainflue-platform
+    part-of: iacherie-platform
 spec:
   replicas: 3
   strategy:
@@ -29,28 +29,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
       version: v1
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
         version: v1
         component: backend-api
-        part-of: ainflue-platform
+        part-of: iacherie-platform
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: ainflue-api-sa
+      serviceAccountName: iacherie-api-sa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-api
-        image: ainflue/api:latest
+      - name: iacherie-api
+        image: iacherie/api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -69,27 +69,27 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: jwt-secret
         - name: AWS_REGION
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: aws-region
         - name: S3_BUCKET
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: s3-bucket
         resources:
           requests:
@@ -123,7 +123,7 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: ainflue-api-config
+          name: iacherie-api-config
       - name: temp-storage
         emptyDir: {}
       nodeSelector:
@@ -148,19 +148,19 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - ainflue-api
+                  - iacherie-api
               topologyKey: kubernetes.io/hostname
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-engine
-  namespace: ainflue-platform
+  name: iacherie-ai-engine
+  namespace: iacherie-platform
   labels:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
     version: v1
     component: ai-processing
-    part-of: ainflue-platform
+    part-of: iacherie-platform
 spec:
   replicas: 2
   strategy:
@@ -170,28 +170,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: ainflue-ai-engine
+      app: iacherie-ai-engine
       version: v1
   template:
     metadata:
       labels:
-        app: ainflue-ai-engine
+        app: iacherie-ai-engine
         version: v1
         component: ai-processing
-        part-of: ainflue-platform
+        part-of: iacherie-platform
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: ainflue-ai-sa
+      serviceAccountName: iacherie-ai-sa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-ai-engine
-        image: ainflue/ai-engine:latest
+      - name: iacherie-ai-engine
+        image: iacherie/ai-engine:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -214,17 +214,17 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: OPENAI_API_KEY
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: openai-api-key
         resources:
           requests:
@@ -286,13 +286,13 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-mobile-api
-  namespace: ainflue-platform
+  name: iacherie-mobile-api
+  namespace: iacherie-platform
   labels:
-    app: ainflue-mobile-api
+    app: iacherie-mobile-api
     version: v1
     component: mobile-backend
-    part-of: ainflue-platform
+    part-of: iacherie-platform
 spec:
   replicas: 3
   strategy:
@@ -302,28 +302,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: ainflue-mobile-api
+      app: iacherie-mobile-api
       version: v1
   template:
     metadata:
       labels:
-        app: ainflue-mobile-api
+        app: iacherie-mobile-api
         version: v1
         component: mobile-backend
-        part-of: ainflue-platform
+        part-of: iacherie-platform
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: ainflue-mobile-sa
+      serviceAccountName: iacherie-mobile-sa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-mobile-api
-        image: ainflue/mobile-api:latest
+      - name: iacherie-mobile-api
+        image: iacherie/mobile-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -342,17 +342,17 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: PUSH_NOTIFICATION_KEY
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: push-notification-key
         resources:
           requests:
@@ -386,7 +386,7 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: ainflue-mobile-config
+          name: iacherie-mobile-config
       - name: temp-storage
         emptyDir: {}
       nodeSelector:
@@ -402,19 +402,19 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - ainflue-mobile-api
+                  - iacherie-mobile-api
               topologyKey: kubernetes.io/hostname
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-worker
-  namespace: ainflue-platform
+  name: iacherie-worker
+  namespace: iacherie-platform
   labels:
-    app: ainflue-worker
+    app: iacherie-worker
     version: v1
     component: background-worker
-    part-of: ainflue-platform
+    part-of: iacherie-platform
 spec:
   replicas: 2
   strategy:
@@ -424,28 +424,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: ainflue-worker
+      app: iacherie-worker
       version: v1
   template:
     metadata:
       labels:
-        app: ainflue-worker
+        app: iacherie-worker
         version: v1
         component: background-worker
-        part-of: ainflue-platform
+        part-of: iacherie-platform
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8090"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: ainflue-worker-sa
+      serviceAccountName: iacherie-worker-sa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
       containers:
-      - name: ainflue-worker
-        image: ainflue/worker:latest
+      - name: iacherie-worker
+        image: iacherie/worker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8090
@@ -461,22 +461,22 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: AWS_REGION
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: aws-region
         - name: S3_BUCKET
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: s3-bucket
         resources:
           requests:

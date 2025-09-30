@@ -485,7 +485,7 @@ Démarrage du monitoring"""
                 "level": "CRITICAL",
                 "alerts": alerts,
                 "timestamp": datetime.now().isoformat(),
-                "server_id": "ainflue-prod-server",
+                "server_id": "iacherie-prod-server",
                 "action_required": True
             }
             
@@ -507,8 +507,8 @@ Démarrage du monitoring"""
                 "level": "WARNING", 
                 "alerts": alerts,
                 "timestamp": datetime.now().isoformat(),
-                "server_id": "ainflue-prod-server",
-                "monitoring_dashboard": "https://grafana.ainflue.com/alerts"
+                "server_id": "iacherie-prod-server",
+                "monitoring_dashboard": "https://grafana.iacherie.com/alerts"
             }
             
             # En production, envoyer via Slack et email uniquement

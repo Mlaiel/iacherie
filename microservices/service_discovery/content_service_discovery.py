@@ -1,12 +1,12 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🎨 Content Service Discovery Enterprise - Ainflue
+🎨 Content Service Discovery Enterprise - IA Chérie
 ================================================
-Service discovery spécialisé pour services contenu Ainflue.
+Service discovery spécialisé pour services contenu IA Chérie.
 Media processing + content analysis + creator services discovery.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -542,7 +542,7 @@ class ContentWorkflowOptimizer:
 
 class ContentServiceDiscovery:
     """
-    Service discovery spécialisé pour services contenu Ainflue.
+    Service discovery spécialisé pour services contenu IA Chérie.
     Media processing + content analysis + creator services discovery.
     """
     
@@ -756,7 +756,7 @@ class ContentServiceDiscovery:
             mock_storage_service = ServiceInstance(
                 service_id=f"storage-{storage_type.value}-001",
                 service_name=f"storage_{storage_type.value}",
-                host="storage.ainflue.com",
+                host="storage.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={

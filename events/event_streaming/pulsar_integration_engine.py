@@ -1,5 +1,5 @@
 """IA Influencer Agent - Pulsar Integration Engine
-Apache Pulsar Integration for Cross-Datacenter Event Streaming in Ainflue Platform
+Apache Pulsar Integration for Cross-Datacenter Event Streaming in IA Chérie Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -48,23 +48,23 @@ class ReplicationStrategy(Enum):
 
 
 class AinflueBusinesPulsarTopics:
-    """Pulsar topics for Ainflue cross-datacenter events"""
+    """Pulsar topics for IA Chérie cross-datacenter events"""
     
     # Global content distribution
-    GLOBAL_CONTENT_DISTRIBUTION = "persistent://ainflue/global/content-distribution"
-    CROSS_REGION_SYNC = "persistent://ainflue/global/cross-region-sync"
+    GLOBAL_CONTENT_DISTRIBUTION = "persistent://iacherie/global/content-distribution"
+    CROSS_REGION_SYNC = "persistent://iacherie/global/cross-region-sync"
     
     # Creator-specific tenants (template)
-    CREATOR_EVENTS_TEMPLATE = "persistent://ainflue/creator-{creator_id}/events"
-    CREATOR_ANALYTICS_TEMPLATE = "persistent://ainflue/creator-{creator_id}/analytics"
+    CREATOR_EVENTS_TEMPLATE = "persistent://iacherie/creator-{creator_id}/events"
+    CREATOR_ANALYTICS_TEMPLATE = "persistent://iacherie/creator-{creator_id}/analytics"
     
     # Business critical events
-    REVENUE_RECONCILIATION = "persistent://ainflue/finance/revenue-reconciliation"
-    AUDIT_TRAIL = "persistent://ainflue/audit/trail"
+    REVENUE_RECONCILIATION = "persistent://iacherie/finance/revenue-reconciliation"
+    AUDIT_TRAIL = "persistent://iacherie/audit/trail"
     
     # Cross-datacenter coordination
-    DATACENTER_HEARTBEAT = "persistent://ainflue/system/datacenter-heartbeat"
-    GLOBAL_CONFIGURATION = "persistent://ainflue/system/global-configuration"
+    DATACENTER_HEARTBEAT = "persistent://iacherie/system/datacenter-heartbeat"
+    GLOBAL_CONFIGURATION = "persistent://iacherie/system/global-configuration"
 
 
 @dataclass
@@ -430,7 +430,7 @@ class PulsarConsumer:
                         "data": {"test": "data"},
                         "timestamp": datetime.now(timezone.utc).isoformat()
                     }).encode('utf-8'),
-                    properties={"source": "ainflue"},
+                    properties={"source": "iacherie"},
                     event_time=datetime.now(timezone.utc),
                     publish_time=datetime.now(timezone.utc)
                 )
@@ -601,7 +601,7 @@ class GeoReplicationManager:
 
 
 class PulsarIntegrationEngine:
-    """Main engine for Pulsar integration in Ainflue platform"""
+    """Main engine for Pulsar integration in IA Chérie platform"""
     
     def __init__(self, cluster_configs: Dict[str, PulsarClusterConfig], metrics_collector=None):
         self.cluster_configs = cluster_configs
@@ -617,7 +617,7 @@ class PulsarIntegrationEngine:
         try:
             logger.info("Starting Pulsar Integration Engine")
             
-            # Setup default producers and consumers for Ainflue
+            # Setup default producers and consumers for IA Chérie
             await self._setup_default_topology()
             
             # Start engine monitoring task
@@ -658,7 +658,7 @@ class PulsarIntegrationEngine:
             raise
     
     async def _setup_default_topology(self):
-        """Setup default Pulsar topology for Ainflue"""
+        """Setup default Pulsar topology for IA Chérie"""
         try:
             # Get primary cluster config
             if "primary" not in self.cluster_configs:
@@ -677,7 +677,7 @@ class PulsarIntegrationEngine:
             for topic in key_topics:
                 producer_config = PulsarProducerConfig(
                     topic=topic,
-                    producer_name=f"ainflue-producer-{topic.split('/')[-1]}",
+                    producer_name=f"iacherie-producer-{topic.split('/')[-1]}",
                     compression_type=PulsarCompressionType.LZ4,
                     batching_enabled=True
                 )
@@ -696,7 +696,7 @@ class PulsarIntegrationEngine:
             for topic in consumer_topics:
                 consumer_config = PulsarConsumerConfig(
                     topics=[topic],
-                    subscription_name=f"ainflue-subscription-{topic.split('/')[-1]}",
+                    subscription_name=f"iacherie-subscription-{topic.split('/')[-1]}",
                     subscription_type=PulsarSubscriptionType.SHARED
                 )
                 

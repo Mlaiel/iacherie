@@ -2,7 +2,7 @@
 """Circuit Breaker Manager - Resilience Pattern Enterprise
 =========================================================
 
-Advanced circuit breaker implementation for Ainflue platform error handling.
+Advanced circuit breaker implementation for IA Chérie platform error handling.
 Provides adaptive circuit breakers with intelligent failure detection,
 state management, and integration with existing error handling infrastructure.
 

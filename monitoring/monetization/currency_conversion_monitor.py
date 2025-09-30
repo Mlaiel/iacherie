@@ -1,11 +1,11 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Ainflue Platform - Currency Conversion Monitor
+IA Chérie Platform - Currency Conversion Monitor
 ==============================================
 
 Advanced currency conversion monitoring system for tracking exchange rates,
 conversion performance, and cost optimization across global monetization
-workflows for the Ainflue platform.
+workflows for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

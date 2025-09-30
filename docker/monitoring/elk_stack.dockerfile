@@ -2,7 +2,7 @@
 
 # Elasticsearch
 FROM docker.elastic.co/elasticsearch/elasticsearch:8.8.0 AS elasticsearch
-ENV cluster.name=ainflue-monitoring
+ENV cluster.name=iacherie-monitoring
 ENV discovery.type=single-node
 ENV "ES_JAVA_OPTS=-Xms2g -Xmx2g"
 ENV xpack.security.enabled=false

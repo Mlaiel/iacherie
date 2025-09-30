@@ -5,7 +5,7 @@ Professional text generation with 12 specialized text agents.
 Multilingual content creation for enterprise platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 

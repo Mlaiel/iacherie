@@ -1,11 +1,11 @@
 """
-🤝 Collaboration Service Mesh Enterprise - Ainflue
+🤝 Collaboration Service Mesh Enterprise - IA Chérie
 =================================================
 Service mesh collaboration pour créateurs et équipes.
 Team coordination + permission management + real-time sync.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -611,7 +611,7 @@ class CollaborationServiceMesh:
             ServiceInstance(
                 service_id="rt_sync_001",
                 service_name="real_time_sync",
-                host="sync.ainflue.com",
+                host="sync.iacherie.com",
                 port=8080,
                 health_check_url="/health",
                 metadata={
@@ -628,7 +628,7 @@ class CollaborationServiceMesh:
             ServiceInstance(
                 service_id="comment_001",
                 service_name="comment_system", 
-                host="comments.ainflue.com",
+                host="comments.iacherie.com",
                 port=8080,
                 health_check_url="/health",
                 metadata={
@@ -645,7 +645,7 @@ class CollaborationServiceMesh:
             ServiceInstance(
                 service_id="stream_001",
                 service_name="streaming_service",
-                host="stream.ainflue.com", 
+                host="stream.iacherie.com", 
                 port=1935,
                 health_check_url="/health",
                 metadata={
@@ -662,7 +662,7 @@ class CollaborationServiceMesh:
             ServiceInstance(
                 service_id="task_001",
                 service_name="task_manager",
-                host="tasks.ainflue.com",
+                host="tasks.iacherie.com",
                 port=8080,
                 health_check_url="/health",
                 metadata={
@@ -679,7 +679,7 @@ class CollaborationServiceMesh:
             ServiceInstance(
                 service_id="files_001",
                 service_name="file_sharing",
-                host="files.ainflue.com",
+                host="files.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={
@@ -859,7 +859,7 @@ class CollaborationServiceMesh:
                 endpoints['websocket'] = f"wss://{sync_service.host}:{sync_service.port}/sync/{session.session_id}"
             
             # Endpoint REST pour opérations asynchrones
-            endpoints['rest_api'] = f"https://api.ainflue.com/collaboration/{session.session_id}"
+            endpoints['rest_api'] = f"https://api.iacherie.com/collaboration/{session.session_id}"
             
             # Endpoint pour streaming (si applicable)
             if 'streaming_service' in allocated_services:

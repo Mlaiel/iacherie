@@ -130,7 +130,7 @@ staging:
       
   storage:
     aws_s3:
-      bucket_name: "ainflue-staging-content"
+      bucket_name: "iacherie-staging-content"
       region: "eu-west-1"
       encryption: true
       
@@ -192,7 +192,7 @@ production:
       uri: "${PROD_MONGO_URI}"
       max_pool_size: 100
       ssl_enabled: true
-      replica_set: "ainflue-rs"
+      replica_set: "iacherie-rs"
       
   external_services:
     mock_mode: false
@@ -219,14 +219,14 @@ production:
       
   storage:
     aws_s3:
-      bucket_name: "ainflue-prod-content"
+      bucket_name: "iacherie-prod-content"
       region: "eu-west-1"
       encryption: true
       versioning: true
       lifecycle_policy: true
       
     cdn:
-      cloudfront_domain: "cdn.ainflue.com"
+      cloudfront_domain: "cdn.iacherie.com"
       cache_policy: "creator_optimized"
       
   security:

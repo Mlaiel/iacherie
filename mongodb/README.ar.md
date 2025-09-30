@@ -1,13 +1,13 @@
-# طبقة قاعدة البيانات MongoDB - منصة Ainflue
+# طبقة قاعدة البيانات MongoDB - منصة IA Chérie
 
-[![الترخيص: ملكية خاصة](https://img.shields.io/badge/الترخيص-ملكية_خاصة-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![الترخيص: ملكية خاصة](https://img.shields.io/badge/الترخيص-ملكية_خاصة-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-green.svg)](https://www.mongodb.com/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-جاهز-blue.svg)](https://www.docker.com/)
 
 ## 🚀 نظرة عامة
 
-طبقة قاعدة البيانات MongoDB هي نظام إدارة البيانات الأساسي لمنصة Ainflue - منصة وكلاء المؤثرين المدعومة بالذكاء الاصطناعي التي تحدث ثورة في إنشاء المحتوى والتعاون وتحقيق الأرباح. توفر هذه الوحدة إدارة قواعد البيانات على مستوى المؤسسات مع ميزات متقدمة لقابلية التوسع والأمان وتحسين الأداء.
+طبقة قاعدة البيانات MongoDB هي نظام إدارة البيانات الأساسي لمنصة IA Chérie - منصة وكلاء المؤثرين المدعومة بالذكاء الاصطناعي التي تحدث ثورة في إنشاء المحتوى والتعاون وتحقيق الأرباح. توفر هذه الوحدة إدارة قواعد البيانات على مستوى المؤسسات مع ميزات متقدمة لقابلية التوسع والأمان وتحسين الأداء.
 
 ## 👥 تخصصات الفريق
 
@@ -34,7 +34,7 @@
 
 ## 🎯 هندسة منطق الأعمال
 
-تتبع Ainflue سير عمل معقد لمنشئي المحتوى:
+تتبع IA Chérie سير عمل معقد لمنشئي المحتوى:
 
 ```mermaid
 graph LR
@@ -108,8 +108,8 @@ mongodb/
 
 ```bash
 # استنساخ المستودع (المستخدمون المصرح لهم فقط)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mongodb
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mongodb
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -271,8 +271,8 @@ terraform apply terraform/mongodb.tf
 # تكوين الإنتاج
 production:
   connection:
-    hosts: ["mongo1.ainflue.com", "mongo2.ainflue.com", "mongo3.ainflue.com"]
-    replica_set: "ainflue-rs"
+    hosts: ["mongo1.iacherie.com", "mongo2.iacherie.com", "mongo3.iacherie.com"]
+    replica_set: "iacherie-rs"
     ssl: true
     auth_source: "admin"
   
@@ -368,4 +368,4 @@ coverage run -m pytest && coverage report -m
 
 ---
 
-*هذا README جزء من وثائق طبقة قاعدة البيانات MongoDB لمنصة Ainflue. للحصول على وثائق النظام الكاملة، يرجى الرجوع إلى مستودع المشروع الرئيسي.*
+*هذا README جزء من وثائق طبقة قاعدة البيانات MongoDB لمنصة IA Chérie. للحصول على وثائق النظام الكاملة، يرجى الرجوع إلى مستودع المشروع الرئيسي.*

@@ -133,10 +133,10 @@ class AIModelConfig:
     ai_analysis_enabled: bool = True
     ml_model_version: str = "v2.1"
     ai_confidence_threshold: float = 0.8
-    content_analysis_model: str = "ainflue-content-v2"
-    sentiment_analysis_model: str = "ainflue-sentiment-v2"
-    quality_scoring_model: str = "ainflue-quality-v2"
-    threat_detection_model: str = "ainflue-security-v2"
+    content_analysis_model: str = "iacherie-content-v2"
+    sentiment_analysis_model: str = "iacherie-sentiment-v2"
+    quality_scoring_model: str = "iacherie-quality-v2"
+    threat_detection_model: str = "iacherie-security-v2"
     model_cache_enabled: bool = True
     model_update_check_hours: int = 24
     fallback_to_traditional: bool = True

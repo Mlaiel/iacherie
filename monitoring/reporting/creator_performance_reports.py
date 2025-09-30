@@ -1,7 +1,7 @@
 """Creator Performance Reports System
 ==================================
 
-Advanced creator performance analytics and reporting for Ainflue Creator Economy.
+Advanced creator performance analytics and reporting for IA Chérie Creator Economy.
 Comprehensive tracking of creator engagement, content performance, revenue analysis,
 and growth trajectory with multi-platform correlation.
 

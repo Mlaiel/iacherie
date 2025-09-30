@@ -1,4 +1,4 @@
-# 📋 Ainflue Platform - Coding Standards
+# 📋 IA Chérie Platform - Coding Standards
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 2.0.0  
@@ -142,7 +142,7 @@ logger = logging.getLogger(__name__)
 
 # Custom exceptions
 class AinfluePlatformError(Exception):
-    """Base exception for Ainflue platform."""
+    """Base exception for IA Chérie platform."""
     pass
 
 class ContentAnalysisError(AinfluePlatformError):
@@ -1254,4 +1254,4 @@ class ContentRepository:
 
 ---
 
-This completes the comprehensive coding standards documentation. The document provides detailed guidelines for Python development, API design, database modeling, and more, all specifically tailored for the Ainflue platform.
+This completes the comprehensive coding standards documentation. The document provides detailed guidelines for Python development, API design, database modeling, and more, all specifically tailored for the IA Chérie platform.

@@ -315,9 +315,9 @@ class DeploymentRollbackManager:
         """Get service endpoints for the deployment."""
         try:
             return [
-                f"https://api.ainflue.com/{deployment_id}/inference",
-                f"https://api.ainflue.com/{deployment_id}/health",
-                f"https://api.ainflue.com/{deployment_id}/metrics"
+                f"https://api.iacherie.com/{deployment_id}/inference",
+                f"https://api.iacherie.com/{deployment_id}/health",
+                f"https://api.iacherie.com/{deployment_id}/metrics"
             ]
         except Exception as e:
             self.logger.error(f"Error getting service endpoints: {e}")

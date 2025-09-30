@@ -1,0 +1,1477 @@
+# ⚡ Consul Connect Configuration Template - Ainflue Templates Configuration Module
+# 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
+# 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
+
+# ===================================================================
+# CONSUL CONNECT SERVICE MESH CONFIGURATION TEMPLATE
+# Enterprise-grade Consul Connect service mesh configuration
+# ===================================================================
+
+# 🔧 Consul Server Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-server-config
+  namespace: consul
+  labels:
+    app: consul
+    component: server
+data:
+  server.hcl: |
+    datacenter = "ainflue-dc1"
+    data_dir = "/consul/data"
+    log_level = "INFO"
+    node_name = "consul-server"
+    bind_addr = "0.0.0.0"
+    client_addr = "0.0.0.0"
+    
+    # Server Configuration
+    server = true
+    bootstrap_expect = 3
+    retry_join = ["consul-server-0.consul-server.consul.svc.cluster.local",
+                 "consul-server-1.consul-server.consul.svc.cluster.local",
+                 "consul-server-2.consul-server.consul.svc.cluster.local"]
+    
+    # UI Configuration
+    ui_config {
+      enabled = true
+    }
+    
+    # Connect Configuration
+    connect {
+      enabled = true
+    }
+    
+    # Ports Configuration
+    ports {
+      grpc = 8502
+      grpc_tls = 8503
+    }
+    
+    # ACL Configuration
+    acl = {
+      enabled = true
+      default_policy = "deny"
+      enable_token_persistence = true
+      tokens = {
+        initial_management = "ainflue-consul-bootstrap-token"
+      }
+    }
+    
+    # TLS Configuration
+    tls {
+      defaults {
+        ca_file = "/consul/tls/ca/tls.crt"
+        cert_file = "/consul/tls/server/tls.crt"
+        key_file = "/consul/tls/server/tls.key"
+        verify_incoming = true
+        verify_outgoing = true
+        verify_server_hostname = true
+      }
+    }
+    
+    # Encryption
+    encrypt = "ainflue-consul-encryption-key-base64"
+    encrypt_verify_incoming = true
+    encrypt_verify_outgoing = true
+    
+    # Performance
+    performance {
+      raft_multiplier = 1
+    }
+    
+    # Logging
+    log_rotate_duration = "24h"
+    log_rotate_max_files = 30
+    
+    # Metrics
+    telemetry {
+      prometheus_retention_time = "60s"
+      disable_hostname = true
+      metrics_prefix = "consul.ainflue"
+    }
+---
+# 🚀 Consul Server StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: consul-server
+  namespace: consul
+  labels:
+    app: consul
+    component: server
+spec:
+  serviceName: consul-server
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consul
+      component: server
+  template:
+    metadata:
+      labels:
+        app: consul
+        component: server
+      annotations:
+        consul.hashicorp.com/connect-inject: "false"
+    spec:
+      serviceAccountName: consul-server
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: consul
+        image: "hashicorp/consul:1.17.0"
+        imagePullPolicy: IfNotPresent
+        command:
+        - "/bin/sh"
+        - "-ec"
+        - |
+          CONSUL_FULLNAME="consul"
+          
+          exec /usr/local/bin/docker-entrypoint.sh consul agent \
+            -config-dir=/consul/config \
+            -advertise="${ADVERTISE_IP}" \
+            -bind="0.0.0.0" \
+            -bootstrap-expect=3 \
+            -client="0.0.0.0" \
+            -config-dir="/consul/config" \
+            -datacenter=ainflue-dc1 \
+            -data-dir="/consul/data" \
+            -domain=cluster.local \
+            -hcl="connect { enabled = true }" \
+            -log-level=INFO \
+            -retry-join="${CONSUL_FULLNAME}-server-0.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc.cluster.local" \
+            -retry-join="${CONSUL_FULLNAME}-server-1.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc.cluster.local" \
+            -retry-join="${CONSUL_FULLNAME}-server-2.${CONSUL_FULLNAME}-server.${NAMESPACE}.svc.cluster.local" \
+            -serf-lan-port=8301 \
+            -server
+        env:
+        - name: ADVERTISE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: CONSUL_DISABLE_PERM_MGMT
+          value: "true"
+        ports:
+        - containerPort: 8500
+          name: http
+        - containerPort: 8501
+          name: https
+        - containerPort: 8502
+          name: grpc
+        - containerPort: 8503
+          name: grpc-tls
+        - containerPort: 8301
+          name: serflan-tcp
+          protocol: TCP
+        - containerPort: 8301
+          name: serflan-udp
+          protocol: UDP
+        - containerPort: 8302
+          name: serfwan-tcp
+          protocol: TCP
+        - containerPort: 8302
+          name: serfwan-udp
+          protocol: UDP
+        - containerPort: 8300
+          name: server
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - |
+              curl http://127.0.0.1:8500/v1/status/leader \
+              2>/dev/null | grep -E '".+"'
+          failureThreshold: 2
+          initialDelaySeconds: 5
+          periodSeconds: 3
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -ec
+            - |
+              curl http://127.0.0.1:8500/v1/status/leader \
+              2>/dev/null | grep -E '".+"'
+          failureThreshold: 2
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 1
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - name: data
+          mountPath: /consul/data
+        - name: config
+          mountPath: /consul/config
+        - name: tls-ca
+          mountPath: /consul/tls/ca
+          readOnly: true
+        - name: tls-server
+          mountPath: /consul/tls/server
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: consul-server-config
+      - name: tls-ca
+        secret:
+          secretName: consul-ca-cert
+      - name: tls-server
+        secret:
+          secretName: consul-server-cert
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: fast-ssd
+---
+# 🌐 Consul Server Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-server
+  namespace: consul
+  labels:
+    app: consul
+    component: server
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+  - name: http
+    port: 8500
+    targetPort: 8500
+  - name: https
+    port: 8501
+    targetPort: 8501
+  - name: grpc
+    port: 8502
+    targetPort: 8502
+  - name: grpc-tls
+    port: 8503
+    targetPort: 8503
+  - name: serflan-tcp
+    protocol: TCP
+    port: 8301
+    targetPort: 8301
+  - name: serflan-udp
+    protocol: UDP
+    port: 8301
+    targetPort: 8301
+  - name: serfwan-tcp
+    protocol: TCP
+    port: 8302
+    targetPort: 8302
+  - name: serfwan-udp
+    protocol: UDP
+    port: 8302
+    targetPort: 8302
+  - name: server
+    port: 8300
+    targetPort: 8300
+  selector:
+    app: consul
+    component: server
+---
+# 🔐 Consul Server ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: consul-server
+  namespace: consul
+  labels:
+    app: consul
+    component: server
+---
+# 🎯 Consul Server RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: consul-server
+  labels:
+    app: consul
+    component: server
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "nodes/proxy"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: consul-server
+  labels:
+    app: consul
+    component: server
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: consul-server
+subjects:
+- kind: ServiceAccount
+  name: consul-server
+  namespace: consul
+---
+# 🚀 Consul Connect Injector Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-connect-injector
+  namespace: consul
+  labels:
+    app: consul
+    component: connect-injector
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: consul
+      component: connect-injector
+  template:
+    metadata:
+      labels:
+        app: consul
+        component: connect-injector
+      annotations:
+        consul.hashicorp.com/connect-inject: "false"
+    spec:
+      serviceAccountName: consul-connect-injector
+      containers:
+      - name: sidecar-injector
+        image: "hashicorp/consul-k8s-control-plane:1.3.0"
+        imagePullPolicy: IfNotPresent
+        command:
+        - "/bin/sh"
+        - "-ec"
+        - |
+          CONSUL_FULLNAME="consul"
+          
+          consul-k8s-control-plane inject-connect \
+            -default-inject=false \
+            -consul-image="hashicorp/consul:1.17.0" \
+            -consul-k8s-image="hashicorp/consul-k8s-control-plane:1.3.0" \
+            -log-level=INFO \
+            -log-json=false \
+            -consul-node-name=k8s-cluster \
+            -listen=:8080 \
+            -default-protocol="http" \
+            -allow-k8s-namespace="*" \
+            -enable-namespaces=true \
+            -consul-destination-namespace="default" \
+            -enable-k8s-namespace-mirroring=true \
+            -k8s-namespace-mirroring-prefix="" \
+            -consul-cross-namespace-acl-policy="" \
+            -default-enable-merging-metrics=true \
+            -default-merged-metrics-port=20100 \
+            -default-prometheus-scrape-port=20200 \
+            -default-prometheus-scrape-path="/metrics" \
+            -init-container-memory-request=25Mi \
+            -init-container-memory-limit=150Mi \
+            -init-container-cpu-request=50m \
+            -init-container-cpu-limit=50m \
+            -sidecar-proxy-memory-request=100Mi \
+            -sidecar-proxy-memory-limit=100Mi \
+            -sidecar-proxy-cpu-request=100m \
+            -sidecar-proxy-cpu-limit=100m \
+            -set-iptables-for-init=true \
+            -default-envoy-proxy-concurrency=2 \
+            -lifecycle-sidecar-memory-request=25Mi \
+            -lifecycle-sidecar-memory-limit=50Mi \
+            -lifecycle-sidecar-cpu-request=20m \
+            -lifecycle-sidecar-cpu-limit=20m
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        livenessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8080
+            scheme: HTTP
+          failureThreshold: 2
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8080
+            scheme: HTTP
+          failureThreshold: 2
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8080
+          name: webhook-port
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 150Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 5995
+        volumeMounts:
+        - name: webhook-certs
+          mountPath: /etc/webhook/certs
+          readOnly: true
+      volumes:
+      - name: webhook-certs
+        secret:
+          secretName: consul-connect-injector-certs
+---
+# 🔒 Consul Connect Injector ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: consul-connect-injector
+  namespace: consul
+  labels:
+    app: consul
+    component: connect-injector
+---
+# 🎯 Consul Connect Injector RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: consul-connect-injector
+  labels:
+    app: consul
+    component: connect-injector
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: consul-connect-injector
+  labels:
+    app: consul
+    component: connect-injector
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: consul-connect-injector
+subjects:
+- kind: ServiceAccount
+  name: consul-connect-injector
+  namespace: consul
+---
+# 🌐 Consul Connect Injector Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-connect-injector
+  namespace: consul
+  labels:
+    app: consul
+    component: connect-injector
+spec:
+  ports:
+  - name: webhook-port
+    port: 443
+    targetPort: 8080
+  selector:
+    app: consul
+    component: connect-injector
+---
+# 🎯 Consul Connect Admission Webhook
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionWebhook
+metadata:
+  name: consul-connect-injector
+  labels:
+    app: consul
+    component: connect-injector
+webhooks:
+- name: consul-connect-injector.consul.hashicorp.com
+  clientConfig:
+    service:
+      name: consul-connect-injector
+      namespace: consul
+      path: "/mutate"
+  rules:
+  - operations: ["CREATE", "UPDATE"]
+    apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  failurePolicy: Fail
+  reinvocationPolicy: Never
+---
+# 📊 Consul UI Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-ui
+  namespace: consul
+  labels:
+    app: consul
+    component: ui
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8500
+  selector:
+    app: consul
+    component: server
+
+# ===================================================================
+# 🎯 CONSUL CONNECT SERVICE DEFINITIONS
+# ===================================================================
+
+# 🚀 Ainflue API Service Definition
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-api-service-defaults
+  namespace: consul
+data:
+  service-defaults.hcl: |
+    Kind = "service-defaults"
+    Name = "ainflue-api"
+    Namespace = "ainflue-production"
+    Protocol = "http"
+    
+    MeshGateway {
+      Mode = "local"
+    }
+    
+    Expose {
+      Checks = true
+      Paths = [
+        {
+          Path = "/health"
+          LocalPathPort = 8080
+          ListenerPort = 21500
+          Protocol = "http"
+        },
+        {
+          Path = "/metrics"
+          LocalPathPort = 8080
+          ListenerPort = 21600
+          Protocol = "http"
+        }
+      ]
+    }
+    
+    UpstreamConfig {
+      Defaults {
+        ConnectTimeoutMs = 5000
+        Protocol = "http"
+        Limits {
+          MaxConnections = 100
+          MaxPendingRequests = 100
+          MaxConcurrentRequests = 100
+        }
+        PassiveHealthCheck {
+          MaxFailures = 5
+          Interval = "30s"
+          BaseEjectionTime = "30s"
+          MaxEjectionPercent = 50
+        }
+      }
+      Overrides = [
+        {
+          Name = "ainflue-database"
+          ConnectTimeoutMs = 1000
+          Protocol = "tcp"
+          Limits {
+            MaxConnections = 20
+            MaxPendingRequests = 20
+            MaxConcurrentRequests = 20
+          }
+        },
+        {
+          Name = "ainflue-cache"
+          ConnectTimeoutMs = 500
+          Protocol = "tcp"
+          Limits {
+            MaxConnections = 50
+            MaxPendingRequests = 50
+            MaxConcurrentRequests = 50
+          }
+        }
+      ]
+    }
+---
+# 🎨 Creator Content Service Definition
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-content-service-defaults
+  namespace: consul
+data:
+  service-defaults.hcl: |
+    Kind = "service-defaults"
+    Name = "ainflue-content-processor"
+    Namespace = "ainflue-production"
+    Protocol = "grpc"
+    
+    MeshGateway {
+      Mode = "local"
+    }
+    
+    Expose {
+      Checks = true
+      Paths = [
+        {
+          Path = "/health"
+          LocalPathPort = 8080
+          ListenerPort = 21500
+          Protocol = "http"
+        }
+      ]
+    }
+    
+    UpstreamConfig {
+      Defaults {
+        ConnectTimeoutMs = 10000
+        Protocol = "grpc"
+        Limits {
+          MaxConnections = 50
+          MaxPendingRequests = 50
+          MaxConcurrentRequests = 50
+        }
+        PassiveHealthCheck {
+          MaxFailures = 3
+          Interval = "60s"
+          BaseEjectionTime = "60s"
+          MaxEjectionPercent = 30
+        }
+      }
+      Overrides = [
+        {
+          Name = "ainflue-ai-engine"
+          ConnectTimeoutMs = 30000
+          Protocol = "grpc"
+          Limits {
+            MaxConnections = 10
+            MaxPendingRequests = 10
+            MaxConcurrentRequests = 5
+          }
+        },
+        {
+          Name = "ainflue-storage"
+          ConnectTimeoutMs = 5000
+          Protocol = "http"
+          Limits {
+            MaxConnections = 100
+            MaxPendingRequests = 100
+            MaxConcurrentRequests = 100
+          }
+        }
+      ]
+    }
+---
+# 🔒 Service Intentions for Security
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-service-intentions
+  namespace: consul
+data:
+  service-intentions.hcl: |
+    Kind = "service-intentions"
+    Name = "ainflue-api"
+    Namespace = "ainflue-production"
+    Sources = [
+      {
+        Name = "ainflue-frontend"
+        Namespace = "ainflue-production"
+        Action = "allow"
+        Permissions = [
+          {
+            Action = "allow"
+            HTTP {
+              PathPrefix = "/api/v1/"
+              Methods = ["GET", "POST", "PUT", "DELETE"]
+            }
+          }
+        ]
+      },
+      {
+        Name = "ainflue-mobile"
+        Namespace = "ainflue-production"
+        Action = "allow"
+        Permissions = [
+          {
+            Action = "allow"
+            HTTP {
+              PathPrefix = "/api/v1/"
+              Methods = ["GET", "POST", "PUT", "DELETE"]
+            }
+          }
+        ]
+      },
+      {
+        Name = "*"
+        Action = "deny"
+      }
+    ]
+---
+# 📊 Service Router Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-service-router
+  namespace: consul
+data:
+  service-router.hcl: |
+    Kind = "service-router"
+    Name = "ainflue-api"
+    Namespace = "ainflue-production"
+    Routes = [
+      {
+        Match {
+          HTTP {
+            PathPrefix = "/api/v1/creators"
+          }
+        }
+        Destination {
+          Service = "ainflue-creator-service"
+          Namespace = "ainflue-production"
+          RequestTimeout = "30s"
+          RetryPolicy {
+            RetryOn = "gateway-error"
+            NumRetries = 3
+            RetryOnConnectFailure = true
+            RetryOnStatusCodes = [500, 502, 503, 504]
+          }
+        }
+      },
+      {
+        Match {
+          HTTP {
+            PathPrefix = "/api/v1/content"
+          }
+        }
+        Destination {
+          Service = "ainflue-content-processor"
+          Namespace = "ainflue-production"
+          RequestTimeout = "120s"
+          RetryPolicy {
+            RetryOn = "gateway-error"
+            NumRetries = 2
+            RetryOnConnectFailure = true
+            RetryOnStatusCodes = [500, 502, 503, 504]
+          }
+        }
+      },
+      {
+        Match {
+          HTTP {
+            PathPrefix = "/api/v1/payments"
+          }
+        }
+        Destination {
+          Service = "ainflue-payment-service"
+          Namespace = "ainflue-production"
+          RequestTimeout = "15s"
+          RetryPolicy {
+            RetryOn = "gateway-error"
+            NumRetries = 5
+            RetryOnConnectFailure = true
+            RetryOnStatusCodes = [500, 502, 503, 504]
+          }
+        }
+      }
+    ]
+---
+# 🎯 Service Splitter for Canary Deployments
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-service-splitter
+  namespace: consul
+data:
+  service-splitter.hcl: |
+    Kind = "service-splitter"
+    Name = "ainflue-api"
+    Namespace = "ainflue-production"
+    Splits = [
+      {
+        Weight = 90
+        Service = "ainflue-api-stable"
+        Namespace = "ainflue-production"
+        ServiceSubset = "v1"
+      },
+      {
+        Weight = 10
+        Service = "ainflue-api-canary"
+        Namespace = "ainflue-production"
+        ServiceSubset = "v2"
+        RequestHeaders {
+          Set = {
+            "x-canary-version" = "v2"
+          }
+        }
+        ResponseHeaders {
+          Set = {
+            "x-served-by" = "canary"
+          }
+        }
+      }
+    ]
+
+# ===================================================================
+# 🌐 CONSUL CONNECT GATEWAY CONFIGURATIONS
+# ===================================================================
+
+# 🚀 Ingress Gateway Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-ingress-gateway-config
+  namespace: consul
+data:
+  ingress-gateway.hcl: |
+    Kind = "ingress-gateway"
+    Name = "ainflue-ingress"
+    Namespace = "ainflue-production"
+    
+    TLS {
+      Enabled = true
+      TLSMinVersion = "TLSv1_2"
+      TLSMaxVersion = "TLSv1_3"
+      CipherSuites = [
+        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+      ]
+    }
+    
+    Listeners = [
+      {
+        Port = 8080
+        Protocol = "http"
+        Services = [
+          {
+            Name = "ainflue-api"
+            Namespace = "ainflue-production"
+            Hosts = ["api.ainflue.com"]
+            RequestHeaders {
+              Set = {
+                "x-request-start" = "%START_TIME%"
+              }
+              Remove = ["x-debug-info"]
+            }
+            ResponseHeaders {
+              Set = {
+                "x-served-by" = "consul-connect"
+                "strict-transport-security" = "max-age=31536000; includeSubDomains"
+              }
+            }
+          },
+          {
+            Name = "ainflue-frontend"
+            Namespace = "ainflue-production"
+            Hosts = ["app.ainflue.com", "ainflue.com"]
+          }
+        ]
+      },
+      {
+        Port = 8443
+        Protocol = "https"
+        Services = [
+          {
+            Name = "ainflue-api"
+            Namespace = "ainflue-production"
+            Hosts = ["api.ainflue.com"]
+            TLS = {
+              SDS = {
+                ClusterName = "ainflue-api-tls"
+                CertResource = "ainflue-api-cert"
+              }
+            }
+          }
+        ]
+      }
+    ]
+---
+# 🌐 Terminating Gateway Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-terminating-gateway-config
+  namespace: consul
+data:
+  terminating-gateway.hcl: |
+    Kind = "terminating-gateway"
+    Name = "ainflue-terminating"
+    Namespace = "ainflue-production"
+    
+    Services = [
+      {
+        Name = "external-database"
+        Namespace = "ainflue-production"
+        CAFile = "/etc/ssl/certs/external-db-ca.pem"
+        CertFile = "/etc/ssl/certs/external-db-cert.pem"
+        KeyFile = "/etc/ssl/private/external-db-key.pem"
+        SNI = "database.external.com"
+      },
+      {
+        Name = "external-analytics"
+        Namespace = "ainflue-production"
+        DisableAutoHostRewrite = false
+      },
+      {
+        Name = "external-payment-gateway"
+        Namespace = "ainflue-production"
+        CAFile = "/etc/ssl/certs/payment-ca.pem"
+        CertFile = "/etc/ssl/certs/payment-cert.pem"
+        KeyFile = "/etc/ssl/private/payment-key.pem"
+        SNI = "payments.external.com"
+      }
+    ]
+
+# ===================================================================
+# 🔒 CONSUL CONNECT SECURITY CONFIGURATIONS
+# ===================================================================
+
+# 🛡️ ACL Policy Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-acl-policies
+  namespace: consul
+data:
+  ainflue-api-policy.hcl: |
+    # Ainflue API Service ACL Policy
+    service "ainflue-api" {
+      policy = "write"
+    }
+    
+    service "ainflue-content-processor" {
+      policy = "read"
+    }
+    
+    service "ainflue-payment-service" {
+      policy = "read"
+    }
+    
+    service "ainflue-database" {
+      policy = "read"
+    }
+    
+    service "ainflue-cache" {
+      policy = "read"
+    }
+    
+    service_prefix "" {
+      policy = "read"
+    }
+    
+    node_prefix "" {
+      policy = "read"
+    }
+    
+    key_prefix "ainflue/api/" {
+      policy = "write"
+    }
+    
+    key_prefix "ainflue/config/" {
+      policy = "read"
+    }
+    
+    session_prefix "" {
+      policy = "write"
+    }
+    
+    agent_prefix "" {
+      policy = "read"
+    }
+    
+    # Connect intentions
+    service "ainflue-api" {
+      intentions = "write"
+    }
+  
+  ainflue-frontend-policy.hcl: |
+    # Ainflue Frontend Service ACL Policy
+    service "ainflue-frontend" {
+      policy = "write"
+    }
+    
+    service "ainflue-api" {
+      policy = "read"
+    }
+    
+    service_prefix "" {
+      policy = "read"
+    }
+    
+    node_prefix "" {
+      policy = "read"
+    }
+    
+    key_prefix "ainflue/frontend/" {
+      policy = "write"
+    }
+    
+    key_prefix "ainflue/config/" {
+      policy = "read"
+    }
+    
+    # Connect intentions
+    service "ainflue-frontend" {
+      intentions = "write"
+    }
+---
+# 🔐 Certificate Authority Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-ca-config
+  namespace: consul
+data:
+  ca-config.hcl: |
+    # Consul Connect CA Configuration
+    connect {
+      ca_config {
+        provider = "vault"
+        
+        vault {
+          address = "https://vault.ainflue.internal:8200"
+          token = "consul-ca-token"
+          root_pki_path = "connect_root"
+          intermediate_pki_path = "connect_inter"
+          
+          ca_file = "/consul/tls/vault-ca.pem"
+          cert_file = "/consul/tls/vault-client.pem"
+          key_file = "/consul/tls/vault-client-key.pem"
+          
+          tls_server_name = "vault.ainflue.internal"
+          tls_skip_verify = false
+          
+          root_cert_ttl = "10y"
+          intermediate_cert_ttl = "1y"
+          leaf_cert_ttl = "72h"
+          
+          rotation_period = "2160h"
+          csr_max_per_second = 50
+          csr_max_concurrent = 100
+        }
+      }
+      
+      ca_provider = "vault"
+    }
+
+# ===================================================================
+# 🔧 CONSUL CONNECT ENTERPRISE FEATURES
+# ===================================================================
+
+# 🏢 Enterprise License Configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: consul-enterprise-license
+  namespace: consul
+  labels:
+    app: consul
+    component: server
+type: Opaque
+data:
+  license: <base64-encoded-enterprise-license>
+---
+# 🌐 Multi-Datacenter Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-federation-config
+  namespace: consul
+data:
+  federation.hcl: |
+    # Primary Datacenter Configuration
+    datacenter = "ainflue-dc1"
+    primary_datacenter = "ainflue-dc1"
+    
+    # WAN Federation
+    retry_join_wan = [
+      "consul-dc2.ainflue.internal",
+      "consul-dc3.ainflue.internal"
+    ]
+    
+    # Mesh Gateway Configuration
+    connect {
+      enable_mesh_gateway_wan_federation = true
+    }
+    
+    ports {
+      grpc = 8502
+      grpc_tls = 8503
+    }
+    
+    # Auto-encrypt configuration
+    auto_encrypt {
+      allow_tls = true
+    }
+    
+    # Verify incoming/outgoing connections
+    verify_incoming = true
+    verify_outgoing = true
+    verify_server_hostname = true
+    
+    # CA configuration for federation
+    ca_file = "/consul/tls/ca.pem"
+    cert_file = "/consul/tls/consul.pem"
+    key_file = "/consul/tls/consul-key.pem"
+---
+# 📊 Observability Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consul-observability-config
+  namespace: consul
+data:
+  observability.hcl: |
+    # Telemetry Configuration
+    telemetry {
+      prometheus_retention_time = "60s"
+      disable_hostname = true
+      
+      metrics_prefix = "consul.ainflue"
+      
+      # StatsD configuration
+      statsd_address = "statsd.monitoring.svc.cluster.local:8125"
+      
+      # Circonus configuration
+      circonus_api_token = ""
+      circonus_api_app = "consul"
+      circonus_api_url = "https://api.circonus.com/v2"
+      circonus_submission_interval = "10s"
+      
+      # Datadog configuration
+      dogstatsd_addr = "datadog-agent.monitoring.svc.cluster.local:8125"
+      dogstatsd_tags = ["datacenter:ainflue-dc1", "environment:production"]
+    }
+    
+    # Logging configuration
+    log_level = "INFO"
+    log_json = true
+    log_rotate_duration = "24h"
+    log_rotate_max_files = 30
+    
+    # Enable script checks
+    enable_script_checks = false
+    
+    # Enable local script checks
+    enable_local_script_checks = true
+    
+    # Performance tuning
+    performance {
+      raft_multiplier = 1
+    }
+    
+    # Limits
+    limits {
+      http_max_conns_per_client = 200
+      https_handshake_timeout = "5s"
+      rpc_handshake_timeout = "5s"
+      rpc_max_burst = 1000
+      rpc_max_conns_per_client = 100
+      rpc_rate = 2147483647
+      kv_max_value_size = 1048576
+      txn_max_req_len = 1048576
+    }
+
+# ===================================================================
+# 📱 CONSUL CONNECT CREATOR ECONOMY CONFIGURATIONS
+# ===================================================================
+
+# 🎨 Creator Services Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-creator-services-config
+  namespace: consul
+data:
+  creator-services.hcl: |
+    # Creator Content Processing Service
+    service {
+      name = "ainflue-content-processor"
+      id = "ainflue-content-processor-1"
+      port = 8080
+      address = "10.0.1.100"
+      
+      tags = [
+        "creator-economy",
+        "content-processing",
+        "ai-enabled",
+        "version-v1.0.0"
+      ]
+      
+      meta = {
+        version = "1.0.0"
+        capabilities = "image,video,audio,text"
+        max_file_size = "100MB"
+        processing_types = "enhancement,compression,format-conversion"
+      }
+      
+      check {
+        name = "Content Processor Health"
+        http = "http://10.0.1.100:8080/health"
+        method = "GET"
+        interval = "10s"
+        timeout = "3s"
+        deregister_critical_service_after = "30s"
+      }
+      
+      check {
+        name = "Content Processor Deep Check"
+        http = "http://10.0.1.100:8080/health/deep"
+        method = "GET"
+        interval = "60s"
+        timeout = "10s"
+      }
+      
+      connect {
+        sidecar_service {
+          port = 20000
+          
+          check {
+            name = "Connect Envoy Sidecar"
+            tcp = "10.0.1.100:20000"
+            interval = "10s"
+          }
+          
+          proxy {
+            upstreams = [
+              {
+                destination_name = "ainflue-ai-engine"
+                local_bind_port = 8001
+                config = {
+                  connect_timeout_ms = 30000
+                  protocol = "grpc"
+                }
+              },
+              {
+                destination_name = "ainflue-storage"
+                local_bind_port = 8002
+                config = {
+                  connect_timeout_ms = 5000
+                  protocol = "http"
+                }
+              },
+              {
+                destination_name = "ainflue-database"
+                local_bind_port = 8003
+                config = {
+                  connect_timeout_ms = 1000
+                  protocol = "tcp"
+                }
+              }
+            ]
+            
+            config = {
+              protocol = "http"
+              envoy_prometheus_bind_addr = "0.0.0.0:9102"
+              envoy_stats_bind_addr = "0.0.0.0:9103"
+            }
+          }
+        }
+      }
+    }
+    
+    # Creator Monetization Service
+    service {
+      name = "ainflue-monetization"
+      id = "ainflue-monetization-1"
+      port = 8080
+      address = "10.0.1.200"
+      
+      tags = [
+        "creator-economy",
+        "monetization",
+        "payments",
+        "analytics",
+        "version-v1.0.0"
+      ]
+      
+      meta = {
+        version = "1.0.0"
+        payment_methods = "stripe,paypal,crypto"
+        revenue_models = "subscription,pay-per-view,donations,merchandise"
+        analytics_features = "real-time,historical,predictive"
+      }
+      
+      check {
+        name = "Monetization Service Health"
+        http = "http://10.0.1.200:8080/health"
+        method = "GET"
+        interval = "10s"
+        timeout = "3s"
+        deregister_critical_service_after = "30s"
+      }
+      
+      connect {
+        sidecar_service {
+          port = 20000
+          
+          proxy {
+            upstreams = [
+              {
+                destination_name = "external-payment-gateway"
+                local_bind_port = 8001
+                config = {
+                  connect_timeout_ms = 15000
+                  protocol = "https"
+                }
+              },
+              {
+                destination_name = "ainflue-analytics"
+                local_bind_port = 8002
+                config = {
+                  connect_timeout_ms = 5000
+                  protocol = "http"
+                }
+              },
+              {
+                destination_name = "ainflue-database"
+                local_bind_port = 8003
+                config = {
+                  connect_timeout_ms = 1000
+                  protocol = "tcp"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+    
+    # Creator Collaboration Service
+    service {
+      name = "ainflue-collaboration"
+      id = "ainflue-collaboration-1"
+      port = 8080
+      address = "10.0.1.300"
+      
+      tags = [
+        "creator-economy",
+        "collaboration",
+        "real-time",
+        "version-v1.0.0"
+      ]
+      
+      meta = {
+        version = "1.0.0"
+        features = "real-time-editing,version-control,comments,approvals"
+        max_collaborators = "50"
+        supported_formats = "all"
+      }
+      
+      check {
+        name = "Collaboration Service Health"
+        http = "http://10.0.1.300:8080/health"
+        method = "GET"
+        interval = "10s"
+        timeout = "3s"
+      }
+      
+      connect {
+        sidecar_service {
+          port = 20000
+          
+          proxy {
+            upstreams = [
+              {
+                destination_name = "ainflue-websocket"
+                local_bind_port = 8001
+                config = {
+                  connect_timeout_ms = 5000
+                  protocol = "http"
+                }
+              },
+              {
+                destination_name = "ainflue-storage"
+                local_bind_port = 8002
+                config = {
+                  connect_timeout_ms = 5000
+                  protocol = "http"
+                }
+              },
+              {
+                destination_name = "ainflue-database"
+                local_bind_port = 8003
+                config = {
+                  connect_timeout_ms = 1000
+                  protocol = "tcp"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+
+# ===================================================================
+# END OF CONSUL CONNECT CONFIGURATION TEMPLATE
+# Creator Economy Service Mesh Solution by Fahed Mlaiel
+# Enterprise-grade Consul Connect configuration for Ainflue platform
+# ===================================================================

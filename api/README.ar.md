@@ -1,4 +1,4 @@
-# 🚀 Ainflue Enterprise API - منصة المحتوى المتقدمة المدعومة بالذكاء الاصطناعي
+# 🚀 IA Chérie Enterprise API - منصة المحتوى المتقدمة المدعومة بالذكاء الاصطناعي
 
 **المؤلف:** فاهد مليل (mlaiel@live.de)  
 **الفريق المتخصص:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 نظرة عامة على المنصة
 
-Ainflue هي المنصة الأكثر تقدماً في العالم المدعومة بالذكاء الاصطناعي لحماية المحتوى والتحقيق من الدخل والتعاون للمبدعين عبر أكثر من 35 منصة. واجهة برمجة التطبيقات المؤسسية الخاصة بنا توفر خدمات تنسيق شاملة لمنشئي المحتوى والمؤثرين وشركات الإعلام في جميع أنحاء العالم.
+IA Chérie هي المنصة الأكثر تقدماً في العالم المدعومة بالذكاء الاصطناعي لحماية المحتوى والتحقيق من الدخل والتعاون للمبدعين عبر أكثر من 35 منصة. واجهة برمجة التطبيقات المؤسسية الخاصة بنا توفر خدمات تنسيق شاملة لمنشئي المحتوى والمؤثرين وشركات الإعلام في جميع أنحاء العالم.
 
 ## 🏗️ هيكلة واجهة برمجة التطبيقات المؤسسية
 
@@ -168,9 +168,9 @@ Ainflue هي المنصة الأكثر تقدماً في العالم المدع
 ## 🚀 البداية
 
 ### عناوين URL الأساسية لواجهة برمجة التطبيقات
-- **الإنتاج:** `https://api.ainflue.com`
-- **التدريج:** `https://staging-api.ainflue.com`
-- **التطوير:** `https://dev-api.ainflue.com`
+- **الإنتاج:** `https://api.iacherie.com`
+- **التدريج:** `https://staging-api.iacherie.com`
+- **التطوير:** `https://dev-api.iacherie.com`
 
 ### الوثائق
 - **الوثائق التفاعلية:** `/docs` - Swagger UI مع ميزات المؤسسة
@@ -207,7 +207,7 @@ collaboration_data = {
 
 # العثور على المبدعين المتوافقين
 response = requests.post(
-    "https://api.ainflue.com/api/v1/collaboration/matching/find-creators",
+    "https://api.iacherie.com/api/v1/collaboration/matching/find-creators",
     headers=headers,
     json={
         "creator_id": "creator_123",
@@ -230,9 +230,9 @@ print(f"تم العثور على {len(matches['data']['matches'])} مبدع مت
 - **دعم 24/7:** متاح للقضايا الحرجة
 
 ### الموارد
-- **وثائق المطور:** [https://docs.ainflue.com](https://docs.ainflue.com)
-- **صفحة حالة API:** [https://status.ainflue.com](https://status.ainflue.com)
-- **منتدى المجتمع:** [https://community.ainflue.com](https://community.ainflue.com)
+- **وثائق المطور:** [https://docs.iacherie.com](https://docs.iacherie.com)
+- **صفحة حالة API:** [https://status.iacherie.com](https://status.iacherie.com)
+- **منتدى المجتمع:** [https://community.iacherie.com](https://community.iacherie.com)
 - **مستودع GitHub:** وصول مستودع مؤسسي خاص
 
 ### دعم التكامل
@@ -251,5 +251,5 @@ print(f"تم العثور على {len(matches['data']['matches'])} مبدع مت
 
 ---
 
-**بُني بـ ❤️ من قبل فريق Ainflue Enterprise**  
+**بُني بـ ❤️ من قبل فريق IA Chérie Enterprise**  
 **قيادة مستقبل إنشاء المحتوى والتعاون المدعوم بالذكاء الاصطناعي**

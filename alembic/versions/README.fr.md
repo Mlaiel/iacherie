@@ -1,4 +1,4 @@
-# Plateforme Ainflue - Migrations de Base de Données
+# Plateforme IA Chérie - Migrations de Base de Données
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe Spécialisée :** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## Architecture des Migrations de Base de Données
 
-Ce répertoire contient le système complet de migration de base de données pour la plateforme Ainflue - la première plateforme mondiale de créateurs multi-format alimentée par l'IA combinant protection du contenu, optimisation de la monétisation et matching de collaboration.
+Ce répertoire contient le système complet de migration de base de données pour la plateforme IA Chérie - la première plateforme mondiale de créateurs multi-format alimentée par l'IA combinant protection du contenu, optimisation de la monétisation et matching de collaboration.
 
 ### Aperçu des Migrations
 
@@ -99,7 +99,7 @@ alembic history
 
 ### Innovation Métier
 
-**Fonctionnalités Plateforme Ainflue :**
+**Fonctionnalités Plateforme IA Chérie :**
 - Création de contenu multi-format (audio, vidéo, image, texte)
 - Protection de la propriété intellectuelle alimentée par l'IA
 - Optimisation et distribution automatisées des revenus
@@ -144,6 +144,6 @@ alembic history
 ---
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
-**Plateforme Ainflue - Documentation Migrations Base de Données**
+**Plateforme IA Chérie - Documentation Migrations Base de Données**
 
 Pour le support technique et l'assistance aux migrations, contactez : mlaiel@live.de

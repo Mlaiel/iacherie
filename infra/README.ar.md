@@ -1,10 +1,10 @@
-# وحدة البنية التحتية لـ Ainflue
+# وحدة البنية التحتية لـ IA Chérie
 
-**إدارة البنية التحتية على مستوى المؤسسات لمنصة اقتصاد المبدعين Ainflue**
+**إدارة البنية التحتية على مستوى المؤسسات لمنصة اقتصاد المبدعين IA Chérie**
 
 ## نظرة عامة
 
-توفر وحدة البنية التحتية لـ Ainflue قدرات شاملة لإدارة البنية التحتية على مستوى المؤسسات للنشر متعدد السحابة مع أمان المؤسسة وميزات المراقبة والامتثال.
+توفر وحدة البنية التحتية لـ IA Chérie قدرات شاملة لإدارة البنية التحتية على مستوى المؤسسات للنشر متعدد السحابة مع أمان المؤسسة وميزات المراقبة والامتثال.
 
 ### الميزات الرئيسية
 
@@ -50,8 +50,8 @@
 
 1. **استنساخ المستودع**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infra
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/infra
 ```
 
 2. **تكوين أوراق اعتماد السحابة**
@@ -97,7 +97,7 @@ export AWS_REGION="us-west-2"
 export AZURE_LOCATION="West US 2"
 export GCP_REGION="us-west2"
 export ENVIRONMENT="production"
-export PROJECT_NAME="ainflue"
+export PROJECT_NAME="iacherie"
 ```
 
 ## النشر متعدد السحابة
@@ -169,7 +169,7 @@ export PROJECT_NAME="ainflue"
 ### الاتصال
 - **البريد الإلكتروني**: mlaiel@live.de
 - **GitHub**: [@Mlaiel](https://github.com/Mlaiel)
-- **الموقع الإلكتروني**: [https://ainflue.com](https://ainflue.com)
+- **الموقع الإلكتروني**: [https://iacherie.com](https://iacherie.com)
 
 ---
 

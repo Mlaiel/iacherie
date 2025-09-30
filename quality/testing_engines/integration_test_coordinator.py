@@ -1,4 +1,4 @@
-"""🔗 Integration Test Coordinator - Ainflue Platform
+"""🔗 Integration Test Coordinator - IA Chérie Platform
 ================================================================
 Expert: QUALITY_ENGINEER + INTEGRATION_ARCHITECT + DEVOPS_ENGINEER
 Created: 2025-01-XX

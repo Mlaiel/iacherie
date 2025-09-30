@@ -1,0 +1,433 @@
+# 🚨 AlertManager Creator Rules Configuration
+# ============================================
+# Règles d'alertes intelligentes pour Creator Economy Ainflue
+# Alerting différencié par tier avec escalade automatique et prédictions IA
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROTECTION INTELLECTUELLE:
+# ==========================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS
+#
+# 🚨 AVERTISSEMENT LÉGAL:
+# - Code propriétaire de Fahed Mlaiel
+# - Utilisation commerciale INTERDITE sans autorisation écrite
+# - Reverse engineering STRICTEMENT INTERDIT
+# - Distribution INTERDITE sans licence explicite
+# - Violation = Poursuites judiciaires automatiques
+
+# Configuration globale AlertManager
+global:
+  smtp_smarthost: 'smtp.ainflue.com:587'
+  smtp_from: 'alerts@ainflue.com'
+  smtp_auth_username: 'alerts@ainflue.com'
+  smtp_require_tls: true
+  resolve_timeout: 5m
+
+# 📞 Configuration des receveurs d'alertes
+receivers:
+  # 🔴 Alertes Critiques Enterprise/Premium
+  - name: 'creator-critical-enterprise'
+    email_configs:
+      - to: 'enterprise-support@ainflue.com'
+        subject: '🚨 CRITIQUE: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
+        body: |
+          🚨 ALERTE CRITIQUE CREATOR ECONOMY
+          
+          Créateur: {{ .GroupLabels.creator_id }}
+          Type: {{ .GroupLabels.creator_type }}
+          Tier: {{ .GroupLabels.creator_tier }}
+          
+          Détails:
+          {{ range .Alerts }}
+          - {{ .Annotations.summary }}
+          - Impact: {{ .Annotations.impact }}
+          - Valeur: {{ .Annotations.value }}
+          {{ end }}
+          
+          Actions requises IMMÉDIATEMENT.
+          Support Enterprise: +1-800-AINFLUE
+        headers:
+          Priority: 'high'
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
+        channel: '#creator-alerts-critical'
+        title: '🚨 Alerte Critique Creator {{ .GroupLabels.creator_tier }}'
+        text: '{{ .CommonAnnotations.summary }}'
+        color: 'danger'
+    pagerduty_configs:
+      - service_key: 'creator-enterprise-pagerduty-key'
+        description: '{{ .CommonAnnotations.summary }}'
+        severity: 'critical'
+
+  # 🟠 Alertes Haute Priorité Premium/Standard
+  - name: 'creator-high-priority'
+    email_configs:
+      - to: 'support@ainflue.com'
+        subject: '⚠️ URGENT: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
+        body: |
+          ⚠️ ALERTE URGENTE CREATOR ECONOMY
+          
+          Créateur: {{ .GroupLabels.creator_id }}
+          Type: {{ .GroupLabels.creator_type }}
+          Tier: {{ .GroupLabels.creator_tier }}
+          
+          {{ range .Alerts }}
+          - {{ .Annotations.summary }}
+          - Seuil dépassé: {{ .Annotations.threshold }}
+          - Valeur actuelle: {{ .Annotations.value }}
+          {{ end }}
+          
+          SLA à risque - Intervention requise dans {{ .CommonAnnotations.response_time }}
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
+        channel: '#creator-alerts-high'
+        title: '⚠️ Alerte Urgente Creator {{ .GroupLabels.creator_tier }}'
+        text: '{{ .CommonAnnotations.summary }}'
+        color: 'warning'
+
+  # 🟡 Alertes Moyennes Standard/Basic
+  - name: 'creator-medium-priority'
+    email_configs:
+      - to: 'monitoring@ainflue.com'
+        subject: '💡 INFO: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
+        body: |
+          💡 NOTIFICATION CREATOR ECONOMY
+          
+          Créateur: {{ .GroupLabels.creator_id }}
+          Type: {{ .GroupLabels.creator_type }}
+          Tier: {{ .GroupLabels.creator_tier }}
+          
+          {{ .CommonAnnotations.summary }}
+          
+          Surveillance continue - Pas d'action immédiate requise.
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
+        channel: '#creator-alerts-info'
+        title: '💡 Notification Creator {{ .GroupLabels.creator_tier }}'
+        text: '{{ .CommonAnnotations.summary }}'
+        color: 'good'
+
+  # 🔵 Alertes Business Intelligence & Prédictions
+  - name: 'creator-business-intelligence'
+    email_configs:
+      - to: 'business-intelligence@ainflue.com'
+        subject: '📊 BI ALERT: {{ .GroupLabels.alertname }}'
+        body: |
+          📊 ALERTE BUSINESS INTELLIGENCE
+          
+          Type d'alerte: {{ .GroupLabels.alert_type }}
+          Prédiction: {{ .CommonAnnotations.prediction }}
+          Confiance: {{ .CommonAnnotations.confidence }}
+          
+          Impact business estimé: {{ .CommonAnnotations.business_impact }}
+          Actions recommandées: {{ .CommonAnnotations.recommended_actions }}
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
+        channel: '#creator-business-intelligence'
+        title: '📊 Alerte BI Creator Economy'
+        text: '{{ .CommonAnnotations.summary }}'
+        color: '#36a64f'
+
+# 🎯 Règles de routage intelligentes
+route:
+  group_by: ['creator_tier', 'creator_type', 'alertname']
+  group_wait: 10s
+  group_interval: 5m
+  repeat_interval: 12h
+  receiver: 'creator-medium-priority'  # Default
+  
+  # Routage conditionnel par tier et criticité
+  routes:
+    # 🔴 Enterprise - Route critique immédiate
+    - match:
+        creator_tier: enterprise
+        severity: critical
+      receiver: 'creator-critical-enterprise'
+      group_wait: 0s
+      repeat_interval: 5m
+      continue: false
+      
+    # 🔴 Premium - Route critique rapide  
+    - match:
+        creator_tier: premium
+        severity: critical
+      receiver: 'creator-critical-enterprise'
+      group_wait: 30s
+      repeat_interval: 10m
+      continue: false
+      
+    # 🟠 Standard/Premium - Route haute priorité
+    - match_re:
+        creator_tier: '(premium|standard)'
+        severity: '(warning|critical)'
+      receiver: 'creator-high-priority'
+      group_wait: 1m
+      repeat_interval: 30m
+      continue: false
+      
+    # 🟡 Basic - Route priorité normale
+    - match:
+        creator_tier: basic
+      receiver: 'creator-medium-priority'
+      group_wait: 5m
+      repeat_interval: 2h
+      continue: false
+      
+    # 📊 Alertes Business Intelligence
+    - match_re:
+        alert_type: '(prediction|business_intelligence|revenue_forecast)'
+      receiver: 'creator-business-intelligence'
+      group_wait: 15m
+      repeat_interval: 6h
+      continue: false
+
+# 🚨 Règles d'alertes Creator Economy
+groups:
+  # 💰 Alertes Revenus & Monétisation
+  - name: creator_revenue_alerts
+    interval: 60s
+    rules:
+      - alert: CreatorRevenueDropDetected
+        expr: |
+          (
+            (ainflue_creator_revenue_current - ainflue_creator_revenue_previous) 
+            / ainflue_creator_revenue_previous
+          ) < -0.2
+        for: 5m
+        labels:
+          severity: critical
+          creator_impact: high
+          alert_type: revenue
+        annotations:
+          summary: "Chute significative des revenus créateur détectée"
+          description: "Le créateur {{ $labels.creator_id }} ({{ $labels.creator_type }}) a une chute de revenus de {{ $value | humanizePercentage }}"
+          impact: "Perte potentielle de revenus et risque de churn créateur"
+          recommended_actions: "Analyser les causes, contacter le créateur, proposer support"
+          business_impact: "Élevé - Risque de perte de créateur premium"
+          response_time: "{{ if eq $labels.creator_tier \"enterprise\" }}5 minutes{{ else if eq $labels.creator_tier \"premium\" }}15 minutes{{ else }}1 heure{{ end }}"
+          
+      - alert: CreatorMonetizationOpportunityMissed
+        expr: |
+          ainflue_creator_monetization_opportunities_available > 3
+          and
+          ainflue_creator_monetization_activation_rate < 0.3
+        for: 30m
+        labels:
+          severity: warning
+          creator_impact: medium
+          alert_type: monetization
+        annotations:
+          summary: "Opportunités de monétisation manquées"
+          description: "Le créateur {{ $labels.creator_id }} a {{ $value }} opportunités non exploitées"
+          recommended_actions: "Envoyer recommandations personnalisées, proposer assistance"
+
+  # 🎨 Alertes Performance par Type de Créateur
+  - name: creator_performance_alerts
+    interval: 30s
+    rules:
+      # 🎵 Musicians - Audio Processing
+      - alert: MusicianAudioProcessingLatencyHigh
+        expr: |
+          ainflue_audio_processing_duration_ms > 
+          (
+            case(creator_tier == "enterprise", 30,
+            case(creator_tier == "premium", 50,
+            case(creator_tier == "standard", 100, 200)))
+          )
+        for: 2m
+        labels:
+          severity: critical
+          creator_type: musician
+          service_impact: high
+        annotations:
+          summary: "Latence traitement audio excessive pour musicien"
+          description: "Musicien {{ $labels.creator_id }} - Latence: {{ $value }}ms (SLA: {{ $labels.sla_target }}ms)"
+          impact: "Dégradation expérience utilisateur, risque abandon session"
+          
+      # 📝 Bloggers - SEO Performance
+      - alert: BloggerSEORankingDrop
+        expr: |
+          increase(ainflue_blog_seo_ranking_drop_total[24h]) > 5
+        for: 1h
+        labels:
+          severity: warning
+          creator_type: blogger
+          impact_type: seo
+        annotations:
+          summary: "Chute significative du ranking SEO pour blogger"
+          description: "Blogger {{ $labels.creator_id }} - Chute de {{ $value }} positions en 24h"
+          recommended_actions: "Analyser changements algorithme, optimiser contenu"
+          
+      # 📸 Photographers - Storage & Processing
+      - alert: PhotographerStorageNearLimit
+        expr: |
+          ainflue_photographer_storage_utilization > 85
+        for: 15m
+        labels:
+          severity: warning
+          creator_type: photographer
+          resource_type: storage
+        annotations:
+          summary: "Stockage photographe proche de la limite"
+          description: "Photographe {{ $labels.creator_id }} - Utilisation: {{ $value }}%"
+          recommended_actions: "Proposer upgrade stockage, optimiser images existantes"
+
+  # 🤖 Alertes AI/ML & Prédictions
+  - name: creator_ai_predictions
+    interval: 300s  # 5 minutes pour prédictions
+    rules:
+      - alert: CreatorChurnRiskHigh
+        expr: |
+          ainflue_creator_churn_risk_score > 0.75
+        for: 30m
+        labels:
+          severity: critical
+          alert_type: prediction
+          business_impact: high
+        annotations:
+          summary: "Risque élevé de churn créateur prédit"
+          description: "Créateur {{ $labels.creator_id }} - Risque churn: {{ $value | humanizePercentage }}"
+          prediction: "Churn probable dans les 30 prochains jours"
+          confidence: "{{ $labels.prediction_confidence }}%"
+          recommended_actions: "Contact proactif, analyse satisfaction, offres de rétention"
+          business_impact: "Perte potentielle de {{ $labels.estimated_ltv }}$ de LTV"
+          
+      - alert: ContentViralityPredicted
+        expr: |
+          ainflue_content_virality_prediction > 0.85
+        for: 5m
+        labels:
+          severity: info
+          alert_type: prediction
+          opportunity_type: viral
+        annotations:
+          summary: "Potentiel viral élevé détecté pour contenu"
+          description: "Contenu {{ $labels.content_id }} du créateur {{ $labels.creator_id }} - Score viral: {{ $value }}"
+          prediction: "Potentiel viral dans les 24-48h"
+          recommended_actions: "Boost promotion, optimiser distribution, surveiller métriques"
+
+  # 🛡️ Alertes Sécurité & Protection Contenu
+  - name: creator_security_alerts
+    interval: 60s
+    rules:
+      - alert: ContentPiracyDetected
+        expr: |
+          ainflue_content_piracy_incidents > 0
+        for: 1m
+        labels:
+          severity: critical
+          security_type: copyright_infringement
+          creator_impact: high
+        annotations:
+          summary: "Piratage de contenu créateur détecté"
+          description: "{{ $value }} incidents de piratage détectés pour le créateur {{ $labels.creator_id }}"
+          impact: "Vol de propriété intellectuelle, perte de revenus potentielle"
+          recommended_actions: "DMCA takedown immédiat, notification créateur, action légale si nécessaire"
+          
+      - alert: UnauthorizedContentAccess
+        expr: |
+          ainflue_unauthorized_access_attempts > 10
+        for: 5m
+        labels:
+          severity: warning
+          security_type: access_violation
+        annotations:
+          summary: "Tentatives d'accès non autorisé au contenu créateur"
+          description: "{{ $value }} tentatives d'accès non autorisé détectées"
+          recommended_actions: "Renforcer sécurité, analyser patterns, bloquer IPs suspectes"
+
+  # 🎮 Alertes Gamification & Engagement
+  - name: creator_engagement_alerts
+    interval: 120s
+    rules:
+      - alert: CreatorEngagementDropSignificant
+        expr: |
+          (
+            (ainflue_creator_engagement_current - ainflue_creator_engagement_avg_30d)
+            / ainflue_creator_engagement_avg_30d
+          ) < -0.3
+        for: 1h
+        labels:
+          severity: warning
+          engagement_type: drop
+        annotations:
+          summary: "Chute significative de l'engagement créateur"
+          description: "Créateur {{ $labels.creator_id }} - Chute engagement: {{ $value | humanizePercentage }}"
+          recommended_actions: "Analyser contenu récent, proposer stratégies engagement, support contenu"
+          
+      - alert: GamificationMilestoneAchieved
+        expr: |
+          increase(ainflue_gamification_milestones_achieved[1h]) > 0
+        for: 0s
+        labels:
+          severity: info
+          alert_type: achievement
+        annotations:
+          summary: "Nouveau milestone gamification atteint"
+          description: "Créateur {{ $labels.creator_id }} a atteint le milestone {{ $labels.milestone_name }}"
+          recommended_actions: "Félicitations automatiques, promotion milestone, reward distribution"
+
+  # 📊 Alertes Business Intelligence
+  - name: creator_business_intelligence
+    interval: 600s  # 10 minutes pour BI
+    rules:
+      - alert: PlatformCreatorGrowthSlowing
+        expr: |
+          rate(ainflue_new_creators_total[7d]) < rate(ainflue_new_creators_total[30d]) * 0.7
+        for: 1d
+        labels:
+          severity: warning
+          alert_type: business_intelligence
+          kpi_type: growth
+        annotations:
+          summary: "Ralentissement de la croissance des nouveaux créateurs"
+          description: "Taux de nouveaux créateurs: {{ $value }}/jour (vs moyenne 30j)"
+          business_impact: "Potuel impact sur croissance plateforme et revenus futurs"
+          recommended_actions: "Analyser campagnes acquisition, optimiser onboarding, étudier concurrence"
+          
+      - alert: RevenuePerCreatorDecreasing
+        expr: |
+          avg(ainflue_revenue_per_creator) < avg(ainflue_revenue_per_creator offset 30d) * 0.9
+        for: 2d
+        labels:
+          severity: critical
+          alert_type: business_intelligence
+          kpi_type: revenue_efficiency
+        annotations:
+          summary: "Revenus par créateur en baisse"
+          description: "Revenus moyens par créateur: ${{ $value }} (vs ${{ $labels.previous_value }})"
+          business_impact: "Baisse de rentabilité plateforme, besoin optimisation monétisation"
+          recommended_actions: "Optimiser outils monétisation, analyser pricing, améliorer matching marques"
+
+# 🔄 Configuration Inhibition d'alertes
+inhibit_rules:
+  # Éviter spam d'alertes similaires
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['creator_id', 'creator_type']
+    
+  # Inhiber alertes de faible priorité pendant maintenance
+  - source_match:
+      alert_type: 'maintenance'
+    target_match_re:
+      severity: '(warning|info)'
+    equal: ['service']
+
+# 📱 Configuration Templates avancés
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Expert Team Signature
+# =====================
+# Configuration experte réalisée par:
+# 🧠 Lead Dev IA + Backend Senior + ML Engineer
+# 💾 DBA + Sécurité + Microservices + Audio  
+# ⚙️ DevOps + IA Prompt Engineer
+#
+# Alerting intelligent Creator Economy avec prédictions IA
+# Escalade automatique différenciée par tier créateur

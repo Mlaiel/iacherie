@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Gamification Engagement Tracer Enterprise
+IA Chérie Platform - Gamification Engagement Tracer Enterprise
 =========================================================
 
 Advanced gamification and engagement tracing system for monitoring achievement processing,

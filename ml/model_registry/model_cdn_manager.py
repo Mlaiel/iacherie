@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Model CDN Manager for Ainflue ML Platform
+Model CDN Manager for IA Chérie ML Platform
 Content Delivery Network integration for global model distribution
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -601,9 +601,9 @@ async def main():
                 'priority': 2
             }
         ],
-        'aws_s3_bucket': 'ainflue-models',
+        'aws_s3_bucket': 'iacherie-models',
         'azure_container': 'models',
-        'gcp_bucket': 'ainflue-ml-models',
+        'gcp_bucket': 'iacherie-ml-models',
         'redis_host': 'localhost',
         'redis_port': 6379
     }

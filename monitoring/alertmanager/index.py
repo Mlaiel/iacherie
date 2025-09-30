@@ -14,7 +14,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chérie - AI-Powered Creator Economy Platform
 Module: AlertManager Enterprise Orchestrator
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -160,7 +160,7 @@ class AlertManagerOrchestrator:
                     "enabled": True,
                     "smtp_host": os.getenv("SMTP_HOST", "smtp.gmail.com"),
                     "smtp_port": int(os.getenv("SMTP_PORT", "587")),
-                    "sender": os.getenv("ALERT_SENDER_EMAIL", "alerts@ainflue.com")
+                    "sender": os.getenv("ALERT_SENDER_EMAIL", "alerts@iacherie.com")
                 },
                 "sms": {
                     "enabled": True,

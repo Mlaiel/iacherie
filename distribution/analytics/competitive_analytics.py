@@ -2,7 +2,7 @@
 Competitive Analytics Engine
 ===========================
 
-Advanced competitive analysis and benchmarking for Ainflue Distribution Platform.
+Advanced competitive analysis and benchmarking for IA Chérie Distribution Platform.
 Provides insights on competitor strategies, performance, and market positioning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

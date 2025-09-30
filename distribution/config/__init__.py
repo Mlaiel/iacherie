@@ -1,5 +1,5 @@
 """
-Configuration Module for Ainflue Distribution Platform
+Configuration Module for IA Chérie Distribution Platform
 
 This module provides comprehensive configuration management for all distribution
 components including database configurations, platform settings, and optimization parameters.

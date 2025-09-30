@@ -1,5 +1,5 @@
 """
-Ainflue Platform - SEO Intelligence Orchestrator
+IA Chérie Platform - SEO Intelligence Orchestrator
 ===============================================
 
 AI-powered SEO intelligence system for comprehensive multi-platform optimization,

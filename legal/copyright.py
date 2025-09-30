@@ -51,9 +51,9 @@ import cv2
 logger = logging.getLogger(__name__)
 
 # Enterprise Configuration
-BLOCKCHAIN_ENDPOINT = os.environ.get('BLOCKCHAIN_ENDPOINT', 'https://blockchain-api.ainflue.com')
-COPYRIGHT_REGISTRY_API = os.environ.get('COPYRIGHT_REGISTRY_API', 'https://copyright-api.ainflue.com')
-FINGERPRINT_STORAGE = os.environ.get('FINGERPRINT_STORAGE', '/var/lib/ainflue/fingerprints')
+BLOCKCHAIN_ENDPOINT = os.environ.get('BLOCKCHAIN_ENDPOINT', 'https://blockchain-api.iacherie.com')
+COPYRIGHT_REGISTRY_API = os.environ.get('COPYRIGHT_REGISTRY_API', 'https://copyright-api.iacherie.com')
+FINGERPRINT_STORAGE = os.environ.get('FINGERPRINT_STORAGE', '/var/lib/iacherie/fingerprints')
 
 
 class CopyrightStatus(Enum):
@@ -3658,14 +3658,14 @@ class CopyrightRenewalManager:
             'jurisdiction': renewal_info['jurisdiction'],
             'application_type': 'expedited_renewal' if expedited else 'standard_renewal',
             'applicant_information': {
-                'copyright_owner': 'Ainflue Platform',
-                'contact_information': 'legal@ainflue.com',
+                'copyright_owner': 'IA Chérie Platform',
+                'contact_information': 'legal@iacherie.com',
                 'legal_representative': 'Fahed Mlaiel'
             },
             'copyright_details': {
                 'original_registration_date': renewal_info['registration_date'],
                 'copyright_type': renewal_info['copyright_type'],
-                'work_title': f"Ainflue Protected Content {renewal_info['copyright_id']}"
+                'work_title': f"IA Chérie Protected Content {renewal_info['copyright_id']}"
             },
             'renewal_details': {
                 'renewal_period': renewal_info['renewal_schedule']['base_period_years'],

@@ -1,4 +1,4 @@
-# 🏗️ Templates Microservices Enterprise - Plateforme Ainflue
+# 🏗️ Templates Microservices Enterprise - Plateforme IA Chérie
 
 **Équipe Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -10,7 +10,7 @@
 
 ## 🎯 Vue d'ensemble
 
-Templates microservices de niveau entreprise pour construire des services évolutifs et prêts pour la production avec des patterns avancés, observabilité et résilience intégrées. Ces templates supportent la logique métier de la **Plateforme Économie Créateur Ainflue** et fournissent des fondations de qualité industrielle pour le développement rapide de microservices.
+Templates microservices de niveau entreprise pour construire des services évolutifs et prêts pour la production avec des patterns avancés, observabilité et résilience intégrées. Ces templates supportent la logique métier de la **Plateforme Économie Créateur IA Chérie** et fournissent des fondations de qualité industrielle pour le développement rapide de microservices.
 
 ### 📊 Statut Templates (18/18 fichiers - 100% Complet) ✅
 
@@ -22,7 +22,7 @@ Templates microservices de niveau entreprise pour construire des services évolu
 
 ## 🚀 Vue d'ensemble Architecture
 
-### **🌍 INTÉGRATION LOGIQUE MÉTIER AINFLUE**
+### **🌍 INTÉGRATION LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs Multi-format → Traitement IA → Protection Contenu → Monétisation → 
 Collaboration & Gamification → Optimisation SEO → Distribution Multi-plateforme
@@ -291,8 +291,8 @@ Documentation disponible en plusieurs langues:
 ### **Support Technique**
 - **Auteur**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Projet**: Plateforme Économie Créateur Ainflue
-- **Repository**: [Ainflue/microservices](https://github.com/Mlaiel/Ainflue)
+- **Projet**: Plateforme Économie Créateur IA Chérie
+- **Repository**: [IA Chérie/microservices](https://github.com/Mlaiel/IA Chérie)
 
 ### **Spécialisations Équipe Expert**
 - **Lead Dev IA**: Architecture templates et intégration IA
@@ -313,4 +313,4 @@ Ce logiciel et tous templates associés sont propriétaires et confidentiels. La
 
 ---
 
-**Construit avec ❤️ par l'Équipe Expert Ainflue pour la Plateforme Économie Créateur**
+**Construit avec ❤️ par l'Équipe Expert IA Chérie pour la Plateforme Économie Créateur**

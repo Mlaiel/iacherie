@@ -3,7 +3,7 @@
 
 Enterprise-grade Distribution Intelligence system providing comprehensive
 multi-platform content distribution, intelligent scheduling, and advanced
-distribution analytics for the Ainflue Creator Economy. Implements
+distribution analytics for the IA Chérie Creator Economy. Implements
 sophisticated distribution algorithms, platform optimization, and real-time coordination.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

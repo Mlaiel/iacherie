@@ -1,12 +1,12 @@
 """
-Payment Gateways Module - Ainflue Integrations
+Payment Gateways Module - IA Chérie Integrations
 =============================================
 Enterprise-grade payment processing providing comprehensive payment gateway
 integrations, fraud detection, subscription management, and global
 payment solutions across multiple currencies and regions.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -33,7 +33,7 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise payment processing infrastructure for global monetization"
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,

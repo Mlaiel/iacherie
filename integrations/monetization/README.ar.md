@@ -11,7 +11,7 @@
 
 ## 🎯 ذكاء تحقيق الدخل المؤسسي
 
-مجموعة تحقيق الدخل الجاهزة للإنتاج مع التسعير الذكي وتحسين الإيرادات وتحليلات الأعمال لمنصة منشئ المحتوى Ainflue مع تكاملات 65+ منصة.
+مجموعة تحقيق الدخل الجاهزة للإنتاج مع التسعير الذكي وتحسين الإيرادات وتحليلات الأعمال لمنصة منشئ المحتوى IA Chérie مع تكاملات 65+ منصة.
 
 ### 🏗️ نظرة عامة على الهندسة المعمارية الكاملة
 
@@ -110,7 +110,7 @@ integrations/monetization/
 
 ## 📊 رحلة المنشئ لتحقيق الدخل
 
-### خط أنابيب تحقيق الدخل الخاص بـ Ainflue
+### خط أنابيب تحقيق الدخل الخاص بـ IA Chérie
 
 ```mermaid
 graph LR
@@ -350,12 +350,12 @@ conversion = await currency_manager.convert_currency(
 
 ---
 
-## 🔗 التكامل مع منصة Ainflue
+## 🔗 التكامل مع منصة IA Chérie
 
 ### تكامل لوحة معلومات المنشئ
 ```javascript
 // تكامل الواجهة الأمامية
-import { MonetizationWidget } from '@ainflue/monetization-ui';
+import { MonetizationWidget } from '@iacherie/monetization-ui';
 
 <MonetizationWidget
   creatorId={creator.id}
@@ -379,9 +379,9 @@ async def handle_monetization_event(request):
 ## 📞 الدعم والاتصال
 
 ### الدعم التقني
-- **البريد الإلكتروني**: support@ainflue.com
-- **التوثيق**: https://docs.ainflue.com/monetization
-- **مرجع API**: https://api.ainflue.com/docs/monetization
+- **البريد الإلكتروني**: support@iacherie.com
+- **التوثيق**: https://docs.iacherie.com/monetization
+- **مرجع API**: https://api.iacherie.com/docs/monetization
 
 ### الاستفسارات التجارية
 - **المطور الرئيسي**: فاهد مليل (mlaiel@live.de)
@@ -398,4 +398,4 @@ async def handle_monetization_event(request):
 
 ---
 
-*الوثائق العربية تم إنشاؤها من قبل فريق خبراء Ainflue تحت إشراف **فاهد مليل** - ملكية فكرية محمية*
+*الوثائق العربية تم إنشاؤها من قبل فريق خبراء IA Chérie تحت إشراف **فاهد مليل** - ملكية فكرية محمية*

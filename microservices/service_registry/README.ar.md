@@ -10,7 +10,7 @@
 
 ## 🎯 نظرة عامة على الوحدة
 
-**الموقع**: `/workspaces/Ainflue/microservices/service_registry/`  
+**الموقع**: `/workspaces/IA Chérie/microservices/service_registry/`  
 **البنية المعمارية**: Backend Level 3 (الحد الأقصى) | حد 18 ملف | سجل خدمات جاهز للإنتاج  
 **الغرض**: سجل خدمات مؤسسي لإدارة الخدمات المصغرة في أينفلو
 
@@ -274,8 +274,8 @@ service_metrics = {
 ### **بيئة التطوير**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/microservices/service_registry
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/microservices/service_registry
 
 # تثبيت تبعيات التطوير
 pip install -r requirements-dev.txt
@@ -335,8 +335,8 @@ health_config = {
 
 ### **الدعم الفني**
 - **البريد الإلكتروني**: mlaiel@live.de
-- **التوثيق**: [مستندات أينفلو](https://docs.ainflue.com)
-- **المشاكل**: [مشاكل GitHub](https://github.com/Mlaiel/Ainflue/issues)
+- **التوثيق**: [مستندات أينفلو](https://docs.iacherie.com)
+- **المشاكل**: [مشاكل GitHub](https://github.com/Mlaiel/IA Chérie/issues)
 
 ### **الدعم المؤسسي**
 نقدم لعملاء المؤسسات:

@@ -831,7 +831,7 @@ This offer remains open for {offer_validity_days} days from the date of this let
             "infringing_urls": violation_details.get("infringing_locations", ["Unknown location"]),
             "agent_name": "AI Legal Agent",
             "signature": "Electronically signed by AI Legal System",
-            "contact_info": "legal@ainflue.com",
+            "contact_info": "legal@iacherie.com",
             "compliance_days": str((deadline - datetime.utcnow()).days),
             "legal_authorities": ", ".join(legal_basis),
             "infringement_description": violation_details.get("description", "Legal violation detected")
@@ -975,7 +975,7 @@ class LegalNotificationService:
             "success": True,
             "delivery_method": "secure_portal",
             "portal_ref": f"PORTAL-{str(uuid.uuid4())[:8]}",
-            "access_url": f"https://legal.ainflue.com/notices/{notice.id}"
+            "access_url": f"https://legal.iacherie.com/notices/{notice.id}"
         }
 
 

@@ -735,7 +735,7 @@ if __name__ == "__main__":
                         'restartPolicy': 'Never',
                         'containers': [{
                             'name': 'workflow-executor',
-                            'image': 'ainflue/workflow-executor:latest',
+                            'image': 'iacherie/workflow-executor:latest',
                             'env': [
                                 {
                                     'name': 'WORKFLOW_ID',

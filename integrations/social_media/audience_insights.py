@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Audience Insights Engine
+IA Chérie Platform - Advanced Audience Insights Engine
 ====================================================
 
 Enterprise-grade cross-platform audience analysis with AI-powered demographic insights,
@@ -56,7 +56,7 @@ import matplotlib.pyplot as plt
 import aiohttp
 import redis.asyncio as redis
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

@@ -1,4 +1,4 @@
-# 🚀 Ainflue Production Deployment Guide
+# 🚀 IA Chérie Production Deployment Guide
 
 ## Complete Guide for 100% Key-in-Hand Deployment
 
@@ -12,7 +12,7 @@
 
 ### ✅ Platform Completeness Verification
 
-Based on the comprehensive analysis, the Ainflue platform is **100% complete** and ready for production deployment:
+Based on the comprehensive analysis, the IA Chérie platform is **100% complete** and ready for production deployment:
 
 - ✅ **Frontend Complete (100%)**: Next.js with TypeScript, Tailwind CSS, full component library
 - ✅ **Backend APIs Complete (100%)**: All critical endpoints implemented (fingerprinting, monitoring, monetization, collaboration)
@@ -36,7 +36,7 @@ Based on the comprehensive analysis, the Ainflue platform is **100% complete** a
 
 #### External Services
 - **SSL Certificates**: Let's Encrypt or custom
-- **Domain**: ainflue.com (or custom domain)
+- **Domain**: iacherie.com (or custom domain)
 - **Email Service**: SendGrid, AWS SES, or similar
 - **Cloud Storage**: AWS S3, Google Cloud Storage
 
@@ -51,32 +51,32 @@ Based on the comprehensive analysis, the Ainflue platform is **100% complete** a
 kubectl apply -f kubernetes/production/namespaces.yaml
 
 # Verify namespace creation
-kubectl get namespaces | grep ainflue
+kubectl get namespaces | grep iacherie
 ```
 
 ### Step 2: Secrets Configuration
 
 ```bash
 # Create production secrets
-kubectl create secret generic ainflue-secrets \
-  --from-literal=database-url="postgresql://user:pass@host:5432/ainflue" \
+kubectl create secret generic iacherie-secrets \
+  --from-literal=database-url="postgresql://user:pass@host:5432/iacherie" \
   --from-literal=redis-url="redis://redis-host:6379" \
   --from-literal=jwt-secret="your-super-secret-jwt-key" \
   --from-literal=openai-api-key="your-openai-key" \
   --from-literal=stripe-secret-key="your-stripe-secret" \
-  -n ainflue-production
+  -n iacherie-production
 ```
 
 ### Step 3: Database Setup
 
 ```bash
 # Run database migrations
-kubectl run ainflue-migration \
-  --image=ainflue/api:latest \
+kubectl run iacherie-migration \
+  --image=iacherie/api:latest \
   --restart=Never \
   --rm \
   --command -- python -m alembic upgrade head \
-  -n ainflue-production
+  -n iacherie-production
 ```
 
 ### Step 4: Backend Deployment
@@ -86,8 +86,8 @@ kubectl run ainflue-migration \
 kubectl apply -f kubernetes/production/api-deployment.yaml
 
 # Verify API deployment
-kubectl get pods -n ainflue-production -l app=ainflue-api
-kubectl logs -f deployment/ainflue-api -n ainflue-production
+kubectl get pods -n iacherie-production -l app=iacherie-api
+kubectl logs -f deployment/iacherie-api -n iacherie-production
 ```
 
 ### Step 5: Frontend Deployment
@@ -97,7 +97,7 @@ kubectl logs -f deployment/ainflue-api -n ainflue-production
 kubectl apply -f kubernetes/production/frontend-deployment.yaml
 
 # Verify frontend deployment
-kubectl get pods -n ainflue-production -l app=ainflue-frontend
+kubectl get pods -n iacherie-production -l app=iacherie-frontend
 ```
 
 ### Step 6: Load Balancer & Ingress
@@ -107,7 +107,7 @@ kubectl get pods -n ainflue-production -l app=ainflue-frontend
 kubectl apply -f kubernetes/production/ingress.yaml
 
 # Get external IP
-kubectl get ingress -n ainflue-production
+kubectl get ingress -n iacherie-production
 ```
 
 ### Step 7: SSL Configuration
@@ -126,20 +126,20 @@ kubectl apply -f kubernetes/production/ssl-certificates.yaml
 
 ### Health Check Endpoints
 
-- **API Health**: `https://api.ainflue.com/health`
-- **Frontend**: `https://ainflue.com`
-- **Metrics**: `https://ainflue.com/metrics`
+- **API Health**: `https://api.iacherie.com/health`
+- **Frontend**: `https://iacherie.com`
+- **Metrics**: `https://iacherie.com/metrics`
 
 ### Smoke Tests
 
 ```bash
 # Test API endpoints
-curl -X GET https://api.ainflue.com/health
-curl -X GET https://api.ainflue.com/api/fingerprinting/status
-curl -X GET https://api.ainflue.com/api/monitoring/status
+curl -X GET https://api.iacherie.com/health
+curl -X GET https://api.iacherie.com/api/fingerprinting/status
+curl -X GET https://api.iacherie.com/api/monitoring/status
 
 # Test frontend
-curl -X GET https://ainflue.com
+curl -X GET https://iacherie.com
 ```
 
 ### Performance Verification
@@ -184,13 +184,13 @@ kubectl apply -f kubernetes/production/monitoring/
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-api-hpa
-  namespace: ainflue-production
+  name: iacherie-api-hpa
+  namespace: iacherie-production
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-api
+    name: iacherie-api
   minReplicas: 3
   maxReplicas: 10
   metrics:
@@ -280,10 +280,10 @@ kubectl apply -f kubernetes/production/backup/database-backup.yaml
 #### API Pod Not Starting
 ```bash
 # Check pod logs
-kubectl logs -f pod/{pod-name} -n ainflue-production
+kubectl logs -f pod/{pod-name} -n iacherie-production
 
 # Check events
-kubectl get events -n ainflue-production --sort-by='.lastTimestamp'
+kubectl get events -n iacherie-production --sort-by='.lastTimestamp'
 ```
 
 #### Database Connection Issues
@@ -295,7 +295,7 @@ kubectl run db-test --image=postgres:14 --rm -it -- psql $DATABASE_URL
 #### Frontend Build Issues
 ```bash
 # Check frontend logs
-kubectl logs -f deployment/ainflue-frontend -n ainflue-production
+kubectl logs -f deployment/iacherie-frontend -n iacherie-production
 ```
 
 ### Performance Issues
@@ -303,19 +303,19 @@ kubectl logs -f deployment/ainflue-frontend -n ainflue-production
 #### High Memory Usage
 ```bash
 # Check memory metrics
-kubectl top pods -n ainflue-production
+kubectl top pods -n iacherie-production
 
 # Scale up if needed
-kubectl scale deployment ainflue-api --replicas=5 -n ainflue-production
+kubectl scale deployment iacherie-api --replicas=5 -n iacherie-production
 ```
 
 #### Slow API Response
 ```bash
 # Check API metrics
-curl https://api.ainflue.com/metrics
+curl https://api.iacherie.com/metrics
 
 # Review database query performance
-kubectl exec -it deployment/ainflue-api -- python -m tools.query_analyzer
+kubectl exec -it deployment/iacherie-api -- python -m tools.query_analyzer
 ```
 
 ---
@@ -340,7 +340,7 @@ kubectl exec -it deployment/ainflue-api -- python -m tools.query_analyzer
 
 ## 🎉 Conclusion
 
-The Ainflue platform is **100% complete and ready for production deployment**. All critical components have been implemented and tested:
+The IA Chérie platform is **100% complete and ready for production deployment**. All critical components have been implemented and tested:
 
 - ✅ **Complete Frontend**: Modern React/Next.js interface
 - ✅ **Robust Backend**: FastAPI with all endpoints

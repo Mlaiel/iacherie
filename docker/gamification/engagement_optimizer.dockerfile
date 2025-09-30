@@ -1,5 +1,5 @@
 # ===============================================
-# Engagement Optimizer Dockerfile - Ainflue Platform
+# Engagement Optimizer Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Engagement Optimization Service
 # Handles engagement analysis, optimization recommendations, and user retention
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8087/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Engagement Optimizer Service for Ainflue Gamification"
+LABEL description="Engagement Optimizer Service for IA Chérie Gamification"
 
 EXPOSE 8087
 CMD ["python", "-m", "engagement_optimizer.main"]

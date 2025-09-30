@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: Deploy Ainflue Infrastructure Components
+- name: Deploy IA Chérie Infrastructure Components
   hosts: all
   become: true
   gather_facts: true
@@ -33,17 +33,17 @@
         state: directory
         mode: '0755'
       loop:
-        - /opt/ainflue
-        - /opt/ainflue/config
-        - /opt/ainflue/logs
-        - /opt/ainflue/data
-        - /var/log/ainflue
+        - /opt/iacherie
+        - /opt/iacherie/config
+        - /opt/iacherie/logs
+        - /opt/iacherie/data
+        - /var/log/iacherie
     
     - name: Set deployment facts
       set_fact:
         deployment_id: "{{ infrastructure_environment }}-{{ deployment_timestamp }}"
-        config_path: "/opt/ainflue/config"
-        log_path: "/var/log/ainflue"
+        config_path: "/opt/iacherie/config"
+        log_path: "/var/log/iacherie"
 
   tasks:
     - name: Update system packages

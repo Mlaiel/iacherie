@@ -1,11 +1,11 @@
 """
-Collaboration Security Manager - Ainflue Integrations
+Collaboration Security Manager - IA Chérie Integrations
 ===================================================
 Enterprise-grade security for creator collaborations with end-to-end encryption,
 digital rights management, and comprehensive compliance automation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chérie Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -337,7 +337,7 @@ class CollaborationSecurityManager:
         data: Union[str, bytes],
         tenant_id: str,
         key_id: Optional[str] = None
-    ) -> Tuple[bytes, str]:
+    ) -> tuple[bytes, str]:
         """Encrypt data with tenant-specific or specified encryption key."""
         try:
             # Use specified key or tenant's master key
@@ -522,7 +522,7 @@ class CollaborationSecurityManager:
         creator_id: str,
         content_type: str,
         watermark_config: Optional[WatermarkConfig] = None
-    ) -> Tuple[bytes, str]:
+    ) -> tuple[bytes, str]:
         """Apply digital watermark to content for IP protection."""
         try:
             # Create or use existing watermark configuration
@@ -532,7 +532,7 @@ class CollaborationSecurityManager:
                     watermark_id=watermark_id,
                     creator_id=creator_id,
                     content_type=content_type,
-                    watermark_data=f"Ainflue_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+                    watermark_data=f"IACherie_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
                 )
                 self.watermark_configs[watermark_id] = watermark_config
             
@@ -562,7 +562,7 @@ class CollaborationSecurityManager:
         tenant_id: str,
         user_id: str,
         activity_data: Dict[str, Any]
-    ) -> Tuple[bool, float, List[str]]:
+    ) -> tuple[bool, float, List[str]]:
         """Detect fraudulent activity using ML-based detection."""
         try:
             fraud_indicators = []
@@ -769,7 +769,7 @@ class CollaborationSecurityManager:
             "watermark_id": config.watermark_id,
             "creator_id": config.creator_id,
             "timestamp": datetime.utcnow().isoformat(),
-            "platform": "Ainflue"
+            "platform": "IA Chérie"
         }
         
         # For text content, append watermark as metadata
@@ -785,7 +785,7 @@ class CollaborationSecurityManager:
         tenant_id: str,
         user_id: str,
         activity_data: Dict[str, Any]
-    ) -> Tuple[bool, float, str]:
+    ) -> tuple[bool, float, str]:
         """Evaluate a single fraud detection rule."""
         rule_id = rule["rule_id"]
         

@@ -1,12 +1,12 @@
 """
-AI Processing Timeouts Module - Ainflue Enterprise
+AI Processing Timeouts Module - IA Chérie Enterprise
 =================================================
 Timeout management spécialisé pour processing IA/ML.
 GPU-aware timeouts + model complexity + inference optimization + business intelligence.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chérie Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

@@ -1,12 +1,12 @@
-# 🏢 وحدة تحسين محركات البحث للمؤسسات في Ainflue
+# 🏢 وحدة تحسين محركات البحث للمؤسسات في IA Chérie
 
-[![مستوى مؤسسي](https://img.shields.io/badge/مؤسسي-مستوى-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![الأمان](https://img.shields.io/badge/الأمان-مؤسسي-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![الامتثال](https://img.shields.io/badge/الامتثال-متعدد%20التنظيم-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![مستوى مؤسسي](https://img.shields.io/badge/مؤسسي-مستوى-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![الأمان](https://img.shields.io/badge/الأمان-مؤسسي-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![الامتثال](https://img.shields.io/badge/الامتثال-متعدد%20التنظيم-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🌟 نظرة عامة
 
-وحدة تحسين محركات البحث للمؤسسات في Ainflue هي نظام شامل للحوكمة وإدارة تحسين محركات البحث على مستوى المؤسسات، مصمم للمنظمات الكبيرة. يوفر مراقبة متقدمة للامتثال وإدارة المخاطر وأمان العلامة التجارية والتحليلات الاستراتيجية لعمليات تحسين محركات البحث للمؤسسات.
+وحدة تحسين محركات البحث للمؤسسات في IA Chérie هي نظام شامل للحوكمة وإدارة تحسين محركات البحث على مستوى المؤسسات، مصمم للمنظمات الكبيرة. يوفر مراقبة متقدمة للامتثال وإدارة المخاطر وأمان العلامة التجارية والتحليلات الاستراتيجية لعمليات تحسين محركات البحث للمؤسسات.
 
 ## 👨‍💻 قيادة المشروع وفريق الخبراء
 
@@ -85,8 +85,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/seo/enterprise
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/seo/enterprise
 
 # تثبيت التبعيات
 pip install -r requirements-enterprise.txt
@@ -256,8 +256,8 @@ enterprise:
 ### **معلومات الاتصال**
 - **مبيعات المؤسسة**: mlaiel@live.de
 - **الدعم التقني**: متاح مع ترخيص المؤسسة
-- **مشاكل الأمان**: security@ainflue.com (مع ترخيص المؤسسة)
-- **أسئلة الامتثال**: compliance@ainflue.com (مع ترخيص المؤسسة)
+- **مشاكل الأمان**: security@iacherie.com (مع ترخيص المؤسسة)
+- **أسئلة الامتثال**: compliance@iacherie.com (مع ترخيص المؤسسة)
 
 ## 📋 خارطة الطريق
 
@@ -285,5 +285,5 @@ enterprise:
 
 ---
 
-**مدعوم من منصة Ainflue لتحسين محركات البحث للمؤسسات**  
+**مدعوم من منصة IA Chérie لتحسين محركات البحث للمؤسسات**  
 *تحويل إدارة محتوى المؤسسة وحوكمة تحسين محركات البحث*

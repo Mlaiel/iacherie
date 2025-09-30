@@ -265,7 +265,7 @@ class AIAgent:
         """Optimisation virale du contenu."""
         return {
             "viral_potential": np.random.uniform(0.5, 0.95),
-            "trending_hashtags": ["#viral", "#trending", "#ainflue"],
+            "trending_hashtags": ["#viral", "#trending", "#iacherie"],
             "amplification_strategy": "progressive_boost",
             "network_effects": {"reach_multiplier": 2.5, "engagement_boost": 1.8}
         }

@@ -1,6 +1,6 @@
 # 🚨 Krisenmanagement-Engine
 
-**Fortschrittliches Krisenerkennung-, Management- und Reputationsschutzsystem für die Ainflue Distribution Platform**
+**Fortschrittliches Krisenerkennung-, Management- und Reputationsschutzsystem für die IA Chérie Distribution Platform**
 
 ## 📖 Überblick
 
@@ -254,10 +254,10 @@ response = await influencer_crisis_handler.manage_influencer_scandal(
 
 ### 🆘 Notfall-Support
 - **Krisen-Hotline:** +49 (0) XXX XXX XXXX
-- **Emergency Discord:** discord.gg/ainflue-crisis
-- **Dokumentation:** docs.ainflue.com/crisis-management
+- **Emergency Discord:** discord.gg/iacherie-crisis
+- **Dokumentation:** docs.iacherie.com/crisis-management
 
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue Platform - Krisenmanagement Engine**
+**IA Chérie Platform - Krisenmanagement Engine**

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Collaboration Marketplace - Ainflue Enterprise Creator Platform
+Collaboration Marketplace - IA Chérie Enterprise Creator Platform
 Advanced creator-brand matching and bidding platform with AI-powered recommendations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -56,7 +56,7 @@ class MarketplaceListing(Base):
     timeline = Column(JSON)  # Project timeline
     status = Column(String(50), default="active")  # active, paused, closed, completed
     tags = Column(JSON)  # Search tags
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     expires_at = Column(DateTime)
@@ -79,7 +79,7 @@ class MarketplaceBid(Base):
     status = Column(String(50), default="pending")  # pending, accepted, rejected, withdrawn
     ai_score = Column(Numeric(5, 3))  # AI matching score (0-1)
     ranking = Column(Integer)  # Bid ranking
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     expires_at = Column(DateTime)
@@ -101,7 +101,7 @@ class MarketplaceContract(Base):
     payment_schedule = Column(JSON)
     deliverables = Column(JSON)
     signatures = Column(JSON)  # Digital signatures
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     signed_at = Column(DateTime)
     completed_at = Column(DateTime)
@@ -120,7 +120,7 @@ class MarketplaceReview(Base):
     criteria_scores = Column(JSON)  # Detailed scoring
     is_public = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 # Pydantic Models
@@ -160,7 +160,7 @@ class CreatorRequirements(BaseModel):
     platforms: List[str] = Field(default_factory=list)
     languages: List[str] = Field(default_factory=list)
     locations: List[str] = Field(default_factory=list)
-    age_range: Optional[Tuple[int, int]] = None
+    age_range: Optional[tuple[int, int]] = None
     gender_preference: Optional[str] = None
     content_types: List[str] = Field(default_factory=list)
     experience_level: Optional[str] = None  # beginner, intermediate, expert
@@ -194,7 +194,7 @@ class MarketplaceListingCreate(BaseModel):
     category: ListingCategory
     budget_min: Decimal = Field(..., gt=0)
     budget_max: Decimal = Field(..., gt=0)
-    currency: str = Field(default="USD", regex=r"^[A-Z]{3}$")
+    currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")
     requirements: CreatorRequirements
     deliverables: ProjectDeliverables
     timeline: ProjectTimeline
@@ -213,7 +213,7 @@ class CreatorBidCreate(BaseModel):
     """Create creator bid request"""
     listing_id: str
     bid_amount: Decimal = Field(..., gt=0)
-    currency: str = Field(default="USD", regex=r"^[A-Z]{3}$")
+    currency: str = Field(default="USD", pattern=r"^[A-Z]{3}$")
     proposal: str = Field(..., min_length=100)
     deliverables: ProjectDeliverables
     timeline: ProjectTimeline

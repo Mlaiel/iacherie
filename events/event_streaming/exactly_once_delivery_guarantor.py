@@ -1,5 +1,5 @@
 """IA Influencer Agent - Exactly Once Delivery Guarantor
-Enterprise-grade Exactly-Once Delivery Guarantees for Ainflue Event Streaming
+Enterprise-grade Exactly-Once Delivery Guarantees for IA Chérie Event Streaming
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -504,7 +504,7 @@ class TransactionCoordinator:
 
 
 class ExactlyOnceDeliveryGuarantor:
-    """Main exactly-once delivery guarantor for Ainflue platform"""
+    """Main exactly-once delivery guarantor for IA Chérie platform"""
     
     def __init__(self, guarantor_id: str, metrics_collector=None):
         self.guarantor_id = guarantor_id

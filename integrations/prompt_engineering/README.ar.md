@@ -1,8 +1,8 @@
 # 🤖 وحدة هندسة البرمجة - منصة الذكاء الاصطناعي للمؤسسات
 
-[![مستوى المؤسسات](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![مدعوم بالذكاء الاصطناعي](https://img.shields.io/badge/AI-Powered-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![متعدد الخبراء](https://img.shields.io/badge/Multi-Expert-Architecture-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![مستوى المؤسسات](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![مدعوم بالذكاء الاصطناعي](https://img.shields.io/badge/AI-Powered-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![متعدد الخبراء](https://img.shields.io/badge/Multi-Expert-Architecture-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 بيان المهمة
 
@@ -88,8 +88,8 @@ integrations/prompt_engineering/
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/prompt_engineering
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/prompt_engineering
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -164,7 +164,7 @@ GOOGLE_AI_API_KEY=مفتاح_google_الخاص_بك
 COHERE_API_KEY=مفتاح_cohere_الخاص_بك
 
 # تكوين قاعدة البيانات
-DATABASE_URL=postgresql://user:password@localhost/ainflue
+DATABASE_URL=postgresql://user:password@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # تكوين الأمان
@@ -218,7 +218,7 @@ GRAFANA_ENDPOINT=http://localhost:3000
 
 هذا المشروع هو برنامج مملوك لـ **فهد المليل**. جميع الحقوق محفوظة.
 
-لاستفسارات الترخيص، يرجى الاتصال: [licensing@ainflue.com](mailto:licensing@ainflue.com)
+لاستفسارات الترخيص، يرجى الاتصال: [licensing@iacherie.com](mailto:licensing@iacherie.com)
 
 ## 🆘 الدعم
 

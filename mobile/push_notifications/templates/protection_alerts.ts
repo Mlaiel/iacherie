@@ -50,13 +50,13 @@ export class ProtectionAlertTemplates {
           id: 'view_violation',
           title: 'View Details',
           type: 'button',
-          deepLink: 'ainflue://protection/violations/{violationId}'
+          deepLink: 'iacherie://protection/violations/{violationId}'
         },
         {
           id: 'take_action',
           title: 'Take Action',
           type: 'button',
-          deepLink: 'ainflue://protection/violations/{violationId}/actions'
+          deepLink: 'iacherie://protection/violations/{violationId}/actions'
         },
         {
           id: 'dismiss',
@@ -109,7 +109,7 @@ export class ProtectionAlertTemplates {
           id: 'view_protection',
           title: 'View Protection',
           type: 'button',
-          deepLink: 'ainflue://protection/content/{protectionId}'
+          deepLink: 'iacherie://protection/content/{protectionId}'
         }
       ],
       defaultSettings: {
@@ -156,13 +156,13 @@ export class ProtectionAlertTemplates {
           id: 'track_dmca',
           title: 'Track Progress',
           type: 'button',
-          deepLink: 'ainflue://protection/dmca/{dmcaId}'
+          deepLink: 'iacherie://protection/dmca/{dmcaId}'
         },
         {
           id: 'view_notice',
           title: 'View Notice',
           type: 'button',
-          deepLink: 'ainflue://protection/dmca/{dmcaId}/notice'
+          deepLink: 'iacherie://protection/dmca/{dmcaId}/notice'
         }
       ],
       defaultSettings: {
@@ -209,7 +209,7 @@ export class ProtectionAlertTemplates {
           id: 'view_details',
           title: 'View Details',
           type: 'button',
-          deepLink: 'ainflue://protection/violations/{violationId}/resolution'
+          deepLink: 'iacherie://protection/violations/{violationId}/resolution'
         }
       ],
       defaultSettings: {

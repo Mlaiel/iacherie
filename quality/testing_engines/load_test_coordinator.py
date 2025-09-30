@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Load Test Coordinator - Ainflue Quality Platform
+Load Test Coordinator - IA Chérie Quality Platform
 ==============================================
 
 Enterprise-grade load testing and performance analysis system.

@@ -1,4 +1,4 @@
-# Production Configuration for Ainflue Docker Platform
+# Production Configuration for IA Chérie Docker Platform
 version: '3.8'
 
 # Production environment variables
@@ -96,12 +96,12 @@ monitoring:
     smtp_enabled: true
   
   alertmanager:
-    smtp_smarthost: smtp.ainflue.com:587
+    smtp_smarthost: smtp.iacherie.com:587
     webhook_url: ${SLACK_WEBHOOK_URL}
 
 # Backup configuration
 backup:
   schedule: "0 2 * * *"  # Daily at 2 AM
   retention_days: 30
-  s3_bucket: ainflue-production-backups
+  s3_bucket: iacherie-production-backups
   encryption: enabled

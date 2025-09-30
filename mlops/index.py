@@ -1,6 +1,6 @@
 """
 MLOps Module - Main Index
-Enterprise MLOps platform orchestration for Ainflue
+Enterprise MLOps platform orchestration for IA Chérie
 
 This is the main entry point for the comprehensive MLOps platform supporting
 53 AI agents across 7 phases of the ML lifecycle with enterprise-grade
@@ -276,7 +276,7 @@ class MLOpsPlatformOrchestrator:
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute the complete Ainflue MLOps workflow with 53 AI agents"""
+        """Execute the complete IA Chérie MLOps workflow with 53 AI agents"""
         try:
             workflow_id = f"ainflue_workflow_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -361,11 +361,11 @@ class MLOpsPlatformOrchestrator:
             workflow_result["status"] = "completed"
             self.active_workflows[workflow_id] = workflow_result
             
-            self.logger.info(f"Ainflue workflow executed: {workflow_id}")
+            self.logger.info(f"IA Chérie workflow executed: {workflow_id}")
             return workflow_result
             
         except Exception as e:
-            self.logger.error(f"Ainflue workflow execution failed: {str(e)}")
+            self.logger.error(f"IA Chérie workflow execution failed: {str(e)}")
             raise
     
     async def get_platform_status(self) -> Dict[str, Any]:

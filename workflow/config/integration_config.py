@@ -1,5 +1,5 @@
 """
-🔗 INTEGRATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+🔗 INTEGRATION CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced integration configuration management for enterprise-grade deployment
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -96,7 +96,7 @@ class MessageQueueConfig:
     connection_url: str = "amqp://localhost:5672"
     exchange_name: str = "ainflue_exchange"
     queue_name: str = "ainflue_queue"
-    routing_key: str = "ainflue.events"
+    routing_key: str = "iacherie.events"
     durable: bool = True
     auto_ack: bool = False
     prefetch_count: int = 10
@@ -120,12 +120,12 @@ class IntegrationConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize integration configuration"""
-        self.config_path = config_path or "/etc/ainflue/integration.json"
+        self.config_path = config_path or "/etc/iacherie/integration.json"
         self.api_integration = APIIntegrationConfig(
             name="default",
-            base_url="https://api.ainflue.com"
+            base_url="https://api.iacherie.com"
         )
-        self.service_mesh = ServiceMeshConfig(service_name="ainflue-core")
+        self.service_mesh = ServiceMeshConfig(service_name="iacherie-core")
         self.message_queue = MessageQueueConfig()
         
         # Integration registry
@@ -533,7 +533,7 @@ class IntegrationConfig:
 ENTERPRISE_INTEGRATION_TEMPLATES = {
     "api_gateway": {
         "name": "api_gateway",
-        "base_url": "https://gateway.ainflue.com",
+        "base_url": "https://gateway.iacherie.com",
         "timeout": 30,
         "retry_attempts": 3,
         "rate_limit": 10000,
@@ -542,7 +542,7 @@ ENTERPRISE_INTEGRATION_TEMPLATES = {
     },
     "content_processing": {
         "name": "content_processing",
-        "base_url": "https://processing.ainflue.com",
+        "base_url": "https://processing.iacherie.com",
         "timeout": 120,
         "retry_attempts": 5,
         "rate_limit": 1000,
@@ -551,7 +551,7 @@ ENTERPRISE_INTEGRATION_TEMPLATES = {
     },
     "ai_services": {
         "name": "ai_services",
-        "base_url": "https://ai.ainflue.com",
+        "base_url": "https://ai.iacherie.com",
         "timeout": 60,
         "retry_attempts": 3,
         "rate_limit": 500,
@@ -560,7 +560,7 @@ ENTERPRISE_INTEGRATION_TEMPLATES = {
     },
     "analytics": {
         "name": "analytics",
-        "base_url": "https://analytics.ainflue.com",
+        "base_url": "https://analytics.iacherie.com",
         "timeout": 15,
         "retry_attempts": 2,
         "rate_limit": 5000,

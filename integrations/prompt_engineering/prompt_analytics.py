@@ -14,7 +14,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Prompt-specific metrics et optimization insights
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chérie Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 
@@ -247,7 +247,7 @@ class PromptAnalytics:
     async def prompt_performance_analytics(
         self,
         prompt_ids: List[str],
-        time_range: Optional[Tuple[datetime, datetime]] = None,
+        time_range: Optional[tuple[datetime, datetime]] = None,
         metrics: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Analyse des performances détaillée des prompts"""
@@ -325,7 +325,7 @@ class PromptAnalytics:
     async def usage_pattern_analysis(
         self,
         scope: AnalyticsScope = AnalyticsScope.GLOBAL,
-        time_range: Optional[Tuple[datetime, datetime]] = None
+        time_range: Optional[tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
         """Analyse avancée des patterns d'utilisation"""
         try:
@@ -389,7 +389,7 @@ class PromptAnalytics:
         self,
         prompt_id: str,
         success_criteria: Dict[str, float],
-        time_range: Optional[Tuple[datetime, datetime]] = None
+        time_range: Optional[tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
         """Mesure d'efficacité avancée des prompts"""
         try:
@@ -471,7 +471,7 @@ class PromptAnalytics:
         prompt_ids: List[str],
         cost_metrics: Dict[str, float],
         revenue_metrics: Dict[str, float],
-        time_range: Optional[Tuple[datetime, datetime]] = None
+        time_range: Optional[tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
         """Analyse ROI avancée pour les prompts"""
         try:
@@ -561,7 +561,7 @@ class PromptAnalytics:
     async def trend_identification(
         self,
         metric_names: List[str],
-        time_range: Optional[Tuple[datetime, datetime]] = None,
+        time_range: Optional[tuple[datetime, datetime]] = None,
         granularity: TimeGranularity = TimeGranularity.DAY
     ) -> Dict[str, Any]:
         """Identification avancée des tendances"""
@@ -794,7 +794,7 @@ class PromptAnalytics:
     async def _get_prompt_metrics(
         self,
         prompt_id: str,
-        time_range: Tuple[datetime, datetime],
+        time_range: tuple[datetime, datetime],
         metrics: List[str]
     ) -> List[PromptMetric]:
         """Récupère les métriques d'un prompt"""

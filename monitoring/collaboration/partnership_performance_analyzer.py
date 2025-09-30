@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Partnership Performance Analyzer
+IA Chérie Platform - Partnership Performance Analyzer
 ===================================================
 
 Advanced partnership performance analysis system for measuring collaboration
 success, ROI tracking, and performance optimization with ML-powered insights
-for the Ainflue platform.
+for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

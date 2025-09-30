@@ -1,7 +1,7 @@
 """Circuit Breaker Protection Module
 
 Advanced circuit breaker patterns with intelligent failure detection and recovery
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -161,7 +161,7 @@ class CircuitBreakerMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Circuit Breaker Configuration"""
+    """IA Chérie Business Circuit Breaker Configuration"""
     
     # Circuit breaker configurations by service
     CIRCUIT_BREAKER_CONFIGS = {
@@ -342,7 +342,7 @@ class AinflueBusiness:
 class CircuitBreakerProtection:
     """
     Advanced circuit breaker patterns with intelligent failure detection and recovery
-    Provides comprehensive protection for Ainflue business operations
+    Provides comprehensive protection for IA Chérie business operations
     """
     
     def __init__(self,
@@ -794,7 +794,7 @@ class CircuitBreakerProtection:
     # Helper methods
     
     async def _load_business_configurations(self):
-        """Load Ainflue business circuit breaker configurations"""
+        """Load IA Chérie business circuit breaker configurations"""
         for service_name, config in AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.items():
             await self.register_circuit_breaker(config)
         

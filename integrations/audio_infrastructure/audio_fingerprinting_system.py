@@ -2,7 +2,7 @@
 =============================================================================
 
 Système de fingerprinting audio enterprise avec identification de contenu,
-détection de copyright et protection intellectuelle pour Ainflue.
+détection de copyright et protection intellectuelle pour IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Algorithmes de fingerprinting + extraction de features audio
@@ -170,7 +170,7 @@ class SpectralPeaksFingerprinter:
         self,
         audio: np.ndarray,
         sample_rate: int
-    ) -> Tuple[List[Tuple[int, int]], Dict[str, Any]]:
+    ) -> tuple[List[tuple[int, int]], Dict[str, Any]]:
         """Génère une empreinte basée sur les pics spectraux"""
         
         # Rééchantillonner si nécessaire
@@ -204,7 +204,7 @@ class SpectralPeaksFingerprinter:
         
         return hashes, features
     
-    async def _find_spectral_peaks(self, magnitude: np.ndarray) -> List[Tuple[int, int]]:
+    async def _find_spectral_peaks(self, magnitude: np.ndarray) -> List[tuple[int, int]]:
         """Trouve les pics spectraux dans le spectrogramme"""
         peaks = []
         
@@ -233,8 +233,8 @@ class SpectralPeaksFingerprinter:
     
     async def _generate_constellation_hashes(
         self,
-        peaks: List[Tuple[int, int]]
-    ) -> List[Tuple[int, int]]:
+        peaks: List[tuple[int, int]]
+    ) -> List[tuple[int, int]]:
         """Génère les hashes de constellation à partir des pics"""
         hashes = []
         
@@ -273,7 +273,7 @@ class MFCCHashFingerprinter:
         self,
         audio: np.ndarray,
         sample_rate: int
-    ) -> Tuple[str, Dict[str, Any]]:
+    ) -> tuple[str, Dict[str, Any]]:
         """Génère une empreinte MFCC"""
         
         # Rééchantillonner si nécessaire
@@ -343,7 +343,7 @@ class PerceptualHashFingerprinter:
         self,
         audio: np.ndarray,
         sample_rate: int
-    ) -> Tuple[str, Dict[str, Any]]:
+    ) -> tuple[str, Dict[str, Any]]:
         """Génère une empreinte perceptuelle"""
         
         # Rééchantillonner si nécessaire

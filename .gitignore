@@ -106,3 +106,26 @@ sdk/python/*.egg-info/
 __pycache__/
 *.pyc
 data/pipelines/__pycache__/
+
+# IA Chérie - Protection fichiers sensibles avec clés API
+*.md
+!README.md
+*_analysis.json
+*_api_*.json
+*_report.json
+diagnostic_*.json
+mega_api_*.json
+ia_cherie_*.json
+# Fichiers avec clés sensibles
+*.md
+.env*
+api_analysis_*.json
+# Exclusions pour fichiers volumineux
+migration_backup/frontend/node_modules/
+docs/analysis/security_scan_results.json
+*.node
+*.so
+*.dll
+*.dylib
+*.wasm
+*.map

@@ -15,12 +15,12 @@
 
 ### Core Components
 
-The Ainflue webhook system consists of several key components:
+The IA Chérie webhook system consists of several key components:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Event Source  │───▶│ Webhook Manager │───▶│   Destination   │
-│   (Platform)    │    │    (Ainflue)    │    │   (External)    │
+│   (Platform)    │    │    (IA Chérie)    │    │   (External)    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                               │
                               ▼
@@ -71,11 +71,11 @@ Required headers for webhook requests:
 POST /your-webhook-endpoint HTTP/1.1
 Host: your-domain.com
 Content-Type: application/json
-X-Ainflue-Signature: sha256=<hmac_signature>
-X-Ainflue-Event: <event_type>
-X-Ainflue-Delivery: <delivery_id>
-X-Ainflue-Timestamp: <unix_timestamp>
-User-Agent: Ainflue-Webhook/1.0
+X-IA Chérie-Signature: sha256=<hmac_signature>
+X-IA Chérie-Event: <event_type>
+X-IA Chérie-Delivery: <delivery_id>
+X-IA Chérie-Timestamp: <unix_timestamp>
+User-Agent: IA Chérie-Webhook/1.0
 ```
 
 ### IP Allowlisting
@@ -371,7 +371,7 @@ Real-time webhook dashboard includes:
 Use the webhook testing endpoint to validate your integration:
 
 ```bash
-curl -X POST https://api.ainflue.com/webhooks/test \
+curl -X POST https://api.iacherie.com/webhooks/test \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -453,9 +453,9 @@ const app = express();
 app.use('/webhook', bodyParser.raw({ type: 'application/json' }));
 
 app.post('/webhook', (req, res) => {
-  const signature = req.headers['x-ainflue-signature'];
-  const timestamp = req.headers['x-ainflue-timestamp'];
-  const eventType = req.headers['x-ainflue-event'];
+  const signature = req.headers['x-iacherie-signature'];
+  const timestamp = req.headers['x-iacherie-timestamp'];
+  const eventType = req.headers['x-iacherie-event'];
   
   // Verify signature
   if (!verifySignature(req.body, signature)) {
@@ -526,9 +526,9 @@ app = FastAPI()
 @app.post("/webhook")
 async def handle_webhook(request: Request):
     # Get headers
-    signature = request.headers.get("x-ainflue-signature")
-    timestamp = request.headers.get("x-ainflue-timestamp")
-    event_type = request.headers.get("x-ainflue-event")
+    signature = request.headers.get("x-iacherie-signature")
+    timestamp = request.headers.get("x-iacherie-timestamp")
+    event_type = request.headers.get("x-iacherie-event")
     
     # Get raw body
     body = await request.body()
@@ -569,13 +569,13 @@ async def process_webhook(event_type: str, payload: dict):
 
 For additional webhook support:
 
-- **API Documentation**: https://docs.ainflue.com/webhooks
-- **Support Email**: support@ainflue.com
-- **Developer Portal**: https://developers.ainflue.com
-- **Status Page**: https://status.ainflue.com
+- **API Documentation**: https://docs.iacherie.com/webhooks
+- **Support Email**: support@iacherie.com
+- **Developer Portal**: https://developers.iacherie.com
+- **Status Page**: https://status.iacherie.com
 
 ---
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Contact**: mlaiel@live.de  
-**Legal**: This documentation is part of the Ainflue platform and is protected by international copyright law.
+**Legal**: This documentation is part of the IA Chérie platform and is protected by international copyright law.

@@ -1,5 +1,5 @@
 # 🏗️ Events Message Queues Modul - Enterprise Messaging Infrastruktur
-**Ainflue Plattform - Fortgeschrittene Message Queuing Implementierung**
+**IA Chérie Plattform - Fortgeschrittene Message Queuing Implementierung**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 ENTERPRISE ÜBERBLICK
 
-Das **Events Message Queues Modul** bietet enterprise-grade Messaging-Infrastruktur und Queue-Management für die Ainflue-Plattform, speziell entwickelt für Multi-Format Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultra-fortschrittliche industrielle System liefert High-Throughput Message Processing, intelligentes Routing und resiliente Kommunikationsmuster für skalierbare Content-Erstellungsworkflows.
+Das **Events Message Queues Modul** bietet enterprise-grade Messaging-Infrastruktur und Queue-Management für die IA Chérie-Plattform, speziell entwickelt für Multi-Format Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultra-fortschrittliche industrielle System liefert High-Throughput Message Processing, intelligentes Routing und resiliente Kommunikationsmuster für skalierbare Content-Erstellungsworkflows.
 
 ### 🎯 **Geschäftslogik-Fluss**
 ```
@@ -159,7 +159,7 @@ music_processing_msg = {
         "tempo_extraction": True,
         "key_detection": True
     },
-    "callback_url": "https://api.ainflue.com/callbacks/audio_analysis"
+    "callback_url": "https://api.iacherie.com/callbacks/audio_analysis"
 }
 
 # Einreihen mit hoher Priorität für Live-Performance
@@ -403,7 +403,7 @@ print(f"Success rate after retry: {retry_stats['success_rate_after_retry']}")
 version: '3.8'
 services:
   message-queues:
-    image: ainflue/message-queues:latest
+    image: iacherie/message-queues:latest
     deploy:
       replicas: 5
       resources:
@@ -422,7 +422,7 @@ services:
       - "8080:8080"
       
   queue-monitor:
-    image: ainflue/queue-monitor:latest
+    image: iacherie/queue-monitor:latest
     deploy:
       replicas: 2
     environment:
@@ -461,7 +461,7 @@ error_rate = Counter('queue_processing_errors_total', 'Total processing errors')
 
 ## 📝 **FAZIT**
 
-Das Events Message Queues Modul repräsentiert den Höhepunkt der Enterprise Messaging-Infrastruktur für die Ainflue-Plattform, speziell entwickelt für Multi-Format Content-Ersteller. Mit High-Throughput Message Processing, intelligentem Routing und umfassenden Resilience-Mechanismen gewährleistet dieses Modul zuverlässiges, skalierbares und intelligentes Message-Handling für das gesamte Creator-Ecosystem.
+Das Events Message Queues Modul repräsentiert den Höhepunkt der Enterprise Messaging-Infrastruktur für die IA Chérie-Plattform, speziell entwickelt für Multi-Format Content-Ersteller. Mit High-Throughput Message Processing, intelligentem Routing und umfassenden Resilience-Mechanismen gewährleistet dieses Modul zuverlässiges, skalierbares und intelligentes Message-Handling für das gesamte Creator-Ecosystem.
 
 **🎯 Mission:** Die fortschrittlichste Enterprise Messaging-Infrastruktur weltweit für Content-Ersteller liefern, die zuverlässige Kommunikation, intelligente Workflow-Orchestrierung und nahtlose Integration über alle Plattform-Services ermöglicht.
 

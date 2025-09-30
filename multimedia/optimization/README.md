@@ -251,6 +251,6 @@ optimization/
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform**  
 **Contact**: mlaiel@live.de  
 **Version**: 3.1.0 Enterprise

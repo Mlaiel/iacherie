@@ -25,7 +25,7 @@ DSGVO, DMCA und internationale Urheberrechtsschutz gelten.
 - **KI-Prompt-Ingenieur:** Plattform-KI-Integration und -Optimierung
 
 ## Zusammenfassung
-Enterprise-Level Platform Core Architektur für umfassende Orchestrierung, Management und Infrastrukturdienste für das Ainflue AI Creator-Plattform-Ökosystem.
+Enterprise-Level Platform Core Architektur für umfassende Orchestrierung, Management und Infrastrukturdienste für das IA Chérie AI Creator-Plattform-Ökosystem.
 
 ## Architektur-Übersicht
 Level 2 Backend-Komponente, die grundlegende Plattformdienste bereitstellt, einschließlich Orchestrierung, Tenant-Management, Abrechnung, Abonnement-Management, Kommunikationsinfrastruktur und umfassende Unterstützungssysteme für das gesamte Creator-Ökosystem.
@@ -97,7 +97,7 @@ Das Platform Core orchestriert den kompletten Creator-Workflow:
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt

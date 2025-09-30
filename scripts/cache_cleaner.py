@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-System Cache Cleaner - Ainflue Platform
+System Cache Cleaner - IA Chérie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: DevOps Engineer  
 Purpose: Enterprise cache management and cleanup automation
@@ -27,7 +27,7 @@ class CacheCleaner:
     """Enterprise cache cleaning system with smart cleanup policies"""
     
     def __init__(self, project_root: Path = None):
-        self.project_root = project_root or Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = project_root or Path("/home/runner/work/IA Chérie/IA Chérie")
         self.cache_dirs = self._identify_cache_directories()
         self.stats = {
             "files_removed": 0,
@@ -344,7 +344,7 @@ async def main():
     """Main cache cleaner execution"""
     cleaner = CacheCleaner()
     
-    print("🧹 Cache Cleaner - Ainflue Platform")
+    print("🧹 Cache Cleaner - IA Chérie Platform")
     print("=" * 40)
     
     # Analyze current cache state

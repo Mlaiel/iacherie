@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Format Conversion Configuration - MEDIA TRANSFORMATION ENGINE
+"""IA Chérie Enterprise Format Conversion Configuration - MEDIA TRANSFORMATION ENGINE
 ====================================================================================
 
 🎬 ENTERPRISE FORMAT CONVERSION FEATURES:
@@ -776,7 +776,7 @@ __all__ = [
     "get_supported_formats", "get_platform_presets"
 ]
 
-logger.info("🎬 Ainflue Format Conversion Configuration initialized")
+logger.info("🎬 IA Chérie Format Conversion Configuration initialized")
 logger.info(f"📊 Video formats: {len(format_conversion_config.video_formats)}")
 logger.info(f"🔧 Audio formats: {len(format_conversion_config.audio_formats)}")
 logger.info(f"🖼️ Image formats: {len(format_conversion_config.image_formats)}")

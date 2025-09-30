@@ -50,7 +50,7 @@ except ImportError:
         return ProtectionConfig()
     
     PROTECTION_VERSION = "1.0.0"
-    PROTECTION_NAME = "Ainflue Protection System"
+    PROTECTION_NAME = "IA Chérie Protection System"
     PROTECTION_AUTHOR = "Fahed Mlaiel <mlaiel@live.de>"
 
 __all__ = [

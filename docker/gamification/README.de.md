@@ -65,8 +65,8 @@ Community-Leadership & Mentorship
 ### 1. Produktionsbereitstellung
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/gamification
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/gamification
 
 # Umgebungsvariablen setzen
 cp .env.example .env

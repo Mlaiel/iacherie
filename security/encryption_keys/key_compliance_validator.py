@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Compliance Validator - Enterprise Cryptographic Compliance Validation System
-Production-grade compliance validation for Ainflue Creator Economy Platform
+Production-grade compliance validation for IA Chérie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -152,7 +152,7 @@ class KeyComplianceValidator:
     """
     🔐 Key Compliance Validator - Enterprise Cryptographic Compliance System
     
-    Provides comprehensive compliance validation for Ainflue Creator Economy:
+    Provides comprehensive compliance validation for IA Chérie Creator Economy:
     - Multi-standard compliance validation (FIPS 140-2, Common Criteria, SOX, etc.)
     - Real-time compliance monitoring and alerting
     - Automated remediation recommendations
@@ -431,7 +431,7 @@ class KeyComplianceValidator:
             exempted_rules=[],
             validation_frequency="daily",
             auto_remediation=False,
-            notification_recipients=["compliance@ainflue.com", "security@ainflue.com"]
+            notification_recipients=["compliance@iacherie.com", "security@iacherie.com"]
         )
         
         # Creator economy policy
@@ -453,7 +453,7 @@ class KeyComplianceValidator:
             exempted_rules=[],
             validation_frequency="weekly",
             auto_remediation=True,
-            notification_recipients=["privacy@ainflue.com"]
+            notification_recipients=["privacy@iacherie.com"]
         )
         
         # Healthcare policy
@@ -474,7 +474,7 @@ class KeyComplianceValidator:
             exempted_rules=[],
             validation_frequency="daily",
             auto_remediation=False,
-            notification_recipients=["hipaa@ainflue.com", "security@ainflue.com"]
+            notification_recipients=["hipaa@iacherie.com", "security@iacherie.com"]
         )
 
     async def validate_compliance(self,

@@ -1,0 +1,145 @@
+# Production Environment Variables
+# ================================
+
+# Environment configuration
+environment: prod
+project_name: ainflue
+aws_region: us-west-2
+
+# Infrastructure sizing (production scale)
+cluster_size: 5
+db_instance_class: db.r5.xlarge
+
+# Domain configuration
+domain_name: ainflue.com
+
+# Feature flags
+enable_monitoring: true
+enable_backup: true
+
+# Docker configuration
+docker_registry: ainflue
+image_tag: latest
+
+# Database configuration
+postgresql:
+  enabled: true
+  auth:
+    password: "{{ vault_postgresql_password }}"  # Should be in Ansible Vault
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "{{ vault_redis_password }}"  # Should be in Ansible Vault
+
+# API Keys (should be in Ansible Vault)
+openai_api_key: "{{ vault_openai_api_key }}"
+elevenlabs_api_key: "{{ vault_elevenlabs_api_key }}"
+stripe_secret_key: "{{ vault_stripe_secret_key }}"
+stripe_publishable_key: "{{ vault_stripe_publishable_key }}"
+shopify_api_key: "{{ vault_shopify_api_key }}"
+midjourney_api_token: "{{ vault_midjourney_api_token }}"
+
+# Resource limits (production scale)
+api:
+  replicaCount: 5
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  autoscaling:
+    enabled: true
+    minReplicas: 5
+    maxReplicas: 20
+
+aiEngine:
+  replicaCount: 3
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+      nvidia.com/gpu: 1
+    limits:
+      memory: "4Gi"
+      cpu: "2000m"
+      nvidia.com/gpu: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+
+mobileApi:
+  replicaCount: 3
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "125m"
+    limits:
+      memory: "512Mi"
+      cpu: "250m"
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 15
+
+workers:
+  replicaCount: 5
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  autoscaling:
+    enabled: true
+    minReplicas: 5
+    maxReplicas: 25
+
+# Monitoring configuration
+grafana_admin_password: "{{ vault_grafana_admin_password }}"
+
+# SSL configuration
+ssl_enabled: true
+cert_manager_enabled: true
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: 30  # days
+
+# Security settings
+network_policy:
+  enabled: true
+
+pod_security_context:
+  fsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+security_context:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+
+# Performance settings
+persistence:
+  media:
+    size: 500Gi
+    storageClass: efs-sc
+  
+  postgresql:
+    size: 200Gi
+    storageClass: gp3-sc
+  
+  redis:
+    size: 50Gi
+    storageClass: gp3-sc

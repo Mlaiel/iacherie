@@ -3,7 +3,7 @@
 🔒 Secure API Gateway - Enterprise Payment API Security
 =======================================================
 
-Advanced API security gateway for Ainflue payment services.
+Advanced API security gateway for IA Chérie payment services.
 API authentication, rate limiting, threat protection, and monitoring.
 
 Author: Expert Team (Security + Backend Senior + Microservices)
@@ -1189,7 +1189,7 @@ class SecurityMiddleware(BaseHTTPMiddleware):
             return await self.gateway._create_error_response(security_result)
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chérie
 async def secure_creator_endpoint(path: str, methods: List[str]) -> APIEndpoint:
     """Créer endpoint sécurisé pour créateurs"""
     endpoint = APIEndpoint(

@@ -4,7 +4,7 @@
 Backend Senior Expert: Infrastructure orchestration enterprise avec
 Terraform/Ansible automation, disaster recovery et multi-cloud management.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Orchestration infrastructure pour 65+ plateformes de distribution
 - Auto-scaling pour traitement IA de contenu créateur
 - Disaster recovery pour protection propriété intellectuelle
@@ -110,7 +110,7 @@ class InfrastructureOrchestrator:
     """🏗️ Backend Senior: Infrastructure orchestration enterprise
     
     Orchestration infrastructure multi-cloud avec Terraform/Ansible automation,
-    state management, disaster recovery et cost optimization pour Ainflue.
+    state management, disaster recovery et cost optimization pour IA Chérie.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -120,7 +120,7 @@ class InfrastructureOrchestrator:
         self.state_backend = self.config.get('state_backend', 'local')
         self.executor = ThreadPoolExecutor(max_workers=10)
         
-        # Ainflue-specific configuration
+        # IA Chérie-specific configuration
         self.platform_configs = {
             'content_processing': {
                 'min_nodes': 3,
@@ -193,7 +193,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Ansible configuration automation
         
         Automated Ansible configuration management avec inventory génération
-        et playbook execution pour infrastructure Ainflue.
+        et playbook execution pour infrastructure IA Chérie.
         """
         try:
             execution_id = f"ansible-{int(datetime.now().timestamp())}"
@@ -237,7 +237,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Multi-cloud resource provisioning
         
         Provisioning automatisé de ressources cloud avec optimization
-        pour workloads IA et distribution Ainflue.
+        pour workloads IA et distribution IA Chérie.
         """
         try:
             provisioning_id = f"provision-{provider.value}-{int(datetime.now().timestamp())}"
@@ -269,7 +269,7 @@ class InfrastructureOrchestrator:
                 self.resources[resource['id']] = infrastructure_resource
                 resources_created.append(infrastructure_resource)
             
-            # Apply Ainflue-specific optimizations
+            # Apply IA Chérie-specific optimizations
             await self._apply_ainflue_optimizations(resources_created)
             
             logger.info(f"Cloud resources provisioned: {provisioning_id}")
@@ -341,7 +341,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Disaster recovery automation
         
         Automation complète disaster recovery avec backup, replication
-        et failover pour protection des créateurs Ainflue.
+        et failover pour protection des créateurs IA Chérie.
         """
         try:
             recovery_id = f"dr-{strategy.value}-{int(datetime.now().timestamp())}"
@@ -397,7 +397,7 @@ class InfrastructureOrchestrator:
             'resource': {}
         }
         
-        # Add Ainflue-specific resources
+        # Add IA Chérie-specific resources
         for platform, platform_config in self.platform_configs.items():
             if platform in config.resources:
                 tf_config['resource'][f'{config.provider.value}_{platform}'] = platform_config
@@ -503,7 +503,7 @@ class InfrastructureOrchestrator:
             'resources': [
                 {
                     'id': 'aws-instance-1',
-                    'name': 'ainflue-app-server',
+                    'name': 'iacherie-app-server',
                     'type': 'ec2_instance',
                     'config': {'instance_type': 't3.large'},
                     'metadata': {'ip_address': '10.0.1.10'}
@@ -518,7 +518,7 @@ class InfrastructureOrchestrator:
             'resources': [
                 {
                     'id': 'azure-vm-1',
-                    'name': 'ainflue-app-vm',
+                    'name': 'iacherie-app-vm',
                     'type': 'virtual_machine',
                     'config': {'vm_size': 'Standard_D2s_v3'},
                     'metadata': {'ip_address': '10.1.1.10'}
@@ -533,7 +533,7 @@ class InfrastructureOrchestrator:
             'resources': [
                 {
                     'id': 'gcp-instance-1',
-                    'name': 'ainflue-app-instance',
+                    'name': 'iacherie-app-instance',
                     'type': 'compute_instance',
                     'config': {'machine_type': 'n1-standard-2'},
                     'metadata': {'ip_address': '10.2.1.10'}
@@ -548,20 +548,20 @@ class InfrastructureOrchestrator:
             'resources': [
                 {
                     'id': 'k8s-deployment-1',
-                    'name': 'ainflue-app-deployment',
+                    'name': 'iacherie-app-deployment',
                     'type': 'deployment',
                     'config': {'replicas': 3},
-                    'metadata': {'namespace': 'ainflue-prod'}
+                    'metadata': {'namespace': 'iacherie-prod'}
                 }
             ]
         }
 
     async def _apply_ainflue_optimizations(self, resources: List[InfrastructureResource]) -> None:
-        """Apply Ainflue-specific optimizations to resources"""
+        """Apply IA Chérie-specific optimizations to resources"""
         for resource in resources:
-            # Add Ainflue-specific tags
+            # Add IA Chérie-specific tags
             resource.metadata.update({
-                'platform': 'ainflue',
+                'platform': 'iacherie',
                 'owner': 'fahed_mlaiel',
                 'cost_center': 'creator_platform',
                 'backup_required': True
@@ -669,7 +669,7 @@ if __name__ == "__main__":
         
         # Test infrastructure configuration
         config = InfrastructureConfig(
-            name="ainflue-production",
+            name="iacherie-production",
             provider=CloudProvider.AWS,
             region="us-east-1",
             environment="production",

@@ -1,8 +1,8 @@
-# 🚦 Rate Limiting Guide - Ainflue API
+# 🚦 Rate Limiting Guide - IA Chérie API
 
 ## 🎯 Overview
 
-The Ainflue API implements comprehensive rate limiting to ensure fair usage, maintain service quality, and protect against abuse. This guide covers all aspects of our rate limiting system.
+The IA Chérie API implements comprehensive rate limiting to ensure fair usage, maintain service quality, and protect against abuse. This guide covers all aspects of our rate limiting system.
 
 ## 📊 Rate Limiting Tiers
 
@@ -148,7 +148,7 @@ Retry-After: 1800
       "window": "hour",
       "retry_after": 1800,
       "tier": "free",
-      "upgrade_url": "https://ainflue.com/pricing"
+      "upgrade_url": "https://iacherie.com/pricing"
     },
     "request_id": "req_12345",
     "timestamp": "2025-01-07T10:00:00Z"
@@ -291,7 +291,7 @@ Enterprise customers can reserve API capacity:
 
 ### Rate Limit Metrics Dashboard
 
-Track your usage at: https://dashboard.ainflue.com/api/usage
+Track your usage at: https://dashboard.iacherie.com/api/usage
 
 **Available Metrics:**
 - Real-time request count
@@ -364,7 +364,7 @@ for i in range(0, len(files), batch_size):
 #### Real-time Monitoring
 ```python
 # Use WebSocket for real-time data instead of polling
-websocket.connect('wss://api.ainflue.com/v2/events')
+websocket.connect('wss://api.iacherie.com/v2/events')
 
 # Or implement smart polling with backoff
 def smart_poll():
@@ -491,7 +491,7 @@ except RateLimitExceeded as e:
 ### JavaScript SDK Example
 
 ```javascript
-import { AinflueFree } from '@ainflue/api-sdk';
+import { AinflueFree } from '@iacherie/api-sdk';
 
 const client = new AinflueFree({ apiKey: 'your_key' });
 
@@ -545,7 +545,7 @@ try {
 
 ### Upgrade Process
 
-1. **Contact Sales**: enterprise@ainflue.com
+1. **Contact Sales**: enterprise@iacherie.com
 2. **Usage Analysis**: We analyze your current usage patterns
 3. **Custom Plan**: Tailored to your specific needs
 4. **Migration Support**: Seamless transition assistance
@@ -571,29 +571,29 @@ try {
 
 ### Support Channels
 
-- **Rate Limit Issues**: ratelimit-support@ainflue.com
-- **Performance Questions**: performance@ainflue.com
-- **Tier Upgrades**: sales@ainflue.com
-- **Emergency Support**: +1-800-AINFLUE (Enterprise only)
+- **Rate Limit Issues**: ratelimit-support@iacherie.com
+- **Performance Questions**: performance@iacherie.com
+- **Tier Upgrades**: sales@iacherie.com
+- **Emergency Support**: +1-800-IACHERIE (Enterprise only)
 
 ### Debugging Tools
 
 1. **Rate Limit Analyzer**
    ```bash
    curl -H "Authorization: Bearer token" \
-        "https://api.ainflue.com/v2/debug/rate-limits"
+        "https://api.iacherie.com/v2/debug/rate-limits"
    ```
 
 2. **Usage Patterns**
    ```bash
    curl -H "Authorization: Bearer token" \
-        "https://api.ainflue.com/v2/debug/usage-patterns?period=24h"
+        "https://api.iacherie.com/v2/debug/usage-patterns?period=24h"
    ```
 
 3. **Health Check with Rate Limits**
    ```bash
    curl -H "Authorization: Bearer token" \
-        "https://api.ainflue.com/v2/health?include=rate-limits"
+        "https://api.iacherie.com/v2/health?include=rate-limits"
    ```
 
 ---

@@ -1,4 +1,4 @@
-# 🔒 SECURITY PROTOCOLS GUIDE - AINFLUE PLATFORM
+# 🔒 SECURITY PROTOCOLS GUIDE - IACHERIE PLATFORM
 **Enterprise-Grade Security Framework & Protocols**
 
 **Version:** 3.0 (Production-Ready)  
@@ -9,7 +9,7 @@
 
 ## 🎯 OVERVIEW
 
-This comprehensive security guide covers enterprise-level security protocols, frameworks, and best practices for the Ainflue Distribution Platform. It addresses security across all layers: infrastructure, application, data, network, and operational security.
+This comprehensive security guide covers enterprise-level security protocols, frameworks, and best practices for the IA Chérie Distribution Platform. It addresses security across all layers: infrastructure, application, data, network, and operational security.
 
 ### 🛡️ **Security Objectives**
 - **Zero-Trust Architecture**: Never trust, always verify
@@ -62,7 +62,7 @@ from cryptography.fernet import Fernet
 
 @dataclass
 class MFAConfig:
-    issuer: str = "Ainflue Platform"
+    issuer: str = "IA Chérie Platform"
     algorithm: str = "SHA1"
     digits: int = 6
     period: int = 30
@@ -189,7 +189,7 @@ class SecureJWTManager:
         self.algorithm = "RS256"
         self.access_token_lifetime = timedelta(minutes=15)
         self.refresh_token_lifetime = timedelta(days=30)
-        self.issuer = "https://api.ainflue.com"
+        self.issuer = "https://api.iacherie.com"
         
     def generate_access_token(self, user_id: str, roles: List[str], scopes: List[str]) -> str:
         """Generate secure access token"""
@@ -197,7 +197,7 @@ class SecureJWTManager:
         payload = {
             "iss": self.issuer,
             "sub": user_id,
-            "aud": "ainflue-api",
+            "aud": "iacherie-api",
             "exp": now + self.access_token_lifetime,
             "iat": now,
             "nbf": now,
@@ -226,7 +226,7 @@ class SecureJWTManager:
         payload = {
             "iss": self.issuer,
             "sub": user_id,
-            "aud": "ainflue-api",
+            "aud": "iacherie-api",
             "exp": now + self.refresh_token_lifetime,
             "iat": now,
             "nbf": now,
@@ -259,7 +259,7 @@ class SecureJWTManager:
                 token,
                 public_pem,
                 algorithms=[self.algorithm],
-                audience="ainflue-api",
+                audience="iacherie-api",
                 issuer=self.issuer
             )
             
@@ -534,7 +534,7 @@ class DatabaseEncryption:
     
     def load_or_generate_master_key(self) -> bytes:
         """Load master key from secure storage or generate new one"""
-        key_file = os.environ.get('ENCRYPTION_KEY_FILE', '/etc/ainflue/master.key')
+        key_file = os.environ.get('ENCRYPTION_KEY_FILE', '/etc/iacherie/master.key')
         
         try:
             with open(key_file, 'rb') as f:
@@ -637,11 +637,11 @@ cluster_encryption_key = '/etc/postgresql/cluster.key'
 # Nginx SSL/TLS Configuration
 server {
     listen 443 ssl http2;
-    server_name api.ainflue.com;
+    server_name api.iacherie.com;
     
     # SSL Certificate configuration
-    ssl_certificate /etc/ssl/certs/ainflue.com.crt;
-    ssl_certificate_key /etc/ssl/private/ainflue.com.key;
+    ssl_certificate /etc/ssl/certs/iacherie.com.crt;
+    ssl_certificate_key /etc/ssl/private/iacherie.com.key;
     ssl_trusted_certificate /etc/ssl/certs/ca-chain.crt;
     
     # Strong SSL configuration
@@ -696,7 +696,7 @@ server {
 # Redirect HTTP to HTTPS
 server {
     listen 80;
-    server_name api.ainflue.com;
+    server_name api.iacherie.com;
     return 301 https://$server_name$request_uri;
 }
 ```
@@ -784,7 +784,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: distribution-api-netpol
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   podSelector:
     matchLabels:
@@ -862,7 +862,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
     ports:
     - protocol: TCP
       port: 5432
@@ -1448,7 +1448,7 @@ class SOARPlatform:
 
 ### 👨‍💻 **Security Team**
 **Lead Security Engineer:** **Fahed Mlaiel**
-- **Email:** security@ainflue.com / mlaiel@live.de
+- **Email:** security@iacherie.com / mlaiel@live.de
 - **Specialties:** Enterprise security, compliance, incident response, threat hunting
 - **Availability:** 24/7 for critical security incidents
 
@@ -1460,8 +1460,8 @@ class SOARPlatform:
 
 ### 📞 **Emergency Contacts**
 - **Security Hotline**: +1-XXX-XXX-XXXX
-- **Incident Response Email**: security-incident@ainflue.com
-- **Executive Escalation**: executive-security@ainflue.com
+- **Incident Response Email**: security-incident@iacherie.com
+- **Executive Escalation**: executive-security@iacherie.com
 
 ---
 

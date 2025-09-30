@@ -390,7 +390,7 @@ class MemoryMessageBroker(MessageBrokerInterface):
 class KafkaMessageBroker(MessageBrokerInterface):
     """Kafka message broker implementation"""
     
-    def __init__(self, brokers: List[str], client_id: str = "ainflue"):
+    def __init__(self, brokers: List[str], client_id: str = "iacherie"):
         self.brokers = brokers
         self.client_id = client_id
         self.producer = None
@@ -798,7 +798,7 @@ def create_message_broker_service(config: Dict[str, Any] = None) -> MessageBroke
             elif broker_type == 'kafka':
                 broker = KafkaMessageBroker(
                     brokers=broker_config.get('brokers', ['localhost:9092']),
-                    client_id=broker_config.get('client_id', 'ainflue')
+                    client_id=broker_config.get('client_id', 'iacherie')
                 )
                 service.add_broker(name, broker, is_default)
                 

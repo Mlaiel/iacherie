@@ -1,4 +1,4 @@
-# 🚀 Services Marketing Enterprise Ainflue
+# 🚀 Services Marketing Enterprise IA Chérie
 
 **Équipe Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer  
 **Propriétaire IP**: Fahed Mlaiel (mlaiel@live.de)  
@@ -11,7 +11,7 @@ Toute reproduction, modification, distribution ou vol d'idées/concepts/code san
 
 ## 🎯 Aperçu
 
-Suite de services marketing de niveau entreprise pour la plateforme d'économie créative Ainflue. Orchestration marketing complète alimentée par l'IA avec modèles ML avancés, analytics temps réel et partenariats automatisés.
+Suite de services marketing de niveau entreprise pour la plateforme d'économie créative IA Chérie. Orchestration marketing complète alimentée par l'IA avec modèles ML avancés, analytics temps réel et partenariats automatisés.
 
 ## 🏗️ Architecture
 

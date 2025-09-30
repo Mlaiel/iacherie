@@ -1,5 +1,5 @@
 """
-Ainflue Core Infrastructure - Distributed Tracing Core
+IA Chérie Core Infrastructure - Distributed Tracing Core
 =====================================================
 
 Enterprise-grade distributed tracing system for monitoring, debugging, and 
@@ -107,7 +107,7 @@ class TracingCore:
         
         # Configuration
         self.config = {
-            "service_name": "ainflue-core",
+            "service_name": "iacherie-core",
             "service_version": "1.0.0",
             "environment": "production",
             "jaeger_endpoint": "http://localhost:14268/api/traces",

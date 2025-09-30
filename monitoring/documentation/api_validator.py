@@ -46,7 +46,7 @@ class APIDocumentationValidator:
     Ensures 100% documentation coverage requirement
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chérie/IA Chérie"):
         self.logger = logging.getLogger(__name__)
         self.project_root = Path(project_root)
         self.api_directories = [

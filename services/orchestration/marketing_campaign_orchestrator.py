@@ -1,5 +1,5 @@
 """
-🎯 MARKETING CAMPAIGN ORCHESTRATOR - AINFLUE ENTERPRISE
+🎯 MARKETING CAMPAIGN ORCHESTRATOR - IACHERIE ENTERPRISE
 ======================================================
 
 Multi-channel campaign coordination and marketing automation for creator economy platform.
@@ -859,7 +859,7 @@ class MarketingCampaignOrchestrator:
             if channel == ChannelType.EMAIL and self._sendgrid_client:
                 # Send email via SendGrid
                 message = Mail(
-                    from_email='noreply@ainflue.com',
+                    from_email='noreply@iacherie.com',
                     to_emails=f'user_{recipient_id}@example.com',  # Would get real email
                     subject=content.get("subject", ""),
                     html_content=content.get("content", "")

@@ -1,9 +1,9 @@
 {
-  "name": "Ainflue AI Platform API - Environment",
+  "name": "IA Chérie AI Platform API - Environment",
   "values": [
     {
       "key": "base_url",
-      "value": "https://api.ainflue.com/v1",
+      "value": "https://api.iacherie.com/v1",
       "enabled": true,
       "type": "default"
     },

@@ -1,4 +1,4 @@
-# 🐳 Ainflue Platform - Docker & Containerization
+# 🐳 IA Chérie Platform - Docker & Containerization
 
 **Enterprise AI Influencer Platform - Ultra-Advanced Docker Infrastructure & Containerization**
 
@@ -10,7 +10,7 @@
 
 ## 📋 Overview
 
-This Docker module provides a complete, enterprise-grade containerization solution for the Ainflue AI Influencer Platform. The architecture supports 80+ microservices across 12 specialized modules, designed for creators (musicians, bloggers, photographers, influencers, comedians) with advanced AI-powered content processing, protection, monetization, and distribution capabilities.
+This Docker module provides a complete, enterprise-grade containerization solution for the IA Chérie AI Influencer Platform. The architecture supports 80+ microservices across 12 specialized modules, designed for creators (musicians, bloggers, photographers, influencers, comedians) with advanced AI-powered content processing, protection, monetization, and distribution capabilities.
 
 ### 🎯 Business Logic Flow
 ```
@@ -163,8 +163,8 @@ docker/
 ### 1. Production Deployment
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker
 
 # Set environment variables
 cp infrastructure/.env.example .env
@@ -184,7 +184,7 @@ docker-compose logs -f
 docker-compose -f infrastructure/docker-compose.yml up -d
 
 # Build custom images
-docker build -f infrastructure/Dockerfile.dev -t ainflue/dev:latest .
+docker build -f infrastructure/Dockerfile.dev -t iacherie/dev:latest .
 
 # Monitor services
 docker stats
@@ -228,8 +228,8 @@ REDIS_PASSWORD=redis_password
 # Security Configuration
 JWT_SECRET_KEY=ultra_secure_jwt_secret
 ENCRYPTION_KEY=256bit_encryption_key
-SSL_CERT_PATH=/etc/ssl/certs/ainflue.crt
-SSL_KEY_PATH=/etc/ssl/private/ainflue.key
+SSL_CERT_PATH=/etc/ssl/certs/iacherie.crt
+SSL_KEY_PATH=/etc/ssl/private/iacherie.key
 
 # Monitoring Configuration
 PROMETHEUS_ENDPOINT=http://prometheus:9090
@@ -242,8 +242,8 @@ ELK_ENDPOINT=http://elasticsearch:9200
 # docker-compose.production.yml
 version: '3.8'
 services:
-  ainflue-api:
-    image: ainflue/api:${VERSION}
+  iacherie-api:
+    image: iacherie/api:${VERSION}
     deploy:
       replicas: 3
       placement:
@@ -354,11 +354,11 @@ services:
 docker-compose -f testing/docker-compose.testing.yml up --abort-on-container-exit
 
 # Performance testing
-docker run --rm ainflue/performance-tester:latest
+docker run --rm iacherie/performance-tester:latest
 
 # Security scanning
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  aquasec/trivy image ainflue/api:latest
+  aquasec/trivy image iacherie/api:latest
 ```
 
 ---
@@ -420,11 +420,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build Service Image
         run: |
-          docker build -t ainflue/${{ matrix.service }}:${{ github.sha }} \
+          docker build -t iacherie/${{ matrix.service }}:${{ github.sha }} \
             -f docker/${{ matrix.service }}/*.dockerfile .
       - name: Security Scan
         run: |
-          trivy image ainflue/${{ matrix.service }}:${{ github.sha }}
+          trivy image iacherie/${{ matrix.service }}:${{ github.sha }}
 ```
 
 ---

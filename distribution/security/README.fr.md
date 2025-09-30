@@ -1,6 +1,6 @@
 # 🔐 Security Distribution Engine - Plateforme de Sécurité & Conformité Enterprise
 
-**Système de Sécurité Enterprise pour la Plateforme de Distribution Ainflue**
+**Système de Sécurité Enterprise pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Aperçu
 
@@ -137,9 +137,9 @@ python setup_security.py --environment=production
 
 ## 📞 Support & Contact
 
-**Équipe Sécurité**: security@ainflue.com  
+**Équipe Sécurité**: security@iacherie.com  
 **Réponse aux Incidents**: +1-800-SECURITY  
-**Responsable Conformité**: compliance@ainflue.com
+**Responsable Conformité**: compliance@iacherie.com
 
 ---
 

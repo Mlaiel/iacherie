@@ -1,7 +1,7 @@
 """Cloud Providers Integration Module
 ===================================
 
-Enterprise cloud infrastructure integrations for Ainflue platform.
+Enterprise cloud infrastructure integrations for IA Chérie platform.
 Supports 14+ cloud providers for scalable multi-cloud content delivery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -121,7 +121,7 @@ if SupabaseIntegration:
 if VercelIntegration:
     CLOUD_PROVIDERS['vercel'] = VercelIntegration
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_CLOUD_CONFIG = {
     'total_providers': len(CLOUD_PROVIDERS),
     'ecosystems': ['AWS', 'Azure', 'GCP'],

@@ -1,9 +1,9 @@
-"""Ainflue AI Inference Configuration - Enterprise Real-Time AI Model Serving
+"""IA Chérie AI Inference Configuration - Enterprise Real-Time AI Model Serving
 ============================================================================
 
 Advanced AI inference configuration for enterprise-grade real-time model
 serving, multi-model orchestration, auto-scaling, performance optimization,
-and business logic integration for Ainflue's content intelligence platform.
+and business logic integration for IA Chérie's content intelligence platform.
 
 Business Logic Integration:
 - Real-time content analysis and recommendation
@@ -389,12 +389,12 @@ class EnterpriseAIInferenceConfiguration:
         }
     
     def _initialize_model_configurations(self):
-        """Initialize model configurations for Ainflue business logic"""
+        """Initialize model configurations for IA Chérie business logic"""
         
         # Content Recommendation Model
         content_recommender = ModelConfiguration(
             model_id="ainflue_content_recommender_v2",
-            model_name="Ainflue Content Recommender",
+            model_name="IA Chérie Content Recommender",
             model_version="2.1.0",
             model_type=ModelType.RECOMMENDATION,
             framework=ModelFramework.PYTORCH,
@@ -420,7 +420,7 @@ class EnterpriseAIInferenceConfiguration:
         # Content Safety Moderator
         content_moderator = ModelConfiguration(
             model_id="ainflue_content_moderator_v1",
-            model_name="Ainflue Content Safety Moderator",
+            model_name="IA Chérie Content Safety Moderator",
             model_version="1.3.0",
             model_type=ModelType.CLASSIFICATION,
             framework=ModelFramework.ONNX,
@@ -442,7 +442,7 @@ class EnterpriseAIInferenceConfiguration:
         # Revenue Optimization Engine
         revenue_optimizer = ModelConfiguration(
             model_id="ainflue_revenue_optimizer_v1",
-            model_name="Ainflue Revenue Optimization Engine",
+            model_name="IA Chérie Revenue Optimization Engine",
             model_version="1.0.0",
             model_type=ModelType.REINFORCEMENT_LEARNING,
             framework=ModelFramework.PYTORCH,
@@ -463,7 +463,7 @@ class EnterpriseAIInferenceConfiguration:
         # Multimodal Content Analyzer
         content_analyzer = ModelConfiguration(
             model_id="ainflue_multimodal_analyzer_v2",
-            model_name="Ainflue Multimodal Content Analyzer",
+            model_name="IA Chérie Multimodal Content Analyzer",
             model_version="2.0.0",
             model_type=ModelType.MULTIMODAL,
             framework=ModelFramework.HUGGINGFACE,
@@ -487,7 +487,7 @@ class EnterpriseAIInferenceConfiguration:
         # Creator Performance Predictor
         performance_predictor = ModelConfiguration(
             model_id="ainflue_performance_predictor_v1",
-            model_name="Ainflue Creator Performance Predictor",
+            model_name="IA Chérie Creator Performance Predictor",
             model_version="1.2.0",
             model_type=ModelType.REGRESSION,
             framework=ModelFramework.TENSORFLOW,

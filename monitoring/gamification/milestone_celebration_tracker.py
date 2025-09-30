@@ -1,7 +1,7 @@
 """
 Milestone Celebration Tracker - Enterprise Achievement & Milestone Celebration System
 
-This module implements comprehensive milestone celebration tracking for the Ainflue platform,
+This module implements comprehensive milestone celebration tracking for the IA Chérie platform,
 managing achievement celebrations, milestone recognition, and automated celebration campaigns.
 
 Author: Fahed Mlaiel
@@ -104,7 +104,7 @@ class CelebrationCampaign:
 
 class MilestoneCelebrationTracker:
     """
-    Enterprise milestone celebration tracking system for Ainflue platform.
+    Enterprise milestone celebration tracking system for IA Chérie platform.
     
     Features:
     - Automated milestone detection
@@ -259,13 +259,13 @@ class MilestoneCelebrationTracker:
             {
                 "milestone_type": MilestoneType.ANNIVERSARY_MILESTONE,
                 "name": "One Year Strong",
-                "description": "One year as an Ainflue creator!",
+                "description": "One year as an IA Chérie creator!",
                 "threshold_value": 365,
                 "threshold_unit": "days",
                 "rarity_score": 0.6,
                 "reward_points": 3650,
                 "badge_design": "one_year_badge",
-                "social_share_template": "🎂 One year on Ainflue! What an incredible journey it's been! #OneYear #Anniversary"
+                "social_share_template": "🎂 One year on IA Chérie! What an incredible journey it's been! #OneYear #Anniversary"
             }
         ]
         

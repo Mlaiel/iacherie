@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Platform Connector Service
+ * IA Chérie Desktop - Platform Connector Service
  * 
  * Advanced multi-platform integration for seamless content distribution
  * Implements unified API for major social media and streaming platforms

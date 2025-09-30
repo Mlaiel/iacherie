@@ -1,7 +1,7 @@
-# Ainflue Helm Chart Default Values
+# IA Chérie Helm Chart Default Values
 # =================================
 # 
-# Default configuration values for Ainflue platform deployment
+# Default configuration values for IA Chérie platform deployment
 # This file contains configuration for all components and services
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -18,24 +18,24 @@ fullnameOverride: ""
 
 # Environment configuration
 environment: production
-domain: ainflue.com
+domain: iacherie.com
 
 # Image configuration
 image:
   api:
-    repository: ainflue/api
+    repository: iacherie/api
     tag: "latest"
     pullPolicy: IfNotPresent
   aiEngine:
-    repository: ainflue/ai-engine
+    repository: iacherie/ai-engine
     tag: "latest"
     pullPolicy: IfNotPresent
   mobileApi:
-    repository: ainflue/mobile-api
+    repository: iacherie/mobile-api
     tag: "latest"
     pullPolicy: IfNotPresent
   worker:
-    repository: ainflue/worker
+    repository: iacherie/worker
     tag: "latest"
     pullPolicy: IfNotPresent
 
@@ -182,7 +182,7 @@ postgresql:
     postgresPassword: "changeme"
     username: "ainflue_admin"
     password: "changeme"
-    database: "ainflue"
+    database: "iacherie"
   
   primary:
     persistence:
@@ -234,28 +234,28 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
   
   hosts:
-    - host: api.ainflue.com
+    - host: api.iacherie.com
       paths:
         - path: /
           pathType: Prefix
           service: api
-    - host: ai.ainflue.com
+    - host: ai.iacherie.com
       paths:
         - path: /
           pathType: Prefix
           service: ai-engine
-    - host: mobile.ainflue.com
+    - host: mobile.iacherie.com
       paths:
         - path: /
           pathType: Prefix
           service: mobile-api
   
   tls:
-    - secretName: ainflue-tls
+    - secretName: iacherie-tls
       hosts:
-        - api.ainflue.com
-        - ai.ainflue.com
-        - mobile.ainflue.com
+        - api.iacherie.com
+        - ai.iacherie.com
+        - mobile.iacherie.com
 
 # Persistent storage configuration
 persistence:
@@ -271,7 +271,7 @@ config:
   database:
     host: ""  # Will be set automatically if postgresql.enabled is true
     port: 5432
-    name: "ainflue"
+    name: "iacherie"
     username: "ainflue_admin"
   
   # Redis settings

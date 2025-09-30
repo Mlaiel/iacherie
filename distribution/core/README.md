@@ -1,10 +1,10 @@
 # 🎯 Core Distribution Engine - Foundation Components
 
-**Core Foundation Components for Ainflue Distribution Platform**
+**Core Foundation Components for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
-The Core Distribution Engine provides the fundamental building blocks and essential components that power the entire Ainflue distribution ecosystem. This module contains the core functionality including cross-platform synchronization, format adaptation, content security, and A/B testing capabilities that serve as the foundation for all distribution operations.
+The Core Distribution Engine provides the fundamental building blocks and essential components that power the entire IA Chérie distribution ecosystem. This module contains the core functionality including cross-platform synchronization, format adaptation, content security, and A/B testing capabilities that serve as the foundation for all distribution operations.
 
 ## 🚀 Key Features
 
@@ -133,6 +133,6 @@ test_result = await ab_test.run_experiment(
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE CORE DISTRIBUTION ENGINE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE CORE DISTRIBUTION ENGINE**  
 **🔒 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED**  
 **⚠️ ENTERPRISE-GRADE SOLUTION - AUTHORIZED PERSONNEL ONLY**

@@ -148,7 +148,7 @@ key_derivation:
   hkdf:
     algorithm: "HKDF-SHA-256"
     salt_size: 256
-    info_context: "Ainflue-KDF-v1"
+    info_context: "IA Chérie-KDF-v1"
     
 # Key Management Configuration
 key_management:
@@ -165,7 +165,7 @@ key_management:
       enabled: true
       provider: "AWS CloudHSM"
       cluster_id: "${HSM_CLUSTER_ID}"
-      partition_label: "ainflue-keys"
+      partition_label: "iacherie-keys"
       
     # Software-based secure storage
     software:

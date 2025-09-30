@@ -6,7 +6,7 @@
 🛠️ Security Configuration Manager - Centralized Security Management
 ===================================================================
 
-Enterprise security configuration management for Ainflue platform.
+Enterprise security configuration management for IA Chérie platform.
 Secure config, secrets management, environment validation, and compliance.
 
 Author: Expert Team (Security + DevOps + Backend Senior)
@@ -178,7 +178,7 @@ class SecretManager:
         
     def _get_or_create_master_key(self) -> bytes:
         """Obtenir ou créer la clé maître"""
-        key_file = Path("~/.ainflue/master.key").expanduser()
+        key_file = Path("~/.iacherie/master.key").expanduser()
         
         if key_file.exists():
             # Charger clé existante
@@ -1220,7 +1220,7 @@ async def get_config_manager() -> SecurityConfigManager:
     return config_manager
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chérie
 async def setup_creator_environment_config(creator_id: str) -> EnvironmentConfig:
     """Configuration spécifique créateur"""
     creator_config = {

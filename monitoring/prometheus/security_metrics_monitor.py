@@ -3,9 +3,9 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
 Security Metrics Monitor Module
-Monitoring métriques sécurité et compliance - Ainflue Platform
+Monitoring métriques sécurité et compliance - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

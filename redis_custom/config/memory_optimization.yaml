@@ -1,4 +1,4 @@
-# ⚡ Redis Memory Optimization Configuration - Ainflue Enterprise
+# ⚡ Redis Memory Optimization Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Advanced Memory Management for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-memory-optimization
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: memory-optimization
     environment: enterprise
     owner: fahed-mlaiel
@@ -219,7 +219,7 @@ data:
     # Alert Destinations
     alert_destinations:
       - slack: "#redis-alerts"
-      - email: "redis-alerts@ainflue.com"
+      - email: "redis-alerts@iacherie.com"
       - pagerduty: "redis-memory-service"
 
   # ===================================================================================
@@ -350,11 +350,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-memory-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   optimize_memory.sh: |
     #!/bin/bash
-    # Memory Optimization Script for Ainflue Redis Enterprise
+    # Memory Optimization Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🧠 Optimizing Redis Memory Configuration..."

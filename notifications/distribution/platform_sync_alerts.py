@@ -1,6 +1,6 @@
 """
 🔄 PLATFORM SYNC ALERTS
-Ainflue Platform - Multi-Platform Synchronization System
+IA Chérie Platform - Multi-Platform Synchronization System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

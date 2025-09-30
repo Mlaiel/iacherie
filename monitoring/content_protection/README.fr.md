@@ -1,4 +1,4 @@
-# Surveillance de Protection de Contenu - Plateforme Ainflue
+# Surveillance de Protection de Contenu - Plateforme IA Chérie
 
 ## Vue d'ensemble
 
@@ -110,5 +110,5 @@ content_protection/
 
 **Copyright:** © 2025 Fahed Mlaiel. Tous droits réservés.  
 **Contact:** mlaiel@live.de  
-**Projet:** Ainflue Platform - Content Protection Monitoring  
+**Projet:** IA Chérie Platform - Content Protection Monitoring  
 **Version:** 3.1.0 Enterprise

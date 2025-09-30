@@ -1,7 +1,7 @@
 # 🎯 Module de Métriques Avancées - Analytique Entreprise & Intelligence d'Affaires
 
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Auteur](https://img.shields.io/badge/Auteur-Fahed%20Mlaiel-green.svg)](mailto:mlaiel@live.de)
 
 ## ⚠️ **AVERTISSEMENT CRITIQUE DE DROITS D'AUTEUR** ⚠️
@@ -24,7 +24,7 @@ Toute personne ou organisation trouvée utilisant, copiant, distribuant ou déri
 
 ## 📖 Aperçu
 
-Le Module de Métriques Avancées est un système complet d'analytique et d'intelligence d'affaires de niveau entreprise conçu pour la plateforme Ainflue. Ce module fournit une analyse multidimensionnelle, l'optimisation des performances et des insights stratégiques à travers tous les types de contenu, les patterns d'engagement utilisateur, les KPIs business, la qualité du contenu généré par IA, et les métriques de succès de collaboration.
+Le Module de Métriques Avancées est un système complet d'analytique et d'intelligence d'affaires de niveau entreprise conçu pour la plateforme IA Chérie. Ce module fournit une analyse multidimensionnelle, l'optimisation des performances et des insights stratégiques à travers tous les types de contenu, les patterns d'engagement utilisateur, les KPIs business, la qualité du contenu généré par IA, et les métriques de succès de collaboration.
 
 ## 👥 Spécialités de l'Équipe de Développement
 
@@ -84,8 +84,8 @@ Le Module de Métriques Avancées est un système complet d'analytique et d'inte
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/performance_intelligence
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/performance_intelligence
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -125,7 +125,7 @@ engagement_analysis = await manager.analyze_metrics(
 
 ## 📈 Flux Logique Métier
 
-Le Module de Métriques Avancées suit la logique métier principale d'Ainflue :
+Le Module de Métriques Avancées suit la logique métier principale d'IA Chérie :
 
 ```
 Utilisateur (musicien/blogueur/photographe/influenceur/comédien)
@@ -244,7 +244,7 @@ spec:
     spec:
       containers:
       - name: advanced-metrics
-        image: ainflue/advanced-metrics:1.0.0
+        image: iacherie/advanced-metrics:1.0.0
         ports:
         - containerPort: 8000
 ```
@@ -270,15 +270,15 @@ spec:
 
 **Pour Support Technique :**
 - Email : mlaiel@live.de
-- Sujet : [Ainflue Advanced Metrics] Demande Support
+- Sujet : [IA Chérie Advanced Metrics] Demande Support
 
 **Pour Demandes de Licence :**
 - Email : mlaiel@live.de
-- Sujet : [Ainflue] Demande Licence
+- Sujet : [IA Chérie] Demande Licence
 
 **Pour Opportunités Partenariat :**
 - Email : mlaiel@live.de
-- Sujet : [Ainflue] Proposition Partenariat
+- Sujet : [IA Chérie] Proposition Partenariat
 
 ## 📄 Licence
 

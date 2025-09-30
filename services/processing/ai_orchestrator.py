@@ -147,7 +147,7 @@ class AIContentAnalyzer:
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         # Initialize structured logger
         if LOGGING_ENABLED:
-            self.logger = get_logger("ai_orchestrator", service_name="ainflue-ai")
+            self.logger = get_logger("ai_orchestrator", service_name="iacherie-ai")
         else:
             self.logger = logging.getLogger(__name__)
         

@@ -1,6 +1,6 @@
 """
 📊 CROSS PLATFORM PERFORMANCE
-Ainflue Platform - Cross-Platform Performance Analytics
+IA Chérie Platform - Cross-Platform Performance Analytics
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

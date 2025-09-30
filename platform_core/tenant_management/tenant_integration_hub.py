@@ -42,7 +42,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/tenant_integrations.log'),
+        logging.FileHandler('/var/log/iacherie/tenant_integrations.log'),
         logging.StreamHandler()
     ]
 )
@@ -158,7 +158,7 @@ class TenantIntegrationHub:
     - Monitoring et analytics d'intégrations
     """
     
-    def __init__(self, config_path: str = '/etc/ainflue/integrations_config.yaml'):
+    def __init__(self, config_path: str = '/etc/iacherie/integrations_config.yaml'):
         """Initialisation du hub d'intégrations"""
         self.config = self._load_config(config_path)
         self.integrations: Dict[str, IntegrationConfig] = {}
@@ -229,7 +229,7 @@ class TenantIntegrationHub:
     
     def _get_encryption_key(self) -> bytes:
         """Récupération de la clé de chiffrement"""
-        key_path = self.config.get('encryption_key_path', '/etc/ainflue/integrations.key')
+        key_path = self.config.get('encryption_key_path', '/etc/iacherie/integrations.key')
         try:
             with open(key_path, 'rb') as f:
                 return f.read()
@@ -1291,7 +1291,7 @@ def create_tenant_integration_hub(config_path: Optional[str] = None) -> TenantIn
     Returns:
         Instance configurée du TenantIntegrationHub
     """
-    return TenantIntegrationHub(config_path or '/etc/ainflue/integrations_config.yaml')
+    return TenantIntegrationHub(config_path or '/etc/iacherie/integrations_config.yaml')
 
 
 # Exemple d'utilisation
@@ -1327,8 +1327,8 @@ if __name__ == "__main__":
             action='post_content',
             payload={
                 'media_url': 'https://example.com/image.jpg',
-                'caption': 'Hello from Ainflue!',
-                'hashtags': ['ainflue', 'socialmedia']
+                'caption': 'Hello from IA Chérie!',
+                'hashtags': ['iacherie', 'socialmedia']
             }
         )
         

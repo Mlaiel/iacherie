@@ -1,5 +1,5 @@
 """
-YouTube SEO Optimizer for Ainflue Platform
+YouTube SEO Optimizer for IA Chérie Platform
 Advanced YouTube-specific SEO optimization for video content creators
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -758,14 +758,14 @@ class YouTubeSEOOptimizer:
         
         # These would typically be customized per channel
         branded_tags = [
-            'ainflue',
-            'ainflue platform',
+            'iacherie',
+            'iacherie platform',
             'creator content',
             'content creator'
         ]
         
         if category:
-            branded_tags.append(f'ainflue {category}')
+            branded_tags.append(f'iacherie {category}')
             
         return branded_tags
         
@@ -866,7 +866,7 @@ class YouTubeSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_youtube_optimizer() -> YouTubeSEOOptimizer:
-    """Create configured YouTube SEO optimizer for Ainflue"""
+    """Create configured YouTube SEO optimizer for IA Chérie"""
     return YouTubeSEOOptimizer()
 
 

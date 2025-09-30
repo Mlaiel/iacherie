@@ -1,7 +1,7 @@
-# Ainflue Kubernetes Deployment Configuration
+# IA Chérie Kubernetes Deployment Configuration
 # ==========================================
 #
-# Complete Kubernetes deployment manifests for Ainflue platform
+# Complete Kubernetes deployment manifests for IA Chérie platform
 # Includes all core services, configurations, and monitoring
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,24 +10,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue
+  name: iacherie
   labels:
-    name: ainflue
+    name: iacherie
     environment: production
-    project: ainflue
+    project: iacherie
 
 ---
 # ConfigMap for application configuration
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-config
-  namespace: ainflue
+  name: iacherie-config
+  namespace: iacherie
 data:
-  DATABASE_HOST: "ainflue-postgresql.ainflue.svc.cluster.local"
+  DATABASE_HOST: "iacherie-postgresql.iacherie.svc.cluster.local"
   DATABASE_PORT: "5432"
-  DATABASE_NAME: "ainflue"
-  REDIS_HOST: "ainflue-redis.ainflue.svc.cluster.local"
+  DATABASE_NAME: "iacherie"
+  REDIS_HOST: "iacherie-redis.iacherie.svc.cluster.local"
   REDIS_PORT: "6379"
   ENVIRONMENT: "production"
   LOG_LEVEL: "INFO"
@@ -45,8 +45,8 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ainflue-secrets
-  namespace: ainflue
+  name: iacherie-secrets
+  namespace: iacherie
 type: Opaque
 data:
   # Base64 encoded secrets - replace with actual values
@@ -65,8 +65,8 @@ data:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ainflue-media-pvc
-  namespace: ainflue
+  name: iacherie-media-pvc
+  namespace: iacherie
 spec:
   accessModes:
     - ReadWriteMany
@@ -80,25 +80,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api
-  namespace: ainflue
+  name: iacherie-api
+  namespace: iacherie
   labels:
-    app: ainflue-api
+    app: iacherie-api
     component: backend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
         component: backend
     spec:
       containers:
       - name: api
-        image: ainflue/api:latest
+        image: iacherie/api:latest
         ports:
         - containerPort: 8000
           name: http
@@ -108,13 +108,13 @@ spec:
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: DATABASE_PASSWORD
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "512Mi"
@@ -140,20 +140,20 @@ spec:
       volumes:
       - name: media-storage
         persistentVolumeClaim:
-          claimName: ainflue-media-pvc
+          claimName: iacherie-media-pvc
 
 ---
 # Service for API
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-api-service
-  namespace: ainflue
+  name: iacherie-api-service
+  namespace: iacherie
   labels:
-    app: ainflue-api
+    app: iacherie-api
 spec:
   selector:
-    app: ainflue-api
+    app: iacherie-api
   ports:
   - name: http
     port: 80
@@ -165,33 +165,33 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-engine
-  namespace: ainflue
+  name: iacherie-ai-engine
+  namespace: iacherie
   labels:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
     component: ai
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ainflue-ai-engine
+      app: iacherie-ai-engine
   template:
     metadata:
       labels:
-        app: ainflue-ai-engine
+        app: iacherie-ai-engine
         component: ai
     spec:
       containers:
       - name: ai-engine
-        image: ainflue/ai-engine:latest
+        image: iacherie/ai-engine:latest
         ports:
         - containerPort: 8001
           name: http
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "2Gi"
@@ -226,13 +226,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-ai-service
-  namespace: ainflue
+  name: iacherie-ai-service
+  namespace: iacherie
   labels:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
 spec:
   selector:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
   ports:
   - name: http
     port: 80
@@ -244,33 +244,33 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-mobile-api
-  namespace: ainflue
+  name: iacherie-mobile-api
+  namespace: iacherie
   labels:
-    app: ainflue-mobile-api
+    app: iacherie-mobile-api
     component: mobile
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ainflue-mobile-api
+      app: iacherie-mobile-api
   template:
     metadata:
       labels:
-        app: ainflue-mobile-api
+        app: iacherie-mobile-api
         component: mobile
     spec:
       containers:
       - name: mobile-api
-        image: ainflue/mobile-api:latest
+        image: iacherie/mobile-api:latest
         ports:
         - containerPort: 8002
           name: http
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "256Mi"
@@ -296,13 +296,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-mobile-service
-  namespace: ainflue
+  name: iacherie-mobile-service
+  namespace: iacherie
   labels:
-    app: ainflue-mobile-api
+    app: iacherie-mobile-api
 spec:
   selector:
-    app: ainflue-mobile-api
+    app: iacherie-mobile-api
   ports:
   - name: http
     port: 80
@@ -314,31 +314,31 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-workers
-  namespace: ainflue
+  name: iacherie-workers
+  namespace: iacherie
   labels:
-    app: ainflue-workers
+    app: iacherie-workers
     component: workers
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-workers
+      app: iacherie-workers
   template:
     metadata:
       labels:
-        app: ainflue-workers
+        app: iacherie-workers
         component: workers
     spec:
       containers:
       - name: worker
-        image: ainflue/worker:latest
-        command: ["celery", "worker", "-A", "ainflue.celery", "--loglevel=info"]
+        image: iacherie/worker:latest
+        command: ["celery", "worker", "-A", "iacherie.celery", "--loglevel=info"]
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "512Mi"
@@ -352,38 +352,38 @@ spec:
       volumes:
       - name: media-storage
         persistentVolumeClaim:
-          claimName: ainflue-media-pvc
+          claimName: iacherie-media-pvc
 
 ---
 # Deployment for Celery Beat (Scheduler)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-scheduler
-  namespace: ainflue
+  name: iacherie-scheduler
+  namespace: iacherie
   labels:
-    app: ainflue-scheduler
+    app: iacherie-scheduler
     component: scheduler
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ainflue-scheduler
+      app: iacherie-scheduler
   template:
     metadata:
       labels:
-        app: ainflue-scheduler
+        app: iacherie-scheduler
         component: scheduler
     spec:
       containers:
       - name: scheduler
-        image: ainflue/worker:latest
-        command: ["celery", "beat", "-A", "ainflue.celery", "--loglevel=info"]
+        image: iacherie/worker:latest
+        command: ["celery", "beat", "-A", "iacherie.celery", "--loglevel=info"]
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "128Mi"
@@ -397,20 +397,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-postgresql
-  namespace: ainflue
+  name: iacherie-postgresql
+  namespace: iacherie
   labels:
-    app: ainflue-postgresql
+    app: iacherie-postgresql
     component: database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ainflue-postgresql
+      app: iacherie-postgresql
   template:
     metadata:
       labels:
-        app: ainflue-postgresql
+        app: iacherie-postgresql
         component: database
     spec:
       containers:
@@ -420,13 +420,13 @@ spec:
         - containerPort: 5432
         env:
         - name: POSTGRES_DB
-          value: "ainflue"
+          value: "iacherie"
         - name: POSTGRES_USER
           value: "ainflue_admin"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: DATABASE_PASSWORD
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
@@ -447,7 +447,7 @@ spec:
             - -U
             - ainflue_admin
             - -d
-            - ainflue
+            - iacherie
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
@@ -457,21 +457,21 @@ spec:
             - -U
             - ainflue_admin
             - -d
-            - ainflue
+            - iacherie
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
       - name: postgresql-data
         persistentVolumeClaim:
-          claimName: ainflue-postgresql-pvc
+          claimName: iacherie-postgresql-pvc
 
 ---
 # PVC for PostgreSQL
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ainflue-postgresql-pvc
-  namespace: ainflue
+  name: iacherie-postgresql-pvc
+  namespace: iacherie
 spec:
   accessModes:
     - ReadWriteOnce
@@ -485,13 +485,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-postgresql
-  namespace: ainflue
+  name: iacherie-postgresql
+  namespace: iacherie
   labels:
-    app: ainflue-postgresql
+    app: iacherie-postgresql
 spec:
   selector:
-    app: ainflue-postgresql
+    app: iacherie-postgresql
   ports:
   - name: postgresql
     port: 5432
@@ -503,20 +503,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-redis
-  namespace: ainflue
+  name: iacherie-redis
+  namespace: iacherie
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: cache
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ainflue-redis
+      app: iacherie-redis
   template:
     metadata:
       labels:
-        app: ainflue-redis
+        app: iacherie-redis
         component: cache
     spec:
       containers:
@@ -548,15 +548,15 @@ spec:
       volumes:
       - name: redis-data
         persistentVolumeClaim:
-          claimName: ainflue-redis-pvc
+          claimName: iacherie-redis-pvc
 
 ---
 # PVC for Redis
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ainflue-redis-pvc
-  namespace: ainflue
+  name: iacherie-redis-pvc
+  namespace: iacherie
 spec:
   accessModes:
     - ReadWriteOnce
@@ -570,13 +570,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-redis
-  namespace: ainflue
+  name: iacherie-redis
+  namespace: iacherie
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
 spec:
   selector:
-    app: ainflue-redis
+    app: iacherie-redis
   ports:
   - name: redis
     port: 6379
@@ -588,8 +588,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ainflue-ingress
-  namespace: ainflue
+  name: iacherie-ingress
+  namespace: iacherie
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -599,39 +599,39 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - api.ainflue.com
-    - ai.ainflue.com
-    - mobile.ainflue.com
-    secretName: ainflue-tls
+    - api.iacherie.com
+    - ai.iacherie.com
+    - mobile.iacherie.com
+    secretName: iacherie-tls
   rules:
-  - host: api.ainflue.com
+  - host: api.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-api-service
+            name: iacherie-api-service
             port:
               number: 80
-  - host: ai.ainflue.com
+  - host: ai.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-ai-service
+            name: iacherie-ai-service
             port:
               number: 80
-  - host: mobile.ainflue.com
+  - host: mobile.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-mobile-service
+            name: iacherie-mobile-service
             port:
               number: 80
 
@@ -640,13 +640,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-api-hpa
-  namespace: ainflue
+  name: iacherie-api-hpa
+  namespace: iacherie
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-api
+    name: iacherie-api
   minReplicas: 3
   maxReplicas: 10
   metrics:
@@ -668,13 +668,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-ai-hpa
-  namespace: ainflue
+  name: iacherie-ai-hpa
+  namespace: iacherie
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-ai-engine
+    name: iacherie-ai-engine
   minReplicas: 2
   maxReplicas: 5
   metrics:
@@ -696,13 +696,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-workers-hpa
-  namespace: ainflue
+  name: iacherie-workers-hpa
+  namespace: iacherie
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-workers
+    name: iacherie-workers
   minReplicas: 3
   maxReplicas: 15
   metrics:
@@ -724,8 +724,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-database-netpol
-  namespace: ainflue
+  name: iacherie-database-netpol
+  namespace: iacherie
 spec:
   podSelector:
     matchLabels:
@@ -749,8 +749,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-cache-netpol
-  namespace: ainflue
+  name: iacherie-cache-netpol
+  namespace: iacherie
 spec:
   podSelector:
     matchLabels:
@@ -777,14 +777,14 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ainflue-monitoring
-  namespace: ainflue
+  name: iacherie-monitoring
+  namespace: iacherie
   labels:
-    app: ainflue
+    app: iacherie
 spec:
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   endpoints:
   - port: http
     path: /metrics
@@ -795,16 +795,16 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: ainflue-alerts
-  namespace: ainflue
+  name: iacherie-alerts
+  namespace: iacherie
   labels:
-    app: ainflue
+    app: iacherie
 spec:
   groups:
-  - name: ainflue.rules
+  - name: iacherie.rules
     rules:
     - alert: AinfluePodCrashLooping
-      expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
+      expr: rate(kube_pod_container_status_restarts_total{namespace="iacherie"}[15m]) > 0
       for: 5m
       labels:
         severity: warning
@@ -813,7 +813,7 @@ spec:
         description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is restarting frequently"
     
     - alert: AinflueHighMemoryUsage
-      expr: (container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes{namespace="ainflue"}) > 0.9
+      expr: (container_memory_usage_bytes{namespace="iacherie"} / container_spec_memory_limit_bytes{namespace="iacherie"}) > 0.9
       for: 5m
       labels:
         severity: warning
@@ -822,7 +822,7 @@ spec:
         description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of available memory"
     
     - alert: AinflueHighCPUUsage
-      expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) > 0.8
+      expr: rate(container_cpu_usage_seconds_total{namespace="iacherie"}[5m]) > 0.8
       for: 10m
       labels:
         severity: warning

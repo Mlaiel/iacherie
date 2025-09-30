@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Performance Intelligence Dashboard
+IA Chérie Platform - Creator Performance Intelligence Dashboard
 ===========================================================
 
 Enterprise dashboard for creator performance intelligence with AI-powered predictive

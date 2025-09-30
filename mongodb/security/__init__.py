@@ -1,4 +1,4 @@
-"""MongoDB Security Module for Ainflue Platform
+"""MongoDB Security Module for IA Chérie Platform
 =============================================
 
 Enterprise-grade security implementation for MongoDB including field-level encryption,

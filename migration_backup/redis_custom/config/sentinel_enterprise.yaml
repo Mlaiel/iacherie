@@ -1,0 +1,421 @@
+# Redis Sentinel Enterprise Configuration - Ultra-Secure HA
+# =========================================================
+# Expert: DEVOPS + DBA + SECURITY + INFRASTRUCTURE ARCHITECT
+# Environment: Production Enterprise
+# Security: TLS 1.3 + Authentication + RBAC
+# Availability: 99.99% SLA Target
+# Recovery: RTO < 30s, RPO < 5s
+# Date: 2025-01-14
+# =========================================================
+
+# Sentinel Enterprise Configuration
+sentinel_enterprise:
+  # Identification
+  sentinel_id: "sentinel-enterprise-cluster"
+  cluster_name: "ainflue-redis-enterprise"
+  environment: "production"
+  version: "7.2.0-enterprise"
+  
+  # Topology Sentinel - Distributed HA
+  topology:
+    total_sentinels: 5
+    min_quorum: 3
+    geographic_distribution: true
+    cross_datacenter: true
+    
+  # Configuration Sentinels
+  sentinels:
+    sentinel_1:
+      host: "redis-sentinel-1.ainflue.internal"
+      port: 26379
+      datacenter: "dc-primary"
+      zone: "zone-a"
+      priority: 100
+      
+    sentinel_2:
+      host: "redis-sentinel-2.ainflue.internal"
+      port: 26379
+      datacenter: "dc-primary"
+      zone: "zone-b"
+      priority: 100
+      
+    sentinel_3:
+      host: "redis-sentinel-3.ainflue.internal"
+      port: 26379
+      datacenter: "dc-primary"
+      zone: "zone-c"
+      priority: 100
+      
+    sentinel_4:
+      host: "redis-sentinel-4.ainflue.internal"
+      port: 26379
+      datacenter: "dc-secondary"
+      zone: "zone-a"
+      priority: 90
+      
+    sentinel_5:
+      host: "redis-sentinel-5.ainflue.internal"
+      port: 26379
+      datacenter: "dc-cloud"
+      zone: "zone-cloud"
+      priority: 80
+
+# Masters Configuration Ultra-Strict
+masters_configuration:
+  # Master Instance 1
+  ainflue_master_1:
+    host: "redis-master-1.ainflue.internal"
+    port: 6379
+    quorum: 3
+    auth_user: "sentinel_service"
+    auth_pass: "{{ SENTINEL_AUTH_PASS_1 }}"
+    
+    # Timing Configuration - Ultra-Fast
+    down_after_milliseconds: 5000      # 5 secondes max
+    parallel_syncs: 2                  # 2 replicas simultanées
+    failover_timeout: 30000            # 30 secondes max
+    
+    # Notification Scripts
+    notification_script: "/opt/redis/scripts/sentinel-notify.sh"
+    client_reconfig_script: "/opt/redis/scripts/client-reconfig.sh"
+    
+    # Advanced Configuration
+    deny_scripts_reconfig: true
+    resolve_hostnames: true
+    announce_hostnames: true
+    
+  # Master Instance 2
+  ainflue_master_2:
+    host: "redis-master-2.ainflue.internal"
+    port: 6379
+    quorum: 3
+    auth_user: "sentinel_service"
+    auth_pass: "{{ SENTINEL_AUTH_PASS_2 }}"
+    
+    down_after_milliseconds: 5000
+    parallel_syncs: 2
+    failover_timeout: 30000
+    
+    notification_script: "/opt/redis/scripts/sentinel-notify.sh"
+    client_reconfig_script: "/opt/redis/scripts/client-reconfig.sh"
+    
+    deny_scripts_reconfig: true
+    resolve_hostnames: true
+    announce_hostnames: true
+    
+  # Master Instance 3
+  ainflue_master_3:
+    host: "redis-master-3.ainflue.internal"
+    port: 6379
+    quorum: 3
+    auth_user: "sentinel_service"
+    auth_pass: "{{ SENTINEL_AUTH_PASS_3 }}"
+    
+    down_after_milliseconds: 5000
+    parallel_syncs: 2
+    failover_timeout: 30000
+    
+    notification_script: "/opt/redis/scripts/sentinel-notify.sh"
+    client_reconfig_script: "/opt/redis/scripts/client-reconfig.sh"
+    
+    deny_scripts_reconfig: true
+    resolve_hostnames: true
+    announce_hostnames: true
+
+# Security Enterprise Configuration
+security_enterprise:
+  # Authentication Ultra-Secure
+  authentication:
+    enabled: true
+    require_pass: "{{ SENTINEL_MASTER_PASSWORD }}"
+    
+    # ACL Configuration for Sentinel
+    acl_enabled: true
+    acl_users:
+      sentinel_admin:
+        username: "sentinel_admin"
+        password: "{{ SENTINEL_ADMIN_PASSWORD }}"
+        permissions: "+@all"
+        
+      sentinel_monitor:
+        username: "sentinel_monitor"
+        password: "{{ SENTINEL_MONITOR_PASSWORD }}"
+        permissions: "+ping +sentinel +info +hello"
+        
+      application_client:
+        username: "app_client"
+        password: "{{ SENTINEL_CLIENT_PASSWORD }}"
+        permissions: "+ping +sentinel +get-master-addr-by-name"
+  
+  # TLS/SSL Configuration
+  tls:
+    enabled: true
+    port: 26380
+    cert_file: "/etc/redis/ssl/sentinel.crt"
+    key_file: "/etc/redis/ssl/sentinel.key"
+    ca_cert_file: "/etc/redis/ssl/ca.crt"
+    protocols: "TLSv1.3"
+    ciphers: "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
+    prefer_server_ciphers: true
+    
+  # Network Security
+  network:
+    bind_interfaces:
+      - "0.0.0.0"  # Production: spécifier IPs exactes
+    protected_mode: true
+    tcp_keepalive: 300
+    
+    # IP Restrictions
+    allowed_networks:
+      - "10.0.0.0/8"      # Internal network
+      - "172.16.0.0/12"   # Container network
+      - "192.168.0.0/16"  # Private network
+
+# Performance Configuration Ultra-Optimized
+performance_enterprise:
+  # Network Performance
+  network:
+    tcp_backlog: 2048
+    tcp_keepalive: 300
+    timeout: 0  # No timeout for Sentinel
+    
+  # Memory Management
+  memory:
+    max_memory: "4GB"
+    
+  # Logging Performance
+  logging:
+    level: "notice"
+    file: "/var/log/redis/sentinel.log"
+    max_size: "100MB"
+    rotate_count: 10
+    
+  # Connection Management
+  connections:
+    max_clients: 10000
+    
+# High Availability Settings
+high_availability:
+  # Failover Configuration Ultra-Fast
+  failover:
+    # Timing optimisé pour ultra-fast recovery
+    sentinel_down_after_milliseconds: 5000    # 5s detection
+    sentinel_failover_timeout: 30000          # 30s max failover
+    sentinel_parallel_syncs: 2                # 2 replicas sync
+    
+    # Failover Strategy
+    strategy: "aggressive"  # aggressive, balanced, conservative
+    
+    # Leader Election
+    leader_election_timeout: 10000
+    
+    # Promotion Rules
+    promotion_rules:
+      min_replica_lag: 10     # Max 10s lag
+      min_replica_priority: 1 # Min priority 1
+      replica_validity_factor: 10
+      
+  # Health Checking Ultra-Strict
+  health_checks:
+    ping_period: 1000           # 1s ping interval
+    ping_timeout: 500           # 500ms timeout
+    info_period: 10000          # 10s info check
+    script_kill_timeout: 60000  # 60s script timeout
+    
+  # Quorum Management
+  quorum:
+    voting_timeout: 15000       # 15s vote timeout
+    min_quorum_percentage: 60   # 60% minimum
+    
+# Monitoring and Observability
+monitoring_enterprise:
+  # Metrics Collection
+  metrics:
+    enabled: true
+    prometheus_port: 9355
+    collection_interval: 15
+    
+    # Key Metrics
+    key_metrics:
+      - "sentinel_masters"
+      - "sentinel_running_scripts"
+      - "sentinel_scripts_queue_length"
+      - "sentinel_simulate_failure_flags"
+      - "sentinel_tilt"
+      - "sentinel_info_period"
+      - "sentinel_ask_period"
+      - "sentinel_publish_period"
+      - "sentinel_ping_period"
+      
+  # Health Monitoring
+  health_monitoring:
+    endpoint: "/health"
+    port: 8080
+    checks:
+      - "masters_reachable"
+      - "quorum_available"
+      - "scripts_functioning"
+      - "network_connectivity"
+      
+  # Alerting Configuration
+  alerting:
+    critical_alerts:
+      - name: "master_down"
+        condition: "master_unreachable > 5s"
+        severity: "critical"
+        
+      - name: "quorum_lost"
+        condition: "available_sentinels < quorum"
+        severity: "critical"
+        
+      - name: "failover_failed"
+        condition: "failover_timeout_exceeded"
+        severity: "critical"
+        
+    warning_alerts:
+      - name: "high_failover_frequency"
+        condition: "failovers > 3 in 1h"
+        severity: "warning"
+        
+      - name: "replica_lag_high"
+        condition: "replica_lag > 30s"
+        severity: "warning"
+
+# Notification System Enterprise
+notifications:
+  # Notification Handlers
+  handlers:
+    email:
+      enabled: true
+      smtp_host: "smtp.ainflue.com"
+      smtp_port: 587
+      recipients:
+        - "ops-team@ainflue.com"
+        - "dba-team@ainflue.com"
+        
+    slack:
+      enabled: true
+      webhook_url: "{{ SLACK_WEBHOOK_URL }}"
+      channel: "#redis-alerts"
+      
+    pagerduty:
+      enabled: true
+      service_key: "{{ PAGERDUTY_SERVICE_KEY }}"
+      
+    webhook:
+      enabled: true
+      url: "{{ WEBHOOK_NOTIFICATION_URL }}"
+      timeout: 5000
+      
+  # Notification Rules
+  rules:
+    critical:
+      methods: ["pagerduty", "email", "slack"]
+      cooldown: 300  # 5 minutes
+      
+    warning:
+      methods: ["slack", "email"]
+      cooldown: 900  # 15 minutes
+      
+    info:
+      methods: ["slack"]
+      cooldown: 1800  # 30 minutes
+
+# Scripts Configuration
+scripts_enterprise:
+  # Script Directories
+  script_dir: "/opt/redis/scripts"
+  
+  # Notification Script
+  notification_script:
+    path: "/opt/redis/scripts/sentinel-notify.sh"
+    timeout: 10000
+    kill_timeout: 5000
+    max_runtime: 30000
+    
+  # Client Reconfiguration Script
+  client_reconfig_script:
+    path: "/opt/redis/scripts/client-reconfig.sh"
+    timeout: 15000
+    kill_timeout: 5000
+    max_runtime: 60000
+    
+  # Custom Scripts
+  custom_scripts:
+    failover_webhook:
+      path: "/opt/redis/scripts/failover-webhook.py"
+      timeout: 10000
+      
+    backup_trigger:
+      path: "/opt/redis/scripts/backup-trigger.sh"
+      timeout: 30000
+      
+    health_check:
+      path: "/opt/redis/scripts/health-check.py"
+      timeout: 5000
+
+# Backup Integration
+backup_integration:
+  # Trigger backup on failover
+  backup_on_failover: true
+  backup_script: "/opt/redis/scripts/emergency-backup.sh"
+  backup_timeout: 300000  # 5 minutes
+  
+  # Metadata collection
+  collect_metadata: true
+  metadata_script: "/opt/redis/scripts/collect-metadata.py"
+
+# Advanced Configuration
+advanced_config:
+  # Resolve hostnames for better network resilience
+  resolve_hostnames: true
+  announce_hostnames: true
+  
+  # Script management
+  deny_scripts_reconfig: true
+  
+  # Sentinel working directory
+  dir: "/var/lib/redis-sentinel"
+  
+  # PID file
+  pidfile: "/var/run/redis-sentinel.pid"
+  
+  # Log file rotation
+  logfile: "/var/log/redis/sentinel.log"
+  
+  # Syslog integration
+  syslog_enabled: true
+  syslog_ident: "redis-sentinel"
+  syslog_facility: "local0"
+
+# Environment Specific Overrides
+environments:
+  production:
+    masters_configuration:
+      down_after_milliseconds: 5000
+      failover_timeout: 30000
+      quorum: 3
+      
+    monitoring_enterprise:
+      metrics:
+        collection_interval: 15
+        
+  staging:
+    masters_configuration:
+      down_after_milliseconds: 10000
+      failover_timeout: 60000
+      quorum: 2
+      
+    monitoring_enterprise:
+      metrics:
+        collection_interval: 30
+        
+  development:
+    masters_configuration:
+      down_after_milliseconds: 30000
+      failover_timeout: 120000
+      quorum: 1
+      
+    monitoring_enterprise:
+      metrics:
+        collection_interval: 60

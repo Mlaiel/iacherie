@@ -1,14 +1,14 @@
-# 🔍 Tracing Distribué Enterprise - Plateforme Créateur Ainflue
+# 🔍 Tracing Distribué Enterprise - Plateforme Créateur IA Chérie
 
 > **⚠️ LOGICIEL PROPRIÉTAIRE CONFIDENTIEL - Fahed Mlaiel (mlaiel@live.de)**
 > 
-> Ce système avancé de tracing distribué contient des algorithmes propriétaires et de l'intelligence business pour la plateforme Ainflue Creator Economy. Toute utilisation, reproduction ou distribution non autorisée est strictement interdite et passible de poursuites judiciaires.
+> Ce système avancé de tracing distribué contient des algorithmes propriétaires et de l'intelligence business pour la plateforme IA Chérie Creator Economy. Toute utilisation, reproduction ou distribution non autorisée est strictement interdite et passible de poursuites judiciaires.
 
 ---
 
 ## 🏗️ Vue d'ensemble Architecture
 
-Système de tracing distribué de niveau enterprise pour la surveillance complète de la plateforme Ainflue Creator Economy, fournissant des insights approfondis sur les parcours créateurs, les pipelines de traitement de contenu, les transactions business, et les workflows de distribution cross-platform.
+Système de tracing distribué de niveau enterprise pour la surveillance complète de la plateforme IA Chérie Creator Economy, fournissant des insights approfondis sur les parcours créateurs, les pipelines de traitement de contenu, les transactions business, et les workflows de distribution cross-platform.
 
 ### 🎯 Intégration Logique Métier Core
 
@@ -157,9 +157,9 @@ pip install -r requirements.txt
 # Initialiser tracing distribué
 from monitoring.tracing import EnterpriseTracingSystem
 
-# Configurer pour Plateforme Créateur Ainflue
+# Configurer pour Plateforme Créateur IA Chérie
 tracer = EnterpriseTracingSystem(
-    service_name="ainflue-creator-platform",
+    service_name="iacherie-creator-platform",
     environment="production",
     business_context=True,
     creator_journey_tracking=True
@@ -272,5 +272,5 @@ Contact: mlaiel@live.de pour demandes licence
 
 ---
 
-**🔒 DOCUMENT CONFIDENTIEL - PLATEFORME CRÉATEUR AINFLUE**
+**🔒 DOCUMENT CONFIDENTIEL - PLATEFORME CRÉATEUR IACHERIE**
 *Propriété exclusive Fahed Mlaiel - Distribution restreinte membres équipe autorisés uniquement*

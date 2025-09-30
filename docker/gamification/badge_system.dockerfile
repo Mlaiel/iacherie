@@ -1,5 +1,5 @@
 # ===============================================
-# Badge System Dockerfile - Ainflue Platform
+# Badge System Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Badge Management Service
 # Handles badge creation, awarding, and verification systems
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8086/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Badge System Service for Ainflue Gamification"
+LABEL description="Badge System Service for IA Chérie Gamification"
 
 EXPOSE 8086
 CMD ["python", "-m", "badge_system.main"]

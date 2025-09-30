@@ -1,5 +1,5 @@
 # 🚀 Events Architektur - Fortgeschrittenes Event-getriebenes System
-**Ainflue Platform - Unternehmens-Event-Verarbeitungs-Ökosystem**
+**IA Chérie Platform - Unternehmens-Event-Verarbeitungs-Ökosystem**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Urheberrecht:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Unternehmensübersicht
 
-Die **Events-Architektur** stellt das Rückgrat des event-getriebenen Ökosystems der Ainflue-Plattform dar, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochmoderne, produktionsreife System bietet umfassende Event-Verarbeitung, Streaming, Persistierung und Analysefähigkeiten mit unternehmenstauglicher Skalierbarkeit, Sicherheit und Leistungsoptimierung.
+Die **Events-Architektur** stellt das Rückgrat des event-getriebenen Ökosystems der IA Chérie-Plattform dar, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochmoderne, produktionsreife System bietet umfassende Event-Verarbeitung, Streaming, Persistierung und Analysefähigkeiten mit unternehmenstauglicher Skalierbarkeit, Sicherheit und Leistungsoptimierung.
 
 ### 🎯 **Geschäftslogik-Fluss**
 ```
@@ -352,7 +352,7 @@ async def analyze_campaign_engagement(event):
 version: '3.8'
 services:
   event-core:
-    image: ainflue/event-core:latest
+    image: iacherie/event-core:latest
     deploy:
       replicas: 5
       resources:
@@ -370,7 +370,7 @@ services:
       - "8080:8080"
       
   event-streaming:
-    image: ainflue/event-streaming:latest
+    image: iacherie/event-streaming:latest
     deploy:
       replicas: 3
       resources:
@@ -415,7 +415,7 @@ creator_satisfaction = Gauge('creator_satisfaction_score', 'Creator satisfaction
 
 ## 📝 **Zusammenfassung**
 
-Die Events-Architektur repräsentiert den Höhepunkt des event-getriebenen Systemdesigns für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit fortgeschrittenen Verarbeitungsfähigkeiten, umfassendem Monitoring und intelligenter Optimierung gewährleistet dieses System maximale Performance, Zuverlässigkeit und Skalierbarkeit für alle Creator-Workflows und bietet gleichzeitig tiefe Einblicke in Creator-Erfolgsmetriken und Systemoptimierungsmöglichkeiten.
+Die Events-Architektur repräsentiert den Höhepunkt des event-getriebenen Systemdesigns für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit fortgeschrittenen Verarbeitungsfähigkeiten, umfassendem Monitoring und intelligenter Optimierung gewährleistet dieses System maximale Performance, Zuverlässigkeit und Skalierbarkeit für alle Creator-Workflows und bietet gleichzeitig tiefe Einblicke in Creator-Erfolgsmetriken und Systemoptimierungsmöglichkeiten.
 
 **🎯 Mission:** Das weltweit fortschrittlichste Event-Verarbeitungssystem für Content-Ersteller liefern, das optimale Performance, intelligente Optimierung und umfassendes Monitoring im gesamten Creator-Ökosystem ermöglicht.
 

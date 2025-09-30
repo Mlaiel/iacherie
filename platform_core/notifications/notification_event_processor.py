@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise Notification Event Processor - Ainflue Platform Core
+⚡ Enterprise Notification Event Processor - IA Chérie Platform Core
 Real-time triggered notifications and event-driven processing
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
@@ -1013,7 +1013,7 @@ if __name__ == "__main__":
         trigger = await processor.create_event_trigger(
             name="Welcome New Users",
             event_type=EventType.USER_SIGNUP,
-            notification_template="Welcome to Ainflue, {user_id}! 🎉",
+            notification_template="Welcome to IA Chérie, {user_id}! 🎉",
             target_users=["{user_id}"],  # Send to the user who signed up
             condition=TriggerCondition.IMMEDIATE
         )

@@ -1,4 +1,4 @@
-# Staging Configuration for Ainflue Docker Platform
+# Staging Configuration for IA Chérie Docker Platform
 version: '3.8'
 
 # Staging environment variables
@@ -96,5 +96,5 @@ monitoring:
 backup:
   schedule: "0 4 * * *"  # Daily at 4 AM
   retention_days: 7
-  s3_bucket: ainflue-staging-backups
+  s3_bucket: iacherie-staging-backups
   encryption: disabled

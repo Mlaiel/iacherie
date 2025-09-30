@@ -1,5 +1,5 @@
 """
-Advanced Engagement Prediction Engine for Ainflue Distribution Platform
+Advanced Engagement Prediction Engine for IA Chérie Distribution Platform
 
 This module provides sophisticated ML-powered engagement prediction capabilities
 for optimizing content distribution and maximizing audience engagement across platforms.

@@ -2,7 +2,7 @@
 
 #
 # Universal Mobile App Deployment Script
-# Ainflue Professional Content Creation Platform
+# IA Chérie Professional Content Creation Platform
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -79,7 +79,7 @@ show_usage() {
 
 # Function to show version
 show_version() {
-    echo "Ainflue Mobile Deployment System v1.0.0"
+    echo "IA Chérie Mobile Deployment System v1.0.0"
     echo "Author: Fahed Mlaiel"
     echo "Platform: Multi-platform (iOS/Android)"
     echo "Build System: React Native + Native"

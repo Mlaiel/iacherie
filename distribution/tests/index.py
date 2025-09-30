@@ -1,7 +1,7 @@
 """Testing Framework Engine - Main Interface
 
 Enterprise-grade testing framework providing unified interface
-for all testing, validation, and quality assurance capabilities across the Ainflue platform.
+for all testing, validation, and quality assurance capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -86,7 +86,7 @@ class TestingEngine:
     """Main Testing Framework Engine
     
     Provides comprehensive testing, validation, and quality assurance
-    for the entire Ainflue distribution platform.
+    for the entire IA Chérie distribution platform.
     """
     
     def __init__(self):

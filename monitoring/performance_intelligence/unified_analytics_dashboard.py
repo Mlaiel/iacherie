@@ -949,8 +949,8 @@ Collect active alerts from all systems"""
                 "channels": {
                     "email": {
                         "enabled": True,
-                        "recipients": ["admin@ainflue.com", "alerts@ainflue.com"],
-                        "smtp_server": "smtp.ainflue.com",
+                        "recipients": ["admin@iacherie.com", "alerts@iacherie.com"],
+                        "smtp_server": "smtp.iacherie.com",
                         "smtp_port": 587
                     },
                     "slack": {
@@ -960,7 +960,7 @@ Collect active alerts from all systems"""
                     },
                     "webhook": {
                         "enabled": True,
-                        "url": "https://api.ainflue.com/webhooks/alerts"
+                        "url": "https://api.iacherie.com/webhooks/alerts"
                     }
                 },
                 "rules": [

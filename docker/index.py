@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE DOCKER SERVICES INDEX
+# IACHERIE DOCKER SERVICES INDEX
 # =============================================================================
 # Central orchestrator for all Docker services and registry
 #
@@ -11,7 +11,7 @@
 Docker Services Registry and Orchestrator
 
 This module provides centralized management for all Docker services
-in the Ainflue platform, including service discovery, health checks,
+in the IA Chérie platform, including service discovery, health checks,
 and orchestration coordination.
 
 Service Categories:

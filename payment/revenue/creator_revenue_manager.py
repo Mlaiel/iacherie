@@ -2,7 +2,7 @@
 ===========================
 
 Comprehensive creator revenue management system handling monetization workflows,
-payout scheduling, analytics, and optimization for the Ainflue creator platform.
+payout scheduling, analytics, and optimization for the IA Chérie creator platform.
 
 Features:
 - Creator monetization workflow automation

@@ -1,10 +1,10 @@
 # 📊 ANALYTICS SERVICES - ENTERPRISE ANALYSE DIENSTE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE MICROSERVICES ENTERPRISE**
+**© FAHED MLAIEL 2024-2025 - IACHERIE MICROSERVICES ENTERPRISE**
 
 ## 🎯 Überblick
 
-Enterprise Analytics und Business Intelligence Modul für die Ainflue-Plattform.
+Enterprise Analytics und Business Intelligence Modul für die IA Chérie-Plattform.
 Verteilte Microservices-Architektur mit 18+ spezialisierten Analytics-Services.
 
 ## 🏗️ Service Architektur
@@ -78,7 +78,7 @@ bi = BusinessIntelligenceService()
 insights = await bi.generate_insights()
 ```
 
-## 🎯 Ainflue Workflow
+## 🎯 IA Chérie Workflow
 
 Vollständige Integration des 7-Phasen-Workflows mit Analytics:
 1. **Upload & Validation** → Content-Qualität Analytics

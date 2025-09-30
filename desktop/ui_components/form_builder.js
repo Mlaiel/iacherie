@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Dynamic Form Builder
+ * IA Chérie Desktop - Dynamic Form Builder
  * 
  * Advanced form building system for dynamic user interfaces
  * Supports validation, real-time updates, and accessibility
@@ -12,9 +12,9 @@ class FormBuilder {
   constructor(options = {}) {
     this.container = options.container || document.body;
     this.themes = {
-      default: 'ainflue-form-default',
-      dark: 'ainflue-form-dark',
-      professional: 'ainflue-form-professional'
+      default: 'iacherie-form-default',
+      dark: 'iacherie-form-dark',
+      professional: 'iacherie-form-professional'
     };
     this.currentTheme = options.theme || 'professional';
     this.validators = new Map();
@@ -43,7 +43,7 @@ class FormBuilder {
     const styles = document.createElement('style');
     styles.id = 'form-builder-styles';
     styles.textContent = `
-      .ainflue-form-container {
+      .iacherie-form-container {
         background: #ffffff;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -51,12 +51,12 @@ class FormBuilder {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       
-      .ainflue-form-professional {
+      .iacherie-form-professional {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
       }
       
-      .ainflue-form-dark {
+      .iacherie-form-dark {
         background: #2d3748;
         color: #e2e8f0;
       }
@@ -491,7 +491,7 @@ class FormBuilder {
    */
   render() {
     const formContainer = document.createElement('div');
-    formContainer.className = `ainflue-form-container ${this.themes[this.currentTheme]}`;
+    formContainer.className = `iacherie-form-container ${this.themes[this.currentTheme]}`;
     
     // Add all fields
     for (const field of this.fields.values()) {

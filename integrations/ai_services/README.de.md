@@ -1,4 +1,4 @@
-# 🤖 KI-Services Modul - Ainflue Integrationen
+# 🤖 KI-Services Modul - IA Chérie Integrationen
 
 **Expertenteam: Lead Dev KI + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + KI Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Modul-Zweck
 
-Das KI-Services-Modul bietet erstklassige künstliche Intelligenz für die Ainflue-Plattform. Es liefert umfassende KI-Modell-Orchestrierung, Multi-Provider-Integration, Kostenoptimierung und intelligente Inhaltsgenerierung über 53+ spezialisierte KI-Agenten.
+Das KI-Services-Modul bietet erstklassige künstliche Intelligenz für die IA Chérie-Plattform. Es liefert umfassende KI-Modell-Orchestrierung, Multi-Provider-Integration, Kostenoptimierung und intelligente Inhaltsgenerierung über 53+ spezialisierte KI-Agenten.
 
 ### Kernkomponenten
 

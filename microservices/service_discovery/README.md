@@ -1,22 +1,22 @@
-# 🚀 SERVICE DISCOVERY ENTERPRISE MODULE - Ainflue Platform
+# 🚀 SERVICE DISCOVERY ENTERPRISE MODULE - IA Chérie Platform
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer  
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)  
-**Copyright**: ©2025 Ainflue Platform - All Rights Reserved
+**Copyright**: ©2025 IA Chérie Platform - All Rights Reserved
 
 ## ⚠️ INTELLECTUAL PROPERTY - FAHED MLAIEL
 
 This code constitutes the exclusive intellectual property of Fahed Mlaiel.
 - **Email**: mlaiel@live.de  
-- **Project**: Ainflue Platform
+- **Project**: IA Chérie Platform
 - **License**: Proprietary - Commercial use prohibited without authorization
 - **Protection**: Confidential source code
 
 ## 🌟 OVERVIEW
 
-The Ainflue Service Discovery Enterprise Module is a comprehensive, production-ready service discovery system designed specifically for the Ainflue creator economy platform. It orchestrates communication between all microservices with advanced features including ML-powered load balancing, multi-region discovery, and intelligent service mesh management.
+The IA Chérie Service Discovery Enterprise Module is a comprehensive, production-ready service discovery system designed specifically for the IA Chérie creator economy platform. It orchestrates communication between all microservices with advanced features including ML-powered load balancing, multi-region discovery, and intelligent service mesh management.
 
-### 🎯 AINFLUE BUSINESS LOGIC
+### 🎯 IACHERIE BUSINESS LOGIC
 
 ```
 Multi-format Creators → AI Processing → Protection → Monetization → 
@@ -38,7 +38,7 @@ The module consists of 18 highly sophisticated Python files organized in three p
 - ✅ `multi_region_discovery.py` - Cross-region discovery, latency optimization, failover
 - ✅ `api_gateway_integration.py` - Route discovery, authentication, rate limiting, transformations
 
-### **⚡ PHASE 2 - AINFLUE SPECIALIZED SERVICES (6 files)**
+### **⚡ PHASE 2 - IACHERIE SPECIALIZED SERVICES (6 files)**
 - ✅ `content_service_discovery.py` - Content processing services discovery (video, audio, image, text)
 - ✅ `ai_service_orchestration.py` - AI/ML services orchestration with GPU scheduling
 - ✅ `collaboration_service_mesh.py` - Real-time collaboration services mesh
@@ -246,7 +246,7 @@ The module integrates with popular monitoring systems:
 - **Jaeger**: Distributed tracing integration
 - **ELK Stack**: Structured logging and analytics
 
-## 🎯 AINFLUE INTEGRATION
+## 🎯 IACHERIE INTEGRATION
 
 ### **Creator Economy Services**
 
@@ -339,20 +339,20 @@ CMD ["python", "-m", "service_discovery"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-service-discovery
+  name: iacherie-service-discovery
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-service-discovery
+      app: iacherie-service-discovery
   template:
     metadata:
       labels:
-        app: ainflue-service-discovery
+        app: iacherie-service-discovery
     spec:
       containers:
       - name: service-discovery
-        image: ainflue/service-discovery:latest
+        image: iacherie/service-discovery:latest
         ports:
         - containerPort: 8080
         env:
@@ -397,8 +397,8 @@ await orchestrator.multi_region.optimize_cross_region_latency(
 For technical support and enterprise inquiries:
 
 - **Technical Issues**: Create GitHub issue with detailed logs
-- **Enterprise Support**: contact@ainflue.com
-- **Security Issues**: security@ainflue.com
+- **Enterprise Support**: contact@iacherie.com
+- **Security Issues**: security@iacherie.com
 - **IP Owner Contact**: mlaiel@live.de
 
 ## 📄 LICENSE
@@ -411,5 +411,5 @@ This software is the exclusive intellectual property of Fahed Mlaiel. All rights
 
 ---
 
-**Built with ❤️ by the Ainflue Expert Team**  
+**Built with ❤️ by the IA Chérie Expert Team**  
 *Empowering creators through intelligent infrastructure*

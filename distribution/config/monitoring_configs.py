@@ -2,7 +2,7 @@
 Monitoring System Configurations
 ===============================
 
-System monitoring and observability settings for Ainflue Distribution Platform.
+System monitoring and observability settings for IA Chérie Distribution Platform.
 Handles metrics collection, alerting, and performance monitoring.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -398,7 +398,7 @@ class MonitoringConfigs:
             "ops_email": AlertChannel(
                 name="Operations Email",
                 channel_type=AlertChannel.EMAIL,
-                endpoint="ops@ainflue.com",
+                endpoint="ops@iacherie.com",
                 severity_filter=[AlertSeverity.WARNING, AlertSeverity.ERROR, AlertSeverity.CRITICAL],
                 rate_limit_minutes=5
             ),

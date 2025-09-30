@@ -243,7 +243,7 @@ class WorkflowAutomation:
                 cost_per_hour=res_data["cost"],
                 utilization_percentage=res_data["utilization"],
                 last_accessed=datetime.now() - timedelta(hours=1),
-                tags={"environment": "production", "project": "ainflue"}
+                tags={"environment": "production", "project": "iacherie"}
             )
             
             self.resources[resource.resource_id] = resource

@@ -1,4 +1,4 @@
-# 🏗️ ARCHITECTURE DISTRIBUTION COMPLÈTE - AINFLUE PLATFORM
+# 🏗️ ARCHITECTURE DISTRIBUTION COMPLÈTE - IACHERIE PLATFORM
 
 **Version:** 3.0 (Production-Ready Architecture)  
 **Date:** Décembre 2024  
@@ -8,7 +8,7 @@
 
 ## 🎯 OVERVIEW ARCHITECTURE
 
-La plateforme Ainflue utilise une architecture de distribution multi-plateformes ultra-avancée basée sur des microservices intelligents avec IA intégrée pour optimisation automatique.
+La plateforme IA Chérie utilise une architecture de distribution multi-plateformes ultra-avancée basée sur des microservices intelligents avec IA intégrée pour optimisation automatique.
 
 ### 🏛️ ARCHITECTURE PATTERN
 ```
@@ -267,7 +267,7 @@ class AlertingSystem:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-distribution
+  name: iacherie-distribution
 spec:
   replicas: 20
   strategy:
@@ -279,7 +279,7 @@ spec:
     spec:
       containers:
       - name: distribution-engine
-        image: ainflue/distribution:v3.0
+        image: iacherie/distribution:v3.0
         resources:
           requests:
             memory: "4Gi"
@@ -304,7 +304,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-distribution
+    name: iacherie-distribution
   minReplicas: 10
   maxReplicas: 100
   metrics:

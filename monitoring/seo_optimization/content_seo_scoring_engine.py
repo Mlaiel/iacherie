@@ -1,7 +1,7 @@
 """
 Content SEO Scoring Engine - Enterprise Content SEO Analysis & Optimization
 
-This module implements comprehensive content SEO scoring for the Ainflue platform,
+This module implements comprehensive content SEO scoring for the IA Chérie platform,
 providing real-time SEO analysis, content optimization recommendations, and automated SEO scoring.
 
 Author: Fahed Mlaiel
@@ -104,7 +104,7 @@ class SEOOptimization:
 
 class ContentSEOScoringEngine:
     """
-    Enterprise content SEO scoring engine for Ainflue platform.
+    Enterprise content SEO scoring engine for IA Chérie platform.
     
     Features:
     - Real-time SEO analysis and scoring
@@ -1140,19 +1140,19 @@ if __name__ == "__main__":
             "description": "Learn the secrets to creating viral content that gets millions of views. This comprehensive guide covers all platforms including TikTok, Instagram, and YouTube.",
             "transcription": "Welcome to this complete guide on creating viral content. In this video, we'll explore the strategies that top content creators use to reach millions of people. We'll cover topics like audience engagement, trending hashtags, and content optimization for maximum reach.",
             "hashtags": ["#viral", "#contentcreator", "#socialmedia", "#trending"],
-            "url": "https://ainflue.com/guides/viral-content-creation-2025",
+            "url": "https://iacherie.com/guides/viral-content-creation-2025",
             "meta_tags": {
                 "description": "Complete guide to creating viral content on social media platforms",
                 "keywords": "viral content, social media, content creator, engagement",
-                "author": "Ainflue Team"
+                "author": "IA Chérie Team"
             },
             "images": [
                 {"alt_text": "Content creator filming video showing viral content strategies"},
                 {"alt_text": "Social media analytics dashboard displaying engagement metrics"}
             ],
             "internal_links": [
-                "https://ainflue.com/tools/hashtag-generator",
-                "https://ainflue.com/analytics/engagement-tracker"
+                "https://iacherie.com/tools/hashtag-generator",
+                "https://iacherie.com/analytics/engagement-tracker"
             ],
             "duration": 420,  # 7 minutes
             "created_date": datetime.now(),

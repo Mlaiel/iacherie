@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 Load Balancer Performance Monitor - Enterprise Performance Monitoring
 Advanced load balancer performance monitoring for Creator Economy infrastructure

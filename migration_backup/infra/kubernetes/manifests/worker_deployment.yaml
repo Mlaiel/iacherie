@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-worker
+  namespace: ainflue
+  labels:
+    app: ainflue-worker
+    component: background-processing
+    environment: production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ainflue-worker
+  template:
+    metadata:
+      labels:
+        app: ainflue-worker
+        component: background-processing
+    spec:
+      serviceAccountName: ainflue-worker-service-account
+      containers:
+      - name: celery-worker
+        image: ainflue/worker:latest
+        command: ["celery", "worker", "-A", "ainflue.worker", "--loglevel=info"]
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: celery-broker-url
+        - name: STORAGE_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: storage-bucket
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: worker-temp
+          mountPath: /tmp/worker
+        - name: media-processing
+          mountPath: /app/media
+      - name: celery-beat
+        image: ainflue/worker:latest
+        command: ["celery", "beat", "-A", "ainflue.worker", "--loglevel=info"]
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: celery-broker-url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+      volumes:
+      - name: worker-temp
+        emptyDir:
+          sizeLimit: 10Gi
+      - name: media-processing
+        persistentVolumeClaim:
+          claimName: media-processing-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-worker-metrics
+  namespace: ainflue
+  labels:
+    app: ainflue-worker
+spec:
+  selector:
+    app: ainflue-worker
+  ports:
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ainflue-worker-service-account
+  namespace: ainflue
+  labels:
+    app: ainflue
+    component: worker
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ainflue
+  name: ainflue-worker-role
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ainflue-worker-role-binding
+  namespace: ainflue
+subjects:
+- kind: ServiceAccount
+  name: ainflue-worker-service-account
+  namespace: ainflue
+roleRef:
+  kind: Role
+  name: ainflue-worker-role
+  apiGroup: rbac.authorization.k8s.io

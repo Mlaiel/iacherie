@@ -1,7 +1,7 @@
-package com.ainflue.sdk.models;
+package com.iacherie.sdk.models;
 
 /**
- * API Response Model for Ainflue Java SDK
+ * API Response Model for IA Chérie Java SDK
  * Type-safe response handling with comprehensive metadata
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

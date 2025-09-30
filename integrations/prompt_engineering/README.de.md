@@ -1,14 +1,14 @@
-# 🤖 Prompt Engineering - Ainflue Integrationen
+# 🤖 Prompt Engineering - IA Chérie Integrationen
 
 **Enterprise-Grade Prompt Engineering Modul mit fortschrittlicher KI-Optimierung**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Lizenz](https://img.shields.io/badge/license-Proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Lizenz](https://img.shields.io/badge/license-Proprietary-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Autor](https://img.shields.io/badge/author-Fahed%20Mlaiel-green.svg)](mailto:mlaiel@live.de)
 
 ## 🎯 Überblick
 
-Das Ainflue Prompt Engineering Modul ist eine umfassende Enterprise-Lösung zur Revolutionierung der Content-Erstellung für Musiker, Video-Ersteller, Fotografen, Blogger und Influencer. Dieses fortschrittliche System kombiniert modernste KI-Technologien mit spezialisierter Domänen-Expertise für personalisierte, optimierte und umsatzorientierte Prompt-Generierung.
+Das IA Chérie Prompt Engineering Modul ist eine umfassende Enterprise-Lösung zur Revolutionierung der Content-Erstellung für Musiker, Video-Ersteller, Fotografen, Blogger und Influencer. Dieses fortschrittliche System kombiniert modernste KI-Technologien mit spezialisierter Domänen-Expertise für personalisierte, optimierte und umsatzorientierte Prompt-Generierung.
 
 ## 🏗️ Architektur
 
@@ -82,8 +82,8 @@ Redis 6+
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/prompt_engineering
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/prompt_engineering
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -319,7 +319,7 @@ Content-Type: application/json
 ### Docker-Deployment
 ```bash
 # Image bauen
-docker build -t ainflue-prompt-engineering .
+docker build -t iacherie-prompt-engineering .
 
 # Container ausführen
 docker run -d \
@@ -327,7 +327,7 @@ docker run -d \
   -p 8000:8000 \
   -e DATABASE_URL=postgresql://... \
   -e REDIS_URL=redis://... \
-  ainflue-prompt-engineering
+  iacherie-prompt-engineering
 ```
 
 ### Kubernetes-Deployment
@@ -348,7 +348,7 @@ spec:
     spec:
       containers:
       - name: prompt-engineering
-        image: ainflue-prompt-engineering:latest
+        image: iacherie-prompt-engineering:latest
         ports:
         - containerPort: 8000
 ```
@@ -356,14 +356,14 @@ spec:
 ## 📞 Support & Kontakt
 
 ### Technischer Support
-- **Email**: support@ainflue.com
-- **Dokumentation**: https://docs.ainflue.com
-- **Issues**: https://github.com/Mlaiel/Ainflue/issues
+- **Email**: support@iacherie.com
+- **Dokumentation**: https://docs.iacherie.com
+- **Issues**: https://github.com/Mlaiel/IA Chérie/issues
 
 ### Kommerzielle Anfragen
-- **Vertrieb**: sales@ainflue.com
-- **Partnerschaften**: partnerships@ainflue.com
-- **Enterprise**: enterprise@ainflue.com
+- **Vertrieb**: sales@iacherie.com
+- **Partnerschaften**: partnerships@iacherie.com
+- **Enterprise**: enterprise@iacherie.com
 
 ### Autor
 **Fahed Mlaiel**
@@ -383,9 +383,9 @@ Das unbefugte Kopieren, Modifizieren, Verteilen oder Verwenden dieser Software i
 
 ## 🔗 Verwandte Projekte
 
-- [Ainflue Platform](https://github.com/Mlaiel/Ainflue) - Haupt-Plattform Repository
-- [Ainflue API](https://github.com/Mlaiel/Ainflue-API) - Core API Services
-- [Ainflue SDK](https://github.com/Mlaiel/Ainflue-SDK) - Entwickler SDK
+- [IA Chérie Platform](https://github.com/Mlaiel/IA Chérie) - Haupt-Plattform Repository
+- [IA Chérie API](https://github.com/Mlaiel/IA Chérie-API) - Core API Services
+- [IA Chérie SDK](https://github.com/Mlaiel/IA Chérie-SDK) - Entwickler SDK
 
 ## 🎯 Roadmap
 

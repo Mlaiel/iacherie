@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Monitoring - SLA Monitor
+IA Chérie Platform - Distribution Monitoring - SLA Monitor
 Advanced Service Level Agreement monitoring and compliance tracking
 
 Author: Fahed Mlaiel (mlaiel@live.de)

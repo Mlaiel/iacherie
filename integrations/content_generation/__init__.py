@@ -1,5 +1,5 @@
 """
-Content Generation Module - Ainflue Integrations
+Content Generation Module - IA Chérie Integrations
 ===============================================
 Module de génération de contenu IA enterprise avec 53 agents
 spécialisés pour création multi-format et multi-plateforme.
@@ -11,7 +11,7 @@ Support pour:
 - Pipeline automatisé de création
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 

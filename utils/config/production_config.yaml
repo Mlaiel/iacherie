@@ -111,7 +111,7 @@ logging:
   format: "json"            # Structured JSON logs
   enable_console: false     # Console logging disabled
   enable_file: true
-  file_path: "/var/log/ainflue/production.log"
+  file_path: "/var/log/iacherie/production.log"
   structured_logging: true
   include_trace: false      # No trace in production
   log_sql_queries: false
@@ -143,7 +143,7 @@ file_management:
   virus_scanning:
     enabled: true
     engine: "clamav"
-    quarantine_path: "/var/quarantine/ainflue"
+    quarantine_path: "/var/quarantine/iacherie"
     
 # Rate Limiting (Strict for Production)
 rate_limiting:
@@ -233,9 +233,9 @@ external_services:
 api:
   # CORS settings for production
   cors_origins:
-    - "https://ainflue.com"
-    - "https://www.ainflue.com"
-    - "https://app.ainflue.com"
+    - "https://iacherie.com"
+    - "https://www.iacherie.com"
+    - "https://app.iacherie.com"
   
   # Strict API limits for production
   request_timeout: 30       # Strict timeout
@@ -252,8 +252,8 @@ security_headers:
 # SSL/TLS Configuration (Production)
 ssl:
   enabled: true
-  cert_path: "/etc/ssl/certs/ainflue.crt"
-  key_path: "/etc/ssl/private/ainflue.key"
+  cert_path: "/etc/ssl/certs/iacherie.crt"
+  key_path: "/etc/ssl/private/iacherie.key"
   protocols:
     - "TLSv1.2"
     - "TLSv1.3"

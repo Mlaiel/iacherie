@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das Services-Modul der Ainflue-Plattform implementiert eine weltklasse Enterprise-Mikroservices-Architektur mit 3-Ebenen-Trennung für optimale Skalierbarkeit, Sicherheit und Performance.
+Das Services-Modul der IA Chérie-Plattform implementiert eine weltklasse Enterprise-Mikroservices-Architektur mit 3-Ebenen-Trennung für optimale Skalierbarkeit, Sicherheit und Performance.
 
 ## 🏗️ 3-Ebenen-Architektur
 
@@ -251,8 +251,8 @@ JWT_SECRET=ihr-jwt-secret
 ## 📞 Support
 
 - **E-Mail**: mlaiel@live.de
-- **Dokumentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Status**: [status.ainflue.com](https://status.ainflue.com)
+- **Dokumentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Status**: [status.iacherie.com](https://status.iacherie.com)
 
 ## 📄 Lizenz
 

@@ -2,7 +2,7 @@
 # =============================================================================
 # MONGODB CLUSTER DEPLOYMENT SCRIPT
 # =============================================================================
-# Production MongoDB cluster deployment automation for Ainflue platform.
+# Production MongoDB cluster deployment automation for IA Chérie platform.
 # Supports replica sets, sharding, monitoring, and backup configuration.
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -14,7 +14,7 @@ set -euo pipefail
 # Script configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-LOG_FILE="/var/log/ainflue/mongodb-deploy.log"
+LOG_FILE="/var/log/iacherie/mongodb-deploy.log"
 
 # Colors for output
 RED='\033[0;31m'
@@ -64,9 +64,9 @@ check_prerequisites() {
     fi
     
     # Check namespace
-    if ! kubectl get namespace ainflue-mongodb &> /dev/null; then
+    if ! kubectl get namespace iacherie-mongodb &> /dev/null; then
         info "Creating MongoDB namespace..."
-        kubectl create namespace ainflue-mongodb
+        kubectl create namespace iacherie-mongodb
     fi
     
     success "Prerequisites check completed"
@@ -86,7 +86,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mongodb-auth
-  namespace: ainflue-mongodb
+  namespace: iacherie-mongodb
 type: Opaque
 data:
   root-password: $(echo -n "$MONGODB_ROOT_PASSWORD" | base64)
@@ -97,7 +97,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mongodb-keyfile
-  namespace: ainflue-mongodb
+  namespace: iacherie-mongodb
 type: Opaque
 data:
   keyfile: $(openssl rand -base64 756 | base64 | tr -d '\n')
@@ -108,7 +108,7 @@ EOF
 
 # Main deployment function (simplified for demo)
 deploy_mongodb() {
-    info "Starting MongoDB deployment for Ainflue platform"
+    info "Starting MongoDB deployment for IA Chérie platform"
     info "Environment: $ENVIRONMENT"
     info "Deployment Type: $DEPLOYMENT_TYPE"
     info "MongoDB Version: $MONGODB_VERSION"

@@ -1,5 +1,5 @@
 """
-Performance Baseline Manager - Ainflue Health Checks Module
+Performance Baseline Manager - IA Chérie Health Checks Module
 Gestionnaire baselines performance avec adaptive thresholds, trend analysis,
 performance regression detection et optimization recommendations.
 

@@ -1,5 +1,5 @@
 """
-🔍 QUALITY ASSURANCE ORCHESTRATOR - AINFLUE ENTERPRISE
+🔍 QUALITY ASSURANCE ORCHESTRATOR - IACHERIE ENTERPRISE
 ======================================================
 
 Automated testing pipeline coordination and quality gate enforcement for creator economy platform.
@@ -687,7 +687,7 @@ class QualityAssuranceOrchestrator:
         """Load default test suites"""
         default_suites = [
             {
-                "name": "Ainflue Core Unit Tests",
+                "name": "IA Chérie Core Unit Tests",
                 "description": "Core functionality unit tests",
                 "test_types": ["unit"],
                 "parallel_execution": True,
@@ -707,7 +707,7 @@ class QualityAssuranceOrchestrator:
                 ]
             },
             {
-                "name": "Ainflue API Integration Tests",
+                "name": "IA Chérie API Integration Tests",
                 "description": "API integration tests",
                 "test_types": ["integration", "api"],
                 "test_cases": [

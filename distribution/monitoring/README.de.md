@@ -1,10 +1,10 @@
 # 📡 Monitoring System Engine - Enterprise Observability Plattform
 
-**Echtzeit-Monitoring und Alerting-System für die Ainflue Distribution Plattform**
+**Echtzeit-Monitoring und Alerting-System für die IA Chérie Distribution Plattform**
 
 ## 🎯 Überblick
 
-Die Monitoring System Engine ist eine umfassende Enterprise-Grade Observability-Plattform, die Echtzeit-Monitoring, Alerting, Metriken-Sammlung und System-Health-Tracking über das gesamte Ainflue Distribution-Ökosystem bietet. Dieses Modul gewährleistet optimale Performance, proaktive Problem-Erkennung und vollständige Sichtbarkeit in 65+ Plattformen und 53 KI-Agenten.
+Die Monitoring System Engine ist eine umfassende Enterprise-Grade Observability-Plattform, die Echtzeit-Monitoring, Alerting, Metriken-Sammlung und System-Health-Tracking über das gesamte IA Chérie Distribution-Ökosystem bietet. Dieses Modul gewährleistet optimale Performance, proaktive Problem-Erkennung und vollständige Sichtbarkeit in 65+ Plattformen und 53 KI-Agenten.
 
 ## 🚀 Hauptmerkmale
 
@@ -99,9 +99,9 @@ python setup_monitoring.py --environment=production
 
 ## 📞 Support & Kontakt
 
-**Monitoring-Team**: monitoring@ainflue.com  
-**DevOps-Support**: devops@ainflue.com  
-**Enterprise-Monitoring**: enterprise-monitoring@ainflue.com
+**Monitoring-Team**: monitoring@iacherie.com  
+**DevOps-Support**: devops@iacherie.com  
+**Enterprise-Monitoring**: enterprise-monitoring@iacherie.com
 
 ---
 

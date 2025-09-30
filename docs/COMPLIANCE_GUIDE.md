@@ -1,4 +1,4 @@
-# ⚖️ COMPLIANCE GUIDE - AINFLUE PLATFORM
+# ⚖️ COMPLIANCE GUIDE - IACHERIE PLATFORM
 **Enterprise-Grade Regulatory Compliance Framework**
 
 **Version:** 3.0 (Production-Ready)  
@@ -9,7 +9,7 @@
 
 ## 🎯 OVERVIEW
 
-This comprehensive compliance guide covers regulatory requirements, frameworks, and implementation strategies for the Ainflue Distribution Platform. It addresses multiple compliance standards including GDPR, CCPA, SOX, HIPAA, PCI DSS, ISO 27001, and industry-specific regulations.
+This comprehensive compliance guide covers regulatory requirements, frameworks, and implementation strategies for the IA Chérie Distribution Platform. It addresses multiple compliance standards including GDPR, CCPA, SOX, HIPAA, PCI DSS, ISO 27001, and industry-specific regulations.
 
 ### 📊 **Compliance Scope**
 - **Data Protection**: GDPR, CCPA, PIPEDA compliance
@@ -1276,7 +1276,7 @@ class ComplianceMonitoringDashboard:
 
 ### 👨‍💻 **Compliance Team**
 **Lead Compliance Officer:** **Fahed Mlaiel**
-- **Email:** compliance@ainflue.com / mlaiel@live.de
+- **Email:** compliance@iacherie.com / mlaiel@live.de
 - **Specialties:** Multi-regulatory compliance, risk management, audit coordination
 - **Availability:** 24/7 for critical compliance issues
 
@@ -1289,7 +1289,7 @@ class ComplianceMonitoringDashboard:
 ### 📞 **Regulatory Contacts**
 - **Data Protection Authority**: [Local DPA contact information]
 - **Financial Regulators**: [Relevant financial authority contacts]
-- **Legal Counsel**: legal@ainflue.com
+- **Legal Counsel**: legal@iacherie.com
 - **External Auditors**: [Audit firm contact information]
 
 ---

@@ -1,5 +1,5 @@
 # 🚀 Architecture des Événements - Système Événementiel Avancé
-**Plateforme Ainflue - Écosystème de Traitement d'Événements d'Entreprise**
+**Plateforme IA Chérie - Écosystème de Traitement d'Événements d'Entreprise**
 
 **Auteur:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Aperçu Entreprise
 
-L'**Architecture des Événements** représente l'épine dorsale de l'écosystème événementiel de la plateforme Ainflue, conçue spécifiquement pour les créateurs de contenu multi-formats (Musiciens, Blogueurs, Photographes, Influenceurs, Comédiens). Ce système ultra-avancé et prêt pour la production fournit des capacités complètes de traitement d'événements, streaming, persistance et analytique avec une évolutivité, sécurité et optimisation des performances de niveau entreprise.
+L'**Architecture des Événements** représente l'épine dorsale de l'écosystème événementiel de la plateforme IA Chérie, conçue spécifiquement pour les créateurs de contenu multi-formats (Musiciens, Blogueurs, Photographes, Influenceurs, Comédiens). Ce système ultra-avancé et prêt pour la production fournit des capacités complètes de traitement d'événements, streaming, persistance et analytique avec une évolutivité, sécurité et optimisation des performances de niveau entreprise.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -352,7 +352,7 @@ async def analyze_campaign_engagement(event):
 version: '3.8'
 services:
   event-core:
-    image: ainflue/event-core:latest
+    image: iacherie/event-core:latest
     deploy:
       replicas: 5
       resources:
@@ -370,7 +370,7 @@ services:
       - "8080:8080"
       
   event-streaming:
-    image: ainflue/event-streaming:latest
+    image: iacherie/event-streaming:latest
     deploy:
       replicas: 3
       resources:
@@ -415,7 +415,7 @@ creator_satisfaction = Gauge('creator_satisfaction_score', 'Creator satisfaction
 
 ## 📝 **Résumé**
 
-L'Architecture des Événements représente le sommet de la conception de systèmes événementiels pour la plateforme Ainflue, spécifiquement conçue pour les créateurs de contenu multi-formats. Avec des capacités de traitement avancées, un monitoring complet et une optimisation intelligente, ce système assure performance maximale, fiabilité et évolutivité pour tous les workflows créateurs tout en fournissant des insights profonds sur les métriques de succès créateurs et les opportunités d'optimisation système.
+L'Architecture des Événements représente le sommet de la conception de systèmes événementiels pour la plateforme IA Chérie, spécifiquement conçue pour les créateurs de contenu multi-formats. Avec des capacités de traitement avancées, un monitoring complet et une optimisation intelligente, ce système assure performance maximale, fiabilité et évolutivité pour tous les workflows créateurs tout en fournissant des insights profonds sur les métriques de succès créateurs et les opportunités d'optimisation système.
 
 **🎯 Mission:** Livrer le système de traitement d'événements le plus avancé au monde pour les créateurs de contenu, permettant performance optimale, optimisation intelligente et monitoring complet à travers tout l'écosystème créateur.
 

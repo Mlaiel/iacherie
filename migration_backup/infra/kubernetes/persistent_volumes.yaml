@@ -1,0 +1,346 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade Kubernetes Persistent Volumes for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+# Storage Classes for different performance tiers
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ainflue-ssd-fast
+  labels:
+    app: ainflue-platform
+    component: storage
+    tier: fast
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3
+  iops: "3000"
+  throughput: "125"
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ainflue-ssd-standard
+  labels:
+    app: ainflue-platform
+    component: storage
+    tier: standard
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3
+  iops: "1000"
+  throughput: "50"
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ainflue-content-storage
+  labels:
+    app: ainflue-platform
+    component: storage
+    tier: content
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: st1
+  encrypted: "true"
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+# Database Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: postgres
+    component: database
+    tier: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-backup-pvc
+  namespace: ainflue-platform
+  labels:
+    app: postgres
+    component: backup
+    tier: secondary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 200Gi
+
+---
+# Redis Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: redis
+    component: cache
+    tier: primary
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 50Gi
+
+---
+# Content Storage Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: content-upload-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-platform
+    component: content-storage
+    tier: upload
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-content-storage
+  resources:
+    requests:
+      storage: 1Ti
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: content-processed-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-platform
+    component: content-storage
+    tier: processed
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 2Ti
+
+---
+# AI/ML Model Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-models-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-ai
+    component: model-storage
+    tier: models
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 500Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-training-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-ai
+    component: training-storage
+    tier: training
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-content-storage
+  resources:
+    requests:
+      storage: 5Ti
+
+---
+# Monitoring Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: prometheus
+    component: monitoring
+    tier: metrics
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: grafana
+    component: monitoring
+    tier: dashboards
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# Log Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-data-pvc
+  namespace: ainflue-platform
+  labels:
+    app: elasticsearch
+    component: logging
+    tier: logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 200Gi
+
+---
+# Backup Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backup-storage-pvc
+  namespace: ainflue-platform
+  labels:
+    app: backup
+    component: backup-storage
+    tier: backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 500Gi
+
+---
+# Shared Configuration Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-config-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-platform
+    component: shared-config
+    tier: config
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-standard
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# Audio Processing Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audio-processing-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-audio
+    component: audio-processing
+    tier: processing
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 1Ti
+
+---
+# Video Processing Storage  
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: video-processing-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-video
+    component: video-processing
+    tier: processing
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 5Ti
+
+---
+# Cache Storage for Distributed Processing
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: distributed-cache-pvc
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-cache
+    component: distributed-cache
+    tier: cache
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ainflue-ssd-fast
+  resources:
+    requests:
+      storage: 200Gi

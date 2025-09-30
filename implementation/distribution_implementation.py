@@ -1,6 +1,6 @@
 """Distribution Implementation - Enterprise Multi-Platform Content Distribution System
 
-Advanced distribution system for Ainflue creator economy platform enabling
+Advanced distribution system for IA Chérie creator economy platform enabling
 intelligent content distribution across 35+ platforms with optimization and analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -203,7 +203,7 @@ class DistributionAnalytics:
 
 class DistributionImplementation:
     """
-    Enterprise Distribution Implementation for Ainflue Creator Economy Platform
+    Enterprise Distribution Implementation for IA Chérie Creator Economy Platform
     
     Comprehensive multi-platform content distribution system with intelligent optimization,
     performance analytics, and automated workflow management across 35+ platforms.
@@ -1149,7 +1149,7 @@ class DistributionImplementation:
     async def _generate_instagram_hashtags(self, distribution: ContentDistribution) -> List[str]:
         """Generate Instagram-optimized hashtags"""
         
-        base_hashtags = ["#ainflue", "#creator", "#content"]
+        base_hashtags = ["#iacherie", "#creator", "#content"]
         content_hashtags = distribution.tags[:7]  # Instagram limit considerations
         
         return base_hashtags + [f"#{tag}" for tag in content_hashtags]

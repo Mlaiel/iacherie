@@ -12,7 +12,7 @@ aws:
     
   s3:
     content_bucket:
-      name: "ainflue-creator-content"
+      name: "iacherie-creator-content"
       region: "eu-west-1"
       versioning: true
       encryption:
@@ -30,31 +30,31 @@ aws:
               storage_class: "DEEP_ARCHIVE"
               
     backup_bucket:
-      name: "ainflue-backups"
+      name: "iacherie-backups"
       region: "eu-west-1"
       cross_region_replication:
-        destination_bucket: "ainflue-backups-us"
+        destination_bucket: "iacherie-backups-us"
         destination_region: "us-east-1"
         
     public_assets_bucket:
-      name: "ainflue-public-assets"
+      name: "iacherie-public-assets"
       region: "eu-west-1"
       public_read: true
       cors_configuration:
-        allowed_origins: ["https://creator.ainflue.com"]
+        allowed_origins: ["https://creator.iacherie.com"]
         allowed_methods: ["GET", "HEAD"]
         allowed_headers: ["*"]
         
   cloudfront:
     content_distribution:
-      domain_name: "cdn.ainflue.com"
+      domain_name: "cdn.iacherie.com"
       price_class: "PriceClass_All"
       origins:
-        - domain_name: "ainflue-creator-content.s3.eu-west-1.amazonaws.com"
+        - domain_name: "iacherie-creator-content.s3.eu-west-1.amazonaws.com"
           origin_path: "/public"
       cache_behaviors:
         default:
-          target_origin_id: "S3-ainflue-creator-content"
+          target_origin_id: "S3-iacherie-creator-content"
           viewer_protocol_policy: "redirect-to-https"
           allowed_methods: ["GET", "HEAD", "OPTIONS"]
           cached_methods: ["GET", "HEAD"]
@@ -66,7 +66,7 @@ aws:
             
   rds:
     primary_instance:
-      identifier: "ainflue-creator-primary"
+      identifier: "iacherie-creator-primary"
       engine: "postgres"
       engine_version: "15.4"
       instance_class: "db.r6g.2xlarge"
@@ -76,14 +76,14 @@ aws:
       backup_retention_period: 30
       
     read_replicas:
-      - identifier: "ainflue-creator-read-1"
-        source_db: "ainflue-creator-primary"
+      - identifier: "iacherie-creator-read-1"
+        source_db: "iacherie-creator-primary"
         instance_class: "db.r6g.xlarge"
         auto_minor_version_upgrade: true
         
   elasticache:
     redis_cluster:
-      cluster_id: "ainflue-redis"
+      cluster_id: "iacherie-redis"
       engine: "redis"
       engine_version: "7.0"
       node_type: "cache.r7g.large"
@@ -95,7 +95,7 @@ aws:
   lambda:
     functions:
       content_processor:
-        function_name: "ainflue-content-processor"
+        function_name: "iacherie-content-processor"
         runtime: "python3.11"
         handler: "handler.process_content"
         memory_size: 1024
@@ -104,7 +104,7 @@ aws:
           ENVIRONMENT: "${ENVIRONMENT}"
           
       thumbnail_generator:
-        function_name: "ainflue-thumbnail-generator"
+        function_name: "iacherie-thumbnail-generator"
         runtime: "python3.11"
         handler: "handler.generate_thumbnail"
         memory_size: 2048
@@ -113,35 +113,35 @@ aws:
   sqs:
     queues:
       content_processing:
-        name: "ainflue-content-processing"
+        name: "iacherie-content-processing"
         visibility_timeout: 300
         message_retention_period: 1209600
         dead_letter_queue:
-          name: "ainflue-content-processing-dlq"
+          name: "iacherie-content-processing-dlq"
           max_receive_count: 3
           
       notification_queue:
-        name: "ainflue-notifications"
+        name: "iacherie-notifications"
         visibility_timeout: 60
         message_retention_period: 345600
         
   sns:
     topics:
       creator_notifications:
-        name: "ainflue-creator-notifications"
+        name: "iacherie-creator-notifications"
         display_name: "Creator Notifications"
         
   ec2:
     auto_scaling:
       launch_template:
-        name: "ainflue-creator-lt"
+        name: "iacherie-creator-lt"
         image_id: "ami-0c02fb55956c7d316"
         instance_type: "t3.large"
         key_name: "${EC2_KEY_PAIR}"
         security_groups: ["${APP_SECURITY_GROUP}"]
         
       auto_scaling_group:
-        name: "ainflue-creator-asg"
+        name: "iacherie-creator-asg"
         min_size: 2
         max_size: 20
         desired_capacity: 4
@@ -156,7 +156,7 @@ gcp:
     
   cloud_storage:
     content_bucket:
-      name: "ainflue-gcp-content"
+      name: "iacherie-gcp-content"
       location: "EU"
       storage_class: "STANDARD"
       lifecycle_rules:
@@ -170,14 +170,14 @@ gcp:
           storage_class: "COLDLINE"
           
     ai_models_bucket:
-      name: "ainflue-ai-models"
+      name: "iacherie-ai-models"
       location: "US"
       storage_class: "STANDARD"
       versioning: true
       
   cloud_sql:
     instance:
-      name: "ainflue-postgres"
+      name: "iacherie-postgres"
       database_version: "POSTGRES_15"
       tier: "db-custom-4-16384"
       region: "europe-west1"
@@ -189,7 +189,7 @@ gcp:
         
   compute_engine:
     instance_template:
-      name: "ainflue-template"
+      name: "iacherie-template"
       machine_type: "e2-standard-4"
       boot_disk:
         source_image: "projects/ubuntu-os-cloud/global/images/family/ubuntu-2204-lts"
@@ -197,15 +197,15 @@ gcp:
         auto_delete: true
         
     instance_group:
-      name: "ainflue-ig"
-      base_instance_name: "ainflue-vm"
+      name: "iacherie-ig"
+      base_instance_name: "iacherie-vm"
       target_size: 3
       
   cloud_run:
     services:
       api_service:
-        name: "ainflue-api"
-        image: "gcr.io/${GCP_PROJECT_ID}/ainflue-api:latest"
+        name: "iacherie-api"
+        image: "gcr.io/${GCP_PROJECT_ID}/iacherie-api:latest"
         port: 8080
         cpu: "2"
         memory: "4Gi"
@@ -231,8 +231,8 @@ gcp:
           
   cloud_cdn:
     backend_bucket:
-      name: "ainflue-cdn-backend"
-      bucket_name: "ainflue-gcp-content"
+      name: "iacherie-cdn-backend"
+      bucket_name: "iacherie-gcp-content"
       enable_cdn: true
       
   monitoring:
@@ -241,7 +241,7 @@ gcp:
       
   logging:
     log_sink:
-      name: "ainflue-logs"
+      name: "iacherie-logs"
       destination: "bigquery.googleapis.com/projects/${GCP_PROJECT_ID}/datasets/logs"
 
 # Microsoft Azure Configuration
@@ -254,7 +254,7 @@ azure:
     
   storage_account:
     name: "ainfluestorage"
-    resource_group: "ainflue-rg"
+    resource_group: "iacherie-rg"
     location: "West Europe"
     account_tier: "Standard"
     replication_type: "GRS"
@@ -270,34 +270,34 @@ azure:
         
   sql_database:
     server:
-      name: "ainflue-sql-server"
-      resource_group: "ainflue-rg"
+      name: "iacherie-sql-server"
+      resource_group: "iacherie-rg"
       location: "West Europe"
       version: "12.0"
       administrator_login: "${AZURE_SQL_ADMIN}"
       administrator_password: "${AZURE_SQL_PASSWORD}"
       
     database:
-      name: "ainflue-creator-db"
+      name: "iacherie-creator-db"
       edition: "Standard"
       service_objective: "S2"
       max_size_bytes: 268435456000
       
   app_service:
     plan:
-      name: "ainflue-app-plan"
-      resource_group: "ainflue-rg"
+      name: "iacherie-app-plan"
+      resource_group: "iacherie-rg"
       location: "West Europe"
       sku: "P2v2"
       
     web_app:
-      name: "ainflue-creator-app"
+      name: "iacherie-creator-app"
       runtime_stack: "PYTHON|3.11"
       always_on: true
       
   redis_cache:
-    name: "ainflue-redis"
-    resource_group: "ainflue-rg"
+    name: "iacherie-redis"
+    resource_group: "iacherie-rg"
     location: "West Europe"
     capacity: 1
     family: "P"
@@ -305,22 +305,22 @@ azure:
     
   cognitive_services:
     text_analytics:
-      name: "ainflue-text-analytics"
+      name: "iacherie-text-analytics"
       kind: "TextAnalytics"
       sku: "S"
       
     computer_vision:
-      name: "ainflue-computer-vision"
+      name: "iacherie-computer-vision"
       kind: "ComputerVision"
       sku: "S1"
       
   cdn:
     profile:
-      name: "ainflue-cdn"
+      name: "iacherie-cdn"
       sku: "Standard_Microsoft"
       
     endpoint:
-      name: "ainflue-content"
+      name: "iacherie-content"
       origin_host_header: "ainfluestorage.blob.core.windows.net"
 
 # Multi-Cloud Configuration

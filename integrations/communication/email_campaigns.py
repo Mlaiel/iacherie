@@ -627,13 +627,13 @@ async def main():
     # Create template
     template_id = await manager.create_template(
         name="Welcome Email",
-        subject="Welcome to Ainflue, {{recipient_name}}!",
+        subject="Welcome to IA Chérie, {{recipient_name}}!",
         html_content="""
         <h1>Welcome {{recipient_name}}!</h1>
-        <p>Thank you for joining Ainflue. We're excited to help you grow your influence.</p>
-        <a href="https://ainflue.com/dashboard">Get Started</a>
+        <p>Thank you for joining IA Chérie. We're excited to help you grow your influence.</p>
+        <a href="https://iacherie.com/dashboard">Get Started</a>
         """,
-        text_content="Welcome {{recipient_name}}! Thank you for joining Ainflue."
+        text_content="Welcome {{recipient_name}}! Thank you for joining IA Chérie."
     )
     
     # Create recipients
@@ -648,11 +648,11 @@ async def main():
     # Create campaign
     campaign_id = await manager.create_campaign(
         name="Welcome Campaign",
-        subject="Welcome to Ainflue!",
+        subject="Welcome to IA Chérie!",
         template_id=template_id,
         recipients=recipients,
-        sender_name="Ainflue Team",
-        sender_email="hello@ainflue.com",
+        sender_name="IA Chérie Team",
+        sender_email="hello@iacherie.com",
         campaign_type=CampaignType.WELCOME_SERIES
     )
     

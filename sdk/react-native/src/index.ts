@@ -1,5 +1,5 @@
 /**
- * Ainflue React Native SDK - Main Entry Point
+ * IA Chérie React Native SDK - Main Entry Point
  * 
  * Enterprise mobile SDK with multi-expert design:
  * - Lead Dev IA: AI-powered mobile content processing

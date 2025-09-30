@@ -1,8 +1,8 @@
-# 📚 Ainflue Dokumentationssystem - Creator Economy Enterprise
+# 📚 IA Chérie Dokumentationssystem - Creator Economy Enterprise
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Lizenz](https://img.shields.io/badge/lizenz-Proprietär-red.svg)](LICENSE)
-[![Creator Economy](https://img.shields.io/badge/Creator%20Economy-Angetrieben-green.svg)](https://ainflue.com)
+[![Creator Economy](https://img.shields.io/badge/Creator%20Economy-Angetrieben-green.svg)](https://iacherie.com)
 
 ## 🎯 **Fortgeschrittene Dokumentationsarchitektur für Creator Economy Plattform**
 
@@ -201,8 +201,8 @@ Node.js >= 18.0
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Python-Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -343,13 +343,13 @@ else:
 - 🔧 **[API-Referenz](docs/api-reference.de.md)** - Detaillierte API-Dokumentation
 - 🎯 **[Best Practices](docs/best-practices.de.md)** - Entwicklungsrichtlinien
 - 🔍 **[Fehlerbehebung](docs/troubleshooting.de.md)** - Häufige Probleme & Lösungen
-- 🎥 **[Video-Tutorials](https://ainflue.com/de/tutorials)** - Visuelle Lernressourcen
+- 🎥 **[Video-Tutorials](https://iacherie.com/de/tutorials)** - Visuelle Lernressourcen
 
 ### Community
-- 💬 **[Discord-Community](https://discord.gg/ainflue-de)** - Creator-Diskussionen
-- 📧 **Support:** support@ainflue.com
-- 🐛 **Bug-Reports:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- 💡 **Feature-Anfragen:** [GitHub Discussions](https://github.com/Mlaiel/Ainflue/discussions)
+- 💬 **[Discord-Community](https://discord.gg/iacherie-de)** - Creator-Diskussionen
+- 📧 **Support:** support@iacherie.com
+- 🐛 **Bug-Reports:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- 💡 **Feature-Anfragen:** [GitHub Discussions](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ---
 
@@ -380,4 +380,4 @@ Für Lizenzanfragen: **mlaiel@live.de**
 
 ---
 
-*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre Ainflue-Dokumentationsarchitektur*
+*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre IA Chérie-Dokumentationsarchitektur*

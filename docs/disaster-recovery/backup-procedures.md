@@ -1,8 +1,8 @@
-# 💾 Ainflue Platform - Comprehensive Backup Procedures
+# 💾 IA Chérie Platform - Comprehensive Backup Procedures
 
 ## 📋 Executive Summary
 
-This document outlines comprehensive backup procedures for the Ainflue AI-powered content protection and monetization platform. Our backup strategy ensures data protection, rapid recovery capabilities, and business continuity while maintaining the integrity of creator content and user data across multiple geographic locations.
+This document outlines comprehensive backup procedures for the IA Chérie AI-powered content protection and monetization platform. Our backup strategy ensures data protection, rapid recovery capabilities, and business continuity while maintaining the integrity of creator content and user data across multiple geographic locations.
 
 ## 🎯 Backup Objectives
 
@@ -76,11 +76,11 @@ This document outlines comprehensive backup procedures for the Ainflue AI-powere
 # postgresql-backup.sh - PostgreSQL continuous backup
 
 # Environment variables
-export PGHOST="postgresql-primary.ainflue.com"
+export PGHOST="postgresql-primary.iacherie.com"
 export PGPORT="5432"
 export PGUSER="backup_user"
 export PGPASSWORD="$(vault kv get -field=password secret/db/backup_user)"
-export BACKUP_S3_BUCKET="ainflue-db-backups"
+export BACKUP_S3_BUCKET="iacherie-db-backups"
 export RETENTION_DAYS="30"
 
 # Function: Create base backup
@@ -289,12 +289,12 @@ EOF
 # mongodb-backup.sh - MongoDB comprehensive backup
 
 # Configuration
-MONGO_HOST="mongodb-cluster.ainflue.com"
+MONGO_HOST="mongodb-cluster.iacherie.com"
 MONGO_PORT="27017"
 MONGO_USER="backup_user"
 MONGO_PASSWORD="$(vault kv get -field=password secret/mongodb/backup_user)"
-BACKUP_S3_BUCKET="ainflue-mongodb-backups"
-DATABASES=("ainflue" "analytics" "logs")
+BACKUP_S3_BUCKET="iacherie-mongodb-backups"
+DATABASES=("iacherie" "analytics" "logs")
 
 # Function: Create consistent backup
 create_mongodb_backup() {
@@ -441,10 +441,10 @@ esac
 # redis-backup.sh - Redis backup and restore
 
 # Configuration
-REDIS_HOST="redis-cluster.ainflue.com"
+REDIS_HOST="redis-cluster.iacherie.com"
 REDIS_PORT="6379"
 REDIS_PASSWORD="$(vault kv get -field=password secret/redis/auth)"
-BACKUP_S3_BUCKET="ainflue-redis-backups"
+BACKUP_S3_BUCKET="iacherie-redis-backups"
 
 # Function: Create Redis backup
 create_redis_backup() {
@@ -541,8 +541,8 @@ esac
 # Configuration
 CONTENT_SOURCE="/data/creator-content"
 PRIMARY_BACKUP="/backup/content"
-S3_BUCKET="ainflue-content-backups"
-GLACIER_BUCKET="ainflue-content-archive"
+S3_BUCKET="iacherie-content-backups"
+GLACIER_BUCKET="iacherie-content-archive"
 
 # Function: Real-time content sync
 setup_real_time_sync() {
@@ -770,12 +770,12 @@ CONFIG_DIRS=(
     "/etc/nginx"
     "/etc/postgresql"
     "/etc/redis"
-    "/opt/ainflue/config"
+    "/opt/iacherie/config"
     "/etc/ssl/certs"
     "/etc/systemd/system"
 )
-BACKUP_S3_BUCKET="ainflue-config-backups"
-VAULT_ADDR="https://vault.ainflue.com"
+BACKUP_S3_BUCKET="iacherie-config-backups"
+VAULT_ADDR="https://vault.iacherie.com"
 
 # Function: Backup configurations
 backup_configurations() {
@@ -1033,13 +1033,13 @@ check_prerequisites() {
     fi
     
     # Check S3 connectivity
-    if ! aws s3 ls s3://ainflue-db-backups > /dev/null 2>&1; then
+    if ! aws s3 ls s3://iacherie-db-backups > /dev/null 2>&1; then
         echo "Error: Cannot connect to S3 backup bucket" | tee -a "${LOG_FILE}"
         errors=$((errors + 1))
     fi
     
     # Check database connectivity
-    if ! pg_isready -h postgresql-primary.ainflue.com -p 5432; then
+    if ! pg_isready -h postgresql-primary.iacherie.com -p 5432; then
         echo "Error: PostgreSQL not accessible" | tee -a "${LOG_FILE}"
         errors=$((errors + 1))
     fi
@@ -1075,7 +1075,7 @@ generate_backup_report() {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ainflue Backup Report - $(date +%Y-%m-%d)</title>
+    <title>IA Chérie Backup Report - $(date +%Y-%m-%d)</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; }
@@ -1089,7 +1089,7 @@ generate_backup_report() {
 </head>
 <body>
     <div class="header">
-        <h1>Ainflue Platform - Backup Report</h1>
+        <h1>IA Chérie Platform - Backup Report</h1>
         <p>Generated: $(date)</p>
     </div>
     
@@ -1112,7 +1112,7 @@ EOF
     
     <h2>Storage Utilization</h2>
     <p>Local backup storage: $(df -h /backup | awk 'NR==2 {print $3 "/" $2 " (" $5 ")"}')</p>
-    <p>S3 storage usage: $(aws s3 ls s3://ainflue-db-backups --recursive --summarize | grep "Total Size" | awk '{print $3 $4}')</p>
+    <p>S3 storage usage: $(aws s3 ls s3://iacherie-db-backups --recursive --summarize | grep "Total Size" | awk '{print $3 $4}')</p>
     
     <h2>Recent Log Entries</h2>
     <pre>$(tail -20 ${LOG_FILE})</pre>
@@ -1121,8 +1121,8 @@ EOF
 EOF
     
     # Email the report
-    echo "Daily backup report attached" | mail -s "Ainflue Backup Report - $(date +%Y-%m-%d)" \
-        -a "${report_file}" ops@ainflue.com
+    echo "Daily backup report attached" | mail -s "IA Chérie Backup Report - $(date +%Y-%m-%d)" \
+        -a "${report_file}" ops@iacherie.com
     
     echo "Backup report generated: ${report_file}"
 }
@@ -1226,7 +1226,7 @@ main "$@"
     ],
     "notification_settings": {
       "slack_webhook": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
-      "email_recipients": ["ops@ainflue.com", "alerts@ainflue.com"],
+      "email_recipients": ["ops@iacherie.com", "alerts@iacherie.com"],
       "sms_alerts": ["+1234567890"]
     },
     "storage_settings": {
@@ -1262,9 +1262,9 @@ class BackupValidator:
         self.logger = logging.getLogger(__name__)
         self.s3_client = boto3.client('s3')
         self.backup_buckets = {
-            'database': 'ainflue-db-backups',
-            'content': 'ainflue-content-backups',
-            'config': 'ainflue-config-backups'
+            'database': 'iacherie-db-backups',
+            'content': 'iacherie-content-backups',
+            'config': 'iacherie-config-backups'
         }
         
     def validate_all_backups(self) -> Dict:
@@ -1439,7 +1439,7 @@ class BackupValidator:
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Ainflue Backup Dashboard</title>
+            <title>IA Chérie Backup Dashboard</title>
             <meta http-equiv="refresh" content="300">
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 20px; }}
@@ -1454,7 +1454,7 @@ class BackupValidator:
         </head>
         <body>
             <div class="dashboard-header">
-                <h1>Ainflue Platform - Backup Status Dashboard</h1>
+                <h1>IA Chérie Platform - Backup Status Dashboard</h1>
                 <p>Last Updated: {timestamp}</p>
                 <p class="status-{overall_status}">Overall Status: {overall_status}</p>
             </div>

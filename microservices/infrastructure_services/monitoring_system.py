@@ -762,7 +762,7 @@ class EnterpriseMonitoringSystem:
         self.monitoring_tasks = []
         self.system_metrics = {}
     
-    async def initialize(self, service_name: str = "ainflue-monitoring"):
+    async def initialize(self, service_name: str = "iacherie-monitoring"):
         """Initialize monitoring system"""
         try:
             # Initialize Redis
@@ -1147,16 +1147,16 @@ class EnterpriseMonitoringSystem:
         logger.info("Enterprise Monitoring System shutdown complete")
 
 
-# Example usage for Ainflue microservices
+# Example usage for IA Chérie microservices
 async def setup_ainflue_monitoring():
-    """Setup Ainflue monitoring system"""
+    """Setup IA Chérie monitoring system"""
     monitoring = EnterpriseMonitoringSystem()
-    await monitoring.initialize("ainflue-platform")
+    await monitoring.initialize("iacherie-platform")
     
     # Create custom business metrics
     monitoring.metrics_collector.create_custom_metric(
         "ainflue_content_uploads",
-        "Total content uploads to Ainflue platform",
+        "Total content uploads to IA Chérie platform",
         MetricType.COUNTER,
         ["content_type", "user_type"]
     )

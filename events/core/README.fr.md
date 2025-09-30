@@ -1,5 +1,5 @@
 # 🏗️ Module Events Core - Fondation du Système d'Événements Enterprise
-**Plateforme Ainflue - Infrastructure de Traitement d'Événements Core**
+**Plateforme IA Chérie - Infrastructure de Traitement d'Événements Core**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTERPRISE
 
-Le **Module Events Core** est l'infrastructure fondamentale de traitement d'événements de la plateforme Ainflue, conçue spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit une gestion d'événements de niveau entreprise, un traitement en temps réel et une orchestration de logique métier.
+Le **Module Events Core** est l'infrastructure fondamentale de traitement d'événements de la plateforme IA Chérie, conçue spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit une gestion d'événements de niveau entreprise, un traitement en temps réel et une orchestration de logique métier.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -223,7 +223,7 @@ await EventDispatcher.dispatch(revenue_event)
 version: '3.8'
 services:
   events-core:
-    image: ainflue/events-core:latest
+    image: iacherie/events-core:latest
     deploy:
       replicas: 10
       resources:
@@ -263,7 +263,7 @@ event_duration = Histogram('event_processing_duration_seconds', 'Event processin
 
 ## 📝 **CONCLUSION**
 
-Le Module Events Core représente la fondation de l'infrastructure de traitement d'événements enterprise d'Ainflue, conçue spécifiquement pour les créateurs de contenu multi-format. Avec une gestion d'événements ultra-avancée, des capacités de traitement temps réel et une intégration complète de logique métier, ce module assure une gestion d'événements fiable, scalable et sécurisée pour toute la plateforme.
+Le Module Events Core représente la fondation de l'infrastructure de traitement d'événements enterprise d'IA Chérie, conçue spécifiquement pour les créateurs de contenu multi-format. Avec une gestion d'événements ultra-avancée, des capacités de traitement temps réel et une intégration complète de logique métier, ce module assure une gestion d'événements fiable, scalable et sécurisée pour toute la plateforme.
 
 **🎯 Mission :** Fournir l'infrastructure de traitement d'événements la plus avancée pour les créateurs de contenu mondialement, permettant un traitement contenu multi-format transparent, des améliorations alimentées par IA et un suivi monétisation complet.
 

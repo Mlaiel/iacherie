@@ -1,0 +1,1251 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Ainflue AI Platform API",
+    "version": "1.0.0",
+    "description": "\n# Ainflue AI Platform API\n\nComplete API documentation for the Ainflue AI-powered content protection and monetization platform.\n\n## Features\n\n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n- **Creator Management**: Comprehensive creator profiles and content management\n- **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**: Real-time analytics and performance metrics\n- **Multi-platform Support**: Integration with major content platforms\n- **Security**: Enterprise-grade security and compliance features\n\n## Authentication\n\nAll API endpoints require authentication using API keys or JWT tokens.\n                ",
+    "termsOfService": "https://ainflue.com/terms",
+    "contact": {
+      "name": "Ainflue API Support",
+      "email": "mlaiel@live.de",
+      "url": "https://ainflue.com/support"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://ainflue.com/license"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ainflue.com/v1",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging-api.ainflue.com/v1",
+      "description": "Staging server"
+    },
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "System health check",
+        "description": "Check the overall health and status of the API system",
+        "tags": [
+          "Health"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "System is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "1.0.0"
+                    },
+                    "uptime": {
+                      "type": "number",
+                      "description": "Uptime in seconds"
+                    }
+                  }
+                },
+                "examples": {
+                  "healthy": {
+                    "summary": "Healthy system response",
+                    "value": {
+                      "status": "healthy",
+                      "timestamp": "2025-01-07T10:00:00Z",
+                      "version": "1.0.0",
+                      "uptime": 3600
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "System is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/detailed": {
+      "get": {
+        "summary": "Detailed system health check",
+        "description": "Get detailed health information about all system components",
+        "tags": [
+          "Health"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Detailed health information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "components": {
+                      "type": "object",
+                      "properties": {
+                        "database": {
+                          "type": "string"
+                        },
+                        "redis": {
+                          "type": "string"
+                        },
+                        "ai_engine": {
+                          "type": "string"
+                        },
+                        "storage": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "metrics": {
+                      "type": "object",
+                      "properties": {
+                        "cpu_usage": {
+                          "type": "number"
+                        },
+                        "memory_usage": {
+                          "type": "number"
+                        },
+                        "disk_usage": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/creators": {
+      "get": {
+        "summary": "List creators",
+        "description": "Get a paginated list of creators with optional filtering",
+        "tags": [
+          "Creators"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-based)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Items per page",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by creator type",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "musician",
+                "blogger",
+                "photographer",
+                "influencer"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by verification status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "verified",
+                "rejected"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search by name or email",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of creators",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creators": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Creator"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "per_page": {
+                      "type": "integer"
+                    },
+                    "total_pages": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create new creator",
+        "description": "Create a new creator account with the provided information",
+        "tags": [
+          "Creators"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Creator created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Creator with email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Creator information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "John Doe",
+                  "email": "john@example.com",
+                  "type": "musician",
+                  "country": "US",
+                  "language": "en"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/creators/{creator_id}": {
+      "get": {
+        "summary": "Get creator by ID",
+        "description": "Retrieve detailed information about a specific creator",
+        "tags": [
+          "Creators"
+        ],
+        "parameters": [
+          {
+            "name": "creator_id",
+            "in": "path",
+            "description": "Creator identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "creator_123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Creator details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Creator not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/content/upload": {
+      "post": {
+        "summary": "Upload content",
+        "description": "Upload new content for protection and management",
+        "tags": [
+          "Content"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Content uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "upload_time": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "processing_eta": {
+                      "type": "integer",
+                      "description": "ETA in seconds"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid upload data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Content upload data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "creator_id": "creator_123",
+                  "title": "My New Song",
+                  "description": "A beautiful acoustic piece",
+                  "content_type": "audio",
+                  "file_data": "base64_encoded_file_data"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/content/{content_id}": {
+      "get": {
+        "summary": "Get content details",
+        "description": "Retrieve detailed information about specific content",
+        "tags": [
+          "Content"
+        ],
+        "parameters": [
+          {
+            "name": "content_id",
+            "in": "path",
+            "description": "Content identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "content_123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Content details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Content"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/content/{content_id}/analyze": {
+      "post": {
+        "summary": "Analyze content",
+        "description": "Run AI analysis on uploaded content for protection and classification",
+        "tags": [
+          "Content",
+          "Protection"
+        ],
+        "parameters": [
+          {
+            "name": "content_id",
+            "in": "path",
+            "description": "Content identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "content_123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analysis completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content_id": {
+                      "type": "string"
+                    },
+                    "analysis_score": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "protection_level": {
+                      "type": "string",
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high"
+                      ]
+                    },
+                    "metadata": {
+                      "type": "object"
+                    },
+                    "fingerprint": {
+                      "type": "string",
+                      "description": "Content fingerprint"
+                    },
+                    "analyzed_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Content already analyzed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/protection/check": {
+      "post": {
+        "summary": "Check for content infringement",
+        "description": "Check if content matches any protected content in the system",
+        "tags": [
+          "Protection"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Infringement check results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "matches_found": {
+                      "type": "boolean"
+                    },
+                    "matches": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "content_id": {
+                            "type": "string"
+                          },
+                          "similarity_score": {
+                            "type": "number"
+                          },
+                          "creator_id": {
+                            "type": "string"
+                          },
+                          "match_segments": {
+                            "type": "array"
+                          }
+                        }
+                      }
+                    },
+                    "check_timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Content to check",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "content_data": "base64_encoded_content",
+                  "content_type": "audio",
+                  "threshold": 0.85
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/monetization/revenue": {
+      "get": {
+        "summary": "Get revenue reports",
+        "description": "Retrieve revenue reports for creators and content",
+        "tags": [
+          "Monetization"
+        ],
+        "parameters": [
+          {
+            "name": "creator_id",
+            "in": "query",
+            "description": "Filter by creator",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Start date (ISO 8601)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date (ISO 8601)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "group_by",
+            "in": "query",
+            "description": "Group results by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "day",
+                "week",
+                "month"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Revenue report data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_revenue": {
+                      "type": "number"
+                    },
+                    "period_start": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "period_end": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "breakdown": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "period": {
+                            "type": "string"
+                          },
+                          "revenue": {
+                            "type": "number"
+                          },
+                          "transactions": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/analytics/dashboard": {
+      "get": {
+        "summary": "Get dashboard analytics",
+        "description": "Retrieve key metrics for the analytics dashboard",
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Dashboard analytics data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyticsData"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/security/audit": {
+      "get": {
+        "summary": "Get security audit report",
+        "description": "Retrieve security audit information and compliance status",
+        "tags": [
+          "Security"
+        ],
+        "parameters": [
+          {
+            "name": "audit_type",
+            "in": "query",
+            "description": "Type of audit",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "access",
+                "data",
+                "infrastructure",
+                "compliance"
+              ]
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Audit period start",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Audit period end",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Security audit report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "audit_id": {
+                      "type": "string"
+                    },
+                    "audit_type": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "passed",
+                        "failed",
+                        "warning"
+                      ]
+                    },
+                    "score": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "findings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "severity": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "recommendation": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "generated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          },
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/config": {
+      "get": {
+        "summary": "Get system configuration",
+        "description": "Retrieve current system configuration (admin only)",
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "System configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "version": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "string"
+                    },
+                    "features": {
+                      "type": "object"
+                    },
+                    "limits": {
+                      "type": "object"
+                    },
+                    "security_settings": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "error_code": {
+            "type": "string",
+            "description": "Machine-readable error code"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Error timestamp"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "Request ID for tracking"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "Creator": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique creator identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Creator's full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Creator's email address"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "musician",
+              "blogger",
+              "photographer",
+              "influencer",
+              "comedian",
+              "podcaster",
+              "writer",
+              "artist",
+              "videographer"
+            ],
+            "description": "Type of creator"
+          },
+          "country": {
+            "type": "string",
+            "description": "Creator's country code"
+          },
+          "language": {
+            "type": "string",
+            "description": "Creator's primary language"
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "verified",
+              "rejected"
+            ],
+            "description": "Creator verification status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "type"
+        ]
+      },
+      "Content": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique content identifier"
+          },
+          "creator_id": {
+            "type": "string",
+            "description": "ID of the content creator"
+          },
+          "title": {
+            "type": "string",
+            "description": "Content title"
+          },
+          "description": {
+            "type": "string",
+            "description": "Content description"
+          },
+          "content_type": {
+            "type": "string",
+            "enum": [
+              "audio",
+              "video",
+              "image",
+              "text",
+              "mixed"
+            ],
+            "description": "Type of content"
+          },
+          "file_size": {
+            "type": "integer",
+            "description": "File size in bytes"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Content duration in seconds (for audio/video)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "uploaded",
+              "processing",
+              "processed",
+              "failed",
+              "deleted"
+            ],
+            "description": "Content processing status"
+          },
+          "protection_level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "description": "Content protection level"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional content metadata"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Upload timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "creator_id",
+          "content_type",
+          "status"
+        ]
+      },
+      "AnalyticsData": {
+        "type": "object",
+        "properties": {
+          "total_creators": {
+            "type": "integer",
+            "description": "Total number of creators"
+          },
+          "total_content": {
+            "type": "integer",
+            "description": "Total content items"
+          },
+          "active_workflows": {
+            "type": "integer",
+            "description": "Number of active workflows"
+          },
+          "revenue_today": {
+            "type": "number",
+            "description": "Today's revenue"
+          },
+          "revenue_this_month": {
+            "type": "number",
+            "description": "This month's revenue"
+          },
+          "protected_content": {
+            "type": "integer",
+            "description": "Number of protected content items"
+          },
+          "last_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "total_creators",
+          "total_content",
+          "last_updated"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key for authentication"
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT token for authentication"
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {}
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    },
+    {
+      "BearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Health",
+      "description": "API health check and system status endpoints"
+    },
+    {
+      "name": "Creators",
+      "description": "Creator management and profile operations"
+    },
+    {
+      "name": "Content",
+      "description": "Content upload, management, and analysis"
+    },
+    {
+      "name": "Protection",
+      "description": "Content protection and rights management"
+    },
+    {
+      "name": "Monetization",
+      "description": "Revenue tracking and payment processing"
+    },
+    {
+      "name": "Analytics",
+      "description": "Analytics and reporting endpoints"
+    },
+    {
+      "name": "Security",
+      "description": "Security and audit endpoints"
+    },
+    {
+      "name": "Admin",
+      "description": "Administrative operations (admin only)"
+    }
+  ]
+}

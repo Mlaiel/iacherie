@@ -110,7 +110,7 @@ kubectl apply -f kubernetes/monitoring/monitoring-stack.yaml
 ### Access Services
 ```bash
 # Kibana (Logs)
-kubectl port-forward -n ainflue-logging service/kibana 5601:5601
+kubectl port-forward -n iacherie-logging service/kibana 5601:5601
 # Access: http://localhost:5601
 
 # Jaeger (Tracing)

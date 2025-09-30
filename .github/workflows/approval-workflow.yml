@@ -27,7 +27,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: mlaiel/ainflue
+  IMAGE_NAME: mlaiel/iacherie
 
 jobs:
   # Pre-approval validation

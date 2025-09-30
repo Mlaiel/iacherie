@@ -1,6 +1,6 @@
 # 🚀 Distribution Module - Docker Services
 
-**Ainflue Platform Distribution Infrastructure**
+**IA Chérie Platform Distribution Infrastructure**
 
 Multi-platform content distribution system with intelligent scheduling, format adaptation, and cross-platform synchronization for musicians, bloggers, photographers, influencers, and comedians.
 

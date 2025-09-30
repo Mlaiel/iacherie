@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Crisis Communication Manager for PagerDuty - Ainflue Platform
+Crisis Communication Manager for PagerDuty - IA Chérie Platform
 Public communication and stakeholder notification during incidents
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -205,7 +205,7 @@ class CrisisCommunicationManager:
                 CommunicationChannel.DISCORD
             ],
             contact_info={
-                "email": ["creators@ainflue.com"],
+                "email": ["creators@iacherie.com"],
                 "discord": ["creator-alerts"],
                 "push_tokens": []
             },
@@ -233,7 +233,7 @@ class CrisisCommunicationManager:
                 CommunicationChannel.STATUS_PAGE
             ],
             contact_info={
-                "email": ["partnerships@ainflue.com", "brands@ainflue.com"],
+                "email": ["partnerships@iacherie.com", "brands@iacherie.com"],
                 "slack": ["#brand-partners", "#incident-updates"]
             },
             escalation_threshold_minutes=30,
@@ -260,9 +260,9 @@ class CrisisCommunicationManager:
                 CommunicationChannel.SOCIAL_MEDIA
             ],
             contact_info={
-                "status_page": ["https://status.ainflue.com"],
+                "status_page": ["https://status.iacherie.com"],
                 "twitter": ["@AinfluePlatform"],
-                "linkedin": ["ainflue-platform"]
+                "linkedin": ["iacherie-platform"]
             },
             escalation_threshold_minutes=60,
             requires_approval=True,
@@ -279,7 +279,7 @@ class CrisisCommunicationManager:
         # Employees
         self.stakeholder_groups["employees"] = StakeholderGroup(
             group_id="employees",
-            group_name="Ainflue Employees",
+            group_name="IA Chérie Employees",
             stakeholder_type=StakeholderType.EMPLOYEES,
             priority_level=1,
             preferred_channels=[
@@ -288,7 +288,7 @@ class CrisisCommunicationManager:
             ],
             contact_info={
                 "slack": ["#all-hands", "#incident-response"],
-                "email": ["all@ainflue.com"]
+                "email": ["all@iacherie.com"]
             },
             escalation_threshold_minutes=5,
             requires_approval=False,
@@ -312,7 +312,7 @@ class CrisisCommunicationManager:
                 CommunicationChannel.EMAIL
             ],
             contact_info={
-                "email": ["investors@ainflue.com", "board@ainflue.com"]
+                "email": ["investors@iacherie.com", "board@iacherie.com"]
             },
             escalation_threshold_minutes=60,
             requires_approval=True,
@@ -337,7 +337,7 @@ class CrisisCommunicationManager:
                 CommunicationChannel.EMAIL
             ],
             contact_info={
-                "email": ["press@ainflue.com"],
+                "email": ["press@iacherie.com"],
                 "press_contacts": ["techcrunch@tc.com", "verge@vox.com"]
             },
             escalation_threshold_minutes=120,
@@ -362,7 +362,7 @@ class CrisisCommunicationManager:
                 "content": """
 Dear Creator,
 
-We're currently experiencing technical difficulties that may affect some creator features on the Ainflue platform. Our engineering team is actively working to resolve this issue.
+We're currently experiencing technical difficulties that may affect some creator features on the IA Chérie platform. Our engineering team is actively working to resolve this issue.
 
 **What's happening:** {incident_description}
 **Services affected:** {affected_services}
@@ -370,7 +370,7 @@ We're currently experiencing technical difficulties that may affect some creator
 
 We'll keep you updated as we work to restore full functionality. Thank you for your patience.
 
-The Ainflue Team
+The IA Chérie Team
                 """.strip()
             },
             "fr": {
@@ -378,7 +378,7 @@ The Ainflue Team
                 "content": """
 Cher Créateur,
 
-Nous rencontrons actuellement des difficultés techniques qui peuvent affecter certaines fonctionnalités créateur sur la plateforme Ainflue. Notre équipe d'ingénieurs travaille activement pour résoudre ce problème.
+Nous rencontrons actuellement des difficultés techniques qui peuvent affecter certaines fonctionnalités créateur sur la plateforme IA Chérie. Notre équipe d'ingénieurs travaille activement pour résoudre ce problème.
 
 **Ce qui se passe:** {incident_description}
 **Services affectés:** {affected_services}
@@ -386,7 +386,7 @@ Nous rencontrons actuellement des difficultés techniques qui peuvent affecter c
 
 Nous vous tiendrons informé pendant que nous travaillons à restaurer toutes les fonctionnalités. Merci pour votre patience.
 
-L'équipe Ainflue
+L'équipe IA Chérie
                 """.strip()
             }
         }
@@ -394,11 +394,11 @@ L'équipe Ainflue
         # Brand incident templates
         self.message_templates["brand_incident_alert"] = {
             "en": {
-                "subject": "🔴 URGENT: Service Disruption - Ainflue Platform",
+                "subject": "🔴 URGENT: Service Disruption - IA Chérie Platform",
                 "content": """
 Dear Brand Partner,
 
-We are experiencing a service disruption on the Ainflue platform that may impact collaboration campaigns and analytics reporting.
+We are experiencing a service disruption on the IA Chérie platform that may impact collaboration campaigns and analytics reporting.
 
 **Incident Details:**
 - Issue: {incident_description}
@@ -414,7 +414,7 @@ We are experiencing a service disruption on the Ainflue platform that may impact
 We apologize for any inconvenience and appreciate your patience.
 
 Best regards,
-Ainflue Partnership Team
+IA Chérie Partnership Team
                 """.strip()
             }
         }
@@ -422,13 +422,13 @@ Ainflue Partnership Team
         # User public templates
         self.message_templates["user_incident_alert"] = {
             "en": {
-                "subject": "Service Update - Ainflue Platform",
+                "subject": "Service Update - IA Chérie Platform",
                 "content": """
-We're currently experiencing technical issues that may affect your experience on Ainflue.
+We're currently experiencing technical issues that may affect your experience on IA Chérie.
 
 Our team is working to resolve this quickly. We'll provide updates as they become available.
 
-For real-time updates: https://status.ainflue.com
+For real-time updates: https://status.iacherie.com
 
 Thank you for your patience.
                 """.strip()
@@ -466,28 +466,28 @@ Stay alert and ready to assist.
         # Media templates
         self.message_templates["media_incident_statement"] = {
             "en": {
-                "subject": "Ainflue Platform Statement - Service Issue",
+                "subject": "IA Chérie Platform Statement - Service Issue",
                 "content": """
 FOR IMMEDIATE RELEASE
 
-Ainflue Platform Statement on Current Service Issues
+IA Chérie Platform Statement on Current Service Issues
 
-{date} - Ainflue, the leading Creator Economy platform, is currently addressing technical issues affecting some platform services. The company's engineering team is working to restore full functionality as quickly as possible.
+{date} - IA Chérie, the leading Creator Economy platform, is currently addressing technical issues affecting some platform services. The company's engineering team is working to restore full functionality as quickly as possible.
 
-"We take any service disruption extremely seriously," said {spokesperson}, {title} at Ainflue. "Our priority is restoring service to our creator community and brand partners while ensuring data security and platform integrity."
+"We take any service disruption extremely seriously," said {spokesperson}, {title} at IA Chérie. "Our priority is restoring service to our creator community and brand partners while ensuring data security and platform integrity."
 
 **Key Points:**
 - Issue detected at {start_time}
 - Affects: {affected_services}
 - No data loss or security breach
 - Estimated resolution: {estimated_resolution}
-- Regular updates at https://status.ainflue.com
+- Regular updates at https://status.iacherie.com
 
-Ainflue serves over {creator_count} content creators and {brand_count} brand partners worldwide, facilitating authentic collaborations in the Creator Economy.
+IA Chérie serves over {creator_count} content creators and {brand_count} brand partners worldwide, facilitating authentic collaborations in the Creator Economy.
 
 For media inquiries:
-Press Team: press@ainflue.com
-Phone: +1-555-AINFLUE
+Press Team: press@iacherie.com
+Phone: +1-555-IACHERIE
 
 ###
                 """.strip()
@@ -514,7 +514,7 @@ Phone: +1-555-AINFLUE
                 actual_resolution=None,
                 status="active",
                 incident_commander=incident_data.get("incident_commander", "unknown"),
-                communication_lead=incident_data.get("communication_lead", "communications@ainflue.com"),
+                communication_lead=incident_data.get("communication_lead", "communications@iacherie.com"),
                 stakeholder_impact={},
                 messages_sent=[],
                 social_media_monitoring={},
@@ -1014,17 +1014,17 @@ Phone: +1-555-AINFLUE
             if platform == "twitter":
                 # Twitter character limit
                 if len(base_content) > 280:
-                    return base_content[:250] + "... Status: https://status.ainflue.com"
+                    return base_content[:250] + "... Status: https://status.iacherie.com"
                 else:
-                    return base_content + " Status: https://status.ainflue.com"
+                    return base_content + " Status: https://status.iacherie.com"
             
             elif platform == "linkedin":
                 # Professional tone for LinkedIn
-                return f"Ainflue Platform Update:\n\n{base_content}\n\nFor real-time updates: https://status.ainflue.com\n\n#PlatformUpdate #Transparency"
+                return f"IA Chérie Platform Update:\n\n{base_content}\n\nFor real-time updates: https://status.iacherie.com\n\n#PlatformUpdate #Transparency"
             
             elif platform == "facebook":
                 # More detailed for Facebook
-                return f"{base_content}\n\nWe appreciate your patience as we work to resolve this issue. Updates: https://status.ainflue.com"
+                return f"{base_content}\n\nWe appreciate your patience as we work to resolve this issue. Updates: https://status.iacherie.com"
             
             else:
                 return base_content
@@ -1075,9 +1075,9 @@ Phone: +1-555-AINFLUE
         try:
             monitoring_config = {
                 "keywords": [
-                    "ainflue",
-                    "ainflue down",
-                    "ainflue not working",
+                    "iacherie",
+                    "iacherie down",
+                    "iacherie not working",
                     crisis.title.lower()
                 ],
                 "platforms": ["twitter", "reddit", "instagram"],
@@ -1144,7 +1144,7 @@ Status Update - {datetime.utcnow().strftime('%H:%M UTC')}
 
 We'll continue to provide updates as the situation develops.
 
-For real-time status: https://status.ainflue.com
+For real-time status: https://status.iacherie.com
                     """.strip()
                 }
             }
@@ -1296,10 +1296,10 @@ We'll be conducting a thorough post-mortem analysis and will share our findings 
             platforms = ["twitter", "linkedin", "facebook"]
             
             for platform in platforms:
-                content = f"✅ Update: The platform issues have been resolved. All Ainflue services are now operating normally. Thank you for your patience! #Resolved"
+                content = f"✅ Update: The platform issues have been resolved. All IA Chérie services are now operating normally. Thank you for your patience! #Resolved"
                 
                 if platform == "linkedin":
-                    content = f"Ainflue Platform Update: ✅ Resolved\n\n{resolution_message}\n\nAll services are now operating normally. Thank you for your patience and continued trust in our platform.\n\n#PlatformUpdate #Resolved #BackOnline"
+                    content = f"IA Chérie Platform Update: ✅ Resolved\n\n{resolution_message}\n\nAll services are now operating normally. Thank you for your patience and continued trust in our platform.\n\n#PlatformUpdate #Resolved #BackOnline"
                 
                 # Store social media post
                 social_post = SocialMediaPost(

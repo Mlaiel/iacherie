@@ -1,15 +1,15 @@
 # Creator Economy RBAC Manifests
 # Type: role_bindings
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Generated for Ainflue Creator Economy Platform
+# Generated for IA Chérie Creator Economy Platform
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
   name: creator-content-manager-binding
-  namespace: ainflue
+  namespace: iacherie
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -17,16 +17,16 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: creator-api
-  namespace: ainflue
+  namespace: iacherie
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
   name: collaboration-manager-binding
-  namespace: ainflue
+  namespace: iacherie
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -34,16 +34,16 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: collaboration-service
-  namespace: ainflue
+  namespace: iacherie
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
   name: analytics-viewer-binding
-  namespace: ainflue
+  namespace: iacherie
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -51,5 +51,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: analytics-service
-  namespace: ainflue
+  namespace: iacherie
 

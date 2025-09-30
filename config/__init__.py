@@ -1,7 +1,7 @@
-"""Ainflue Configuration Management - Enterprise Orchestrator
+"""IA Chérie Configuration Management - Enterprise Orchestrator
 ===========================================================
 
-Master configuration orchestrator for the Ainflue platform providing
+Master configuration orchestrator for the IA Chérie platform providing
 centralized configuration management, environment handling, and enterprise
 integration across all subsystems and business logic components.
 
@@ -47,7 +47,7 @@ class ConfigurationLevel(str, Enum):
     QUANTUM = "quantum"
 
 class BusinessLogicFlow(str, Enum):
-    """Ainflue business logic flow stages"""
+    """IA Chérie business logic flow stages"""
     CREATOR_ONBOARDING = "creator_onboarding"
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
@@ -60,7 +60,7 @@ class BusinessLogicFlow(str, Enum):
     GAMIFICATION_ENGAGEMENT = "gamification_engagement"
 
 class AinflueMasterConfiguration:
-    """Master configuration orchestrator for Ainflue platform"""
+    """Master configuration orchestrator for IA Chérie platform"""
     
     def __init__(self, level: ConfigurationLevel = ConfigurationLevel.ENTERPRISE):
         """Initialize master configuration"""
@@ -280,7 +280,7 @@ if core_imports_success:
     ])
 
 # Initialize logging
-logger.info(f"🔧 Ainflue Master Configuration initialized - Level: {master_config.level.value}")
+logger.info(f"🔧 IA Chérie Master Configuration initialized - Level: {master_config.level.value}")
 logger.info(f"📊 Total configurations: {len(master_config.configurations)}")
 logger.info(f"🔄 Business logic flows: {len(master_config.business_flow_configs)}")
 logger.info(f"✅ Core imports successful: {core_imports_success}")

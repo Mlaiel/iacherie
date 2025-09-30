@@ -147,7 +147,7 @@ business_intelligence:
       
     superset:
       enabled: true
-      host: "superset.ainflue.com"
+      host: "superset.iacherie.com"
 
 # Key Performance Indicators (KPIs)
 kpis:
@@ -299,17 +299,17 @@ reporting:
   automated_reports:
     daily_executive_summary:
       schedule: "0 8 * * *"  # 8 AM daily
-      recipients: ["ceo@ainflue.com", "cto@ainflue.com"]
+      recipients: ["ceo@iacherie.com", "cto@iacherie.com"]
       format: "email_html"
       
     weekly_creator_insights:
       schedule: "0 9 * * 1"  # Monday 9 AM
-      recipients: ["creator_team@ainflue.com"]
+      recipients: ["creator_team@iacherie.com"]
       format: "pdf"
       
     monthly_board_report:
       schedule: "0 10 1 * *"  # 1st of month 10 AM
-      recipients: ["board@ainflue.com"]
+      recipients: ["board@iacherie.com"]
       format: "powerpoint"
       
   self_service_analytics:
@@ -413,7 +413,7 @@ security:
 # Integration APIs
 integration_apis:
   rest_api:
-    base_url: "https://analytics-api.ainflue.com"
+    base_url: "https://analytics-api.iacherie.com"
     authentication: "jwt"
     
     endpoints:

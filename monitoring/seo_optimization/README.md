@@ -4,7 +4,7 @@
 
 ## Overview
 
-The SEO Optimization Monitoring Module provides comprehensive SEO tracking and optimization across all major platforms where Ainflue creators distribute their content. This module leverages AI-powered analysis to optimize rankings, enhance metadata, track competitive positioning, and maximize search visibility.
+The SEO Optimization Monitoring Module provides comprehensive SEO tracking and optimization across all major platforms where IA Chérie creators distribute their content. This module leverages AI-powered analysis to optimize rankings, enhance metadata, track competitive positioning, and maximize search visibility.
 
 ## Core Components
 
@@ -153,5 +153,5 @@ For enterprise support and custom SEO strategies:
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform**  
 **All Rights Reserved - Enterprise License**

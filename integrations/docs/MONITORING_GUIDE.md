@@ -15,7 +15,7 @@
 
 ### Overview
 
-The Ainflue integration monitoring system provides comprehensive observability across all third-party integrations, ensuring high availability, performance, and reliability.
+The IA Chérie integration monitoring system provides comprehensive observability across all third-party integrations, ensuring high availability, performance, and reliability.
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -626,7 +626,7 @@ async def metrics_dashboard():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Ainflue Integration Monitoring</title>
+        <title>IA Chérie Integration Monitoring</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; }
@@ -1060,7 +1060,7 @@ class PerformanceTrends:
 ```json
 {
   "dashboard": {
-    "title": "Ainflue Integration Monitoring",
+    "title": "IA Chérie Integration Monitoring",
     "panels": [
       {
         "title": "Integration Health Status",
@@ -1125,4 +1125,4 @@ class PerformanceTrends:
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Contact**: mlaiel@live.de  
-**Legal**: This documentation is part of the Ainflue platform and is protected by international copyright law.
+**Legal**: This documentation is part of the IA Chérie platform and is protected by international copyright law.

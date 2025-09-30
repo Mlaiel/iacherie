@@ -3,7 +3,7 @@
 Distribution Module Health Check System
 ======================================
 
-Comprehensive health check and validation system for the Ainflue Distribution Module.
+Comprehensive health check and validation system for the IA Chérie Distribution Module.
 Validates all modules are properly configured and functioning according to the enterprise checklist.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -360,7 +360,7 @@ class DistributionHealthChecker:
     def print_console_report(self, report: DistributionHealthReport):
         """Print a formatted console report"""
         print("\n" + "="*80)
-        print("🚀 AINFLUE DISTRIBUTION MODULE HEALTH CHECK REPORT")
+        print("🚀 IACHERIE DISTRIBUTION MODULE HEALTH CHECK REPORT")
         print("="*80)
         print(f"📊 Overall Status: {report.overall_status.value.upper()}")
         print(f"📅 Generated: {report.generated_at.strftime('%Y-%m-%d %H:%M:%S UTC')}")
@@ -398,7 +398,7 @@ async def main():
     """Main function to run the health check"""
     try:
         # Add the project root to Python path
-        sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
+        sys.path.insert(0, '/home/runner/work/IA Chérie/IA Chérie')
         
         checker = DistributionHealthChecker()
         report = await checker.run_comprehensive_health_check()

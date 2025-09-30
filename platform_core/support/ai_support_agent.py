@@ -377,7 +377,7 @@ class AISupportAgent:
         """🎯 Construction prompt système contextualisé"""
         lang_model = self.language_models[context.language]
         
-        base_prompt = f"""You are an expert AI support agent for Ainflue Creator Economy Platform.
+        base_prompt = f"""You are an expert AI support agent for IA Chérie Creator Economy Platform.
 
 Creator Profile:
 - Type: {context.creator_type}

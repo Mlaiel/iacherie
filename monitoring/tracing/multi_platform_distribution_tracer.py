@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multi-Platform Distribution Tracer Enterprise
+IA Chérie Platform - Multi-Platform Distribution Tracer Enterprise
 ==============================================================
 
 Advanced multi-platform distribution tracing system for monitoring cross-platform sync,

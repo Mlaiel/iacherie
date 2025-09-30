@@ -1,4 +1,4 @@
-# 💳 Architecture Enterprise du Noyau de Paiement - Plateforme Économie Créateur Ainflue
+# 💳 Architecture Enterprise du Noyau de Paiement - Plateforme Économie Créateur IA Chérie
 
 **Infrastructure Entreprise du Gateway de Paiement**  
 **Version :** 4.0 Enterprise  
@@ -17,7 +17,7 @@
 
 ## 🎯 Résumé Exécutif
 
-L'**Architecture Enterprise du Noyau de Paiement** représente l'aboutissement de l'expertise multi-rôles combinant 9 domaines spécialisés pour fournir une infrastructure de paiement de niveau industriel pour la Plateforme Économie Créateur Ainflue. Ce système traite les workflows de monétisation des créateurs à travers multiples formats de contenu avec des temps de réponse inférieurs à 100ms et une disponibilité de 99,99%.
+L'**Architecture Enterprise du Noyau de Paiement** représente l'aboutissement de l'expertise multi-rôles combinant 9 domaines spécialisés pour fournir une infrastructure de paiement de niveau industriel pour la Plateforme Économie Créateur IA Chérie. Ce système traite les workflows de monétisation des créateurs à travers multiples formats de contenu avec des temps de réponse inférieurs à 100ms et une disponibilité de 99,99%.
 
 ### 🏆 Implémentation Expert Multi-Rôles
 
@@ -324,7 +324,7 @@ spec:
     spec:
       containers:
       - name: payment-core
-        image: ainflue/payment-core:enterprise-v4.0
+        image: iacherie/payment-core:enterprise-v4.0
         resources:
           requests:
             memory: "2Gi"
@@ -552,4 +552,4 @@ print(f"Fournisseur utilisé : {result.provider}")
 
 ---
 
-*Cette documentation représente l'expertise collective de 9 rôles spécialisés travaillant ensemble pour fournir une infrastructure de paiement niveau entreprise pour la Plateforme Économie Créateur Ainflue.*
+*Cette documentation représente l'expertise collective de 9 rôles spécialisés travaillant ensemble pour fournir une infrastructure de paiement niveau entreprise pour la Plateforme Économie Créateur IA Chérie.*

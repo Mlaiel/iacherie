@@ -243,7 +243,7 @@ class SMSServicesHub:
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=timeout,
-                headers={'User-Agent': 'Ainflue-SMS-Hub/1.0'}
+                headers={'User-Agent': 'IA Chérie-SMS-Hub/1.0'}
             )
     
     async def close_session(self):
@@ -837,7 +837,7 @@ async def main():
         # Send single message
         message_id = await sms_hub.send_message(
             to_number="+1234567890",
-            content="Welcome to Ainflue! Your account is now active.",
+            content="Welcome to IA Chérie! Your account is now active.",
             message_type=MessageType.TRANSACTIONAL
         )
         

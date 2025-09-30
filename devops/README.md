@@ -1,4 +1,4 @@
-# 🚀 DevOps Enterprise Architecture - Ainflue Platform
+# 🚀 DevOps Enterprise Architecture - IA Chérie Platform
 
 ## ⚠️ COPYRIGHT PROTECTION NOTICE
 **© 2025 Fahed Mlaiel. All Rights Reserved.**
@@ -11,7 +11,7 @@ This DevOps architecture and implementation are the **EXCLUSIVE PROPERTY** of **
 
 ## 📋 Overview
 
-The Ainflue DevOps Enterprise Architecture provides comprehensive infrastructure automation, deployment management, monitoring, security, and performance optimization for the Ainflue platform. This enterprise-grade system supports multi-format content processing, real-time AI operations, and global distribution networks.
+The IA Chérie DevOps Enterprise Architecture provides comprehensive infrastructure automation, deployment management, monitoring, security, and performance optimization for the IA Chérie platform. This enterprise-grade system supports multi-format content processing, real-time AI operations, and global distribution networks.
 
 ## 🏗️ Architecture Overview
 
@@ -58,8 +58,8 @@ The Ainflue DevOps Enterprise Architecture provides comprehensive infrastructure
 
 1. **Clone and Setup**
    ```bash
-   git clone https://github.com/Mlaiel/Ainflue.git
-   cd Ainflue/devops
+   git clone https://github.com/Mlaiel/IA Chérie.git
+   cd IA Chérie/devops
    pip install -r ../requirements.txt
    ```
 
@@ -117,14 +117,14 @@ deployment_mgr = DeploymentManager()
 
 # Blue/Green deployment
 await deployment_mgr.blue_green_deployment({
-    "application": "ainflue-api",
+    "application": "iacherie-api",
     "version": "v2.1.0",
     "health_check_url": "/health"
 })
 
 # Canary deployment with 10% traffic
 await deployment_mgr.canary_deployment({
-    "application": "ainflue-web",
+    "application": "iacherie-web",
     "version": "v1.5.0",
     "traffic_split": 0.1
 })
@@ -140,7 +140,7 @@ observability = ObservabilityManager()
 
 # Setup monitoring for service
 await observability.setup_service_monitoring({
-    "service": "ainflue-api",
+    "service": "iacherie-api",
     "metrics": ["response_time", "error_rate", "throughput"],
     "alerts": {
         "response_time": {"threshold": "100ms", "action": "scale_up"},
@@ -159,7 +159,7 @@ security = SecurityAutomation()
 
 # Run vulnerability scan
 scan_results = await security.vulnerability_scanning({
-    "targets": ["docker.io/ainflue/api:latest"],
+    "targets": ["docker.io/iacherie/api:latest"],
     "scanners": ["trivy", "clair"],
     "fail_on": "critical"
 })
@@ -188,12 +188,12 @@ infrastructure:
     target_cpu: 70
 
 monitoring:
-  prometheus_endpoint: https://prometheus.ainflue.com
-  grafana_endpoint: https://grafana.ainflue.com
+  prometheus_endpoint: https://prometheus.iacherie.com
+  grafana_endpoint: https://grafana.iacherie.com
   retention_days: 30
 
 security:
-  vault_endpoint: https://vault.ainflue.com
+  vault_endpoint: https://vault.iacherie.com
   encryption_at_rest: true
   network_policies: strict
 ```
@@ -202,7 +202,7 @@ security:
 
 ```yaml
 # .github/workflows/deploy.yml
-name: Ainflue DevOps Pipeline
+name: IA Chérie DevOps Pipeline
 on:
   push:
     branches: [main]
@@ -227,22 +227,22 @@ jobs:
 #### **Deployment Failures**
 ```bash
 # Check deployment status
-python -m devops.deployment_manager status --app ainflue-api
+python -m devops.deployment_manager status --app iacherie-api
 
 # Manual rollback
-python -m devops.deployment_manager rollback --app ainflue-api --to-version v1.4.0
+python -m devops.deployment_manager rollback --app iacherie-api --to-version v1.4.0
 
 # Check logs
-python -m devops.observability_manager logs --service ainflue-api --since 1h
+python -m devops.observability_manager logs --service iacherie-api --since 1h
 ```
 
 #### **Performance Issues**
 ```bash
 # Performance analysis
-python -m devops.performance_optimizer analyze --service ainflue-api
+python -m devops.performance_optimizer analyze --service iacherie-api
 
 # Auto-scaling adjustment
-python -m devops.performance_optimizer scale --service ainflue-api --target-cpu 50
+python -m devops.performance_optimizer scale --service iacherie-api --target-cpu 50
 
 # Resource optimization
 python -m devops.performance_optimizer optimize --cost-target 20%
@@ -291,23 +291,23 @@ python -m devops.security_automation monthly-scan
 ## 🔗 Integration Points
 
 ### Docker Integration
-- **Path**: `/workspaces/Ainflue/docker/`
+- **Path**: `/workspaces/IA Chérie/docker/`
 - **Purpose**: Container management and orchestration
 
 ### Kubernetes Integration
-- **Path**: `/workspaces/Ainflue/kubernetes/`
+- **Path**: `/workspaces/IA Chérie/kubernetes/`
 - **Purpose**: Container orchestration and service mesh
 
 ### Infrastructure Integration
-- **Path**: `/workspaces/Ainflue/infra/`
+- **Path**: `/workspaces/IA Chérie/infra/`
 - **Purpose**: Infrastructure as Code management
 
 ### Monitoring Integration
-- **Path**: `/workspaces/Ainflue/monitoring/`
+- **Path**: `/workspaces/IA Chérie/monitoring/`
 - **Purpose**: Observability and alerting
 
 ### Security Integration
-- **Path**: `/workspaces/Ainflue/security/`
+- **Path**: `/workspaces/IA Chérie/security/`
 - **Purpose**: Security automation and compliance
 
 ## 📈 Performance Standards
@@ -355,4 +355,4 @@ python -m devops.security_automation monthly-scan
 
 **© 2025 Fahed Mlaiel. All Rights Reserved.**
 
-*This documentation represents enterprise-grade DevOps architecture designed for production-scale deployment of the Ainflue platform.*
+*This documentation represents enterprise-grade DevOps architecture designed for production-scale deployment of the IA Chérie platform.*

@@ -1,4 +1,4 @@
-# 🎵 Audio Processing Monitoring - Ainflue Platform
+# 🎵 Audio Processing Monitoring - IA Chérie Platform
 
 ## Overview
 
@@ -213,5 +213,5 @@ alerts:
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform Audio Processing Monitoring**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform Audio Processing Monitoring**  
 Contact: mlaiel@live.de

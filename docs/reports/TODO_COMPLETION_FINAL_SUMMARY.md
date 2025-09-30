@@ -92,4 +92,4 @@ The remaining 114 TODO items have been analyzed and fall into these categories:
 
 **Implementation Team**: GitHub Copilot Assistant
 **Date**: December 2024
-**Project**: Ainflue - IA Influencer Agent Platform
+**Project**: IA Chérie - IA Influencer Agent Platform

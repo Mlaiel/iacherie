@@ -1,0 +1,671 @@
+# Prometheus Configuration Template - Ainflue Creator Economy Platform
+# =====================================================================
+#
+# 🎯 MONITORING EXPERT + DEVOPS ENGINEER + OBSERVABILITY SPECIALIST
+# Lead: Fahed Mlaiel (mlaiel@live.de)
+#
+# Enterprise Prometheus configuration for Creator Economy Platform:
+# - Creator Economy specific metrics collection
+# - AI processing monitoring and alerting
+# - Business metrics and KPIs tracking
+# - Performance monitoring and optimization
+# - Security and compliance monitoring
+# - Multi-tenant metrics isolation
+#
+# ⚠️ INTELLECTUAL PROPERTY PROTECTION:
+# ==========================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS
+#
+# 🚨 PROTECTION INTELLECTUELLE:
+# - Code propriétaire de Fahed Mlaiel
+# - Utilisation commerciale INTERDITE sans autorisation écrite
+# - Reverse engineering STRICTEMENT INTERDIT
+# - Distribution INTERDITE sans licence explicite
+# - Violation = Poursuites judiciaires automatiques
+#
+# Created: 2025-01-18
+# Version: 1.0.0
+
+# ==============================================================================
+# GLOBAL PROMETHEUS CONFIGURATION
+# ==============================================================================
+global:
+  # Scrape interval for all targets
+  scrape_interval: 30s
+  
+  # Evaluation interval for recording and alerting rules
+  evaluation_interval: 30s
+  
+  # Scrape timeout
+  scrape_timeout: 10s
+  
+  # External labels applied to all metrics
+  external_labels:
+    cluster: 'ainflue-creator-economy'
+    environment: 'production'
+    region: 'us-east-1'
+    business_unit: 'creator-economy'
+    owner: 'fahed-mlaiel'
+    project: 'ainflue'
+    security_level: 'enterprise'
+
+# ==============================================================================
+# RULE FILES
+# ==============================================================================
+rule_files:
+  - "/etc/prometheus/rules/creator_economy_rules.yml"
+  - "/etc/prometheus/rules/ai_processing_rules.yml"
+  - "/etc/prometheus/rules/collaboration_rules.yml"
+  - "/etc/prometheus/rules/monetization_rules.yml"
+  - "/etc/prometheus/rules/security_rules.yml"
+  - "/etc/prometheus/rules/performance_rules.yml"
+  - "/etc/prometheus/rules/business_metrics_rules.yml"
+
+# ==============================================================================
+# ALERTING CONFIGURATION
+# ==============================================================================
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - "alertmanager.monitoring.svc.cluster.local:9093"
+      scheme: http
+      timeout: 10s
+      api_version: v2
+    
+    - kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names:
+              - monitoring
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_service_name]
+          action: keep
+          regex: alertmanager
+        - source_labels: [__meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: web
+
+# ==============================================================================
+# SCRAPE CONFIGURATIONS
+# ==============================================================================
+scrape_configs:
+
+  # ==============================================================================
+  # KUBERNETES INFRASTRUCTURE MONITORING
+  # ==============================================================================
+  
+  # Kubernetes API Server
+  - job_name: 'kubernetes-apiservers'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - default
+    scheme: https
+    tls_config:
+      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      insecure_skip_verify: true
+    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: default;kubernetes;https
+    scrape_interval: 30s
+    metrics_path: /metrics
+  
+  # Kubernetes Nodes
+  - job_name: 'kubernetes-nodes'
+    kubernetes_sd_configs:
+      - role: node
+    scheme: https
+    tls_config:
+      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      insecure_skip_verify: true
+    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+      - target_label: __address__
+        replacement: kubernetes.default.svc:443
+      - source_labels: [__meta_kubernetes_node_name]
+        regex: (.+)
+        target_label: __metrics_path__
+        replacement: /api/v1/nodes/${1}/proxy/metrics
+    scrape_interval: 30s
+  
+  # Kubernetes Pods
+  - job_name: 'kubernetes-pods'
+    kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names:
+            - ainflue-platform
+            - monitoring
+            - istio-system
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: kubernetes_pod_name
+    scrape_interval: 30s
+
+  # ==============================================================================
+  # CREATOR ECONOMY SERVICES MONITORING
+  # ==============================================================================
+  
+  # Creator Platform Service
+  - job_name: 'creator-platform'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: creator-platform-service
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: metrics
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: kubernetes_service_name
+    scrape_interval: 15s
+    metrics_path: /metrics
+    params:
+      format: ['prometheus']
+    metric_relabel_configs:
+      # Add Creator Economy specific labels
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: platform
+      - target_label: criticality
+        replacement: high
+
+  # AI Processing Service
+  - job_name: 'ai-processor'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: ai-processing-service
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: metrics
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: kubernetes_service_name
+    scrape_interval: 30s  # Longer interval due to heavy processing
+    scrape_timeout: 15s
+    metrics_path: /metrics
+    metric_relabel_configs:
+      # Add AI processing specific labels
+      - target_label: business_unit
+        replacement: ai-processing
+      - target_label: service_type
+        replacement: compute
+      - target_label: gpu_enabled
+        replacement: true
+      - target_label: criticality
+        replacement: high
+
+  # Collaboration Service
+  - job_name: 'collaboration-service'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: collaboration-service
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: metrics
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: kubernetes_service_name
+    scrape_interval: 15s
+    metrics_path: /metrics
+    metric_relabel_configs:
+      # Add collaboration specific labels
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: collaboration
+      - target_label: realtime_enabled
+        replacement: true
+      - target_label: criticality
+        replacement: medium
+
+  # Monetization Service
+  - job_name: 'monetization-service'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: monetization-service
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: metrics
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: kubernetes_service_name
+    scrape_interval: 10s  # More frequent for payment processing
+    metrics_path: /metrics
+    metric_relabel_configs:
+      # Add monetization specific labels
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: monetization
+      - target_label: security_level
+        replacement: high
+      - target_label: compliance
+        replacement: pci-dss
+      - target_label: criticality
+        replacement: critical
+
+  # API Gateway
+  - job_name: 'api-gateway'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: api-gateway-service
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: metrics
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: kubernetes_service_name
+    scrape_interval: 15s
+    metrics_path: /metrics
+    metric_relabel_configs:
+      # Add API gateway specific labels
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: gateway
+      - target_label: rate_limiting
+        replacement: enabled
+      - target_label: criticality
+        replacement: high
+
+  # ==============================================================================
+  # DATABASE MONITORING
+  # ==============================================================================
+  
+  # PostgreSQL Exporter
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgresql-exporter.ainflue-platform.svc.cluster.local:9187']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: database_type
+        replacement: postgresql
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: database
+
+  # MySQL Exporter (Analytics DB)
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql-exporter.ainflue-platform.svc.cluster.local:9104']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: database_type
+        replacement: mysql
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: analytics-database
+
+  # Redis Exporter
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter.ainflue-platform.svc.cluster.local:9121']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: database_type
+        replacement: redis
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: cache
+
+  # ==============================================================================
+  # ISTIO SERVICE MESH MONITORING
+  # ==============================================================================
+  
+  # Istio Proxy (Envoy) Metrics
+  - job_name: 'istio-proxy'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: .*-envoy-prom;http-monitoring
+      - source_labels: [__address__, __meta_kubernetes_endpoint_port_number]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:15090
+        target_label: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: source_namespace
+      - source_labels: [__meta_kubernetes_service_name]
+        target_label: source_service
+    scrape_interval: 15s
+    metrics_path: /stats/prometheus
+
+  # Istio Control Plane
+  - job_name: 'istio-system'
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - istio-system
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: istiod;http-monitoring
+      - source_labels: [__address__, __meta_kubernetes_endpoint_port_number]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:15014
+        target_label: __address__
+    scrape_interval: 15s
+    metrics_path: /metrics
+
+  # ==============================================================================
+  # NVIDIA GPU MONITORING (for AI Processing)
+  # ==============================================================================
+  
+  # NVIDIA DCGM Exporter
+  - job_name: 'nvidia-gpu'
+    kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names:
+            - ainflue-platform
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: dcgm-exporter
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+    scrape_interval: 30s
+    metric_relabel_configs:
+      - target_label: business_unit
+        replacement: ai-processing
+      - target_label: resource_type
+        replacement: gpu
+
+  # ==============================================================================
+  # BUSINESS METRICS COLLECTION
+  # ==============================================================================
+  
+  # Creator Economy Business Metrics
+  - job_name: 'business-metrics'
+    static_configs:
+      - targets: ['business-metrics-exporter.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 60s  # Business metrics don't need high frequency
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: metric_type
+        replacement: business
+      - target_label: business_unit
+        replacement: creator-economy
+    metric_relabel_configs:
+      # Add business context labels
+      - target_label: metric_category
+        replacement: kpi
+      - target_label: dashboard
+        replacement: executive
+
+  # Content Processing Metrics
+  - job_name: 'content-processing-metrics'
+    static_configs:
+      - targets: ['content-processor.ainflue-platform.svc.cluster.local:9090']
+    scrape_interval: 30s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: service_type
+        replacement: content-processing
+
+  # ==============================================================================
+  # EXTERNAL SERVICES MONITORING
+  # ==============================================================================
+  
+  # Payment Provider Health Checks
+  - job_name: 'payment-providers'
+    static_configs:
+      - targets: ['payment-health-checker.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 120s  # Less frequent for external services
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: service_type
+        replacement: external-payment
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: criticality
+        replacement: high
+
+  # AI Service Providers Health
+  - job_name: 'ai-service-providers'
+    static_configs:
+      - targets: ['ai-health-checker.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 180s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: service_type
+        replacement: external-ai
+      - target_label: business_unit
+        replacement: ai-processing
+
+  # ==============================================================================
+  # SECURITY AND COMPLIANCE MONITORING
+  # ==============================================================================
+  
+  # Falco Security Events
+  - job_name: 'falco-security'
+    static_configs:
+      - targets: ['falco-exporter.security.svc.cluster.local:9376']
+    scrape_interval: 15s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: security_tool
+        replacement: falco
+      - target_label: metric_type
+        replacement: security
+
+  # Certificate Expiry Monitoring
+  - job_name: 'certificate-expiry'
+    static_configs:
+      - targets: ['cert-exporter.security.svc.cluster.local:8080']
+    scrape_interval: 300s  # Every 5 minutes
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: metric_type
+        replacement: compliance
+      - target_label: compliance_type
+        replacement: certificates
+
+  # ==============================================================================
+  # CUSTOM CREATOR ECONOMY METRICS
+  # ==============================================================================
+  
+  # Creator Engagement Metrics
+  - job_name: 'creator-engagement'
+    static_configs:
+      - targets: ['engagement-metrics.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 300s
+    metrics_path: /metrics
+    params:
+      format: ['prometheus']
+      include_business_metrics: ['true']
+    relabel_configs:
+      - target_label: metric_type
+        replacement: engagement
+      - target_label: business_unit
+        replacement: creator-economy
+
+  # Revenue and Monetization Metrics
+  - job_name: 'revenue-metrics'
+    static_configs:
+      - targets: ['revenue-metrics.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 300s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: metric_type
+        replacement: revenue
+      - target_label: business_unit
+        replacement: creator-economy
+      - target_label: compliance
+        replacement: financial
+
+  # Content Performance Metrics
+  - job_name: 'content-performance'
+    static_configs:
+      - targets: ['content-analytics.ainflue-platform.svc.cluster.local:8080']
+    scrape_interval: 180s
+    metrics_path: /metrics
+    relabel_configs:
+      - target_label: metric_type
+        replacement: content-performance
+      - target_label: business_unit
+        replacement: creator-economy
+
+# ==============================================================================
+# REMOTE STORAGE CONFIGURATION
+# ==============================================================================
+remote_write:
+  # Long-term storage in S3 via Cortex/Thanos
+  - url: "https://cortex-gateway.monitoring.svc.cluster.local/api/v1/push"
+    queue_config:
+      max_samples_per_send: 10000
+      batch_send_deadline: 5s
+      max_shards: 200
+      min_shards: 1
+      max_retries: 10
+      min_backoff: 30ms
+      max_backoff: 100ms
+    metadata_config:
+      send: true
+      send_interval: 1m
+    write_relabel_configs:
+      # Add tenant information for multi-tenancy
+      - target_label: __tmp_tenant_id
+        replacement: "ainflue-creator-economy"
+      - source_labels: [__tmp_tenant_id]
+        target_label: tenant_id
+
+  # Backup to AWS Timestream for business metrics
+  - url: "https://timestream-adapter.monitoring.svc.cluster.local/write"
+    queue_config:
+      max_samples_per_send: 1000
+      batch_send_deadline: 10s
+    write_relabel_configs:
+      # Only send business metrics to Timestream
+      - source_labels: [__name__]
+        regex: '(ainflue_creator_.*|ainflue_revenue_.*|ainflue_engagement_.*)'
+        action: keep
+
+remote_read:
+  # Historical data from long-term storage
+  - url: "https://cortex-gateway.monitoring.svc.cluster.local/api/v1/read"
+    read_recent: true
+    required_matchers:
+      tenant_id: "ainflue-creator-economy"
+
+# ==============================================================================
+# STORAGE CONFIGURATION
+# ==============================================================================
+storage:
+  tsdb:
+    # Retention period for local storage
+    retention_time: "7d"
+    retention_size: "100GB"
+    
+    # Compression settings
+    compression: "snappy"
+    
+    # Block settings
+    min_block_duration: "2h"
+    max_block_duration: "25h"
+    
+    # WAL settings
+    wal_compression: true
+    
+    # Head chunks retention
+    head_chunks_write_queue_size: 10000

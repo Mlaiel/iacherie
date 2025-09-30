@@ -2,7 +2,7 @@
 
 #
 # Android Google Play Store Deployment Script
-# Ainflue Professional Content Creation Platform
+# IA Chérie Professional Content Creation Platform
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -13,8 +13,8 @@
 set -e
 
 # Configuration
-APP_NAME="Ainflue"
-PACKAGE_NAME="com.ainflue.mobile"
+APP_NAME="IA Chérie"
+PACKAGE_NAME="com.iacherie.mobile"
 BUILD_TYPE="release"
 FLAVOR="pro"
 APK_PATH="android/build/outputs/apk/${FLAVOR}/${BUILD_TYPE}"
@@ -221,7 +221,7 @@ fi
 # Generate release notes template
 log_info "Generating release notes template..."
 cat > "build/android/release-notes.txt" << EOF
-# Release Notes for Ainflue v1.0.0
+# Release Notes for IA Chérie v1.0.0
 
 ## New Features
 - Professional content creation platform

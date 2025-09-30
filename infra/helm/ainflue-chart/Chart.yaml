@@ -1,18 +1,18 @@
 apiVersion: v2
-name: ainflue-chart
-description: A Helm chart for Ainflue AI Influencer Platform
+name: iacherie-chart
+description: A Helm chart for IA Chérie AI Influencer Platform
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 keywords:
-  - ainflue
+  - iacherie
   - ai
   - influencer
   - social-media
   - content-generation
-home: https://ainflue.com
+home: https://iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de

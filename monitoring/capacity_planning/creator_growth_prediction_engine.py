@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorSegment(Enum):
-    """Segments créateurs Ainflue pour prédictions"""
+    """Segments créateurs IA Chérie pour prédictions"""
     MUSICIANS = "musicians"
     BLOGGERS = "bloggers"
     PHOTOGRAPHERS = "photographers"
@@ -1020,7 +1020,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['trained_models']} modèles actifs")
     
     print("\n🎯 Creator Growth Prediction Engine - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

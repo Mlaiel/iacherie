@@ -2,7 +2,7 @@
 
 ## Overview
 
-The SEO Services module provides enterprise-grade platform optimization and keyword intelligence services for the Ainflue platform. This module enables advanced SEO capabilities, content optimization, and multi-platform performance analytics through intelligent algorithms and real-time data processing.
+The SEO Services module provides enterprise-grade platform optimization and keyword intelligence services for the IA Chérie platform. This module enables advanced SEO capabilities, content optimization, and multi-platform performance analytics through intelligent algorithms and real-time data processing.
 
 ## Architecture
 
@@ -44,8 +44,8 @@ This module contains 11 specialized Docker services for SEO optimization:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/seo
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/seo
 
 # Start SEO services
 docker-compose -f docker-compose.seo.yml up -d
@@ -189,7 +189,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 For technical support and questions:
 - Email: mlaiel@live.de
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues: https://github.com/Mlaiel/IA Chérie/issues
 
 ## Changelog
 

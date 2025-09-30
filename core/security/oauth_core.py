@@ -1,9 +1,9 @@
-"""Ainflue Core Security - OAuth Core
+"""IA Chérie Core Security - OAuth Core
 ===================================
 
 Enterprise-grade OAuth 2.0/OIDC implementation providing secure authentication,
 authorization server, token management, scope-based access control, 
-and federated identity support for the Ainflue platform.
+and federated identity support for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -372,7 +372,7 @@ class OAuthCore:
         self.client_store = InMemoryClientStore()
         self.jwt_handler: Optional[JWTHandler] = None
         self.scopes: Dict[str, OAuthScope] = {}
-        self.issuer = "https://auth.ainflue.com"
+        self.issuer = "https://auth.iacherie.com"
         self.default_scope = ["read"]
         self.token_endpoint = "/oauth/token"
         self.authorization_endpoint = "/oauth/authorize"
@@ -480,12 +480,12 @@ class OAuthCore:
             client_id="ainflue_web_app",
             client_secret=secrets.token_urlsafe(32),
             client_type=ClientType.CONFIDENTIAL,
-            redirect_uris=["https://app.ainflue.com/auth/callback"],
+            redirect_uris=["https://app.iacherie.com/auth/callback"],
             scopes=list(self.scopes.keys()),
             grant_types=[GrantType.AUTHORIZATION_CODE, GrantType.REFRESH_TOKEN],
             response_types=[ResponseType.CODE],
-            name="Ainflue Web Application",
-            description="Main web application for Ainflue platform",
+            name="IA Chérie Web Application",
+            description="Main web application for IA Chérie platform",
             trusted=True
         )
         await self.client_store.register_client(client)

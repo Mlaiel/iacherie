@@ -149,7 +149,7 @@ class ModelStagingManager:
             Environment.DEV: EnvironmentConfig(
                 name="development",
                 environment=Environment.DEV,
-                kubernetes_namespace="ainflue-ml-dev",
+                kubernetes_namespace="iacherie-ml-dev",
                 resource_limits={"memory": "1Gi", "cpu": "500m"},
                 environment_variables={"ENV": "dev", "LOG_LEVEL": "DEBUG"},
                 health_check_endpoint="/health",
@@ -167,7 +167,7 @@ class ModelStagingManager:
             Environment.STAGING: EnvironmentConfig(
                 name="staging",
                 environment=Environment.STAGING,
-                kubernetes_namespace="ainflue-ml-staging",
+                kubernetes_namespace="iacherie-ml-staging",
                 resource_limits={"memory": "2Gi", "cpu": "1000m"},
                 environment_variables={"ENV": "staging", "LOG_LEVEL": "INFO"},
                 health_check_endpoint="/health",
@@ -186,7 +186,7 @@ class ModelStagingManager:
             Environment.PRODUCTION: EnvironmentConfig(
                 name="production",
                 environment=Environment.PRODUCTION,
-                kubernetes_namespace="ainflue-ml-prod",
+                kubernetes_namespace="iacherie-ml-prod",
                 resource_limits={"memory": "4Gi", "cpu": "2000m"},
                 environment_variables={"ENV": "production", "LOG_LEVEL": "WARNING"},
                 health_check_endpoint="/health",
@@ -336,7 +336,7 @@ if __name__ == '__main__':
                 f.write("mlflow\nflask\nnumpy\npandas\nscikit-learn")
             
             # Build image
-            image_name = f"ainflue-ml/{deployment_id}:latest"
+            image_name = f"iacherie-ml/{deployment_id}:latest"
             image, build_logs = self.docker_client.images.build(
                 path=str(build_context),
                 tag=image_name,

@@ -1,9 +1,52 @@
 # 🔑 GUIDE COMPLET - APIs GRATUITES ÉTAPE PAR ÉTAPE
 ## Ce que chaque API fait + Comment l'obtenir + Liens directs
 
-**Auteur:** Fahed Mlaiel  
+**Aut### **10. In### **10. Instagram Basic Display**
+- **À QUOI ÇA SERT:** Récupérer posts Instagram utilisateur
+- **CE QU'IL FAUT:**
+  - `INSTAGRAM_APP_ID` = 811077928272845
+  - `INSTAGRAM_APP_SECRET` = ceb72052bcbbde0420e345b821e36833
+- **LIEN:** https://developers.facebook.com/apps/
+- **ÉTAPES:**
+  1. Créer app Facebook ✅ **FAIT**
+  2. Ajouter Instagram Basic Display ✅ **FAIT**
+  3. **RÉCUPÉRÉ:** 
+     - ID App: 811077928272845
+     - Secret: ceb72052bcbbde0420e345b821e36833
+- **STATUT:** ✅ **CONFIGURÉ ET PRÊT**
+
+### **10.5. Facebook Marketing API**
+- **À QUOI ÇA SERT:** Gestion complète campagnes pub, pages, analytics
+- **CE QU'IL FAUT:**
+  - `FACEBOOK_ACCESS_TOKEN` = EAAUtvMRjlAI... (configuré)
+  - `FACEBOOK_APP_ID` = 811077928272845
+  - `FACEBOOK_APP_SECRET` = ceb72052bcbbde0420e345b821e36833
+- **LIEN:** https://developers.facebook.com/tools/explorer/
+- **CAPACITÉS ACTIVÉES:**
+  ✅ Gestion campagnes publicitaires
+  ✅ Analytics et insights détaillés
+  ✅ Audiences personnalisées
+  ✅ Publication automatique
+- **STATUT:** ✅ **CONFIGURÉ ET TESTÉ**
+
+### **11. TikTok Research API**
+- **À QUOI ÇA SERT:** Récupérer données publiques TikTok
+- **CE QU'IL FAUT:**
+  - `TIKTOK_CLIENT_KEY` = votre_client_keylay**
+- **À QUOI ÇA SERT:** Récupérer posts Instagram utilisateur
+- **CE QU'IL FAUT:**
+  - `INSTAGRAM_APP_ID` = 811077928272845
+  - `INSTAGRAM_APP_SECRET` = ceb72052bcbbde0420e345b821e36833
+- **LIEN:** https://developers.facebook.com/apps/
+- **ÉTAPES:**
+  1. Créer app Facebook ✅ **FAIT**
+  2. Ajouter Instagram Basic Display ✅ **FAIT**
+  3. **RÉCUPÉRÉ:** 
+     - ID App: 811077928272845
+     - Secret: ceb72052bcbbde0420e345b821e36833
+- **STATUT:** ✅ **CONFIGURÉ ET PRÊT** Mlaiel  
 **Date:** 28 Septembre 2025  
-**Projet:** Ainfluencer - 53 Agents IA + 680 Microservices
+**Projet:** IA Chérie - 53 Agents IA + 680 Microservices
 
 ---
 
@@ -24,7 +67,7 @@ Chaque API ci-dessous explique:
 ### **1. Hugging Face (IA Images)**
 - **À QUOI ÇA SERT:** Générer des images avec des modèles IA gratuits
 - **CE QU'IL FAUT:**
-  - `HUGGINGFACE_API_KEY` = hf_xxxxxxxxxxxxx
+  - `HUGGINGFACE_API_KEY` = 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
 - **LIEN:** https://huggingface.co/settings/tokens
 - **ÉTAPES:**
   1. Créer compte gratuit
@@ -45,20 +88,22 @@ Chaque API ci-dessous explique:
 ### **3. Freesound API (Sons et musiques)**
 - **À QUOI ÇA SERT:** Récupérer sons, musiques et effets audio gratuits
 - **CE QU'IL FAUT:**
-  - `FREESOUND_API_KEY` = votre_api_key
+  - `FREESOUND_API_KEY` = vgspKtAIP6NcQc995U8dHrOApuckeO0sX0DRMzn3
 - **LIEN:** https://freesound.org/apiv2/apply/
 - **ÉTAPES:**
   1. Créer compte gratuit
   2. Aller sur "Apply for API key"
   3. Remplir le formulaire (projet personnel)
   4. Récupérer votre API key
+  Client id= DC7XnlZJBpt8CaCLHzdv
+  
 
 ### **4. Mozilla TTS (Text-to-Speech)**
 - **À QUOI ÇA SERT:** Convertir texte en parole (installation locale)
 - **CE QU'IL FAUT:** Installation Python
 - **LIEN:** https://github.com/mozilla/TTS
 - **INSTALLATION:** `pip install TTS`
-
+ 
 ---
 
 ## 📝 **Traitement de Texte**
@@ -66,7 +111,8 @@ Chaque API ci-dessous explique:
 ### **5. TextRazor (Analyse de texte)**
 - **À QUOI ÇA SERT:** Analyser sentiments, extraire mots-clés, détecter entités
 - **CE QU'IL FAUT:**
-  - `TEXTRAZOR_API_KEY` = votre_api_key
+  - `TEXTRAZOR_API_KEY` = 095fa25a57d1822ef373e299e9ad4ca2062f1284e7b2024685c7dd3a
+
 - **LIEN:** https://www.textrazor.com/signup
 - **LIMITE GRATUITE:** 500 requêtes/jour
 - **ÉTAPES:**
@@ -87,20 +133,17 @@ Chaque API ci-dessous explique:
 
 ### **7. YouTube Data API v3**
 - **À QUOI ÇA SERT:** Récupérer infos vidéos, statistiques, commentaires YouTube
-- **CE QU'IL FAUT:**
-  - `YOUTUBE_API_KEY` = AIzaSyxxxxxxxxxx
-- **LIEN:** https://console.developers.google.com/
-- **ÉTAPES:**
-  1. Créer projet Google
-  2. Activer YouTube Data API v3
-  3. Créer une clé API
-  4. Copier la clé `AIzaSyxxxxxx`
+-✅ API YouTube DÉJÀ PRÉSENTE :
+
+YOUTUBE_API_KEY = AIzaSyDZmVYU65zQDbtmSa8egSOuFAaRwpcSYn4
+YOUTUBE_CLIENT_ID = 329063366855-v3s5vcac3oopnev9kh81skkfoe43ijed.apps.googleusercontent.com
+YOUTUBE_CLIENT_SECRET = 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
 
 ### **8. Reddit API**
 - **À QUOI ÇA SERT:** Récupérer posts, commentaires Reddit
 - **CE QU'IL FAUT:**
-  - `REDDIT_CLIENT_ID` = votre_client_id
-  - `REDDIT_CLIENT_SECRET` = votre_client_secret
+  - `REDDIT_CLIENT_ID` = uWkgmNPbT7x2vVTBsgA09Q
+  - `REDDIT_CLIENT_SECRET` = NTOnMfOokzIA9B_TvbZ-FuBigH3kcA
 - **LIEN:** https://www.reddit.com/prefs/apps
 - **ÉTAPES:**
   1. Connexion Reddit
@@ -127,7 +170,10 @@ Chaque API ci-dessous explique:
 - **ÉTAPES:**
   1. Créer app Facebook
   2. Ajouter Instagram Basic Display
-  3. Récupérer client ID et secret
+  3. Récupérer client ID et secret ceb72052bcbbde0420e345b821e36833
+  ID d’app Instagram
+811077928272845
+
 
 ### **11. TikTok Research API**
 - **À QUOI ÇA SERT:** Récupérer données publiques TikTok
@@ -160,14 +206,20 @@ Chaque API ci-dessous explique:
   2. Récupérer App ID et Secret
 
 ### **14. Discord API**
-- **À QUOI ÇA SERT:** Créer bots Discord, webhooks
+- **À QUOI ÇA SERT:** Créer bots Discord, webhooks, gestion communautés
 - **CE QU'IL FAUT:**
-  - `DISCORD_BOT_TOKEN` = votre_bot_token
-- **LIEN:** https://discord.com/developers/applications
+  - `DISCORD_APPLICATION_ID` = 1422349936938324052
+  - `DISCORD_PUBLIC_KEY` = bbd18a7882997874701a36cf26103f850563b2ae40bf76ac1df87116d59a7cc4
+  - `DISCORD_BOT_TOKEN` = [À RÉCUPÉRER]
+- **LIEN:** https://discord.com/developers/applications/1422349936938324052
 - **ÉTAPES:**
-  1. Créer nouvelle application
-  2. Aller dans Bot
-  3. Créer bot et récupérer token
+  1. ✅ Application créée (ID: 1422349936938324052)
+  2. ✅ Public Key récupérée
+  3. 🔄 **PROCHAINE ÉTAPE:** Récupérer Bot Token
+     - Aller dans section "Bot"
+     - Cliquer "Reset Token" 
+     - Copier le token généré
+- **STATUT:** ⚡ **PARTIELLEMENT CONFIGURÉ** (manque Bot Token)
 
 ---
 
@@ -393,13 +445,19 @@ YOUTUBE_API_KEY=AIzaSy_votre_cle_youtube
 REDDIT_CLIENT_ID=votre_reddit_client_id
 REDDIT_CLIENT_SECRET=votre_reddit_secret
 TWITTER_BEARER_TOKEN=AAAAAAAAAvotre_twitter_token
-INSTAGRAM_CLIENT_ID=votre_instagram_id
-INSTAGRAM_CLIENT_SECRET=votre_instagram_secret
+INSTAGRAM_APP_ID=811077928272845
+INSTAGRAM_APP_SECRET=ceb72052bcbbde0420e345b821e36833
+FACEBOOK_APP_ID=811077928272845
+FACEBOOK_APP_SECRET=ceb72052bcbbde0420e345b821e36833
+FACEBOOK_ACCESS_TOKEN=EAAUtvMRjlAI_votre_token_facebook
+FACEBOOK_MARKETING_API_VERSION=v18.0
 TIKTOK_CLIENT_KEY=votre_tiktok_key
 LINKEDIN_CLIENT_ID=votre_linkedin_id
 LINKEDIN_CLIENT_SECRET=votre_linkedin_secret
 PINTEREST_APP_ID=votre_pinterest_id
 PINTEREST_APP_SECRET=votre_pinterest_secret
+DISCORD_APPLICATION_ID=1422349936938324052
+DISCORD_PUBLIC_KEY=bbd18a7882997874701a36cf26103f850563b2ae40bf76ac1df87116d59a7cc4
 DISCORD_BOT_TOKEN=votre_discord_bot_token
 
 # === FINANCE & CRYPTO ===

@@ -1,8 +1,8 @@
 /**
- * Ainflue Desktop - AI Processing Panel Component
+ * IA Chérie Desktop - AI Processing Panel Component
  * 
  * Advanced AI processing controls for real-time content analysis and optimization
- * Integrates with Ainflue's AI pipeline for intelligent content enhancement
+ * Integrates with IA Chérie's AI pipeline for intelligent content enhancement
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)
  * Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -3,7 +3,7 @@
 🤝 COLLABORATION ANALYTICS SERVICE
 ==================================
 
-Advanced collaboration performance analytics and insights service for the Ainflue platform.
+Advanced collaboration performance analytics and insights service for the IA Chérie platform.
 Provides detailed analytics for collaboration performance, team dynamics, and project outcomes.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

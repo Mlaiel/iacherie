@@ -8,7 +8,7 @@ Role-based access + attribute-based control + ML-specific permissions + audit in
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Access Control
+Project: IA Chérie ML Security - Access Control
 Version: 1.0 Production
 =======================================================================
 """
@@ -86,7 +86,7 @@ class AccessControlConfig:
     mfa_required: bool = True
     risk_assessment_enabled: bool = True
     context_evaluation: bool = True
-    creator_protection_mode: bool = True  # Ainflue-specific
+    creator_protection_mode: bool = True  # IA Chérie-specific
     ip_protection_enabled: bool = True    # Fahed Mlaiel IP protection
 
 @dataclass
@@ -187,7 +187,7 @@ class RoleBasedAccessEngine:
                 resource_types=[MLResourceType.DATASET, MLResourceType.EXPERIMENT, MLResourceType.NOTEBOOK,
                               MLResourceType.MODEL]
             ),
-            "creator": MLRole(  # Ainflue-specific role
+            "creator": MLRole(  # IA Chérie-specific role
                 name="creator",
                 permissions=[Permission.READ, Permission.INFERENCE, Permission.SHARE],
                 resource_types=[MLResourceType.MODEL, MLResourceType.INFERENCE_ENDPOINT]
@@ -225,7 +225,7 @@ class RoleBasedAccessEngine:
                         rbac_result["granted_permissions"] = list(role.permissions)
                         break
             
-            # Special handling for creator IP protection (Ainflue-specific)
+            # Special handling for creator IP protection (IA Chérie-specific)
             if self.config.creator_protection_mode and "creator" in user_roles:
                 rbac_result["creator_protection"] = self._apply_creator_protection(user_context, access_context)
             
@@ -240,7 +240,7 @@ class RoleBasedAccessEngine:
             return {"decision": AccessDecision.DENY, "error": str(e)}
     
     def _apply_creator_protection(self, user_context: UserContext, access_context: AccessContext) -> Dict[str, Any]:
-        """Application protection spéciale créateurs Ainflue"""
+        """Application protection spéciale créateurs IA Chérie"""
         protection_result = {
             "creator_protection_active": True,
             "protected_resources": [],

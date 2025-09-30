@@ -67,7 +67,7 @@ class TwitchCreatorAPIError(Exception):
 
 class TwitchCreatorAPI:
     """
-    Comprehensive Twitch Creator API integration for Ainflue platform.
+    Comprehensive Twitch Creator API integration for IA Chérie platform.
     
     Features:
     - Live streaming analytics and optimization
@@ -317,7 +317,7 @@ class TwitchCreatorAPI:
         followers_data = await self._make_request('GET', '/users/follows', params={'to_id': user_data['id']})
         follower_count = followers_data.get('total', 0)
         
-        # Enhanced profile with Ainflue-specific metrics
+        # Enhanced profile with IA Chérie-specific metrics
         enhanced_profile = {
             'user_id': user_data['id'],
             'username': user_data['login'],

@@ -722,7 +722,7 @@ class KeyBackupOrchestrator:
             tier=BackupTier.HOT,
             region='us-east-1',
             endpoint='s3.amazonaws.com',
-            credentials={'bucket_name': 'ainflue-keys-hot'},
+            credentials={'bucket_name': 'iacherie-keys-hot'},
             max_retention_days=30
         )
         
@@ -731,7 +731,7 @@ class KeyBackupOrchestrator:
             tier=BackupTier.COLD,
             region='us-west-2',
             endpoint='s3.amazonaws.com',
-            credentials={'bucket_name': 'ainflue-keys-cold'},
+            credentials={'bucket_name': 'iacherie-keys-cold'},
             max_retention_days=365
         )
         
@@ -741,7 +741,7 @@ class KeyBackupOrchestrator:
             tier=BackupTier.WARM,
             region='westeurope',
             endpoint='blob.core.windows.net',
-            credentials={'container_name': 'ainflue-keys-warm'},
+            credentials={'container_name': 'iacherie-keys-warm'},
             max_retention_days=90
         )
         
@@ -751,7 +751,7 @@ class KeyBackupOrchestrator:
             tier=BackupTier.CREATOR_PRIORITY,
             region='us-east-1',
             endpoint='s3.amazonaws.com',
-            credentials={'bucket_name': 'ainflue-creator-priority'},
+            credentials={'bucket_name': 'iacherie-creator-priority'},
             max_retention_days=7,
             creator_specific=True
         )

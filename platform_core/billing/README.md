@@ -1,7 +1,7 @@
-# 🚀 Enterprise Billing Platform Core - Ainflue
+# 🚀 Enterprise Billing Platform Core - IA Chérie
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Python](https://img.shields.io/badge/python-3.11+-green.svg)](https://python.org)
 
 ## ⚠️ INTELLECTUAL PROPERTY NOTICE
@@ -15,7 +15,7 @@ This code, concept, and intellectual property are the exclusive property of **Fa
 
 ## 🎯 Overview
 
-Advanced Enterprise Billing Platform Core for the Ainflue Creator Economy. This comprehensive billing system provides world-class payment processing, fraud detection, revenue recognition, and creator monetization capabilities with ML-powered optimization.
+Advanced Enterprise Billing Platform Core for the IA Chérie Creator Economy. This comprehensive billing system provides world-class payment processing, fraud detection, revenue recognition, and creator monetization capabilities with ML-powered optimization.
 
 ### 🌟 Key Features
 
@@ -67,8 +67,8 @@ platform_core/billing/
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/billing
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/billing
 
 # Install dependencies
 pip install -r requirements.txt
@@ -417,7 +417,7 @@ This is proprietary software. Contributions are only accepted from authorized te
 
 **Primary Contact:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Project:** Ainflue Creator Economy Platform  
+**Project:** IA Chérie Creator Economy Platform  
 
 For technical support, integration assistance, or licensing inquiries, please contact directly.
 
@@ -429,4 +429,4 @@ This software is the exclusive intellectual property of Fahed Mlaiel. Unauthoriz
 
 ---
 
-*Built with ❤️ by the Ainflue Team for the Creator Economy*
+*Built with ❤️ by the IA Chérie Team for the Creator Economy*

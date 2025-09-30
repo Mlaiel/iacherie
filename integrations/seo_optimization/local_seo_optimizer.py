@@ -5,7 +5,7 @@ SEO local enterprise géolocalisé avec Google My Business automation,
 citations management, reviews optimization et geo-targeting avancé.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:

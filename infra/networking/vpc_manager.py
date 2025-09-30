@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - VPC Manager
+"""IA Chérie Infrastructure Module - VPC Manager
 ===========================================
 
-Advanced Virtual Private Cloud (VPC) management system for the Ainflue platform.
+Advanced Virtual Private Cloud (VPC) management system for the IA Chérie platform.
 Provides comprehensive multi-cloud VPC orchestration, subnet management, routing
 configuration, and network security for creator economy infrastructure.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chérie Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -117,7 +117,7 @@ class VPCConfiguration:
 
 class EnterpriseVPCManager:
     """
-    Enterprise-grade VPC management system for Ainflue platform.
+    Enterprise-grade VPC management system for IA Chérie platform.
     
     Provides comprehensive VPC management capabilities:
     - Multi-cloud VPC orchestration (AWS, GCP, Azure)
@@ -182,7 +182,7 @@ class EnterpriseVPCManager:
         # Create VPC configuration
         vpc = VPCConfiguration(
             id=vpc_id,
-            name=f"Ainflue Creator Platform - {region.upper()}",
+            name=f"IA Chérie Creator Platform - {region.upper()}",
             cidr_block=cidr_block,
             vpc_type=vpc_type,
             cloud_provider=cloud_provider,
@@ -192,7 +192,7 @@ class EnterpriseVPCManager:
             route_tables={},
             security_groups={},
             tags={
-                'Project': 'Ainflue',
+                'Project': 'IA Chérie',
                 'Environment': vpc_type.value,
                 'Purpose': 'Creator Platform',
                 'Creator Count': str(creator_count)

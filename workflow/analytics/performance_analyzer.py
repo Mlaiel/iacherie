@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE PERFORMANCE ANALYZER - AINFLUE PLATFORM
+🔥 ENTERPRISE PERFORMANCE ANALYZER - IACHERIE PLATFORM
 Ultra-advanced performance analytics and tracking system
 Consolidates: performance_tracking_workflow.py + real_time_insights_workflow.py + predictive_analytics_workflow.py
 """

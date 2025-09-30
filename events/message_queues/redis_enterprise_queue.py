@@ -1,7 +1,7 @@
 """Redis Enterprise Queue Module
 
 High-performance Redis queue implementation with clustering and persistence
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -92,43 +92,43 @@ class QueueMessage:
 
 
 class AinflueBusiness:
-    """Ainflue Business Logic Constants for Redis Queues"""
+    """IA Chérie Business Logic Constants for Redis Queues"""
     
     # Content processing queues
-    CONTENT_UPLOAD_QUEUE = "ainflue:queue:content:upload"
-    CONTENT_VALIDATION_QUEUE = "ainflue:queue:content:validation"
-    CONTENT_AI_ANALYSIS_QUEUE = "ainflue:queue:content:ai-analysis"
+    CONTENT_UPLOAD_QUEUE = "iacherie:queue:content:upload"
+    CONTENT_VALIDATION_QUEUE = "iacherie:queue:content:validation"
+    CONTENT_AI_ANALYSIS_QUEUE = "iacherie:queue:content:ai-analysis"
     
     # User interaction queues
-    USER_REGISTRATION_QUEUE = "ainflue:queue:user:registration"
-    USER_PROFILE_UPDATE_QUEUE = "ainflue:queue:user:profile-update"
-    USER_AUTHENTICATION_QUEUE = "ainflue:queue:user:authentication"
+    USER_REGISTRATION_QUEUE = "iacherie:queue:user:registration"
+    USER_PROFILE_UPDATE_QUEUE = "iacherie:queue:user:profile-update"
+    USER_AUTHENTICATION_QUEUE = "iacherie:queue:user:authentication"
     
     # Collaboration queues
-    COLLABORATION_MATCHING_QUEUE = "ainflue:queue:collaboration:matching"
-    COLLABORATION_NOTIFICATION_QUEUE = "ainflue:queue:collaboration:notification"
-    COLLABORATION_WORKFLOW_QUEUE = "ainflue:queue:collaboration:workflow"
+    COLLABORATION_MATCHING_QUEUE = "iacherie:queue:collaboration:matching"
+    COLLABORATION_NOTIFICATION_QUEUE = "iacherie:queue:collaboration:notification"
+    COLLABORATION_WORKFLOW_QUEUE = "iacherie:queue:collaboration:workflow"
     
     # Revenue processing queues
-    REVENUE_CALCULATION_QUEUE = "ainflue:queue:revenue:calculation"
-    PAYMENT_PROCESSING_QUEUE = "ainflue:queue:payment:processing"
-    COMMISSION_DISTRIBUTION_QUEUE = "ainflue:queue:commission:distribution"
+    REVENUE_CALCULATION_QUEUE = "iacherie:queue:revenue:calculation"
+    PAYMENT_PROCESSING_QUEUE = "iacherie:queue:payment:processing"
+    COMMISSION_DISTRIBUTION_QUEUE = "iacherie:queue:commission:distribution"
     
     # SEO optimization queues
-    SEO_ANALYSIS_QUEUE = "ainflue:queue:seo:analysis"
-    SEO_METADATA_QUEUE = "ainflue:queue:seo:metadata"
-    SEO_INDEXING_QUEUE = "ainflue:queue:seo:indexing"
+    SEO_ANALYSIS_QUEUE = "iacherie:queue:seo:analysis"
+    SEO_METADATA_QUEUE = "iacherie:queue:seo:metadata"
+    SEO_INDEXING_QUEUE = "iacherie:queue:seo:indexing"
     
     # Distribution queues
-    PLATFORM_PUBLISHING_QUEUE = "ainflue:queue:platform:publishing"
-    SOCIAL_MEDIA_SYNC_QUEUE = "ainflue:queue:social:sync"
-    CONTENT_DISTRIBUTION_QUEUE = "ainflue:queue:content:distribution"
+    PLATFORM_PUBLISHING_QUEUE = "iacherie:queue:platform:publishing"
+    SOCIAL_MEDIA_SYNC_QUEUE = "iacherie:queue:social:sync"
+    CONTENT_DISTRIBUTION_QUEUE = "iacherie:queue:content:distribution"
 
 
 class RedisEnterpriseQueue:
     """
     Redis Enterprise Queue with clustering and persistence
-    Optimized for Ainflue business logic with high performance requirements
+    Optimized for IA Chérie business logic with high performance requirements
     """
     
     def __init__(self, 

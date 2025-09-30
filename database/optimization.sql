@@ -1,4 +1,4 @@
--- Database Optimization for Ainflue Platform
+-- Database Optimization for IA Chérie Platform
 -- PostgreSQL performance tuning and indexing strategy
 --
 -- Author: Fahed Mlaiel (mlaiel@live.de)
@@ -404,13 +404,13 @@ $$ LANGUAGE plpgsql;
 -- (These would typically be set up in crontab or PostgreSQL scheduler)
 
 -- Update table statistics daily
--- 0 2 * * * psql -d ainflue -c "ANALYZE;"
+-- 0 2 * * * psql -d iacherie -c "ANALYZE;"
 
 -- Update materialized views every 15 minutes
--- */15 * * * * psql -d ainflue -c "SELECT update_user_stats();"
+-- */15 * * * * psql -d iacherie -c "SELECT update_user_stats();"
 
 -- Clean up expired cache every hour
--- 0 * * * * psql -d ainflue -c "SELECT cleanup_validation_cache();"
+-- 0 * * * * psql -d iacherie -c "SELECT cleanup_validation_cache();"
 
 -- ============================================================================
 -- MONITORING QUERIES
@@ -484,7 +484,7 @@ DECLARE
     backup_command TEXT;
 BEGIN
     backup_filename := backup_path || 'ainflue_backup_' || to_char(CURRENT_TIMESTAMP, 'YYYY_MM_DD_HH24_MI_SS') || '.sql';
-    backup_command := 'pg_dump -h localhost -U postgres -d ainflue > ' || backup_filename;
+    backup_command := 'pg_dump -h localhost -U postgres -d iacherie > ' || backup_filename;
     
     -- Note: This would need to be executed outside PostgreSQL
     RETURN 'Backup command: ' || backup_command;

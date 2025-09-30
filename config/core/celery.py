@@ -115,7 +115,7 @@ def get_celery_config() -> dict:
     }
 
 
-def create_celery_app(app_name: str = "ainflue"):
+def create_celery_app(app_name: str = "iacherie"):
     """Create and configure Celery application"""
     try:
         from celery import Celery
@@ -134,7 +134,7 @@ def create_celery_app(app_name: str = "ainflue"):
 celery_settings = CelerySettings()
 
 class CeleryConfiguration:
-    """Celery configuration manager for Ainflue platform"""
+    """Celery configuration manager for IA Chérie platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

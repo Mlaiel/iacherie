@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Security Policies Enforcement
+ * IA Chérie Desktop - Security Policies Enforcement
  * 
  * Advanced security policies for content protection, user privacy, and system integrity
  * Implements enterprise-grade security with multi-layer protection mechanisms
@@ -193,7 +193,7 @@ class SecurityPolicies {
     ses.setCertificateVerifyProc((request, callback) => {
       const { hostname, certificate } = request;
       
-      if (hostname === 'api.ainflue.com') {
+      if (hostname === 'api.iacherie.com') {
         // Verify certificate fingerprint
         const expectedFingerprint = this.getAPIServerFingerprint();
         const actualFingerprint = this.calculateCertificateFingerprint(certificate);
@@ -215,7 +215,7 @@ class SecurityPolicies {
 
     // Secure cookie policies
     ses.cookies.set({
-      url: 'https://ainflue.com',
+      url: 'https://iacherie.com',
       name: 'security_policy',
       value: 'strict',
       secure: true,
@@ -228,8 +228,8 @@ class SecurityPolicies {
     // Secure file access patterns
     this.fileAccessPolicies = {
       allowedDirectories: [
-        path.join(require('os').homedir(), '.ainflue'),
-        path.join(require('os').tmpdir(), 'ainflue-temp'),
+        path.join(require('os').homedir(), '.iacherie'),
+        path.join(require('os').tmpdir(), 'iacherie-temp'),
         process.cwd()
       ],
       forbiddenDirectories: [

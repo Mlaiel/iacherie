@@ -3,7 +3,7 @@
 🚀 Distributed Training Manager - Enterprise ML Training Infrastructure
 
 Handles large-scale distributed training across multiple GPUs/nodes with fault tolerance,
-optimized for Ainflue's creator-centric ML workloads.
+optimized for IA Chérie's creator-centric ML workloads.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

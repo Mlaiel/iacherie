@@ -3,7 +3,7 @@
 
 Advanced quality assessment and performance tracking system for AI-generated remixes, adaptations,
 and creative content variations. Monitors creative innovation, technical quality, and market performance
-of AI-enhanced content across the Ainflue platform.
+of AI-enhanced content across the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

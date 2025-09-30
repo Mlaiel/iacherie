@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Configuration Management System
+ * IA Chérie Desktop - Configuration Management System
  * 
  * Professional configuration management with platform-specific optimizations
  * 
@@ -19,8 +19,8 @@ const fs = require('fs');
 class DesktopConfigurationManager {
   constructor() {
     this.store = new Store({
-      name: 'ainflue-config',
-      encryptionKey: 'ainflue-desktop-config-2025',
+      name: 'iacherie-config',
+      encryptionKey: 'iacherie-desktop-config-2025',
       defaults: this.getDefaultConfiguration()
     });
     
@@ -446,7 +446,7 @@ class DesktopConfigurationManager {
   // Backup and restore
   createBackup() {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupPath = path.join(path.dirname(this.configPath), `ainflue-config-backup-${timestamp}.json`);
+    const backupPath = path.join(path.dirname(this.configPath), `iacherie-config-backup-${timestamp}.json`);
     
     try {
       fs.writeFileSync(backupPath, JSON.stringify(this.store.store, null, 2));

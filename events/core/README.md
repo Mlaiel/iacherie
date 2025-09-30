@@ -1,5 +1,5 @@
 # 🏗️ Events Core Module - Enterprise Event System Foundation
-**Ainflue Platform - Core Event Processing Infrastructure**
+**IA Chérie Platform - Core Event Processing Infrastructure**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 ENTERPRISE OVERVIEW
 
-The **Events Core Module** is the foundational event processing infrastructure of the Ainflue platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-advanced industrial system provides enterprise-grade event handling, real-time processing, and business logic orchestration.
+The **Events Core Module** is the foundational event processing infrastructure of the IA Chérie platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-advanced industrial system provides enterprise-grade event handling, real-time processing, and business logic orchestration.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -223,7 +223,7 @@ await EventDispatcher.dispatch(revenue_event)
 version: '3.8'
 services:
   events-core:
-    image: ainflue/events-core:latest
+    image: iacherie/events-core:latest
     deploy:
       replicas: 10
       resources:
@@ -263,7 +263,7 @@ event_duration = Histogram('event_processing_duration_seconds', 'Event processin
 
 ## 📝 **CONCLUSION**
 
-The Events Core Module represents the foundation of Ainflue's enterprise event processing infrastructure, designed specifically for multi-format content creators. With ultra-advanced event handling, real-time processing capabilities, and comprehensive business logic integration, this module ensures reliable, scalable, and secure event management for the entire platform.
+The Events Core Module represents the foundation of IA Chérie's enterprise event processing infrastructure, designed specifically for multi-format content creators. With ultra-advanced event handling, real-time processing capabilities, and comprehensive business logic integration, this module ensures reliable, scalable, and secure event management for the entire platform.
 
 **🎯 Mission:** Provide the most advanced event processing infrastructure for content creators worldwide, enabling seamless multi-format content processing, AI-powered enhancements, and comprehensive monetization tracking.
 

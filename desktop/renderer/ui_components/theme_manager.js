@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Theme Manager
+ * IA Chérie Desktop Renderer - Theme Manager
  * Professional theme management system
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,8 +1,8 @@
-# 📚 نظام توثيق Ainflue - اقتصاد المبدعين المتقدم
+# 📚 نظام توثيق IA Chérie - اقتصاد المبدعين المتقدم
 
-[![إصدار](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![إصدار](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![رخصة](https://img.shields.io/badge/license-ملكية_خاصة-red.svg)](LICENSE)
-[![اقتصاد المبدعين](https://img.shields.io/badge/اقتصاد%20المبدعين-مدعوم-green.svg)](https://ainflue.com)
+[![اقتصاد المبدعين](https://img.shields.io/badge/اقتصاد%20المبدعين-مدعوم-green.svg)](https://iacherie.com)
 
 ## 🎯 **معمارية التوثيق المتقدمة لمنصة اقتصاد المبدعين**
 
@@ -201,8 +201,8 @@ Node.js >= 18.0
 ### التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # تثبيت تبعيات Python
 pip install -r requirements.txt
@@ -343,13 +343,13 @@ else:
 - 🔧 **[مرجع API](docs/api-reference.ar.md)** - توثيق API مفصل
 - 🎯 **[أفضل الممارسات](docs/best-practices.ar.md)** - إرشادات التطوير
 - 🔍 **[استكشاف الأخطاء](docs/troubleshooting.ar.md)** - المشاكل الشائعة والحلول
-- 🎥 **[دروس الفيديو](https://ainflue.com/ar/tutorials)** - موارد التعلم البصري
+- 🎥 **[دروس الفيديو](https://iacherie.com/ar/tutorials)** - موارد التعلم البصري
 
 ### المجتمع
-- 💬 **[مجتمع Discord](https://discord.gg/ainflue-ar)** - نقاشات المبدعين
-- 📧 **الدعم:** support@ainflue.com
-- 🐛 **تقارير الأخطاء:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- 💡 **طلبات الميزات:** [GitHub Discussions](https://github.com/Mlaiel/Ainflue/discussions)
+- 💬 **[مجتمع Discord](https://discord.gg/iacherie-ar)** - نقاشات المبدعين
+- 📧 **الدعم:** support@iacherie.com
+- 🐛 **تقارير الأخطاء:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- 💡 **طلبات الميزات:** [GitHub Discussions](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ---
 
@@ -380,4 +380,4 @@ else:
 
 ---
 
-*© 2025 فهد مليل - جميع الحقوق محفوظة - معمارية توثيق Ainflue الملكية*
+*© 2025 فهد مليل - جميع الحقوق محفوظة - معمارية توثيق IA Chérie الملكية*

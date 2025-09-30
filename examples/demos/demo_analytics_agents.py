@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Analytics Agents Demo - 6-Agent Analytics System for Ainflue Platform
+Analytics Agents Demo - 6-Agent Analytics System for IA Chérie Platform
 
 This script demonstrates the complete 6-agent analytics system:
 1. Predictive Analytics Agent - ML prédictif
@@ -38,7 +38,7 @@ def print_section(title):
 async def demo_analytics_agents():
     """Demonstrate all 6 analytics agents."""
     
-    print_header("AINFLUE PLATFORM - 6-AGENT ANALYTICS SYSTEM DEMO")
+    print_header("IACHERIE PLATFORM - 6-AGENT ANALYTICS SYSTEM DEMO")
     print("Complete implementation of advanced analytics agents")
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     
@@ -105,7 +105,7 @@ async def demo_analytics_agents():
         print(f"Agent: {sentiment_agent.agent_name} v{sentiment_agent.agent_version}")
         
         sentiment_request = SentimentAnalysisRequest(
-            content_text="The new Ainflue analytics features are absolutely fantastic! "
+            content_text="The new IA Chérie analytics features are absolutely fantastic! "
                         "The insights are incredible and really help creators optimize their content. "
                         "I'm so excited about the AI-powered recommendations!",
             include_emotions=True,
@@ -192,7 +192,7 @@ async def demo_analytics_agents():
         print(f"⚠️  Alerts Active: {len(perf_result.alerts)}")
         print(f"📋 Recommendations: {len(bi_result.recommendations) + len(user_result.recommendations)}")
         
-        print("\n🚀 The Ainflue platform now has comprehensive analytics coverage:")
+        print("\n🚀 The IA Chérie platform now has comprehensive analytics coverage:")
         print("   • Real-time performance monitoring")
         print("   • Advanced user behavior analysis") 
         print("   • ML-powered predictive insights")

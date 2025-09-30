@@ -180,7 +180,7 @@ class EscalationManager:
                 member_id="support_001",
                 name="Sarah Chen",
                 role=TeamMemberRole.SUPPORT_AGENT,
-                contact_info={"email": "sarah.chen@ainflue.com", "phone": "+1-555-0101"},
+                contact_info={"email": "sarah.chen@iacherie.com", "phone": "+1-555-0101"},
                 escalation_level=EscalationLevel.L1_SUPPORT,
                 specializations=["general_support", "creator_onboarding"]
             ),
@@ -188,7 +188,7 @@ class EscalationManager:
                 member_id="ml_engineer_001",
                 name="Alex Rodriguez",
                 role=TeamMemberRole.ML_ENGINEER,
-                contact_info={"email": "alex.rodriguez@ainflue.com", "phone": "+1-555-0102"},
+                contact_info={"email": "alex.rodriguez@iacherie.com", "phone": "+1-555-0102"},
                 escalation_level=EscalationLevel.L2_ENGINEERING,
                 specializations=["model_deployment", "performance_optimization"]
             ),
@@ -196,7 +196,7 @@ class EscalationManager:
                 member_id="senior_001",
                 name="Dr. Emily Watson",
                 role=TeamMemberRole.SENIOR_ENGINEER,
-                contact_info={"email": "emily.watson@ainflue.com", "phone": "+1-555-0103"},
+                contact_info={"email": "emily.watson@iacherie.com", "phone": "+1-555-0103"},
                 escalation_level=EscalationLevel.L3_SENIOR,
                 specializations=["ml_architecture", "incident_resolution", "creator_experience"]
             ),
@@ -204,7 +204,7 @@ class EscalationManager:
                 member_id="team_lead_001",
                 name="Michael Kim",
                 role=TeamMemberRole.TEAM_LEAD,
-                contact_info={"email": "michael.kim@ainflue.com", "phone": "+1-555-0104"},
+                contact_info={"email": "michael.kim@iacherie.com", "phone": "+1-555-0104"},
                 escalation_level=EscalationLevel.L3_SENIOR,
                 specializations=["team_coordination", "business_alignment"]
             ),
@@ -212,7 +212,7 @@ class EscalationManager:
                 member_id="eng_manager_001",
                 name="Lisa Thompson",
                 role=TeamMemberRole.ENGINEERING_MANAGER,
-                contact_info={"email": "lisa.thompson@ainflue.com", "phone": "+1-555-0105"},
+                contact_info={"email": "lisa.thompson@iacherie.com", "phone": "+1-555-0105"},
                 escalation_level=EscalationLevel.L4_EXECUTIVE,
                 specializations=["strategic_planning", "resource_allocation"]
             ),
@@ -220,7 +220,7 @@ class EscalationManager:
                 member_id="vp_eng_001",
                 name="Robert Chen",
                 role=TeamMemberRole.VP_ENGINEERING,
-                contact_info={"email": "robert.chen@ainflue.com", "phone": "+1-555-0106"},
+                contact_info={"email": "robert.chen@iacherie.com", "phone": "+1-555-0106"},
                 escalation_level=EscalationLevel.L4_EXECUTIVE,
                 specializations=["executive_decisions", "business_strategy"]
             ),
@@ -228,7 +228,7 @@ class EscalationManager:
                 member_id="cto_001",
                 name="Dr. Jennifer Park",
                 role=TeamMemberRole.CTO,
-                contact_info={"email": "jennifer.park@ainflue.com", "phone": "+1-555-0107"},
+                contact_info={"email": "jennifer.park@iacherie.com", "phone": "+1-555-0107"},
                 escalation_level=EscalationLevel.L5_EMERGENCY,
                 specializations=["technical_strategy", "crisis_management"]
             )

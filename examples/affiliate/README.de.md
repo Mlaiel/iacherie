@@ -1,5 +1,5 @@
 # 🚀 Affiliate Beispiele - Fortgeschrittene Partnerschafts- & Umsatzsysteme
-**Ainflue Platform - Umfassende Affiliate Marketing Beispiele**
+**IA Chérie Platform - Umfassende Affiliate Marketing Beispiele**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Urheberrecht:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Unternehmensübersicht
 
-Das **Affiliate-Beispiele** Modul zeigt umfassende Affiliate-Marketing-, Partnerschaftsmanagement- und Umsatzteilungs-Implementierungen für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochmoderne, produktionsreife System demonstriert unternehmenstaugliches Affiliate-Tracking, Provisionsmanagement, Compliance-Reporting und plattformübergreifende Partnerschaftsintegration mit realen Szenarien und bewährten Praktiken.
+Das **Affiliate-Beispiele** Modul zeigt umfassende Affiliate-Marketing-, Partnerschaftsmanagement- und Umsatzteilungs-Implementierungen für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochmoderne, produktionsreife System demonstriert unternehmenstaugliches Affiliate-Tracking, Provisionsmanagement, Compliance-Reporting und plattformübergreifende Partnerschaftsintegration mit realen Szenarien und bewährten Praktiken.
 
 ### 🎯 **Geschäftslogik-Fluss**
 ```
@@ -328,7 +328,7 @@ print(f"Musiker Affiliate-Programm Setup vollständig: {musician_program['profil
 version: '3.8'
 services:
   affiliate-examples:
-    image: ainflue/affiliate-examples:latest
+    image: iacherie/affiliate-examples:latest
     deploy:
       replicas: 3
       resources:
@@ -341,8 +341,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://affiliate-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - API_GATEWAY=https://api.ainflue.com
-      - TRACKING_SERVICE=https://tracking.ainflue.com
+      - API_GATEWAY=https://api.iacherie.com
+      - TRACKING_SERVICE=https://tracking.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -366,7 +366,7 @@ services:
 
 ## 📝 **Zusammenfassung**
 
-Das Affiliate-Beispiele-Modul repräsentiert den Höhepunkt des Affiliate-Marketing-System-Designs für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit umfassenden Beispielen, fortgeschrittenen Tracking-Fähigkeiten und unternehmenstauglichen Compliance-Features gewährleistet dieses System maximale Umsatzgenerierung, regulatorische Compliance und Performance-Optimierung für alle Creator-Affiliate-Aktivitäten und bietet gleichzeitig tiefe Einblicke in Partnerschafts-Erfolgsmetriken und Umsatzoptimierungsmöglichkeiten.
+Das Affiliate-Beispiele-Modul repräsentiert den Höhepunkt des Affiliate-Marketing-System-Designs für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit umfassenden Beispielen, fortgeschrittenen Tracking-Fähigkeiten und unternehmenstauglichen Compliance-Features gewährleistet dieses System maximale Umsatzgenerierung, regulatorische Compliance und Performance-Optimierung für alle Creator-Affiliate-Aktivitäten und bietet gleichzeitig tiefe Einblicke in Partnerschafts-Erfolgsmetriken und Umsatzoptimierungsmöglichkeiten.
 
 **🎯 Mission:** Die weltweit umfassendsten Affiliate-Marketing-Beispiele für Content-Ersteller liefern, die optimale Umsatzgenerierung, Partnerschaftsmanagement und Compliance im gesamten Creator-Ökosystem ermöglichen.
 

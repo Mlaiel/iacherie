@@ -1,4 +1,4 @@
-# 🚀 REGISTRE DE SERVICES ENTERPRISE AINFLUE
+# 🚀 REGISTRE DE SERVICES ENTERPRISE IACHERIE
 
 **Équipe Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer  
 **Propriétaire IP**: Fahed Mlaiel (mlaiel@live.de)  
@@ -13,7 +13,7 @@
 
 ## 🎯 APERÇU
 
-Le Registre de Services Enterprise Ainflue est un système de registre de services distribué prêt pour la production, conçu spécifiquement pour la Plateforme d'Économie Créatrice Ainflue. Il fournit une découverte de services complète, une surveillance de la santé, une gestion de configuration, des politiques de sécurité et des analyses avec une intelligence alimentée par ML.
+Le Registre de Services Enterprise IA Chérie est un système de registre de services distribué prêt pour la production, conçu spécifiquement pour la Plateforme d'Économie Créatrice IA Chérie. Il fournit une découverte de services complète, une surveillance de la santé, une gestion de configuration, des politiques de sécurité et des analyses avec une intelligence alimentée par ML.
 
 ### 🌟 Fonctionnalités Clés
 
@@ -28,7 +28,7 @@ Le Registre de Services Enterprise Ainflue est un système de registre de servic
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                 REGISTRE DE SERVICES AINFLUE                    │
+│                 REGISTRE DE SERVICES IACHERIE                    │
 │                      COUCHE ENTERPRISE                          │
 ├─────────────────────────────────────────────────────────────────┤
 │  🔥 Phase 1: Moteur Registre Services Principal (6 Composants)  │
@@ -80,14 +80,14 @@ async def main():
     # 1. Initialiser le registre
     registry = DistributedRegistryCore(
         RegistryBackend.MEMORY, 
-        {'node_id': 'ainflue-node-1'}
+        {'node_id': 'iacherie-node-1'}
     )
     await registry.initialize()
     
     # 2. Enregistrer un service
     service = ServiceInstance(
-        service_id="ainflue-content-service-1",
-        service_name="ainflue-content-service",
+        service_id="iacherie-content-service-1",
+        service_name="iacherie-content-service",
         host="10.0.1.100",
         port=8080,
         service_type="content_service",
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 - Consensus style Raft avec élection de leader
 - Réplication de services avec garanties ACID
 - Intégration service mesh avec coordination sidecar
-- Validation des contraintes métier Ainflue
+- Validation des contraintes métier IA Chérie
 - Surveillance et nettoyage de santé en arrière-plan
 
 #### 2. Moteur Découverte Services (`service_discovery_engine.py`)
@@ -144,7 +144,7 @@ if __name__ == "__main__":
 - `WEIGHTED_RESPONSE_TIME`: Sélection basée sur la performance
 - `GEOGRAPHIC_PROXIMITY`: Routage conscient de l'emplacement
 - `ML_PREDICTIVE`: Sélection optimale basée sur ML
-- `BUSINESS_PRIORITY`: Priorité du domaine métier Ainflue
+- `BUSINESS_PRIORITY`: Priorité du domaine métier IA Chérie
 - `RANDOM`: Sélection aléatoire
 - `HEALTH_WEIGHTED`: Routage basé sur le score de santé
 
@@ -175,7 +175,7 @@ if __name__ == "__main__":
 - Contrôle de version avec capacités de rollback
 - Feature flags avec 6 stratégies de déploiement
 - Configuration spécifique à l'environnement
-- Validation de schéma avec règles métier Ainflue
+- Validation de schéma avec règles métier IA Chérie
 - Templates de configuration
 
 **Stratégies Feature Flag**:
@@ -196,7 +196,7 @@ if __name__ == "__main__":
 - `CAPACITY_PLANNING`: Recommandations de planification de capacité
 - `COST_OPTIMIZATION`: Insights d'optimisation des coûts
 - `DEPENDENCY_ANALYSIS`: Analyse des dépendances de service
-- `BUSINESS_IMPACT`: Métriques d'impact métier Ainflue
+- `BUSINESS_IMPACT`: Métriques d'impact métier IA Chérie
 
 **Types de Patterns d'Utilisation**:
 - **Heures de Pointe**: Périodes d'utilisation de pointe prévisibles
@@ -237,7 +237,7 @@ if __name__ == "__main__":
 AINFLUE_REGISTRY_BACKEND=redis
 AINFLUE_REGISTRY_HOST=localhost
 AINFLUE_REGISTRY_PORT=6379
-AINFLUE_NODE_ID=ainflue-registry-1
+AINFLUE_NODE_ID=iacherie-registry-1
 
 # Configuration Sécurité
 AINFLUE_JWT_SECRET=votre-clé-secrète-jwt
@@ -257,7 +257,7 @@ AINFLUE_ANALYTICS_COLLECTION_INTERVAL=60
 registry:
   backend: redis
   cluster_mode: true
-  node_id: ainflue-registry-1
+  node_id: iacherie-registry-1
   replication_factor: 3
 
 discovery:
@@ -373,7 +373,7 @@ Utilisation CPU:
 ```
 Erreur: Échec validation contraintes métier
 ```
-**Solution**: S'assurer que les métadonnées du service incluent les champs métier Ainflue requis:
+**Solution**: S'assurer que les métadonnées du service incluent les champs métier IA Chérie requis:
 ```python
 service = ServiceInstance(
     # ... autres champs ...
@@ -409,5 +409,5 @@ Ce logiciel est la propriété intellectuelle exclusive de **Fahed Mlaiel** (mla
 
 ---
 
-**🎯 REGISTRE DE SERVICES ENTERPRISE POUR L'ÉCONOMIE CRÉATRICE AINFLUE**  
+**🎯 REGISTRE DE SERVICES ENTERPRISE POUR L'ÉCONOMIE CRÉATRICE IACHERIE**  
 *Registre de services distribué prêt pour la production avec intelligence ML*

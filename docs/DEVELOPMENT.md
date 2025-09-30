@@ -1,4 +1,4 @@
-# Ainflue - Documentation de Développement
+# IA Chérie - Documentation de Développement
 
 **Créateur du Projet & Lead Developer:** Fahed Mlaiel <mlaiel@live.de>  
 **Spécialités de l'équipe:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -236,8 +236,8 @@ Ce code et ce concept sont la propriété intellectuelle exclusive de **Fahed Ml
 ### Setup Environnement
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Install dependencies
 pip install -r requirements.txt

@@ -2,7 +2,7 @@
 Data Protection Manager
 ======================
 
-Advanced data protection and privacy management for Ainflue Distribution Platform.
+Advanced data protection and privacy management for IA Chérie Distribution Platform.
 Provides GDPR/CCPA compliance, data encryption, and privacy controls.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

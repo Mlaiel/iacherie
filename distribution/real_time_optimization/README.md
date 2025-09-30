@@ -1,6 +1,6 @@
 # 🚀 Real-Time Optimization Engine
 
-**Advanced Real-Time Performance Optimization and Adaptive Adjustment System for Ainflue Distribution Platform**
+**Advanced Real-Time Performance Optimization and Adaptive Adjustment System for IA Chérie Distribution Platform**
 
 ## 📖 Overview
 
@@ -322,15 +322,15 @@ optimization_config = {
 ```python
 escalation_protocols = {
     "level_1": {
-        "contact": "content_manager@ainflue.com",
+        "contact": "content_manager@iacherie.com",
         "escalation_time": 15  # minutes
     },
     "level_2": {
-        "contact": "marketing_director@ainflue.com",
+        "contact": "marketing_director@iacherie.com",
         "escalation_time": 30
     },
     "level_3": {
-        "contact": "cmo@ainflue.com",
+        "contact": "cmo@iacherie.com",
         "escalation_time": 60
     },
     "level_4": {

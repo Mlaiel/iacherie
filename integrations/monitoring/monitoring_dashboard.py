@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AINFLUE INTEGRATIONS MODULE - ENTERPRISE MONITORING DASHBOARD
+IACHERIE INTEGRATIONS MODULE - ENTERPRISE MONITORING DASHBOARD
 =============================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Module: Real-time Integration Health Monitoring
@@ -46,7 +46,7 @@ class MonitoringMetrics:
     services: List[IntegrationHealth]
 
 class IntegrationsMonitor:
-    """Enterprise monitoring for all Ainflue integrations"""
+    """Enterprise monitoring for all IA Chérie integrations"""
     
     def __init__(self):
         self.services = {}
@@ -319,7 +319,7 @@ class IntegrationsMonitor:
         }
         
         report = f"""
-# 🚀 AINFLUE INTEGRATIONS - REAL-TIME MONITORING DASHBOARD
+# 🚀 IACHERIE INTEGRATIONS - REAL-TIME MONITORING DASHBOARD
 ================================================================
 Generated: {metrics.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
 Monitoring Session: SESSION 5 - FEBRUARY 2025
@@ -412,7 +412,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
         
         return report
     
-    async def save_monitoring_data(self, metrics: MonitoringMetrics, base_path: str = "/home/runner/work/Ainflue/Ainflue/integrations"):
+    async def save_monitoring_data(self, metrics: MonitoringMetrics, base_path: str = "/home/runner/work/IA Chérie/IA Chérie/integrations"):
         """Save monitoring data to files"""
         base_path = Path(base_path)
         
@@ -442,7 +442,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
 
 async def main():
     """Main monitoring execution"""
-    print("🚀 AINFLUE INTEGRATIONS - ENTERPRISE MONITORING")
+    print("🚀 IACHERIE INTEGRATIONS - ENTERPRISE MONITORING")
     print("=" * 60)
     print("Real-time health monitoring for all integration services")
     print("Expert Roles: All 9 roles monitoring their respective domains")
@@ -462,6 +462,10 @@ async def main():
     print(f"Services: {metrics.healthy_services}/{metrics.total_services} healthy")
     print(f"Avg Response: {metrics.avg_response_time:.1f}ms")
     print(f"💾 Reports saved to monitoring_dashboard.md and monitoring_metrics.json")
+
+
+# Alias pour compatibilité d'import
+MonitoringDashboard = IntegrationsMonitor
 
 if __name__ == "__main__":
     asyncio.run(main())

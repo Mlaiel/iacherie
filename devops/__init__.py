@@ -1,5 +1,5 @@
 """
-🚀 Ainflue DevOps Engineering Module - Enterprise Implementation
+🚀 IA Chérie DevOps Engineering Module - Enterprise Implementation
 ===============================================================
 
 Advanced DevOps automation system with infrastructure management, deployment
@@ -169,7 +169,7 @@ def handle_devops_exception(func):
 def get_devops_info() -> Dict[str, Any]:
     """Get DevOps module information and status"""
     return {
-        "module": "ainflue.devops",
+        "module": "iacherie.devops",
         "version": __version__,
         "author": __author__,
         "copyright": __copyright__,
@@ -230,7 +230,7 @@ def get_devops_system():
 async def initialize_devops_modules():
     """Initialize and register all available DevOps modules"""
     
-    logger.info("Initializing Ainflue DevOps Engineering System...")
+    logger.info("Initializing IA Chérie DevOps Engineering System...")
     
     # Register core DevOps system
     devops_system = get_devops_system()
@@ -286,4 +286,4 @@ __all__ = [
     "__copyright__"
 ]
 
-logger.info(f"🚀 Ainflue DevOps Engineering Module v{__version__} initialized")
+logger.info(f"🚀 IA Chérie DevOps Engineering Module v{__version__} initialized")

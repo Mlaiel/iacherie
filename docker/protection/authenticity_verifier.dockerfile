@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AUTHENTICITY VERIFIER - SPECIALIZED DOCKERFILE
+# IACHERIE AUTHENTICITY VERIFIER - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for authenticity verification supporting
 # digital signatures, blockchain verification, and AI-based authenticity detection.

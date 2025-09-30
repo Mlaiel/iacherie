@@ -1,10 +1,10 @@
-# 🚀 Ainflue Infrastructure Deployment Guide
+# 🚀 IA Chérie Infrastructure Deployment Guide
 
 **Enterprise Deployment Procedures and Best Practices**
 
 ## 📋 Overview
 
-This guide provides comprehensive deployment procedures for the Ainflue Infrastructure module, covering multi-cloud deployments, best practices, and operational procedures.
+This guide provides comprehensive deployment procedures for the IA Chérie Infrastructure module, covering multi-cloud deployments, best practices, and operational procedures.
 
 ## 🎯 Deployment Objectives
 
@@ -56,7 +56,7 @@ This guide provides comprehensive deployment procedures for the Ainflue Infrastr
 export AINFLUE_ENV=production  # dev, staging, production
 export CLOUD_PROVIDER=aws      # aws, gcp, azure, multi
 export REGION=us-east-1
-export CLUSTER_NAME=ainflue-infrastructure
+export CLUSTER_NAME=iacherie-infrastructure
 ```
 
 ## 🏗️ Infrastructure Provisioning
@@ -69,11 +69,11 @@ export CLUSTER_NAME=ainflue-infrastructure
 aws configure
 
 # Create S3 bucket for Terraform state
-aws s3 mb s3://ainflue-terraform-state-${REGION}
+aws s3 mb s3://iacherie-terraform-state-${REGION}
 
 # Enable versioning
 aws s3api put-bucket-versioning \
-  --bucket ainflue-terraform-state-${REGION} \
+  --bucket iacherie-terraform-state-${REGION} \
   --versioning-configuration Status=Enabled
 
 # Provision infrastructure
@@ -87,7 +87,7 @@ terraform apply -auto-approve
 ```bash
 # Authenticate with GCP
 gcloud auth login
-gcloud config set project ainflue-infrastructure
+gcloud config set project iacherie-infrastructure
 
 # Enable required APIs
 gcloud services enable compute.googleapis.com
@@ -95,7 +95,7 @@ gcloud services enable container.googleapis.com
 gcloud services enable sql-component.googleapis.com
 
 # Create GCS bucket for Terraform state
-gsutil mb gs://ainflue-terraform-state-${REGION}
+gsutil mb gs://iacherie-terraform-state-${REGION}
 
 # Provision infrastructure
 cd infrastructure/terraform/gcp
@@ -110,12 +110,12 @@ terraform apply -auto-approve
 az login
 
 # Create resource group
-az group create --name ainflue-infrastructure --location ${REGION}
+az group create --name iacherie-infrastructure --location ${REGION}
 
 # Create storage account for Terraform state
 az storage account create \
   --name ainfluestoragestate \
-  --resource-group ainflue-infrastructure \
+  --resource-group iacherie-infrastructure \
   --location ${REGION} \
   --sku Standard_LRS
 
@@ -135,7 +135,7 @@ eksctl create cluster \
   --name ${CLUSTER_NAME} \
   --region ${REGION} \
   --version 1.21 \
-  --nodegroup-name ainflue-nodes \
+  --nodegroup-name iacherie-nodes \
   --node-type t3.medium \
   --nodes 3 \
   --nodes-min 1 \
@@ -173,7 +173,7 @@ kubectl get nodes
 ```bash
 # Create AKS cluster
 az aks create \
-  --resource-group ainflue-infrastructure \
+  --resource-group iacherie-infrastructure \
   --name ${CLUSTER_NAME} \
   --node-count 3 \
   --enable-addons monitoring \
@@ -183,7 +183,7 @@ az aks create \
   --generate-ssh-keys
 
 # Configure kubectl
-az aks get-credentials --resource-group ainflue-infrastructure --name ${CLUSTER_NAME}
+az aks get-credentials --resource-group iacherie-infrastructure --name ${CLUSTER_NAME}
 
 # Verify cluster
 kubectl get nodes
@@ -228,7 +228,7 @@ helm repo update
 helm install prometheus prometheus-community/kube-prometheus-stack \
   --namespace monitoring \
   --create-namespace \
-  --set grafana.adminPassword=ainflue-admin
+  --set grafana.adminPassword=iacherie-admin
 
 # Install Jaeger
 kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.25.0/jaeger-operator.yaml
@@ -241,19 +241,19 @@ kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/downl
 #### Build Infrastructure Images
 ```bash
 # Build main infrastructure orchestrator
-docker build -t ainflue/infrastructure-orchestrator:latest \
+docker build -t iacherie/infrastructure-orchestrator:latest \
   -f infrastructure/docker/Dockerfile.orchestrator .
 
 # Build multi-cloud manager
-docker build -t ainflue/multi-cloud-manager:latest \
+docker build -t iacherie/multi-cloud-manager:latest \
   -f infrastructure/docker/Dockerfile.multicloud .
 
 # Build performance optimizer
-docker build -t ainflue/performance-optimizer:latest \
+docker build -t iacherie/performance-optimizer:latest \
   -f infrastructure/docker/Dockerfile.optimizer .
 
 # Build cost manager
-docker build -t ainflue/cost-manager:latest \
+docker build -t iacherie/cost-manager:latest \
   -f infrastructure/docker/Dockerfile.cost .
 ```
 
@@ -263,34 +263,34 @@ docker build -t ainflue/cost-manager:latest \
 aws ecr get-login-password --region ${REGION} | \
   docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com
 
-docker tag ainflue/infrastructure-orchestrator:latest \
-  ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/ainflue/infrastructure-orchestrator:latest
-docker push ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/ainflue/infrastructure-orchestrator:latest
+docker tag iacherie/infrastructure-orchestrator:latest \
+  ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/iacherie/infrastructure-orchestrator:latest
+docker push ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/iacherie/infrastructure-orchestrator:latest
 
 # GCP Container Registry
 gcloud auth configure-docker
-docker tag ainflue/infrastructure-orchestrator:latest \
-  gcr.io/${PROJECT_ID}/ainflue/infrastructure-orchestrator:latest
-docker push gcr.io/${PROJECT_ID}/ainflue/infrastructure-orchestrator:latest
+docker tag iacherie/infrastructure-orchestrator:latest \
+  gcr.io/${PROJECT_ID}/iacherie/infrastructure-orchestrator:latest
+docker push gcr.io/${PROJECT_ID}/iacherie/infrastructure-orchestrator:latest
 
 # Azure Container Registry
 az acr login --name ainflueregistry
-docker tag ainflue/infrastructure-orchestrator:latest \
-  ainflueregistry.azurecr.io/ainflue/infrastructure-orchestrator:latest
-docker push ainflueregistry.azurecr.io/ainflue/infrastructure-orchestrator:latest
+docker tag iacherie/infrastructure-orchestrator:latest \
+  ainflueregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
+docker push ainflueregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
 ```
 
 ### 2. Helm Chart Deployment
 
 #### Install Infrastructure Helm Chart
 ```bash
-# Add Ainflue Helm repository
-helm repo add ainflue https://charts.ainflue.com
+# Add IA Chérie Helm repository
+helm repo add iacherie https://charts.iacherie.com
 helm repo update
 
 # Install infrastructure components
-helm install ainflue-infrastructure ainflue/infrastructure \
-  --namespace ainflue-system \
+helm install iacherie-infrastructure iacherie/infrastructure \
+  --namespace iacherie-system \
   --create-namespace \
   --set environment=${AINFLUE_ENV} \
   --set cloudProvider=${CLOUD_PROVIDER} \
@@ -304,16 +304,16 @@ helm install ainflue-infrastructure ainflue/infrastructure \
 #### Verify Deployment
 ```bash
 # Check pod status
-kubectl get pods -n ainflue-system
+kubectl get pods -n iacherie-system
 
 # Check services
-kubectl get services -n ainflue-system
+kubectl get services -n iacherie-system
 
 # Check ingress
-kubectl get ingress -n ainflue-system
+kubectl get ingress -n iacherie-system
 
 # View logs
-kubectl logs -n ainflue-system deployment/infrastructure-orchestrator
+kubectl logs -n iacherie-system deployment/infrastructure-orchestrator
 ```
 
 ### 3. Database Setup
@@ -363,14 +363,14 @@ kubectl get mongodbcommunity
 #### Setup Blue-Green Environment
 ```bash
 # Deploy to Blue environment
-helm install ainflue-infrastructure-blue ainflue/infrastructure \
-  --namespace ainflue-blue \
+helm install iacherie-infrastructure-blue iacherie/infrastructure \
+  --namespace iacherie-blue \
   --create-namespace \
   --set environment=blue \
   --values infrastructure/helm/values-blue.yaml
 
 # Verify Blue deployment
-kubectl get pods -n ainflue-blue
+kubectl get pods -n iacherie-blue
 
 # Run smoke tests
 ./scripts/smoke-tests.sh blue
@@ -380,7 +380,7 @@ kubectl patch service infrastructure-gateway \
   --patch '{"spec":{"selector":{"app":"infrastructure-orchestrator","environment":"blue"}}}'
 
 # Verify traffic switch
-curl -s http://infrastructure.ainflue.com/health | jq .environment
+curl -s http://infrastructure.iacherie.com/health | jq .environment
 ```
 
 #### Rollback Procedure
@@ -390,11 +390,11 @@ kubectl patch service infrastructure-gateway \
   --patch '{"spec":{"selector":{"app":"infrastructure-orchestrator","environment":"green"}}}'
 
 # Verify rollback
-curl -s http://infrastructure.ainflue.com/health | jq .environment
+curl -s http://infrastructure.iacherie.com/health | jq .environment
 
 # Clean up Blue environment if needed
-helm uninstall ainflue-infrastructure-blue -n ainflue-blue
-kubectl delete namespace ainflue-blue
+helm uninstall iacherie-infrastructure-blue -n iacherie-blue
+kubectl delete namespace iacherie-blue
 ```
 
 ### 2. Canary Deployment
@@ -402,8 +402,8 @@ kubectl delete namespace ainflue-blue
 #### Setup Canary Release
 ```bash
 # Deploy canary version (10% traffic)
-helm install ainflue-infrastructure-canary ainflue/infrastructure \
-  --namespace ainflue-canary \
+helm install iacherie-infrastructure-canary iacherie/infrastructure \
+  --namespace iacherie-canary \
   --create-namespace \
   --set environment=canary \
   --set replicaCount=1 \
@@ -428,7 +428,7 @@ kubectl patch virtualservice infrastructure-vs \
   --patch '{"spec":{"http":[{"route":[{"destination":{"host":"infrastructure-canary"}}]}]}}'
 
 # Replace stable version
-helm upgrade ainflue-infrastructure-stable ainflue/infrastructure \
+helm upgrade iacherie-infrastructure-stable iacherie/infrastructure \
   --set image.tag=canary-validated \
   --reuse-values
 ```
@@ -453,7 +453,7 @@ kubectl patch deployment infrastructure-orchestrator \
 
 # Update image
 kubectl set image deployment/infrastructure-orchestrator \
-  infrastructure-orchestrator=ainflue/infrastructure-orchestrator:v2.0.0
+  infrastructure-orchestrator=iacherie/infrastructure-orchestrator:v2.0.0
 
 # Monitor rollout
 kubectl rollout status deployment/infrastructure-orchestrator
@@ -552,14 +552,14 @@ kubectl create secret generic cloud-credentials \
   --from-literal=aws-secret-access-key=${AWS_SECRET_ACCESS_KEY} \
   --from-literal=gcp-service-account-key=${GCP_SERVICE_ACCOUNT_KEY} \
   --from-literal=azure-client-secret=${AZURE_CLIENT_SECRET} \
-  --namespace ainflue-system
+  --namespace iacherie-system
 
 # Create secret for database passwords
 kubectl create secret generic db-credentials \
   --from-literal=postgres-password=${POSTGRES_PASSWORD} \
   --from-literal=redis-password=${REDIS_PASSWORD} \
   --from-literal=mongodb-password=${MONGODB_PASSWORD} \
-  --namespace ainflue-system
+  --namespace iacherie-system
 ```
 
 #### External Secrets (AWS Secrets Manager)
@@ -584,16 +584,16 @@ kubectl apply -f infrastructure/k8s/external-secret.yaml
 #### Application Health
 ```bash
 # Check infrastructure orchestrator health
-curl -f http://infrastructure.ainflue.com/health
+curl -f http://infrastructure.iacherie.com/health
 
 # Check multi-cloud manager health
-curl -f http://infrastructure.ainflue.com/multicloud/health
+curl -f http://infrastructure.iacherie.com/multicloud/health
 
 # Check performance optimizer health
-curl -f http://infrastructure.ainflue.com/optimizer/health
+curl -f http://infrastructure.iacherie.com/optimizer/health
 
 # Check cost manager health
-curl -f http://infrastructure.ainflue.com/cost/health
+curl -f http://infrastructure.iacherie.com/cost/health
 ```
 
 #### Kubernetes Health
@@ -640,7 +640,7 @@ kubectl top pods --all-namespaces
 #### Security Scanning
 ```bash
 # Scan container images
-trivy image ainflue/infrastructure-orchestrator:latest
+trivy image iacherie/infrastructure-orchestrator:latest
 
 # Scan Kubernetes manifests
 kube-score score infrastructure/k8s/*.yaml
@@ -666,30 +666,30 @@ kubectl describe compliancescan infrastructure-scan
 #### Pod Startup Issues
 ```bash
 # Check pod events
-kubectl describe pod <pod-name> -n ainflue-system
+kubectl describe pod <pod-name> -n iacherie-system
 
 # Check logs
-kubectl logs <pod-name> -n ainflue-system --previous
+kubectl logs <pod-name> -n iacherie-system --previous
 
 # Check resource constraints
-kubectl top pod <pod-name> -n ainflue-system
+kubectl top pod <pod-name> -n iacherie-system
 ```
 
 #### Service Discovery Issues
 ```bash
 # Check service endpoints
-kubectl get endpoints -n ainflue-system
+kubectl get endpoints -n iacherie-system
 
 # Test service connectivity
 kubectl run test-pod --image=busybox --rm -it -- \
-  wget -qO- http://infrastructure-orchestrator.ainflue-system.svc.cluster.local:8080/health
+  wget -qO- http://infrastructure-orchestrator.iacherie-system.svc.cluster.local:8080/health
 ```
 
 #### Storage Issues
 ```bash
 # Check persistent volume status
 kubectl get pv
-kubectl get pvc -n ainflue-system
+kubectl get pvc -n iacherie-system
 
 # Check storage class
 kubectl get storageclass
@@ -700,13 +700,13 @@ kubectl get storageclass
 #### Emergency Rollback
 ```bash
 # Immediate rollback using Helm
-helm rollback ainflue-infrastructure 1 --namespace ainflue-system
+helm rollback iacherie-infrastructure 1 --namespace iacherie-system
 
 # Force pod restart
-kubectl rollout restart deployment/infrastructure-orchestrator -n ainflue-system
+kubectl rollout restart deployment/infrastructure-orchestrator -n iacherie-system
 
 # Scale down problematic deployment
-kubectl scale deployment infrastructure-orchestrator --replicas=0 -n ainflue-system
+kubectl scale deployment infrastructure-orchestrator --replicas=0 -n iacherie-system
 ```
 
 #### Disaster Recovery
@@ -769,7 +769,7 @@ kubectl apply -f infrastructure/argocd/application.yaml
 # Install Flux
 flux bootstrap github \
   --owner=Mlaiel \
-  --repository=Ainflue \
+  --repository=IA Chérie \
   --branch=main \
   --path=./infrastructure/flux
 ```
@@ -796,8 +796,8 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
       - name: Deploy Infrastructure
         run: |
-          helm upgrade --install ainflue-infrastructure ./infrastructure/helm \
-            --namespace ainflue-system \
+          helm upgrade --install iacherie-infrastructure ./infrastructure/helm \
+            --namespace iacherie-system \
             --create-namespace \
             --wait --timeout=10m
 ```

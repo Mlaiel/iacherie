@@ -1,9 +1,9 @@
-"""Ainflue Core Database - Enterprise Database Management System
+"""IA Chérie Core Database - Enterprise Database Management System
 ============================================================
 
 Advanced database management providing connection pooling, query optimization,
 transaction management, migration support, and distributed database operations
-for the Ainflue platform core engine.
+for the IA Chérie platform core engine.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -58,7 +58,7 @@ class DatabaseConfig:
     db_type: DatabaseType = DatabaseType.POSTGRESQL
     host: str = "localhost"
     port: int = 5432
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: str = "ainflue_user"
     password: str = ""
     pool_size: int = 20

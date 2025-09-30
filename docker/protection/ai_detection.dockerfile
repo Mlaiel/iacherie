@@ -1,11 +1,11 @@
 # AI Detection Service
-# AI-powered content detection for Ainflue Platform
+# AI-powered content detection for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue AI Detection - AI-generated content detection"
+LABEL description="IA Chérie AI Detection - AI-generated content detection"
 LABEL version="1.0.0"
 
 # Set working directory

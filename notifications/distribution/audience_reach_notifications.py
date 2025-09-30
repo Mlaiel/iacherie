@@ -1,6 +1,6 @@
 """
 📊 AUDIENCE REACH NOTIFICATIONS
-Ainflue Platform - Audience Reach Analytics System
+IA Chérie Platform - Audience Reach Analytics System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -1,10 +1,10 @@
 # 🎯 Moteur de Distribution Central - Composants Fondamentaux
 
-**Composants Fondamentaux pour la Plateforme de Distribution Ainflue**
+**Composants Fondamentaux pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Vue d'ensemble
 
-Le Moteur de Distribution Central fournit les blocs de construction fondamentaux et les composants essentiels qui alimentent l'ensemble de l'écosystème de distribution Ainflue. Ce module contient les fonctionnalités principales incluant la synchronisation cross-platform, l'adaptation de format, la sécurité du contenu et les capacités de test A/B qui servent de fondation pour toutes les opérations de distribution.
+Le Moteur de Distribution Central fournit les blocs de construction fondamentaux et les composants essentiels qui alimentent l'ensemble de l'écosystème de distribution IA Chérie. Ce module contient les fonctionnalités principales incluant la synchronisation cross-platform, l'adaptation de format, la sécurité du contenu et les capacités de test A/B qui servent de fondation pour toutes les opérations de distribution.
 
 ## 🚀 Fonctionnalités Clés
 
@@ -31,6 +31,6 @@ Le Moteur de Distribution Central fournit les blocs de construction fondamentaux
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - MOTEUR DE DISTRIBUTION CENTRAL AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - MOTEUR DE DISTRIBUTION CENTRAL IACHERIE**  
 **🔒 LOGICIEL PROPRIÉTAIRE - TOUS DROITS RÉSERVÉS**  
 **⚠️ SOLUTION NIVEAU ENTREPRISE - PERSONNEL AUTORISÉ UNIQUEMENT**

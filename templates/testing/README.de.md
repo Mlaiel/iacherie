@@ -1,4 +1,4 @@
-# 🧪 Ainflue Test-Vorlagen - Enterprise Testing Framework
+# 🧪 IA Chérie Test-Vorlagen - Enterprise Testing Framework
 
 ## ⚠️ SCHUTZ DES GEISTIGEN EIGENTUMS
 > **Exklusives Eigentum von Fahed Mlaiel (mlaiel@live.de)**  
@@ -9,7 +9,7 @@
 
 ## 🎯 Enterprise Testing Architektur
 
-**Ainflue Test-Vorlagen** bietet ein umfassendes Enterprise-Testing-Framework, das speziell für die Creator-Economy-Plattform entwickelt wurde. Dieses Modul liefert über 130 professionelle Test-Vorlagen, die alle Aspekte einer modernen Multi-Format-Content-Erstellungsplattform abdecken.
+**IA Chérie Test-Vorlagen** bietet ein umfassendes Enterprise-Testing-Framework, das speziell für die Creator-Economy-Plattform entwickelt wurde. Dieses Modul liefert über 130 professionelle Test-Vorlagen, die alle Aspekte einer modernen Multi-Format-Content-Erstellungsplattform abdecken.
 
 ### 🏗️ Expert Team Spezialisierungen
 

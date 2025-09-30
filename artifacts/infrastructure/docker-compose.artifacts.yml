@@ -1,6 +1,6 @@
 version: '3.8'
 
-# 🏗️ Ainflue Platform - Artifacts Module Container Orchestration
+# 🏗️ IA Chérie Platform - Artifacts Module Container Orchestration
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 # License: Proprietary
@@ -10,12 +10,12 @@ version: '3.8'
 # Unauthorized copying, distribution, or implementation is strictly prohibited.
 
 networks:
-  ainflue-artifacts:
+  iacherie-artifacts:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.0.0/16
-  ainflue-monitoring:
+  iacherie-monitoring:
     driver: bridge
     ipam:
       config:
@@ -38,7 +38,7 @@ services:
   
   documentation-server:
     image: nginx:1.25-alpine
-    container_name: ainflue-docs
+    container_name: iacherie-docs
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -46,13 +46,13 @@ services:
       - ../:/usr/share/nginx/html/artifacts:ro
       - ./nginx-docs.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
-      - ainflue-artifacts
+      - iacherie-artifacts
     environment:
-      - NGINX_HOST=docs.ainflue.local
+      - NGINX_HOST=docs.iacherie.local
       - NGINX_PORT=80
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.docs.rule=Host(`docs.ainflue.local`)"
+      - "traefik.http.routers.docs.rule=Host(`docs.iacherie.local`)"
       - "traefik.http.services.docs.loadbalancer.server.port=80"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/artifacts/"]
@@ -66,14 +66,14 @@ services:
   
   config-validator:
     image: node:18-alpine
-    container_name: ainflue-config-validator
+    container_name: iacherie-config-validator
     restart: "no"
     working_dir: /app
     volumes:
       - ../configs:/app/configs:ro
       - ./validation:/app/validation:ro
     networks:
-      - ainflue-artifacts
+      - iacherie-artifacts
     command: >
       sh -c "
         npm install -g ajv-cli &&
@@ -91,7 +91,7 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.47.0
-    container_name: ainflue-prometheus
+    container_name: iacherie-prometheus
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -100,8 +100,8 @@ services:
       - ./prometheus-rules.yml:/etc/prometheus/rules.yml:ro
       - prometheus_data:/prometheus
     networks:
-      - ainflue-monitoring
-      - ainflue-artifacts
+      - iacherie-monitoring
+      - iacherie-artifacts
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -112,7 +112,7 @@ services:
       - '--web.enable-admin-api'
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.ainflue.local`)"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.iacherie.local`)"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
@@ -122,7 +122,7 @@ services:
 
   grafana:
     image: grafana/grafana:10.1.0
-    container_name: ainflue-grafana
+    container_name: iacherie-grafana
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -131,18 +131,18 @@ services:
       - ./grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
       - ./grafana-datasources:/etc/grafana/provisioning/datasources:ro
     networks:
-      - ainflue-monitoring
+      - iacherie-monitoring
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=ainflue_secure_2025
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-clock-panel
-      - GF_SERVER_ROOT_URL=http://grafana.ainflue.local
+      - GF_SERVER_ROOT_URL=http://grafana.iacherie.local
     depends_on:
       - prometheus
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.ainflue.local`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.iacherie.local`)"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
@@ -156,7 +156,7 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
-    container_name: ainflue-elasticsearch
+    container_name: iacherie-elasticsearch
     restart: unless-stopped
     ports:
       - "9200:9200"
@@ -164,13 +164,13 @@ services:
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
     networks:
-      - ainflue-monitoring
+      - iacherie-monitoring
     environment:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
       - xpack.security.enabled=false
       - xpack.security.enrollment.enabled=false
-      - cluster.name=ainflue-logs
+      - cluster.name=iacherie-logs
       - node.name=artifacts-node
     ulimits:
       memlock:
@@ -184,21 +184,21 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.10.0
-    container_name: ainflue-kibana
+    container_name: iacherie-kibana
     restart: unless-stopped
     ports:
       - "5601:5601"
     networks:
-      - ainflue-monitoring
+      - iacherie-monitoring
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - SERVER_NAME=kibana.ainflue.local
+      - SERVER_NAME=kibana.iacherie.local
       - XPACK_SECURITY_ENABLED=false
     depends_on:
       - elasticsearch
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.ainflue.local`)"
+      - "traefik.http.routers.kibana.rule=Host(`kibana.iacherie.local`)"
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
@@ -212,7 +212,7 @@ services:
 
   traefik:
     image: traefik:v3.0
-    container_name: ainflue-traefik
+    container_name: iacherie-traefik
     restart: unless-stopped
     ports:
       - "80:80"
@@ -223,8 +223,8 @@ services:
       - ./traefik.yml:/etc/traefik/traefik.yml:ro
       - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
     networks:
-      - ainflue-artifacts
-      - ainflue-monitoring
+      - iacherie-artifacts
+      - iacherie-monitoring
     command:
       - "--api.dashboard=true"
       - "--api.insecure=true"
@@ -235,7 +235,7 @@ services:
       - "--log.level=INFO"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.ainflue.local`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.iacherie.local`)"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
     healthcheck:
       test: ["CMD", "traefik", "healthcheck"]
@@ -249,14 +249,14 @@ services:
 
   redis:
     image: redis:7.2-alpine
-    container_name: ainflue-redis
+    container_name: iacherie-redis
     restart: unless-stopped
     ports:
       - "6379:6379"
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
     networks:
-      - ainflue-artifacts
+      - iacherie-artifacts
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
       - REDIS_PASSWORD=ainflue_redis_2025
@@ -272,13 +272,13 @@ services:
 
   security-scanner:
     image: aquasec/trivy:latest
-    container_name: ainflue-security-scanner
+    container_name: iacherie-security-scanner
     restart: "no"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./security-reports:/reports
     networks:
-      - ainflue-artifacts
+      - iacherie-artifacts
     command: >
       sh -c "
         echo 'Running security scans...' &&
@@ -298,11 +298,11 @@ services:
 
   health-monitor:
     image: curlimages/curl:8.4.0
-    container_name: ainflue-health-monitor
+    container_name: iacherie-health-monitor
     restart: unless-stopped
     networks:
-      - ainflue-artifacts
-      - ainflue-monitoring
+      - iacherie-artifacts
+      - iacherie-monitoring
     command: >
       sh -c "
         while true; do

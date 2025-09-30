@@ -414,7 +414,7 @@ class MessageBirdProvider(SMSProviderInterface):
             data = {
                 'recipients': recipients,
                 'body': request.message,
-                'originator': request.sender_id or 'Ainflue'
+                'originator': request.sender_id or 'IA Chérie'
             }
             
             if request.type == SMSType.TRANSACTIONAL:

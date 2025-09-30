@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Redis Sentinel Orchestrator - Ainflue Platform
+Redis Sentinel Orchestrator - IA Chérie Platform
 ==============================================
 
 Enterprise Sentinel orchestration with automatic deployment, monitoring,
@@ -29,8 +29,8 @@ try:
     import importlib
     # Temporarily remove the local redis module from the path
     original_path = sys.path[:]
-    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
-    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    local_redis_path = [p for p in sys.path if 'IA Chérie' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'IA Chérie' not in p] + local_redis_path
     
     redis_module = importlib.import_module('redis')
     # For Redis 5.x, async is typically in redis.asyncio or use redis directly
@@ -136,7 +136,7 @@ class SentinelConfig:
         if not self.sentinels:
             self.sentinels = [('localhost', 26379)]
         if not self.master_name:
-            self.master_name = 'ainflue-master'
+            self.master_name = 'iacherie-master'
         if self.sentinel_kwargs is None:
             self.sentinel_kwargs = {}
 
@@ -488,7 +488,7 @@ class RedisSentinelOrchestrator:
             # For now, return default configuration
             return [
                 {
-                    'name': 'ainflue-master',
+                    'name': 'iacherie-master',
                     'host': 'redis-master',
                     'port': 6379,
                     'quorum': 2
@@ -1300,7 +1300,7 @@ async def main():
         config = {
             'masters': [
                 {
-                    'name': 'ainflue-master',
+                    'name': 'iacherie-master',
                     'host': 'redis-master',
                     'port': 6379,
                     'quorum': 2

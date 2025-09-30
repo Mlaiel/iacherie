@@ -105,7 +105,7 @@ logging:
   format: "json"
   enable_console: true      # Console enabled for debugging
   enable_file: true
-  file_path: "/var/log/ainflue/staging.log"
+  file_path: "/var/log/iacherie/staging.log"
   structured_logging: true
   include_trace: false
   log_sql_queries: true     # Enable for performance testing
@@ -210,8 +210,8 @@ external_services:
 api:
   # CORS settings for staging
   cors_origins:
-    - "https://staging.ainflue.com"
-    - "https://staging-app.ainflue.com"
+    - "https://staging.iacherie.com"
+    - "https://staging-app.iacherie.com"
     - "http://localhost:3000"  # Local development access
   
   # API limits for staging

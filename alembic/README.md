@@ -1,10 +1,10 @@
-# 🗄️ Ainflue Alembic - Enterprise Database Migration System
+# 🗄️ IA Chérie Alembic - Enterprise Database Migration System
 
 **Advanced AI-Powered Database Migration & Schema Management**
 
 ## 🎯 Overview
 
-The Ainflue Alembic module provides enterprise-grade database migration and schema management capabilities for the AI-powered content protection and monetization platform. This system manages complex multi-tenant databases with advanced features including quantum-resistant encryption, AI-powered optimization, and compliance automation.
+The IA Chérie Alembic module provides enterprise-grade database migration and schema management capabilities for the AI-powered content protection and monetization platform. This system manages complex multi-tenant databases with advanced features including quantum-resistant encryption, AI-powered optimization, and compliance automation.
 
 ## 👨‍💻 Development Team
 
@@ -107,14 +107,14 @@ pip install psycopg2-binary>=2.9.0
 
 ### Initialize Alembic
 ```bash
-cd /workspaces/Ainflue/alembic
+cd /workspaces/IA Chérie/alembic
 alembic init .
 ```
 
 ### Environment Configuration
 ```bash
 # Set database URL
-export DATABASE_URL="postgresql://user:password@localhost/ainflue"
+export DATABASE_URL="postgresql://user:password@localhost/iacherie"
 
 # Configure encryption keys
 export ENCRYPTION_KEY="your_quantum_safe_key"
@@ -247,4 +247,4 @@ All migration modules are production-ready with:
 
 ---
 
-**🗄️ Ainflue Alembic - The Most Advanced Database Migration System in the World**
+**🗄️ IA Chérie Alembic - The Most Advanced Database Migration System in the World**

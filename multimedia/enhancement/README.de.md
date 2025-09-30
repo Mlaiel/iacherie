@@ -1,6 +1,6 @@
 # ✨ Erweiterte KI-Verbesserungsmodul
 
-**KI-gestützte Multimedia-Verbesserung mit neuronaler Netzwerk-Skalierung für die Ainflue-Plattform**
+**KI-gestützte Multimedia-Verbesserung mit neuronaler Netzwerk-Skalierung für die IA Chérie-Plattform**
 
 ## Überblick
 

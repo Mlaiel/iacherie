@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 ELASTICSEARCH SEARCH ENGINE
 High-performance Elasticsearch integration for full-text search,
-analytics aggregations, and real-time monitoring of Ainflue events.
+analytics aggregations, and real-time monitoring of IA Chérie events.
 
 Key Features:
 - Full-text search across event content and metadata
@@ -52,7 +52,7 @@ if not ELASTICSEARCH_AVAILABLE:
 
 class ElasticsearchSearchEngine(IEventStoreBackend):
     """
-    Elasticsearch search engine for Ainflue platform
+    Elasticsearch search engine for IA Chérie platform
     
     Optimized for:
     - Full-text search across content and metadata
@@ -82,12 +82,12 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
         
         # Index names for different event types
         self.index_names = {
-            'content_events': 'ainflue-content-events',
-            'user_events': 'ainflue-user-events',
-            'revenue_events': 'ainflue-revenue-events',
-            'performance_events': 'ainflue-performance-events',
-            'search_events': 'ainflue-search-events',
-            'analytics_events': 'ainflue-analytics-events'
+            'content_events': 'iacherie-content-events',
+            'user_events': 'iacherie-user-events',
+            'revenue_events': 'iacherie-revenue-events',
+            'performance_events': 'iacherie-performance-events',
+            'search_events': 'iacherie-search-events',
+            'analytics_events': 'iacherie-analytics-events'
         }
     
     async def initialize(self):
@@ -140,7 +140,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             raise
     
     async def _initialize_indices(self):
-        """Initialize indices with optimized mappings for Ainflue events"""
+        """Initialize indices with optimized mappings for IA Chérie events"""
         
         # Content events index
         await self._create_index_if_not_exists(
@@ -461,7 +461,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
         
         # Template for time-based indices
         template_body = {
-            "index_patterns": ["ainflue-*"],
+            "index_patterns": ["iacherie-*"],
             "settings": {
                 "number_of_shards": self.config.get('shards', 3),
                 "number_of_replicas": self.config.get('replicas', 1),
@@ -471,7 +471,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
         
         try:
             await self.client.indices.put_template(
-                name="ainflue-template",
+                name="iacherie-template",
                 body=template_body
             )
             logger.info("Created index template")
@@ -482,13 +482,13 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
         """Setup index aliases for easier querying"""
         
         aliases = {
-            "ainflue-all-events": list(self.index_names.values()),
-            "ainflue-business-events": [
+            "iacherie-all-events": list(self.index_names.values()),
+            "iacherie-business-events": [
                 self.index_names['content_events'],
                 self.index_names['user_events'],
                 self.index_names['revenue_events']
             ],
-            "ainflue-monitoring": [
+            "iacherie-monitoring": [
                 self.index_names['performance_events'],
                 self.index_names['analytics_events']
             ]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AINFLUE INTEGRATIONS MODULE - ENTERPRISE VALIDATION SCRIPT
+IACHERIE INTEGRATIONS MODULE - ENTERPRISE VALIDATION SCRIPT
 ===========================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Module: Integrations Architecture Validator
@@ -43,9 +43,9 @@ class ValidationSummary:
     results: List[ValidationResult]
 
 class IntegrationsValidator:
-    """Enterprise-grade validation for Ainflue integrations module"""
+    """Enterprise-grade validation for IA Chérie integrations module"""
     
-    def __init__(self, base_path: str = "/home/runner/work/Ainflue/Ainflue/integrations"):
+    def __init__(self, base_path: str = "/home/runner/work/IA Chérie/IA Chérie/integrations"):
         self.base_path = Path(base_path)
         self.results: List[ValidationResult] = []
         
@@ -100,7 +100,7 @@ class IntegrationsValidator:
         
         python_files = self.get_python_files()
         
-        print(f"🔍 AINFLUE INTEGRATIONS VALIDATION - SESSION 5")
+        print(f"🔍 IACHERIE INTEGRATIONS VALIDATION - SESSION 5")
         print(f"📁 Validating {len(python_files)} Python modules...")
         print(f"📍 Base path: {self.base_path}")
         print("-" * 70)
@@ -155,7 +155,7 @@ class IntegrationsValidator:
     def generate_report(self, summary: ValidationSummary) -> str:
         """Generate detailed validation report"""
         report = f"""
-# AINFLUE INTEGRATIONS MODULE - VALIDATION REPORT
+# IACHERIE INTEGRATIONS MODULE - VALIDATION REPORT
 ================================================================
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Validation Session: SESSION 5 - FEBRUARY 2025
@@ -275,7 +275,7 @@ Validation Status: MISSION ACCOMPLISHED WITH EXCELLENCE
 
 def main():
     """Main validation execution"""
-    print("🚀 AINFLUE INTEGRATIONS MODULE - ENTERPRISE VALIDATION")
+    print("🚀 IACHERIE INTEGRATIONS MODULE - ENTERPRISE VALIDATION")
     print("=" * 70)
     print("Expert Roles: Lead Dev IA + Backend Senior + ML Engineer + DBA +")
     print("             Security + Microservices + Audio + DevOps + IA Prompt Engineer")
@@ -298,3 +298,7 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# Alias pour compatibilité d'import
+ValidationManager = IntegrationsValidator

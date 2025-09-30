@@ -1,11 +1,11 @@
 """
-Distributed Timeout Manager - Ainflue Enterprise
+Distributed Timeout Manager - IA Chérie Enterprise
 ===============================================
 Manager timeout distribué avec coordination inter-services.
 Support cluster-wide timeout policies et cascading timeout prevention.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chérie Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -39,7 +39,7 @@ class TimeoutPriority(Enum):
 
 @dataclass
 class TimeoutConfiguration:
-    """Configuration timeout avec métadonnées business Ainflue"""
+    """Configuration timeout avec métadonnées business IA Chérie"""
     service_name: str
     operation_name: str
     default_timeout: float
@@ -115,7 +115,7 @@ class DistributedTimeoutManager:
         self.cluster_nodes: List[str] = []
         self.is_initialized = False
         
-        # Business domain weights for Ainflue
+        # Business domain weights for IA Chérie
         self.business_weights = {
             'creator': 0.9,      # High priority for creator workflows
             'content': 0.85,     # High priority for content processing
@@ -143,7 +143,7 @@ class DistributedTimeoutManager:
             
         logger.info("Initializing Distributed Timeout Manager")
         
-        # Load default timeout configurations for Ainflue business domains
+        # Load default timeout configurations for IA Chérie business domains
         await self._load_default_configurations()
         
         # Initialize cluster coordination
@@ -288,7 +288,7 @@ class DistributedTimeoutManager:
         return adaptive_timeout
     
     async def _load_default_configurations(self):
-        """Load default timeout configurations for Ainflue business domains"""
+        """Load default timeout configurations for IA Chérie business domains"""
         default_configs = {
             # Creator workflows
             'creator_service_upload': TimeoutConfiguration(

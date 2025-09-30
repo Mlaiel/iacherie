@@ -1,9 +1,9 @@
-"""Ainflue Core Workflow Engine - Enterprise Business Process Automation
+"""IA Chérie Core Workflow Engine - Enterprise Business Process Automation
 ====================================================================
 
 Advanced workflow engine providing business process orchestration, state machines,
 task automation, conditional logic, parallel processing, and workflow monitoring
-for the Ainflue platform orchestration core.
+for the IA Chérie platform orchestration core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

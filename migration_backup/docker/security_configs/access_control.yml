@@ -1,0 +1,32 @@
+# Access Control Configuration
+version: '3.8'
+
+rbac:
+  enabled: true
+  default_policy: deny
+  
+roles:
+  admin:
+    permissions:
+      - "*"
+  developer:
+    permissions:
+      - "read:services"
+      - "update:configs"
+  operator:
+    permissions:
+      - "read:*"
+      - "scale:services"
+      
+oauth2:
+  provider: oauth.ainflue.com
+  client_id: ainflue-docker
+  scopes:
+    - docker:admin
+    - docker:read
+    
+mfa:
+  required_for_admin: true
+  methods:
+    - totp
+    - webauthn

@@ -1,10 +1,10 @@
 # 📝 CONTENT SERVICES - SERVICES DE CONTENU ENTERPRISE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE MICROSERVICES ENTERPRISE**
+**© FAHED MLAIEL 2024-2025 - IACHERIE MICROSERVICES ENTERPRISE**
 
 ## 🎯 Vue d'Ensemble
 
-Module enterprise de traitement et gestion de contenu multi-format pour la plateforme Ainflue.
+Module enterprise de traitement et gestion de contenu multi-format pour la plateforme IA Chérie.
 Architecture microservices spécialisée avec 16+ services de traitement de contenu.
 
 ## 🏗️ Architecture des Services
@@ -85,7 +85,7 @@ optimizer = ContentOptimizationService()
 optimized = await optimizer.optimize_content(processed.id)
 ```
 
-## 🎯 Workflow Ainflue
+## 🎯 Workflow IA Chérie
 
 Integration workflow 7 phases avec processing contenu:
 1. **Upload & Validation** → Validation + métadonnées

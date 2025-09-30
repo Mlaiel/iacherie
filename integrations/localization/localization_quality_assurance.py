@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Localization quality assurance enterprise avec automated testing,
 linguistic accuracy validation et cultural compliance verification.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Automated translation quality testing pour créateurs globaux
 - Cultural appropriateness validation automatique
 - Linguistic accuracy assessment avec NLP avancé
@@ -114,7 +114,7 @@ class QualityReport:
     """Rapport de qualité complet"""
     report_id: str
     content_id: str
-    language_pair: Tuple[str, str]
+    language_pair: tuple[str, str]
     overall_score: float
     test_results: List[TestResult]
     quality_metrics: Dict[QualityMetric, float]

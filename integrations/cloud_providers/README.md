@@ -1,4 +1,4 @@
-# ☁️ Cloud Providers Module - Ainflue Integrations
+# ☁️ Cloud Providers Module - IA Chérie Integrations
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

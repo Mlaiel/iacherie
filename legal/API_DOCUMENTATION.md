@@ -276,7 +276,7 @@ Register copyright on blockchain with cryptographic proof.
     "consensus_achieved": true
   },
   "cryptographic_proof": "sha256_proof_hash",
-  "certificate_url": "https://blockchain.ainflue.com/cert/uuid",
+  "certificate_url": "https://blockchain.iacherie.com/cert/uuid",
   "verification_status": "VERIFIED"
 }
 ```
@@ -665,7 +665,7 @@ print(f"Risk Score: {result.risk_score}")
 
 ### **JavaScript SDK Example:**
 ```javascript
-import { LegalClient } from '@ainflue/legal-sdk';
+import { LegalClient } from '@iacherie/legal-sdk';
 
 const client = new LegalClient({ apiKey: 'your_api_key' });
 

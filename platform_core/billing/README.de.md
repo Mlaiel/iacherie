@@ -1,4 +1,4 @@
-# 💳 Enterprise Billing System - Ainflue Creator Economy
+# 💳 Enterprise Billing System - IA Chérie Creator Economy
 
 ⚠️  **EXKLUSIVES GEISTIGES EIGENTUM - FAHED MLAIEL** ⚠️  
 © 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -8,7 +8,7 @@ Kontakt: mlaiel@live.de
 
 ## 🎯 Systemübersicht
 
-Das Ainflue Enterprise-Billing-System ist eine hochmoderne Zahlungs- und Monetarisierungsplattform, die speziell für die Creator Economy entwickelt wurde. Es integriert künstliche Intelligenz, bankentaugliche Sicherheit und regulatorische Compliance zur Optimierung der Creator-Einnahmen.
+Das IA Chérie Enterprise-Billing-System ist eine hochmoderne Zahlungs- und Monetarisierungsplattform, die speziell für die Creator Economy entwickelt wurde. Es integriert künstliche Intelligenz, bankentaugliche Sicherheit und regulatorische Compliance zur Optimierung der Creator-Einnahmen.
 
 ## 🏗️ Systemarchitektur
 
@@ -189,4 +189,4 @@ pytest tests/security/ -v
 
 ---
 
-© 2025 Fahed Mlaiel. Ultra-fortschrittliches Enterprise-Billing-System für Ainflue Creator Economy.
+© 2025 Fahed Mlaiel. Ultra-fortschrittliches Enterprise-Billing-System für IA Chérie Creator Economy.

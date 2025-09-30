@@ -162,7 +162,7 @@ class SessionConfig:
     session_replication_factor: int = 2        # 2 copies par session
     migration_timeout: int = 30                # 30 secondes
     affinity_cookie_name: str = "AINFLUE_SESSION"
-    affinity_cookie_domain: str = ".ainflue.com"
+    affinity_cookie_domain: str = ".iacherie.com"
     enable_session_encryption: bool = True
     storage_tier: SessionStorageTier = SessionStorageTier.HYBRID
     redis_connection_string: str = "redis://localhost:6379"
@@ -750,7 +750,7 @@ class SessionAwareBalancer:
         demo_servers = [
             ServerSession(
                 server_id="session-srv-01",
-                hostname="app1.ainflue.com",
+                hostname="app1.iacherie.com",
                 port=8080,
                 is_healthy=True,
                 current_sessions=45,
@@ -761,7 +761,7 @@ class SessionAwareBalancer:
             ),
             ServerSession(
                 server_id="session-srv-02", 
-                hostname="app2.ainflue.com",
+                hostname="app2.iacherie.com",
                 port=8080,
                 is_healthy=True,
                 current_sessions=30,
@@ -772,7 +772,7 @@ class SessionAwareBalancer:
             ),
             ServerSession(
                 server_id="session-srv-03",
-                hostname="app3.ainflue.com",
+                hostname="app3.iacherie.com",
                 port=8080,
                 is_healthy=True,
                 current_sessions=60,

@@ -2,7 +2,7 @@
 Publication Dependency Manager
 ============================
 
-Advanced dependency management system for Ainflue Distribution Platform.
+Advanced dependency management system for IA Chérie Distribution Platform.
 Handles complex publication workflows with dependencies, prerequisites, and conditional logic.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

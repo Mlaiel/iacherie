@@ -1,8 +1,8 @@
 # API Gateway Services - Dokumentation
 
-## 🔗 Enterprise API Gateway für Ainflue Platform
+## 🔗 Enterprise API Gateway für IA Chérie Platform
 
-Umfassende API Gateway-Architektur mit fortschrittlichen Enterprise-Features für die Ainflue Creator Platform.
+Umfassende API Gateway-Architektur mit fortschrittlichen Enterprise-Features für die IA Chérie Creator Platform.
 
 ### 📊 **Implementierte Services (16 Services)**
 

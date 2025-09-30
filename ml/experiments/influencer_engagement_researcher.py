@@ -2,7 +2,7 @@
 📊 Influencer Engagement Researcher - Creator Intelligence Analytics Module
 
 Advanced AI-powered engagement pattern research and optimization system specifically 
-designed for influencer creators on the Ainflue platform. Analyzes audience behavior, 
+designed for influencer creators on the IA Chérie platform. Analyzes audience behavior, 
 predicts viral content potential, and optimizes social media strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

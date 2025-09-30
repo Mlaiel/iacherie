@@ -1,5 +1,5 @@
 """
-Business Workflow Monitor for Ainflue Platform
+Business Workflow Monitor for IA Chérie Platform
 Comprehensive monitoring across the entire business workflow
 
 Author: Fahed Mlaiel <mlaiel@live.de>

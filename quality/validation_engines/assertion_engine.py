@@ -1,4 +1,4 @@
-"""⚡ Assertion Engine - Ainflue Platform
+"""⚡ Assertion Engine - IA Chérie Platform
 ================================================================
 Expert: QUALITY_ENGINEER + TESTING_ARCHITECT + SOFTWARE_ENGINEER
 Created: 2025-01-XX

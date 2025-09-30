@@ -2,7 +2,7 @@
  * 🎨 DESIGN SYSTEM - ENTERPRISE UI FOUNDATION
  * ===========================================
  * 
- * Complete Design System for Ainflue Creator Economy
+ * Complete Design System for IA Chérie Creator Economy
  * Token-based design, component specifications, patterns
  * 
  * © 2025 Fahed Mlaiel <mlaiel@live.de>

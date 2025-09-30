@@ -2,7 +2,7 @@
 Comprehensive Integration Tests - Distribution Module
 ===================================================
 
-Enterprise-grade integration tests for the Ainflue Distribution Module.
+Enterprise-grade integration tests for the IA Chérie Distribution Module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2024 Fahed Mlaiel. All rights reserved.

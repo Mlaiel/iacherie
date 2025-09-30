@@ -1,5 +1,5 @@
 """Documentation Orchestrator - Main Entry Point
-Enterprise documentation system for Ainflue Creator Economy platform.
+Enterprise documentation system for IA Chérie Creator Economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -551,7 +551,7 @@ class DocumentationOrchestrator:
 
 # Factory function for creating documentation orchestrator
 def create_documentation_orchestrator(
-    project_root: str = "/home/runner/work/Ainflue/Ainflue",
+    project_root: str = "/home/runner/work/IA Chérie/IA Chérie",
     **config_kwargs
 ) -> DocumentationOrchestrator:
     """

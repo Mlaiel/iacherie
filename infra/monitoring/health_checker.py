@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -605,13 +605,13 @@ class HealthChecker:
             logger.error(f"Failed to send alert notification: {str(e)}")
     
     async def create_default_health_checks(self):
-        """Create default health checks for Ainflue infrastructure."""
+        """Create default health checks for IA Chérie infrastructure."""
         try:
             # API health check
             api_check = HealthCheck(
-                name="ainflue-api",
+                name="iacherie-api",
                 type=CheckType.HTTP,
-                target="http://ainflue-api:8000/health",
+                target="http://iacherie-api:8000/health",
                 interval=15,
                 timeout=5,
                 critical=True,
@@ -621,9 +621,9 @@ class HealthChecker:
             
             # AI Engine health check
             ai_check = HealthCheck(
-                name="ainflue-ai-engine",
+                name="iacherie-ai-engine",
                 type=CheckType.HTTP,
-                target="http://ainflue-ai:8001/health",
+                target="http://iacherie-ai:8001/health",
                 interval=30,
                 timeout=10,
                 critical=True,
@@ -635,7 +635,7 @@ class HealthChecker:
             db_check = HealthCheck(
                 name="postgresql",
                 type=CheckType.DATABASE,
-                target="postgresql://ainflue-postgresql:5432",
+                target="postgresql://iacherie-postgresql:5432",
                 interval=60,
                 timeout=15,
                 critical=True,
@@ -647,7 +647,7 @@ class HealthChecker:
             redis_check = HealthCheck(
                 name="redis",
                 type=CheckType.REDIS,
-                target="redis://ainflue-redis:6379",
+                target="redis://iacherie-redis:6379",
                 interval=60,
                 timeout=10,
                 critical=False,

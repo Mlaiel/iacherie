@@ -1,5 +1,5 @@
-# 🚀 Ainflue Beispiele - Umfassende Plattform-Beispiele & Demonstrationen
-**Ainflue-Plattform - Vollständige Beispiel-Suite & Workflow-Showcases**
+# 🚀 IA Chérie Beispiele - Umfassende Plattform-Beispiele & Demonstrationen
+**IA Chérie-Plattform - Vollständige Beispiel-Suite & Workflow-Showcases**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Urheberrecht:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -25,7 +25,7 @@
 
 ## ⚖️ Strenge rechtliche Warnung
 
-**🚨 Exklusives geistiges Eigentum:** Alle Konzepte, Architekturen, technischen Spezifikationen, Code-Implementierungen und Dokumentationen im Ainflue Beispiele-Modul sind **exklusives Eigentum** von **Fahed Mlaiel** (mlaiel@live.de).
+**🚨 Exklusives geistiges Eigentum:** Alle Konzepte, Architekturen, technischen Spezifikationen, Code-Implementierungen und Dokumentationen im IA Chérie Beispiele-Modul sind **exklusives Eigentum** von **Fahed Mlaiel** (mlaiel@live.de).
 
 **⚠️ Offizielles Verbot:** Jede Nutzung, Reproduktion, Anpassung, Kopierung oder Implementierung ohne ausdrückliche schriftliche Genehmigung von Fahed Mlaiel führt zu sofortigen rechtlichen Schritten einschließlich:
 - Ansprüche wegen Verletzung geistigen Eigentums
@@ -39,7 +39,7 @@
 
 ## 🚀 Unternehmens-Übersicht
 
-Das **Ainflue Beispiele**-Modul bietet eine umfassende Suite von Beispielen, Demonstrationen und Workflow-Showcases für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochsophistizierte, produktionsreife System demonstriert KI-Verarbeitung auf Unternehmensebene, Analytics, Geschäftslogik, Kollaboration, Monetarisierung, Infrastruktur und plattformübergreifende Integration mit realen Szenarien und Best Practices.
+Das **IA Chérie Beispiele**-Modul bietet eine umfassende Suite von Beispielen, Demonstrationen und Workflow-Showcases für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochsophistizierte, produktionsreife System demonstriert KI-Verarbeitung auf Unternehmensebene, Analytics, Geschäftslogik, Kollaboration, Monetarisierung, Infrastruktur und plattformübergreifende Integration mit realen Szenarien und Best Practices.
 
 ### 🎯 **Geschäftslogik-Ablauf**
 ```
@@ -302,11 +302,11 @@ print(f"Ersteller-Workflow abgeschlossen: {workflow_results['suite_results']['su
 
 ### **Produktions-Deployment**
 ```yaml
-# Docker Compose für Ainflue Beispiele
+# Docker Compose für IA Chérie Beispiele
 version: '3.8'
 services:
   examples-orchestrator:
-    image: ainflue/examples-orchestrator:latest
+    image: iacherie/examples-orchestrator:latest
     deploy:
       replicas: 5
       resources:
@@ -319,8 +319,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://examples-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -344,7 +344,7 @@ services:
 
 ## 📝 **Zusammenfassung**
 
-Das Ainflue Beispiele-Modul repräsentiert den Höhepunkt des Plattform-Beispiel-Designs, speziell für Multi-Format-Content-Ersteller entwickelt. Mit umfassenden Beispielen, erweiterten KI/ML-Fähigkeiten und Features auf Unternehmensebene gewährleistet dieses System maximales Plattform-Verständnis, Feature-Adoption und Performance-Optimierung für alle Ersteller-Aktivitäten, während es tiefe Einblicke in Plattform-Fähigkeiten und Optimierungsmöglichkeiten bietet.
+Das IA Chérie Beispiele-Modul repräsentiert den Höhepunkt des Plattform-Beispiel-Designs, speziell für Multi-Format-Content-Ersteller entwickelt. Mit umfassenden Beispielen, erweiterten KI/ML-Fähigkeiten und Features auf Unternehmensebene gewährleistet dieses System maximales Plattform-Verständnis, Feature-Adoption und Performance-Optimierung für alle Ersteller-Aktivitäten, während es tiefe Einblicke in Plattform-Fähigkeiten und Optimierungsmöglichkeiten bietet.
 
 **🎯 Mission:** Die weltweit umfassendsten Plattform-Beispiele für Content-Ersteller liefern, die optimale Plattform-Adoption, Feature-Nutzung und Performance-Optimierung im gesamten Ersteller-Ökosystem ermöglichen.
 

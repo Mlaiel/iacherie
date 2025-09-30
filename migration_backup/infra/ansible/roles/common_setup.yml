@@ -1,0 +1,119 @@
+# Ainflue Infrastructure Module - Common Setup Ansible Role
+# =========================================================
+# 
+# Enterprise-grade common setup role for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+- name: Common Setup for Ainflue Infrastructure
+  hosts: all
+  become: yes
+  vars:
+    ainflue_user: ainflue
+    ainflue_group: ainflue
+    log_directory: /var/log/ainflue
+    config_directory: /etc/ainflue
+    data_directory: /opt/ainflue/data
+    backup_directory: /opt/ainflue/backups
+    
+    # Security settings
+    ssh_port: 22
+    firewall_enabled: true
+    fail2ban_enabled: true
+    
+    # Monitoring settings
+    node_exporter_enabled: true
+    cloudwatch_agent_enabled: true
+
+  tasks:
+    - name: Create ainflue system user
+      user:
+        name: "{{ ainflue_user }}"
+        group: "{{ ainflue_group }}"
+        system: yes
+        shell: /bin/bash
+        home: /opt/ainflue
+        create_home: yes
+        state: present
+      tags: [users, security]
+
+    - name: Create ainflue system group
+      group:
+        name: "{{ ainflue_group }}"
+        system: yes
+        state: present
+      tags: [users, security]
+
+    - name: Create required directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ ainflue_user }}"
+        group: "{{ ainflue_group }}"
+        mode: '0755'
+      loop:
+        - "{{ log_directory }}"
+        - "{{ config_directory }}"
+        - "{{ data_directory }}"
+        - "{{ backup_directory }}"
+      tags: [directories]
+
+    - name: Update system packages
+      package:
+        name: "*"
+        state: latest
+      when: ansible_facts['os_family'] == "RedHat"
+      tags: [packages, security]
+
+    - name: Install essential packages
+      package:
+        name:
+          - curl
+          - wget
+          - git
+          - htop
+          - iotop
+          - ntp
+          - rsync
+          - unzip
+          - vim
+          - tree
+          - jq
+          - python3
+          - python3-pip
+          - docker
+          - awscli
+        state: present
+      tags: [packages]
+
+    - name: Configure SSH security
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        backup: yes
+      loop:
+        - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+        - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+        - { regexp: '^#?PubkeyAuthentication', line: 'PubkeyAuthentication yes' }
+        - { regexp: '^#?Port', line: 'Port {{ ssh_port }}' }
+      notify: restart sshd
+      tags: [security, ssh]
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      tags: [docker, services]
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted

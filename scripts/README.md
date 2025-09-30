@@ -1,6 +1,6 @@
 # Essential Scripts Directory
 
-This directory contains only the 5 most essential scripts for the Ainflue platform, following the project consolidation guidelines.
+This directory contains only the 5 most essential scripts for the IA Chérie platform, following the project consolidation guidelines.
 
 ## Essential Scripts
 

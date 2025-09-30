@@ -662,13 +662,13 @@ async def main():
     node1 = ReplicationNode(
         node_id="us-east-1",
         region="us-east",
-        endpoint="https://us-east-1.models.ainflue.com",
+        endpoint="https://us-east-1.models.iacherie.com",
         priority=1
     )
     node2 = ReplicationNode(
         node_id="eu-west-1",
         region="eu-west",
-        endpoint="https://eu-west-1.models.ainflue.com",
+        endpoint="https://eu-west-1.models.iacherie.com",
         priority=2
     )
     

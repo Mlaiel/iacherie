@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="aiGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#4ECDC4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#45B7D1;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#96CEB4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFEAA7;stop-opacity:1" />
+    </radialGradient>
+    <filter id="neuralGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#0f0f0f"/>
+  
+  <!-- Neural Network Visualization -->
+  <!-- Input Layer -->
+  <g fill="#FF6B6B" opacity="0.8" filter="url(#neuralGlow)">
+    <circle cx="100" cy="100" r="8"/>
+    <circle cx="100" cy="140" r="8"/>
+    <circle cx="100" cy="180" r="8"/>
+    <circle cx="100" cy="220" r="8"/>
+    <circle cx="100" cy="260" r="8"/>
+    <circle cx="100" cy="300" r="8"/>
+  </g>
+  
+  <!-- Hidden Layer 1 -->
+  <g fill="#4ECDC4" opacity="0.8" filter="url(#neuralGlow)">
+    <circle cx="200" cy="80" r="10"/>
+    <circle cx="200" cy="120" r="10"/>
+    <circle cx="200" cy="160" r="10"/>
+    <circle cx="200" cy="200" r="10"/>
+    <circle cx="200" cy="240" r="10"/>
+    <circle cx="200" cy="280" r="10"/>
+    <circle cx="200" cy="320" r="10"/>
+  </g>
+  
+  <!-- Hidden Layer 2 -->
+  <g fill="#45B7D1" opacity="0.8" filter="url(#neuralGlow)">
+    <circle cx="300" cy="100" r="10"/>
+    <circle cx="300" cy="140" r="10"/>
+    <circle cx="300" cy="180" r="10"/>
+    <circle cx="300" cy="220" r="10"/>
+    <circle cx="300" cy="260" r="10"/>
+    <circle cx="300" cy="300" r="10"/>
+  </g>
+  
+  <!-- Output Layer -->
+  <g fill="#96CEB4" opacity="0.8" filter="url(#neuralGlow)">
+    <circle cx="400" cy="150" r="12"/>
+    <circle cx="400" cy="200" r="12"/>
+    <circle cx="400" cy="250" r="12"/>
+  </g>
+  
+  <!-- Connections -->
+  <g stroke="#FFFFFF" stroke-width="0.5" opacity="0.3">
+    <!-- Input to Hidden 1 -->
+    <line x1="108" y1="100" x2="192" y2="80"/>
+    <line x1="108" y1="100" x2="192" y2="120"/>
+    <line x1="108" y1="140" x2="192" y2="120"/>
+    <line x1="108" y1="140" x2="192" y2="160"/>
+    <line x1="108" y1="180" x2="192" y2="160"/>
+    <line x1="108" y1="180" x2="192" y2="200"/>
+    <line x1="108" y1="220" x2="192" y2="200"/>
+    <line x1="108" y1="220" x2="192" y2="240"/>
+    <line x1="108" y1="260" x2="192" y2="240"/>
+    <line x1="108" y1="260" x2="192" y2="280"/>
+    <line x1="108" y1="300" x2="192" y2="280"/>
+    <line x1="108" y1="300" x2="192" y2="320"/>
+    
+    <!-- Hidden 1 to Hidden 2 -->
+    <line x1="210" y1="80" x2="290" y2="100"/>
+    <line x1="210" y1="120" x2="290" y2="140"/>
+    <line x1="210" y1="160" x2="290" y2="180"/>
+    <line x1="210" y1="200" x2="290" y2="220"/>
+    <line x1="210" y1="240" x2="290" y2="260"/>
+    <line x1="210" y1="280" x2="290" y2="300"/>
+    
+    <!-- Hidden 2 to Output -->
+    <line x1="310" y1="140" x2="388" y2="150"/>
+    <line x1="310" y1="180" x2="388" y2="200"/>
+    <line x1="310" y1="220" x2="388" y2="250"/>
+  </g>
+  
+  <!-- AI Processing Center -->
+  <circle cx="300" cy="200" r="40" fill="url(#aiGradient)" opacity="0.6" filter="url(#neuralGlow)"/>
+  <text x="300" y="205" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">AI CORE</text>
+  
+  <!-- Input Labels -->
+  <g fill="#FF6B6B" font-family="Arial, sans-serif" font-size="10">
+    <text x="20" y="105">Genre</text>
+    <text x="20" y="145">Style</text>
+    <text x="20" y="185">BPM</text>
+    <text x="20" y="225">Key</text>
+    <text x="20" y="265">Mood</text>
+    <text x="20" y="305">Skills</text>
+  </g>
+  
+  <!-- Output Labels -->
+  <g fill="#96CEB4" font-family="Arial, sans-serif" font-size="11">
+    <text x="430" y="155">Match Score</text>
+    <text x="430" y="205">Compatibility</text>
+    <text x="430" y="255">Synergy Level</text>
+  </g>
+  
+  <!-- Matching Results -->
+  <rect x="480" y="100" width="100" height="200" fill="#1a1a1a" stroke="#333" stroke-width="1" rx="8"/>
+  <text x="530" y="120" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Matches</text>
+  
+  <!-- Match Cards -->
+  <g transform="translate(490, 130)">
+    <rect x="0" y="0" width="80" height="30" fill="#96CEB4" rx="4" opacity="0.8"/>
+    <text x="40" y="15" font-family="Arial, sans-serif" font-size="8" fill="#1a1a1a" text-anchor="middle">Producer A</text>
+    <text x="40" y="25" font-family="Arial, sans-serif" font-size="8" fill="#1a1a1a" text-anchor="middle">95% Match</text>
+    
+    <rect x="0" y="40" width="80" height="30" fill="#45B7D1" rx="4" opacity="0.8"/>
+    <text x="40" y="55" font-family="Arial, sans-serif" font-size="8" fill="#FFFFFF" text-anchor="middle">Vocalist B</text>
+    <text x="40" y="65" font-family="Arial, sans-serif" font-size="8" fill="#FFFFFF" text-anchor="middle">88% Match</text>
+    
+    <rect x="0" y="80" width="80" height="30" fill="#4ECDC4" rx="4" opacity="0.8"/>
+    <text x="40" y="95" font-family="Arial, sans-serif" font-size="8" fill="#1a1a1a" text-anchor="middle">Guitarist C</text>
+    <text x="40" y="105" font-family="Arial, sans-serif" font-size="8" fill="#1a1a1a" text-anchor="middle">82% Match</text>
+    
+    <rect x="0" y="120" width="80" height="30" fill="#FF6B6B" rx="4" opacity="0.8"/>
+    <text x="40" y="135" font-family="Arial, sans-serif" font-size="8" fill="#FFFFFF" text-anchor="middle">Drummer D</text>
+    <text x="40" y="145" font-family="Arial, sans-serif" font-size="8" fill="#FFFFFF" text-anchor="middle">76% Match</text>
+  </g>
+  
+  <!-- Processing Indicators -->
+  <g fill="#FFEAA7" opacity="0.7">
+    <circle cx="150" cy="50" r="3">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="250" cy="50" r="3">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="350" cy="50" r="3">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="50" r="3">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">AI-Powered Collaboration Matching</text>
+  
+  <!-- Status -->
+  <rect x="20" y="350" width="560" height="30" fill="#1a1a1a" stroke="#333" stroke-width="1" rx="4"/>
+  <text x="30" y="370" font-family="Arial, sans-serif" font-size="12" fill="#4ECDC4">Status: Processing 1,247 creators • Finding optimal matches • Real-time compatibility analysis</text>
+  
+  <!-- Copyright -->
+  <text x="300" y="395" font-family="Arial, sans-serif" font-size="10" fill="#666" text-anchor="middle">© 2025 Ainflue Studio - AI Collaboration Engine</text>
+</svg>

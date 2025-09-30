@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Collaboration Dashboard
+IA Chérie Platform - Creator Collaboration Dashboard
 =================================================
 
 Enterprise dashboard for creator collaboration with intelligent matching,

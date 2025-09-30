@@ -1,4 +1,4 @@
-"""Training Metrics Collector for Ainflue ML Platform
+"""Training Metrics Collector for IA Chérie ML Platform
 
 Comprehensive training metrics collection and real-time monitoring for ML models
 with creator-specific metrics and enterprise-grade analytics.
@@ -999,7 +999,7 @@ def create_metrics_collector(
     return TrainingMetricsCollector(config)
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chérie creators
 async def example_metrics_collection():
     """Example of metrics collection for creator training."""
     

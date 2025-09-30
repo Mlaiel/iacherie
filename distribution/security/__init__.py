@@ -1,5 +1,5 @@
 """
-Security Module for Ainflue Distribution Platform
+Security Module for IA Chérie Distribution Platform
 
 This module provides comprehensive security management for content distribution,
 including API security, credential management, access control, and threat detection.

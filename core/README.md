@@ -1,10 +1,10 @@
 # 🏗️ Core Module - Enterprise Business Logic Core Components
 
-**Advanced Enterprise-Grade Core System for Ainflue Platform**
+**Advanced Enterprise-Grade Core System for IA Chérie Platform**
 
 ## 🎯 **Project Overview**
 
-The Core Module provides the foundational business logic infrastructure for the Ainflue IA Influencer Agent Platform. This enterprise-grade system handles creator multi-format content processing, AI-powered content analysis, copyright protection, and revenue optimization with >99.99% uptime guarantee.
+The Core Module provides the foundational business logic infrastructure for the IA Chérie IA Influencer Agent Platform. This enterprise-grade system handles creator multi-format content processing, AI-powered content analysis, copyright protection, and revenue optimization with >99.99% uptime guarantee.
 
 ### 👥 **Development Team Specialties**
 **Project Lead & Creator:** Fahed Mlaiel <mlaiel@live.de>
@@ -327,19 +327,19 @@ print(f"Confidence: {result.confidence_scores}")
 - **Custom Development**: Tailored solutions for specific requirements
 
 **Primary Contact**: Fahed Mlaiel <mlaiel@live.de>
-**Business Development**: business@ainflue.com
-**Technical Support**: support@ainflue.com
-**Legal Inquiries**: legal@ainflue.com
+**Business Development**: business@iacherie.com
+**Technical Support**: support@iacherie.com
+**Legal Inquiries**: legal@iacherie.com
 
 ---
 
 ## 🏆 **Enterprise Success Stories**
 
 ### **Content Creator Agency**
-"The Ainflue Core Module increased our revenue processing efficiency by 300% while reducing copyright violations by 95%. The AI-powered content optimization helped our creators increase engagement by 150%."
+"The IA Chérie Core Module increased our revenue processing efficiency by 300% while reducing copyright violations by 95%. The AI-powered content optimization helped our creators increase engagement by 150%."
 
 ### **Music Distribution Platform**
-"Integration with Ainflue's protection and monetization cores enabled us to process 1M+ tracks with zero downtime and 99.9% payment accuracy. The enterprise support team provided exceptional service."
+"Integration with IA Chérie's protection and monetization cores enabled us to process 1M+ tracks with zero downtime and 99.9% payment accuracy. The enterprise support team provided exceptional service."
 
 ### **Influencer Marketing Platform**
 "The creator multi-format processing capabilities allowed us to expand from text-only to full multimedia campaigns, increasing client satisfaction by 200% and platform revenue by 400%."

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🗄️ DATA INTEGRITY VALIDATOR ENTERPRISE - AINFLUE IA INFLUENCER AGENT
+🗄️ DATA INTEGRITY VALIDATOR ENTERPRISE - IACHERIE IA INFLUENCER AGENT
 ==================================================================
 
 Moteur de validation d'intégrité des données ultra-avancé pour l'écosystème qualité enterprise,
@@ -116,7 +116,7 @@ class EnterpriseDataIntegrityValidator:
     ========================================================
     
     Orchestrateur central de validation d'intégrité des données avec détection temps réel,
-    auditing complet et restauration automatique pour l'écosystème Ainflue.
+    auditing complet et restauration automatique pour l'écosystème IA Chérie.
     
     📊 CAPACITÉS INDUSTRIELLES:
     - Validation multi-niveaux ultra-performante

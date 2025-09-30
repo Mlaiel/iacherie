@@ -423,7 +423,7 @@ class AnalyticsConfig:
             if model_type not in self.ai_model_configs:
                 self.ai_model_configs[model_type] = AIModelConfig(
                     model_type=model_type,
-                    model_name=f"ainflue_{model_type.value}",
+                    model_name=f"iacherie_{model_type.value}",
                     accuracy_threshold=0.85,
                     confidence_threshold=0.75,
                     update_frequency=24

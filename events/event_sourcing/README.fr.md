@@ -1,5 +1,5 @@
 # 🏗️ Module Events Event Sourcing - Architecture Enterprise Event Store
-**Plateforme Ainflue - Infrastructure Avancée Event Sourcing**
+**Plateforme IA Chérie - Infrastructure Avancée Event Sourcing**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTERPRISE
 
-Le **Module Events Event Sourcing** implémente des patterns Event Sourcing avancés pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit une persistance d'événements de niveau entreprise, des capacités de replay et des trails d'audit complets pour des workflows de création de contenu évolutifs.
+Le **Module Events Event Sourcing** implémente des patterns Event Sourcing avancés pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit une persistance d'événements de niveau entreprise, des capacités de replay et des trails d'audit complets pour des workflows de création de contenu évolutifs.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -260,7 +260,7 @@ latest_snapshot = await snapshot_manager.load_snapshot("artist_123")
 version: '3.8'
 services:
   event-store:
-    image: ainflue/event-store:latest
+    image: iacherie/event-store:latest
     deploy:
       replicas: 3
       resources:
@@ -275,7 +275,7 @@ services:
       - event_data:/var/lib/eventstore
       
   event-projector:
-    image: ainflue/event-projector:latest
+    image: iacherie/event-projector:latest
     deploy:
       replicas: 5
       resources:
@@ -316,7 +316,7 @@ replay_duration = Histogram('event_replay_duration_seconds', 'Event replay time'
 
 ## 📝 **CONCLUSION**
 
-Le Module Events Event Sourcing représente le summum de l'architecture de stockage et replay d'événements pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-format. Avec une implémentation Event Sourcing avancée, une optimisation de stockage haute performance et des capacités d'audit complètes, ce module assure une gestion d'événements fiable, évolutive et sécurisée pour toute la plateforme.
+Le Module Events Event Sourcing représente le summum de l'architecture de stockage et replay d'événements pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-format. Avec une implémentation Event Sourcing avancée, une optimisation de stockage haute performance et des capacités d'audit complètes, ce module assure une gestion d'événements fiable, évolutive et sécurisée pour toute la plateforme.
 
 **🎯 Mission :** Fournir l'infrastructure Event Sourcing la plus avancée pour les créateurs de contenu mondialement, permettant des trails d'audit complets, des requêtes temporelles et une reconstruction d'état fiable via des logs d'événements immuables.
 

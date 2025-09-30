@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Monitoring Orchestrator
+IA Chérie Platform - Distribution Monitoring Orchestrator
 ====================================================
 
 Enterprise-grade distribution monitoring orchestrator for Creator Economy platform.
@@ -246,9 +246,9 @@ class DistributionMonitoringOrchestrator:
     def _initialize_delivery_tracking(self):
         """Initialize content delivery performance tracking."""
         self.cdn_endpoints = {
-            "primary": {"endpoint": "cdn-primary.ainflue.com", "regions": ["us-east", "eu-west", "ap-south"]},
-            "secondary": {"endpoint": "cdn-backup.ainflue.com", "regions": ["us-west", "eu-central", "ap-east"]},
-            "edge": {"endpoint": "edge.ainflue.com", "regions": ["global"]}
+            "primary": {"endpoint": "cdn-primary.iacherie.com", "regions": ["us-east", "eu-west", "ap-south"]},
+            "secondary": {"endpoint": "cdn-backup.iacherie.com", "regions": ["us-west", "eu-central", "ap-east"]},
+            "edge": {"endpoint": "edge.iacherie.com", "regions": ["global"]}
         }
         
         self.delivery_optimization = {

@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-The Analysis Engines module provides sophisticated AI-powered analysis capabilities for the Ainflue Enterprise Quality Framework. This module orchestrates multiple analysis engines to ensure comprehensive quality assessment of content, code, and system performance.
+The Analysis Engines module provides sophisticated AI-powered analysis capabilities for the IA Chérie Enterprise Quality Framework. This module orchestrates multiple analysis engines to ensure comprehensive quality assessment of content, code, and system performance.
 
 ## 🚀 Key Features
 
@@ -76,5 +76,5 @@ The analysis engines contribute to the overall quality score through:
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Enterprise Quality Framework**  
+**© 2025 Fahed Mlaiel - IA Chérie Enterprise Quality Framework**  
 **Contact**: mlaiel@live.de

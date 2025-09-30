@@ -30,7 +30,7 @@ TOUS DROITS RÉSERVÉS
 
 ---
 
-## 🎯 **LOGIQUE MÉTIER AINFLUE**
+## 🎯 **LOGIQUE MÉTIER IACHERIE**
 **Pipeline Creator Economy :** Créateurs multi-format → Traitement IA → Protection IP → Monétisation → Collaboration & Gamification → SEO Professionnel → Distribution Multi-plateformes
 
 ---
@@ -90,8 +90,8 @@ Le Système de Surveillance Filebeat Creator Economy est une plateforme d'agrég
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/filebeat
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/filebeat
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -110,7 +110,7 @@ python index.py
 ```python
 config = {
     "environment": "production",
-    "cluster_name": "ainflue-production", 
+    "cluster_name": "iacherie-production", 
     "elasticsearch_hosts": ["elasticsearch:9200"],
     "logstash_hosts": ["logstash:5044"],
     "enable_real_time": True,
@@ -313,7 +313,7 @@ await hub.start_background_sync()
 - **LinkedIn** - Réseautage professionnel
 - **Pinterest** - Plateforme découverte visuelle
 - **Snapchat** - Suivi contenu éphémère
-- **Ainflue** - Intégration plateforme native
+- **IA Chérie** - Intégration plateforme native
 
 ## 🔄 **RÉFÉRENCE API**
 
@@ -419,4 +419,4 @@ Contact : mlaiel@live.de pour informations licence.
 
 ---
 
-**© 2025 Fahed Mlaiel - Tous Droits Réservés - Architecture Filebeat Ainflue Propriétaire**
+**© 2025 Fahed Mlaiel - Tous Droits Réservés - Architecture Filebeat IA Chérie Propriétaire**

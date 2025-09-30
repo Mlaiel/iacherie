@@ -1,6 +1,6 @@
 # 🏗️ Infrastruktur - Docker Services
 
-**Ainflue Platform Infrastruktur Docker**
+**IA Chérie Platform Infrastruktur Docker**
 
 Enterprise-Grade Docker-Infrastruktur mit Multi-Environment-Support, Load Balancing, Service Discovery und automatischer Orchestrierung für Content-Ersteller und Influencer.
 
@@ -77,7 +77,7 @@ SERVICE_TAGS=web,api,backend
 VAULT_ROOT_TOKEN=secret_root_token
 VAULT_ADDR=http://vault:8200
 SECRET_ENGINE=kv-v2
-VAULT_NAMESPACE=ainflue
+VAULT_NAMESPACE=iacherie
 ```
 
 ## 📊 Multi-Environment-Support

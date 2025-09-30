@@ -1,6 +1,6 @@
 # Integration Architecture Guide
 
-## Enterprise Integration Architecture for Ainflue Platform
+## Enterprise Integration Architecture for IA Chérie Platform
 
 **Author:** Fahed Mlaiel <mlaiel@live.de>  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -9,7 +9,7 @@
 
 ## Overview
 
-The Ainflue Integrations Module implements a comprehensive enterprise-grade integration architecture designed to support 100+ third-party platform integrations with high performance, reliability, and security.
+The IA Chérie Integrations Module implements a comprehensive enterprise-grade integration architecture designed to support 100+ third-party platform integrations with high performance, reliability, and security.
 
 ## Architecture Principles
 
@@ -337,6 +337,6 @@ The Ainflue Integrations Module implements a comprehensive enterprise-grade inte
 
 ---
 
-**Note:** This architecture guide represents the current state and planned evolution of the Ainflue Integration Platform. All designs follow enterprise best practices and are continuously evolved based on performance requirements and industry standards.
+**Note:** This architecture guide represents the current state and planned evolution of the IA Chérie Integration Platform. All designs follow enterprise best practices and are continuously evolved based on performance requirements and industry standards.
 
 **Contact:** mlaiel@live.de for architectural questions and clarifications.

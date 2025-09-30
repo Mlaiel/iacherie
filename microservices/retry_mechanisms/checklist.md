@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/retry_mechanisms/`  
+**Location**: `/workspaces/IA Chérie/microservices/retry_mechanisms/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Retry Patterns  
-**Purpose**: Retry Mechanisms Enterprise pour résilience et fiabilité système Ainflue
+**Purpose**: Retry Mechanisms Enterprise pour résilience et fiabilité système IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -35,13 +35,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Exponential Backoff Engine Enterprise - Ainflue
+Exponential Backoff Engine Enterprise - IA Chérie
 ===============================================
 Moteur exponential backoff avec jitter, circuit breaker integration.
 Algorithmes retry sophistiqués pour microservices haute disponibilité.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 """
 
@@ -377,7 +377,7 @@ class FailurePatternAnalyzer:
 ```python
 class ContentProcessingRetry:
     """
-    Retry spécialisé pour processing contenu Ainflue.
+    Retry spécialisé pour processing contenu IA Chérie.
     Media processing + AI analysis + upload retry patterns.
     """
     
@@ -633,7 +633,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Retry mechanisms pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Retry mechanisms pour workflow créateurs → distribution
 - **Code Industriel**: ✅ ML intelligent + distributed + content-aware + compliance
 - **Resilience Patterns**: ✅ Circuit breaker + exponential backoff + failure analysis
 - **Creator Economy Focus**: ✅ Content processing + collaboration + monetization retry
@@ -700,7 +700,7 @@ Chaque README doit contenir:
 6. `failure_pattern_analyzer.py` - Analyseur patterns échec ML
 
 ### **🎯 PHASE 2 - RETRY PATTERNS SPÉCIALISÉS **
-7. `content_processing_retry.py` - Retry processing contenu Ainflue
+7. `content_processing_retry.py` - Retry processing contenu IA Chérie
 8. `ai_processing_retry.py` - Retry processing IA/ML GPU-aware
 9. `monetization_retry.py` - Retry monétisation financial compliance
 10. `collaboration_retry.py` - Retry collaboration multi-user
@@ -755,4 +755,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module retry mechanisms enterprise clé en main, ML intelligent + distributed coordination + content-aware patterns + compliance, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module retry mechanisms enterprise clé en main, ML intelligent + distributed coordination + content-aware patterns + compliance, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

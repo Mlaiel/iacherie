@@ -1,10 +1,10 @@
 # 🎨 Creator Ecosystem Intelligence - Surveillance Créateurs
 
-**Intelligence spécialisée pour l'écosystème créateurs multi-format Ainflue**
+**Intelligence spécialisée pour l'écosystème créateurs multi-format IA Chérie**
 
 ## Vue d'ensemble
 
-Le module Creator Ecosystem Intelligence est le cerveau analytique dédié à la surveillance, l'analyse et l'optimisation des performances créatives sur la plateforme Ainflue. Il fournit une intelligence avancée pour les créateurs multi-format : musiciens, blogueurs, photographes, influenceurs et comédiens.
+Le module Creator Ecosystem Intelligence est le cerveau analytique dédié à la surveillance, l'analyse et l'optimisation des performances créatives sur la plateforme IA Chérie. Il fournit une intelligence avancée pour les créateurs multi-format : musiciens, blogueurs, photographes, influenceurs et comédiens.
 
 ## Fonctionnalités Principales
 

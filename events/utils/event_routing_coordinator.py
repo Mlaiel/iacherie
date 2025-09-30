@@ -1,5 +1,5 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
-"""Event Routing Coordinator - Intelligent for Ainflue Platform
+"""Event Routing Coordinator - Intelligent for IA Chérie Platform
 
 Intelligent event routing coordinator with dynamic routing rules,
 load balancing, and business-aware service selection.
@@ -91,7 +91,7 @@ class RoutingMetrics:
 
 class EventRoutingCoordinator:
     """
-    Intelligent event routing coordinator for Ainflue platform
+    Intelligent event routing coordinator for IA Chérie platform
     Dynamic routing with business logic, load balancing, and service health monitoring
     """
     
@@ -107,10 +107,10 @@ class EventRoutingCoordinator:
         self._initialize_default_rules()
         self._initialize_default_services()
         
-        logger.info("EventRoutingCoordinator initialized for Ainflue platform")
+        logger.info("EventRoutingCoordinator initialized for IA Chérie platform")
     
     def _initialize_default_rules(self):
-        """Initialize default routing rules for Ainflue services"""
+        """Initialize default routing rules for IA Chérie services"""
         
         self.routing_rules = [
             RoutingRule(

@@ -2,7 +2,7 @@
 
 ## 🌟 نظرة عامة
 
-إن **وحدة تنسيق الخلفية** هي المركز العصبي لمنصة Ainflue، توفر قدرات تنسيق فائقة التطور لإنشاء المحتوى متعدد الأشكال، والمعالجة المدعومة بالذكاء الاصطناعي، وتدفقات العمل التعاونية، والتوزيع على مستوى المؤسسات عبر منصات متعددة.
+إن **وحدة تنسيق الخلفية** هي المركز العصبي لمنصة IA Chérie، توفر قدرات تنسيق فائقة التطور لإنشاء المحتوى متعدد الأشكال، والمعالجة المدعومة بالذكاء الاصطناعي، وتدفقات العمل التعاونية، والتوزيع على مستوى المؤسسات عبر منصات متعددة.
 
 ## 🎯 خط أنابيب منطق الأعمال
 
@@ -117,7 +117,7 @@ portfolio_result = await visual_orchestrator.optimize_portfolio(
 ### التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/ainflue/backend-orchestration
+git clone https://github.com/iacherie/backend-orchestration
 cd backend-orchestration
 
 # تثبيت التبعيات
@@ -206,7 +206,7 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 🎓 التدريب والشهادة
 
 ### برامج الشهادة
-- **شهادة منشئ Ainflue**: إتقان المنصة
+- **شهادة منشئ IA Chérie**: إتقان المنصة
 - **أخصائي تحسين الذكاء الاصطناعي**: ميزات الذكاء الاصطناعي المتقدمة
 - **مدير المؤسسة**: نشر المؤسسة
 - **أخصائي الأمان**: تكوين الأمان
@@ -235,15 +235,15 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 📞 الدعم
 
 ### الدعم التقني
-- **البريد الإلكتروني**: support@ainflue.com
+- **البريد الإلكتروني**: support@iacherie.com
 - **Slack**: #backend-orchestration
 - **GitHub Issues**: تقارير الأخطاء وطلبات الميزات
-- **التوثيق**: https://docs.ainflue.com
+- **التوثيق**: https://docs.iacherie.com
 
 ### دعم الأعمال
-- **المبيعات**: sales@ainflue.com
-- **الشراكات**: partnerships@ainflue.com
-- **المؤسسة**: enterprise@ainflue.com
+- **المبيعات**: sales@iacherie.com
+- **الشراكات**: partnerships@iacherie.com
+- **المؤسسة**: enterprise@iacherie.com
 
 ## ⚖️ القانون والامتثال
 
@@ -293,6 +293,6 @@ result = await orchestrator.orchestrate_content_intelligence(
 
 ---
 
-**صُنع بـ 💝 من فريق Ainflue**
+**صُنع بـ 💝 من فريق IA Chérie**
 
 *تمكين المبدعين في جميع أنحاء العالم بالتكنولوجيا الذكية*

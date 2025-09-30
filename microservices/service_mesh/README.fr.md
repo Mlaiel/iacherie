@@ -10,11 +10,11 @@
 
 ## 🎯 APERÇU DU MODULE
 
-**Emplacement** : `/workspaces/Ainflue/microservices/service_mesh/`  
+**Emplacement** : `/workspaces/IA Chérie/microservices/service_mesh/`  
 **Architecture** : Service Mesh Enterprise | 17 Composants | Production-Ready  
-**Objectif** : Service Mesh Enterprise pour l'orchestration des microservices Ainflue
+**Objectif** : Service Mesh Enterprise pour l'orchestration des microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs Multi-format → Traitement IA → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution Multi-plateformes
@@ -255,7 +255,7 @@ await service_mesh_orchestrator.configure_custom_metrics([
 - **Localité des Données** : Localité des données conforme
 - **Intégration Edge Computing** : Placement de services basé sur l'edge
 
-## 🎖️ INTÉGRATION AINFLUE
+## 🎖️ INTÉGRATION IACHERIE
 
 ### **🎵 FONCTIONNALITÉS AXÉES CRÉATEURS**
 - **Routage Conscient du Contenu** : Routage basé sur le type de contenu
@@ -323,4 +323,4 @@ await service_mesh_orchestrator.configure_custom_metrics([
 **Date** : 16 septembre 2025  
 **Version** : 1.0 Production
 
-> **🎯 OBJECTIF ENTERPRISE** : Service Mesh Production-Ready avec orchestration complète des microservices, sécurité Zero Trust, optimisation basée ML et fonctionnalités axées créateurs pour la plateforme Ainflue.
+> **🎯 OBJECTIF ENTERPRISE** : Service Mesh Production-Ready avec orchestration complète des microservices, sécurité Zero Trust, optimisation basée ML et fonctionnalités axées créateurs pour la plateforme IA Chérie.

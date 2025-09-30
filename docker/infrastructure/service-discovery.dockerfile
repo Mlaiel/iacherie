@@ -1,11 +1,11 @@
 # Service Discovery Service
-# Consul-based service discovery for Ainflue Platform
+# Consul-based service discovery for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM consul:1.16 AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Service Discovery - Consul-based service registry and discovery"
+LABEL description="IA Chérie Service Discovery - Consul-based service registry and discovery"
 LABEL version="1.0.0"
 
 # Create consul user for security
@@ -47,7 +47,7 @@ ENV CONSUL_CONFIG_DIR=/consul/config
 ENV CONSUL_LOG_LEVEL=INFO
 ENV CONSUL_BIND_INTERFACE=eth0
 ENV CONSUL_CLIENT_INTERFACE=0.0.0.0
-ENV CONSUL_DATACENTER=ainflue-dc1
+ENV CONSUL_DATACENTER=iacherie-dc1
 ENV CONSUL_DOMAIN=consul
 ENV CONSUL_ENCRYPT_KEY=""
 ENV CONSUL_UI=true

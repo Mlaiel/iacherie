@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎯 TEST ORCHESTRATION MODULE - AINFLUE ENTERPRISE QUALITY
+🎯 TEST ORCHESTRATION MODULE - IACHERIE ENTERPRISE QUALITY
 ==========================================================
 
 Module d'orchestration tests multi-niveaux avec imports enterprise standardisés.

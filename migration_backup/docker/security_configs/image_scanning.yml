@@ -1,0 +1,10 @@
+# Image Security Scanning Configuration
+scanner: trivy
+scan_on_build: true
+scan_on_deploy: true
+vulnerability_threshold: HIGH
+block_on_critical: true
+registries:
+  - registry.ainflue.com
+  - docker.io
+  - gcr.io

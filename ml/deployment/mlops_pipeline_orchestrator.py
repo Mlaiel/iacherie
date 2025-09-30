@@ -512,7 +512,7 @@ import numpy as np
 
 # Configuration MLflow
 mlflow.set_tracking_uri("{self.mlflow_tracking_uri}")
-experiment_name = "ainflue_{config.creator_type.value}_{config.model_type}"
+experiment_name = "iacherie_{config.creator_type.value}_{config.model_type}"
 mlflow.set_experiment(experiment_name)
 
 with mlflow.start_run():
@@ -671,7 +671,7 @@ with mlflow.start_run():
             # Déploiement simulé via Docker/Kubernetes
             deployment_script = f"""
 # Build Docker image for model serving
-docker build -t ainflue-ml/{execution.pipeline_id}:staging .
+docker build -t iacherie-ml/{execution.pipeline_id}:staging .
 
 # Deploy to staging namespace
 kubectl apply -f staging-deployment.yaml
@@ -684,7 +684,7 @@ kubectl rollout status deployment/model-{execution.pipeline_id} -n staging
             await asyncio.sleep(2)  # Simuler le temps de déploiement
             
             # Endpoint de staging
-            staging_endpoint = f"http://staging.ainflue.com/api/ml/{execution.pipeline_id}"
+            staging_endpoint = f"http://staging.iacherie.com/api/ml/{execution.pipeline_id}"
             execution.deployment_endpoints["staging"] = staging_endpoint
             
             stage_execution.artifacts["staging_endpoint"] = staging_endpoint
@@ -816,7 +816,7 @@ kubectl rollout status deployment/model-{execution.pipeline_id} -n staging
                         return False
             
             # Déploiement en production avec stratégie blue-green
-            production_endpoint = f"https://api.ainflue.com/ml/{execution.pipeline_id}"
+            production_endpoint = f"https://api.iacherie.com/ml/{execution.pipeline_id}"
             execution.deployment_endpoints["production"] = production_endpoint
             
             # Simuler le déploiement
@@ -1118,7 +1118,7 @@ async def demo_mlops_orchestrator():
         name="Musician Content Classifier",
         creator_type=CreatorType.MUSICIAN,
         model_type="classification",
-        git_repository="https://github.com/ainflue/ml-models",
+        git_repository="https://github.com/iacherie/ml-models",
         git_branch="main",
         environments=["dev", "staging", "production"],
         enabled_stages=[
@@ -1148,7 +1148,7 @@ async def demo_mlops_orchestrator():
     execution_id = await orchestrator.trigger_pipeline(
         "musician-classifier-v1",
         TriggerType.MANUAL,
-        "developer@ainflue.com"
+        "developer@iacherie.com"
     )
     print(f"✅ Pipeline triggered: {execution_id}")
     

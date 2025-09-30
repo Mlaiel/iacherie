@@ -1,8 +1,8 @@
 # 🤖 Module d'Ingénierie des Prompts - Plateforme IA Enterprise
 
-[![Niveau Enterprise](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Alimenté par IA](https://img.shields.io/badge/IA-Alimenté-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Multi-Expert](https://img.shields.io/badge/Multi-Expert-Architecture-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![Niveau Enterprise](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Alimenté par IA](https://img.shields.io/badge/IA-Alimenté-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Multi-Expert](https://img.shields.io/badge/Multi-Expert-Architecture-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 Déclaration de Mission
 
@@ -88,8 +88,8 @@ integrations/prompt_engineering/
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/prompt_engineering
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/prompt_engineering
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -164,7 +164,7 @@ GOOGLE_AI_API_KEY=votre_clé_google
 COHERE_API_KEY=votre_clé_cohere
 
 # Configuration Base de Données
-DATABASE_URL=postgresql://user:password@localhost/ainflue
+DATABASE_URL=postgresql://user:password@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Configuration Sécurité
@@ -218,7 +218,7 @@ Nous accueillons les contributions de la communauté. Veuillez lire nos directiv
 
 Ce projet est un logiciel propriétaire appartenant à **Fahed Mlaiel**. Tous droits réservés.
 
-Pour les demandes de licence, veuillez contacter : [licensing@ainflue.com](mailto:licensing@ainflue.com)
+Pour les demandes de licence, veuillez contacter : [licensing@iacherie.com](mailto:licensing@iacherie.com)
 
 ## 🆘 Support
 

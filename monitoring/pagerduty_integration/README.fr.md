@@ -1,4 +1,4 @@
-# 🚨 Intégration PagerDuty Enterprise - Plateforme Créateur Ainflue
+# 🚨 Intégration PagerDuty Enterprise - Plateforme Créateur IA Chérie
 
 ## ⚠️ **AVIS LÉGAL**
 **© 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS**
@@ -120,8 +120,8 @@ Collaboration & Gamification → SEO → Distribution Multi-Plateforme
 - **Économie Créative** : Consultance spécialisée Économie Créative
 
 ### **Informations Contact**
-- **Email** : enterprise@ainflue.com
-- **Téléphone** : +33-1-AINFLUE
+- **Email** : enterprise@iacherie.com
+- **Téléphone** : +33-1-IACHERIE
 - **Urgence** : +33-1-URGENT
 - **Architecte Direct** : mlaiel@live.de (Fahed Mlaiel)
 
@@ -135,4 +135,4 @@ Ce module Intégration PagerDuty Enterprise représente des années de développ
 
 ---
 
-*Propulsé par Plateforme Créateur Ainflue - Autonomiser la Prochaine Génération de Créateurs Numériques*
+*Propulsé par Plateforme Créateur IA Chérie - Autonomiser la Prochaine Génération de Créateurs Numériques*

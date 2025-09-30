@@ -131,7 +131,7 @@ class ContainerOrchestrator:
     async def get_cluster_status(self) -> Dict[str, Any]:
         """Get comprehensive cluster status"""
         return {
-            'cluster_name': self.config.get('cluster_name', 'ainflue-cluster'),
+            'cluster_name': self.config.get('cluster_name', 'iacherie-cluster'),
             'kubernetes_version': await self.kubernetes_client.get_version(),
             'deployments': len(self.deployments),
             'timestamp': datetime.utcnow().isoformat()

@@ -2,7 +2,7 @@
 🛡️ Compliance Orchestration Controller - Enterprise Core
 ========================================================
 
-Contrôleur d'orchestration avancé pour la conformité enterprise Ainflue.
+Contrôleur d'orchestration avancé pour la conformité enterprise IA Chérie.
 Gestion automatisée de la conformité GDPR, DMCA et réglementations.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

@@ -1,0 +1,14 @@
+# Intrusion Detection Configuration
+system: OSSEC
+rules:
+  - failed_login_attempts
+  - unusual_network_traffic
+  - privilege_escalation
+  - file_integrity_violations
+alerting:
+  email: security@ainflue.com
+  syslog: enabled
+  real_time: true
+response:
+  auto_block: enabled
+  quarantine: enabled

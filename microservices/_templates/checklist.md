@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/_templates/`  
+**Location**: `/workspaces/IA Chérie/microservices/_templates/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Templates  
-**Purpose**: Templates enterprise pour création microservices standardisés Ainflue
+**Purpose**: Templates enterprise pour création microservices standardisés IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -51,13 +51,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Enterprise Microservices Templates - Ainflue
+Enterprise Microservices Templates - IA Chérie
 ===========================================
 Templates standardisés pour création microservices enterprise.
 Support patterns avancés + observability + resilience.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices
+Project: IA Chérie Microservices
 Version: 1.0 Production
 """
 
@@ -520,13 +520,13 @@ class LoggingServiceTemplate(EnterpriseServiceBase):
 **Spécifications techniques**:
 ```python
 """
-Microservices Templates - Ainflue Enterprise
+Microservices Templates - IA Chérie Enterprise
 ===========================================
 Point d'entrée principal pour templates microservices.
 Factory patterns + template discovery + code generation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chérie Microservices Templates
 Version: 1.0 Production
 """
 
@@ -597,7 +597,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous templates
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Templates supportent workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Templates supportent workflow créateurs → distribution
 - **Code Industriel**: ✅ Patterns enterprise + observability + resilience
 - **Architecture Microservices**: ✅ Templates pour tous patterns microservices
 - **Scalabilité Enterprise**: ✅ Templates supportent haute charge + distribution
@@ -708,4 +708,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Templates microservices enterprise clé en main, patterns avancés, observability intégrée, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Templates microservices enterprise clé en main, patterns avancés, observability intégrée, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

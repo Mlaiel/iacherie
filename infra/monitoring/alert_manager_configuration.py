@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Alert Manager Configuration for Ainflue Platform
+Alert Manager Configuration for IA Chérie Platform
 ===============================================
 
 Enterprise-grade alerting system for infrastructure and application monitoring.
@@ -126,7 +126,7 @@ class AlertManagerConfiguration:
         logger.addHandler(console_handler)
         
         # File handler
-        log_dir = Path("/var/log/ainflue/alertmanager")
+        log_dir = Path("/var/log/iacherie/alertmanager")
         log_dir.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_dir / "configuration.log")
         file_handler.setFormatter(console_formatter)
@@ -232,7 +232,7 @@ class AlertManagerConfiguration:
         config = {
             "global": {
                 "smtp_smarthost": "localhost:587",
-                "smtp_from": "alerts@ainflue.com",
+                "smtp_from": "alerts@iacherie.com",
                 "slack_api_url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
             },
             "templates": [
@@ -283,8 +283,8 @@ class AlertManagerConfiguration:
                 "name": "default",
                 "email_configs": [
                     {
-                        "to": "ops@ainflue.com",
-                        "subject": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                        "to": "ops@iacherie.com",
+                        "subject": "IA Chérie Alert: {{ .GroupLabels.alertname }}",
                         "body": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
                     }
                 ]
@@ -315,7 +315,7 @@ class AlertManagerConfiguration:
                 slack_config = {
                     "api_url": target.config["webhook_url"],
                     "channel": target.config["channel"],
-                    "title": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                    "title": "IA Chérie Alert: {{ .GroupLabels.alertname }}",
                     "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                     "color": "{{ if eq .Status \"firing\" }}danger{{ else }}good{{ end }}"
                 }
@@ -370,7 +370,7 @@ Started: {{ .StartsAt }}
         return """
 <html>
 <body>
-<h2>Ainflue Platform Alert</h2>
+<h2>IA Chérie Platform Alert</h2>
 {{ range .Alerts }}
 <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0;">
     <h3 style="color: {{ if eq .Labels.severity "critical" }}red{{ else if eq .Labels.severity "high" }}orange{{ else }}blue{{ end }};">
@@ -393,11 +393,11 @@ Started: {{ .StartsAt }}
         rules_config = {
             "groups": [
                 {
-                    "name": "ainflue-infrastructure",
+                    "name": "iacherie-infrastructure",
                     "rules": []
                 },
                 {
-                    "name": "ainflue-application",
+                    "name": "iacherie-application",
                     "rules": []
                 }
             ]
@@ -440,7 +440,7 @@ Started: {{ .StartsAt }}
             test_alert = Alert(
                 name="test-alert",
                 severity=AlertSeverity.INFO,
-                message="This is a test alert from Ainflue Alert Manager",
+                message="This is a test alert from IA Chérie Alert Manager",
                 labels={"service": "alertmanager", "environment": "test"},
                 annotations={
                     "summary": "Test Alert",
@@ -483,9 +483,9 @@ Started: {{ .StartsAt }}
 # TODO: Move to environment variables or secure vault
             
             msg = MimeMultipart()
-            msg['From'] = target.config.get("from_email", "alerts@ainflue.com")
+            msg['From'] = target.config.get("from_email", "alerts@iacherie.com")
             msg['To'] = target.config["email"]
-            msg['Subject'] = f"Ainflue Alert: {alert.name} [{alert.severity.value.upper()}]"
+            msg['Subject'] = f"IA Chérie Alert: {alert.name} [{alert.severity.value.upper()}]"
             
             body = f"""
 Alert: {alert.name}
@@ -529,7 +529,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
             
             payload = {
                 "channel": target.config.get("channel", "#alerts"),
-                "username": "Ainflue AlertManager",
+                "username": "IA Chérie AlertManager",
                 "icon_emoji": ":warning:",
                 "attachments": [
                     {
@@ -603,7 +603,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
             return False
     
     def create_default_rules(self) -> bool:
-        """Create default alert rules for Ainflue platform"""
+        """Create default alert rules for IA Chérie platform"""
         try:
             default_rules = [
                 AlertRule(
@@ -614,7 +614,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
                     summary="High CPU usage detected",
                     description="CPU usage is above 80% for more than 5 minutes",
                     labels={"category": "infrastructure"},
-                    annotations={"runbook": "https://docs.ainflue.com/runbooks/high-cpu"}
+                    annotations={"runbook": "https://docs.iacherie.com/runbooks/high-cpu"}
                 ),
                 AlertRule(
                     name="HighMemoryUsage",
@@ -624,7 +624,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
                     summary="High memory usage detected",
                     description="Memory usage is above 85% for more than 5 minutes",
                     labels={"category": "infrastructure"},
-                    annotations={"runbook": "https://docs.ainflue.com/runbooks/high-memory"}
+                    annotations={"runbook": "https://docs.iacherie.com/runbooks/high-memory"}
                 ),
                 AlertRule(
                     name="DiskSpaceLow",
@@ -634,7 +634,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
                     summary="Disk space critically low",
                     description="Disk space usage is above 90%",
                     labels={"category": "infrastructure"},
-                    annotations={"runbook": "https://docs.ainflue.com/runbooks/disk-space"}
+                    annotations={"runbook": "https://docs.iacherie.com/runbooks/disk-space"}
                 ),
                 AlertRule(
                     name="APIHighLatency",
@@ -644,7 +644,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
                     summary="API high latency detected",
                     description="95th percentile latency is above 500ms for more than 5 minutes",
                     labels={"category": "application"},
-                    annotations={"runbook": "https://docs.ainflue.com/runbooks/api-latency"}
+                    annotations={"runbook": "https://docs.iacherie.com/runbooks/api-latency"}
                 ),
                 AlertRule(
                     name="ServiceDown",
@@ -654,7 +654,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
                     summary="Service is down",
                     description="Service has been down for more than 1 minute",
                     labels={"category": "availability"},
-                    annotations={"runbook": "https://docs.ainflue.com/runbooks/service-down"}
+                    annotations={"runbook": "https://docs.iacherie.com/runbooks/service-down"}
                 )
             ]
             
@@ -701,10 +701,10 @@ if __name__ == "__main__":
         name="ops-team-email",
         channel=NotificationChannel.EMAIL,
         config={
-            "email": "ops@ainflue.com",
+            "email": "ops@iacherie.com",
             "smtp_server": "smtp.gmail.com",
             "smtp_port": 587,
-            "username": "alerts@ainflue.com",
+            "username": "alerts@iacherie.com",
             "password": "app_password"
         }
     )

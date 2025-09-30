@@ -1,10 +1,10 @@
-# 💼 Business Services Enterprise - Ainflue
+# 💼 Business Services Enterprise - IA Chérie
 
 **🚀 SERVICES MÉTIER ENTERPRISE POUR WORKFLOW CRÉATEURS**
 
 ## 📋 Aperçu
 
-Module Services Métier Enterprise pour le workflow complet des créateurs, collaboration, gamification et engagement communautaire. Implémente la logique métier complète de l'écosystème Ainflue avec des patterns enterprise.
+Module Services Métier Enterprise pour le workflow complet des créateurs, collaboration, gamification et engagement communautaire. Implémente la logique métier complète de l'écosystème IA Chérie avec des patterns enterprise.
 
 ## 🏗️ Architecture
 
@@ -302,14 +302,14 @@ Ingénieur Analytics:       Expert Business Intelligence + Modélisation Prédic
 
 ### 🆘 Support Urgent
 ```yaml
-Issues Critiques:         business-team@ainflue.com
+Issues Critiques:         business-team@iacherie.com
 Escalation:              Lead Architect (mlaiel@live.de)
 Temps Réponse:           < 20 minutes incidents P0
-Documentation:           docs.ainflue.com/business-services
+Documentation:           docs.iacherie.com/business-services
 ```
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - BUSINESS SERVICES ENTERPRISE AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - BUSINESS SERVICES ENTERPRISE IACHERIE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE**  
 **🎯 MOTEUR WORKFLOW CRÉATEUR PRODUCTION-READY**

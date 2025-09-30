@@ -379,7 +379,7 @@ class NotificationManager:
                 name="Welcome Email",
                 notification_type=NotificationType.WELCOME,
                 channel=NotificationChannel.EMAIL,
-                subject_template="Welcome to Ainflue Creator Economy!",
+                subject_template="Welcome to IA Chérie Creator Economy!",
                 body_template="Hi {{username}}, welcome to the future of creator monetization!",
                 variables=["username"]
             ),
@@ -1289,7 +1289,7 @@ class DiscordProvider:
             
             payload = {
                 "content": f"**{delivery.subject}**\n{delivery.body}",
-                "username": "Ainflue Creator Economy"
+                "username": "IA Chérie Creator Economy"
             }
             
             async with aiohttp.ClientSession() as session:

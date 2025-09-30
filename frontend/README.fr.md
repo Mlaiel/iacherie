@@ -1,4 +1,4 @@
-# 🎨 Plateforme Frontend Ainflue - Enterprise Creator Economy
+# 🎨 Plateforme Frontend IA Chérie - Enterprise Creator Economy
 
 ## 🏆 Équipe de Développement Expert
 - **Lead AI Developer**: Fahed Mlaiel - Systèmes IA avancés et apprentissage automatique
@@ -37,7 +37,7 @@ npm run test     # Exécuter les tests
 ```
 frontend/
 ├── core/          # Configuration technique, types, constantes
-├── business/      # Modules logique métier Ainflue
+├── business/      # Modules logique métier IA Chérie
 ├── presentation/  # Composants UI, pages, layouts
 ├── infrastructure/ # Services techniques, clients API
 └── package.json   # Configuration projet
@@ -93,4 +93,4 @@ npm run test:coverage # Rapport de couverture
 - Chiffrement des données
 
 ---
-**© 2024-2025 Fahed Mlaiel - Plateforme Frontend Ainflue**
+**© 2024-2025 Fahed Mlaiel - Plateforme Frontend IA Chérie**

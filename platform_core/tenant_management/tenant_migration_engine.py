@@ -40,7 +40,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/tenant_migration.log'),
+        logging.FileHandler('/var/log/iacherie/tenant_migration.log'),
         logging.StreamHandler()
     ]
 )
@@ -121,7 +121,7 @@ class TenantMigrationEngine:
     - Support multi-région et multi-cloud
     """
     
-    def __init__(self, config_path: str = '/etc/ainflue/migration_config.yaml'):
+    def __init__(self, config_path: str = '/etc/iacherie/migration_config.yaml'):
         """Initialisation du moteur de migration"""
         self.config = self._load_config(config_path)
         self.migration_plans: Dict[str, MigrationPlan] = {}
@@ -163,7 +163,7 @@ class TenantMigrationEngine:
             },
             'storage': {
                 'type': 's3',
-                'bucket': 'ainflue-migrations',
+                'bucket': 'iacherie-migrations',
                 'region': 'eu-west-1'
             }
         }
@@ -202,7 +202,7 @@ class TenantMigrationEngine:
                 's3',
                 region_name=storage_config.get('region', 'eu-west-1')
             )
-            self.migration_bucket = storage_config.get('bucket', 'ainflue-migrations')
+            self.migration_bucket = storage_config.get('bucket', 'iacherie-migrations')
         
         logger.info("Connexions stockage initialisées")
     
@@ -859,7 +859,7 @@ def create_tenant_migration_engine(config_path: Optional[str] = None) -> TenantM
     Returns:
         Instance configurée du TenantMigrationEngine
     """
-    return TenantMigrationEngine(config_path or '/etc/ainflue/migration_config.yaml')
+    return TenantMigrationEngine(config_path or '/etc/iacherie/migration_config.yaml')
 
 
 # Exemple d'utilisation

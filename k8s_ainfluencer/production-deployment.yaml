@@ -1,0 +1,228 @@
+# Kubernetes Deployment for IA Chérie Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Role: DevOps Engineer
+# Purpose: Production-ready Kubernetes deployment manifests
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iacherie-platform
+  labels:
+    project: iacherie
+    environment: production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iacherie-api
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-api
+    version: v2.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: iacherie-api
+  template:
+    metadata:
+      labels:
+        app: iacherie-api
+        version: v2.0.0
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: iacherie-api
+        image: iacherie/platform:2.0.0-production
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+        - containerPort: 8765
+          name: websocket
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DEBUG
+          value: "false"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: redis-url
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: iacherie-secrets
+              key: secret-key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+        - name: uploads
+          mountPath: /app/uploads
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: iacherie-uploads-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iacherie-api-service
+  namespace: iacherie-platform
+  labels:
+    app: iacherie-api
+spec:
+  selector:
+    app: iacherie-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  - name: websocket
+    port: 8765
+    targetPort: 8765
+    protocol: TCP
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iacherie-api-ingress
+  namespace: iacherie-platform
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - api.iacherie.com
+    secretName: iacherie-api-tls
+  rules:
+  - host: api.iacherie.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: iacherie-api-service
+            port:
+              number: 80
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: iacherie-uploads-pvc
+  namespace: iacherie-platform
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-ssd
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iacherie-secrets
+  namespace: iacherie-platform
+type: Opaque
+data:
+  # Base64 encoded secrets (replace with actual values)
+  database-url: cG9zdGdyZXNxbDovL3VzZXI6cGFzc0BkYi9haW5mbHVl  # postgresql://user:pass@db/iacherie
+  redis-url: cmVkaXM6Ly9yZWRpcy1zZXJ2aWNlOjYzNzk=  # redis://redis-service:6379
+  secret-key: c3VwZXItc2VjdXJlLWtleS1jaGFuZ2UtaW4tcHJvZHVjdGlvbg==  # super-secure-key-change-in-production
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: iacherie-api-pdb
+  namespace: iacherie-platform
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: iacherie-api
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: iacherie-api-hpa
+  namespace: iacherie-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: iacherie-api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

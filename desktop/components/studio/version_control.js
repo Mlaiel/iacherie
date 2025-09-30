@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Version Control System
+ * IA Chérie Desktop - Version Control System
  * 
  * Git-like version control for creative projects
  * 
@@ -34,7 +34,7 @@ class VersionControl extends EventEmitter {
   async initializeRepository(projectPath, projectName) {
     try {
       this.workingDirectory = projectPath;
-      this.repositoryPath = path.join(projectPath, '.ainflue');
+      this.repositoryPath = path.join(projectPath, '.iacherie');
       
       // Create repository structure
       await fs.mkdir(this.repositoryPath, { recursive: true });
@@ -85,7 +85,7 @@ class VersionControl extends EventEmitter {
   async loadRepository(projectPath) {
     try {
       this.workingDirectory = projectPath;
-      this.repositoryPath = path.join(projectPath, '.ainflue');
+      this.repositoryPath = path.join(projectPath, '.iacherie');
 
       // Check if repository exists
       const metadataPath = path.join(this.repositoryPath, 'metadata.json');

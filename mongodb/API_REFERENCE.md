@@ -1,8 +1,8 @@
 # MongoDB API Reference
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Database Layer API Reference  
 **Version:** 1.0.0  
 **Last Updated:** September 12, 2025  
@@ -33,7 +33,7 @@ from mongodb.connection import MongoDBConnection
 # Basic connection
 connection = MongoDBConnection(
     connection_string="mongodb://localhost:27017",
-    database_name="ainflue"
+    database_name="iacherie"
 )
 
 # Advanced connection with options
@@ -704,7 +704,7 @@ Deploys a MongoDB replica set.
 
 ```python
 replica_config = {
-    "cluster_name": "ainflue-prod",
+    "cluster_name": "iacherie-prod",
     "nodes": [
         {"host": "mongo1.example.com", "port": 27017, "role": "primary"},
         {"host": "mongo2.example.com", "port": 27017, "role": "secondary"},
@@ -954,7 +954,7 @@ except ValidationError as e:
 ## 📞 SUPPORT & CONTACT
 
 **Technical Leadership:** Fahed Mlaiel (mlaiel@live.de)  
-**Project:** Ainflue Platform  
+**Project:** IA Chérie Platform  
 **Module:** MongoDB API Reference  
 **Documentation Version:** 1.0.0  
 

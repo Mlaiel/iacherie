@@ -1,4 +1,4 @@
-# 📊 MONITORING SETUP GUIDE - AINFLUE PLATFORM
+# 📊 MONITORING SETUP GUIDE - IACHERIE PLATFORM
 **Enterprise-Grade Monitoring, Observability & Alerting System**
 
 **Version:** 3.0 (Production-Ready)  
@@ -9,7 +9,7 @@
 
 ## 🎯 OVERVIEW
 
-This comprehensive guide covers the complete monitoring and observability stack for the Ainflue Distribution Platform. It includes infrastructure monitoring, application performance monitoring (APM), log management, security monitoring, and business metrics tracking.
+This comprehensive guide covers the complete monitoring and observability stack for the IA Chérie Distribution Platform. It includes infrastructure monitoring, application performance monitoring (APM), log management, security monitoring, and business metrics tracking.
 
 ### 🚀 **Monitoring Objectives**
 - **Infrastructure Health**: 99.99% uptime monitoring
@@ -54,7 +54,7 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
   external_labels:
-    cluster: 'ainflue-production'
+    cluster: 'iacherie-production'
     region: 'us-west-2'
 
 rule_files:
@@ -300,8 +300,8 @@ asyncio.create_task(metrics.update_business_metrics())
 # alertmanager.yml
 global:
   smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'alerts@ainflue.com'
-  smtp_auth_username: 'alerts@ainflue.com'
+  smtp_from: 'alerts@iacherie.com'
+  smtp_auth_username: 'alerts@iacherie.com'
   smtp_auth_password: 'app-specific-password'
 
 route:
@@ -333,11 +333,11 @@ route:
 receivers:
 - name: 'web.hook'
   webhook_configs:
-  - url: 'http://monitoring.ainflue.com/webhook'
+  - url: 'http://monitoring.iacherie.com/webhook'
 
 - name: 'critical-alerts'
   email_configs:
-  - to: 'critical@ainflue.com'
+  - to: 'critical@iacherie.com'
     subject: '🚨 CRITICAL ALERT: {{ .GroupLabels.alertname }}'
     body: |
       {{ range .Alerts }}
@@ -365,7 +365,7 @@ receivers:
 
 - name: 'warning-alerts'
   email_configs:
-  - to: 'warnings@ainflue.com'
+  - to: 'warnings@iacherie.com'
     subject: '⚠️ WARNING: {{ .GroupLabels.alertname }}'
   
   slack_configs:
@@ -375,12 +375,12 @@ receivers:
 
 - name: 'api-team'
   email_configs:
-  - to: 'api-team@ainflue.com'
+  - to: 'api-team@iacherie.com'
     subject: 'API Alert: {{ .GroupLabels.alertname }}'
 
 - name: 'dba-team'
   email_configs:
-  - to: 'dba-team@ainflue.com'
+  - to: 'dba-team@iacherie.com'
     subject: 'Database Alert: {{ .GroupLabels.alertname }}'
 
 inhibit_rules:
@@ -523,8 +523,8 @@ groups:
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Distribution Platform - Main Dashboard",
-    "tags": ["ainflue", "distribution", "production"],
+    "title": "IA Chérie Distribution Platform - Main Dashboard",
+    "tags": ["iacherie", "distribution", "production"],
     "timezone": "browser",
     "panels": [
       {
@@ -649,7 +649,7 @@ groups:
 
 ```yaml
 # elasticsearch.yml
-cluster.name: ainflue-logs
+cluster.name: iacherie-logs
 node.name: ${HOSTNAME}
 network.host: 0.0.0.0
 http.port: 9200
@@ -740,14 +740,14 @@ filter {
 output {
   elasticsearch {
     hosts => ["elasticsearch-1:9200", "elasticsearch-2:9200", "elasticsearch-3:9200"]
-    index => "ainflue-logs-%{+YYYY.MM.dd}"
+    index => "iacherie-logs-%{+YYYY.MM.dd}"
     
     if "error" in [tags] {
-      index => "ainflue-errors-%{+YYYY.MM.dd}"
+      index => "iacherie-errors-%{+YYYY.MM.dd}"
     }
     
     if "security_alert" in [tags] {
-      index => "ainflue-security-%{+YYYY.MM.dd}"
+      index => "iacherie-security-%{+YYYY.MM.dd}"
     }
   }
   
@@ -784,7 +784,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/ainflue/api/*.log
+    - /var/log/iacherie/api/*.log
   fields:
     logtype: api
     service: distribution-api
@@ -795,7 +795,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/ainflue/application/*.log
+    - /var/log/iacherie/application/*.log
   fields:
     logtype: application
     service: distribution-backend
@@ -803,7 +803,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/ainflue/security/*.log
+    - /var/log/iacherie/security/*.log
   fields:
     logtype: security
     service: security-monitor
@@ -847,7 +847,7 @@ logging.files:
 apiVersion: jaegertracing.io/v1
 kind: Jaeger
 metadata:
-  name: ainflue-jaeger
+  name: iacherie-jaeger
   namespace: monitoring
 spec:
   strategy: production
@@ -1008,7 +1008,7 @@ async def distribute_content(content_data, platform):
     "search": {
       "request": {
         "search_type": "query_then_fetch",
-        "indices": ["ainflue-security-*"],
+        "indices": ["iacherie-security-*"],
         "body": {
           "query": {
             "bool": {
@@ -1051,7 +1051,7 @@ async def distribute_content(content_data, platform):
     "send_security_alert": {
       "webhook": {
         "scheme": "https",
-        "host": "security-alerts.ainflue.com",
+        "host": "security-alerts.iacherie.com",
         "port": 443,
         "method": "post",
         "path": "/security-incident",
@@ -1077,24 +1077,24 @@ findtime = 600
 maxretry = 5
 backend = auto
 
-[ainflue-api]
+[iacherie-api]
 enabled = true
 port = 80,443
-filter = ainflue-api
-logpath = /var/log/ainflue/api/access.log
+filter = iacherie-api
+logpath = /var/log/iacherie/api/access.log
 maxretry = 3
 bantime = 7200
 
-[ainflue-login]
+[iacherie-login]
 enabled = true
 port = 80,443
-filter = ainflue-login
-logpath = /var/log/ainflue/auth/login.log
+filter = iacherie-login
+logpath = /var/log/iacherie/auth/login.log
 maxretry = 3
 bantime = 3600
 
 # Custom filter for API abuse
-# /etc/fail2ban/filter.d/ainflue-api.conf
+# /etc/fail2ban/filter.d/iacherie-api.conf
 [Definition]
 failregex = ^<HOST> - - \[.*\] "(GET|POST) .* HTTP/.*" (4[0-9][0-9]|5[0-9][0-9]) .*$
 ignoreregex = ^<HOST> - - \[.*\] "(GET|POST) /health.* HTTP/.*" 200 .*$
@@ -1378,7 +1378,7 @@ class AutomatedIncidentResponder:
         # Get current deployment
         deployment = k8s_client.read_namespaced_deployment(
             name="distribution-api",
-            namespace="ainflue-production"
+            namespace="iacherie-production"
         )
         
         current_replicas = deployment.spec.replicas
@@ -1388,7 +1388,7 @@ class AutomatedIncidentResponder:
         deployment.spec.replicas = new_replicas
         k8s_client.patch_namespaced_deployment(
             name="distribution-api",
-            namespace="ainflue-production",
+            namespace="iacherie-production",
             body=deployment
         )
         

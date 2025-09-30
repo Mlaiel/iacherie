@@ -1,5 +1,5 @@
 """
-Ainflue Core Orchestration - Event Driven Core
+IA Chérie Core Orchestration - Event Driven Core
 ===============================================
 
 Enterprise-grade event-driven architecture system with event sourcing, CQRS integration,
@@ -54,7 +54,7 @@ class Event:
     version: int = 1
     correlation_id: Optional[str] = None
     causation_id: Optional[str] = None
-    source: str = "ainflue-core"
+    source: str = "iacherie-core"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert event to dictionary"""

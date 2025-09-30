@@ -2,7 +2,7 @@
 ================================================================
 
 Advanced content performance analytics and SEO optimization reporting system
-for Ainflue Creator Economy platform. Provides comprehensive content insights,
+for IA Chérie Creator Economy platform. Provides comprehensive content insights,
 viral trend analysis, and cross-platform performance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

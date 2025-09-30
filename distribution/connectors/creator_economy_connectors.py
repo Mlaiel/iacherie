@@ -107,7 +107,7 @@ class PatreonConnector(BaseCreatorConnector):
             
             headers = {
                 "Authorization": f"Bearer {access_token}",
-                "User-Agent": "Ainflue/1.0"
+                "User-Agent": "IA Chérie/1.0"
             }
             
             async with aiohttp.ClientSession() as session:

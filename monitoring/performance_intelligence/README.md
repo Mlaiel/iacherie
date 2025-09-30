@@ -1,7 +1,7 @@
 # 🎯 Advanced Metrics Module - Enterprise Analytics & Business Intelligence
 
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Author](https://img.shields.io/badge/Author-Fahed%20Mlaiel-green.svg)](mailto:mlaiel@live.de)
 
 ## ⚠️ **CRITICAL COPYRIGHT WARNING** ⚠️
@@ -24,7 +24,7 @@ Any person or organization found using, copying, distributing, or deriving from 
 
 ## 📖 Overview
 
-The Advanced Metrics Module is a comprehensive, enterprise-grade analytics and business intelligence system designed for the Ainflue platform. This module provides multi-dimensional analysis, performance optimization, and strategic insights across all content types, user engagement patterns, business KPIs, AI-generated content quality, and collaboration success metrics.
+The Advanced Metrics Module is a comprehensive, enterprise-grade analytics and business intelligence system designed for the IA Chérie platform. This module provides multi-dimensional analysis, performance optimization, and strategic insights across all content types, user engagement patterns, business KPIs, AI-generated content quality, and collaboration success metrics.
 
 ## 👥 Development Team Specialties
 
@@ -115,8 +115,8 @@ Advanced Metrics Module
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/advanced_metrics
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/advanced_metrics
 
 # Install dependencies
 pip install -r requirements.txt
@@ -167,7 +167,7 @@ report = await manager.generate_report(
 
 ## 📈 Business Logic Flow
 
-The Advanced Metrics Module follows the core Ainflue business logic:
+The Advanced Metrics Module follows the core IA Chérie business logic:
 
 ```
 User (musician/blogger/photographer/influencer/comedian)
@@ -339,7 +339,7 @@ start_http_server(8000)
 ```json
 {
   "dashboard": {
-    "title": "Ainflue Advanced Metrics",
+    "title": "IA Chérie Advanced Metrics",
     "panels": [
       {
         "title": "Business KPIs",
@@ -445,7 +445,7 @@ spec:
     spec:
       containers:
       - name: advanced-metrics
-        image: ainflue/advanced-metrics:1.0.0
+        image: iacherie/advanced-metrics:1.0.0
         ports:
         - containerPort: 8000
 ```
@@ -471,15 +471,15 @@ spec:
 
 **For Technical Support:**
 - Email: mlaiel@live.de
-- Subject: [Ainflue Advanced Metrics] Support Request
+- Subject: [IA Chérie Advanced Metrics] Support Request
 
 **For Licensing Inquiries:**
 - Email: mlaiel@live.de
-- Subject: [Ainflue] Licensing Inquiry
+- Subject: [IA Chérie] Licensing Inquiry
 
 **For Partnership Opportunities:**
 - Email: mlaiel@live.de
-- Subject: [Ainflue] Partnership Proposal
+- Subject: [IA Chérie] Partnership Proposal
 
 ## 📄 License
 

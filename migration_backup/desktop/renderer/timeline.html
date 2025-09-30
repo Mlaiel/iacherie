@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Editor - Ainflue Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1f2937;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    
+    .timeline-header {
+      height: 50px;
+      background: rgba(31, 41, 55, 0.9);
+      border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      gap: 10px;
+    }
+    
+    .timeline-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .control-btn {
+      background: #374151;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+    }
+    
+    .control-btn:hover {
+      background: #4B5563;
+    }
+    
+    .control-btn.active {
+      background: #3B82F6;
+    }
+    
+    .timeline-content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .track-panel {
+      width: 200px;
+      background: rgba(55, 65, 81, 0.8);
+      border-right: 1px solid rgba(75, 85, 99, 0.3);
+      overflow-y: auto;
+    }
+    
+    .track-item {
+      height: 60px;
+      border-bottom: 1px solid rgba(75, 85, 99, 0.2);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .track-item:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .track-type {
+      width: 8px;
+      height: 40px;
+      border-radius: 2px;
+    }
+    
+    .track-type.audio {
+      background: #10B981;
+    }
+    
+    .track-type.video {
+      background: #F59E0B;
+    }
+    
+    .track-type.text {
+      background: #8B5CF6;
+    }
+    
+    .track-info {
+      flex: 1;
+    }
+    
+    .track-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .track-meta {
+      font-size: 12px;
+      color: #9CA3AF;
+    }
+    
+    .timeline-canvas {
+      flex: 1;
+      background: #111827;
+      position: relative;
+      overflow: auto;
+    }
+    
+    .timeline-ruler {
+      height: 30px;
+      background: #1F2937;
+      border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #9CA3AF;
+    }
+    
+    .timeline-tracks {
+      padding: 10px;
+    }
+    
+    .timeline-track {
+      height: 60px;
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .track-content {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+    
+    .audio-waveform {
+      width: 100%;
+      height: 30px;
+      background: linear-gradient(90deg, #10B981 0%, #059669 50%, #047857 100%);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .waveform-bars {
+      display: flex;
+      height: 100%;
+      align-items: end;
+      gap: 1px;
+      padding: 2px;
+    }
+    
+    .waveform-bar {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 1px;
+      min-width: 2px;
+    }
+    
+    .playhead {
+      position: absolute;
+      top: 0;
+      left: 50px;
+      width: 2px;
+      height: 100%;
+      background: #EF4444;
+      z-index: 20;
+      pointer-events: none;
+    }
+    
+    .timeline-footer {
+      height: 40px;
+      background: rgba(31, 41, 55, 0.9);
+      border-top: 1px solid rgba(75, 85, 99, 0.3);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      justify-content: space-between;
+    }
+    
+    .timeline-info {
+      font-size: 12px;
+      color: #9CA3AF;
+    }
+    
+    .zoom-controls {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    
+    .zoom-btn {
+      background: #374151;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    
+    .zoom-btn:hover {
+      background: #4B5563;
+    }
+  </style>
+</head>
+<body>
+  <div class="timeline-container">
+    <div class="timeline-header">
+      <div class="timeline-controls">
+        <button class="control-btn" id="play-btn">▶</button>
+        <button class="control-btn" id="pause-btn">⏸</button>
+        <button class="control-btn" id="stop-btn">⏹</button>
+        <button class="control-btn" id="record-btn">⏺</button>
+      </div>
+      <div class="timeline-info">
+        <span id="current-time">00:00:00</span> / <span id="total-time">00:00:00</span>
+      </div>
+    </div>
+    
+    <div class="timeline-content">
+      <div class="track-panel">
+        <div class="track-item">
+          <div class="track-type audio"></div>
+          <div class="track-info">
+            <div class="track-name">Master Audio</div>
+            <div class="track-meta">Stereo • 48kHz</div>
+          </div>
+        </div>
+        <div class="track-item">
+          <div class="track-type video"></div>
+          <div class="track-info">
+            <div class="track-name">Video Track 1</div>
+            <div class="track-meta">1920x1080 • 30fps</div>
+          </div>
+        </div>
+        <div class="track-item">
+          <div class="track-type text"></div>
+          <div class="track-info">
+            <div class="track-name">Captions</div>
+            <div class="track-meta">SRT • Auto-generated</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-canvas">
+        <div class="timeline-ruler">
+          <span>0:00</span>
+          <span style="margin-left: 80px;">0:10</span>
+          <span style="margin-left: 80px;">0:20</span>
+          <span style="margin-left: 80px;">0:30</span>
+          <span style="margin-left: 80px;">0:40</span>
+          <span style="margin-left: 80px;">0:50</span>
+          <span style="margin-left: 80px;">1:00</span>
+        </div>
+        
+        <div class="playhead"></div>
+        
+        <div class="timeline-tracks">
+          <div class="timeline-track">
+            <div class="track-content">
+              <div class="audio-waveform">
+                <div class="waveform-bars" id="audio-waveform">
+                  <!-- Waveform bars will be generated by JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="timeline-track">
+            <div class="track-content">
+              <div style="width: 200px; height: 40px; background: linear-gradient(45deg, #F59E0B, #D97706); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                Video Clip 1
+              </div>
+            </div>
+          </div>
+          
+          <div class="timeline-track">
+            <div class="track-content">
+              <div style="width: 150px; height: 20px; background: #8B5CF6; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 11px;">
+                Auto-Generated Captions
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-footer">
+      <div class="timeline-info">
+        Duration: 1:23:45 • 3 tracks • 24fps
+      </div>
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-out">-</button>
+        <span style="font-size: 11px; color: #9CA3AF;">100%</span>
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="fit-timeline">Fit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Generate audio waveform
+    function generateWaveform() {
+      const container = document.getElementById('audio-waveform');
+      const bars = [];
+      
+      for (let i = 0; i < 100; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'waveform-bar';
+        bar.style.height = Math.random() * 80 + 20 + '%';
+        bar.style.flex = '1';
+        bars.push(bar);
+        container.appendChild(bar);
+      }
+    }
+
+    // Timeline controls
+    let isPlaying = false;
+    let currentTime = 0;
+    let playheadPosition = 50;
+
+    document.getElementById('play-btn').addEventListener('click', () => {
+      isPlaying = true;
+      document.getElementById('play-btn').classList.add('active');
+      document.getElementById('pause-btn').classList.remove('active');
+      startPlayback();
+    });
+
+    document.getElementById('pause-btn').addEventListener('click', () => {
+      isPlaying = false;
+      document.getElementById('pause-btn').classList.add('active');
+      document.getElementById('play-btn').classList.remove('active');
+    });
+
+    document.getElementById('stop-btn').addEventListener('click', () => {
+      isPlaying = false;
+      currentTime = 0;
+      playheadPosition = 50;
+      updatePlayhead();
+      document.getElementById('play-btn').classList.remove('active');
+      document.getElementById('pause-btn').classList.remove('active');
+    });
+
+    function startPlayback() {
+      if (isPlaying) {
+        currentTime += 0.1;
+        playheadPosition += 0.5;
+        updatePlayhead();
+        updateTimeDisplay();
+        
+        if (playheadPosition < window.innerWidth - 200) {
+          setTimeout(startPlayback, 100);
+        } else {
+          isPlaying = false;
+          document.getElementById('play-btn').classList.remove('active');
+        }
+      }
+    }
+
+    function updatePlayhead() {
+      const playhead = document.querySelector('.playhead');
+      playhead.style.left = playheadPosition + 'px';
+    }
+
+    function updateTimeDisplay() {
+      const minutes = Math.floor(currentTime / 60);
+      const seconds = Math.floor(currentTime % 60);
+      const timeStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:00`;
+      document.getElementById('current-time').textContent = timeStr;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      generateWaveform();
+      console.log('🎬 Timeline Editor initialized');
+      
+      // Notify main process that timeline is ready
+      if (window.electronAPI) {
+        window.electronAPI.timelineReady?.();
+      }
+    });
+  </script>
+</body>
+</html>

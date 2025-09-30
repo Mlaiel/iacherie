@@ -4,7 +4,7 @@
 
 ## Überblick
 
-Dieses umfassende Verschlüsselungsschlüssel-Modul bietet eine Enterprise-Sicherheitsinfrastruktur, die speziell für die Ainflue Creator Economy-Plattform entwickelt wurde. Es kombiniert modernste kryptographische Technologien mit Creator-zentrierten Optimierungen, um unvergleichliche Sicherheit, Leistung und Benutzerfreundlichkeit zu liefern.
+Dieses umfassende Verschlüsselungsschlüssel-Modul bietet eine Enterprise-Sicherheitsinfrastruktur, die speziell für die IA Chérie Creator Economy-Plattform entwickelt wurde. Es kombiniert modernste kryptographische Technologien mit Creator-zentrierten Optimierungen, um unvergleichliche Sicherheit, Leistung und Benutzerfreundlichkeit zu liefern.
 
 ## 🚀 Hauptfunktionen
 
@@ -139,7 +139,7 @@ encrypted_content = await encryptor.encrypt_content(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-encryption-keys
+  name: iacherie-encryption-keys
 spec:
   replicas: 3
   selector:
@@ -149,7 +149,7 @@ spec:
     spec:
       containers:
       - name: key-manager
-        image: ainflue/encryption-keys:latest
+        image: iacherie/encryption-keys:latest
         env:
         - name: HSM_CLUSTER_ID
           valueFrom:
@@ -225,6 +225,6 @@ Enterprise-Kunden können eine kommerzielle Lizenz mit zusätzlichen Features er
 
 ---
 
-**Mit ❤️ für die Creator Economy vom Ainflue Security Team entwickelt**
+**Mit ❤️ für die Creator Economy vom IA Chérie Security Team entwickelt**
 
 *Creator mit Enterprise-Grade-Sicherheit zu befähigen, während die Einfachheit und Leistung beibehalten wird, die sie benötigen, um sich auf ihr Handwerk zu konzentrieren.*

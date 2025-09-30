@@ -5,7 +5,7 @@ High-resolution image synthesis with 15 specialized image agents.
 Advanced AI image generation for enterprise content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -130,8 +130,8 @@ class ImageAgent:
             
             result = ImageGenerationResult(
                 image_id=image_id,
-                image_url=f"https://ai-generated-images.ainflue.com/{image_id}.{request.format.value}",
-                thumbnail_url=f"https://ai-generated-images.ainflue.com/{image_id}_thumb.jpg",
+                image_url=f"https://ai-generated-images.iacherie.com/{image_id}.{request.format.value}",
+                thumbnail_url=f"https://ai-generated-images.iacherie.com/{image_id}_thumb.jpg",
                 width=width,
                 height=height,
                 file_size=self._estimate_file_size(width, height, request.format),
@@ -169,7 +169,7 @@ class ImageAgent:
                 error_message=str(e)
             )
     
-    def _parse_resolution(self, quality: ImageQuality) -> Tuple[int, int]:
+    def _parse_resolution(self, quality: ImageQuality) -> tuple[int, int]:
         """Parse resolution from quality enum."""
         resolution_map = {
             ImageQuality.STANDARD: (512, 512),

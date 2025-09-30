@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+  <defs>
+    <linearGradient id="flacGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Badge Background -->
+  <rect x="5" y="5" width="140" height="40" fill="url(#flacGradient)" stroke="#1B5E20" stroke-width="2" rx="8" filter="url(#badgeGlow)"/>
+  
+  <!-- Icon -->
+  <circle cx="25" cy="25" r="8" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 20 22 L 23 25 L 20 28 M 25 22 L 28 25 L 25 28" stroke="#2E7D32" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Text -->
+  <text x="40" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">FLAC</text>
+  <text x="40" y="35" font-family="Arial, sans-serif" font-size="10" fill="#E8F5E8">Lossless</text>
+  
+  <!-- Quality indicator -->
+  <circle cx="125" cy="15" r="4" fill="#FFFFFF"/>
+  <circle cx="125" cy="25" r="4" fill="#FFFFFF"/>
+  <circle cx="125" cy="35" r="4" fill="#FFFFFF"/>
+  
+  <!-- Copyright -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="6" fill="#1B5E20">© Ainflue</text>
+</svg>

@@ -559,7 +559,7 @@ class ModelAPIGenerator:
                 },
                 "license": {
                     "name": "Proprietary",
-                    "url": "https://ainflue.com/license"
+                    "url": "https://iacherie.com/license"
                 }
             },
             "servers": [
@@ -683,7 +683,7 @@ class ModelAPIGenerator:
 async def main():
     """Example usage of ModelAPIGenerator"""
     config = {
-        'base_url': 'https://api.ainflue.com',
+        'base_url': 'https://api.iacherie.com',
         'output_dir': 'generated_apis',
         'template_dir': 'templates'
     }

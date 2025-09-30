@@ -1,6 +1,6 @@
 """Creator Implementation Engine - Multi-format Creator Workflow System
 
-Comprehensive implementation of creator workflow management for the Ainflue platform,
+Comprehensive implementation of creator workflow management for the IA Chérie platform,
 supporting musicians, bloggers, photographers, influencers, and comedians.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Supported creator types in Ainflue platform"""
+    """Supported creator types in IA Chérie platform"""
     MUSICIAN = "musician"
     BLOGGER = "blogger" 
     PHOTOGRAPHER = "photographer"
@@ -103,7 +103,7 @@ class WorkflowResult:
 
 class CreatorImplementationEngine:
     """
-    Advanced Creator Implementation Engine for Ainflue Platform
+    Advanced Creator Implementation Engine for IA Chérie Platform
     
     Manages complete creator workflows from content upload to distribution,
     with specialized handling for different creator types and content formats.
@@ -165,7 +165,7 @@ class CreatorImplementationEngine:
         creator_data: Dict[str, Any]
     ) -> CreatorProfile:
         """
-        Register new creator in Ainflue platform
+        Register new creator in IA Chérie platform
         
         Args:
             creator_data: Creator registration data
@@ -383,7 +383,7 @@ class CreatorImplementationEngine:
         return {
             "sentiment_score": 0.85,
             "engagement_prediction": 0.78,
-            "seo_keywords": ["ainflue", "creator", content.content_format.value],
+            "seo_keywords": ["iacherie", "creator", content.content_format.value],
             "target_audience": f"{creator.creator_type.value}_followers"
         }
     

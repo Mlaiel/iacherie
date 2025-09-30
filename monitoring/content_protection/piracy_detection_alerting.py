@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Piracy Detection Alerting System
+IA Chérie Platform - Piracy Detection Alerting System
 ===================================================
 
 Advanced AI-powered piracy detection and automated alerting system for
@@ -704,10 +704,10 @@ class PiracyDetectionAlertingSystem:
         
         return template.format(
             content_title=incident.content_metadata.get('title', 'Protected Content'),
-            copyright_owner='Ainflue Platform / Content Owner',
+            copyright_owner='IA Chérie Platform / Content Owner',
             infringing_url=incident.pirated_content_url,
-            sender_name='Ainflue Anti-Piracy Team',
-            contact_information='legal@ainflue.com'
+            sender_name='IA Chérie Anti-Piracy Team',
+            contact_information='legal@iacherie.com'
         )
     
     def get_piracy_statistics(self, hours: int = 24) -> Dict[str, Any]:

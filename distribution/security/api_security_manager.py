@@ -1,5 +1,5 @@
 """
-API Security Manager for Ainflue Distribution Platform
+API Security Manager for IA Chérie Distribution Platform
 
 This module provides comprehensive API security management including
 authentication, authorization, rate limiting, and threat detection.
@@ -316,7 +316,7 @@ class APISecurityManager:
                 return False, "Token expired"
             
             # Check issuer
-            if 'iss' in payload and payload['iss'] != 'ainflue-distribution':
+            if 'iss' in payload and payload['iss'] != 'iacherie-distribution':
                 return False, "Invalid token issuer"
             
             return True, None
@@ -537,7 +537,7 @@ class APISecurityManager:
             payload = {
                 'user_id': user_id,
                 'permissions': permissions,
-                'iss': 'ainflue-distribution',
+                'iss': 'iacherie-distribution',
                 'iat': time.time(),
                 'exp': time.time() + expires_in
             }

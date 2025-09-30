@@ -946,7 +946,7 @@ class SecurityManager:
     """
     Enterprise Security Manager with threat detection and vulnerability management
     
-    Provides comprehensive security management for the Ainflue creator platform
+    Provides comprehensive security management for the IA Chérie creator platform
     with AI-powered threat detection, vulnerability scanning, and automated incident response.
     """
     

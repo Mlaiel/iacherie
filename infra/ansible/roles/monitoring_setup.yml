@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Monitoring Setup Ansible Role
+# IA Chérie Infrastructure Module - Monitoring Setup Ansible Role
 # ==============================================================
 # 
-# Enterprise-grade monitoring setup for Ainflue platform
+# Enterprise-grade monitoring setup for IA Chérie platform
 # Prometheus, Grafana, Jaeger, and comprehensive observability
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,11 +21,11 @@
 # IA Prompt Engineer: AI provider monitoring, prompt performance tracking
 
 ---
-- name: "Monitoring Setup - Ainflue Platform"
+- name: "Monitoring Setup - IA Chérie Platform"
   hosts: monitoring
   become: yes
   vars:
-    project_name: "ainflue"
+    project_name: "iacherie"
     environment: "{{ env | default('dev') }}"
     monitoring_user: "monitoring"
     
@@ -57,8 +57,8 @@
     
     # Alert Configuration
     alert_recipients:
-      - "admin@ainflue.com"
-      - "devops@ainflue.com"
+      - "admin@iacherie.com"
+      - "devops@iacherie.com"
     
     slack_webhook_url: "{{ slack_webhook | default('') }}"
     
@@ -70,15 +70,15 @@
       - job_name: "node-exporter"
         static_configs:
           - targets: ["localhost:9100"]
-      - job_name: "ainflue-api"
+      - job_name: "iacherie-api"
         static_configs:
           - targets: ["localhost:8000"]
         metrics_path: "/metrics"
-      - job_name: "ainflue-ai"
+      - job_name: "iacherie-ai"
         static_configs:
           - targets: ["localhost:8001"]
         metrics_path: "/metrics"
-      - job_name: "ainflue-media"
+      - job_name: "iacherie-media"
         static_configs:
           - targets: ["localhost:8003"]
         metrics_path: "/metrics"
@@ -228,14 +228,14 @@
     - name: "Configure Prometheus"
       copy:
         content: |
-          # Ainflue Prometheus Configuration
+          # IA Chérie Prometheus Configuration
           # Enterprise monitoring for AI-powered creator platform
           
           global:
             scrape_interval: 15s
             evaluation_interval: 15s
             external_labels:
-              cluster: 'ainflue-{{ environment }}'
+              cluster: 'iacherie-{{ environment }}'
               environment: '{{ environment }}'
           
           rule_files:
@@ -262,20 +262,20 @@
           {% endfor %}
           
             # AI/ML Specific Monitoring
-            - job_name: 'ainflue-ml-models'
+            - job_name: 'iacherie-ml-models'
               static_configs:
                 - targets: ['localhost:8002']
               metrics_path: '/model-metrics'
               scrape_interval: 30s
               
-            - job_name: 'ainflue-ai-providers'
+            - job_name: 'iacherie-ai-providers'
               static_configs:
                 - targets: ['localhost:8010']
               metrics_path: '/ai-metrics'
               scrape_interval: 60s
               
             # Media Processing Monitoring
-            - job_name: 'ainflue-media-processor'
+            - job_name: 'iacherie-media-processor'
               static_configs:
                 - targets: ['localhost:8004']
               metrics_path: '/media-metrics'
@@ -321,11 +321,11 @@
     - name: "Configure Prometheus alert rules"
       copy:
         content: |
-          # Ainflue Alert Rules
+          # IA Chérie Alert Rules
           # Enterprise alerting for AI creator platform
           
           groups:
-            - name: ainflue.rules
+            - name: iacherie.rules
               rules:
                 # Infrastructure Alerts
                 - alert: HighCPUUsage
@@ -451,7 +451,7 @@
                   annotations:
                     summary: "High media processing failure rate"
                     description: "Media processing failure rate is above 10%"
-        dest: "/etc/prometheus/alerts/ainflue.yml"
+        dest: "/etc/prometheus/alerts/iacherie.yml"
         owner: "{{ monitoring_user }}"
         group: "{{ monitoring_user }}"
         mode: '0644'
@@ -460,12 +460,12 @@
     - name: "Configure Alertmanager"
       copy:
         content: |
-          # Ainflue Alertmanager Configuration
+          # IA Chérie Alertmanager Configuration
           # Enterprise alerting and notification
           
           global:
             smtp_smarthost: 'localhost:587'
-            smtp_from: 'alerts@ainflue.com'
+            smtp_from: 'alerts@iacherie.com'
             
           route:
             group_by: ['alertname', 'cluster', 'service']
@@ -493,7 +493,7 @@
             - name: 'default-receiver'
               email_configs:
                 - to: '{{ alert_recipients | join(",") }}'
-                  subject: '[Ainflue {{ environment | upper }}] Alert: {{ .GroupLabels.alertname }}'
+                  subject: '[IA Chérie {{ environment | upper }}] Alert: {{ .GroupLabels.alertname }}'
                   body: |
                     {{ range .Alerts }}
                     Alert: {{ .Annotations.summary }}
@@ -505,7 +505,7 @@
             - name: 'critical-alerts'
               email_configs:
                 - to: '{{ alert_recipients | join(",") }}'
-                  subject: '[CRITICAL] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  subject: '[CRITICAL] IA Chérie {{ environment | upper }}: {{ .GroupLabels.alertname }}'
                   body: |
                     CRITICAL ALERT TRIGGERED
                     
@@ -519,7 +519,7 @@
               slack_configs:
                 - api_url: '{{ slack_webhook_url }}'
                   channel: '#alerts-critical'
-                  title: '[CRITICAL] Ainflue {{ environment | upper }}'
+                  title: '[CRITICAL] IA Chérie {{ environment | upper }}'
                   text: |
                     {{ range .Alerts }}
                     *Alert:* {{ .Annotations.summary }}
@@ -531,18 +531,18 @@
             
             - name: 'ai-team'
               email_configs:
-                - to: 'ai-team@ainflue.com'
-                  subject: '[AI Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                - to: 'ai-team@iacherie.com'
+                  subject: '[AI Alert] IA Chérie {{ environment | upper }}: {{ .GroupLabels.alertname }}'
             
             - name: 'dba-team'
               email_configs:
-                - to: 'dba-team@ainflue.com'
-                  subject: '[Database Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                - to: 'dba-team@iacherie.com'
+                  subject: '[Database Alert] IA Chérie {{ environment | upper }}: {{ .GroupLabels.alertname }}'
             
             - name: 'devops-team'
               email_configs:
-                - to: 'devops-team@ainflue.com'
-                  subject: '[Infrastructure Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                - to: 'devops-team@iacherie.com'
+                  subject: '[Infrastructure Alert] IA Chérie {{ environment | upper }}: {{ .GroupLabels.alertname }}'
           
           inhibit_rules:
             - source_match:
@@ -559,7 +559,7 @@
     - name: "Configure Grafana"
       copy:
         content: |
-          # Ainflue Grafana Configuration
+          # IA Chérie Grafana Configuration
           
           [server]
           protocol = http
@@ -725,7 +725,7 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Monitoring Health Check
+          # IA Chérie Monitoring Health Check
           # Verify all monitoring services are running
           
           HEALTH_LOG="/var/log/monitoring/health-check.log"

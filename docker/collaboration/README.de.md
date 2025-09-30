@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das Kollaborationsdienste-Modul bietet enterprise-taugliche, KI-gestützte Kollaborations-Matching und Projekt-Orchestrierung für die Ainflue-Plattform. Dieses Modul ermöglicht es Kreativen, sich zu entdecken, zu verbinden und durch intelligente Matching-Algorithmen und automatisierte Workflow-Verwaltung zusammenzuarbeiten.
+Das Kollaborationsdienste-Modul bietet enterprise-taugliche, KI-gestützte Kollaborations-Matching und Projekt-Orchestrierung für die IA Chérie-Plattform. Dieses Modul ermöglicht es Kreativen, sich zu entdecken, zu verbinden und durch intelligente Matching-Algorithmen und automatisierte Workflow-Verwaltung zusammenzuarbeiten.
 
 ## Architektur
 
@@ -44,8 +44,8 @@ Dieses Modul enthält 11 spezialisierte Docker-Dienste für Kollaborationsverwal
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/collaboration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/collaboration
 
 # Kollaborationsdienste starten
 docker-compose -f docker-compose.collaboration.yml up -d
@@ -170,4 +170,4 @@ Copyright (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.
 
 Für technischen Support und Fragen:
 - E-Mail: mlaiel@live.de
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues: https://github.com/Mlaiel/IA Chérie/issues

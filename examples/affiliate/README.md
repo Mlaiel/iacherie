@@ -1,5 +1,5 @@
 # 🚀 Affiliate Examples - Advanced Partnership & Revenue Systems
-**Ainflue Platform - Comprehensive Affiliate Marketing Examples**
+**IA Chérie Platform - Comprehensive Affiliate Marketing Examples**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise Overview
 
-The **Affiliate Examples** module showcases comprehensive affiliate marketing, partnership management, and revenue sharing implementations for the Ainflue platform, specifically designed for multi-format content creators (Musicians, Bloggers, Photographers, Influencers, Comedians). This ultra-advanced, production-ready system demonstrates enterprise-grade affiliate tracking, commission management, compliance reporting, and cross-platform partnership integration with real-world scenarios and best practices.
+The **Affiliate Examples** module showcases comprehensive affiliate marketing, partnership management, and revenue sharing implementations for the IA Chérie platform, specifically designed for multi-format content creators (Musicians, Bloggers, Photographers, Influencers, Comedians). This ultra-advanced, production-ready system demonstrates enterprise-grade affiliate tracking, commission management, compliance reporting, and cross-platform partnership integration with real-world scenarios and best practices.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -585,7 +585,7 @@ print(f"Cross-platform campaign created for: {campaign_result['profile']['name']
 version: '3.8'
 services:
   affiliate-examples:
-    image: ainflue/affiliate-examples:latest
+    image: iacherie/affiliate-examples:latest
     deploy:
       replicas: 3
       resources:
@@ -598,13 +598,13 @@ services:
     environment:
       - DATABASE_URL=postgresql://affiliate-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - API_GATEWAY=https://api.ainflue.com
-      - TRACKING_SERVICE=https://tracking.ainflue.com
+      - API_GATEWAY=https://api.iacherie.com
+      - TRACKING_SERVICE=https://tracking.iacherie.com
     ports:
       - "8080:8080"
       
   affiliate-analytics:
-    image: ainflue/affiliate-analytics:latest
+    image: iacherie/affiliate-analytics:latest
     deploy:
       replicas: 2
       resources:
@@ -613,7 +613,7 @@ services:
           memory: 16G
     environment:
       - ANALYTICS_DB=clickhouse://analytics-db:8123
-      - ML_MODELS=https://ml.ainflue.com
+      - ML_MODELS=https://ml.iacherie.com
     ports:
       - "8081:8081"
 ```
@@ -657,7 +657,7 @@ affiliate_api_examples = {
 
 ## 📝 **Summary**
 
-The Affiliate Examples module represents the pinnacle of affiliate marketing system design for the Ainflue platform, specifically crafted for multi-format content creators. With comprehensive examples, advanced tracking capabilities, and enterprise-grade compliance features, this system ensures maximum revenue generation, regulatory compliance, and performance optimization for all creator affiliate activities while providing deep insights into partnership success metrics and revenue optimization opportunities.
+The Affiliate Examples module represents the pinnacle of affiliate marketing system design for the IA Chérie platform, specifically crafted for multi-format content creators. With comprehensive examples, advanced tracking capabilities, and enterprise-grade compliance features, this system ensures maximum revenue generation, regulatory compliance, and performance optimization for all creator affiliate activities while providing deep insights into partnership success metrics and revenue optimization opportunities.
 
 **🎯 Mission:** Deliver the world's most comprehensive affiliate marketing examples for content creators, enabling optimal revenue generation, partnership management, and compliance across the entire creator ecosystem.
 

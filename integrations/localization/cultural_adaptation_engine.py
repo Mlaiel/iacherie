@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Cultural adaptation engine enterprise avec behavioral psychology,
 cross-cultural communication optimization et cultural sensitivity detection.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Behavioral psychology analysis pour adaptation contenu créateur
 - Cultural sensitivity detection automatique
 - Regional preference optimization par machine learning

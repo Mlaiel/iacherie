@@ -19,7 +19,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Advanced multimodal prompt techniques et format optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chérie Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 
@@ -112,7 +112,7 @@ class CrossModalAlignment:
     modal2_id: str
     alignment_type: str
     alignment_score: float
-    temporal_alignment: Optional[List[Tuple[float, float]]]
+    temporal_alignment: Optional[List[tuple[float, float]]]
     semantic_alignment: Dict[str, Any]
     spatial_alignment: Optional[Dict[str, Any]]
     confidence_score: float

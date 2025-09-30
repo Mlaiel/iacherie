@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Database Configuration - QUANTUM GRADE DBA ARCHITECTURE
+"""IA Chérie Enterprise Database Configuration - QUANTUM GRADE DBA ARCHITECTURE
 ===========================================================================
 
 🗄️ ENTERPRISE DATABASE FEATURES:
@@ -118,24 +118,24 @@ class DatabaseSettings(BaseSettings):
     primary_db_password: str = os.getenv("DB_PASSWORD", "ainflue_enterprise_secure_2025")
     
     # Read Replica Cluster
-    replica_db_hosts: List[str] = ["replica1.ainflue.local", "replica2.ainflue.local"]
+    replica_db_hosts: List[str] = ["replica1.iacherie.local", "replica2.iacherie.local"]
     replica_db_port: int = 5432
     replica_lag_tolerance: float = 2.0  # seconds
     
     # Analytics Database (TimescaleDB)
-    analytics_db_host: str = "analytics.ainflue.local"
+    analytics_db_host: str = "analytics.iacherie.local"
     analytics_db_port: int = 5432
     analytics_db_name: str = "ainflue_analytics"
     analytics_retention_days: int = 365
     
     # MongoDB for Content Storage
-    mongodb_host: str = "mongodb.ainflue.local"
+    mongodb_host: str = "mongodb.iacherie.local"
     mongodb_port: int = 27017
     mongodb_database: str = "ainflue_content"
-    mongodb_replica_set: str = "ainflue-rs0"
+    mongodb_replica_set: str = "iacherie-rs0"
     
     # Redis for Caching & Sessions
-    redis_host: str = "redis.ainflue.local"
+    redis_host: str = "redis.iacherie.local"
     redis_port: int = 6379
     redis_cluster_enabled: bool = True
     redis_cluster_nodes: List[str] = ["redis1:6379", "redis2:6379", "redis3:6379"]
@@ -159,8 +159,8 @@ class DatabaseSettings(BaseSettings):
     
     # Security Settings
     ssl_enabled: bool = True
-    ssl_cert_path: Optional[str] = "/etc/ssl/certs/ainflue-db.crt"
-    ssl_key_path: Optional[str] = "/etc/ssl/private/ainflue-db.key"
+    ssl_cert_path: Optional[str] = "/etc/ssl/certs/iacherie-db.crt"
+    ssl_key_path: Optional[str] = "/etc/ssl/private/iacherie-db.key"
     ssl_ca_path: Optional[str] = "/etc/ssl/certs/ca-certificates.crt"
     encryption_at_rest: bool = True
     audit_logging: bool = True
@@ -421,7 +421,7 @@ def get_database_config() -> dict:
 db_settings = DatabaseSettings()
 
 class DatabaseConfiguration:
-    """Database configuration manager for Ainflue platform"""
+    """Database configuration manager for IA Chérie platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

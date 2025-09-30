@@ -1,5 +1,5 @@
 """
-Platform Analyzer for Ainflue Distribution Platform
+Platform Analyzer for IA Chérie Distribution Platform
 
 Advanced platform-specific analysis system that provides deep insights into
 platform performance, algorithm compatibility, and optimization opportunities

@@ -1,5 +1,5 @@
 """
-Engagement Multiplier for Ainflue Distribution Platform
+Engagement Multiplier for IA Chérie Distribution Platform
 
 Advanced engagement optimization engine that maximizes content engagement
 through AI-powered tactics, psychological triggers, and behavioral optimization

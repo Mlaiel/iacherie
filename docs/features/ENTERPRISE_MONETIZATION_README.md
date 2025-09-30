@@ -76,7 +76,7 @@ pip install scikit-learn pandas numpy aiohttp
 ```bash
 # 1. Clone the repository
 git clone <repository-url>
-cd Ainflue
+cd IA Chérie
 
 # 2. Install dependencies
 pip install -r requirements.txt

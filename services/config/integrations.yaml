@@ -13,7 +13,7 @@ youtube:
   oauth:
     client_id: "${YOUTUBE_CLIENT_ID}"
     client_secret: "${YOUTUBE_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/youtube/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/youtube/callback"
     scopes:
       - "https://www.googleapis.com/auth/youtube.readonly"
       - "https://www.googleapis.com/auth/youtube.upload"
@@ -49,7 +49,7 @@ youtube:
     daily_quota_limit: 1000000
     
   webhook:
-    url: "https://api.ainflue.com/webhooks/youtube"
+    url: "https://api.iacherie.com/webhooks/youtube"
     events:
       - "video_uploaded"
       - "video_processed"
@@ -64,7 +64,7 @@ spotify:
   oauth:
     client_id: "${SPOTIFY_CLIENT_ID}"
     client_secret: "${SPOTIFY_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/spotify/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/spotify/callback"
     scopes:
       - "user-read-private"
       - "user-read-email"
@@ -107,7 +107,7 @@ instagram:
   oauth:
     client_id: "${INSTAGRAM_CLIENT_ID}"
     client_secret: "${INSTAGRAM_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/instagram/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/instagram/callback"
     scopes:
       - "instagram_basic"
       - "instagram_content_publish"
@@ -162,7 +162,7 @@ tiktok:
   oauth:
     client_key: "${TIKTOK_CLIENT_KEY}"
     client_secret: "${TIKTOK_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/tiktok/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/tiktok/callback"
     scopes:
       - "user.info.basic"
       - "video.list"
@@ -252,7 +252,7 @@ linkedin:
   oauth:
     client_id: "${LINKEDIN_CLIENT_ID}"
     client_secret: "${LINKEDIN_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/linkedin/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/linkedin/callback"
     scopes:
       - "r_liteprofile"
       - "r_emailaddress"
@@ -294,7 +294,7 @@ facebook:
   oauth:
     app_id: "${FACEBOOK_APP_ID}"
     app_secret: "${FACEBOOK_APP_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/facebook/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/facebook/callback"
     scopes:
       - "email"
       - "public_profile"
@@ -325,7 +325,7 @@ twitch:
   oauth:
     client_id: "${TWITCH_CLIENT_ID}"
     client_secret: "${TWITCH_CLIENT_SECRET}"
-    redirect_uri: "https://creator.ainflue.com/auth/twitch/callback"
+    redirect_uri: "https://creator.iacherie.com/auth/twitch/callback"
     scopes:
       - "user:read:email"
       - "channel:read:stream_key"

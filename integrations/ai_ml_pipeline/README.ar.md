@@ -1,4 +1,4 @@
-# بنية خط أنابيب الذكاء الاصطناعي/التعلم الآلي - Ainflue Enterprise
+# بنية خط أنابيب الذكاء الاصطناعي/التعلم الآلي - IA Chérie Enterprise
 
 نظام خط أنابيب الذكاء الاصطناعي/التعلم الآلي للمؤسسات لـ 53 وكيل ذكي يخدم منصة المبدعين العالمية مع أتمتة MLOps كاملة وتحسين GPU.
 
@@ -60,7 +60,7 @@
 16. **مدير موارد GPU** - تحسين الأجهزة مع التوزيع الذكي لأعباء العمل
 17. **محلل أداء النماذج** - تحليل الأداء والتحسين مع المقارنة المرجعية
 
-## 🎯 تكامل منطق أعمال Ainflue
+## 🎯 تكامل منطق أعمال IA Chérie
 
 ### سير عمل الذكاء الاصطناعي/التعلم الآلي المرتكز على المبدعين
 ```
@@ -195,8 +195,8 @@ NVLink/NVSwitch للتواصل متعدد GPU
 ### التثبيت والإعداد
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # تثبيت التبعيات
 pip install -r requirements-ml.txt
@@ -218,7 +218,7 @@ from integrations.ai_ml_pipeline import create_complete_ai_ml_pipeline
 async def main():
     # تحميل التكوين
     config = {
-        'database_url': 'postgresql://localhost/ainflue',
+        'database_url': 'postgresql://localhost/iacherie',
         'redis_url': 'redis://localhost:6379',
         'gpu_enabled': True,
         'monitoring_enabled': True
@@ -273,15 +273,15 @@ if __name__ == "__main__":
 
 ### الدعم التقني
 - **البريد الإلكتروني**: mlaiel@live.de
-- **الوثائق**: [مستندات الذكاء الاصطناعي/التعلم الآلي Ainflue](https://docs.ainflue.com/ai-ml)
+- **الوثائق**: [مستندات الذكاء الاصطناعي/التعلم الآلي IA Chérie](https://docs.iacherie.com/ai-ml)
 - **تتبع المشاكل**: نظام دعم المؤسسة الداخلي
 
 ### الترخيص المؤسسي
 للترخيص المؤسسي أو التنفيذ المخصص أو استفسارات الشراكة:
 - **الاتصال**: mlaiel@live.de
-- **الموضوع**: "ترخيص مؤسسي للذكاء الاصطناعي/التعلم الآلي Ainflue"
+- **الموضوع**: "ترخيص مؤسسي للذكاء الاصطناعي/التعلم الآلي IA Chérie"
 
 ---
 
 **© 2025 فاهد ملائيل - جميع الحقوق محفوظة**  
-**بنية خط أنابيب الذكاء الاصطناعي/التعلم الآلي Ainflue - إصدار المؤسسة v3.0**
+**بنية خط أنابيب الذكاء الاصطناعي/التعلم الآلي IA Chérie - إصدار المؤسسة v3.0**

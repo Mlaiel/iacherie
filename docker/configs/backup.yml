@@ -13,7 +13,7 @@ retention:
   
 destinations:
   s3:
-    bucket: ainflue-backups
+    bucket: iacherie-backups
     region: us-east-1
   azure:
     container: backups

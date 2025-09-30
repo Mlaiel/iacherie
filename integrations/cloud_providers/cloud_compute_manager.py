@@ -7,7 +7,7 @@ AWS EC2, Azure VMs, GCP Compute Engine, DigitalOcean Droplets, and more.
 
 This module provides unified compute resource management, intelligent
 workload placement, auto-scaling, and cost optimization across multiple
-cloud providers for the Ainflue platform.
+cloud providers for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -561,7 +561,7 @@ class MultiCloudComputeManager:
         self,
         workload_type: WorkloadType,
         requirements: Dict[str, Any]
-    ) -> Tuple[CloudProvider, str, InstanceType]:
+    ) -> tuple[CloudProvider, str, InstanceType]:
         """Intelligently place workload based on requirements and costs.
         
         Args:
@@ -894,7 +894,7 @@ class MultiCloudComputeManager:
         }
         return type_mapping.get(instance_type, 't3.medium')
     
-    def _get_aws_instance_specs(self, instance_type: str) -> Tuple[int, int]:
+    def _get_aws_instance_specs(self, instance_type: str) -> tuple[int, int]:
         """Get vCPUs and memory for AWS instance type."""
         specs = {
             't3.micro': (2, 1),
@@ -989,7 +989,7 @@ async def example_usage():
         
         # Create optimized instance
         instance = await manager.create_instance(
-            name="ainflue-ai-inference-001",
+            name="iacherie-ai-inference-001",
             instance_type=instance_type,
             provider=provider,
             region=region,

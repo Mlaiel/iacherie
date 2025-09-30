@@ -224,8 +224,8 @@ SQLAlchemy 2.0+
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -240,7 +240,7 @@ python api/enterprise_monetization_api.py
 ### Konfiguration
 ```python
 # Umgebungsvariablen
-MONETIZATION_DATABASE_URL=postgresql://user:pass@localhost/ainflue
+MONETIZATION_DATABASE_URL=postgresql://user:pass@localhost/iacherie
 MONETIZATION_REDIS_URL=redis://localhost:6379
 MONETIZATION_SECRET_KEY=your-secret-key
 STRIPE_API_KEY=your-stripe-key

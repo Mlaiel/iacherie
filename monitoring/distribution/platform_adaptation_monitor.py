@@ -1,6 +1,6 @@
 """
 🌍 MONITORING DISTRIBUTION - Platform Adaptation Monitor
-Advanced multi-platform content adaptation monitoring for Ainflue ecosystem
+Advanced multi-platform content adaptation monitoring for IA Chérie ecosystem
 Backend Senior + Microservices Architect Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -127,7 +127,7 @@ class AdaptationResult:
 
 class PlatformAdaptationMonitor:
     """
-    🌍 Advanced Platform Adaptation Monitor for Ainflue Distribution
+    🌍 Advanced Platform Adaptation Monitor for IA Chérie Distribution
     
     Multi-platform content adaptation with:
     - Real-time platform requirement monitoring
@@ -568,7 +568,7 @@ class PlatformAdaptationMonitor:
             # Create result
             result = AdaptationResult(
                 task_id=task.task_id,
-                adapted_content_url=f"https://cdn.ainflue.com/adapted/{task.content_id}_{task.target_platform.value}",
+                adapted_content_url=f"https://cdn.iacherie.com/adapted/{task.content_id}_{task.target_platform.value}",
                 adaptation_time_seconds=4.0,  # Simulated time
                 quality_metrics=quality_metrics,
                 file_size_reduction_percentage=25.0,

@@ -262,7 +262,7 @@ class CreatorEarningsService:
         """Initialize platform and payment processor fees."""
         # Platform fees (as percentage)
         self.platform_fee_rates = {
-            "ainflue": Decimal("5.0"),  # 5%
+            "iacherie": Decimal("5.0"),  # 5%
             "youtube": Decimal("30.0"),  # 30%
             "spotify": Decimal("30.0"),  # 30%
             "instagram": Decimal("30.0"),  # 30%
@@ -290,7 +290,7 @@ class CreatorEarningsService:
         gross_amount: Decimal,
         currency: Currency,
         tax_jurisdiction: TaxJurisdiction,
-        source_platform: str = "ainflue",
+        source_platform: str = "iacherie",
         payment_method: str = "stripe",
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
@@ -721,7 +721,7 @@ class CreatorEarningsService:
                     gross_amount=Decimal(str(earning_data["gross_amount"])),
                     currency=Currency(earning_data["currency"]),
                     tax_jurisdiction=TaxJurisdiction(earning_data["tax_jurisdiction"]),
-                    source_platform=earning_data.get("source_platform", "ainflue"),
+                    source_platform=earning_data.get("source_platform", "iacherie"),
                     payment_method=earning_data.get("payment_method", "stripe"),
                     metadata=earning_data.get("metadata", {})
                 )
@@ -835,7 +835,7 @@ async def example_usage():
     earnings = [
         (EarningType.CONTENT_SALE, Decimal("29.99"), Currency.USD, TaxJurisdiction.US, "youtube"),
         (EarningType.SUBSCRIPTION, Decimal("9.99"), Currency.USD, TaxJurisdiction.US, "patreon"),
-        (EarningType.LICENSING, Decimal("150.00"), Currency.EUR, TaxJurisdiction.DE, "ainflue"),
+        (EarningType.LICENSING, Decimal("150.00"), Currency.EUR, TaxJurisdiction.DE, "iacherie"),
         (EarningType.TIP_DONATION, Decimal("5.00"), Currency.USD, TaxJurisdiction.US, "twitch"),
         (EarningType.SPONSORSHIP, Decimal("500.00"), Currency.USD, TaxJurisdiction.US, "instagram"),
     ]

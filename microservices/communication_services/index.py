@@ -2,7 +2,7 @@
 Communication Services Module Entry Point
 =========================================
 
-Main entry point for all communication and messaging services in the Ainflue platform.
+Main entry point for all communication and messaging services in the IA Chérie platform.
 Provides orchestration and coordination for enterprise-grade communication systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +21,7 @@ class CommunicationServicesOrchestrator:
     Enterprise Communication Services Orchestrator
     
     Coordinates all communication services for optimal performance
-    and enterprise-grade reliability across the Ainflue platform.
+    and enterprise-grade reliability across the IA Chérie platform.
     """
     
     def __init__(self):

@@ -1,4 +1,4 @@
-# 🎯 Plateforme Ainflue - Monitoring Core Enterprise
+# 🎯 Plateforme IA Chérie - Monitoring Core Enterprise
 
 ## 📋 **Infrastructure Core de Monitoring Enterprise**
 
@@ -27,7 +27,7 @@
 
 ---
 
-## 🎯 **LOGIQUE MÉTIER AINFLUE**
+## 🎯 **LOGIQUE MÉTIER IACHERIE**
 
 **Pipeline Creator Economy :** Créateurs multi-format → Traitement IA → Protection IP → Monétisation → Collaboration & Gamification → SEO Professionnel → Distribution Multi-plateformes
 
@@ -223,4 +223,4 @@ Pour licence entreprise, support technique, ou implémentations personnalisées 
 
 ---
 
-*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire Ainflue*
+*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire IA Chérie*

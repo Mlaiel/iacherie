@@ -1,4 +1,4 @@
-"""🔧 API Breaking Changes Detector - Ainflue Platform
+"""🔧 API Breaking Changes Detector - IA Chérie Platform
 ================================================================
 Expert: API_ARCHITECT + QUALITY_ENGINEER
 Created: 2025-01-XX

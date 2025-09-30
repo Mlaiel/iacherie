@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Search Engines Integration Module
+IA Chérie Platform - Search Engines Integration Module
 Enterprise-grade search engine APIs for SEO optimization and content discovery
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -124,7 +124,7 @@ class KeywordData:
     keyword_difficulty: float = 0.0
     cost_per_click: float = 0.0
     competition_level: str = "unknown"  # low, medium, high
-    trend_data: List[Tuple[str, int]] = field(default_factory=list)  # (date, volume)
+    trend_data: List[tuple[str, int]] = field(default_factory=list)  # (date, volume)
     related_keywords: List[str] = field(default_factory=list)
     long_tail_keywords: List[str] = field(default_factory=list)
     questions: List[str] = field(default_factory=list)
@@ -885,10 +885,10 @@ def create_search_engine_manager(config: Dict[str, Any]) -> SearchEngineManager:
     """Create configured search engine manager"""
     return SearchEngineManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def ainflue_seo_optimization_workflow(content_topic: str, target_keywords: List[str], domain: str) -> Dict[str, Any]:
     """
-    Complete SEO optimization workflow for Ainflue creators
+    Complete SEO optimization workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -953,7 +953,7 @@ if __name__ == "__main__":
         
         test_topic = "AI content creation"
         test_keywords = ["ai content generator", "automated content creation", "ai writing tools"]
-        test_domain = "ainflue.com"
+        test_domain = "iacherie.com"
         
         result = await ainflue_seo_optimization_workflow(test_topic, test_keywords, test_domain)
         
@@ -964,5 +964,5 @@ if __name__ == "__main__":
     # asyncio.run(test_search_engines())
     
     print("✅ Search Engines Integration Module loaded successfully")
-    print("🔍 Enterprise-grade SEO optimization for Ainflue creators")
+    print("🔍 Enterprise-grade SEO optimization for IA Chérie creators")
     print("📈 Keyword research, ranking monitoring, and content optimization tools ready")

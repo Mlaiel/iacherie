@@ -1,6 +1,6 @@
 """Analytics Implementation - Enterprise Business Intelligence & Performance Analytics
 
-Advanced analytics system for Ainflue creator economy platform providing
+Advanced analytics system for IA Chérie creator economy platform providing
 comprehensive business intelligence, performance metrics, and predictive insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -150,7 +150,7 @@ class Dashboard:
 
 class AnalyticsImplementation:
     """
-    Enterprise Analytics Implementation for Ainflue Creator Economy Platform
+    Enterprise Analytics Implementation for IA Chérie Creator Economy Platform
     
     Comprehensive business intelligence system providing real-time analytics,
     performance monitoring, trend analysis, and predictive insights.
@@ -546,7 +546,7 @@ class AnalyticsImplementation:
     # Private helper methods
     
     def _initialize_core_metrics(self):
-        """Initialize core Ainflue platform metrics"""
+        """Initialize core IA Chérie platform metrics"""
         
         core_metrics = [
             # Content Performance

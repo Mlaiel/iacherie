@@ -3,7 +3,7 @@
 ✅ Configuration Validation Schema - Creator Economy Enterprise
 ===============================================================
 
-Schémas de validation pour toutes les configurations monitoring Creator Economy Ainflue.
+Schémas de validation pour toutes les configurations monitoring Creator Economy IA Chérie.
 Validation JSON Schema, règles métier et vérifications de cohérence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -39,7 +39,7 @@ import yaml
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("ainflue.config.validation")
+logger = logging.getLogger("iacherie.config.validation")
 
 
 class ConfigType(str, Enum):
@@ -715,7 +715,7 @@ class ConfigValidationSchema:
             job_names.add(job_name)
             
             # Vérification convention nommage Creator Economy
-            if not job_name.startswith('creator-') and not job_name.startswith('ainflue-'):
+            if not job_name.startswith('creator-') and not job_name.startswith('iacherie-'):
                 warnings.append(f"Job name '{job_name}' doesn't follow naming convention")
         
         return {'valid': len(errors) == 0, 'errors': errors, 'warnings': warnings}
@@ -761,10 +761,10 @@ class ConfigValidationSchema:
         for job_config in scrape_configs:
             job_name = job_config.get('job_name', '')
             
-            # Les jobs Creator Economy doivent exposer des métriques ainflue_*
+            # Les jobs Creator Economy doivent exposer des métriques iacherie_*
             if job_name.startswith('creator-'):
-                if 'ainflue_' not in str(job_config):
-                    warnings.append(f"Creator job '{job_name}' should expose ainflue_* metrics")
+                if 'iacherie_' not in str(job_config):
+                    warnings.append(f"Creator job '{job_name}' should expose iacherie_* metrics")
         
         return {'valid': True, 'errors': [], 'warnings': warnings}
     

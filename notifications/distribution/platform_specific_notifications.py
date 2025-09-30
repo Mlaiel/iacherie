@@ -1,6 +1,6 @@
 """
 🎯 PLATFORM SPECIFIC NOTIFICATIONS
-Ainflue Platform - Platform-Specific Alert System
+IA Chérie Platform - Platform-Specific Alert System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

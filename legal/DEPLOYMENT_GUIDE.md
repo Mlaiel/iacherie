@@ -93,7 +93,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-core
-    image: ainflue/legal-core:2.0.0
+    image: iacherie/legal-core:2.0.0
     restart: unless-stopped
     replicas: 3
     environment:
@@ -119,7 +119,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-analytics
-    image: ainflue/legal-analytics:2.0.0
+    image: iacherie/legal-analytics:2.0.0
     restart: unless-stopped
     environment:
       - ML_MODEL_PATH=/app/models
@@ -138,7 +138,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-enforcement
-    image: ainflue/legal-enforcement:2.0.0
+    image: iacherie/legal-enforcement:2.0.0
     restart: unless-stopped
     environment:
       - NOTIFICATION_SERVICE_URL=${NOTIFICATION_SERVICE_URL}
@@ -154,7 +154,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-international
-    image: ainflue/legal-international:2.0.0
+    image: iacherie/legal-international:2.0.0
     restart: unless-stopped
     environment:
       - JURISDICTION_DATA_PATH=/app/jurisdictions
@@ -168,7 +168,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-blockchain
-    image: ainflue/legal-blockchain:2.0.0
+    image: iacherie/legal-blockchain:2.0.0
     restart: unless-stopped
     environment:
       - BLOCKCHAIN_ENDPOINT=${BLOCKCHAIN_ENDPOINT}
@@ -184,7 +184,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-audio
-    image: ainflue/legal-audio:2.0.0
+    image: iacherie/legal-audio:2.0.0
     restart: unless-stopped
     environment:
       - AUDIO_PROCESSING_PATH=/app/audio
@@ -200,7 +200,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.legal-monitoring
-    image: ainflue/legal-monitoring:2.0.0
+    image: iacherie/legal-monitoring:2.0.0
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -364,7 +364,7 @@ spec:
     spec:
       containers:
       - name: legal-core
-        image: ainflue/legal-core:2.0.0
+        image: iacherie/legal-core:2.0.0
         ports:
         - containerPort: 8000
         env:
@@ -528,7 +528,7 @@ http {
     # SSL Configuration
     server {
         listen 443 ssl http2;
-        server_name legal.ainflue.com;
+        server_name legal.iacherie.com;
 
         ssl_certificate /etc/nginx/ssl/cert.pem;
         ssl_certificate_key /etc/nginx/ssl/key.pem;
@@ -566,7 +566,7 @@ http {
     # HTTP to HTTPS Redirect
     server {
         listen 80;
-        server_name legal.ainflue.com;
+        server_name legal.iacherie.com;
         return 301 https://$server_name$request_uri;
     }
 }
@@ -662,7 +662,7 @@ alerting:
 openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
     -keyout ssl/key.pem \
     -out ssl/cert.pem \
-    -subj "/C=US/ST=State/L=City/O=Organization/CN=legal.ainflue.com"
+    -subj "/C=US/ST=State/L=City/O=Organization/CN=legal.iacherie.com"
 
 # Set proper permissions
 chmod 600 ssl/key.pem

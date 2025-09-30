@@ -1,6 +1,6 @@
 # 🚀 Module de Distribution - Services Docker
 
-**Infrastructure de Distribution de la Plateforme Ainflue**
+**Infrastructure de Distribution de la Plateforme IA Chérie**
 
 Système de distribution de contenu multi-plateforme avec planification intelligente, adaptation de format et synchronisation cross-plateforme pour musiciens, blogueurs, photographes, influenceurs et comédiens.
 

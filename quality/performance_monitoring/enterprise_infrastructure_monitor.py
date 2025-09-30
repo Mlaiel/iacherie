@@ -425,7 +425,7 @@ class EnterpriseInfrastructureMonitor:
         now = datetime.now()
         
         try:
-            # Métriques business simulées pour Ainflue
+            # Métriques business simulées pour IA Chérie
             
             # Créateurs actifs
             active_creators = np.random.randint(450, 550)
@@ -546,7 +546,7 @@ class EnterpriseInfrastructureMonitor:
     def _check_services_health(self):
         """Vérification santé services enterprise"""
         try:
-            # Services Ainflue simulés
+            # Services IA Chérie simulés
             services = [
                 "api-gateway",
                 "content-processor", 

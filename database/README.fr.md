@@ -1,10 +1,10 @@
 # 🗄️ Module Base de Données - Gestion d'Entreprise des Bases de Données
 
-## Solution Avancée de Base de Données de Niveau Entreprise pour la Plateforme Ainflue
+## Solution Avancée de Base de Données de Niveau Entreprise pour la Plateforme IA Chérie
 
 ### 🎯 **Aperçu du Module**
 
-Le Module Base de Données fournit des capacités complètes de gestion de base de données de niveau entreprise pour la plateforme de protection et monétisation de contenu Ainflue, offrant une connectivité multi-bases de données, des analyses avancées, une gestion de la sécurité et une optimisation intelligente des requêtes.
+Le Module Base de Données fournit des capacités complètes de gestion de base de données de niveau entreprise pour la plateforme de protection et monétisation de contenu IA Chérie, offrant une connectivité multi-bases de données, des analyses avancées, une gestion de la sécurité et une optimisation intelligente des requêtes.
 
 ### 👥 **Spécialités de l'Équipe de Développement**
 
@@ -269,14 +269,14 @@ compliance_status = await security.check_gdpr_compliance()
 ## ⚠️ **Avis Légal**
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
-**Plateforme Ainflue - Module Base de Données d'Entreprise**
+**Plateforme IA Chérie - Module Base de Données d'Entreprise**
 
 Ce logiciel est protégé par le droit d'auteur international et contient une technologie propriétaire appartenant exclusivement à Fahed Mlaiel. L'utilisation non autorisée, la reproduction ou la distribution est strictement interdite et peut entraîner de lourdes sanctions civiles et pénales.
 
 **Pour demandes de licence :** mlaiel@live.de  
-**Pour rapports de sécurité :** security@ainflue.com  
-**Pour support entreprise :** enterprise@ainflue.com
+**Pour rapports de sécurité :** security@iacherie.com  
+**Pour support entreprise :** enterprise@iacherie.com
 
 ---
 
-**🚀 Découvrez la puissance de la gestion de base de données de niveau entreprise avec le Module Base de Données d'Ainflue - où la performance rencontre la sécurité à grande échelle.**
+**🚀 Découvrez la puissance de la gestion de base de données de niveau entreprise avec le Module Base de Données d'IA Chérie - où la performance rencontre la sécurité à grande échelle.**

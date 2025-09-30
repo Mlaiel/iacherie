@@ -224,4 +224,4 @@ Ce logiciel est la propriété de Fahed Mlaiel. L'utilisation commerciale est IN
 
 ---
 
-*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture enterprise propriétaire Ainflue*
+*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture enterprise propriétaire IA Chérie*

@@ -1,4 +1,4 @@
-# 📋 Schemas Module Checklist - Ainflue Platform
+# 📋 Schemas Module Checklist - IA Chérie Platform
 ================================================================
 
 ## 📋 Übersicht

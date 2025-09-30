@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Cache Storage Management for Multi-Cloud Infrastructure
@@ -359,7 +359,7 @@ class CacheStorageManager:
                 node_type = 'cache.m5.xlarge'
             
             cluster_params = {
-                'CacheClusterId': f"ainflue-{config.name}",
+                'CacheClusterId': f"iacherie-{config.name}",
                 'CacheNodeType': node_type,
                 'Engine': 'redis',
                 'NumCacheNodes': config.replication_factor,
@@ -368,7 +368,7 @@ class CacheStorageManager:
                 'Tags': [
                     {'Key': 'Name', 'Value': config.name},
                     {'Key': 'Environment', 'Value': self.config.get('environment', 'production')},
-                    {'Key': 'Application', 'Value': 'ainflue'}
+                    {'Key': 'Application', 'Value': 'iacherie'}
                 ]
             }
             
@@ -399,12 +399,12 @@ class CacheStorageManager:
                 'display_name': config.name,
                 'labels': {
                     'environment': self.config.get('environment', 'production'),
-                    'application': 'ainflue'
+                    'application': 'iacherie'
                 }
             }
             
             parent = f"projects/{project_id}/locations/{region}"
-            instance_id = f"ainflue-{config.name}"
+            instance_id = f"iacherie-{config.name}"
             
             operation = redis_client.create_instance(
                 parent=parent,
@@ -1050,11 +1050,11 @@ if __name__ == "__main__":
             "enabled": True,
             "region": "us-east-1",
             "security_groups": ["sg-12345678"],
-            "subnet_group": "ainflue-cache-subnet-group"
+            "subnet_group": "iacherie-cache-subnet-group"
         },
         "gcp": {
             "enabled": True,
-            "project_id": "ainflue-project",
+            "project_id": "iacherie-project",
             "region": "us-central1"
         },
         "redis": {

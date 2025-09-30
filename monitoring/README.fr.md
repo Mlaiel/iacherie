@@ -1,8 +1,8 @@
-# 📊 Plateforme Ainflue - Architecture de Surveillance Entreprise
+# 📊 Plateforme IA Chérie - Architecture de Surveillance Entreprise
 
 ## Aperçu
 
-Le système de surveillance d'entreprise de la plateforme Ainflue fournit une observabilité complète pour la création de contenu alimentée par l'IA, la protection et les flux de travail de monétisation. Cette architecture de surveillance prend en charge le traitement audio, la protection du contenu, l'appariement de collaboration, la gamification, l'optimisation SEO, la distribution et l'analyse sur plusieurs plateformes.
+Le système de surveillance d'entreprise de la plateforme IA Chérie fournit une observabilité complète pour la création de contenu alimentée par l'IA, la protection et les flux de travail de monétisation. Cette architecture de surveillance prend en charge le traitement audio, la protection du contenu, l'appariement de collaboration, la gamification, l'optimisation SEO, la distribution et l'analyse sur plusieurs plateformes.
 
 ## 🏗️ Composants d'Architecture
 
@@ -109,7 +109,7 @@ config = MonitoringConfig(
 
 ## 🎯 Surveillance Flux de Travail Métier
 
-Le système de surveillance couvre le flux de travail métier Ainflue complet :
+Le système de surveillance couvre le flux de travail métier IA Chérie complet :
 
 ```
 Upload Utilisateur → Traitement Audio → Protection Contenu → Optimisation SEO 
@@ -149,7 +149,7 @@ Chaque étape est surveillée avec métriques, alertes et tableaux de bord spéc
 Pour contributions entreprise et personnalisations, contactez :
 - **Auteur** : Fahed Mlaiel
 - **E-mail** : mlaiel@live.de
-- **Plateforme** : Ainflue Enterprise Monitoring
+- **Plateforme** : IA Chérie Enterprise Monitoring
 
 ## 📄 Licence
 
@@ -158,5 +158,5 @@ Architecture de Surveillance Entreprise Propriétaire
 
 ---
 
-**Surveillance Entreprise Plateforme Ainflue**  
+**Surveillance Entreprise Plateforme IA Chérie**  
 Version 3.1.0 - Architecture Prête pour Production

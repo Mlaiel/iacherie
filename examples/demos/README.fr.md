@@ -1,5 +1,5 @@
 # 🚀 Démos Avancées - Démonstrations Complètes de la Plateforme
-**Plateforme Ainflue - Démonstrations Système Complètes & Showcases**
+**Plateforme IA Chérie - Démonstrations Système Complètes & Showcases**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Droits d'auteur :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Aperçu Entreprise
 
-Le module **Démos Avancées** présente des démonstrations complètes de la plateforme et des showcases système pour la plateforme Ainflue, conçu spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système ultra-sophistiqué et prêt pour la production démontre le traitement IA de niveau entreprise, la gestion du cycle de vie du contenu, la distribution cross-plateforme, la business intelligence, les systèmes de collaboration et les écosystèmes de monétisation avec des scénarios réels et les meilleures pratiques.
+Le module **Démos Avancées** présente des démonstrations complètes de la plateforme et des showcases système pour la plateforme IA Chérie, conçu spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système ultra-sophistiqué et prêt pour la production démontre le traitement IA de niveau entreprise, la gestion du cycle de vie du contenu, la distribution cross-plateforme, la business intelligence, les systèmes de collaboration et les écosystèmes de monétisation avec des scénarios réels et les meilleures pratiques.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -349,7 +349,7 @@ print(f"Démonstration plateforme terminée : {len(platform_demo['results']['sce
 version: '3.8'
 services:
   advanced-demos:
-    image: ainflue/advanced-demos:latest
+    image: iacherie/advanced-demos:latest
     deploy:
       replicas: 5
       resources:
@@ -362,8 +362,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://demo-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -387,7 +387,7 @@ services:
 
 ## 📝 **Résumé**
 
-Le module Démos Avancées représente le summum de la conception de démonstrations de plateforme pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-format. Avec des démonstrations complètes, des capacités IA/ML avancées et des fonctionnalités de niveau entreprise, ce système assure une compréhension maximale de la plateforme, l'adoption des fonctionnalités et l'optimisation des performances pour toutes les activités de créateurs tout en fournissant des insights profonds sur les capacités de la plateforme et les opportunités d'optimisation.
+Le module Démos Avancées représente le summum de la conception de démonstrations de plateforme pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-format. Avec des démonstrations complètes, des capacités IA/ML avancées et des fonctionnalités de niveau entreprise, ce système assure une compréhension maximale de la plateforme, l'adoption des fonctionnalités et l'optimisation des performances pour toutes les activités de créateurs tout en fournissant des insights profonds sur les capacités de la plateforme et les opportunités d'optimisation.
 
 **🎯 Mission :** Livrer les démonstrations de plateforme les plus complètes au monde pour les créateurs de contenu, permettant une adoption optimale de la plateforme, une utilisation des fonctionnalités et une optimisation des performances à travers l'écosystème complet des créateurs.
 

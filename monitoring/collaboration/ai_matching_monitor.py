@@ -1,10 +1,10 @@
 """
-Ainflue Platform - AI Matching Monitor
+IA Chérie Platform - AI Matching Monitor
 ======================================
 
 Advanced AI-powered matching system for intelligent creator collaboration
 recommendations, compatibility scoring, and real-time matching performance
-optimization for the Ainflue platform.
+optimization for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

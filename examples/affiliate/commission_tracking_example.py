@@ -3,7 +3,7 @@
 Commission Tracking Example - Example Tracking Commissions Temps Réel
 ====================================================================
 
-Démonstration tracking commissions ultra sophistiqué temps réel pour Ainflue.
+Démonstration tracking commissions ultra sophistiqué temps réel pour IA Chérie.
 Multi-touch attribution avec fraud detection et compliance automation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -210,9 +210,9 @@ class CommissionTrackingExample:
         
         # Tracking configuration
         self.webhook_endpoints = [
-            "https://api.ainflue.com/webhooks/commission",
-            "https://analytics.ainflue.com/realtime",
-            "https://fraud.ainflue.com/monitor"
+            "https://api.iacherie.com/webhooks/commission",
+            "https://analytics.iacherie.com/realtime",
+            "https://fraud.iacherie.com/monitor"
         ]
         
         # Fraud detection patterns
@@ -740,7 +740,7 @@ class CommissionTrackingExample:
         
         # Add affiliate-specific webhooks
         for attribution in attribution_results.attributions.values():
-            webhook_url = f"https://affiliate-{attribution.affiliate_id}.ainflue.com/webhook"
+            webhook_url = f"https://affiliate-{attribution.affiliate_id}.iacherie.com/webhook"
             if webhook_url not in active_webhooks:
                 active_webhooks.append(webhook_url)
         
@@ -1053,7 +1053,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS COMMISSION TRACKING TERMINÉES!")
-        logger.info("⚡ Commission Tracking - Ainflue Platform")
+        logger.info("⚡ Commission Tracking - IA Chérie Platform")
         logger.info("=" * 70)
         
         return True

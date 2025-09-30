@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Header Controls
+ * IA Chérie Desktop Renderer - Header Controls
  * Professional header control components
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

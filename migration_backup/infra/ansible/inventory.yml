@@ -1,0 +1,359 @@
+---
+# Ainflue Infrastructure Module - Ansible Inventory Management
+# ============================================================
+# 
+# Enterprise-grade Ansible inventory for Ainflue platform
+# Supports multi-cloud deployment and enterprise orchestration
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+all:
+  children:
+    # Web Tier - Load Balancers and Reverse Proxies
+    web_tier:
+      hosts:
+        web-lb-1.ainflue.com:
+          ansible_host: 10.0.1.10
+          role: load_balancer
+          lb_type: nginx
+          ssl_enabled: true
+        web-lb-2.ainflue.com:
+          ansible_host: 10.0.1.11
+          role: load_balancer
+          lb_type: nginx
+          ssl_enabled: true
+      vars:
+        nginx_version: "1.24"
+        ssl_certificate_path: "/etc/ssl/certs/ainflue.com"
+        upstream_servers:
+          - "app-1.ainflue.com:8080"
+          - "app-2.ainflue.com:8080"
+          - "app-3.ainflue.com:8080"
+
+    # Application Tier - API and Business Logic
+    app_tier:
+      hosts:
+        app-1.ainflue.com:
+          ansible_host: 10.0.2.10
+          role: api_server
+          cpu_cores: 4
+          memory_gb: 8
+        app-2.ainflue.com:
+          ansible_host: 10.0.2.11
+          role: api_server
+          cpu_cores: 4
+          memory_gb: 8
+        app-3.ainflue.com:
+          ansible_host: 10.0.2.12
+          role: api_server
+          cpu_cores: 4
+          memory_gb: 8
+        mobile-api-1.ainflue.com:
+          ansible_host: 10.0.2.20
+          role: mobile_api
+          cpu_cores: 2
+          memory_gb: 4
+        mobile-api-2.ainflue.com:
+          ansible_host: 10.0.2.21
+          role: mobile_api
+          cpu_cores: 2
+          memory_gb: 4
+      vars:
+        app_version: "{{ deployment_version | default('latest') }}"
+        container_runtime: docker
+        health_check_endpoint: "/health"
+        metrics_port: 9090
+
+    # AI/ML Tier - Machine Learning and AI Processing
+    ai_tier:
+      hosts:
+        ai-gpu-1.ainflue.com:
+          ansible_host: 10.0.3.10
+          role: ai_engine
+          gpu_type: "nvidia_tesla_v100"
+          gpu_count: 2
+          cpu_cores: 8
+          memory_gb: 32
+        ai-gpu-2.ainflue.com:
+          ansible_host: 10.0.3.11
+          role: ai_engine
+          gpu_type: "nvidia_tesla_v100"
+          gpu_count: 2
+          cpu_cores: 8
+          memory_gb: 32
+        ai-cpu-1.ainflue.com:
+          ansible_host: 10.0.3.20
+          role: ai_processing
+          cpu_cores: 16
+          memory_gb: 64
+          workload_type: "cpu_intensive"
+      vars:
+        ai_model_path: "/opt/ainflue/models"
+        pytorch_version: "2.0"
+        cuda_version: "11.8"
+        model_cache_size: "50GB"
+
+    # Database Tier - Primary and Replica Databases
+    database_tier:
+      hosts:
+        db-primary.ainflue.com:
+          ansible_host: 10.0.4.10
+          role: database_primary
+          db_type: postgresql
+          version: "14"
+          cpu_cores: 8
+          memory_gb: 32
+          storage_gb: 1000
+        db-replica-1.ainflue.com:
+          ansible_host: 10.0.4.11
+          role: database_replica
+          db_type: postgresql
+          version: "14"
+          master_host: "db-primary.ainflue.com"
+          cpu_cores: 4
+          memory_gb: 16
+          storage_gb: 1000
+        db-replica-2.ainflue.com:
+          ansible_host: 10.0.4.12
+          role: database_replica
+          db_type: postgresql
+          version: "14"
+          master_host: "db-primary.ainflue.com"
+          cpu_cores: 4
+          memory_gb: 16
+          storage_gb: 1000
+      vars:
+        postgresql_max_connections: 200
+        postgresql_shared_buffers: "8GB"
+        postgresql_effective_cache_size: "24GB"
+        backup_retention_days: 30
+
+    # Cache Tier - Redis and In-Memory Caching
+    cache_tier:
+      hosts:
+        cache-1.ainflue.com:
+          ansible_host: 10.0.5.10
+          role: redis_primary
+          redis_port: 6379
+          cpu_cores: 4
+          memory_gb: 16
+        cache-2.ainflue.com:
+          ansible_host: 10.0.5.11
+          role: redis_replica
+          redis_port: 6379
+          master_host: "cache-1.ainflue.com"
+          cpu_cores: 2
+          memory_gb: 8
+        cache-3.ainflue.com:
+          ansible_host: 10.0.5.12
+          role: redis_replica
+          redis_port: 6379
+          master_host: "cache-1.ainflue.com"
+          cpu_cores: 2
+          memory_gb: 8
+      vars:
+        redis_version: "7.0"
+        redis_maxmemory: "12GB"
+        redis_maxmemory_policy: "allkeys-lru"
+        redis_persistence: true
+
+    # Message Queue Tier - Background Job Processing
+    queue_tier:
+      hosts:
+        queue-1.ainflue.com:
+          ansible_host: 10.0.6.10
+          role: message_broker
+          broker_type: rabbitmq
+          cpu_cores: 4
+          memory_gb: 8
+        worker-1.ainflue.com:
+          ansible_host: 10.0.6.20
+          role: worker_node
+          worker_type: celery
+          cpu_cores: 4
+          memory_gb: 8
+        worker-2.ainflue.com:
+          ansible_host: 10.0.6.21
+          role: worker_node
+          worker_type: celery
+          cpu_cores: 4
+          memory_gb: 8
+        worker-3.ainflue.com:
+          ansible_host: 10.0.6.22
+          role: worker_node
+          worker_type: celery
+          cpu_cores: 4
+          memory_gb: 8
+      vars:
+        rabbitmq_version: "3.12"
+        celery_broker_url: "amqp://guest@queue-1.ainflue.com:5672//"
+        worker_concurrency: 4
+
+    # Monitoring Tier - Observability and Alerting
+    monitoring_tier:
+      hosts:
+        monitor-1.ainflue.com:
+          ansible_host: 10.0.7.10
+          role: monitoring_server
+          services:
+            - prometheus
+            - grafana
+            - alertmanager
+          cpu_cores: 4
+          memory_gb: 16
+          storage_gb: 500
+        logs-1.ainflue.com:
+          ansible_host: 10.0.7.20
+          role: log_aggregator
+          services:
+            - elasticsearch
+            - logstash
+            - kibana
+          cpu_cores: 8
+          memory_gb: 32
+          storage_gb: 2000
+        tracing-1.ainflue.com:
+          ansible_host: 10.0.7.30
+          role: tracing_server
+          services:
+            - jaeger
+          cpu_cores: 2
+          memory_gb: 8
+          storage_gb: 200
+      vars:
+        prometheus_retention: "30d"
+        grafana_admin_password: "{{ vault_grafana_password }}"
+        elasticsearch_heap_size: "16g"
+        jaeger_storage_type: "elasticsearch"
+
+    # Security Tier - Security and Compliance
+    security_tier:
+      hosts:
+        security-1.ainflue.com:
+          ansible_host: 10.0.8.10
+          role: security_scanner
+          services:
+            - vulnerability_scanner
+            - compliance_monitor
+          cpu_cores: 4
+          memory_gb: 8
+        bastion-1.ainflue.com:
+          ansible_host: 10.0.8.20
+          role: bastion_host
+          services:
+            - ssh_gateway
+            - audit_logger
+          cpu_cores: 2
+          memory_gb: 4
+      vars:
+        ssh_port: 2222
+        fail2ban_enabled: true
+        security_scan_schedule: "0 2 * * *"
+
+    # Storage Tier - File and Object Storage
+    storage_tier:
+      hosts:
+        storage-1.ainflue.com:
+          ansible_host: 10.0.9.10
+          role: file_server
+          storage_type: nfs
+          cpu_cores: 4
+          memory_gb: 16
+          storage_gb: 10000
+        cdn-1.ainflue.com:
+          ansible_host: 10.0.9.20
+          role: cdn_edge
+          cpu_cores: 4
+          memory_gb: 8
+          storage_gb: 2000
+      vars:
+        nfs_exports:
+          - "/data/media"
+          - "/data/backups"
+        cdn_cache_size: "1000GB"
+
+  vars:
+    # Global Variables
+    environment: production
+    project_name: ainflue
+    ansible_user: ubuntu
+    ansible_become: true
+    ansible_become_method: sudo
+    ansible_python_interpreter: /usr/bin/python3
+    
+    # Network Configuration
+    vpc_cidr: "10.0.0.0/16"
+    availability_zones:
+      - "us-west-2a"
+      - "us-west-2b"
+      - "us-west-2c"
+    
+    # SSL/TLS Configuration
+    ssl_certificate_domains:
+      - "ainflue.com"
+      - "*.ainflue.com"
+      - "api.ainflue.com"
+      - "mobile.ainflue.com"
+      - "ai.ainflue.com"
+    
+    # Container Configuration
+    docker_version: "24.0"
+    docker_compose_version: "2.21.0"
+    container_registry: "registry.ainflue.com"
+    
+    # Kubernetes Configuration
+    kubernetes_version: "1.28"
+    kubernetes_cni: "calico"
+    kubernetes_ingress: "nginx"
+    
+    # Database Configuration
+    database_name: "ainflue_production"
+    database_username: "ainflue"
+    database_backup_schedule: "0 1 * * *"
+    
+    # Application Configuration
+    app_log_level: "INFO"
+    app_debug: false
+    app_secret_key: "{{ vault_app_secret_key }}"
+    
+    # AI/ML Configuration
+    ai_model_registry: "models.ainflue.com"
+    ai_inference_timeout: 30
+    ai_batch_size: 32
+    
+    # Monitoring Configuration
+    metrics_retention: "30d"
+    log_retention: "90d"
+    alert_notification_channels:
+      - slack
+      - email
+      - pagerduty
+    
+    # Security Configuration
+    security_hardening_enabled: true
+    firewall_enabled: true
+    intrusion_detection_enabled: true
+    
+    # Backup Configuration
+    backup_enabled: true
+    backup_encryption: true
+    backup_storage_class: "GLACIER"
+    
+    # Performance Configuration
+    connection_pooling: true
+    caching_enabled: true
+    cdn_enabled: true
+    
+    # Timezone and Locale
+    timezone: "UTC"
+    locale: "en_US.UTF-8"
+    
+    # NTP Configuration
+    ntp_servers:
+      - "0.pool.ntp.org"
+      - "1.pool.ntp.org"
+      - "2.pool.ntp.org"
+      - "3.pool.ntp.org"

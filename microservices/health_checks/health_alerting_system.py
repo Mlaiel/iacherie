@@ -1,5 +1,5 @@
 """
-Health Alerting System - Ainflue Health Checks Module
+Health Alerting System - IA Chérie Health Checks Module
 Système alerting santé avec smart notifications, escalation automatique,
 multi-channel delivery et intelligent noise reduction.
 
@@ -254,7 +254,7 @@ class NotificationDelivery:
             smtp_port = email_config.get('smtp_port', 587)
             username = email_config.get('username', '')
             password = email_config.get('password', '')
-            from_email = email_config.get('from_email', 'alerts@ainflue.com')
+            from_email = email_config.get('from_email', 'alerts@iacherie.com')
             
             # Créer message
             msg = MimeMultipart()
@@ -797,9 +797,9 @@ Status: {status}
         # Placeholder - à configurer selon environment
         if channel == NotificationChannel.EMAIL:
             if severity in [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY]:
-                return ['ops-team@ainflue.com', 'engineering@ainflue.com']
+                return ['ops-team@iacherie.com', 'engineering@iacherie.com']
             else:
-                return ['ops-team@ainflue.com']
+                return ['ops-team@iacherie.com']
         elif channel == NotificationChannel.SLACK:
             return ['#alerts', '#ops-team']
         else:
@@ -832,9 +832,9 @@ if __name__ == "__main__":
             {
                 'smtp_server': 'smtp.gmail.com',
                 'smtp_port': 587,
-                'username': 'alerts@ainflue.com',
+                'username': 'alerts@iacherie.com',
                 'password': 'password',
-                'from_email': 'alerts@ainflue.com'
+                'from_email': 'alerts@iacherie.com'
             }
         )
         
@@ -878,9 +878,9 @@ if __name__ == "__main__":
             policy_id="default",
             name="Default Escalation",
             escalation_levels=[
-                {'level': 'L1', 'contacts': ['oncall-engineer@ainflue.com'], 'delay_minutes': 5},
-                {'level': 'L2', 'contacts': ['team-lead@ainflue.com'], 'delay_minutes': 15},
-                {'level': 'L3', 'contacts': ['engineering-manager@ainflue.com'], 'delay_minutes': 30}
+                {'level': 'L1', 'contacts': ['oncall-engineer@iacherie.com'], 'delay_minutes': 5},
+                {'level': 'L2', 'contacts': ['team-lead@iacherie.com'], 'delay_minutes': 15},
+                {'level': 'L3', 'contacts': ['engineering-manager@iacherie.com'], 'delay_minutes': 30}
             ]
         )
         await alerting_system.register_escalation_policy(escalation_policy)

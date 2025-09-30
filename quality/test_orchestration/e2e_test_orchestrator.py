@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-E2E Test Orchestrator - Ainflue Quality Platform
+E2E Test Orchestrator - IA Chérie Quality Platform
 ==============================================
 
 Enterprise-grade End-to-End testing orchestration system.
@@ -286,8 +286,8 @@ class E2ETestOrchestrator:
             },
             'environments': {
                 'development': 'http://localhost:8000',
-                'staging': 'https://staging.ainflue.com',
-                'production': 'https://ainflue.com'
+                'staging': 'https://staging.iacherie.com',
+                'production': 'https://iacherie.com'
             },
             'test_data': {
                 'users': {

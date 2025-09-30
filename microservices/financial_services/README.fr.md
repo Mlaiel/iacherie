@@ -1,10 +1,10 @@
 # 💰 Services Financiers et Paiements - Architecture Microservices Enterprise
 
-**Module Financier et de Paiement pour la Plateforme Ainflue**
+**Module Financier et de Paiement pour la Plateforme IA Chérie**
 
 ## 🎯 Vue d'Ensemble
 
-Ce module fournit une infrastructure financière enterprise complète avec 16 microservices spécialisés pour la gestion des paiements, la facturation, la distribution des revenus et la conformité financière sur la plateforme Ainflue.
+Ce module fournit une infrastructure financière enterprise complète avec 16 microservices spécialisés pour la gestion des paiements, la facturation, la distribution des revenus et la conformité financière sur la plateforme IA Chérie.
 
 ### 🏗️ Architecture des Services Financiers
 
@@ -185,7 +185,7 @@ payment_result = await payment_service.process_payment({
     'currency': 'USD',
     'payment_method': 'card',
     'customer_id': 'cust_123',
-    'description': 'Ainflue Pro Subscription',
+    'description': 'IA Chérie Pro Subscription',
     'metadata': {
         'subscription_id': 'sub_456',
         'billing_cycle': 'monthly'
@@ -203,7 +203,7 @@ distribution_result = await revenue_service.distribute_revenue({
     'participants': [
         {'creator_id': 'creator_123', 'percentage': 60},
         {'creator_id': 'creator_456', 'percentage': 20},
-        {'platform': 'ainflue', 'percentage': 20}
+        {'platform': 'iacherie', 'percentage': 20}
     ]
 })
 ```
@@ -215,7 +215,7 @@ invoice = await billing_service.create_invoice({
     'customer_id': 'cust_123',
     'line_items': [
         {
-            'description': 'Ainflue Pro Plan',
+            'description': 'IA Chérie Pro Plan',
             'quantity': 1,
             'unit_price': 99.99,
             'tax_rate': 8.25
@@ -289,7 +289,7 @@ Métriques Compliance:
 - **Plaid** - Connexion comptes bancaires
 - **Currency APIs** - Taux de change temps réel
 
-## 🎯 Workflow Business Ainflue
+## 🎯 Workflow Business IA Chérie
 
 ### 📋 Phase 4: Monétisation (Financial Core)
 ```yaml
@@ -324,20 +324,20 @@ Financial Analytics Engineer:    Expert BI financière + prévisions
 ```
 
 ### 🆘 Support Technique
-- **Email**: financial-support@ainflue.com
-- **Urgences 24/7**: +1-800-AINFLUE-FIN
-- **Documentation**: https://docs.ainflue.com/financial
-- **Status Page**: https://status.ainflue.com/financial
+- **Email**: financial-support@iacherie.com
+- **Urgences 24/7**: +1-800-IACHERIE-FIN
+- **Documentation**: https://docs.iacherie.com/financial
+- **Status Page**: https://status.iacherie.com/financial
 
 ---
 
 ## 📜 Informations Légales
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE FINANCIAL SERVICES MODULE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE FINANCIAL SERVICES MODULE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE - TOUS DROITS RÉSERVÉS**  
 **⚠️ MODULE CONFIDENTIEL - USAGE ENTERPRISE UNIQUEMENT**  
 **💳 CONFORMITÉ PCI DSS NIVEAU 1 - DONNÉES FINANCIÈRES PROTÉGÉES**
 
 ---
 
-*Ce module fait partie de l'architecture microservices enterprise Ainflue et constitue le pilier financier et de paiement de la plateforme.*
+*Ce module fait partie de l'architecture microservices enterprise IA Chérie et constitue le pilier financier et de paiement de la plateforme.*

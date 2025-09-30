@@ -239,7 +239,7 @@ seo_config = {
     'reporting': {
         'auto_reports': True,
         'report_frequency': 'weekly',
-        'stakeholder_emails': ['team@ainflue.com']
+        'stakeholder_emails': ['team@iacherie.com']
     }
 }
 ```

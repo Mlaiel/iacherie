@@ -1,10 +1,10 @@
 # 🗄️ DATA SERVICES - SERVICES DE DONNÉES ENTERPRISE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE MICROSERVICES ENTERPRISE**
+**© FAHED MLAIEL 2024-2025 - IACHERIE MICROSERVICES ENTERPRISE**
 
 ## 🎯 Vue d'Ensemble
 
-Module enterprise de gestion et gouvernance des données pour la plateforme Ainflue.
+Module enterprise de gestion et gouvernance des données pour la plateforme IA Chérie.
 Architecture microservices distribuée avec 18+ services spécialisés de data management.
 
 ## 🏗️ Architecture des Services
@@ -80,7 +80,7 @@ warehouse = DataWarehouseService()
 analytics_data = await warehouse.query_analytics_data(query)
 ```
 
-## 🎯 Workflow Ainflue
+## 🎯 Workflow IA Chérie
 
 Integration complète du workflow 7 phases avec data management:
 1. **Upload & Validation** → Ingestion + validation qualité

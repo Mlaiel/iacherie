@@ -684,7 +684,7 @@ async def main():
             task_id="async_task_1",
             task_type="network_call",
             function=async_network_task,
-            kwargs={"url": "https://api.ainflue.com"},
+            kwargs={"url": "https://api.iacherie.com"},
             priority=TaskPriority.HIGH
         ),
         ExecutionTask(

@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Content localization processor enterprise avec AI-powered content adaptation,
 multi-format support et cultural content optimization.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Multi-format content localization (text, video, audio, images)
 - AI-powered content adaptation pour créateurs
 - Cultural content optimization par région
@@ -553,7 +553,7 @@ class ContentLocalizationProcessor:
     
     async def multi_format_content_localization(
         self,
-        content_items: List[Tuple[Union[str, Dict], ContentFormat]],
+        content_items: List[tuple[Union[str, Dict], ContentFormat]],
         source_language: str,
         target_language: str,
         target_region: str

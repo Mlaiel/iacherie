@@ -3,7 +3,7 @@ Cross-Platform Sync Monitor - Distribution Module
 ================================================
 
 Real-time monitoring system for cross-platform content synchronization
-in the Ainflue ecosystem. Provides comprehensive tracking of sync operations,
+in the IA Chérie ecosystem. Provides comprehensive tracking of sync operations,
 timing analysis, and conflict resolution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

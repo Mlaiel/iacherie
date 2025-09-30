@@ -11,7 +11,7 @@
 
 MISSION ENTERPRISE:
 Sécurisation complète des datasets avec conformité GDPR, chiffrement,
-contrôle d'accès, et audit trails pour la plateforme Ainflue.
+contrôle d'accès, et audit trails pour la plateforme IA Chérie.
 """
 
 from .index import DatasetSecurity, GDPRCompliance, EncryptionManager, AccessController

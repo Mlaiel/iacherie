@@ -1,4 +1,4 @@
-# 🤖 AI Services Module - Ainflue Integrations
+# 🤖 AI Services Module - IA Chérie Integrations
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Module Purpose
 
-The AI Services module provides enterprise-grade artificial intelligence capabilities for the Ainflue platform. It delivers comprehensive AI model orchestration, multi-provider integration, cost optimization, performance monitoring, and intelligent content generation across 53+ specialized AI agents.
+The AI Services module provides enterprise-grade artificial intelligence capabilities for the IA Chérie platform. It delivers comprehensive AI model orchestration, multi-provider integration, cost optimization, performance monitoring, and intelligent content generation across 53+ specialized AI agents.
 
 ### Core Components
 

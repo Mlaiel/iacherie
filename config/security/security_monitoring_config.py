@@ -4,10 +4,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Security Monitoring Configuration Module
+"""IA Chérie Security Monitoring Configuration Module
 ================================================
 
-Enterprise-grade security monitoring configuration for the Ainflue platform.
+Enterprise-grade security monitoring configuration for the IA Chérie platform.
 Real-time security monitoring, threat detection, incident response,
 and comprehensive security analytics capabilities.
 

@@ -1,6 +1,6 @@
 # 🤝 Module Notifications Collaboration - Architecture Enterprise
 
-**Plateforme Ainflue - Écosystème de Collaboration Avancé**
+**Plateforme IA Chérie - Écosystème de Collaboration Avancé**
 
 **Version :** 3.1.0 Enterprise  
 **Date :** 11 septembre 2025  
@@ -22,7 +22,7 @@ Cette architecture, ce concept, ce code et toute propriété intellectuelle asso
 
 ---
 
-## 🎯 LOGIQUE MÉTIER AINFLUE - ÉCOSYSTÈME COLLABORATION
+## 🎯 LOGIQUE MÉTIER IACHERIE - ÉCOSYSTÈME COLLABORATION
 
 ### 🔄 WORKFLOW COLLABORATION CENTRAL
 
@@ -265,7 +265,7 @@ const invitation = await collaboration.sendInvitation({
 
 ### 📧 Informations Contact
 - **Email :** mlaiel@live.de
-- **Site Web :** [Plateforme Ainflue](https://ainflue.com)
+- **Site Web :** [Plateforme IA Chérie](https://iacherie.com)
 - **Lead Developer :** Fahed Mlaiel
 - **Localisation :** Allemagne
 
@@ -279,5 +279,5 @@ const invitation = await collaboration.sendInvitation({
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Plateforme Ainflue - Architecture Enterprise Notifications Collaboration  
+**Projet :** Plateforme IA Chérie - Architecture Enterprise Notifications Collaboration  
 **Version :** 3.1.0 - Documentation Complète Professionnelle

@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Blockchain Rights Monitor
+IA Chérie Platform - Blockchain Rights Monitor
 ==========================================
 
 Enterprise-grade blockchain monitoring for content rights management,

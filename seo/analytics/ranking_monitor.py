@@ -1,5 +1,5 @@
 """
-Search Ranking Monitor for Ainflue Platform
+Search Ranking Monitor for IA Chérie Platform
 ===========================================
 
 Advanced search ranking monitoring and analysis for creators and content.

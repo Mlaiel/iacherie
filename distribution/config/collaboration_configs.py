@@ -2,7 +2,7 @@
 Creator Collaboration Configurations
 ===================================
 
-Creator collaboration and partnership settings for Ainflue Distribution Platform.
+Creator collaboration and partnership settings for IA Chérie Distribution Platform.
 Manages collaboration workflows, revenue sharing, and creator matching.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

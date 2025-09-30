@@ -1,5 +1,5 @@
 """
-Health Dashboard Engine - Ainflue Health Checks Module
+Health Dashboard Engine - IA Chérie Health Checks Module
 Moteur dashboard santé enterprise temps réel avec real-time visualization,
 custom charts, alerting interface et executive summaries.
 
@@ -1013,7 +1013,7 @@ if __name__ == "__main__":
         # Créer dashboard opérationnel
         dashboard_spec = {
             'type': 'operational',
-            'title': 'Ainflue Health Operations Dashboard',
+            'title': 'IA Chérie Health Operations Dashboard',
             'refresh_interval': 30,
             'charts': [
                 {

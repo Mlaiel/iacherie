@@ -1,4 +1,4 @@
-"""WebSocket Real-time Client for Ainflue SDK
+"""WebSocket Real-time Client for IA Chérie SDK
 
 Enterprise-grade WebSocket client with multi-expert design:
 - DevOps: Connection monitoring and automatic reconnection
@@ -110,7 +110,7 @@ class ConnectionMetrics:
 
 
 class WebSocketClient:
-    """Enterprise WebSocket client for Ainflue real-time communication
+    """Enterprise WebSocket client for IA Chérie real-time communication
     
     Features:
     - Automatic reconnection with exponential backoff
@@ -170,7 +170,7 @@ class WebSocketClient:
     def _build_auth_headers(self) -> Dict[str, str]:
         """Build authentication headers (Sécurité expertise)"""
         headers = {
-            'User-Agent': 'Ainflue-WebSocket-Client/1.0.0'
+            'User-Agent': 'IA Chérie-WebSocket-Client/1.0.0'
         }
         
         if self.api_key:

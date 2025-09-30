@@ -585,7 +585,7 @@ class PushNotificationService {
       sound: payload.sound || 'default',
       data: {
         timestamp: Date.now(),
-        source: 'ainflue',
+        source: 'iacherie',
         version: '1.0.0',
         ...payload.data
       }

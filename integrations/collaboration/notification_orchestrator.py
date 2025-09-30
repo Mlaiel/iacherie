@@ -1,11 +1,11 @@
 """
-Notification Orchestrator - Ainflue Integrations
+Notification Orchestrator - IA Chérie Integrations
 ==============================================
 Multi-channel notification orchestrator for enterprise collaboration platform.
 Manages intelligent notification delivery across email, SMS, push, and in-app channels.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chérie Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -216,7 +216,7 @@ class NotificationOrchestrator:
                 },
                 "body_templates": {
                     "en": "Hi {recipient_name},\n\n{inviter_name} has invited you to collaborate on the project '{project_name}'. This is an exciting opportunity to work together and create amazing content!\n\nProject Details:\n- Type: {project_type}\n- Timeline: {timeline}\n- Revenue Share: {revenue_share}\n\nClick here to accept: {accept_link}\n\nBest regards,\nAinflue Team",
-                    "fr": "Bonjour {recipient_name},\n\n{inviter_name} vous a invité à collaborer sur le projet '{project_name}'. C'est une opportunité passionnante de travailler ensemble et de créer du contenu incroyable!\n\nDétails du projet:\n- Type: {project_type}\n- Calendrier: {timeline}\n- Partage des revenus: {revenue_share}\n\nCliquez ici pour accepter: {accept_link}\n\nCordialement,\nÉquipe Ainflue"
+                    "fr": "Bonjour {recipient_name},\n\n{inviter_name} vous a invité à collaborer sur le projet '{project_name}'. C'est une opportunité passionnante de travailler ensemble et de créer du contenu incroyable!\n\nDétails du projet:\n- Type: {project_type}\n- Calendrier: {timeline}\n- Partage des revenus: {revenue_share}\n\nCliquez ici pour accepter: {accept_link}\n\nCordialement,\nÉquipe IA Chérie"
                 },
                 "variables": ["recipient_name", "inviter_name", "project_name", "project_type", "timeline", "revenue_share", "accept_link"]
             },
@@ -231,7 +231,7 @@ class NotificationOrchestrator:
                 },
                 "body_templates": {
                     "en": "Hello {recipient_name},\n\nHere's an update on your collaboration project '{project_name}':\n\n{update_message}\n\nProgress: {progress_percentage}%\nNext milestone: {next_milestone}\nDeadline: {deadline}\n\nView project details: {project_link}\n\nBest regards,\nAinflue Team",
-                    "fr": "Bonjour {recipient_name},\n\nVoici une mise à jour sur votre projet de collaboration '{project_name}':\n\n{update_message}\n\nProgrès: {progress_percentage}%\nProchaine étape: {next_milestone}\nÉchéance: {deadline}\n\nVoir les détails du projet: {project_link}\n\nCordialement,\nÉquipe Ainflue"
+                    "fr": "Bonjour {recipient_name},\n\nVoici une mise à jour sur votre projet de collaboration '{project_name}':\n\n{update_message}\n\nProgrès: {progress_percentage}%\nProchaine étape: {next_milestone}\nÉchéance: {deadline}\n\nVoir les détails du projet: {project_link}\n\nCordialement,\nÉquipe IA Chérie"
                 },
                 "variables": ["recipient_name", "project_name", "update_message", "progress_percentage", "next_milestone", "deadline", "project_link"]
             },
@@ -246,7 +246,7 @@ class NotificationOrchestrator:
                 },
                 "body_templates": {
                     "en": "URGENT - Security Alert\n\nDear {recipient_name},\n\nWe detected a security event on your account:\n\nAlert Type: {alert_type}\nTime: {alert_time}\nLocation: {location}\nDetails: {alert_details}\n\nIf this was you, no action is needed. If not, please secure your account immediately.\n\nAinflue Security Team",
-                    "fr": "URGENT - Alerte Sécurité\n\nCher/Chère {recipient_name},\n\nNous avons détecté un événement de sécurité sur votre compte:\n\nType d'alerte: {alert_type}\nHeure: {alert_time}\nLieu: {location}\nDétails: {alert_details}\n\nSi c'était vous, aucune action n'est nécessaire. Sinon, veuillez sécuriser votre compte immédiatement.\n\nÉquipe Sécurité Ainflue"
+                    "fr": "URGENT - Alerte Sécurité\n\nCher/Chère {recipient_name},\n\nNous avons détecté un événement de sécurité sur votre compte:\n\nType d'alerte: {alert_type}\nHeure: {alert_time}\nLieu: {location}\nDétails: {alert_details}\n\nSi c'était vous, aucune action n'est nécessaire. Sinon, veuillez sécuriser votre compte immédiatement.\n\nÉquipe Sécurité IA Chérie"
                 },
                 "variables": ["recipient_name", "alert_type", "alert_time", "location", "alert_details"]
             }
@@ -963,7 +963,7 @@ if __name__ == "__main__":
                 "project_type": "Music Production",
                 "timeline": "2 weeks",
                 "revenue_share": "50/50",
-                "accept_link": "https://ainflue.com/accept/12345"
+                "accept_link": "https://iacherie.com/accept/12345"
             }
         )
         

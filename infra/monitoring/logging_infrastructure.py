@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Logging Infrastructure Management
@@ -137,7 +137,7 @@ class LoggingInfrastructure:
                         "number_of_shards": self.config.shard_count,
                         "number_of_replicas": self.config.replica_count,
                         "refresh_interval": self.config.refresh_interval,
-                        "index.lifecycle.name": "ainflue-logs-policy",
+                        "index.lifecycle.name": "iacherie-logs-policy",
                         "index.lifecycle.rollover_alias": f"{self.config.index_pattern}-alias",
                         "codec": "best_compression" if self.config.compression_enabled else "default"
                     },
@@ -269,7 +269,7 @@ class LoggingInfrastructure:
         """Setup Fluentd configuration for log collection"""
         try:
             fluentd_config = """
-# Ainflue Enterprise Fluentd Configuration
+# IA Chérie Enterprise Fluentd Configuration
 # ========================================
 
 # Input plugins for Kubernetes logs
@@ -351,7 +351,7 @@ class LoggingInfrastructure:
 <filter kubernetes.**>
   @type ai_log_analyzer
   @id filter_ai_analysis
-  model_endpoint "http://ai-engine.ainflue-production.svc.cluster.local:8081/analyze-logs"
+  model_endpoint "http://ai-engine.iacherie-production.svc.cluster.local:8081/analyze-logs"
   api_key "#{ENV['AI_ANALYSIS_API_KEY']}"
   batch_size 100
   analysis_fields ["anomaly_score", "intent_classification", "threat_detection"]
@@ -368,8 +368,8 @@ class LoggingInfrastructure:
   </rule>
   <rule>
     key $.kubernetes.namespace_name
-    pattern ^ainflue-(.+)$
-    tag ainflue.$1.logs
+    pattern ^iacherie-(.+)$
+    tag iacherie.$1.logs
   </rule>
   <rule>
     key $.kubernetes.namespace_name

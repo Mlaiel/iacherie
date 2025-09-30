@@ -10,12 +10,12 @@ COLLABORATION MATCHING ENGINE - INTELLIGENT AI MATCHING
 =======================================================
 
 🎯 RÔLE ENTERPRISE:
-- Matching IA avancé pour créateurs Ainflue
+- Matching IA avancé pour créateurs IA Chérie
 - Algorithmes ML pour compatibilité optimale
 - Score de matching multi-dimensionnel
 - Prédiction succès collaboration
 
-🚀 FONCTIONNALITÉS AINFLUE:
+🚀 FONCTIONNALITÉS IACHERIE:
 - Analyse profils créateurs et compatibilité
 - Matching basé compétences complémentaires
 - Score audience overlap et synergies

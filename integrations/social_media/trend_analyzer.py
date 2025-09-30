@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Social Media Trend Analyzer
+IA Chérie Platform - Advanced Social Media Trend Analyzer
 =======================================================
 
 Enterprise-grade social media trend analysis with AI-powered predictive insights,
@@ -54,7 +54,7 @@ from statsmodels.tsa.stattools import adfuller
 import aiohttp
 import redis.asyncio as redis
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler
@@ -143,7 +143,7 @@ class TrendPrediction:
     estimated_emergence: datetime
     predicted_peak: datetime
     expected_volume: int
-    confidence_interval: Tuple[float, float]
+    confidence_interval: tuple[float, float]
     key_indicators: List[str]
     trigger_events: List[str]
     preparation_timeline: Dict[str, str]

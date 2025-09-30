@@ -963,6 +963,6 @@ async def setup_brand_collaboration(hub: CollaborationCommunicationHub,
 🚀 DevOps: Comprehensive project analytics and monitoring
 📝 IA Prompt Engineer: Intelligent approval workflows and content review systems
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chérie Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

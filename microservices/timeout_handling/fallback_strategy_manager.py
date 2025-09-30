@@ -1,11 +1,11 @@
 """
-Fallback Strategy Manager - Ainflue Enterprise
+Fallback Strategy Manager - IA Chérie Enterprise
 =============================================
 Manager stratégies fallback avec business continuity.
 Fallback orchestration + graceful degradation + service mesh integration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chérie Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -129,7 +129,7 @@ class FallbackStrategyManager:
         self.cache_providers: Dict[str, Any] = {}
         self.is_initialized = False
         
-        # Ainflue business domain fallback strategies
+        # IA Chérie business domain fallback strategies
         self.business_fallback_strategies = {
             'creator': {
                 'upload': [
@@ -551,7 +551,7 @@ class FallbackStrategyManager:
     # Implementation helper methods
     
     async def _load_default_configurations(self):
-        """Load default fallback configurations for Ainflue services"""
+        """Load default fallback configurations for IA Chérie services"""
         default_configs = []
         
         # Creator service configurations
@@ -659,10 +659,10 @@ class FallbackStrategyManager:
         """Initialize service mesh integration"""
         # Mock service mesh endpoints
         self.service_mesh_endpoints = {
-            'creator_service': ['creator-service-1.ainflue.local', 'creator-service-2.ainflue.local'],
-            'ai_service': ['ai-service-1.ainflue.local', 'ai-service-2.ainflue.local'],
-            'payment_service': ['payment-service-1.ainflue.local', 'backup-payment-service.ainflue.local'],
-            'collaboration_service': ['collab-service-1.ainflue.local', 'collab-service-2.ainflue.local']
+            'creator_service': ['creator-service-1.iacherie.local', 'creator-service-2.iacherie.local'],
+            'ai_service': ['ai-service-1.iacherie.local', 'ai-service-2.iacherie.local'],
+            'payment_service': ['payment-service-1.iacherie.local', 'backup-payment-service.iacherie.local'],
+            'collaboration_service': ['collab-service-1.iacherie.local', 'collab-service-2.iacherie.local']
         }
         logger.info("Service mesh integration initialized")
     

@@ -1,6 +1,6 @@
 """
 Security Module - Access Controller
-Advanced granular access control system for Ainflue Distribution Platform
+Advanced granular access control system for IA Chérie Distribution Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

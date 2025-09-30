@@ -1,5 +1,5 @@
 """
-Distribution Metrics Collector for Ainflue Platform
+Distribution Metrics Collector for IA Chérie Platform
 
 This module provides comprehensive metrics collection for all distribution
 activities with real-time aggregation and time-series storage.

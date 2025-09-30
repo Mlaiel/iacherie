@@ -1,6 +1,6 @@
 """
 👁️ SUSPICIOUS ACTIVITY ALERTS
-Ainflue Platform - Suspicious Activity Detection System
+IA Chérie Platform - Suspicious Activity Detection System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

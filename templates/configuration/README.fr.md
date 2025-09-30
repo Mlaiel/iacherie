@@ -1,9 +1,9 @@
-# 🎵 Ainflue - Module Templates Configuration (Français)
+# 🎵 IA Chérie - Module Templates Configuration (Français)
 
-[![Statut Build](https://github.com/Mlaiel/Ainflue/workflows/CI/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![Scan Sécurité](https://github.com/Mlaiel/Ainflue/workflows/Security/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
+[![Statut Build](https://github.com/Mlaiel/IA Chérie/workflows/CI/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![Scan Sécurité](https://github.com/Mlaiel/IA Chérie/workflows/Security/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Statut Production](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/Ainflue)
+[![Statut Production](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/IA Chérie)
 
 ## ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
 
@@ -13,7 +13,7 @@
 
 ## 🌟 Vue d'ensemble
 
-Le module Templates Configuration d'Ainflue fournit une suite complète de templates d'infrastructure et de configuration pour la plateforme économie créative alimentée par l'IA. Ce module offre des configurations prêtes pour la production, sécurisées et optimisées pour les créateurs de contenu, influenceurs et marques.
+Le module Templates Configuration d'IA Chérie fournit une suite complète de templates d'infrastructure et de configuration pour la plateforme économie créative alimentée par l'IA. Ce module offre des configurations prêtes pour la production, sécurisées et optimisées pour les créateurs de contenu, influenceurs et marques.
 
 ## 👨‍💻 Équipe Projet & Leadership
 
@@ -101,11 +101,11 @@ Le module Templates Configuration d'Ainflue fournit une suite complète de templ
 ### Installation Rapide
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/configuration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/configuration
 
 # Initialiser Terraform
-terraform init -backend-config="bucket=ainflue-terraform-state"
+terraform init -backend-config="bucket=iacherie-terraform-state"
 
 # Déployer infrastructure
 terraform plan -var-file="environments/production.tfvars"
@@ -113,7 +113,7 @@ terraform apply
 
 # Déployer applications
 kubectl apply -f k8s/
-helm install ainflue-platform ./charts/ainflue
+helm install iacherie-platform ./charts/iacherie
 ```
 
 ## 🚀 Démarrage Rapide
@@ -123,7 +123,7 @@ helm install ainflue-platform ./charts/ainflue
 # Variables d'environnement
 export AINFLUE_ENVIRONMENT=production
 export AINFLUE_REGION=us-east-1
-export AINFLUE_DOMAIN=app.ainflue.com
+export AINFLUE_DOMAIN=app.iacherie.com
 ```
 
 ### 2. Déploiement Infrastructure
@@ -141,8 +141,8 @@ docker-compose -f microservice_container_template.yml up -d
 ### 3. Validation Déploiement
 ```bash
 # Health checks
-curl https://api.ainflue.com/health
-kubectl get pods -n ainflue-production
+curl https://api.iacherie.com/health
+kubectl get pods -n iacherie-production
 
 # Monitoring
 kubectl port-forward svc/prometheus 9090:9090
@@ -226,7 +226,7 @@ pytest tests/integration/ --parallel
 # Tests sécurité
 bandit -r backend/
 npm audit frontend/
-trivy image ainflue/app:latest
+trivy image iacherie/app:latest
 
 # Tests performance
 artillery run tests/load-test.yml
@@ -258,7 +258,7 @@ k6 run tests/stress-test.js
 
 ### Workflow Automatisé
 ```yaml
-# .github/workflows/ainflue-ci-cd.yml
+# .github/workflows/iacherie-ci-cd.yml
 Trigger → Security Scan → Build → Test → Deploy → Verify
     ↓         ↓           ↓      ↓      ↓       ↓
   Push     Trivy       Docker  Unit   K8s    Health
@@ -281,9 +281,9 @@ Trigger → Security Scan → Build → Test → Deploy → Verify
 - [Guide Contributeur](./docs/contributing.md)
 
 ### API Documentation
-- **Swagger/OpenAPI** : https://api.ainflue.com/docs
+- **Swagger/OpenAPI** : https://api.iacherie.com/docs
 - **Postman Collection** : Disponible dans `/docs/api/`
-- **GraphQL Playground** : https://api.ainflue.com/graphql
+- **GraphQL Playground** : https://api.iacherie.com/graphql
 
 ## 🤝 Contribution
 
@@ -304,9 +304,9 @@ Trigger → Security Scan → Build → Test → Deploy → Verify
 
 ### Canaux Support
 - **Issues GitHub** : Bugs et feature requests
-- **Documentation** : https://docs.ainflue.com
-- **Email** : support@ainflue.com
-- **Slack** : #ainflue-dev (équipe interne)
+- **Documentation** : https://docs.iacherie.com
+- **Email** : support@iacherie.com
+- **Slack** : #iacherie-dev (équipe interne)
 
 ### SLA Support
 - **Critical P0** : 1 heure (24/7)
@@ -349,6 +349,6 @@ Ce projet est sous licence propriétaire. Voir [LICENSE](LICENSE) pour détails.
 
 ---
 
-**🎵 Alimenter l'Économie Créative avec l'IA - Ainflue Platform**
+**🎵 Alimenter l'Économie Créative avec l'IA - IA Chérie Platform**
 
 © 2025 Fahed Mlaiel. Tous droits réservés.

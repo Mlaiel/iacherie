@@ -1,17 +1,17 @@
 {
   "app_info": {
-    "name": "Ainflue",
+    "name": "IA Chérie",
     "subtitle": "Professional Content Creation Platform",
     "version": "1.0.0",
     "build": "1",
-    "bundle_id": "com.fahedmlaiel.ainflue",
+    "bundle_id": "com.fahedmlaiel.iacherie",
     "sku": "AINFLUE_IOS_2025",
     "developer": {
       "name": "Fahed Mlaiel",
       "email": "mlaiel@live.de",
-      "website": "https://ainflue.com",
-      "support_url": "https://support.ainflue.com",
-      "privacy_policy_url": "https://ainflue.com/privacy"
+      "website": "https://iacherie.com",
+      "support_url": "https://support.iacherie.com",
+      "privacy_policy_url": "https://iacherie.com/privacy"
     }
   },
   "app_store_info": {
@@ -72,7 +72,7 @@
   },
   "review_info": {
     "demo_account": {
-      "username": "demo@ainflue.com",
+      "username": "demo@iacherie.com",
       "password": "DemoAccount2025!",
       "notes": "This is a demonstration account for App Store review. All features are accessible."
     },
@@ -86,7 +86,7 @@
   "marketing": {
     "promotional_text": "Transform your content creation with AI-powered tools and protection",
     "description_summary": "Professional content creation platform with AI-powered protection, multi-platform distribution, and advanced analytics for creators and influencers.",
-    "whats_new": "🚀 Introducing Ainflue - The future of content creation!\n\n✨ NEW FEATURES:\n• AI-powered content protection\n• Multi-platform publishing\n• Professional editing tools\n• Real-time analytics\n• Secure biometric authentication\n\n🎯 CREATOR FOCUSED:\n• Streamlined workflow\n• Revenue optimization\n• Brand partnership tools\n• Copyright protection\n\n🔒 PRIVACY FIRST:\n• On-device AI processing\n• End-to-end encryption\n• No unauthorized data collection\n\nJoin thousands of creators already using Ainflue!"
+    "whats_new": "🚀 Introducing IA Chérie - The future of content creation!\n\n✨ NEW FEATURES:\n• AI-powered content protection\n• Multi-platform publishing\n• Professional editing tools\n• Real-time analytics\n• Secure biometric authentication\n\n🎯 CREATOR FOCUSED:\n• Streamlined workflow\n• Revenue optimization\n• Brand partnership tools\n• Copyright protection\n\n🔒 PRIVACY FIRST:\n• On-device AI processing\n• End-to-end encryption\n• No unauthorized data collection\n\nJoin thousands of creators already using IA Chérie!"
   },
   "compliance": {
     "data_collection": {

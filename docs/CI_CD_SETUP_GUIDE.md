@@ -1,6 +1,6 @@
 # 🚀 CI/CD Pipeline Complete Setup Guide
 
-This document provides a comprehensive guide to set up and configure the complete CI/CD pipeline for the Ainflue platform.
+This document provides a comprehensive guide to set up and configure the complete CI/CD pipeline for the IA Chérie platform.
 
 ## 📋 Overview
 
@@ -181,14 +181,14 @@ export VAULT_ADDR="https://your-vault-server.com"
 export VAULT_TOKEN="your-vault-token"
 
 # Create secret paths for each environment
-vault kv put secret/ainflue/production \
+vault kv put secret/iacherie/production \
   postgres-password="$(openssl rand -base64 32)" \
   redis-password="$(openssl rand -base64 32)" \
   jwt-secret="$(openssl rand -base64 64)" \
   api-key="$(openssl rand -hex 32)" \
   encryption-key="$(openssl rand -base64 32)"
 
-vault kv put secret/ainflue/staging \
+vault kv put secret/iacherie/staging \
   postgres-password="$(openssl rand -base64 32)" \
   redis-password="$(openssl rand -base64 32)" \
   jwt-secret="$(openssl rand -base64 64)" \
@@ -222,28 +222,28 @@ kubernetes/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api-green
-  namespace: ainflue
+  name: iacherie-api-green
+  namespace: iacherie
   labels:
-    app: ainflue
+    app: iacherie
     version: green
     environment: production
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue
+      app: iacherie
       version: green
   template:
     metadata:
       labels:
-        app: ainflue
+        app: iacherie
         version: green
         environment: production
     spec:
       containers:
-      - name: ainflue
-        image: ghcr.io/mlaiel/ainflue:latest
+      - name: iacherie
+        image: ghcr.io/mlaiel/iacherie:latest
         ports:
         - containerPort: 8000
         env:
@@ -252,12 +252,12 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: postgres-password
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-password
         livenessProbe:
           httpGet:
@@ -473,16 +473,16 @@ gh run list --workflow="production-deployment.yml"
 gh run view <run-id> --log
 
 # Check Kubernetes deployment status
-kubectl get deployments -n ainflue
-kubectl describe deployment ainflue-api-green -n ainflue
+kubectl get deployments -n iacherie
+kubectl describe deployment iacherie-api-green -n iacherie
 
 # Verify secrets
-kubectl get secrets -n ainflue
-kubectl describe secret ainflue-secrets -n ainflue
+kubectl get secrets -n iacherie
+kubectl describe secret iacherie-secrets -n iacherie
 
 # Check Vault connectivity
 vault status
-vault kv get secret/ainflue/production
+vault kv get secret/iacherie/production
 ```
 
 ## 📚 Additional Resources

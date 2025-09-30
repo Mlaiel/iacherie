@@ -1,7 +1,7 @@
-# 🎯 Quality Module - Ainflue Platform
+# 🎯 Quality Module - IA Chérie Platform
 
 ## Overview
-The Quality module provides comprehensive quality assurance, testing frameworks, and continuous improvement systems for the Ainflue platform. It ensures reliability, performance, and security across all creator workflows.
+The Quality module provides comprehensive quality assurance, testing frameworks, and continuous improvement systems for the IA Chérie platform. It ensures reliability, performance, and security across all creator workflows.
 
 ## Key Features
 - **Comprehensive Testing Framework**: Unit, integration, E2E, and performance testing
@@ -60,7 +60,7 @@ results = await orchestrator.assess_quality()
 ---
 
 ## Legal Notice
-**Copyright © 2025 Ainflue Platform**  
+**Copyright © 2025 IA Chérie Platform**  
 **Author**: Fahed Mlaiel (mlaiel@live.de)  
 **License**: Proprietary - All Rights Reserved  
 
@@ -68,9 +68,9 @@ This software is protected by copyright law and international treaties. Unauthor
 
 **Confidentiality**: This code contains proprietary algorithms and trade secrets. Any unauthorized disclosure or use is prohibited under applicable trade secret laws.
 
-**Security Notice**: This module contains security-critical components. Any security vulnerabilities must be reported immediately to security@ainflue.com following responsible disclosure procedures.
+**Security Notice**: This module contains security-critical components. Any security vulnerabilities must be reported immediately to security@iacherie.com following responsible disclosure procedures.
 
-**Enterprise License Required**: Commercial use requires a valid Enterprise License. Contact licensing@ainflue.com for licensing terms.
+**Enterprise License Required**: Commercial use requires a valid Enterprise License. Contact licensing@iacherie.com for licensing terms.
 
 **Compliance**: This software complies with GDPR, CCPA, and international data protection regulations. Any modifications must maintain compliance standards.
 

@@ -1,9 +1,9 @@
 apiVersion: 1
 
 providers:
-  - name: 'Ainflue Dashboards'
+  - name: 'IA Chérie Dashboards'
     orgId: 1
-    folder: 'Ainflue'
+    folder: 'IA Chérie'
     type: file
     disableDeletion: false
     updateIntervalSeconds: 30

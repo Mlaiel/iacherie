@@ -98,7 +98,7 @@ class TaxCalculationService:
     💰 Tax Calculation Service
     
     Comprehensive tax calculation service supporting multiple jurisdictions,
-    tax types, and creator monetization scenarios for the Ainflue platform.
+    tax types, and creator monetization scenarios for the IA Chérie platform.
     """
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):

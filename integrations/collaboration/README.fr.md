@@ -139,7 +139,7 @@ SUPPORTED_PLATFORMS = {
 
 ## 🎯 Intégration Agents IA
 
-Intégration avec les **53 agents IA spécialisés** Ainflue :
+Intégration avec les **53 agents IA spécialisés** IA Chérie :
 
 ### **Agents de Génération de Contenu (12)**
 - Analyse de style pour matching

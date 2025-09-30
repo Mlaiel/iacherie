@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - Vector Database Storage
+"""IA Chérie Infrastructure Module - Vector Database Storage
 ======================================================
 
-Advanced vector database storage system for the Ainflue platform AI/ML workloads.
+Advanced vector database storage system for the IA Chérie platform AI/ML workloads.
 Provides comprehensive vector storage, similarity search, embedding management,
 and multi-modal content indexing for creator economy AI applications.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chérie Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -95,7 +95,7 @@ class VectorCollection:
 
 class EnterpriseVectorDatabase:
     """
-    Enterprise-grade vector database system for Ainflue platform.
+    Enterprise-grade vector database system for IA Chérie platform.
     
     Provides comprehensive vector storage capabilities:
     - Multi-modal content embeddings

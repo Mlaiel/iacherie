@@ -1,5 +1,5 @@
 """
-Image SEO Optimizer for Ainflue Platform
+Image SEO Optimizer for IA Chérie Platform
 Advanced image optimization for search engines and visual platforms
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -770,7 +770,7 @@ class ImageSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_image_seo_optimizer() -> ImageSEOOptimizer:
-    """Create configured image SEO optimizer for Ainflue"""
+    """Create configured image SEO optimizer for IA Chérie"""
     return ImageSEOOptimizer()
 
 
@@ -787,7 +787,7 @@ if __name__ == "__main__":
         file_size=250000,  # 250KB
         dimensions=(1200, 800),
         format="jpg",
-        context_url="https://ainflue.com/portfolio/photography",
+        context_url="https://iacherie.com/portfolio/photography",
         surrounding_text="This amazing landscape photo was taken during golden hour in the mountains."
     )
     

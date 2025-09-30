@@ -1,5 +1,5 @@
 """
-DNS Service for Ainflue Microservices
+DNS Service for IA Chérie Microservices
 Service discovery and DNS management
 
 Author: Fahed Mlaiel (mlaiel@live.de)

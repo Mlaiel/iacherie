@@ -1,6 +1,6 @@
 """Multi-Platform Distribution Module
 
-Advanced multi-platform content distribution system for the Ainflue platform.
+Advanced multi-platform content distribution system for the IA Chérie platform.
 Handles automated publication scheduling, format adaptation, analytics aggregation,
 hashtag optimization, and A/B testing across all major social platforms.
 

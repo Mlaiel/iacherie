@@ -2,7 +2,7 @@
 ============================================================================
 
 Système d'audit compliance enterprise avec automatisation réglementaire,
-reporting automatique et monitoring conformité pour la plateforme Ainflue.
+reporting automatique et monitoring conformité pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🔒 Security Specialist: Compliance frameworks + audit trails + regulatory security + data governance

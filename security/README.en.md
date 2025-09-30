@@ -1,4 +1,4 @@
-# 🔒 Enterprise Security Module - Ainflue Platform
+# 🔒 Enterprise Security Module - IA Chérie Platform
 
 ## Overview
 
@@ -63,10 +63,10 @@ Ultra-advanced security module with 3-tier architecture compliant with the stric
 
 ## Enterprise Support 24/7
 
-- **SOC 24/7**: security-operations@ainflue.enterprise
-- **Incident Response**: incident@ainflue.enterprise
-- **Compliance**: compliance@ainflue.enterprise
-- **CISO Escalation**: ciso@ainflue.enterprise
+- **SOC 24/7**: security-operations@iacherie.enterprise
+- **Incident Response**: incident@iacherie.enterprise
+- **Compliance**: compliance@iacherie.enterprise
+- **CISO Escalation**: ciso@iacherie.enterprise
 
 ---
 

@@ -1,7 +1,7 @@
 """🤖 AI Content Metrics - ML-Powered Content Intelligence System
 ===============================================================
 
-Advanced AI content processing metrics and analytics for the Ainflue platform.
+Advanced AI content processing metrics and analytics for the IA Chérie platform.
 Tracks AI model performance, content generation quality, enhancement effectiveness,
 and provides ML-powered insights for content optimization.
 

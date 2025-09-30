@@ -3,7 +3,7 @@
 API Management Enterprise Validation Script
 ==========================================
 Demonstrates Phase 1 enterprise components working together with
-multi-expert implementation for Ainflue creator economy.
+multi-expert implementation for IA Chérie creator economy.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 """
@@ -44,7 +44,7 @@ except ImportError as e:
 async def validate_enterprise_api_management():
     """Validate enterprise API management components integration"""
     
-    print("\n🚀 AINFLUE ENTERPRISE API MANAGEMENT VALIDATION")
+    print("\n🚀 IACHERIE ENTERPRISE API MANAGEMENT VALIDATION")
     print("=" * 60)
     print("Multi-Expert Implementation:")
     print("Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité")
@@ -56,7 +56,7 @@ async def validate_enterprise_api_management():
     
     # Authentication Manager
     auth_config = {
-        'jwt_secret': 'ainflue-enterprise-demo-key',
+        'jwt_secret': 'iacherie-enterprise-demo-key',
         'token_expiry_hours': 24,
         'max_login_attempts': 5
     }
@@ -227,7 +227,7 @@ async def validate_enterprise_api_management():
     
     print("\n🎉 VALIDATION COMPLETE!")
     print("=" * 60)
-    print("🏆 AINFLUE ENTERPRISE API MANAGEMENT - PHASE 1 SUCCESSFUL")
+    print("🏆 IACHERIE ENTERPRISE API MANAGEMENT - PHASE 1 SUCCESSFUL")
     print("✅ All 5 critical components working together")
     print("✅ Multi-expert architecture validated")
     print("✅ Creator economy workflows operational")

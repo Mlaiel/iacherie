@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <defs>
+    <linearGradient id="waveformGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0066ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ff0066;stop-opacity:0.6" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="200" fill="#1a1a1a"/>
+  
+  <!-- Grid lines -->
+  <g stroke="#333" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/>
+    <line x1="600" y1="0" x2="600" y2="200"/>
+  </g>
+  
+  <!-- Professional Waveform -->
+  <path d="M 0 100 L 10 80 L 20 120 L 30 60 L 40 140 L 50 50 L 60 150 L 70 40 L 80 160 L 90 30 L 100 170 L 110 85 L 120 115 L 130 75 L 140 125 L 150 65 L 160 135 L 170 55 L 180 145 L 190 45 L 200 155 L 210 90 L 220 110 L 230 70 L 240 130 L 250 60 L 260 140 L 270 50 L 280 150 L 290 40 L 300 160 L 310 95 L 320 105 L 330 85 L 340 115 L 350 75 L 360 125 L 370 65 L 380 135 L 390 55 L 400 145 L 410 88 L 420 112 L 430 78 L 440 122 L 450 68 L 460 132 L 470 58 L 480 142 L 490 48 L 500 152 L 510 92 L 520 108 L 530 82 L 540 118 L 550 72 L 560 128 L 570 62 L 580 138 L 590 52 L 600 148 L 610 87 L 620 113 L 630 77 L 640 123 L 650 67 L 660 133 L 670 57 L 680 143 L 690 47 L 700 153 L 710 93 L 720 107 L 730 83 L 740 117 L 750 73 L 760 127 L 770 63 L 780 137 L 790 53 L 800 100" 
+        fill="none" 
+        stroke="url(#waveformGradient)" 
+        stroke-width="2" 
+        filter="url(#glow)"/>
+  
+  <!-- Level indicators -->
+  <g fill="#00ff88" font-family="Arial, sans-serif" font-size="10">
+    <text x="10" y="15">Professional Waveform Visualization</text>
+    <text x="10" y="190">© Ainflue Studio - Fahed Mlaiel</text>
+    <text x="720" y="15">-6dB</text>
+    <text x="720" y="100">0dB</text>
+    <text x="720" y="190">-6dB</text>
+  </g>
+</svg>

@@ -3,7 +3,7 @@
 📊 REPORTING SERVICE
 ===================
 
-Advanced automated reporting and document generation service for the Ainflue platform.
+Advanced automated reporting and document generation service for the IA Chérie platform.
 Handles business reports, analytics dashboards, compliance reports, and data exports.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

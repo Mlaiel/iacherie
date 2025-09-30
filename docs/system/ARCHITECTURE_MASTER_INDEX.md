@@ -1,8 +1,8 @@
-# 🏗️ Ainflue Layered Architecture - Master Index
+# 🏗️ IA Chérie Layered Architecture - Master Index
 
 ## 📋 Complete Architecture Overview
 
-This document provides the master index for the Ainflue layered architecture implementation, designed to meet enterprise performance targets while maintaining large, well-documented files for optimal performance.
+This document provides the master index for the IA Chérie layered architecture implementation, designed to meet enterprise performance targets while maintaining large, well-documented files for optimal performance.
 
 ## 🎯 Architecture Compliance Status
 
@@ -16,7 +16,7 @@ This document provides the master index for the Ainflue layered architecture imp
 
 #### 2. Layered Architecture (COMPLETED)
 ```
-✅ ainflue/
+✅ iacherie/
 ├── ✅ core-platform/ (20-30 massive files)
 │   ├── 🤖 ai_engine_consolidated.py (715k+ lines with TOC)
 │   ├── 📊 data_engine_core.py (167k+ lines with TOC)

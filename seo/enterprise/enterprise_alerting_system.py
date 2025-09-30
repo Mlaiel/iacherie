@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Enterprise Alerting System
 ==========================
 
-Enterprise-grade alerting and notification system for Ainflue SEO platform.
+Enterprise-grade alerting and notification system for IA Chérie SEO platform.
 Provides comprehensive monitoring, alerting, and incident management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -470,7 +470,7 @@ class NotificationManager:
             # Email configuration (should be from settings)
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
-            smtp_username = "alerts@ainflue.com"
+            smtp_username = "alerts@iacherie.com"
             smtp_password = "alert_password"  # Should be from secure config
             
             # Create email
@@ -496,7 +496,7 @@ Current Value: {alert.metric_data.get('current_value')}
 Threshold: {alert.metric_data.get('threshold')}
 Operator: {alert.metric_data.get('operator')}
 
-This is an automated alert from Ainflue Enterprise Monitoring System.
+This is an automated alert from IA Chérie Enterprise Monitoring System.
             """
             
             msg.attach(MIMEText(body, 'plain'))
@@ -543,7 +543,7 @@ This is an automated alert from Ainflue Enterprise Monitoring System.
                             {"title": "Metric", "value": alert.metric_data.get('metric_name'), "short": True},
                             {"title": "Value", "value": str(alert.metric_data.get('current_value')), "short": True}
                         ],
-                        "footer": "Ainflue Enterprise Monitoring",
+                        "footer": "IA Chérie Enterprise Monitoring",
                         "ts": int(alert.triggered_at.timestamp())
                     }
                 ]
@@ -788,7 +788,7 @@ class EscalationManager:
         return {
             "level": level.value,
             "channels": [NotificationChannel.EMAIL],
-            "recipients": ["escalation@ainflue.com"]
+            "recipients": ["escalation@iacherie.com"]
         }
 
 

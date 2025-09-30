@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Project Management System
+ * IA Chérie Desktop - Project Management System
  * 
  * Advanced project state management and persistence for creator workflows
  * 

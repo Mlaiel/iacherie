@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Preload Script
+ * IA Chérie Desktop - Preload Script
  * 
  * Secure bridge between main process and renderer process
  * 

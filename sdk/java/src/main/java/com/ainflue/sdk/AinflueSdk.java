@@ -1,7 +1,7 @@
-package com.ainflue.sdk;
+package com.iacherie.sdk;
 
 /**
- * Main Ainflue SDK Client for Java
+ * Main IA Chérie SDK Client for Java
  * 
  * Multi-expert implementation:
  * - Backend Senior: Robust Java client architecture with enterprise patterns
@@ -13,20 +13,20 @@ package com.ainflue.sdk;
  * @version 1.0.0
  */
 
-import com.ainflue.sdk.auth.AuthenticationManager;
-import com.ainflue.sdk.client.HttpClientAdapter;
-import com.ainflue.sdk.config.SdkConfiguration;
-import com.ainflue.sdk.exceptions.AinflueSdkException;
-import com.ainflue.sdk.exceptions.ConfigurationException;
-import com.ainflue.sdk.models.ApiResponse;
-import com.ainflue.sdk.models.ContentItem;
-import com.ainflue.sdk.models.UserProfile;
-import com.ainflue.sdk.services.ContentService;
-import com.ainflue.sdk.services.AnalyticsService;
-import com.ainflue.sdk.services.AIService;
-import com.ainflue.sdk.utils.Constants;
-import com.ainflue.sdk.utils.Logger;
-import com.ainflue.sdk.metrics.SdkMetrics;
+import com.iacherie.sdk.auth.AuthenticationManager;
+import com.iacherie.sdk.client.HttpClientAdapter;
+import com.iacherie.sdk.config.SdkConfiguration;
+import com.iacherie.sdk.exceptions.AinflueSdkException;
+import com.iacherie.sdk.exceptions.ConfigurationException;
+import com.iacherie.sdk.models.ApiResponse;
+import com.iacherie.sdk.models.ContentItem;
+import com.iacherie.sdk.models.UserProfile;
+import com.iacherie.sdk.services.ContentService;
+import com.iacherie.sdk.services.AnalyticsService;
+import com.iacherie.sdk.services.AIService;
+import com.iacherie.sdk.utils.Constants;
+import com.iacherie.sdk.utils.Logger;
+import com.iacherie.sdk.metrics.SdkMetrics;
 
 import java.util.List;
 import java.util.Map;
@@ -36,12 +36,12 @@ import java.io.Closeable;
 import java.time.Instant;
 
 /**
- * Main SDK client providing access to all Ainflue platform features
+ * Main SDK client providing access to all IA Chérie platform features
  */
 public class AinflueSdk implements Closeable {
     
     private static final String SDK_VERSION = "1.0.0";
-    private static final String USER_AGENT = "Ainflue-Java-SDK/" + SDK_VERSION;
+    private static final String USER_AGENT = "IA Chérie-Java-SDK/" + SDK_VERSION;
     
     private final SdkConfiguration configuration;
     private final AuthenticationManager authManager;
@@ -76,7 +76,7 @@ public class AinflueSdk implements Closeable {
         this.analyticsService = new AnalyticsService(httpClient, metrics);
         this.aiService = new AIService(httpClient, metrics);
         
-        logger.info("Ainflue SDK initialized with version " + SDK_VERSION);
+        logger.info("IA Chérie SDK initialized with version " + SDK_VERSION);
     }
     
     /**
@@ -158,7 +158,7 @@ public class AinflueSdk implements Closeable {
         
         return CompletableFuture.supplyAsync(() -> {
             try {
-                logger.info("Initializing Ainflue SDK...");
+                logger.info("Initializing IA Chérie SDK...");
                 
                 // Initialize authentication
                 authManager.initialize();
@@ -172,7 +172,7 @@ public class AinflueSdk implements Closeable {
                 }
                 
                 isInitialized = true;
-                logger.info("Ainflue SDK initialization completed successfully");
+                logger.info("IA Chérie SDK initialization completed successfully");
                 
                 return null;
                 
@@ -342,7 +342,7 @@ public class AinflueSdk implements Closeable {
         }
         
         try {
-            logger.info("Closing Ainflue SDK...");
+            logger.info("Closing IA Chérie SDK...");
             
             // Stop metrics collection
             if (metrics != null) {
@@ -360,7 +360,7 @@ public class AinflueSdk implements Closeable {
             }
             
             isClosed = true;
-            logger.info("Ainflue SDK closed successfully");
+            logger.info("IA Chérie SDK closed successfully");
             
         } catch (Exception e) {
             logger.error("Error closing SDK", e);
@@ -493,7 +493,7 @@ public class AinflueSdk implements Closeable {
         // Example 2: Advanced configuration
         AinflueSdk advancedSdk = AinflueSdk.builder()
             .apiKey("your-api-key")
-            .baseUrl("https://api-staging.ainflue.com")
+            .baseUrl("https://api-staging.iacherie.com")
             .timeout(60, TimeUnit.SECONDS)
             .maxRetries(5)
             .enableMetrics(true)

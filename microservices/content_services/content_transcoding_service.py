@@ -1,5 +1,5 @@
 """
-Content Transcoding Service for Ainflue Microservices
+Content Transcoding Service for IA Chérie Microservices
 Multi-format video/audio transcoding and optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)

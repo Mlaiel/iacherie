@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Creator Analytics Configuration Module
+"""IA Chérie Creator Analytics Configuration Module
 ===============================================
 
-Advanced creator analytics configuration for the Ainflue platform.
+Advanced creator analytics configuration for the IA Chérie platform.
 Handles performance tracking, audience analytics, content optimization,
 revenue analytics, engagement metrics, and AI-powered insights for creators.
 

@@ -50,7 +50,7 @@ class FilebeatConfig:
     config_path: str = "/etc/filebeat/filebeat.yml"
     log_level: str = "info"
     environment: str = "production"
-    cluster_name: str = "ainflue-production"
+    cluster_name: str = "iacherie-production"
     elasticsearch_hosts: List[str] = None
     logstash_hosts: List[str] = None
     enable_real_time: bool = True
@@ -59,9 +59,9 @@ class FilebeatConfig:
     
     def __post_init__(self):
         if self.elasticsearch_hosts is None:
-            self.elasticsearch_hosts = ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+            self.elasticsearch_hosts = ["elasticsearch.iacherie-monitoring.svc.cluster.local:9200"]
         if self.logstash_hosts is None:
-            self.logstash_hosts = ["logstash.ainflue-monitoring.svc.cluster.local:5044"]
+            self.logstash_hosts = ["logstash.iacherie-monitoring.svc.cluster.local:5044"]
         if self.creator_types is None:
             self.creator_types = ["musicians", "bloggers", "photographers", "influencers", "comedians"]
 
@@ -375,7 +375,7 @@ def create_config_from_file(config_path: str) -> FilebeatConfig:
             config_path=config_path,
             log_level=config_data.get('log_level', 'info'),
             environment=config_data.get('environment', 'production'),
-            cluster_name=config_data.get('cluster_name', 'ainflue-production'),
+            cluster_name=config_data.get('cluster_name', 'iacherie-production'),
             elasticsearch_hosts=config_data.get('elasticsearch_hosts'),
             logstash_hosts=config_data.get('logstash_hosts'),
             enable_real_time=config_data.get('enable_real_time', True),

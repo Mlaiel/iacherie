@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-The **Multimedia Formats Module** provides comprehensive support for all modern multimedia formats with AI-powered detection, validation, and optimization capabilities. This enterprise-grade system supports the complete Ainflue creator workflow from content upload to distribution.
+The **Multimedia Formats Module** provides comprehensive support for all modern multimedia formats with AI-powered detection, validation, and optimization capabilities. This enterprise-grade system supports the complete IA Chérie creator workflow from content upload to distribution.
 
 ## 🚀 Key Features
 
@@ -145,6 +145,6 @@ formats/
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform**  
 **Contact**: mlaiel@live.de  
 **Version**: 3.1.0 Enterprise

@@ -78,7 +78,7 @@ services:
 
   # Platform Services for Testing
   api_gateway:
-    image: ainflue/platform:test
+    image: iacherie/platform:test
     environment:
       - ENV=testing
       - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
@@ -91,7 +91,7 @@ services:
 
   # Audio Service for Testing
   audio_service:
-    image: ainflue/audio:test
+    image: iacherie/audio:test
     environment:
       - ENV=testing
       - API_GATEWAY_URL=http://api_gateway:8000
@@ -102,7 +102,7 @@ services:
 
   # Protection Service for Testing
   protection_service:
-    image: ainflue/protection:test
+    image: iacherie/protection:test
     environment:
       - ENV=testing
       - API_GATEWAY_URL=http://api_gateway:8000
@@ -113,7 +113,7 @@ services:
 
   # Monetization Service for Testing
   monetization_service:
-    image: ainflue/monetization:test
+    image: iacherie/monetization:test
     environment:
       - ENV=testing
       - API_GATEWAY_URL=http://api_gateway:8000
@@ -145,7 +145,7 @@ services:
 
   # Test Report Aggregator
   test_reporter:
-    image: ainflue/test-reporter:latest
+    image: iacherie/test-reporter:latest
     environment:
       - REPORT_OUTPUT_FORMAT=html,xml,json
       - COVERAGE_THRESHOLD=95.0

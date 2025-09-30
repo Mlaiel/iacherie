@@ -1,8 +1,8 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Application deployment role variables
-# Environment-specific variables for Ainflue deployment
+# Environment-specific variables for IA Chérie deployment
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -11,13 +11,13 @@
 
 ---
 # Git repository configuration
-git_repo: "https://github.com/Mlaiel/Ainflue.git"
+git_repo: "https://github.com/Mlaiel/IA Chérie.git"
 git_branch: "{{ deployment_branch | default('main') }}"
 git_commit: "{{ deployment_commit | default('HEAD') }}"
 
 # Docker configuration
 docker_enabled: true
-docker_registry: "{{ docker_registry_url | default('ghcr.io/mlaiel/ainflue') }}"
+docker_registry: "{{ docker_registry_url | default('ghcr.io/mlaiel/iacherie') }}"
 docker_images:
   api: "{{ docker_registry }}/api:{{ app_version }}"
   ai_engine: "{{ docker_registry }}/ai-engine:{{ app_version }}"
@@ -26,7 +26,7 @@ docker_images:
 
 # Kubernetes configuration
 kubernetes_enabled: true
-kubernetes_namespace: "ainflue-{{ app_environment }}"
+kubernetes_namespace: "iacherie-{{ app_environment }}"
 kubernetes_manifests_dir: "{{ app_config_dir }}/k8s"
 
 # Environment variables for application
@@ -75,7 +75,7 @@ ssl_ca_certificate_path: "{{ app_config_dir }}/ssl/ca.crt"
 
 # Systemd service configuration
 systemd_services:
-  - name: "ainflue-api"
+  - name: "iacherie-api"
     type: "notify"
     user: "{{ app_user }}"
     group: "{{ app_group }}"
@@ -84,7 +84,7 @@ systemd_services:
     restart: "always"
     restart_sec: 10
     
-  - name: "ainflue-worker"
+  - name: "iacherie-worker"
     type: "notify"
     user: "{{ app_user }}"
     group: "{{ app_group }}"

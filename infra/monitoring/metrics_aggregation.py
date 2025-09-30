@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade metrics aggregation system for Ainflue platform
+# Enterprise-grade metrics aggregation system for IA Chérie platform
 # Supports multi-cloud metrics collection, aggregation, and analytics
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -63,7 +63,7 @@ class AggregatedMetric:
     sample_count: int
 
 class MetricsAggregationEngine:
-    """Enterprise metrics aggregation engine for Ainflue platform"""
+    """Enterprise metrics aggregation engine for IA Chérie platform"""
     
     def __init__(self, config_path: str = "config/metrics_config.yaml"):
         self.config = self._load_config(config_path)
@@ -110,7 +110,7 @@ class MetricsAggregationEngine:
             },
             "prometheus": {
                 "pushgateway_url": "http://prometheus-pushgateway:9091",
-                "job_name": "ainflue-metrics-aggregation"
+                "job_name": "iacherie-metrics-aggregation"
             },
             "creator_economy": {
                 "track_uploads": True,
@@ -372,7 +372,7 @@ class MetricsAggregationEngine:
             # Create Prometheus metrics
             for metric_name, metric_value in metrics.items():
                 if isinstance(metric_value, (int, float)):
-                    gauge = Gauge(f"ainflue_{metric_name}", f"Ainflue {metric_name}", 
+                    gauge = Gauge(f"iacherie_{metric_name}", f"IA Chérie {metric_name}", 
                                  registry=self.prometheus_registry)
                     gauge.set(metric_value)
             
@@ -384,7 +384,7 @@ class MetricsAggregationEngine:
                 from prometheus_client import push_to_gateway
                 push_to_gateway(
                     pushgateway_url,
-                    job=prometheus_config.get("job_name", "ainflue-metrics"),
+                    job=prometheus_config.get("job_name", "iacherie-metrics"),
                     registry=self.prometheus_registry
                 )
             

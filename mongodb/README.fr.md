@@ -1,13 +1,13 @@
-# Couche Base de Données MongoDB - Plateforme Ainflue
+# Couche Base de Données MongoDB - Plateforme IA Chérie
 
-[![Licence: Propriétaire](https://img.shields.io/badge/Licence-Propriétaire-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Licence: Propriétaire](https://img.shields.io/badge/Licence-Propriétaire-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-green.svg)](https://www.mongodb.com/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Prêt-blue.svg)](https://www.docker.com/)
 
 ## 🚀 Aperçu
 
-La couche de base de données MongoDB est le système de gestion de données central de la plateforme Ainflue - une plateforme d'agents influenceurs alimentée par l'IA qui révolutionne la création de contenu, la collaboration et la monétisation. Ce module fournit une gestion de base de données de niveau entreprise avec des fonctionnalités avancées pour la scalabilité, la sécurité et l'optimisation des performances.
+La couche de base de données MongoDB est le système de gestion de données central de la plateforme IA Chérie - une plateforme d'agents influenceurs alimentée par l'IA qui révolutionne la création de contenu, la collaboration et la monétisation. Ce module fournit une gestion de base de données de niveau entreprise avec des fonctionnalités avancées pour la scalabilité, la sécurité et l'optimisation des performances.
 
 ## 👥 Spécialités de l'Équipe
 
@@ -34,7 +34,7 @@ Ce code, cette architecture, documentation et toute propriété intellectuelle a
 
 ## 🎯 Architecture de Logique Métier
 
-Ainflue suit un flux de travail sophistiqué pour les créateurs de contenu :
+IA Chérie suit un flux de travail sophistiqué pour les créateurs de contenu :
 
 ```mermaid
 graph LR
@@ -108,8 +108,8 @@ mongodb/
 
 ```bash
 # Cloner le repository (utilisateurs autorisés uniquement)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mongodb
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mongodb
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -271,8 +271,8 @@ terraform apply terraform/mongodb.tf
 # Configuration Production
 production:
   connection:
-    hosts: ["mongo1.ainflue.com", "mongo2.ainflue.com", "mongo3.ainflue.com"]
-    replica_set: "ainflue-rs"
+    hosts: ["mongo1.iacherie.com", "mongo2.iacherie.com", "mongo3.iacherie.com"]
+    replica_set: "iacherie-rs"
     ssl: true
     auth_source: "admin"
   
@@ -368,4 +368,4 @@ Ce logiciel et les fichiers de documentation associés sont propriétaires et co
 
 ---
 
-*Ce README fait partie de la documentation de la couche base de données MongoDB de la plateforme Ainflue. Pour la documentation système complète, veuillez vous référer au repository principal du projet.*
+*Ce README fait partie de la documentation de la couche base de données MongoDB de la plateforme IA Chérie. Pour la documentation système complète, veuillez vous référer au repository principal du projet.*

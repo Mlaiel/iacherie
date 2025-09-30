@@ -428,7 +428,7 @@ class SecurityValidator:
     async def _check_cors_configuration(self, base_url: str) -> Dict[str, Any]:
         """Check CORS configuration"""
         # Simulate CORS check
-        return {"passed": True, "origins": ["*.ainflue.com"], "severity": "medium"}
+        return {"passed": True, "origins": ["*.iacherie.com"], "severity": "medium"}
     
     async def _check_security_headers(self, base_url: str) -> Dict[str, Any]:
         """Check security headers"""
@@ -1075,7 +1075,7 @@ if __name__ == "__main__":
         
         report = await validator.validate_deployment(
             deployment_id="deploy-123",
-            base_url="https://api.ainflue.com/ml",
+            base_url="https://api.iacherie.com/ml",
             environment=DeploymentEnvironment.STAGING,
             model_info=model_info,
             creator_type="musician"

@@ -1,6 +1,6 @@
 """Ultra-Sophisticated Encryption Manager for Events Security
 
-Advanced encryption, key management, and cryptographic operations for Ainflue 
+Advanced encryption, key management, and cryptographic operations for IA Chérie 
 business events with quantum-resistant algorithms and ML-powered key rotation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -105,7 +105,7 @@ class DecryptionResult:
 
 class EncryptionManager:
     """
-    Ultra-sophisticated encryption manager for Ainflue Events Security
+    Ultra-sophisticated encryption manager for IA Chérie Events Security
     
     Features:
     - Multiple encryption algorithms with automatic selection

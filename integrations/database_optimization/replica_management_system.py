@@ -3,7 +3,7 @@
 =========================================================
 
 Intelligent read replica management with geographic optimization,
-automatic failover, and load balancing for Ainflue platform.
+automatic failover, and load balancing for IA Chérie platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Advanced replication strategies + failover + consistency management

@@ -168,7 +168,7 @@
 
 **🎉 FÉLICITATIONS: VOUS AVEZ DÉJÀ UNE PLATEFORME QUASI-COMPLÈTE!**
 
-Le projet Ainflue est à **99.8% implémenté**. Les 247 fichiers de l'ancienne checklist existent déjà dans le repository avec des implémentations fonctionnelles.
+Le projet IA Chérie est à **99.8% implémenté**. Les 247 fichiers de l'ancienne checklist existent déjà dans le repository avec des implémentations fonctionnelles.
 
 **Le vrai travail restant:**
 1. Finaliser les dépendances et l'environnement

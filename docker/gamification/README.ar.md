@@ -65,8 +65,8 @@
 ### 1. نشر الإنتاج
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/gamification
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/gamification
 
 # تعيين متغيرات البيئة
 cp .env.example .env

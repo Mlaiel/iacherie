@@ -1035,10 +1035,10 @@ class KubernetesHealthIntegration:
             "apiVersion": "apiextensions.k8s.io/v1",
             "kind": "CustomResourceDefinition",
             "metadata": {
-                "name": "healthchecks.ainflue.monitoring.fahed-mlaiel.com"
+                "name": "healthchecks.iacherie.monitoring.fahed-mlaiel.com"
             },
             "spec": {
-                "group": "ainflue.monitoring.fahed-mlaiel.com",
+                "group": "iacherie.monitoring.fahed-mlaiel.com",
                 "versions": [{
                     "name": "v1",
                     "served": True,

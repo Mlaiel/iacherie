@@ -1,5 +1,5 @@
 """
-Ainflue Core Platform - File Storage Core
+IA Chérie Core Platform - File Storage Core
 =========================================
 
 Enterprise-grade file storage system with multi-provider support, 

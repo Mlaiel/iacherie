@@ -15,7 +15,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chérie - AI-Powered Creator Economy Platform
 Module: Notification Channel Orchestrator
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -221,7 +221,7 @@ class NotificationChannelOrchestrator:
     </div>
     
     <div style="margin-top: 20px; padding: 15px; background-color: #333; color: white; text-align: center;">
-        <p>Ainflue AlertManager Enterprise • AI-Powered Creator Economy Platform</p>
+        <p>IA Chérie AlertManager Enterprise • AI-Powered Creator Economy Platform</p>
         <p>© 2025 Fahed Mlaiel - All Rights Reserved</p>
     </div>
 </body>
@@ -249,7 +249,7 @@ class NotificationChannelOrchestrator:
     <div style="padding: 20px;">
         <p>Dear {creator_name},</p>
         
-        <p>We want to inform you about a service impact that may affect your Creator experience on Ainflue.</p>
+        <p>We want to inform you about a service impact that may affect your Creator experience on IA Chérie.</p>
         
         <h3>Impact Details</h3>
         <ul>
@@ -273,7 +273,7 @@ class NotificationChannelOrchestrator:
         <p>Thank you for your patience as we work to resolve this issue.</p>
         
         <p>Best regards,<br>
-        The Ainflue Team</p>
+        The IA Chérie Team</p>
     </div>
 </body>
 </html>
@@ -305,7 +305,7 @@ class NotificationChannelOrchestrator:
                 "source": "{service}",
                 "severity": "{severity}",  
                 "component": "{service}",
-                "group": "ainflue-alerts",
+                "group": "iacherie-alerts",
                 "class": "creator-economy",
                 "custom_details": {
                     "creator_impact": "{creator_impact}",
@@ -339,7 +339,7 @@ class NotificationChannelOrchestrator:
                 "enabled": self.config.get("channels", {}).get("email", {}).get("enabled", True),
                 "smtp_host": self.config.get("channels", {}).get("email", {}).get("smtp_host", "smtp.gmail.com"),
                 "smtp_port": self.config.get("channels", {}).get("email", {}).get("smtp_port", 587),
-                "sender": self.config.get("channels", {}).get("email", {}).get("sender", "alerts@ainflue.com"),
+                "sender": self.config.get("channels", {}).get("email", {}).get("sender", "alerts@iacherie.com"),
                 "username": self.config.get("channels", {}).get("email", {}).get("username"),
                 "password": self.config.get("channels", {}).get("email", {}).get("password"),
                 "rate_limit": 60,  # messages per minute
@@ -539,7 +539,7 @@ class NotificationChannelOrchestrator:
                     name=f"{team.replace('-', ' ').title()}",
                     channels={
                         "slack": f"#{team}",
-                        "email": f"{team}@ainflue.com"
+                        "email": f"{team}@iacherie.com"
                     },
                     preferences={
                         "escalation_delay": 900  # 15 minutes
@@ -563,7 +563,7 @@ class NotificationChannelOrchestrator:
                     channels={
                         "pagerduty": "primary-oncall",
                         "sms": "+1-555-ONCALL",
-                        "email": "oncall@ainflue.com"
+                        "email": "oncall@iacherie.com"
                     },
                     preferences={
                         "always_notify": True,
@@ -657,10 +657,10 @@ class NotificationChannelOrchestrator:
             "timestamp": alert_context.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC'),
             "creator_impact": f"{alert_context.business_impact:.1%}",
             "description": getattr(alert_context, 'metadata', {}).get('description', 'No description available'),
-            "dashboard_url": f"https://dashboard.ainflue.com/alerts/{alert_context.alert_id}",
-            "runbook_url": f"https://docs.ainflue.com/runbooks/{alert_context.source_service}",
-            "status_page_url": "https://status.ainflue.com",
-            "short_url": f"https://ainflue.co/a/{alert_context.alert_id[:8]}",
+            "dashboard_url": f"https://dashboard.iacherie.com/alerts/{alert_context.alert_id}",
+            "runbook_url": f"https://docs.iacherie.com/runbooks/{alert_context.source_service}",
+            "status_page_url": "https://status.iacherie.com",
+            "short_url": f"https://iacherie.co/a/{alert_context.alert_id[:8]}",
             
             # Impact metrics
             "user_count_affected": alert_context.user_count_affected,
@@ -950,7 +950,7 @@ class NotificationChannelOrchestrator:
             
             payload = {
                 "channel": slack_channel,
-                "username": "Ainflue AlertManager",
+                "username": "IA Chérie AlertManager",
                 "icon_emoji": ":rotating_light:",
                 "text": message.content
             }
@@ -1302,7 +1302,7 @@ if __name__ == "__main__":
         config = {
             "channels": {
                 "slack": {"enabled": True, "webhook_url": "https://hooks.slack.com/test"},
-                "email": {"enabled": True, "smtp_host": "smtp.gmail.com", "sender": "test@ainflue.com"}
+                "email": {"enabled": True, "smtp_host": "smtp.gmail.com", "sender": "test@iacherie.com"}
             }
         }
         

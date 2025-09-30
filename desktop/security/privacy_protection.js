@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Privacy Protection Manager
+ * IA Chérie Desktop - Privacy Protection Manager
  * 
  * Advanced privacy protection system for user data and content
  * 
@@ -340,7 +340,7 @@ class PrivacyProtectionManager {
             userData,
             exportFormat: format,
             exportVersion: '1.0.0',
-            generatedBy: 'Ainflue Desktop Privacy Manager'
+            generatedBy: 'IA Chérie Desktop Privacy Manager'
         };
 
         this.logDataProcessing('data_export_generated', {

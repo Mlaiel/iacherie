@@ -3,7 +3,7 @@
 ===============================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/violation_analysis_intelligence.py
+Module: /workspaces/IA Chérie/data/content_protection/violation_analysis_intelligence.py
 Expert Team: Lead Dev IA + ML Engineer + Data Scientist + Pattern Recognition Expert
 
 Author: Fahed Mlaiel (mlaiel@live.de)

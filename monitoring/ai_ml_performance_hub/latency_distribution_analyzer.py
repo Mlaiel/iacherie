@@ -2,7 +2,7 @@
 ⏱️ Latency Distribution Analyzer - Enterprise AI/ML Performance Hub
 =================================================================
 
-Analyseur distribution latence enterprise ultra-avancé pour Creator Economy Ainflue.
+Analyseur distribution latence enterprise ultra-avancé pour Creator Economy IA Chérie.
 P50/P95/P99 latency tracking, breakdown latence par composant, impact expérience créateur,
 distribution latence géographique, monitoring compliance SLA.
 
@@ -381,7 +381,7 @@ class LatencyDistributionAnalyzer:
             cache_hit=random.random() < 0.3,
             cdn_used=random.random() < 0.8,
             edge_location=f"edge_{region.value}_{random.randint(1, 5)}",
-            user_agent="Ainflue-Client/1.0",
+            user_agent="IA Chérie-Client/1.0",
             connection_type=random.choice(["4G", "5G", "WiFi", "Fiber"])
         )
         
@@ -898,7 +898,7 @@ if __name__ == "__main__":
             service_type=ServiceType.CONTENT_ANALYSIS,
             geographic_region=GeographicRegion.NORTH_AMERICA,
             request_size_bytes=1024*50,
-            user_agent="Ainflue-Test/1.0",
+            user_agent="IA Chérie-Test/1.0",
             connection_type="WiFi"
         )
         

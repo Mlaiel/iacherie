@@ -1,5 +1,5 @@
 """Analytics Module
-Advanced analytics and business intelligence for the Ainflue platform.
+Advanced analytics and business intelligence for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

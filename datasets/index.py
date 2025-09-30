@@ -2,7 +2,7 @@
 🎯 DATASETS ORCHESTRATOR - ENTERPRISE CENTRAL COORDINATOR
 =========================================================
 
-Main orchestrator for Ainflue Datasets Module providing unified access to all
+Main orchestrator for IA Chérie Datasets Module providing unified access to all
 dataset management functionality across 53 AI agents and 65+ platforms.
 Enterprise-grade coordination with multi-modal processing and real-time optimization.
 
@@ -80,7 +80,7 @@ class DatasetsOrchestrator:
     """
     🎯 Enterprise Datasets Orchestrator
     
-    Central coordination system for all dataset operations across the Ainflue platform.
+    Central coordination system for all dataset operations across the IA Chérie platform.
     Provides unified interface for 53 AI agents with enterprise-grade performance,
     security, and scalability.
     
@@ -514,7 +514,7 @@ def get_datasets_orchestrator(**kwargs) -> DatasetsOrchestrator:
 # Main entry point for external access
 def main():
     """Main entry point for datasets orchestration"""
-    print("🎯 Ainflue Datasets Orchestrator - Enterprise Ready")
+    print("🎯 IA Chérie Datasets Orchestrator - Enterprise Ready")
     print("🎖️ Multi-Expert Implementation: All 9 roles validated")
     print("🚀 Supporting 53 AI Agents across 65+ platforms")
     print("© 2025 Fahed Mlaiel - All Rights Reserved")

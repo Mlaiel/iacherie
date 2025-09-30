@@ -1,4 +1,4 @@
-# Collaboration Monitoring - Ainflue Platform
+# Collaboration Monitoring - IA Chérie Platform
 
 ## Overview
 
@@ -108,5 +108,5 @@ collaboration/
 
 **Copyright:** © 2025 Fahed Mlaiel. All rights reserved.  
 **Contact:** mlaiel@live.de  
-**Project:** Ainflue Platform - Collaboration Monitoring  
+**Project:** IA Chérie Platform - Collaboration Monitoring  
 **Version:** 3.1.0 Enterprise

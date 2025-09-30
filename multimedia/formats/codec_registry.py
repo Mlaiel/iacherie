@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Codec Registry System
+IA Chérie Platform - Multimedia Formats - Codec Registry System
 Professional codec management and registry for multimedia processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)

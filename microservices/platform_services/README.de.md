@@ -1,4 +1,4 @@
-# 🌐 Platform Services Enterprise - Ainflue
+# 🌐 Platform Services Enterprise - IA Chérie
 
 **🚀 ENTERPRISE PLATTFORM-INTEGRATIONSDIENSTE FÜR 65+ PLATTFORMEN**
 
@@ -12,11 +12,11 @@
 
 ## 🎯 ENTERPRISE ÜBERBLICK
 
-**Standort**: `/workspaces/Ainflue/microservices/platform_services/`  
+**Standort**: `/workspaces/IA Chérie/microservices/platform_services/`  
 **Architektur**: Enterprise-Level Platform Integration | 65+ Plattformen | Production-Ready  
 **Zweck**: Universelle Plattform-Integration für globale Creator-Economy Orchestrierung
 
-### **🌍 AINFLUE GESCHÄFTSLOGIK**
+### **🌍 IACHERIE GESCHÄFTSLOGIK**
 ```
 Creator Multi-Format → IA Processing → Schutz → Monetarisierung → 
 Zusammenarbeit & Gamification → SEO → Multi-Plattform Distribution

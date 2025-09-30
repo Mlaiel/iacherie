@@ -1,6 +1,6 @@
 """
 📋 CONTENT DISTRIBUTION REPORTS
-Ainflue Platform - Comprehensive Distribution Reporting
+IA Chérie Platform - Comprehensive Distribution Reporting
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

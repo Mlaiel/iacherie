@@ -1,5 +1,5 @@
 """
-Multilingual SEO AI for Ainflue Platform
+Multilingual SEO AI for IA Chérie Platform
 ========================================
 
 Advanced multilingual SEO optimization system with cultural adaptation,
@@ -32,7 +32,7 @@ import openai
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 import pycountry
-from googletrans import Translator
+# from googletrans import Translator  # Temporarily disabled due to httpcore compatibility
 import langdetect
 from langdetect.lang_detect_exception import LangDetectException
 
@@ -213,7 +213,7 @@ class MultilingualSEOAI:
         """Initialize translation and AI models."""
         try:
             # Initialize Google Translator
-            self.translator = Translator()
+            self.translator = None  # Translator() disabled due to httpcore compatibility
             
             # Initialize transformer model for semantic analysis
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)

@@ -11,7 +11,7 @@
 
 ## 🎯 Intelligence Enterprise Monétisation
 
-Suite monétisation production-ready avec pricing intelligent, optimisation revenus et analytics business pour plateforme créateur Ainflue avec intégrations 65+ plateformes.
+Suite monétisation production-ready avec pricing intelligent, optimisation revenus et analytics business pour plateforme créateur IA Chérie avec intégrations 65+ plateformes.
 
 ### 🏗️ Vue d'Ensemble Architecture Complète
 
@@ -110,7 +110,7 @@ integrations/monetization/
 
 ## 📊 Journey Créateur Monétisation
 
-### Pipeline Monétisation Spécifique Ainflue
+### Pipeline Monétisation Spécifique IA Chérie
 
 ```mermaid
 graph LR
@@ -350,12 +350,12 @@ conversion = await currency_manager.convert_currency(
 
 ---
 
-## 🔗 Intégration avec Plateforme Ainflue
+## 🔗 Intégration avec Plateforme IA Chérie
 
 ### Intégration Dashboard Créateur
 ```javascript
 // Intégration Frontend
-import { MonetizationWidget } from '@ainflue/monetization-ui';
+import { MonetizationWidget } from '@iacherie/monetization-ui';
 
 <MonetizationWidget
   creatorId={creator.id}
@@ -379,9 +379,9 @@ async def handle_monetization_event(request):
 ## 📞 Support & Contact
 
 ### Support Technique
-- **Email**: support@ainflue.com
-- **Documentation**: https://docs.ainflue.com/monetization
-- **Référence API**: https://api.ainflue.com/docs/monetization
+- **Email**: support@iacherie.com
+- **Documentation**: https://docs.iacherie.com/monetization
+- **Référence API**: https://api.iacherie.com/docs/monetization
 
 ### Demandes Business
 - **Développeur Principal**: Fahed Mlaiel (mlaiel@live.de)
@@ -398,4 +398,4 @@ Cette architecture monétisation est propriété intellectuelle propriétaire. U
 
 ---
 
-*Documentation française créée par l'équipe d'experts Ainflue sous la direction de **Fahed Mlaiel** - Propriété intellectuelle protégée*
+*Documentation française créée par l'équipe d'experts IA Chérie sous la direction de **Fahed Mlaiel** - Propriété intellectuelle protégée*

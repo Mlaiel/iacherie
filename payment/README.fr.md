@@ -25,7 +25,7 @@ RGPD, DMCA et protections de droits d'auteur internationales s'appliquent.
 - **Ingénieur IA Prompt:** Automatisation workflow de paiement
 
 ## Résumé Exécutif
-Architecture gateway de paiement de niveau entreprise fournissant traitement multi-fournisseurs, support cryptocurrency, détection de fraude et gestion complète des revenus pour la plateforme créateur IA Ainflue.
+Architecture gateway de paiement de niveau entreprise fournissant traitement multi-fournisseurs, support cryptocurrency, détection de fraude et gestion complète des revenus pour la plateforme créateur IA IA Chérie.
 
 ## Vue d'ensemble de l'Architecture
 Composant backend Level 2 gérant tout le traitement des paiements, répartition des revenus, paiements créateurs, frais de licence et workflows de monétisation.
@@ -91,9 +91,9 @@ await gateway.initialize()
 
 ## Support & Contact
 - **Support Technique:** mlaiel@live.de
-- **Documentation:** https://docs.ainflue.com/payment
-- **Page Statut:** https://status.ainflue.com
-- **Problèmes Sécurité:** security@ainflue.com
+- **Documentation:** https://docs.iacherie.com/payment
+- **Page Statut:** https://status.iacherie.com
+- **Problèmes Sécurité:** security@iacherie.com
 
 ## Licence
 Enterprise Commercial License - Voir fichier LICENSE pour détails.

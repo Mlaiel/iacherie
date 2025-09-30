@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Pricing Optimization Engine
+IA Chérie Platform - Pricing Optimization Engine
 ==============================================
 
 Advanced pricing optimization system for dynamic pricing strategies,
 revenue maximization, and market-responsive pricing across creator
-monetization workflows for the Ainflue platform.
+monetization workflows for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -1,8 +1,8 @@
-"""MongoDB Module for Ainflue Platform
+"""MongoDB Module for IA Chérie Platform
 =====================================
 
 Advanced MongoDB integration module providing comprehensive database management,
-connection pooling, indexing, and monitoring capabilities for the Ainflue
+connection pooling, indexing, and monitoring capabilities for the IA Chérie
 Influencer Agent platform.
 
 This module provides:

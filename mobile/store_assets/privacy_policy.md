@@ -1,15 +1,15 @@
-# Privacy Policy for Ainflue Mobile Application
+# Privacy Policy for IA Chérie Mobile Application
 
 **Effective Date: January 1, 2025**
 **Last Updated: January 1, 2025**
 
 ## 1. Introduction
 
-Welcome to Ainflue ("we," "our," or "us"). This Privacy Policy explains how we collect, use, share, and protect your information when you use our mobile application ("App") and related services ("Services").
+Welcome to IA Chérie ("we," "our," or "us"). This Privacy Policy explains how we collect, use, share, and protect your information when you use our mobile application ("App") and related services ("Services").
 
 **Developer:** Fahed Mlaiel  
 **Contact:** mlaiel@live.de  
-**Website:** https://ainflue.com
+**Website:** https://iacherie.com
 
 ## 2. Information We Collect
 
@@ -132,7 +132,7 @@ If applicable, you may:
 
 ## 7. Children's Privacy
 
-Ainflue is not intended for children under 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will delete it promptly.
+IA Chérie is not intended for children under 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will delete it promptly.
 
 ## 8. International Data Transfers
 
@@ -155,7 +155,7 @@ To exercise these rights, contact us at mlaiel@live.de.
 
 EU residents have rights under GDPR including:
 - Lawful basis for processing
-- Data Protection Officer contact: dpo@ainflue.com
+- Data Protection Officer contact: dpo@iacherie.com
 - Right to lodge complaints with supervisory authorities
 
 ## 11. Cookies and Tracking
@@ -185,8 +185,8 @@ For privacy-related questions or concerns:
 
 **Developer:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Privacy Officer:** privacy@ainflue.com  
-**Support:** support@ainflue.com  
+**Privacy Officer:** privacy@iacherie.com  
+**Support:** support@iacherie.com  
 **Address:** [Company Address]  
 
 **EU Representative:** [EU Representative Details]  
@@ -195,7 +195,7 @@ For privacy-related questions or concerns:
 ## 15. Data Protection Officer
 
 For GDPR-related inquiries:  
-**Email:** dpo@ainflue.com
+**Email:** dpo@iacherie.com
 
 ## 16. Supervisory Authority
 
@@ -203,7 +203,7 @@ EU users can contact their local supervisory authority for data protection conce
 
 ---
 
-**This Privacy Policy is effective as of January 1, 2025, and governs your use of the Ainflue mobile application developed by Fahed Mlaiel.**
+**This Privacy Policy is effective as of January 1, 2025, and governs your use of the IA Chérie mobile application developed by Fahed Mlaiel.**
 
 By using our App, you acknowledge that you have read and understood this Privacy Policy.
 

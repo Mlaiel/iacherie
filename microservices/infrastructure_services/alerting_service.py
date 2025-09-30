@@ -168,7 +168,7 @@ class AlertingService:
         self.notification_channels = {
             "email": {
                 "enabled": True,
-                "endpoint": "smtp://mail.ainflue.com",
+                "endpoint": "smtp://mail.iacherie.com",
                 "rate_limit": 100  # per hour
             },
             "slack": {

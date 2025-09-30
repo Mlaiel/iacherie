@@ -3,7 +3,7 @@
 ===========================================================================
 
 Infrastructure audio professionnelle avec traitement temps réel, streaming optimization,
-codecs avancés et processing IA pour la plateforme Ainflue.
+codecs avancés et processing IA pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: DSP professionnelle + codecs lossless + mastering automation
@@ -182,7 +182,7 @@ class AudioMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class EnterpriseAudioInfrastructure:
-    """🎵 Infrastructure Audio Enterprise pour Ainflue
+    """🎵 Infrastructure Audio Enterprise pour IA Chérie
     
     Implémentation multi-expert pour audio professionnel:
     - Traitement temps réel avec DSP avancée
@@ -324,31 +324,31 @@ class EnterpriseAudioInfrastructure:
         try:
             # CDN nodes géographiquement distribués
             self.cdn_nodes = [
-                "cdn-eu-west-1.ainflue.com",
-                "cdn-us-east-1.ainflue.com",
-                "cdn-asia-pacific-1.ainflue.com",
-                "cdn-eu-central-1.ainflue.com",
-                "cdn-us-west-1.ainflue.com"
+                "cdn-eu-west-1.iacherie.com",
+                "cdn-us-east-1.iacherie.com",
+                "cdn-asia-pacific-1.iacherie.com",
+                "cdn-eu-central-1.iacherie.com",
+                "cdn-us-west-1.iacherie.com"
             ]
             
             # Edge servers par région
             self.edge_servers = {
                 "eu-west-1": {
-                    "endpoint": "https://audio-eu-west.ainflue.com",
+                    "endpoint": "https://audio-eu-west.iacherie.com",
                     "capacity_streams": 200,
                     "current_load": 0,
                     "latency_ms": 45,
                     "status": "active"
                 },
                 "us-east-1": {
-                    "endpoint": "https://audio-us-east.ainflue.com",
+                    "endpoint": "https://audio-us-east.iacherie.com",
                     "capacity_streams": 300,
                     "current_load": 0,
                     "latency_ms": 35,
                     "status": "active"
                 },
                 "asia-pacific-1": {
-                    "endpoint": "https://audio-apac.ainflue.com",
+                    "endpoint": "https://audio-apac.iacherie.com",
                     "capacity_streams": 150,
                     "current_load": 0,
                     "latency_ms": 65,
@@ -368,7 +368,7 @@ class EnterpriseAudioInfrastructure:
         🧠 ML Engineer: Model management pour audio processing
         """
         try:
-            # Modèles IA audio pour Ainflue
+            # Modèles IA audio pour IA Chérie
             audio_models = {
                 "voice_synthesis": {
                     "model_name": "ElevenLabs Voice Synthesis",
@@ -432,7 +432,7 @@ class EnterpriseAudioInfrastructure:
         🎵 Audio Engineer: Configurations professionnelles selon standards
         """
         try:
-            # Configurations selon use cases Ainflue
+            # Configurations selon use cases IA Chérie
             configs = {
                 "podcast_standard": AudioConfiguration(
                     id="podcast_standard",
@@ -1033,7 +1033,7 @@ class EnterpriseAudioInfrastructure:
         self, 
         audio_data: bytes, 
         drm_config: Dict[str, Any]
-    ) -> Tuple[bytes, Dict[str, Any]]:
+    ) -> tuple[bytes, Dict[str, Any]]:
         """Appliquer protection DRM
         
         🔒 Sécurité: DRM protection + watermarking

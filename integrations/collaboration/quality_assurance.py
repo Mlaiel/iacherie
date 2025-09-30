@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quality Assurance Manager - Ainflue Enterprise Collaboration
+Quality Assurance Manager - IA Chérie Enterprise Collaboration
 Automated quality control and validation for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -54,7 +54,7 @@ class QualityProfile(Base):
     manual_review_threshold = Column(Float, default=0.70)
     rejection_threshold = Column(Float, default=0.50)
     preferences = Column(JSON)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -69,7 +69,7 @@ class ContentSubmission(Base):
     submission_type = Column(String(50), nullable=False)  # draft, final, revision
     content_type = Column(String(50), nullable=False)  # image, video, audio, text
     content_url = Column(String)
-    content_metadata = Column(JSON)
+    content_meta_data = Column(JSON)
     submission_notes = Column(Text)
     status = Column(String(20), default="pending")  # pending, approved, rejected, revision_requested
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -91,7 +91,7 @@ class QualityAssessment(Base):
     review_notes = Column(Text)
     confidence_level = Column(Float)
     processing_time = Column(Float)  # Time taken for assessment
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class QualityRule(Base):
@@ -108,7 +108,7 @@ class QualityRule(Base):
     is_active = Column(Boolean, default=True)
     is_mandatory = Column(Boolean, default=False)
     created_by = Column(String)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -125,7 +125,7 @@ class QualityBenchmark(Base):
     reference_data = Column(JSON)  # Reference datasets
     update_frequency = Column(String(20), default="monthly")
     is_active = Column(Boolean, default=True)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

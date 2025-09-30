@@ -2,7 +2,7 @@
 ===========================================================================
 
 Console enterprise de gestion database avec interface unifiée, monitoring temps réel,
-et administration centralisée pour la plateforme Ainflue.
+et administration centralisée pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Database administration + monitoring + performance tuning + backup management
@@ -244,7 +244,7 @@ class EnterpriseDatabaseConsole:
         
         # FastAPI application
         self.app = FastAPI(
-            title="Ainflue Enterprise Database Console",
+            title="IA Chérie Enterprise Database Console",
             description="Console unifiée de gestion database enterprise",
             version="2.0.0"
         )
@@ -347,7 +347,7 @@ class EnterpriseDatabaseConsole:
         async def dashboard_home():
             """Page d'accueil dashboard"""
             return await self._render_dashboard_template("dashboard.html", {
-                "title": "Ainflue Database Console",
+                "title": "IA Chérie Database Console",
                 "databases": list(self.database_connections.values()),
                 "metrics": self.console_metrics
             })
@@ -1067,7 +1067,7 @@ class EnterpriseDatabaseConsole:
         </head>
         <body>
             <div class="header">
-                <h1>🖥️ Ainflue Enterprise Database Console</h1>
+                <h1>🖥️ IA Chérie Enterprise Database Console</h1>
                 <p>Unified database management and monitoring platform</p>
             </div>
             

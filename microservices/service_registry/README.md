@@ -1,4 +1,4 @@
-# 🚀 AINFLUE SERVICE REGISTRY ENTERPRISE
+# 🚀 IACHERIE SERVICE REGISTRY ENTERPRISE
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer  
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)  
@@ -13,7 +13,7 @@
 
 ## 🎯 OVERVIEW
 
-The Ainflue Service Registry Enterprise is a production-ready, distributed service registry system designed specifically for the Ainflue Creator Economy Platform. It provides comprehensive service discovery, health monitoring, configuration management, security policies, and analytics with ML-powered intelligence.
+The IA Chérie Service Registry Enterprise is a production-ready, distributed service registry system designed specifically for the IA Chérie Creator Economy Platform. It provides comprehensive service discovery, health monitoring, configuration management, security policies, and analytics with ML-powered intelligence.
 
 ### 🌟 Key Features
 
@@ -28,7 +28,7 @@ The Ainflue Service Registry Enterprise is a production-ready, distributed servi
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    AINFLUE SERVICE REGISTRY                      │
+│                    IACHERIE SERVICE REGISTRY                      │
 │                      ENTERPRISE LAYER                           │
 ├─────────────────────────────────────────────────────────────────┤
 │  🔥 Phase 1: Core Service Registry Engine (6 Components)        │
@@ -80,14 +80,14 @@ async def main():
     # 1. Initialize registry
     registry = DistributedRegistryCore(
         RegistryBackend.MEMORY, 
-        {'node_id': 'ainflue-node-1'}
+        {'node_id': 'iacherie-node-1'}
     )
     await registry.initialize()
     
     # 2. Register a service
     service = ServiceInstance(
-        service_id="ainflue-content-service-1",
-        service_name="ainflue-content-service",
+        service_id="iacherie-content-service-1",
+        service_name="iacherie-content-service",
         host="10.0.1.100",
         port=8080,
         service_type="content_service",
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 - Raft-style consensus with leader election
 - Service replication with ACID guarantees
 - Service mesh integration with sidecar coordination
-- Ainflue business constraints validation
+- IA Chérie business constraints validation
 - Background health monitoring and cleanup
 
 **Example**:
@@ -142,7 +142,7 @@ from microservices.service_registry.distributed_registry_core import (
 
 # Initialize with Redis backend
 config = {
-    'node_id': 'ainflue-registry-1',
+    'node_id': 'iacherie-registry-1',
     'cluster_mode': True,
     'enable_consensus': True
 }
@@ -174,7 +174,7 @@ success = await registry.register_service_instance(service)
 - `WEIGHTED_RESPONSE_TIME`: Performance-based selection
 - `GEOGRAPHIC_PROXIMITY`: Location-aware routing
 - `ML_PREDICTIVE`: ML-based optimal selection
-- `BUSINESS_PRIORITY`: Ainflue business domain priority
+- `BUSINESS_PRIORITY`: IA Chérie business domain priority
 - `RANDOM`: Random selection
 - `HEALTH_WEIGHTED`: Health score-based routing
 
@@ -261,7 +261,7 @@ print(f"Auto-remediations: {len(result.remediations_performed)}")
 - Version control with rollback capabilities
 - Feature flags with 6 rollout strategies
 - Environment-specific configuration
-- Schema validation with Ainflue business rules
+- Schema validation with IA Chérie business rules
 - Configuration templates
 
 **Feature Flag Strategies**:
@@ -283,7 +283,7 @@ config_manager = ServiceConfigurationManager()
 
 # Get service configuration
 request = ServiceConfigRequest(
-    service_id="ainflue-content-service",
+    service_id="iacherie-content-service",
     environment="production",
     format=ConfigFormat.JSON,
     include_feature_flags=True
@@ -314,7 +314,7 @@ await config_manager.feature_flag_engine.update_flag_percentage(flag.flag_id, 0.
 - `CAPACITY_PLANNING`: Capacity planning recommendations
 - `COST_OPTIMIZATION`: Cost optimization insights
 - `DEPENDENCY_ANALYSIS`: Service dependency analysis
-- `BUSINESS_IMPACT`: Ainflue business impact metrics
+- `BUSINESS_IMPACT`: IA Chérie business impact metrics
 
 **Usage Pattern Types**:
 - **Peak Hours**: Predictable peak usage periods
@@ -413,7 +413,7 @@ security = SecurityPolicyEngine()
 principal = ServicePrincipal(
     principal_id="content-processor-1",
     principal_type="service",
-    service_id="ainflue-content-service",
+    service_id="iacherie-content-service",
     roles={"service_writer", "content_processor"},
     permissions={Permission.READ, Permission.WRITE, Permission.MONITOR},
     security_level=SecurityLevel.CONFIDENTIAL
@@ -423,7 +423,7 @@ await security.register_service_principal(principal)
 # Enforce security policies
 security_request = SecurityRequest(
     operation="service_registration",
-    resource="ainflue-content-service",
+    resource="iacherie-content-service",
     client_ip="10.0.1.100",
     auth_method=AuthMethod.JWT_TOKEN,
     auth_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
@@ -448,7 +448,7 @@ await security.start_threat_monitoring()
 AINFLUE_REGISTRY_BACKEND=redis
 AINFLUE_REGISTRY_HOST=localhost
 AINFLUE_REGISTRY_PORT=6379
-AINFLUE_NODE_ID=ainflue-registry-1
+AINFLUE_NODE_ID=iacherie-registry-1
 
 # Security Configuration
 AINFLUE_JWT_SECRET=your-jwt-secret-key
@@ -468,7 +468,7 @@ AINFLUE_ANALYTICS_COLLECTION_INTERVAL=60
 registry:
   backend: redis
   cluster_mode: true
-  node_id: ainflue-registry-1
+  node_id: iacherie-registry-1
   replication_factor: 3
 
 discovery:
@@ -550,7 +550,7 @@ async def metrics_endpoint():
 ```
 Error: Business constraint validation failed
 ```
-**Solution**: Ensure service metadata includes required Ainflue business fields:
+**Solution**: Ensure service metadata includes required IA Chérie business fields:
 ```python
 service = ServiceInstance(
     # ... other fields ...
@@ -663,5 +663,5 @@ This software is the exclusive intellectual property of **Fahed Mlaiel** (mlaiel
 
 ---
 
-**🎯 ENTERPRISE SERVICE REGISTRY FOR AINFLUE CREATOR ECONOMY**  
+**🎯 ENTERPRISE SERVICE REGISTRY FOR IACHERIE CREATOR ECONOMY**  
 *Production-ready distributed service registry with ML intelligence*

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🎯 Traffic Routing Service - Enterprise Service Mesh
-Service de routage intelligent du trafic pour microservices Ainflue
+Service de routage intelligent du trafic pour microservices IA Chérie
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -597,7 +597,7 @@ class TrafficRoutingService:
                     'namespace': route.destinations[0].namespace,
                     'annotations': {
                         'nginx.ingress.kubernetes.io/rewrite-target': '/',
-                        'traffic-routing.ainflue.com/managed-by': 'traffic-routing-service'
+                        'traffic-routing.iacherie.com/managed-by': 'traffic-routing-service'
                     }
                 },
                 'spec': {
@@ -1397,7 +1397,7 @@ async def main():
             'method': 'POST',
             'path': '/api/v2/custom/process',
             'headers': {
-                'host': 'api.ainflue.com',
+                'host': 'api.iacherie.com',
                 'x-api-version': 'v2',
                 'user-agent': 'AinflueMobile/1.0'
             },

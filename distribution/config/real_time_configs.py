@@ -2,7 +2,7 @@
 Real-Time Configuration
 ======================
 
-Advanced real-time optimization configuration for Ainflue Distribution Platform.
+Advanced real-time optimization configuration for IA Chérie Distribution Platform.
 Provides settings for live performance monitoring, adaptive optimization, and emergency response.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

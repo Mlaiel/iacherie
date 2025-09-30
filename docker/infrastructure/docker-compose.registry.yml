@@ -1,5 +1,5 @@
 # =============================================================================
-# CONTAINER REGISTRY CONFIGURATION FOR AINFLUE PLATFORM
+# CONTAINER REGISTRY CONFIGURATION FOR IACHERIE PLATFORM
 # =============================================================================
 # Enterprise container registry setup with security scanning,
 # image signing, and vulnerability management.
@@ -12,7 +12,7 @@ services:
   # Harbor Enterprise Registry
   harbor-registry:
     image: goharbor/harbor-core:v2.9.0
-    container_name: ainflue-harbor-registry
+    container_name: iacherie-harbor-registry
     environment:
       - HARBOR_ADMIN_PASSWORD=${HARBOR_ADMIN_PASSWORD}
       - DATABASE_TYPE=postgresql
@@ -48,7 +48,7 @@ services:
   # Harbor Database
   harbor-db:
     image: postgres:15
-    container_name: ainflue-harbor-db
+    container_name: iacherie-harbor-db
     environment:
       POSTGRES_DB: harbor
       POSTGRES_USER: harbor
@@ -69,7 +69,7 @@ services:
   # Harbor Redis
   harbor-redis:
     image: redis:7-alpine
-    container_name: ainflue-harbor-redis
+    container_name: iacherie-harbor-redis
     command: redis-server --appendonly yes
     volumes:
       - harbor_redis_data:/data
@@ -87,7 +87,7 @@ services:
   # Trivy Security Scanner
   trivy-scanner:
     image: aquasec/trivy:latest
-    container_name: ainflue-trivy-scanner
+    container_name: iacherie-trivy-scanner
     command: ["server", "--listen", "0.0.0.0:4954"]
     volumes:
       - trivy_cache:/root/.cache
@@ -111,7 +111,7 @@ services:
   # Clair Security Scanner
   clair-scanner:
     image: quay.io/coreos/clair:v4.7.0
-    container_name: ainflue-clair-scanner
+    container_name: iacherie-clair-scanner
     environment:
       - CLAIR_CONF=/etc/clair/config.yaml
       - CLAIR_MODE=combo
@@ -132,7 +132,7 @@ services:
   # Notary for Image Signing
   notary-server:
     image: notary:server-0.7.0
-    container_name: ainflue-notary-server
+    container_name: iacherie-notary-server
     environment:
       - NOTARY_SERVER_STORAGE_TYPE=mysql
       - NOTARY_SERVER_STORAGE_DB_URL=server@tcp(notary-mysql:3306)/notaryserver?parseTime=True
@@ -150,7 +150,7 @@ services:
   # Notary Signer
   notary-signer:
     image: notary:signer-0.7.0
-    container_name: ainflue-notary-signer
+    container_name: iacherie-notary-signer
     environment:
       - NOTARY_SIGNER_STORAGE_TYPE=mysql
       - NOTARY_SIGNER_STORAGE_DB_URL=signer@tcp(notary-mysql:3306)/notarysigner?parseTime=True
@@ -164,7 +164,7 @@ services:
   # Notary Database
   notary-mysql:
     image: mysql:8.0
-    container_name: ainflue-notary-mysql
+    container_name: iacherie-notary-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${NOTARY_MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: notary
@@ -179,7 +179,7 @@ services:
   # Docker Registry (backup/private)
   docker-registry:
     image: registry:2.8
-    container_name: ainflue-docker-registry
+    container_name: iacherie-docker-registry
     environment:
       REGISTRY_AUTH: htpasswd
       REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"

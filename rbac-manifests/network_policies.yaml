@@ -1,15 +1,15 @@
 # Creator Economy RBAC Manifests
 # Type: network_policies
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Generated for Ainflue Creator Economy Platform
+# Generated for IA Chérie Creator Economy Platform
 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
-  name: ainflue-deny-all
-  namespace: ainflue
+    app.kubernetes.io/part-of: iacherie-creator-economy
+  name: iacherie-deny-all
+  namespace: iacherie
 spec:
   podSelector: {}
   policyTypes:
@@ -21,9 +21,9 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
   name: creator-api-network-policy
-  namespace: ainflue
+  namespace: iacherie
 spec:
   egress:
   - ports:

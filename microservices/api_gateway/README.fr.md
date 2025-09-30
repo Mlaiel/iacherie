@@ -1,10 +1,10 @@
-# 🔗 API Gateway Enterprise - Ainflue
+# 🔗 API Gateway Enterprise - IA Chérie
 
 **🚀 PASSERELLE API ENTERPRISE-GRADE POUR MICROSERVICES DISTRIBUÉS**
 
 ## 📋 Aperçu
 
-Module API Gateway Enterprise gérant l'accès, le routage, la sécurité et l'observabilité pour l'architecture microservices Ainflue. Point d'entrée unique pour tous les services distribués avec patterns enterprise avancés.
+Module API Gateway Enterprise gérant l'accès, le routage, la sécurité et l'observabilité pour l'architecture microservices IA Chérie. Point d'entrée unique pour tous les services distribués avec patterns enterprise avancés.
 
 ## 🏗️ Architecture
 
@@ -118,7 +118,7 @@ security_policies:
     burst: 50
     
   cors:
-    allowed_origins: ["https://ainflue.com"]
+    allowed_origins: ["https://iacherie.com"]
     allowed_methods: ["GET", "POST", "PUT", "DELETE"]
     allowed_headers: ["Authorization", "Content-Type"]
 ```
@@ -252,14 +252,14 @@ Monitoring Specialist:    Expert observabilité + SLI/SLO
 
 ### 🆘 Support Urgent
 ```yaml
-Issues critiques:     gateway-team@ainflue.com
+Issues critiques:     gateway-team@iacherie.com
 Escalation:          Lead Architect (mlaiel@live.de)
 Response time:       < 15 minutes incidents P0
-Documentation:       docs.ainflue.com/api-gateway
+Documentation:       docs.iacherie.com/api-gateway
 ```
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - API GATEWAY ENTERPRISE AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - API GATEWAY ENTERPRISE IACHERIE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE**  
 **🌍 GATEWAY PRODUCTION-READY POUR 65+ PLATEFORMES**

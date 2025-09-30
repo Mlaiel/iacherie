@@ -1,7 +1,7 @@
-package com.ainflue.sdk.metrics;
+package com.iacherie.sdk.metrics;
 
 /**
- * Request Metrics Collection for Ainflue Java SDK
+ * Request Metrics Collection for IA Chérie Java SDK
  * Enterprise monitoring and performance tracking
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -10,7 +10,7 @@ package com.ainflue.sdk.metrics;
  * Expert Implementation by: DevOps + ML Engineer + Lead Dev IA
  */
 
-import com.ainflue.sdk.utils.Logger;
+import com.iacherie.sdk.utils.Logger;
 
 import java.time.Instant;
 import java.util.concurrent.ConcurrentHashMap;

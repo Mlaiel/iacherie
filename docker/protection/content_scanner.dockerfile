@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE CONTENT SCANNER - AUTOMATED DOCKERFILE
+# IACHERIE CONTENT SCANNER - AUTOMATED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS scanner-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${SCANNER_SERVICE_PORT}
 CMD ["python3.11", "-m", "content_scanner.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Content Scanner"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="content_scanner"
-LABEL ainflue.service.port="8030"
+LABEL org.opencontainers.image.title="IA Chérie Content Scanner"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="content_scanner"
+LABEL iacherie.service.port="8030"

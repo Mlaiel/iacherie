@@ -1,0 +1,35 @@
+# Networking Configuration
+version: '3.8'
+
+networks:
+  frontend:
+    driver: overlay
+    encrypted: true
+    attachable: true
+  backend:
+    driver: overlay
+    encrypted: true
+    internal: true
+  database:
+    driver: overlay
+    encrypted: true
+    internal: true
+  monitoring:
+    driver: overlay
+    encrypted: false
+    
+load_balancer:
+  algorithm: round_robin
+  health_checks: enabled
+  sticky_sessions: false
+  
+dns:
+  resolver: 8.8.8.8
+  search_domains:
+    - ainflue.local
+    - docker.local
+    
+firewall:
+  default_policy: deny
+  allow_established: true
+  rate_limiting: enabled

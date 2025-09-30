@@ -1,10 +1,10 @@
-# Ainflue Infrastruktur-Modul
+# IA Chérie Infrastruktur-Modul
 
-**Enterprise-grade Infrastruktur-Management für die Ainflue Creator Economy Plattform**
+**Enterprise-grade Infrastruktur-Management für die IA Chérie Creator Economy Plattform**
 
 ## Überblick
 
-Das Ainflue Infrastruktur-Modul bietet umfassende, unternehmenstaugliche Infrastruktur-Management-Funktionen für Multi-Cloud-Deployment mit Enterprise-Sicherheit, Monitoring und Compliance-Features.
+Das IA Chérie Infrastruktur-Modul bietet umfassende, unternehmenstaugliche Infrastruktur-Management-Funktionen für Multi-Cloud-Deployment mit Enterprise-Sicherheit, Monitoring und Compliance-Features.
 
 ### Hauptfunktionen
 
@@ -50,8 +50,8 @@ SEO-Optimierung → Content-Distribution
 
 1. **Repository klonen**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infra
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/infra
 ```
 
 2. **Cloud-Anmeldedaten konfigurieren**
@@ -97,7 +97,7 @@ export AWS_REGION="us-west-2"
 export AZURE_LOCATION="West US 2"
 export GCP_REGION="us-west2"
 export ENVIRONMENT="production"
-export PROJECT_NAME="ainflue"
+export PROJECT_NAME="iacherie"
 ```
 
 ### Terraform-Variablen
@@ -117,7 +117,7 @@ Deployment in `ansible/inventory.yml` konfigurieren:
 ```yaml
 all:
   vars:
-    project_name: ainflue
+    project_name: iacherie
     environment: production
     cloud_providers:
       - aws
@@ -271,7 +271,7 @@ Diese Software ist proprietär und durch internationales Urheberrecht geschützt
 ### Kontakt
 - **E-Mail**: mlaiel@live.de
 - **GitHub**: [@Mlaiel](https://github.com/Mlaiel)
-- **Website**: [https://ainflue.com](https://ainflue.com)
+- **Website**: [https://iacherie.com](https://iacherie.com)
 
 ---
 

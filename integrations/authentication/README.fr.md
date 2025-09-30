@@ -1,4 +1,4 @@
-# 🔐 Module Authentification - Intégrations Ainflue
+# 🔐 Module Authentification - Intégrations IA Chérie
 
 **Équipe Expert: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Objectif du Module
 
-Le module Authentification fournit une gestion de sécurité et d'authentification de niveau entreprise pour la plateforme Ainflue. Il offre une intégration complète OAuth 2.0/OIDC, authentification multi-facteurs, gestion de tokens JWT, scanning de sécurité avancé et validation de conformité sur 65+ plateformes intégrées.
+Le module Authentification fournit une gestion de sécurité et d'authentification de niveau entreprise pour la plateforme IA Chérie. Il offre une intégration complète OAuth 2.0/OIDC, authentification multi-facteurs, gestion de tokens JWT, scanning de sécurité avancé et validation de conformité sur 65+ plateformes intégrées.
 
 ### Composants Principaux
 

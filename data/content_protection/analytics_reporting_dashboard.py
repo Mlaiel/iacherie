@@ -2,7 +2,7 @@
 📊 Analytics Reporting Dashboard - Enterprise Analytics + Reporting
 ===================================================================
 
-Module: /workspaces/Ainflue/data/content_protection/analytics_reporting_dashboard.py
+Module: /workspaces/IA Chérie/data/content_protection/analytics_reporting_dashboard.py
 CONSOLIDATION: Analytics + métriques + reporting + dashboard
 """
 

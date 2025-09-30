@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Metadata Configuration Module
+"""IA Chérie Metadata Configuration Module
 =======================================
 
-Enterprise-grade metadata configuration for the Ainflue platform.
+Enterprise-grade metadata configuration for the IA Chérie platform.
 Comprehensive metadata management, extraction, validation, and enrichment
 for video, audio, image, and document content with AI-powered analysis.
 

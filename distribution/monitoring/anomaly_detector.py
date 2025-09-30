@@ -1,5 +1,5 @@
 """
-Anomaly Detection Engine for Ainflue Distribution Monitoring
+Anomaly Detection Engine for IA Chérie Distribution Monitoring
 Provides intelligent anomaly detection for content performance and system metrics
 
 Author: Fahed Mlaiel (mlaiel@live.de)

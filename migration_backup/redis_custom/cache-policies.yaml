@@ -1,0 +1,440 @@
+# Cache Policies Configuration for IA Influencer Agent Platform
+# Comprehensive caching strategy with TTL policies and invalidation rules
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+cache_policies:
+  version: "1.0"
+  name: "IA-Influencer-Cache-Policies"
+  description: "Redis caching policies for AI-powered influencer platform"
+  
+  # Global cache settings
+  global:
+    default_ttl: "1h"
+    max_memory_usage: "80%"
+    eviction_policy: "allkeys-lru"
+    compression_enabled: true
+    serialization_format: "json"
+    
+  # User and authentication caching
+  authentication:
+    user_sessions:
+      ttl: "8h"
+      pattern: "session:*"
+      auto_refresh: true
+      refresh_threshold: "1h"
+      invalidation_triggers:
+        - "user_logout"
+        - "password_change"
+        - "account_suspension"
+      
+    jwt_tokens:
+      ttl: "1h"
+      pattern: "jwt:*"
+      sliding_expiration: true
+      blacklist_on_logout: true
+      
+    user_permissions:
+      ttl: "30m"
+      pattern: "permissions:*"
+      invalidation_triggers:
+        - "role_change"
+        - "subscription_change"
+        - "account_status_change"
+        
+    oauth_tokens:
+      ttl: "2h"
+      pattern: "oauth:*"
+      auto_refresh: true
+      encryption: true
+      
+    mfa_codes:
+      ttl: "5m"
+      pattern: "mfa:*"
+      single_use: true
+      
+  # User profile and data caching
+  user_data:
+    user_profiles:
+      ttl: "2h"
+      pattern: "user:*:profile"
+      invalidation_triggers:
+        - "profile_update"
+        - "avatar_change"
+      warm_cache: true
+      
+    user_settings:
+      ttl: "24h"
+      pattern: "user:*:settings"
+      invalidation_triggers:
+        - "settings_update"
+        - "preference_change"
+        
+    user_stats:
+      ttl: "1h"
+      pattern: "user:*:stats"
+      refresh_on_activity: true
+      batch_updates: true
+      
+    follower_lists:
+      ttl: "30m"
+      pattern: "user:*:followers"
+      lazy_loading: true
+      pagination_cache: true
+      
+  # Content caching policies
+  content:
+    content_metadata:
+      ttl: "6h"
+      pattern: "content:*:metadata"
+      invalidation_triggers:
+        - "content_update"
+        - "status_change"
+        - "visibility_change"
+      preload_related: true
+      
+    content_thumbnails:
+      ttl: "24h"
+      pattern: "content:*:thumbnails"
+      cdn_integration: true
+      multiple_sizes: true
+      
+    content_analytics:
+      ttl: "15m"
+      pattern: "content:*:analytics"
+      real_time_updates: true
+      aggregation_cache: true
+      
+    content_search:
+      ttl: "30m"
+      pattern: "search:content:*"
+      faceted_cache: true
+      popular_queries_cache: "2h"
+      
+    content_recommendations:
+      ttl: "1h"
+      pattern: "recommendations:*"
+      user_specific: true
+      ml_model_versioning: true
+      
+    upload_progress:
+      ttl: "1h"
+      pattern: "upload:*:progress"
+      real_time_updates: true
+      cleanup_on_completion: true
+      
+  # Collaboration system caching
+  collaboration:
+    project_data:
+      ttl: "1h"
+      pattern: "project:*:data"
+      invalidation_triggers:
+        - "project_update"
+        - "participant_change"
+        - "status_change"
+      
+    participant_lists:
+      ttl: "30m"
+      pattern: "project:*:participants"
+      role_based_cache: true
+      
+    project_messages:
+      ttl: "2h"
+      pattern: "project:*:messages"
+      pagination_cache: true
+      unread_counters: "real_time"
+      
+    collaboration_requests:
+      ttl: "15m"
+      pattern: "requests:*"
+      status_based_ttl:
+        pending: "15m"
+        accepted: "5m"
+        declined: "1m"
+        
+    task_assignments:
+      ttl: "30m"
+      pattern: "tasks:*"
+      priority_based_cache: true
+      deadline_aware: true
+      
+  # Analytics and reporting
+  analytics:
+    real_time_metrics:
+      ttl: "5m"
+      pattern: "metrics:realtime:*"
+      high_frequency_updates: true
+      sliding_window: true
+      
+    daily_stats:
+      ttl: "6h"
+      pattern: "stats:daily:*"
+      pre_computed: true
+      timezone_aware: true
+      
+    weekly_reports:
+      ttl: "24h"
+      pattern: "reports:weekly:*"
+      background_refresh: true
+      
+    user_dashboards:
+      ttl: "1h"
+      pattern: "dashboard:*"
+      personalized: true
+      widget_level_cache: true
+      
+    trending_content:
+      ttl: "15m"
+      pattern: "trending:*"
+      algorithm_versioned: true
+      category_specific: true
+      
+  # AI and machine learning
+  ai_processing:
+    model_predictions:
+      ttl: "2h"
+      pattern: "ai:predictions:*"
+      model_version_aware: true
+      input_hash_keyed: true
+      
+    content_analysis:
+      ttl: "24h"
+      pattern: "ai:analysis:*"
+      analysis_type_specific: true
+      confidence_based_ttl: true
+      
+    recommendation_models:
+      ttl: "6h"
+      pattern: "ai:models:*"
+      version_controlled: true
+      a_b_test_aware: true
+      
+    processing_queues:
+      ttl: "1h"
+      pattern: "queue:ai:*"
+      priority_queues: true
+      retry_logic: true
+      
+    feature_vectors:
+      ttl: "12h"
+      pattern: "features:*"
+      compressed_storage: true
+      similarity_indexing: true
+      
+  # Platform and system caching
+  system:
+    configuration_data:
+      ttl: "4h"
+      pattern: "config:*"
+      invalidation_triggers:
+        - "config_update"
+        - "feature_flag_change"
+      environment_specific: true
+      
+    api_rate_limits:
+      ttl: "1h"
+      pattern: "ratelimit:*"
+      sliding_window: true
+      user_tier_aware: true
+      endpoint_specific: true
+      
+    feature_flags:
+      ttl: "10m"
+      pattern: "features:*"
+      user_segment_aware: true
+      gradual_rollout: true
+      
+    system_health:
+      ttl: "5m"
+      pattern: "health:*"
+      service_specific: true
+      alert_integration: true
+      
+    geo_location:
+      ttl: "24h"
+      pattern: "geo:*"
+      ip_based_cache: true
+      privacy_compliant: true
+      
+  # Monetization and payments
+  monetization:
+    subscription_data:
+      ttl: "1h"
+      pattern: "subscription:*"
+      invalidation_triggers:
+        - "payment_received"
+        - "subscription_change"
+        - "cancellation"
+      
+    payment_methods:
+      ttl: "30m"
+      pattern: "payment:methods:*"
+      encrypted_cache: true
+      pci_compliant: true
+      
+    pricing_data:
+      ttl: "4h"
+      pattern: "pricing:*"
+      currency_aware: true
+      region_specific: true
+      
+    revenue_analytics:
+      ttl: "1h"
+      pattern: "revenue:*"
+      time_period_aware: true
+      aggregation_levels: true
+      
+  # Notification system
+  notifications:
+    notification_queues:
+      ttl: "24h"
+      pattern: "notifications:*"
+      priority_based: true
+      delivery_status_tracking: true
+      
+    user_preferences:
+      ttl: "2h"
+      pattern: "notif:prefs:*"
+      channel_specific: true
+      
+    template_cache:
+      ttl: "6h"
+      pattern: "templates:*"
+      localization_aware: true
+      personalization_data: true
+      
+    delivery_logs:
+      ttl: "48h"
+      pattern: "delivery:*"
+      success_failure_tracking: true
+      retry_logic: true
+      
+  # Search and discovery
+  search:
+    search_indices:
+      ttl: "1h"
+      pattern: "search:index:*"
+      incremental_updates: true
+      facet_caching: true
+      
+    autocomplete_data:
+      ttl: "2h"
+      pattern: "autocomplete:*"
+      prefix_based: true
+      popularity_weighted: true
+      
+    search_results:
+      ttl: "30m"
+      pattern: "search:results:*"
+      query_hash_keyed: true
+      pagination_aware: true
+      
+    trending_searches:
+      ttl: "15m"
+      pattern: "trending:searches:*"
+      time_window_based: true
+      category_specific: true
+      
+  # Cache invalidation strategies
+  invalidation:
+    strategies:
+      time_based:
+        enabled: true
+        check_interval: "1m"
+        cleanup_expired: true
+        
+      event_based:
+        enabled: true
+        async_processing: true
+        retry_on_failure: true
+        
+      dependency_based:
+        enabled: true
+        cascade_invalidation: true
+        graph_aware: true
+        
+      manual:
+        enabled: true
+        admin_interface: true
+        bulk_operations: true
+        
+    patterns:
+      wildcard_support: true
+      regex_patterns: true
+      tag_based: true
+      
+  # Performance optimization
+  performance:
+    connection_pooling:
+      enabled: true
+      pool_size: 50
+      max_idle_connections: 10
+      connection_timeout: "30s"
+      
+    compression:
+      enabled: true
+      algorithm: "gzip"
+      min_size: "1KB"
+      compression_level: 6
+      
+    serialization:
+      format: "msgpack"
+      fallback_format: "json"
+      schema_evolution: true
+      
+    batching:
+      enabled: true
+      batch_size: 100
+      batch_timeout: "100ms"
+      
+  # Monitoring and alerting
+  monitoring:
+    metrics:
+      enabled: true
+      collection_interval: "30s"
+      retention_period: "7d"
+      
+    alerts:
+      memory_usage_threshold: "85%"
+      hit_ratio_threshold: "90%"
+      connection_threshold: "80%"
+      response_time_threshold: "100ms"
+      
+    dashboards:
+      grafana_integration: true
+      real_time_updates: true
+      custom_metrics: true
+      
+  # Security and compliance
+  security:
+    encryption_at_rest:
+      enabled: true
+      algorithm: "AES-256"
+      key_rotation: "quarterly"
+      
+    access_control:
+      role_based: true
+      ip_restrictions: true
+      audit_logging: true
+      
+    data_privacy:
+      gdpr_compliant: true
+      data_anonymization: true
+      right_to_deletion: true
+      
+    secure_transmission:
+      tls_enabled: true
+      certificate_validation: true
+      
+  # Development and testing
+  development:
+    cache_debugging:
+      enabled: false  # Only in dev
+      verbose_logging: false
+      cache_miss_tracking: false
+      
+    testing:
+      mock_cache: false
+      deterministic_ttl: false
+      cache_warming: true

@@ -1,4 +1,4 @@
-# 📡 API Documentation - Ainflue Platform
+# 📡 API Documentation - IA Chérie Platform
 
 **Document Version:** 1.0 Enterprise  
 **Last Updated:** September 15, 2025  
@@ -13,15 +13,15 @@
 
 ## 🎯 **API Overview**
 
-The Ainflue Platform API provides comprehensive access to all platform features including content upload, AI processing, platform distribution, and analytics. The API follows RESTful principles with GraphQL support for complex queries.
+The IA Chérie Platform API provides comprehensive access to all platform features including content upload, AI processing, platform distribution, and analytics. The API follows RESTful principles with GraphQL support for complex queries.
 
 ### 🔗 **Base URLs**
 
 ```yaml
 environments:
-  production: "https://api.ainflue.com/v1"
-  staging: "https://staging-api.ainflue.com/v1"
-  development: "https://dev-api.ainflue.com/v1"
+  production: "https://api.iacherie.com/v1"
+  staging: "https://staging-api.iacherie.com/v1"
+  development: "https://dev-api.iacherie.com/v1"
 ```
 
 ### 🔐 **Authentication**
@@ -81,7 +81,7 @@ interface SupportedFormats {
 
 #### **Request Example**
 ```bash
-curl -X POST "https://api.ainflue.com/v1/content/upload" \
+curl -X POST "https://api.iacherie.com/v1/content/upload" \
   -H "Authorization: Bearer {token}" \
   -F "file=@video.mp4" \
   -F "title=My Amazing Video" \
@@ -735,7 +735,7 @@ enum ErrorCodes {
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue API Documentation License Request"
+**Subject:** "IA Chérie API Documentation License Request"
 
 ---
 

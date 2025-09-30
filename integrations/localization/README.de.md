@@ -1,4 +1,4 @@
-# 🌍 Ainflue Lokalisierungs-Intelligenz - Enterprise Grade
+# 🌍 IA Chérie Lokalisierungs-Intelligenz - Enterprise Grade
 
 [![Lizenz: Proprietär](https://img.shields.io/badge/Lizenz-Proprietär-red.svg)](LICENSE)
 [![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-blue.svg)](VERSION)
@@ -38,7 +38,7 @@ Dieses Modul wurde von einem Weltklasse-Expertenteam entworfen und implementiert
 
 ## 📋 Überblick
 
-Das **Ainflue Lokalisierungs-Intelligenz** Modul bietet Enterprise-Grade Lokalisierungsfähigkeiten für die Ainflue Creator Economy Plattform. Diese umfassende Lösung unterstützt 644+ Sprachen, Echtzeit-Übersetzung, kulturelle Anpassung und regulatorische Compliance in globalen Märkten.
+Das **IA Chérie Lokalisierungs-Intelligenz** Modul bietet Enterprise-Grade Lokalisierungsfähigkeiten für die IA Chérie Creator Economy Plattform. Diese umfassende Lösung unterstützt 644+ Sprachen, Echtzeit-Übersetzung, kulturelle Anpassung und regulatorische Compliance in globalen Märkten.
 
 ## 🌟 Hauptfunktionen
 
@@ -103,8 +103,8 @@ integrations/localization/
 
 ```bash
 # Repository klonen (nur autorisierte Benutzer)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/localization
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/localization
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -124,7 +124,7 @@ localization = get_localization_manager()
 
 # Grundlegende Übersetzung
 result = await localization['translation'].translate(
-    content="Hallo, willkommen bei Ainflue!",
+    content="Hallo, willkommen bei IA Chérie!",
     source_language="de",
     target_language="en",
     domain="social_media"
@@ -344,7 +344,7 @@ Für autorisierte Mitwirkende:
 Für technischen Support und Lizenzanfragen:
 
 - **📧 E-Mail**: mlaiel@live.de
-- **🌐 Website**: https://ainflue.com
+- **🌐 Website**: https://iacherie.com
 - **📱 Enterprise Support**: 24/7 verfügbar für autorisierte Benutzer
 
 ## 📄 Lizenz
@@ -362,7 +362,7 @@ Diese Software ist proprietär und vertraulich. Unbefugte Nutzung, Vervielfälti
 
 ---
 
-**© 2024 Fahed Mlaiel - Ainflue Platform**  
+**© 2024 Fahed Mlaiel - IA Chérie Platform**  
 **Enterprise Lokalisierungs-Intelligenz - Produktionsbereit**
 
-*Mit ❤️ vom Ainflue Expertenteam erstellt*
+*Mit ❤️ vom IA Chérie Expertenteam erstellt*

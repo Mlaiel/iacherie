@@ -1,11 +1,11 @@
 # Blockchain Payments Service
-# Cryptocurrency and blockchain payments for Ainflue Platform
+# Cryptocurrency and blockchain payments for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Blockchain Payments - Cryptocurrency payment processing"
+LABEL description="IA Chérie Blockchain Payments - Cryptocurrency payment processing"
 LABEL version="1.0.0"
 
 # Set working directory

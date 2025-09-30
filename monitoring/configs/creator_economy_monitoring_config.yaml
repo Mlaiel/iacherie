@@ -1,6 +1,6 @@
 # 🎨 Creator Economy Monitoring Configuration
 # ===========================================
-# Configuration monitoring spécifique à l'écosystème Ainflue Creator Economy
+# Configuration monitoring spécifique à l'écosystème IA Chérie Creator Economy
 # Surveillance intelligente par type de créateur avec SLA différenciés
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,7 +24,7 @@
 version: "2.0.0"
 metadata:
   name: "creator-economy-monitoring"
-  description: "Configuration monitoring Creator Economy Ainflue"
+  description: "Configuration monitoring Creator Economy IA Chérie"
   created_by: "Fahed Mlaiel"
   created_date: "2025-01-08"
   last_updated: "2025-01-08"

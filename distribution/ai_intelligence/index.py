@@ -3,7 +3,7 @@ Distribution AI Intelligence - Point d'entrée principal
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Version: 1.0 Production Enterprise
 
-Module d'intelligence artificielle pour la distribution globale Ainflue.
+Module d'intelligence artificielle pour la distribution globale IA Chérie.
 Orchestration de 53 agents IA spécialisés pour optimisation distribution multi-plateforme.
 """
 

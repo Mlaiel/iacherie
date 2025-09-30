@@ -1,4 +1,4 @@
-# Ainflue Desktop - Development Guide
+# IA Chérie Desktop - Development Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -79,8 +79,8 @@ sudo apt-get install libxrandr2 libasound2-dev libpangocairo-1.0-0 libatk1.0-0 l
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/desktop
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/desktop
 
 # Install dependencies
 npm install
@@ -344,7 +344,7 @@ npm run pack
 #### File Structure
 ```javascript
 /**
- * Ainflue Desktop - Module Name
+ * IA Chérie Desktop - Module Name
  * 
  * Brief description of module functionality
  * 
@@ -608,7 +608,7 @@ describe('E2E Tests', () => {
   
   it('should have correct title', async () => {
     const title = await app.client.getTitle();
-    assert.strictEqual(title, 'Ainflue Studio');
+    assert.strictEqual(title, 'IA Chérie Studio');
   });
 });
 ```
@@ -967,7 +967,7 @@ npm run system-info
 
 ### Getting Help
 
-1. **Check logs**: `~/Library/Logs/Ainflue/` (macOS) or `%APPDATA%/Ainflue/logs/` (Windows)
+1. **Check logs**: `~/Library/Logs/IA Chérie/` (macOS) or `%APPDATA%/IA Chérie/logs/` (Windows)
 2. **Run diagnostics**: `npm run diagnose`
 3. **Contact support**: mlaiel@live.de (authorized personnel only)
 

@@ -1,8 +1,8 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Application deployment role defaults
-# Default variables for Ainflue application deployment
+# Default variables for IA Chérie application deployment
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -11,7 +11,7 @@
 
 ---
 # Application configuration
-app_name: "ainflue"
+app_name: "iacherie"
 app_version: "{{ git_commit | default('latest') }}"
 app_environment: "{{ environment | default('production') }}"
 
@@ -23,7 +23,7 @@ deploy_ai_models: true
 cleanup_enabled: true
 
 # Application directories
-app_base_dir: "/opt/ainflue"
+app_base_dir: "/opt/iacherie"
 app_current_dir: "{{ app_base_dir }}/current"
 app_releases_dir: "{{ app_base_dir }}/releases"
 app_shared_dir: "{{ app_base_dir }}/shared"
@@ -37,24 +37,24 @@ release_timestamp: "{{ ansible_date_time.epoch }}"
 current_release_dir: "{{ app_releases_dir }}/{{ release_timestamp }}"
 
 # Application user and group
-app_user: "ainflue"
-app_group: "ainflue"
+app_user: "iacherie"
+app_group: "iacherie"
 
 # Service configuration
 services:
-  - name: "ainflue-api"
+  - name: "iacherie-api"
     port: 8000
     replicas: 3
     health_check_path: "/health"
-  - name: "ainflue-ai-engine"
+  - name: "iacherie-ai-engine"
     port: 8001
     replicas: 2
     health_check_path: "/health"
-  - name: "ainflue-mobile-api"
+  - name: "iacherie-mobile-api"
     port: 8002
     replicas: 2
     health_check_path: "/health"
-  - name: "ainflue-worker"
+  - name: "iacherie-worker"
     workers: 4
     health_check_path: "/health"
 
@@ -62,8 +62,8 @@ services:
 database:
   host: "{{ db_host | default('localhost') }}"
   port: "{{ db_port | default('5432') }}"
-  name: "{{ db_name | default('ainflue') }}"
-  user: "{{ db_user | default('ainflue') }}"
+  name: "{{ db_name | default('iacherie') }}"
+  user: "{{ db_user | default('iacherie') }}"
   password: "{{ db_password }}"
   migration_timeout: 300
 
@@ -76,7 +76,7 @@ redis:
 
 # AI/ML Models configuration
 ai_models:
-  model_registry: "{{ model_registry_url | default('s3://ainflue-models') }}"
+  model_registry: "{{ model_registry_url | default('s3://iacherie-models') }}"
   model_cache_dir: "{{ app_shared_dir }}/models"
   models_to_deploy:
     - name: "content_classifier"

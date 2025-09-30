@@ -102,8 +102,8 @@ class JWTConfig:
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 30
-    issuer: str = "ainflue"
-    audience: str = "ainflue-api"
+    issuer: str = "iacherie"
+    audience: str = "iacherie-api"
 
 @dataclass
 class OAuthConfig:
@@ -371,7 +371,7 @@ class AuthenticationUtils:
         def _generate_qr():
             totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
                 name=username,
-                issuer_name="Ainflue"
+                issuer_name="IA Chérie"
             )
             
             qr = qrcode.QRCode(version=1, box_size=10, border=5)

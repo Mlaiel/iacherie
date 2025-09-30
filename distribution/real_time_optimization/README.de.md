@@ -1,6 +1,6 @@
 # ⚡ Echtzeit-Optimierungs-Engine
 
-**Erweiterte KI-gestützte Echtzeit-Optimierungs-Engine für Ainflue Distribution Platform**
+**Erweiterte KI-gestützte Echtzeit-Optimierungs-Engine für IA Chérie Distribution Platform**
 
 ## 📖 Überblick
 
@@ -304,7 +304,7 @@ spec:
     spec:
       containers:
       - name: optimization-engine
-        image: ainflue/real-time-optimization:latest
+        image: iacherie/real-time-optimization:latest
         resources:
           requests:
             memory: "4Gi"

@@ -629,7 +629,7 @@ class ConfigManager:
         env_configs = {}
         
         # Look for variables with specific prefixes
-        prefixes = ['AINFLUE_', 'APP_', 'SERVICE_']
+        prefixes = ['IACHERIE_', 'APP_', 'SERVICE_']
         
         for key, value in os.environ.items():
             for prefix in prefixes:

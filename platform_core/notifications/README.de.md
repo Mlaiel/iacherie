@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das **Platform Core Notifications** Modul von Ainflue ist eine industrielle Enterprise-Benachrichtigungsplattform für Multi-Channel-Kommunikation im großen Maßstab. Diese Plattform integriert künstliche Intelligenz, maschinelles Lernen und regulatorische Compliance für personalisierte und optimierte Benachrichtigungen.
+Das **Platform Core Notifications** Modul von IA Chérie ist eine industrielle Enterprise-Benachrichtigungsplattform für Multi-Channel-Kommunikation im großen Maßstab. Diese Plattform integriert künstliche Intelligenz, maschinelles Lernen und regulatorische Compliance für personalisierte und optimierte Benachrichtigungen.
 
 ## 🎯 Hauptfunktionen
 
@@ -121,7 +121,7 @@ await manager.initialize()
 # Benachrichtigung senden
 result = await manager.send_notification(
     user_id="user123",
-    content="Willkommen bei Ainflue! 🎉",
+    content="Willkommen bei IA Chérie! 🎉",
     channels=["email", "push"],
     priority="high"
 )
@@ -354,14 +354,14 @@ Vollständige Unterstützung für 400+ Zeitzonen mit automatischer Optimierung d
 ## 🤝 Support und Beitrag
 
 ### Technischer Support
-- **E-Mail** : support@ainflue.com
-- **Discord** : [Ainflue Server](https://discord.gg/ainflue)
-- **Dokumentation** : [docs.ainflue.com](https://docs.ainflue.com)
+- **E-Mail** : support@iacherie.com
+- **Discord** : [IA Chérie Server](https://discord.gg/iacherie)
+- **Dokumentation** : [docs.iacherie.com](https://docs.iacherie.com)
 
 ### Beitrag leisten
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Feature Branch erstellen
 git checkout -b feature/neue-funktion
@@ -451,6 +451,6 @@ print(f"Durchschnittliche Latenz: {report.avg_latency}ms")
 
 ---
 
-**© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue KI-Influencer-Agent Platform**
+**© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chérie KI-Influencer-Agent Platform**
 
-*Diese Dokumentation wird vom multi-role Expertenteam von Ainflue gepflegt, das Lead Dev KI, Backend Senior, ML Engineer, DBA, Sicherheitsspezialist, Microservices Architekt, Audio Engineer, DevOps und KI Prompt Engineer kombiniert.*
+*Diese Dokumentation wird vom multi-role Expertenteam von IA Chérie gepflegt, das Lead Dev KI, Backend Senior, ML Engineer, DBA, Sicherheitsspezialist, Microservices Architekt, Audio Engineer, DevOps und KI Prompt Engineer kombiniert.*

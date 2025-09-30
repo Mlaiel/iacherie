@@ -2,7 +2,7 @@
 Funnel Analytics Engine
 =====================
 
-Advanced conversion funnel analysis system for Ainflue Distribution Platform.
+Advanced conversion funnel analysis system for IA Chérie Distribution Platform.
 Tracks user journey through conversion funnels with detailed step analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

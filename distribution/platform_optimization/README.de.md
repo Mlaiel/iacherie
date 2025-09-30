@@ -1,6 +1,6 @@
 # 🚀 Plattform-Optimierung - Advanced Platform Optimization Engine
 
-**Erweiterte KI-gestützte Plattform-Optimierungs-Engine für das Ainflue-System**
+**Erweiterte KI-gestützte Plattform-Optimierungs-Engine für das IA Chérie-System**
 
 ## 📋 Überblick
 
@@ -138,4 +138,4 @@ optimal_features = await feature_optimizer.recommend_features(content_type, audi
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue Platform - Platform Optimization Module**
+**IA Chérie Platform - Platform Optimization Module**

@@ -1,5 +1,5 @@
 """Content Quality Service - Content quality assessment and enhancement
-Enterprise-grade content quality management for the Ainflue AI platform.
+Enterprise-grade content quality management for the IA Chérie AI platform.
 
 This service provides comprehensive content quality assessment, enhancement
 suggestions, and automated optimization for creators across all content types.

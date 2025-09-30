@@ -4,7 +4,7 @@
 
 Système d'optimisation contenu quantique consolidé combinant SEO intelligent,
 ranking prediction, recommendation engine, keyword optimization et metadata processing
-pour maximiser la visibilité et performance du contenu sur la plateforme Ainflue.
+pour maximiser la visibilité et performance du contenu sur la plateforme IA Chérie.
 
 CONSOLIDATION: 5 fichiers → 1 fichier ✅
 - quantum_seo_optimization_engine.py ✅ FUSIONNÉ
@@ -1062,7 +1062,7 @@ class QuantumContentOptimizer:
         return {
             "title_tag": f"SEO Optimized: {content_data.get('title', 'Content Title')}",
             "meta_description": "Compelling meta description with keywords and call-to-action for better CTR.",
-            "canonical_url": f"https://ainflue.com/content/{content_data.get('content_id', 'default')}",
+            "canonical_url": f"https://iacherie.com/content/{content_data.get('content_id', 'default')}",
             "robots_meta": "index, follow",
             "keywords_meta": ", ".join(content_data.get("keywords", [])),
             "language": content_data.get("language", "en"),

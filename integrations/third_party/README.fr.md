@@ -1,4 +1,4 @@
-# 🔗 Module Third Party - Ainflue Integrations
+# 🔗 Module Third Party - IA Chérie Integrations
 
 **Équipe d'Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

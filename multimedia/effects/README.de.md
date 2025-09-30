@@ -1,6 +1,6 @@
 # 🎨 Erweiterte Kreative Effekte Modul
 
-**Professionelle kreative Effekte und Filter für Multimedia-Inhalte auf der Ainflue-Plattform**
+**Professionelle kreative Effekte und Filter für Multimedia-Inhalte auf der IA Chérie-Plattform**
 
 ## Überblick
 

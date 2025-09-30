@@ -2,7 +2,7 @@
 ===================================================================================
 
 Processeur de requêtes analytiques enterprise avec OLAP cubes, columnar storage,
-et business intelligence optimisé pour la plateforme Ainflue créateurs.
+et business intelligence optimisé pour la plateforme IA Chérie créateurs.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Advanced analytics + predictive modeling + feature engineering + ML pipelines
@@ -753,7 +753,7 @@ class AnalyticsQueryProcessor:
     # 📊 BI ANALYST - Business Intelligence et visualizations
     
     async def generate_business_intelligence_report(self, report_type: str,
-                                                  date_range: Tuple[datetime, datetime],
+                                                  date_range: tuple[datetime, datetime],
                                                   filters: Dict[str, Any] = None) -> Dict[str, Any]:
         """Génération rapport business intelligence"""
         try:

@@ -1,5 +1,5 @@
 """
-📈 PERFORMANCE OPTIMIZATION ORCHESTRATOR - AINFLUE ENTERPRISE
+📈 PERFORMANCE OPTIMIZATION ORCHESTRATOR - IACHERIE ENTERPRISE
 =============================================================
 
 Auto-scaling and resource optimization orchestration for creator economy platform.
@@ -201,10 +201,10 @@ class PerformanceOptimizationOrchestrator:
         
         # Service configurations
         self._service_configs = {
-            "ainflue-web": {"min_instances": 2, "max_instances": 10, "target_cpu": 70},
-            "ainflue-api": {"min_instances": 3, "max_instances": 15, "target_cpu": 65},
-            "ainflue-worker": {"min_instances": 1, "max_instances": 8, "target_cpu": 80},
-            "ainflue-db": {"min_instances": 1, "max_instances": 3, "target_cpu": 75}
+            "iacherie-web": {"min_instances": 2, "max_instances": 10, "target_cpu": 70},
+            "iacherie-api": {"min_instances": 3, "max_instances": 15, "target_cpu": 65},
+            "iacherie-worker": {"min_instances": 1, "max_instances": 8, "target_cpu": 80},
+            "iacherie-db": {"min_instances": 1, "max_instances": 3, "target_cpu": 75}
         }
         
         # Performance thresholds
@@ -616,7 +616,7 @@ class PerformanceOptimizationOrchestrator:
         default_rules = [
             {
                 "name": "Web Service CPU Scaling",
-                "service_name": "ainflue-web",
+                "service_name": "iacherie-web",
                 "metric_type": "cpu_usage",
                 "threshold_up": 70.0,
                 "threshold_down": 30.0,
@@ -625,7 +625,7 @@ class PerformanceOptimizationOrchestrator:
             },
             {
                 "name": "API Service CPU Scaling",
-                "service_name": "ainflue-api",
+                "service_name": "iacherie-api",
                 "metric_type": "cpu_usage",
                 "threshold_up": 65.0,
                 "threshold_down": 25.0,
@@ -634,7 +634,7 @@ class PerformanceOptimizationOrchestrator:
             },
             {
                 "name": "Worker Memory Scaling",
-                "service_name": "ainflue-worker",
+                "service_name": "iacherie-worker",
                 "metric_type": "memory_usage",
                 "threshold_up": 80.0,
                 "threshold_down": 40.0,
@@ -991,7 +991,7 @@ class PerformanceOptimizationOrchestrator:
         return [
             {
                 "timestamp": datetime.utcnow().isoformat(),
-                "service": "ainflue-api",
+                "service": "iacherie-api",
                 "action": "scale_out",
                 "details": "Added 2 replicas due to high CPU usage"
             }

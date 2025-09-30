@@ -1,7 +1,7 @@
 """Event Dispatcher Module
 
 Central event dispatching system for managing event routing, processing,
-and delivery across the Ainflue platform infrastructure.
+and delivery across the IA Chérie platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.

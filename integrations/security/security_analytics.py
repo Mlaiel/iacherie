@@ -19,7 +19,7 @@ Expert Team Implementation:
 🎨 IA Prompt Engineer: AI-driven insights + automated analysis + intelligent reporting
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 Date: Septembre 2024
 
@@ -631,7 +631,7 @@ class SecurityAnalytics:
     ===================================
     
     Analytics complet avec threat intelligence, risk assessment
-    et predictive security intelligence pour Ainflue.
+    et predictive security intelligence pour IA Chérie.
     """
     
     def __init__(self):

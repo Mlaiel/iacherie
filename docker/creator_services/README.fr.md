@@ -1,6 +1,6 @@
 # 🎨 Module Services Créateurs - Docker Services
 
-**Infrastructure des Services Créateurs de la Plateforme Ainflue**
+**Infrastructure des Services Créateurs de la Plateforme IA Chérie**
 
 Outils et services spécialisés pour différents types de créateurs de contenu incluant musiciens, photographes, blogueurs, influenceurs et comédiens avec assistance et optimisation alimentées par IA.
 

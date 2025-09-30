@@ -2,7 +2,7 @@
 
 #
 # iOS App Store Deployment Script
-# Ainflue Professional Content Creation Platform
+# IA Chérie Professional Content Creation Platform
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -13,14 +13,14 @@
 set -e
 
 # Configuration
-APP_NAME="Ainflue"
-BUNDLE_ID="com.fahedmlaiel.ainflue"
-SCHEME="Ainflue"
-WORKSPACE_PATH="ios/Ainflue.xcworkspace"
-PROJECT_PATH="ios/Ainflue.xcodeproj"
+APP_NAME="IA Chérie"
+BUNDLE_ID="com.fahedmlaiel.iacherie"
+SCHEME="IA Chérie"
+WORKSPACE_PATH="ios/IA Chérie.xcworkspace"
+PROJECT_PATH="ios/IA Chérie.xcodeproj"
 BUILD_CONFIG="Release"
-ARCHIVE_PATH="build/ios/Ainflue.xcarchive"
-IPA_PATH="build/ios/Ainflue.ipa"
+ARCHIVE_PATH="build/ios/IA Chérie.xcarchive"
+IPA_PATH="build/ios/IA Chérie.ipa"
 EXPORT_OPTIONS_PLIST="ios/ExportOptions.plist"
 
 # Colors for output
@@ -142,7 +142,7 @@ cat > "$EXPORT_OPTIONS_PLIST" << EOF
     <key>provisioningProfiles</key>
     <dict>
         <key>$BUNDLE_ID</key>
-        <string>Ainflue App Store Distribution</string>
+        <string>IA Chérie App Store Distribution</string>
     </dict>
 </dict>
 </plist>

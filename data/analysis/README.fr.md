@@ -2,7 +2,7 @@
 
 ## 🎯 Aperçu
 
-Le module `data/analysis/` sert de centre de validation et de reporting technique central pour la plateforme Ainflue. Il fournit une infrastructure complète d'analyse de code, de validation business et de génération de rapports pour l'ensemble de l'écosystème de développement.
+Le module `data/analysis/` sert de centre de validation et de reporting technique central pour la plateforme IA Chérie. Il fournit une infrastructure complète d'analyse de code, de validation business et de génération de rapports pour l'ensemble de l'écosystème de développement.
 
 ### 🔄 Position dans le Pipeline de Logique Business
 ```
@@ -196,4 +196,4 @@ historical_reports = await engine.retrieve_historical(
 
 ---
 
-*⚖️ Ce module fait partie de la plateforme enterprise Ainflue. Toutes les modifications doivent être validées par l'équipe spécialisée et respecter les spécifications enterprise.*
+*⚖️ Ce module fait partie de la plateforme enterprise IA Chérie. Toutes les modifications doivent être validées par l'équipe spécialisée et respecter les spécifications enterprise.*

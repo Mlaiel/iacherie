@@ -1,9 +1,9 @@
-"""Ainflue Core Business - Content Moderation Core
+"""IA Chérie Core Business - Content Moderation Core
 ===============================================
 
 Enterprise-grade content moderation system providing automated content analysis,
 toxicity detection, NSFW filtering, spam detection, community guidelines enforcement,
-and human moderation workflows for the Ainflue platform.
+and human moderation workflows for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -120,7 +120,7 @@ class ContentSubmission:
     audio_urls: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     user_id: Optional[str] = None
-    platform: str = "ainflue"
+    platform: str = "iacherie"
     submitted_at: datetime = field(default_factory=datetime.utcnow)
     priority: int = 5  # 1-10, 10 being highest priority
 

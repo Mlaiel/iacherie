@@ -1,4 +1,4 @@
-# 🌍 Module Platforms - Ainflue Integrations
+# 🌍 Module Platforms - IA Chérie Integrations
 
 **Équipe d'Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

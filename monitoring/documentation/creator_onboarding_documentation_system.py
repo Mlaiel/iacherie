@@ -128,7 +128,7 @@ class CreatorOnboardingDocumentationSystem:
     tailored to creator types, experience levels, and preferences.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chérie/IA Chérie"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.CreatorOnboardingDocumentationSystem")
         
@@ -231,11 +231,11 @@ class CreatorOnboardingDocumentationSystem:
             OnboardingStep(
                 step_id="welcome_intro",
                 stage=OnboardingStage.REGISTRATION,
-                title="Welcome to Ainflue Creator Economy!",
+                title="Welcome to IA Chérie Creator Economy!",
                 description="Introduction to the platform and what you can achieve",
                 content={
                     'welcome_message': "Welcome to the future of creator economy!",
-                    'platform_overview': "Ainflue empowers creators with AI-powered tools, comprehensive protection, and multiple monetization opportunities.",
+                    'platform_overview': "IA Chérie empowers creators with AI-powered tools, comprehensive protection, and multiple monetization opportunities.",
                     'success_stories': [
                         "Musicians earning 300% more through our streaming optimization",
                         "Bloggers increasing traffic by 250% with our SEO tools",
@@ -248,7 +248,7 @@ class CreatorOnboardingDocumentationSystem:
                 prerequisites=[],
                 interactive_elements=['welcome_video', 'platform_stats'],
                 help_resources={
-                    'video_url': '/help/videos/welcome-to-ainflue',
+                    'video_url': '/help/videos/welcome-to-iacherie',
                     'faq_url': '/help/faq/getting-started',
                     'support_chat': '/support/chat'
                 }
@@ -495,7 +495,7 @@ class CreatorOnboardingDocumentationSystem:
                 title="Congratulations! You're Ready to Create",
                 description="Onboarding complete - your creator journey begins now",
                 content={
-                    'completion_celebration': "🎉 Welcome to the Ainflue Creator Community!",
+                    'completion_celebration': "🎉 Welcome to the IA Chérie Creator Community!",
                     'achievement_summary': {
                         'profile_created': True,
                         'first_content_published': True,

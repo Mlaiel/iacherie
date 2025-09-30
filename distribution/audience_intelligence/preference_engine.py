@@ -1,5 +1,5 @@
 """
-Advanced Preference Engine for Ainflue Distribution Platform
+Advanced Preference Engine for IA Chérie Distribution Platform
 
 This module provides sophisticated user preference analysis and prediction capabilities
 using machine learning to understand and predict user content preferences across platforms.

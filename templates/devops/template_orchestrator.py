@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Template Orchestrator - Ainflue DevOps Enterprise Platform
+🚀 Template Orchestrator - IA Chérie DevOps Enterprise Platform
 ================================================================
 
 DevOps Template Orchestration System for Creator Economy Platform
@@ -80,7 +80,7 @@ class CreatorEconomyConfig:
 
 class TemplateOrchestrator:
     """
-    Enterprise DevOps Template Orchestrator for Ainflue Creator Economy Platform
+    Enterprise DevOps Template Orchestrator for IA Chérie Creator Economy Platform
     
     Capabilities:
     - Multi-platform template generation (AWS, GCP, Azure, K8s)
@@ -91,7 +91,7 @@ class TemplateOrchestrator:
     - Real-time monitoring setup
     """
     
-    def __init__(self, base_path: str = "/home/runner/work/Ainfluencer/Ainfluencer/templates/devops"):
+    def __init__(self, base_path: str = "/home/runner/work/IA Chérie/IA Chérie/templates/devops"):
         self.base_path = Path(base_path)
         self.templates_dir = self.base_path
         self.output_dir = self.base_path / "generated"
@@ -121,7 +121,7 @@ class TemplateOrchestrator:
     async def generate_infrastructure_template(self, config: TemplateConfig) -> Dict[str, Any]:
         """Generate Infrastructure as Code templates"""
         template_data = {
-            "project_name": "ainflue-creator-platform",
+            "project_name": "iacherie-creator-platform",
             "environment": config.environment.value,
             "platform": config.platform,
             "creator_features": config.creator_features,
@@ -160,7 +160,7 @@ class TemplateOrchestrator:
         """Generate AWS CloudFormation templates"""
         template = {
             "AWSTemplateFormatVersion": "2010-09-09",
-            "Description": f"Ainflue Creator Economy Platform - {data['environment']} Environment",
+            "Description": f"IA Chérie Creator Economy Platform - {data['environment']} Environment",
             "Parameters": {
                 "Environment": {
                     "Type": "String",
@@ -180,7 +180,7 @@ class TemplateOrchestrator:
                         "CidrBlock": "10.0.0.0/16",
                         "EnableDnsHostnames": True,
                         "EnableDnsSupport": True,
-                        "Tags": [{"Key": "Name", "Value": f"ainflue-vpc-{data['environment']}"}]
+                        "Tags": [{"Key": "Name", "Value": f"iacherie-vpc-{data['environment']}"}]
                     }
                 },
                 
@@ -188,7 +188,7 @@ class TemplateOrchestrator:
                 "EKSCluster": {
                     "Type": "AWS::EKS::Cluster",
                     "Properties": {
-                        "Name": f"ainflue-creator-{data['environment']}",
+                        "Name": f"iacherie-creator-{data['environment']}",
                         "Version": "1.28",
                         "RoleArn": {"Ref": "EKSServiceRole"},
                         "ResourcesVpcConfig": {
@@ -203,7 +203,7 @@ class TemplateOrchestrator:
                 "CreatorDatabase": {
                     "Type": "AWS::RDS::DBInstance",
                     "Properties": {
-                        "DBInstanceIdentifier": f"ainflue-creator-db-{data['environment']}",
+                        "DBInstanceIdentifier": f"iacherie-creator-db-{data['environment']}",
                         "DBInstanceClass": "db.r5.xlarge" if data['environment'] == "production" else "db.t3.medium",
                         "Engine": "postgres",
                         "EngineVersion": "15.3",
@@ -231,7 +231,7 @@ class TemplateOrchestrator:
                 "ContentStorageBucket": {
                     "Type": "AWS::S3::Bucket",
                     "Properties": {
-                        "BucketName": f"ainflue-creator-content-{data['environment']}",
+                        "BucketName": f"iacherie-creator-content-{data['environment']}",
                         "VersioningConfiguration": {"Status": "Enabled"},
                         "BucketEncryption": {
                             "ServerSideEncryptionConfiguration": [{
@@ -316,7 +316,7 @@ class TemplateOrchestrator:
     async def _generate_github_actions_pipeline(self, config: TemplateConfig) -> Dict[str, Any]:
         """Generate GitHub Actions workflow for Creator Economy Platform"""
         workflow = {
-            "name": "Ainflue Creator Economy CI/CD",
+            "name": "IA Chérie Creator Economy CI/CD",
             "on": {
                 "push": {"branches": ["main", "develop"]},
                 "pull_request": {"branches": ["main"]},
@@ -439,9 +439,9 @@ class TemplateOrchestrator:
                             "name": "Build Creator Economy Images",
                             "run": """
                             # Build multi-service Docker images
-                            docker build -t $DOCKER_REGISTRY/ainflue/creator-api:${{ github.sha }} -f docker/creator_services/api.dockerfile .
-                            docker build -t $DOCKER_REGISTRY/ainflue/ai-processor:${{ github.sha }} -f docker/ai_services/processor.dockerfile .
-                            docker build -t $DOCKER_REGISTRY/ainflue/monetization:${{ github.sha }} -f docker/monetization/service.dockerfile .
+                            docker build -t $DOCKER_REGISTRY/iacherie/creator-api:${{ github.sha }} -f docker/creator_services/api.dockerfile .
+                            docker build -t $DOCKER_REGISTRY/iacherie/ai-processor:${{ github.sha }} -f docker/ai_services/processor.dockerfile .
+                            docker build -t $DOCKER_REGISTRY/iacherie/monetization:${{ github.sha }} -f docker/monetization/service.dockerfile .
                             """
                         },
                         {
@@ -449,9 +449,9 @@ class TemplateOrchestrator:
                             "run": """
                             # Deploy creator economy services
                             kubectl apply -f kubernetes/production/
-                            kubectl set image deployment/creator-api creator-api=$DOCKER_REGISTRY/ainflue/creator-api:${{ github.sha }}
-                            kubectl set image deployment/ai-processor ai-processor=$DOCKER_REGISTRY/ainflue/ai-processor:${{ github.sha }}
-                            kubectl set image deployment/monetization monetization=$DOCKER_REGISTRY/ainflue/monetization:${{ github.sha }}
+                            kubectl set image deployment/creator-api creator-api=$DOCKER_REGISTRY/iacherie/creator-api:${{ github.sha }}
+                            kubectl set image deployment/ai-processor ai-processor=$DOCKER_REGISTRY/iacherie/ai-processor:${{ github.sha }}
+                            kubectl set image deployment/monetization monetization=$DOCKER_REGISTRY/iacherie/monetization:${{ github.sha }}
                             """
                         }
                     ]
@@ -468,7 +468,7 @@ class TemplateOrchestrator:
                 "scrape_interval": "15s",
                 "evaluation_interval": "15s",
                 "external_labels": {
-                    "cluster": f"ainflue-creator-{config.environment.value}",
+                    "cluster": f"iacherie-creator-{config.environment.value}",
                     "environment": config.environment.value
                 }
             },
@@ -562,8 +562,8 @@ class TemplateOrchestrator:
         """Generate Grafana dashboards for Creator Economy"""
         creator_dashboard = {
             "dashboard": {
-                "title": "Ainflue Creator Economy Dashboard",
-                "tags": ["creator", "economy", "ainflue"],
+                "title": "IA Chérie Creator Economy Dashboard",
+                "tags": ["creator", "economy", "iacherie"],
                 "timezone": "UTC",
                 "panels": [
                     {
@@ -640,7 +640,7 @@ class TemplateOrchestrator:
         
         # Configuration for complete deployment
         base_config = TemplateConfig(
-            name=f"ainflue-creator-{environment.value}",
+            name=f"iacherie-creator-{environment.value}",
             type=TemplateType.INFRASTRUCTURE,
             environment=environment,
             platform="kubernetes",
@@ -652,7 +652,7 @@ class TemplateOrchestrator:
         # Generate infrastructure templates
         for platform in ["aws", "gcp", "kubernetes"]:
             config = TemplateConfig(
-                name=f"ainflue-{platform}-{environment.value}",
+                name=f"iacherie-{platform}-{environment.value}",
                 type=TemplateType.INFRASTRUCTURE,
                 environment=environment,
                 platform=platform,
@@ -670,7 +670,7 @@ class TemplateOrchestrator:
         # Generate CI/CD templates
         for ci_platform in ["github-actions", "gitlab-ci"]:
             config = TemplateConfig(
-                name=f"ainflue-cicd-{ci_platform}",
+                name=f"iacherie-cicd-{ci_platform}",
                 type=TemplateType.CI_CD,
                 environment=environment,
                 platform=ci_platform,
@@ -687,7 +687,7 @@ class TemplateOrchestrator:
         
         # Generate monitoring templates
         monitoring_config = TemplateConfig(
-            name=f"ainflue-monitoring-{environment.value}",
+            name=f"iacherie-monitoring-{environment.value}",
             type=TemplateType.MONITORING,
             environment=environment,
             platform="prometheus",

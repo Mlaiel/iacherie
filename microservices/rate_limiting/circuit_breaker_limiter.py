@@ -1,11 +1,11 @@
 """
-Circuit Breaker Rate Limiter Enterprise - Ainflue
+Circuit Breaker Rate Limiter Enterprise - IA Chérie
 ==================================================
 Circuit Breaker intégré avec Rate Limiting.
 Fail-fast + gradual recovery + health monitoring.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chérie Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

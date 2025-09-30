@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Backup Configuration Module
+"""IA Chérie Backup Configuration Module
 =====================================
 
-Enterprise-grade backup configuration for the Ainflue platform.
+Enterprise-grade backup configuration for the IA Chérie platform.
 Handles automated backups, disaster recovery, data retention policies,
 cloud backup strategies, and comprehensive backup monitoring.
 
@@ -177,7 +177,7 @@ class ApplicationBackupConfig:
     # Version control integration
     git_backup_enabled: bool = True
     git_repositories: List[str] = field(default_factory=lambda: [
-        "ainflue-platform", "ainflue-mobile", "ainflue-ai-models"
+        "iacherie-platform", "iacherie-mobile", "iacherie-ai-models"
     ])
     
     # Environment-specific
@@ -252,7 +252,7 @@ class DisasterRecoveryConfig:
     # Communication plan
     incident_notification: bool = True
     notification_contacts: List[str] = field(default_factory=lambda: [
-        "ops@ainflue.com", "cto@ainflue.com", "ceo@ainflue.com"
+        "ops@iacherie.com", "cto@iacherie.com", "ceo@iacherie.com"
     ])
     
     def get_config(self) -> Dict[str, Any]:
@@ -367,20 +367,20 @@ class BackupConfiguration:
         # Storage configuration
         self.storage_configs = {
             BackupStorage.AWS_S3: {
-                "bucket_name": "ainflue-backups",
+                "bucket_name": "iacherie-backups",
                 "region": "us-east-1",
                 "storage_class": "STANDARD_IA",
                 "encryption": "AES256",
                 "lifecycle_policies": True
             },
             BackupStorage.GOOGLE_CLOUD: {
-                "bucket_name": "ainflue-backups-gcs",
+                "bucket_name": "iacherie-backups-gcs",
                 "region": "us-central1",
                 "storage_class": "NEARLINE",
                 "encryption": "GOOGLE_MANAGED"
             },
             BackupStorage.AZURE_BLOB: {
-                "container_name": "ainflue-backups",
+                "container_name": "iacherie-backups",
                 "storage_account": "ainfluebackups",
                 "access_tier": "Cool",
                 "encryption": "MICROSOFT_MANAGED"

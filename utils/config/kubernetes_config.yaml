@@ -71,7 +71,7 @@ security:
 # Database Settings (Kubernetes)
 database:
   # Kubernetes database connection via service
-  url: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres-service:5432/ainflue"
+  url: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres-service:5432/iacherie"
   pool_size: 15
   max_overflow: 25
   pool_timeout: 20
@@ -122,7 +122,7 @@ logging:
 # File Management (Kubernetes)
 file_management:
   max_file_size_mb: 50
-  temp_directory: "/tmp/ainflue"
+  temp_directory: "/tmp/iacherie"
   scan_for_malware: true
   enable_optimization: true
   
@@ -181,20 +181,20 @@ creator_economy:
 kubernetes:
   # Cluster information
   cluster:
-    name: "ainflue-cluster"
+    name: "iacherie-cluster"
     region: "us-west-2"
     
   # Namespace
-  namespace: "ainflue-prod"
+  namespace: "iacherie-prod"
   
   # Service account
   service_account:
-    name: "ainflue-service-account"
+    name: "iacherie-service-account"
     automount_token: true
     
   # Labels and annotations
   labels:
-    app: "ainflue"
+    app: "iacherie"
     component: "api"
     version: "v1.0.0"
     
@@ -287,39 +287,39 @@ ingress:
   
   # Ingress rules
   rules:
-    - host: "api.ainflue.com"
+    - host: "api.iacherie.com"
       http:
         paths:
           - path: "/"
             path_type: "Prefix"
             backend:
               service:
-                name: "ainflue-api"
+                name: "iacherie-api"
                 port:
                   number: 80
                   
   # TLS configuration
   tls:
     - hosts:
-        - "api.ainflue.com"
-      secret_name: "ainflue-tls"
+        - "api.iacherie.com"
+      secret_name: "iacherie-tls"
       
 # ConfigMap and Secrets
 config_storage:
   # ConfigMap for non-sensitive config
   config_map:
-    name: "ainflue-config"
+    name: "iacherie-config"
     
   # Secrets for sensitive data
   secrets:
     database_secret:
-      name: "ainflue-db-secret"
+      name: "iacherie-db-secret"
       keys:
         - "DATABASE_URL"
         - "POSTGRES_PASSWORD"
         
     api_secret:
-      name: "ainflue-api-secret"
+      name: "iacherie-api-secret"
       keys:
         - "SECRET_KEY"
         - "JWT_SECRET"
@@ -329,14 +329,14 @@ config_storage:
 storage:
   # Data storage
   data_pvc:
-    name: "ainflue-data"
+    name: "iacherie-data"
     size: "10Gi"
     access_mode: "ReadWriteMany"
     storage_class: "fast-ssd"
     
   # Logs storage (if needed)
   logs_pvc:
-    name: "ainflue-logs"
+    name: "iacherie-logs"
     size: "5Gi"
     access_mode: "ReadWriteOnce"
     storage_class: "standard"

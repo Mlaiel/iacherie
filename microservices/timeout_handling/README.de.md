@@ -13,13 +13,13 @@ und wird gemäß den internationalen Urheberrechtsgesetzen strafrechtlich verfol
 
 ## 📋 MODULÜBERSICHT
 
-Das **Enterprise Timeout Handling Modul** von Ainflue stellt eine vollständige Lösung für verteiltes Timeout-Management dar, die künstliche Intelligenz, geschäftsbewusste Patterns und regulatorische Compliance integriert. Diese Level 3 Backend-Architektur bietet adaptives Timeout-Management mit ML-Vorhersage, intelligente Circuit Breaker und Echtzeit-Monitoring.
+Das **Enterprise Timeout Handling Modul** von IA Chérie stellt eine vollständige Lösung für verteiltes Timeout-Management dar, die künstliche Intelligenz, geschäftsbewusste Patterns und regulatorische Compliance integriert. Diese Level 3 Backend-Architektur bietet adaptives Timeout-Management mit ML-Vorhersage, intelligente Circuit Breaker und Echtzeit-Monitoring.
 
 ### 🎯 GESCHÄFTSZIELE
 
 - **Optimale Performance**: Intelligentes Timeout-Management für reibungslose Benutzererfahrung
 - **Enterprise-Resilienz**: Automatischer Schutz vor Kaskadenfehler
-- **Geschäftsintelligenz**: Dynamische Anpassung an Ainflue-Geschäftsmuster
+- **Geschäftsintelligenz**: Dynamische Anpassung an IA Chérie-Geschäftsmuster
 - **Regulatorische Compliance**: DSGVO, SOX, PCI-DSS, ISO 27001 Konformität
 - **Effiziente Monetarisierung**: Timeout-Optimierung zur Umsatzmaximierung
 
@@ -143,7 +143,7 @@ Das **Enterprise Timeout Handling Modul** von Ainflue stellt eine vollständige 
 - **ML-Vorhersage**: Adaptive Lernalgorithmen
 - **Mustererkennung**: Automatische Geschäftsmuster-Erkennung
 - **Auto-Optimierung**: Kontinuierliche Performance-Anpassung
-- **Geschäftskontext**: Anpassung an Ainflue-Spezifika
+- **Geschäftskontext**: Anpassung an IA Chérie-Spezifika
 
 ### **⚡ Enterprise Performance**
 - **Subsekunden-Response**: Optimierte Latenz < 100ms
@@ -297,10 +297,10 @@ ML_TIMEOUT_VORHERSAGE = {
 ### **Enterprise-Abhängigkeiten**
 ```python
 # Service Mesh Integration
-from ainflue.infrastructure import ServiceMesh
-from ainflue.monitoring import PrometheusMetrics
-from ainflue.security import AuthenticationService
-from ainflue.database import DistributedCache
+from iacherie.infrastructure import ServiceMesh
+from iacherie.monitoring import PrometheusMetrics
+from iacherie.security import AuthenticationService
+from iacherie.database import DistributedCache
 
 # Timeout Service Konfiguration
 timeout_service = TimeoutHandlingService(
@@ -357,16 +357,16 @@ ALERT_KONFIGURATIONEN = {
 ### **CLI Timeout Management**
 ```bash
 # Konfigurations-Deployment
-ainflue-timeout deploy --env production --config timeout-policies.json
+iacherie-timeout deploy --env production --config timeout-policies.json
 
 # Echtzeit-Monitoring
-ainflue-timeout monitor --service creator_workflow --dashboard
+iacherie-timeout monitor --service creator_workflow --dashboard
 
 # Load Testing
-ainflue-timeout load-test --scenario peak-upload --duration 10m
+iacherie-timeout load-test --scenario peak-upload --duration 10m
 
 # Compliance-Analyse
-ainflue-timeout audit --framework dsgvo --period last-30-days
+iacherie-timeout audit --framework dsgvo --period last-30-days
 ```
 
 ### **SDK Integration**
@@ -398,7 +398,7 @@ await timeout_client.execute_with_timeout(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-timeout-service
+  name: iacherie-timeout-service
 spec:
   replicas: 10
   selector:
@@ -408,7 +408,7 @@ spec:
     spec:
       containers:
       - name: timeout-service
-        image: ainflue/timeout-service:v1.0.0
+        image: iacherie/timeout-service:v1.0.0
         resources:
           requests:
             memory: "2Gi"
@@ -480,10 +480,10 @@ spec:
 ## 📞 SUPPORT & WARTUNG
 
 ### **Technischer Support**
-- **E-Mail**: support@ainflue.com
+- **E-Mail**: support@iacherie.com
 - **Slack**: #timeout-handling-support
-- **Dokumentation**: https://docs.ainflue.com/timeout-handling
-- **Status-Seite**: https://status.ainflue.com
+- **Dokumentation**: https://docs.iacherie.com/timeout-handling
+- **Status-Seite**: https://status.iacherie.com
 
 ### **Wartungsplan**
 - **Updates**: Tägliche automatische Deployments
@@ -529,4 +529,4 @@ spec:
 
 ---
 
-*Dieses Modul repräsentiert den Stand der Technik im Enterprise-Timeout-Management und kombiniert künstliche Intelligenz, geschäftsbewusste Patterns und regulatorische Compliance, um eine vollständige und robuste Lösung für die Ainflue-Plattform zu bieten.*
+*Dieses Modul repräsentiert den Stand der Technik im Enterprise-Timeout-Management und kombiniert künstliche Intelligenz, geschäftsbewusste Patterns und regulatorische Compliance, um eine vollständige und robuste Lösung für die IA Chérie-Plattform zu bieten.*

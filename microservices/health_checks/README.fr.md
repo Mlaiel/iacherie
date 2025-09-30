@@ -1,4 +1,4 @@
-# Health Checks Enterprise - Microservices Ainflue (Français)
+# Health Checks Enterprise - Microservices IA Chérie (Français)
 
 **Équipe Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -20,7 +20,7 @@ Ce module fournit une documentation complète en plusieurs langues :
 
 ### 🏗️ Vue d'Ensemble de l'Architecture
 
-Le module Health Checks d'Ainflue fournit un monitoring de santé de niveau industriel pour l'architecture microservices distribuée avec intégration IA/ML avancée, analytiques prédictives et capacités d'auto-remédiation.
+Le module Health Checks d'IA Chérie fournit un monitoring de santé de niveau industriel pour l'architecture microservices distribuée avec intégration IA/ML avancée, analytiques prédictives et capacités d'auto-remédiation.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -413,7 +413,7 @@ from microservices.health_checks import KubernetesHealthIntegration
 # Initialiser intégration Kubernetes
 k8s_integration = KubernetesHealthIntegration({
     'kubeconfig_path': '/path/to/kubeconfig',
-    'default_namespace': 'ainflue-production'
+    'default_namespace': 'iacherie-production'
 })
 
 # Intégrer health checks natifs

@@ -1,8 +1,8 @@
 # MongoDB Deployment Guide
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Deployment Guide  
 **Version:** 1.0.0  
 **Last Updated:** September 12, 2025  
@@ -217,7 +217,7 @@ provider "aws" {
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
   
-  cluster_name    = "ainflue-mongodb-cluster"
+  cluster_name    = "iacherie-mongodb-cluster"
   cluster_version = "1.28"
   
   vpc_id     = module.vpc.vpc_id
@@ -257,7 +257,7 @@ module "eks" {
   
   tags = {
     Environment = "production"
-    Project     = "ainflue"
+    Project     = "iacherie"
   }
 }
 
@@ -265,7 +265,7 @@ module "eks" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   
-  name = "ainflue-vpc"
+  name = "iacherie-vpc"
   cidr = "10.0.0.0/16"
   
   azs             = ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
@@ -279,7 +279,7 @@ module "vpc" {
   
   tags = {
     Environment = "production"
-    Project     = "ainflue"
+    Project     = "iacherie"
   }
 }
 
@@ -303,7 +303,7 @@ resource "kubernetes_storage_class" "gp3_fast" {
 
 # Application Load Balancer
 resource "aws_lb" "mongodb_alb" {
-  name               = "ainflue-mongodb-alb"
+  name               = "iacherie-mongodb-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
@@ -313,7 +313,7 @@ resource "aws_lb" "mongodb_alb" {
   
   tags = {
     Environment = "production"
-    Project     = "ainflue"
+    Project     = "iacherie"
   }
 }
 ```
@@ -326,7 +326,7 @@ resource "aws_lb" "mongodb_alb" {
 apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
-  name: ainflue-mongodb-cluster
+  name: iacherie-mongodb-cluster
   namespace: default
 spec:
   location: us-central1
@@ -337,9 +337,9 @@ spec:
   
   # Network configuration
   networkRef:
-    name: ainflue-vpc
+    name: iacherie-vpc
   subnetworkRef:
-    name: ainflue-subnet
+    name: iacherie-subnet
     
   # Security configuration
   masterAuth:
@@ -400,7 +400,7 @@ provider "google" {
 
 # GKE Cluster
 resource "google_container_cluster" "mongodb_cluster" {
-  name     = "ainflue-mongodb-cluster"
+  name     = "iacherie-mongodb-cluster"
   location = var.gcp_region
   
   # Remove default node pool
@@ -485,10 +485,10 @@ resource "google_container_node_pool" "mongodb_nodes" {
 apiVersion: containerservice.azure.com/v1beta1
 kind: ManagedCluster
 metadata:
-  name: ainflue-mongodb-cluster
+  name: iacherie-mongodb-cluster
   location: East US 2
 spec:
-  dnsPrefix: ainflue-mongodb
+  dnsPrefix: iacherie-mongodb
   
   # Node pools
   agentPoolProfiles:
@@ -541,16 +541,16 @@ provider "azurerm" {
 
 # Resource Group
 resource "azurerm_resource_group" "mongodb" {
-  name     = "ainflue-mongodb-rg"
+  name     = "iacherie-mongodb-rg"
   location = var.azure_region
 }
 
 # AKS Cluster
 resource "azurerm_kubernetes_cluster" "mongodb" {
-  name                = "ainflue-mongodb-aks"
+  name                = "iacherie-mongodb-aks"
   location            = azurerm_resource_group.mongodb.location
   resource_group_name = azurerm_resource_group.mongodb.name
-  dns_prefix          = "ainflue-mongodb"
+  dns_prefix          = "iacherie-mongodb"
   kubernetes_version  = "1.28"
   
   default_node_pool {
@@ -590,7 +590,7 @@ resource "azurerm_kubernetes_cluster" "mongodb" {
   
   tags = {
     Environment = "production"
-    Project     = "ainflue"
+    Project     = "iacherie"
   }
 }
 ```
@@ -799,7 +799,7 @@ networks:
 mongodb:
   # Connection settings
   connection:
-    host: "mongodb-cluster.ainflue.com"
+    host: "mongodb-cluster.iacherie.com"
     port: 27017
     database: "ainflue_prod"
     replica_set: "rs0"
@@ -869,14 +869,14 @@ infrastructure:
       memory: "4Gi"
       
   monitoring:
-    prometheus_endpoint: "https://prometheus.ainflue.com"
-    grafana_dashboard: "https://grafana.ainflue.com"
-    alert_manager: "https://alerts.ainflue.com"
+    prometheus_endpoint: "https://prometheus.iacherie.com"
+    grafana_dashboard: "https://grafana.iacherie.com"
+    alert_manager: "https://alerts.iacherie.com"
     
   backup:
     schedule: "0 2 * * *"  # Daily at 2 AM
     retention_days: 30
-    cloud_storage: "s3://ainflue-backups/mongodb"
+    cloud_storage: "s3://iacherie-backups/mongodb"
     encryption: true
 ```
 
@@ -885,7 +885,7 @@ infrastructure:
 # configs/staging.yaml
 mongodb:
   connection:
-    host: "mongodb-staging.ainflue.com"
+    host: "mongodb-staging.iacherie.com"
     port: 27017
     database: "ainflue_staging"
     replica_set: "rs0-staging"
@@ -967,7 +967,7 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
-  IMAGE_NAME: ainflue/mongodb
+  IMAGE_NAME: iacherie/mongodb
 
 jobs:
   test:
@@ -1087,7 +1087,7 @@ jobs:
         
     - name: Run smoke tests
       run: |
-        kubectl run smoke-test --image=ainflue/smoke-tests:latest \
+        kubectl run smoke-test --image=iacherie/smoke-tests:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_STAGING }}" \
           --restart=Never -n mongodb-staging
         kubectl wait --for=condition=complete job/smoke-test -n mongodb-staging --timeout=300s
@@ -1116,7 +1116,7 @@ jobs:
     - name: Verify deployment
       run: |
         kubectl get pods -n mongodb-prod
-        kubectl run health-check --image=ainflue/health-check:latest \
+        kubectl run health-check --image=iacherie/health-check:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_PRODUCTION }}" \
           --restart=Never -n mongodb-prod
         kubectl wait --for=condition=complete job/health-check -n mongodb-prod --timeout=300s
@@ -1270,7 +1270,7 @@ spec:
   "dashboard": {
     "id": null,
     "title": "MongoDB Cluster Overview",
-    "tags": ["mongodb", "ainflue"],
+    "tags": ["mongodb", "iacherie"],
     "timezone": "browser",
     "panels": [
       {
@@ -1333,7 +1333,7 @@ spec:
 ## 📞 SUPPORT & CONTACT
 
 **DevOps Engineering:** Fahed Mlaiel (mlaiel@live.de)  
-**Project:** Ainflue Platform  
+**Project:** IA Chérie Platform  
 **Module:** MongoDB Deployment Guide  
 **Documentation Version:** 1.0.0  
 

@@ -887,14 +887,14 @@ class TenantRouterEngine:
         self.tenant_endpoints[test_tenant_id] = [
             TenantEndpoint(
                 tenant_id=test_tenant_id,
-                endpoint_url="https://eu-west-1.ainflue.com",
+                endpoint_url="https://eu-west-1.iacherie.com",
                 region="EU",
                 weight=100,
                 max_connections=1000
             ),
             TenantEndpoint(
                 tenant_id=test_tenant_id,
-                endpoint_url="https://us-east-1.ainflue.com",
+                endpoint_url="https://us-east-1.iacherie.com",
                 region="US",
                 weight=80,
                 max_connections=800
@@ -909,7 +909,7 @@ class TenantRouterEngine:
             RoutingRule(
                 tenant_id=test_tenant_id,
                 strategy=RoutingStrategy.GEOGRAPHIC,
-                patterns=["*.ainflue.com"],
+                patterns=["*.iacherie.com"],
                 target_endpoints=["eu-west-1", "us-east-1"],
                 priority=100
             )
@@ -1099,7 +1099,7 @@ async def main():
         tenant_id="creator_studio_123",
         client_ip="185.199.108.1",  # IP GitHub pour test
         user_agent="TestClient/1.0",
-        host="creator-studio.ainflue.com",
+        host="creator-studio.iacherie.com",
         path="/api/v1/content",
         method="GET",
         headers={"authorization": "Bearer test-token"},

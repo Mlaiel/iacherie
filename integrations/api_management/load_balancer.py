@@ -1,9 +1,9 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Enterprise Load Balancer - Ainflue Platform
+Enterprise Load Balancer - IA Chérie Platform
 ==========================================
 Multi-expert implementation combining Backend Senior + DevOps + ML Engineer +
-Microservices expertise for intelligent load balancing with Ainflue creator
+Microservices expertise for intelligent load balancing with IA Chérie creator
 economy traffic optimization.
 
 Architecture Features:
@@ -16,7 +16,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator traffic patterns and platform optimization
+Business Logic: IA Chérie creator traffic patterns and platform optimization
 """
 
 import asyncio
@@ -302,11 +302,11 @@ class IntelligentLoadBalancer:
     
     def _initialize_server_pool(self):
         """Initialize server pool with default configuration"""
-        # Default server configurations for Ainflue workloads
+        # Default server configurations for IA Chérie workloads
         default_servers = [
             {
                 'instance_id': 'api-gateway-1',
-                'host': 'api-gateway-1.ainflue.internal',
+                'host': 'api-gateway-1.iacherie.internal',
                 'port': 8000,
                 'weight': 1.0,
                 'traffic_types': [TrafficType.API_GATEWAY, TrafficType.CREATOR_UPLOAD],
@@ -314,7 +314,7 @@ class IntelligentLoadBalancer:
             },
             {
                 'instance_id': 'ai-processor-1',
-                'host': 'ai-processor-1.ainflue.internal',
+                'host': 'ai-processor-1.iacherie.internal',
                 'port': 8001,
                 'weight': 1.5,
                 'traffic_types': [TrafficType.AI_PROCESSING],
@@ -322,7 +322,7 @@ class IntelligentLoadBalancer:
             },
             {
                 'instance_id': 'content-streaming-1',
-                'host': 'streaming-1.ainflue.internal',
+                'host': 'streaming-1.iacherie.internal',
                 'port': 8002,
                 'weight': 2.0,
                 'traffic_types': [TrafficType.CONTENT_STREAMING],
@@ -853,7 +853,7 @@ class IntelligentLoadBalancer:
         }
 
 
-# Ainflue Business Logic Integration Constants
+# IA Chérie Business Logic Integration Constants
 AINFLUE_LOAD_BALANCING_CONFIG = {
     'creator_traffic_patterns': {
         'upload_peak_hours': [18, 19, 20, 21],  # 6-9 PM

@@ -1,11 +1,11 @@
 # Load Balancer Service
-# Advanced load balancing for Ainflue Platform
+# Advanced load balancing for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM nginx:alpine AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Load Balancer - Advanced load balancing and reverse proxy"
+LABEL description="IA Chérie Load Balancer - Advanced load balancing and reverse proxy"
 LABEL version="1.0.0"
 
 # Install additional tools

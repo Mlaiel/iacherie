@@ -1,4 +1,4 @@
-# 🏗️ وحدة البنية التحتية Ainflue - هندسة المؤسسة
+# 🏗️ وحدة البنية التحتية IA Chérie - هندسة المؤسسة
 
 ## 👥 تخصصات فريق التطوير
 
@@ -60,7 +60,7 @@
 
 ## 🎯 تكامل منطق الأعمال لاقتصاد المنشئين
 
-تدعم البنية التحتية مباشرة سير عمل اقتصاد منشئي Ainflue:
+تدعم البنية التحتية مباشرة سير عمل اقتصاد منشئي IA Chérie:
 
 ```
 مصادقة المنشئ → بنية تحتية قابلة للتوسع للرفع → 
@@ -90,8 +90,8 @@
 ### التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/infrastructure
 
 # تهيئة Terraform
 terraform init

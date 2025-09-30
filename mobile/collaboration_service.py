@@ -748,7 +748,7 @@ Initialize collaboration and AI engines."""
     ) -> Dict[str, Any]:
         """Setup mobile workspace access for user."""
         return {
-            "workspace_url": f"https://mobile.ainflue.com/workspace/{project_id}",
+            "workspace_url": f"https://mobile.iacherie.com/workspace/{project_id}",
             "access_token": f"mobile_access_{user_id}_{project_id[:8]}",
             "platform_optimized": device_platform,
             "features_enabled": ["real_time_editing", "voice_chat", "file_sharing"]

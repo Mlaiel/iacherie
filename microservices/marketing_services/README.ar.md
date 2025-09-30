@@ -1,4 +1,4 @@
-# 🚀 وحدة خدمات التسويق - Ainflue Enterprise (العربية)
+# 🚀 وحدة خدمات التسويق - IA Chérie Enterprise (العربية)
 
 **منصة ذكاء التسويق المؤسسي والأتمتة**
 
@@ -54,8 +54,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/microservices/marketing_services
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/microservices/marketing_services
 
 # تثبيت التبعيات
 pip install -r ../../requirements.txt
@@ -408,7 +408,7 @@ spec:
     spec:
       containers:
       - name: marketing-services
-        image: ainflue/marketing-services:latest
+        image: iacherie/marketing-services:latest
         ports:
         - containerPort: 8080
         env:
@@ -421,9 +421,9 @@ spec:
 
 ## 🤝 الدعم والاتصال
 
-- **الوثائق**: [docs.ainflue.com](https://docs.ainflue.com)
-- **الدعم**: support@ainflue.com
-- **مشاكل GitHub**: [مستودع GitHub](https://github.com/Mlaiel/Ainflue)
+- **الوثائق**: [docs.iacherie.com](https://docs.iacherie.com)
+- **الدعم**: support@iacherie.com
+- **مشاكل GitHub**: [مستودع GitHub](https://github.com/Mlaiel/IA Chérie)
 
 ## ⚠️ إشعار مهم
 

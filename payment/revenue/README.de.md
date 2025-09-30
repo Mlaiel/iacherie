@@ -1,6 +1,6 @@
 # 💰 Payment Revenue Management System - Umfassendes Umsatzmanagement für Kreative
 
-Enterprise-Umsatzmanagementsystem für die Kreativwirtschaft mit fortschrittlicher Analytik und umfassender Auszahlungsorchestrierung auf der Ainflue-Plattform.
+Enterprise-Umsatzmanagementsystem für die Kreativwirtschaft mit fortschrittlicher Analytik und umfassender Auszahlungsorchestrierung auf der IA Chérie-Plattform.
 
 ## 🏢 **WARNUNG ZUM GEISTIGEN EIGENTUM**
 
@@ -315,8 +315,8 @@ compliance_report = await compliance_validator.validate_revenue_compliance(
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/payment/revenue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/payment/revenue
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt

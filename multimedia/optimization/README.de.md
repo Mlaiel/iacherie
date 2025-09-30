@@ -2,7 +2,7 @@
 
 ## 📋 Überblick
 
-Dieses Modul stellt professionelle Multimedia-Optimierungstools und -techniken für die Ainflue-Plattform bereit. Es umfasst Leistungsoptimierung, Web-Optimierung, mobile Optimierung und intelligente Streaming-Optimierung.
+Dieses Modul stellt professionelle Multimedia-Optimierungstools und -techniken für die IA Chérie-Plattform bereit. Es umfasst Leistungsoptimierung, Web-Optimierung, mobile Optimierung und intelligente Streaming-Optimierung.
 
 ## 🎯 Hauptfunktionen
 
@@ -143,13 +143,13 @@ optimization_config = {
 ## 🤝 Support
 
 Für technischen Support und Optimierungsberatung:
-- **Email**: optimization-support@ainflue.com
-- **Dokumentation**: https://docs.ainflue.com/optimization
-- **Community**: https://community.ainflue.com
+- **Email**: optimization-support@iacherie.com
+- **Dokumentation**: https://docs.iacherie.com/optimization
+- **Community**: https://community.iacherie.com
 
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt**: mlaiel@live.de  
-**Projekt**: Ainflue Platform - Multimedia Optimization  
+**Projekt**: IA Chérie Platform - Multimedia Optimization  
 **Version**: 3.1.0 Enterprise

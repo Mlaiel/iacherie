@@ -1,9 +1,9 @@
-# 🔄 وحدة تكوين سير العمل للمؤسسات - منصة Ainflue
+# 🔄 وحدة تكوين سير العمل للمؤسسات - منصة IA Chérie
 
-[![درجة المؤسسة](https://img.shields.io/badge/المؤسسة-درجة-blue.svg)](https://ainflue.com)
-[![جاهز للإنتاج](https://img.shields.io/badge/الإنتاج-جاهز-green.svg)](https://ainflue.com)
-[![الأداء](https://img.shields.io/badge/الأداء-<500ms-brightgreen.svg)](https://ainflue.com)
-[![الأمان](https://img.shields.io/badge/الأمان-المؤسسة-red.svg)](https://ainflue.com)
+[![درجة المؤسسة](https://img.shields.io/badge/المؤسسة-درجة-blue.svg)](https://iacherie.com)
+[![جاهز للإنتاج](https://img.shields.io/badge/الإنتاج-جاهز-green.svg)](https://iacherie.com)
+[![الأداء](https://img.shields.io/badge/الأداء-<500ms-brightgreen.svg)](https://iacherie.com)
+[![الأمان](https://img.shields.io/badge/الأمان-المؤسسة-red.svg)](https://iacherie.com)
 
 ## 🔒 **برمجيات ملكية - فهد مليل**
 
@@ -42,7 +42,7 @@
 
 ## 📋 **نظرة عامة**
 
-وحدة تكوين سير العمل للمؤسسات هي نظام إدارة التكوين المركزي لمنصة اقتصاد المبدعين Ainflue. توفر هذه الوحدة إدارة تكوين متقدمة جداً وجاهزة للإنتاج لجميع جوانب المنصة، من معالجة الذكاء الاصطناعي إلى التوزيع العالمي للمحتوى.
+وحدة تكوين سير العمل للمؤسسات هي نظام إدارة التكوين المركزي لمنصة اقتصاد المبدعين IA Chérie. توفر هذه الوحدة إدارة تكوين متقدمة جداً وجاهزة للإنتاج لجميع جوانب المنصة، من معالجة الذكاء الاصطناعي إلى التوزيع العالمي للمحتوى.
 
 ### 🚀 **الميزات الرئيسية**
 
@@ -191,8 +191,8 @@ db_config = DatabaseConfig()
 # إعداد بيئة متعددة قواعد البيانات
 await db_config.configure_database_cluster({
     'postgresql': {
-        'master': 'postgresql://master:5432/ainflue',
-        'replicas': ['postgresql://replica1:5432/ainflue'],
+        'master': 'postgresql://master:5432/iacherie',
+        'replicas': ['postgresql://replica1:5432/iacherie'],
         'connection_pool_size': 100
     },
     'redis': {
@@ -200,7 +200,7 @@ await db_config.configure_database_cluster({
         'sentinel_enabled': True
     },
     'mongodb': {
-        'replica_set': 'ainflue-rs',
+        'replica_set': 'iacherie-rs',
         'nodes': ['mongo1:27017', 'mongo2:27017']
     }
 })
@@ -552,7 +552,7 @@ monitoring:
 #### أخطاء تحميل التكوين
 ```bash
 # فحص أذونات ملف التكوين
-chmod 644 /etc/ainflue/workflow.yaml
+chmod 644 /etc/iacherie/workflow.yaml
 
 # التحقق من صحة بناء التكوين
 python -c "from workflow.config import WorkflowConfigManager; WorkflowConfigManager().validate_config()"
@@ -580,7 +580,7 @@ python -c "from workflow.config import DatabaseConfig; DatabaseConfig().get_pool
 
 ### 🏢 **دعم المؤسسات**
 
-- **البريد الإلكتروني**: support@ainflue.com
+- **البريد الإلكتروني**: support@iacherie.com
 - **الهاتف**: +966 11 234 5678
 - **الطوارئ**: +966 50 123 4567 (24/7)
 

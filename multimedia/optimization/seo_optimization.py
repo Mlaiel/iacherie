@@ -147,9 +147,9 @@ class MetadataOptimizationEngine:
                 'keywords': ', '.join(keywords) if keywords else '',
                 'robots': 'index, follow',
                 'viewport': 'width=device-width, initial-scale=1.0',
-                'canonical_url': f"https://ainflue.com/media/{file_path.stem}",
-                'author': 'Ainflue Platform',
-                'generator': 'Ainflue SEO Optimizer'
+                'canonical_url': f"https://iacherie.com/media/{file_path.stem}",
+                'author': 'IA Chérie Platform',
+                'generator': 'IA Chérie SEO Optimizer'
             })
             
             return optimized_metadata
@@ -563,9 +563,9 @@ class SEOOptimizer:
                 'og:title': title[:100],  # Facebook title limit
                 'og:description': description[:300],  # Facebook description limit
                 'og:type': 'website',
-                'og:url': f"https://ainflue.com/media/{file_path.stem}",
-                'og:image': f"https://cdn.ainflue.com/media/{file_path.name}",
-                'og:site_name': 'Ainflue Platform'
+                'og:url': f"https://iacherie.com/media/{file_path.stem}",
+                'og:image': f"https://cdn.iacherie.com/media/{file_path.name}",
+                'og:site_name': 'IA Chérie Platform'
             })
             
             # Twitter Card
@@ -573,7 +573,7 @@ class SEOOptimizer:
                 'twitter:card': 'summary_large_image',
                 'twitter:title': title[:70],  # Twitter title limit
                 'twitter:description': description[:200],  # Twitter description limit
-                'twitter:image': f"https://cdn.ainflue.com/media/{file_path.name}",
+                'twitter:image': f"https://cdn.iacherie.com/media/{file_path.name}",
                 'twitter:site': '@AinfluePlatform'
             })
             
@@ -601,10 +601,10 @@ class SEOOptimizer:
                 "@type": "MediaObject",
                 "name": metadata.get('title', file_path.stem),
                 "description": metadata.get('description', ''),
-                "url": f"https://ainflue.com/media/{file_path.stem}",
+                "url": f"https://iacherie.com/media/{file_path.stem}",
                 "creator": {
                     "@type": "Organization",
-                    "name": "Ainflue Platform"
+                    "name": "IA Chérie Platform"
                 },
                 "keywords": keywords[:5] if keywords else []
             }
@@ -612,16 +612,16 @@ class SEOOptimizer:
             # Media-specific structured data
             if media_type == 'image':
                 structured_data["@type"] = "ImageObject"
-                structured_data["contentUrl"] = f"https://cdn.ainflue.com/media/{file_path.name}"
+                structured_data["contentUrl"] = f"https://cdn.iacherie.com/media/{file_path.name}"
                 
             elif media_type == 'video':
                 structured_data["@type"] = "VideoObject"
-                structured_data["contentUrl"] = f"https://cdn.ainflue.com/media/{file_path.name}"
+                structured_data["contentUrl"] = f"https://cdn.iacherie.com/media/{file_path.name}"
                 structured_data["uploadDate"] = time.strftime('%Y-%m-%d')
                 
             elif media_type == 'audio':
                 structured_data["@type"] = "AudioObject"
-                structured_data["contentUrl"] = f"https://cdn.ainflue.com/media/{file_path.name}"
+                structured_data["contentUrl"] = f"https://cdn.iacherie.com/media/{file_path.name}"
             
             return structured_data
             

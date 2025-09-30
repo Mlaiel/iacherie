@@ -1,10 +1,10 @@
 # 🎛️ Moteur de Système de Gestion - Centre d'Opérations Entreprise
 
-**Centre de Gestion et d'Opérations Centralisé pour la Plateforme de Distribution Ainflue**
+**Centre de Gestion et d'Opérations Centralisé pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Vue d'ensemble
 
-Le Moteur de Système de Gestion sert de centre d'opérations centralisé pour l'ensemble de l'écosystème de distribution Ainflue. Ce module fournit des capacités de gestion de niveau entreprise incluant l'orchestration d'automatisation, le monitoring de conformité, la gestion des dépendances, la réponse d'urgence, la vérification de santé et la distribution de revenus sur 65+ plateformes et 53 agents IA.
+Le Moteur de Système de Gestion sert de centre d'opérations centralisé pour l'ensemble de l'écosystème de distribution IA Chérie. Ce module fournit des capacités de gestion de niveau entreprise incluant l'orchestration d'automatisation, le monitoring de conformité, la gestion des dépendances, la réponse d'urgence, la vérification de santé et la distribution de revenus sur 65+ plateformes et 53 agents IA.
 
 ## 🚀 Fonctionnalités Clés
 
@@ -31,6 +31,6 @@ Le Moteur de Système de Gestion sert de centre d'opérations centralisé pour l
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - MOTEUR DE SYSTÈME DE GESTION AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - MOTEUR DE SYSTÈME DE GESTION IACHERIE**  
 **🔒 LOGICIEL PROPRIÉTAIRE - TOUS DROITS RÉSERVÉS**  
 **⚠️ SOLUTION NIVEAU ENTREPRISE - PERSONNEL AUTORISÉ UNIQUEMENT**

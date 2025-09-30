@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Log Rotator & Archival System - Ainflue Platform
+Log Rotator & Archival System - IA Chérie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)  
 Role: DevOps Engineer
 Purpose: Enterprise log management, rotation and archival automation
@@ -29,7 +29,7 @@ class LogRotator:
     """Enterprise log rotation and archival system"""
     
     def __init__(self, project_root: Path = None):
-        self.project_root = project_root or Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = project_root or Path("/home/runner/work/IA Chérie/IA Chérie")
         self.log_dirs = self._identify_log_directories()
         self.archive_dir = self.project_root / "logs" / "archives"
         self.archive_dir.mkdir(parents=True, exist_ok=True)
@@ -374,7 +374,7 @@ async def main():
     """Main log rotator execution"""
     rotator = LogRotator()
     
-    print("📄 Log Rotator - Ainflue Platform")
+    print("📄 Log Rotator - IA Chérie Platform")
     print("=" * 35)
     
     # Analyze current log state

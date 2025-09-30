@@ -2,11 +2,11 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Enterprise Security Manager - Ainflue Platform
+Enterprise Security Manager - IA Chérie Platform
 ==============================================
 Multi-expert implementation combining Security Expert + Backend Senior + 
 DevOps + ML Engineer expertise for comprehensive API security, threat detection,
-and compliance with Ainflue creator content protection.
+and compliance with IA Chérie creator content protection.
 
 Architecture Features:
 - Threat Detection & Prevention (DDoS + injection + brute force)
@@ -18,7 +18,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator security and content protection patterns
+Business Logic: IA Chérie creator security and content protection patterns
 """
 
 import asyncio
@@ -303,7 +303,7 @@ class EnterpriseSecurityManager:
         self.logger.info("Enterprise Security Manager initialized")
     
     def _initialize_default_security_rules(self):
-        """Initialize default security rules for Ainflue platform"""
+        """Initialize default security rules for IA Chérie platform"""
         default_rules = [
             SecurityRule(
                 rule_id="brute_force_protection",
@@ -1335,7 +1335,7 @@ class EnterpriseSecurityManager:
         }
 
 
-# Ainflue Business Logic Integration Constants
+# IA Chérie Business Logic Integration Constants
 AINFLUE_SECURITY_CONFIGURATION = {
     'creator_protection_features': {
         'content_encryption': 'protect_creator_intellectual_property',

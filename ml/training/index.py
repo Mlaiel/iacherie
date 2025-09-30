@@ -1,11 +1,11 @@
 """
-🚀 ML Training Module Index - Ainflue Enterprise
+🚀 ML Training Module Index - IA Chérie Enterprise
 ==============================================
 Orchestrator principal pour tous les composants d'entraînement ML enterprise.
 Training pipeline coordination + model optimization + distributed learning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Training
+Project: IA Chérie ML Training
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -76,7 +76,7 @@ class TrainingMode(Enum):
     AUTOML = "automl"
 
 class ModelType(Enum):
-    """Types de modèles Ainflue"""
+    """Types de modèles IA Chérie"""
     CONTENT_CLASSIFIER = "content_classifier"
     QUALITY_ASSESSOR = "quality_assessor"
     SENTIMENT_ANALYZER = "sentiment_analyzer"
@@ -140,9 +140,9 @@ class TrainingResult:
 
 class AinflueTRainingOrchestrator:
     """
-    Orchestrateur principal entraînement ML Ainflue Enterprise.
+    Orchestrateur principal entraînement ML IA Chérie Enterprise.
     
-    Logique Métier Ainflue:
+    Logique Métier IA Chérie:
     Créateurs multi-format → IA Processing → Protection → Monétisation → 
     Collaboration & Gamification → SEO → Distribution multi-plateformes
     
@@ -240,7 +240,7 @@ class AinflueTRainingOrchestrator:
             training_time = time.time() - start_time
             
             return TrainingResult(
-                model_id=f"ainflue_{config.model_type.value}_{int(time.time())}",
+                model_id=f"iacherie_{config.model_type.value}_{int(time.time())}",
                 model_type=config.model_type,
                 training_mode=config.training_mode,
                 final_accuracy=training_result.get('accuracy', 0.0),
@@ -559,7 +559,7 @@ def create_distributed_training_manager(num_gpus: int) -> DistributedTrainingMan
 async def train_ainflue_model(model_type: ModelType, training_mode: TrainingMode, 
                              dataset_path: str, **kwargs) -> TrainingResult:
     """
-    Interface principale entraînement modèles Ainflue.
+    Interface principale entraînement modèles IA Chérie.
     
     Creator Economy Training pour:
     - Content Classification (audio, video, image, text)

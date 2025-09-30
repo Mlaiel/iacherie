@@ -1,5 +1,5 @@
 """
-Ainflue Core Security - JWT Manager Core
+IA Chérie Core Security - JWT Manager Core
 ========================================
 
 Enterprise-grade JWT (JSON Web Token) management system with advanced security
@@ -72,7 +72,7 @@ class TokenClaims:
     issued_at: datetime
     expires_at: datetime
     not_before: Optional[datetime] = None
-    issuer: str = "ainflue-core"
+    issuer: str = "iacherie-core"
     audience: List[str] = field(default_factory=list)
     subject: Optional[str] = None
     jti: str = field(default_factory=lambda: str(uuid.uuid4()))

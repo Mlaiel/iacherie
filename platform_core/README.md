@@ -25,7 +25,7 @@ GDPR, DMCA, and international copyright protections apply.
 - **AI Prompt Engineer:** Platform AI integration and optimization
 
 ## Executive Summary
-Enterprise-grade platform core architecture providing comprehensive orchestration, management, and infrastructure services for the Ainflue AI creator platform ecosystem.
+Enterprise-grade platform core architecture providing comprehensive orchestration, management, and infrastructure services for the IA Chérie AI creator platform ecosystem.
 
 ## Architecture Overview
 Level 2 backend component providing foundational platform services including orchestration, tenant management, billing, subscription management, communication infrastructure, and comprehensive support systems for the entire creator ecosystem.
@@ -103,7 +103,7 @@ The platform core orchestrates the complete creator workflow:
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Install dependencies
 pip install -r requirements.txt

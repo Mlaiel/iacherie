@@ -1,11 +1,11 @@
-# 🚀 Ainflue Configuration Module - Enterprise Configuration Management Hub
+# 🚀 IA Chérie Configuration Module - Enterprise Configuration Management Hub
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
 [![Redis](https://img.shields.io/badge/Redis-7.0+-red.svg)](https://redis.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://postgresql.org)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 Ultra-Advanced Enterprise Configuration Orchestration Hub**  
 > Revolutionary configuration management system with AI-powered optimization, quantum-scale security, and real-time distribution across multi-cloud environments.
@@ -50,7 +50,7 @@ Real-time Distribution + Performance Optimization → Global Synchronization →
 
 ## 🌟 **Overview**
 
-The **Ainflue Configuration Module** represents the pinnacle of enterprise configuration management technology. This ultra-advanced system provides centralized, secure, and intelligent configuration orchestration for the entire Ainflue ecosystem, featuring cutting-edge capabilities that redefine how modern applications handle configuration at scale.
+The **IA Chérie Configuration Module** represents the pinnacle of enterprise configuration management technology. This ultra-advanced system provides centralized, secure, and intelligent configuration orchestration for the entire IA Chérie ecosystem, featuring cutting-edge capabilities that redefine how modern applications handle configuration at scale.
 
 ### 🏗️ **Enterprise Architecture**
 
@@ -118,8 +118,8 @@ graph TB
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/config
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/config
 
 # Install dependencies
 pip install -r requirements.txt
@@ -268,10 +268,10 @@ print(f"AI models: {ai_config.enabled_models}")
 ### **Environment Configuration**
 ```bash
 # .env file example
-APP_NAME=Ainflue
+APP_NAME=IA Chérie
 ENVIRONMENT=production
 DEBUG=false
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379/0
 OPENAI_API_KEY=your_api_key
 STRIPE_SECRET_KEY=your_stripe_key

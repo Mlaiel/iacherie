@@ -2,7 +2,7 @@
 🔍 Model Drift Detection Engine - Enterprise AI/ML Performance Hub
 ================================================================
 
-Moteur détection drift modèles IA ultra-avancé pour Creator Economy Ainflue.
+Moteur détection drift modèles IA ultra-avancé pour Creator Economy IA Chérie.
 Algorithmes détection dérive statistique, analyse patterns comportement créateurs,
 monitoring distribution features, alertes dégradation performance, triggers retraining automatique.
 

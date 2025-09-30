@@ -1,13 +1,13 @@
-# 🚀 Module de Configuration Core Ainflue - Édition Enterprise Ultra-Avancée
+# 🚀 Module de Configuration Core IA Chérie - Édition Enterprise Ultra-Avancée
 
-[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.ainflue.com)
-[![Architecture Système](https://img.shields.io/badge/Architecture-Système-blue.svg)](https://architecture.ainflue.com)
-[![Haute Performance](https://img.shields.io/badge/Haute-Performance-green.svg)](https://performance.ainflue.com)
-[![Sécurité Enterprise](https://img.shields.io/badge/Sécurité-Enterprise-red.svg)](https://security.ainflue.com)
+[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.iacherie.com)
+[![Architecture Système](https://img.shields.io/badge/Architecture-Système-blue.svg)](https://architecture.iacherie.com)
+[![Haute Performance](https://img.shields.io/badge/Haute-Performance-green.svg)](https://performance.iacherie.com)
+[![Sécurité Enterprise](https://img.shields.io/badge/Sécurité-Enterprise-red.svg)](https://security.iacherie.com)
 
 ## 🎯 Résumé Exécutif
 
-Le **Module de Configuration Core Ainflue** représente l'infrastructure fondamentale de niveau entreprise alimentant l'ensemble de l'écosystème Ainflue. Ce core ultra-avancé offre des performances à l'échelle quantique, une sécurité de niveau militaire, des opérations système autonomes et une fiabilité d'entreprise sur une infrastructure globale distribuée.
+Le **Module de Configuration Core IA Chérie** représente l'infrastructure fondamentale de niveau entreprise alimentant l'ensemble de l'écosystème IA Chérie. Ce core ultra-avancé offre des performances à l'échelle quantique, une sécurité de niveau militaire, des opérations système autonomes et une fiabilité d'entreprise sur une infrastructure globale distribuée.
 
 ## 🏗️ Vue d'ensemble de l'Architecture Système
 
@@ -121,7 +121,7 @@ from config.core.database import DatabaseConfig
 database = DatabaseConfig(
     primary_database={
         "engine": "postgresql",
-        "host": "primary-db-cluster.ainflue.com",
+        "host": "primary-db-cluster.iacherie.com",
         "port": 5432,
         "connection_pool": {
             "min_connections": 10,
@@ -136,7 +136,7 @@ database = DatabaseConfig(
     },
     analytics_database={
         "engine": "clickhouse",
-        "host": "analytics-cluster.ainflue.com",
+        "host": "analytics-cluster.iacherie.com",
         "sharding": True,
         "compression": "lz4"
     },
@@ -249,9 +249,9 @@ from config.core.cache_config import CacheConfig
 cache = CacheConfig(
     redis_cluster={
         "nodes": [
-            "redis-01.ainflue.com:6379",
-            "redis-02.ainflue.com:6379",
-            "redis-03.ainflue.com:6379"
+            "redis-01.iacherie.com:6379",
+            "redis-02.iacherie.com:6379",
+            "redis-03.iacherie.com:6379"
         ],
         "cluster_mode": True,
         "read_from_replicas": True
@@ -557,10 +557,10 @@ backup_manager.test_disaster_recovery()
 
 ### Support & Communauté
 
-- 💬 [Forum Systèmes Core](https://community.ainflue.com/core)
-- 📧 [Support Enterprise](mailto:core-support@ainflue.com)
+- 💬 [Forum Systèmes Core](https://community.iacherie.com/core)
+- 📧 [Support Enterprise](mailto:core-support@iacherie.com)
 - 📞 [Support Technique 24/7](tel:+1-800-CORE-SUPPORT)
-- 🎯 [Consultation Architecture](https://ainflue.com/architecture-consultation)
+- 🎯 [Consultation Architecture](https://iacherie.com/architecture-consultation)
 
 ## 🔄 Mises à Jour & Roadmap
 
@@ -584,7 +584,7 @@ backup_manager.test_disaster_recovery()
 
 ## 🏆 Excellence Enterprise
 
-**Module Configuration Core Ainflue** - L'infrastructure fondamentale alimentant les plateformes économie créateur à l'échelle enterprise avec performance quantique, sécurité militaire et opérations autonomes.
+**Module Configuration Core IA Chérie** - L'infrastructure fondamentale alimentant les plateformes économie créateur à l'échelle enterprise avec performance quantique, sécurité militaire et opérations autonomes.
 
 *Construit pour l'échelle. Optimisé pour la performance. Conçu pour la fiabilité.*
 
@@ -594,4 +594,4 @@ backup_manager.test_disaster_recovery()
 
 ---
 
-*© 2025 Ainflue Technologies. Tous droits réservés. Édition Enterprise.*
+*© 2025 IA Chérie Technologies. Tous droits réservés. Édition Enterprise.*

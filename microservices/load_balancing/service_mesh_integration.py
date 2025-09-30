@@ -133,7 +133,7 @@ class IstioManager:
                 "name": f"{service_name}-destination-rule",
                 "namespace": namespace,
                 "labels": {
-                    "managed-by": "ainflue-load-balancer",
+                    "managed-by": "iacherie-load-balancer",
                     "service": service_name
                 }
             },
@@ -193,7 +193,7 @@ class IstioManager:
                 "name": f"{service_name}-virtual-service",
                 "namespace": namespace,
                 "labels": {
-                    "managed-by": "ainflue-load-balancer",
+                    "managed-by": "iacherie-load-balancer",
                     "service": service_name
                 }
             },
@@ -300,7 +300,7 @@ class LinkerdManager:
                 "name": f"{service_name}-traffic-split",
                 "namespace": namespace,
                 "labels": {
-                    "managed-by": "ainflue-load-balancer"
+                    "managed-by": "iacherie-load-balancer"
                 }
             },
             "spec": {

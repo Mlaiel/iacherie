@@ -1,4 +1,4 @@
-# 🔐 Module de Sécurité Ainflue - Qualité Entreprise
+# 🔐 Module de Sécurité IA Chérie - Qualité Entreprise
 
 ## 🔒 PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ```
@@ -12,7 +12,7 @@
 
 ## 🚀 Aperçu
 
-Le Module de Sécurité Ainflue est un framework de sécurité de qualité entreprise conçu spécifiquement pour les plateformes d'économie créative. Il offre une protection complète pour les musiciens, photographes, blogueurs et autres créateurs de contenu grâce à la détection avancée de menaces, au contrôle d'accès et à la gestion des vulnérabilités.
+Le Module de Sécurité IA Chérie est un framework de sécurité de qualité entreprise conçu spécifiquement pour les plateformes d'économie créative. Il offre une protection complète pour les musiciens, photographes, blogueurs et autres créateurs de contenu grâce à la détection avancée de menaces, au contrôle d'accès et à la gestion des vulnérabilités.
 
 ### 🎯 Fonctionnalités Clés
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Real-Time Monitoring Dispatcher
+IA Chérie Platform - Real-Time Monitoring Dispatcher
 ================================================
 
 Enterprise-grade real-time monitoring dispatcher for Creator Economy platform.
@@ -942,7 +942,7 @@ async def main():
         'type': 'engagement_spike',
         'priority': 'high',
         'channels': ['websocket', 'email'],
-        'recipients': ['admin@ainflue.com']
+        'recipients': ['admin@iacherie.com']
     }
     
     alert_id = await dispatcher.dispatch_alert(alert_data)

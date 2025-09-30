@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE RIGHTS MANAGER - COMPREHENSIVE DOCKERFILE
+# IACHERIE RIGHTS MANAGER - COMPREHENSIVE DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS rights-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${RIGHTS_SERVICE_PORT}
 CMD ["python3.11", "-m", "rights_manager.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Rights Manager"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="rights_manager"
-LABEL ainflue.service.port="8027"
+LABEL org.opencontainers.image.title="IA Chérie Rights Manager"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="rights_manager"
+LABEL iacherie.service.port="8027"

@@ -1,6 +1,6 @@
 # 📊 Monitoring Module - Docker Services
 
-**Ainflue Platform Monitoring Infrastructure**
+**IA Chérie Platform Monitoring Infrastructure**
 
 Enterprise-grade monitoring infrastructure with Prometheus metrics collection, Grafana dashboards, distributed tracing, and comprehensive observability for content creators and influencers.
 
@@ -59,7 +59,7 @@ services:
   elasticsearch:
     build: ./elk_stack.dockerfile
     environment:
-      - cluster.name=ainflue-monitoring
+      - cluster.name=iacherie-monitoring
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
 ```

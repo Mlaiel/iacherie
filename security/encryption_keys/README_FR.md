@@ -4,7 +4,7 @@
 
 ## Aperçu
 
-Ce module complet de clés de chiffrement fournit une infrastructure de sécurité d'entreprise spécialement conçue pour la plateforme Ainflue Creator Economy. Il combine des technologies cryptographiques de pointe avec des optimisations centrées sur les créateurs pour offrir une sécurité, des performances et une facilité d'utilisation inégalées.
+Ce module complet de clés de chiffrement fournit une infrastructure de sécurité d'entreprise spécialement conçue pour la plateforme IA Chérie Creator Economy. Il combine des technologies cryptographiques de pointe avec des optimisations centrées sur les créateurs pour offrir une sécurité, des performances et une facilité d'utilisation inégalées.
 
 ## 🚀 Fonctionnalités Clés
 
@@ -139,7 +139,7 @@ encrypted_content = await encryptor.encrypt_content(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-encryption-keys
+  name: iacherie-encryption-keys
 spec:
   replicas: 3
   selector:
@@ -149,7 +149,7 @@ spec:
     spec:
       containers:
       - name: key-manager
-        image: ainflue/encryption-keys:latest
+        image: iacherie/encryption-keys:latest
         env:
         - name: HSM_CLUSTER_ID
           valueFrom:
@@ -225,6 +225,6 @@ Les clients entreprise peuvent obtenir une licence commerciale avec des fonction
 
 ---
 
-**Construit avec ❤️ pour l'Économie des Créateurs par l'Équipe de Sécurité Ainflue**
+**Construit avec ❤️ pour l'Économie des Créateurs par l'Équipe de Sécurité IA Chérie**
 
 *Permettre aux créateurs d'avoir une sécurité de niveau entreprise tout en maintenant la simplicité et les performances dont ils ont besoin pour se concentrer sur leur art.*

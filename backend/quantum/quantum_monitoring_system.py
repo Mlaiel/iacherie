@@ -4,7 +4,7 @@
 
 Système de monitoring quantique complet pour surveillance performance,
 métriques quantum advantage, health monitoring, alertes en temps réel
-et analytics pour optimisation continue du système quantique Ainflue.
+et analytics pour optimisation continue du système quantique IA Chérie.
 
 CONSOLIDATION: Monitoring centralisé ✅
 - Performance tracking en temps réel

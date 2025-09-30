@@ -1,10 +1,10 @@
 # 🔧 Module Utilitaires Core - Infrastructure Utilitaires Entreprise
 
-**Système d'Utilitaires Entreprise Avancé pour la Plateforme Ainflue Creator Economy**
+**Système d'Utilitaires Entreprise Avancé pour la Plateforme IA Chérie Creator Economy**
 
 ## 🎯 **Aperçu du Projet**
 
-Le Module Utilitaires Core fournit l'infrastructure utilitaire fondamentale pour la Plateforme Ainflue Creator Economy. Ce système de niveau entreprise gère le traitement des données, la gestion des médias, la sécurité, la mise en cache, le monitoring des performances, et l'orchestration des workflows avec une garantie de >99.99% de disponibilité pour les opérations Creator Economy.
+Le Module Utilitaires Core fournit l'infrastructure utilitaire fondamentale pour la Plateforme IA Chérie Creator Economy. Ce système de niveau entreprise gère le traitement des données, la gestion des médias, la sécurité, la mise en cache, le monitoring des performances, et l'orchestration des workflows avec une garantie de >99.99% de disponibilité pour les opérations Creator Economy.
 
 ### 👥 **Spécialités de l'Équipe de Développement**
 **Chef de Projet et Créateur:** Fahed Mlaiel <mlaiel@live.de>

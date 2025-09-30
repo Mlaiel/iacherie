@@ -1,8 +1,8 @@
 #!/bin/bash
-# Ainflue Infrastructure Module - EKS Node Userdata Script
+# IA Chérie Infrastructure Module - EKS Node Userdata Script
 # ========================================================
 # 
-# Enterprise-grade EKS node bootstrap script for Ainflue platform
+# Enterprise-grade EKS node bootstrap script for IA Chérie platform
 # Supports custom configurations and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -15,7 +15,7 @@
   --apiserver-endpoint ${endpoint} \
   --b64-cluster-ca ${ca_data} \
   --container-runtime containerd \
-  --kubelet-extra-args '--node-labels=ainflue.com/node-type=worker'
+  --kubelet-extra-args '--node-labels=iacherie.com/node-type=worker'
 
 # Install additional packages for creator economy workloads
 yum update -y
@@ -83,8 +83,8 @@ systemctl enable amazon-cloudwatch-agent
 systemctl start amazon-cloudwatch-agent
 
 # Configure log rotation
-cat > /etc/logrotate.d/ainflue-apps << 'EOF'
-/var/log/ainflue/*.log {
+cat > /etc/logrotate.d/iacherie-apps << 'EOF'
+/var/log/iacherie/*.log {
     daily
     missingok
     rotate 52
@@ -96,8 +96,8 @@ cat > /etc/logrotate.d/ainflue-apps << 'EOF'
 EOF
 
 # Create directories for application logs
-mkdir -p /var/log/ainflue
-chmod 755 /var/log/ainflue
+mkdir -p /var/log/iacherie
+chmod 755 /var/log/iacherie
 
 # Set up node exporter for Prometheus monitoring
 wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
@@ -128,7 +128,7 @@ systemctl start node_exporter
 
 # Configure kernel parameters for high-performance workloads
 cat >> /etc/sysctl.conf << 'EOF'
-# Ainflue performance optimizations
+# IA Chérie performance optimizations
 net.core.rmem_max = 268435456
 net.core.wmem_max = 268435456
 net.ipv4.tcp_rmem = 4096 16384 268435456

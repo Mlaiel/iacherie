@@ -121,7 +121,7 @@ class InteractiveDocumentationBuilder:
     tailored for Creator Economy workflows and user types.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chérie/IA Chérie"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.InteractiveDocumentationBuilder")
         
@@ -179,7 +179,7 @@ class InteractiveDocumentationBuilder:
             description="Visual progress tracker for documentation completion",
             widget_type="progress",
             template="""
-            <div class="ainflue-progress-widget" id="progress-{widget_id}">
+            <div class="iacherie-progress-widget" id="progress-{widget_id}">
                 <div class="progress-header">
                     <h3>{title}</h3>
                     <span class="progress-percentage">{percentage}%</span>
@@ -211,7 +211,7 @@ class InteractiveDocumentationBuilder:
             }
             """,
             styles="""
-            .ainflue-progress-widget {
+            .iacherie-progress-widget {
                 background: #f8f9fa;
                 border-radius: 8px;
                 padding: 20px;
@@ -273,7 +273,7 @@ class InteractiveDocumentationBuilder:
             description="Step-by-step interactive tutorial system",
             widget_type="tutorial",
             template="""
-            <div class="ainflue-tutorial-widget" id="tutorial-{widget_id}">
+            <div class="iacherie-tutorial-widget" id="tutorial-{widget_id}">
                 <div class="tutorial-header">
                     <h3>{title}</h3>
                     <div class="tutorial-controls">
@@ -336,7 +336,7 @@ class InteractiveDocumentationBuilder:
             }
             """,
             styles="""
-            .ainflue-tutorial-widget {
+            .iacherie-tutorial-widget {
                 background: #ffffff;
                 border-radius: 12px;
                 padding: 24px;
@@ -408,7 +408,7 @@ class InteractiveDocumentationBuilder:
             description="Interactive API testing and exploration tool",
             widget_type="api_explorer",
             template="""
-            <div class="ainflue-api-explorer" id="api-explorer-{widget_id}">
+            <div class="iacherie-api-explorer" id="api-explorer-{widget_id}">
                 <div class="explorer-header">
                     <h3>API Explorer</h3>
                     <select class="endpoint-selector" onchange="selectEndpoint('{widget_id}', this.value)">
@@ -504,7 +504,7 @@ class InteractiveDocumentationBuilder:
             }
             """,
             styles="""
-            .ainflue-api-explorer {
+            .iacherie-api-explorer {
                 background: #ffffff;
                 border-radius: 8px;
                 padding: 20px;
@@ -643,7 +643,7 @@ class InteractiveDocumentationBuilder:
         # Welcome tour element
         welcome_tour = InteractiveElement(
             element_id="welcome_tour",
-            title="Welcome to Ainflue Creator Platform",
+            title="Welcome to IA Chérie Creator Platform",
             description="Interactive tour of the platform features",
             element_type=InteractiveElementType.GUIDED_TOUR,
             trigger=InteractionTrigger.ON_LOAD,

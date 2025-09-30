@@ -992,7 +992,7 @@ class BlockchainLicensingEngine:
             network=network,
             contract_type=ContractType.ROYALTY_DISTRIBUTION,
             contract_parameters={
-                "name": "Ainflue Royalty Distributor",
+                "name": "IA Chérie Royalty Distributor",
                 "version": "1.0",
                 "batch_size_limit": 100
             },
@@ -1114,7 +1114,7 @@ class BlockchainLicensingEngine:
             network=network,
             contract_type=ContractType.DISPUTE_RESOLUTION,
             contract_parameters={
-                "name": "Ainflue Dispute Arbitrator",
+                "name": "IA Chérie Dispute Arbitrator",
                 "ai_arbitration_enabled": True,
                 "evidence_weight_algorithm": "ml_confidence"
             },

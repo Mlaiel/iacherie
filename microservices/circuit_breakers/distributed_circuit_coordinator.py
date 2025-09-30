@@ -1,5 +1,5 @@
 """
-Distributed Circuit Coordinator - Ainflue Platform
+Distributed Circuit Coordinator - IA Chérie Platform
 ================================================
 
 Coordinator circuit breakers distribués enterprise.

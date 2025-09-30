@@ -1381,7 +1381,7 @@ class TechnicalPerformanceMonitor:
 
 # Enterprise monitoring management
 class PerformanceMonitoringManager:
-    """High-level performance monitoring management for Ainflue platform."""
+    """High-level performance monitoring management for IA Chérie platform."""
     
     def __init__(self):
         self.monitor = TechnicalPerformanceMonitor()

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ainflue\SDK;
+namespace IA Chérie\SDK;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -19,9 +19,9 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 /**
- * Ainflue PHP SDK - Enterprise Server-Side Client
+ * IA Chérie PHP SDK - Enterprise Server-Side Client
  * 
- * Provides secure, high-performance access to Ainflue Platform APIs for PHP applications.
+ * Provides secure, high-performance access to IA Chérie Platform APIs for PHP applications.
  * 
  * Features:
  * - JWT Authentication with automatic refresh
@@ -77,7 +77,7 @@ class AinfluenceClient
             'timeout' => $this->config->getTimeout(),
             'connect_timeout' => 10.0,
             'headers' => [
-                'User-Agent' => "Ainflue-PHP-SDK/" . self::VERSION,
+                'User-Agent' => "IA Chérie-PHP-SDK/" . self::VERSION,
                 'X-Client-Version' => self::VERSION,
                 'X-Platform' => 'PHP',
                 'Content-Type' => 'application/json',
@@ -88,7 +88,7 @@ class AinfluenceClient
         ]);
 
         // Initialize logger
-        $this->logger = new Logger('ainflue-sdk');
+        $this->logger = new Logger('iacherie-sdk');
         $this->logger->pushHandler(new StreamHandler($this->config->getLogPath(), Logger::INFO));
 
         // Initialize managers
@@ -96,14 +96,14 @@ class AinfluenceClient
         $this->securityManager = new SecurityManager($this->config);
         $this->cacheManager = new CacheManager($this->config);
 
-        $this->logger->info('Ainflue SDK initialized', [
+        $this->logger->info('IA Chérie SDK initialized', [
             'version' => self::VERSION,
             'base_url' => $this->config->getBaseUrl(),
         ]);
     }
 
     /**
-     * Authenticate with the Ainflue platform
+     * Authenticate with the IA Chérie platform
      */
     public function authenticate(string $email, string $password): AuthResult
     {

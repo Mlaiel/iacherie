@@ -1,6 +1,6 @@
 """
 Redis Cluster Configuration for Distributed Caching
-High-performance distributed caching solution for Ainflue Platform
+High-performance distributed caching solution for IA Chérie Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -53,7 +53,7 @@ class DistributedCache:
         
     def _setup_logger(self) -> logging.Logger:
         """Setup logging for cache operations"""
-        logger = logging.getLogger("ainflue.cache")
+        logger = logging.getLogger("iacherie.cache")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -110,7 +110,7 @@ class DistributedCache:
         # Create a hash of the identifier and kwargs for consistent keys
         key_data = f"{identifier}:{json.dumps(kwargs, sort_keys=True)}"
         key_hash = hashlib.md5(key_data.encode()).hexdigest()[:12]
-        return f"ainflue:{prefix}:{key_hash}"
+        return f"iacherie:{prefix}:{key_hash}"
     
     async def get(self, key: str) -> Optional[Any]:
         """Get value from cache"""
@@ -270,7 +270,7 @@ class CacheManager:
     
     def __init__(self, cache: DistributedCache):
         self.cache = cache
-        self.logger = logging.getLogger("ainflue.cache_manager")
+        self.logger = logging.getLogger("iacherie.cache_manager")
     
     # API Response Caching
     async def cache_api_response(self, endpoint: str, params: Dict, response: Any, ttl: int = 300):
@@ -372,12 +372,12 @@ class CacheManager:
     # Bulk Operations
     async def invalidate_user_cache(self, user_id: str) -> int:
         """Invalidate all cache entries for a user"""
-        pattern = f"ainflue:*:*{user_id}*"
+        pattern = f"iacherie:*:*{user_id}*"
         return await self.cache.invalidate_pattern(pattern)
     
     async def invalidate_content_cache(self, content_id: str) -> int:
         """Invalidate all cache entries for content"""
-        pattern = f"ainflue:*:*{content_id}*"
+        pattern = f"iacherie:*:*{content_id}*"
         return await self.cache.invalidate_pattern(pattern)
 
 # Factory function to create cache instance
@@ -415,9 +415,9 @@ async def initialize_cache():
     success = await cache_instance.initialize()
     
     if success:
-        logging.getLogger("ainflue.cache").info("Distributed cache initialized successfully")
+        logging.getLogger("iacherie.cache").info("Distributed cache initialized successfully")
     else:
-        logging.getLogger("ainflue.cache").error("Failed to initialize distributed cache")
+        logging.getLogger("iacherie.cache").error("Failed to initialize distributed cache")
     
     return success
 
@@ -443,7 +443,7 @@ def cache_result(ttl: int = 3600, namespace: str = "general"):
             # Generate cache key from function name and arguments
             key_data = f"{func.__name__}:{str(args)}:{json.dumps(kwargs, sort_keys=True)}"
             key_hash = hashlib.md5(key_data.encode()).hexdigest()[:12]
-# SECURITY: # SECURITY: cache_key = f"ainflue:{namespace}:{key_hash}" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"iacherie:{namespace}:{key_hash}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             

@@ -1,8 +1,8 @@
-# 🌍 Module de Surveillance de Distribution - Plateforme Ainflue
+# 🌍 Module de Surveillance de Distribution - Plateforme IA Chérie
 
 ## Vue d'ensemble
 
-Le Module de Surveillance de Distribution fournit un suivi complet et une optimisation pour la distribution de contenu multi-plateforme dans l'écosystème Ainflue. Ce système de surveillance de niveau entreprise permet le suivi de synchronisation en temps réel, l'analyse de performance et l'optimisation intelligente de distribution sur toutes les principales plateformes de contenu.
+Le Module de Surveillance de Distribution fournit un suivi complet et une optimisation pour la distribution de contenu multi-plateforme dans l'écosystème IA Chérie. Ce système de surveillance de niveau entreprise permet le suivi de synchronisation en temps réel, l'analyse de performance et l'optimisation intelligente de distribution sur toutes les principales plateformes de contenu.
 
 ## Composants Principaux
 

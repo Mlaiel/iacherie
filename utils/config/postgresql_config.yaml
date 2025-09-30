@@ -1,5 +1,5 @@
 # ===========================================
-# POSTGRESQL CONFIGURATION - AINFLUE UTILS
+# POSTGRESQL CONFIGURATION - IACHERIE UTILS
 # ===========================================
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -13,7 +13,7 @@ postgresql:
   connection:
     # Primary Database
     primary:
-      host: "postgres-primary.ainflue.com"
+      host: "postgres-primary.iacherie.com"
       port: 5432
       database: "ainflue_production"
       username: "ainflue_app"
@@ -125,13 +125,13 @@ postgresql:
     # Standby Servers
     standby_servers:
       - name: "standby1"
-        host: "postgres-standby-1.ainflue.com"
+        host: "postgres-standby-1.iacherie.com"
         port: 5432
         sync_priority: 1
         application_name: "standby1"
         
       - name: "standby2"
-        host: "postgres-standby-2.ainflue.com"
+        host: "postgres-standby-2.iacherie.com"
         port: 5432
         sync_priority: 2
         application_name: "standby2"
@@ -314,7 +314,7 @@ postgresql:
     # Continuous Archiving
     continuous_archiving:
       enabled: true
-      archive_command: "pgbackrest --stanza=ainflue archive-push %p"
+      archive_command: "pgbackrest --stanza=iacherie archive-push %p"
       archive_timeout: "60s"
       
     # Physical Backups (pg_basebackup)
@@ -336,7 +336,7 @@ postgresql:
     point_in_time_recovery:
       enabled: true
       recovery_target_timeline: "latest"
-      restore_command: "pgbackrest --stanza=ainflue archive-get %f %p"
+      restore_command: "pgbackrest --stanza=iacherie archive-get %f %p"
 
   # =======================
   # MONITORING

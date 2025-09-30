@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chérie Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -1170,7 +1170,7 @@ class RegistryAnalyticsEngine:
                 else:
                     operational_cost_impact[service_id] = 0.0
                 
-                # Creator satisfaction (for Ainflue business context)
+                # Creator satisfaction (for IA Chérie business context)
                 if 'creator' in service_id.lower() or 'content' in service_id.lower():
                     if change_type == 'version_update':
                         creator_satisfaction_impact[service_id] = 0.1
@@ -1342,7 +1342,7 @@ class RegistryAnalyticsEngine:
     async def _calculate_business_impact(self, services: List[ServiceInstance], 
                                        patterns: List[UsagePattern]) -> Dict[str, Any]:
         """Calculate business impact metrics"""
-        # Ainflue-specific business impact
+        # IA Chérie-specific business impact
         creator_services = [s for s in services if s.ainflue_business_domain == 'creator']
         content_services = [s for s in services if s.ainflue_business_domain == 'content']
         monetization_services = [s for s in services if s.ainflue_business_domain == 'monetization']

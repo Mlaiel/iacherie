@@ -2,7 +2,7 @@
 Distribution Service Entry Point - Main Distribution Hub
 ======================================================
 
-Main FastAPI service entry point for the Ainflue distribution system,
+Main FastAPI service entry point for the IA Chérie distribution system,
 coordinating all subsystems and providing unified API access.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -72,7 +72,7 @@ async def distribution_status():
 async def distribution_info():
     """Distribution system information"""
     return {
-        "service": "Ainflue Distribution System",
+        "service": "IA Chérie Distribution System",
         "version": "1.0.0",
         "description": "AI-powered multi-platform content distribution",
         "author": "Fahed Mlaiel",

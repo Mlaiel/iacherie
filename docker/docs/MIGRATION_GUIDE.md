@@ -1,6 +1,6 @@
 # Migration Guide
 
-## Docker Platform Migration Guide for Ainflue
+## Docker Platform Migration Guide for IA Chérie
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Migration Overview
 
-This guide covers migration strategies for the Ainflue Docker platform, including version upgrades, platform migrations, and infrastructure changes.
+This guide covers migration strategies for the IA Chérie Docker platform, including version upgrades, platform migrations, and infrastructure changes.
 
 ### Pre-Migration Assessment
 
@@ -48,7 +48,7 @@ echo "Images:"
 docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
 
 # Export current configuration
-docker stack config ainflue > current-stack-config.yml
+docker stack config iacherie > current-stack-config.yml
 docker node ls --format "table {{.Hostname}}\t{{.Status}}\t{{.Availability}}\t{{.ManagerStatus}}"
 ```
 
@@ -124,7 +124,7 @@ echo "Upgrading Docker from $CURRENT_VERSION to $TARGET_VERSION"
 
 # Backup current configuration
 cp /etc/docker/daemon.json /etc/docker/daemon.json.backup
-docker stack config ainflue > ainflue-stack-backup.yml
+docker stack config iacherie > iacherie-stack-backup.yml
 
 # Drain nodes one by one
 NODES=$(docker node ls --format "{{.Hostname}}")
@@ -199,12 +199,12 @@ data:
     services:
       api:
         swarm:
-          image: ainflue/api:latest
+          image: iacherie/api:latest
           replicas: 3
           ports: ["8000:8000"]
         kubernetes:
-          deployment: ainflue-api
-          service: ainflue-api-service
+          deployment: iacherie-api
+          service: iacherie-api-service
           replicas: 3
           
       database:
@@ -303,7 +303,7 @@ TARGET_CLOUD="azure"
 echo "Migrating from $SOURCE_CLOUD to $TARGET_CLOUD"
 
 # Export current state
-docker stack config ainflue > ainflue-export.yml
+docker stack config iacherie > iacherie-export.yml
 docker config ls --format "{{.Name}}" > configs-list.txt
 docker secret ls --format "{{.Name}}" > secrets-list.txt
 
@@ -345,22 +345,22 @@ version: '3.8'
 services:
   # Current production (Blue)
   api-blue:
-    image: ainflue/api:v1.0
+    image: iacherie/api:v1.0
     deploy:
       replicas: 3
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.api.rule=Host(`api.ainflue.com`)"
+        - "traefik.http.routers.api.rule=Host(`api.iacherie.com`)"
         - "traefik.http.services.api.loadbalancer.server.port=8000"
   
   # New version (Green) - initially disabled
   api-green:
-    image: ainflue/api:v2.0
+    image: iacherie/api:v2.0
     deploy:
       replicas: 3
       labels:
         - "traefik.enable=false"  # Initially disabled
-        - "traefik.http.routers.api-green.rule=Host(`api.ainflue.com`) && Headers(`X-Version`, `green`)"
+        - "traefik.http.routers.api-green.rule=Host(`api.iacherie.com`) && Headers(`X-Version`, `green`)"
         - "traefik.http.services.api-green.loadbalancer.server.port=8000"
   
   # Load balancer for traffic switching
@@ -390,12 +390,12 @@ docker service update --label-add traefik.enable=true ainflue_api-green
 sleep 30
 
 # Verify green is healthy
-if curl -f http://api.ainflue.com/health -H "X-Version: green"; then
+if curl -f http://api.iacherie.com/health -H "X-Version: green"; then
     echo "Green version is healthy, switching traffic"
     
     # Switch traffic to green
     docker service update --label-rm traefik.http.routers.api.rule ainflue_api-blue
-    docker service update --label-add traefik.http.routers.api.rule=Host\(\`api.ainflue.com\`\) ainflue_api-green
+    docker service update --label-add traefik.http.routers.api.rule=Host\(\`api.iacherie.com\`\) ainflue_api-green
     
     # Wait and verify
     sleep 60
@@ -431,8 +431,8 @@ docker exec $OLD_DB psql -U postgres -c "
 
 # Step 2: Start new database as replica
 docker run -d --name $NEW_DB \
-    -e POSTGRES_DB=ainflue \
-    -e POSTGRES_USER=ainflue \
+    -e POSTGRES_DB=iacherie \
+    -e POSTGRES_USER=iacherie \
     -e POSTGRES_PASSWORD=password \
     postgres:15
 
@@ -529,8 +529,8 @@ class ConfigMigration:
 #!/bin/bash
 # rollback.sh
 
-STACK_NAME="ainflue"
-BACKUP_CONFIG="ainflue-backup.yml"
+STACK_NAME="iacherie"
+BACKUP_CONFIG="iacherie-backup.yml"
 
 echo "Starting rollback procedure"
 
@@ -541,7 +541,7 @@ if [ ! -f "$BACKUP_CONFIG" ]; then
 fi
 
 # Store current state for potential re-rollback
-docker stack config $STACK_NAME > ainflue-current.yml
+docker stack config $STACK_NAME > iacherie-current.yml
 
 # Perform rollback
 echo "Rolling back to previous configuration"
@@ -579,7 +579,7 @@ import time
 
 class MigrationValidator:
     def __init__(self):
-        self.base_url = "https://api.ainflue.com"
+        self.base_url = "https://api.iacherie.com"
         self.test_endpoints = [
             "/health",
             "/api/v1/status",

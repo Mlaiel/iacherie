@@ -1,5 +1,5 @@
 # ===============================================
-# Community Builder Dockerfile - Ainflue Platform
+# Community Builder Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Community Building Service
 # Handles community creation, management, and social network features
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8088/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Community Builder Service for Ainflue Gamification"
+LABEL description="Community Builder Service for IA Chérie Gamification"
 
 EXPOSE 8088
 CMD ["python", "-m", "community_builder.main"]

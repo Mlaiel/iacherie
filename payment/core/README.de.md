@@ -1,4 +1,4 @@
-# 💳 Payment Core Enterprise Architektur - Ainflue Creator Economy Plattform
+# 💳 Payment Core Enterprise Architektur - IA Chérie Creator Economy Plattform
 
 **Enterprise Payment Gateway Kern-Infrastruktur**  
 **Version:** 4.0 Enterprise  
@@ -17,7 +17,7 @@
 
 ## 🎯 Zusammenfassung
 
-Die **Payment Core Enterprise Architektur** stellt den Höhepunkt der Multi-Role-Expertise dar, die 9 spezialisierte Domänen kombiniert, um eine industrietaugliche Payment-Infrastruktur für die Ainflue Creator Economy Plattform zu liefern. Dieses System verarbeitet Creator-Monetarisierungs-Workflows über mehrere Content-Formate mit Antwortzeiten unter 100ms und 99,99% Verfügbarkeit.
+Die **Payment Core Enterprise Architektur** stellt den Höhepunkt der Multi-Role-Expertise dar, die 9 spezialisierte Domänen kombiniert, um eine industrietaugliche Payment-Infrastruktur für die IA Chérie Creator Economy Plattform zu liefern. Dieses System verarbeitet Creator-Monetarisierungs-Workflows über mehrere Content-Formate mit Antwortzeiten unter 100ms und 99,99% Verfügbarkeit.
 
 ### 🏆 Multi-Role Experten-Implementierung
 
@@ -324,7 +324,7 @@ spec:
     spec:
       containers:
       - name: payment-core
-        image: ainflue/payment-core:enterprise-v4.0
+        image: iacherie/payment-core:enterprise-v4.0
         resources:
           requests:
             memory: "2Gi"
@@ -552,4 +552,4 @@ print(f"Verwendeter Anbieter: {result.provider}")
 
 ---
 
-*Diese Dokumentation repräsentiert die kollektive Expertise von 9 spezialisierten Rollen, die zusammenarbeiten, um Enterprise-Grade Payment-Infrastruktur für die Ainflue Creator Economy Plattform zu liefern.*
+*Diese Dokumentation repräsentiert die kollektive Expertise von 9 spezialisierten Rollen, die zusammenarbeiten, um Enterprise-Grade Payment-Infrastruktur für die IA Chérie Creator Economy Plattform zu liefern.*

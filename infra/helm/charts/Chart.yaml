@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,22 +10,22 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 apiVersion: v2
-name: ainflue-platform
-description: Enterprise-grade Helm chart for Ainflue Creator Economy Platform
+name: iacherie-platform
+description: Enterprise-grade Helm chart for IA Chérie Creator Economy Platform
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 
 keywords:
-  - ainflue
+  - iacherie
   - creator-economy
   - ai-platform
   - enterprise
   - kubernetes
 
-home: https://ainflue.com
+home: https://iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 
 maintainers:
   - name: Fahed Mlaiel
@@ -36,14 +36,14 @@ annotations:
   category: Infrastructure
   licenses: Proprietary
   images: |
-    - name: ainflue-api
-      image: ainflue/api:1.0.0
-    - name: ainflue-ai-engine
-      image: ainflue/ai-engine:1.0.0
-    - name: ainflue-mobile-api
-      image: ainflue/mobile-api:1.0.0
-    - name: ainflue-worker
-      image: ainflue/worker:1.0.0
+    - name: iacherie-api
+      image: iacherie/api:1.0.0
+    - name: iacherie-ai-engine
+      image: iacherie/ai-engine:1.0.0
+    - name: iacherie-mobile-api
+      image: iacherie/mobile-api:1.0.0
+    - name: iacherie-worker
+      image: iacherie/worker:1.0.0
 
 dependencies:
   - name: postgresql

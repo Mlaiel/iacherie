@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Crisis Detection System
+IA Chérie Platform - Advanced Crisis Detection System
 ===================================================
 
 Enterprise-grade crisis detection with real-time monitoring, ML-powered early warning,
@@ -60,7 +60,7 @@ import redis.asyncio as redis
 import aiohttp
 from bs4 import BeautifulSoup
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

@@ -1,10 +1,10 @@
 # 📞 Services de Communication et Messagerie - Architecture Microservices Enterprise
 
-**Module de Communication Distribuée pour la Plateforme Ainflue**
+**Module de Communication Distribuée pour la Plateforme IA Chérie**
 
 ## 🎯 Vue d'Ensemble
 
-Ce module fournit une infrastructure de communication enterprise complète avec 14 microservices spécialisés pour la messagerie, les notifications, le streaming d'événements et les communications en temps réel sur la plateforme Ainflue.
+Ce module fournit une infrastructure de communication enterprise complète avec 14 microservices spécialisés pour la messagerie, les notifications, le streaming d'événements et les communications en temps réel sur la plateforme IA Chérie.
 
 ### 🏗️ Architecture des Services de Communication
 
@@ -258,7 +258,7 @@ Métriques Performance:
 - **Microsoft Teams** - Teams integration
 - **WebRTC Custom** - Solution personnalisée
 
-## 🎯 Workflow Business Ainflue
+## 🎯 Workflow Business IA Chérie
 
 ### 📋 Communication dans les 7 Phases
 ```yaml
@@ -291,19 +291,19 @@ Integration Engineer:            Expert APIs externes + webhooks
 ```
 
 ### 🆘 Support Technique
-- **Email**: communication-support@ainflue.com
+- **Email**: communication-support@iacherie.com
 - **Slack**: #communication-services-support
-- **Documentation**: https://docs.ainflue.com/communication
-- **Status Page**: https://status.ainflue.com/communication
+- **Documentation**: https://docs.iacherie.com/communication
+- **Status Page**: https://status.iacherie.com/communication
 
 ---
 
 ## 📜 Informations Légales
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE COMMUNICATION SERVICES MODULE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE COMMUNICATION SERVICES MODULE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE - TOUS DROITS RÉSERVÉS**  
 **⚠️ MODULE CONFIDENTIEL - USAGE ENTERPRISE UNIQUEMENT**
 
 ---
 
-*Ce module fait partie de l'architecture microservices enterprise Ainflue et constitue le pilier de communication distribuée de la plateforme.*
+*Ce module fait partie de l'architecture microservices enterprise IA Chérie et constitue le pilier de communication distribuée de la plateforme.*

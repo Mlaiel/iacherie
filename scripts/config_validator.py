@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Configuration Validator - Ainflue Platform
+Configuration Validator - IA Chérie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: DevOps Engineer + DBA + Security Expert
 Purpose: Enterprise configuration validation and compliance checking
@@ -29,7 +29,7 @@ class ConfigValidator:
     """Enterprise configuration validation system"""
     
     def __init__(self, project_root: Path = None):
-        self.project_root = project_root or Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = project_root or Path("/home/runner/work/IA Chérie/IA Chérie")
         self.config_files = self._discover_config_files()
         self.validation_rules = self._load_validation_rules()
         self.results = {
@@ -419,7 +419,7 @@ async def main():
     """Main configuration validator execution"""
     validator = ConfigValidator()
     
-    print("🔍 Configuration Validator - Ainflue Platform")
+    print("🔍 Configuration Validator - IA Chérie Platform")
     print("=" * 45)
     
     # Perform comprehensive validation

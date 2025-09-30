@@ -2,7 +2,7 @@
 Artifacts Configs Module - Configuration Management
 ==================================================
 
-Enterprise configuration management for Ainflue platform.
+Enterprise configuration management for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

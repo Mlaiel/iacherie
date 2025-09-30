@@ -280,7 +280,7 @@ class DataServicesOrchestrator:
             source_id='platforms',
             name='Platform Integration APIs',
             source_type=DataSourceType.API,
-            connection_config={'base_url': 'https://api.platforms.ainflue.com'},
+            connection_config={'base_url': 'https://api.platforms.iacherie.com'},
             refresh_interval=300  # 5 minutes
         )
     

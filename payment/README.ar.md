@@ -85,9 +85,9 @@ await gateway.initialize()
 
 ## الدعم والتواصل
 - **الدعم الفني:** mlaiel@live.de
-- **التوثيق:** https://docs.ainflue.com/payment
-- **صفحة الحالة:** https://status.ainflue.com
-- **مشاكل الأمان:** security@ainflue.com
+- **التوثيق:** https://docs.iacherie.com/payment
+- **صفحة الحالة:** https://status.iacherie.com
+- **مشاكل الأمان:** security@iacherie.com
 
 ## الترخيص
 رخصة تجارية للمؤسسات - راجع ملف LICENSE للتفاصيل.

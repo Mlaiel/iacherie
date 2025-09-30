@@ -10,7 +10,7 @@ class APIClient {
   constructor() {
     this.baseURL = process.env.NODE_ENV === 'development' 
       ? 'http://localhost:8000/api' 
-      : 'https://api.ainflue.com';
+      : 'https://api.iacherie.com';
     
     this.config = {
       timeout: 30000,
@@ -63,7 +63,7 @@ class APIClient {
 
       // Add client information
       config.headers = config.headers || {};
-      config.headers['X-Client'] = 'Ainflue-Desktop';
+      config.headers['X-Client'] = 'IA Chérie-Desktop';
       config.headers['X-Client-Version'] = '1.0.0';
       config.headers['Content-Type'] = 'application/json';
 
@@ -303,7 +303,7 @@ class APIClient {
     });
   }
 
-  // API Endpoints for Ainflue Business Logic
+  // API Endpoints for IA Chérie Business Logic
 
   /**
    * Authentication endpoints

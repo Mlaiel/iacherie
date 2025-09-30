@@ -1,5 +1,5 @@
 """
-🔄 Workflow Orchestrator - Enterprise Ainflue Pipeline Management
+🔄 Workflow Orchestrator - Enterprise IA Chérie Pipeline Management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -204,9 +204,9 @@ class DependencyResolver:
 
 class WorkflowOrchestrator:
     """
-    Enterprise Workflow Orchestrator with Ainflue pipeline automation
+    Enterprise Workflow Orchestrator with IA Chérie pipeline automation
     
-    Provides comprehensive workflow orchestration for the Ainflue creator platform
+    Provides comprehensive workflow orchestration for the IA Chérie creator platform
     with support for multi-stage processing, parallel execution, dependency resolution,
     and real-time monitoring.
     """
@@ -226,7 +226,7 @@ class WorkflowOrchestrator:
         self._register_event_handlers()
     
     def _setup_default_dependencies(self):
-        """Setup default Ainflue pipeline dependencies"""
+        """Setup default IA Chérie pipeline dependencies"""
         self.dependency_resolver.add_dependency(
             WorkflowStage.AI_PROCESSING, 
             [WorkflowStage.INGESTION]
@@ -273,9 +273,9 @@ class WorkflowOrchestrator:
         workflow_config: WorkflowConfiguration
     ) -> WorkflowExecution:
         """
-        Execute complete Ainflue pipeline with automation
+        Execute complete IA Chérie pipeline with automation
         
-        Main entry point for Ainflue content processing pipeline supporting:
+        Main entry point for IA Chérie content processing pipeline supporting:
         - Multi-format creator content ingestion
         - AI-powered content processing and enhancement
         - Automated IP protection and blockchain registration
@@ -283,7 +283,7 @@ class WorkflowOrchestrator:
         - Intelligent collaboration matching
         - Global distribution orchestration
         """
-        logger.info(f"Starting Ainflue pipeline for content {creator_content.content_id}")
+        logger.info(f"Starting IA Chérie pipeline for content {creator_content.content_id}")
         
         execution = WorkflowExecution(
             execution_id=str(uuid.uuid4()),

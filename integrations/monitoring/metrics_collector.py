@@ -1,7 +1,7 @@
 """Metrics Collector - Advanced Metrics Collection System
 =======================================================
 
-Advanced metrics collection and analysis capabilities for Ainflue integrations.
+Advanced metrics collection and analysis capabilities for IA Chérie integrations.
 Provides comprehensive data gathering, statistical analysis, and performance insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -413,5 +413,9 @@ class PerformanceCollector:
 
 # Export main classes
 __all__ = [
-    "PerformanceCollector"
+    "PerformanceCollector",
+    "MetricsCollector"
 ]
+
+# Alias pour compatibilité d'import
+MetricsCollector = PerformanceCollector

@@ -1,15 +1,15 @@
-# 🚀 وحدة التوزيع Ainflue - محرك التوزيع متعدد المنصات
+# 🚀 وحدة التوزيع IA Chérie - محرك التوزيع متعدد المنصات
 
 **نظام توزيع المحتوى مدعوم بالذكاء الاصطناعي على مستوى المؤسسات**
 
-[![الإصدار](https://img.shields.io/badge/version-3.0.0-blue)](https://github.com/Mlaiel/Ainflue)
+[![الإصدار](https://img.shields.io/badge/version-3.0.0-blue)](https://github.com/Mlaiel/IA Chérie)
 [![الترخيص](https://img.shields.io/badge/licence-Proprietary-red)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11+-green)](https://python.org)
 [![الذكاء الاصطناعي](https://img.shields.io/badge/AI-Powered-purple)](https://openai.com)
 
 ## 📋 نظرة عامة
 
-وحدة التوزيع Ainflue هي أكثر أنظمة توزيع المحتوى متعددة المنصات تقدماً في العالم، مصممة خصيصاً لمنشئي المحتوى والمؤثرين والموسيقيين والمدونين والمصورين. يجمع هذا الحل على مستوى المؤسسات بين التحسين المدعوم بالذكاء الاصطناعي والتحليلات في الوقت الفعلي والأتمتة الذكية لتعظيم وصول المحتوى والتفاعل عبر أكثر من 35 منصة في آن واحد.
+وحدة التوزيع IA Chérie هي أكثر أنظمة توزيع المحتوى متعددة المنصات تقدماً في العالم، مصممة خصيصاً لمنشئي المحتوى والمؤثرين والموسيقيين والمدونين والمصورين. يجمع هذا الحل على مستوى المؤسسات بين التحسين المدعوم بالذكاء الاصطناعي والتحليلات في الوقت الفعلي والأتمتة الذكية لتعظيم وصول المحتوى والتفاعل عبر أكثر من 35 منصة في آن واحد.
 
 ## 🎯 الميزات الرئيسية
 
@@ -78,8 +78,8 @@ distribution/
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # تثبيت التبعيات
 pip install -r requirements.txt

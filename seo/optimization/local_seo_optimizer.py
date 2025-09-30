@@ -1,5 +1,5 @@
 """
-Local SEO Optimizer for Ainflue Platform
+Local SEO Optimizer for IA Chérie Platform
 ========================================
 
 Advanced local SEO optimization for creator businesses and location-based content.

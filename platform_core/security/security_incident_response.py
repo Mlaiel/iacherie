@@ -273,7 +273,7 @@ class SecurityIncidentResponseEngine:
             escalation_criteria={'immediate': True}
         ))
         
-        # Playbook spécifique créateurs Ainflue
+        # Playbook spécifique créateurs IA Chérie
         self.add_playbook(ResponsePlaybook(
             playbook_id="creator_account_abuse_response",
             name="Creator Account Abuse Response",

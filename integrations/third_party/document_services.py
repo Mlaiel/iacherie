@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - DOCUMENT PROCESSING SERVICES
+IACHERIE INTEGRATIONS - DOCUMENT PROCESSING SERVICES
 ==================================================
 
 Enterprise document processing integration for creator economy platform.
 Combines multiple expert roles for comprehensive document management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chérie - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/third_party)
 
 Expert Roles Applied:
@@ -178,7 +178,7 @@ class DocumentSecurityManager:
         )
         return base64.urlsafe_b64encode(kdf.derive(password))
     
-    def encrypt_document(self, content: bytes) -> Tuple[bytes, str]:
+    def encrypt_document(self, content: bytes) -> tuple[bytes, str]:
         """Encrypt document content"""
         try:
             encrypted_content = self.cipher_suite.encrypt(content)

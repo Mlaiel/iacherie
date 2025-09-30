@@ -1,4 +1,4 @@
-# 🐳 Ainflue Platform - Docker & Containerisierung
+# 🐳 IA Chérie Platform - Docker & Containerisierung
 
 **Enterprise KI-Influencer-Plattform - Ultra-Fortgeschrittene Docker-Infrastruktur & Containerisierung**
 
@@ -10,7 +10,7 @@
 
 ## 📋 Überblick
 
-Dieses Docker-Modul bietet eine vollständige, unternehmenstaugliche Containerisierungslösung für die Ainflue KI-Influencer-Plattform. Die Architektur unterstützt 80+ Microservices in 12 spezialisierten Modulen, entwickelt für Kreative (Musiker, Blogger, Fotografen, Influencer, Comedians) mit fortgeschrittenen KI-gestützten Content-Processing-, Schutz-, Monetarisierungs- und Verteilungsfähigkeiten.
+Dieses Docker-Modul bietet eine vollständige, unternehmenstaugliche Containerisierungslösung für die IA Chérie KI-Influencer-Plattform. Die Architektur unterstützt 80+ Microservices in 12 spezialisierten Modulen, entwickelt für Kreative (Musiker, Blogger, Fotografen, Influencer, Comedians) mit fortgeschrittenen KI-gestützten Content-Processing-, Schutz-, Monetarisierungs- und Verteilungsfähigkeiten.
 
 ### 🎯 Geschäftslogik-Ablauf
 ```
@@ -127,8 +127,8 @@ docker/
 ### 1. Produktionsbereitstellung
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker
 
 # Umgebungsvariablen setzen
 cp infrastructure/.env.example .env
@@ -148,7 +148,7 @@ docker-compose logs -f
 docker-compose -f infrastructure/docker-compose.yml up -d
 
 # Benutzerdefinierte Images erstellen
-docker build -f infrastructure/Dockerfile.dev -t ainflue/dev:latest .
+docker build -f infrastructure/Dockerfile.dev -t iacherie/dev:latest .
 
 # Services überwachen
 docker stats
@@ -180,8 +180,8 @@ REDIS_PASSWORD=redis_passwort
 # Sicherheitskonfiguration
 JWT_SECRET_KEY=ultra_sicherer_jwt_schluessel
 ENCRYPTION_KEY=256bit_verschluesselung_schluessel
-SSL_CERT_PATH=/etc/ssl/certs/ainflue.crt
-SSL_KEY_PATH=/etc/ssl/private/ainflue.key
+SSL_CERT_PATH=/etc/ssl/certs/iacherie.crt
+SSL_KEY_PATH=/etc/ssl/private/iacherie.key
 ```
 
 ---
@@ -252,11 +252,11 @@ SSL_KEY_PATH=/etc/ssl/private/ainflue.key
 docker-compose -f testing/docker-compose.testing.yml up --abort-on-container-exit
 
 # Performance-Tests
-docker run --rm ainflue/performance-tester:latest
+docker run --rm iacherie/performance-tester:latest
 
 # Sicherheits-Scanning
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  aquasec/trivy image ainflue/api:latest
+  aquasec/trivy image iacherie/api:latest
 ```
 
 ---

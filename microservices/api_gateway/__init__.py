@@ -3,7 +3,7 @@
 =======================================================
 
 Provides enterprise API gateway functionality including authentication, 
-rate limiting, routing, monitoring, and security for the Ainflue platform.
+rate limiting, routing, monitoring, and security for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

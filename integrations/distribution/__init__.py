@@ -1,5 +1,5 @@
 """
-Distribution Module - Ainflue Integrations
+Distribution Module - IA Chérie Integrations
 ==========================================
 Module de distribution enterprise pour 65+ plateformes avec
 scheduling intelligent, optimization contenu et analytics performance.
@@ -12,7 +12,7 @@ Support pour:
 - Gestion formats et metadata
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 

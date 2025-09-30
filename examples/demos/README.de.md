@@ -1,5 +1,5 @@
 # 🚀 Erweiterte Demos - Umfassende Plattform-Demonstrationen
-**Ainflue-Plattform - Vollständige System-Demonstrationen & Showcases**
+**IA Chérie-Plattform - Vollständige System-Demonstrationen & Showcases**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Urheberrecht:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Unternehmens-Übersicht
 
-Das **Erweiterte Demos**-Modul präsentiert umfassende Plattform-Demonstrationen und System-Showcases für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochsophistizierte, produktionsreife System demonstriert KI-Verarbeitung auf Unternehmensebene, Content-Lifecycle-Management, plattformübergreifende Distribution, Business Intelligence, Kollaborationssysteme und Monetarisierungs-Ökosysteme mit realen Szenarien und Best Practices.
+Das **Erweiterte Demos**-Modul präsentiert umfassende Plattform-Demonstrationen und System-Showcases für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses hochsophistizierte, produktionsreife System demonstriert KI-Verarbeitung auf Unternehmensebene, Content-Lifecycle-Management, plattformübergreifende Distribution, Business Intelligence, Kollaborationssysteme und Monetarisierungs-Ökosysteme mit realen Szenarien und Best Practices.
 
 ### 🎯 **Geschäftslogik-Ablauf**
 ```
@@ -349,7 +349,7 @@ print(f"Plattform-Demonstration abgeschlossen: {len(platform_demo['results']['sc
 version: '3.8'
 services:
   advanced-demos:
-    image: ainflue/advanced-demos:latest
+    image: iacherie/advanced-demos:latest
     deploy:
       replicas: 5
       resources:
@@ -362,8 +362,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://demo-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -387,7 +387,7 @@ services:
 
 ## 📝 **Zusammenfassung**
 
-Das Erweiterte Demos-Modul repräsentiert den Höhepunkt des Plattform-Demonstrations-Designs für die Ainflue-Plattform, speziell für Multi-Format-Content-Ersteller entwickelt. Mit umfassenden Demonstrationen, erweiterten KI/ML-Fähigkeiten und Features auf Unternehmensebene gewährleistet dieses System maximales Plattform-Verständnis, Feature-Adoption und Performance-Optimierung für alle Ersteller-Aktivitäten, während es tiefe Einblicke in Plattform-Fähigkeiten und Optimierungsmöglichkeiten bietet.
+Das Erweiterte Demos-Modul repräsentiert den Höhepunkt des Plattform-Demonstrations-Designs für die IA Chérie-Plattform, speziell für Multi-Format-Content-Ersteller entwickelt. Mit umfassenden Demonstrationen, erweiterten KI/ML-Fähigkeiten und Features auf Unternehmensebene gewährleistet dieses System maximales Plattform-Verständnis, Feature-Adoption und Performance-Optimierung für alle Ersteller-Aktivitäten, während es tiefe Einblicke in Plattform-Fähigkeiten und Optimierungsmöglichkeiten bietet.
 
 **🎯 Mission:** Die weltweit umfassendsten Plattform-Demonstrationen für Content-Ersteller liefern, die optimale Plattform-Adoption, Feature-Nutzung und Performance-Optimierung im gesamten Ersteller-Ökosystem ermöglichen.
 

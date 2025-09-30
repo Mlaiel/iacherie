@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -33,7 +33,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/var/log/ainflue/intrusion_detection.log')
+        logging.FileHandler('/var/log/iacherie/intrusion_detection.log')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -872,7 +872,7 @@ class ResponseEngine:
             }
             
             # Save notification to file for external processing
-            async with aiofiles.open('/var/log/ainflue/security_notifications.log', 'a') as f:
+            async with aiofiles.open('/var/log/iacherie/security_notifications.log', 'a') as f:
                 await f.write(json.dumps(notification_data) + '\n')
             
             return True
@@ -889,7 +889,7 @@ class ResponseEngine:
                 'event': asdict(event)
             }
             
-            async with aiofiles.open('/var/log/ainflue/detailed_security_events.log', 'a') as f:
+            async with aiofiles.open('/var/log/iacherie/detailed_security_events.log', 'a') as f:
                 await f.write(json.dumps(detailed_log) + '\n')
             
             return True
@@ -915,7 +915,7 @@ class ResponseEngine:
             logger.critical(f"CRITICAL SECURITY ALERT: {event.description}")
             
             # Save to critical alerts file
-            async with aiofiles.open('/var/log/ainflue/critical_security_alerts.log', 'a') as f:
+            async with aiofiles.open('/var/log/iacherie/critical_security_alerts.log', 'a') as f:
                 await f.write(json.dumps(alert_data) + '\n')
             
             return True
@@ -989,7 +989,7 @@ class IntrusionDetectionSystem:
     
     async def initialize(self):
         """Initialize the IDS"""
-        logger.info("Initializing Ainflue Intrusion Detection System")
+        logger.info("Initializing IA Chérie Intrusion Detection System")
         
         # Establish baselines
         await self.host_monitor.establish_baseline()
@@ -1101,7 +1101,7 @@ class IntrusionDetectionSystem:
             event_data = asdict(event)
             event_data['timestamp'] = event.timestamp.isoformat()
             
-            async with aiofiles.open('/var/log/ainflue/security_events.log', 'a') as f:
+            async with aiofiles.open('/var/log/iacherie/security_events.log', 'a') as f:
                 await f.write(json.dumps(event_data) + '\n')
         
         except Exception as e:
@@ -1134,7 +1134,7 @@ class IntrusionDetectionSystem:
             # Read from event log file
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
-            async with aiofiles.open('/var/log/ainflue/security_events.log', 'r') as f:
+            async with aiofiles.open('/var/log/iacherie/security_events.log', 'r') as f:
                 async for line in f:
                     try:
                         event_data = json.loads(line.strip())

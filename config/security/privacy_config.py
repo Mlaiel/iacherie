@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Privacy Configuration Module
+"""IA Chérie Privacy Configuration Module
 ====================================
 
-Enterprise-grade privacy configuration for the Ainflue platform.
+Enterprise-grade privacy configuration for the IA Chérie platform.
 Data privacy protection, consent management, anonymization, pseudonymization,
 data minimization, and comprehensive privacy-by-design implementation.
 

@@ -1,9 +1,9 @@
-"""Ainflue Live Streaming Configuration - Enterprise Real-Time Streaming Platform
+"""IA Chérie Live Streaming Configuration - Enterprise Real-Time Streaming Platform
 ================================================================================
 
 Advanced live streaming configuration for enterprise-grade real-time content
 delivery, multi-protocol streaming, adaptive bitrate, global CDN integration,
-and professional broadcasting features for Ainflue's creator platform.
+and professional broadcasting features for IA Chérie's creator platform.
 
 Business Logic Integration:
 - Creator-specific streaming tiers and capabilities
@@ -184,7 +184,7 @@ class EnterpriseLiveStreamingConfiguration:
         """Load live streaming configuration settings"""
         return {
             "global_settings": {
-                "platform_name": "Ainflue Live",
+                "platform_name": "IA Chérie Live",
                 "max_concurrent_streams": 10000,
                 "default_cdn_provider": "cloudflare",
                 "backup_cdn_provider": "amazon_cloudfront",
@@ -375,9 +375,9 @@ class EnterpriseLiveStreamingConfiguration:
                 endpoint_id="rtmp_us_east",
                 name="US East RTMP Endpoint",
                 protocol=StreamingProtocol.RTMP,
-                ingest_url="rtmp://live-us-east.ainflue.com/live",
+                ingest_url="rtmp://live-us-east.iacherie.com/live",
                 stream_key="auto_generated",
-                backup_url="rtmp://backup-us-east.ainflue.com/live",
+                backup_url="rtmp://backup-us-east.iacherie.com/live",
                 max_bitrate=20000,
                 max_concurrent_viewers=50000
             ),
@@ -385,9 +385,9 @@ class EnterpriseLiveStreamingConfiguration:
                 endpoint_id="rtmp_eu_west",
                 name="EU West RTMP Endpoint",
                 protocol=StreamingProtocol.RTMP,
-                ingest_url="rtmp://live-eu-west.ainflue.com/live",
+                ingest_url="rtmp://live-eu-west.iacherie.com/live",
                 stream_key="auto_generated",
-                backup_url="rtmp://backup-eu-west.ainflue.com/live",
+                backup_url="rtmp://backup-eu-west.iacherie.com/live",
                 max_bitrate=20000,
                 max_concurrent_viewers=50000
             ),
@@ -397,7 +397,7 @@ class EnterpriseLiveStreamingConfiguration:
                 endpoint_id="webrtc_global",
                 name="Global WebRTC Endpoint",
                 protocol=StreamingProtocol.WebRTC,
-                ingest_url="wss://webrtc.ainflue.com/publish",
+                ingest_url="wss://webrtc.iacherie.com/publish",
                 stream_key="auto_generated",
                 max_bitrate=10000,
                 max_concurrent_viewers=10000
@@ -408,7 +408,7 @@ class EnterpriseLiveStreamingConfiguration:
                 endpoint_id="hls_global",
                 name="Global HLS Endpoint",
                 protocol=StreamingProtocol.HLS,
-                ingest_url="https://hls.ainflue.com/publish",
+                ingest_url="https://hls.iacherie.com/publish",
                 stream_key="auto_generated",
                 max_bitrate=15000,
                 max_concurrent_viewers=100000
@@ -419,7 +419,7 @@ class EnterpriseLiveStreamingConfiguration:
                 endpoint_id="srt_professional",
                 name="Professional SRT Endpoint",
                 protocol=StreamingProtocol.SRT,
-                ingest_url="srt://srt.ainflue.com:9999",
+                ingest_url="srt://srt.iacherie.com:9999",
                 stream_key="auto_generated",
                 max_bitrate=50000,
                 max_concurrent_viewers=5000
@@ -742,11 +742,11 @@ class EnterpriseLiveStreamingConfiguration:
         stream_id = session.stream_config.stream_id
         
         return {
-            "hls": f"https://hls.ainflue.com/live/{stream_id}/playlist.m3u8",
-            "dash": f"https://dash.ainflue.com/live/{stream_id}/manifest.mpd",
-            "webrtc": f"wss://webrtc.ainflue.com/play/{stream_id}",
-            "rtmp": f"rtmp://rtmp.ainflue.com/live/{stream_id}",
-            "embed": f"https://player.ainflue.com/embed/{stream_id}"
+            "hls": f"https://hls.iacherie.com/live/{stream_id}/playlist.m3u8",
+            "dash": f"https://dash.iacherie.com/live/{stream_id}/manifest.mpd",
+            "webrtc": f"wss://webrtc.iacherie.com/play/{stream_id}",
+            "rtmp": f"rtmp://rtmp.iacherie.com/live/{stream_id}",
+            "embed": f"https://player.iacherie.com/embed/{stream_id}"
         }
     
     def update_stream_metrics(self, session_id: str, metrics: Dict[str, Any]):

@@ -1,5 +1,5 @@
 """
-Threat Detection Service for Ainflue Microservices
+Threat Detection Service for IA Chérie Microservices
 Real-time threat detection and security monitoring
 
 Author: Fahed Mlaiel (mlaiel@live.de)

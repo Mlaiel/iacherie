@@ -1,10 +1,10 @@
 # 🏗️ Module Core - Composants Core de Logique Métier d'Entreprise
 
-**Système Core de Niveau Entreprise Avancé pour la Plateforme Ainflue**
+**Système Core de Niveau Entreprise Avancé pour la Plateforme IA Chérie**
 
 ## 🎯 **Aperçu du Projet**
 
-Le Module Core fournit l'infrastructure de logique métier fondamentale pour la Plateforme Agent Influenceur IA Ainflue. Ce système de niveau entreprise gère le traitement de contenu multi-format des créateurs, l'analyse de contenu alimentée par l'IA, la protection des droits d'auteur, et l'optimisation des revenus avec une garantie de disponibilité >99,99%.
+Le Module Core fournit l'infrastructure de logique métier fondamentale pour la Plateforme Agent Influenceur IA IA Chérie. Ce système de niveau entreprise gère le traitement de contenu multi-format des créateurs, l'analyse de contenu alimentée par l'IA, la protection des droits d'auteur, et l'optimisation des revenus avec une garantie de disponibilité >99,99%.
 
 ### 👥 **Expertise de l'Équipe de Développement**
 **Chef de Projet & Créateur:** Fahed Mlaiel <mlaiel@live.de>
@@ -166,8 +166,8 @@ Docker & Docker Compose
 ### **Installation Rapide**
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/core
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/core
 
 # Installer les dépendances
 pip install -r requirements.txt

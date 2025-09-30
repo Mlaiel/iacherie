@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Competitor Analysis Component
+ * IA Chérie Desktop - Competitor Analysis Component
  * 
  * Advanced competitor tracking and competitive intelligence
  * Implements comprehensive competitor monitoring, analysis, and strategic insights

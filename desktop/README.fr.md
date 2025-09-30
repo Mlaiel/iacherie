@@ -1,4 +1,4 @@
-# 🖥️ Ainflue Desktop - Studio Professionnel de Contenu IA
+# 🖥️ IA Chérie Desktop - Studio Professionnel de Contenu IA
 
 ⚠️ **AVERTISSEMENT STRICT DROITS D'AUTEUR** ⚠️  
 Ce logiciel et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.  
@@ -8,7 +8,7 @@ Contact: mlaiel@live.de pour demandes de licence.
 
 ## Aperçu
 
-L'application Ainflue Desktop est un studio professionnel de création de contenu alimenté par l'IA, développé avec Electron. Elle offre des capacités d'édition avancées, le support multi-moniteurs, des fonctionnalités complètes d'intégration système et une sécurité de niveau entreprise pour les créateurs de contenu et influenceurs.
+L'application IA Chérie Desktop est un studio professionnel de création de contenu alimenté par l'IA, développé avec Electron. Elle offre des capacités d'édition avancées, le support multi-moniteurs, des fonctionnalités complètes d'intégration système et une sécurité de niveau entreprise pour les créateurs de contenu et influenceurs.
 
 ### 🚀 Architecture Desktop Avancée
 

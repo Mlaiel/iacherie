@@ -1,0 +1,14 @@
+{
+  "node_id": "feature_f399a173",
+  "name": "content_popularity",
+  "type": "feature",
+  "source": "api",
+  "created_at": "2025-09-12T01:58:00.735860",
+  "metadata": {
+    "description": "Popularit\u00e9 du contenu",
+    "version": "1.0"
+  },
+  "creator_types": [
+    "musician"
+  ]
+}

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Service Mesh Configuration
+# IA Chérie Infrastructure Module - Service Mesh Configuration
 # ==========================================================
 # 
-# Enterprise-grade service mesh configuration for Ainflue platform
+# Enterprise-grade service mesh configuration for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -100,7 +100,7 @@ class ServiceMeshConfigurator:
     Enterprise Service Mesh Configurator
     
     Manages service mesh configuration, traffic routing, and security policies
-    across multi-cloud environments for the Ainflue platform.
+    across multi-cloud environments for the IA Chérie platform.
     """
     
     def __init__(self, provider: ServiceMeshProvider = ServiceMeshProvider.ISTIO):
@@ -645,7 +645,7 @@ class ServiceMeshConfigurator:
         """Save manifests to files"""
         try:
             # Create output directory
-            output_dir = Path(f"/home/runner/work/Ainflue/Ainflue/infra/kubernetes/manifests/{self.provider.value}")
+            output_dir = Path(f"/home/runner/work/IA Chérie/IA Chérie/infra/kubernetes/manifests/{self.provider.value}")
             output_dir.mkdir(parents=True, exist_ok=True)
             
             for manifest_type, manifest in manifests.items():

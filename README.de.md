@@ -1,8 +1,8 @@
-# 🚀 **AINFLUENCER** - Die Ultimative KI-gestützte Content & Influencer Plattform
+# 🚀 **IACHERIE** - Die Ultimative KI-gestützte Content & Influencer Plattform
 
 <div align="center">
 
-![Ainfluencer Platform](https://img.shields.io/badge/Platform-Enterprise%20KI-blue?style=for-the-badge)
+![IA Chérie Platform](https://img.shields.io/badge/Platform-Enterprise%20KI-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-2.0.0-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Produktionsbereit-success?style=for-the-badge)
 ![License](https://img.shields.io/badge/Lizenz-Proprietär-red?style=for-the-badge)
@@ -17,9 +17,9 @@
 
 ## 🎯 **VISION & MISSION**
 
-**Ainfluencer** ist die weltweit fortschrittlichste KI-gestützte Plattform, die die Lücke zwischen Content-Erstellern, Unternehmen und künstlicher Intelligenz schließt. Wir sind nicht nur eine Plattform - wir sind die **Zukunft der digitalen Content-Erstellung und Monetarisierung**.
+**IA Chérie** ist die weltweit fortschrittlichste KI-gestützte Plattform, die die Lücke zwischen Content-Erstellern, Unternehmen und künstlicher Intelligenz schließt. Wir sind nicht nur eine Plattform - wir sind die **Zukunft der digitalen Content-Erstellung und Monetarisierung**.
 
-### 🔥 **Warum Ainfluencer alles verändert:**
+### 🔥 **Warum IA Chérie alles verändert:**
 - **53 Spezialisierte KI-Agenten** arbeiten als Ihre Content-Erstellungs-Armee
 - **680+ Enterprise-Microservices** für unbegrenzte Skalierbarkeit
 - **Multi-modale Content-Generierung** (Text, Bilder, Audio, Video)
@@ -106,8 +106,8 @@ graph TB
 ### ⚡ **1-Minuten-Setup**
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainfluencer.git
-cd Ainfluencer
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Umgebung einrichten
 cp .env.example .env
@@ -134,7 +134,7 @@ python backend_server.py & cd frontend && npm run dev
 
 ### 📁 **Projektstruktur**
 ```
-ainfluencer/
+iacherie/
 ├── 🎨 frontend/              # Next.js Anwendung (React 18)
 ├── 🔧 backend/               # FastAPI Backend
 ├── 🤖 ai/                    # KI/ML Module
@@ -152,7 +152,7 @@ ainfluencer/
 
 ## 🔥 **WETTBEWERBSVORTEILE**
 
-### 🥇 **Warum Ainfluencer dominiert**
+### 🥇 **Warum IA Chérie dominiert**
 1. **Unvergleichliche Größe:** 53 KI-Agenten vs. Konkurrenten mit 5-10
 2. **Echte Multi-Modalität:** Generierung ALLER Content-Typen in einer Plattform
 3. **Echtzeit-Kollaboration:** Live-Arbeitsbereich-Sharing und -Bearbeitung
@@ -222,7 +222,7 @@ kubectl apply -f kubernetes/
 - **Blog & Ressourcen:** Brancheneinblicke und Best Practices
 
 ### 🎓 **Lernen & Zertifizierung**
-- **Ainfluencer Academy:** Kostenlose Online-Kurse
+- **IA Chérie Academy:** Kostenlose Online-Kurse
 - **Zertifizierungsprogramme:** Werden Sie ein verifizierter Experte
 - **Webinar-Serie:** Live-Trainings-Sessions wöchentlich
 

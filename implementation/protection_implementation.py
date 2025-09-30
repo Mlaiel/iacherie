@@ -1,6 +1,6 @@
 """Protection Implementation - Advanced Content Protection & Rights Management
 
-Comprehensive content protection implementation for the Ainflue platform providing
+Comprehensive content protection implementation for the IA Chérie platform providing
 enterprise-grade content protection, copyright management, and intellectual property security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -132,7 +132,7 @@ class ProtectionResult:
 
 class ProtectionImplementation:
     """
-    Advanced Protection Implementation for Ainflue Platform
+    Advanced Protection Implementation for IA Chérie Platform
     
     Provides comprehensive content protection including watermarking, fingerprinting,
     copyright management, and threat detection for creator content security.
@@ -542,7 +542,7 @@ class ProtectionImplementation:
         """Generate unique creator signature"""
         signature_data = f"{creator_id}:{content_id}:{datetime.utcnow().isoformat()}"
         signature_hash = hashlib.sha256(signature_data.encode()).hexdigest()
-        return f"AINFLUE_{signature_hash[:16]}"
+        return f"IACHERIE_{signature_hash[:16]}"
     
     def _generate_protection_hash(
         self,
@@ -557,7 +557,7 @@ class ProtectionImplementation:
             "creator_id": creator_id,
             "methods": [m.value for m in methods],
             "timestamp": timestamp.isoformat(),
-            "platform": "ainflue"
+            "platform": "iacherie"
         }
         
         protection_string = json.dumps(protection_data, sort_keys=True)

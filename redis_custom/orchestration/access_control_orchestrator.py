@@ -449,7 +449,7 @@ class RedisAccessControlOrchestrator:
             if admin_user_id not in self.users:
                 admin_user = await self.create_user(
                     username="admin",
-                    email="admin@ainflue.com",
+                    email="admin@iacherie.com",
                     password="AdminPassword123!",
                     roles=["redis_super_admin"]
                 )

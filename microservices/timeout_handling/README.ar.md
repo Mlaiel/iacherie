@@ -13,13 +13,13 @@
 
 ## 📋 نظرة عامة على الوحدة
 
-تمثل **وحدة إدارة المهلة الزمنية المؤسسية** في Ainflue حلاً شاملاً لإدارة المهل الزمنية الموزعة، مع دمج الذكاء الاصطناعي والأنماط الواعية بالأعمال والامتثال التنظيمي. تقدم هذا العمارة الخلفية من المستوى الثالث إدارة تكيفية للمهل الزمنية مع التنبؤ بالتعلم الآلي، وقواطع الدوائر الذكية، والمراقبة في الوقت الفعلي.
+تمثل **وحدة إدارة المهلة الزمنية المؤسسية** في IA Chérie حلاً شاملاً لإدارة المهل الزمنية الموزعة، مع دمج الذكاء الاصطناعي والأنماط الواعية بالأعمال والامتثال التنظيمي. تقدم هذا العمارة الخلفية من المستوى الثالث إدارة تكيفية للمهل الزمنية مع التنبؤ بالتعلم الآلي، وقواطع الدوائر الذكية، والمراقبة في الوقت الفعلي.
 
 ### 🎯 الأهداف التجارية
 
 - **الأداء الأمثل**: إدارة ذكية للمهل الزمنية لتجربة مستخدم سلسة
 - **المرونة المؤسسية**: الحماية التلقائية من الفشل المتتالي
-- **الذكاء التجاري**: التكيف الديناميكي مع أنماط أعمال Ainflue
+- **الذكاء التجاري**: التكيف الديناميكي مع أنماط أعمال IA Chérie
 - **الامتثال التنظيمي**: توافق GDPR، SOX، PCI-DSS، ISO 27001
 - **الاستثمار الفعال**: تحسين المهل الزمنية لتعظيم الإيرادات
 
@@ -143,7 +143,7 @@
 - **التنبؤ بالتعلم الآلي**: خوارزميات التعلم التكيفية
 - **التعرف على الأنماط**: الكشف التلقائي عن أنماط الأعمال
 - **التحسين التلقائي**: التعديل المستمر للأداء
-- **السياق التجاري**: التكيف مع خصائص Ainflue
+- **السياق التجاري**: التكيف مع خصائص IA Chérie
 
 ### **⚡ أداء مؤسسي**
 - **استجابة أقل من الثانية**: زمن استجابة محسن < 100ms
@@ -297,10 +297,10 @@ distribution_result = await distribution_coordinator.coordinate_multi_platform(
 ### **التبعيات المؤسسية**
 ```python
 # تكامل شبكة الخدمات
-from ainflue.infrastructure import ServiceMesh
-from ainflue.monitoring import PrometheusMetrics
-from ainflue.security import AuthenticationService
-from ainflue.database import DistributedCache
+from iacherie.infrastructure import ServiceMesh
+from iacherie.monitoring import PrometheusMetrics
+from iacherie.security import AuthenticationService
+from iacherie.database import DistributedCache
 
 # تكوين خدمة المهلة الزمنية
 timeout_service = TimeoutHandlingService(
@@ -357,16 +357,16 @@ WS   /ws/timeout/alerts
 ### **CLI إدارة المهلة الزمنية**
 ```bash
 # نشر التكوين
-ainflue-timeout deploy --env production --config timeout-policies.json
+iacherie-timeout deploy --env production --config timeout-policies.json
 
 # مراقبة الوقت الفعلي
-ainflue-timeout monitor --service creator_workflow --dashboard
+iacherie-timeout monitor --service creator_workflow --dashboard
 
 # اختبار الحمولة
-ainflue-timeout load-test --scenario peak-upload --duration 10m
+iacherie-timeout load-test --scenario peak-upload --duration 10m
 
 # تحليل الامتثال
-ainflue-timeout audit --framework gdpr --period last-30-days
+iacherie-timeout audit --framework gdpr --period last-30-days
 ```
 
 ### **تكامل SDK**
@@ -398,7 +398,7 @@ await timeout_client.execute_with_timeout(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-timeout-service
+  name: iacherie-timeout-service
 spec:
   replicas: 10
   selector:
@@ -408,7 +408,7 @@ spec:
     spec:
       containers:
       - name: timeout-service
-        image: ainflue/timeout-service:v1.0.0
+        image: iacherie/timeout-service:v1.0.0
         resources:
           requests:
             memory: "2Gi"
@@ -480,10 +480,10 @@ spec:
 ## 📞 الدعم والصيانة
 
 ### **الدعم التقني**
-- **البريد الإلكتروني**: support@ainflue.com
+- **البريد الإلكتروني**: support@iacherie.com
 - **Slack**: #timeout-handling-support
-- **الوثائق**: https://docs.ainflue.com/timeout-handling
-- **صفحة الحالة**: https://status.ainflue.com
+- **الوثائق**: https://docs.iacherie.com/timeout-handling
+- **صفحة الحالة**: https://status.iacherie.com
 
 ### **جدول الصيانة**
 - **التحديثات**: عمليات نشر تلقائية يومية
@@ -529,4 +529,4 @@ spec:
 
 ---
 
-*تمثل هذه الوحدة أحدث ما توصلت إليه التقنية في إدارة المهل الزمنية المؤسسية، وتجمع بين الذكاء الاصطناعي والأنماط الواعية بالأعمال والامتثال التنظيمي لتقديم حل شامل وقوي لمنصة Ainflue.*
+*تمثل هذه الوحدة أحدث ما توصلت إليه التقنية في إدارة المهل الزمنية المؤسسية، وتجمع بين الذكاء الاصطناعي والأنماط الواعية بالأعمال والامتثال التنظيمي لتقديم حل شامل وقوي لمنصة IA Chérie.*

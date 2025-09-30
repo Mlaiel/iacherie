@@ -1,4 +1,4 @@
-# Ainflue User Manual
+# IA Chérie User Manual
 
 **AI-Powered Content Protection & Monetization Platform**
 
@@ -38,7 +38,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 
 ### Account Creation
 
-1. **Visit**: https://app.ainflue.com
+1. **Visit**: https://app.iacherie.com
 2. **Click**: "Sign Up" button
 3. **Enter**: Email, password, and personal information
 4. **Verify**: Email address via confirmation link
@@ -313,7 +313,7 @@ Monitor the health of all platform components:
 
 ### Supported Languages
 
-Ainflue supports **350+ languages and dialects**, including:
+IA Chérie supports **350+ languages and dialects**, including:
 
 **Major Languages:** English, Spanish, French, German, Arabic, Chinese, Japanese, Korean, Hindi, Portuguese, Russian, Italian, Dutch
 
@@ -401,13 +401,13 @@ Ainflue supports **350+ languages and dialects**, including:
 
 ### Self-Service Resources
 
-**Knowledge Base**: https://help.ainflue.com
+**Knowledge Base**: https://help.iacherie.com
 - Step-by-step tutorials
 - Video guides
 - FAQ section
 - Community forum
 
-**API Documentation**: https://docs.ainflue.com
+**API Documentation**: https://docs.iacherie.com
 - Complete API reference
 - Code examples
 - Integration guides
@@ -416,15 +416,15 @@ Ainflue supports **350+ languages and dialects**, including:
 ### Contact Support
 
 **Technical Support:**
-- **Email**: support@ainflue.com
+- **Email**: support@iacherie.com
 - **Response Time**: 24 hours (Free), 4 hours (Premium), 1 hour (Enterprise)
 - **Live Chat**: Available for Premium+ users
 - **Phone Support**: Enterprise customers only
 
 **Business Inquiries:**
-- **Email**: business@ainflue.com
-- **Partnership Opportunities**: partnerships@ainflue.com
-- **Press Inquiries**: press@ainflue.com
+- **Email**: business@iacherie.com
+- **Partnership Opportunities**: partnerships@iacherie.com
+- **Press Inquiries**: press@iacherie.com
 
 ### Developer & Enterprise Support
 
@@ -441,9 +441,9 @@ Ainflue supports **350+ languages and dialects**, including:
 
 ### Legal & Compliance
 
-**DMCA Agent**: dmca@ainflue.com  
-**Privacy Officer**: privacy@ainflue.com  
-**Legal Department**: legal@ainflue.com
+**DMCA Agent**: dmca@iacherie.com  
+**Privacy Officer**: privacy@iacherie.com  
+**Legal Department**: legal@iacherie.com
 
 **Compliance Standards:**
 - GDPR (European Union)
@@ -457,7 +457,7 @@ Ainflue supports **350+ languages and dialects**, including:
 
 ### Training Materials
 
-**Video Tutorials**: https://learn.ainflue.com
+**Video Tutorials**: https://learn.iacherie.com
 - Getting started guide (15 minutes)
 - Advanced features walkthrough (45 minutes)
 - Best practices workshop (30 minutes)
@@ -469,7 +469,7 @@ Ainflue supports **350+ languages and dialects**, including:
 
 ### Community
 
-**User Forum**: https://community.ainflue.com
+**User Forum**: https://community.iacherie.com
 - Share experiences and tips
 - Get help from other users
 - Feature requests and feedback
@@ -477,12 +477,12 @@ Ainflue supports **350+ languages and dialects**, including:
 
 **Social Media:**
 - Twitter: @AinfluePlatform
-- LinkedIn: Ainflue Official
-- YouTube: Ainflue Tutorials
+- LinkedIn: IA Chérie Official
+- YouTube: IA Chérie Tutorials
 
 ---
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Proprietary and Confidential - Unauthorized use is strictly prohibited.**
 
-*This manual is regularly updated. Check https://help.ainflue.com for the latest version.*
+*This manual is regularly updated. Check https://help.iacherie.com for the latest version.*

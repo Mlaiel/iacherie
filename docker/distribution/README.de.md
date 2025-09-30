@@ -1,6 +1,6 @@
 # 🚀 Verteilungsmodul - Docker Services
 
-**Ainflue Platform Verteilungsinfrastruktur**
+**IA Chérie Platform Verteilungsinfrastruktur**
 
 Multiplattform-Inhaltsverteilungssystem mit intelligenter Terminplanung, Formatanpassung und plattformübergreifender Synchronisation für Musiker, Blogger, Fotografen, Influencer und Komiker.
 

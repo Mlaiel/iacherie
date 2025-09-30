@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🛡️ Firewall Service - Enterprise Network Security
-Service de pare-feu enterprise pour microservices Ainflue
+Service de pare-feu enterprise pour microservices IA Chérie
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

@@ -1,4 +1,4 @@
-# ⚡ Module Services d'Orchestration - Plateforme Entreprise Ainflue
+# ⚡ Module Services d'Orchestration - Plateforme Entreprise IA Chérie
 
 > **🚨 AVERTISSEMENT PROPRIÉTÉ INTELLECTUELLE**  
 > **Code propriétaire de Fahed Mlaiel (mlaiel@live.de)**  
@@ -11,7 +11,7 @@
 
 ## 🏗️ Architecture d'Orchestration Entreprise
 
-Le Module Services d'Orchestration fournit une gestion de workflow de niveau entreprise, l'intelligence d'affaires, l'automatisation et la coordination de systèmes complexes pour la Plateforme d'Économie des Créateurs Ainflue.
+Le Module Services d'Orchestration fournit une gestion de workflow de niveau entreprise, l'intelligence d'affaires, l'automatisation et la coordination de systèmes complexes pour la Plateforme d'Économie des Créateurs IA Chérie.
 
 ### 🎯 Flux Logique Métier Principal
 ```

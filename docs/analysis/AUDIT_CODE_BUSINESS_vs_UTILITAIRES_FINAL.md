@@ -3,7 +3,7 @@
 **Date:** 30 Août 2025  
 **Auditeur:** AUDIT_CODE_BUSINESS_IMPACT.py v1.0  
 **Auteur:** Fahed Mlaiel (mlaiel@live.de)  
-**Repository:** Ainflue Platform - IA Influencer Agent  
+**Repository:** IA Chérie Platform - IA Influencer Agent  
 
 ---
 

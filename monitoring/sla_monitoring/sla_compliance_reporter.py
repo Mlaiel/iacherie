@@ -88,25 +88,25 @@ class SLAComplianceReporter:
                 "notification_threshold": "CRITICAL",
                 "report_frequency": "weekly",
                 "preferred_format": ReportFormat.PDF,
-                "email_list": ["ceo@ainflue.com", "cto@ainflue.com"]
+                "email_list": ["ceo@iacherie.com", "cto@iacherie.com"]
             },
             "engineering": {
                 "notification_threshold": "WARNING",
                 "report_frequency": "daily",
                 "preferred_format": ReportFormat.JSON,
-                "email_list": ["engineering@ainflue.com", "devops@ainflue.com"]
+                "email_list": ["engineering@iacherie.com", "devops@iacherie.com"]
             },
             "compliance": {
                 "notification_threshold": "WARNING",
                 "report_frequency": "daily",
                 "preferred_format": ReportFormat.CSV,
-                "email_list": ["compliance@ainflue.com", "legal@ainflue.com"]
+                "email_list": ["compliance@iacherie.com", "legal@iacherie.com"]
             },
             "support": {
                 "notification_threshold": "WARNING",
                 "report_frequency": "daily",
                 "preferred_format": ReportFormat.HTML,
-                "email_list": ["support@ainflue.com"]
+                "email_list": ["support@iacherie.com"]
             }
         }
         
@@ -154,7 +154,7 @@ class SLAComplianceReporter:
             regulatory_status=regulatory_status,
             metadata={
                 "report_generator": "SLA Compliance Reporter v1.0",
-                "platform": "Ainflue Creator Economy",
+                "platform": "IA Chérie Creator Economy",
                 "author": "Fahed Mlaiel",
                 "confidentiality": "RESTRICTED"
             }
@@ -542,7 +542,7 @@ class SLAComplianceReporter:
             </style>
         </head>
         <body>
-            <div class="confidential">⚠️ CONFIDENTIAL - AINFLUE CREATOR PLATFORM ⚠️</div>
+            <div class="confidential">⚠️ CONFIDENTIAL - IACHERIE CREATOR PLATFORM ⚠️</div>
             
             <div class="header">
                 <h1>SLA Compliance Report</h1>

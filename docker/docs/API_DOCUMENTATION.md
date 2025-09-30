@@ -1,6 +1,6 @@
 # API Documentation Guide
 
-## Docker Services API Documentation for Ainflue Platform
+## Docker Services API Documentation for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,14 +8,14 @@
 
 ### API Overview
 
-This document provides comprehensive API documentation for all Docker services in the Ainflue platform, including REST APIs, gRPC services, and WebSocket endpoints.
+This document provides comprehensive API documentation for all Docker services in the IA Chérie platform, including REST APIs, gRPC services, and WebSocket endpoints.
 
 ### Core Services APIs
 
 #### 1. API Gateway Service
 ```yaml
 # API Gateway - Port 80/443
-Base URL: https://api.ainflue.com
+Base URL: https://api.iacherie.com
 Health Check: GET /health
 Metrics: GET /metrics
 Documentation: GET /docs
@@ -54,7 +54,7 @@ Health Check: GET /health
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Ainflue Authentication API",
+    "title": "IA Chérie Authentication API",
     "version": "1.0.0"
   },
   "paths": {
@@ -142,7 +142,7 @@ class AudioProcessorClient:
 // audio_processor.proto
 syntax = "proto3";
 
-package ainflue.audio;
+package iacherie.audio;
 
 service AudioProcessor {
     rpc ProcessAudio(ProcessAudioRequest) returns (stream ProcessAudioResponse);
@@ -504,7 +504,7 @@ import asyncio
 from typing import Optional, Dict, Any
 
 class AinfluePlatformSDK:
-    def __init__(self, api_key: str, base_url: str = "https://api.ainflue.com"):
+    def __init__(self, api_key: str, base_url: str = "https://api.iacherie.com"):
         self.api_key = api_key
         self.base_url = base_url
         self.session = None
@@ -568,9 +568,9 @@ asyncio.run(main())
 
 #### 2. JavaScript SDK
 ```javascript
-// ainflue-sdk.js
+// iacherie-sdk.js
 class AinfluePlatformSDK {
-    constructor(apiKey, baseUrl = 'https://api.ainflue.com') {
+    constructor(apiKey, baseUrl = 'https://api.iacherie.com') {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
     }
@@ -670,7 +670,7 @@ GET /api/v1/audio/process
 GET /api/v2/audio/process
 
 # Version in Accept header
-Accept: application/vnd.ainflue.v1+json
+Accept: application/vnd.iacherie.v1+json
 ```
 
 ### Error Handling

@@ -262,7 +262,7 @@ spec:
     spec:
       containers:
       - name: ml-matcher
-        image: ainflue/advanced-ml-matcher:latest
+        image: iacherie/advanced-ml-matcher:latest
         resources:
           requests:
             memory: "2Gi"

@@ -1,4 +1,4 @@
-# 🔧 TROUBLESHOOTING GUIDE - AINFLUE ENTERPRISE
+# 🔧 TROUBLESHOOTING GUIDE - IACHERIE ENTERPRISE
 
 **Version:** 1.0 Enterprise  
 **Date:** 15 Décembre 2025  
@@ -20,11 +20,11 @@
 # 1. Vérification état général
 kubectl get pods --all-namespaces | grep -v Running
 docker ps --filter "status=exited"
-systemctl status ainflue-*
+systemctl status iacherie-*
 
 # 2. Rollback immédiat si déploiement récent
-kubectl rollout undo deployment/ainflue-api -n production
-helm rollback ainflue-platform
+kubectl rollout undo deployment/iacherie-api -n production
+helm rollback iacherie-platform
 
 # 3. Activation cluster de secours
 kubectl config use-context disaster-recovery
@@ -43,7 +43,7 @@ psql -c "SELECT * FROM pg_stat_activity WHERE state = 'active';"
 redis-cli --latency-history
 
 # 3. Scaling automatique d'urgence
-kubectl scale deployment ainflue-api --replicas=10
+kubectl scale deployment iacherie-api --replicas=10
 docker service update --replicas 5 ainflue_worker
 ```
 
@@ -53,7 +53,7 @@ docker service update --replicas 5 ainflue_worker
 ```bash
 # Problème: 502/503 Errors
 # Diagnostic:
-curl -I https://api.ainflue.com/health
+curl -I https://api.iacherie.com/health
 kubectl logs -f deployment/api-gateway -n production
 
 # Solutions:
@@ -294,7 +294,7 @@ redis-cli FLUSHALL  # Clear all sessions
 kubectl create job revoke-tokens --from=cronjob/security-cleanup
 
 # 3. Notification équipe sécurité
-curl -X POST https://alerts.ainflue.com/security \
+curl -X POST https://alerts.iacherie.com/security \
   -H "Content-Type: application/json" \
   -d '{"level":"critical","type":"data_breach_suspected"}'
 ```
@@ -329,10 +329,10 @@ tar -tzf backup.tar.gz > /dev/null
 
 # 2. Restoration alternative
 # Point-in-time recovery
-pg_restore --clean --if-exists --no-owner --dbname=ainflue /backup/latest.dump
+pg_restore --clean --if-exists --no-owner --dbname=iacherie /backup/latest.dump
 
 # 3. Sync depuis replica
-pg_basebackup -h replica.ainflue.com -D /var/lib/postgresql/data -U replication -W
+pg_basebackup -h replica.iacherie.com -D /var/lib/postgresql/data -U replication -W
 ```
 
 ### 🐳 **KUBERNETES TROUBLESHOOTING**
@@ -398,9 +398,9 @@ curl -H "Authorization: Bearer $API_KEY" \
 ### 📞 **Contacts d'Urgence**
 
 #### **Niveau 1 Support (Réponse: 15 minutes)**
-- **DevOps Engineer:** devops@ainflue.enterprise
-- **Backend Engineer:** backend@ainflue.enterprise
-- **Security Engineer:** security@ainflue.enterprise
+- **DevOps Engineer:** devops@iacherie.enterprise
+- **Backend Engineer:** backend@iacherie.enterprise
+- **Security Engineer:** security@iacherie.enterprise
 
 #### **Niveau 2 Escalade (Réponse: 5 minutes)**
 - **Lead Architect:** Fahed Mlaiel (mlaiel@live.de)
@@ -469,7 +469,7 @@ check_service_health() {
 }
 
 # Monitor critical services
-for service in ainflue-api ainflue-worker postgresql redis; do
+for service in iacherie-api iacherie-worker postgresql redis; do
     check_service_health $service
 done
 ```
@@ -491,7 +491,7 @@ def check_db_health():
     try:
         conn = psycopg2.connect(
             host="localhost",
-            database="ainflue",
+            database="iacherie",
             user="postgres",
             connect_timeout=5
         )
@@ -540,12 +540,12 @@ if __name__ == "__main__":
 
 ### 📞 **SUPPORT TECHNIQUE D'URGENCE**
 
-**Incident Response:** incident@ainflue.enterprise  
+**Incident Response:** incident@iacherie.enterprise  
 **Architecture Lead:** Fahed Mlaiel (mlaiel@live.de)  
 **Emergency Hotline:** +33 1 XX XX XX XX
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Ainflue Platform Troubleshooting Guide**  
+**IA Chérie Platform Troubleshooting Guide**  
 **Version 1.0 - Confidentiel et Propriétaire**

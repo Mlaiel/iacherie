@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Viral Content Predictor
+IA Chérie Platform - Advanced Viral Content Predictor
 ===================================================
 
 Enterprise-grade viral content prediction with AI-powered virality scoring,
@@ -70,7 +70,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 import aiohttp
 import redis.asyncio as redis
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler
@@ -141,7 +141,7 @@ class ViralPrediction:
     total_predicted_reach: int
     engagement_breakdown: Dict[str, int]
     viral_trajectory: List[Dict[str, Any]]
-    confidence_intervals: Dict[str, Tuple[float, float]]
+    confidence_intervals: Dict[str, tuple[float, float]]
     key_success_factors: List[str]
     potential_bottlenecks: List[str]
     optimization_opportunities: List[str]

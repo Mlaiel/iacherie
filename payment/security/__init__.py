@@ -1,7 +1,7 @@
 """🔒 Payment Security Framework - Enterprise Security Suite
 =========================================================
 
-Complete enterprise security framework for Ainflue payment systems with:
+Complete enterprise security framework for IA Chérie payment systems with:
 - Advanced encryption management (AES-256, RSA-4096, HSM integration)
 - ML-powered fraud detection and payment validation
 - JWT/Token security with session management
@@ -287,7 +287,7 @@ __all__ = [
 
 # Business Logic Flow Integration
 """
-🔥 AINFLUE PAYMENT SECURITY WORKFLOW:
+🔥 IACHERIE PAYMENT SECURITY WORKFLOW:
 
 1. 🎨 CREATOR CONTENT → 
 2. 🤖 IA PROCESSING → 

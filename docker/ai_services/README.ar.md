@@ -76,7 +76,7 @@ curl http://localhost:8006/ai/models/status
 ```yaml
 # مثال: محرك استنتاج التعلم الآلي مع GPU
 ml_inference_engine:
-  image: ainflue/ml-inference:gpu-latest
+  image: iacherie/ml-inference:gpu-latest
   runtime: nvidia
   environment:
     - NVIDIA_VISIBLE_DEVICES=all
@@ -248,7 +248,7 @@ POST /api/ai/style/transfer
 
 # الاستجابة
 {
-    "processed_audio_url": "https://cdn.ainflue.com/styled_audio_abc123.wav",
+    "processed_audio_url": "https://cdn.iacherie.com/styled_audio_abc123.wav",
     "processing_time": 15.3,
     "style_transfer_score": 0.89,
     "original_style": "electronic"

@@ -1,6 +1,6 @@
-# 🐳 Ainflue Platform - Docker & Containerisation
+# 🐳 IA Chérie Platform - Docker & Containerisation
 
-Enterprise-grade Docker containerisation implementation for the Ainflue AI-Powered Content Protection & Monetization Platform.
+Enterprise-grade Docker containerisation implementation for the IA Chérie AI-Powered Content Protection & Monetization Platform.
 
 ## 📋 Implementation Overview
 
@@ -43,8 +43,8 @@ This implementation provides a complete, production-ready containerisation solut
 ### 1. Environment Setup
 ```bash
 # Clone and setup
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Configure environment
 cp .env.production.example .env.production
@@ -55,7 +55,7 @@ mkdir -p nginx/ssl
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout nginx/ssl/private.key \
     -out nginx/ssl/certificate.crt \
-    -subj "/C=US/ST=State/L=City/O=Ainflue/CN=localhost"
+    -subj "/C=US/ST=State/L=City/O=IA Chérie/CN=localhost"
 ```
 
 ### 2. Production Deployment
@@ -79,7 +79,7 @@ docker-compose -f docker-compose.production.yml up -d
 ## 📁 File Structure
 
 ```
-ainflue/
+iacherie/
 ├── docker-compose.production.yml     # Production deployment
 ├── docker-compose.registry.yml       # Container registry stack
 ├── Dockerfile.production            # Optimized production Dockerfile
@@ -143,7 +143,7 @@ ainflue/
 ### Per-Service Resource Allocation
 ```yaml
 # Application Services
-ainflue-app: 2 CPU, 2GB RAM
+iacherie-app: 2 CPU, 2GB RAM
 ai-service: 8 CPU, 16GB RAM, 1 GPU
 crawler-service: 3 CPU, 4GB RAM
 analytics-service: 2 CPU, 2GB RAM

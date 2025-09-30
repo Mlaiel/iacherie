@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Global Deployment Manager Enterprise
 ====================================
 
-Enterprise-grade global deployment management system for Ainflue SEO platform.
+Enterprise-grade global deployment management system for IA Chérie SEO platform.
 Provides comprehensive multi-region deployment, CDN optimization, and global scalability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -257,8 +257,8 @@ class RegionalDeploymentManager:
         """Execute blue-green deployment"""
         try:
             # Simulate blue-green deployment
-            blue_endpoint = f"blue-{regional_deployment_id}.{region.value}.ainflue.com"
-            green_endpoint = f"green-{regional_deployment_id}.{region.value}.ainflue.com"
+            blue_endpoint = f"blue-{regional_deployment_id}.{region.value}.iacherie.com"
+            green_endpoint = f"green-{regional_deployment_id}.{region.value}.iacherie.com"
             
             # Deploy to green environment
             await self._simulate_container_deployment(green_endpoint, config)
@@ -307,7 +307,7 @@ class RegionalDeploymentManager:
             
             # Rolling update instances
             for i in range(config.min_instances):
-                instance_endpoint = f"instance-{i}-{regional_deployment_id}.{region.value}.ainflue.com"
+                instance_endpoint = f"instance-{i}-{regional_deployment_id}.{region.value}.iacherie.com"
                 
                 # Update instance
                 await self._simulate_container_deployment(instance_endpoint, config)
@@ -352,8 +352,8 @@ class RegionalDeploymentManager:
         """Execute canary deployment"""
         try:
             # Deploy canary instance (10% of traffic)
-            canary_endpoint = f"canary-{regional_deployment_id}.{region.value}.ainflue.com"
-            stable_endpoint = f"stable-{regional_deployment_id}.{region.value}.ainflue.com"
+            canary_endpoint = f"canary-{regional_deployment_id}.{region.value}.iacherie.com"
+            stable_endpoint = f"stable-{regional_deployment_id}.{region.value}.iacherie.com"
             
             # Deploy canary version
             await self._simulate_container_deployment(canary_endpoint, config)
@@ -398,7 +398,7 @@ class RegionalDeploymentManager:
     ) -> Dict[str, Any]:
         """Execute standard deployment"""
         try:
-            endpoint = f"{regional_deployment_id}.{region.value}.ainflue.com"
+            endpoint = f"{regional_deployment_id}.{region.value}.iacherie.com"
             
             # Deploy application
             await self._simulate_container_deployment(endpoint, config)

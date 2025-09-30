@@ -1,0 +1,110 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "Active Users by Type",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "ia_influencer_active_users",
+          "legendFormat": "{{user_type}} - {{time_window}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 2,
+      "title": "User Engagement Score",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "avg(ia_influencer_user_engagement_score)",
+          "legendFormat": "Average Engagement"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 3,
+      "title": "Content Uploads by User Type",
+      "type": "piechart",
+      "targets": [
+        {
+          "expr": "rate(ia_influencer_content_uploads_total[1h])",
+          "legendFormat": "{{user_type}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 4,
+      "title": "User Session Duration",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(ia_influencer_session_duration_seconds_bucket[5m]))",
+          "legendFormat": "Session Duration P95"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [
+    "users",
+    "activity",
+    "engagement"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "User Activity",
+  "uid": null,
+  "version": 1,
+  "description": "User engagement and activity metrics"
+}

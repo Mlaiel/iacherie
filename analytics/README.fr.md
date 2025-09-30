@@ -1,4 +1,4 @@
-# 📊 Système d'Analyse Avancé - Plateforme Ainflue
+# 📊 Système d'Analyse Avancé - Plateforme IA Chérie
 
 **Version :** 8.0 Consolidation Intelligente Analytics  
 **Date :** 6 Septembre 2025  
@@ -159,7 +159,7 @@ Cette architecture, les concepts, les analytics, et toutes les spécifications t
 
 **Architecte Principal :** Fahed Mlaiel  
 **Email :** mlaiel@live.de  
-**Site Web :** [Plateforme Ainflue]
+**Site Web :** [Plateforme IA Chérie]
 
 ---
 

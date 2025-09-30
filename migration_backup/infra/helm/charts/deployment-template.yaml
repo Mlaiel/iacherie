@@ -1,0 +1,194 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise Helm Chart Template for API Gateway
+# Production-ready deployment with security and monitoring
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "api-gateway.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "api-gateway.labels" . | nindent 4 }}
+    app.kubernetes.io/component: api-gateway
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "api-gateway.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.service.metricsPort }}"
+        prometheus.io/path: "/metrics"
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "api-gateway.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: api-gateway
+        version: {{ .Values.image.tag | default .Chart.AppVersion }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "api-gateway.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.port }}
+          protocol: TCP
+        - name: metrics
+          containerPort: {{ .Values.service.metricsPort }}
+          protocol: TCP
+        - name: health
+          containerPort: {{ .Values.service.healthPort }}
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: {{ .Values.environment }}
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        {{- if .Values.tracing.enabled }}
+        - name: JAEGER_ENDPOINT
+          value: {{ .Values.tracing.jaegerEndpoint }}
+        - name: TRACING_ENABLED
+          value: "true"
+        {{- end }}
+        {{- if .Values.redis.enabled }}
+        - name: REDIS_URL
+          value: {{ .Values.redis.url }}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "api-gateway.fullname" . }}-config
+        - secretRef:
+            name: {{ include "api-gateway.fullname" . }}-secret
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.livenessProbe.path }}
+            port: health
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.readinessProbe.path }}
+            port: health
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        startupProbe:
+          httpGet:
+            path: {{ .Values.startupProbe.path }}
+            port: health
+          initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.startupProbe.successThreshold }}
+          failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        {{- if .Values.persistence.enabled }}
+        - name: data-volume
+          mountPath: {{ .Values.persistence.mountPath }}
+        {{- end }}
+        {{- if .Values.tls.enabled }}
+        - name: tls-certs
+          mountPath: /app/certs
+          readOnly: true
+        {{- end }}
+        {{- with .Values.extraVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- if .Values.monitoring.sidecar.enabled }}
+      - name: monitoring-sidecar
+        image: {{ .Values.monitoring.sidecar.image }}
+        ports:
+        - name: sidecar-metrics
+          containerPort: {{ .Values.monitoring.sidecar.port }}
+        resources:
+          {{- toYaml .Values.monitoring.sidecar.resources | nindent 12 }}
+      {{- end }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ include "api-gateway.fullname" . }}-config
+      {{- if .Values.persistence.enabled }}
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: {{ include "api-gateway.fullname" . }}-pvc
+      {{- end }}
+      {{- if .Values.tls.enabled }}
+      - name: tls-certs
+        secret:
+          secretName: {{ .Values.tls.secretName }}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- range .Values.topologySpreadConstraints }}
+        - maxSkew: {{ .maxSkew }}
+          topologyKey: {{ .topologyKey }}
+          whenUnsatisfiable: {{ .whenUnsatisfiable }}
+          labelSelector:
+            matchLabels:
+              {{- include "api-gateway.selectorLabels" $ | nindent 14 }}
+        {{- end }}
+      {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}

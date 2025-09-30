@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Trace Correlation Engine Enterprise
+IA Chérie Platform - Trace Correlation Engine Enterprise
 ====================================================
 
 Advanced trace correlation engine for monitoring cross-trace correlation,

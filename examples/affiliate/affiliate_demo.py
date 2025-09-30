@@ -35,7 +35,7 @@ async def demonstrate_affiliate_service():
     """Démonstration complète du service d'affiliation"""
     
     print("=" * 60)
-    print("🤝 DÉMONSTRATION MODULE AFFILIATION - AINFLUE PLATFORM")
+    print("🤝 DÉMONSTRATION MODULE AFFILIATION - IACHERIE PLATFORM")
     print("=" * 60)
     
     # Initialize the service
@@ -221,7 +221,7 @@ async def demonstrate_affiliate_service():
     
     print("\n" + "=" * 60)
     print("✅ DÉMONSTRATION TERMINÉE AVEC SUCCÈS!")
-    print("🤝 Module d'Affiliation - Ainflue Platform")
+    print("🤝 Module d'Affiliation - IA Chérie Platform")
     print("=" * 60)
     
     return True

@@ -1,13 +1,13 @@
 # 🔒 Platform Security Monitor: Cross-Platform Intelligence & Monitoring
 """
-Platform Security Monitor - Ainflue Integrations
+Platform Security Monitor - IA Chérie Integrations
 ===============================================
 Enterprise platform security monitoring providing cross-platform intelligence,
 social media monitoring, brand protection, and comprehensive threat detection
-across 30+ platforms for Ainflue creator ecosystem.
+across 30+ platforms for IA Chérie creator ecosystem.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -145,7 +145,7 @@ class PlatformAccountModel(Base):
     follower_count = Column(Integer, default=0)
     monitoring_enabled = Column(Boolean, default=True)
     last_checked = Column(DateTime, default=datetime.utcnow)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class ThreatDetectionModel(Base):

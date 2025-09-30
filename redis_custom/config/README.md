@@ -1,4 +1,4 @@
-# ⚡ Ainflue Redis Configuration Module - Enterprise Edition
+# ⚡ IA Chérie Redis Configuration Module - Enterprise Edition
 
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-4.0.0-blue.svg)](VERSION)
@@ -29,7 +29,7 @@
 
 ## 🎯 Overview
 
-The Ainflue Redis Configuration Module is an **enterprise-grade** configuration management system designed specifically for the **Creator Economy Platform**. It provides comprehensive Redis optimization, security, and management capabilities to support **1.8M+ operations per second** with **sub-millisecond latency**.
+The IA Chérie Redis Configuration Module is an **enterprise-grade** configuration management system designed specifically for the **Creator Economy Platform**. It provides comprehensive Redis optimization, security, and management capabilities to support **1.8M+ operations per second** with **sub-millisecond latency**.
 
 ### 🏗️ Architecture Highlights
 

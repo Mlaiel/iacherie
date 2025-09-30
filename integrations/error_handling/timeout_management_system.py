@@ -2,7 +2,7 @@
 """Timeout Management System - Adaptive Timeout Control
 =====================================================
 
-Advanced timeout management implementation for Ainflue platform error handling.
+Advanced timeout management implementation for IA Chérie platform error handling.
 Provides adaptive timeout calculation, cascading timeout prevention,
 and intelligent timeout orchestration across services.
 

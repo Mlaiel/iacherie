@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 """
-Ainflue Protection Rate Limiter - Copyright Protection & Legal Compliance
+IA Chérie Protection Rate Limiter - Copyright Protection & Legal Compliance
 =========================================================================
 
 Advanced rate limiting system for copyright protection, content matching,
-DMCA compliance automation, and legal enforcement for the Ainflue creator
+DMCA compliance automation, and legal enforcement for the IA Chérie creator
 platform. Provides comprehensive content protection with real-time monitoring.
 
 Features:
@@ -22,7 +22,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying or distribution prohibited
 
-Project: Ainflue Rate Limiting - Protection Module
+Project: IA Chérie Rate Limiting - Protection Module
 Version: 1.0 Production
 """
 
@@ -920,7 +920,7 @@ class ProtectionRateLimiter:
             original_content=f"Content ID: {violation.violating_content_id}",
             detected_usage="Unauthorized use detected",
             similarity_score=int(violation.similarity_score * 100),
-            platform_name="Ainflue"
+            platform_name="IA Chérie"
         )
         
         if custom_message:
@@ -955,10 +955,10 @@ class ProtectionRateLimiter:
         
         content = template['template'].format(
             copyrighted_work=f"Protected Content ID: {violation.violating_content_id}",
-            copyright_owner="Ainflue User",
+            copyright_owner="IA Chérie User",
             infringing_url=f"Content URL for {violation.violating_content_id}",
-            sender_name="Ainflue Legal Team",
-            sender_contact="legal@ainflue.com"
+            sender_name="IA Chérie Legal Team",
+            sender_contact="legal@iacherie.com"
         )
         
         if custom_message:
@@ -996,7 +996,7 @@ class ProtectionRateLimiter:
             infringement_description=f"Unauthorized use of protected content (Similarity: {violation.similarity_score:.2%})",
             copyrighted_work=f"Content ID: {violation.violating_content_id}",
             response_deadline=(datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d"),
-            legal_representative="Ainflue Legal Department"
+            legal_representative="IA Chérie Legal Department"
         )
         
         if custom_message:

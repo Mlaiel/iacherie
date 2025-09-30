@@ -1,7 +1,7 @@
 # Grafana Dashboards & Visualization Setup - COMPLETE
 
 ## Overview
-This implementation provides a complete dashboards and visualization solution for the Ainflue platform, fulfilling all requirements specified in the problem statement.
+This implementation provides a complete dashboards and visualization solution for the IA Chérie platform, fulfilling all requirements specified in the problem statement.
 
 ## ✅ Completed Requirements
 
@@ -80,7 +80,7 @@ tests/
 
 ### 1. Start Monitoring Stack
 ```bash
-cd /home/runner/work/Ainflue/Ainflue
+cd /home/runner/work/IA Chérie/IA Chérie
 docker-compose -f docker-compose.monitoring.yml up -d
 ```
 
@@ -109,7 +109,7 @@ python -m pytest tests/test_grafana_dashboards.py -v
 ### Provisioning Configuration
 - **Datasources**: Automatic Prometheus and Elasticsearch configuration
 - **Dashboards**: Automatic dashboard loading from `/var/lib/grafana/dashboards`
-- **Folder Organization**: All dashboards organized in "Ainflue" folder
+- **Folder Organization**: All dashboards organized in "IA Chérie" folder
 
 ### Validation & Testing
 - **Setup Validator**: `scripts/validate_grafana_setup.py` - Comprehensive setup validation

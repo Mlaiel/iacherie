@@ -1,8 +1,8 @@
-# 🚀 **AINFLUENCER** - The Ultimate AI-Powered Content & Influencer Platform
+# 🚀 **IACHERIE** - The Ultimate AI-Powered Content & Influencer Platform
 
 <div align="center">
 
-![Ainfluencer Platform](https://img.shields.io/badge/Platform-Enterprise%20AI-blue?style=for-the-badge)
+![IA Chérie Platform](https://img.shields.io/badge/Platform-Enterprise%20AI-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-2.0.0-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
@@ -17,9 +17,9 @@
 
 ## 🎯 **VISION & MISSION**
 
-**Ainfluencer** is the world's most advanced AI-powered platform that bridges the gap between content creators, businesses, and artificial intelligence. We're not just a platform - we're the **future of digital content creation and monetization**.
+**IA Chérie** is the world's most advanced AI-powered platform that bridges the gap between content creators, businesses, and artificial intelligence. We're not just a platform - we're the **future of digital content creation and monetization**.
 
-### 🔥 **Why Ainfluencer Changes Everything:**
+### 🔥 **Why IA Chérie Changes Everything:**
 - **53 Specialized AI Agents** working as your content creation army
 - **680+ Enterprise Microservices** for unlimited scalability
 - **Multi-Modal Content Generation** (Text, Images, Audio, Video)
@@ -106,8 +106,8 @@ graph TB
 ### ⚡ **1-Minute Setup**
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainfluencer.git
-cd Ainfluencer
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Environment setup
 cp .env.example .env
@@ -134,7 +134,7 @@ python backend_server.py & cd frontend && npm run dev
 
 ### �📁 **Project Structure**
 ```
-ainfluencer/
+iacherie/
 ├── � frontend/              # Next.js Application (React 18)
 │   ├── app/                  # App Router (Next.js 14)
 │   ├── components/           # Reusable UI components
@@ -218,7 +218,7 @@ ainfluencer/
 
 ## 🔥 **COMPETITIVE ADVANTAGES**
 
-### 🥇 **Why Ainfluencer Dominates**
+### 🥇 **Why IA Chérie Dominates**
 1. **Unmatched Scale:** 53 AI agents vs competitors' 5-10
 2. **True Multi-Modal:** Generate ALL content types in one platform
 3. **Real-Time Collaboration:** Live workspace sharing and editing
@@ -227,7 +227,7 @@ ainfluencer/
 6. **Advanced Analytics:** Predictive insights for content performance
 
 ### 🆚 **vs Competition**
-| Feature | Ainfluencer | Creator.ly | Jasper | Copy.ai |
+| Feature | IA Chérie | Creator.ly | Jasper | Copy.ai |
 |---------|-------------|-----------|--------|---------|
 | AI Agents | ✅ 53 | ❌ 5 | ❌ 10 | ❌ 3 |
 | Video Generation | ✅ Yes | ❌ No | ❌ No | ❌ No |
@@ -327,7 +327,7 @@ kubectl apply -f kubernetes/
 - **Developer Forum:** Open-source contributions welcome
 
 ### 🎓 **Learning & Certification**
-- **Ainfluencer Academy:** Free online courses
+- **IA Chérie Academy:** Free online courses
 - **Certification Programs:** Become a verified expert
 - **Webinar Series:** Live training sessions weekly
 - **1:1 Mentorship:** Premium support for enterprises

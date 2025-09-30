@@ -2,7 +2,7 @@
 Cohort Analytics Engine
 =====================
 
-Advanced cohort analysis system for Ainflue Distribution Platform.
+Advanced cohort analysis system for IA Chérie Distribution Platform.
 Tracks user behavior, retention, and engagement patterns across cohorts.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

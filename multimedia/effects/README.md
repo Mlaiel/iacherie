@@ -1,6 +1,6 @@
 # 🎨 Advanced Creative Effects Module
 
-**Professional creative effects and filters for multimedia content on the Ainflue Platform**
+**Professional creative effects and filters for multimedia content on the IA Chérie Platform**
 
 ## Overview
 
@@ -247,4 +247,4 @@ async def process_for_instagram(input_image):
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
 Contact: mlaiel@live.de  
-Project: Ainflue Platform - Creative Effects Module
+Project: IA Chérie Platform - Creative Effects Module

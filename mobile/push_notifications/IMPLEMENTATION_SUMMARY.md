@@ -70,4 +70,4 @@ The system is designed to integrate seamlessly with:
 
 ---
 
-**The mobile push notifications system is now COMPLETE and ready for deployment with the Ainflue platform.**
+**The mobile push notifications system is now COMPLETE and ready for deployment with the IA Chérie platform.**

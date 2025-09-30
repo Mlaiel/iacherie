@@ -1,0 +1,443 @@
+# OAuth2 Configuration for IA Influencer Agent Platform
+# Production-ready OAuth2 and OpenID Connect configuration
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+oauth2_config:
+  version: "1.0"
+  name: "IA-Influencer-OAuth2"
+  description: "OAuth2 and OpenID Connect configuration for influencer platform"
+  
+  # Server configuration
+  server:
+    issuer: "https://auth.ia-influencer.com"
+    authorization_endpoint: "https://auth.ia-influencer.com/oauth2/authorize"
+    token_endpoint: "https://auth.ia-influencer.com/oauth2/token"
+    userinfo_endpoint: "https://auth.ia-influencer.com/oauth2/userinfo"
+    jwks_uri: "https://auth.ia-influencer.com/.well-known/jwks.json"
+    introspection_endpoint: "https://auth.ia-influencer.com/oauth2/introspect"
+    revocation_endpoint: "https://auth.ia-influencer.com/oauth2/revoke"
+    
+    # OpenID Connect
+    end_session_endpoint: "https://auth.ia-influencer.com/oauth2/logout"
+    check_session_iframe: "https://auth.ia-influencer.com/oauth2/check-session"
+    
+    # Supported features
+    code_challenge_methods_supported:
+      - "S256"
+      - "plain"
+    grant_types_supported:
+      - "authorization_code"
+      - "client_credentials"
+      - "refresh_token"
+      - "device_code"
+    response_types_supported:
+      - "code"
+      - "token"
+      - "id_token"
+      - "code token"
+      - "code id_token"
+      - "token id_token"
+      - "code token id_token"
+    scopes_supported:
+      - "openid"
+      - "profile"
+      - "email"
+      - "phone"
+      - "address"
+      - "offline_access"
+      - "creator:read"
+      - "creator:write"
+      - "content:read"
+      - "content:write"
+      - "analytics:read"
+      - "payment:read"
+      - "payment:write"
+      - "collaboration:read"
+      - "collaboration:write"
+      - "admin:read"
+      - "admin:write"
+
+  # Client configurations
+  clients:
+    # Web application client
+    web_app:
+      client_id: "ia-influencer-web"
+      client_name: "IA Influencer Web Application"
+      client_type: "confidential"
+      grant_types:
+        - "authorization_code"
+        - "refresh_token"
+      response_types:
+        - "code"
+      redirect_uris:
+        - "https://app.ia-influencer.com/callback"
+        - "https://app.ia-influencer.com/auth/callback"
+        - "https://studio.ia-influencer.com/callback"
+      post_logout_redirect_uris:
+        - "https://app.ia-influencer.com/logout"
+        - "https://studio.ia-influencer.com/logout"
+      allowed_scopes:
+        - "openid"
+        - "profile"
+        - "email"
+        - "creator:read"
+        - "creator:write"
+        - "content:read"
+        - "content:write"
+        - "analytics:read"
+        - "collaboration:read"
+        - "collaboration:write"
+      token_lifetime:
+        access_token: "1h"
+        refresh_token: "30d"
+        id_token: "1h"
+      require_pkce: true
+      
+    # Mobile application client
+    mobile_app:
+      client_id: "ia-influencer-mobile"
+      client_name: "IA Influencer Mobile App"
+      client_type: "public"
+      grant_types:
+        - "authorization_code"
+        - "refresh_token"
+      response_types:
+        - "code"
+      redirect_uris:
+        - "com.ia-influencer://callback"
+        - "com.ia-influencer://auth"
+      allowed_scopes:
+        - "openid"
+        - "profile"
+        - "email"
+        - "creator:read"
+        - "creator:write"
+        - "content:read"
+        - "content:write"
+        - "analytics:read"
+      token_lifetime:
+        access_token: "1h"
+        refresh_token: "90d"
+        id_token: "1h"
+      require_pkce: true
+      
+    # API service client
+    api_service:
+      client_id: "ia-influencer-api"
+      client_name: "IA Influencer API Service"
+      client_type: "confidential"
+      grant_types:
+        - "client_credentials"
+      response_types: []
+      allowed_scopes:
+        - "admin:read"
+        - "admin:write"
+        - "analytics:read"
+        - "content:read"
+      token_lifetime:
+        access_token: "2h"
+      
+    # Desktop application client
+    desktop_app:
+      client_id: "ia-influencer-desktop"
+      client_name: "IA Influencer Desktop Studio"
+      client_type: "public"
+      grant_types:
+        - "authorization_code"
+        - "refresh_token"
+        - "device_code"
+      response_types:
+        - "code"
+      redirect_uris:
+        - "http://localhost:8080/callback"
+        - "http://127.0.0.1:8080/callback"
+      allowed_scopes:
+        - "openid"
+        - "profile"
+        - "email"
+        - "creator:read"
+        - "creator:write"
+        - "content:read"
+        - "content:write"
+        - "analytics:read"
+        - "collaboration:read"
+        - "collaboration:write"
+      token_lifetime:
+        access_token: "2h"
+        refresh_token: "90d"
+        id_token: "2h"
+      require_pkce: true
+
+  # Social OAuth2 providers
+  social_providers:
+    google:
+      enabled: true
+      client_id: "${GOOGLE_OAUTH_CLIENT_ID}"
+      client_secret: "${GOOGLE_OAUTH_CLIENT_SECRET}"
+      authorization_endpoint: "https://accounts.google.com/o/oauth2/v2/auth"
+      token_endpoint: "https://oauth2.googleapis.com/token"
+      userinfo_endpoint: "https://www.googleapis.com/oauth2/v2/userinfo"
+      scopes:
+        - "openid"
+        - "email"
+        - "profile"
+      field_mapping:
+        user_id: "id"
+        email: "email"
+        name: "name"
+        picture: "picture"
+        
+    spotify:
+      enabled: true
+      client_id: "${SPOTIFY_CLIENT_ID}"
+      client_secret: "${SPOTIFY_CLIENT_SECRET}"
+      authorization_endpoint: "https://accounts.spotify.com/authorize"
+      token_endpoint: "https://accounts.spotify.com/api/token"
+      userinfo_endpoint: "https://api.spotify.com/v1/me"
+      scopes:
+        - "user-read-email"
+        - "user-read-private"
+        - "user-library-read"
+        - "user-top-read"
+        - "playlist-read-private"
+      field_mapping:
+        user_id: "id"
+        email: "email"
+        name: "display_name"
+        picture: "images[0].url"
+        country: "country"
+        
+    instagram:
+      enabled: true
+      client_id: "${INSTAGRAM_CLIENT_ID}"
+      client_secret: "${INSTAGRAM_CLIENT_SECRET}"
+      authorization_endpoint: "https://api.instagram.com/oauth/authorize"
+      token_endpoint: "https://api.instagram.com/oauth/access_token"
+      userinfo_endpoint: "https://graph.instagram.com/me"
+      scopes:
+        - "user_profile"
+        - "user_media"
+      field_mapping:
+        user_id: "id"
+        name: "username"
+        
+    youtube:
+      enabled: true
+      client_id: "${YOUTUBE_CLIENT_ID}"
+      client_secret: "${YOUTUBE_CLIENT_SECRET}"
+      authorization_endpoint: "https://accounts.google.com/o/oauth2/v2/auth"
+      token_endpoint: "https://oauth2.googleapis.com/token"
+      userinfo_endpoint: "https://www.googleapis.com/youtube/v3/channels"
+      scopes:
+        - "https://www.googleapis.com/auth/youtube.readonly"
+        - "https://www.googleapis.com/auth/userinfo.email"
+        - "https://www.googleapis.com/auth/userinfo.profile"
+      field_mapping:
+        user_id: "items[0].id"
+        name: "items[0].snippet.title"
+        picture: "items[0].snippet.thumbnails.default.url"
+        
+    github:
+      enabled: true
+      client_id: "${GITHUB_CLIENT_ID}"
+      client_secret: "${GITHUB_CLIENT_SECRET}"
+      authorization_endpoint: "https://github.com/login/oauth/authorize"
+      token_endpoint: "https://github.com/login/oauth/access_token"
+      userinfo_endpoint: "https://api.github.com/user"
+      scopes:
+        - "user:email"
+        - "read:user"
+      field_mapping:
+        user_id: "id"
+        email: "email"
+        name: "name"
+        username: "login"
+        picture: "avatar_url"
+        
+    discord:
+      enabled: true
+      client_id: "${DISCORD_CLIENT_ID}"
+      client_secret: "${DISCORD_CLIENT_SECRET}"
+      authorization_endpoint: "https://discord.com/api/oauth2/authorize"
+      token_endpoint: "https://discord.com/api/oauth2/token"
+      userinfo_endpoint: "https://discord.com/api/users/@me"
+      scopes:
+        - "identify"
+        - "email"
+      field_mapping:
+        user_id: "id"
+        email: "email"
+        name: "username"
+        picture: "avatar"
+
+  # Security settings
+  security:
+    # JWT settings
+    jwt:
+      algorithm: "RS256"
+      public_key_url: "https://auth.ia-influencer.com/.well-known/jwks.json"
+      issuer: "https://auth.ia-influencer.com"
+      audience: "ia-influencer-platform"
+      
+    # Token security
+    tokens:
+      access_token:
+        default_lifetime: "1h"
+        max_lifetime: "24h"
+        min_lifetime: "5m"
+        
+      refresh_token:
+        default_lifetime: "30d"
+        max_lifetime: "365d"
+        rotation_enabled: true
+        
+      authorization_code:
+        lifetime: "10m"
+        max_uses: 1
+        
+      device_code:
+        lifetime: "15m"
+        polling_interval: "5s"
+        
+    # PKCE settings
+    pkce:
+      required_for_public_clients: true
+      required_for_confidential_clients: false
+      allowed_methods:
+        - "S256"
+        - "plain"
+        
+    # Rate limiting
+    rate_limiting:
+      enabled: true
+      token_endpoint: "100/hour"
+      authorization_endpoint: "50/hour"
+      userinfo_endpoint: "200/hour"
+      introspection_endpoint: "1000/hour"
+      
+    # CORS settings
+    cors:
+      enabled: true
+      allowed_origins:
+        - "https://app.ia-influencer.com"
+        - "https://studio.ia-influencer.com"
+        - "https://admin.ia-influencer.com"
+      allowed_methods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+        - "OPTIONS"
+      allowed_headers:
+        - "Authorization"
+        - "Content-Type"
+        - "X-Requested-With"
+      max_age: "86400"
+
+  # Session management
+  session:
+    cookie_name: "ia_influencer_session"
+    cookie_domain: ".ia-influencer.com"
+    cookie_secure: true
+    cookie_httponly: true
+    cookie_samesite: "strict"
+    session_timeout: "8h"
+    remember_me_timeout: "30d"
+    
+  # Multi-factor authentication
+  mfa:
+    enabled: true
+    required_for_admin: true
+    methods:
+      - "totp"
+      - "sms"
+      - "email"
+      - "webauthn"
+    grace_period: "24h"
+    
+  # Consent management
+  consent:
+    enabled: true
+    remember_consent: true
+    consent_lifetime: "365d"
+    required_scopes:
+      - "email"
+      - "profile"
+      - "creator:write"
+      - "payment:write"
+      - "admin:write"
+
+  # Device flow settings
+  device_flow:
+    enabled: true
+    device_code_lifetime: "15m"
+    polling_interval: "5s"
+    user_code_length: 8
+    user_code_charset: "BCDFGHJKLMNPQRSTVWXZ23456789"
+    
+  # Logging and monitoring
+  logging:
+    enabled: true
+    level: "info"
+    format: "json"
+    include_tokens: false  # Never log actual tokens
+    audit_events:
+      - "token_issued"
+      - "token_revoked"
+      - "login_success"
+      - "login_failure"
+      - "consent_granted"
+      - "consent_revoked"
+      
+  # Storage configuration
+  storage:
+    # Authorization codes
+    authorization_codes:
+      backend: "redis"
+      key_prefix: "oauth2:auth_code:"
+      
+    # Access tokens
+    access_tokens:
+      backend: "redis"
+      key_prefix: "oauth2:access_token:"
+      
+    # Refresh tokens
+    refresh_tokens:
+      backend: "postgresql"
+      table: "oauth2_refresh_tokens"
+      
+    # Sessions
+    sessions:
+      backend: "redis"
+      key_prefix: "oauth2:session:"
+      
+    # Consent
+    consent:
+      backend: "postgresql"
+      table: "oauth2_user_consent"
+
+  # Development and testing
+  development:
+    enabled: false  # Only enable in dev environment
+    allow_http: false
+    skip_consent: false
+    debug_mode: false
+    mock_providers: false
+    
+  # Compliance settings
+  compliance:
+    gdpr:
+      enabled: true
+      data_retention: "2y"
+      consent_withdrawal: true
+      
+    ccpa:
+      enabled: true
+      opt_out_enabled: true
+      
+    coppa:
+      enabled: true
+      age_verification: true
+      parental_consent: true

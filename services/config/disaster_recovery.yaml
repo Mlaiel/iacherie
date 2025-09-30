@@ -111,8 +111,8 @@ file_system_backup:
       logs: "daily"
       
     destinations:
-      primary: "s3://ainflue-backups/"
-      secondary: "gcs://ainflue-backup-secondary/"
+      primary: "s3://iacherie-backups/"
+      secondary: "gcs://iacherie-backup-secondary/"
       
   application_files:
     code_repository: "git"
@@ -161,7 +161,7 @@ multi_region:
 cloud_backup:
   aws:
     s3_backup:
-      bucket: "ainflue-disaster-recovery"
+      bucket: "iacherie-disaster-recovery"
       storage_class: "GLACIER_IR"
       lifecycle_policy: true
       
@@ -181,7 +181,7 @@ cloud_backup:
       
   gcp:
     cloud_storage:
-      bucket: "ainflue-dr-gcp"
+      bucket: "iacherie-dr-gcp"
       storage_class: "NEARLINE"
       
     cloud_sql:
@@ -190,7 +190,7 @@ cloud_backup:
       
   azure:
     blob_storage:
-      container: "ainflue-dr-azure"
+      container: "iacherie-dr-azure"
       tier: "Cool"
       
     sql_database:

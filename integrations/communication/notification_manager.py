@@ -725,7 +725,7 @@ if __name__ == "__main__":
                 template_id="welcome_email",
                 channel=NotificationChannel.EMAIL,
                 recipient=recipient,
-                variables={"platform_name": "Ainflue"}
+                variables={"platform_name": "IA Chérie"}
             )
             
             print(f"Notification queued: {notification_id}")

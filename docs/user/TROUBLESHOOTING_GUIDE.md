@@ -1,8 +1,8 @@
-# 🔧 Ainflue Troubleshooting Guide
+# 🔧 IA Chérie Troubleshooting Guide
 
 ## Complete Problem Resolution Guide
 
-**Platform:** Ainflue AI-Powered Content Protection & Monetization  
+**Platform:** IA Chérie AI-Powered Content Protection & Monetization  
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Last Updated:** September 2025
@@ -31,17 +31,17 @@
 ### Platform Down or Inaccessible
 
 **Symptoms:**
-- Cannot access Ainflue website
+- Cannot access IA Chérie website
 - "Service Unavailable" error messages
 - Infinite loading screens
 - Complete platform outage
 
 **Immediate Actions:**
-1. **Check System Status:** Visit [https://status.ainflue.com](https://status.ainflue.com)
+1. **Check System Status:** Visit [https://status.iacherie.com](https://status.iacherie.com)
 2. **Verify Internet Connection:** Test other websites
 3. **Try Different Browser:** Use incognito/private mode
 4. **Check Social Media:** Follow @AinfluePlatform for updates
-5. **Contact Emergency Support:** critical@ainflue.com
+5. **Contact Emergency Support:** critical@iacherie.com
 
 **Resolution Timeline:**
 - **Minor Issues:** 15-30 minutes
@@ -60,7 +60,7 @@
 1. **Do NOT Upload More Content:** Preserve current state
 2. **Document Missing Items:** List what's missing
 3. **Check Recent Activities:** Review account activity log
-4. **Contact Support Immediately:** dataloss@ainflue.com
+4. **Contact Support Immediately:** dataloss@iacherie.com
 5. **Provide Backup Information:** Any local copies or references
 
 **Recovery Process:**
@@ -81,7 +81,7 @@
 2. **Enable MFA:** If not already enabled
 3. **Review Account Activity:** Check all recent actions
 4. **Log Out All Devices:** Force logout from all sessions
-5. **Contact Security Team:** security@ainflue.com
+5. **Contact Security Team:** security@iacherie.com
 
 ---
 
@@ -109,7 +109,7 @@ Causes: Multiple failed login attempts, suspicious activity
 Solution:
 1. Wait 15 minutes for automatic unlock
 2. Use "Forgot Password" to reset
-3. Contact support if still locked: accounts@ainflue.com
+3. Contact support if still locked: accounts@iacherie.com
 ```
 
 **3. Two-Factor Authentication Issues**
@@ -128,7 +128,7 @@ Problem: "Please verify your email" message
 Solution:
 1. Check email inbox and spam folder
 2. Request new verification email
-3. Add noreply@ainflue.com to contacts
+3. Add noreply@iacherie.com to contacts
 4. Try different email if persistent
 ```
 
@@ -149,7 +149,7 @@ Troubleshooting Steps:
 Immediate Actions:
 1. Check billing history in account settings
 2. Verify payment method is valid
-3. Contact billing support: billing@ainflue.com
+3. Contact billing support: billing@iacherie.com
 4. Allow 24 hours for processing
 ```
 
@@ -420,7 +420,7 @@ Requirements:
 Troubleshooting:
 1. Verify YPP status in YouTube Studio
 2. Check Analytics API permissions
-3. Refresh connection in Ainflue settings
+3. Refresh connection in IA Chérie settings
 4. Allow 24-48 hours for data sync
 ```
 
@@ -487,7 +487,7 @@ Common Issues:
 
 Solutions:
 1. Access tax documents in billing section
-2. Contact tax support: tax@ainflue.com
+2. Contact tax support: tax@iacherie.com
 3. Consult local tax professional
 4. Request amended documentation if needed
 ```
@@ -665,7 +665,7 @@ Common Problems:
 
 Solutions:
 1. Disable Safari privacy features temporarily
-2. Allow cookies for Ainflue.com
+2. Allow cookies for IA Chérie.com
 3. Enable JavaScript
 4. Update macOS and Safari
 ```
@@ -678,7 +678,7 @@ Common Problems:
 - Security settings too strict
 
 Solutions:
-1. Disable tracking protection for Ainflue
+1. Disable tracking protection for IA Chérie
 2. Disable problematic add-ons
 3. Reset Firefox settings
 4. Create new Firefox profile
@@ -703,7 +703,7 @@ Immediate Actions:
 **Push Notifications Not Working**
 ```
 Troubleshooting Steps:
-1. Settings → Notifications → Ainflue → Enable
+1. Settings → Notifications → IA Chérie → Enable
 2. Check Do Not Disturb settings
 3. Verify internet connection
 4. Log out and log back in
@@ -725,7 +725,7 @@ Common Solutions:
 **App Performance Problems**
 ```
 Optimization Steps:
-1. Clear app cache: Settings → Apps → Ainflue → Storage
+1. Clear app cache: Settings → Apps → IA Chérie → Storage
 2. Clear app data (will require re-login)
 3. Update Android system
 4. Free up storage space
@@ -749,7 +749,7 @@ Sync Troubleshooting:
 2. Check internet connection
 3. Log out and back in
 4. Clear app cache
-5. Contact mobile support: mobile@ainflue.com
+5. Contact mobile support: mobile@iacherie.com
 ```
 
 ---
@@ -966,7 +966,7 @@ Solutions:
 **Maintenance Notifications**
 ```
 How to Stay Informed:
-1. Subscribe to status updates: status.ainflue.com
+1. Subscribe to status updates: status.iacherie.com
 2. Follow @AinfluePlatform on social media
 3. Check in-app notifications
 4. Enable email maintenance alerts
@@ -1043,11 +1043,11 @@ Contact Channels:
 ### Support Channels
 
 **Email Support:**
-- **General:** support@ainflue.com
-- **Technical:** technical@ainflue.com
-- **Billing:** billing@ainflue.com
-- **Security:** security@ainflue.com
-- **API/Integration:** developers@ainflue.com
+- **General:** support@iacherie.com
+- **Technical:** technical@iacherie.com
+- **Billing:** billing@iacherie.com
+- **Security:** security@iacherie.com
+- **API/Integration:** developers@iacherie.com
 
 **Response Times:**
 - **Free Plan:** 24-48 hours
@@ -1145,4 +1145,4 @@ Contact Channels:
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Proprietary and Confidential - Unauthorized use is strictly prohibited.**
 
-*This troubleshooting guide is regularly updated with new solutions and common issues. For the most current version, visit [https://help.ainflue.com/troubleshooting](https://help.ainflue.com/troubleshooting)*
+*This troubleshooting guide is regularly updated with new solutions and common issues. For the most current version, visit [https://help.iacherie.com/troubleshooting](https://help.iacherie.com/troubleshooting)*

@@ -1,6 +1,6 @@
 """Monetization Events Module
 
-Revenue generation, payment processing, and financial events for the Ainflue platform.
+Revenue generation, payment processing, and financial events for the IA Chérie platform.
 Handles all monetization-related operations including payments, commissions, and payouts.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

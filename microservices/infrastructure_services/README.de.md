@@ -1,12 +1,12 @@
 # 🏗️ Infrastructure Services - Konsolidierte Architektur
 
-[![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)](https://github.com/Mlaiel/IA Chérie)
 [![Services](https://img.shields.io/badge/services-18%20(konsolidiert)-blue)](.)
 [![Compliance](https://img.shields.io/badge/compliance-18%20files%20limit-success)](.)
 
 ## 🌟 Überblick
 
-Die **Infrastructure Services** bilden das Rückgrat der Ainflue-Plattform und wurden im Rahmen der **Enterprise-Architektur-Konsolidierung v4.1.0** von 25 auf 18 Services optimiert. Diese konsolidierten Services bieten verbesserte Performance, reduzierte Komplexität und strikte Einhaltung der 18-Dateien-Begrenzung.
+Die **Infrastructure Services** bilden das Rückgrat der IA Chérie-Plattform und wurden im Rahmen der **Enterprise-Architektur-Konsolidierung v4.1.0** von 25 auf 18 Services optimiert. Diese konsolidierten Services bieten verbesserte Performance, reduzierte Komplexität und strikte Einhaltung der 18-Dateien-Begrenzung.
 
 ## 📊 Konsolidierungsstatistiken
 
@@ -374,7 +374,7 @@ spec:
     spec:
       containers:
       - name: infrastructure
-        image: ainflue/infrastructure-services:v4.1.0
+        image: iacherie/infrastructure-services:v4.1.0
         resources:
           requests:
             memory: "256Mi"
@@ -395,25 +395,25 @@ spec:
 ### Docker
 ```bash
 # Image bauen
-docker build -t ainflue/infrastructure-services:v4.1.0 .
+docker build -t iacherie/infrastructure-services:v4.1.0 .
 
 # Container starten
 docker run -p 8000:8000 \
   -e MONITORING_ENABLED=true \
   -e VAULT_PATH=/app/vault \
-  ainflue/infrastructure-services:v4.1.0
+  iacherie/infrastructure-services:v4.1.0
 ```
 
 ### Kubernetes
 ```bash
 # Namespace erstellen
-kubectl create namespace ainflue-infrastructure
+kubectl create namespace iacherie-infrastructure
 
 # Services deployen
 kubectl apply -f kubernetes/infrastructure-services.yaml
 
 # Status überprüfen
-kubectl get pods -n ainflue-infrastructure
+kubectl get pods -n iacherie-infrastructure
 ```
 
 ### Docker Compose
@@ -421,7 +421,7 @@ kubectl get pods -n ainflue-infrastructure
 version: '3.8'
 services:
   infrastructure:
-    image: ainflue/infrastructure-services:v4.1.0
+    image: iacherie/infrastructure-services:v4.1.0
     ports:
       - "8000:8000"
     environment:
@@ -460,7 +460,7 @@ kubectl logs -f deployment/infrastructure-services
 curl http://localhost:8000/infrastructure/metrics | grep response_time
 
 # Resource-Nutzung checken
-kubectl top pods -n ainflue-infrastructure
+kubectl top pods -n iacherie-infrastructure
 
 # Circuit Breaker Status
 curl http://localhost:8000/infrastructure/circuit-breakers
@@ -472,7 +472,7 @@ curl http://localhost:8000/infrastructure/circuit-breakers
 curl http://localhost:8000/infrastructure/backup/status
 
 # Storage-Verbindung testen
-aws s3 ls s3://ainflue-backups/
+aws s3 ls s3://iacherie-backups/
 
 # Verschlüsselungsschlüssel überprüfen
 ls -la /secure/vault.key
@@ -481,11 +481,11 @@ ls -la /secure/vault.key
 ## 📞 Support
 
 ### Community Support
-- **GitHub Issues**: [Ainflue Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Mlaiel/Ainflue/discussions)
+- **GitHub Issues**: [IA Chérie Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ### Enterprise Support
-- **Email**: infrastructure@ainflue.com
+- **Email**: infrastructure@iacherie.com
 - **Telefon**: +49-800-INFRASTRUCTURE
 - **24/7 Support**: Für Enterprise-Kunden
 
@@ -500,6 +500,6 @@ Dieses Projekt steht unter der MIT-Lizenz. Siehe [LICENSE](../../LICENSE) für D
 
 ---
 
-**🏗️ Infrastructure Services - Herzstück der Ainflue-Plattform**  
+**🏗️ Infrastructure Services - Herzstück der IA Chérie-Plattform**  
 **Mit ❤️ entwickelt von [Fahed Mlaiel](mailto:mlaiel@live.de)**  
 **Version**: v4.1.0 | **Stand**: September 2025

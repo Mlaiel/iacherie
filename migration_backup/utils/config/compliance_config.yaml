@@ -1,0 +1,296 @@
+# ===========================================
+# COMPLIANCE CONFIGURATION - AINFLUE UTILS
+# ===========================================
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# Module: Enterprise Compliance Configuration
+# Purpose: GDPR, SOX, PCI DSS, CCPA compliance settings
+
+compliance:
+  # =======================
+  # GDPR Compliance Settings
+  # =======================
+  gdpr:
+    enabled: true
+    data_retention_days: 2555  # 7 years for financial records
+    personal_data_retention_days: 1095  # 3 years
+    cookie_consent_required: true
+    right_to_be_forgotten: true
+    data_portability: true
+    privacy_by_design: true
+    
+    # Data Processing Lawful Basis
+    lawful_basis:
+      - consent
+      - contract
+      - legal_obligation
+      - vital_interests
+      - public_task
+      - legitimate_interests
+    
+    # Data Subject Rights
+    data_subject_rights:
+      access: true
+      rectification: true
+      erasure: true
+      restrict_processing: true
+      data_portability: true
+      object_processing: true
+      automated_decision_making: false
+    
+    # Data Protection Officer
+    dpo:
+      required: true
+      contact_email: "dpo@ainflue.com"
+      public_contact: true
+    
+    # Data Breach Notification
+    breach_notification:
+      authority_notification_hours: 72
+      data_subject_notification_required: true
+      high_risk_threshold: "high"
+      incident_response_team: "security@ainflue.com"
+
+  # =======================
+  # SOX Compliance (Sarbanes-Oxley)
+  # =======================
+  sox:
+    enabled: true
+    financial_controls: true
+    audit_trail_required: true
+    segregation_of_duties: true
+    change_management: true
+    
+    # Internal Controls
+    internal_controls:
+      financial_reporting: true
+      entity_level_controls: true
+      it_general_controls: true
+      application_controls: true
+    
+    # Documentation Requirements
+    documentation:
+      control_documentation: true
+      testing_documentation: true
+      deficiency_tracking: true
+      remediation_tracking: true
+    
+    # Audit Requirements
+    audit:
+      independent_audit: true
+      quarterly_reviews: true
+      annual_assessment: true
+      management_certification: true
+
+  # =======================
+  # PCI DSS Compliance
+  # =======================
+  pci_dss:
+    enabled: true
+    level: "Level 1"  # Merchant level
+    assessment_type: "Self-Assessment"
+    
+    # 12 Requirements
+    requirements:
+      firewall_configuration: true
+      default_passwords: false
+      cardholder_data_protection: true
+      encrypted_transmission: true
+      antivirus_software: true
+      secure_systems: true
+      access_control: true
+      unique_ids: true
+      physical_access_restriction: true
+      network_monitoring: true
+      security_testing: true
+      information_security_policy: true
+    
+    # Data Security
+    data_security:
+      card_data_storage: false  # No card data storage
+      tokenization: true
+      encryption_standards: "AES-256"
+      key_management: true
+    
+    # Network Security
+    network_security:
+      network_segmentation: true
+      dmz_implementation: true
+      firewall_rules: "restrictive"
+      intrusion_detection: true
+
+  # =======================
+  # CCPA Compliance (California)
+  # =======================
+  ccpa:
+    enabled: true
+    business_threshold_met: true
+    consumer_rights: true
+    
+    # Consumer Rights
+    rights:
+      know_personal_info: true
+      delete_personal_info: true
+      opt_out_sale: true
+      non_discrimination: true
+    
+    # Privacy Practices
+    privacy_practices:
+      privacy_policy_required: true
+      collection_notice: true
+      deletion_procedures: true
+      opt_out_mechanisms: true
+    
+    # Business Obligations
+    business_obligations:
+      privacy_policy_updates: true
+      consumer_request_handling: true
+      employee_training: true
+      vendor_agreements: true
+
+  # =======================
+  # HIPAA Compliance (Healthcare)
+  # =======================
+  hipaa:
+    enabled: false  # Enable if handling health data
+    covered_entity: false
+    business_associate: false
+    
+    # Technical Safeguards
+    technical_safeguards:
+      access_control: true
+      audit_controls: true
+      integrity: true
+      person_authentication: true
+      transmission_security: true
+    
+    # Administrative Safeguards
+    administrative_safeguards:
+      security_officer: true
+      workforce_training: true
+      information_access_management: true
+      security_awareness: true
+      contingency_plan: true
+    
+    # Physical Safeguards
+    physical_safeguards:
+      facility_access_controls: true
+      workstation_use: true
+      device_controls: true
+
+  # =======================
+  # International Compliance
+  # =======================
+  international:
+    # Canada - PIPEDA
+    pipeda:
+      enabled: false
+      privacy_policy_required: false
+      breach_notification: false
+    
+    # Brazil - LGPD
+    lgpd:
+      enabled: false
+      data_protection_officer: false
+      privacy_impact_assessment: false
+    
+    # Australia - Privacy Act
+    privacy_act_australia:
+      enabled: false
+      notifiable_data_breaches: false
+      privacy_policy_required: false
+
+# =======================
+# AUDIT AND MONITORING
+# =======================
+audit:
+  compliance_monitoring:
+    enabled: true
+    automated_checks: true
+    compliance_dashboard: true
+    alert_thresholds:
+      critical: "immediate"
+      high: "1_hour"
+      medium: "4_hours"
+      low: "24_hours"
+  
+  audit_logging:
+    compliance_events: true
+    access_logs: true
+    change_logs: true
+    security_events: true
+    retention_period_days: 2555  # 7 years
+  
+  reporting:
+    compliance_reports: true
+    scheduled_reports: true
+    ad_hoc_reports: true
+    executive_dashboards: true
+
+# =======================
+# TRAINING AND AWARENESS
+# =======================
+training:
+  compliance_training:
+    enabled: true
+    mandatory_training: true
+    annual_refresh: true
+    role_based_training: true
+  
+  awareness_programs:
+    security_awareness: true
+    privacy_awareness: true
+    phishing_simulation: true
+    incident_response_training: true
+
+# =======================
+# VENDOR MANAGEMENT
+# =======================
+vendor_management:
+  due_diligence:
+    security_assessments: true
+    compliance_verification: true
+    contractual_requirements: true
+    ongoing_monitoring: true
+  
+  data_processing_agreements:
+    required: true
+    standard_clauses: true
+    liability_provisions: true
+    breach_notification: true
+
+# =======================
+# INCIDENT RESPONSE
+# =======================
+incident_response:
+  compliance_incidents:
+    escalation_procedures: true
+    notification_timelines: true
+    investigation_procedures: true
+    remediation_tracking: true
+  
+  regulatory_reporting:
+    automatic_notifications: true
+    timeline_tracking: true
+    documentation_requirements: true
+    follow_up_procedures: true
+
+# =======================
+# PERFORMANCE METRICS
+# =======================
+metrics:
+  compliance_score: true
+  audit_findings: true
+  remediation_time: true
+  training_completion: true
+  incident_response_time: true
+
+# ========================================
+# COPYRIGHT AND INTELLECTUAL PROPERTY
+# ========================================
+copyright:
+  notice: "© 2025 Fahed Mlaiel. All rights reserved."
+  owner: "Fahed Mlaiel"
+  contact: "mlaiel@live.de"
+  license: "Proprietary"
+  unauthorized_use_prohibited: true

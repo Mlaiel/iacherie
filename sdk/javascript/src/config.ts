@@ -40,7 +40,7 @@ export interface AinflueConfig extends AinflueClientOptions {
  */
 const ENVIRONMENT_CONFIGS: Record<string, Partial<AinflueConfig>> = {
   production: {
-    baseUrl: 'https://api.ainflue.com',
+    baseUrl: 'https://api.iacherie.com',
     timeout: 30000,
     enableLogging: false,
     debug: false,
@@ -63,7 +63,7 @@ const ENVIRONMENT_CONFIGS: Record<string, Partial<AinflueConfig>> = {
   },
   
   staging: {
-    baseUrl: 'https://staging-api.ainflue.com',
+    baseUrl: 'https://staging-api.iacherie.com',
     timeout: 30000,
     enableLogging: true,
     debug: true,
@@ -113,7 +113,7 @@ const ENVIRONMENT_CONFIGS: Record<string, Partial<AinflueConfig>> = {
  * Default configuration
  */
 const DEFAULT_CONFIG: AinflueConfig = {
-  baseUrl: 'https://api.ainflue.com',
+  baseUrl: 'https://api.iacherie.com',
   apiVersion: 'v1',
   timeout: 30000,
   maxRetries: 3,

@@ -73,8 +73,8 @@ class TokenMetadata:
     user_id: str = ""
     device_id: str = ""
     session_id: str = ""
-    issuer: str = "ainflue.enterprise"
-    audience: str = "ainflue.platform"
+    issuer: str = "iacherie.enterprise"
+    audience: str = "iacherie.platform"
     subject: str = ""
     issued_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     expires_at: Optional[datetime] = None

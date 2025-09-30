@@ -57,7 +57,7 @@ log() {
 show_header() {
     echo -e "${PURPLE}${BOLD}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║                    🎯 AINFLUE WORKFLOW ORCHESTRATOR             ║"
+    echo "║                    🎯 IACHERIE WORKFLOW ORCHESTRATOR             ║"
     echo "║                                                                  ║"
     echo "║        Central Desktop Scripts Automation Coordinator           ║"
     echo "║                                                                  ║"

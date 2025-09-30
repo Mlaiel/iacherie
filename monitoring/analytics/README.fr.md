@@ -2,7 +2,7 @@
 
 ## Aperçu
 
-Le Module de Surveillance Analytics est un système enterprise complet d'intelligence analytique et de business intelligence pour la plateforme Ainflue. Il fournit des analyses en temps réel, une collecte de données cross-platform et une intelligence business avancée.
+Le Module de Surveillance Analytics est un système enterprise complet d'intelligence analytique et de business intelligence pour la plateforme IA Chérie. Il fournit des analyses en temps réel, une collecte de données cross-platform et une intelligence business avancée.
 
 ## 🎯 Fonctionnalités Principales
 
@@ -135,13 +135,13 @@ python -m pytest tests/performance/test_analytics_performance.py -v
 ## 🤝 Support & Contact
 
 ### Support Technique
-- **Email**: support@ainflue.com
-- **Documentation**: https://docs.ainflue.com/analytics
-- **Référence API**: https://api.ainflue.com/docs/analytics
+- **Email**: support@iacherie.com
+- **Documentation**: https://docs.iacherie.com/analytics
+- **Référence API**: https://api.iacherie.com/docs/analytics
 
 ### Support Développement
-- **GitHub**: https://github.com/ainflue/analytics-monitoring
-- **Issues**: https://github.com/ainflue/analytics-monitoring/issues
+- **GitHub**: https://github.com/iacherie/analytics-monitoring
+- **Issues**: https://github.com/iacherie/analytics-monitoring/issues
 - **Contributions**: Voir CONTRIBUTING.md
 
 ## 📄 Licence

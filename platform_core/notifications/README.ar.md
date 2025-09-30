@@ -2,7 +2,7 @@
 
 ## نظرة عامة
 
-وحدة **Platform Core Notifications** من Ainflue هي منصة إشعارات مؤسسية صناعية مصممة للتعامل مع الاتصالات متعددة القنوات على نطاق واسع. تدمج هذه المنصة الذكاء الاصطناعي والتعلم الآلي والامتثال التنظيمي لتقديم إشعارات مخصصة ومحسنة.
+وحدة **Platform Core Notifications** من IA Chérie هي منصة إشعارات مؤسسية صناعية مصممة للتعامل مع الاتصالات متعددة القنوات على نطاق واسع. تدمج هذه المنصة الذكاء الاصطناعي والتعلم الآلي والامتثال التنظيمي لتقديم إشعارات مخصصة ومحسنة.
 
 ## 🎯 الميزات الرئيسية
 
@@ -121,7 +121,7 @@ await manager.initialize()
 # إرسال إشعار
 result = await manager.send_notification(
     user_id="user123",
-    content="مرحباً بك في Ainflue! 🎉",
+    content="مرحباً بك في IA Chérie! 🎉",
     channels=["email", "push"],
     priority="high"
 )
@@ -354,14 +354,14 @@ RATE_LIMIT_REDIS_KEY_PREFIX = "rl:"
 ## 🤝 الدعم والمساهمة
 
 ### الدعم التقني
-- **البريد الإلكتروني** : support@ainflue.com
-- **Discord** : [خادم Ainflue](https://discord.gg/ainflue)
-- **الوثائق** : [docs.ainflue.com](https://docs.ainflue.com)
+- **البريد الإلكتروني** : support@iacherie.com
+- **Discord** : [خادم IA Chérie](https://discord.gg/iacherie)
+- **الوثائق** : [docs.iacherie.com](https://docs.iacherie.com)
 
 ### المساهمة
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # إنشاء فرع ميزة
 git checkout -b feature/ميزة-جديدة
@@ -451,6 +451,6 @@ print(f"متوسط الكمون: {report.avg_latency}ms")
 
 ---
 
-**© 2025 فهد المليل (mlaiel@live.de) - منصة Ainflue لوكيل المؤثر بالذكاء الاصطناعي**
+**© 2025 فهد المليل (mlaiel@live.de) - منصة IA Chérie لوكيل المؤثر بالذكاء الاصطناعي**
 
-*هذه الوثائق يحتفظ بها فريق الخبراء متعدد الأدوار في Ainflue الذي يجمع بين مطور رائد للذكاء الاصطناعي، كبير مطوري الخلفية، مهندس التعلم الآلي، مدير قاعدة البيانات، أخصائي الأمان، مهندس الخدمات المصغرة، مهندس الصوت، DevOps ومهندس موجه الذكاء الاصطناعي.*
+*هذه الوثائق يحتفظ بها فريق الخبراء متعدد الأدوار في IA Chérie الذي يجمع بين مطور رائد للذكاء الاصطناعي، كبير مطوري الخلفية، مهندس التعلم الآلي، مدير قاعدة البيانات، أخصائي الأمان، مهندس الخدمات المصغرة، مهندس الصوت، DevOps ومهندس موجه الذكاء الاصطناعي.*

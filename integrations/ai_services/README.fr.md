@@ -1,4 +1,4 @@
-# 🤖 Module Services IA - Intégrations Ainflue
+# 🤖 Module Services IA - Intégrations IA Chérie
 
 **Équipe Expert: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Objectif du Module
 
-Le module Services IA fournit des capacités d'intelligence artificielle de niveau entreprise pour la plateforme Ainflue. Il offre une orchestration complète de modèles IA, intégration multi-fournisseurs, optimisation des coûts et génération de contenu intelligent via 53+ agents IA spécialisés.
+Le module Services IA fournit des capacités d'intelligence artificielle de niveau entreprise pour la plateforme IA Chérie. Il offre une orchestration complète de modèles IA, intégration multi-fournisseurs, optimisation des coûts et génération de contenu intelligent via 53+ agents IA spécialisés.
 
 ### Composants Principaux
 

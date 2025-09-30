@@ -1,5 +1,5 @@
 """
-💰 MONETIZATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+💰 MONETIZATION CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced monetization configuration for creator economy platform
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -173,7 +173,7 @@ class MonetizationConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize monetization configuration"""
-        self.config_path = config_path or "/etc/ainflue/monetization.json"
+        self.config_path = config_path or "/etc/iacherie/monetization.json"
         
         # Payment configurations
         self.payment_config = PaymentConfig(

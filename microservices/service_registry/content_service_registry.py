@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chérie Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -16,7 +16,7 @@ Cette architecture service registry et tous ses algorithmes sont la propriété 
 Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est STRICTEMENT INTERDITE.
 
 🎬 CONTENT SERVICE REGISTRY
-Registry spécialisé pour services contenu Ainflue.
+Registry spécialisé pour services contenu IA Chérie.
 Content-aware registration + media processing service discovery + creator workflows.
 """
 
@@ -168,7 +168,7 @@ class ContentDiscoveryResult:
 
 class ContentServiceRegistry:
     """
-    Registry spécialisé pour services contenu Ainflue.
+    Registry spécialisé pour services contenu IA Chérie.
     Content-aware registration + media processing service discovery + creator workflows.
     """
     

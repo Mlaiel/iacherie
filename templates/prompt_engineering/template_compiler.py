@@ -246,7 +246,7 @@ class TemplateCompiler:
     def _get_creator_context(self) -> Dict[str, Any]:
         """Get creator context for templates"""
         return {
-            "platform": "ainflue",
+            "platform": "iacherie",
             "features": ["ai_optimization", "multi_format", "monetization"],
             "support": "enterprise"
         }

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 """
-Ainflue Rate Limit Dashboard Service - Real-Time Monitoring Interface
+IA Chérie Rate Limit Dashboard Service - Real-Time Monitoring Interface
 =====================================================================
 
 Advanced dashboard service providing real-time visualization, monitoring,
-and management interface for the Ainflue rate limiting system. Features
+and management interface for the IA Chérie rate limiting system. Features
 interactive dashboards, customizable widgets, and comprehensive analytics.
 
 Features:
@@ -22,7 +22,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying or distribution prohibited
 
-Project: Ainflue Rate Limiting - Dashboard Service
+Project: IA Chérie Rate Limiting - Dashboard Service
 Version: 1.0 Production
 """
 
@@ -357,7 +357,7 @@ class DashboardService:
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Ainflue Rate Limiting Dashboard</title>
+            <title>IA Chérie Rate Limiting Dashboard</title>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script src="https://d3js.org/d3.v7.min.js"></script>
             <style>
@@ -379,7 +379,7 @@ class DashboardService:
         </head>
         <body>
             <div class="dashboard-header">
-                <h1>Ainflue Rate Limiting Dashboard</h1>
+                <h1>IA Chérie Rate Limiting Dashboard</h1>
                 <div id="connection-status" class="disconnected">Connecting...</div>
             </div>
             

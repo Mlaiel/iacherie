@@ -10,14 +10,14 @@ prometheus:
   
 alertmanager:
   image: prom/alertmanager:v0.25.0
-  smtp_smarthost: smtp.ainflue.com:587
+  smtp_smarthost: smtp.iacherie.com:587
   slack_webhook: ${SLACK_WEBHOOK_URL}
   
 grafana:
   image: grafana/grafana:10.1.0
   admin_password: ${GRAFANA_ADMIN_PASSWORD}
   smtp_enabled: true
-  smtp_host: smtp.ainflue.com:587
+  smtp_host: smtp.iacherie.com:587
   
 jaeger:
   image: jaegertracing/all-in-one:1.48

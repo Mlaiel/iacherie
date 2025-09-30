@@ -1,5 +1,5 @@
 # 🚀 Exemples d'Affiliation - Systèmes de Partenariat & Revenus Avancés
-**Plateforme Ainflue - Exemples Complets de Marketing d'Affiliation**
+**Plateforme IA Chérie - Exemples Complets de Marketing d'Affiliation**
 
 **Auteur:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Aperçu Entreprise
 
-Le module **Exemples d'Affiliation** présente des implémentations complètes de marketing d'affiliation, gestion de partenariats et partage de revenus pour la plateforme Ainflue, spécialement conçues pour les créateurs de contenu multi-formats (Musiciens, Blogueurs, Photographes, Influenceurs, Comédiens). Ce système ultra-avancé et prêt pour la production démontre le suivi d'affiliation de niveau entreprise, la gestion des commissions, le reporting de conformité et l'intégration de partenariats cross-plateforme avec des scénarios réels et les meilleures pratiques.
+Le module **Exemples d'Affiliation** présente des implémentations complètes de marketing d'affiliation, gestion de partenariats et partage de revenus pour la plateforme IA Chérie, spécialement conçues pour les créateurs de contenu multi-formats (Musiciens, Blogueurs, Photographes, Influenceurs, Comédiens). Ce système ultra-avancé et prêt pour la production démontre le suivi d'affiliation de niveau entreprise, la gestion des commissions, le reporting de conformité et l'intégration de partenariats cross-plateforme avec des scénarios réels et les meilleures pratiques.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -328,7 +328,7 @@ print(f"Configuration du programme d'affiliation musicien terminée: {musician_p
 version: '3.8'
 services:
   affiliate-examples:
-    image: ainflue/affiliate-examples:latest
+    image: iacherie/affiliate-examples:latest
     deploy:
       replicas: 3
       resources:
@@ -341,8 +341,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://affiliate-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - API_GATEWAY=https://api.ainflue.com
-      - TRACKING_SERVICE=https://tracking.ainflue.com
+      - API_GATEWAY=https://api.iacherie.com
+      - TRACKING_SERVICE=https://tracking.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -366,7 +366,7 @@ services:
 
 ## 📝 **Résumé**
 
-Le module Exemples d'Affiliation représente le sommet de la conception de système de marketing d'affiliation pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-formats. Avec des exemples complets, des capacités de suivi avancées et des fonctionnalités de conformité de niveau entreprise, ce système assure génération de revenus maximale, conformité réglementaire et optimisation de performance pour toutes activités d'affiliation de créateurs tout en fournissant des insights profonds sur métriques de succès de partenariats et opportunités d'optimisation de revenus.
+Le module Exemples d'Affiliation représente le sommet de la conception de système de marketing d'affiliation pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-formats. Avec des exemples complets, des capacités de suivi avancées et des fonctionnalités de conformité de niveau entreprise, ce système assure génération de revenus maximale, conformité réglementaire et optimisation de performance pour toutes activités d'affiliation de créateurs tout en fournissant des insights profonds sur métriques de succès de partenariats et opportunités d'optimisation de revenus.
 
 **🎯 Mission:** Livrer les exemples de marketing d'affiliation les plus complets au monde pour créateurs de contenu, permettant génération de revenus optimale, gestion de partenariats et conformité à travers tout l'écosystème créateur.
 

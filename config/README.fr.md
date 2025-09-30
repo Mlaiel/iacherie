@@ -1,11 +1,11 @@
-# 🚀 Module Configuration Ainflue - Hub de Gestion Configuration Enterprise
+# 🚀 Module Configuration IA Chérie - Hub de Gestion Configuration Enterprise
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
 [![Redis](https://img.shields.io/badge/Redis-7.0+-red.svg)](https://redis.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://postgresql.org)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 Hub d'Orchestration Configuration Enterprise Ultra-Avancé**  
 > Système révolutionnaire de gestion configuration avec optimisation IA, sécurité quantum-scale et distribution temps réel dans environnements multi-cloud.
@@ -50,7 +50,7 @@ Distribution Temps Réel + Optimisation Performance → Synchronisation Globale 
 
 ## 🌟 **Aperçu**
 
-Le **Module Configuration Ainflue** représente le summum de la technologie gestion configuration enterprise. Ce système ultra-avancé fournit orchestration configuration centralisée, sécurisée et intelligente pour l'écosystème Ainflue complet, avec capacités de pointe qui redéfinissent comment applications modernes gèrent configuration à grande échelle.
+Le **Module Configuration IA Chérie** représente le summum de la technologie gestion configuration enterprise. Ce système ultra-avancé fournit orchestration configuration centralisée, sécurisée et intelligente pour l'écosystème IA Chérie complet, avec capacités de pointe qui redéfinissent comment applications modernes gèrent configuration à grande échelle.
 
 ### 🏗️ **Architecture Enterprise**
 
@@ -171,10 +171,10 @@ print(f"Modèles IA: {ai_config.enabled_models}")
 ### **Configuration Environnement**
 ```bash
 # Exemple fichier .env
-APP_NAME=Ainflue
+APP_NAME=IA Chérie
 ENVIRONMENT=production
 DEBUG=false
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379/0
 OPENAI_API_KEY=your_api_key
 STRIPE_SECRET_KEY=your_stripe_key

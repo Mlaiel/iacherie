@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Helm Release Manager for Ainflue Platform
+Helm Release Manager for IA Chérie Platform
 =========================================
 
 Enterprise-grade Helm release management system for Kubernetes deployments.
@@ -107,7 +107,7 @@ class ReleaseManager:
         logger.addHandler(console_handler)
         
         # File handler
-        log_dir = Path("/var/log/ainflue/helm")
+        log_dir = Path("/var/log/iacherie/helm")
         log_dir.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_dir / "release_manager.log")
         file_handler.setFormatter(console_formatter)
@@ -600,13 +600,13 @@ if __name__ == "__main__":
     
     # Example release configuration
     example_release = HelmRelease(
-        name="ainflue-api",
-        namespace="ainflue-production",
-        chart="ainflue/api",
+        name="iacherie-api",
+        namespace="iacherie-production",
+        chart="iacherie/api",
         version="1.0.0",
         values={
             "image": {
-                "repository": "ainflue/api",
+                "repository": "iacherie/api",
                 "tag": "v1.0.0"
             },
             "service": {
@@ -615,7 +615,7 @@ if __name__ == "__main__":
             },
             "ingress": {
                 "enabled": True,
-                "host": "api.ainflue.com"
+                "host": "api.iacherie.com"
             }
         },
         environment="production",

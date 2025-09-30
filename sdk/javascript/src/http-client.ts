@@ -1,5 +1,5 @@
 /**
- * HTTP Client Implementation for Ainflue JavaScript SDK
+ * HTTP Client Implementation for IA Chérie JavaScript SDK
  * Provides robust HTTP communication with retry logic and error handling
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +22,7 @@ export class HttpClient {
     this.baseURL = config.baseUrl.replace(/\/$/, ''); // Remove trailing slash
     this.defaultHeaders = {
       'Content-Type': 'application/json',
-      'User-Agent': `ainflue-js-sdk/${config.version || '1.0.0'}`,
+      'User-Agent': `iacherie-js-sdk/${config.version || '1.0.0'}`,
       'Accept': 'application/json',
     };
 

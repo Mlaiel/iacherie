@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Security - Incident Responder
+IA Chérie Platform - Distribution Security - Incident Responder
 Advanced incident response automation for distribution security events
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -595,7 +595,7 @@ Estimated Impact: {incident.estimated_impact}
 Recent Events: {len(incident.events)}
 Automated Actions Taken: {len(incident.response_actions)}
 
-This is an automated alert from the Ainflue Security Incident Response System.
+This is an automated alert from the IA Chérie Security Incident Response System.
         """
     
     async def get_incident_status(self, incident_id: str) -> Optional[Dict[str, Any]]:

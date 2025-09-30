@@ -1,5 +1,5 @@
 /**
- * Node.js-specific Implementation for Ainflue JavaScript SDK
+ * Node.js-specific Implementation for IA Chérie JavaScript SDK
  * Optimized for server-side environments with file system and OS integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@
  * Expert Implementation by: Backend Senior + DevOps + Security + Audio Engineer + DBA
  */
 
-import { AinflueClient } from './ainflue-client';
+import { AinflueClient } from './iacherie-client';
 import { AinflueConfig } from './config';
 import { AxiosAdapter } from './axios-adapter';
 import { ApiResponse } from './interfaces';
@@ -20,7 +20,7 @@ import * as crypto from 'crypto';
 import { performance } from 'perf_hooks';
 
 /**
- * Node.js-optimized Ainflue SDK Client
+ * Node.js-optimized IA Chérie SDK Client
  */
 export class NodeClient extends AinflueClient {
   private fileSystemWatcher?: fs.FSWatcher;
@@ -35,7 +35,7 @@ export class NodeClient extends AinflueClient {
       adapter: new AxiosAdapter(config.baseUrl, {
         'Authorization': config.apiKey ? `Bearer ${config.apiKey}` : '',
         'Content-Type': 'application/json',
-        'User-Agent': `ainflue-node-sdk/${config.version || '1.0.0'} (${os.platform()} ${os.arch()})`,
+        'User-Agent': `iacherie-node-sdk/${config.version || '1.0.0'} (${os.platform()} ${os.arch()})`,
       }),
     });
 
@@ -535,7 +535,7 @@ class NodeStorageManager {
   private encryptionKey: string;
 
   constructor() {
-    this.cacheDir = path.join(os.tmpdir(), 'ainflue-cache');
+    this.cacheDir = path.join(os.tmpdir(), 'iacherie-cache');
     this.encryptionKey = this.generateEncryptionKey();
     this.ensureCacheDirectory();
   }

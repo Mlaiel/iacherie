@@ -1,11 +1,11 @@
 """
-📡 Distribution Service Coordination Enterprise - Ainflue
+📡 Distribution Service Coordination Enterprise - IA Chérie
 ========================================================
 Coordination distribution multi-plateformes pour créateurs.
 Cross-platform publishing + CDN optimization + scheduling.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -137,7 +137,7 @@ class DistributionServiceCoordination:
             ServiceInstance(
                 service_id="cdn_cloudflare_001",
                 service_name="cdn_cloudflare",
-                host="cdn.ainflue.com",
+                host="cdn.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={
@@ -150,7 +150,7 @@ class DistributionServiceCoordination:
             ServiceInstance(
                 service_id="cdn_aws_001", 
                 service_name="cdn_aws_cloudfront",
-                host="cdn-aws.ainflue.com",
+                host="cdn-aws.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={
@@ -167,7 +167,7 @@ class DistributionServiceCoordination:
             ServiceInstance(
                 service_id="adaptation_001",
                 service_name="content_adaptation",
-                host="adaptation.ainflue.com",
+                host="adaptation.iacherie.com",
                 port=8080,
                 health_check_url="/health",
                 metadata={
@@ -183,7 +183,7 @@ class DistributionServiceCoordination:
             ServiceInstance(
                 service_id="scheduler_001",
                 service_name="distribution_scheduler",
-                host="scheduler.ainflue.com",
+                host="scheduler.iacherie.com",
                 port=8080,
                 health_check_url="/health",
                 metadata={

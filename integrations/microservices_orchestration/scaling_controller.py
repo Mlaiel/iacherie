@@ -2,7 +2,7 @@
 ==========================================================
 
 Scaling controller enterprise avec predictive autoscaling, ML-powered scaling decisions,
-resource optimization et cost-aware scaling pour l'écosystème Ainflue.
+resource optimization et cost-aware scaling pour l'écosystème IA Chérie.
 
 Expert Roles Implementation:
 🤖 Lead Dev IA: ML-powered scaling predictions + intelligent resource allocation

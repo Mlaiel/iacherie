@@ -73,7 +73,7 @@ docker stats seo_platform_optimizer seo_keyword_intelligence
 ```yaml
 # Beispiel: Keyword Intelligence Service
 seo_keyword_intelligence:
-  image: ainflue/keyword-intelligence:latest
+  image: iacherie/keyword-intelligence:latest
   environment:
     - GOOGLE_TRENDS_API_KEY=${GOOGLE_TRENDS_API}
     - SEMRUSH_API_KEY=${SEMRUSH_API}

@@ -51,7 +51,7 @@ class AnalyticsConfig:
     metrics_export_interval: int = 60
     real_time_buffer_size: int = 10000
     redis_url: str = "redis://localhost:6379"
-    postgres_url: str = "postgresql://localhost/ainflue"
+    postgres_url: str = "postgresql://localhost/iacherie"
     prometheus_port: int = 8000
     
     def __post_init__(self):

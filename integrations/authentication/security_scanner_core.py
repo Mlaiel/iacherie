@@ -1,7 +1,7 @@
 """Security Scanner Core - Core Security Management System
 ========================================================
 
-Core security scanning infrastructure for Ainflue integrations.
+Core security scanning infrastructure for IA Chérie integrations.
 Provides the main SecurityScanner class and result management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -141,9 +141,6 @@ class IntegrationSecurityProfile:
     
     # Scan history
     scan_history: List[str] = field(default_factory=list)
-
-# Create alias for backward compatibility
-SecurityScannerCore = SecurityScanner
 
 class SecurityScanner:
     """Comprehensive security scanner for integrations."""
@@ -516,6 +513,7 @@ security_scanner = SecurityScanner()
 # Export main classes and functions
 __all__ = [
     "SecurityScanner",
+    "SecurityScannerCore",
     "SecurityVulnerability",
     "SecurityScanResult", 
     "IntegrationSecurityProfile",
@@ -524,3 +522,6 @@ __all__ = [
     "SecurityStandard",
     "security_scanner"
 ]
+
+# Create alias for backward compatibility
+SecurityScannerCore = SecurityScanner

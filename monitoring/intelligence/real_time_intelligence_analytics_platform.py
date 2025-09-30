@@ -3,7 +3,7 @@
 
 Enterprise-grade Real-Time Intelligence Analytics system providing comprehensive
 real-time monitoring, intelligent analytics, and advanced performance tracking
-for the Ainflue Creator Economy. Implements sophisticated real-time algorithms,
+for the IA Chérie Creator Economy. Implements sophisticated real-time algorithms,
 streaming analytics, and intelligent event processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

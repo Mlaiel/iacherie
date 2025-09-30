@@ -142,10 +142,10 @@ await manager.shutdown()
 ## 📞 دعم المؤسسة
 
 **دعم 24/7 فائق الجودة:**
-- **تقني**: redis-tech@ainflue.enterprise
-- **أمان**: security@ainflue.enterprise
-- **أداء**: performance@ainflue.enterprise
-- **تصعيد**: cto@ainflue.enterprise
+- **تقني**: redis-tech@iacherie.enterprise
+- **أمان**: security@iacherie.enterprise
+- **أداء**: performance@iacherie.enterprise
+- **تصعيد**: cto@iacherie.enterprise
 
 ---
 

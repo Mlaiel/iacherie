@@ -595,8 +595,8 @@ class ProtectionBusinessCore:
                 "demanded_action": self._get_demanded_action(action_type),
                 "contact_information": {
                     "copyright_owner": profile.copyright_info.get("owner_name"),
-                    "legal_representative": "Ainflue Legal Department",
-                    "contact_email": "legal@ainflue.com"
+                    "legal_representative": "IA Chérie Legal Department",
+                    "contact_email": "legal@iacherie.com"
                 }
             }
             

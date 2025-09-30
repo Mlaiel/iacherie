@@ -1,5 +1,5 @@
 """Creator Compliance Service - Creator legal compliance and verification
-Enterprise-grade compliance management for the Ainflue AI platform.
+Enterprise-grade compliance management for the IA Chérie AI platform.
 
 This service manages legal compliance, verification processes, content moderation,
 and regulatory adherence for creators across multiple jurisdictions.

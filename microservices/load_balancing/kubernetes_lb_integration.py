@@ -138,8 +138,8 @@ class K8sApiClient:
             self.cluster_info = {
                 'version': 'v1.28.0',
                 'nodes': 3,
-                'namespaces': ['default', 'kube-system', 'ainflue-prod'],
-                'cluster_name': 'ainflue-cluster'
+                'namespaces': ['default', 'kube-system', 'iacherie-prod'],
+                'cluster_name': 'iacherie-cluster'
             }
             
             logger.info("✅ Connected to Kubernetes cluster")
@@ -157,8 +157,8 @@ class K8sApiClient:
         # Simulation de pods
         pods = [
             K8sPodInfo(
-                name="ainflue-api-5f7b6d8c9-x1z2v",
-                namespace="ainflue-prod",
+                name="iacherie-api-5f7b6d8c9-x1z2v",
+                namespace="iacherie-prod",
                 ip="10.244.1.15",
                 phase=PodPhase.RUNNING,
                 ready=True,
@@ -167,12 +167,12 @@ class K8sApiClient:
                 memory_request="512Mi",
                 cpu_limit="500m",
                 memory_limit="1Gi",
-                labels={"app": "ainflue-api", "version": "v1.0"},
+                labels={"app": "iacherie-api", "version": "v1.0"},
                 created_at=datetime.now() - timedelta(hours=2)
             ),
             K8sPodInfo(
-                name="ainflue-api-5f7b6d8c9-y2a3w",
-                namespace="ainflue-prod",
+                name="iacherie-api-5f7b6d8c9-y2a3w",
+                namespace="iacherie-prod",
                 ip="10.244.2.22",
                 phase=PodPhase.RUNNING,
                 ready=True,
@@ -181,19 +181,19 @@ class K8sApiClient:
                 memory_request="512Mi",
                 cpu_limit="500m",
                 memory_limit="1Gi",
-                labels={"app": "ainflue-api", "version": "v1.0"},
+                labels={"app": "iacherie-api", "version": "v1.0"},
                 created_at=datetime.now() - timedelta(hours=1)
             ),
             K8sPodInfo(
-                name="ainflue-worker-7d8e9f1a2-b3c4x",
-                namespace="ainflue-prod",
+                name="iacherie-worker-7d8e9f1a2-b3c4x",
+                namespace="iacherie-prod",
                 ip="10.244.1.28",
                 phase=PodPhase.PENDING,
                 ready=False,
                 node_name="node-1",
                 cpu_request="100m",
                 memory_request="256Mi",
-                labels={"app": "ainflue-worker", "version": "v1.0"},
+                labels={"app": "iacherie-worker", "version": "v1.0"},
                 created_at=datetime.now() - timedelta(minutes=10)
             )
         ]
@@ -204,7 +204,7 @@ class K8sApiClient:
         
         # Filtrage par label selector (simulation basique)
         if label_selector:
-            # Exemple: "app=ainflue-api"
+            # Exemple: "app=iacherie-api"
             if "=" in label_selector:
                 key, value = label_selector.split("=", 1)
                 pods = [p for p in pods if p.labels.get(key) == value]
@@ -218,22 +218,22 @@ class K8sApiClient:
         
         services = [
             K8sServiceInfo(
-                name="ainflue-api-service",
-                namespace="ainflue-prod",
+                name="iacherie-api-service",
+                namespace="iacherie-prod",
                 cluster_ip="10.96.1.100",
                 external_ip="192.168.1.100",
                 service_type="LoadBalancer",
                 ports=[{"port": 80, "target_port": 8080, "protocol": "TCP"}],
-                selector={"app": "ainflue-api"}
+                selector={"app": "iacherie-api"}
             ),
             K8sServiceInfo(
-                name="ainflue-worker-service",
-                namespace="ainflue-prod",
+                name="iacherie-worker-service",
+                namespace="iacherie-prod",
                 cluster_ip="10.96.1.101",
                 external_ip=None,
                 service_type="ClusterIP",
                 ports=[{"port": 8080, "target_port": 8080, "protocol": "TCP"}],
-                selector={"app": "ainflue-worker"}
+                selector={"app": "iacherie-worker"}
             )
         ]
         
@@ -249,9 +249,9 @@ class K8sApiClient:
         
         hpa_configs = [
             HPAConfiguration(
-                name="ainflue-api-hpa",
-                namespace="ainflue-prod",
-                target_deployment="ainflue-api",
+                name="iacherie-api-hpa",
+                namespace="iacherie-prod",
+                target_deployment="iacherie-api",
                 min_replicas=2,
                 max_replicas=10,
                 cpu_target_percentage=70,

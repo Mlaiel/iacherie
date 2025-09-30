@@ -1,4 +1,4 @@
-# 🚀 Ainflue Enterprise Timeout Handling Module
+# 🚀 IA Chérie Enterprise Timeout Handling Module
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -12,7 +12,7 @@
 
 ## 🎯 Module Overview
 
-**Enterprise-Grade Timeout Management System** pour Ainflue Creator Economy Platform.
+**Enterprise-Grade Timeout Management System** pour IA Chérie Creator Economy Platform.
 
 ### 🌍 Business Logic Integration
 ```
@@ -136,7 +136,7 @@ print(f"Compliance status: {policy_result.compliance_status}")
   - Bottleneck detection avec root cause analysis
   - SLA violation monitoring avec business impact assessment
   - Performance optimization recommendations
-  - Custom performance metrics pour Ainflue workflows
+  - Custom performance metrics pour IA Chérie workflows
 
 ```python
 from microservices.timeout_handling import performance_monitoring_engine
@@ -448,5 +448,5 @@ result = await enterprise_timeout_service.execute_with_enterprise_timeout(
 ---
 
 **🎯 Enterprise Timeout Handling Module - Production Ready**  
-**Architecture Level 3 | Code Industriel | Ainflue Creator Economy Platform**  
+**Architecture Level 3 | Code Industriel | IA Chérie Creator Economy Platform**  
 **Copyright © 2025 Fahed Mlaiel. All rights reserved.**

@@ -4,7 +4,7 @@
 
 Advanced datasets management system for 53 AI agents supporting 65+ platforms.
 Enterprise-grade data pipeline with multi-modal processing, quality control,
-and production-ready architecture for Ainflue IA Influencer Agent platform.
+and production-ready architecture for IA Chérie IA Influencer Agent platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -209,7 +209,7 @@ __all__ = [
     'AlertManager'
 ]
 
-# Ainflue Datasets Integration Constants
+# IA Chérie Datasets Integration Constants
 SUPPORTED_AGENTS_COUNT = 53
 SUPPORTED_PLATFORMS_COUNT = 65
 MAX_FILES_PER_MODULE = 18
@@ -230,7 +230,7 @@ IA_PROMPT_ENGINEER_VALIDATED = True
 
 # Enterprise Module Metadata
 MODULE_METADATA = {
-    "name": "Ainflue Datasets Enterprise Module",
+    "name": "IA Chérie Datasets Enterprise Module",
     "version": __version__,
     "author": __author__,
     "copyright": __copyright__,
@@ -264,7 +264,7 @@ def validate_expert_approval() -> bool:
     return all(expert_validations)
 
 # Module Initialization Success
-print(f"✅ Ainflue Datasets Module v{__version__} - Enterprise Ready")
+print(f"✅ IA Chérie Datasets Module v{__version__} - Enterprise Ready")
 print(f"🎖️ Multi-Expert Validation: {validate_expert_approval()}")
 print(f"🚀 Supporting {SUPPORTED_AGENTS_COUNT} AI Agents across {SUPPORTED_PLATFORMS_COUNT} platforms")
 print(f"© 2025 Fahed Mlaiel - All Rights Reserved")

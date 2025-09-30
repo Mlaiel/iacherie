@@ -1,5 +1,5 @@
 """
-Competitor AI Analyzer for Ainflue Platform
+Competitor AI Analyzer for IA Chérie Platform
 ==========================================
 
 Advanced AI-powered competitive analysis system for SEO strategy intelligence.

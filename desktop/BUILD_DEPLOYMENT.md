@@ -1,4 +1,4 @@
-# Ainflue Desktop - Build & Deployment Guide
+# IA Chérie Desktop - Build & Deployment Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -28,7 +28,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 ## Build System Overview
 
-Ainflue Desktop uses **Electron Builder** for creating distributable packages across Windows, macOS, and Linux platforms. The build system supports:
+IA Chérie Desktop uses **Electron Builder** for creating distributable packages across Windows, macOS, and Linux platforms. The build system supports:
 
 - **Multi-platform builds** from any platform
 - **Code signing** for security and trust
@@ -125,8 +125,8 @@ The build configuration is in `electron_builder_config.js`:
  */
 
 const config = {
-  appId: "com.ainflue.desktop",
-  productName: "Ainflue Studio",
+  appId: "com.iacherie.desktop",
+  productName: "IA Chérie Studio",
   
   // Directories
   directories: {
@@ -217,7 +217,7 @@ npm run pack:linux
 
 ```bash
 # Build with specific configuration
-npx electron-builder --config.productName="Ainflue Studio Dev" --config.appId="com.ainflue.desktop.dev"
+npx electron-builder --config.productName="IA Chérie Studio Dev" --config.appId="com.iacherie.desktop.dev"
 
 # Skip code signing (faster builds)
 npx electron-builder --config.win.certificateFile="" --config.mac.identity=""
@@ -344,8 +344,8 @@ win: {
   fileAssociations: [
     {
       ext: "ainproj",
-      name: "Ainflue Project",
-      description: "Ainflue Studio Project File",
+      name: "IA Chérie Project",
+      description: "IA Chérie Studio Project File",
       icon: "assets/project.ico"
     }
   ]
@@ -360,7 +360,7 @@ nsis: {
   allowElevation: true,
   createDesktopShortcut: true,
   createStartMenuShortcut: true,
-  shortcutName: "Ainflue Studio",
+  shortcutName: "IA Chérie Studio",
   runAfterFinish: true,
   license: "LICENSE.txt",
   installerIcon: "assets/installer.ico",
@@ -472,22 +472,22 @@ linux: {
   
   // Desktop entry
   desktop: {
-    Name: "Ainflue Studio",
+    Name: "IA Chérie Studio",
     Comment: "AI-Powered Content Creation Studio",
-    Exec: "ainflue-studio %U",
-    Icon: "ainflue-studio",
+    Exec: "iacherie-studio %U",
+    Icon: "iacherie-studio",
     Type: "Application",
     Categories: "AudioVideo;Video;Audio;Graphics;Photography;",
-    MimeType: "application/x-ainflue-project;",
-    StartupWMClass: "Ainflue Studio"
+    MimeType: "application/x-iacherie-project;",
+    StartupWMClass: "IA Chérie Studio"
   },
   
   // File associations
   fileAssociations: [
     {
       ext: "ainproj",
-      name: "Ainflue Project",
-      mimeType: "application/x-ainflue-project"
+      name: "IA Chérie Project",
+      mimeType: "application/x-iacherie-project"
     }
   ]
 }
@@ -556,7 +556,7 @@ npm version 1.2.3
 #### 2. Release Notes
 Create `RELEASE_NOTES.md`:
 ```markdown
-# Ainflue Studio v1.2.3
+# IA Chérie Studio v1.2.3
 
 ## New Features
 - Advanced AI content optimization
@@ -596,7 +596,7 @@ npm run generate:checksums
 publish: {
   provider: "github",
   owner: "Mlaiel",
-  repo: "Ainflue",
+  repo: "IA Chérie",
   private: true,
   token: process.env.GITHUB_TOKEN,
   releaseType: "release"
@@ -619,7 +619,7 @@ npm run build:publish
 // Custom update server configuration
 publish: {
   provider: "generic",
-  url: "https://updates.ainflue.com/desktop/",
+  url: "https://updates.iacherie.com/desktop/",
   channel: "latest"
 }
 ```

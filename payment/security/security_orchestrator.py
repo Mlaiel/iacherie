@@ -193,14 +193,14 @@ class EnterpriseSecurityOrchestrator:
         self.siem_integrations = {
             'splunk': {
                 'enabled': True,
-                'endpoint': 'https://splunk.ainflue.com:8089',
+                'endpoint': 'https://splunk.iacherie.com:8089',
                 'auth_token': 'splunk_auth_token',
                 'index': 'ainflue_security',
                 'event_types': list(SecurityEventType)
             },
             'elk_stack': {
                 'enabled': True,
-                'endpoint': 'https://elasticsearch.ainflue.com:9200',
+                'endpoint': 'https://elasticsearch.iacherie.com:9200',
                 'index': 'security-events',
                 'auth_username': 'elastic',
                 'auth_password': 'elastic_password'

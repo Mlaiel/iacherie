@@ -1,7 +1,7 @@
-# 🎯 Qualitätsmodul - Ainflue Platform
+# 🎯 Qualitätsmodul - IA Chérie Platform
 
 ## Überblick
-Das Qualitätsmodul bietet umfassende Qualitätssicherung, Test-Frameworks und kontinuierliche Verbesserungssysteme für die Ainflue-Plattform. Es gewährleistet Zuverlässigkeit, Performance und Sicherheit in allen Creator-Workflows.
+Das Qualitätsmodul bietet umfassende Qualitätssicherung, Test-Frameworks und kontinuierliche Verbesserungssysteme für die IA Chérie-Plattform. Es gewährleistet Zuverlässigkeit, Performance und Sicherheit in allen Creator-Workflows.
 
 ## Hauptfunktionen
 - **Umfassendes Test-Framework**: Unit-, Integrations-, E2E- und Performance-Tests
@@ -60,7 +60,7 @@ results = await orchestrator.assess_quality()
 ---
 
 ## Rechtlicher Hinweis
-**Copyright © 2025 Ainflue Platform**  
+**Copyright © 2025 IA Chérie Platform**  
 **Autor**: Fahed Mlaiel (mlaiel@live.de)  
 **Lizenz**: Proprietär - Alle Rechte vorbehalten  
 
@@ -68,9 +68,9 @@ Diese Software ist durch Urheberrecht und internationale Verträge geschützt. U
 
 **Vertraulichkeit**: Dieser Code enthält proprietäre Algorithmen und Geschäftsgeheimnisse. Jede unbefugte Offenlegung oder Nutzung ist nach geltendem Geschäftsgeheimnisrecht verboten.
 
-**Sicherheitshinweis**: Dieses Modul enthält sicherheitskritische Komponenten. Sicherheitslücken müssen unverzüglich an security@ainflue.com nach verantwortlichen Offenlegungsverfahren gemeldet werden.
+**Sicherheitshinweis**: Dieses Modul enthält sicherheitskritische Komponenten. Sicherheitslücken müssen unverzüglich an security@iacherie.com nach verantwortlichen Offenlegungsverfahren gemeldet werden.
 
-**Enterprise-Lizenz erforderlich**: Kommerzielle Nutzung erfordert eine gültige Enterprise-Lizenz. Kontaktieren Sie licensing@ainflue.com für Lizenzbedingungen.
+**Enterprise-Lizenz erforderlich**: Kommerzielle Nutzung erfordert eine gültige Enterprise-Lizenz. Kontaktieren Sie licensing@iacherie.com für Lizenzbedingungen.
 
 **Compliance**: Diese Software entspricht GDPR, CCPA und internationalen Datenschutzbestimmungen. Alle Änderungen müssen Compliance-Standards einhalten.
 

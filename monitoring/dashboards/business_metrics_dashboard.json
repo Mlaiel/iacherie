@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "Comprehensive business metrics dashboard for Ainflue platform monitoring revenue, user engagement, and platform performance.",
+  "description": "Comprehensive business metrics dashboard for IA Chérie platform monitoring revenue, user engagement, and platform performance.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
@@ -286,7 +286,7 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "avg(up{job=~\"ainflue-.*\"})",
+          "expr": "avg(up{job=~\"iacherie-.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -506,7 +506,7 @@
       },
       "targets": [
         {
-          "expr": "rate(http_requests_total{job=\"ainflue-api\"}[5m])",
+          "expr": "rate(http_requests_total{job=\"iacherie-api\"}[5m])",
           "interval": "",
           "legendFormat": "API Requests",
           "refId": "A"
@@ -686,19 +686,19 @@
       },
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+          "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
           "interval": "",
           "legendFormat": "50th percentile",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
           "interval": "",
           "legendFormat": "95th percentile",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+          "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
           "interval": "",
           "legendFormat": "99th percentile",
           "refId": "C"
@@ -712,7 +712,7 @@
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
-    "ainflue",
+    "iacherie",
     "business",
     "revenue",
     "monitoring"
@@ -726,7 +726,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Ainflue Business Metrics Dashboard",
-  "uid": "ainflue-business-metrics",
+  "title": "IA Chérie Business Metrics Dashboard",
+  "uid": "iacherie-business-metrics",
   "version": 1
 }

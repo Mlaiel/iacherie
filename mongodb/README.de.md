@@ -1,13 +1,13 @@
-# MongoDB Datenbankschicht - Ainflue Platform
+# MongoDB Datenbankschicht - IA Chérie Platform
 
-[![Lizenz: Proprietär](https://img.shields.io/badge/Lizenz-Proprietär-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Lizenz: Proprietär](https://img.shields.io/badge/Lizenz-Proprietär-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-green.svg)](https://www.mongodb.com/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Bereit-blue.svg)](https://www.docker.com/)
 
 ## 🚀 Übersicht
 
-Die MongoDB Datenbankschicht ist das zentrale Datenverwaltungssystem für die Ainflue Platform - eine KI-gestützte Influencer-Agent-Plattform, die Content-Erstellung, Kollaboration und Monetarisierung revolutioniert. Dieses Modul bietet unternehmenstaugliche Datenbankverwaltung mit erweiterten Funktionen für Skalierbarkeit, Sicherheit und Leistungsoptimierung.
+Die MongoDB Datenbankschicht ist das zentrale Datenverwaltungssystem für die IA Chérie Platform - eine KI-gestützte Influencer-Agent-Plattform, die Content-Erstellung, Kollaboration und Monetarisierung revolutioniert. Dieses Modul bietet unternehmenstaugliche Datenbankverwaltung mit erweiterten Funktionen für Skalierbarkeit, Sicherheit und Leistungsoptimierung.
 
 ## 👥 Team-Spezialisierungen
 
@@ -34,7 +34,7 @@ Dieser Code, diese Architektur, Dokumentation und alle damit verbundenen geistig
 
 ## 🎯 Geschäftslogik-Architektur
 
-Ainflue folgt einem ausgeklügelten Content-Creator-Workflow:
+IA Chérie folgt einem ausgeklügelten Content-Creator-Workflow:
 
 ```mermaid
 graph LR
@@ -108,8 +108,8 @@ mongodb/
 
 ```bash
 # Repository klonen (nur autorisierte Benutzer)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mongodb
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mongodb
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -271,8 +271,8 @@ terraform apply terraform/mongodb.tf
 # Produktions-Konfiguration
 production:
   connection:
-    hosts: ["mongo1.ainflue.com", "mongo2.ainflue.com", "mongo3.ainflue.com"]
-    replica_set: "ainflue-rs"
+    hosts: ["mongo1.iacherie.com", "mongo2.iacherie.com", "mongo3.iacherie.com"]
+    replica_set: "iacherie-rs"
     ssl: true
     auth_source: "admin"
   
@@ -368,4 +368,4 @@ Diese Software und die dazugehörigen Dokumentationsdateien sind proprietär und
 
 ---
 
-*Diese README ist Teil der Ainflue Platform MongoDB Database Layer Dokumentation. Für die vollständige Systemdokumentation wenden Sie sich bitte an das Haupt-Projekt-Repository.*
+*Diese README ist Teil der IA Chérie Platform MongoDB Database Layer Dokumentation. Für die vollständige Systemdokumentation wenden Sie sich bitte an das Haupt-Projekt-Repository.*

@@ -1,6 +1,6 @@
 //
 //  OfflineSync.swift
-//  Ainflue iOS - Professional Offline Synchronization System
+//  IA Chérie iOS - Professional Offline Synchronization System
 //
 //  Enterprise-grade offline data management with intelligent conflict resolution,
 //  optimized synchronization strategies, and comprehensive data integrity protection.
@@ -78,12 +78,12 @@ class OfflineSyncService: NSObject {
     private var compressionManager: DataCompressionManager!
     
     // MARK: - Processing Queues
-    private let syncProcessingQueue = DispatchQueue(label: "com.ainflue.sync.processing", qos: .userInitiated)
-    private let conflictResolutionQueue = DispatchQueue(label: "com.ainflue.sync.conflicts", qos: .userInitiated)
-    private let dataValidationQueue = DispatchQueue(label: "com.ainflue.sync.validation", qos: .utility)
+    private let syncProcessingQueue = DispatchQueue(label: "com.iacherie.sync.processing", qos: .userInitiated)
+    private let conflictResolutionQueue = DispatchQueue(label: "com.iacherie.sync.conflicts", qos: .userInitiated)
+    private let dataValidationQueue = DispatchQueue(label: "com.iacherie.sync.validation", qos: .utility)
     
     // MARK: - Logging
-    private let logger = Logger(subsystem: "com.fahedmlaiel.ainflue", category: "OfflineSync")
+    private let logger = Logger(subsystem: "com.fahedmlaiel.iacherie", category: "OfflineSync")
     
     // MARK: - Initialization
     

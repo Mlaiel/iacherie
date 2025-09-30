@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-API Testing Framework - Ainflue Enterprise API Management
+API Testing Framework - IA Chérie Enterprise API Management
 =========================================================
 
 Automated Testing & Quality Assurance Framework for API Management Infrastructure
@@ -743,7 +743,7 @@ class APITestingFramework:
         self, 
         assertions: List[TestAssertion], 
         response: TestResponse
-    ) -> Tuple[int, int, List[Dict[str, Any]]]:
+    ) -> tuple[int, int, List[Dict[str, Any]]]:
         """Evaluate test assertions"""
         passed = 0
         failed = 0

@@ -2,7 +2,7 @@
 🎮 Gamification Orchestration Coordinator - Enterprise Core
 ==========================================================
 
-Coordinateur d'orchestration avancé pour la gamification Creator Economy Ainflue.
+Coordinateur d'orchestration avancé pour la gamification Creator Economy IA Chérie.
 Engagement intelligent et motivation des créateurs par le jeu.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)
@@ -584,7 +584,7 @@ class GamificationOrchestrationCoordinator:
                 event_type="player_registration",
                 element_type=GameElementType.POINTS,
                 points_earned=self.point_values.get("profile_complete", 10),
-                description="Welcome to Ainflue gamification!",
+                description="Welcome to IA Chérie gamification!",
                 data={"welcome_bonus": True}
             )
             

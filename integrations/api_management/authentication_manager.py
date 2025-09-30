@@ -2,10 +2,10 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Enterprise API Authentication Manager - Ainflue Platform
+Enterprise API Authentication Manager - IA Chérie Platform
 ======================================================
 Multi-expert implementation combining Lead Dev IA + Backend Senior + Security + 
-ML Engineer expertise for OAuth2, JWT, Multi-tenant authentication with Ainflue 
+ML Engineer expertise for OAuth2, JWT, Multi-tenant authentication with IA Chérie 
 business logic integration.
 
 Architecture Features:
@@ -18,7 +18,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator economy authentication patterns
+Business Logic: IA Chérie creator economy authentication patterns
 """
 
 import asyncio
@@ -41,7 +41,7 @@ import httpx
 
 
 class CreatorType(str, Enum):
-    """Ainflue creator types for specialized authentication"""
+    """IA Chérie creator types for specialized authentication"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -99,15 +99,15 @@ class AuthenticationResult:
 
 
 class JWTPayload(BaseModel):
-    """JWT payload structure for Ainflue platform"""
+    """JWT payload structure for IA Chérie platform"""
     sub: str = Field(..., description="Subject (User ID)")
-    iss: str = Field(default="ainflue-platform", description="Issuer")
-    aud: str = Field(default="ainflue-api", description="Audience")
+    iss: str = Field(default="iacherie-platform", description="Issuer")
+    aud: str = Field(default="iacherie-api", description="Audience")
     exp: int = Field(..., description="Expiration timestamp")
     iat: int = Field(..., description="Issued at timestamp")
     jti: str = Field(..., description="JWT ID")
     
-    # Ainflue-specific claims
+    # IA Chérie-specific claims
     creator_type: Optional[CreatorType] = None
     tenant_id: Optional[str] = None
     permissions: List[str] = Field(default_factory=list)
@@ -153,7 +153,7 @@ class EnterpriseAuthenticationManager:
         self.logger = logging.getLogger(f"{__name__}.EnterpriseAuthenticationManager")
         
         # JWT Configuration
-        self.jwt_secret = config.get('jwt_secret', 'ainflue-enterprise-secret-key')
+        self.jwt_secret = config.get('jwt_secret', 'iacherie-enterprise-secret-key')
         self.jwt_algorithm = config.get('jwt_algorithm', 'HS256')
         self.token_expiry = config.get('token_expiry_hours', 24)
         self.refresh_token_expiry = config.get('refresh_token_expiry_days', 30)
@@ -228,12 +228,12 @@ class EnterpriseAuthenticationManager:
         
         for platform in platforms:
             self.oauth_configs[platform] = OAuth2Config(
-                client_id=f"ainflue_{platform}_client",
-                client_secret=f"ainflue_{platform}_secret",
+                client_id=f"iacherie_{platform}_client",
+                client_secret=f"iacherie_{platform}_secret",
                 authorization_url=f"https://auth.{platform}.com/oauth/authorize",
                 token_url=f"https://auth.{platform}.com/oauth/token",
                 scopes=['read', 'write', 'profile'],
-                redirect_uri=f"https://api.ainflue.com/auth/{platform}/callback",
+                redirect_uri=f"https://api.iacherie.com/auth/{platform}/callback",
                 platform_name=platform,
                 creator_permissions={
                     'musician': ['audio_upload', 'streaming'],
@@ -790,7 +790,7 @@ class EnterpriseAuthenticationManager:
         return None
 
 
-# Ainflue Business Logic Integration Constants
+# IA Chérie Business Logic Integration Constants
 AINFLUE_PLATFORM_INTEGRATIONS = {
     'supported_platforms': 65,
     'creator_types': [e.value for e in CreatorType],

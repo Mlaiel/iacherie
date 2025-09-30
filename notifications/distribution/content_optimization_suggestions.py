@@ -1,6 +1,6 @@
 """
 💡 CONTENT OPTIMIZATION SUGGESTIONS
-Ainflue Platform - AI-Powered Content Optimization
+IA Chérie Platform - AI-Powered Content Optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Violation Detector
+ * IA Chérie Desktop - Violation Detector
  * 
  * Advanced copyright and license violation detection system with AI-powered
  * content analysis, pattern recognition, and automated enforcement.

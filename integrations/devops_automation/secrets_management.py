@@ -2,7 +2,7 @@
 ========================================================
 
 Security Expert: Secrets management enterprise avec Vault/KeyVault integration,
-rotation automation et access control management pour Ainflue.
+rotation automation et access control management pour IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025
@@ -259,7 +259,7 @@ class SecretsManagement:
     """
     
     def __init__(self,
-                 audit_dir: str = "/var/audit/ainflue/secrets",
+                 audit_dir: str = "/var/audit/iacherie/secrets",
                  default_provider: str = "vault"):
         """
         Initialise le système de gestion de secrets
@@ -273,8 +273,8 @@ class SecretsManagement:
         
         # Providers de secrets
         self.providers: Dict[str, SecretProvider] = {
-            "vault": HashiCorpVaultProvider("https://vault.ainflue.com", "vault_token"),
-            "azure": AzureKeyVaultProvider("https://ainflue.vault.azure.net/", None),
+            "vault": HashiCorpVaultProvider("https://vault.iacherie.com", "vault_token"),
+            "azure": AzureKeyVaultProvider("https://iacherie.vault.azure.net/", None),
         }
         
         # État interne
@@ -794,12 +794,12 @@ class SecretsManagement:
         """Récupère secrets requis pour une application"""
         # Simulation configuration application
         app_secrets = {
-            "ainflue-api": [
+            "iacherie-api": [
                 {"secret_id": "api_db_password", "method": "environment_variable", "access_level": AccessLevel.READ},
                 {"secret_id": "api_jwt_secret", "method": "file", "access_level": AccessLevel.READ},
                 {"secret_id": "api_redis_password", "method": "environment_variable", "access_level": AccessLevel.READ}
             ],
-            "ainflue-worker": [
+            "iacherie-worker": [
                 {"secret_id": "worker_queue_password", "method": "environment_variable", "access_level": AccessLevel.READ},
                 {"secret_id": "worker_storage_key", "method": "file", "access_level": AccessLevel.READ}
             ]
@@ -1355,7 +1355,7 @@ class SecretsManagement:
             }
 
 
-def create_secrets_management(audit_dir: str = "/var/audit/ainflue/secrets",
+def create_secrets_management(audit_dir: str = "/var/audit/iacherie/secrets",
                             default_provider: str = "vault") -> SecretsManagement:
     """
     Factory function pour créer instance SecretsManagement
@@ -1408,13 +1408,13 @@ if __name__ == "__main__":
         
         # Test injection de secrets
         print("💉 Test Secret Injection Pipeline...")
-        injection_results = await secrets_mgmt.secret_injection_pipeline("ainflue-api", "production")
+        injection_results = await secrets_mgmt.secret_injection_pipeline("iacherie-api", "production")
         print(f"Secrets injectés: {injection_results['secrets_injected']}/{injection_results['secrets_requested']}")
         
         # Test gestion d'accès
         print("🔐 Test Access Control Management...")
         grant_result = await secrets_mgmt.access_control_management(
-            "app:ainflue-api", "grant",
+            "app:iacherie-api", "grant",
             secret_id="api_db_password",
             access_level=AccessLevel.READ,
             ttl=timedelta(hours=24)

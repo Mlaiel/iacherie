@@ -1,4 +1,4 @@
-# 🗺️ ROADMAP - AINFLUE ENTERPRISE
+# 🗺️ ROADMAP - IACHERIE ENTERPRISE
 
 **Version:** 1.0 Enterprise  
 **Date:** 15 Décembre 2025  
@@ -152,7 +152,7 @@
 - [ ] **Strategic Acquisitions** - Acquisition startups complémentaires
 - [ ] **API Marketplace** - Écosystème développeurs tiers
 - [ ] **Partner Program** - Programme partenaires technologiques
-- [ ] **Academy Launch** - Formation certification experts Ainflue
+- [ ] **Academy Launch** - Formation certification experts IA Chérie
 
 ##### **🤖 Next-Gen AI**
 - [ ] **AGI Integration** - Préparation intégration IA générale
@@ -366,14 +366,14 @@
 
 ### 📞 **CONTACT STRATÉGIE**
 
-**Strategy Office:** strategy@ainflue.enterprise  
+**Strategy Office:** strategy@iacherie.enterprise  
 **CEO & Founder:** Fahed Mlaiel (mlaiel@live.de)  
-**Board Communications:** board@ainflue.enterprise
+**Board Communications:** board@iacherie.enterprise
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Ainflue Enterprise Strategic Roadmap**  
+**IA Chérie Enterprise Strategic Roadmap**  
 **Version 1.0 - Document Stratégique Confidentiel**
 
 **Classification:** TOP SECRET - STRATEGIC  

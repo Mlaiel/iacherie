@@ -27,7 +27,7 @@
 
 ## 🎯 **Aperçu du Module**
 
-La plateforme MLOps fournit un DevOps complet pour l'apprentissage automatique, orchestrant le cycle de vie complet des modèles ML avec des standards entreprise. Elle intègre parfaitement la logique métier Ainflue pour optimiser l'expérience créateur.
+La plateforme MLOps fournit un DevOps complet pour l'apprentissage automatique, orchestrant le cycle de vie complet des modèles ML avec des standards entreprise. Elle intègre parfaitement la logique métier IA Chérie pour optimiser l'expérience créateur.
 
 ### **🚀 Intégration du Flux de Logique Métier**
 Créateur (Musicien/Blogueur/Photographe/Influenceur/Comédien) → Upload Multi-Format → **Traitement IA & Pipeline MLOps** → Protection → Collaboration → SEO → Distribution → Monétisation

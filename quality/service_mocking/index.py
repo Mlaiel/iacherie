@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎭 SERVICE MOCKING ENTERPRISE - AINFLUE QUALITY MODULE
+🎭 SERVICE MOCKING ENTERPRISE - IACHERIE QUALITY MODULE
 ======================================================
 
 Hub moteurs service mocking enterprise pour l'écosystème IA Influencer Agent.

@@ -3,7 +3,7 @@
 Competitive Advantages Showcase Demo
 ====================================
 
-Demonstrates the five unique competitive advantages of Ainflue platform.
+Demonstrates the five unique competitive advantages of IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
@@ -18,7 +18,7 @@ def display_banner():
     """Display the competitive advantages banner."""
     banner = """
 🚀 =============================================== 🚀
-   AINFLUE - COMPETITIVE ADVANTAGES SHOWCASE
+   IACHERIE - COMPETITIVE ADVANTAGES SHOWCASE
 🚀 =============================================== 🚀
 
 Créateur: Fahed Mlaiel (mlaiel@live.de)
@@ -264,19 +264,19 @@ def display_summary():
     print("="*60)
     
     vs_competition = [
-        {"criteria": "AI Fingerprinting", "ainflue": "Multi-algorithm proprietary", "competitors": "Basic hashing", "advantage": "+300% precision"},
-        {"criteria": "Language Support", "ainflue": "644 native languages", "competitors": "10-50 languages", "advantage": "+1200% coverage"},
-        {"criteria": "Ecosystem", "ainflue": "Complete workflow", "competitors": "Isolated solutions", "advantage": "Full integration"},
-        {"criteria": "Scalability", "ainflue": "Millions simultaneous", "competitors": "Thousands", "advantage": "+1000x capacity"},
-        {"criteria": "Legal Compliance", "ainflue": "6 major jurisdictions", "competitors": "1-2 regions", "advantage": "Global coverage"}
+        {"criteria": "AI Fingerprinting", "iacherie": "Multi-algorithm proprietary", "competitors": "Basic hashing", "advantage": "+300% precision"},
+        {"criteria": "Language Support", "iacherie": "644 native languages", "competitors": "10-50 languages", "advantage": "+1200% coverage"},
+        {"criteria": "Ecosystem", "iacherie": "Complete workflow", "competitors": "Isolated solutions", "advantage": "Full integration"},
+        {"criteria": "Scalability", "iacherie": "Millions simultaneous", "competitors": "Thousands", "advantage": "+1000x capacity"},
+        {"criteria": "Legal Compliance", "iacherie": "6 major jurisdictions", "competitors": "1-2 regions", "advantage": "Global coverage"}
     ]
     
     print("\n💡 Competitive Positioning:")
-    print("   Criteria               Ainflue                    Competitors           Advantage")
+    print("   Criteria               IA Chérie                    Competitors           Advantage")
     print("   " + "-"*80)
     
     for comparison in vs_competition:
-        print(f"   {comparison['criteria']:<20} {comparison['ainflue']:<25} {comparison['competitors']:<15} {comparison['advantage']}")
+        print(f"   {comparison['criteria']:<20} {comparison['iacherie']:<25} {comparison['competitors']:<15} {comparison['advantage']}")
     
     print(f"\n🎯 Unique Value Proposition:")
     print('   "The only global platform combining proprietary revolutionary AI,')

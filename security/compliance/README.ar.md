@@ -1,4 +1,4 @@
-# 🛡️ منصة أمان ومطابقة المؤسسات - اقتصاد المبدعين Ainflue
+# 🛡️ منصة أمان ومطابقة المؤسسات - اقتصاد المبدعين IA Chérie
 
 ⚠️  **ملكية فكرية حصرية - فهد المليل** ⚠️  
 © 2025 فهد المليل. جميع الحقوق محفوظة.  
@@ -84,10 +84,10 @@ SQLAlchemy
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # التنقل إلى وحدة المطابقة
-cd Ainflue/security/compliance
+cd IA Chérie/security/compliance
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -257,7 +257,7 @@ python -m compliance.reporting --generate-all
 - حلول العلامة البيضاء
 - مستويات الوصول إلى API
 
-## 👥 فريق الخبراء - Ainflue Compliance Engineering
+## 👥 فريق الخبراء - IA Chérie Compliance Engineering
 
 ### قيادة المشروع
 **فهد المليل** - كبير مسؤولي التكنولوجيا ومهندس المطابقة

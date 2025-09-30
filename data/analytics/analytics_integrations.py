@@ -750,7 +750,7 @@ class APIIntegrationEngine:
     async def _prepare_headers(self, config: IntegrationConfig) -> Dict[str, str]:
         """Prepare request headers with authentication"""
         headers = {
-            "User-Agent": "Ainflue-Analytics/1.0",
+            "User-Agent": "IA Chérie-Analytics/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }
@@ -880,7 +880,7 @@ class WebhookManager:
                 webhook_id="spotify_webhook",
                 platform=PlatformType.SPOTIFY,
                 event_types=[EventType.USER_ACTION, EventType.ENGAGEMENT_METRIC],
-                endpoint_url="https://api.ainflue.com/webhooks/spotify",
+                endpoint_url="https://api.iacherie.com/webhooks/spotify",
                 secret_key="spotify_webhook_secret",
                 signature_header="X-Spotify-Signature",
                 payload_format=DataFormat.JSON

@@ -1,4 +1,4 @@
-# 🚀 Ainflue Enterprise API - Plateforme de Contenu Avancée Alimentée par l'IA
+# 🚀 IA Chérie Enterprise API - Plateforme de Contenu Avancée Alimentée par l'IA
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe Spécialisée :** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 Aperçu de la Plateforme
 
-Ainflue est la plateforme mondiale la plus avancée alimentée par l'IA pour la protection de contenu, la monétisation et la collaboration pour les créateurs sur plus de 35 plateformes. Notre API d'entreprise fournit des services d'orchestration complets pour les créateurs de contenu, influenceurs et entreprises médiatiques du monde entier.
+IA Chérie est la plateforme mondiale la plus avancée alimentée par l'IA pour la protection de contenu, la monétisation et la collaboration pour les créateurs sur plus de 35 plateformes. Notre API d'entreprise fournit des services d'orchestration complets pour les créateurs de contenu, influenceurs et entreprises médiatiques du monde entier.
 
 ## 🏗️ Architecture de l'API Enterprise
 
@@ -168,9 +168,9 @@ Orchestrateurs Enterprise → Logique Métier → Couche de Données
 ## 🚀 Premiers Pas
 
 ### URLs de Base API
-- **Production :** `https://api.ainflue.com`
-- **Staging :** `https://staging-api.ainflue.com`
-- **Développement :** `https://dev-api.ainflue.com`
+- **Production :** `https://api.iacherie.com`
+- **Staging :** `https://staging-api.iacherie.com`
+- **Développement :** `https://dev-api.iacherie.com`
 
 ### Documentation
 - **Docs Interactives :** `/docs` - Swagger UI avec fonctionnalités d'entreprise
@@ -207,7 +207,7 @@ collaboration_data = {
 
 # Trouver des créateurs compatibles
 response = requests.post(
-    "https://api.ainflue.com/api/v1/collaboration/matching/find-creators",
+    "https://api.iacherie.com/api/v1/collaboration/matching/find-creators",
     headers=headers,
     json={
         "creator_id": "creator_123",
@@ -230,9 +230,9 @@ print(f"Trouvé {len(matches['data']['matches'])} créateurs compatibles")
 - **Support 24/7 :** Disponible pour les problèmes critiques
 
 ### Ressources
-- **Documentation Développeur :** [https://docs.ainflue.com](https://docs.ainflue.com)
-- **Page de Statut API :** [https://status.ainflue.com](https://status.ainflue.com)
-- **Forum Communauté :** [https://community.ainflue.com](https://community.ainflue.com)
+- **Documentation Développeur :** [https://docs.iacherie.com](https://docs.iacherie.com)
+- **Page de Statut API :** [https://status.iacherie.com](https://status.iacherie.com)
+- **Forum Communauté :** [https://community.iacherie.com](https://community.iacherie.com)
 - **Dépôt GitHub :** Accès au dépôt privé d'entreprise
 
 ### Support d'Intégration
@@ -251,5 +251,5 @@ Pour les demandes de licence et les accords d'entreprise, contactez : **mlaiel@l
 
 ---
 
-**Construit avec ❤️ par l'Équipe Ainflue Enterprise**  
+**Construit avec ❤️ par l'Équipe IA Chérie Enterprise**  
 **Menant l'avenir de la création de contenu et collaboration alimentées par l'IA**

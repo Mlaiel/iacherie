@@ -3,7 +3,7 @@
 🎛️ Monitoring Configuration Orchestrator - Creator Economy Enterprise
 =====================================================================
 
-Orchestrateur central des configurations monitoring pour l'écosystème Ainflue Creator Economy.
+Orchestrateur central des configurations monitoring pour l'écosystème IA Chérie Creator Economy.
 Gestion intelligente des configurations avec validation, hot-reload et optimisation Creator-specific.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -58,11 +58,11 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logger = logging.getLogger("ainflue.monitoring.config")
+logger = logging.getLogger("iacherie.monitoring.config")
 
 
 class CreatorTier(str, Enum):
-    """Niveaux de créateurs Ainflue avec SLA différenciés"""
+    """Niveaux de créateurs IA Chérie avec SLA différenciés"""
     PREMIUM = "premium"
     STANDARD = "standard" 
     BASIC = "basic"
@@ -114,7 +114,7 @@ class ConfigurationManager:
     - Rollback automatique en cas d'erreur
     """
     
-    def __init__(self, config_dir: str = "/home/runner/work/Ainflue/Ainflue/monitoring/configs"):
+    def __init__(self, config_dir: str = "/home/runner/work/IA Chérie/IA Chérie/monitoring/configs"):
         self.config_dir = Path(config_dir)
         self.configs: Dict[str, Dict[str, Any]] = {}
         self.metadata: Dict[str, ConfigMetadata] = {}
@@ -266,7 +266,7 @@ class ConfigurationManager:
             # Cache Redis pour accès distribué
             if self.redis_client:
                 await self.redis_client.setex(
-                    f"ainflue:config:{config_name}",
+                    f"iacherie:config:{config_name}",
                     3600,  # TTL 1 heure
                     json.dumps(config_data, default=str)
                 )
@@ -343,7 +343,7 @@ class ConfigurationManager:
         if not base_config:
             # Tentative récupération depuis Redis
             if self.redis_client:
-                cached_config = await self.redis_client.get(f"ainflue:config:{config_name}")
+                cached_config = await self.redis_client.get(f"iacherie:config:{config_name}")
                 if cached_config:
                     base_config = json.loads(cached_config)
                     self.configs[config_name] = base_config

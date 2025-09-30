@@ -1,8 +1,8 @@
 # 👥 MULTIMEDIA COLLABORATION MODULE - ENTERPRISE ARCHITECTURE
 
-[![Enterprise Ready](https://img.shields.io/badge/Enterprise-Ready-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Real-time](https://img.shields.io/badge/Real--time-Enabled-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![WebRTC](https://img.shields.io/badge/WebRTC-Supported-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise Ready](https://img.shields.io/badge/Enterprise-Ready-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Real-time](https://img.shields.io/badge/Real--time-Enabled-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![WebRTC](https://img.shields.io/badge/WebRTC-Supported-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 OVERVIEW
 
@@ -284,7 +284,7 @@ submission = await pipeline.submit_for_approval(
 
 ## 🎯 BUSINESS INTEGRATION
 
-### Ainflue Platform Integration
+### IA Chérie Platform Integration
 
 ```python
 # Complete workflow integration
@@ -345,7 +345,7 @@ async def setup_creator_collaboration(creator_id: str, project_type: str):
 version: '3.8'
 services:
   collaboration-service:
-    image: ainflue/multimedia-collaboration:latest
+    image: iacherie/multimedia-collaboration:latest
     environment:
       - REDIS_URL=redis://redis:6379
       - WEBRTC_ENABLED=true
@@ -373,7 +373,7 @@ spec:
     spec:
       containers:
       - name: collaboration
-        image: ainflue/multimedia-collaboration:latest
+        image: iacherie/multimedia-collaboration:latest
         resources:
           requests:
             memory: "512Mi"
@@ -463,7 +463,7 @@ function applyLocalEdit(operation) {
 
 **Author:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Project:** Ainflue Platform - Enterprise Multimedia Collaboration  
+**Project:** IA Chérie Platform - Enterprise Multimedia Collaboration  
 **Version:** 3.1.0
 
 ### Additional Resources

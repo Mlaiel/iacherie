@@ -147,7 +147,7 @@ AUDIT_LOGGING=true
 Run the comprehensive data protection test:
 
 ```bash
-cd /home/runner/work/Ainflue/Ainflue
+cd /home/runner/work/IA Chérie/IA Chérie
 python simple_data_protection_test.py
 ```
 

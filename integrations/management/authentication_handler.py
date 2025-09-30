@@ -310,7 +310,7 @@ class MFAHandler:
         totp = pyotp.TOTP(secret)
         provisioning_uri = totp.provisioning_uri(
             name=user_id,
-            issuer_name="Ainflue Platform"
+            issuer_name="IA Chérie Platform"
         )
         
         return {
@@ -392,8 +392,8 @@ class JWTManager:
             "scopes": scopes or [],
             "iat": int(issued_at.timestamp()),
             "exp": int(expires_at.timestamp()),
-            "iss": "ainflue-platform",
-            "aud": "ainflue-api"
+            "iss": "iacherie-platform",
+            "aud": "iacherie-api"
         }
         
         if additional_claims:
@@ -578,7 +578,7 @@ class AuthenticationHandler:
     """
     Enterprise Authentication Handler with multi-provider OAuth and SSO
     
-    Provides comprehensive authentication services for the Ainflue creator platform
+    Provides comprehensive authentication services for the IA Chérie creator platform
     with support for multiple OAuth providers, JWT tokens, MFA, and session management.
     """
     
@@ -615,7 +615,7 @@ class AuthenticationHandler:
             provider=AuthProvider.GOOGLE,
             client_id="google_client_id",
             client_secret="google_client_secret",
-            redirect_uri="https://ainflue.com/auth/google/callback",
+            redirect_uri="https://iacherie.com/auth/google/callback",
             scopes=["openid", "email", "profile"],
             authorization_url="https://accounts.google.com/o/oauth2/v2/auth",
             token_url="https://oauth2.googleapis.com/token",
@@ -627,7 +627,7 @@ class AuthenticationHandler:
             provider=AuthProvider.GITHUB,
             client_id="github_client_id",
             client_secret="github_client_secret",
-            redirect_uri="https://ainflue.com/auth/github/callback",
+            redirect_uri="https://iacherie.com/auth/github/callback",
             scopes=["read:user", "user:email"],
             authorization_url="https://github.com/login/oauth/authorize",
             token_url="https://github.com/login/oauth/access_token",
@@ -639,7 +639,7 @@ class AuthenticationHandler:
             provider=AuthProvider.MICROSOFT,
             client_id="microsoft_client_id",
             client_secret="microsoft_client_secret",
-            redirect_uri="https://ainflue.com/auth/microsoft/callback",
+            redirect_uri="https://iacherie.com/auth/microsoft/callback",
             scopes=["openid", "profile", "email"],
             authorization_url="https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
             token_url="https://login.microsoftonline.com/common/oauth2/v2.0/token",

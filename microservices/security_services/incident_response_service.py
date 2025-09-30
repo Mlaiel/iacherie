@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🚨 Incident Response Service - Enterprise Security
-Service de réponse aux incidents de sécurité pour microservices Ainflue
+Service de réponse aux incidents de sécurité pour microservices IA Chérie
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -178,11 +178,11 @@ class IncidentResponseService:
         
         # Équipe de réponse
         self.response_team = {
-            'incident_commander': 'security-lead@ainflue.com',
-            'security_analysts': ['analyst1@ainflue.com', 'analyst2@ainflue.com'],
-            'forensics_experts': ['forensics@ainflue.com'],
-            'legal_counsel': ['legal@ainflue.com'],
-            'communications': ['comms@ainflue.com']
+            'incident_commander': 'security-lead@iacherie.com',
+            'security_analysts': ['analyst1@iacherie.com', 'analyst2@iacherie.com'],
+            'forensics_experts': ['forensics@iacherie.com'],
+            'legal_counsel': ['legal@iacherie.com'],
+            'communications': ['comms@iacherie.com']
         }
         
         logger.info(f"🚨 {self.service_name} v{self.version} - Initialisation")
@@ -367,7 +367,7 @@ class IncidentResponseService:
                 channel_id="email-critical",
                 name="Critical Email Alerts",
                 type="email",
-                endpoint="security-alerts@ainflue.com",
+                endpoint="security-alerts@iacherie.com",
                 severity_filter=[IncidentSeverity.CRITICAL]
             )
             
@@ -385,7 +385,7 @@ class IncidentResponseService:
                 channel_id="siem-webhook",
                 name="SIEM Integration",
                 type="webhook",
-                endpoint="https://siem.ainflue.com/api/incidents",
+                endpoint="https://siem.iacherie.com/api/incidents",
                 severity_filter=[IncidentSeverity.CRITICAL, IncidentSeverity.HIGH]
             )
             
@@ -1213,7 +1213,7 @@ async def main():
             description="Chiffrement détecté sur srv-prod-01, activité suspecte confirmée",
             incident_type=IncidentType.RANSOMWARE,
             severity=IncidentSeverity.CRITICAL,
-            reporter="security-analyst@ainflue.com",
+            reporter="security-analyst@iacherie.com",
             affected_systems=["srv-prod-01", "db-prod-02"],
             indicators=["192.168.1.100", "malware.exe", "user:admin"]
         )
@@ -1228,7 +1228,7 @@ async def main():
             incident_id,
             IncidentStatus.CONTAINING,
             "Systèmes isolés, analyse forensique en cours",
-            "incident-commander@ainflue.com"
+            "incident-commander@iacherie.com"
         )
         
         # Ajout preuve
@@ -1236,7 +1236,7 @@ async def main():
             incident_id,
             "memory_dump",
             "srv-prod-01",
-            "forensics-expert@ainflue.com",
+            "forensics-expert@iacherie.com",
             b"fake_memory_dump_data",
             {"dump_type": "full", "acquisition_tool": "volatility"}
         )

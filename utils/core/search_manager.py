@@ -402,7 +402,7 @@ class SearchManager:
             return
         
         for content_type in ContentType:
-            index_name = f"ainflue_{content_type.value}"
+            index_name = f"iacherie_{content_type.value}"
             
             mapping = {
                 "mappings": {
@@ -522,7 +522,7 @@ class SearchManager:
         if not self.es_client:
             return
         
-        index_name = f"ainflue_{document.content_type.value}"
+        index_name = f"iacherie_{document.content_type.value}"
         
         doc_body = {
             "title": document.title,
@@ -709,7 +709,7 @@ class SearchManager:
         # Add content type filter
         if query.content_types:
             es_query["query"]["bool"]["filter"].append({
-                "terms": {"_index": [f"ainflue_{ct.value}" for ct in query.content_types]}
+                "terms": {"_index": [f"iacherie_{ct.value}" for ct in query.content_types]}
             })
         
         # Add sorting
@@ -731,9 +731,9 @@ class SearchManager:
                 }
         
         # Execute search across all indices
-        indices = [f"ainflue_{ct.value}" for ct in ContentType]
+        indices = [f"iacherie_{ct.value}" for ct in ContentType]
         if query.content_types:
-            indices = [f"ainflue_{ct.value}" for ct in query.content_types]
+            indices = [f"iacherie_{ct.value}" for ct in query.content_types]
         
         try:
             es_response = await self.es_client.search(
@@ -1261,7 +1261,7 @@ class SearchManager:
             source = hit["_source"]
             document = SearchDocument(
                 id=hit["_id"],
-                content_type=ContentType(hit["_index"].replace("ainflue_", "")),
+                content_type=ContentType(hit["_index"].replace("iacherie_", "")),
                 title=source["title"],
                 content=source["content"],
                 creator_id=source["creator_id"],
@@ -1431,7 +1431,7 @@ class SearchManager:
             # Remove from Elasticsearch
             if self.es_client:
                 for content_type in ContentType:
-                    index_name = f"ainflue_{content_type.value}"
+                    index_name = f"iacherie_{content_type.value}"
                     try:
                         await self.es_client.delete(index=index_name, id=doc_id, ignore=404)
                     except Exception:

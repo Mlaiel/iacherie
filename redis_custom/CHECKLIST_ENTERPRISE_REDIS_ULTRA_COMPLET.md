@@ -1,4 +1,4 @@
-# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE REDIS - AINFLUE PLATFORM
+# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE REDIS - IACHERIE PLATFORM
 
 > **⚠️ AVERTISSEMENT LÉGAL ULTRA-CRITIQUE** ⚠️  
 > **CETTE CHECKLIST CONSTITUE UN STANDARD ENTERPRISE ULTRA-STRICT**  
@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 EXIGENCES STRICTES ENTERPRISE AINFLUE
+## 📋 EXIGENCES STRICTES ENTERPRISE IACHERIE
 
 ### 🎯 **CONFORMITÉ ULTRA-STRICTE OBLIGATOIRE**
 - ✅ **ARCHITECTURE 3 NIVEAUX MAXIMUM** (connection/, storage/, orchestration/)
@@ -364,10 +364,10 @@ mypy redis/ --strict --config-file=mypy.enterprise.ini
 - **DevOps Specialist**: Déploiement enterprise
 
 ### 📧 **CONTACTS URGENCE**
-- **Technique**: redis-tech@ainflue.enterprise
-- **Sécurité**: security@ainflue.enterprise
-- **Performance**: performance@ainflue.enterprise
-- **Escalade**: cto@ainflue.enterprise
+- **Technique**: redis-tech@iacherie.enterprise
+- **Sécurité**: security@iacherie.enterprise
+- **Performance**: performance@iacherie.enterprise
+- **Escalade**: cto@iacherie.enterprise
 
 ---
 

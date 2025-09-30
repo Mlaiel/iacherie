@@ -1,0 +1,821 @@
+# Ainflue Infrastructure Module - Monitoring Setup Ansible Role
+# ==============================================================
+# 
+# Enterprise-grade monitoring setup for Ainflue platform
+# Prometheus, Grafana, Jaeger, and comprehensive observability
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI service monitoring, model performance tracking
+# Backend Senior: Application performance monitoring, API metrics
+# ML Engineer: ML pipeline monitoring, model drift detection, experiment tracking
+# DBA: Database performance monitoring, query optimization
+# Security: Security monitoring, threat detection, audit logging
+# Microservices: Service mesh observability, distributed tracing
+# Audio Engineer: Media processing monitoring, streaming metrics
+# DevOps: Infrastructure monitoring, alerting, SLA tracking
+# IA Prompt Engineer: AI provider monitoring, prompt performance tracking
+
+---
+- name: "Monitoring Setup - Ainflue Platform"
+  hosts: monitoring
+  become: yes
+  vars:
+    project_name: "ainflue"
+    environment: "{{ env | default('dev') }}"
+    monitoring_user: "monitoring"
+    
+    # Prometheus Configuration
+    prometheus_version: "2.45.0"
+    prometheus_port: 9090
+    prometheus_retention: "15d"
+    prometheus_storage_path: "/var/lib/prometheus"
+    
+    # Grafana Configuration
+    grafana_version: "10.0.0"
+    grafana_port: 3000
+    grafana_admin_user: "admin"
+    grafana_admin_password: "{{ grafana_password | default('ainflue123!') }}"
+    
+    # Jaeger Configuration
+    jaeger_version: "1.47.0"
+    jaeger_ui_port: 16686
+    jaeger_collector_port: 14268
+    jaeger_agent_port: 6831
+    
+    # Alertmanager Configuration
+    alertmanager_version: "0.25.0"
+    alertmanager_port: 9093
+    
+    # Node Exporter Configuration
+    node_exporter_version: "1.6.0"
+    node_exporter_port: 9100
+    
+    # Alert Configuration
+    alert_recipients:
+      - "admin@ainflue.com"
+      - "devops@ainflue.com"
+    
+    slack_webhook_url: "{{ slack_webhook | default('') }}"
+    
+    # Monitoring Targets
+    monitoring_targets:
+      - job_name: "prometheus"
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: "node-exporter"
+        static_configs:
+          - targets: ["localhost:9100"]
+      - job_name: "ainflue-api"
+        static_configs:
+          - targets: ["localhost:8000"]
+        metrics_path: "/metrics"
+      - job_name: "ainflue-ai"
+        static_configs:
+          - targets: ["localhost:8001"]
+        metrics_path: "/metrics"
+      - job_name: "ainflue-media"
+        static_configs:
+          - targets: ["localhost:8003"]
+        metrics_path: "/metrics"
+      - job_name: "postgres-exporter"
+        static_configs:
+          - targets: ["localhost:9187"]
+      - job_name: "redis-exporter"
+        static_configs:
+          - targets: ["localhost:9121"]
+
+  tasks:
+    - name: "Create monitoring user"
+      user:
+        name: "{{ monitoring_user }}"
+        system: yes
+        shell: /bin/false
+        home: /var/lib/monitoring
+        create_home: yes
+
+    - name: "Create monitoring directories"
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0755'
+      loop:
+        - "/etc/prometheus"
+        - "/var/lib/prometheus"
+        - "/etc/grafana"
+        - "/var/lib/grafana"
+        - "/etc/alertmanager"
+        - "/var/lib/alertmanager"
+        - "/etc/jaeger"
+        - "/var/log/monitoring"
+
+    - name: "Download and install Prometheus"
+      block:
+        - name: "Download Prometheus"
+          get_url:
+            url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+            dest: "/tmp/prometheus-{{ prometheus_version }}.tar.gz"
+            mode: '0644'
+
+        - name: "Extract Prometheus"
+          unarchive:
+            src: "/tmp/prometheus-{{ prometheus_version }}.tar.gz"
+            dest: "/tmp"
+            remote_src: yes
+
+        - name: "Copy Prometheus binaries"
+          copy:
+            src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}"
+            dest: "/usr/local/bin/{{ item }}"
+            remote_src: yes
+            owner: root
+            group: root
+            mode: '0755'
+          loop:
+            - prometheus
+            - promtool
+
+        - name: "Copy Prometheus console files"
+          copy:
+            src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}"
+            dest: "/etc/prometheus/"
+            remote_src: yes
+            owner: "{{ monitoring_user }}"
+            group: "{{ monitoring_user }}"
+            mode: '0644'
+          loop:
+            - consoles
+            - console_libraries
+
+    - name: "Download and install Node Exporter"
+      block:
+        - name: "Download Node Exporter"
+          get_url:
+            url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+            dest: "/tmp/node_exporter-{{ node_exporter_version }}.tar.gz"
+
+        - name: "Extract Node Exporter"
+          unarchive:
+            src: "/tmp/node_exporter-{{ node_exporter_version }}.tar.gz"
+            dest: "/tmp"
+            remote_src: yes
+
+        - name: "Copy Node Exporter binary"
+          copy:
+            src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+            dest: "/usr/local/bin/node_exporter"
+            remote_src: yes
+            owner: root
+            group: root
+            mode: '0755'
+
+    - name: "Download and install Alertmanager"
+      block:
+        - name: "Download Alertmanager"
+          get_url:
+            url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+            dest: "/tmp/alertmanager-{{ alertmanager_version }}.tar.gz"
+
+        - name: "Extract Alertmanager"
+          unarchive:
+            src: "/tmp/alertmanager-{{ alertmanager_version }}.tar.gz"
+            dest: "/tmp"
+            remote_src: yes
+
+        - name: "Copy Alertmanager binaries"
+          copy:
+            src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-amd64/{{ item }}"
+            dest: "/usr/local/bin/{{ item }}"
+            remote_src: yes
+            owner: root
+            group: root
+            mode: '0755'
+          loop:
+            - alertmanager
+            - amtool
+
+    - name: "Install Grafana"
+      block:
+        - name: "Add Grafana GPG key"
+          apt_key:
+            url: https://packages.grafana.com/gpg.key
+            state: present
+
+        - name: "Add Grafana repository"
+          apt_repository:
+            repo: "deb https://packages.grafana.com/oss/deb stable main"
+            state: present
+
+        - name: "Install Grafana"
+          apt:
+            name: grafana
+            state: present
+            update_cache: yes
+
+    - name: "Install additional monitoring tools"
+      package:
+        name:
+          - docker.io
+          - docker-compose
+        state: present
+
+    - name: "Configure Prometheus"
+      copy:
+        content: |
+          # Ainflue Prometheus Configuration
+          # Enterprise monitoring for AI-powered creator platform
+          
+          global:
+            scrape_interval: 15s
+            evaluation_interval: 15s
+            external_labels:
+              cluster: 'ainflue-{{ environment }}'
+              environment: '{{ environment }}'
+          
+          rule_files:
+            - "/etc/prometheus/alerts/*.yml"
+          
+          alerting:
+            alertmanagers:
+              - static_configs:
+                  - targets:
+                      - localhost:{{ alertmanager_port }}
+          
+          scrape_configs:
+          {% for target in monitoring_targets %}
+            - job_name: '{{ target.job_name }}'
+              static_configs:
+          {% for config in target.static_configs %}
+                - targets: {{ config.targets }}
+          {% endfor %}
+          {% if target.metrics_path is defined %}
+              metrics_path: '{{ target.metrics_path }}'
+          {% endif %}
+              scrape_interval: 15s
+              scrape_timeout: 10s
+          {% endfor %}
+          
+            # AI/ML Specific Monitoring
+            - job_name: 'ainflue-ml-models'
+              static_configs:
+                - targets: ['localhost:8002']
+              metrics_path: '/model-metrics'
+              scrape_interval: 30s
+              
+            - job_name: 'ainflue-ai-providers'
+              static_configs:
+                - targets: ['localhost:8010']
+              metrics_path: '/ai-metrics'
+              scrape_interval: 60s
+              
+            # Media Processing Monitoring
+            - job_name: 'ainflue-media-processor'
+              static_configs:
+                - targets: ['localhost:8004']
+              metrics_path: '/media-metrics'
+              scrape_interval: 30s
+              
+            # Database Monitoring
+            - job_name: 'postgres-exporter'
+              static_configs:
+                - targets: ['localhost:9187']
+              scrape_interval: 15s
+              
+            - job_name: 'redis-exporter'
+              static_configs:
+                - targets: ['localhost:9121']
+              scrape_interval: 15s
+              
+            # Kubernetes Monitoring (if applicable)
+            - job_name: 'kubernetes-apiservers'
+              kubernetes_sd_configs:
+                - role: endpoints
+              scheme: https
+              tls_config:
+                ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+              relabel_configs:
+                - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+                  action: keep
+                  regex: default;kubernetes;https
+        dest: "/etc/prometheus/prometheus.yml"
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0644'
+      notify: restart prometheus
+
+    - name: "Create Prometheus alert rules directory"
+      file:
+        path: "/etc/prometheus/alerts"
+        state: directory
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0755'
+
+    - name: "Configure Prometheus alert rules"
+      copy:
+        content: |
+          # Ainflue Alert Rules
+          # Enterprise alerting for AI creator platform
+          
+          groups:
+            - name: ainflue.rules
+              rules:
+                # Infrastructure Alerts
+                - alert: HighCPUUsage
+                  expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: infrastructure
+                  annotations:
+                    summary: "High CPU usage detected"
+                    description: "CPU usage is above 80% for more than 5 minutes on {{ $labels.instance }}"
+                
+                - alert: HighMemoryUsage
+                  expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: infrastructure
+                  annotations:
+                    summary: "High memory usage detected"
+                    description: "Memory usage is above 85% on {{ $labels.instance }}"
+                
+                - alert: DiskSpaceUsage
+                  expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) / node_filesystem_size_bytes * 100 > 85
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: infrastructure
+                  annotations:
+                    summary: "High disk usage detected"
+                    description: "Disk usage is above 85% on {{ $labels.instance }} for {{ $labels.mountpoint }}"
+                
+                # Application Alerts
+                - alert: APIHighErrorRate
+                  expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+                  for: 2m
+                  labels:
+                    severity: critical
+                    service: api
+                  annotations:
+                    summary: "High API error rate"
+                    description: "API error rate is above 5% for more than 2 minutes"
+                
+                - alert: APIHighLatency
+                  expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: api
+                  annotations:
+                    summary: "High API latency"
+                    description: "95th percentile API latency is above 2 seconds"
+                
+                # AI/ML Specific Alerts
+                - alert: AIModelHighLatency
+                  expr: ai_model_inference_duration_seconds{quantile="0.95"} > 5
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: ai
+                  annotations:
+                    summary: "AI model high latency"
+                    description: "AI model inference latency is above 5 seconds for {{ $labels.model }}"
+                
+                - alert: AIModelLowAccuracy
+                  expr: ai_model_accuracy < 0.85
+                  for: 10m
+                  labels:
+                    severity: critical
+                    service: ai
+                  annotations:
+                    summary: "AI model accuracy degradation"
+                    description: "AI model {{ $labels.model }} accuracy dropped below 85%"
+                
+                # Database Alerts
+                - alert: PostgreSQLHighConnections
+                  expr: pg_stat_database_numbackends / pg_settings_max_connections * 100 > 80
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: database
+                  annotations:
+                    summary: "PostgreSQL high connection usage"
+                    description: "PostgreSQL connection usage is above 80%"
+                
+                - alert: PostgreSQLSlowQueries
+                  expr: pg_stat_statements_mean_time_seconds > 1
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: database
+                  annotations:
+                    summary: "PostgreSQL slow queries detected"
+                    description: "Slow queries detected in PostgreSQL (> 1 second average)"
+                
+                - alert: RedisHighMemoryUsage
+                  expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 85
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: cache
+                  annotations:
+                    summary: "Redis high memory usage"
+                    description: "Redis memory usage is above 85%"
+                
+                # Media Processing Alerts
+                - alert: MediaProcessingQueueHigh
+                  expr: media_processing_queue_size > 100
+                  for: 5m
+                  labels:
+                    severity: warning
+                    service: media
+                  annotations:
+                    summary: "Media processing queue is high"
+                    description: "Media processing queue has more than 100 items pending"
+                
+                - alert: MediaProcessingFailed
+                  expr: rate(media_processing_failed_total[5m]) > 0.1
+                  for: 2m
+                  labels:
+                    severity: critical
+                    service: media
+                  annotations:
+                    summary: "High media processing failure rate"
+                    description: "Media processing failure rate is above 10%"
+        dest: "/etc/prometheus/alerts/ainflue.yml"
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0644'
+      notify: restart prometheus
+
+    - name: "Configure Alertmanager"
+      copy:
+        content: |
+          # Ainflue Alertmanager Configuration
+          # Enterprise alerting and notification
+          
+          global:
+            smtp_smarthost: 'localhost:587'
+            smtp_from: 'alerts@ainflue.com'
+            
+          route:
+            group_by: ['alertname', 'cluster', 'service']
+            group_wait: 10s
+            group_interval: 10s
+            repeat_interval: 1h
+            receiver: 'default-receiver'
+            routes:
+              - match:
+                  severity: critical
+                receiver: 'critical-alerts'
+                group_wait: 5s
+                repeat_interval: 30m
+              - match:
+                  service: ai
+                receiver: 'ai-team'
+              - match:
+                  service: database
+                receiver: 'dba-team'
+              - match:
+                  service: infrastructure
+                receiver: 'devops-team'
+          
+          receivers:
+            - name: 'default-receiver'
+              email_configs:
+                - to: '{{ alert_recipients | join(",") }}'
+                  subject: '[Ainflue {{ environment | upper }}] Alert: {{ .GroupLabels.alertname }}'
+                  body: |
+                    {{ range .Alerts }}
+                    Alert: {{ .Annotations.summary }}
+                    Description: {{ .Annotations.description }}
+                    Instance: {{ .Labels.instance }}
+                    Severity: {{ .Labels.severity }}
+                    {{ end }}
+            
+            - name: 'critical-alerts'
+              email_configs:
+                - to: '{{ alert_recipients | join(",") }}'
+                  subject: '[CRITICAL] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  body: |
+                    CRITICAL ALERT TRIGGERED
+                    
+                    {{ range .Alerts }}
+                    Alert: {{ .Annotations.summary }}
+                    Description: {{ .Annotations.description }}
+                    Instance: {{ .Labels.instance }}
+                    Started: {{ .StartsAt }}
+                    {{ end }}
+          {% if slack_webhook_url %}
+              slack_configs:
+                - api_url: '{{ slack_webhook_url }}'
+                  channel: '#alerts-critical'
+                  title: '[CRITICAL] Ainflue {{ environment | upper }}'
+                  text: |
+                    {{ range .Alerts }}
+                    *Alert:* {{ .Annotations.summary }}
+                    *Description:* {{ .Annotations.description }}
+                    *Instance:* {{ .Labels.instance }}
+                    *Severity:* {{ .Labels.severity }}
+                    {{ end }}
+          {% endif %}
+            
+            - name: 'ai-team'
+              email_configs:
+                - to: 'ai-team@ainflue.com'
+                  subject: '[AI Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+            
+            - name: 'dba-team'
+              email_configs:
+                - to: 'dba-team@ainflue.com'
+                  subject: '[Database Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+            
+            - name: 'devops-team'
+              email_configs:
+                - to: 'devops-team@ainflue.com'
+                  subject: '[Infrastructure Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+          
+          inhibit_rules:
+            - source_match:
+                severity: 'critical'
+              target_match:
+                severity: 'warning'
+              equal: ['alertname', 'cluster', 'service']
+        dest: "/etc/alertmanager/alertmanager.yml"
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0644'
+      notify: restart alertmanager
+
+    - name: "Configure Grafana"
+      copy:
+        content: |
+          # Ainflue Grafana Configuration
+          
+          [server]
+          protocol = http
+          http_addr = 0.0.0.0
+          http_port = {{ grafana_port }}
+          domain = localhost
+          enforce_domain = false
+          root_url = http://localhost:{{ grafana_port }}/
+          
+          [database]
+          type = sqlite3
+          path = /var/lib/grafana/grafana.db
+          
+          [security]
+          admin_user = {{ grafana_admin_user }}
+          admin_password = {{ grafana_admin_password }}
+          secret_key = {{ ansible_hostname }}{{ ansible_date_time.epoch }}
+          
+          [users]
+          allow_sign_up = false
+          allow_org_create = false
+          auto_assign_org = true
+          auto_assign_org_role = Viewer
+          
+          [auth.anonymous]
+          enabled = false
+          
+          [log]
+          mode = console file
+          level = info
+          
+          [alerting]
+          enabled = true
+          execute_alerts = true
+          
+          [unified_alerting]
+          enabled = true
+          
+          [feature_toggles]
+          enable = ngalert
+        dest: "/etc/grafana/grafana.ini"
+        owner: grafana
+        group: grafana
+        mode: '0640'
+      notify: restart grafana
+
+    - name: "Create systemd service for Prometheus"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus Server
+          Documentation=https://prometheus.io/docs/
+          After=network-online.target
+          
+          [Service]
+          Type=simple
+          User={{ monitoring_user }}
+          Group={{ monitoring_user }}
+          ExecStart=/usr/local/bin/prometheus \
+            --config.file=/etc/prometheus/prometheus.yml \
+            --storage.tsdb.path={{ prometheus_storage_path }} \
+            --storage.tsdb.retention.time={{ prometheus_retention }} \
+            --web.console.templates=/etc/prometheus/consoles \
+            --web.console.libraries=/etc/prometheus/console_libraries \
+            --web.listen-address=0.0.0.0:{{ prometheus_port }} \
+            --web.external-url=http://localhost:{{ prometheus_port }}/ \
+            --web.enable-lifecycle
+          
+          ExecReload=/bin/kill -HUP $MAINPID
+          Restart=always
+          RestartSec=5
+          
+          [Install]
+          WantedBy=multi-user.target
+        dest: "/etc/systemd/system/prometheus.service"
+      notify:
+        - reload systemd
+        - restart prometheus
+
+    - name: "Create systemd service for Node Exporter"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          Documentation=https://prometheus.io/docs/
+          After=network-online.target
+          
+          [Service]
+          Type=simple
+          User={{ monitoring_user }}
+          Group={{ monitoring_user }}
+          ExecStart=/usr/local/bin/node_exporter \
+            --web.listen-address=0.0.0.0:{{ node_exporter_port }}
+          
+          Restart=always
+          RestartSec=5
+          
+          [Install]
+          WantedBy=multi-user.target
+        dest: "/etc/systemd/system/node-exporter.service"
+      notify:
+        - reload systemd
+        - restart node-exporter
+
+    - name: "Create systemd service for Alertmanager"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus Alertmanager
+          Documentation=https://prometheus.io/docs/
+          After=network-online.target
+          
+          [Service]
+          Type=simple
+          User={{ monitoring_user }}
+          Group={{ monitoring_user }}
+          ExecStart=/usr/local/bin/alertmanager \
+            --config.file=/etc/alertmanager/alertmanager.yml \
+            --storage.path=/var/lib/alertmanager \
+            --web.external-url=http://localhost:{{ alertmanager_port }}/ \
+            --web.listen-address=0.0.0.0:{{ alertmanager_port }}
+          
+          ExecReload=/bin/kill -HUP $MAINPID
+          Restart=always
+          RestartSec=5
+          
+          [Install]
+          WantedBy=multi-user.target
+        dest: "/etc/systemd/system/alertmanager.service"
+      notify:
+        - reload systemd
+        - restart alertmanager
+
+    - name: "Install Jaeger using Docker Compose"
+      copy:
+        content: |
+          version: '3.8'
+          
+          services:
+            jaeger:
+              image: jaegertracing/all-in-one:{{ jaeger_version }}
+              container_name: jaeger
+              ports:
+                - "{{ jaeger_ui_port }}:16686"
+                - "{{ jaeger_collector_port }}:14268"
+                - "{{ jaeger_agent_port }}:6831/udp"
+              environment:
+                - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+                - SPAN_STORAGE_TYPE=memory
+              restart: unless-stopped
+              networks:
+                - monitoring
+          
+          networks:
+            monitoring:
+              driver: bridge
+        dest: "/etc/jaeger/docker-compose.yml"
+        owner: "{{ monitoring_user }}"
+        group: "{{ monitoring_user }}"
+        mode: '0644'
+
+    - name: "Create monitoring health check script"
+      copy:
+        content: |
+          #!/bin/bash
+          # Ainflue Monitoring Health Check
+          # Verify all monitoring services are running
+          
+          HEALTH_LOG="/var/log/monitoring/health-check.log"
+          
+          echo "=== Monitoring Health Check - $(date) ===" >> $HEALTH_LOG
+          
+          # Check Prometheus
+          if curl -s http://localhost:{{ prometheus_port }}/-/healthy > /dev/null; then
+            echo "✓ Prometheus is healthy" >> $HEALTH_LOG
+          else
+            echo "✗ Prometheus is unhealthy" >> $HEALTH_LOG
+          fi
+          
+          # Check Grafana
+          if curl -s http://localhost:{{ grafana_port }}/api/health > /dev/null; then
+            echo "✓ Grafana is healthy" >> $HEALTH_LOG
+          else
+            echo "✗ Grafana is unhealthy" >> $HEALTH_LOG
+          fi
+          
+          # Check Alertmanager
+          if curl -s http://localhost:{{ alertmanager_port }}/-/healthy > /dev/null; then
+            echo "✓ Alertmanager is healthy" >> $HEALTH_LOG
+          else
+            echo "✗ Alertmanager is unhealthy" >> $HEALTH_LOG
+          fi
+          
+          # Check Node Exporter
+          if curl -s http://localhost:{{ node_exporter_port }}/metrics > /dev/null; then
+            echo "✓ Node Exporter is healthy" >> $HEALTH_LOG
+          else
+            echo "✗ Node Exporter is unhealthy" >> $HEALTH_LOG
+          fi
+          
+          # Check Jaeger
+          if curl -s http://localhost:{{ jaeger_ui_port }}/ > /dev/null; then
+            echo "✓ Jaeger is healthy" >> $HEALTH_LOG
+          else
+            echo "✗ Jaeger is unhealthy" >> $HEALTH_LOG
+          fi
+          
+          echo "Health check completed" >> $HEALTH_LOG
+        dest: "/usr/local/bin/monitoring-health-check.sh"
+        mode: '0755'
+
+    - name: "Start and enable monitoring services"
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+        daemon_reload: yes
+      loop:
+        - prometheus
+        - node-exporter
+        - alertmanager
+        - grafana-server
+
+    - name: "Start Jaeger with Docker Compose"
+      command: docker-compose -f /etc/jaeger/docker-compose.yml up -d
+      args:
+        chdir: /etc/jaeger
+
+    - name: "Add monitoring health check cron job"
+      cron:
+        name: "Monitoring health check"
+        minute: "*/5"
+        job: "/usr/local/bin/monitoring-health-check.sh"
+        user: "{{ monitoring_user }}"
+
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: restart prometheus
+      systemd:
+        name: prometheus
+        state: restarted
+
+    - name: restart node-exporter
+      systemd:
+        name: node-exporter
+        state: restarted
+
+    - name: restart alertmanager
+      systemd:
+        name: alertmanager
+        state: restarted
+
+    - name: restart grafana
+      systemd:
+        name: grafana-server
+        state: restarted

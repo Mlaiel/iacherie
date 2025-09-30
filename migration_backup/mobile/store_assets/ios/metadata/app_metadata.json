@@ -1,0 +1,115 @@
+{
+  "app_info": {
+    "name": "Ainflue",
+    "subtitle": "Professional Content Creation Platform",
+    "version": "1.0.0",
+    "build": "1",
+    "bundle_id": "com.fahedmlaiel.ainflue",
+    "sku": "AINFLUE_IOS_2025",
+    "developer": {
+      "name": "Fahed Mlaiel",
+      "email": "mlaiel@live.de",
+      "website": "https://ainflue.com",
+      "support_url": "https://support.ainflue.com",
+      "privacy_policy_url": "https://ainflue.com/privacy"
+    }
+  },
+  "app_store_info": {
+    "primary_category": "Productivity",
+    "secondary_category": "Social Networking",
+    "content_rating": "4+",
+    "price_tier": "Free",
+    "in_app_purchases": true,
+    "subscription_model": "Freemium",
+    "keywords": [
+      "content creation",
+      "social media",
+      "video editing",
+      "AI protection",
+      "influencer tools",
+      "content marketing",
+      "creator economy",
+      "video creator",
+      "content management",
+      "social media management"
+    ]
+  },
+  "technical_info": {
+    "minimum_os_version": "14.0",
+    "device_requirements": [
+      "iPhone 6s or later",
+      "iPad Air 2 or later",
+      "iPod touch (7th generation) or later"
+    ],
+    "supported_languages": [
+      "English (Primary)",
+      "Spanish",
+      "French",
+      "German",
+      "Japanese",
+      "Korean",
+      "Portuguese",
+      "Italian",
+      "Russian",
+      "Chinese (Simplified)",
+      "Chinese (Traditional)",
+      "Arabic"
+    ],
+    "features": [
+      "Camera",
+      "Microphone",
+      "Face ID",
+      "Touch ID",
+      "Background App Refresh",
+      "Push Notifications",
+      "CloudKit",
+      "Core Data",
+      "Metal",
+      "Core ML",
+      "ARKit",
+      "Widgets"
+    ]
+  },
+  "review_info": {
+    "demo_account": {
+      "username": "demo@ainflue.com",
+      "password": "DemoAccount2025!",
+      "notes": "This is a demonstration account for App Store review. All features are accessible."
+    },
+    "test_content": {
+      "sample_video": "Sample content creation workflow",
+      "sample_audio": "Audio recording and processing demo",
+      "ai_features": "Content protection and fingerprinting demo"
+    },
+    "review_notes": "The app requires camera and microphone permissions for core functionality. All AI processing is performed on-device for privacy. The app includes optional subscription features but core functionality is free."
+  },
+  "marketing": {
+    "promotional_text": "Transform your content creation with AI-powered tools and protection",
+    "description_summary": "Professional content creation platform with AI-powered protection, multi-platform distribution, and advanced analytics for creators and influencers.",
+    "whats_new": "🚀 Introducing Ainflue - The future of content creation!\n\n✨ NEW FEATURES:\n• AI-powered content protection\n• Multi-platform publishing\n• Professional editing tools\n• Real-time analytics\n• Secure biometric authentication\n\n🎯 CREATOR FOCUSED:\n• Streamlined workflow\n• Revenue optimization\n• Brand partnership tools\n• Copyright protection\n\n🔒 PRIVACY FIRST:\n• On-device AI processing\n• End-to-end encryption\n• No unauthorized data collection\n\nJoin thousands of creators already using Ainflue!"
+  },
+  "compliance": {
+    "data_collection": {
+      "collects_data": true,
+      "data_types": [
+        "Contact Info (Email for account creation)",
+        "User Content (Videos, Images, Audio created in app)",
+        "Usage Data (Analytics for app improvement)",
+        "Diagnostics (Crash reports)"
+      ],
+      "tracking": false,
+      "privacy_policy_required": true
+    },
+    "age_rating": {
+      "rating": "4+",
+      "reason": "No objectionable content",
+      "restrictions": "None"
+    },
+    "export_compliance": {
+      "uses_encryption": true,
+      "encryption_type": "Standard encryption",
+      "exempt": false,
+      "notes": "App uses standard encryption for content protection and secure communications"
+    }
+  }
+}

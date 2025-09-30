@@ -1,4 +1,4 @@
-# Ainflue Reporting Enterprise Modul
+# IA Chérie Reporting Enterprise Modul
 
 **Enterprise-Level Reporting und Business Intelligence System für die Creator Economy**
 
@@ -29,7 +29,7 @@ ALLE RECHTE VORBEHALTEN
 
 ## 📊 Modul-Übersicht
 
-Das Ainflue Reporting Enterprise Modul bietet umfassende Business Intelligence und automatisierte Reporting-Funktionen, speziell für die Creator Economy entwickelt. Diese industrielle Lösung integriert sich nahtlos in die Creator Economy Geschäftslogik:
+Das IA Chérie Reporting Enterprise Modul bietet umfassende Business Intelligence und automatisierte Reporting-Funktionen, speziell für die Creator Economy entwickelt. Diese industrielle Lösung integriert sich nahtlos in die Creator Economy Geschäftslogik:
 
 **Creator Workflow:** Multi-Format Inhalte → KI-Verarbeitung → IP-Schutz → Monetarisierung → Kollaboration & Gamification → SEO → Distribution
 

@@ -2,7 +2,7 @@
 Platform Compliance Configurations
 =================================
 
-Platform compliance and regulatory settings for Ainflue Distribution Platform.
+Platform compliance and regulatory settings for IA Chérie Distribution Platform.
 Handles content policies, data privacy, and regulatory compliance across platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -162,8 +162,8 @@ class ComplianceConfigs:
             "backup_encryption": True,
             "incident_reporting_enabled": True,
             "breach_notification_hours": 72,
-            "dpo_contact": "dpo@ainflue.com",
-            "legal_contact": "legal@ainflue.com"
+            "dpo_contact": "dpo@iacherie.com",
+            "legal_contact": "legal@iacherie.com"
         }
         
     def _load_default_configurations(self):

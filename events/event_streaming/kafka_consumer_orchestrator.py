@@ -1,5 +1,5 @@
 """IA Influencer Agent - Kafka Consumer Orchestrator
-Enterprise Kafka Consumer Group Management for Ainflue Platform
+Enterprise Kafka Consumer Group Management for IA Chérie Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -43,28 +43,28 @@ class LoadBalancingStrategy(Enum):
 
 
 class AinflueBusinesConsumerGroups:
-    """Consumer groups for Ainflue business workflows"""
+    """Consumer groups for IA Chérie business workflows"""
     
     # Content Processing Pipeline
-    CONTENT_UPLOAD_PROCESSOR = "ainflue-content-upload-processor"
-    AI_ANALYSIS_PROCESSOR = "ainflue-ai-analysis-processor"
-    CONTENT_PROTECTION_PROCESSOR = "ainflue-content-protection-processor"
+    CONTENT_UPLOAD_PROCESSOR = "iacherie-content-upload-processor"
+    AI_ANALYSIS_PROCESSOR = "iacherie-ai-analysis-processor"
+    CONTENT_PROTECTION_PROCESSOR = "iacherie-content-protection-processor"
     
     # SEO & Search
-    SEO_OPTIMIZATION_PROCESSOR = "ainflue-seo-optimization-processor"
-    SEARCH_INDEXING_PROCESSOR = "ainflue-search-indexing-processor"
+    SEO_OPTIMIZATION_PROCESSOR = "iacherie-seo-optimization-processor"
+    SEARCH_INDEXING_PROCESSOR = "iacherie-search-indexing-processor"
     
     # Collaboration & Matching
-    COLLABORATION_MATCHING_PROCESSOR = "ainflue-collaboration-matching-processor"
-    RECOMMENDATION_ENGINE_PROCESSOR = "ainflue-recommendation-engine-processor"
+    COLLABORATION_MATCHING_PROCESSOR = "iacherie-collaboration-matching-processor"
+    RECOMMENDATION_ENGINE_PROCESSOR = "iacherie-recommendation-engine-processor"
     
     # Analytics & Monetization
-    REVENUE_ANALYTICS_PROCESSOR = "ainflue-revenue-analytics-processor"
-    ENGAGEMENT_METRICS_PROCESSOR = "ainflue-engagement-metrics-processor"
+    REVENUE_ANALYTICS_PROCESSOR = "iacherie-revenue-analytics-processor"
+    ENGAGEMENT_METRICS_PROCESSOR = "iacherie-engagement-metrics-processor"
     
     # Distribution & Publishing
-    DISTRIBUTION_ORCHESTRATOR = "ainflue-distribution-orchestrator"
-    PLATFORM_SYNC_PROCESSOR = "ainflue-platform-sync-processor"
+    DISTRIBUTION_ORCHESTRATOR = "iacherie-distribution-orchestrator"
+    PLATFORM_SYNC_PROCESSOR = "iacherie-platform-sync-processor"
 
 
 @dataclass
@@ -483,7 +483,7 @@ class KafkaConsumer:
 
 
 class KafkaConsumerOrchestrator:
-    """Orchestrates multiple Kafka consumer groups for Ainflue platform"""
+    """Orchestrates multiple Kafka consumer groups for IA Chérie platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -497,7 +497,7 @@ class KafkaConsumerOrchestrator:
         self._register_default_processors()
     
     def _register_default_processors(self):
-        """Register default message processors for Ainflue business logic"""
+        """Register default message processors for IA Chérie business logic"""
         self.processors["content_upload"] = ContentUploadProcessor()
         self.processors["ai_analysis"] = AIAnalysisProcessor()
     
@@ -509,7 +509,7 @@ class KafkaConsumerOrchestrator:
             # Start orchestrator monitoring task
             self._orchestrator_task = asyncio.create_task(self._orchestrator_loop())
             
-            # Setup default consumer groups for Ainflue
+            # Setup default consumer groups for IA Chérie
             await self._setup_default_consumer_groups()
             
             logger.info("Kafka Consumer Orchestrator started successfully")
@@ -542,12 +542,12 @@ class KafkaConsumerOrchestrator:
             raise
     
     async def _setup_default_consumer_groups(self):
-        """Setup default consumer groups for Ainflue platform"""
+        """Setup default consumer groups for IA Chérie platform"""
         try:
             # Content upload processing group
             await self.create_consumer_group(
                 group_id=AinflueBusinesConsumerGroups.CONTENT_UPLOAD_PROCESSOR,
-                topics=["ainflue-content-events"],
+                topics=["iacherie-content-events"],
                 consumer_count=3,
                 processor=self.processors["content_upload"]
             )
@@ -555,7 +555,7 @@ class KafkaConsumerOrchestrator:
             # AI analysis processing group
             await self.create_consumer_group(
                 group_id=AinflueBusinesConsumerGroups.AI_ANALYSIS_PROCESSOR,
-                topics=["ainflue-content-events"],
+                topics=["iacherie-content-events"],
                 consumer_count=2,
                 processor=self.processors["ai_analysis"]
             )
@@ -563,7 +563,7 @@ class KafkaConsumerOrchestrator:
             # Revenue analytics group
             await self.create_consumer_group(
                 group_id=AinflueBusinesConsumerGroups.REVENUE_ANALYTICS_PROCESSOR,
-                topics=["ainflue-revenue-events"],
+                topics=["iacherie-revenue-events"],
                 consumer_count=1,
                 processor=None  # Default processing
             )

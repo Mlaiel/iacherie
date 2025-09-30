@@ -1,5 +1,5 @@
 """
-Creator Economy Service for Ainflue Microservices
+Creator Economy Service for IA Chérie Microservices
 Integration with creator economy platforms and monetization
 
 Author: Fahed Mlaiel (mlaiel@live.de)

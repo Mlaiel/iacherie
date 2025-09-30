@@ -1,4 +1,4 @@
-# 📜 LICENCE PROPRIÉTAIRE - AINFLUE ENTERPRISE
+# 📜 LICENCE PROPRIÉTAIRE - IACHERIE ENTERPRISE
 
 **Version:** 1.0 Enterprise Proprietary License  
 **Date:** 15 Décembre 2025  
@@ -12,11 +12,11 @@
 
 ---
 
-## ⚖️ LICENCE PROPRIÉTAIRE AINFLUE ENTERPRISE
+## ⚖️ LICENCE PROPRIÉTAIRE IACHERIE ENTERPRISE
 
 ### 📋 **PRÉAMBULE JURIDIQUE**
 
-Cette licence régit l'utilisation de la plateforme Ainflue Enterprise, incluant mais non limitée à :
+Cette licence régit l'utilisation de la plateforme IA Chérie Enterprise, incluant mais non limitée à :
 
 - **Plateforme logicielle complète** (backend, frontend, mobile, desktop)
 - **Architecture enterprise** (53 agents IA, 65+ intégrations plateformes)
@@ -267,7 +267,7 @@ Fahed Mlaiel se réserve le **droit exclusif** de :
 **Propriétaire et Licenceur :**
 ```
 Fahed Mlaiel
-Email: legal@ainflue.enterprise
+Email: legal@iacherie.enterprise
 Tel: +33 1 XX XX XX XX (France)
 Tel: +49 XXX XXX XXXX (Allemagne)
 Adresse légale: [Confidentielle - Sur demande]
@@ -275,7 +275,7 @@ Adresse légale: [Confidentielle - Sur demande]
 
 #### **10.2 Procédure Demande Licence**
 
-1. **Email motivation** à licensing@ainflue.enterprise
+1. **Email motivation** à licensing@iacherie.enterprise
 2. **Due diligence** de l'entreprise demandeuse
 3. **Négociation termes** spécifiques
 4. **Signature contrat** avec annexes techniques
@@ -309,7 +309,7 @@ Cette licence entre en vigueur le **15 Décembre 2025** et remplace toute licenc
 
 > **CETTE LICENCE EST UN DOCUMENT JURIDIQUE CONTRAIGNANT**
 > 
-> Toute utilisation du logiciel Ainflue Enterprise sans licence valide constitue :
+> Toute utilisation du logiciel IA Chérie Enterprise sans licence valide constitue :
 > - **Contrefaçon** (Code de la propriété intellectuelle - Art. L335-2)
 > - **Concurrence déloyale** (Code de commerce - Art. L442-1)
 > - **Vol de propriété intellectuelle** (Code pénal - Art. 311-1)
@@ -323,7 +323,7 @@ Cette licence entre en vigueur le **15 Décembre 2025** et remplace toute licenc
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés mondialement**  
-**Ainflue Enterprise Proprietary License v1.0**  
+**IA Chérie Enterprise Proprietary License v1.0**  
 **Document juridique confidentiel et propriétaire**
 
 **Signature requise pour acceptation des termes**

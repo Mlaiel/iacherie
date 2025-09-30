@@ -1,11 +1,11 @@
 """
-⚙️ Dynamic Configuration Manager Enterprise - Ainflue
+⚙️ Dynamic Configuration Manager Enterprise - IA Chérie
 ====================================================
 Manager configuration dynamique pour microservices.
 Config hot-reload + feature flags + environment management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -254,7 +254,7 @@ class DistributedConfigStore:
         """Charger depuis fichier de configuration"""
         try:
             import os
-            config_file = f"/etc/ainflue/{service_id}/{environment}.json"
+            config_file = f"/etc/iacherie/{service_id}/{environment}.json"
             if os.path.exists(config_file):
                 with open(config_file, 'r') as f:
                     return json.load(f)
@@ -263,7 +263,7 @@ class DistributedConfigStore:
         
         # Configuration par défaut
         return {
-            'database_url': 'postgresql://localhost:5432/ainflue',
+            'database_url': 'postgresql://localhost:5432/iacherie',
             'redis_url': 'redis://localhost:6379',
             'log_level': 'INFO',
             'max_connections': 100,

@@ -1,4 +1,4 @@
-# 🔐 Ainflue Security Module - Enterprise Grade
+# 🔐 IA Chérie Security Module - Enterprise Grade
 
 ## 🔒 INTELLECTUAL PROPERTY - FAHED MLAIEL
 ```
@@ -12,7 +12,7 @@
 
 ## 🚀 Overview
 
-The Ainflue Security Module is an enterprise-grade security framework designed specifically for creator economy platforms. It provides comprehensive protection for musicians, photographers, bloggers, and other content creators through advanced threat detection, access control, and vulnerability management.
+The IA Chérie Security Module is an enterprise-grade security framework designed specifically for creator economy platforms. It provides comprehensive protection for musicians, photographers, bloggers, and other content creators through advanced threat detection, access control, and vulnerability management.
 
 ### 🎯 Key Features
 

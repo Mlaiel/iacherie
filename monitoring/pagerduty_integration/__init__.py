@@ -1,5 +1,5 @@
 """
-PagerDuty Integration Module for Ainflue Platform
+PagerDuty Integration Module for IA Chérie Platform
 Intelligent alerting and incident management for Creator Economy
 
 Author: Fahed Mlaiel <mlaiel@live.de>

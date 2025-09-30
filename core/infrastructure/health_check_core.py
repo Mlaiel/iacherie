@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Infrastructure - Advanced Health Check Engine
+IA Chérie Core Infrastructure - Advanced Health Check Engine
 =========================================================
 
 Enterprise-grade health checking system for distributed microservices
@@ -393,7 +393,7 @@ class HealthCheckHistory:
 class HealthCheckCore:
     """Advanced enterprise health check core"""
     
-    def __init__(self, level: str = "enterprise", service_name: str = "ainflue-service"):
+    def __init__(self, level: str = "enterprise", service_name: str = "iacherie-service"):
         self.level = level
         self.service_name = service_name
         self.checkers: Dict[str, HealthChecker] = {}

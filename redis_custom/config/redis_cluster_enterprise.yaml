@@ -11,7 +11,7 @@
 # Enterprise Cluster Configuration
 cluster_enterprise:
   # Identification Ultra-Stricte
-  cluster_name: "ainflue-redis-enterprise-prod"
+  cluster_name: "iacherie-redis-enterprise-prod"
   cluster_id: "cluster-enterprise-001"
   environment: "production"
   version: "7.2.0-enterprise"
@@ -29,7 +29,7 @@ cluster_enterprise:
   # Configuration Nodes Enterprise
   nodes:
     master_1:
-      host: "redis-master-1.ainflue.internal"
+      host: "redis-master-1.iacherie.internal"
       port: 6379
       role: "master"
       slots: "0-2730"
@@ -41,7 +41,7 @@ cluster_enterprise:
         storage: "500GB SSD"
       
     master_2:
-      host: "redis-master-2.ainflue.internal"
+      host: "redis-master-2.iacherie.internal"
       port: 6379
       role: "master"
       slots: "2731-5461"
@@ -53,7 +53,7 @@ cluster_enterprise:
         storage: "500GB SSD"
         
     master_3:
-      host: "redis-master-3.ainflue.internal"
+      host: "redis-master-3.iacherie.internal"
       port: 6379
       role: "master"
       slots: "5462-8192"
@@ -65,7 +65,7 @@ cluster_enterprise:
         storage: "500GB SSD"
         
     master_4:
-      host: "redis-master-4.ainflue.internal"
+      host: "redis-master-4.iacherie.internal"
       port: 6379
       role: "master"
       slots: "8193-10922"
@@ -77,7 +77,7 @@ cluster_enterprise:
         storage: "500GB SSD"
         
     master_5:
-      host: "redis-master-5.ainflue.internal"
+      host: "redis-master-5.iacherie.internal"
       port: 6379
       role: "master"
       slots: "10923-13653"
@@ -89,7 +89,7 @@ cluster_enterprise:
         storage: "500GB SSD"
         
     master_6:
-      host: "redis-master-6.ainflue.internal"
+      host: "redis-master-6.iacherie.internal"
       port: 6379
       role: "master"
       slots: "13654-16383"
@@ -301,8 +301,8 @@ high_availability:
   # Sentinel Configuration Enterprise
   sentinel:
     masters:
-      - name: "ainflue-master-1"
-        ip: "redis-master-1.ainflue.internal"
+      - name: "iacherie-master-1"
+        ip: "redis-master-1.iacherie.internal"
         port: 6379
         quorum: 2
         

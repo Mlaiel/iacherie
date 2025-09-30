@@ -1,16 +1,16 @@
-# Terms of Service - Ainflue Platform
+# Terms of Service - IA Chérie Platform
 
 **Last Updated: January 2025**
 
 ## 1. Introduction
 
-Welcome to Ainflue, an AI-powered content protection and creator monetization platform operated by Fahed Mlaiel ("Company", "we", "us", or "our"). These Terms of Service ("Terms") govern your use of our platform, services, and associated applications (collectively, the "Service").
+Welcome to IA Chérie, an AI-powered content protection and creator monetization platform operated by Fahed Mlaiel ("Company", "we", "us", or "our"). These Terms of Service ("Terms") govern your use of our platform, services, and associated applications (collectively, the "Service").
 
 By accessing or using our Service, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access the Service.
 
 ## 2. Description of Service
 
-Ainflue is a comprehensive platform that provides:
+IA Chérie is a comprehensive platform that provides:
 
 - **Content Protection**: Advanced AI-powered fingerprinting and copyright protection for digital content
 - **Creator Monetization**: Tools and systems to help content creators monetize their work
@@ -173,7 +173,7 @@ For questions about these Terms of Service, please contact us:
 
 **Fahed Mlaiel**  
 Email: mlaiel@live.de  
-Legal Department: legal@ainflue.com  
+Legal Department: legal@iacherie.com  
 
 ## 15. Updates to Terms
 

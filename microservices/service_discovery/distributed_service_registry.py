@@ -1,11 +1,11 @@
 """
-🚀 Distributed Service Registry Enterprise - Ainflue
+🚀 Distributed Service Registry Enterprise - IA Chérie
 ====================================================
 Registry distribué avec consensus, high availability, et auto-healing.
 Support multi-nœuds avec consistent hashing et leader election.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

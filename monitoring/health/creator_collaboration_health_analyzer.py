@@ -1,4 +1,4 @@
-"""🤝 Creator Collaboration Health Analyzer | Ainflue Enterprise
+"""🤝 Creator Collaboration Health Analyzer | IA Chérie Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

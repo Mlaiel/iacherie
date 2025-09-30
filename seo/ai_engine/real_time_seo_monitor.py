@@ -1,5 +1,5 @@
 """
-Real-Time SEO Monitor for Ainflue Platform
+Real-Time SEO Monitor for IA Chérie Platform
 ==========================================
 
 Advanced real-time SEO monitoring system with AI-powered predictive alerts,
@@ -220,7 +220,7 @@ class RealTimeSEOMonitor:
             self.db_pool = await asyncpg.create_pool(
                 host=self.config.get('db_host', 'localhost'),
                 port=self.config.get('db_port', 5432),
-                database=self.config.get('db_name', 'ainflue'),
+                database=self.config.get('db_name', 'iacherie'),
                 user=self.config.get('db_user', 'postgres'),
                 password=self.config.get('db_password', ''),
                 min_size=5,

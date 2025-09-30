@@ -1,5 +1,5 @@
 
-AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION REPORT
+IACHERIE PLATFORM - INFRASTRUCTURE VALIDATION REPORT
 ====================================================
 
 Validation completed in 2.69 seconds
@@ -29,7 +29,7 @@ GENERATED FILES:
 ✅ test_database_migrations.sh
 ✅ INFRASTRUCTURE_STARTUP_GUIDE.md
 
-📖 Startup Guide: /home/runner/work/Ainflue/Ainflue/INFRASTRUCTURE_STARTUP_GUIDE.md
+📖 Startup Guide: /home/runner/work/IA Chérie/IA Chérie/INFRASTRUCTURE_STARTUP_GUIDE.md
 
 SUMMARY & NEXT STEPS:
 ====================

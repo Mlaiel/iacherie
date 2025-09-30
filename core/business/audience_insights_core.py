@@ -1,5 +1,5 @@
 """
-Ainflue Core Business - Audience Insights Core
+IA Chérie Core Business - Audience Insights Core
 ===============================================
 
 Enterprise-grade audience analytics and insights system providing deep audience

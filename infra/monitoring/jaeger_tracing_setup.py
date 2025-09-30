@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Jaeger Tracing Setup
+# IA Chérie Infrastructure Module - Jaeger Tracing Setup
 # ===================================================
 # 
-# Enterprise-grade distributed tracing setup for Ainflue platform
+# Enterprise-grade distributed tracing setup for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -104,7 +104,7 @@ class JaegerTracingSetup:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize Jaeger tracing setup"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/monitoring"
+        self.config_path = config_path or "/home/runner/work/IA Chérie/IA Chérie/infra/monitoring"
         self.jaeger_config: Dict[str, Any] = {}
         self.components: Dict[str, JaegerComponent] = {}
         self.trace_configs: Dict[str, TracingConfig] = {}
@@ -319,30 +319,30 @@ class JaegerTracingSetup:
                 },
                 "per_service_strategies": [
                     {
-                        "service": "ainflue-api",
+                        "service": "iacherie-api",
                         "type": SamplingStrategy.PROBABILISTIC.value,
                         "param": 0.5
                     },
                     {
-                        "service": "ainflue-ai-engine",
+                        "service": "iacherie-ai-engine",
                         "type": SamplingStrategy.PROBABILISTIC.value,
                         "param": 1.0
                     },
                     {
-                        "service": "ainflue-auth",
+                        "service": "iacherie-auth",
                         "type": SamplingStrategy.RATE_LIMITING.value,
                         "param": 100
                     }
                 ],
                 "per_operation_strategies": [
                     {
-                        "service": "ainflue-api",
+                        "service": "iacherie-api",
                         "operation": "POST /upload",
                         "type": SamplingStrategy.PROBABILISTIC.value,
                         "param": 1.0
                     },
                     {
-                        "service": "ainflue-api",
+                        "service": "iacherie-api",
                         "operation": "GET /health",
                         "type": SamplingStrategy.PROBABILISTIC.value,
                         "param": 0.01

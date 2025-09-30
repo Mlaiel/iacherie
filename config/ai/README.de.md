@@ -1,4 +1,4 @@
-# 🧠 Ainflue KI-Konfigurationsmodul - Ultra-Fortgeschrittener Künstlicher Intelligenz Hub
+# 🧠 IA Chérie KI-Konfigurationsmodul - Ultra-Fortgeschrittener Künstlicher Intelligenz Hub
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org)
@@ -6,7 +6,7 @@
 [![Transformers](https://img.shields.io/badge/🤗%20Transformers-4.30+-yellow.svg)](https://huggingface.co/transformers)
 [![CUDA](https://img.shields.io/badge/CUDA-12.0+-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 Ultra-Fortgeschrittener KI-Konfiguration Orchestrierungs-Hub**  
 > Revolutionäres System für das Management künstlicher Intelligenz-Konfigurationen mit Quantum-Scale neuronalen Netzwerken, autonomer Modelloptimierung und nächster Generation KI-Orchestrierungsfähigkeiten.
@@ -15,7 +15,7 @@
 
 ## 🌟 **Überblick**
 
-Das **Ainflue KI-Konfigurationsmodul** repräsentiert den absoluten Gipfel der Technologie für das Management künstlicher Intelligenz-Konfigurationen. Dieses ultra-sophistizierte System bietet zentralisierte, intelligente und adaptive KI-Konfigurationsorchestierung für das gesamte Ainflue KI-Ökosystem mit Quantum-Level-Funktionen, die neu definieren, wie moderne KI-Anwendungen Modellkonfiguration, Trainingspipelines und Inferenzoptimierung in beispiellosem Maßstab handhaben.
+Das **IA Chérie KI-Konfigurationsmodul** repräsentiert den absoluten Gipfel der Technologie für das Management künstlicher Intelligenz-Konfigurationen. Dieses ultra-sophistizierte System bietet zentralisierte, intelligente und adaptive KI-Konfigurationsorchestierung für das gesamte IA Chérie KI-Ökosystem mit Quantum-Level-Funktionen, die neu definieren, wie moderne KI-Anwendungen Modellkonfiguration, Trainingspipelines und Inferenzoptimierung in beispiellosem Maßstab handhaben.
 
 ### 🏗️ **Quantum KI-Architektur**
 
@@ -117,8 +117,8 @@ Dieses **proprietäre ultra-fortgeschrittene KI-Konfigurationsorchestierungssyst
 
 ```bash
 # KI-Konfiguration Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/config/ai
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/config/ai
 
 # KI-Abhängigkeiten installieren
 pip install -r requirements-ai.txt
@@ -146,7 +146,7 @@ ai_config = AIModelConfig()
 
 # Transformer-Modell konfigurieren
 transformer_config = {
-    "model_name": "ainflue-quantum-transformer-7b",
+    "model_name": "iacherie-quantum-transformer-7b",
     "architecture": "transformer",
     "attention_heads": 64,
     "hidden_size": 4096,
@@ -169,7 +169,7 @@ training_config = TrainingConfig(
 
 # Inferenz-Optimierung konfigurieren
 inference_config = InferenceConfig(
-    model_path="/models/ainflue-quantum-transformer-7b",
+    model_path="/models/iacherie-quantum-transformer-7b",
     batch_size=1,
     max_tokens=2048,
     temperature=0.7,
@@ -196,7 +196,7 @@ quantum_config = QuantumAIConfig(
 from config.ai import ModelDeploymentConfig
 
 deployment = ModelDeploymentConfig(
-    model_name="ainflue-quantum-transformer-7b",
+    model_name="iacherie-quantum-transformer-7b",
     deployment_target="kubernetes",
     replicas=5,
     auto_scaling=True,
@@ -342,21 +342,21 @@ class AIOptimizationConfig:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-models
+  name: iacherie-ai-models
   namespace: ai-production
 spec:
   replicas: 10
   selector:
     matchLabels:
-      app: ainflue-ai
+      app: iacherie-ai
   template:
     metadata:
       labels:
-        app: ainflue-ai
+        app: iacherie-ai
     spec:
       containers:
       - name: ai-inference
-        image: ainflue/ai-models:quantum-v2.0
+        image: iacherie/ai-models:quantum-v2.0
         resources:
           requests:
             memory: "32Gi"
@@ -501,11 +501,11 @@ AI_ETHICS_CONFIG = {
 
 ### 🤝 **KI-Support erhalten**
 
-- **📚 KI-Dokumentation**: [https://docs.ainflue.com/ai](https://docs.ainflue.com/ai)
-- **🧠 KI-Forschungsgemeinschaft**: [Discord KI-Kanal](https://discord.gg/ainflue-ai)
-- **🐛 KI-Bug-Berichte**: [GitHub KI-Issues](https://github.com/Mlaiel/Ainflue/issues/ai)
-- **💡 KI-Forschungsvorschläge**: [KI-Forschungsportal](https://research.ainflue.com)
-- **🤖 KI-Modell-Hub**: [Hugging Face Ainflue](https://huggingface.co/ainflue)
+- **📚 KI-Dokumentation**: [https://docs.iacherie.com/ai](https://docs.iacherie.com/ai)
+- **🧠 KI-Forschungsgemeinschaft**: [Discord KI-Kanal](https://discord.gg/iacherie-ai)
+- **🐛 KI-Bug-Berichte**: [GitHub KI-Issues](https://github.com/Mlaiel/IA Chérie/issues/ai)
+- **💡 KI-Forschungsvorschläge**: [KI-Forschungsportal](https://research.iacherie.com)
+- **🤖 KI-Modell-Hub**: [Hugging Face IA Chérie](https://huggingface.co/iacherie)
 
 ### 👨‍🔬 **KI-Forschungsleitung**
 
@@ -534,7 +534,7 @@ Wir sind verpflichtet, KI-Technologie zu entwickeln, die:
 
 ---
 
-**🚀 Bereit, Ihre KI-Fähigkeiten zu revolutionieren? Erkunden Sie die Zukunft der künstlichen Intelligenz mit dem Ainflue KI-Konfigurationsmodul!**
+**🚀 Bereit, Ihre KI-Fähigkeiten zu revolutionieren? Erkunden Sie die Zukunft der künstlichen Intelligenz mit dem IA Chérie KI-Konfigurationsmodul!**
 
 ---
 

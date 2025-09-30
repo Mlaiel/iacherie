@@ -1,4 +1,4 @@
-# 🐳 منصة Ainflue - Docker والحاويات
+# 🐳 منصة IA Chérie - Docker والحاويات
 
 **منصة المؤثرين بالذكاء الاصطناعي للمؤسسات - بنية Docker فائقة التطور والحاويات**
 
@@ -10,7 +10,7 @@
 
 ## 📋 نظرة عامة
 
-يوفر هذا الوحدة Docker حلاً شاملاً على مستوى المؤسسات للحاويات لمنصة Ainflue للمؤثرين بالذكاء الاصطناعي. تدعم الهندسة المعمارية أكثر من 80 خدمة مايكرو موزعة على 12 وحدة متخصصة، مصممة للمبدعين (الموسيقيين، المدونين، المصورين، المؤثرين، الكوميديين) مع قدرات متقدمة لمعالجة المحتوى بالذكاء الاصطناعي، والحماية، والاستثمار، والتوزيع.
+يوفر هذا الوحدة Docker حلاً شاملاً على مستوى المؤسسات للحاويات لمنصة IA Chérie للمؤثرين بالذكاء الاصطناعي. تدعم الهندسة المعمارية أكثر من 80 خدمة مايكرو موزعة على 12 وحدة متخصصة، مصممة للمبدعين (الموسيقيين، المدونين، المصورين، المؤثرين، الكوميديين) مع قدرات متقدمة لمعالجة المحتوى بالذكاء الاصطناعي، والحماية، والاستثمار، والتوزيع.
 
 ### 🎯 تدفق منطق الأعمال
 ```
@@ -127,8 +127,8 @@ docker/
 ### 1. نشر الإنتاج
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker
 
 # تعيين متغيرات البيئة
 cp infrastructure/.env.example .env
@@ -148,7 +148,7 @@ docker-compose logs -f
 docker-compose -f infrastructure/docker-compose.yml up -d
 
 # بناء صور مخصصة
-docker build -f infrastructure/Dockerfile.dev -t ainflue/dev:latest .
+docker build -f infrastructure/Dockerfile.dev -t iacherie/dev:latest .
 
 # مراقبة الخدمات
 docker stats
@@ -180,8 +180,8 @@ REDIS_PASSWORD=كلمة_مرور_redis
 # تكوين الأمان
 JWT_SECRET_KEY=مفتاح_jwt_فائق_الأمان
 ENCRYPTION_KEY=مفتاح_تشفير_256بت
-SSL_CERT_PATH=/etc/ssl/certs/ainflue.crt
-SSL_KEY_PATH=/etc/ssl/private/ainflue.key
+SSL_CERT_PATH=/etc/ssl/certs/iacherie.crt
+SSL_KEY_PATH=/etc/ssl/private/iacherie.key
 ```
 
 ---
@@ -252,11 +252,11 @@ SSL_KEY_PATH=/etc/ssl/private/ainflue.key
 docker-compose -f testing/docker-compose.testing.yml up --abort-on-container-exit
 
 # اختبار الأداء
-docker run --rm ainflue/performance-tester:latest
+docker run --rm iacherie/performance-tester:latest
 
 # فحص الأمان
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  aquasec/trivy image ainflue/api:latest
+  aquasec/trivy image iacherie/api:latest
 ```
 
 ---

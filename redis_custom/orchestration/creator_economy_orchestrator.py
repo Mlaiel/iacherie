@@ -989,7 +989,7 @@ class CreatorEconomyOrchestratorFactory:
         """Création orchestrateur selon type"""
         redis_configs = {
             "enterprise": {
-                'host': 'redis-cluster.ainflue.internal',
+                'host': 'redis-cluster.iacherie.internal',
                 'port': 6379,
                 'db': 5,
                 'max_connections': 200,

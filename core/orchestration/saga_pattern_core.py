@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Orchestration - Advanced Saga Pattern Engine
+IA Chérie Core Orchestration - Advanced Saga Pattern Engine
 =========================================================
 
 Enterprise-grade saga pattern implementation for distributed

@@ -1,6 +1,6 @@
 """
 📈 Content Performance Service - Performance de Contenu Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Service spécialisé de monitoring et optimisation de performance pour contenu.
 Monitoring temps réel avec optimisation automatique et alertes intelligentes.

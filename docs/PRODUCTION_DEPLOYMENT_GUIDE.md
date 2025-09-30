@@ -1,6 +1,6 @@
-# 🚀 Production Deployment Guide - Ainflue Platform
+# 🚀 Production Deployment Guide - IA Chérie Platform
 
-This guide covers the comprehensive production deployment system implemented for the Ainflue Platform, featuring blue-green deployment, canary releases, health-based automatic rollback, deployment scheduling, and emergency procedures.
+This guide covers the comprehensive production deployment system implemented for the IA Chérie Platform, featuring blue-green deployment, canary releases, health-based automatic rollback, deployment scheduling, and emergency procedures.
 
 ## 📋 Table of Contents
 
@@ -236,12 +236,12 @@ Thresholds and behaviors can be customized by modifying:
    - Verify all required fields
 
 ### Monitoring Dashboards
-- **Grafana**: https://grafana.ainflue.com/deployments
-- **Datadog**: https://app.datadoghq.com/apm/services/ainflue
-- **Sentry**: https://sentry.io/organizations/ainflue
+- **Grafana**: https://grafana.iacherie.com/deployments
+- **Datadog**: https://app.datadoghq.com/apm/services/iacherie
+- **Sentry**: https://sentry.io/organizations/iacherie
 
 ### Contact Information
-- **DevOps Team**: devops@ainflue.com
+- **DevOps Team**: devops@iacherie.com
 - **Emergency Hotline**: +1-xxx-xxx-xxxx
 - **Slack Channel**: #deployments
 

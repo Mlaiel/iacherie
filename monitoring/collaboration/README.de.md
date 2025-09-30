@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das **Collaboration Monitoring Module** ist ein Enterprise-Level-System zur Überwachung und Optimierung von KI-gestützten Kollaborationspartnerschaften auf der Ainflue-Plattform. Es bietet umfassende Tools für Matching-Algorithmen, Erfolgsprognosen, ROI-Verfolgung und Vertrauensbewertungen.
+Das **Collaboration Monitoring Module** ist ein Enterprise-Level-System zur Überwachung und Optimierung von KI-gestützten Kollaborationspartnerschaften auf der IA Chérie-Plattform. Es bietet umfassende Tools für Matching-Algorithmen, Erfolgsprognosen, ROI-Verfolgung und Vertrauensbewertungen.
 
 ## Hauptfunktionen
 

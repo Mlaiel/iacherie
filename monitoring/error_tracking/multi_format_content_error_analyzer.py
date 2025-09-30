@@ -1,5 +1,5 @@
 """
-Multi-Format Content Error Analyzer for Ainflue Creator Economy
+Multi-Format Content Error Analyzer for IA Chérie Creator Economy
 Advanced error analysis specialized for multi-format content processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>

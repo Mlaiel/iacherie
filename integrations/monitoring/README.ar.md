@@ -11,7 +11,7 @@
 
 ## 🎯 ذكاء المراقبة المؤسسي
 
-مجموعة المراقبة الجاهزة للإنتاج مع قابلية المراقبة الشاملة ومراقبة الأداء وذكاء الأعمال لمنصة منشئ المحتوى Ainflue مع تكاملات 65+ منصة.
+مجموعة المراقبة الجاهزة للإنتاج مع قابلية المراقبة الشاملة ومراقبة الأداء وذكاء الأعمال لمنصة منشئ المحتوى IA Chérie مع تكاملات 65+ منصة.
 
 ### 🏗️ الهندسة المعمارية الكاملة - المكونات المنشورة
 
@@ -35,7 +35,7 @@
 
 ### ذكاء التتبع الموزع
 ```python
-# مثال: تتبع خط إنتاج Ainflue
+# مثال: تتبع خط إنتاج IA Chérie
 trace_analysis = await distributed_tracing.trace_ainflue_pipeline(
     creator_content={
         'creator_id': 'creator_123',
@@ -184,7 +184,7 @@ export CULTURAL_SENSITIVITY=strict
 
 ### تكامل الخدمات
 ```python
-# في خدمات Ainflue الخاصة بك
+# في خدمات IA Chérie الخاصة بك
 from integrations.monitoring import (
     get_distributed_tracing,
     get_log_aggregation,
@@ -294,10 +294,10 @@ DATA_RESIDENCY_CONFIG = {
 ## 📞 الدعم المؤسسي
 
 ### مركز عمليات المراقبة 24/7
-- **الدعم الفني**: monitoring-support-ar@ainflue.com
-- **استفسارات الامتثال**: compliance-mena@ainflue.com
+- **الدعم الفني**: monitoring-support-ar@iacherie.com
+- **استفسارات الامتثال**: compliance-mena@iacherie.com
 - **خط الطوارئ**: +966-11-xxx-xxxx
-- **الوثائق**: https://docs.ainflue.com/monitoring/ar
+- **الوثائق**: https://docs.iacherie.com/monitoring/ar
 
 ### التدريب والشهادات
 - **تدريب المدير**: 3 أيام تدريب مكثف
@@ -368,6 +368,6 @@ DATA_RESIDENCY_CONFIG = {
 ---
 
 **🎯 التميز في المراقبة المؤسسية - مدعوم بابتكار فاهد مليل**  
-**📧 التواصل**: mlaiel@live.de | **🌐 المنصة**: https://ainflue.com  
+**📧 التواصل**: mlaiel@live.de | **🌐 المنصة**: https://iacherie.com  
 **🔒 الملكية الفكرية**: فاهد مليل © 2025 - جميع الحقوق محفوظة  
 **🇸🇦 مركز التميز**: الرياض، المملكة العربية السعودية | **🌍 التأثير العالمي**: 65+ منصة

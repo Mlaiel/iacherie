@@ -1,0 +1,288 @@
+# =============================================================================
+# AINFLUE MONETIZATION SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
+# =============================================================================
+# Specialized container for payment processing, revenue tracking,
+# and monetization features with enterprise security and compliance.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+ARG PYTHON_VERSION=3.11
+ARG DEBIAN_VERSION=slim
+ARG BUILD_ENV=production
+
+# =============================================================================
+# STAGE 1: BASE WITH PAYMENT PROCESSING DEPENDENCIES
+# =============================================================================
+FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION} AS monetization-base
+
+LABEL stage=monetization-base
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Monetization service base with payment processing capabilities"
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies for payment processing
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        # Build essentials (removed later)
+        build-essential \
+        pkg-config \
+        # Database connectivity
+        libpq5 \
+        libpq-dev \
+        # SSL and security (critical for payments)
+        ca-certificates \
+        libssl-dev \
+        libffi-dev \
+        gnupg \
+        # Network tools
+        curl \
+        wget \
+        netcat-openbsd \
+        # Cryptography support
+        libgmp-dev \
+        # Clean up
+        && rm -rf /var/lib/apt/lists/* \
+        && apt-get clean \
+        && apt-get autoremove -y
+
+# Security: Create non-root user
+RUN groupadd --gid 10001 monetization && \
+    useradd --uid 10001 --gid monetization \
+            --home-dir /home/monetization \
+            --create-home \
+            --shell /bin/bash \
+            monetization
+
+# =============================================================================
+# STAGE 2: PYTHON DEPENDENCIES
+# =============================================================================
+FROM monetization-base AS monetization-dependencies
+
+LABEL stage=monetization-dependencies
+LABEL description="Monetization-specific Python dependencies"
+
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Upgrade pip and install build tools
+RUN pip install --no-cache-dir --upgrade \
+    pip==23.3.1 \
+    setuptools==68.2.2 \
+    wheel==0.41.2
+
+# Copy requirements
+WORKDIR /build
+COPY requirements.txt ./
+COPY requirements-monetization.txt ./
+
+# Install monetization-specific dependencies
+RUN pip install --no-cache-dir \
+    # Payment processing
+    stripe==7.7.0 \
+    paypalrestsdk==1.13.3 \
+    braintree==4.23.0 \
+    # Database connectivity
+    sqlalchemy==2.0.23 \
+    psycopg2-binary==2.9.7 \
+    redis==5.0.1 \
+    # Cryptography and security
+    cryptography==41.0.7 \
+    pycrypto==2.6.1 \
+    pyjwt==2.8.0 \
+    passlib==1.7.4 \
+    bcrypt==4.0.1 \
+    # Data validation and processing
+    pydantic==2.5.0 \
+    marshmallow==3.20.1 \
+    # Financial calculations
+    decimal==1.70 \
+    money==1.3.0 \
+    forex-python==1.8 \
+    # Analytics for revenue
+    pandas==2.1.1 \
+    numpy==1.24.3 \
+    # API framework
+    fastapi==0.104.1 \
+    uvicorn==0.24.0 \
+    # HTTP clients for payment APIs
+    requests==2.31.0 \
+    httpx==0.25.0 \
+    # Background tasks
+    celery==5.3.4 \
+    # Async processing
+    aiofiles==23.2.1 \
+    aioredis==2.0.1
+
+# Install main requirements
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install monetization-specific requirements if they exist
+RUN if [ -f requirements-monetization.txt ]; then \
+        pip install --no-cache-dir -r requirements-monetization.txt; \
+    fi
+
+# Clean up pip cache
+RUN pip cache purge
+
+# =============================================================================
+# STAGE 3: PRODUCTION
+# =============================================================================
+FROM monetization-base AS production
+
+LABEL stage=production
+LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
+LABEL description="Ainflue Monetization Service - Production Runtime"
+LABEL service="monetization-service"
+LABEL capabilities="payment-processing,revenue-tracking,subscription-management"
+LABEL compliance="PCI-DSS-ready,GDPR-compliant"
+
+# Production environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONPATH=/app \
+    PATH="/opt/venv/bin:$PATH" \
+    # Monetization service specific
+    MONETIZATION_SERVICE=true \
+    SERVICE_PORT=8002 \
+    # Security settings (critical for payments)
+    ENABLE_ENCRYPTION=true \
+    ENABLE_AUDIT_LOGGING=true \
+    PAYMENT_SECURITY_LEVEL=high \
+    # Payment processing settings
+    PAYMENT_PROCESSOR_TIMEOUT=30 \
+    MAX_PAYMENT_RETRIES=3 \
+    ENABLE_FRAUD_DETECTION=true \
+    # Performance settings
+    MONETIZATION_WORKERS=2 \
+    MAX_CONCURRENT_PAYMENTS=50 \
+    PAYMENT_QUEUE_SIZE=1000 \
+    # Compliance settings
+    ENABLE_PCI_COMPLIANCE_MODE=true \
+    LOG_SENSITIVE_DATA=false \
+    ENABLE_DATA_ENCRYPTION_AT_REST=true
+
+# Remove build dependencies, keep runtime
+RUN apt-get remove -y \
+        build-essential \
+        pkg-config \
+        libpq-dev \
+        libssl-dev \
+        libffi-dev \
+        libgmp-dev \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy virtual environment from dependencies stage
+COPY --from=monetization-dependencies /opt/venv /opt/venv
+
+# Set working directory
+WORKDIR /app
+
+# Copy application code with proper ownership
+COPY --chown=monetization:monetization . .
+
+# Create monetization directories with proper permissions
+RUN mkdir -p \
+        /app/payments \
+        /app/payments/logs \
+        /app/payments/receipts \
+        /app/subscriptions \
+        /app/revenue_reports \
+        /app/audit_logs \
+        /app/temp \
+        /app/cache \
+        /app/backups \
+    && chown -R monetization:monetization /app \
+    && chmod -R 755 /app \
+    && chmod -R 777 /app/payments /app/subscriptions /app/revenue_reports /app/audit_logs /app/temp /app/cache /app/backups
+
+# Security: Set stricter permissions for sensitive directories
+RUN chmod 700 /app/payments/logs /app/audit_logs /app/backups
+
+# Create monetization service startup script
+RUN echo '#!/bin/bash\n\
+set -e\n\
+\n\
+echo "=== Monetization Service Starting ==="\n\
+echo "Service Port: ${SERVICE_PORT}"\n\
+echo "Workers: ${MONETIZATION_WORKERS}"\n\
+echo "Security Level: ${PAYMENT_SECURITY_LEVEL}"\n\
+echo "PCI Compliance: ${ENABLE_PCI_COMPLIANCE_MODE}"\n\
+echo "Fraud Detection: ${ENABLE_FRAUD_DETECTION}"\n\
+echo "===================================="\n\
+\n\
+# Validate payment processing capabilities\n\
+echo "Validating payment processing setup..."\n\
+python -c "\n\
+import stripe\n\
+import paypalrestsdk\n\
+from cryptography.fernet import Fernet\n\
+print(\"Payment processing libraries loaded successfully\")\n\
+"\n\
+\n\
+# Security check for payment credentials\n\
+python -c "\n\
+import os\n\
+required_vars = [\"STRIPE_SECRET_KEY\", \"PAYPAL_CLIENT_ID\", \"PAYPAL_CLIENT_SECRET\"]\n\
+missing_vars = [var for var in required_vars if not os.getenv(var)]\n\
+if missing_vars:\n\
+    print(f\"Warning: Missing payment credentials: {missing_vars}\")\n\
+else:\n\
+    print(\"Payment credentials configured\")\n\
+"\n\
+\n\
+# Start monetization service with security-focused configuration\n\
+exec python -m uvicorn monetization.service:app \\\n\
+    --host 0.0.0.0 \\\n\
+    --port ${SERVICE_PORT} \\\n\
+    --workers ${MONETIZATION_WORKERS} \\\n\
+    --worker-class uvicorn.workers.UvicornWorker \\\n\
+    --log-level info \\\n\
+    --access-log \\\n\
+    --ssl-keyfile /app/ssl/private.key \\\n\
+    --ssl-certfile /app/ssl/certificate.crt || \\\n\
+exec python -m uvicorn monetization.service:app \\\n\
+    --host 0.0.0.0 \\\n\
+    --port ${SERVICE_PORT} \\\n\
+    --workers ${MONETIZATION_WORKERS} \\\n\
+    --worker-class uvicorn.workers.UvicornWorker \\\n\
+    --log-level info \\\n\
+    --access-log\n\
+' > /app/start-monetization.sh && chmod +x /app/start-monetization.sh
+
+# Switch to non-root user
+USER monetization
+
+# Expose service port
+EXPOSE 8002
+
+# Health check with payment system validation
+HEALTHCHECK --interval=30s \
+            --timeout=10s \
+            --start-period=60s \
+            --retries=3 \
+            CMD curl -f http://localhost:8002/health \
+                && python -c "
+import os
+import sys
+
+# Check critical environment variables for payments
+critical_vars = ['STRIPE_SECRET_KEY', 'PAYPAL_CLIENT_ID']
+missing = [var for var in critical_vars if not os.getenv(var)]
+
+if missing:
+    print(f'Missing critical payment vars: {missing}')
+    sys.exit(1)
+
+print('Payment configuration validated')
+sys.exit(0)
+" || exit 1
+
+# Start monetization service
+CMD ["/app/start-monetization.sh"]

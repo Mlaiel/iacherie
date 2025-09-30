@@ -1,4 +1,4 @@
-# 🤖 Ainflue AI SEO Engine - Advanced AI-Powered SEO Optimization
+# 🤖 IA Chérie AI SEO Engine - Advanced AI-Powered SEO Optimization
 
 **⚠️ INTELLECTUAL PROPERTY WARNING**  
 © 2025 Fahed Mlaiel (mlaiel@live.de) - ALL RIGHTS RESERVED  
@@ -9,7 +9,7 @@
 
 ## 🎯 Overview
 
-The Ainflue AI SEO Engine is an enterprise-grade, AI-powered SEO optimization platform specifically designed for the creator economy. Combining advanced machine learning, natural language processing, and competitive intelligence to deliver unprecedented SEO performance for content creators, influencers, and digital entrepreneurs.
+The IA Chérie AI SEO Engine is an enterprise-grade, AI-powered SEO optimization platform specifically designed for the creator economy. Combining advanced machine learning, natural language processing, and competitive intelligence to deliver unprecedented SEO performance for content creators, influencers, and digital entrepreneurs.
 
 ## 🚀 Core Features
 
@@ -104,7 +104,7 @@ from seo.ai_engine import (
 config = {
     'openai_api_key': 'your_openai_key',
     'db_host': 'localhost',
-    'db_name': 'ainflue',
+    'db_name': 'iacherie',
     'redis_host': 'localhost'
 }
 

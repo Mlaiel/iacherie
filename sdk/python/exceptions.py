@@ -1,4 +1,4 @@
-"""Comprehensive Exception Handling for Ainflue SDK
+"""Comprehensive Exception Handling for IA Chérie SDK
 
 Enterprise-grade exception hierarchy with multi-expert design:
 - Backend Senior: Robust error handling architecture
@@ -16,7 +16,7 @@ from datetime import datetime
 
 
 class AinflueSdkException(Exception):
-    """Base exception class for all Ainflue SDK errors
+    """Base exception class for all IA Chérie SDK errors
     
     Designed with enterprise requirements:
     - Structured error information

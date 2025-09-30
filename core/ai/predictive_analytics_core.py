@@ -1,5 +1,5 @@
 """
-Ainflue Core AI - Predictive Analytics Core
+IA Chérie Core AI - Predictive Analytics Core
 ============================================
 
 Enterprise-grade predictive analytics system with machine learning models,

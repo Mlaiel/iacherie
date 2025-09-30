@@ -1,4 +1,4 @@
-# 📋 Templates Module Checklist - Ainflue Platform
+# 📋 Templates Module Checklist - IA Chérie Platform
 ================================================================
 
 ## 📋 Übersicht

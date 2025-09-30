@@ -1,11 +1,11 @@
 """
-Retry Dashboard Service - Ainflue
+Retry Dashboard Service - IA Chérie
 ================================
 Service dashboard retry monitoring temps réel.
 Real-time metrics + executive reporting + alerting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

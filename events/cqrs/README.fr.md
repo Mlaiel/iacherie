@@ -1,5 +1,5 @@
 # 🏗️ Module Events CQRS - Command Query Responsibility Segregation Enterprise
-**Plateforme Ainflue - Infrastructure Avancée de Traitement d'Événements CQRS**
+**Plateforme IA Chérie - Infrastructure Avancée de Traitement d'Événements CQRS**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTERPRISE
 
-Le **Module Events CQRS** implémente le pattern Command Query Responsibility Segregation pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit un Event Sourcing de niveau entreprise, une gestion de commandes et une optimisation de requêtes pour des workflows de création de contenu évolutifs.
+Le **Module Events CQRS** implémente le pattern Command Query Responsibility Segregation pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé fournit un Event Sourcing de niveau entreprise, une gestion de commandes et une optimisation de requêtes pour des workflows de création de contenu évolutifs.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -248,7 +248,7 @@ await SagaOrchestrator.start(saga)
 version: '3.8'
 services:
   cqrs-commands:
-    image: ainflue/cqrs-commands:latest
+    image: iacherie/cqrs-commands:latest
     deploy:
       replicas: 5
       resources:
@@ -260,7 +260,7 @@ services:
       - REDIS_URL=redis://redis-cluster:6379
       
   cqrs-queries:
-    image: ainflue/cqrs-queries:latest
+    image: iacherie/cqrs-queries:latest
     deploy:
       replicas: 10
       resources:
@@ -301,7 +301,7 @@ aggregate_count = Gauge('cqrs_aggregates_loaded', 'Number of loaded aggregates')
 
 ## 📝 **CONCLUSION**
 
-Le Module Events CQRS représente le summum de l'architecture de séparation command-query pour la plateforme Ainflue, spécifiquement conçu pour les créateurs de contenu multi-format. Avec une implémentation CQRS avancée, des capacités Event Sourcing et une intégration complète de logique métier, ce module assure des workflows de gestion de contenu évolutifs, cohérents et haute performance.
+Le Module Events CQRS représente le summum de l'architecture de séparation command-query pour la plateforme IA Chérie, spécifiquement conçu pour les créateurs de contenu multi-format. Avec une implémentation CQRS avancée, des capacités Event Sourcing et une intégration complète de logique métier, ce module assure des workflows de gestion de contenu évolutifs, cohérents et haute performance.
 
 **🎯 Mission :** Fournir l'architecture CQRS la plus avancée pour les créateurs de contenu mondialement, permettant un traitement de commandes transparent, une performance de requêtes optimisée et une orchestration complète de processus métier via des patterns event-driven.
 

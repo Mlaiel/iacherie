@@ -1,5 +1,5 @@
 """
-📊 REAL-TIME ANALYTICS ORCHESTRATOR - AINFLUE ENTERPRISE
+📊 REAL-TIME ANALYTICS ORCHESTRATOR - IACHERIE ENTERPRISE
 =======================================================
 
 Stream processing pipeline and real-time analytics automation for creator economy platform.
@@ -281,7 +281,7 @@ class RealTimeAnalyticsOrchestrator:
                 self.influxdb_client = InfluxDBClient(
                     url=self.config.get("influxdb_url", "http://localhost:8086"),
                     token=self.config.get("influxdb_token", ""),
-                    org=self.config.get("influxdb_org", "ainflue")
+                    org=self.config.get("influxdb_org", "iacherie")
                 )
             
         except Exception as e:
@@ -638,7 +638,7 @@ class RealTimeAnalyticsOrchestrator:
             if self.elasticsearch_client:
                 for event in events:
                     self.elasticsearch_client.index(
-                        index=f"ainflue-{stream_type.value}",
+                        index=f"iacherie-{stream_type.value}",
                         document=event
                     )
             

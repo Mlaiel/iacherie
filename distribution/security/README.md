@@ -1,6 +1,6 @@
 # 🔐 Security Distribution Engine - Enterprise Security & Compliance Platform
 
-**Enterprise-Grade Security System for Ainflue Distribution Platform**
+**Enterprise-Grade Security System for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
@@ -175,7 +175,7 @@ python setup_security.py --environment=production
 ### 🔧 **Environment Setup**
 ```bash
 # Configure security environment
-export SECURITY_KEY_VAULT_URL="https://vault.ainflue.com"
+export SECURITY_KEY_VAULT_URL="https://vault.iacherie.com"
 export ENCRYPTION_KEY_ID="prod-encryption-key"
 export COMPLIANCE_MODE="strict"
 ```
@@ -198,9 +198,9 @@ export COMPLIANCE_MODE="strict"
 
 ## 📞 Support & Contact
 
-**Security Team**: security@ainflue.com  
+**Security Team**: security@iacherie.com  
 **Incident Response**: +1-800-SECURITY  
-**Compliance Officer**: compliance@ainflue.com
+**Compliance Officer**: compliance@iacherie.com
 
 ---
 

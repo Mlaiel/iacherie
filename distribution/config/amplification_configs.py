@@ -1,5 +1,5 @@
 """
-Content Amplification Configuration for Ainflue Distribution
+Content Amplification Configuration for IA Chérie Distribution
 Provides enterprise-grade configuration for content amplification strategies
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Watermark Integrity Checker
+IA Chérie Platform - Watermark Integrity Checker
 ==============================================
 
 Enterprise-grade watermark integrity monitoring and validation system

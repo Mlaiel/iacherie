@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AI Services module provides enterprise-grade ML inference engines and content generation services for the Ainflue platform. This module enables advanced AI-powered content creation, enhancement, and processing through state-of-the-art machine learning models and neural networks.
+The AI Services module provides enterprise-grade ML inference engines and content generation services for the IA Chérie platform. This module enables advanced AI-powered content creation, enhancement, and processing through state-of-the-art machine learning models and neural networks.
 
 ## Architecture
 
@@ -45,8 +45,8 @@ This module contains 11 specialized Docker services for AI and ML operations:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/ai_services
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/ai_services
 
 # Start AI services
 docker-compose -f docker-compose.ai.yml up -d
@@ -237,7 +237,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 For technical support and questions:
 - Email: mlaiel@live.de
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues: https://github.com/Mlaiel/IA Chérie/issues
 
 ## Changelog
 

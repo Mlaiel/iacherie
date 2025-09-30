@@ -696,7 +696,7 @@ async def main():
     # Enregistrer des nœuds edge
     node_us = await manager.register_edge_node(
         region=EdgeRegion.US_EAST,
-        endpoint_url="https://edge-us-east.ainflue.com",
+        endpoint_url="https://edge-us-east.iacherie.com",
         capacity_cpu=8.0,
         capacity_memory_gb=32.0,
         capacity_storage_gb=500.0
@@ -704,7 +704,7 @@ async def main():
     
     node_eu = await manager.register_edge_node(
         region=EdgeRegion.EU_WEST,
-        endpoint_url="https://edge-eu-west.ainflue.com",
+        endpoint_url="https://edge-eu-west.iacherie.com",
         capacity_cpu=8.0,
         capacity_memory_gb=32.0,
         capacity_storage_gb=500.0

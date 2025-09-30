@@ -1,5 +1,5 @@
 /**
- * Core Ainflue Client Implementation
+ * Core IA Chérie Client Implementation
  * 
  * Enterprise-grade TypeScript client with multi-expert design:
  * - Lead Dev IA: AI-powered content analysis and processing
@@ -44,9 +44,9 @@ import {
 } from './errors';
 
 /**
- * Main Ainflue SDK Client
+ * Main IA Chérie SDK Client
  * 
- * Provides comprehensive access to the Ainflue platform:
+ * Provides comprehensive access to the IA Chérie platform:
  * - Content upload and analysis
  * - AI-powered content protection
  * - User management and analytics
@@ -75,7 +75,7 @@ export class AinflueClient extends EventEmitter {
     
     // Merge with defaults
     this.config = {
-      baseUrl: 'https://api.ainflue.com',
+      baseUrl: 'https://api.iacherie.com',
       apiVersion: 'v1',
       timeout: 30000,
       maxRetries: 3,
@@ -110,7 +110,7 @@ export class AinflueClient extends EventEmitter {
       baseURL: `${this.config.baseUrl}/${this.config.apiVersion}`,
       timeout: this.config.timeout,
       headers: {
-        'User-Agent': 'Ainflue-JS-SDK/1.0.0',
+        'User-Agent': 'IA Chérie-JS-SDK/1.0.0',
         'X-SDK-Version': '1.0.0',
         ...this.config.customHeaders
       }
@@ -128,7 +128,7 @@ export class AinflueClient extends EventEmitter {
       logger: this.logger
     });
 
-    this.logger.info(`Ainflue Client initialized for ${this.config.environment} environment`);
+    this.logger.info(`IA Chérie Client initialized for ${this.config.environment} environment`);
   }
 
   /**
@@ -140,7 +140,7 @@ export class AinflueClient extends EventEmitter {
     }
 
     try {
-      this.logger.info('Initializing Ainflue Client...');
+      this.logger.info('Initializing IA Chérie Client...');
 
       // Initialize authentication
       await this.authManager.initialize();
@@ -155,7 +155,7 @@ export class AinflueClient extends EventEmitter {
       this.isInitialized = true;
       this.emit('initialized', { timestamp: new Date() });
       
-      this.logger.info('Ainflue Client initialized successfully');
+      this.logger.info('IA Chérie Client initialized successfully');
     } catch (error) {
       this.logger.error('Failed to initialize client:', error);
       throw new AinflueError('Client initialization failed', { originalError: error });
@@ -544,7 +544,7 @@ export class AinflueClient extends EventEmitter {
    * Dispose client resources
    */
   async dispose(): Promise<void> {
-    this.logger.info('Disposing Ainflue Client...');
+    this.logger.info('Disposing IA Chérie Client...');
     
     // Clear cache
     this.clearCache();
@@ -556,7 +556,7 @@ export class AinflueClient extends EventEmitter {
     this.removeAllListeners();
     
     this.isInitialized = false;
-    this.logger.info('Ainflue Client disposed');
+    this.logger.info('IA Chérie Client disposed');
   }
 
   // Private helper methods

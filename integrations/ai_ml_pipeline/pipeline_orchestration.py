@@ -1126,7 +1126,7 @@ def create_data_ingestion_task(
         task_description=f"Ingest data from {data_source.get('type', 'unknown')} source",
         executor_type="python",
         executor_config={
-            "module": "ainflue.ml.data_ingestion",
+            "module": "iacherie.ml.data_ingestion",
             "function": "ingest_data",
             "parameters": {
                 "data_source": data_source,
@@ -1152,7 +1152,7 @@ def create_model_training_task(
         task_description=f"Train {model_config.get('model_type', 'unknown')} model",
         executor_type="python",
         executor_config={
-            "module": "ainflue.ml.training",
+            "module": "iacherie.ml.training",
             "function": "train_model",
             "parameters": {
                 "model_config": model_config,
@@ -1182,8 +1182,8 @@ def create_model_deployment_task(
         task_description="Deploy trained model to production",
         executor_type="kubernetes",
         executor_config={
-            "image": "ainflue/model-deployment:latest",
-            "command": ["python", "-m", "ainflue.ml.deployment"],
+            "image": "iacherie/model-deployment:latest",
+            "command": ["python", "-m", "iacherie.ml.deployment"],
             "args": ["--model-path", model_path, "--config", json.dumps(deployment_config)],
             "namespace": "ml-production"
         },

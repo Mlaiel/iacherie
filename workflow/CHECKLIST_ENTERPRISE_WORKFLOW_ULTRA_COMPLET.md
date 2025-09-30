@@ -1,4 +1,4 @@
-# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE WORKFLOW - AINFLUE PLATFORM
+# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE WORKFLOW - IACHERIE PLATFORM
 
 > **🚨 AVERTISSEMENT LÉGAL ULTRA-CRITIQUE** 🚨  
 > **CETTE CHECKLIST CONSTITUE UN STANDARD ENTERPRISE ULTRA-STRICT**  
@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 EXIGENCES STRICTES ENTERPRISE AINFLUE
+## 📋 EXIGENCES STRICTES ENTERPRISE IACHERIE
 
 ### 🎯 **CONFORMITÉ ULTRA-STRICTE OBLIGATOIRE**
 - ✅ **ARCHITECTURE 3 NIVEAUX MAXIMUM** (orchestration/, execution/, analytics/)
@@ -438,10 +438,10 @@ pytest workflow/tests/e2e/ --workflow-e2e --kubernetes-cluster
 - **Reliability Engineer**: SRE + chaos engineering
 
 ### 📧 **CONTACTS URGENCE WORKFLOWS**
-- **Workflow Operations**: workflows-ops@ainflue.enterprise
-- **Performance**: performance@ainflue.enterprise
-- **Architecture**: architecture@ainflue.enterprise
-- **Escalade CTO**: cto@ainflue.enterprise
+- **Workflow Operations**: workflows-ops@iacherie.enterprise
+- **Performance**: performance@iacherie.enterprise
+- **Architecture**: architecture@iacherie.enterprise
+- **Escalade CTO**: cto@iacherie.enterprise
 
 ### 🚨 **PROCÉDURES D'URGENCE WORKFLOWS**
 - **Workflow Failures**: Reprise automatique sous 5min

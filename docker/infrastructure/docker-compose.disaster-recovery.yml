@@ -1,11 +1,11 @@
 # Docker Compose for Disaster Recovery
-# Disaster recovery infrastructure for Ainflue Platform
+# Disaster recovery infrastructure for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 services:
   # Disaster Recovery Coordinator
   dr_coordinator:
-    image: ainflue/dr-coordinator:latest
+    image: iacherie/dr-coordinator:latest
     environment:
       - DR_SITE_REGION=${DR_SITE_REGION}
       - PRIMARY_SITE_REGION=${PRIMARY_SITE_REGION}
@@ -27,7 +27,7 @@ services:
 
   # Data Replication Service
   data_replication:
-    image: ainflue/data-replication:latest
+    image: iacherie/data-replication:latest
     environment:
       - PRIMARY_DB_HOST=${PRIMARY_DB_HOST}
       - PRIMARY_DB_PORT=${PRIMARY_DB_PORT}
@@ -47,7 +47,7 @@ services:
 
   # File Synchronization Service
   file_sync:
-    image: ainflue/file-sync:latest
+    image: iacherie/file-sync:latest
     environment:
       - PRIMARY_STORAGE_PATH=${PRIMARY_STORAGE_PATH}
       - DR_STORAGE_PATH=${DR_STORAGE_PATH}
@@ -63,7 +63,7 @@ services:
 
   # Configuration Sync Service
   config_sync:
-    image: ainflue/config-sync:latest
+    image: iacherie/config-sync:latest
     environment:
       - PRIMARY_CONFIG_REPO=${PRIMARY_CONFIG_REPO}
       - DR_CONFIG_REPO=${DR_CONFIG_REPO}
@@ -77,7 +77,7 @@ services:
 
   # Health Check Monitoring
   dr_health_monitor:
-    image: ainflue/dr-health-monitor:latest
+    image: iacherie/dr-health-monitor:latest
     environment:
       - PRIMARY_ENDPOINTS=${PRIMARY_HEALTH_ENDPOINTS}
       - CHECK_INTERVAL_SECONDS=30
@@ -106,7 +106,7 @@ services:
 
   # API Gateway (DR Site)
   dr_api_gateway:
-    image: ainflue/platform:${VERSION:-latest}
+    image: iacherie/platform:${VERSION:-latest}
     environment:
       - ENV=disaster_recovery
       - DATABASE_URL=${DR_DATABASE_URL}
@@ -190,7 +190,7 @@ services:
 
   # Failover Test Service
   failover_tester:
-    image: ainflue/failover-tester:latest
+    image: iacherie/failover-tester:latest
     environment:
       - TEST_SCHEDULE=0 2 * * 0
       - TEST_DURATION_MINUTES=30
@@ -205,7 +205,7 @@ services:
 
   # DNS Failover Service
   dns_failover:
-    image: ainflue/dns-failover:latest
+    image: iacherie/dns-failover:latest
     environment:
       - DNS_PROVIDER=${DNS_PROVIDER}
       - PRIMARY_IP=${PRIMARY_SITE_IP}
@@ -222,7 +222,7 @@ services:
 
   # Backup Restore Service
   backup_restore:
-    image: ainflue/backup-restore:latest
+    image: iacherie/backup-restore:latest
     environment:
       - BACKUP_SOURCE=${BACKUP_S3_BUCKET}
       - RESTORE_TARGET_DB=${DR_DATABASE_URL}

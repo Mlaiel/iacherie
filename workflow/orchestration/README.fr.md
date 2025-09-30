@@ -17,7 +17,7 @@ Violation = Poursuites judiciaires automatiques
 ## 🎯 ARCHITECTURE ORCHESTRATION WORKFLOW
 
 ### 🏗️ MODULES ENTERPRISE IMPLÉMENTÉS
-L'architecture d'orchestration Ainflue est conçue pour gérer des workflows complexes de création de contenu multi-format avec des performances enterprise et une scalabilité industrielle.
+L'architecture d'orchestration IA Chérie est conçue pour gérer des workflows complexes de création de contenu multi-format avec des performances enterprise et une scalabilité industrielle.
 
 #### 🎼 COMPOSANTS CORE ORCHESTRATION
 - **workflow_orchestrator.py** - Orchestrateur principal des workflows enterprise
@@ -191,9 +191,9 @@ Devenir la plateforme d'orchestration workflow #1 mondiale pour l'économie cré
 
 **📞 CONTACT ENTERPRISE**
 - **Email**: mlaiel@live.de
-- **Support**: support@ainflue.com  
-- **Sales**: sales@ainflue.com
-- **Partnership**: partnerships@ainflue.com
+- **Support**: support@iacherie.com  
+- **Sales**: sales@iacherie.com
+- **Partnership**: partnerships@iacherie.com
 
 **⚖️ MENTIONS LÉGALES**
 Ce logiciel est la propriété exclusive de Fahed Mlaiel. Toute utilisation non autorisée est strictement interdite et passible de poursuites judiciaires. Pour obtenir une licence enterprise, contactez mlaiel@live.de.

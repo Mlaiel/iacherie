@@ -1,6 +1,6 @@
 """Events Utils Module - Ultra-Advanced Enterprise Suite
 
-Ultra-advanced utility classes and functions for the Ainflue events system.
+Ultra-advanced utility classes and functions for the IA Chérie events system.
 Complete enterprise-grade event processing utilities with business intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -5,7 +5,7 @@ Système avancé de fingerprinting d'images avec hashing perceptuel,
 extraction de caractéristiques et détection de similarité.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -59,7 +59,7 @@ class ImageFingerprint:
     texture_features: Optional[Dict[str, Any]]
     geometric_features: Optional[Dict[str, Any]]
     metadata: Dict[str, Any]
-    image_size: Tuple[int, int]
+    image_size: tuple[int, int]
     color_mode: str
     file_size: int
     created_at: datetime
@@ -597,7 +597,7 @@ class ImageFingerprinting:
             logger.error(f"Erreur color histogram: {e}")
             return {'hash_value': ''}
 
-    def _extract_dominant_colors(self, image: Image.Image, num_colors: int = 5) -> List[Tuple[int, int, int]]:
+    def _extract_dominant_colors(self, image: Image.Image, num_colors: int = 5) -> List[tuple[int, int, int]]:
         """Extrait les couleurs dominantes de l'image."""
         try:
             # Simplification: utilisation de la quantification des couleurs

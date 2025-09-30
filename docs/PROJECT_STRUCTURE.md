@@ -1,9 +1,9 @@
-# 📁 Ainflue Platform - Project Structure
+# 📁 IA Chérie Platform - Project Structure
 
 ## Root Directory (Clean & Professional)
 
 ```
-ainflue-platform/
+iacherie-platform/
 ├── 📄 README.md                    # Main project documentation
 ├── 📄 LICENSE                      # Software license
 ├── 📄 main.py                      # Main application entry point

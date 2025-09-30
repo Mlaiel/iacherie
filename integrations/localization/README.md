@@ -1,4 +1,4 @@
-# 🌍 Ainflue Localization Intelligence - Enterprise Grade
+# 🌍 IA Chérie Localization Intelligence - Enterprise Grade
 
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-blue.svg)](VERSION)
@@ -38,7 +38,7 @@ This module was designed and implemented by a world-class expert team:
 
 ## 📋 Overview
 
-The **Ainflue Localization Intelligence** module provides enterprise-grade localization capabilities for the Ainflue creator economy platform. This comprehensive solution supports 644+ languages, real-time translation, cultural adaptation, and regulatory compliance across global markets.
+The **IA Chérie Localization Intelligence** module provides enterprise-grade localization capabilities for the IA Chérie creator economy platform. This comprehensive solution supports 644+ languages, real-time translation, cultural adaptation, and regulatory compliance across global markets.
 
 ## 🌟 Key Features
 
@@ -103,8 +103,8 @@ integrations/localization/
 
 ```bash
 # Clone the repository (authorized users only)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/localization
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/localization
 
 # Install dependencies
 pip install -r requirements.txt
@@ -124,7 +124,7 @@ localization = get_localization_manager()
 
 # Basic translation
 result = await localization['translation'].translate(
-    content="Hello, welcome to Ainflue!",
+    content="Hello, welcome to IA Chérie!",
     source_language="en",
     target_language="fr",
     domain="social_media"
@@ -344,7 +344,7 @@ For authorized contributors:
 For technical support and licensing inquiries:
 
 - **📧 Email**: mlaiel@live.de
-- **🌐 Website**: https://ainflue.com
+- **🌐 Website**: https://iacherie.com
 - **📱 Enterprise Support**: Available 24/7 for authorized users
 
 ## 📄 License
@@ -362,7 +362,7 @@ This software is proprietary and confidential. Unauthorized use, reproduction, o
 
 ---
 
-**© 2024 Fahed Mlaiel - Ainflue Platform**  
+**© 2024 Fahed Mlaiel - IA Chérie Platform**  
 **Enterprise Localization Intelligence - Production Ready**
 
-*Built with ❤️ by the Ainflue Expert Team*
+*Built with ❤️ by the IA Chérie Expert Team*

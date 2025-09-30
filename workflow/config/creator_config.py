@@ -1,5 +1,5 @@
 """
-🎨 CREATOR CONFIG - AINFLUE ENTERPRISE PLATFORM
+🎨 CREATOR CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced creator workflow configuration for multi-format content creators
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -226,7 +226,7 @@ class CreatorConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize creator configuration"""
-        self.config_path = config_path or "/etc/ainflue/creator.json"
+        self.config_path = config_path or "/etc/iacherie/creator.json"
         
         # Creator configurations
         self.musician_config = MusicianWorkflowConfig()

@@ -1,6 +1,6 @@
 """Real-Time Optimization Engine
 
-Real-time performance optimization and adaptive adjustment system for the Ainflue platform.
+Real-time performance optimization and adaptive adjustment system for the IA Chérie platform.
 Continuously monitors and optimizes content performance in real-time using AI-powered
 adaptive algorithms.
 

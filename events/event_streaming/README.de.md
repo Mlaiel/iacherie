@@ -1,5 +1,5 @@
 # 🏗️ Events Event Streaming Modul - Echtzeit Event Processing Infrastruktur
-**Ainflue Plattform - Fortgeschrittene Event Streaming Implementierung**
+**IA Chérie Plattform - Fortgeschrittene Event Streaming Implementierung**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 ENTERPRISE ÜBERBLICK
 
-Das **Events Event Streaming Modul** bietet Echtzeit Event-Processing und Streaming-Infrastruktur für die Ainflue-Plattform, speziell entwickelt für Multi-Format Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultra-fortschrittliche industrielle System liefert enterprise-grade Event Streaming, Echtzeit-Analytics und Low-Latency Datenverarbeitung für skalierbare Content-Erstellungsworkflows.
+Das **Events Event Streaming Modul** bietet Echtzeit Event-Processing und Streaming-Infrastruktur für die IA Chérie-Plattform, speziell entwickelt für Multi-Format Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultra-fortschrittliche industrielle System liefert enterprise-grade Event Streaming, Echtzeit-Analytics und Low-Latency Datenverarbeitung für skalierbare Content-Erstellungsworkflows.
 
 ### 🎯 **Geschäftslogik-Fluss**
 ```
@@ -359,7 +359,7 @@ await analytics.start()
 version: '3.8'
 services:
   event-streaming:
-    image: ainflue/event-streaming:latest
+    image: iacherie/event-streaming:latest
     deploy:
       replicas: 10
       resources:
@@ -380,7 +380,7 @@ services:
       - "8090:8090"
       
   stream-analytics:
-    image: ainflue/stream-analytics:latest
+    image: iacherie/stream-analytics:latest
     deploy:
       replicas: 5
       resources:
@@ -422,7 +422,7 @@ throughput = Gauge('streaming_throughput_eps', 'Events per second throughput')
 
 ## 📝 **FAZIT**
 
-Das Events Event Streaming Modul repräsentiert den Höhepunkt der Echtzeit Event-Processing-Infrastruktur für die Ainflue-Plattform, speziell entwickelt für Multi-Format Content-Ersteller. Mit ultra-hohem Durchsatz Streaming, Sub-Millisekunden Latenz und umfassenden Echtzeit-Analytics gewährleistet dieses Modul nahtloses, skalierbares und intelligentes Event-Processing für das gesamte Creator-Ecosystem.
+Das Events Event Streaming Modul repräsentiert den Höhepunkt der Echtzeit Event-Processing-Infrastruktur für die IA Chérie-Plattform, speziell entwickelt für Multi-Format Content-Ersteller. Mit ultra-hohem Durchsatz Streaming, Sub-Millisekunden Latenz und umfassenden Echtzeit-Analytics gewährleistet dieses Modul nahtloses, skalierbares und intelligentes Event-Processing für das gesamte Creator-Ecosystem.
 
 **🎯 Mission:** Die fortschrittlichste Echtzeit Event-Streaming-Infrastruktur weltweit für Content-Ersteller liefern, die sofortige Insights, Echtzeit-Optimierung und sofortige Reaktion auf Creator- und Audience-Interaktionen ermöglicht.
 

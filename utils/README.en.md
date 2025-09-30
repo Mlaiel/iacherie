@@ -2,7 +2,7 @@
 
 ## Ultra-Strict Enterprise Architecture
 
-The Ainflue Utils module implements an ultra-strict enterprise 3-tier architecture that consolidates 42 original utilities into 15 ultra-optimized modules.
+The IA Chérie Utils module implements an ultra-strict enterprise 3-tier architecture that consolidates 42 original utilities into 15 ultra-optimized modules.
 
 ### 🏗️ 3-Tier Architecture
 

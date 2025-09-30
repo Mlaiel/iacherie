@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-📊 ENTERPRISE BENCHMARK DATASETS - AINFLUE IA INFLUENCER AGENT
+📊 ENTERPRISE BENCHMARK DATASETS - IACHERIE IA INFLUENCER AGENT
 Creator: Fahed Mlaiel
 Multi-Expert Implementation: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -56,8 +56,7 @@ try:
 except ImportError:
     HAS_PYTORCH = False
 
-try:
-    # Import TensorFlow via gestionnaire centralisé
+# Import TensorFlow via gestionnaire centralisé
 try:
     from core.tensorflow_singleton import get_tensorflow
     tf = get_tensorflow()
@@ -69,6 +68,27 @@ except ImportError:
 try:
     import librosa
     import soundfile as sf
+    HAS_AUDIO_PROCESSING = True
+except ImportError:
+    HAS_AUDIO_PROCESSING = False
+
+# Optional dependencies
+try:
+    import aiofiles
+    HAS_AIOFILES = True
+except ImportError:
+    HAS_AIOFILES = False
+    # Fallback pour aiofiles
+    class aiofiles:
+        @staticmethod
+        def open(file, mode):
+            return open(file, mode)
+
+try:
+    import memory_profiler
+    HAS_MEMORY_PROFILER = True
+except ImportError:
+    HAS_MEMORY_PROFILER = False
     HAS_AUDIO = True
 except ImportError:
     HAS_AUDIO = False

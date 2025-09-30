@@ -2,7 +2,7 @@
 🔥 Enterprise Monitoring Hub - Point d'entrée principal
 ======================================================
 
-Hub central ultra-avancé pour la surveillance enterprise Ainflue.
+Hub central ultra-avancé pour la surveillance enterprise IA Chérie.
 Orchestration intelligente de tous les agents de monitoring.
 
 Fonctionnalités:
@@ -28,10 +28,10 @@ import uuid
 
 @dataclass
 class MonitoringConfig:
-    """Configuration enterprise monitoring Ainflue"""
+    """Configuration enterprise monitoring IA Chérie"""
     
     # Core Settings
-    service_name: str = "ainflue-monitoring-enterprise"
+    service_name: str = "iacherie-monitoring-enterprise"
     version: str = "1.0.0"
     environment: str = "production"
     debug: bool = False
@@ -54,7 +54,7 @@ class MonitoringConfig:
 
 
 class MonitoringEventType(Enum):
-    """Types d'événements surveillance Ainflue"""
+    """Types d'événements surveillance IA Chérie"""
     CREATOR_UPLOAD = "creator_upload"
     AI_PROCESSING = "ai_processing"
     CONTENT_PROTECTION = "content_protection"
@@ -81,7 +81,7 @@ class MonitoringEvent:
 
 
 class EnterpriseMonitoringHub:
-    """Hub central surveillance enterprise Ainflue"""
+    """Hub central surveillance enterprise IA Chérie"""
     
     def __init__(self, config: MonitoringConfig):
         self.config = config
@@ -155,7 +155,7 @@ class EnterpriseMonitoringHub:
     
     async def initialize(self):
         """Initialisation système surveillance"""
-        self.logger.info("🚀 Initialisation Monitoring Enterprise Ainflue...")
+        self.logger.info("🚀 Initialisation Monitoring Enterprise IA Chérie...")
         
         # Setup event processors
         self._setup_event_processors()
@@ -175,7 +175,7 @@ class EnterpriseMonitoringHub:
         # Initialize Real-Time Analytics
         await self._initialize_real_time_analytics()
         
-        self.logger.info("✅ Monitoring Enterprise Ainflue initialisé avec succès!")
+        self.logger.info("✅ Monitoring Enterprise IA Chérie initialisé avec succès!")
     
     async def _initialize_creator_economy_orchestration(self):
         """Initialisation orchestration Creator Economy"""

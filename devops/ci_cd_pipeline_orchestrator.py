@@ -3,7 +3,7 @@
 CI/CD Pipeline Orchestrator - DevOps Engineer Implementation
 ==========================================================
 
-Advanced CI/CD pipeline orchestration for Ainflue platform.
+Advanced CI/CD pipeline orchestration for IA Chérie platform.
 Implements enterprise-grade deployment strategies, automation,
 and monitoring for multi-environment deployments.
 
@@ -720,29 +720,29 @@ async def main():
     # Create deployment environments
     staging_env = DeploymentEnvironment(
         name="staging",
-        cluster_name="ainflue-staging",
-        namespace="ainflue",
-        api_url="https://staging-api.ainflue.com",
-        monitoring_url="https://staging-monitor.ainflue.com",
+        cluster_name="iacherie-staging",
+        namespace="iacherie",
+        api_url="https://staging-api.iacherie.com",
+        monitoring_url="https://staging-monitor.iacherie.com",
         resource_limits={"cpu": "500m", "memory": "1Gi"},
         replica_count=2
     )
     
     production_env = DeploymentEnvironment(
         name="production",
-        cluster_name="ainflue-production",
-        namespace="ainflue",
-        api_url="https://api.ainflue.com",
-        monitoring_url="https://monitor.ainflue.com",
+        cluster_name="iacherie-production",
+        namespace="iacherie",
+        api_url="https://api.iacherie.com",
+        monitoring_url="https://monitor.iacherie.com",
         resource_limits={"cpu": "1000m", "memory": "2Gi"},
         replica_count=5
     )
     
     # Create pipeline configuration
     pipeline_config = PipelineConfiguration(
-        id="ainflue-backend-pipeline",
-        name="Ainflue Backend Deployment",
-        repository_url="https://github.com/Mlaiel/Ainflue.git",
+        id="iacherie-backend-pipeline",
+        name="IA Chérie Backend Deployment",
+        repository_url="https://github.com/Mlaiel/IA Chérie.git",
         branch="main",
         dockerfile_path="docker/Dockerfile.backend",
         kubernetes_manifests=["kubernetes/backend/"],
@@ -763,7 +763,7 @@ async def main():
     execution_id = await orchestrator.trigger_pipeline(
         pipeline_id=pipeline_id,
         commit_sha="abc123def456",
-        triggered_by="developer@ainflue.com"
+        triggered_by="developer@iacherie.com"
     )
     
     print(f"Started pipeline execution: {execution_id}")

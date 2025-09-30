@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise Database Infrastructure Provisioning Playbook
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Database Infrastructure Provisioning"
+- name: "IA Chérie Enterprise Database Infrastructure Provisioning"
   hosts: database_servers
   become: yes
   gather_facts: yes
@@ -95,7 +95,7 @@
             labels:
               name: "{{ item }}"
               purpose: "database-infrastructure"
-              managed-by: "ainflue-infrastructure"
+              managed-by: "iacherie-infrastructure"
               security-policy: "strict"
       loop:
         - "postgresql"
@@ -174,10 +174,10 @@
           apiVersion: "acid.zalan.do/v1"
           kind: postgresql
           metadata:
-            name: ainflue-postgresql-cluster
+            name: iacherie-postgresql-cluster
             namespace: postgresql
           spec:
-            teamId: "ainflue"
+            teamId: "iacherie"
             volume:
               size: "{{ database_cluster_config.postgresql.storage_size }}"
               storageClass: database-ssd-high-iops
@@ -298,7 +298,7 @@
           apiVersion: mongodbcommunity.mongodb.com/v1
           kind: MongoDBCommunity
           metadata:
-            name: ainflue-mongodb-cluster
+            name: iacherie-mongodb-cluster
             namespace: mongodb
           spec:
             members: "{{ database_cluster_config.mongodb.replica_set_nodes }}"
@@ -314,7 +314,7 @@
                 caConfigMapRef:
                   name: mongodb-ca
             users:
-            - name: ainflue-admin
+            - name: iacherie-admin
               db: admin
               passwordSecretRef:
                 name: mongodb-admin-password
@@ -325,7 +325,7 @@
                 db: admin
               - name: readWriteAnyDatabase
                 db: admin
-            - name: ainflue-app
+            - name: iacherie-app
               db: ainflue_main
               passwordSecretRef:
                 name: mongodb-app-password
@@ -419,7 +419,7 @@
           apiVersion: databases.spotahome.com/v1
           kind: RedisFailover
           metadata:
-            name: ainflue-redis-cluster
+            name: iacherie-redis-cluster
             namespace: redis
           spec:
             sentinel:
@@ -521,7 +521,7 @@
           apiVersion: elasticsearch.k8s.elastic.co/v1
           kind: Elasticsearch
           metadata:
-            name: ainflue-elasticsearch-cluster
+            name: iacherie-elasticsearch-cluster
             namespace: elasticsearch
           spec:
             version: "{{ elasticsearch_version }}"
@@ -648,17 +648,17 @@
           namespace: postgresql
           schedule: "0 2 * * *"
           image: "postgres:15-alpine"
-          command: ["/bin/sh", "-c", "pg_dumpall -h ainflue-postgresql-cluster -U postgres | gzip > /backup/postgresql-$(date +%Y%m%d).sql.gz"]
+          command: ["/bin/sh", "-c", "pg_dumpall -h iacherie-postgresql-cluster -U postgres | gzip > /backup/postgresql-$(date +%Y%m%d).sql.gz"]
         - name: mongodb
           namespace: mongodb
           schedule: "0 3 * * *"
           image: "mongo:6.0"
-          command: ["/bin/sh", "-c", "mongodump --host ainflue-mongodb-cluster --archive=/backup/mongodb-$(date +%Y%m%d).archive --gzip"]
+          command: ["/bin/sh", "-c", "mongodump --host iacherie-mongodb-cluster --archive=/backup/mongodb-$(date +%Y%m%d).archive --gzip"]
         - name: redis
           namespace: redis
           schedule: "0 4 * * *"
           image: "redis:7-alpine"
-          command: ["/bin/sh", "-c", "redis-cli -h ainflue-redis-cluster --rdb /backup/redis-$(date +%Y%m%d).rdb"]
+          command: ["/bin/sh", "-c", "redis-cli -h iacherie-redis-cluster --rdb /backup/redis-$(date +%Y%m%d).rdb"]
       tags: ["backup", "infrastructure"]
 
     # ==========================================
@@ -743,19 +743,19 @@
       register: cluster_status
       failed_when: cluster_status.resources | length == 0
       loop:
-        - { name: "ainflue-postgresql-cluster", namespace: "postgresql" }
-        - { name: "ainflue-mongodb-cluster", namespace: "mongodb" }
-        - { name: "ainflue-redis-cluster", namespace: "redis" }
-        - { name: "ainflue-elasticsearch-cluster-es-masters", namespace: "elasticsearch" }
+        - { name: "iacherie-postgresql-cluster", namespace: "postgresql" }
+        - { name: "iacherie-mongodb-cluster", namespace: "mongodb" }
+        - { name: "iacherie-redis-cluster", namespace: "redis" }
+        - { name: "iacherie-elasticsearch-cluster-es-masters", namespace: "elasticsearch" }
       tags: ["verification"]
 
     - name: "Display database connection information"
       debug:
         msg:
-          - "PostgreSQL: ainflue-postgresql-cluster.postgresql.svc.cluster.local:5432"
-          - "MongoDB: ainflue-mongodb-cluster.mongodb.svc.cluster.local:27017"
-          - "Redis: ainflue-redis-cluster.redis.svc.cluster.local:6379"
-          - "Elasticsearch: ainflue-elasticsearch-cluster-es-http.elasticsearch.svc.cluster.local:9200"
+          - "PostgreSQL: iacherie-postgresql-cluster.postgresql.svc.cluster.local:5432"
+          - "MongoDB: iacherie-mongodb-cluster.mongodb.svc.cluster.local:27017"
+          - "Redis: iacherie-redis-cluster.redis.svc.cluster.local:6379"
+          - "Elasticsearch: iacherie-elasticsearch-cluster-es-http.elasticsearch.svc.cluster.local:9200"
       tags: ["endpoints"]
 
   handlers:
@@ -787,15 +787,15 @@
         - db: postgresql
           namespace: postgresql
           image: postgres:15-alpine
-          command: "psql -h ainflue-postgresql-cluster -U postgres -c 'SELECT 1'"
+          command: "psql -h iacherie-postgresql-cluster -U postgres -c 'SELECT 1'"
         - db: mongodb
           namespace: mongodb
           image: mongo:6.0
-          command: "mongosh --host ainflue-mongodb-cluster --eval 'db.adminCommand(\"hello\")'"
+          command: "mongosh --host iacherie-mongodb-cluster --eval 'db.adminCommand(\"hello\")'"
         - db: redis
           namespace: redis
           image: redis:7-alpine
-          command: "redis-cli -h ainflue-redis-cluster ping"
+          command: "redis-cli -h iacherie-redis-cluster ping"
       register: connectivity_tests
       tags: ["validation", "connectivity"]
 

@@ -1,0 +1,714 @@
+# Ainflue Infrastructure Module - Monitoring Stack Helm Chart
+# ============================================================
+# 
+# Enterprise-grade Monitoring stack chart for Ainflue platform
+# Prometheus, Grafana, Jaeger, Alertmanager, and observability tools
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v2
+name: ainflue-monitoring
+description: "Enterprise Monitoring stack for Ainflue platform with comprehensive observability"
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://monitoring.ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+keywords:
+  - monitoring
+  - observability
+  - prometheus
+  - grafana
+  - jaeger
+  - alerting
+annotations:
+  category: Monitoring
+  licenses: Proprietary
+
+# Chart dependencies
+dependencies:
+  - name: prometheus
+    version: "19.7.2"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus.enabled
+  - name: grafana
+    version: "6.52.4"
+    repository: "https://grafana.github.io/helm-charts"
+    condition: grafana.enabled
+  - name: jaeger
+    version: "0.69.1"
+    repository: "https://jaegertracing.github.io/helm-charts"
+    condition: jaeger.enabled
+  - name: loki
+    version: "4.8.0"
+    repository: "https://grafana.github.io/helm-charts"
+    condition: loki.enabled
+
+---
+# Default values for ainflue-monitoring
+# Expert roles implementation in configuration
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI service monitoring, model performance tracking, inference metrics
+# Backend Senior: Application performance monitoring, API metrics, service health
+# ML Engineer: ML pipeline monitoring, model drift detection, experiment tracking
+# DBA: Database performance monitoring, query optimization, connection pooling
+# Security: Security monitoring, threat detection, audit logging, compliance
+# Microservices: Service mesh observability, distributed tracing, inter-service metrics
+# Audio Engineer: Media processing monitoring, streaming metrics, quality tracking
+# DevOps: Infrastructure monitoring, alerting, SLA tracking, capacity planning
+# IA Prompt Engineer: AI provider monitoring, prompt performance, cost tracking
+
+# Global configuration
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: "fast-ssd"
+
+# Prometheus configuration
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - alertmanager.ainflue.com
+      tls:
+        - secretName: alertmanager-tls
+          hosts:
+            - alertmanager.ainflue.com
+    
+    persistence:
+      enabled: true
+      size: 10Gi
+    
+    config:
+      global:
+        smtp_smarthost: 'localhost:587'
+        smtp_from: 'alerts@ainflue.com'
+      
+      route:
+        group_by: ['alertname', 'cluster', 'service']
+        group_wait: 10s
+        group_interval: 10s
+        repeat_interval: 1h
+        receiver: 'default-receiver'
+        routes:
+          - match:
+              severity: critical
+            receiver: 'critical-alerts'
+          - match:
+              service: ai
+            receiver: 'ai-team'
+          - match:
+              service: database
+            receiver: 'dba-team'
+      
+      receivers:
+        - name: 'default-receiver'
+          email_configs:
+            - to: 'admin@ainflue.com'
+              subject: '[Ainflue] Alert: {{ .GroupLabels.alertname }}'
+        - name: 'critical-alerts'
+          email_configs:
+            - to: 'critical@ainflue.com'
+              subject: '[CRITICAL] Ainflue: {{ .GroupLabels.alertname }}'
+        - name: 'ai-team'
+          email_configs:
+            - to: 'ai-team@ainflue.com'
+              subject: '[AI Alert] Ainflue: {{ .GroupLabels.alertname }}'
+        - name: 'dba-team'
+          email_configs:
+            - to: 'dba-team@ainflue.com'
+              subject: '[Database Alert] Ainflue: {{ .GroupLabels.alertname }}'
+
+  server:
+    ingress:
+      enabled: true
+      hosts:
+        - prometheus.ainflue.com
+      tls:
+        - secretName: prometheus-tls
+          hosts:
+            - prometheus.ainflue.com
+    
+    persistence:
+      enabled: true
+      size: 100Gi
+      storageClass: "fast-ssd"
+    
+    retention: "30d"
+    
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 8Gi
+      requests:
+        cpu: 2000m
+        memory: 4Gi
+
+    # Prometheus configuration
+    config:
+      global:
+        scrape_interval: 15s
+        evaluation_interval: 15s
+        external_labels:
+          cluster: 'ainflue-production'
+          environment: 'production'
+      
+      rule_files:
+        - "/etc/prometheus/rules/*.yml"
+      
+      scrape_configs:
+        # Kubernetes API server
+        - job_name: 'kubernetes-apiservers'
+          kubernetes_sd_configs:
+            - role: endpoints
+          scheme: https
+          tls_config:
+            ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+              action: keep
+              regex: default;kubernetes;https
+
+        # Kubernetes nodes
+        - job_name: 'kubernetes-nodes'
+          kubernetes_sd_configs:
+            - role: node
+          scheme: https
+          tls_config:
+            ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          relabel_configs:
+            - action: labelmap
+              regex: __meta_kubernetes_node_label_(.+)
+
+        # Kubernetes pods
+        - job_name: 'kubernetes-pods'
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+              action: keep
+              regex: true
+            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+              action: replace
+              target_label: __metrics_path__
+              regex: (.+)
+            - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+              action: replace
+              regex: ([^:]+)(?::\d+)?;(\d+)
+              replacement: $1:$2
+              target_label: __address__
+
+        # Ainflue specific services
+        - job_name: 'ainflue-api'
+          static_configs:
+            - targets: ['ainflue-api:8000']
+          metrics_path: '/metrics'
+          scrape_interval: 15s
+
+        - job_name: 'ainflue-mobile-api'
+          static_configs:
+            - targets: ['ainflue-mobile-api:8002']
+          metrics_path: '/metrics'
+          scrape_interval: 15s
+
+        - job_name: 'ainflue-ai-engine'
+          static_configs:
+            - targets: ['ainflue-ai-engine:8001']
+          metrics_path: '/metrics'
+          scrape_interval: 30s
+
+        - job_name: 'ainflue-workers'
+          static_configs:
+            - targets: ['ainflue-worker:9393']
+          metrics_path: '/metrics'
+          scrape_interval: 30s
+
+    # Alert rules
+    rules:
+      groups:
+        - name: ainflue.rules
+          rules:
+            # Infrastructure alerts
+            - alert: HighCPUUsage
+              expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+              for: 5m
+              labels:
+                severity: warning
+                service: infrastructure
+              annotations:
+                summary: "High CPU usage detected"
+                description: "CPU usage is above 80% for more than 5 minutes on {{ $labels.instance }}"
+
+            - alert: HighMemoryUsage
+              expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+              for: 5m
+              labels:
+                severity: warning
+                service: infrastructure
+              annotations:
+                summary: "High memory usage detected"
+                description: "Memory usage is above 85% on {{ $labels.instance }}"
+
+            # Application alerts
+            - alert: APIHighErrorRate
+              expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+              for: 2m
+              labels:
+                severity: critical
+                service: api
+              annotations:
+                summary: "High API error rate"
+                description: "API error rate is above 5% for more than 2 minutes"
+
+            - alert: APIHighLatency
+              expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+              for: 5m
+              labels:
+                severity: warning
+                service: api
+              annotations:
+                summary: "High API latency"
+                description: "95th percentile API latency is above 2 seconds"
+
+            # AI/ML alerts
+            - alert: AIModelHighLatency
+              expr: ai_model_inference_duration_seconds{quantile="0.95"} > 5
+              for: 5m
+              labels:
+                severity: warning
+                service: ai
+              annotations:
+                summary: "AI model high latency"
+                description: "AI model inference latency is above 5 seconds for {{ $labels.model }}"
+
+            - alert: AIModelLowAccuracy
+              expr: ai_model_accuracy < 0.85
+              for: 10m
+              labels:
+                severity: critical
+                service: ai
+              annotations:
+                summary: "AI model accuracy degradation"
+                description: "AI model {{ $labels.model }} accuracy dropped below 85%"
+
+            # Database alerts
+            - alert: PostgreSQLHighConnections
+              expr: pg_stat_database_numbackends / pg_settings_max_connections * 100 > 80
+              for: 5m
+              labels:
+                severity: warning
+                service: database
+              annotations:
+                summary: "PostgreSQL high connection usage"
+                description: "PostgreSQL connection usage is above 80%"
+
+# Grafana configuration
+grafana:
+  enabled: true
+  
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.ainflue.com
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - grafana.ainflue.com
+
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: "fast-ssd"
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+
+  admin:
+    existingSecret: "grafana-admin-secret"
+    userKey: "admin-user"
+    passwordKey: "admin-password"
+
+  # Grafana configuration
+  grafana.ini:
+    server:
+      protocol: http
+      http_port: 3000
+      domain: grafana.ainflue.com
+      root_url: https://grafana.ainflue.com
+      
+    database:
+      type: sqlite3
+      path: /var/lib/grafana/grafana.db
+      
+    security:
+      disable_gravatar: true
+      cookie_secure: true
+      cookie_samesite: strict
+      
+    users:
+      allow_sign_up: false
+      allow_org_create: false
+      auto_assign_org: true
+      auto_assign_org_role: Viewer
+      
+    auth.anonymous:
+      enabled: false
+      
+    auth.basic:
+      enabled: true
+      
+    unified_alerting:
+      enabled: true
+      
+    alerting:
+      enabled: false
+
+  # Data sources
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus:9090
+          access: proxy
+          isDefault: true
+          
+        - name: Loki
+          type: loki
+          url: http://loki:3100
+          access: proxy
+          
+        - name: Jaeger
+          type: jaeger
+          url: http://jaeger-query:16686
+          access: proxy
+
+  # Dashboards
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'ainflue-dashboards'
+          orgId: 1
+          folder: 'Ainflue'
+          type: file
+          disableDeletion: false
+          editable: true
+          allowUiUpdates: true
+          options:
+            path: /var/lib/grafana/dashboards/ainflue
+
+  dashboards:
+    ainflue:
+      kubernetes-cluster:
+        gnetId: 7249
+        revision: 1
+        datasource: Prometheus
+      
+      ainflue-api:
+        json: |
+          {
+            "dashboard": {
+              "title": "Ainflue API Dashboard",
+              "panels": [
+                {
+                  "title": "Request Rate",
+                  "type": "graph",
+                  "targets": [
+                    {
+                      "expr": "rate(http_requests_total[5m])",
+                      "legendFormat": "{{ method }} {{ status }}"
+                    }
+                  ]
+                },
+                {
+                  "title": "Response Time",
+                  "type": "graph",
+                  "targets": [
+                    {
+                      "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+                      "legendFormat": "95th percentile"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+
+# Jaeger configuration
+jaeger:
+  enabled: true
+  
+  query:
+    ingress:
+      enabled: true
+      hosts:
+        - jaeger.ainflue.com
+      tls:
+        - secretName: jaeger-tls
+          hosts:
+            - jaeger.ainflue.com
+    
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+
+  collector:
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      host: elasticsearch
+      port: 9200
+      scheme: http
+
+# Loki configuration for log aggregation
+loki:
+  enabled: true
+  
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClassName: "fast-ssd"
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+
+  config:
+    auth_enabled: false
+    server:
+      http_listen_port: 3100
+    
+    ingester:
+      lifecycler:
+        address: 127.0.0.1
+        ring:
+          kvstore:
+            store: inmemory
+          replication_factor: 1
+        final_sleep: 0s
+      chunk_idle_period: 5m
+      chunk_retain_period: 30s
+      max_transfer_retries: 0
+    
+    schema_config:
+      configs:
+        - from: 2020-10-24
+          store: boltdb
+          object_store: filesystem
+          schema: v11
+          index:
+            prefix: index_
+            period: 168h
+    
+    storage_config:
+      boltdb:
+        directory: /loki/index
+      filesystem:
+        directory: /loki/chunks
+    
+    limits_config:
+      enforce_metric_name: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+    
+    chunk_store_config:
+      max_look_back_period: 0s
+    
+    table_manager:
+      retention_deletes_enabled: false
+      retention_period: 0s
+
+# Node Exporter for node metrics
+nodeExporter:
+  enabled: true
+  
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+  # Custom collectors
+  extraArgs:
+    - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+)($|/)
+    - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+
+# Kube State Metrics for Kubernetes metrics
+kubeStateMetrics:
+  enabled: true
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+# Custom metrics exporters
+customExporters:
+  # PostgreSQL Exporter
+  postgresqlExporter:
+    enabled: true
+    image: prometheuscommunity/postgres-exporter
+    port: 9187
+    env:
+      - name: DATA_SOURCE_NAME
+        valueFrom:
+          secretKeyRef:
+            name: postgresql-exporter-secret
+            key: data-source-name
+
+  # Redis Exporter
+  redisExporter:
+    enabled: true
+    image: oliver006/redis_exporter
+    port: 9121
+    env:
+      - name: REDIS_ADDR
+        value: "redis://ainflue-redis:6379"
+
+  # Nginx Exporter
+  nginxExporter:
+    enabled: true
+    image: nginx/nginx-prometheus-exporter
+    port: 9113
+    args:
+      - -nginx.scrape-uri=http://nginx:8080/nginx_status
+
+# Service monitors for automatic discovery
+serviceMonitors:
+  - name: ainflue-api
+    selector:
+      matchLabels:
+        app: ainflue-api
+    endpoints:
+      - port: metrics
+        path: /metrics
+        interval: 15s
+
+  - name: ainflue-workers
+    selector:
+      matchLabels:
+        app: ainflue-worker
+    endpoints:
+      - port: metrics
+        path: /metrics
+        interval: 30s
+
+# Network policies
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000  # Grafana
+        - protocol: TCP
+          port: 9090  # Prometheus
+        - protocol: TCP
+          port: 16686 # Jaeger
+        - protocol: TCP
+          port: 3100  # Loki
+
+# Resource quotas and limits
+resources:
+  prometheus:
+    limits:
+      cpu: 4000m
+      memory: 8Gi
+    requests:
+      cpu: 2000m
+      memory: 4Gi
+      
+  grafana:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+      
+  jaeger:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+      
+  loki:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+
+# Security configuration
+security:
+  podSecurityPolicy:
+    enabled: true
+  
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT:role/MonitoringServiceRole
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: "30d"
+  
+  destinations:
+    - type: s3
+      bucket: ainflue-monitoring-backups
+      path: /prometheus
+    - type: gcs
+      bucket: ainflue-monitoring-backups
+      path: /grafana

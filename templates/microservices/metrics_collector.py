@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Metrics Collector for Ainflue Microservices Platform
+Metrics Collector for IA Chérie Microservices Platform
 ===================================================
 
 Enterprise-grade metrics collection and monitoring providing:
@@ -84,7 +84,7 @@ class MetricsCollectorConfig(BaseModel):
     prometheus_port: int = Field(default=9090, description="Prometheus metrics port")
     pushgateway_url: Optional[str] = Field(default=None, description="Pushgateway URL")
     pushgateway_job: str = Field(default="microservice", description="Pushgateway job name")
-    registry_namespace: str = Field(default="ainflue", description="Registry namespace")
+    registry_namespace: str = Field(default="iacherie", description="Registry namespace")
     enable_redis_export: bool = Field(default=False, description="Enable Redis metrics export")
     redis_key_prefix: str = Field(default="metrics", description="Redis key prefix")
     retention_days: int = Field(default=7, description="Metrics retention in days")

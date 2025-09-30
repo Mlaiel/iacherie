@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Enterprise Distributed Tracing Module
+IA Chérie Platform - Enterprise Distributed Tracing Module
 ========================================================
 
 Advanced enterprise-grade distributed tracing system for monitoring audio processing pipelines,
@@ -42,7 +42,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SpanType(Enum):
-    """Types of distributed trace spans for Ainflue platform."""
+    """Types of distributed trace spans for IA Chérie platform."""
     # Core Infrastructure
     HTTP_REQUEST = "http_request"
     DATABASE_QUERY = "database_query"
@@ -52,7 +52,7 @@ class SpanType(Enum):
     FILE_OPERATION = "file_operation"
     QUEUE_OPERATION = "queue_operation"
     
-    # Ainflue-Specific Operations
+    # IA Chérie-Specific Operations
     AUDIO_PROCESSING = "audio_processing"
     AI_INFERENCE = "ai_inference"
     BUSINESS_TRANSACTION = "business_transaction"
@@ -686,7 +686,7 @@ class EnterpriseBusinessTransactionTracer:
 
 class EnterpriseDistributedTracingSystem:
     """
-    Advanced enterprise distributed tracing system for Ainflue platform.
+    Advanced enterprise distributed tracing system for IA Chérie platform.
     
     Enhanced Features:
     - Multi-tenant tracing with isolation

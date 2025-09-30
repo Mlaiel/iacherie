@@ -4,7 +4,7 @@
 DevOps Senior Expert: Terraform automation enterprise avec state management
 intelligent, multi-environment workflows et infrastructure versioning.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Infrastructure versioning pour déploiements créateurs sécurisés
 - State management distribué pour 65+ plateformes
 - Workspace orchestration pour environnements multi-tenant
@@ -125,7 +125,7 @@ class TerraformAutomation:
     """⚙️ DevOps Senior: Terraform automation enterprise
     
     Automation Terraform avec state management intelligent, workspace
-    orchestration et module registry pour infrastructure Ainflue.
+    orchestration et module registry pour infrastructure IA Chérie.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -141,7 +141,7 @@ class TerraformAutomation:
         self.base_directory = Path(self.config.get('base_directory', '/tmp/terraform'))
         self.base_directory.mkdir(parents=True, exist_ok=True)
         
-        # Ainflue-specific modules
+        # IA Chérie-specific modules
         self.ainflue_modules = {
             'content_processing': {
                 'description': 'AI content processing infrastructure',
@@ -177,7 +177,7 @@ class TerraformAutomation:
         """⚙️ DevOps Senior: Terraform plan generation avec cost estimation
         
         Génération automatisée de plans Terraform avec analysis des impacts
-        et estimation des coûts pour infrastructure Ainflue.
+        et estimation des coûts pour infrastructure IA Chérie.
         """
         try:
             plan_id = f"plan-{workspace_name}-{int(datetime.now().timestamp())}"
@@ -259,7 +259,7 @@ class TerraformAutomation:
         """⚙️ DevOps Senior: Infrastructure diff analysis
         
         Analyse détaillée des différences infrastructure avec impact
-        assessment et dependency mapping pour Ainflue.
+        assessment et dependency mapping pour IA Chérie.
         """
         try:
             if workspace_name not in self.workspaces:
@@ -354,7 +354,7 @@ class TerraformAutomation:
         """⚙️ DevOps Senior: Terraform workspace orchestration
         
         Orchestration complète des workspaces Terraform avec lifecycle
-        management et environment promotion pour Ainflue.
+        management et environment promotion pour IA Chérie.
         """
         try:
             orchestration_result = {
@@ -418,7 +418,7 @@ class TerraformAutomation:
         """⚙️ DevOps Senior: Terraform module registry management
         
         Registry management pour modules Terraform réutilisables avec
-        versioning, dependency resolution et Ainflue-specific modules.
+        versioning, dependency resolution et IA Chérie-specific modules.
         """
         try:
             if action == 'register':
@@ -552,7 +552,7 @@ class TerraformAutomation:
 
     async def _estimate_infrastructure_costs(self, plan_analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Estimate infrastructure costs"""
-        # Simulated cost estimation based on Ainflue-specific rates
+        # Simulated cost estimation based on IA Chérie-specific rates
         base_cost_per_resource = 50.0  # USD per month
         cost_multipliers = {
             'content_processing': 5.0,  # GPU instances are expensive
@@ -567,7 +567,7 @@ class TerraformAutomation:
         resources_added = plan_analysis['resources_to_add']
         resources_changed = plan_analysis['resources_to_change']
         
-        # Calculate costs for Ainflue modules
+        # Calculate costs for IA Chérie modules
         for module_name, multiplier in cost_multipliers.items():
             module_resources = resources_added // len(cost_multipliers)  # Simplified
             module_cost = module_resources * base_cost_per_resource * multiplier
@@ -641,7 +641,7 @@ class TerraformAutomation:
         """Generate main Terraform configuration"""
         config = f'''
 # Terraform configuration for {workspace.name}
-# Generated automatically for Ainflue platform
+# Generated automatically for IA Chérie platform
 
 terraform {{
   required_version = ">= {self.terraform_version}"
@@ -678,10 +678,10 @@ variable "region" {{
   default     = "us-east-1"
 }}
 
-# Ainflue-specific modules
+# IA Chérie-specific modules
 '''
         
-        # Add Ainflue modules
+        # Add IA Chérie modules
         for module_name, module_config in self.ainflue_modules.items():
             if module_name in workspace.variables:
                 config += f'''
@@ -917,11 +917,11 @@ if __name__ == "__main__":
         
         # Create test workspace
         workspace = TerraformWorkspace(
-            name="ainflue-production",
+            name="iacherie-production",
             environment="production",
             backend_config={
                 'type': 's3',
-                'bucket': 'ainflue-terraform-state',
+                'bucket': 'iacherie-terraform-state',
                 'region': 'us-east-1'
             },
             variables={
@@ -929,21 +929,21 @@ if __name__ == "__main__":
                 'distribution_api': {'enabled': True}
             }
         )
-        tf_automation.workspaces['ainflue-production'] = workspace
+        tf_automation.workspaces['iacherie-production'] = workspace
         
         # Test plan generation
         plan_result = await tf_automation.terraform_plan_generation(
-            'ainflue-production',
+            'iacherie-production',
             {'instance_type': 't3.large', 'min_size': 2}
         )
         print("Plan Generation:", plan_result)
         
         # Test diff analysis
-        diff_result = await tf_automation.infrastructure_diff_analysis('ainflue-production')
+        diff_result = await tf_automation.infrastructure_diff_analysis('iacherie-production')
         print("Diff Analysis:", diff_result)
         
         # Test state management
-        state_result = await tf_automation.state_file_management('ainflue-production', 'backup')
+        state_result = await tf_automation.state_file_management('iacherie-production', 'backup')
         print("State Management:", state_result)
         
         # Test workspace orchestration
@@ -954,10 +954,10 @@ if __name__ == "__main__":
         module_result = await tf_automation.terraform_module_registry(
             'register',
             module_config={
-                'name': 'ainflue-content-processing',
+                'name': 'iacherie-content-processing',
                 'version': '1.0.0',
-                'source': 'git::https://github.com/Mlaiel/Ainflue//modules/content-processing',
-                'documentation': 'AI content processing module for Ainflue platform'
+                'source': 'git::https://github.com/Mlaiel/IA Chérie//modules/content-processing',
+                'documentation': 'AI content processing module for IA Chérie platform'
             }
         )
         print("Module Registry:", module_result)

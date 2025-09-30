@@ -127,7 +127,7 @@ mongodb:
     connect_timeout_ms: 10000
     
   replica_set:
-    name: "ainflue-rs"
+    name: "iacherie-rs"
     read_preference: "secondaryPreferred"
     write_concern:
       w: "majority"
@@ -177,7 +177,7 @@ mongodb:
 # Elasticsearch Configuration (Search & Analytics)
 elasticsearch:
   cluster:
-    name: "ainflue-cluster"
+    name: "iacherie-cluster"
     hosts:
       - "${ELASTICSEARCH_HOST_1:-localhost:9200}"
       - "${ELASTICSEARCH_HOST_2:-localhost:9201}"
@@ -324,7 +324,7 @@ backup:
     
   storage:
     local_path: "/backups"
-    s3_bucket: "ainflue-db-backups"
+    s3_bucket: "iacherie-db-backups"
     encryption: true
     compression: true
     

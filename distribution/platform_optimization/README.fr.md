@@ -1,6 +1,6 @@
 # 🚀 Optimisation de Plateforme - Moteur d'Optimisation de Plateforme Avancé
 
-**Moteur d'optimisation de plateforme intelligent et alimenté par l'IA pour le système Ainflue**
+**Moteur d'optimisation de plateforme intelligent et alimenté par l'IA pour le système IA Chérie**
 
 ## 📋 Aperçu
 
@@ -138,4 +138,4 @@ optimal_features = await feature_optimizer.recommend_features(content_type, audi
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Plateforme Ainflue - Module d'Optimisation de Plateforme**
+**Plateforme IA Chérie - Module d'Optimisation de Plateforme**

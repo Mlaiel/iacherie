@@ -2,7 +2,7 @@
 ===================================
 
 Real-time data synchronization and change streams management for MongoDB
-in the Ainflue platform enterprise infrastructure.
+in the IA Chérie platform enterprise infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

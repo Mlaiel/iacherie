@@ -4,7 +4,7 @@
 DevOps Senior Expert: Pipeline orchestration multi-environment avec
 dependency management, approval workflows et performance optimization.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Coordination pipelines pour déploiement synchronisé 65+ plateformes
 - Dependency management pour services IA interdépendants
 - Approval workflows pour déploiements créateurs critiques
@@ -157,7 +157,7 @@ class PipelineOrchestrator:
     """⚙️ DevOps Senior: Pipeline orchestration enterprise
     
     Orchestration CI/CD enterprise avec dependency management intelligent,
-    approval workflows et environment promotion automation pour Ainflue.
+    approval workflows et environment promotion automation pour IA Chérie.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -173,7 +173,7 @@ class PipelineOrchestrator:
         self.default_timeout = self.config.get('default_timeout', 3600)  # seconds
         self.retry_attempts = self.config.get('retry_attempts', 3)
         
-        # Ainflue-specific pipeline configurations
+        # IA Chérie-specific pipeline configurations
         self.ainflue_pipelines = {
             'content-processing-ai': {
                 'description': 'AI content processing pipeline',
@@ -300,7 +300,7 @@ class PipelineOrchestrator:
                 coordination_result, pipeline_ids
             )
             
-            # Apply Ainflue-specific coordination logic
+            # Apply IA Chérie-specific coordination logic
             ainflue_coordination = await self._apply_ainflue_coordination_logic(
                 pipeline_ids, coordination_result
             )
@@ -368,7 +368,7 @@ class PipelineOrchestrator:
                 pipeline_id, pipeline_dependencies
             )
             
-            # Apply Ainflue-specific dependency logic
+            # Apply IA Chérie-specific dependency logic
             ainflue_dependencies = await self._apply_ainflue_dependency_logic(
                 pipeline_id, pipeline_dependencies
             )
@@ -396,7 +396,7 @@ class PipelineOrchestrator:
         """⚙️ DevOps Senior: Pipeline approval workflows
         
         Workflows d'approbation sophistiqués avec conditional logic,
-        auto-approval rules et escalation policies pour Ainflue.
+        auto-approval rules et escalation policies pour IA Chérie.
         """
         try:
             workflow_id = f"approval-{approval_gate.id}-{int(datetime.now().timestamp())}"
@@ -428,7 +428,7 @@ class PipelineOrchestrator:
             # Apply escalation policies
             escalation_result = await self._apply_approval_escalation_policies(approval_gate)
             
-            # Apply Ainflue-specific approval logic
+            # Apply IA Chérie-specific approval logic
             ainflue_approval = await self._apply_ainflue_approval_logic(
                 approval_gate, approval_result
             )
@@ -500,7 +500,7 @@ class PipelineOrchestrator:
                 promotion_id, target_env, backup_result
             )
             
-            # Apply Ainflue-specific promotion logic
+            # Apply IA Chérie-specific promotion logic
             ainflue_promotion = await self._apply_ainflue_promotion_logic(
                 pipeline_id, source_env, target_env, promotion_result
             )
@@ -563,7 +563,7 @@ class PipelineOrchestrator:
                 performance_analysis, optimization_opportunities
             )
             
-            # Apply Ainflue-specific performance optimizations
+            # Apply IA Chérie-specific performance optimizations
             ainflue_optimizations = await self._apply_ainflue_performance_optimizations()
             
             logger.info(f"Pipeline performance optimization completed: {optimization_id}")
@@ -598,7 +598,7 @@ class PipelineOrchestrator:
                 'properties': self.pipelines[pipeline_id].__dict__ if pipeline_id in self.pipelines else {}
             })
         
-        # Add dependencies from Ainflue configurations
+        # Add dependencies from IA Chérie configurations
         for pipeline_id in pipeline_ids:
             if pipeline_id in self.ainflue_pipelines:
                 dependencies = self.ainflue_pipelines[pipeline_id].get('dependencies', [])
@@ -742,7 +742,7 @@ class PipelineOrchestrator:
         # Simulate pipeline execution
         start_time = datetime.now()
         
-        # Simulate build time based on Ainflue configuration
+        # Simulate build time based on IA Chérie configuration
         if pipeline_id in self.ainflue_pipelines:
             build_time = self.ainflue_pipelines[pipeline_id]['sla']['build_time']
             await asyncio.sleep(build_time / 100)  # Simulate reduced time for testing
@@ -795,7 +795,7 @@ class PipelineOrchestrator:
 
     async def _apply_ainflue_coordination_logic(self, pipeline_ids: List[str], 
                                               coordination_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific coordination logic"""
+        """Apply IA Chérie-specific coordination logic"""
         ainflue_pipelines_involved = [pid for pid in pipeline_ids if pid in self.ainflue_pipelines]
         
         return {
@@ -817,7 +817,7 @@ class PipelineOrchestrator:
         for pipeline_id in self.pipelines:
             graph.add_node(pipeline_id)
         
-        # Add Ainflue pipeline dependencies
+        # Add IA Chérie pipeline dependencies
         for pipeline_id, config in self.ainflue_pipelines.items():
             dependencies = config.get('dependencies', [])
             for dep in dependencies:
@@ -871,7 +871,7 @@ class PipelineOrchestrator:
         ancestors = list(nx.ancestors(graph, pipeline_id))
         critical_path = ancestors + [pipeline_id]
         
-        # Estimate duration based on Ainflue SLAs
+        # Estimate duration based on IA Chérie SLAs
         total_duration = 0
         for pipeline in critical_path:
             if pipeline in self.ainflue_pipelines:
@@ -940,7 +940,7 @@ class PipelineOrchestrator:
 
     async def _apply_ainflue_dependency_logic(self, pipeline_id: str, 
                                             dependencies: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific dependency logic"""
+        """Apply IA Chérie-specific dependency logic"""
         if pipeline_id not in self.ainflue_pipelines:
             return {'ainflue_logic_applied': False}
         
@@ -1064,7 +1064,7 @@ class PipelineOrchestrator:
 
     async def _apply_ainflue_approval_logic(self, approval_gate: ApprovalGate, 
                                           approval_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific approval logic"""
+        """Apply IA Chérie-specific approval logic"""
         return {
             'creator_impact_assessment': True,
             'revenue_impact_check': True,
@@ -1126,7 +1126,7 @@ class PipelineOrchestrator:
             'backup_type': 'full',
             'backup_size': '2.5GB',
             'backup_duration': 120,  # seconds
-            'backup_location': f"s3://ainflue-backups/{backup_id}",
+            'backup_location': f"s3://iacherie-backups/{backup_id}",
             'backup_status': 'completed'
         }
 
@@ -1192,7 +1192,7 @@ class PipelineOrchestrator:
                                            source_env: EnvironmentType,
                                            target_env: EnvironmentType,
                                            promotion_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific promotion logic"""
+        """Apply IA Chérie-specific promotion logic"""
         return {
             'creator_notification': True,
             'platform_sync': True,
@@ -1324,7 +1324,7 @@ class PipelineOrchestrator:
         }
 
     async def _apply_ainflue_performance_optimizations(self) -> Dict[str, Any]:
-        """Apply Ainflue-specific performance optimizations"""
+        """Apply IA Chérie-specific performance optimizations"""
         return {
             'ai_model_optimization': True,
             'content_processing_acceleration': True,
@@ -1356,7 +1356,7 @@ if __name__ == "__main__":
         content_pipeline = Pipeline(
             id="content-processing-ai",
             name="AI Content Processing Pipeline",
-            repository="ainflue/content-processor",
+            repository="iacherie/content-processor",
             branch="main",
             trigger="push",
             tasks=[],
@@ -1366,7 +1366,7 @@ if __name__ == "__main__":
         distribution_pipeline = Pipeline(
             id="distribution-api",
             name="Distribution API Pipeline",
-            repository="ainflue/distribution-api",
+            repository="iacherie/distribution-api",
             branch="main",
             trigger="push",
             tasks=[],

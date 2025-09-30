@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Redis Cluster Orchestrator - Ainflue Platform
+Redis Cluster Orchestrator - IA Chérie Platform
 ==============================================
 
 Enterprise-grade Redis cluster orchestration with intelligent management

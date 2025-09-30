@@ -1,0 +1,549 @@
+name: "🚀 Ainflue Platform - Main CI/CD Pipeline"
+
+# 🏗️ Ainflue Platform - Enterprise CI/CD Workflow
+# Author: Fahed Mlaiel (mlaiel@live.de) 
+# Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+# License: Proprietary
+#
+# ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+# This CI/CD configuration is the exclusive intellectual property of Fahed Mlaiel.
+# Unauthorized copying, distribution, or implementation is strictly prohibited.
+
+on:
+  push:
+    branches: [ main, develop, release/* ]
+    paths:
+      - 'artifacts/**'
+      - '.github/workflows/**'
+      - 'configs/**'
+      - 'infrastructure/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'artifacts/**'
+      - '.github/workflows/**'
+      - 'configs/**'
+      - 'infrastructure/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      force_deploy:
+        description: 'Force deployment (skip tests)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ainflue/platform
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.11'
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════
+  # 🔍 CODE QUALITY & SECURITY ANALYSIS
+  # ═══════════════════════════════════════════════════════════════
+  
+  code-quality:
+    name: "🔍 Code Quality & Security"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: "🏗️ Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: "🏗️ Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          
+      - name: "📦 Install Dependencies"
+        run: |
+          npm install -g @commitlint/cli @commitlint/config-conventional
+          npm install -g markdownlint-cli
+          npm install -g ajv-cli
+          pip install yamllint ansible-lint
+          
+      - name: "📝 Lint Markdown Documentation"
+        run: |
+          echo "🔍 Linting Markdown files..."
+          markdownlint artifacts/**/*.md --config .markdownlint.json
+          
+      - name: "📋 Validate JSON Configurations"
+        run: |
+          echo "🔍 Validating JSON configurations..."
+          find artifacts/configs -name "*.json" -exec ajv validate -s schemas/config.schema.json -d {} \;
+          
+      - name: "📄 Lint YAML Files"
+        run: |
+          echo "🔍 Linting YAML files..."
+          yamllint artifacts/infrastructure/ artifacts/workflows/
+          
+      - name: "🔒 Security Scan - Secrets"
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
+          
+      - name: "🔒 Security Scan - Dependencies"
+        run: |
+          echo "🔍 Scanning for vulnerable dependencies..."
+          npm audit --audit-level=high
+          pip-audit
+          
+      - name: "📊 Upload Code Quality Results"
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: code-quality-results
+          path: |
+            markdownlint-report.json
+            security-scan-results.json
+          retention-days: 30
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🧪 DOCUMENTATION & CONFIGURATION TESTING  
+  # ═══════════════════════════════════════════════════════════════
+  
+  documentation-tests:
+    name: "📚 Documentation & Config Tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: code-quality
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "🏗️ Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: "📚 Test Documentation Structure"
+        run: |
+          echo "🔍 Validating documentation structure..."
+          
+          # Check required files exist
+          test -f artifacts/README.md || exit 1
+          test -f artifacts/README.ar.md || exit 1
+          test -f artifacts/README.de.md || exit 1
+          test -f artifacts/README.fr.md || exit 1
+          test -f artifacts/index.md || exit 1
+          test -f artifacts/ARCHITECTURE_OVERVIEW.md || exit 1
+          test -f artifacts/checklist.md || exit 1
+          
+          # Check configs directory
+          test -d artifacts/configs || exit 1
+          test -f artifacts/configs/index.json || exit 1
+          test -f artifacts/configs/technical_specifications.json || exit 1
+          
+          # Check infrastructure directory
+          test -d artifacts/infrastructure || exit 1
+          test -f artifacts/infrastructure/index.yml || exit 1
+          test -f artifacts/infrastructure/docker-compose.artifacts.yml || exit 1
+          
+          echo "✅ All required documentation files found"
+          
+      - name: "🔧 Validate Configuration Files"
+        run: |
+          echo "🔍 Validating configuration files..."
+          
+          # Install validation tools
+          npm install -g ajv-cli
+          
+          # Validate JSON files
+          for json_file in artifacts/configs/*.json; do
+            echo "Validating $json_file..."
+            node -e "JSON.parse(require('fs').readFileSync('$json_file', 'utf8'))" || exit 1
+          done
+          
+          # Validate YAML files  
+          pip install pyyaml
+          python -c "
+          import yaml
+          import os
+          for root, dirs, files in os.walk('artifacts/infrastructure'):
+              for file in files:
+                  if file.endswith('.yml') or file.endswith('.yaml'):
+                      filepath = os.path.join(root, file)
+                      with open(filepath, 'r') as f:
+                          yaml.safe_load(f)
+                      print(f'✅ {filepath} is valid YAML')
+          "
+          
+          echo "✅ All configuration files are valid"
+          
+      - name: "🌍 Test Multi-language Documentation"
+        run: |
+          echo "🔍 Testing multi-language documentation..."
+          
+          # Check for required sections in each language
+          grep -q "Fahed Mlaiel" artifacts/README.ar.md || exit 1
+          grep -q "مهندس" artifacts/README.ar.md || exit 1
+          
+          echo "✅ Multi-language documentation validated"
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🐳 INFRASTRUCTURE VALIDATION
+  # ═══════════════════════════════════════════════════════════════
+  
+  infrastructure-tests:
+    name: "🐳 Infrastructure Validation"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: documentation-tests
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "🐳 Setup Docker"
+        uses: docker/setup-buildx-action@v3
+        
+      - name: "🔧 Validate Docker Compose"
+        run: |
+          echo "🔍 Validating Docker Compose configuration..."
+          cd artifacts/infrastructure
+          
+          # Validate docker-compose syntax
+          docker-compose -f docker-compose.artifacts.yml config
+          
+          # Test container build (dry run)
+          docker-compose -f docker-compose.artifacts.yml pull
+          
+          echo "✅ Docker Compose configuration is valid"
+          
+      - name: "☸️ Validate Kubernetes Manifests"
+        run: |
+          echo "🔍 Validating Kubernetes manifests..."
+          
+          # Install kubeval for K8s validation
+          curl -L https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz | tar xz
+          sudo mv kubeval /usr/local/bin
+          
+          # Validate any K8s YAML files
+          find artifacts/infrastructure -name "kubernetes-*.yml" -exec kubeval {} \;
+          
+          echo "✅ Kubernetes manifests are valid"
+          
+      - name: "🔧 Test Infrastructure Deployment (Dry Run)"
+        run: |
+          echo "🔍 Testing infrastructure deployment..."
+          cd artifacts/infrastructure
+          
+          # Start services in detached mode for testing
+          docker-compose -f docker-compose.artifacts.yml up -d --no-deps documentation-server
+          
+          # Wait for service to be ready
+          sleep 10
+          
+          # Test service health
+          curl -f http://localhost:8080/artifacts/ || exit 1
+          
+          # Cleanup
+          docker-compose -f docker-compose.artifacts.yml down
+          
+          echo "✅ Infrastructure deployment test passed"
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🔒 SECURITY & COMPLIANCE VALIDATION
+  # ═══════════════════════════════════════════════════════════════
+  
+  security-compliance:
+    name: "🔒 Security & Compliance"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: infrastructure-tests
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "🔒 Container Security Scan"
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: 'artifacts/'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          
+      - name: "📋 Upload Security Results"
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+          
+      - name: "🔍 GDPR Compliance Check"
+        run: |
+          echo "🔍 Checking GDPR compliance..."
+          
+          # Check for required privacy notices
+          grep -r "GDPR\|privacy\|data protection" artifacts/ || exit 1
+          
+          # Check for required copyright notices
+          grep -r "Fahed Mlaiel" artifacts/ || exit 1
+          grep -r "All Rights Reserved" artifacts/ || exit 1
+          
+          echo "✅ GDPR compliance checks passed"
+          
+      - name: "🔐 Intellectual Property Validation"
+        run: |
+          echo "🔍 Validating intellectual property protection..."
+          
+          # Check for copyright notices in all markdown files
+          find artifacts -name "*.md" -exec grep -l "Fahed Mlaiel" {} \; | wc -l
+          
+          # Check for IP warnings
+          grep -r "INTELLECTUAL PROPERTY WARNING" artifacts/ || exit 1
+          
+          echo "✅ Intellectual property validation passed"
+
+  # ═══════════════════════════════════════════════════════════════
+  # 📦 BUILD & PACKAGE
+  # ═══════════════════════════════════════════════════════════════
+  
+  build-package:
+    name: "📦 Build & Package"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [code-quality, documentation-tests, infrastructure-tests, security-compliance]
+    if: github.event_name == 'push' || github.event.inputs.force_deploy == 'true'
+    
+    outputs:
+      image-digest: ${{ steps.build.outputs.digest }}
+      
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "🏗️ Setup Docker Buildx"
+        uses: docker/setup-buildx-action@v3
+        
+      - name: "🔐 Login to Container Registry"
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: "📊 Extract Metadata"
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            
+      - name: "🏗️ Build and Push"
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: artifacts/
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: "📋 Generate SBOM"
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+          
+      - name: "📦 Upload Build Artifacts"
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            sbom.spdx.json
+          retention-days: 30
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🚀 DEPLOYMENT
+  # ═══════════════════════════════════════════════════════════════
+  
+  deploy-staging:
+    name: "🚀 Deploy to Staging"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: build-package
+    if: github.ref == 'refs/heads/develop' || github.event.inputs.environment == 'staging'
+    environment: staging
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "☸️ Setup Kubectl"
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+          
+      - name: "🔐 Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          
+      - name: "☸️ Update Kubeconfig"
+        run: |
+          aws eks update-kubeconfig --name ainflue-staging --region us-west-2
+          
+      - name: "🚀 Deploy to Staging"
+        run: |
+          echo "🚀 Deploying to staging environment..."
+          
+          # Apply Kubernetes manifests
+          kubectl apply -f artifacts/infrastructure/kubernetes-namespace.yml
+          
+          # Update deployment with new image
+          kubectl set image deployment/artifacts-module \
+            artifacts-module=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            -n ainflue-staging
+            
+          # Wait for rollout
+          kubectl rollout status deployment/artifacts-module -n ainflue-staging --timeout=300s
+          
+          echo "✅ Staging deployment completed"
+          
+      - name: "🧪 Post-Deployment Tests"
+        run: |
+          echo "🧪 Running post-deployment tests..."
+          
+          # Get service endpoint
+          ENDPOINT=$(kubectl get service artifacts-module -n ainflue-staging -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          
+          # Health check
+          curl -f "http://${ENDPOINT}/health" || exit 1
+          
+          # Basic functionality test
+          curl -f "http://${ENDPOINT}/artifacts/" || exit 1
+          
+          echo "✅ Post-deployment tests passed"
+
+  deploy-production:
+    name: "🏭 Deploy to Production"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: build-package
+    if: github.ref == 'refs/heads/main' || github.event.inputs.environment == 'production'
+    environment: production
+    
+    steps:
+      - name: "📥 Checkout Repository"
+        uses: actions/checkout@v4
+        
+      - name: "☸️ Setup Kubectl"
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+          
+      - name: "🔐 Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: us-west-2
+          
+      - name: "☸️ Update Kubeconfig"
+        run: |
+          aws eks update-kubeconfig --name ainflue-production --region us-west-2
+          
+      - name: "🚀 Blue-Green Deployment"
+        run: |
+          echo "🚀 Starting blue-green deployment to production..."
+          
+          # Create new deployment (green)
+          kubectl apply -f artifacts/infrastructure/kubernetes-deployment-green.yml
+          
+          # Wait for green deployment to be ready
+          kubectl rollout status deployment/artifacts-module-green -n ainflue-production --timeout=600s
+          
+          # Run production readiness tests
+          kubectl run production-test --image=curlimages/curl:latest --rm -i --restart=Never -- \
+            curl -f http://artifacts-module-green-service/health
+            
+          # Switch traffic to green deployment
+          kubectl patch service artifacts-module -n ainflue-production -p '{"spec":{"selector":{"version":"green"}}}'
+          
+          # Wait and monitor
+          sleep 60
+          
+          # Clean up blue deployment
+          kubectl delete deployment artifacts-module-blue -n ainflue-production --ignore-not-found=true
+          
+          echo "✅ Production deployment completed"
+
+  # ═══════════════════════════════════════════════════════════════
+  # 📊 MONITORING & NOTIFICATIONS
+  # ═══════════════════════════════════════════════════════════════
+  
+  notify-completion:
+    name: "📊 Notify Completion"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+      - name: "📊 Deployment Summary"
+        run: |
+          echo "📊 CI/CD Pipeline Summary:"
+          echo "========================"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "========================"
+          
+      - name: "📧 Slack Notification"
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: '#ainflue-deployments'
+          text: |
+            🚀 Ainflue Artifacts Module Deployment
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Status: ${{ job.status }}
+            Actor: ${{ github.actor }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          
+      - name: "📊 Update Deployment Metrics"
+        run: |
+          echo "📊 Updating deployment metrics..."
+          # Add custom metrics tracking here
+          echo "Deployment completed at $(date)"

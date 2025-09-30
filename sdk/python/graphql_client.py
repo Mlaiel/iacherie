@@ -1,4 +1,4 @@
-"""GraphQL API Client for Ainflue SDK
+"""GraphQL API Client for IA Chérie SDK
 
 Multi-expert implementation:
 - Backend Senior: Robust GraphQL client architecture with query optimization
@@ -470,7 +470,7 @@ class GraphQLClient:
         headers = {
             "Authorization": f"Bearer {auth_token}",
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-Python-SDK/1.0.0"
+            "User-Agent": "IA Chérie-Python-SDK/1.0.0"
         }
         
         # Execute with retry logic
@@ -643,7 +643,7 @@ async def example_graphql_usage():
     auth_manager = AuthenticationManager("your-api-key")
     
     async with GraphQLClient(
-        endpoint="https://api.ainflue.com/graphql",
+        endpoint="https://api.iacherie.com/graphql",
         auth_manager=auth_manager
     ) as client:
         

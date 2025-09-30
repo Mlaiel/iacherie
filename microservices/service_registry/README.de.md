@@ -1,4 +1,4 @@
-# 🔥 SERVICE REGISTRY ENTERPRISE - AINFLUE MIKROSERVICES
+# 🔥 SERVICE REGISTRY ENTERPRISE - IACHERIE MIKROSERVICES
 
 **Expertenteam**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -10,11 +10,11 @@
 
 ## 🎯 MODUL ÜBERSICHT
 
-**Standort**: `/workspaces/Ainflue/microservices/service_registry/`  
+**Standort**: `/workspaces/IA Chérie/microservices/service_registry/`  
 **Architektur**: Backend Level 3 (Maximum) | 18 Dateien Limit | Produktionsreife Service Registry  
-**Zweck**: Enterprise Service Registry für Ainflue Mikroservices Management
+**Zweck**: Enterprise Service Registry für IA Chérie Mikroservices Management
 
-### **🌍 AINFLUE GESCHÄFTSLOGIK**
+### **🌍 IACHERIE GESCHÄFTSLOGIK**
 ```
 Multi-Format Creator → IA Processing → Schutz → Monetarisierung → 
 Zusammenarbeit & Gamification → SEO → Multi-Plattform Distribution
@@ -32,7 +32,7 @@ Zusammenarbeit & Gamification → SEO → Multi-Plattform Distribution
 - **Security Policy Engine** - Sicherheitsrichtlinien mit RBAC, Audit und Bedrohungserkennung
 
 ### **Phase 2: Service Lifecycle Management**
-- **Content Service Registry** - Spezialisiertes Registry für Ainflue-Inhaltsdienste
+- **Content Service Registry** - Spezialisiertes Registry für IA Chérie-Inhaltsdienste
 - **AI Service Orchestration** - IA/ML-Dienste-Orchestrierung mit GPU-Planung
 - **Creator Service Coordination** - Creator-fokussierte Dienst-Koordination mit Workflow-Optimierung
 - **Monetization Service Registry** - Monetarisierungsdienste mit Finanz-Compliance
@@ -72,7 +72,7 @@ Zusammenarbeit & Gamification → SEO → Multi-Plattform Distribution
 ## 🎨 CREATOR-FOKUSSIERTE FUNKTIONEN
 
 ### **Content Service Registry**
-Spezialisiertes Registry für Ainflue-Inhaltsdienste mit:
+Spezialisiertes Registry für IA Chérie-Inhaltsdienste mit:
 - **Content-Type Awareness**: Audio, Video, Bild, Mixed Media Unterstützung
 - **Creator Workflow Integration**: Musiker, Video-Creator, Podcaster, Influencer
 - **Ressourcenoptimierung**: GPU-Scheduling für Media Processing
@@ -122,7 +122,7 @@ STRATEGIES = {
     'weighted_response_time': 'Gewichtete Antwortzeit',
     'geographic_proximity': 'Geografische Nähe',
     'ml_predictive': 'ML-basierte Vorhersage',
-    'business_priority': 'Ainflue Geschäftspriorität'
+    'business_priority': 'IA Chérie Geschäftspriorität'
 }
 ```
 
@@ -274,8 +274,8 @@ Vorgefertigte Dashboards für:
 ### **Entwicklungsumgebung**
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/microservices/service_registry
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/microservices/service_registry
 
 # Entwicklungsabhängigkeiten installieren
 pip install -r requirements-dev.txt
@@ -335,8 +335,8 @@ health_config = {
 
 ### **Technischer Support**
 - **Email**: mlaiel@live.de
-- **Dokumentation**: [Ainflue Docs](https://docs.ainflue.com)
-- **Issues**: [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
+- **Dokumentation**: [IA Chérie Docs](https://docs.iacherie.com)
+- **Issues**: [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
 
 ### **Enterprise Support**
 Für Enterprise-Kunden bieten wir:
@@ -368,10 +368,10 @@ Dieses Projekt steht unter der MIT-Lizenz - siehe [LICENSE](LICENSE) Datei für 
 
 ---
 
-**🔥 AINFLUE SERVICE REGISTRY ENTERPRISE - DEUTSCHE DOKUMENTATION**  
+**🔥 IACHERIE SERVICE REGISTRY ENTERPRISE - DEUTSCHE DOKUMENTATION**  
 **Autor**: Expertenteam (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)  
 **IP-Eigentümer**: Fahed Mlaiel (mlaiel@live.de)  
 **Datum**: 16. September 2025  
 **Version**: 1.0 Produktion
 
-> **🎯 ENDZIEL**: Enterprise-Service-Registry-Modul, schlüsselfertig, verteiltes Registry + ML-Discovery + Sicherheit + Analytics + Gesundheitsüberwachung, produktionsreif mit ultra-fortgeschrittenem Industriecode, konform mit den Ainflue-Spezifikationen.
+> **🎯 ENDZIEL**: Enterprise-Service-Registry-Modul, schlüsselfertig, verteiltes Registry + ML-Discovery + Sicherheit + Analytics + Gesundheitsüberwachung, produktionsreif mit ultra-fortgeschrittenem Industriecode, konform mit den IA Chérie-Spezifikationen.

@@ -1,4 +1,4 @@
-# 🚨 PagerDuty Integration Enterprise - Ainflue Creator Plattform
+# 🚨 PagerDuty Integration Enterprise - IA Chérie Creator Plattform
 
 ## ⚠️ **RECHTLICHER HINWEIS**
 **© 2025 Fahed Mlaiel <mlaiel@live.de> - ALLE RECHTE VORBEHALTEN**
@@ -120,8 +120,8 @@ Kollaboration & Gamification → SEO → Multi-Plattform Distribution
 - **Creator Economy**: Spezialisierte Creator Economy Beratung
 
 ### **Kontaktinformationen**
-- **E-Mail**: enterprise@ainflue.com
-- **Telefon**: +49-30-AINFLUE
+- **E-Mail**: enterprise@iacherie.com
+- **Telefon**: +49-30-IACHERIE
 - **Notfall**: +49-30-URGENT
 - **Architekt Direkt**: mlaiel@live.de (Fahed Mlaiel)
 
@@ -135,4 +135,4 @@ Dieses PagerDuty Integration Enterprise Modul repräsentiert Jahre spezialisiert
 
 ---
 
-*Powered by Ainflue Creator Plattform - Die nächste Generation digitaler Creators stärken*
+*Powered by IA Chérie Creator Plattform - Die nächste Generation digitaler Creators stärken*

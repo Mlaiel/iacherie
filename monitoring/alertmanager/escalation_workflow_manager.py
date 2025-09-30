@@ -14,7 +14,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chérie - AI-Powered Creator Economy Platform
 Module: Escalation Workflow Manager
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -293,7 +293,7 @@ class EscalationWorkflowManager:
                 level=EscalationLevel.L1_TEAM,
                 contact_methods={
                     "slack": "#api-team",
-                    "email": "api-team@ainflue.com",
+                    "email": "api-team@iacherie.com",
                     "pagerduty": "api-team-oncall"
                 },
                 availability={"24x7": True},
@@ -306,7 +306,7 @@ class EscalationWorkflowManager:
                 level=EscalationLevel.L1_TEAM,
                 contact_methods={
                     "slack": "#database-team",
-                    "email": "dba-team@ainflue.com",
+                    "email": "dba-team@iacherie.com",
                     "pagerduty": "dba-oncall"
                 },
                 availability={"24x7": True},
@@ -319,7 +319,7 @@ class EscalationWorkflowManager:
                 level=EscalationLevel.L1_TEAM,
                 contact_methods={
                     "slack": "#ai-team",
-                    "email": "ai-team@ainflue.com",
+                    "email": "ai-team@iacherie.com",
                     "pagerduty": "ai-team-oncall"
                 },
                 availability={"business_hours": True},
@@ -333,7 +333,7 @@ class EscalationWorkflowManager:
                 level=EscalationLevel.L2_SENIOR,
                 contact_methods={
                     "slack": "#senior-engineers",
-                    "email": "senior-eng@ainflue.com",
+                    "email": "senior-eng@iacherie.com",
                     "pagerduty": "senior-oncall",
                     "sms": "+1-555-SENIOR"
                 },
@@ -348,7 +348,7 @@ class EscalationWorkflowManager:
                 level=EscalationLevel.L3_MANAGEMENT,
                 contact_methods={
                     "slack": "#engineering-leadership",
-                    "email": "eng-mgmt@ainflue.com",
+                    "email": "eng-mgmt@iacherie.com",
                     "sms": "+1-555-MGMT"
                 },
                 availability={"business_hours_extended": True},
@@ -361,7 +361,7 @@ class EscalationWorkflowManager:
                 name="Chief Technology Officer",
                 level=EscalationLevel.L4_EXECUTIVE,
                 contact_methods={
-                    "email": "cto@ainflue.com",
+                    "email": "cto@iacherie.com",
                     "sms": "+1-555-CTO"
                 },
                 availability={"emergency_only": True},
@@ -791,8 +791,8 @@ Context:
 
 Expected Response Time: {event.target.response_sla // 60} minutes
 
-Dashboard: https://dashboard.ainflue.com/alerts/{alert_context.alert_id}
-Escalation Workflow: https://dashboard.ainflue.com/escalations/{workflow.escalation_id}
+Dashboard: https://dashboard.iacherie.com/alerts/{alert_context.alert_id}
+Escalation Workflow: https://dashboard.iacherie.com/escalations/{workflow.escalation_id}
 
 This escalation requires immediate attention from {event.target.name}.
 """

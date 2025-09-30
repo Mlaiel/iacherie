@@ -1,6 +1,6 @@
 # 🚀 Platform Core Support - Enterprise Support System
 
-![Ainflue Logo](https://img.shields.io/badge/Ainflue-Creator%20Economy-blue) ![Support](https://img.shields.io/badge/Support-Enterprise%20Ready-green) ![AI Powered](https://img.shields.io/badge/AI-Powered%20Support-orange)
+![IA Chérie Logo](https://img.shields.io/badge/IA Chérie-Creator%20Economy-blue) ![Support](https://img.shields.io/badge/Support-Enterprise%20Ready-green) ![AI Powered](https://img.shields.io/badge/AI-Powered%20Support-orange)
 
 ## ⚠️ INTELLECTUAL PROPERTY WARNING
 
@@ -97,8 +97,8 @@ platform_core/support/
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/support
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/support
 
 # Install dependencies
 pip install -r requirements.txt
@@ -294,7 +294,7 @@ POST /api/support/escalate          # Escalate to human
 
 ```javascript
 // Connect to live chat
-const socket = io('wss://api.ainflue.com/support');
+const socket = io('wss://api.iacherie.com/support');
 
 // Send message
 socket.emit('message', {
@@ -368,9 +368,9 @@ print(f"Active connections: {metrics['active_connections']}")
 ## 📞 Support & Contact
 
 ### Technical Support
-- **Email**: support@ainflue.com
-- **Documentation**: https://docs.ainflue.com/support
-- **Status Page**: https://status.ainflue.com
+- **Email**: support@iacherie.com
+- **Documentation**: https://docs.iacherie.com/support
+- **Status Page**: https://status.iacherie.com
 
 ### Enterprise Licensing
 - **Contact**: Fahed Mlaiel <mlaiel@live.de>
@@ -379,5 +379,5 @@ print(f"Active connections: {metrics['active_connections']}")
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Creator Economy Platform**  
+**© 2025 Fahed Mlaiel - IA Chérie Creator Economy Platform**  
 *Revolutionizing creator support with AI-powered enterprise solutions*

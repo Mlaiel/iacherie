@@ -1,4 +1,4 @@
-# 🚀 Marketing Services Module - Ainflue Enterprise (Deutsch)
+# 🚀 Marketing Services Module - IA Chérie Enterprise (Deutsch)
 
 **Enterprise Marketing Intelligence & Automation Platform**
 
@@ -54,8 +54,8 @@ Das Marketing Services Module ist eine hochmoderne Enterprise-Lösung für umfas
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/microservices/marketing_services
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/microservices/marketing_services
 
 # Abhängigkeiten installieren
 pip install -r ../../requirements.txt
@@ -408,7 +408,7 @@ spec:
     spec:
       containers:
       - name: marketing-services
-        image: ainflue/marketing-services:latest
+        image: iacherie/marketing-services:latest
         ports:
         - containerPort: 8080
         env:
@@ -421,9 +421,9 @@ spec:
 
 ## 🤝 Support & Kontakt
 
-- **Dokumentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Support**: support@ainflue.com
-- **GitHub Issues**: [GitHub Repository](https://github.com/Mlaiel/Ainflue)
+- **Dokumentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Support**: support@iacherie.com
+- **GitHub Issues**: [GitHub Repository](https://github.com/Mlaiel/IA Chérie)
 
 ## ⚠️ Wichtiger Hinweis
 

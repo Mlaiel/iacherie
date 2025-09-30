@@ -1,7 +1,7 @@
 """Performance Monitor Core - Core Performance Monitoring System
 ================================================================
 
-Core performance monitoring infrastructure for Ainflue integrations.
+Core performance monitoring infrastructure for IA Chérie integrations.
 Provides the main PerformanceMonitor class and result management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -693,6 +693,7 @@ performance_monitor = PerformanceMonitor()
 # Export main classes and functions
 __all__ = [
     "PerformanceMonitor",
+    "PerformanceMonitorCore", 
     "PerformanceMetric",
     "PerformanceThreshold",
     "PerformanceAlert",
@@ -701,3 +702,6 @@ __all__ = [
     "AlertLevel",
     "performance_monitor"
 ]
+
+# Alias pour compatibilité d'import
+PerformanceMonitorCore = PerformanceMonitor

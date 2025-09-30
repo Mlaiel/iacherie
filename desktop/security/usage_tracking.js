@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Usage Tracking System
+ * IA Chérie Desktop - Usage Tracking System
  * 
  * Comprehensive usage tracking for copyright compliance, licensing enforcement,
  * and detailed analytics with privacy-compliant data collection.
@@ -372,12 +372,12 @@ class UsageTrackingSystem {
 
     async saveEventsToLocalStorage(events) {
         try {
-            const existingEvents = JSON.parse(localStorage.getItem('ainflue-tracking-events') || '[]');
+            const existingEvents = JSON.parse(localStorage.getItem('iacherie-tracking-events') || '[]');
             const allEvents = [...existingEvents, ...events];
             
             // Keep only recent events in localStorage (last 1000)
             const recentEvents = allEvents.slice(-1000);
-            localStorage.setItem('ainflue-tracking-events', JSON.stringify(recentEvents));
+            localStorage.setItem('iacherie-tracking-events', JSON.stringify(recentEvents));
         } catch (error) {
             console.warn('Failed to save events to localStorage:', error);
         }

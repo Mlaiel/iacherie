@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Authentication Manager for Ainflue SDK
+"""Authentication Manager for IA Chérie SDK
 
 Enterprise-grade authentication with multi-expert design:
 - Sécurité: Secure token storage and rotation
@@ -34,7 +34,7 @@ class SecureTokenStorage:
     
     def __init__(self, storage_path: Optional[str] = None):
         self.storage_path = storage_path or os.path.join(
-            Path.home(), '.ainflue', 'tokens.dat'
+            Path.home(), '.iacherie', 'tokens.dat'
         )
         self._ensure_storage_dir()
         self._lock = threading.Lock()
@@ -450,7 +450,7 @@ class AuthenticationManager:
         # OAuth flow would typically redirect to authorization server
         # For this implementation, we'll return the authorization URL
         
-        auth_url = f"https://auth.ainflue.com/oauth/authorize"
+        auth_url = f"https://auth.iacherie.com/oauth/authorize"
         params = {
             'client_id': client_id,
             'redirect_uri': redirect_uri,

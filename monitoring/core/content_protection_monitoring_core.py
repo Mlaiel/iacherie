@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Content Protection Monitoring Core
+IA Chérie Platform - Content Protection Monitoring Core
 ===================================================
 
 Enterprise-grade monitoring core for content protection including copyright 

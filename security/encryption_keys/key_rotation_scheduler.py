@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Rotation Scheduler - Automated Cryptographic Key Rotation Enterprise System
-Production-grade automated key rotation for Ainflue Creator Economy Platform
+Production-grade automated key rotation for IA Chérie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -149,7 +149,7 @@ class KeyRotationScheduler:
     """
     🔐 Key Rotation Scheduler - Enterprise Automated Key Rotation System
     
-    Provides comprehensive automated key rotation for Ainflue Creator Economy:
+    Provides comprehensive automated key rotation for IA Chérie Creator Economy:
     - Policy-driven automatic rotation scheduling
     - Zero-downtime rotation strategies
     - Emergency rotation procedures
@@ -585,8 +585,8 @@ class KeyRotationScheduler:
                 "validate_service_connectivity"
             ],
             "emergency_contacts": [
-                "security_team@ainflue.com",
-                "ops_team@ainflue.com"
+                "security_team@iacherie.com",
+                "ops_team@iacherie.com"
             ]
         }
 

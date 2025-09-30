@@ -1,11 +1,11 @@
-# 🚀 Ainflue Konfigurationsmodul - Enterprise Konfigurationsmanagement Hub
+# 🚀 IA Chérie Konfigurationsmodul - Enterprise Konfigurationsmanagement Hub
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
 [![Redis](https://img.shields.io/badge/Redis-7.0+-red.svg)](https://redis.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://postgresql.org)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **� Ultra-Fortgeschrittener Enterprise Konfiguration Orchestrierungs-Hub**  
 > Revolutionäres Konfigurationsmanagement-System mit KI-gestützter Optimierung, Quantum-Scale-Sicherheit und Echtzeit-Verteilung über Multi-Cloud-Umgebungen.
@@ -50,7 +50,7 @@ Echtzeit-Verteilung + Leistungsoptimierung → Globale Synchronisation → Analy
 
 ## 🌟 **Überblick**
 
-Das **Ainflue Konfigurationsmodul** repräsentiert den Gipfel der Enterprise-Konfigurationsmanagement-Technologie. Dieses ultra-fortgeschrittene System bietet zentralisierte, sichere und intelligente Konfigurationsorchestierung für das gesamte Ainflue-Ökosystem mit modernsten Funktionen, die neu definieren, wie moderne Anwendungen Konfiguration in großem Maßstab handhaben.
+Das **IA Chérie Konfigurationsmodul** repräsentiert den Gipfel der Enterprise-Konfigurationsmanagement-Technologie. Dieses ultra-fortgeschrittene System bietet zentralisierte, sichere und intelligente Konfigurationsorchestierung für das gesamte IA Chérie-Ökosystem mit modernsten Funktionen, die neu definieren, wie moderne Anwendungen Konfiguration in großem Maßstab handhaben.
 
 ### 🏗️ **Enterprise Architektur**
 
@@ -171,10 +171,10 @@ print(f"AI-Modelle: {ai_config.enabled_models}")
 ### **Umgebungs-Konfiguration**
 ```bash
 # .env Datei Beispiel
-APP_NAME=Ainflue
+APP_NAME=IA Chérie
 ENVIRONMENT=production
 DEBUG=false
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379/0
 OPENAI_API_KEY=your_api_key
 STRIPE_SECRET_KEY=your_stripe_key

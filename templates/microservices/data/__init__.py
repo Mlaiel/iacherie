@@ -17,7 +17,7 @@ TOUS DROITS RÉSERVÉS
 - Maintenance et mises à jour assurées
 - Formation équipe technique fournie
 
-Ainflue Data Templates Module
+IA Chérie Data Templates Module
 Enterprise data management microservices templates for creator economy platform
 """
 

@@ -59,7 +59,7 @@ class MonitoringTier(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types in the Ainflue ecosystem"""
+    """Creator types in the IA Chérie ecosystem"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"

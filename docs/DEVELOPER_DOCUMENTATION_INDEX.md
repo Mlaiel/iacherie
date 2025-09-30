@@ -1,4 +1,4 @@
-# 📚 Ainflue Platform - Developer Documentation Index
+# 📚 IA Chérie Platform - Developer Documentation Index
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Platform Version:** 2.0.0  
@@ -9,7 +9,7 @@
 
 ## 🎯 Quick Start Guide
 
-**New to Ainflue development?** Follow this path:
+**New to IA Chérie development?** Follow this path:
 
 1. **[📖 Developer Guide](./DEVELOPER_GUIDE.md)** - Complete development handbook
 2. **[⚙️ Setup Instructions](./development/development_setup.md)** - Environment setup
@@ -117,8 +117,8 @@
 **Essential commands:**
 ```bash
 # Setup environment
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 pip install -r requirements.txt
 
 # Run tests
@@ -334,10 +334,10 @@ This documentation and all associated intellectual property are the exclusive pr
 ### 📧 Contact Information
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Project**: Ainflue Platform - AI-Powered Content Protection and Monetization
+- **Project**: IA Chérie Platform - AI-Powered Content Protection and Monetization
 
 For licensing inquiries, collaboration opportunities, or technical support, contact the author directly.
 
 ---
 
-*This documentation index serves as the central hub for all Ainflue platform development resources. It is regularly updated to reflect the current state of the project and should be your starting point for any development-related questions.*
+*This documentation index serves as the central hub for all IA Chérie platform development resources. It is regularly updated to reflect the current state of the project and should be your starting point for any development-related questions.*

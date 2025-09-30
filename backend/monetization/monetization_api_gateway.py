@@ -109,7 +109,7 @@ class MonetizationAPIGateway:
     
     def __init__(self):
         self.app = FastAPI(
-            title="Ainflue Monetization API Gateway",
+            title="IA Chérie Monetization API Gateway",
             description="Unified gateway for all monetization services",
             version="2.0.0"
         )
@@ -142,7 +142,7 @@ class MonetizationAPIGateway:
         # CORS middleware
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=["https://ainflue.com", "https://api.ainflue.com"],
+            allow_origins=["https://iacherie.com", "https://api.iacherie.com"],
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
@@ -151,7 +151,7 @@ class MonetizationAPIGateway:
         # Trusted host middleware
         self.app.add_middleware(
             TrustedHostMiddleware,
-            allowed_hosts=["ainflue.com", "*.ainflue.com", "localhost"]
+            allowed_hosts=["iacherie.com", "*.iacherie.com", "localhost"]
         )
         
         # Request logging middleware

@@ -3,7 +3,7 @@
 
 **Date :** 3.12.1 (main, Jul 10 2025, 11:57:50) [GCC 13.3.0]
 **Projet source :** IA-Influencer
-**Projet cible :** Ainflue
+**Projet cible :** IA Chérie
 
 ## 📈 Statistiques
 
@@ -12,259 +12,259 @@
 
 ## 📁 Fichiers Importés
 
-- /workspaces/Ainflue/tests/ai/core/test_base_models.py
-- /workspaces/Ainflue/tests/ai/core/test_content_processor.py
-- /workspaces/Ainflue/tests/ai/core/test_setup.py
-- /workspaces/Ainflue/tests/ai/core/test_integration.py
-- /workspaces/Ainflue/tests/ai/core/test_validation.py
-- /workspaces/Ainflue/tests/ai/core/test_metrics.py
-- /workspaces/Ainflue/tests/ai/core/test_performance.py
-- /workspaces/Ainflue/tests/ai/core/test_exceptions.py
-- /workspaces/Ainflue/tests/ai/core/test_config.py
-- /workspaces/Ainflue/tests/ai/core/test_ai_engine.py
-- /workspaces/Ainflue/tests/ai/core/__init__.py
-- /workspaces/Ainflue/tests/ai/core/conftest.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_reporting.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_text_quality.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_content_analysis.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_video_quality.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_core.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_benchmarking.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_audio_quality.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_enhancement.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_image_quality.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_compliance.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/test_business_metrics.py
-- /workspaces/Ainflue/tests/ai/quality_assessment/__init__.py
-- /workspaces/Ainflue/tests/ai/config/test_protection_config.py
-- /workspaces/Ainflue/tests/ai/config/test_security_config.py
-- /workspaces/Ainflue/tests/ai/config/test_ai_models_config.py
-- /workspaces/Ainflue/tests/ai/config/test_seo_config.py
-- /workspaces/Ainflue/tests/ai/config/test_audio_config.py
-- /workspaces/Ainflue/tests/ai/config/test_monetization_config.py
-- /workspaces/Ainflue/tests/ai/config/test_integration.py
-- /workspaces/Ainflue/tests/ai/config/__init__.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_workflow.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_collaboration_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_examples.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_ai_orchestrator.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_base_agent.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_audio_specialist.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_validate.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_seo_optimization_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_audience_development_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_content_strategy_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_monetization_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_content_creator.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_engagement_specialist.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_social_media_manager.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_analytics_agent.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_task_manager.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_trend_analysis_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_config.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_orchestrator.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_brand_consulting_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_content_protection_agents.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_communication.py
-- /workspaces/Ainflue/tests/ai/ai_agents/test_index.py
-- /workspaces/Ainflue/tests/ai/ai_agents/__init__.py
-- /workspaces/Ainflue/tests/ai/ai_agents/conftest.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_health_checks.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_quick_verification.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_reporting.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_ai_performance.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_monitoring_isolated.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_anomaly_detection.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_real_time_alerts.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_content_monitoring.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_metrics.py
-- /workspaces/Ainflue/tests/ai/monitoring/test_business_metrics.py
-- /workspaces/Ainflue/tests/ai/monitoring/__init__.py
-- /workspaces/Ainflue/tests/ai/monitoring/conftest.py
-- /workspaces/Ainflue/tests/ai/models/test_model_factory.py
-- /workspaces/Ainflue/tests/ai/models/test_audio_models.py
-- /workspaces/Ainflue/tests/ai/models/test_text_models.py
-- /workspaces/Ainflue/tests/ai/models/test_image_models.py
-- /workspaces/Ainflue/tests/ai/models/test_video_models.py
-- /workspaces/Ainflue/tests/ai/models/test_business_intelligence_models.py
-- /workspaces/Ainflue/tests/ai/models/test_protection_models.py
-- /workspaces/Ainflue/tests/ai/models/__init__.py
-- /workspaces/Ainflue/tests/ai/__init__.py
-- /workspaces/Ainflue/tests/ai/engines/test_base_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_optimization.py
-- /workspaces/Ainflue/tests/ai/engines/test_engines_structure.py
-- /workspaces/Ainflue/tests/ai/engines/test_text_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_text_generator.py
-- /workspaces/Ainflue/tests/ai/engines/test_collaboration_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_protection_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_image_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_audio_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_multimodal_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_analytics.py
-- /workspaces/Ainflue/tests/ai/engines/test_validation.py
-- /workspaces/Ainflue/tests/ai/engines/test_standalone_engines.py
-- /workspaces/Ainflue/tests/ai/engines/test_config.py
-- /workspaces/Ainflue/tests/ai/engines/test_monetization_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_seo_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_video_engine.py
-- /workspaces/Ainflue/tests/ai/engines/test_helpers.py
-- /workspaces/Ainflue/tests/ai/engines/test_index.py
-- /workspaces/Ainflue/tests/ai/engines/__init__.py
-- /workspaces/Ainflue/tests/ai/personalization/test_utils.py
-- /workspaces/Ainflue/tests/ai/personalization/test_models.py
-- /workspaces/Ainflue/tests/ai/personalization/test_profile.py
-- /workspaces/Ainflue/tests/ai/personalization/test_analytics.py
-- /workspaces/Ainflue/tests/ai/personalization/test_content.py
-- /workspaces/Ainflue/tests/ai/personalization/test_core.py
-- /workspaces/Ainflue/tests/ai/personalization/test_exceptions.py
-- /workspaces/Ainflue/tests/ai/personalization/test_algorithms.py
-- /workspaces/Ainflue/tests/ai/personalization/__init__.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_transformer_models.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_content_understanding.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_recommendation_networks.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_generative_models.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_base_networks.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_optimization_networks.py
-- /workspaces/Ainflue/tests/ai/neural_networks/test_protection_networks.py
-- /workspaces/Ainflue/tests/ai/neural_networks/__init__.py
-- /workspaces/Ainflue/tests/ai/content_processing/__init__.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_effects.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_pipeline.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_simple.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_formats.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_embeddings.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_ml_models.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_realtime.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_quality.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_core.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_fingerprinting.py
-- /workspaces/Ainflue/tests/ai/audio_processing/test_config.py
-- /workspaces/Ainflue/tests/ai/audio_processing/__init__.py
-- /workspaces/Ainflue/tests/ai/audio_processing/conftest.py
-- /workspaces/Ainflue/tests/ai/audio_processing/pytest.ini
-- /workspaces/Ainflue/tests/ai/nlp/test_generators.py
-- /workspaces/Ainflue/tests/ai/nlp/test_utils.py
-- /workspaces/Ainflue/tests/ai/nlp/test_models.py
-- /workspaces/Ainflue/tests/ai/nlp/test_sentiment.py
-- /workspaces/Ainflue/tests/ai/nlp/test_seo.py
-- /workspaces/Ainflue/tests/ai/nlp/test_classification.py
-- /workspaces/Ainflue/tests/ai/nlp/test_analyzers.py
-- /workspaces/Ainflue/tests/ai/nlp/test_extraction.py
-- /workspaces/Ainflue/tests/ai/nlp/test_processors.py
-- /workspaces/Ainflue/tests/ai/nlp/test_core.py
-- /workspaces/Ainflue/tests/ai/nlp/test_analysis.py
-- /workspaces/Ainflue/tests/ai/nlp/test_fingerprinting.py
-- /workspaces/Ainflue/tests/ai/nlp/test_translation.py
-- /workspaces/Ainflue/tests/ai/nlp/test_monitoring.py
-- /workspaces/Ainflue/tests/ai/nlp/__init__.py
-- /workspaces/Ainflue/tests/ai/nlp/conftest.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_audio_generator.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_text_generator.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_image_generator.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_social_templates.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_distribution_service.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_audio_generator_new.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_quality_metrics.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_content_pipeline.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_content_models.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_performance_tracker.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_content_service.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_seo_optimizer.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_base_generator.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_generation_manager.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_format_optimizer.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_blog_templates.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_marketing_templates.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_video_generator.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_generation_config.py
-- /workspaces/Ainflue/tests/ai/content_generation/test_quality_enhancer.py
-- /workspaces/Ainflue/tests/ai/content_generation/__init__.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_seo.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_embeddings.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_ml_models.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_streaming.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_core.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_detection.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_protection.py
-- /workspaces/Ainflue/tests/ai/computer_vision/test_enhancement.py
-- /workspaces/Ainflue/tests/ai/computer_vision/__init__.py
-- /workspaces/Ainflue/tests/ai/ml/test_performance_monitor.py
-- /workspaces/Ainflue/tests/ai/ml/test_data_processing.py
-- /workspaces/Ainflue/tests/ai/ml/test_trend_detection.py
-- /workspaces/Ainflue/tests/ai/ml/test_model_security.py
-- /workspaces/Ainflue/tests/ai/ml/test_ml_demo.py
-- /workspaces/Ainflue/tests/ai/ml/test_model_manager.py
-- /workspaces/Ainflue/tests/ai/ml/test_pipeline.py
-- /workspaces/Ainflue/tests/ai/ml/test_audio_intelligence.py
-- /workspaces/Ainflue/tests/ai/ml/test_content_models.py
-- /workspaces/Ainflue/tests/ai/ml/test_audit_logger.py
-- /workspaces/Ainflue/tests/ai/ml/test_inference.py
-- /workspaces/Ainflue/tests/ai/ml/test_training.py
-- /workspaces/Ainflue/tests/ai/ml/test_sentiment_analysis.py
-- /workspaces/Ainflue/tests/ai/ml/test_recommendation.py
-- /workspaces/Ainflue/tests/ai/ml/__init__.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_utils.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_models.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_trend_analyzer.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_collaboration_matcher.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_protection_integrator.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_revenue_optimizer.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_content_analyzer.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_core.py
-- /workspaces/Ainflue/tests/ai/recommendation/test_exceptions.py
-- /workspaces/Ainflue/tests/ai/recommendation/__init__.py
-- /workspaces/Ainflue/tests/ai/recommendation/conftest.py
-- /workspaces/Ainflue/tests/ai/prompts/test_content_creator_prompts.py
-- /workspaces/Ainflue/tests/ai/prompts/test_distribution_prompts.py
-- /workspaces/Ainflue/tests/ai/prompts/test_collaboration_analytics_prompts.py
-- /workspaces/Ainflue/tests/ai/prompts/test_protection_prompts.py
-- /workspaces/Ainflue/tests/ai/prompts/test_prompt_manager.py
-- /workspaces/Ainflue/tests/ai/prompts/test_prompts_models.py
-- /workspaces/Ainflue/tests/ai/prompts/test_prompts_config.py
-- /workspaces/Ainflue/tests/ai/prompts/test_template_engine.py
-- /workspaces/Ainflue/tests/ai/prompts/test_seo_monetization_prompts.py
-- /workspaces/Ainflue/tests/ai/prompts/__init__.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_core_fixed.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_dmca.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_main_system.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_models.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_integrations.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_encryption.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_rights_management.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_analytics.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_watermarking.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_core.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_blockchain.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_system_integration.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_detection.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_fingerprinting.py
-- /workspaces/Ainflue/tests/ai/content_protection/test_discovery_complete.py
-- /workspaces/Ainflue/tests/ai/content_protection/__init__.py
-- /workspaces/Ainflue/tests/ai/content_protection/conftest.py
-- /workspaces/Ainflue/tests/ai/observability/test_diagnostics.py
-- /workspaces/Ainflue/tests/ai/observability/test_tracing.py
-- /workspaces/Ainflue/tests/ai/observability/test_visualization.py
-- /workspaces/Ainflue/tests/ai/observability/test_data_management.py
-- /workspaces/Ainflue/tests/ai/observability/test_ai_observability.py
-- /workspaces/Ainflue/tests/ai/observability/test_dashboards.py
-- /workspaces/Ainflue/tests/ai/observability/test_logging.py
-- /workspaces/Ainflue/tests/ai/observability/test_health.py
-- /workspaces/Ainflue/tests/ai/observability/test_alerting.py
-- /workspaces/Ainflue/tests/ai/observability/test_analytics.py
-- /workspaces/Ainflue/tests/ai/observability/test_quality.py
-- /workspaces/Ainflue/tests/ai/observability/test_metrics.py
-- /workspaces/Ainflue/tests/ai/observability/test_monitoring.py
-- /workspaces/Ainflue/tests/ai/observability/__init__.py
-- /workspaces/Ainflue/tests/crawlers/__init__.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_error_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_event_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_content_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_response_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_retry_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/test_data_handler.py
-- /workspaces/Ainflue/tests/crawlers/handlers/__init__.py
-- /workspaces/Ainflue/tests/business/content/test_content_module.py
-- /workspaces/Ainflue/tests/conversational/content_guidance/test_index.py
+- /workspaces/IA Chérie/tests/ai/core/test_base_models.py
+- /workspaces/IA Chérie/tests/ai/core/test_content_processor.py
+- /workspaces/IA Chérie/tests/ai/core/test_setup.py
+- /workspaces/IA Chérie/tests/ai/core/test_integration.py
+- /workspaces/IA Chérie/tests/ai/core/test_validation.py
+- /workspaces/IA Chérie/tests/ai/core/test_metrics.py
+- /workspaces/IA Chérie/tests/ai/core/test_performance.py
+- /workspaces/IA Chérie/tests/ai/core/test_exceptions.py
+- /workspaces/IA Chérie/tests/ai/core/test_config.py
+- /workspaces/IA Chérie/tests/ai/core/test_ai_engine.py
+- /workspaces/IA Chérie/tests/ai/core/__init__.py
+- /workspaces/IA Chérie/tests/ai/core/conftest.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_reporting.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_text_quality.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_content_analysis.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_video_quality.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_core.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_benchmarking.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_audio_quality.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_enhancement.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_image_quality.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_compliance.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/test_business_metrics.py
+- /workspaces/IA Chérie/tests/ai/quality_assessment/__init__.py
+- /workspaces/IA Chérie/tests/ai/config/test_protection_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_security_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_ai_models_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_seo_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_audio_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_monetization_config.py
+- /workspaces/IA Chérie/tests/ai/config/test_integration.py
+- /workspaces/IA Chérie/tests/ai/config/__init__.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_workflow.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_collaboration_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_examples.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_ai_orchestrator.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_base_agent.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_audio_specialist.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_validate.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_seo_optimization_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_audience_development_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_content_strategy_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_monetization_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_content_creator.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_engagement_specialist.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_social_media_manager.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_analytics_agent.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_task_manager.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_trend_analysis_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_config.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_orchestrator.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_brand_consulting_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_content_protection_agents.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_communication.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/test_index.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/__init__.py
+- /workspaces/IA Chérie/tests/ai/ai_agents/conftest.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_health_checks.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_quick_verification.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_reporting.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_ai_performance.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_monitoring_isolated.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_anomaly_detection.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_real_time_alerts.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_content_monitoring.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_metrics.py
+- /workspaces/IA Chérie/tests/ai/monitoring/test_business_metrics.py
+- /workspaces/IA Chérie/tests/ai/monitoring/__init__.py
+- /workspaces/IA Chérie/tests/ai/monitoring/conftest.py
+- /workspaces/IA Chérie/tests/ai/models/test_model_factory.py
+- /workspaces/IA Chérie/tests/ai/models/test_audio_models.py
+- /workspaces/IA Chérie/tests/ai/models/test_text_models.py
+- /workspaces/IA Chérie/tests/ai/models/test_image_models.py
+- /workspaces/IA Chérie/tests/ai/models/test_video_models.py
+- /workspaces/IA Chérie/tests/ai/models/test_business_intelligence_models.py
+- /workspaces/IA Chérie/tests/ai/models/test_protection_models.py
+- /workspaces/IA Chérie/tests/ai/models/__init__.py
+- /workspaces/IA Chérie/tests/ai/__init__.py
+- /workspaces/IA Chérie/tests/ai/engines/test_base_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_optimization.py
+- /workspaces/IA Chérie/tests/ai/engines/test_engines_structure.py
+- /workspaces/IA Chérie/tests/ai/engines/test_text_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_text_generator.py
+- /workspaces/IA Chérie/tests/ai/engines/test_collaboration_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_protection_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_image_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_audio_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_multimodal_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_analytics.py
+- /workspaces/IA Chérie/tests/ai/engines/test_validation.py
+- /workspaces/IA Chérie/tests/ai/engines/test_standalone_engines.py
+- /workspaces/IA Chérie/tests/ai/engines/test_config.py
+- /workspaces/IA Chérie/tests/ai/engines/test_monetization_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_seo_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_video_engine.py
+- /workspaces/IA Chérie/tests/ai/engines/test_helpers.py
+- /workspaces/IA Chérie/tests/ai/engines/test_index.py
+- /workspaces/IA Chérie/tests/ai/engines/__init__.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_utils.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_models.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_profile.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_analytics.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_content.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_core.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_exceptions.py
+- /workspaces/IA Chérie/tests/ai/personalization/test_algorithms.py
+- /workspaces/IA Chérie/tests/ai/personalization/__init__.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_transformer_models.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_content_understanding.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_recommendation_networks.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_generative_models.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_base_networks.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_optimization_networks.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/test_protection_networks.py
+- /workspaces/IA Chérie/tests/ai/neural_networks/__init__.py
+- /workspaces/IA Chérie/tests/ai/content_processing/__init__.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_effects.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_pipeline.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_simple.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_formats.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_embeddings.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_ml_models.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_realtime.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_quality.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_core.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_fingerprinting.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/test_config.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/__init__.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/conftest.py
+- /workspaces/IA Chérie/tests/ai/audio_processing/pytest.ini
+- /workspaces/IA Chérie/tests/ai/nlp/test_generators.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_utils.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_models.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_sentiment.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_seo.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_classification.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_analyzers.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_extraction.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_processors.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_core.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_analysis.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_fingerprinting.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_translation.py
+- /workspaces/IA Chérie/tests/ai/nlp/test_monitoring.py
+- /workspaces/IA Chérie/tests/ai/nlp/__init__.py
+- /workspaces/IA Chérie/tests/ai/nlp/conftest.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_audio_generator.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_text_generator.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_image_generator.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_social_templates.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_distribution_service.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_audio_generator_new.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_quality_metrics.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_content_pipeline.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_content_models.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_performance_tracker.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_content_service.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_seo_optimizer.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_base_generator.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_generation_manager.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_format_optimizer.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_blog_templates.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_marketing_templates.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_video_generator.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_generation_config.py
+- /workspaces/IA Chérie/tests/ai/content_generation/test_quality_enhancer.py
+- /workspaces/IA Chérie/tests/ai/content_generation/__init__.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_seo.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_embeddings.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_ml_models.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_streaming.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_core.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_detection.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_protection.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/test_enhancement.py
+- /workspaces/IA Chérie/tests/ai/computer_vision/__init__.py
+- /workspaces/IA Chérie/tests/ai/ml/test_performance_monitor.py
+- /workspaces/IA Chérie/tests/ai/ml/test_data_processing.py
+- /workspaces/IA Chérie/tests/ai/ml/test_trend_detection.py
+- /workspaces/IA Chérie/tests/ai/ml/test_model_security.py
+- /workspaces/IA Chérie/tests/ai/ml/test_ml_demo.py
+- /workspaces/IA Chérie/tests/ai/ml/test_model_manager.py
+- /workspaces/IA Chérie/tests/ai/ml/test_pipeline.py
+- /workspaces/IA Chérie/tests/ai/ml/test_audio_intelligence.py
+- /workspaces/IA Chérie/tests/ai/ml/test_content_models.py
+- /workspaces/IA Chérie/tests/ai/ml/test_audit_logger.py
+- /workspaces/IA Chérie/tests/ai/ml/test_inference.py
+- /workspaces/IA Chérie/tests/ai/ml/test_training.py
+- /workspaces/IA Chérie/tests/ai/ml/test_sentiment_analysis.py
+- /workspaces/IA Chérie/tests/ai/ml/test_recommendation.py
+- /workspaces/IA Chérie/tests/ai/ml/__init__.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_utils.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_models.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_trend_analyzer.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_collaboration_matcher.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_protection_integrator.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_revenue_optimizer.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_content_analyzer.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_core.py
+- /workspaces/IA Chérie/tests/ai/recommendation/test_exceptions.py
+- /workspaces/IA Chérie/tests/ai/recommendation/__init__.py
+- /workspaces/IA Chérie/tests/ai/recommendation/conftest.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_content_creator_prompts.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_distribution_prompts.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_collaboration_analytics_prompts.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_protection_prompts.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_prompt_manager.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_prompts_models.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_prompts_config.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_template_engine.py
+- /workspaces/IA Chérie/tests/ai/prompts/test_seo_monetization_prompts.py
+- /workspaces/IA Chérie/tests/ai/prompts/__init__.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_core_fixed.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_dmca.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_main_system.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_models.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_integrations.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_encryption.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_rights_management.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_analytics.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_watermarking.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_core.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_blockchain.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_system_integration.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_detection.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_fingerprinting.py
+- /workspaces/IA Chérie/tests/ai/content_protection/test_discovery_complete.py
+- /workspaces/IA Chérie/tests/ai/content_protection/__init__.py
+- /workspaces/IA Chérie/tests/ai/content_protection/conftest.py
+- /workspaces/IA Chérie/tests/ai/observability/test_diagnostics.py
+- /workspaces/IA Chérie/tests/ai/observability/test_tracing.py
+- /workspaces/IA Chérie/tests/ai/observability/test_visualization.py
+- /workspaces/IA Chérie/tests/ai/observability/test_data_management.py
+- /workspaces/IA Chérie/tests/ai/observability/test_ai_observability.py
+- /workspaces/IA Chérie/tests/ai/observability/test_dashboards.py
+- /workspaces/IA Chérie/tests/ai/observability/test_logging.py
+- /workspaces/IA Chérie/tests/ai/observability/test_health.py
+- /workspaces/IA Chérie/tests/ai/observability/test_alerting.py
+- /workspaces/IA Chérie/tests/ai/observability/test_analytics.py
+- /workspaces/IA Chérie/tests/ai/observability/test_quality.py
+- /workspaces/IA Chérie/tests/ai/observability/test_metrics.py
+- /workspaces/IA Chérie/tests/ai/observability/test_monitoring.py
+- /workspaces/IA Chérie/tests/ai/observability/__init__.py
+- /workspaces/IA Chérie/tests/crawlers/__init__.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_error_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_event_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_content_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_response_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_retry_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/test_data_handler.py
+- /workspaces/IA Chérie/tests/crawlers/handlers/__init__.py
+- /workspaces/IA Chérie/tests/business/content/test_content_module.py
+- /workspaces/IA Chérie/tests/conversational/content_guidance/test_index.py
 
 ## 🔧 Adaptations Effectuées
 

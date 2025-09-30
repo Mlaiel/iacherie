@@ -1,15 +1,15 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Ainflue Infrastructure Module - Enterprise Security Audit Engine
+"""IA Chérie Infrastructure Module - Enterprise Security Audit Engine
 ================================================================
 
-Comprehensive security audit engine for the Ainflue platform infrastructure.
+Comprehensive security audit engine for the IA Chérie platform infrastructure.
 Provides automated security compliance auditing, policy enforcement monitoring,
 and continuous security assessment across all infrastructure components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chérie Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -109,7 +109,7 @@ class AuditReport:
     
 class EnterpriseSecurityAuditEngine:
     """
-    Enterprise-grade security audit engine for Ainflue infrastructure.
+    Enterprise-grade security audit engine for IA Chérie infrastructure.
     
     Provides comprehensive security auditing capabilities:
     - Multi-cloud infrastructure audit
@@ -138,7 +138,7 @@ class EnterpriseSecurityAuditEngine:
         
     async def comprehensive_security_audit(self, audit_config: Dict[str, Any]) -> AuditReport:
         """
-        Perform comprehensive security audit across all Ainflue infrastructure
+        Perform comprehensive security audit across all IA Chérie infrastructure
         """
         audit_id = hashlib.md5(f"{datetime.utcnow().isoformat()}_{audit_config}".encode()).hexdigest()[:12]
         start_time = datetime.utcnow()

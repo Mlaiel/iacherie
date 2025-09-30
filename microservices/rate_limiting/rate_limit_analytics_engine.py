@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Ainflue Rate Limit Analytics Engine - Enterprise Business Intelligence
+IA Chérie Rate Limit Analytics Engine - Enterprise Business Intelligence
 ======================================================================
 
 Advanced analytics engine for rate limiting insights, business intelligence,
 predictive analytics, and performance optimization. Provides comprehensive
-data analysis, ML-driven insights, and real-time monitoring for the Ainflue
+data analysis, ML-driven insights, and real-time monitoring for the IA Chérie
 creator platform rate limiting system.
 
 Features:
@@ -23,7 +23,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying or distribution prohibited
 
-Project: Ainflue Rate Limiting - Analytics Engine
+Project: IA Chérie Rate Limiting - Analytics Engine
 Version: 1.0 Production
 """
 

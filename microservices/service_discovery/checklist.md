@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/service_discovery/`  
+**Location**: `/workspaces/IA Chérie/microservices/service_discovery/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Service Discovery  
-**Purpose**: Service Discovery Enterprise pour orchestration microservices Ainflue
+**Purpose**: Service Discovery Enterprise pour orchestration microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -143,13 +143,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Status**: ✅ ENRICHI (2,597 octets)
 ```python
 """
-Distributed Service Registry Enterprise - Ainflue
+Distributed Service Registry Enterprise - IA Chérie
 ================================================
 Registry distribué avec consensus, high availability, et auto-healing.
 Support multi-nœuds avec consistent hashing et leader election.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 """
 
@@ -479,7 +479,7 @@ class APIGatewayIntegration:
 ```python
 class ContentServiceDiscovery:
     """
-    Service discovery spécialisé pour services contenu Ainflue.
+    Service discovery spécialisé pour services contenu IA Chérie.
     Media processing + content analysis + creator services discovery.
     """
     
@@ -735,7 +735,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Service discovery pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Service discovery pour workflow créateurs → distribution
 - **Code Industriel**: ✅ Distributed + ML intelligent + multi-region + service mesh
 - **Microservices Orchestration**: ✅ Service mesh + API gateway + load balancing
 - **Creator Economy Focus**: ✅ Content-aware + collaboration + monetization discovery
@@ -802,7 +802,7 @@ Chaque README doit contenir:
 6. `api_gateway_integration.py` - Intégration API Gateway
 
 ### **🎯 PHASE 2 - SERVICE DISCOVERY PATTERNS AVANCÉS **
-7. `content_service_discovery.py` - Discovery services contenu Ainflue
+7. `content_service_discovery.py` - Discovery services contenu IA Chérie
 8. `ai_service_orchestration.py` - Orchestration services IA/ML
 9. `collaboration_service_mesh.py` - Service mesh collaboration
 10. `monetization_service_discovery.py` - Discovery services monétisation
@@ -857,4 +857,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module service discovery enterprise clé en main, distributed registry + ML load balancing + service mesh + multi-region, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module service discovery enterprise clé en main, distributed registry + ML load balancing + service mesh + multi-region, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

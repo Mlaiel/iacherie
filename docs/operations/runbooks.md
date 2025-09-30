@@ -1,8 +1,8 @@
-# 🔧 Ainflue Platform - Operational Runbooks
+# 🔧 IA Chérie Platform - Operational Runbooks
 
 ## 📋 Overview
 
-This comprehensive operational runbook provides detailed procedures for the day-to-day operations of the Ainflue AI-powered content protection and monetization platform. These runbooks ensure consistent, reliable operations and provide step-by-step guidance for common operational tasks.
+This comprehensive operational runbook provides detailed procedures for the day-to-day operations of the IA Chérie AI-powered content protection and monetization platform. These runbooks ensure consistent, reliable operations and provide step-by-step guidance for common operational tasks.
 
 ## 🎯 Runbook Categories
 
@@ -71,7 +71,7 @@ kubectl get pods
 #### Docker Compose Service Startup
 ```bash
 # Production environment
-cd /opt/ainflue
+cd /opt/iacherie
 docker-compose -f docker-compose.production.yml up -d
 
 # Verify services
@@ -126,7 +126,7 @@ curl -s http://localhost/api/v1/health | jq
 curl -s http://localhost/metrics
 
 # Database connectivity
-psql -h localhost -U postgres -d ainflue -c "SELECT 1"
+psql -h localhost -U postgres -d iacherie -c "SELECT 1"
 mongo --host localhost --eval "db.runCommand({ping: 1})"
 redis-cli ping
 ```
@@ -138,7 +138,7 @@ redis-cli ping
 #### CPU and Memory Monitoring
 ```bash
 # Real-time system monitoring
-top -p $(pgrep -d',' -f ainflue)
+top -p $(pgrep -d',' -f iacherie)
 htop
 iotop
 
@@ -159,13 +159,13 @@ kubectl top pods
 curl -w "@curl-format.txt" -s -o /dev/null http://localhost/api/v1/users
 
 # Database performance
-psql -d ainflue -c "SELECT * FROM pg_stat_activity WHERE state = 'active';"
-psql -d ainflue -c "SELECT * FROM pg_stat_database WHERE datname = 'ainflue';"
+psql -d iacherie -c "SELECT * FROM pg_stat_activity WHERE state = 'active';"
+psql -d iacherie -c "SELECT * FROM pg_stat_database WHERE datname = 'iacherie';"
 
 # Queue monitoring
 redis-cli info stats
-celery -A ainflue.app inspect active
-celery -A ainflue.app inspect stats
+celery -A iacherie.app inspect active
+celery -A iacherie.app inspect stats
 ```
 
 ### Performance Thresholds and Alerts
@@ -219,7 +219,7 @@ fi
 
 # Database Health
 echo "Checking Database..."
-if psql -h localhost -U postgres -d ainflue -c "SELECT 1" > /dev/null 2>&1; then
+if psql -h localhost -U postgres -d iacherie -c "SELECT 1" > /dev/null 2>&1; then
     echo "✅ Database: Healthy"
 else
     echo "❌ Database: Unhealthy"
@@ -315,33 +315,33 @@ docker logs -f ainflue_api_1
 docker logs --tail=100 ainflue_database_1
 
 # System logs
-journalctl -u ainflue.service -f
-tail -f /var/log/ainflue/application.log
+journalctl -u iacherie.service -f
+tail -f /var/log/iacherie/application.log
 ```
 
 #### Log Analysis Commands
 ```bash
 # Error log analysis
-grep -i error /var/log/ainflue/*.log | tail -20
-grep -i "exception\|error\|fail" /var/log/ainflue/app.log
+grep -i error /var/log/iacherie/*.log | tail -20
+grep -i "exception\|error\|fail" /var/log/iacherie/app.log
 
 # Performance log analysis
 grep "slow query" /var/log/postgresql/postgresql.log
-grep "response_time" /var/log/ainflue/access.log | awk '$8 > 2000'
+grep "response_time" /var/log/iacherie/access.log | awk '$8 > 2000'
 
 # Security log analysis
-grep -i "unauthorized\|forbidden\|failed.*login" /var/log/ainflue/security.log
-grep -i "sql injection\|xss\|csrf" /var/log/ainflue/security.log
+grep -i "unauthorized\|forbidden\|failed.*login" /var/log/iacherie/security.log
+grep -i "sql injection\|xss\|csrf" /var/log/iacherie/security.log
 ```
 
 #### Log Rotation and Cleanup
 ```bash
 # Manual log rotation
-logrotate -f /etc/logrotate.d/ainflue
+logrotate -f /etc/logrotate.d/iacherie
 
 # Cleanup old logs
-find /var/log/ainflue -name "*.log.*" -mtime +30 -delete
-find /var/log/ainflue -name "*.gz" -mtime +90 -delete
+find /var/log/iacherie -name "*.log.*" -mtime +30 -delete
+find /var/log/iacherie -name "*.gz" -mtime +90 -delete
 
 # Container log cleanup
 docker system prune -f
@@ -363,7 +363,7 @@ SELECT
     blks_read,
     blks_hit
 FROM pg_stat_database 
-WHERE datname = 'ainflue';
+WHERE datname = 'iacherie';
 
 -- Table statistics
 SELECT 
@@ -396,7 +396,7 @@ ANALYZE;
 VACUUM ANALYZE;
 
 -- Reindex if needed
-REINDEX DATABASE ainflue;
+REINDEX DATABASE iacherie;
 
 -- Update table statistics
 UPDATE pg_stat_reset();
@@ -405,13 +405,13 @@ UPDATE pg_stat_reset();
 #### Backup Operations
 ```bash
 # Create database backup
-pg_dump -h localhost -U postgres -d ainflue > backup_$(date +%Y%m%d_%H%M%S).sql
+pg_dump -h localhost -U postgres -d iacherie > backup_$(date +%Y%m%d_%H%M%S).sql
 
 # Create compressed backup
-pg_dump -h localhost -U postgres -d ainflue | gzip > backup_$(date +%Y%m%d_%H%M%S).sql.gz
+pg_dump -h localhost -U postgres -d iacherie | gzip > backup_$(date +%Y%m%d_%H%M%S).sql.gz
 
 # Restore from backup
-psql -h localhost -U postgres -d ainflue < backup_file.sql
+psql -h localhost -U postgres -d iacherie < backup_file.sql
 
 # Point-in-time recovery
 pg_basebackup -h localhost -U postgres -D /backup/base -Ft -z -P
@@ -495,8 +495,8 @@ kubectl get namespaces
 kubectl describe nodes | grep -A 5 "Allocated resources"
 
 # Check container registry access
-docker login registry.ainflue.com
-docker pull registry.ainflue.com/ainflue/api:latest
+docker login registry.iacherie.com
+docker pull registry.iacherie.com/iacherie/api:latest
 
 # Validate configuration
 kubectl apply --dry-run=client -f k8s/
@@ -546,7 +546,7 @@ echo "Deployment to $NEW_ENV completed successfully"
 ```bash
 # Update deployment image
 kubectl set image deployment/api-gateway \
-  api-gateway=registry.ainflue.com/ainflue/api:v2.1.0
+  api-gateway=registry.iacherie.com/iacherie/api:v2.1.0
 
 # Monitor rollout
 kubectl rollout status deployment/api-gateway
@@ -601,7 +601,7 @@ psql -h $DB_HOST -U $DB_USER -d $DB_NAME < pre_migration_backup.sql
 
 # Restart application with previous version
 kubectl set image deployment/api-gateway \
-  api-gateway=registry.ainflue.com/ainflue/api:v2.0.0
+  api-gateway=registry.iacherie.com/iacherie/api:v2.0.0
 kubectl scale deployment api-gateway --replicas=3
 ```
 
@@ -639,7 +639,7 @@ kubectl delete pod <high-memory-pod>
 #### Database Connection Issues
 ```bash
 # Check connection pool
-psql -d ainflue -c "SELECT * FROM pg_stat_activity;"
+psql -d iacherie -c "SELECT * FROM pg_stat_activity;"
 
 # Restart database connections
 sudo systemctl restart postgresql
@@ -693,8 +693,8 @@ pg_ctl stop -D /var/lib/postgresql/data -m immediate
 pg_ctl start -D /var/lib/postgresql/data
 
 # Emergency log cleanup
-rm -rf /var/log/ainflue/*.log
-truncate -s 0 /var/log/ainflue/app.log
+rm -rf /var/log/iacherie/*.log
+truncate -s 0 /var/log/iacherie/app.log
 ```
 
 ---
@@ -712,7 +712,7 @@ truncate -s 0 /var/log/ainflue/app.log
 - **Health Check Script**: `/opt/scripts/health-check.sh`
 - **Emergency Procedures**: `/opt/docs/emergency-procedures.md`
 - **Contact List**: `/opt/docs/emergency-contacts.txt`
-- **Log Locations**: `/var/log/ainflue/`
+- **Log Locations**: `/var/log/iacherie/`
 
 ---
 

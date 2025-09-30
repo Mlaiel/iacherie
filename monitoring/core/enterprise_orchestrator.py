@@ -277,7 +277,7 @@ def get_platform_status() -> Dict[str, Any]:
     try:
         return {
             "status": "healthy",
-            "platform": "Ainfluencer",
+            "platform": "IA Chérie",
             "version": "1.0.0",
             "services_count": 680,
             "uptime": 3600,

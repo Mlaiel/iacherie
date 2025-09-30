@@ -1,8 +1,8 @@
 # ⚡ وحدة تحسين محركات البحث التقني - محرك الابتكار المؤسسي
 
-[![تحسين محركات البحث التقني](https://img.shields.io/badge/التحسين%20التقني-مؤسسي-brightgreen)](https://github.com/Mlaiel/Ainflue)
-[![جاهز للإنتاج](https://img.shields.io/badge/الحالة-جاهز%20للإنتاج-success)](https://github.com/Mlaiel/Ainflue)
-[![محرك الابتكار](https://img.shields.io/badge/الابتكار-مدعوم%20بالذكاء%20الاصطناعي-blue)](https://github.com/Mlaiel/Ainflue)
+[![تحسين محركات البحث التقني](https://img.shields.io/badge/التحسين%20التقني-مؤسسي-brightgreen)](https://github.com/Mlaiel/IA Chérie)
+[![جاهز للإنتاج](https://img.shields.io/badge/الحالة-جاهز%20للإنتاج-success)](https://github.com/Mlaiel/IA Chérie)
+[![محرك الابتكار](https://img.shields.io/badge/الابتكار-مدعوم%20بالذكاء%20الاصطناعي-blue)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🚨 **تحذير حرج للملكية الفكرية** 🚨
 
@@ -14,7 +14,7 @@
 
 ## 🌟 نظرة عامة
 
-وحدة تحسين محركات البحث التقني في Ainflue هي حل شامل على مستوى المؤسسات مصمم خصيصاً للمبدعين والمؤثرين ومحترفي المحتوى. تجمع هذه الوحدة بين تقنيات الذكاء الاصطناعي المتقدمة والتحسين التقني القوي لتوفير قدرات تحسين محركات البحث الرائدة في الصناعة.
+وحدة تحسين محركات البحث التقني في IA Chérie هي حل شامل على مستوى المؤسسات مصمم خصيصاً للمبدعين والمؤثرين ومحترفي المحتوى. تجمع هذه الوحدة بين تقنيات الذكاء الاصطناعي المتقدمة والتحسين التقني القوي لتوفير قدرات تحسين محركات البحث الرائدة في الصناعة.
 
 **🎯 منطق الأعمال الأساسي**: المبدعون متعددو التنسيقات → معالجة الذكاء الاصطناعي → حماية الملكية الفكرية → التحسين التقني لمحركات البحث → الربح المتقدم → التعاون والألعاب → التوزيع المحسن
 
@@ -126,10 +126,10 @@ aiohttp >= 3.8.0
 ### **التثبيت**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # الانتقال إلى وحدة تحسين محركات البحث التقني
-cd Ainflue/seo/technical
+cd IA Chérie/seo/technical
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -251,10 +251,10 @@ python -m pytest seo/technical/tests/test_performance_optimization.py -v
 ## 🤝 الدعم المؤسسي
 
 ### **قنوات الدعم**
-- **الدعم التقني**: enterprise-support@ainflue.com
-- **دعم المبدعين**: creator-help@ainflue.com
-- **الاستفسارات التجارية**: business@ainflue.com
-- **مشاكل الأمان**: security@ainflue.com
+- **الدعم التقني**: enterprise-support@iacherie.com
+- **دعم المبدعين**: creator-help@iacherie.com
+- **الاستفسارات التجارية**: business@iacherie.com
+- **مشاكل الأمان**: security@iacherie.com
 
 ### **الخدمات المهنية**
 - **التنفيذ المؤسسي**: خدمات نشر تحسين محركات البحث التقني الكاملة
@@ -296,11 +296,11 @@ python -m pytest seo/technical/tests/test_performance_optimization.py -v
 
 ### **الاتصال للترخيص**
 - **البريد الإلكتروني**: mlaiel@live.de
-- **الموضوع**: "Ainflue تحسين محركات البحث التقني - استفسار الترخيص المؤسسي"
+- **الموضوع**: "IA Chérie تحسين محركات البحث التقني - استفسار الترخيص المؤسسي"
 - **تضمين**: حالة الاستخدام، تفاصيل المؤسسة والمتطلبات التقنية
 
 ---
 
 **© 2025 فاهد ملائل. جميع الحقوق محفوظة.**
 
-*وحدة تحسين محركات البحث التقني Ainflue - حيث يلتقي الابتكار بالتميز*
+*وحدة تحسين محركات البحث التقني IA Chérie - حيث يلتقي الابتكار بالتميز*

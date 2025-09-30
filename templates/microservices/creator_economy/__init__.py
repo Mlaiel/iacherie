@@ -4,7 +4,7 @@
 © 2025 Fahed Mlaiel <mlaiel@live.de>
 TOUS DROITS RÉSERVÉS
 
-Creator Economy Templates Module for Ainflue Microservices
+Creator Economy Templates Module for IA Chérie Microservices
 =========================================================
 
 Enterprise-grade creator economy patterns for microservices:

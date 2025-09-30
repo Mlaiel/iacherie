@@ -1,8 +1,8 @@
-# 🚀 **AINFLUENCER** - La Plateforme Ultime de Contenu & Influenceurs Alimentée par l'IA
+# 🚀 **IACHERIE** - La Plateforme Ultime de Contenu & Influenceurs Alimentée par l'IA
 
 <div align="center">
 
-![Ainfluencer Platform](https://img.shields.io/badge/Plateforme-Enterprise%20IA-blue?style=for-the-badge)
+![IA Chérie Platform](https://img.shields.io/badge/Plateforme-Enterprise%20IA-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-2.0.0-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Statut-Prêt%20Production-success?style=for-the-badge)
 ![License](https://img.shields.io/badge/Licence-Propriétaire-red?style=for-the-badge)
@@ -17,9 +17,9 @@
 
 ## 🎯 **VISION & MISSION**
 
-**Ainfluencer** est la plateforme alimentée par l'IA la plus avancée au monde qui comble le fossé entre les créateurs de contenu, les entreprises et l'intelligence artificielle. Nous ne sommes pas juste une plateforme - nous sommes le **futur de la création de contenu numérique et de la monétisation**.
+**IA Chérie** est la plateforme alimentée par l'IA la plus avancée au monde qui comble le fossé entre les créateurs de contenu, les entreprises et l'intelligence artificielle. Nous ne sommes pas juste une plateforme - nous sommes le **futur de la création de contenu numérique et de la monétisation**.
 
-### 🔥 **Pourquoi Ainfluencer change tout :**
+### 🔥 **Pourquoi IA Chérie change tout :**
 - **53 Agents IA Spécialisés** travaillant comme votre armée de création de contenu
 - **680+ Microservices Enterprise** pour une évolutivité illimitée
 - **Génération de Contenu Multi-Modal** (Texte, Images, Audio, Vidéo)
@@ -106,8 +106,8 @@ graph TB
 ### ⚡ **Configuration en 1 Minute**
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainfluencer.git
-cd Ainfluencer
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Configuration de l'environnement
 cp .env.example .env
@@ -134,7 +134,7 @@ python backend_server.py & cd frontend && npm run dev
 
 ### 📁 **Structure du Projet**
 ```
-ainfluencer/
+iacherie/
 ├── 🎨 frontend/              # Application Next.js (React 18)
 ├── 🔧 backend/               # Backend FastAPI
 ├── 🤖 ai/                    # Modules IA/ML
@@ -152,7 +152,7 @@ ainfluencer/
 
 ## 🔥 **AVANTAGES CONCURRENTIELS**
 
-### 🥇 **Pourquoi Ainfluencer domine**
+### 🥇 **Pourquoi IA Chérie domine**
 1. **Échelle Inégalée :** 53 agents IA vs 5-10 chez les concurrents
 2. **Vraie Multi-Modalité :** Génération de TOUS les types de contenu en une plateforme
 3. **Collaboration Temps Réel :** Partage et édition d'espaces de travail en direct
@@ -161,7 +161,7 @@ ainfluencer/
 6. **Analytics Avancées :** Insights prédictifs pour la performance du contenu
 
 ### 🆚 **vs Concurrence**
-| Fonctionnalité | Ainfluencer | Creator.ly | Jasper | Copy.ai |
+| Fonctionnalité | IA Chérie | Creator.ly | Jasper | Copy.ai |
 |----------------|-------------|-----------|--------|---------|
 | Agents IA | ✅ 53 | ❌ 5 | ❌ 10 | ❌ 3 |
 | Génération Vidéo | ✅ Oui | ❌ Non | ❌ Non | ❌ Non |
@@ -231,7 +231,7 @@ kubectl apply -f kubernetes/
 - **Blog & Ressources :** Insights industrie et meilleures pratiques
 
 ### 🎓 **Apprentissage & Certification**
-- **Académie Ainfluencer :** Cours en ligne gratuits
+- **Académie IA Chérie :** Cours en ligne gratuits
 - **Programmes de Certification :** Devenez un expert vérifié
 - **Série de Webinaires :** Sessions de formation en direct hebdomadaires
 

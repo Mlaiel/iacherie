@@ -1,5 +1,5 @@
 """
-Voice Search Optimizer for Ainflue Platform
+Voice Search Optimizer for IA Chérie Platform
 ==========================================
 
 Advanced voice search optimization system leveraging NLP and conversational AI

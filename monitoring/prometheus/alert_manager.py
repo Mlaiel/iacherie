@@ -1,8 +1,8 @@
 """
 Intelligent Alert Manager Module
-Gestionnaire alertes intelligent ML-powered - Ainflue Platform
+Gestionnaire alertes intelligent ML-powered - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -251,8 +251,8 @@ class IntelligentAlertManager:
                 },
                 annotations={
                     'description': f'Alert generated at {datetime.now()}',
-                    'runbook': 'https://runbooks.ainflue.com/alerts/',
-                    'dashboard': 'https://grafana.ainflue.com/dashboards/'
+                    'runbook': 'https://runbooks.iacherie.com/alerts/',
+                    'dashboard': 'https://grafana.iacherie.com/dashboards/'
                 },
                 starts_at=datetime.now(),
                 ends_at=None,

@@ -412,7 +412,7 @@ class ResponsiveLayout {
    */
   injectResponsiveCSS() {
     const style = document.createElement('style');
-    style.id = 'ainflue-responsive-utilities';
+    style.id = 'iacherie-responsive-utilities';
     
     style.textContent = this.generateResponsiveCSS();
     document.head.appendChild(style);
@@ -900,7 +900,7 @@ class ResponsiveLayout {
     
     // Re-inject CSS if grid configuration changed
     if (newConfig.gridColumns || newConfig.gridGutter) {
-      const styleElement = document.getElementById('ainflue-responsive-utilities');
+      const styleElement = document.getElementById('iacherie-responsive-utilities');
       if (styleElement) {
         styleElement.textContent = this.generateResponsiveCSS();
       }
@@ -930,7 +930,7 @@ class ResponsiveLayout {
     }
     
     // Remove style element
-    const styleElement = document.getElementById('ainflue-responsive-utilities');
+    const styleElement = document.getElementById('iacherie-responsive-utilities');
     if (styleElement) {
       styleElement.remove();
     }

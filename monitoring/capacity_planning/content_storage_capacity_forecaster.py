@@ -1116,7 +1116,7 @@ async def main():
     print(f"✅ Croissance moyenne: {storage_overview['average_growth_rate']:.1f}%/semaine")
     
     print("\n🎯 Content Storage Capacity Forecaster - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

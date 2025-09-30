@@ -65,8 +65,8 @@ Leadership Communauté & Mentorat
 ### 1. Déploiement Production
 ```bash
 # Cloner repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/gamification
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/gamification
 
 # Définir variables environnement
 cp .env.example .env

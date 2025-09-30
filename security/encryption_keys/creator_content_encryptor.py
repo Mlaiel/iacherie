@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Creator Content Encryptor - Specialized Content Encryption for Creator Economy
-Production-grade content-specific encryption for Ainflue Creator Economy Platform
+Production-grade content-specific encryption for IA Chérie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

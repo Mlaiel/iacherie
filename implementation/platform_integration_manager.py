@@ -260,7 +260,7 @@ Initialize built-in platform configurations"""
             # Create session with platform-specific configuration
             timeout = aiohttp.ClientTimeout(total=30)
             headers = {
-                "User-Agent": "Ainflue-Platform-Integration/1.0",
+                "User-Agent": "IA Chérie-Platform-Integration/1.0",
                 **platform_config.headers
             }
             

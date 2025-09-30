@@ -50,7 +50,7 @@ class MetricsCalculator:
         self.client = client
         self.database = client[database_name]
         
-        # Collection mappings for Ainflue platform
+        # Collection mappings for IA Chérie platform
         self._collections = {
             'users': 'users',
             'content': 'content',

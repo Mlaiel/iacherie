@@ -1,6 +1,6 @@
 """ASGI Application Entry Point
 ---------------------------
-- Complete FastAPI-ASGI App for Ainflue AI Platform
+- Complete FastAPI-ASGI App for IA Chérie AI Platform
 - Integrates Security, CORS, Observability, Health, Multilingual, Sentry, OpenTelemetry
 - Comprehensive Swagger API Documentation
 
@@ -65,7 +65,7 @@ except ImportError:
             debug = False
             host = "0.0.0.0"
             port = 8000
-            cors_origins = ["https://app.ainflue.com", "https://admin.ainflue.com"]
+            cors_origins = ["https://app.iacherie.com", "https://admin.iacherie.com"]
             rate_limiting = True
             security_headers = True
             compression = True
@@ -114,13 +114,13 @@ def custom_openapi():
         return app.openapi_schema
     
     openapi_schema = get_openapi(
-        title="Ainflue AI Platform - Complete API Documentation",
+        title="IA Chérie AI Platform - Complete API Documentation",
         version="2.0.0",
         description="""
-        # 🚀 Ainflue AI Platform - Enterprise Content Protection & Monetization
+        # 🚀 IA Chérie AI Platform - Enterprise Content Protection & Monetization
 
         ## Overview
-        The Ainflue AI Platform provides comprehensive AI-powered content protection, monetization, 
+        The IA Chérie AI Platform provides comprehensive AI-powered content protection, monetization, 
         and collaboration services for content creators worldwide. Our platform supports multiple 
         content formats including audio, video, images, and documents.
 
@@ -151,22 +151,22 @@ def custom_openapi():
 
         ## 📞 Support
         - **Technical Support**: mlaiel@live.de
-        - **Documentation**: [API Docs](https://docs.ainflue.com)
-        - **Status Page**: [Status](https://status.ainflue.com)
+        - **Documentation**: [API Docs](https://docs.iacherie.com)
+        - **Status Page**: [Status](https://status.iacherie.com)
         """,
         routes=app.routes,
         contact={
             "name": "Fahed Mlaiel - Lead Developer",
             "email": "mlaiel@live.de",
-            "url": "https://ainflue.com"
+            "url": "https://iacherie.com"
         },
         license_info={
             "name": "Proprietary License",
-            "url": "https://ainflue.com/license"
+            "url": "https://iacherie.com/license"
         },
         servers=[
-            {"url": "https://api.ainflue.com", "description": "Production Server"},
-            {"url": "https://staging-api.ainflue.com", "description": "Staging Server"},
+            {"url": "https://api.iacherie.com", "description": "Production Server"},
+            {"url": "https://staging-api.iacherie.com", "description": "Staging Server"},
             {"url": "http://localhost:8000", "description": "Development Server"}
         ]
     )
@@ -189,8 +189,8 @@ def custom_openapi():
             "type": "oauth2",
             "flows": {
                 "authorizationCode": {
-                    "authorizationUrl": "https://api.ainflue.com/auth/oauth2/authorize",
-                    "tokenUrl": "https://api.ainflue.com/auth/oauth2/token",
+                    "authorizationUrl": "https://api.iacherie.com/auth/oauth2/authorize",
+                    "tokenUrl": "https://api.iacherie.com/auth/oauth2/token",
                     "scopes": {
                         "read": "Read access to user data",
                         "write": "Write access to user data",
@@ -294,11 +294,11 @@ app = FastAPI(
     openapi_url="/openapi.json",
     contact=API_METADATA["contact"],
     license_info=API_METADATA["license"],
-    terms_of_service="https://ainflue.com/terms",
+    terms_of_service="https://iacherie.com/terms",
     servers=[
-        {"url": "https://api.ainflue.com", "description": "Production Enterprise Server"},
-        {"url": "https://staging-api.ainflue.com", "description": "Staging Environment"},
-        {"url": "https://dev-api.ainflue.com", "description": "Development Environment"},
+        {"url": "https://api.iacherie.com", "description": "Production Enterprise Server"},
+        {"url": "https://staging-api.iacherie.com", "description": "Staging Environment"},
+        {"url": "https://dev-api.iacherie.com", "description": "Development Environment"},
         {"url": "http://localhost:8000", "description": "Local Development"}
     ],
     openapi_tags=[
@@ -393,21 +393,21 @@ if ENTERPRISE_CONFIG["security"]["security_headers_enabled"]:
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=[
-        "*.ainflue.com", 
+        "*.iacherie.com", 
         "localhost", 
         "127.0.0.1",
-        "api.ainflue.com",
-        "staging-api.ainflue.com",
-        "dev-api.ainflue.com"
+        "api.iacherie.com",
+        "staging-api.iacherie.com",
+        "dev-api.iacherie.com"
     ] if not settings.app.debug else ["*"]
 )
 
 # Enhanced CORS Middleware with Enterprise Configuration
 cors_origins = getattr(settings.app, 'cors_origins', [
-    "https://app.ainflue.com",
-    "https://admin.ainflue.com", 
-    "https://dashboard.ainflue.com",
-    "https://studio.ainflue.com"
+    "https://app.iacherie.com",
+    "https://admin.iacherie.com", 
+    "https://dashboard.iacherie.com",
+    "https://studio.iacherie.com"
 ])
 
 if settings.app.debug:
@@ -515,7 +515,7 @@ async def http_exception_handler(request, exc):
                 "method": request.method
             },
             "support": {
-                "documentation": "https://docs.ainflue.com",
+                "documentation": "https://docs.iacherie.com",
                 "contact": "mlaiel@live.de"
             }
         }
@@ -584,7 +584,7 @@ async def enterprise_redoc():
         openapi_url=app.openapi_url,
         title=f"{API_METADATA['title']} - Technical Documentation",
         redoc_js_url="https://cdn.jsdelivr.net/npm/redoc@2.1.3/bundles/redoc.standalone.js",
-        redoc_favicon_url="https://ainflue.com/favicon.ico",
+        redoc_favicon_url="https://iacherie.com/favicon.ico",
         with_google_fonts=True
     )
 
@@ -643,8 +643,8 @@ async def enterprise_root():
         "support": {
             "technical_lead": API_METADATA["contact"]["name"],
             "contact_email": API_METADATA["contact"]["email"],
-            "documentation": "https://docs.ainflue.com",
-            "status_page": "https://status.ainflue.com",
+            "documentation": "https://docs.iacherie.com",
+            "status_page": "https://status.iacherie.com",
             "license": API_METADATA["license"]["name"]
         },
         "compliance": {
@@ -754,19 +754,19 @@ async def enterprise_readiness():
 @app.on_event("startup")
 async def startup_event():
     """Enterprise application startup procedures"""
-    logger.info("🚀 Starting Ainflue Enterprise API Platform...")
+    logger.info("🚀 Starting IA Chérie Enterprise API Platform...")
     logger.info(f"📋 Environment: {settings.app.environment}")
     logger.info(f"🔧 Configuration: Enterprise features enabled")
     logger.info(f"🤝 Orchestrators: 5 orchestrators loaded")
     logger.info(f"🔐 Security: Enhanced security stack active")
     logger.info(f"📊 Monitoring: Advanced monitoring enabled")
-    logger.info("✅ Ainflue Enterprise API Platform started successfully")
+    logger.info("✅ IA Chérie Enterprise API Platform started successfully")
 
 # Application shutdown event
 @app.on_event("shutdown")
 async def shutdown_event():
     """Enterprise application shutdown procedures"""
-    logger.info("🔄 Shutting down Ainflue Enterprise API Platform...")
+    logger.info("🔄 Shutting down IA Chérie Enterprise API Platform...")
     logger.info("✅ Shutdown completed gracefully")
 
 # Export the ASGI application

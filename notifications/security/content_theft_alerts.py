@@ -1,11 +1,11 @@
 """
 🕵️ CONTENT THEFT ALERTS
-Ainflue Platform - Content Theft Detection and Alert System
+IA Chérie Platform - Content Theft Detection and Alert System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This module provides advanced content theft detection and alerting for the Ainflue Platform,
+This module provides advanced content theft detection and alerting for the IA Chérie Platform,
 using AI-powered analysis to detect unauthorized use of protected content.
 """
 

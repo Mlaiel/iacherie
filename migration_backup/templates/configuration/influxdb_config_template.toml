@@ -1,0 +1,623 @@
+# InfluxDB Configuration Template for Ainflue Platform
+# Time-series database for metrics, analytics, and real-time monitoring
+
+[meta]
+  # Directory for metadata/raft database
+  dir = "/var/lib/influxdb/meta"
+
+  # The default retention policy name
+  retention-autocreate = true
+
+  # If log messages are printed for the meta service
+  logging-enabled = true
+
+[data]
+  # Directory for TSM storage engine files
+  dir = "/var/lib/influxdb/data"
+
+  # Directory for write-ahead log files
+  wal-dir = "/var/lib/influxdb/wal"
+
+  # The amount of time that a write will wait before fsyncing
+  wal-fsync-delay = "0s"
+
+  # Settings for TSM engine
+  # Maximum number of concurrent queries allowed
+  max-concurrent-compactions = 3
+
+  # Maximum number of points in each batch when writing to the storage engine
+  max-series-per-database = 1000000
+
+  # Maximum number of tag values per tag that are allowed before writes are dropped
+  max-values-per-tag = 100000
+
+  # Trace logging provides more verbose output around the TSM engine
+  trace-logging-enabled = false
+
+  # Whether queries should be logged before execution
+  query-log-enabled = true
+
+  # Compaction settings
+  compact-full-write-cold-duration = "4h"
+  compact-throughput = "48m"
+  compact-throughput-burst = "48m"
+
+  # Maximum age of a shard before it's compacted
+  max-index-log-file-size = "1m"
+
+  # Series file settings
+  series-id-set-cache-size = 100
+
+[coordinator]
+  # Time limit for write requests
+  write-timeout = "10s"
+
+  # Maximum number of concurrent queries allowed
+  max-concurrent-queries = 0
+
+  # Time limit for queries
+  query-timeout = "0s"
+
+  # Maximum number of points a SELECT can process
+  max-select-point = 0
+
+  # Maximum number of series a SELECT can run
+  max-select-series = 0
+
+  # Maximum number of group by time bucket a SELECT can create
+  max-select-buckets = 0
+
+[retention]
+  # Enables the retention policy enforcement service
+  enabled = true
+
+  # The interval of time when retention policy enforcement checks run
+  check-interval = "30m"
+
+[shard-precreation]
+  # Determines whether shard pre-creation service is enabled
+  enabled = true
+
+  # The interval of time when the check to pre-create new shards runs
+  check-interval = "10m"
+
+  # The default period ahead of the endtime of a shard group that its successor group is created
+  advance-period = "30m"
+
+[monitor]
+  # Whether to record statistics internally
+  store-enabled = true
+
+  # The destination database for recorded statistics
+  store-database = "_internal"
+
+  # The value of the 'host' tag in the statistics
+  store-interval = "10s"
+
+[admin]
+  # Determines whether the admin service is enabled
+  enabled = false
+
+  # The default bind address used by the admin service
+  bind-address = ":8083"
+
+  # Whether HTTPS is enabled
+  https-enabled = false
+
+  # The SSL certificate to use when HTTPS is enabled
+  https-certificate = "/etc/ssl/influxdb.pem"
+
+[http]
+  # Determines whether HTTP endpoint is enabled
+  enabled = true
+
+  # The bind address used by the HTTP service
+  bind-address = ":8086"
+
+  # Determines whether user authentication over HTTP/HTTPS is enabled
+  auth-enabled = true
+
+  # Determines whether HTTP request logging is enabled
+  log-enabled = true
+
+  # Determines whether detailed write logging is enabled
+  suppress-write-log = false
+
+  # When HTTP request logging is enabled, this option specifies the path where log entries should be written
+  access-log-path = "/var/log/influxdb/access.log"
+
+  # Determines whether HTTPS is enabled
+  https-enabled = true
+
+  # The SSL certificate to use when HTTPS is enabled
+  https-certificate = "/etc/ssl/influxdb.crt"
+
+  # Use a separate private key location
+  https-private-key = "/etc/ssl/influxdb.key"
+
+  # The JWT auth shared secret to validate requests using JSON web tokens
+  shared-secret = "${INFLUXDB_JWT_SECRET}"
+
+  # The default realm sent back when issuing a basic auth challenge
+  realm = "InfluxDB"
+
+  # The default chunk size for result sets that should be chunked
+  max-body-size = 25000000
+
+  # The maximum number of HTTP connections that may be open at once
+  max-concurrent-write-limit = 0
+
+  # The maximum number of writes processed concurrently
+  max-enqueued-write-limit = 0
+
+  # The maximum duration for a write to wait in the queue to be processed
+  enqueued-write-timeout = 30000000000
+
+[logging]
+  # Log format (auto, logfmt, json)
+  format = "auto"
+
+  # Log level (error, warn, info, debug)
+  level = "info"
+
+  # Suppress the logo output that is printed when the program is started
+  suppress-logo = false
+
+[subscriber]
+  # Determines whether the subscriber service is enabled
+  enabled = true
+
+  # The default timeout for HTTP writes by the subscriber service
+  http-timeout = "30s"
+
+  # Allows insecure HTTPS connections to subscribers
+  insecure-skip-verify = false
+
+  # The path to the PEM encoded CA certs file
+  ca-certs = ""
+
+  # The number of writer goroutines processing the write channel
+  write-concurrency = 40
+
+  # The number of in-flight writes buffered in the write channel
+  write-buffer-size = 1000
+
+[[graphite]]
+  # Determines whether the graphite endpoint is enabled
+  enabled = false
+  database = "graphite"
+  retention-policy = ""
+  bind-address = ":2003"
+  protocol = "tcp"
+  consistency-level = "one"
+
+[[collectd]]
+  enabled = false
+  bind-address = ":25826"
+  database = "collectd"
+  retention-policy = ""
+
+[[opentsdb]]
+  enabled = false
+  bind-address = ":4242"
+  database = "opentsdb"
+  retention-policy = ""
+  consistency-level = "one"
+  tls-enabled = false
+  certificate = "/etc/ssl/influxdb.pem"
+
+[[udp]]
+  enabled = false
+  bind-address = ":8089"
+  database = "udp"
+  retention-policy = ""
+
+[continuous_queries]
+  # Determines whether the continuous query service is enabled
+  enabled = true
+
+  # Controls whether queries are logged when executed by the CQ service
+  log-enabled = true
+
+  # Controls whether queries are logged to the self-monitoring data store
+  query-stats-enabled = false
+
+  # interval for how often continuous queries will be checked if they need to run
+  run-interval = "1s"
+
+---
+# InfluxDB Database Schema for Ainflue Platform
+
+# Create database and retention policies
+CREATE DATABASE ainflue
+CREATE RETENTION POLICY "default" ON "ainflue" DURATION 30d REPLICATION 1 DEFAULT
+CREATE RETENTION POLICY "long_term" ON "ainflue" DURATION 365d REPLICATION 1
+CREATE RETENTION POLICY "short_term" ON "ainflue" DURATION 7d REPLICATION 1
+
+# User engagement metrics
+# Measurement: user_engagement
+# Tags: user_id, platform, content_type, campaign_id
+# Fields: views, likes, comments, shares, engagement_rate, session_duration
+
+# Creator performance metrics
+# Measurement: creator_performance
+# Tags: creator_id, platform, category, location
+# Fields: follower_count, following_count, post_count, avg_engagement_rate, reach, impressions
+
+# Campaign analytics
+# Measurement: campaign_analytics
+# Tags: campaign_id, brand_id, platform, content_type
+# Fields: total_reach, total_impressions, total_engagement, cost_per_engagement, roi, conversion_rate
+
+# Content metrics
+# Measurement: content_metrics
+# Tags: content_id, creator_id, platform, content_type, campaign_id
+# Fields: views, likes, comments, shares, saves, engagement_rate, reach, impressions, click_through_rate
+
+# Revenue tracking
+# Measurement: revenue_metrics
+# Tags: user_id, user_type, transaction_type, payment_method
+# Fields: amount, commission, net_amount, processing_fee
+
+# API performance metrics
+# Measurement: api_metrics
+# Tags: endpoint, method, status_code, user_type
+# Fields: response_time, request_size, response_size, error_count
+
+# System performance metrics
+# Measurement: system_metrics
+# Tags: server, service, environment
+# Fields: cpu_usage, memory_usage, disk_usage, network_io, response_time
+
+# Real-time event tracking
+# Measurement: events
+# Tags: event_type, user_id, source, platform
+# Fields: count, value, duration, success
+
+---
+# InfluxDB Users and Permissions
+
+# Create admin user
+CREATE USER "ainflue_admin" WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES
+
+# Create application user
+CREATE USER "ainflue_app" WITH PASSWORD '${INFLUXDB_APP_PASSWORD}'
+GRANT ALL ON "ainflue" TO "ainflue_app"
+
+# Create read-only user for analytics
+CREATE USER "ainflue_readonly" WITH PASSWORD '${INFLUXDB_READONLY_PASSWORD}'
+GRANT READ ON "ainflue" TO "ainflue_readonly"
+
+# Create monitoring user
+CREATE USER "ainflue_monitor" WITH PASSWORD '${INFLUXDB_MONITOR_PASSWORD}'
+GRANT READ ON "_internal" TO "ainflue_monitor"
+GRANT READ ON "ainflue" TO "ainflue_monitor"
+
+---
+# Continuous Queries for Data Aggregation
+
+# Hourly creator performance aggregation
+CREATE CONTINUOUS QUERY "cq_creator_performance_hourly" ON "ainflue"
+BEGIN
+  SELECT 
+    mean("follower_count") AS "avg_followers",
+    mean("engagement_rate") AS "avg_engagement_rate",
+    sum("post_count") AS "total_posts",
+    mean("reach") AS "avg_reach"
+  INTO "long_term"."creator_performance_hourly"
+  FROM "creator_performance"
+  GROUP BY time(1h), "creator_id", "platform", "category"
+END
+
+# Daily campaign analytics
+CREATE CONTINUOUS QUERY "cq_campaign_analytics_daily" ON "ainflue"
+BEGIN
+  SELECT 
+    sum("total_reach") AS "daily_reach",
+    sum("total_impressions") AS "daily_impressions",
+    sum("total_engagement") AS "daily_engagement",
+    mean("cost_per_engagement") AS "avg_cpe",
+    mean("roi") AS "avg_roi"
+  INTO "long_term"."campaign_analytics_daily"
+  FROM "campaign_analytics"
+  GROUP BY time(1d), "campaign_id", "brand_id", "platform"
+END
+
+# Content performance aggregation
+CREATE CONTINUOUS QUERY "cq_content_performance_hourly" ON "ainflue"
+BEGIN
+  SELECT 
+    sum("views") AS "total_views",
+    sum("likes") AS "total_likes",
+    sum("comments") AS "total_comments",
+    sum("shares") AS "total_shares",
+    mean("engagement_rate") AS "avg_engagement_rate"
+  INTO "long_term"."content_performance_hourly"
+  FROM "content_metrics"
+  GROUP BY time(1h), "content_id", "creator_id", "platform", "content_type"
+END
+
+# API performance monitoring
+CREATE CONTINUOUS QUERY "cq_api_performance_5m" ON "ainflue"
+BEGIN
+  SELECT 
+    mean("response_time") AS "avg_response_time",
+    max("response_time") AS "max_response_time",
+    min("response_time") AS "min_response_time",
+    count("error_count") AS "total_errors",
+    sum("request_size") AS "total_request_size"
+  INTO "short_term"."api_performance_5m"
+  FROM "api_metrics"
+  GROUP BY time(5m), "endpoint", "method"
+END
+
+# Revenue aggregation
+CREATE CONTINUOUS QUERY "cq_revenue_daily" ON "ainflue"
+BEGIN
+  SELECT 
+    sum("amount") AS "daily_revenue",
+    sum("commission") AS "daily_commission",
+    sum("net_amount") AS "daily_net",
+    count("amount") AS "transaction_count"
+  INTO "long_term"."revenue_daily"
+  FROM "revenue_metrics"
+  GROUP BY time(1d), "user_type", "transaction_type"
+END
+
+# System health monitoring
+CREATE CONTINUOUS QUERY "cq_system_health_1m" ON "ainflue"
+BEGIN
+  SELECT 
+    mean("cpu_usage") AS "avg_cpu",
+    max("cpu_usage") AS "max_cpu",
+    mean("memory_usage") AS "avg_memory",
+    max("memory_usage") AS "max_memory",
+    mean("response_time") AS "avg_response_time"
+  INTO "short_term"."system_health_1m"
+  FROM "system_metrics"
+  GROUP BY time(1m), "server", "service"
+END
+
+---
+# InfluxDB Queries for Ainflue Analytics
+
+# Top performing creators by engagement rate (last 24 hours)
+SELECT creator_id, platform, mean(engagement_rate) as avg_engagement
+FROM creator_performance
+WHERE time >= now() - 24h
+GROUP BY creator_id, platform
+ORDER BY avg_engagement DESC
+LIMIT 50
+
+# Campaign ROI analysis
+SELECT campaign_id, brand_id, mean(roi) as avg_roi, sum(total_reach) as total_reach
+FROM campaign_analytics
+WHERE time >= now() - 7d
+GROUP BY campaign_id, brand_id
+ORDER BY avg_roi DESC
+
+# Content performance trending
+SELECT content_id, platform, 
+       sum(views) as total_views,
+       sum(engagement_rate) as total_engagement
+FROM content_metrics
+WHERE time >= now() - 48h
+GROUP BY content_id, platform, time(1h)
+ORDER BY time DESC
+
+# API performance monitoring
+SELECT endpoint, method,
+       mean(response_time) as avg_response_time,
+       max(response_time) as max_response_time,
+       count(error_count) as total_errors
+FROM api_metrics
+WHERE time >= now() - 1h
+GROUP BY endpoint, method, time(5m)
+
+# Real-time engagement tracking
+SELECT user_id, platform, event_type, count(count) as total_events
+FROM events
+WHERE time >= now() - 15m
+  AND event_type =~ /^(like|comment|share)$/
+GROUP BY user_id, platform, event_type, time(1m)
+
+# Revenue analysis by user type
+SELECT user_type, transaction_type,
+       sum(amount) as total_amount,
+       sum(commission) as total_commission,
+       count(amount) as transaction_count
+FROM revenue_metrics
+WHERE time >= now() - 30d
+GROUP BY user_type, transaction_type, time(1d)
+
+# Platform comparison analysis
+SELECT platform,
+       sum(views) as total_views,
+       sum(engagement_rate) as total_engagement,
+       count(*) as content_count
+FROM content_metrics
+WHERE time >= now() - 7d
+GROUP BY platform, time(1d)
+
+# Creator performance by category
+SELECT category, location,
+       mean(follower_count) as avg_followers,
+       mean(engagement_rate) as avg_engagement,
+       count(*) as creator_count
+FROM creator_performance
+WHERE time >= now() - 24h
+GROUP BY category, location
+
+---
+# InfluxDB Backup and Restore Scripts
+
+#!/bin/bash
+# Backup script for InfluxDB
+BACKUP_DIR="/backups/influxdb/$(date +%Y%m%d_%H%M%S)"
+mkdir -p $BACKUP_DIR
+
+# Create backup
+influxd backup -portable -database ainflue $BACKUP_DIR
+
+# Backup metadata
+influxd backup -portable $BACKUP_DIR/meta
+
+# Compress backup
+tar -czf $BACKUP_DIR.tar.gz $BACKUP_DIR
+
+# Upload to S3
+aws s3 cp $BACKUP_DIR.tar.gz s3://ainflue-db-backups/influxdb/
+
+# Clean up local files
+rm -rf $BACKUP_DIR
+rm $BACKUP_DIR.tar.gz
+
+echo "InfluxDB backup completed and uploaded to S3"
+
+#!/bin/bash
+# Restore script for InfluxDB
+BACKUP_FILE=$1
+if [ -z "$BACKUP_FILE" ]; then
+  echo "Usage: $0 <backup_file>"
+  exit 1
+fi
+
+# Stop InfluxDB service
+systemctl stop influxdb
+
+# Extract backup
+tar -xzf $BACKUP_FILE
+
+# Restore database
+influxd restore -portable -database ainflue /path/to/backup/
+
+# Restore metadata
+influxd restore -portable /path/to/backup/meta/
+
+# Start InfluxDB service
+systemctl start influxdb
+
+echo "InfluxDB restore completed"
+
+---
+# InfluxDB Performance Tuning
+
+# Monitor query performance
+SHOW QUERIES
+
+# Check database statistics
+SHOW STATS
+
+# Monitor series cardinality
+SHOW CARDINALITY
+
+# Check retention policies
+SHOW RETENTION POLICIES ON ainflue
+
+# Monitor continuous queries
+SHOW CONTINUOUS QUERIES
+
+# Check measurement statistics
+SHOW MEASUREMENTS ON ainflue
+
+# Monitor tag values
+SHOW TAG VALUES ON ainflue FROM "creator_performance" WITH KEY = "platform"
+
+# Performance optimization queries
+# Drop series with high cardinality
+DROP SERIES FROM measurement_name WHERE tag_key = 'problematic_value'
+
+# Optimize retention policies
+ALTER RETENTION POLICY "default" ON "ainflue" DURATION 15d
+
+---
+# Kapacitor Configuration for Alerting
+
+# Kapacitor configuration file
+[http]
+  bind-address = ":9092"
+  auth-enabled = false
+  log-enabled = true
+  write-tracing = false
+  pprof-enabled = false
+  https-enabled = false
+  https-certificate = "/etc/ssl/kapacitor.pem"
+  shutdown-timeout = "10s"
+
+[logging]
+  file = "/var/log/kapacitor/kapacitor.log"
+  level = "INFO"
+
+[replay]
+  dir = "/var/lib/kapacitor/replay"
+
+[storage]
+  boltdb = "/var/lib/kapacitor/kapacitor.db"
+
+[task]
+  dir = "/var/lib/kapacitor/tasks"
+  snapshot-interval = "1m0s"
+
+[[influxdb]]
+  enabled = true
+  name = "default"
+  default = false
+  urls = ["http://localhost:8086"]
+  username = "ainflue_monitor"
+  password = "${INFLUXDB_MONITOR_PASSWORD}"
+  timeout = 0
+  insecure-skip-verify = false
+  startup-timeout = "5m0s"
+  disable-subscriptions = false
+  subscription-protocol = "http"
+
+[smtp]
+  enabled = true
+  host = "${SMTP_HOST}"
+  port = 587
+  username = "${SMTP_USERNAME}"
+  password = "${SMTP_PASSWORD}"
+  from = "${SMTP_FROM}"
+  to = ["${ALERT_EMAIL}"]
+
+[slack]
+  enabled = true
+  url = "${SLACK_WEBHOOK_URL}"
+  channel = "#alerts"
+
+# Alert for high API response times
+stream
+  |from()
+    .measurement('api_metrics')
+    .where(lambda: "response_time" > 5000)
+  |alert()
+    .id('high-api-response-time')
+    .message('High API response time detected: {{ index .Fields "response_time" }}ms on {{ index .Tags "endpoint" }}')
+    .warn(lambda: "response_time" > 2000)
+    .crit(lambda: "response_time" > 5000)
+    .slack()
+    .email()
+
+# Alert for low engagement rates
+stream
+  |from()
+    .measurement('creator_performance')
+    .where(lambda: "engagement_rate" < 0.01)
+  |alert()
+    .id('low-engagement-rate')
+    .message('Low engagement rate detected for creator {{ index .Tags "creator_id" }}: {{ index .Fields "engagement_rate" }}')
+    .warn(lambda: "engagement_rate" < 0.02)
+    .crit(lambda: "engagement_rate" < 0.01)
+    .email()
+
+# Alert for campaign budget overrun
+stream
+  |from()
+    .measurement('campaign_analytics')
+    .where(lambda: "cost_per_engagement" > 5.0)
+  |alert()
+    .id('campaign-budget-overrun')
+    .message('Campaign {{ index .Tags "campaign_id" }} cost per engagement exceeds budget: ${{ index .Fields "cost_per_engagement" }}')
+    .crit(lambda: "cost_per_engagement" > 5.0)
+    .slack()
+    .email()

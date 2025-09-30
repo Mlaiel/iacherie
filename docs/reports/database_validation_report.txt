@@ -5,7 +5,7 @@ Database Schema and Migration Validation Report
 📁 Database Structure: ✅ VALID
 
 📋 Database Schema: ✅ VALID
-   File: /home/runner/work/Ainflue/Ainflue/database/schema.py
+   File: /home/runner/work/IA Chérie/IA Chérie/database/schema.py
 
 🔄 Migration Files: ❌ ISSUES
    Files Found: 23
@@ -75,7 +75,7 @@ Database Schema and Migration Validation Report
    • Missing packages: ['asyncpg', 'psycopg2', 'sqlalchemy', 'alembic']
    • Install with: pip install asyncpg psycopg2 sqlalchemy alembic
 
-🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_database_migrations.sh
+🧪 Test Script: /home/runner/work/IA Chérie/IA Chérie/test_database_migrations.sh
 
 SUMMARY
 ========================================

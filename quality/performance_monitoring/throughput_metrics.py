@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Throughput Metrics - Ainflue Quality Platform
+Throughput Metrics - IA Chérie Quality Platform
 ===========================================
 
 Enterprise-grade throughput monitoring and analysis system.

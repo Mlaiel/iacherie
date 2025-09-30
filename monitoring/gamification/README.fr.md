@@ -4,7 +4,7 @@
 
 ## Aperçu
 
-Le Module de Surveillance Gamification fournit une surveillance et une optimisation complètes de toutes les mécaniques de gamification au sein de la plateforme Ainflue. Ce module suit l'engagement des utilisateurs, l'automatisation de la preuve sociale, la progression des achievements et l'optimisation de la rétention pour maximiser l'engagement des créateurs et l'adhésion à la plateforme.
+Le Module de Surveillance Gamification fournit une surveillance et une optimisation complètes de toutes les mécaniques de gamification au sein de la plateforme IA Chérie. Ce module suit l'engagement des utilisateurs, l'automatisation de la preuve sociale, la progression des achievements et l'optimisation de la rétention pour maximiser l'engagement des créateurs et l'adhésion à la plateforme.
 
 ## Composants Principaux
 
@@ -95,5 +95,5 @@ Pour le support entreprise et la personnalisation:
 
 ---
 
-**© 2025 Fahed Mlaiel - Plateforme Ainflue**  
+**© 2025 Fahed Mlaiel - Plateforme IA Chérie**  
 **Tous Droits Réservés - Licence Entreprise**

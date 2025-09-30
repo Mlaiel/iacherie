@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/circuit_breakers/`  
+**Location**: `/workspaces/IA Chérie/microservices/circuit_breakers/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Resilience  
-**Purpose**: Circuit Breakers Enterprise pour résilience microservices Ainflue
+**Purpose**: Circuit Breakers Enterprise pour résilience microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -353,7 +353,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Circuit breakers protègent workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Circuit breakers protègent workflow créateurs → distribution
 - **Code Industriel**: ✅ Patterns enterprise + ML + observability
 - **Résilience Enterprise**: ✅ Protection contre cascades de pannes
 - **Scalabilité Microservices**: ✅ Patterns distribués + coordination
@@ -467,4 +467,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module circuit breakers enterprise clé en main, patterns résilience avancés, ML/IA intégré, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module circuit breakers enterprise clé en main, patterns résilience avancés, ML/IA intégré, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

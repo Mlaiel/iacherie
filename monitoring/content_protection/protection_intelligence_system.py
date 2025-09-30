@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Protection Intelligence System
+IA Chérie Platform - Protection Intelligence System
 =================================================
 
 AI-powered intelligence hub for content protection combining all

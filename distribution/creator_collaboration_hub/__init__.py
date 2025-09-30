@@ -1,6 +1,6 @@
 """Creator Collaboration Hub
 
-Advanced creator collaboration and partnership management system for the Ainflue platform.
+Advanced creator collaboration and partnership management system for the IA Chérie platform.
 Facilitates collaborations, cross-promotions, and partnership opportunities between creators
 using AI-powered matching and optimization.
 

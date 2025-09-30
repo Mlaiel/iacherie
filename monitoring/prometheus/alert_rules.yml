@@ -1,4 +1,4 @@
-# Prometheus Alert Rules for Ainflue Platform
+# Prometheus Alert Rules for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready alert rules with comprehensive coverage
 
@@ -6,11 +6,11 @@ groups:
   # =================================================================
   # CRITICAL SYSTEM ALERTS
   # =================================================================
-  - name: ainflue.critical.system
+  - name: iacherie.critical.system
     rules:
       # API Service Down
       - alert: AinfluApiServiceDown
-        expr: up{job="ainflue-api"} == 0
+        expr: up{job="iacherie-api"} == 0
         for: 1m
         labels:
           severity: critical
@@ -18,9 +18,9 @@ groups:
           team: platform
           priority: P1
         annotations:
-          summary: "🚨 CRITICAL: Ainflue API service is down"
+          summary: "🚨 CRITICAL: IA Chérie API service is down"
           description: "API service {{ $labels.instance }} has been down for more than 1 minute. This affects all platform functionality."
-          runbook_url: "https://docs.ainflue.com/runbooks/api-service-down"
+          runbook_url: "https://docs.iacherie.com/runbooks/api-service-down"
           action: "Immediate escalation to on-call engineer"
 
       # AI Engine Down
@@ -35,7 +35,7 @@ groups:
         annotations:
           summary: "🚨 CRITICAL: AI Engine service is down"
           description: "AI Engine service {{ $labels.instance }} has been down for more than 2 minutes. Content protection and fingerprinting are offline."
-          runbook_url: "https://docs.ainflue.com/runbooks/ai-engine-down"
+          runbook_url: "https://docs.iacherie.com/runbooks/ai-engine-down"
           action: "Immediate restart and investigation required"
 
       # Database Down
@@ -50,7 +50,7 @@ groups:
         annotations:
           summary: "🚨 CRITICAL: PostgreSQL database is down"
           description: "PostgreSQL database {{ $labels.instance }} is unreachable. All data operations are failing."
-          runbook_url: "https://docs.ainflue.com/runbooks/database-down"
+          runbook_url: "https://docs.iacherie.com/runbooks/database-down"
           action: "Immediate database recovery procedures"
 
       # Redis Cache Down
@@ -65,17 +65,17 @@ groups:
         annotations:
           summary: "🚨 CRITICAL: Redis cache is down"
           description: "Redis cache {{ $labels.instance }} is down. Performance will be severely degraded."
-          runbook_url: "https://docs.ainflue.com/runbooks/redis-down"
+          runbook_url: "https://docs.iacherie.com/runbooks/redis-down"
           action: "Restart Redis and check for data corruption"
 
   # =================================================================
   # BUSINESS CRITICAL ALERTS
   # =================================================================
-  - name: ainflue.business.critical
+  - name: iacherie.business.critical
     rules:
       # Revenue Loss Alert
       - alert: AinfluRevenueLoss
-        expr: ainflue:revenue_per_hour:sum < (ainflue:revenue_per_hour:sum offset 1h) * 0.5
+        expr: iacherie:revenue_per_hour:sum < (iacherie:revenue_per_hour:sum offset 1h) * 0.5
         for: 15m
         labels:
           severity: critical
@@ -85,7 +85,7 @@ groups:
         annotations:
           summary: "💰 CRITICAL: Revenue dropped by 50%+ in the last hour"
           description: "Current hourly revenue: ${{ $value | humanize }}. This is less than 50% of the previous hour."
-          runbook_url: "https://docs.ainflue.com/runbooks/revenue-loss"
+          runbook_url: "https://docs.iacherie.com/runbooks/revenue-loss"
           action: "Immediate investigation of monetization systems"
 
       # Content Protection Failure
@@ -100,12 +100,12 @@ groups:
         annotations:
           summary: "🛡️ CRITICAL: Content violations increased 5x"
           description: "Content violations per hour: {{ $value | humanize }}. Protection systems may be compromised."
-          runbook_url: "https://docs.ainflue.com/runbooks/protection-failure"
+          runbook_url: "https://docs.iacherie.com/runbooks/protection-failure"
           action: "Check AI models and fingerprinting accuracy"
 
       # Platform Integration Failure
       - alert: AinfluPlatformIntegrationDown
-        expr: ainflue:platform_api_success_rate:5m < 0.8
+        expr: iacherie:platform_api_success_rate:5m < 0.8
         for: 5m
         labels:
           severity: critical
@@ -115,17 +115,17 @@ groups:
         annotations:
           summary: "🔌 CRITICAL: Platform {{ $labels.platform }} integration failing"
           description: "Success rate for {{ $labels.platform }}: {{ $value | humanizePercentage }}. Below 80% threshold."
-          runbook_url: "https://docs.ainflue.com/runbooks/platform-integration-failure"
+          runbook_url: "https://docs.iacherie.com/runbooks/platform-integration-failure"
           action: "Check API credentials and rate limits"
 
   # =================================================================
   # PERFORMANCE ALERTS
   # =================================================================
-  - name: ainflue.performance
+  - name: iacherie.performance
     rules:
       # High API Response Time
       - alert: AinfluHighApiResponseTime
-        expr: ainflue:api_response_time:p95_5m > 2
+        expr: iacherie:api_response_time:p95_5m > 2
         for: 5m
         labels:
           severity: warning
@@ -135,12 +135,12 @@ groups:
         annotations:
           summary: "⚠️ API response time is high"
           description: "95th percentile response time: {{ $value }}s for {{ $labels.endpoint }}. Target: <2s"
-          runbook_url: "https://docs.ainflue.com/runbooks/high-response-time"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-response-time"
           action: "Check database performance and scaling"
 
       # High Error Rate
       - alert: AinfluHighErrorRate
-        expr: ainflue:api_error_rate:5m > 0.05
+        expr: iacherie:api_error_rate:5m > 0.05
         for: 5m
         labels:
           severity: warning
@@ -150,12 +150,12 @@ groups:
         annotations:
           summary: "⚠️ High API error rate detected"
           description: "Error rate: {{ $value | humanizePercentage }} for {{ $labels.endpoint }}. Target: <5%"
-          runbook_url: "https://docs.ainflue.com/runbooks/high-error-rate"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-error-rate"
           action: "Check logs for error patterns"
 
       # AI Processing Queue Backup
       - alert: AinfluAiQueueBackup
-        expr: ainflue:ai_queue_depth:current > 1000
+        expr: iacherie:ai_queue_depth:current > 1000
         for: 10m
         labels:
           severity: warning
@@ -165,17 +165,17 @@ groups:
         annotations:
           summary: "⚠️ AI processing queue is backing up"
           description: "Queue depth: {{ $value }} items. Processing may be slower than incoming requests."
-          runbook_url: "https://docs.ainflue.com/runbooks/ai-queue-backup"
+          runbook_url: "https://docs.iacherie.com/runbooks/ai-queue-backup"
           action: "Scale AI workers or check for processing issues"
 
   # =================================================================
   # INFRASTRUCTURE ALERTS
   # =================================================================
-  - name: ainflue.infrastructure
+  - name: iacherie.infrastructure
     rules:
       # High CPU Usage
       - alert: AinfluHighCpuUsage
-        expr: ainflue:instance_cpu_usage:rate5m > 80
+        expr: iacherie:instance_cpu_usage:rate5m > 80
         for: 10m
         labels:
           severity: warning
@@ -185,12 +185,12 @@ groups:
         annotations:
           summary: "⚠️ High CPU usage on {{ $labels.instance }}"
           description: "CPU usage: {{ $value }}% on instance {{ $labels.instance }}"
-          runbook_url: "https://docs.ainflue.com/runbooks/high-cpu"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-cpu"
           action: "Check for resource-intensive processes"
 
       # High Memory Usage
       - alert: AinfluHighMemoryUsage
-        expr: ainflue:instance_memory_usage:percentage > 85
+        expr: iacherie:instance_memory_usage:percentage > 85
         for: 10m
         labels:
           severity: warning
@@ -200,12 +200,12 @@ groups:
         annotations:
           summary: "⚠️ High memory usage on {{ $labels.instance }}"
           description: "Memory usage: {{ $value }}% on instance {{ $labels.instance }}"
-          runbook_url: "https://docs.ainflue.com/runbooks/high-memory"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-memory"
           action: "Check for memory leaks or scale vertically"
 
       # Disk Space Low
       - alert: AinfluLowDiskSpace
-        expr: ainflue:instance_disk_usage:percentage > 85
+        expr: iacherie:instance_disk_usage:percentage > 85
         for: 5m
         labels:
           severity: critical
@@ -215,17 +215,17 @@ groups:
         annotations:
           summary: "🚨 Low disk space on {{ $labels.instance }}"
           description: "Disk usage: {{ $value }}% on instance {{ $labels.instance }}"
-          runbook_url: "https://docs.ainflue.com/runbooks/low-disk-space"
+          runbook_url: "https://docs.iacherie.com/runbooks/low-disk-space"
           action: "Clean up logs or expand storage immediately"
 
   # =================================================================
   # DATABASE ALERTS
   # =================================================================
-  - name: ainflue.database
+  - name: iacherie.database
     rules:
       # High Database Connections
       - alert: AinfluHighDatabaseConnections
-        expr: ainflue:postgres_connections:utilization > 80
+        expr: iacherie:postgres_connections:utilization > 80
         for: 5m
         labels:
           severity: warning
@@ -235,12 +235,12 @@ groups:
         annotations:
           summary: "⚠️ High database connection utilization"
           description: "Connection pool usage: {{ $value }}%. Risk of connection exhaustion."
-          runbook_url: "https://docs.ainflue.com/runbooks/high-db-connections"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-db-connections"
           action: "Check for connection leaks or scale connection pool"
 
       # Slow Database Queries
       - alert: AinfluSlowDatabaseQueries
-        expr: ainflue:postgres_query_time:p95_5m > 5
+        expr: iacherie:postgres_query_time:p95_5m > 5
         for: 10m
         labels:
           severity: warning
@@ -250,12 +250,12 @@ groups:
         annotations:
           summary: "⚠️ Slow database queries detected"
           description: "95th percentile query time: {{ $value }}s. Performance degraded."
-          runbook_url: "https://docs.ainflue.com/runbooks/slow-queries"
+          runbook_url: "https://docs.iacherie.com/runbooks/slow-queries"
           action: "Analyze slow query log and optimize"
 
       # Redis Memory High
       - alert: AinfluRedisMemoryHigh
-        expr: ainflue:redis_memory:utilization > 90
+        expr: iacherie:redis_memory:utilization > 90
         for: 5m
         labels:
           severity: warning
@@ -265,17 +265,17 @@ groups:
         annotations:
           summary: "⚠️ Redis memory usage is high"
           description: "Redis memory usage: {{ $value }}%. Risk of eviction."
-          runbook_url: "https://docs.ainflue.com/runbooks/redis-memory-high"
+          runbook_url: "https://docs.iacherie.com/runbooks/redis-memory-high"
           action: "Scale Redis or optimize cache usage"
 
   # =================================================================
   # SECURITY ALERTS
   # =================================================================
-  - name: ainflue.security
+  - name: iacherie.security
     rules:
       # High Authentication Failures
       - alert: AinfluHighAuthFailures
-        expr: ainflue:auth_failure_rate:5m > 0.1
+        expr: iacherie:auth_failure_rate:5m > 0.1
         for: 2m
         labels:
           severity: warning
@@ -285,12 +285,12 @@ groups:
         annotations:
           summary: "🔒 High authentication failure rate"
           description: "Auth failure rate: {{ $value | humanizePercentage }}. Possible brute force attack."
-          runbook_url: "https://docs.ainflue.com/runbooks/high-auth-failures"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-auth-failures"
           action: "Check for suspicious IP addresses and implement rate limiting"
 
       # Suspicious Activity Detected
       - alert: AinfluSuspiciousActivity
-        expr: ainflue:suspicious_activity:5m > 10
+        expr: iacherie:suspicious_activity:5m > 10
         for: 1m
         labels:
           severity: critical
@@ -300,12 +300,12 @@ groups:
         annotations:
           summary: "🚨 SECURITY: Suspicious activity detected"
           description: "{{ $value }} suspicious activities detected in the last 5 minutes."
-          runbook_url: "https://docs.ainflue.com/runbooks/suspicious-activity"
+          runbook_url: "https://docs.iacherie.com/runbooks/suspicious-activity"
           action: "Immediate security investigation required"
 
       # Rate Limiting Triggered
       - alert: AinfluRateLimitingTriggered
-        expr: ainflue:rate_limit_triggered:5m > 100
+        expr: iacherie:rate_limit_triggered:5m > 100
         for: 5m
         labels:
           severity: warning
@@ -315,17 +315,17 @@ groups:
         annotations:
           summary: "⚠️ High rate limiting activity"
           description: "Rate limiting triggered {{ $value }} times in 5 minutes for {{ $labels.endpoint }}"
-          runbook_url: "https://docs.ainflue.com/runbooks/rate-limiting"
+          runbook_url: "https://docs.iacherie.com/runbooks/rate-limiting"
           action: "Analyze traffic patterns and adjust limits if needed"
 
   # =================================================================
   # BUSINESS MONITORING ALERTS
   # =================================================================
-  - name: ainflue.business.monitoring
+  - name: iacherie.business.monitoring
     rules:
       # Low User Activity
       - alert: AinfluLowUserActivity
-        expr: ainflue:active_users:hourly < 100
+        expr: iacherie:active_users:hourly < 100
         for: 30m
         labels:
           severity: warning
@@ -335,12 +335,12 @@ groups:
         annotations:
           summary: "📊 Low user activity detected"
           description: "Only {{ $value }} active users in the last hour. Below normal levels."
-          runbook_url: "https://docs.ainflue.com/runbooks/low-user-activity"
+          runbook_url: "https://docs.iacherie.com/runbooks/low-user-activity"
           action: "Check for platform issues or external factors"
 
       # Content Processing Lag
       - alert: AinfluContentProcessingLag
-        expr: ainflue:content_protected:rate_5m < 10
+        expr: iacherie:content_protected:rate_5m < 10
         for: 15m
         labels:
           severity: warning
@@ -350,17 +350,17 @@ groups:
         annotations:
           summary: "⚠️ Content processing is lagging"
           description: "Only {{ $value }} content items processed per 5 minutes. Below normal rate."
-          runbook_url: "https://docs.ainflue.com/runbooks/content-processing-lag"
+          runbook_url: "https://docs.iacherie.com/runbooks/content-processing-lag"
           action: "Check AI engine performance and queue status"
 
   # =================================================================
   # SLA VIOLATION ALERTS
   # =================================================================
-  - name: ainflue.sla.violations
+  - name: iacherie.sla.violations
     rules:
       # API Availability SLA Violation
       - alert: AinfluApiAvailabilitySlaViolation
-        expr: ainflue:api_availability:5m < 0.999
+        expr: iacherie:api_availability:5m < 0.999
         for: 1m
         labels:
           severity: critical
@@ -371,12 +371,12 @@ groups:
         annotations:
           summary: "🚨 SLA VIOLATION: API availability below 99.9%"
           description: "Current availability: {{ $value | humanizePercentage }}. SLA target: 99.9%"
-          runbook_url: "https://docs.ainflue.com/runbooks/sla-availability"
+          runbook_url: "https://docs.iacherie.com/runbooks/sla-availability"
           action: "Immediate investigation and remediation required"
 
       # Response Time SLA Violation
       - alert: AinfluResponseTimeSlaViolation
-        expr: ainflue:api_response_time_sla:5m == 0
+        expr: iacherie:api_response_time_sla:5m == 0
         for: 5m
         labels:
           severity: warning
@@ -387,17 +387,17 @@ groups:
         annotations:
           summary: "⚠️ SLA VIOLATION: API response time above 2s"
           description: "95th percentile response time exceeds 2 seconds SLA target"
-          runbook_url: "https://docs.ainflue.com/runbooks/sla-response-time"
+          runbook_url: "https://docs.iacherie.com/runbooks/sla-response-time"
           action: "Performance optimization required"
 
   # =================================================================
   # COST OPTIMIZATION ALERTS
   # =================================================================
-  - name: ainflue.cost.optimization
+  - name: iacherie.cost.optimization
     rules:
       # High Infrastructure Costs
       - alert: AinfluHighInfrastructureCosts
-        expr: ainflue:infrastructure_cost:hourly > 500
+        expr: iacherie:infrastructure_cost:hourly > 500
         for: 1h
         labels:
           severity: warning
@@ -407,12 +407,12 @@ groups:
         annotations:
           summary: "💰 High infrastructure costs detected"
           description: "Hourly infrastructure cost: ${{ $value }}. Above normal levels."
-          runbook_url: "https://docs.ainflue.com/runbooks/high-costs"
+          runbook_url: "https://docs.iacherie.com/runbooks/high-costs"
           action: "Review resource usage and optimization opportunities"
 
       # Low ROI
       - alert: AinfluLowRoi
-        expr: ainflue:roi:hourly < 2
+        expr: iacherie:roi:hourly < 2
         for: 2h
         labels:
           severity: warning
@@ -422,41 +422,41 @@ groups:
         annotations:
           summary: "📊 Low ROI detected"
           description: "Current ROI: {{ $value }}x. Target: >2x"
-          runbook_url: "https://docs.ainflue.com/runbooks/low-roi"
+          runbook_url: "https://docs.iacherie.com/runbooks/low-roi"
           action: "Review costs and revenue optimization"
           team: platform
         annotations:
-          summary: "High error rate detected in Ainflue API"
+          summary: "High error rate detected in IA Chérie API"
           description: "Error rate is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
 
       # High Response Time
       - alert: AinfluHighResponseTime
-        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) > 2
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="iacherie-api"}[5m])) > 2
         for: 5m
         labels:
           severity: warning
           service: api
           team: platform
         annotations:
-          summary: "High response time in Ainflue API"
+          summary: "High response time in IA Chérie API"
           description: "95th percentile response time is {{ $value }}s for {{ $labels.instance }}"
 
       # No Requests (Traffic Drop)
       - alert: AinfluNoTraffic
-        expr: rate(http_requests_total{job="ainflue-api"}[5m]) < 0.1
+        expr: rate(http_requests_total{job="iacherie-api"}[5m]) < 0.1
         for: 10m
         labels:
           severity: warning
           service: api
           team: platform
         annotations:
-          summary: "Very low traffic to Ainflue API"
+          summary: "Very low traffic to IA Chérie API"
           description: "Request rate is {{ $value }} requests/second for {{ $labels.instance }}"
 
   # =================================================================
   # BUSINESS METRICS ALERTS
   # =================================================================
-  - name: ainflue.business.metrics
+  - name: iacherie.business.metrics
     rules:
       # Revenue Processing Failures
       - alert: AinfluRevenueProcessingFailures
@@ -484,7 +484,7 @@ groups:
 
       # Content Violation Detection Issues
       - alert: AinfluViolationDetectionDown
-        expr: up{job="ainflue-crawler"} == 0
+        expr: up{job="iacherie-crawler"} == 0
         for: 5m
         labels:
           severity: warning
@@ -509,35 +509,35 @@ groups:
   # =================================================================
   # INFRASTRUCTURE ALERTS
   # =================================================================
-  - name: ainflue.infrastructure
+  - name: iacherie.infrastructure
     rules:
       # High CPU Usage
       - alert: AinfluHighCpuUsage
-        expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) * 100 > 80
+        expr: rate(container_cpu_usage_seconds_total{namespace="iacherie"}[5m]) * 100 > 80
         for: 10m
         labels:
           severity: warning
           service: infrastructure
           team: platform
         annotations:
-          summary: "High CPU usage in Ainflue namespace"
+          summary: "High CPU usage in IA Chérie namespace"
           description: "CPU usage is {{ $value }}% for {{ $labels.pod }}"
 
       # High Memory Usage
       - alert: AinfluHighMemoryUsage
-        expr: container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes > 0.9
+        expr: container_memory_usage_bytes{namespace="iacherie"} / container_spec_memory_limit_bytes > 0.9
         for: 5m
         labels:
           severity: warning
           service: infrastructure
           team: platform
         annotations:
-          summary: "High memory usage in Ainflue pod"
+          summary: "High memory usage in IA Chérie pod"
           description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod }}"
 
       # Pod Restart Loops
       - alert: AinfluPodRestartLoop
-        expr: increase(kube_pod_container_status_restarts_total{namespace="ainflue"}[1h]) > 3
+        expr: increase(kube_pod_container_status_restarts_total{namespace="iacherie"}[1h]) > 3
         for: 5m
         labels:
           severity: critical
@@ -556,13 +556,13 @@ groups:
           service: infrastructure
           team: platform
         annotations:
-          summary: "Low disk space on Ainflue node"
+          summary: "Low disk space on IA Chérie node"
           description: "Disk space is {{ $value }}% available on {{ $labels.instance }}"
 
   # =================================================================
   # DATABASE ALERTS
   # =================================================================
-  - name: ainflue.database
+  - name: iacherie.database
     rules:
       # PostgreSQL Down
       - alert: AinfluPostgreSQLDown
@@ -639,7 +639,7 @@ groups:
   # =================================================================
   # SECURITY ALERTS
   # =================================================================
-  - name: ainflue.security
+  - name: iacherie.security
     rules:
       # Suspicious Request Pattern
       - alert: AinfluSuspiciousRequestPattern
@@ -680,7 +680,7 @@ groups:
   # =================================================================
   # EXTERNAL DEPENDENCIES ALERTS
   # =================================================================
-  - name: ainflue.external.dependencies
+  - name: iacherie.external.dependencies
     rules:
       # Payment Provider Down
       - alert: AinfluPaymentProviderDown
@@ -721,7 +721,7 @@ groups:
   # =================================================================
   # KUBERNETES CLUSTER ALERTS
   # =================================================================
-  - name: ainflue.kubernetes
+  - name: iacherie.kubernetes
     rules:
       # Node Not Ready
       - alert: AinfluNodeNotReady
@@ -737,7 +737,7 @@ groups:
 
       # Pod Crash Looping
       - alert: AinfluPodCrashLooping
-        expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
+        expr: rate(kube_pod_container_status_restarts_total{namespace="iacherie"}[15m]) > 0
         for: 5m
         labels:
           severity: warning
@@ -762,7 +762,7 @@ groups:
   # =================================================================
   # CUSTOM BUSINESS LOGIC ALERTS
   # =================================================================
-  - name: ainflue.business.logic
+  - name: iacherie.business.logic
     rules:
       # Revenue Below Threshold
       - alert: AinfluRevenueBelowThreshold

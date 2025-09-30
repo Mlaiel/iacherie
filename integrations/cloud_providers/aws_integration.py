@@ -2,7 +2,7 @@
 ========================================================
 
 Comprehensive AWS integration for cloud services including S3, CloudFront,
-Lambda, SES, SNS, and other AWS services for the Ainflue platform.
+Lambda, SES, SNS, and other AWS services for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -133,7 +133,7 @@ class SESTemplate:
 
 
 class AWSIntegration:
-    """Main AWS integration for Ainflue platform."""
+    """Main AWS integration for IA Chérie platform."""
     
     def __init__(self, credentials: AWSCredentials):
         self.credentials = credentials
@@ -373,13 +373,13 @@ class AWSIntegration:
     
     async def create_cloudfront_distribution(self, origin_domain: str,
                                            aliases: Optional[List[str]] = None,
-                                           comment: str = "Ainflue CDN",
+                                           comment: str = "IA Chérie CDN",
                                            price_class: str = "PriceClass_100") -> CloudFrontDistribution:
         """Create CloudFront distribution."""
         try:
             async with self.async_session.client('cloudfront') as cloudfront:
                 distribution_config = {
-                    'CallerReference': f"ainflue-{int(time.time())}",
+                    'CallerReference': f"iacherie-{int(time.time())}",
                     'Comment': comment,
                     'DefaultCacheBehavior': {
                         'TargetOriginId': origin_domain,
@@ -461,7 +461,7 @@ class AWSIntegration:
                             'Quantity': len(paths),
                             'Items': paths
                         },
-                        'CallerReference': f"ainflue-invalidation-{int(time.time())}"
+                        'CallerReference': f"iacherie-invalidation-{int(time.time())}"
                     }
                 )
                 
@@ -592,7 +592,7 @@ class AWSIntegration:
                     destination['ReplyToAddresses'] = reply_to_addresses
                 
                 response = await ses.send_email(
-                    Source=from_address or f"noreply@ainflue.com",
+                    Source=from_address or f"noreply@iacherie.com",
                     Destination=destination,
                     Message=message
                 )
@@ -647,7 +647,7 @@ class AWSIntegration:
         try:
             async with self.async_session.client('ses') as ses:
                 response = await ses.send_templated_email(
-                    Source=from_address or f"noreply@ainflue.com",
+                    Source=from_address or f"noreply@iacherie.com",
                     Destination={'ToAddresses': to_addresses},
                     Template=template_name,
                     TemplateData=json.dumps(template_data)
@@ -772,7 +772,7 @@ async def main():
         print("✅ AWS integration initialized")
         
         # Upload content
-        content = b"Hello, Ainflue AWS Integration!"
+        content = b"Hello, IA Chérie AWS Integration!"
         s3_object = await aws.upload_content_bytes(
             content=content,
             key="test/hello.txt",
@@ -788,16 +788,16 @@ async def main():
         # Send email
         message_id = await aws.send_email(
             to_addresses=["recipient@example.com"],
-            subject="Test Email from Ainflue",
+            subject="Test Email from IA Chérie",
             body_text="This is a test email sent via AWS SES integration.",
-            from_address="noreply@ainflue.com"
+            from_address="noreply@iacherie.com"
         )
         
         print(f"📧 Sent email: {message_id}")
         
         # Put CloudWatch metric
         await aws.put_cloudwatch_metric(
-            namespace="Ainflue/Integration",
+            namespace="IA Chérie/Integration",
             metric_name="TestMetric",
             value=1.0,
             dimensions={"Service": "AWS"}

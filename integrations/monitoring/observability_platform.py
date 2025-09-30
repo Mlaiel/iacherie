@@ -5,7 +5,7 @@
 =============================================================
 
 Observability platform enterprise avec unified monitoring et correlation.
-Infrastructure robuste d'observabilité pour monitoring complet des applications Ainflue.
+Infrastructure robuste d'observabilité pour monitoring complet des applications IA Chérie.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -81,7 +81,7 @@ class AnomalyDetection:
     detected_at: datetime
     severity: AlertSeverity
     current_value: float
-    expected_range: Tuple[float, float]
+    expected_range: tuple[float, float]
     deviation_score: float
     context: Dict[str, Any] = field(default_factory=dict)
 
@@ -620,7 +620,7 @@ class ObservabilityDataLake:
         self,
         service: str,
         metric_name: str,
-        time_range: Tuple[datetime, datetime],
+        time_range: tuple[datetime, datetime],
         aggregation: str = "avg"  # avg, sum, min, max, count
     ) -> Dict[str, Any]:
         """Requête les métriques avec agrégation"""
@@ -810,7 +810,7 @@ class PlatformIntelligenceEngine:
     ) -> Optional[ObservabilityInsight]:
         """Analyse l'impact business"""
         
-        # Services critiques pour Ainflue
+        # Services critiques pour IA Chérie
         critical_services = {
             'upload_service': 'Pipeline création contenu',
             'ai_service': 'Processing IA',
@@ -967,7 +967,7 @@ class ObservabilityPlatform:
         self,
         service: str,
         metric: str,
-        time_range: Tuple[datetime, datetime],
+        time_range: tuple[datetime, datetime],
         aggregation: str = "avg"
     ) -> Dict[str, Any]:
         """Requête les données d'observabilité"""

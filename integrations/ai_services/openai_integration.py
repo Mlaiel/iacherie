@@ -2,7 +2,7 @@
 ========================================================
 
 Enterprise-grade OpenAI API integration supporting all models, features,
-and advanced functionality for the Ainflue platform.
+and advanced functionality for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

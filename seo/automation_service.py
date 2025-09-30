@@ -1,7 +1,7 @@
 """SEO Automation Service - Comprehensive SEO Orchestrator
 
 This module provides a complete SEO automation service that orchestrates
-all SEO optimization components for content creators on the Ainflue platform.
+all SEO optimization components for content creators on the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Content formats supported by Ainflue platform"""
+    """Content formats supported by IA Chérie platform"""
     
     MUSIC = "music"
     VIDEO = "video"
@@ -249,7 +249,7 @@ class SEOAutomationService:
             # Prepare additional metadata
             additional_metadata = {
                 "content_format": content_data.content_format.value,
-                "platform": "ainflue",
+                "platform": "iacherie",
                 **content_data.metadata
             }
             

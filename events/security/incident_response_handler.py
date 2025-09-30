@@ -1,6 +1,6 @@
 """Incident Response Handler for Events Security
 
-Automated security incident response and management for Ainflue platform.
+Automated security incident response and management for IA Chérie platform.
 Handles security incidents with escalation, containment, and recovery procedures.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -127,7 +127,7 @@ class IncidentReport:
 
 class IncidentResponseHandler:
     """
-    Automated security incident response handler for Ainflue platform.
+    Automated security incident response handler for IA Chérie platform.
     Manages complete incident lifecycle with automated and manual responses.
     """
     

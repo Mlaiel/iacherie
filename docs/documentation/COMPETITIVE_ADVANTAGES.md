@@ -1,4 +1,4 @@
-# 🚀 Avantages Concurrentiels Uniques - Ainflue
+# 🚀 Avantages Concurrentiels Uniques - IA Chérie
 
 **Créateur du Projet & Lead Developer:** **Fahed Mlaiel** (mlaiel@live.de)  
 **Spécialités de l'équipe:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -10,7 +10,7 @@ Cette technologie et ces avantages concurrentiels sont la propriété intellectu
 
 ## 🎯 Vue d'Ensemble
 
-Ainflue se distingue par **cinq avantages concurrentiels uniques** qui repositionnent la plateforme comme leader mondial de la protection de contenu alimenté par l'IA :
+IA Chérie se distingue par **cinq avantages concurrentiels uniques** qui repositionnent la plateforme comme leader mondial de la protection de contenu alimenté par l'IA :
 
 ## 🚀 **1. TECHNOLOGIE IA PROPRIÉTAIRE - FINGERPRINTING RÉVOLUTIONNAIRE**
 
@@ -243,7 +243,7 @@ Technologies:
 
 ### 💡 **Avantages Uniques vs Concurrence**
 
-| Critère | Ainflue | Concurrents | Avantage |
+| Critère | IA Chérie | Concurrents | Avantage |
 |---------|---------|-------------|----------|
 | **AI Fingerprinting** | Multi-algorithm proprietary | Basic hashing | 🚀 **+300% précision** |
 | **Language Support** | 644 langues natives | 10-50 langues | 🌍 **+1200% coverage** |

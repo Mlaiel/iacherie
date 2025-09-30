@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Audio Format Validator - Ainflue Audio Platform
+Audio Format Validator - IA Chérie Audio Platform
 =============================================
 
 Professional audio format validation and quality assurance framework.

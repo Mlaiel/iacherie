@@ -2,7 +2,7 @@
 """Distributed Tracing Integration - Error Correlation & Root Cause Analysis
 ==========================================================================
 
-Advanced distributed tracing integration for Ainflue platform error handling.
+Advanced distributed tracing integration for IA Chérie platform error handling.
 Provides error correlation across distributed traces, root cause analysis automation,
 and cross-service error tracking for enterprise-scale deployments.
 

@@ -2,7 +2,7 @@
 Lifetime Value Analytics Engine
 =============================
 
-Advanced customer lifetime value analysis system for Ainflue Distribution Platform.
+Advanced customer lifetime value analysis system for IA Chérie Distribution Platform.
 Calculates predictive LTV, segment analysis, and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

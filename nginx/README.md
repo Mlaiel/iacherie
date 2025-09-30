@@ -12,7 +12,7 @@ Users are responsible for compliance with applicable laws and regulations.
 GDPR, DMCA, and international copyright protections apply.
 
 ## Executive Summary
-Enterprise-grade Nginx web server infrastructure providing high-performance load balancing, SSL termination, intelligent caching, and DDoS protection for the Ainflue AI creator platform.
+Enterprise-grade Nginx web server infrastructure providing high-performance load balancing, SSL termination, intelligent caching, and DDoS protection for the IA Chérie AI creator platform.
 
 ## Architecture Overview
 Level 2 backend component handling all HTTP/HTTPS traffic routing, multi-service upstream management, content delivery optimization, and security enforcement across the entire creator ecosystem.
@@ -154,8 +154,8 @@ Level 2 backend component handling all HTTP/HTTPS traffic routing, multi-service
 ### Quick Deployment
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/nginx
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/nginx
 
 # Deploy with Docker
 docker-compose up -d nginx
@@ -182,7 +182,7 @@ systemctl restart nginx
 ### SSL Certificate Setup
 ```bash
 # Generate Let's Encrypt certificate
-certbot --nginx -d ainflue.com -d www.ainflue.com
+certbot --nginx -d iacherie.com -d www.iacherie.com
 
 # Configure automatic renewal
 echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
@@ -211,9 +211,9 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
 - **Troubleshooting Guide**: Common issues and solutions
 
 ### Contact Information
-- **Technical Support**: support@ainflue.com
-- **Security Issues**: security@ainflue.com
-- **Business Inquiries**: business@ainflue.com
+- **Technical Support**: support@iacherie.com
+- **Security Issues**: security@iacherie.com
+- **Business Inquiries**: business@iacherie.com
 - **Emergency Support**: 24/7 enterprise support available
 
 ## 📄 License

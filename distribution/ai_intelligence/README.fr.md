@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le module Intelligence IA est le cerveau du système de distribution Ainflue, comprenant 53 agents IA spécialisés qui optimisent la distribution de contenu sur 65+ plateformes.
+Le module Intelligence IA est le cerveau du système de distribution IA Chérie, comprenant 53 agents IA spécialisés qui optimisent la distribution de contenu sur 65+ plateformes.
 
 ## Architecture
 
@@ -225,4 +225,4 @@ AI_INTELLIGENCE_CONFIG = {
 **🔒 Technologie Protégée - Tous Droits Réservés**  
 **⚠️ Architecture IA d'Entreprise Confidentielle - Usage Autorisé Seulement**
 
-*Ce module représente l'architecture d'intelligence IA la plus avancée pour la distribution de contenu globale et est entièrement intégré dans le workflow Ainflue.*
+*Ce module représente l'architecture d'intelligence IA la plus avancée pour la distribution de contenu globale et est entièrement intégré dans le workflow IA Chérie.*

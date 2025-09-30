@@ -1,8 +1,8 @@
-# Ainflue - Professional Content Creation Platform
+# IA Chérie - Professional Content Creation Platform
 
 ## Google Play Store Description
 
-Transform your content creation with Ainflue, the revolutionary Android app that combines AI-powered protection, multi-platform distribution, and professional-grade tools for content creators, influencers, and digital entrepreneurs.
+Transform your content creation with IA Chérie, the revolutionary Android app that combines AI-powered protection, multi-platform distribution, and professional-grade tools for content creators, influencers, and digital entrepreneurs.
 
 ## 🎯 **What You Get**
 
@@ -41,7 +41,7 @@ Turn your passion into profit:
 - Real-time earnings tracking
 - Tax optimization tools
 
-## 🚀 **Why Choose Ainflue?**
+## 🚀 **Why Choose IA Chérie?**
 
 **For Content Creators**: Streamline your entire workflow from creation to monetization
 **For Influencers**: Maximize engagement and revenue across all platforms
@@ -73,7 +73,7 @@ Your privacy is our priority:
 
 ## 🌟 **What Users Say**
 
-*"Ainflue changed my content game completely. From creation to protection to analytics - everything in one app!"* - Sarah M., Lifestyle Blogger
+*"IA Chérie changed my content game completely. From creation to protection to analytics - everything in one app!"* - Sarah M., Lifestyle Blogger
 
 *"Finally, an app that understands the creator economy. The AI protection saved me thousands in lost revenue."* - Marcus L., Tech Reviewer
 
@@ -81,7 +81,7 @@ Your privacy is our priority:
 
 ## 🚀 **Get Started Today**
 
-1. **Download** Ainflue for free
+1. **Download** IA Chérie for free
 2. **Create** your first protected content
 3. **Publish** across all platforms
 4. **Track** your success with detailed analytics
@@ -94,15 +94,15 @@ Your privacy is our priority:
 - Regular Workshops & Webinars
 - Comprehensive Documentation
 
-**Website**: https://ainflue.com
-**Support**: support@ainflue.com
-**Community**: https://community.ainflue.com
+**Website**: https://iacherie.com
+**Support**: support@iacherie.com
+**Community**: https://community.iacherie.com
 
 ---
 
 **Ready to transform your content creation journey?**
 
-Download Ainflue now and join thousands of successful creators who trust our platform with their digital empire.
+Download IA Chérie now and join thousands of successful creators who trust our platform with their digital empire.
 
 ## 📋 **App Permissions**
 
@@ -116,7 +116,7 @@ All permissions are used solely for app functionality and never for unauthorized
 
 ---
 
-*Ainflue - Where Creativity Meets Technology*
+*IA Chérie - Where Creativity Meets Technology*
 
 **Developed by Fahed Mlaiel**
 **Copyright © 2025 Fahed Mlaiel. All rights reserved.**

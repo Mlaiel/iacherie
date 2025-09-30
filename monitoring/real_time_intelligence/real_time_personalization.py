@@ -3,7 +3,7 @@
 Real-Time Intelligence - Real-Time Personalization Engine
 Live User Experience Personalization System
 
-This module provides comprehensive real-time personalization capabilities for the Ainflue platform,
+This module provides comprehensive real-time personalization capabilities for the IA Chérie platform,
 enabling dynamic content adaptation, behavioral analysis, and intelligent user journey optimization
 with advanced ML-powered insights and A/B testing integration.
 
@@ -21,8 +21,8 @@ Business Integration:
 - Revenue optimization through personalized monetization strategies
 - User journey optimization with conversion rate improvement
 
-© 2024 Ainflue - Proprietary and Confidential
-All rights reserved. This code is the intellectual property of Ainflue.
+© 2024 IA Chérie - Proprietary and Confidential
+All rights reserved. This code is the intellectual property of IA Chérie.
 Unauthorized copying, distribution, or modification is strictly prohibited.
 """
 

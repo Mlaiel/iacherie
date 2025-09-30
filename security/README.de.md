@@ -1,4 +1,4 @@
-# 🔒 Enterprise-Sicherheitsmodul - Ainflue Platform
+# 🔒 Enterprise-Sicherheitsmodul - IA Chérie Platform
 
 ## Übersicht
 
@@ -63,10 +63,10 @@ Ultra-fortschrittliches Sicherheitsmodul mit 3-Ebenen-Architektur, das den stren
 
 ## Enterprise-Support 24/7
 
-- **SOC 24/7**: security-operations@ainflue.enterprise
-- **Incident Response**: incident@ainflue.enterprise
-- **Compliance**: compliance@ainflue.enterprise
-- **CISO-Eskalation**: ciso@ainflue.enterprise
+- **SOC 24/7**: security-operations@iacherie.enterprise
+- **Incident Response**: incident@iacherie.enterprise
+- **Compliance**: compliance@iacherie.enterprise
+- **CISO-Eskalation**: ciso@iacherie.enterprise
 
 ---
 

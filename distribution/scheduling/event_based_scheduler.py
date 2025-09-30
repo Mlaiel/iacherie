@@ -1,5 +1,5 @@
 """
-Event-Based Scheduler for Ainflue Distribution
+Event-Based Scheduler for IA Chérie Distribution
 Provides intelligent scheduling based on events, trends, and external triggers
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,4 +1,4 @@
-# ☁️ وحدة موفري الخدمات السحابية - Ainflue Integrations
+# ☁️ وحدة موفري الخدمات السحابية - IA Chérie Integrations
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

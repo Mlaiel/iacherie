@@ -1,11 +1,11 @@
 """
-Management Module - Ainflue Integrations
+Management Module - IA Chérie Integrations
 =======================================
 Enterprise management module providing integration orchestration,
 configuration management, and administrative functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -23,9 +23,9 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise management and orchestration for Ainflue platform"
+__description__ = "Enterprise management and orchestration for IA Chérie platform"
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_MANAGEMENT = {
     'platforms': 65,
     'management_features': ['integration_orchestration', 'configuration_management', 'lifecycle_management'],

@@ -1,4 +1,4 @@
-# Überwachung von Inhaltsschutz - Ainflue Plattform
+# Überwachung von Inhaltsschutz - IA Chérie Plattform
 
 ## Überblick
 
@@ -110,5 +110,5 @@ content_protection/
 
 **Copyright:** © 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Content Protection Monitoring  
+**Projekt:** IA Chérie Platform - Content Protection Monitoring  
 **Version:** 3.1.0 Enterprise

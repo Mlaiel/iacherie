@@ -5,7 +5,7 @@ Enterprise-grade video generation with 12 specialized video agents.
 Multi-modal AI video synthesis for professional content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -106,8 +106,8 @@ class VideoAgent:
             
             result = VideoGenerationResult(
                 video_id=video_id,
-                video_url=f"https://ai-generated-videos.ainflue.com/{video_id}.{request.format.value}",
-                thumbnail_url=f"https://ai-generated-videos.ainflue.com/{video_id}_thumb.jpg",
+                video_url=f"https://ai-generated-videos.iacherie.com/{video_id}.{request.format.value}",
+                thumbnail_url=f"https://ai-generated-videos.iacherie.com/{video_id}_thumb.jpg",
                 duration=request.duration,
                 file_size=request.duration * 1024 * 1024,  # Estimate file size
                 metadata={

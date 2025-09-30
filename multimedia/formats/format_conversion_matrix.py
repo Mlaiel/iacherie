@@ -2,7 +2,7 @@
 🔄 FORMAT CONVERSION MATRIX - ENTERPRISE ARCHITECTURE
 ====================================================
 
-Intelligent format conversion matrix and optimization engine for Ainflue Platform
+Intelligent format conversion matrix and optimization engine for IA Chérie Platform
 AI-powered conversion path finding with quality and performance optimization
 
 **Expert Implementation:**

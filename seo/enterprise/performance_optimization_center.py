@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Performance Optimization Center Enterprise
 ==========================================
 
-Enterprise-grade performance optimization system for Ainflue SEO platform.
+Enterprise-grade performance optimization system for IA Chérie SEO platform.
 Provides comprehensive performance monitoring, optimization, and enterprise scalability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

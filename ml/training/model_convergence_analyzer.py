@@ -1,4 +1,4 @@
-"""Model Convergence Analyzer for Ainflue ML Platform
+"""Model Convergence Analyzer for IA Chérie ML Platform
 
 Advanced model convergence analysis and early stopping strategies with creator-specific
 convergence patterns and intelligent stopping criteria.
@@ -905,7 +905,7 @@ def create_convergence_analyzer(
     return ModelConvergenceAnalyzer(config)
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chérie creators
 async def example_convergence_analysis():
     """Example of convergence analysis for creator training."""
     

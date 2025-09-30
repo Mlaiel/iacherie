@@ -1,5 +1,5 @@
 """
-Content Protection Alerting for Ainflue Platform
+Content Protection Alerting for IA Chérie Platform
 Specialized alerting for intellectual property protection and DMCA violations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -201,7 +201,7 @@ Next Steps:
 Your content is protected. We're on it.
 
 Best regards,
-Ainflue IP Protection Team
+IA Chérie IP Protection Team
                 """,
                 "legal_subject": "🔥 URGENT: Copyright Violation Requiring Legal Action",
                 "legal_body": """
@@ -226,7 +226,7 @@ Response Deadline: {resolution_deadline}
 
 Please review and initiate appropriate legal action.
 
-Ainflue Legal Alert System
+IA Chérie Legal Alert System
                 """
             },
             
@@ -253,7 +253,7 @@ Estimated Financial Loss: ${estimated_financial_impact}/day
 
 Pre-drafted notice available in legal dashboard.
 
-Ainflue DMCA Alert System
+IA Chérie DMCA Alert System
                 """
             },
             
@@ -279,7 +279,7 @@ Next review: {next_review_time}
 
 Immediate action required.
 
-Ainflue Executive Alert System
+IA Chérie Executive Alert System
                 """
             }
         }

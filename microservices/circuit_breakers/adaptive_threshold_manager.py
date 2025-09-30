@@ -1,5 +1,5 @@
 """
-Adaptive Threshold Manager - Ainflue Platform
+Adaptive Threshold Manager - IA Chérie Platform
 ===========================================
 
 Gestionnaire seuils adaptatifs avec ML prédictif.

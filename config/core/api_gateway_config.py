@@ -1,4 +1,4 @@
-"""Ainflue API Gateway Configuration
+"""IA Chérie API Gateway Configuration
 ==================================
 
 API Gateway configurations for routing, load balancing, rate limiting,
@@ -322,7 +322,7 @@ class APIGatewayConfiguration:
         return {
             "enable_cors": True,
             "cors_config": {
-                "allowed_origins": ["https://ainflue.com", "https://app.ainflue.com"],
+                "allowed_origins": ["https://iacherie.com", "https://app.iacherie.com"],
                 "allowed_methods": ["GET", "POST", "PUT", "DELETE", "PATCH"],
                 "allowed_headers": ["Authorization", "Content-Type", "X-API-Key"],
                 "expose_headers": ["X-RateLimit-Remaining"],
@@ -398,5 +398,5 @@ __all__ = [
     "api_gateway_config"
 ]
 
-logger.info("🌐 Ainflue API Gateway Configuration loaded")
+logger.info("🌐 IA Chérie API Gateway Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

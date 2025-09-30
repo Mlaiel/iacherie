@@ -8,7 +8,7 @@
 
 ## 🎯 OVERVIEW
 
-Ce guide fournit des solutions aux problèmes courants rencontrés avec le module Distribution d'Ainflue, organisés par catégorie avec des solutions étape par étape.
+Ce guide fournit des solutions aux problèmes courants rencontrés avec le module Distribution d'IA Chérie, organisés par catégorie avec des solutions étape par étape.
 
 ## 🚨 PROBLÈMES CRITIQUES & SOLUTIONS
 
@@ -386,7 +386,7 @@ import os
 from datetime import datetime
 
 async def run_full_diagnosis():
-    print("🔍 DIAGNOSTIC DISTRIBUTION MODULE - AINFLUE")
+    print("🔍 DIAGNOSTIC DISTRIBUTION MODULE - IACHERIE")
     print("=" * 50)
     
     # 1. System Health

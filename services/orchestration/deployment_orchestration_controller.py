@@ -1,5 +1,5 @@
 """
-🚀 DEPLOYMENT ORCHESTRATION CONTROLLER - AINFLUE ENTERPRISE
+🚀 DEPLOYMENT ORCHESTRATION CONTROLLER - IACHERIE ENTERPRISE
 ===========================================================
 
 Multi-environment deployment coordination and infrastructure automation for creator economy platform.
@@ -700,22 +700,22 @@ class DeploymentOrchestrationController:
         """Load default deployment plans"""
         default_plans_data = [
             {
-                "name": "Ainflue Web Application",
+                "name": "IA Chérie Web Application",
                 "environment": "production",
                 "strategy": "blue_green",
                 "services": [
                     {
-                        "name": "ainflue-web",
+                        "name": "iacherie-web",
                         "type": "web_service",
-                        "image": "ainflue/web",
+                        "image": "iacherie/web",
                         "replicas": 3,
                         "ports": [{"containerPort": 3000, "protocol": "TCP"}],
                         "health_checks": [{"type": "http", "path": "/health", "port": 3000}]
                     },
                     {
-                        "name": "ainflue-api",
+                        "name": "iacherie-api",
                         "type": "api_service",
-                        "image": "ainflue/api",
+                        "image": "iacherie/api",
                         "replicas": 5,
                         "ports": [{"containerPort": 8000, "protocol": "TCP"}],
                         "health_checks": [{"type": "http", "path": "/health", "port": 8000}]

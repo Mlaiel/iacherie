@@ -127,8 +127,8 @@
 
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Installer les dépendances
 pip install -r requirements.txt

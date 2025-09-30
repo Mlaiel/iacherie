@@ -109,7 +109,7 @@ authentication:
     
     # TOTP settings
     totp:
-      issuer: "Ainflue"
+      issuer: "IA Chérie"
       algorithm: "SHA-256"
       digits: 6
       period: 30
@@ -117,9 +117,9 @@ authentication:
       
     # WebAuthn settings
     webauthn:
-      rp_name: "Ainflue"
-      rp_id: "ainflue.com"
-      origin: "https://ainflue.com"
+      rp_name: "IA Chérie"
+      rp_id: "iacherie.com"
+      origin: "https://iacherie.com"
       timeout: 60000
       
   # Single Sign-On

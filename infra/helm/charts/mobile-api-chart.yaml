@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Mobile API Helm Chart
+# IA Chérie Infrastructure Module - Mobile API Helm Chart
 # ======================================================
 # 
-# Enterprise-grade Mobile API chart for Ainflue platform
+# Enterprise-grade Mobile API chart for IA Chérie platform
 # Optimized for mobile apps, creator tools, and real-time features
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,14 +10,14 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 apiVersion: v2
-name: ainflue-mobile-api
-description: "Enterprise Mobile API for Ainflue creator platform with real-time features"
+name: iacherie-mobile-api
+description: "Enterprise Mobile API for IA Chérie creator platform with real-time features"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
-home: https://mobile.ainflue.com
+home: https://mobile.iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de
@@ -26,7 +26,7 @@ keywords:
   - api
   - real-time
   - creators
-  - ainflue
+  - iacherie
 annotations:
   category: Mobile API
   licenses: Proprietary
@@ -47,7 +47,7 @@ dependencies:
     condition: nginx.enabled
 
 ---
-# Default values for ainflue-mobile-api
+# Default values for iacherie-mobile-api
 # Expert roles implementation in configuration
 
 # **EXPERT ROLES IMPLEMENTATION:**
@@ -70,7 +70,7 @@ global:
 # Image configuration
 image:
   registry: docker.io
-  repository: ainflue/mobile-api
+  repository: iacherie/mobile-api
   tag: "1.0.0"
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -108,7 +108,7 @@ ingress:
     nginx.ingress.kubernetes.io/rate-limit: "1000"
     nginx.ingress.kubernetes.io/rate-limit-window: "1m"
   hosts:
-    - host: mobile-api.ainflue.com
+    - host: mobile-api.iacherie.com
       paths:
         - path: /
           pathType: Prefix
@@ -119,7 +119,7 @@ ingress:
   tls:
     - secretName: mobile-api-tls
       hosts:
-        - mobile-api.ainflue.com
+        - mobile-api.iacherie.com
 
 # Resource configuration optimized for mobile workloads
 resources:
@@ -179,7 +179,7 @@ env:
   - name: ENVIRONMENT
     value: "production"
   - name: REDIS_URL
-    value: "redis://ainflue-redis:6379"
+    value: "redis://iacherie-redis:6379"
   - name: DATABASE_URL
     valueFrom:
       secretKeyRef:
@@ -356,7 +356,7 @@ affinity:
         podAffinityTerm:
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: ainflue-mobile-api
+              app.kubernetes.io/name: iacherie-mobile-api
           topologyKey: kubernetes.io/hostname
   nodeAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
@@ -385,7 +385,7 @@ networkPolicy:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: ainflue
+              name: iacherie
         - namespaceSelector:
             matchLabels:
               name: ingress-nginx
@@ -517,7 +517,7 @@ nginx:
     server {
         listen 8080;
         location / {
-            proxy_pass http://ainflue-mobile-api:8002;
+            proxy_pass http://iacherie-mobile-api:8002;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -537,7 +537,7 @@ nginx:
         
         # WebSocket support
         location /ws {
-            proxy_pass http://ainflue-mobile-api:8002;
+            proxy_pass http://iacherie-mobile-api:8002;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";

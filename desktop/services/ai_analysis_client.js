@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - AI Analysis Client
+ * IA Chérie Desktop - AI Analysis Client
  * 
  * Advanced AI processing client with local and cloud capabilities
  * Implements multi-modal content analysis with professional insights
@@ -20,7 +20,7 @@ class AIAnalysisClient {
     this.options = {
       localProcessing: true,
       cloudFallback: true,
-      apiEndpoint: 'https://api.ainflue.com/ai',
+      apiEndpoint: 'https://api.iacherie.com/ai',
       maxConcurrentJobs: 3,
       cacheResults: true,
       qualityThreshold: 0.85,
@@ -258,7 +258,7 @@ class AIAnalysisClient {
       processingMethod: 'cloud',
       confidence: 0.92,
       timestamp: new Date().toISOString(),
-      cloudProvider: 'ainflue-ai-cloud',
+      cloudProvider: 'iacherie-ai-cloud',
       // Additional mock analysis data would be here
     };
     
@@ -727,7 +727,7 @@ class TextAIProcessor {
         topics: ['technology', 'entertainment', 'education'],
         readability: Math.random() * 20 + 60, // 60-80 score
         seoScore: Math.random() * 30 + 70, // 70-100
-        keywords: ['ainflue', 'content', 'AI', 'professional'],
+        keywords: ['iacherie', 'content', 'AI', 'professional'],
         languageMetrics: {
           complexity: Math.random() * 0.4 + 0.3, // 30-70%
           clarity: Math.random() * 0.2 + 0.8,    // 80-100%

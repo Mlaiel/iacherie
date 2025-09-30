@@ -1,7 +1,7 @@
 """Audience Intelligence Engine - Main Interface
 
 Enterprise-grade audience intelligence engine providing unified interface
-for all audience analysis capabilities across the Ainflue platform.
+for all audience analysis capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

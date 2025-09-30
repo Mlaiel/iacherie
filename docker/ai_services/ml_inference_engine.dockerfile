@@ -4,7 +4,7 @@
 
 FROM python:3.12-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue ML Inference Engine - High-performance ML inference service"
+LABEL description="IA Chérie ML Inference Engine - High-performance ML inference service"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+  <defs>
+    <linearGradient id="opusGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6A1B9A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Badge Background -->
+  <rect x="5" y="5" width="140" height="40" fill="url(#opusGradient)" stroke="#4A148C" stroke-width="2" rx="8" filter="url(#badgeGlow)"/>
+  
+  <!-- Modern Audio Icon -->
+  <circle cx="25" cy="25" r="8" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.9"/>
+  <polygon points="20,22 20,28 28,25" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="25" cy="25" r="3" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.7"/>
+  
+  <!-- Text -->
+  <text x="40" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">OPUS</text>
+  <text x="40" y="35" font-family="Arial, sans-serif" font-size="10" fill="#E1BEE7">Modern Codec</text>
+  
+  <!-- Efficiency indicators -->
+  <path d="M 115 15 L 125 15 L 125 18 L 115 18 Z" fill="#FFFFFF" opacity="0.8"/>
+  <path d="M 115 20 L 130 20 L 130 23 L 115 23 Z" fill="#FFFFFF" opacity="1.0"/>
+  <path d="M 115 25 L 135 25 L 135 28 L 115 28 Z" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 115 30 L 128 30 L 128 33 L 115 33 Z" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Low latency badge -->
+  <text x="85" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF">LOW</text>
+  <text x="85" y="30" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF">LAT</text>
+  
+  <!-- Copyright -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="6" fill="#4A148C">© Ainflue</text>
+</svg>

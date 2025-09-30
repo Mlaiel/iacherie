@@ -1,5 +1,5 @@
 # Docker Compose - Audio Processing Infrastructure  
-# Ainflue Platform - Professional Audio Processing Services
+# IA Chérie Platform - Professional Audio Processing Services
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -10,8 +10,8 @@
 services:
   # DEMUCS Source Separation Service
   demucs-service:
-    image: ainflue/demucs-professional:latest
-    container_name: ainflue-demucs
+    image: iacherie/demucs-professional:latest
+    container_name: iacherie-demucs
     deploy:
       resources:
         limits:
@@ -43,7 +43,7 @@ services:
     tmpfs:
       - /tmp:size=2G,noexec,nosuid,nodev
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
       interval: 60s
@@ -54,8 +54,8 @@ services:
 
   # EBU R128 Loudness Normalization Service
   loudness-service:
-    image: ainflue/loudness-professional:latest
-    container_name: ainflue-loudness
+    image: iacherie/loudness-professional:latest
+    container_name: iacherie-loudness
     deploy:
       resources:
         limits:
@@ -81,7 +81,7 @@ services:
       - loudness_profiles:/app/profiles
       - ./audio_logs:/app/logs
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8091/health"]
       interval: 30s
@@ -92,8 +92,8 @@ services:
 
   # Audio Format Converter Service
   format-converter:
-    image: ainflue/audio-converter:latest
-    container_name: ainflue-converter
+    image: iacherie/audio-converter:latest
+    container_name: iacherie-converter
     deploy:
       resources:
         limits:
@@ -118,7 +118,7 @@ services:
       - conversion_cache:/app/cache
       - ./audio_logs:/app/logs
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8092/health"]
       interval: 30s
@@ -129,8 +129,8 @@ services:
 
   # Professional Audio Mastering Service
   mastering-service:
-    image: ainflue/audio-mastering:latest
-    container_name: ainflue-mastering
+    image: iacherie/audio-mastering:latest
+    container_name: iacherie-mastering
     deploy:
       resources:
         limits:
@@ -157,7 +157,7 @@ services:
     depends_on:
       - loudness-service
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8093/health"]
       interval: 45s
@@ -168,8 +168,8 @@ services:
 
   # Audio Analysis Service
   analysis-service:
-    image: ainflue/audio-analysis:latest
-    container_name: ainflue-analysis
+    image: iacherie/audio-analysis:latest
+    container_name: iacherie-analysis
     deploy:
       resources:
         limits:
@@ -194,7 +194,7 @@ services:
       - analysis_results:/app/results
       - ./audio_logs:/app/logs
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8094/health"]
       interval: 30s
@@ -206,7 +206,7 @@ services:
   # Redis Cache for Audio Processing
   redis-audio:
     image: redis:7-alpine
-    container_name: ainflue-redis-audio
+    container_name: iacherie-redis-audio
     deploy:
       resources:
         limits:
@@ -230,7 +230,7 @@ services:
     ports:
       - "6381:6379"
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -241,8 +241,8 @@ services:
 
   # Audio Processing Coordinator
   audio-coordinator:
-    image: ainflue/audio-coordinator:latest
-    container_name: ainflue-audio-coordinator
+    image: iacherie/audio-coordinator:latest
+    container_name: iacherie-audio-coordinator
     deploy:
       resources:
         limits:
@@ -273,7 +273,7 @@ services:
     ports:
       - "8095:8080"
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -284,8 +284,8 @@ services:
 
   # Audio Storage Manager
   storage-manager:
-    image: ainflue/audio-storage:latest
-    container_name: ainflue-audio-storage
+    image: iacherie/audio-storage:latest
+    container_name: iacherie-audio-storage
     deploy:
       resources:
         limits:
@@ -311,7 +311,7 @@ services:
       - audio_backup:/app/backup
       - ./audio_logs:/app/logs
     networks:
-      - ainflue-audio-network
+      - iacherie-audio-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
       interval: 60s
@@ -334,13 +334,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/audio_processing
+      device: /data/iacherie/audio_processing
   demucs_models:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/demucs_models
+      device: /data/iacherie/demucs_models
   demucs_cache:
     driver: local
   loudness_profiles:
@@ -354,7 +354,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/analysis_models
+      device: /data/iacherie/analysis_models
   analysis_results:
     driver: local
   redis_audio_data:
@@ -362,20 +362,20 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/redis_audio
+      device: /data/iacherie/redis_audio
   audio_backup:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/audio_backup
+      device: /data/iacherie/audio_backup
 
 # Networks for audio processing services
 networks:
-  ainflue-audio-network:
+  iacherie-audio-network:
     driver: bridge
     driver_opts:
-      com.docker.network.bridge.name: br-ainflue-audio
+      com.docker.network.bridge.name: br-iacherie-audio
     ipam:
       config:
         - subnet: 172.21.0.0/16

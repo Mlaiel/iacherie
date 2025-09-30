@@ -6,7 +6,7 @@
 
 ## 🎯 Objectif du Module
 
-Le module Services de Test fournit des **services de qualité et de test automatisé de niveau enterprise** pour la plateforme Ainflue. Ce module orchestre des tests complets à travers toutes les couches de services, livrant des capacités de tests unitaires, tests d'intégration, validation de performance, tests de sécurité et chaos engineering avec une fiabilité et couverture de niveau enterprise.
+Le module Services de Test fournit des **services de qualité et de test automatisé de niveau enterprise** pour la plateforme IA Chérie. Ce module orchestre des tests complets à travers toutes les couches de services, livrant des capacités de tests unitaires, tests d'intégration, validation de performance, tests de sécurité et chaos engineering avec une fiabilité et couverture de niveau enterprise.
 
 ## 🏗️ Architecture 
 
@@ -146,10 +146,10 @@ load_results = await perf_service.run_load_test(
 **📋 Statut:** PRÊT POUR ÉQUIPE QA ENTERPRISE  
 **🎯 Conformité:** 100% STANDARDS DE TEST + PATTERNS ENTERPRISE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE TESTING SERVICES ENTERPRISE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE TESTING SERVICES ENTERPRISE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE - TOUS DROITS RÉSERVÉS**  
 **⚠️ ARCHITECTURE CONFIDENTIELLE - USAGE ENTERPRISE UNIQUEMENT**
 
-*Ce module constitue l'infrastructure de test enterprise pour le workflow complet Ainflue et sert de référence officielle d'assurance qualité pour les services distribués. Toute modification nécessite approbation écrite du Lead Architect.*
+*Ce module constitue l'infrastructure de test enterprise pour le workflow complet IA Chérie et sert de référence officielle d'assurance qualité pour les services distribués. Toute modification nécessite approbation écrite du Lead Architect.*
 
 ---

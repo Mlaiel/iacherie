@@ -1,5 +1,5 @@
 # Changelog
-# MongoDB Module - Ainflue Platform
+# MongoDB Module - IA Chérie Platform
 
 All notable changes to the MongoDB module will be documented in this file.
 

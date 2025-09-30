@@ -368,7 +368,7 @@ class ContainerBuilder:
                     f.write(inference_script)
                 
                 # Build Docker image
-                image_tag = f"ainflue/{metadata.model_id}:{metadata.version}"
+                image_tag = f"iacherie/{metadata.model_id}:{metadata.version}"
                 build_result = await self._build_docker_image(build_dir, image_tag, config)
                 
                 # Test container
@@ -530,7 +530,7 @@ MODEL_FRAMEWORK = os.getenv("MODEL_FRAMEWORK", "{framework}")
 # Initialize FastAPI app
 app = FastAPI(
     title=f"Model {MODEL_ID} Inference API",
-    description="AI model inference service for Ainflue platform",
+    description="AI model inference service for IA Chérie platform",
     version=MODEL_VERSION
 )
 

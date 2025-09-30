@@ -1,10 +1,10 @@
 # 🔧 Utils Core Module - Enterprise Utilities Foundation
 
-**Advanced Enterprise-Grade Core Utilities for Ainflue Creator Economy Platform**
+**Advanced Enterprise-Grade Core Utilities for IA Chérie Creator Economy Platform**
 
 ## 🎯 **Project Overview**
 
-The Utils Core Module provides the foundational utility infrastructure for the Ainflue Creator Economy Platform. This enterprise-grade system handles data processing, media management, security, caching, performance monitoring, and workflow orchestration with >99.99% uptime guarantee for Creator Economy operations.
+The Utils Core Module provides the foundational utility infrastructure for the IA Chérie Creator Economy Platform. This enterprise-grade system handles data processing, media management, security, caching, performance monitoring, and workflow orchestration with >99.99% uptime guarantee for Creator Economy operations.
 
 ### 👥 **Development Team Specialties**
 **Project Lead & Creator:** Fahed Mlaiel <mlaiel@live.de>

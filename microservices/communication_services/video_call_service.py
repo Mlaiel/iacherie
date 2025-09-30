@@ -107,7 +107,7 @@ class VideoCallService:
                 "status": "success",
                 "call_id": call_id,
                 "room_data": room_data,
-                "join_url": f"https://ainflue.com/call/{call_id}"
+                "join_url": f"https://iacherie.com/call/{call_id}"
             }
             
         except Exception as e:
@@ -121,7 +121,7 @@ class VideoCallService:
             "media_server": "webrtc-server-1",
             "ice_servers": [
                 {"urls": "stun:stun.l.google.com:19302"},
-                {"urls": "turn:turn.ainflue.com", "username": "user", "credential": "pass"}
+                {"urls": "turn:turn.iacherie.com", "username": "user", "credential": "pass"}
             ],
             "max_participants": 50 if call_data["type"] == "webinar" else 10,
             "quality_settings": {

@@ -3,7 +3,7 @@
 
 Enterprise-grade AI-powered influencer identification and analysis system
 supporting multi-platform discovery, authenticity verification, and 
-collaboration matching for the Ainflue platform.
+collaboration matching for the IA Chérie platform.
 
 This module provides intelligent influencer discovery, engagement analysis,
 audience verification, brand alignment scoring, and collaboration 
@@ -235,7 +235,7 @@ class SearchCriteria:
     languages: List[str] = field(default_factory=list)
     
     # Collaboration
-    budget_range: Tuple[Decimal, Decimal] = (Decimal('100'), Decimal('10000'))
+    budget_range: tuple[Decimal, Decimal] = (Decimal('100'), Decimal('10000'))
     collaboration_type: str = "post"  # post, story, video, campaign
     
     # Search parameters

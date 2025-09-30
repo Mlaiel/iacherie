@@ -150,7 +150,7 @@ spec:
     spec:
       containers:
       - name: fingerprinting-api
-        image: ainflue/audio-fingerprinting:latest
+        image: iacherie/audio-fingerprinting:latest
         resources:
           requests:
             memory: "4Gi"

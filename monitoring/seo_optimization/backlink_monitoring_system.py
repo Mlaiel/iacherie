@@ -1,7 +1,7 @@
 """
 Backlink Monitoring System - Enterprise Link Building & Authority Tracking
 
-This module implements comprehensive backlink monitoring for the Ainflue platform,
+This module implements comprehensive backlink monitoring for the IA Chérie platform,
 tracking link authority, analyzing link quality, and optimizing link building strategies.
 
 Author: Fahed Mlaiel
@@ -118,7 +118,7 @@ class LinkBuildingOpportunity:
 
 class BacklinkMonitoringSystem:
     """
-    Enterprise backlink monitoring system for Ainflue platform.
+    Enterprise backlink monitoring system for IA Chérie platform.
     
     Features:
     - Real-time backlink discovery and tracking
@@ -466,7 +466,7 @@ class BacklinkMonitoringSystem:
             quality_score += 0.2
         
         # Brand mention
-        if any(brand in anchor_text for brand in ["ainflue", "platform", "content"]):
+        if any(brand in anchor_text for brand in ["iacherie", "platform", "content"]):
             quality_score += 0.2
         
         return quality_score
@@ -880,7 +880,7 @@ if __name__ == "__main__":
         monitor = BacklinkMonitoringSystem()
         
         # Test backlink discovery
-        target_domain = "ainflue.com"
+        target_domain = "iacherie.com"
         discovery_result = await monitor.discover_backlinks(target_domain, "comprehensive")
         print(f"Backlink discovery result: {discovery_result}")
         

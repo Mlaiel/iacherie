@@ -227,13 +227,13 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
-          tags: ainflue:latest
+          tags: iacherie:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Test Docker image
         run: |
-          docker run --rm ainflue:latest python -c "import main; print('Docker build successful')"
+          docker run --rm iacherie:latest python -c "import main; print('Docker build successful')"
 
   # Security Scan
   security-scan:

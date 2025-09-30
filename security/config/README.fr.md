@@ -1,4 +1,4 @@
-# 🔒 Configuration Sécurité Enterprise - Plateforme Économie Créateur Ainflue
+# 🔒 Configuration Sécurité Enterprise - Plateforme Économie Créateur IA Chérie
 
 ⚠️  **AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE**  
 © 2025 Fahed Mlaiel <mlaiel@live.de>  
@@ -21,7 +21,7 @@
 
 ## 🎯 Vue d'ensemble de la Plateforme
 
-**Ainflue** est une plateforme d'économie créateur alimentée par l'IA de niveau entreprise, offrant des outils complets de protection de contenu, de monétisation et de collaboration pour les créateurs numériques du monde entier.
+**IA Chérie** est une plateforme d'économie créateur alimentée par l'IA de niveau entreprise, offrant des outils complets de protection de contenu, de monétisation et de collaboration pour les créateurs numériques du monde entier.
 
 ### 🎨 Types de Créateurs Supportés
 - **Musiciens :** Protection de contenu audio, gestion des royalties, outils de collaboration
@@ -229,13 +229,13 @@ PUT /api/v1/security/policies/{policy_id}
 
 ### 🆘 Réponse Sécurité Urgence
 - **Ligne Sécurité 24/7 :** +33-X-XX-XX-XX-XX
-- **Email Urgence :** security-emergency@ainflue.com
+- **Email Urgence :** security-emergency@iacherie.com
 - **PagerDuty :** Escalade incidents automatique
 
 ### 💼 Demandes Commerciales
 - **Licence Entreprise :** Fahed Mlaiel <mlaiel@live.de>
-- **Support Technique :** support@ainflue.com
-- **Questions Conformité :** compliance@ainflue.com
+- **Support Technique :** support@iacherie.com
+- **Questions Conformité :** compliance@iacherie.com
 
 ## ⚖️ Légal & Licences
 
@@ -250,13 +250,13 @@ Cette plateforme contient des algorithmes propriétaires, implémentations sécu
 
 ### 🚨 Divulgation Vulnérabilités Sécurité
 Signaler vulnérabilités sécurité de manière responsable :
-- **Email :** security@ainflue.com
-- **Clé PGP :** Disponible sur keybase.io/ainflue
+- **Email :** security@iacherie.com
+- **Clé PGP :** Disponible sur keybase.io/iacherie
 - **Bug Bounty :** Récompenses pour divulgation responsable
 
 ---
 
-**🌟 Plateforme Économie Créateur Ainflue - Autonomiser les Créateurs Mondialement avec Sécurité Entreprise**
+**🌟 Plateforme Économie Créateur IA Chérie - Autonomiser les Créateurs Mondialement avec Sécurité Entreprise**
 
-*Construit avec ❤️ par l'Équipe Sécurité Ainflue*  
+*Construit avec ❤️ par l'Équipe Sécurité IA Chérie*  
 *© 2025 Fahed Mlaiel. Tous droits réservés.*

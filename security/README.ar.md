@@ -1,4 +1,4 @@
-# 🔒 وحدة الأمان المؤسسي - منصة Ainflue
+# 🔒 وحدة الأمان المؤسسي - منصة IA Chérie
 
 ## نظرة عامة
 
@@ -63,10 +63,10 @@
 
 ## الدعم المؤسسي 24/7
 
-- **SOC 24/7**: security-operations@ainflue.enterprise
-- **الاستجابة للحوادث**: incident@ainflue.enterprise
-- **الامتثال**: compliance@ainflue.enterprise
-- **تصعيد CISO**: ciso@ainflue.enterprise
+- **SOC 24/7**: security-operations@iacherie.enterprise
+- **الاستجابة للحوادث**: incident@iacherie.enterprise
+- **الامتثال**: compliance@iacherie.enterprise
+- **تصعيد CISO**: ciso@iacherie.enterprise
 
 ---
 

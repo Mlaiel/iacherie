@@ -1,5 +1,5 @@
 """Monitoring Services Interface
-Main entry point for Ainflue Platform monitoring infrastructure.
+Main entry point for IA Chérie Platform monitoring infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

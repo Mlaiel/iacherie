@@ -1,7 +1,7 @@
-"""Business Metrics Aggregator - Real-Time for Ainflue Platform
+"""Business Metrics Aggregator - Real-Time for IA Chérie Platform
 
 Real-time business metrics aggregation with intelligent dashboards,
-KPI tracking, and automated alerts for Ainflue business performance.
+KPI tracking, and automated alerts for IA Chérie business performance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -91,7 +91,7 @@ class BusinessAlert:
 
 class BusinessMetricsAggregator:
     """
-    Real-time business metrics aggregator for Ainflue platform
+    Real-time business metrics aggregator for IA Chérie platform
     Tracks KPIs, generates insights, and provides automated alerting
     """
     
@@ -103,10 +103,10 @@ class BusinessMetricsAggregator:
         self.alert_handlers: List[Callable] = []
         self.active_alerts: List[BusinessAlert] = []
         
-        logger.info("BusinessMetricsAggregator initialized for Ainflue platform")
+        logger.info("BusinessMetricsAggregator initialized for IA Chérie platform")
     
     def _initialize_metric_definitions(self) -> Dict[str, MetricDefinition]:
-        """Initialize Ainflue business metric definitions"""
+        """Initialize IA Chérie business metric definitions"""
         
         definitions = {}
         

@@ -1,6 +1,6 @@
 # Docker Architecture Documentation
 
-## Complete Docker Architecture for Ainflue Platform
+## Complete Docker Architecture for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Overview
 
-This document describes the complete Docker architecture for the Ainflue platform, including all 80+ containerized services across 13 specialized modules.
+This document describes the complete Docker architecture for the IA Chérie platform, including all 80+ containerized services across 13 specialized modules.
 
 ### Architecture Components
 

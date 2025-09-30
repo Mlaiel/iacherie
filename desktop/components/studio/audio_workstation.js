@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Professional Audio Workstation Component
+ * IA Chérie Desktop - Professional Audio Workstation Component
  * 
  * Advanced professional audio editing workstation with comprehensive mixing capabilities
  * Provides industry-standard audio tools for content creators and musicians

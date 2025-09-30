@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Common Setup Ansible Role
+# IA Chérie Infrastructure Module - Common Setup Ansible Role
 # =========================================================
 # 
-# Enterprise-grade common setup role for Ainflue platform
+# Enterprise-grade common setup role for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,16 +10,16 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: Common Setup for Ainflue Infrastructure
+- name: Common Setup for IA Chérie Infrastructure
   hosts: all
   become: yes
   vars:
-    ainflue_user: ainflue
-    ainflue_group: ainflue
-    log_directory: /var/log/ainflue
-    config_directory: /etc/ainflue
-    data_directory: /opt/ainflue/data
-    backup_directory: /opt/ainflue/backups
+    ainflue_user: iacherie
+    ainflue_group: iacherie
+    log_directory: /var/log/iacherie
+    config_directory: /etc/iacherie
+    data_directory: /opt/iacherie/data
+    backup_directory: /opt/iacherie/backups
     
     # Security settings
     ssh_port: 22
@@ -31,18 +31,18 @@
     cloudwatch_agent_enabled: true
 
   tasks:
-    - name: Create ainflue system user
+    - name: Create iacherie system user
       user:
         name: "{{ ainflue_user }}"
         group: "{{ ainflue_group }}"
         system: yes
         shell: /bin/bash
-        home: /opt/ainflue
+        home: /opt/iacherie
         create_home: yes
         state: present
       tags: [users, security]
 
-    - name: Create ainflue system group
+    - name: Create iacherie system group
       group:
         name: "{{ ainflue_group }}"
         system: yes

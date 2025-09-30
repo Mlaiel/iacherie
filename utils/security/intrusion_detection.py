@@ -5,7 +5,7 @@ Intrusion Detection - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade intrusion detection system for Ainflue creator economy platform.
+Enterprise-grade intrusion detection system for IA Chérie creator economy platform.
 Real-time network monitoring and behavioral analysis with < 20ms detection.
 
 Performance: < 20ms intrusion detection

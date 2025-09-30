@@ -142,7 +142,7 @@ class MetaTags:
 
 class ContentSEOOptimizer:
     """
-    Optimiseur SEO contenu avec IA pour créateurs Ainflue.
+    Optimiseur SEO contenu avec IA pour créateurs IA Chérie.
     Content analysis + optimization + multi-platform adaptation.
     """
     

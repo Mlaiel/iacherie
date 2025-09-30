@@ -1,6 +1,6 @@
 # 💰 Système de Gestion des Revenus de Paiement
 
-Système de gestion des revenus de niveau entreprise pour la monétisation des créateurs, l'analyse avancée et l'orchestration complète des paiements sur la plateforme Ainflue.
+Système de gestion des revenus de niveau entreprise pour la monétisation des créateurs, l'analyse avancée et l'orchestration complète des paiements sur la plateforme IA Chérie.
 
 ## 🏢 **AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE**
 

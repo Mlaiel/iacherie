@@ -47,7 +47,7 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 # Enterprise Content Regulation Configuration
-CONTENT_MODERATION_API = os.environ.get('CONTENT_MODERATION_API', 'https://moderation-api.ainflue.com')
+CONTENT_MODERATION_API = os.environ.get('CONTENT_MODERATION_API', 'https://moderation-api.iacherie.com')
 TOXICITY_THRESHOLD = float(os.environ.get('TOXICITY_THRESHOLD', '0.7'))
 HATE_SPEECH_THRESHOLD = float(os.environ.get('HATE_SPEECH_THRESHOLD', '0.8'))
 VIOLENCE_THRESHOLD = float(os.environ.get('VIOLENCE_THRESHOLD', '0.75'))

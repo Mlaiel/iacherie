@@ -1,6 +1,6 @@
 # 📊 Überwachungsmodul - Docker Services
 
-**Ainflue Platform Überwachungsinfrastruktur**
+**IA Chérie Platform Überwachungsinfrastruktur**
 
 Enterprise-grade Überwachungsinfrastruktur mit Prometheus-Metriken-Sammlung, Grafana-Dashboards, verteilte Verfolgung und umfassende Beobachtbarkeit für Content-Ersteller und Influencer.
 

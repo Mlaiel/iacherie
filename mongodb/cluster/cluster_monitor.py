@@ -2,7 +2,7 @@
 ======================
 
 Real-time cluster health monitoring and alerting system for MongoDB
-in the Ainflue platform enterprise infrastructure.
+in the IA Chérie platform enterprise infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

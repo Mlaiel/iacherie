@@ -1,4 +1,4 @@
-# 🚀 SEO Module Checklist - Ainflue Platform
+# 🚀 SEO Module Checklist - IA Chérie Platform
 ================================================================
 
 ## 📋 Übersicht

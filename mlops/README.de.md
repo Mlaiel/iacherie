@@ -27,7 +27,7 @@
 
 ## 🎯 **Modulübersicht**
 
-Die MLOps-Plattform bietet umfassendes DevOps für Machine Learning und orchestriert den kompletten ML-Modell-Lifecycle mit Enterprise-Standards. Sie integriert nahtlos die Ainflue-Geschäftslogik zur Optimierung der Creator-Erfahrung.
+Die MLOps-Plattform bietet umfassendes DevOps für Machine Learning und orchestriert den kompletten ML-Modell-Lifecycle mit Enterprise-Standards. Sie integriert nahtlos die IA Chérie-Geschäftslogik zur Optimierung der Creator-Erfahrung.
 
 ### **🚀 Business Logic Flow Integration**
 Creator (Musiker/Blogger/Photograph/Influencer/Comedian) → Upload Multi-Format → **KI Processing & MLOps Pipeline** → Protection → Collaboration → SEO → Distribution → Monetization

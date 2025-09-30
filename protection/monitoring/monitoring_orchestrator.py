@@ -687,10 +687,10 @@ class RealTimeAlertingSystem:
         return {
             'email': {
                 'enabled': True,
-                'smtp_server': 'smtp.ainflue.com',
+                'smtp_server': 'smtp.iacherie.com',
                 'port': 587,
                 'use_tls': True,
-                'priority_recipients': ['security@ainflue.com', 'ops@ainflue.com']
+                'priority_recipients': ['security@iacherie.com', 'ops@iacherie.com']
             },
             'slack': {
                 'enabled': True,
@@ -709,7 +709,7 @@ class RealTimeAlertingSystem:
             'webhook': {
                 'enabled': True,
                 'endpoints': [
-                    'https://api.ainflue.com/alerts/webhook',
+                    'https://api.iacherie.com/alerts/webhook',
                     'https://external-siem.company.com/alerts'
                 ]
             }
@@ -721,17 +721,17 @@ class RealTimeAlertingSystem:
             'emergency': {
                 'immediate_channels': ['sms', 'slack', 'webhook'],
                 'escalation_time_minutes': 5,
-                'escalation_contacts': ['ceo@ainflue.com', 'cto@ainflue.com']
+                'escalation_contacts': ['ceo@iacherie.com', 'cto@iacherie.com']
             },
             'critical': {
                 'immediate_channels': ['email', 'slack', 'webhook'],
                 'escalation_time_minutes': 15,
-                'escalation_contacts': ['security-lead@ainflue.com']
+                'escalation_contacts': ['security-lead@iacherie.com']
             },
             'high': {
                 'immediate_channels': ['email', 'slack'],
                 'escalation_time_minutes': 60,
-                'escalation_contacts': ['ops-lead@ainflue.com']
+                'escalation_contacts': ['ops-lead@iacherie.com']
             },
             'medium': {
                 'immediate_channels': ['email'],

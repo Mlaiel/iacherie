@@ -1,4 +1,4 @@
-# ⚡ Redis Authentication Methods Configuration - Ainflue Enterprise
+# ⚡ Redis Authentication Methods Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Multi-factor Authentication for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-authentication-methods
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: authentication-methods
     environment: enterprise
     owner: fahed-mlaiel
@@ -94,8 +94,8 @@ data:
     
     # Certificate Policies
     acceptable_ca_issuers:
-      - "CN=Ainflue Enterprise CA,O=Ainflue,C=DE"
-      - "CN=Ainflue Internal CA,O=Ainflue,C=DE"
+      - "CN=IA Chérie Enterprise CA,O=IA Chérie,C=DE"
+      - "CN=IA Chérie Internal CA,O=IA Chérie,C=DE"
     
     # Certificate Extensions Required
     required_extensions:
@@ -113,10 +113,10 @@ data:
     # Certificate Mapping
     cert_to_user_mapping:
       - attribute: "emailAddress"
-        pattern: "^(.+)@ainflue\\.com$"
+        pattern: "^(.+)@iacherie\\.com$"
         user_format: "${1}"
       - attribute: "CN"
-        pattern: "^Ainflue-(.+)$"
+        pattern: "^IA Chérie-(.+)$"
         user_format: "${1}"
 
   # ===================================================================================
@@ -162,7 +162,7 @@ data:
   oauth_config: |
     # OAuth 2.0 Configuration
     oauth_enabled: true
-    authorization_server: "https://auth.ainflue.com"
+    authorization_server: "https://auth.iacherie.com"
     
     # Supported Grant Types
     supported_grants:
@@ -194,9 +194,9 @@ data:
     
     # JWT Configuration
     jwt_algorithm: RS256
-    jwt_issuer: "https://auth.ainflue.com"
-    jwt_audience: "ainflue-redis-api"
-    jwt_public_key_url: "https://auth.ainflue.com/.well-known/jwks.json"
+    jwt_issuer: "https://auth.iacherie.com"
+    jwt_audience: "iacherie-redis-api"
+    jwt_public_key_url: "https://auth.iacherie.com/.well-known/jwks.json"
 
   # ===================================================================================
   # SAML SINGLE SIGN-ON
@@ -207,15 +207,15 @@ data:
     saml_version: "2.0"
     
     # Identity Provider Configuration
-    idp_entity_id: "https://idp.ainflue.com/saml"
-    idp_sso_url: "https://idp.ainflue.com/saml/sso"
-    idp_slo_url: "https://idp.ainflue.com/saml/slo"
+    idp_entity_id: "https://idp.iacherie.com/saml"
+    idp_sso_url: "https://idp.iacherie.com/saml/sso"
+    idp_slo_url: "https://idp.iacherie.com/saml/slo"
     idp_certificate: "/etc/redis/saml/idp-cert.pem"
     
     # Service Provider Configuration
-    sp_entity_id: "https://redis.ainflue.com/saml"
-    sp_acs_url: "https://redis.ainflue.com/saml/acs"
-    sp_sls_url: "https://redis.ainflue.com/saml/sls"
+    sp_entity_id: "https://redis.iacherie.com/saml"
+    sp_acs_url: "https://redis.iacherie.com/saml/acs"
+    sp_sls_url: "https://redis.iacherie.com/saml/sls"
     sp_certificate: "/etc/redis/saml/sp-cert.pem"
     sp_private_key: "/etc/redis/saml/sp-key.pem"
     
@@ -238,13 +238,13 @@ data:
   ldap_config: |
     # LDAP Configuration
     ldap_enabled: true
-    ldap_url: "ldaps://ldap.ainflue.com:636"
-    ldap_base_dn: "dc=ainflue,dc=com"
-    ldap_bind_dn: "cn=redis-service,ou=services,dc=ainflue,dc=com"
+    ldap_url: "ldaps://ldap.iacherie.com:636"
+    ldap_base_dn: "dc=iacherie,dc=com"
+    ldap_bind_dn: "cn=redis-service,ou=services,dc=iacherie,dc=com"
     ldap_bind_password: "ainflue_ldap_2025_secure_password"
     
     # User Search Configuration
-    user_search_base: "ou=users,dc=ainflue,dc=com"
+    user_search_base: "ou=users,dc=iacherie,dc=com"
     user_search_filter: "(&(objectClass=person)(uid={username}))"
     user_attributes:
       - uid
@@ -255,13 +255,13 @@ data:
       - memberOf
     
     # Group Mapping
-    group_search_base: "ou=groups,dc=ainflue,dc=com"
+    group_search_base: "ou=groups,dc=iacherie,dc=com"
     group_search_filter: "(&(objectClass=groupOfNames)(member={user_dn}))"
     role_mapping:
-      "cn=redis-admins,ou=groups,dc=ainflue,dc=com": "admin_enterprise"
-      "cn=creators,ou=groups,dc=ainflue,dc=com": "creator_standard"
-      "cn=developers,ou=groups,dc=ainflue,dc=com": "developer"
-      "cn=security-team,ou=groups,dc=ainflue,dc=com": "security_auditor"
+      "cn=redis-admins,ou=groups,dc=iacherie,dc=com": "admin_enterprise"
+      "cn=creators,ou=groups,dc=iacherie,dc=com": "creator_standard"
+      "cn=developers,ou=groups,dc=iacherie,dc=com": "developer"
+      "cn=security-team,ou=groups,dc=iacherie,dc=com": "security_auditor"
     
     # Connection Settings
     connection_timeout: 10
@@ -367,11 +367,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-auth-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   setup_mfa.sh: |
     #!/bin/bash
-    # MFA Setup Script for Ainflue Redis Enterprise
+    # MFA Setup Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🔐 Setting up Multi-Factor Authentication..."
@@ -385,7 +385,7 @@ data:
     
     # Generate QR codes for setup
     echo "Generating QR codes for setup..."
-    qrencode -o /tmp/admin-mfa-qr.png "otpauth://totp/Ainflue-Redis-Admin?secret=JBSWY3DPEHPK3PXP&issuer=Ainflue"
+    qrencode -o /tmp/admin-mfa-qr.png "otpauth://totp/IA Chérie-Redis-Admin?secret=JBSWY3DPEHPK3PXP&issuer=IA Chérie"
     
     echo "✅ MFA setup completed"
 
@@ -406,7 +406,7 @@ data:
     
     # Test API key authentication
     echo "Testing API key authentication..."
-    curl -H "Authorization: Bearer ain_${API_KEY}" https://redis.ainflue.com/api/ping
+    curl -H "Authorization: Bearer ain_${API_KEY}" https://redis.iacherie.com/api/ping
     
     echo "✅ Authentication tests completed"
 

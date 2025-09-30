@@ -1,4 +1,4 @@
-# 🔐 Authentication Module - Ainflue Integrations
+# 🔐 Authentication Module - IA Chérie Integrations
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Module Purpose
 
-The Authentication module provides enterprise-grade security and authentication management for the Ainflue platform. It delivers comprehensive OAuth 2.0/OIDC integration, multi-factor authentication, JWT token management, advanced security scanning, and compliance validation across 65+ integrated platforms.
+The Authentication module provides enterprise-grade security and authentication management for the IA Chérie platform. It delivers comprehensive OAuth 2.0/OIDC integration, multi-factor authentication, JWT token management, advanced security scanning, and compliance validation across 65+ integrated platforms.
 
 ### Core Components
 

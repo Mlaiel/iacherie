@@ -1,0 +1,404 @@
+# Ainflue Platform Deployment Playbook
+# =====================================
+#
+# Complete Ansible playbook for deploying Ainflue platform
+# Supports multi-environment deployment with infrastructure provisioning
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+- name: Deploy Ainflue Platform
+  hosts: localhost
+  gather_facts: false
+  vars:
+    # Environment configuration
+    environment: "{{ env | default('dev') }}"
+    project_name: ainflue
+    aws_region: "{{ aws_region | default('us-west-2') }}"
+    
+    # Infrastructure configuration
+    terraform_dir: "../terraform"
+    k8s_manifests_dir: "../k8s"
+    helm_chart_dir: "../helm/ainflue-chart"
+    
+    # Application configuration
+    docker_registry: "{{ docker_registry | default('ainflue') }}"
+    image_tag: "{{ image_tag | default('latest') }}"
+    
+    # Database configuration
+    db_instance_class: "{{ db_instance_class | default('db.t3.micro') }}"
+    
+    # Kubernetes configuration
+    cluster_size: "{{ cluster_size | default(3) }}"
+    
+    # Domain configuration
+    domain_name: "{{ domain_name | default('ainflue.com') }}"
+    
+    # Monitoring configuration
+    enable_monitoring: "{{ enable_monitoring | default(true) }}"
+    enable_backup: "{{ enable_backup | default(true) }}"
+
+  tasks:
+    - name: Display deployment information
+      debug:
+        msg: |
+          Deploying Ainflue Platform
+          ==========================
+          Environment: {{ environment }}
+          AWS Region: {{ aws_region }}
+          Docker Registry: {{ docker_registry }}
+          Image Tag: {{ image_tag }}
+          Domain: {{ domain_name }}
+          Monitoring: {{ enable_monitoring }}
+          Backup: {{ enable_backup }}
+
+    - name: Validate required variables
+      assert:
+        that:
+          - environment is defined
+          - project_name is defined
+          - aws_region is defined
+        fail_msg: "Required variables are not defined"
+
+    - name: Create temporary directory for deployment
+      tempfile:
+        state: directory
+        suffix: -ainflue-deploy
+      register: temp_dir
+
+    - name: Check if Terraform is installed
+      command: terraform version
+      register: terraform_check
+      failed_when: false
+      changed_when: false
+
+    - name: Check if kubectl is installed
+      command: kubectl version --client
+      register: kubectl_check
+      failed_when: false
+      changed_when: false
+
+    - name: Check if helm is installed
+      command: helm version
+      register: helm_check
+      failed_when: false
+      changed_when: false
+
+    - name: Fail if required tools are not installed
+      fail:
+        msg: "Required tool {{ item.tool }} is not installed"
+      when: item.check.rc != 0
+      loop:
+        - { tool: "terraform", check: "{{ terraform_check }}" }
+        - { tool: "kubectl", check: "{{ kubectl_check }}" }
+        - { tool: "helm", check: "{{ helm_check }}" }
+
+- name: Provision Infrastructure with Terraform
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vars/{{ environment }}.yml
+  tasks:
+    - name: Initialize Terraform
+      terraform:
+        project_path: "{{ terraform_dir }}"
+        state: present
+        force_init: true
+        variables:
+          environment: "{{ environment }}"
+          project_name: "{{ project_name }}"
+          aws_region: "{{ aws_region }}"
+          kubernetes_cluster_size: "{{ cluster_size }}"
+          database_instance_class: "{{ db_instance_class }}"
+          enable_monitoring: "{{ enable_monitoring }}"
+          enable_backup: "{{ enable_backup }}"
+          domain_name: "{{ domain_name }}"
+      register: terraform_result
+      tags: [terraform, infrastructure]
+
+    - name: Display Terraform outputs
+      debug:
+        var: terraform_result.outputs
+      tags: [terraform, infrastructure]
+
+    - name: Update kubeconfig
+      shell: |
+        aws eks update-kubeconfig \
+          --region {{ aws_region }} \
+          --name {{ project_name }}-{{ environment }}-cluster
+      tags: [terraform, infrastructure, kubernetes]
+
+- name: Deploy Kubernetes Applications
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create namespace
+      k8s:
+        name: "{{ project_name }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+      tags: [kubernetes, namespace]
+
+    - name: Apply ConfigMap
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: "{{ project_name }}-config"
+            namespace: "{{ project_name }}"
+          data:
+            DATABASE_HOST: "{{ project_name }}-postgresql.{{ project_name }}.svc.cluster.local"
+            DATABASE_PORT: "5432"
+            DATABASE_NAME: "{{ project_name }}"
+            REDIS_HOST: "{{ project_name }}-redis.{{ project_name }}.svc.cluster.local"
+            REDIS_PORT: "6379"
+            ENVIRONMENT: "{{ environment }}"
+            LOG_LEVEL: "INFO"
+            API_VERSION: "v1"
+      tags: [kubernetes, config]
+
+    - name: Generate random passwords
+      set_fact:
+        db_password: "{{ lookup('password', '/dev/null length=32 chars=ascii_letters,digits') }}"
+        secret_key: "{{ lookup('password', '/dev/null length=64 chars=ascii_letters,digits,punctuation') }}"
+        jwt_secret: "{{ lookup('password', '/dev/null length=64 chars=ascii_letters,digits,punctuation') }}"
+      tags: [kubernetes, secrets]
+
+    - name: Apply Secrets
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: "{{ project_name }}-secrets"
+            namespace: "{{ project_name }}"
+          type: Opaque
+          data:
+            DATABASE_PASSWORD: "{{ db_password | b64encode }}"
+            SECRET_KEY: "{{ secret_key | b64encode }}"
+            JWT_SECRET: "{{ jwt_secret | b64encode }}"
+            OPENAI_API_KEY: "{{ openai_api_key | default('') | b64encode }}"
+            ELEVENLABS_API_KEY: "{{ elevenlabs_api_key | default('') | b64encode }}"
+            STRIPE_SECRET_KEY: "{{ stripe_secret_key | default('') | b64encode }}"
+            STRIPE_PUBLISHABLE_KEY: "{{ stripe_publishable_key | default('') | b64encode }}"
+            SHOPIFY_API_KEY: "{{ shopify_api_key | default('') | b64encode }}"
+            MIDJOURNEY_API_TOKEN: "{{ midjourney_api_token | default('') | b64encode }}"
+      tags: [kubernetes, secrets]
+
+    - name: Deploy with Helm
+      helm:
+        name: "{{ project_name }}"
+        chart_ref: "{{ helm_chart_dir }}"
+        release_namespace: "{{ project_name }}"
+        create_namespace: true
+        values:
+          environment: "{{ environment }}"
+          domain: "{{ domain_name }}"
+          image:
+            api:
+              repository: "{{ docker_registry }}/api"
+              tag: "{{ image_tag }}"
+            aiEngine:
+              repository: "{{ docker_registry }}/ai-engine"
+              tag: "{{ image_tag }}"
+            mobileApi:
+              repository: "{{ docker_registry }}/mobile-api"
+              tag: "{{ image_tag }}"
+            worker:
+              repository: "{{ docker_registry }}/worker"
+              tag: "{{ image_tag }}"
+          postgresql:
+            auth:
+              password: "{{ db_password }}"
+          monitoring:
+            enabled: "{{ enable_monitoring }}"
+          backup:
+            enabled: "{{ enable_backup }}"
+      register: helm_result
+      tags: [kubernetes, helm, deploy]
+
+    - name: Wait for deployments to be ready
+      k8s_info:
+        api_version: apps/v1
+        kind: Deployment
+        namespace: "{{ project_name }}"
+        wait: true
+        wait_condition:
+          type: Progressing
+          status: "True"
+          reason: NewReplicaSetAvailable
+        wait_timeout: 600
+      tags: [kubernetes, deploy, wait]
+
+- name: Configure Monitoring and Alerting
+  hosts: localhost
+  gather_facts: false
+  when: enable_monitoring | bool
+  tasks:
+    - name: Add Prometheus Helm repository
+      helm_repository:
+        name: prometheus-community
+        repo_url: https://prometheus-community.github.io/helm-charts
+      tags: [monitoring, helm]
+
+    - name: Deploy Prometheus
+      helm:
+        name: prometheus
+        chart_ref: prometheus-community/kube-prometheus-stack
+        release_namespace: monitoring
+        create_namespace: true
+        values:
+          grafana:
+            adminPassword: "{{ grafana_admin_password | default('admin') }}"
+            ingress:
+              enabled: true
+              hosts:
+                - grafana.{{ domain_name }}
+          prometheus:
+            ingress:
+              enabled: true
+              hosts:
+                - prometheus.{{ domain_name }}
+          alertmanager:
+            ingress:
+              enabled: true
+              hosts:
+                - alertmanager.{{ domain_name }}
+      tags: [monitoring, prometheus]
+
+- name: Configure Backup and Disaster Recovery
+  hosts: localhost
+  gather_facts: false
+  when: enable_backup | bool
+  tasks:
+    - name: Add Velero Helm repository
+      helm_repository:
+        name: vmware-tanzu
+        repo_url: https://vmware-tanzu.github.io/helm-charts
+      tags: [backup, helm]
+
+    - name: Deploy Velero for backups
+      helm:
+        name: velero
+        chart_ref: vmware-tanzu/velero
+        release_namespace: velero-system
+        create_namespace: true
+        values:
+          configuration:
+            provider: aws
+            backupStorageLocation:
+              name: aws
+              bucket: "{{ project_name }}-{{ environment }}-backups"
+              config:
+                region: "{{ aws_region }}"
+          schedules:
+            daily:
+              disabled: false
+              schedule: "0 2 * * *"
+              template:
+                ttl: "720h0m0s"  # 30 days
+      tags: [backup, velero]
+
+- name: Validate Deployment
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check API health endpoint
+      uri:
+        url: "https://api.{{ domain_name }}/health"
+        method: GET
+        status_code: 200
+      register: api_health
+      retries: 10
+      delay: 30
+      tags: [validate, health]
+
+    - name: Check AI Engine health endpoint
+      uri:
+        url: "https://ai.{{ domain_name }}/health"
+        method: GET
+        status_code: 200
+      register: ai_health
+      retries: 10
+      delay: 30
+      tags: [validate, health]
+
+    - name: Check Mobile API health endpoint
+      uri:
+        url: "https://mobile.{{ domain_name }}/health"
+        method: GET
+        status_code: 200
+      register: mobile_health
+      retries: 10
+      delay: 30
+      tags: [validate, health]
+
+    - name: Display deployment summary
+      debug:
+        msg: |
+          Deployment Summary
+          ==================
+          Environment: {{ environment }}
+          API Health: {{ 'OK' if api_health.status == 200 else 'FAILED' }}
+          AI Engine Health: {{ 'OK' if ai_health.status == 200 else 'FAILED' }}
+          Mobile API Health: {{ 'OK' if mobile_health.status == 200 else 'FAILED' }}
+          
+          Access URLs:
+          - API: https://api.{{ domain_name }}
+          - AI Engine: https://ai.{{ domain_name }}
+          - Mobile API: https://mobile.{{ domain_name }}
+          {% if enable_monitoring %}
+          - Grafana: https://grafana.{{ domain_name }}
+          - Prometheus: https://prometheus.{{ domain_name }}
+          {% endif %}
+      tags: [validate, summary]
+
+    - name: Save deployment information
+      copy:
+        content: |
+          # Ainflue Platform Deployment Information
+          
+          **Deployment Date:** {{ ansible_date_time.iso8601 }}
+          **Environment:** {{ environment }}
+          **Version:** {{ image_tag }}
+          
+          ## Access URLs
+          - API: https://api.{{ domain_name }}
+          - AI Engine: https://ai.{{ domain_name }}
+          - Mobile API: https://mobile.{{ domain_name }}
+          {% if enable_monitoring %}
+          - Grafana: https://grafana.{{ domain_name }}
+          - Prometheus: https://prometheus.{{ domain_name }}
+          {% endif %}
+          
+          ## Configuration
+          - AWS Region: {{ aws_region }}
+          - Kubernetes Cluster: {{ project_name }}-{{ environment }}-cluster
+          - Namespace: {{ project_name }}
+          - Monitoring: {{ 'Enabled' if enable_monitoring else 'Disabled' }}
+          - Backup: {{ 'Enabled' if enable_backup else 'Disabled' }}
+          
+          ## Next Steps
+          1. Configure DNS records for the domain {{ domain_name }}
+          2. Update API keys in the secrets
+          3. Configure monitoring alerts
+          4. Test all functionality
+          
+        dest: "{{ temp_dir.path }}/deployment-info.md"
+      tags: [validate, summary]
+
+- name: Cleanup
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Remove temporary directory
+      file:
+        path: "{{ temp_dir.path }}"
+        state: absent
+      when: temp_dir is defined
+      tags: [cleanup]

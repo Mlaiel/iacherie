@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Monitoring Core Orchestrator
+IA Chérie Platform - Monitoring Core Orchestrator
 ==============================================
 
 Enterprise-grade master orchestrator for Creator Economy monitoring infrastructure.

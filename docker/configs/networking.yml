@@ -26,7 +26,7 @@ load_balancer:
 dns:
   resolver: 8.8.8.8
   search_domains:
-    - ainflue.local
+    - iacherie.local
     - docker.local
     
 firewall:

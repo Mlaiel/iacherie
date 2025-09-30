@@ -1,6 +1,6 @@
 # Monetization Docker Services
 
-Professional Docker services for monetization functionality in the Ainflue platform.
+Professional Docker services for monetization functionality in the IA Chérie platform.
 
 ## Overview
 
@@ -76,7 +76,7 @@ All services include comprehensive health checks:
 For technical support, contact:
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Platform**: Ainflue Enterprise
+- **Platform**: IA Chérie Enterprise
 
 ## Copyright
 

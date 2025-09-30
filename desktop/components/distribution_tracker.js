@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Distribution Tracker Component
+ * IA Chérie Desktop - Distribution Tracker Component
  * 
  * Multi-platform content distribution tracking and optimization
  * Implements comprehensive distribution analytics, reach monitoring, and channel performance

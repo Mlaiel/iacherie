@@ -4,7 +4,7 @@
 
 FROM python:3.12-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Skill Analyzer - AI-powered skill assessment service"
+LABEL description="IA Chérie Skill Analyzer - AI-powered skill assessment service"
 
 WORKDIR /app
 

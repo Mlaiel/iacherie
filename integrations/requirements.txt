@@ -1,5 +1,5 @@
 # ===================================================================
-# AINFLUE INTEGRATIONS MODULE - ENTERPRISE DEPENDENCIES
+# IACHERIE INTEGRATIONS MODULE - ENTERPRISE DEPENDENCIES
 # ===================================================================
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Module: Integrations - Level 2 Architecture

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Cross-Browser Testing Framework for Ainflue Platform
+Cross-Browser Testing Framework for IA Chérie Platform
 ==================================================
 
 Advanced cross-browser compatibility testing with AI-powered analysis

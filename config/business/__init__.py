@@ -1,10 +1,10 @@
-"""Ainflue Business Logic Configuration
+"""IA Chérie Business Logic Configuration
 ====================================
 
 Business logic configurations for creator management, content processing,
 monetization, collaboration, gamification, SEO, and distribution.
 
-Enterprise business configuration management for Ainflue platform.
+Enterprise business configuration management for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -126,5 +126,5 @@ __all__ = [
     "business_config_manager"
 ]
 
-logger.info("💼 Ainflue Business Logic Configuration Module loaded")
+logger.info("💼 IA Chérie Business Logic Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Helm Chart Deployment Engine
+# IA Chérie Infrastructure Module - Helm Chart Deployment Engine
 # ============================================================
 # 
-# Enterprise-grade Helm chart deployment for Ainflue platform
+# Enterprise-grade Helm chart deployment for IA Chérie platform
 # Supports multi-cloud Kubernetes and enterprise orchestration
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -80,7 +80,7 @@ class HelmChartDeploymentEngine:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.helm.deployment_engine")
+        logger = logging.getLogger(f"iacherie.infra.helm.deployment_engine")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -113,16 +113,16 @@ class HelmChartDeploymentEngine:
             raise
     
     def _define_standard_charts(self) -> Dict[str, ChartDeployment]:
-        """Define standard Helm charts for Ainflue platform"""
+        """Define standard Helm charts for IA Chérie platform"""
         return {
-            # Ainflue Core Application Charts
-            "ainflue-api": ChartDeployment(
-                release_name="ainflue-api",
-                chart_path="./charts/ainflue-api",
-                namespace="ainflue",
+            # IA Chérie Core Application Charts
+            "iacherie-api": ChartDeployment(
+                release_name="iacherie-api",
+                chart_path="./charts/iacherie-api",
+                namespace="iacherie",
                 values={
                     "image": {
-                        "repository": "ainflue/api",
+                        "repository": "iacherie/api",
                         "tag": "latest",
                         "pullPolicy": "Always"
                     },
@@ -136,14 +136,14 @@ class HelmChartDeploymentEngine:
                         "enabled": True,
                         "hosts": [
                             {
-                                "host": "api.ainflue.com",
+                                "host": "api.iacherie.com",
                                 "paths": ["/"]
                             }
                         ],
                         "tls": [
                             {
-                                "secretName": "ainflue-api-tls",
-                                "hosts": ["api.ainflue.com"]
+                                "secretName": "iacherie-api-tls",
+                                "hosts": ["api.iacherie.com"]
                             }
                         ]
                     },
@@ -168,7 +168,7 @@ class HelmChartDeploymentEngine:
                             "name": "DATABASE_URL",
                             "valueFrom": {
                                 "secretKeyRef": {
-                                    "name": "ainflue-secrets",
+                                    "name": "iacherie-secrets",
                                     "key": "database-url"
                                 }
                             }
@@ -177,7 +177,7 @@ class HelmChartDeploymentEngine:
                             "name": "REDIS_URL",
                             "valueFrom": {
                                 "secretKeyRef": {
-                                    "name": "ainflue-secrets",
+                                    "name": "iacherie-secrets",
                                     "key": "redis-url"
                                 }
                             }
@@ -186,13 +186,13 @@ class HelmChartDeploymentEngine:
                 }
             ),
             
-            "ainflue-ai-engine": ChartDeployment(
-                release_name="ainflue-ai-engine",
-                chart_path="./charts/ainflue-ai-engine",
-                namespace="ainflue",
+            "iacherie-ai-engine": ChartDeployment(
+                release_name="iacherie-ai-engine",
+                chart_path="./charts/iacherie-ai-engine",
+                namespace="iacherie",
                 values={
                     "image": {
-                        "repository": "ainflue/ai-engine",
+                        "repository": "iacherie/ai-engine",
                         "tag": "latest",
                         "pullPolicy": "Always"
                     },
@@ -233,13 +233,13 @@ class HelmChartDeploymentEngine:
                 }
             ),
             
-            "ainflue-mobile-api": ChartDeployment(
-                release_name="ainflue-mobile-api",
-                chart_path="./charts/ainflue-mobile-api",
-                namespace="ainflue",
+            "iacherie-mobile-api": ChartDeployment(
+                release_name="iacherie-mobile-api",
+                chart_path="./charts/iacherie-mobile-api",
+                namespace="iacherie",
                 values={
                     "image": {
-                        "repository": "ainflue/mobile-api",
+                        "repository": "iacherie/mobile-api",
                         "tag": "latest",
                         "pullPolicy": "Always"
                     },
@@ -253,7 +253,7 @@ class HelmChartDeploymentEngine:
                         "enabled": True,
                         "hosts": [
                             {
-                                "host": "mobile.ainflue.com",
+                                "host": "mobile.iacherie.com",
                                 "paths": ["/"]
                             }
                         ]
@@ -360,7 +360,7 @@ class HelmChartDeploymentEngine:
                         },
                         "ingress": {
                             "enabled": True,
-                            "hosts": ["grafana.ainflue.com"]
+                            "hosts": ["grafana.iacherie.com"]
                         }
                     },
                     "alertmanager": {
@@ -392,7 +392,7 @@ class HelmChartDeploymentEngine:
                 values={
                     "auth": {
                         "postgresPassword": "{{ vault_postgres_password }}",
-                        "database": "ainflue"
+                        "database": "iacherie"
                     },
                     "primary": {
                         "persistence": {
@@ -610,7 +610,7 @@ class HelmChartDeploymentEngine:
                         metadata=client.V1ObjectMeta(
                             name=namespace,
                             labels={
-                                "managed-by": "ainflue-helm-engine"
+                                "managed-by": "iacherie-helm-engine"
                             }
                         )
                     )
@@ -824,7 +824,7 @@ class HelmChartDeploymentEngine:
 
 # Enterprise Helm orchestrator
 class AinflueHelmOrchestrator:
-    """High-level Helm orchestration for Ainflue platform"""
+    """High-level Helm orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize Helm orchestrator
@@ -833,11 +833,11 @@ class AinflueHelmOrchestrator:
             environment: Deployment environment
         """
         self.environment = environment
-        self.logger = logging.getLogger(f"ainflue.infra.helm.orchestrator")
+        self.logger = logging.getLogger(f"iacherie.infra.helm.orchestrator")
         
         # Configuration
         self.config = HelmConfig(
-            namespace="ainflue",
+            namespace="iacherie",
             timeout=600 if environment == "production" else 300,
             create_namespace=True
         )
@@ -845,7 +845,7 @@ class AinflueHelmOrchestrator:
         self.engine = HelmChartDeploymentEngine(self.config)
     
     async def deploy_ainflue_platform(self) -> Dict[str, bool]:
-        """Deploy the complete Ainflue platform using Helm charts
+        """Deploy the complete IA Chérie platform using Helm charts
         
         Returns:
             Dict mapping chart names to deployment status
@@ -867,9 +867,9 @@ class AinflueHelmOrchestrator:
                 "redis",
                 
                 # Applications
-                "ainflue-api",
-                "ainflue-ai-engine",
-                "ainflue-mobile-api"
+                "iacherie-api",
+                "iacherie-ai-engine",
+                "iacherie-mobile-api"
             ]
             
             for chart_name in deployment_order:
@@ -896,7 +896,7 @@ class AinflueHelmOrchestrator:
             return results
             
         except Exception as e:
-            self.logger.error(f"Failed to deploy Ainflue platform: {e}")
+            self.logger.error(f"Failed to deploy IA Chérie platform: {e}")
             return {}
     
     def _customize_for_environment(self, deployment: ChartDeployment) -> ChartDeployment:

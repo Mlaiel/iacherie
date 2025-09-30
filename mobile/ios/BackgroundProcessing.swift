@@ -1,6 +1,6 @@
 //
 //  BackgroundProcessing.swift
-//  Ainflue iOS - Professional Background Processing System
+//  IA Chérie iOS - Professional Background Processing System
 //
 //  Enterprise-grade background task management with intelligent scheduling,
 //  power optimization, and comprehensive content processing capabilities.
@@ -37,11 +37,11 @@ class BackgroundProcessingService: NSObject {
     
     // MARK: - Background Task Identifiers
     private struct TaskIdentifiers {
-        static let contentProcessing = "com.fahedmlaiel.ainflue.backgroundprocessing"
-        static let dataSync = "com.fahedmlaiel.ainflue.sync"
-        static let analytics = "com.fahedmlaiel.ainflue.analytics"
-        static let contentProtection = "com.fahedmlaiel.ainflue.contentprotection"
-        static let systemMaintenance = "com.fahedmlaiel.ainflue.maintenance"
+        static let contentProcessing = "com.fahedmlaiel.iacherie.backgroundprocessing"
+        static let dataSync = "com.fahedmlaiel.iacherie.sync"
+        static let analytics = "com.fahedmlaiel.iacherie.analytics"
+        static let contentProtection = "com.fahedmlaiel.iacherie.contentprotection"
+        static let systemMaintenance = "com.fahedmlaiel.iacherie.maintenance"
     }
     
     // MARK: - Task Management
@@ -72,12 +72,12 @@ class BackgroundProcessingService: NSObject {
     weak var delegate: BackgroundProcessingDelegate?
     
     // MARK: - Processing Queues
-    private let backgroundQueue = DispatchQueue(label: "com.ainflue.background.processing", qos: .background)
-    private let highPriorityQueue = DispatchQueue(label: "com.ainflue.background.high", qos: .userInitiated)
-    private let maintenanceQueue = DispatchQueue(label: "com.ainflue.background.maintenance", qos: .utility)
+    private let backgroundQueue = DispatchQueue(label: "com.iacherie.background.processing", qos: .background)
+    private let highPriorityQueue = DispatchQueue(label: "com.iacherie.background.high", qos: .userInitiated)
+    private let maintenanceQueue = DispatchQueue(label: "com.iacherie.background.maintenance", qos: .utility)
     
     // MARK: - Logging
-    private let logger = Logger(subsystem: "com.fahedmlaiel.ainflue", category: "BackgroundProcessing")
+    private let logger = Logger(subsystem: "com.fahedmlaiel.iacherie", category: "BackgroundProcessing")
     
     // MARK: - Initialization
     

@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Ainflue Creator Economy Platform - production Environment
+Description: IA Chérie Creator Economy Platform - production Environment
 Outputs:
   CDNDomain:
     Description: CloudFront Distribution Domain
@@ -61,7 +61,7 @@ Resources:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:
             SSEAlgorithm: AES256
-      BucketName: ainflue-creator-content-production
+      BucketName: iacherie-creator-content-production
       LifecycleConfiguration:
         Rules:
         - Status: Enabled
@@ -77,7 +77,7 @@ Resources:
     Properties:
       AllocatedStorage: 1000
       DBInstanceClass: db.r5.xlarge
-      DBInstanceIdentifier: ainflue-creator-db-production
+      DBInstanceIdentifier: iacherie-creator-db-production
       DBSubnetGroupName:
         Ref: DatabaseSubnetGroup
       Engine: postgres
@@ -89,7 +89,7 @@ Resources:
     Type: AWS::RDS::DBInstance
   EKSCluster:
     Properties:
-      Name: ainflue-creator-production
+      Name: iacherie-creator-production
       ResourcesVpcConfig:
         EndpointConfigPrivate: true
         EndpointConfigPublic: true
@@ -117,5 +117,5 @@ Resources:
       EnableDnsSupport: true
       Tags:
       - Key: Name
-        Value: ainflue-vpc-production
+        Value: iacherie-vpc-production
     Type: AWS::EC2::VPC

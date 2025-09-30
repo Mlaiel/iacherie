@@ -1,5 +1,5 @@
 """
-Advanced Demographic Mapping Engine for Ainflue Distribution Platform
+Advanced Demographic Mapping Engine for IA Chérie Distribution Platform
 
 This module provides sophisticated demographic analysis and intelligent mapping capabilities
 for audience segmentation and targeted content distribution across platforms.

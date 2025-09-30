@@ -1,5 +1,5 @@
 """
-Google Pay Integration for Ainflue Platform
+Google Pay Integration for IA Chérie Platform
 Enterprise-grade Google Pay payment processing with advanced security
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -93,7 +93,7 @@ class GooglePayConfig:
     api_version_minor: int = 0
     total_price_status: str = "FINAL"  # ESTIMATED, FINAL
     checkout_option: str = "DEFAULT"  # DEFAULT, COMPLETE_IMMEDIATE_PURCHASE
-    software_info_id: str = "ainflue.creator.platform"
+    software_info_id: str = "iacherie.creator.platform"
     software_info_version: str = "1.0.0"
 
     def __post_init__(self):
@@ -155,7 +155,7 @@ class ProcessedPayment:
 
 class GooglePayIntegration(BaseIntegration):
     """
-    Enterprise Google Pay integration for Ainflue platform
+    Enterprise Google Pay integration for IA Chérie platform
     
     Features:
     - Secure payment token processing and validation
@@ -193,7 +193,7 @@ class GooglePayIntegration(BaseIntegration):
                                total_amount: Decimal,
                                currency: str,
                                transaction_id: str,
-                               description: str = "Ainflue Payment",
+                               description: str = "IA Chérie Payment",
                                metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Generate Google Pay payment request configuration
@@ -819,14 +819,14 @@ def create_google_pay_integration(
     
     return GooglePayIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_google_pay_flow():
     """Example Google Pay integration usage"""
     
     # Initialize Google Pay integration with Stripe
     google_pay = create_google_pay_integration(
         merchant_id="01234567890123456789",
-        merchant_name="Ainflue Creator Platform",
+        merchant_name="IA Chérie Creator Platform",
         gateway=GooglePayGateway.STRIPE,
         gateway_merchant_id="pk_test_...",
         environment=GooglePayEnvironment.TEST,
@@ -841,11 +841,11 @@ async def example_google_pay_flow():
             total_amount=Decimal("29.99"),
             currency="USD",
             transaction_id="ainflue_tx_123",
-            description="Ainflue Premium Subscription",
+            description="IA Chérie Premium Subscription",
             metadata={
                 "creator_id": "creator_123",
                 "subscription_type": "premium",
-                "platform": "ainflue"
+                "platform": "iacherie"
             }
         )
         
@@ -881,7 +881,7 @@ async def example_google_pay_flow():
             metadata={
                 "creator_id": "creator_123",
                 "subscription_type": "premium",
-                "platform": "ainflue"
+                "platform": "iacherie"
             }
         )
         

@@ -228,7 +228,7 @@ print(f"Overall SEO score: {performance_report.overall_score}/100")
 
 ## Integration with Existing Platform
 
-The SEO Automation Engine integrates seamlessly with the existing Ainflue platform:
+The SEO Automation Engine integrates seamlessly with the existing IA Chérie platform:
 
 ```python
 # In your content creation workflow
@@ -295,4 +295,4 @@ analysis_report = competitor_intel.export_competitive_analysis(competitive_resul
 6. **Track trends** weekly with TrendingAnalyzer
 7. **Optimize internationally** for global reach with MultilingualSEO
 
-The SEO Automation Engine provides enterprise-grade SEO capabilities specifically designed for the Ainflue platform's content creation and optimization workflows.
+The SEO Automation Engine provides enterprise-grade SEO capabilities specifically designed for the IA Chérie platform's content creation and optimization workflows.

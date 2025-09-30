@@ -77,7 +77,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE ACTUELLE VS REQUISE
 
 ```
-/workspaces/Ainflue/data/monetization/                     [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/monetization/                     [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers) 🟡 PARTIEL
 │   ├── README.md ✅                    # Documentation anglais (COMPLET)
 │   ├── README.de.md ✅                 # Documentation allemand (COMPLET)
@@ -433,7 +433,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -535,12 +535,12 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/revenue-intelligence:latest
-- ainflue/payment-processor:latest
-- ainflue/platform-integration:latest
-- ainflue/compliance-engine:latest
-- ainflue/analytics-engine:latest
-- ainflue/optimization-engine:latest
+- iacherie/revenue-intelligence:latest
+- iacherie/payment-processor:latest
+- iacherie/platform-integration:latest
+- iacherie/compliance-engine:latest
+- iacherie/analytics-engine:latest
+- iacherie/optimization-engine:latest
 ```
 
 ---

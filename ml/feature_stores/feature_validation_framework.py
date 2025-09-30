@@ -2,7 +2,7 @@
 ✅ Feature Validation Framework - Data Quality & Feature Engineering Module
 
 Comprehensive feature validation system with statistical tests, drift detection,
-and quality assurance for machine learning features on the Ainflue platform.
+and quality assurance for machine learning features on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

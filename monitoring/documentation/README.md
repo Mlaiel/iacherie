@@ -1,8 +1,8 @@
-# 📚 Ainflue Documentation System - Enterprise Creator Economy
+# 📚 IA Chérie Documentation System - Enterprise Creator Economy
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
-[![Creator Economy](https://img.shields.io/badge/Creator%20Economy-Powered-green.svg)](https://ainflue.com)
+[![Creator Economy](https://img.shields.io/badge/Creator%20Economy-Powered-green.svg)](https://iacherie.com)
 
 ## 🎯 **Advanced Documentation Architecture for Creator Economy Platform**
 
@@ -273,8 +273,8 @@ Node.js >= 18.0
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Install Python dependencies
 pip install -r requirements.txt
@@ -457,7 +457,7 @@ POST /api/v4/documentation/workflows/{workflow_id}/progress
 ### WebSocket Events
 ```javascript
 // Real-time documentation updates
-const ws = new WebSocket('wss://api.ainflue.com/v4/documentation/events');
+const ws = new WebSocket('wss://api.iacherie.com/v4/documentation/events');
 
 ws.on('documentation_generated', (event) => {
     console.log('New documentation:', event.data);
@@ -543,13 +543,13 @@ black monitoring/documentation/
 - 🔧 **[API Reference](docs/api-reference.md)** - Detailed API documentation
 - 🎯 **[Best Practices](docs/best-practices.md)** - Development guidelines
 - 🔍 **[Troubleshooting](docs/troubleshooting.md)** - Common issues & solutions
-- 🎥 **[Video Tutorials](https://ainflue.com/tutorials)** - Visual learning resources
+- 🎥 **[Video Tutorials](https://iacherie.com/tutorials)** - Visual learning resources
 
 ### Community
-- 💬 **[Discord Community](https://discord.gg/ainflue)** - Creator discussions
-- 📧 **Support:** support@ainflue.com
-- 🐛 **Bug Reports:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- 💡 **Feature Requests:** [GitHub Discussions](https://github.com/Mlaiel/Ainflue/discussions)
+- 💬 **[Discord Community](https://discord.gg/iacherie)** - Creator discussions
+- 📧 **Support:** support@iacherie.com
+- 🐛 **Bug Reports:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- 💡 **Feature Requests:** [GitHub Discussions](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ---
 
@@ -580,4 +580,4 @@ For licensing inquiries: **mlaiel@live.de**
 
 ---
 
-*© 2025 Fahed Mlaiel - All rights reserved - Proprietary Ainflue documentation architecture*
+*© 2025 Fahed Mlaiel - All rights reserved - Proprietary IA Chérie documentation architecture*

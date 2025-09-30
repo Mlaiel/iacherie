@@ -1,5 +1,5 @@
 """
-Payment Fraud Detection System for Ainflue Platform
+Payment Fraud Detection System for IA Chérie Platform
 Enterprise-grade fraud prevention and risk assessment for payment processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -169,7 +169,7 @@ class FraudConfig:
 
 class PaymentFraudDetection(BaseIntegration):
     """
-    Enterprise Payment Fraud Detection System for Ainflue platform
+    Enterprise Payment Fraud Detection System for IA Chérie platform
     
     Features:
     - Real-time fraud scoring and risk assessment
@@ -1183,7 +1183,7 @@ def create_fraud_detection_system(**kwargs) -> PaymentFraudDetection:
     config = FraudConfig(**kwargs)
     return PaymentFraudDetection(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_fraud_detection_flow():
     """Example fraud detection usage"""
     
@@ -1203,7 +1203,7 @@ async def example_fraud_detection_flow():
         payment_attempt = PaymentAttempt(
             id="payment_123",
             user_id="user_456",
-            email="creator@ainflue.com",
+            email="creator@iacherie.com",
             ip_address="203.0.113.1",
             user_agent="Mozilla/5.0...",
             amount=Decimal("29.99"),
@@ -1218,7 +1218,7 @@ async def example_fraud_detection_flow():
             timestamp=datetime.utcnow(),
             metadata={
                 "subscription_type": "premium",
-                "platform": "ainflue"
+                "platform": "iacherie"
             }
         )
         

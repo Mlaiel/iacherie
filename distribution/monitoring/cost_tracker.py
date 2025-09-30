@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Monitoring - Cost Tracker
+IA Chérie Platform - Distribution Monitoring - Cost Tracker
 Advanced cost tracking and financial monitoring for distribution infrastructure
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -236,7 +236,7 @@ class DistributionCostTracker:
             threshold_critical=95.0,
             start_date=datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0),
             end_date=datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0) + timedelta(days=32),
-            notification_emails=['ops@ainflue.com', 'finance@ainflue.com']
+            notification_emails=['ops@iacherie.com', 'finance@iacherie.com']
         )
         
         # Monthly total budget
@@ -250,7 +250,7 @@ class DistributionCostTracker:
             threshold_critical=90.0,
             start_date=datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0),
             end_date=datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0) + timedelta(days=32),
-            notification_emails=['cfo@ainflue.com', 'ceo@ainflue.com']
+            notification_emails=['cfo@iacherie.com', 'ceo@iacherie.com']
         )
     
     async def record_cost(self, category: CostCategory, service: str, resource_id: str,

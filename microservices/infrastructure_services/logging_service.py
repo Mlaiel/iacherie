@@ -304,7 +304,7 @@ class FileLogHandler(LogDestinationHandler):
 class ElasticsearchLogHandler(LogDestinationHandler):
     """Elasticsearch log handler"""
     
-    def __init__(self, elasticsearch_url: str, index: str = "ainflue-logs"):
+    def __init__(self, elasticsearch_url: str, index: str = "iacherie-logs"):
         self.elasticsearch_url = elasticsearch_url
         self.index = index
         self.client = None
@@ -360,7 +360,7 @@ class ElasticsearchLogHandler(LogDestinationHandler):
 class KafkaLogHandler(LogDestinationHandler):
     """Kafka log handler"""
     
-    def __init__(self, brokers: List[str], topic: str = "ainflue-logs"):
+    def __init__(self, brokers: List[str], topic: str = "iacherie-logs"):
         self.brokers = brokers
         self.topic = topic
         self.producer = None
@@ -468,13 +468,13 @@ class DistributedLogger:
             elif destination == LogDestination.ELASTICSEARCH and self.config.elasticsearch_url:
                 handler = ElasticsearchLogHandler(
                     self.config.elasticsearch_url,
-                    self.config.elasticsearch_index or f"ainflue-{self.config.name}"
+                    self.config.elasticsearch_index or f"iacherie-{self.config.name}"
                 )
                 
             elif destination == LogDestination.KAFKA and self.config.kafka_brokers:
                 handler = KafkaLogHandler(
                     self.config.kafka_brokers,
-                    self.config.kafka_topic or f"ainflue-{self.config.name}"
+                    self.config.kafka_topic or f"iacherie-{self.config.name}"
                 )
                 
             if handler:
@@ -600,7 +600,7 @@ class LoggingService:
             name="default",
             level=LogLevel.INFO,
             destinations=[LogDestination.CONSOLE, LogDestination.FILE],
-            file_path="logs/ainflue.log"
+            file_path="logs/iacherie.log"
         )
         self.running = False
         

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Offline Manager Service
+ * IA Chérie Desktop - Offline Manager Service
  * 
  * Comprehensive offline functionality manager with intelligent caching,
  * queue management, conflict resolution, and seamless online/offline transitions.
@@ -321,18 +321,18 @@ class OfflineManager {
     async loadFromLocalStorage() {
         try {
             // Load queue from localStorage as backup
-            const queueData = localStorage.getItem('ainflue-offline-queue');
+            const queueData = localStorage.getItem('iacherie-offline-queue');
             if (queueData) {
                 const queue = JSON.parse(queueData);
                 this.offlineQueue.push(...queue);
             }
 
             // Load cache keys from localStorage
-            const cacheKeys = localStorage.getItem('ainflue-offline-cache-keys');
+            const cacheKeys = localStorage.getItem('iacherie-offline-cache-keys');
             if (cacheKeys) {
                 const keys = JSON.parse(cacheKeys);
                 for (const key of keys) {
-                    const data = localStorage.getItem(`ainflue-cache-${key}`);
+                    const data = localStorage.getItem(`iacherie-cache-${key}`);
                     if (data) {
                         this.offlineCache.set(key, JSON.parse(data));
                     }
@@ -682,7 +682,7 @@ class OfflineManager {
             if (this.offlineDB) {
                 await this.saveToIndexedDB('queue', this.offlineQueue);
             }
-            localStorage.setItem('ainflue-offline-queue', JSON.stringify(this.offlineQueue));
+            localStorage.setItem('iacherie-offline-queue', JSON.stringify(this.offlineQueue));
         } catch (error) {
             console.error('Failed to save offline queue:', error);
         }

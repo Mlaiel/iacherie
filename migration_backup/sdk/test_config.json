@@ -1,0 +1,109 @@
+{
+  "test_suites": {
+    "python": [
+      {
+        "name": "Python SDK Unit Tests",
+        "language": "SDKLanguage.PYTHON",
+        "path": "sdk/python",
+        "command": "python -m pytest tests/ -v --cov=ainflue_sdk --cov-report=json",
+        "timeout": 300,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 85.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "Python SDK Integration Tests",
+        "language": "SDKLanguage.PYTHON",
+        "path": "sdk/python",
+        "command": "python -m pytest integration_tests/ -v",
+        "timeout": 600,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "Python SDK Security Tests",
+        "language": "SDKLanguage.PYTHON",
+        "path": "sdk/python",
+        "command": "python -m bandit -r ainflue_sdk/ -f json",
+        "timeout": 120,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      }
+    ],
+    "javascript": [
+      {
+        "name": "JavaScript SDK Unit Tests",
+        "language": "SDKLanguage.JAVASCRIPT",
+        "path": "sdk/javascript",
+        "command": "npm test -- --coverage --coverageReporters=json",
+        "timeout": 300,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 85.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "JavaScript SDK TypeScript Compilation",
+        "language": "SDKLanguage.JAVASCRIPT",
+        "path": "sdk/javascript",
+        "command": "npx tsc --noEmit",
+        "timeout": 120,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "JavaScript SDK ESLint",
+        "language": "SDKLanguage.JAVASCRIPT",
+        "path": "sdk/javascript",
+        "command": "npx eslint src/ --format json",
+        "timeout": 120,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      }
+    ],
+    "java": [
+      {
+        "name": "Java SDK Unit Tests",
+        "language": "SDKLanguage.JAVA",
+        "path": "sdk/java",
+        "command": "mvn test -Dmaven.test.failure.ignore=true jacoco:report",
+        "timeout": 600,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "Java SDK Integration Tests",
+        "language": "SDKLanguage.JAVA",
+        "path": "sdk/java",
+        "command": "mvn verify -Dtest=*IT",
+        "timeout": 900,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      },
+      {
+        "name": "Java SDK Security Scan",
+        "language": "SDKLanguage.JAVA",
+        "path": "sdk/java",
+        "command": "mvn org.owasp:dependency-check-maven:check",
+        "timeout": 300,
+        "environment": null,
+        "dependencies": null,
+        "coverage_threshold": 80.0,
+        "performance_threshold": 5000.0
+      }
+    ]
+  }
+}

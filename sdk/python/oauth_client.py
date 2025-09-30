@@ -1,4 +1,4 @@
-"""OAuth 2.0 Client Implementation for Ainflue SDK
+"""OAuth 2.0 Client Implementation for IA Chérie SDK
 
 Multi-expert implementation:
 - Security: Secure OAuth 2.0 flows with PKCE and state validation
@@ -493,7 +493,7 @@ class OAuthClient:
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
-            "User-Agent": "Ainflue-Python-SDK/1.0.0"
+            "User-Agent": "IA Chérie-Python-SDK/1.0.0"
         }
         
         last_error = None

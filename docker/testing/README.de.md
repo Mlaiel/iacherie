@@ -1,4 +1,4 @@
-# 🧪 Ainflue Platform - Docker Testing Infrastruktur
+# 🧪 IA Chérie Platform - Docker Testing Infrastruktur
 
 **Enterprise-grade Testinfrastruktur für AI Influencer Platform Containerisierung. Umfassende Testsuite mit 95%+ Coverage-Anforderung für 80+ Microservices.**
 
@@ -6,7 +6,7 @@
 
 ## 📋 Überblick
 
-Dieses Testmodul stellt eine vollständige, enterprise-grade Testinfrastruktur für die Ainflue AI Influencer Platform bereit. Die Architektur unterstützt umfassende Tests für 80+ Microservices mit automatisierter Testausführung, Performance-Validierung, Sicherheitsscans und Chaos Engineering.
+Dieses Testmodul stellt eine vollständige, enterprise-grade Testinfrastruktur für die IA Chérie AI Influencer Platform bereit. Die Architektur unterstützt umfassende Tests für 80+ Microservices mit automatisierter Testausführung, Performance-Validierung, Sicherheitsscans und Chaos Engineering.
 
 ### 🎯 Business Logic Flow
 ```
@@ -67,10 +67,10 @@ docker-compose -f docker-compose.testing.yml up performance_tester
 docker-compose -f docker-compose.testing.yml up security_tester
 
 # Tests mit benutzerdefinierten Parametern
-docker run --rm ainflue/test-runner:latest pytest --cov --cov-report=html
+docker run --rm iacherie/test-runner:latest pytest --cov --cov-report=html
 
 # Performance-Tests mit benutzerdefinierter Last
-docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rate=25
+docker run --rm iacherie/performance-tester:latest locust --users=500 --spawn-rate=25
 ```
 
 ---
@@ -161,7 +161,7 @@ docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rat
 docker-compose -f docker-compose.testing.yml logs test_runner
 
 # Spezifischen Test debuggen
-docker run -it ainflue/test-runner:latest bash
+docker run -it iacherie/test-runner:latest bash
 pytest tests/specific_test.py -v
 ```
 
@@ -171,7 +171,7 @@ pytest tests/specific_test.py -v
 docker stats
 
 # Container-Logs prüfen
-docker logs ainflue-performance-tester
+docker logs iacherie-performance-tester
 ```
 
 ---

@@ -162,7 +162,7 @@ class KubernetesManager:
                     "name": self.config.namespace,
                     "app.kubernetes.io/name": "mongodb",
                     "app.kubernetes.io/instance": self.config.cluster_name,
-                    "app.kubernetes.io/managed-by": "ainflue-deployer"
+                    "app.kubernetes.io/managed-by": "iacherie-deployer"
                 }
             }
         }
@@ -343,13 +343,13 @@ db.createUser({
 });
 
 // Create application users
-use ainflue;
+use iacherie;
 db.createUser({
     user: 'ainflue_app',
     pwd: 'app_password',
     roles: [
-        { role: 'readWrite', db: 'ainflue' },
-        { role: 'dbAdmin', db: 'ainflue' }
+        { role: 'readWrite', db: 'iacherie' },
+        { role: 'dbAdmin', db: 'iacherie' }
     ]
 });
 
@@ -792,9 +792,9 @@ print('Users created successfully');
                                         }}
                                         
                                         // Enable sharding for databases
-                                        sh.enableSharding('ainflue');
-                                        sh.shardCollection('ainflue.users', {{ _id: 'hashed' }});
-                                        sh.shardCollection('ainflue.content', {{ userId: 1, _id: 1 }});
+                                        sh.enableSharding('iacherie');
+                                        sh.shardCollection('iacherie.users', {{ _id: 'hashed' }});
+                                        sh.shardCollection('iacherie.content', {{ userId: 1, _id: 1 }});
                                     "
                                     """
                                 ]

@@ -1,4 +1,4 @@
-# ⚡ Redis TLS Configuration - Ainflue Enterprise
+# ⚡ Redis TLS Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Enterprise TLS 1.3 Configuration for Redis Cluster
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-tls-configuration
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: tls-configuration
     environment: enterprise
     owner: fahed-mlaiel
@@ -43,7 +43,7 @@ data:
     tls-cert-file /etc/redis/ssl/certs/redis-server.crt
     tls-key-file /etc/redis/ssl/private/redis-server.key
     tls-key-file-pass /etc/redis/ssl/private/redis-server.pass
-    tls-ca-cert-file /etc/redis/ssl/ca/ainflue-ca.crt
+    tls-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
     tls-ca-cert-dir /etc/redis/ssl/ca/
     
     # DH parameters for perfect forward secrecy
@@ -81,7 +81,7 @@ data:
     tls-client-key-file /etc/redis/ssl/clients/client.key
     
     # Certificate revocation
-    tls-crl-file /etc/redis/ssl/crl/ainflue-crl.pem
+    tls-crl-file /etc/redis/ssl/crl/iacherie-crl.pem
     tls-crl-dir /etc/redis/ssl/crl/
 
   # ===================================================================================
@@ -93,7 +93,7 @@ data:
     tls-cluster-cert-file /etc/redis/ssl/cluster/cluster.crt
     tls-cluster-key-file /etc/redis/ssl/cluster/cluster.key
     tls-cluster-key-file-pass /etc/redis/ssl/cluster/cluster.pass
-    tls-cluster-ca-cert-file /etc/redis/ssl/ca/ainflue-ca.crt
+    tls-cluster-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
     
     # Cluster-specific cipher suites
     tls-cluster-ciphersuites "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
@@ -107,7 +107,7 @@ data:
     tls-repl-cert-file /etc/redis/ssl/replication/repl.crt
     tls-repl-key-file /etc/redis/ssl/replication/repl.key
     tls-repl-key-file-pass /etc/redis/ssl/replication/repl.pass
-    tls-repl-ca-cert-file /etc/redis/ssl/ca/ainflue-ca.crt
+    tls-repl-ca-cert-file /etc/redis/ssl/ca/iacherie-ca.crt
     
     # Replication-specific cipher suites
     tls-repl-ciphersuites "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
@@ -131,9 +131,9 @@ data:
     
     # Subject Alternative Names
     san_dns:
-      - "redis.ainflue.com"
-      - "redis-cluster.ainflue.com"
-      - "redis-sentinel.ainflue.com"
+      - "redis.iacherie.com"
+      - "redis-cluster.iacherie.com"
+      - "redis-sentinel.iacherie.com"
     san_ip:
       - "10.0.0.10"
       - "10.0.0.11"
@@ -144,7 +144,7 @@ data:
   # ===================================================================================
   cert_generation: |
     #!/bin/bash
-    # Certificate Generation Script for Ainflue Redis Enterprise
+    # Certificate Generation Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     # Create directories
@@ -155,9 +155,9 @@ data:
     openssl genpkey -algorithm RSA -out /etc/redis/ssl/ca/ca-key.pem -pkcs8 -aes256 -pass pass:ainflue_ca_2025_secure
     
     # Generate CA certificate
-    openssl req -new -x509 -days 3650 -key /etc/redis/ssl/ca/ca-key.pem -out /etc/redis/ssl/ca/ainflue-ca.crt \
+    openssl req -new -x509 -days 3650 -key /etc/redis/ssl/ca/ca-key.pem -out /etc/redis/ssl/ca/iacherie-ca.crt \
       -passin pass:ainflue_ca_2025_secure \
-      -subj "/C=DE/ST=Berlin/L=Berlin/O=Ainflue Enterprise/OU=Security/CN=Ainflue Redis CA/emailAddress=mlaiel@live.de"
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Security/CN=IA Chérie Redis CA/emailAddress=mlaiel@live.de"
     
     # Generate server private key
     openssl genpkey -algorithm RSA -out /etc/redis/ssl/private/redis-server.key -pkcs8 -aes256 -pass pass:ainflue_server_2025_secure
@@ -165,13 +165,13 @@ data:
     # Generate server certificate signing request
     openssl req -new -key /etc/redis/ssl/private/redis-server.key -out /etc/redis/ssl/certs/redis-server.csr \
       -passin pass:ainflue_server_2025_secure \
-      -subj "/C=DE/ST=Berlin/L=Berlin/O=Ainflue Enterprise/OU=Redis/CN=redis.ainflue.com/emailAddress=mlaiel@live.de"
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Redis/CN=redis.iacherie.com/emailAddress=mlaiel@live.de"
     
     # Generate server certificate
-    openssl x509 -req -in /etc/redis/ssl/certs/redis-server.csr -CA /etc/redis/ssl/ca/ainflue-ca.crt \
+    openssl x509 -req -in /etc/redis/ssl/certs/redis-server.csr -CA /etc/redis/ssl/ca/iacherie-ca.crt \
       -CAkey /etc/redis/ssl/ca/ca-key.pem -CAcreateserial -out /etc/redis/ssl/certs/redis-server.crt \
       -days 365 -passin pass:ainflue_ca_2025_secure \
-      -extensions v3_req -extfile <(echo "[v3_req]"; echo "subjectAltName=DNS:redis.ainflue.com,DNS:redis-cluster.ainflue.com,IP:10.0.0.10")
+      -extensions v3_req -extfile <(echo "[v3_req]"; echo "subjectAltName=DNS:redis.iacherie.com,DNS:redis-cluster.iacherie.com,IP:10.0.0.10")
     
     # Generate DH parameters
     openssl dhparam -out /etc/redis/ssl/dh/dhparam.pem 4096
@@ -282,11 +282,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-tls-validation
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   validate_tls.sh: |
     #!/bin/bash
-    # TLS Validation Script for Ainflue Redis Enterprise
+    # TLS Validation Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🔐 Validating Redis TLS Configuration..."
@@ -297,7 +297,7 @@ data:
     
     # Verify certificate chain
     echo "Verifying certificate chain..."
-    openssl verify -CAfile /etc/redis/ssl/ca/ainflue-ca.crt /etc/redis/ssl/certs/redis-server.crt
+    openssl verify -CAfile /etc/redis/ssl/ca/iacherie-ca.crt /etc/redis/ssl/certs/redis-server.crt
     
     # Test cipher suites
     echo "Testing cipher suites..."
@@ -310,13 +310,13 @@ data:
     # Test Redis connection with TLS
     echo "Testing Redis connection with TLS..."
     redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/clients/client.crt \
-      --key /etc/redis/ssl/clients/client.key --cacert /etc/redis/ssl/ca/ainflue-ca.crt ping
+      --key /etc/redis/ssl/clients/client.key --cacert /etc/redis/ssl/ca/iacherie-ca.crt ping
     
     echo "✅ TLS validation completed"
 
   monitor_tls.sh: |
     #!/bin/bash
-    # TLS Monitoring Script for Ainflue Redis Enterprise
+    # TLS Monitoring Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "📊 Monitoring Redis TLS Status..."

@@ -2,7 +2,7 @@
 🎯 Creator Economy Orchestration Engine - Enterprise Core
 ========================================================
 
-Moteur d'orchestration avancé pour l'écosystème Creator Economy Ainflue.
+Moteur d'orchestration avancé pour l'écosystème Creator Economy IA Chérie.
 Coordination intelligente de tous les flux créateurs multi-format.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

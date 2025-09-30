@@ -25,7 +25,7 @@ RGPD, DMCA et protections de droits d'auteur internationales s'appliquent.
 - **Ingénieur Prompt IA:** Intégration et optimisation IA plateforme
 
 ## Résumé Exécutif
-Architecture platform core de niveau entreprise fournissant orchestration complète, gestion et services infrastructure pour l'écosystème plateforme créateur IA Ainflue.
+Architecture platform core de niveau entreprise fournissant orchestration complète, gestion et services infrastructure pour l'écosystème plateforme créateur IA IA Chérie.
 
 ## Vue d'ensemble de l'Architecture
 Composant backend Level 2 fournissant des services de plateforme fondamentaux incluant l'orchestration, la gestion des locataires, la facturation, la gestion des abonnements, l'infrastructure de communication et des systèmes de support complets pour l'ensemble de l'écosystème créateur.
@@ -97,7 +97,7 @@ Le platform core orchestre le workflow créateur complet:
 ### Installation
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Installer dépendances
 pip install -r requirements.txt

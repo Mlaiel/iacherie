@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 📱 Ainflue Mobile Applications Demo Script
+# 📱 IA Chérie Mobile Applications Demo Script
 # 
 # Demonstrates all mobile platform implementations:
 # - React Native + Expo (iOS/Android)
@@ -12,7 +12,7 @@
 
 set -e
 
-echo "🎵 ===== AINFLUE MOBILE APPLICATIONS DEMO ====="
+echo "🎵 ===== IACHERIE MOBILE APPLICATIONS DEMO ====="
 echo ""
 echo "🚀 Complete mobile suite implementation demonstration"
 echo "📱 React Native + Expo | 🌐 PWA | 🖥️ Desktop Electron"
@@ -44,7 +44,7 @@ print_error() {
 
 # Check if we're in the right directory
 if [ ! -d "mobile" ] || [ ! -d "frontend" ] || [ ! -d "desktop" ]; then
-    print_error "Please run this script from the Ainflue root directory"
+    print_error "Please run this script from the IA Chérie root directory"
     exit 1
 fi
 
@@ -246,5 +246,5 @@ echo "   • PWA Service Worker: frontend/public/sw.js"
 echo "   • Desktop Main: desktop/main.js"
 echo ""
 
-print_success "🎵 Ainflue Mobile Suite - Complete!"
+print_success "🎵 IA Chérie Mobile Suite - Complete!"
 echo "© 2025 Fahed Mlaiel (mlaiel@live.de) - All rights reserved"

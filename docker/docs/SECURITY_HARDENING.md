@@ -1,6 +1,6 @@
 # Docker Security Hardening Guide
 
-## Enterprise Security for Ainflue Platform
+## Enterprise Security for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Security Overview
 
-This guide covers comprehensive security hardening for the Ainflue Docker infrastructure, ensuring enterprise-grade protection across all 80+ containerized services.
+This guide covers comprehensive security hardening for the IA Chérie Docker infrastructure, ensuring enterprise-grade protection across all 80+ containerized services.
 
 ### Container Security
 
@@ -47,7 +47,7 @@ USER 10001
 #### 1. Trivy Integration
 ```bash
 # Scan images for vulnerabilities
-trivy image --severity HIGH,CRITICAL ainflue/audio-processor:latest
+trivy image --severity HIGH,CRITICAL iacherie/audio-processor:latest
 
 # Automated scanning in CI/CD
 #!/bin/bash
@@ -148,7 +148,7 @@ secrets:
 ```python
 import hvac
 
-client = hvac.Client(url='https://vault.ainflue.com:8200')
+client = hvac.Client(url='https://vault.iacherie.com:8200')
 client.token = os.environ['VAULT_TOKEN']
 
 # Read secret
@@ -159,7 +159,7 @@ db_password = secret['data']['data']['password']
 #### 3. Environment Variable Security
 ```dockerfile
 # Avoid hardcoded secrets
-ENV DATABASE_URL="postgresql://user:${DB_PASSWORD}@db:5432/ainflue"
+ENV DATABASE_URL="postgresql://user:${DB_PASSWORD}@db:5432/iacherie"
 
 # Use secret mounting instead
 COPY --from=secrets /run/secrets/db_password /etc/secrets/
@@ -307,7 +307,7 @@ def detect_anomalies():
 #### 2. Container Isolation
 ```bash
 # Emergency container isolation
-docker network disconnect ainflue-network suspicious-container
+docker network disconnect iacherie-network suspicious-container
 docker update --cpus="0.1" --memory="100m" suspicious-container
 ```
 

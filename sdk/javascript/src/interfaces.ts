@@ -1,5 +1,5 @@
 /**
- * API Interface Definitions for Ainflue SDK
+ * API Interface Definitions for IA Chérie SDK
  * 
  * Multi-expert implementation:
  * - Backend Senior: Robust API interface design with type safety

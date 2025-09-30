@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-🚀 Ainflue - Redis Orchestration Platform
+🚀 IA Chérie - Redis Orchestration Platform
 📊 Metrics Orchestrator Module
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED ⚠️
-🔐 Copyright (c) 2024 Ainflue Technologies. All rights reserved.
+🔐 Copyright (c) 2024 IA Chérie Technologies. All rights reserved.
 
 This module implements comprehensive metrics collection, aggregation, and 
 real-time analytics for the Redis orchestration platform. Developed by 

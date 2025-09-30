@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Contact: mlaiel@live.de
 
 🎯 BACKUP & DISASTER RECOVERY
-Enterprise-grade backup and disaster recovery system for Ainflue event store
+Enterprise-grade backup and disaster recovery system for IA Chérie event store
 with multi-region replication, point-in-time recovery, and automated failover.
 
 Key Features:
@@ -143,7 +143,7 @@ class BackupMetrics:
 
 class BackupDisasterRecovery:
     """
-    Enterprise backup and disaster recovery system for Ainflue event store
+    Enterprise backup and disaster recovery system for IA Chérie event store
     
     Features:
     - Automated backup scheduling and execution
@@ -187,15 +187,15 @@ class BackupDisasterRecovery:
             'backup_validation_enabled': True,
             'recovery_test_interval_days': 30,
             'max_parallel_backups': 3,
-            'backup_storage_path': '/backup/ainflue',
+            'backup_storage_path': '/backup/iacherie',
             'encryption_key_rotation_days': 90
         }
         
-        # Initialize Ainflue business backup policies
+        # Initialize IA Chérie business backup policies
         self._initialize_backup_policies()
     
     def _initialize_backup_policies(self):
-        """Initialize Ainflue-specific backup policies"""
+        """Initialize IA Chérie-specific backup policies"""
         
         # Content events - High priority with long retention
         self._backup_schedule['content_events'] = {
@@ -329,7 +329,7 @@ class BackupDisasterRecovery:
                 job_id="full_backup_20250906_020000",
                 backup_type=BackupType.FULL,
                 source_backend="postgresql",
-                target_location="s3://ainflue-backups/full/",
+                target_location="s3://iacherie-backups/full/",
                 status=BackupStatus.COMPLETED,
                 created_at=datetime.utcnow() - timedelta(days=1),
                 started_at=datetime.utcnow() - timedelta(days=1, hours=1),
@@ -347,7 +347,7 @@ class BackupDisasterRecovery:
                     job_id=f"inc_backup_20250906_{6+i*6:02d}0000",
                     backup_type=BackupType.INCREMENTAL,
                     source_backend="postgresql",
-                    target_location="s3://ainflue-backups/incremental/",
+                    target_location="s3://iacherie-backups/incremental/",
                     status=BackupStatus.COMPLETED,
                     created_at=datetime.utcnow() - timedelta(hours=18-i*6),
                     started_at=datetime.utcnow() - timedelta(hours=18-i*6, minutes=5),

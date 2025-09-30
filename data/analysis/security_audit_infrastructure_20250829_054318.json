@@ -12,7 +12,7 @@
       "category": "File Permissions",
       "checks": [
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/config",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/config",
           "permissions": "755",
           "status": "WARN",
           "issues": [
@@ -20,7 +20,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/security",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/security",
           "permissions": "755",
           "status": "WARN",
           "issues": [
@@ -28,7 +28,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/.env.development.example",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/.env.development.example",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -36,7 +36,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/.env.production.example",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/.env.production.example",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -44,7 +44,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/.env.example",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/.env.example",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -52,7 +52,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/docker-compose.yml",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/docker-compose.yml",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -60,7 +60,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/Dockerfile.production",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/Dockerfile.production",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -68,7 +68,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/Dockerfile",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/Dockerfile",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -76,7 +76,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/requirements.txt",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/requirements.txt",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -84,7 +84,7 @@
           ]
         },
         {
-          "path": "/home/runner/work/Ainflue/Ainflue/requirements-production.txt",
+          "path": "/home/runner/work/IA Chérie/IA Chérie/requirements-production.txt",
           "permissions": "644",
           "status": "WARN",
           "issues": [
@@ -146,7 +146,7 @@
       "category": "Dependency Security",
       "checks": [
         {
-          "package": "# core requirements for ainflue platform\n# production-ready packages for ai-powered content protection\n\n# web framework\nfastapi",
+          "package": "# core requirements for iacherie platform\n# production-ready packages for ai-powered content protection\n\n# web framework\nfastapi",
           "version": "0.104.1\nuvicorn[standard]",
           "status": "PASS"
         },
@@ -329,15 +329,15 @@
   },
   "critical_issues_list": [],
   "warnings_list": [
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/config",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/security",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.development.example",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.production.example",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/.env.example",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/docker-compose.yml",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/Dockerfile.production",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/Dockerfile",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/requirements.txt",
-    "World-readable file: /home/runner/work/Ainflue/Ainflue/requirements-production.txt"
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/config",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/security",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/.env.development.example",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/.env.production.example",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/.env.example",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/docker-compose.yml",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/Dockerfile.production",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/Dockerfile",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/requirements.txt",
+    "World-readable file: /home/runner/work/IA Chérie/IA Chérie/requirements-production.txt"
   ]
 }

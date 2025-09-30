@@ -25,7 +25,7 @@ def create_optimized_app() -> FastAPI:
     
     # Create FastAPI app
     app = FastAPI(
-        title="Ainflue - Optimized AI Platform",
+        title="IA Chérie - Optimized AI Platform",
         description="High-performance AI-powered content protection platform",
         version="1.0.0"
     )
@@ -275,7 +275,7 @@ def main():
     Main function to demonstrate the complete setup
     """
     
-    print("🚀 Setting up Ainflue with Cache & Performance Optimizations...")
+    print("🚀 Setting up IA Chérie with Cache & Performance Optimizations...")
     
     # Create optimized FastAPI app
     app, redis_client = create_optimized_app()

@@ -220,7 +220,7 @@ class CreatorSupportService:
             {
                 "id": "agent_001",
                 "name": "Alex Thompson",
-                "email": "alex.thompson@ainflue.com",
+                "email": "alex.thompson@iacherie.com",
                 "role": AgentRole.L1_SUPPORT,
                 "specializations": [SupportCategory.GENERAL_INQUIRY, SupportCategory.PLATFORM_USAGE],
                 "languages": ["en", "es"],
@@ -229,7 +229,7 @@ class CreatorSupportService:
             {
                 "id": "agent_002",
                 "name": "Sarah Chen",
-                "email": "sarah.chen@ainflue.com",
+                "email": "sarah.chen@iacherie.com",
                 "role": AgentRole.L2_TECHNICAL,
                 "specializations": [SupportCategory.TECHNICAL_ISSUE, SupportCategory.BUG_REPORT],
                 "languages": ["en", "zh"],
@@ -238,7 +238,7 @@ class CreatorSupportService:
             {
                 "id": "agent_003",
                 "name": "Marcus Johnson",
-                "email": "marcus.johnson@ainflue.com",
+                "email": "marcus.johnson@iacherie.com",
                 "role": AgentRole.BILLING_SPECIALIST,
                 "specializations": [SupportCategory.PAYMENT_BILLING, SupportCategory.MONETIZATION],
                 "languages": ["en"],
@@ -247,7 +247,7 @@ class CreatorSupportService:
             {
                 "id": "agent_004",
                 "name": "Dr. Emily Rodriguez",
-                "email": "emily.rodriguez@ainflue.com",
+                "email": "emily.rodriguez@iacherie.com",
                 "role": AgentRole.L3_EXPERT,
                 "specializations": [SupportCategory.SECURITY_CONCERN, SupportCategory.COPYRIGHT_DMCA],
                 "languages": ["en", "es", "fr"],
@@ -256,7 +256,7 @@ class CreatorSupportService:
             {
                 "id": "agent_005",
                 "name": "David Kumar",
-                "email": "david.kumar@ainflue.com",
+                "email": "david.kumar@iacherie.com",
                 "role": AgentRole.DEVELOPER_SUPPORT,
                 "specializations": [SupportCategory.API_SUPPORT, SupportCategory.TECHNICAL_ISSUE],
                 "languages": ["en", "hi"],

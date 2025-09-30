@@ -18,7 +18,7 @@ and creator content performance insights across multimedia platforms.
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-Project: Ainflue Creator Economy Intelligence Platform
+Project: IA Chérie Creator Economy Intelligence Platform
 Module: Multi-Format Intelligence Content Analyzer
 Version: 1.0.0 Enterprise Production
 License: Proprietary - All Rights Reserved

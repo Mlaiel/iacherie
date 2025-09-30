@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  Ainflue iOS Application
+//  IA Chérie iOS Application
 //
 //  Professional content creation platform - AppDelegate header
 //

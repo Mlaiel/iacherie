@@ -1,6 +1,6 @@
 # 🌍 Optimisation Géographique - Moteur de Distribution de Contenu Global
 
-**Système avancé d'optimisation géographique et culturelle alimenté par l'IA pour la plateforme Ainflue**
+**Système avancé d'optimisation géographique et culturelle alimenté par l'IA pour la plateforme IA Chérie**
 
 ## 📋 Aperçu
 
@@ -155,4 +155,4 @@ localized_content = await localizer.localize_content(content, target_language, r
 ---
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
-**Plateforme Ainflue - Module d'Optimisation Géographique**
+**Plateforme IA Chérie - Module d'Optimisation Géographique**

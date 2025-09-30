@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ainflue-nginx-ingress
-  namespace: ainflue
+  name: iacherie-nginx-ingress
+  namespace: iacherie
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -25,64 +25,64 @@ metadata:
 spec:
   tls:
   - hosts:
-    - api.ainflue.com
-    - mobile.ainflue.com
-    - ai.ainflue.com
-    - app.ainflue.com
-    secretName: ainflue-tls-secret
+    - api.iacherie.com
+    - mobile.iacherie.com
+    - ai.iacherie.com
+    - app.iacherie.com
+    secretName: iacherie-tls-secret
   rules:
-  - host: api.ainflue.com
+  - host: api.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-api-service
+            name: iacherie-api-service
             port:
               number: 80
-  - host: mobile.ainflue.com
+  - host: mobile.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-mobile-api-service
+            name: iacherie-mobile-api-service
             port:
               number: 80
-  - host: ai.ainflue.com
+  - host: ai.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-ai-engine-service
+            name: iacherie-ai-engine-service
             port:
               number: 80
-  - host: app.ainflue.com
+  - host: app.iacherie.com
     http:
       paths:
       - path: /api/v1
         pathType: Prefix
         backend:
           service:
-            name: ainflue-api-service
+            name: iacherie-api-service
             port:
               number: 80
       - path: /ai
         pathType: Prefix
         backend:
           service:
-            name: ainflue-ai-engine-service
+            name: iacherie-ai-engine-service
             port:
               number: 80
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-frontend-service
+            name: iacherie-frontend-service
             port:
               number: 80
 
@@ -109,12 +109,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-network-policy
-  namespace: ainflue
+  name: iacherie-network-policy
+  namespace: iacherie
 spec:
   podSelector:
     matchLabels:
-      app: ainflue
+      app: iacherie
   policyTypes:
   - Ingress
   - Egress
@@ -125,7 +125,7 @@ spec:
           name: ingress-nginx
     - podSelector:
         matchLabels:
-          app: ainflue
+          app: iacherie
     ports:
     - protocol: TCP
       port: 8080

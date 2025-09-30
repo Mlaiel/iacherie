@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Enterprise Metrics System
+IA Chérie Platform - Enterprise Metrics System
 ============================================
 
 Advanced enterprise metrics collection, aggregation, and analysis system
 for comprehensive monitoring of business KPIs, performance metrics, and
-operational insights across the Ainflue platform.
+operational insights across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

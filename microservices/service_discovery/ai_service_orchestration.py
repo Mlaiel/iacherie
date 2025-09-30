@@ -1,12 +1,12 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🤖 AI Service Orchestration Enterprise - Ainflue
+🤖 AI Service Orchestration Enterprise - IA Chérie
 ===============================================
 Orchestration services IA/ML pour plateforme créateurs.
 Model deployment + inference scaling + GPU optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -205,7 +205,7 @@ class AIModelRegistry:
         
         catalog["content-moderator-v2"] = AIModelSpec(
             model_id="content-moderator-v2",
-            model_name="Ainflue Content Moderator v2",
+            model_name="IA Chérie Content Moderator v2",
             model_type=AIModelType.CONTENT_MODERATION,
             framework=ModelFramework.CUSTOM,
             input_types=["image/jpeg", "video/mp4", "audio/mp3", "text/plain"],
@@ -221,7 +221,7 @@ class AIModelRegistry:
         
         catalog["recommendation-engine-v3"] = AIModelSpec(
             model_id="recommendation-engine-v3",
-            model_name="Ainflue Recommendation Engine v3",
+            model_name="IA Chérie Recommendation Engine v3",
             model_type=AIModelType.RECOMMENDATION,
             framework=ModelFramework.TENSORFLOW,
             input_types=["application/json"],
@@ -236,7 +236,7 @@ class AIModelRegistry:
         
         catalog["voice-cloner-pro"] = AIModelSpec(
             model_id="voice-cloner-pro",
-            model_name="Ainflue Voice Cloner Pro",
+            model_name="IA Chérie Voice Cloner Pro",
             model_type=AIModelType.VOICE_CLONING,
             framework=ModelFramework.PYTORCH,
             input_types=["audio/wav", "text/plain"],
@@ -528,7 +528,7 @@ class ModelDeploymentManager:
                 service_instance = ServiceInstance(
                     service_id=instance_id,
                     service_name=f"ai_{model_spec.model_type.value}",
-                    host="ai-cluster.ainflue.com",
+                    host="ai-cluster.iacherie.com",
                     port=8080 + i,
                     health_check_url="/health",
                     metadata={
@@ -642,7 +642,7 @@ class ModelDeploymentManager:
             service_instance = ServiceInstance(
                 service_id=instance_id,
                 service_name=f"ai_{model_spec.model_type.value}",
-                host="ai-cluster.ainflue.com",
+                host="ai-cluster.iacherie.com",
                 port=8080 + current_count + i,
                 health_check_url="/health",
                 metadata={

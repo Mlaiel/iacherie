@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 Cache Performance Optimizer - Enterprise Performance Monitoring
 Advanced cache performance optimization for Creator Economy platform

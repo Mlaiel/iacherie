@@ -1,5 +1,5 @@
 """
-Collaboration Module - Ainflue Integrations
+Collaboration Module - IA Chérie Integrations
 ==========================================
 Module de collaboration IA avancé pour matching créateurs,
 gamification, et orchestration de workflows collaboratifs.
@@ -17,7 +17,10 @@ Support pour:
 - Gestion base de données optimisée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
+
+# Import enterprise collaboration gateway
+from .enterprise_collaboration_gateway import EnterpriseCollaborationGateway
 Version: 2.0 Enterprise Plus
 """
 
@@ -88,9 +91,9 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Collaboration IA enterprise pour créateurs Ainflue - Version Expert Plus"
+__description__ = "Collaboration IA enterprise pour créateurs IA Chérie - Version Expert Plus"
 
-# Configuration logique métier Ainflue - UPDATED with Expert Enhancements
+# Configuration logique métier IA Chérie - UPDATED with Expert Enhancements
 COLLABORATION_CONFIG = {
     'platforms_supported': 65,
     'ai_agents': 53,

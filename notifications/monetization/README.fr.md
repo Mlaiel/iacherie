@@ -1,10 +1,10 @@
 # 💰 NOTIFICATIONS MONÉTISATION - DOCUMENTATION FRANÇAISE
 
-**Plateforme Ainflue - Système de Notifications Monétisation Enterprise**
+**Plateforme IA Chérie - Système de Notifications Monétisation Enterprise**
 
 ## 🎯 APERÇU
 
-Le module Monetization Notifications gère toutes les notifications liées aux revenus de la plateforme Ainflue, incluant les confirmations de paiement, les opportunités de revenus, les alertes de commission et les rapports financiers.
+Le module Monetization Notifications gère toutes les notifications liées aux revenus de la plateforme IA Chérie, incluant les confirmations de paiement, les opportunités de revenus, les alertes de commission et les rapports financiers.
 
 ## 📋 COMPOSANTS DU MODULE
 
@@ -57,5 +57,5 @@ await monetization.notify_revenue_milestone(
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact:** mlaiel@live.de  
-**Projet:** Plateforme Ainflue - Notifications Monétisation  
+**Projet:** Plateforme IA Chérie - Notifications Monétisation  
 **Version:** 3.1.0 Enterprise

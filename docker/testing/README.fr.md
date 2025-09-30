@@ -1,4 +1,4 @@
-# 🧪 Ainflue Platform - Infrastructure de Tests Docker
+# 🧪 IA Chérie Platform - Infrastructure de Tests Docker
 
 **Infrastructure de tests enterprise-grade pour la containerisation de la plateforme AI Influencer. Suite de tests complète avec exigence de couverture 95%+ supportant 80+ microservices.**
 
@@ -6,7 +6,7 @@
 
 ## 📋 Aperçu
 
-Ce module de tests fournit une infrastructure de tests complète de niveau enterprise pour la plateforme Ainflue AI Influencer. L'architecture supporte des tests complets sur 80+ microservices avec exécution automatisée des tests, validation de performance, scanning de sécurité et chaos engineering.
+Ce module de tests fournit une infrastructure de tests complète de niveau enterprise pour la plateforme IA Chérie AI Influencer. L'architecture supporte des tests complets sur 80+ microservices avec exécution automatisée des tests, validation de performance, scanning de sécurité et chaos engineering.
 
 ### 🎯 Flux de Logique Métier
 ```
@@ -67,10 +67,10 @@ docker-compose -f docker-compose.testing.yml up performance_tester
 docker-compose -f docker-compose.testing.yml up security_tester
 
 # Tests avec paramètres personnalisés
-docker run --rm ainflue/test-runner:latest pytest --cov --cov-report=html
+docker run --rm iacherie/test-runner:latest pytest --cov --cov-report=html
 
 # Tests de performance avec charge personnalisée
-docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rate=25
+docker run --rm iacherie/performance-tester:latest locust --users=500 --spawn-rate=25
 ```
 
 ---
@@ -161,7 +161,7 @@ docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rat
 docker-compose -f docker-compose.testing.yml logs test_runner
 
 # Déboguer un test spécifique
-docker run -it ainflue/test-runner:latest bash
+docker run -it iacherie/test-runner:latest bash
 pytest tests/specific_test.py -v
 ```
 
@@ -171,7 +171,7 @@ pytest tests/specific_test.py -v
 docker stats
 
 # Vérifier les logs des conteneurs
-docker logs ainflue-performance-tester
+docker logs iacherie-performance-tester
 ```
 
 ---

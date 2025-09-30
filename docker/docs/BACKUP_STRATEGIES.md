@@ -1,6 +1,6 @@
 # Backup Strategies Guide
 
-## Comprehensive Backup Solutions for Ainflue Docker Platform
+## Comprehensive Backup Solutions for IA Chérie Docker Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Backup Overview
 
-Multi-layered backup strategy for data protection, configuration preservation, and disaster recovery across all Ainflue services.
+Multi-layered backup strategy for data protection, configuration preservation, and disaster recovery across all IA Chérie services.
 
 ### Database Backups
 
@@ -25,13 +25,13 @@ RETENTION_DAYS=30
 mkdir -p $BACKUP_DIR
 
 # Database backup
-docker exec ainflue-postgres pg_dump -U ainflue -d ainflue_prod > $BACKUP_DIR/backup_$DATE.sql
+docker exec iacherie-postgres pg_dump -U iacherie -d ainflue_prod > $BACKUP_DIR/backup_$DATE.sql
 
 # Compress backup
 gzip $BACKUP_DIR/backup_$DATE.sql
 
 # Upload to S3
-aws s3 cp $BACKUP_DIR/backup_$DATE.sql.gz s3://ainflue-backups/postgresql/
+aws s3 cp $BACKUP_DIR/backup_$DATE.sql.gz s3://iacherie-backups/postgresql/
 
 # Cleanup old backups
 find $BACKUP_DIR -name "backup_*.sql.gz" -mtime +$RETENTION_DAYS -delete
@@ -46,13 +46,13 @@ BACKUP_DIR="/backup/mongodb"
 DATE=$(date +%Y%m%d_%H%M%S)
 
 # MongoDB dump
-docker exec ainflue-mongodb mongodump --db ainflue --out $BACKUP_DIR/$DATE
+docker exec iacherie-mongodb mongodump --db iacherie --out $BACKUP_DIR/$DATE
 
 # Create archive
 tar -czf $BACKUP_DIR/mongodb_backup_$DATE.tar.gz -C $BACKUP_DIR $DATE
 
 # Upload to cloud storage
-rclone copy $BACKUP_DIR/mongodb_backup_$DATE.tar.gz remote:ainflue-backups/mongodb/
+rclone copy $BACKUP_DIR/mongodb_backup_$DATE.tar.gz remote:iacherie-backups/mongodb/
 
 # Cleanup
 rm -rf $BACKUP_DIR/$DATE
@@ -105,7 +105,7 @@ for volume in $VOLUMES; do
     
     # Upload to cloud storage
     aws s3 cp $BACKUP_DIR/$volume/backup_$DATE.tar.gz \
-        s3://ainflue-backups/volumes/$volume/
+        s3://iacherie-backups/volumes/$volume/
 done
 ```
 
@@ -114,7 +114,7 @@ done
 #!/bin/bash
 # config-backup.sh
 
-CONFIG_DIRS=("/etc/docker" "/var/lib/docker/swarm" "/opt/ainflue/configs")
+CONFIG_DIRS=("/etc/docker" "/var/lib/docker/swarm" "/opt/iacherie/configs")
 BACKUP_DIR="/backup/configs"
 DATE=$(date +%Y%m%d_%H%M%S)
 
@@ -148,7 +148,7 @@ from datetime import datetime, timedelta
 class MediaBackup:
     def __init__(self):
         self.s3_client = boto3.client('s3')
-        self.bucket_name = 'ainflue-media-backups'
+        self.bucket_name = 'iacherie-media-backups'
         
     def backup_media_files(self, source_path, prefix):
         """Backup media files to S3"""
@@ -218,7 +218,7 @@ CONFIG_REPO="/backup/config-repo"
 cd $CONFIG_REPO
 
 # Copy current configurations
-cp -r /opt/ainflue/configs/* .
+cp -r /opt/iacherie/configs/* .
 cp /etc/docker/daemon.json docker/
 cp -r /var/lib/docker/swarm/docker-state.json docker/
 
@@ -378,17 +378,17 @@ class MultiCloudBackup:
         """Upload backup to all cloud providers"""
         
         # Upload to AWS S3
-        self.s3_client.upload_file(file_path, 'ainflue-backups-aws', key)
+        self.s3_client.upload_file(file_path, 'iacherie-backups-aws', key)
         
         # Upload to Azure
         blob_client = self.azure_client.get_blob_client(
-            container='ainflue-backups', blob=key
+            container='iacherie-backups', blob=key
         )
         with open(file_path, 'rb') as data:
             blob_client.upload_blob(data, overwrite=True)
         
         # Upload to Google Cloud
-        bucket = self.gcs_client.bucket('ainflue-backups-gcp')
+        bucket = self.gcs_client.bucket('iacherie-backups-gcp')
         blob = bucket.blob(key)
         blob.upload_from_filename(file_path)
         
@@ -405,7 +405,7 @@ class MultiCloudBackup:
 echo "Starting disaster recovery simulation..."
 
 # Stop all services
-docker stack rm ainflue
+docker stack rm iacherie
 
 # Clear volumes (simulation of data loss)
 docker volume prune -f
@@ -414,11 +414,11 @@ docker volume prune -f
 ./restore-from-backup.sh latest
 
 # Restart services
-docker stack deploy -c docker-compose.production.yml ainflue
+docker stack deploy -c docker-compose.production.yml iacherie
 
 # Verify services are healthy
 sleep 60
-docker service ls --filter "label=com.docker.stack.namespace=ainflue"
+docker service ls --filter "label=com.docker.stack.namespace=iacherie"
 
 echo "Disaster recovery simulation completed"
 ```

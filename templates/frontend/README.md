@@ -1,4 +1,4 @@
-# 🎨 Frontend Templates - Ainflue Creator Economy Platform
+# 🎨 Frontend Templates - IA Chérie Creator Economy Platform
 
 > **Enterprise-grade frontend template collection for modern web applications with specialized Creator Economy features**
 
@@ -21,7 +21,7 @@
 
 ## 🚀 Overview
 
-The Ainflue Frontend Templates collection provides 150+ production-ready, enterprise-grade components and templates designed specifically for modern web applications with Creator Economy features. Built with TypeScript, React, Vue, Angular, and more.
+The IA Chérie Frontend Templates collection provides 150+ production-ready, enterprise-grade components and templates designed specifically for modern web applications with Creator Economy features. Built with TypeScript, React, Vue, Angular, and more.
 
 ## 🏗️ Architecture
 
@@ -153,7 +153,7 @@ npm install --save-dev @types/react @types/react-dom jest @testing-library/react
 
 ### **Basic Usage**
 ```typescript
-import { Button, Input, Modal } from '@ainflue/frontend-templates';
+import { Button, Input, Modal } from '@iacherie/frontend-templates';
 
 function App() {
   return (
@@ -190,7 +190,7 @@ import {
   CreatorAnalytics,
   useContentUpload,
   useCreatorCollaboration 
-} from '@ainflue/frontend-templates';
+} from '@iacherie/frontend-templates';
 
 function CreatorApp() {
   const { uploadFile, isUploading, uploadedFiles } = useContentUpload();
@@ -208,7 +208,7 @@ function CreatorApp() {
 
 ### **Advanced Theming**
 ```typescript
-import { ThemeProvider, CombinedProvider } from '@ainflue/frontend-templates';
+import { ThemeProvider, CombinedProvider } from '@iacherie/frontend-templates';
 
 const creatorTheme = {
   colors: {
@@ -251,7 +251,7 @@ npm run test:watch
 ### **Test Example**
 ```typescript
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from '@ainflue/frontend-templates';
+import { Button } from '@iacherie/frontend-templates';
 
 test('Button renders with correct variant', () => {
   render(
@@ -310,7 +310,7 @@ test('Button renders with correct variant', () => {
 
 ### **Usage**
 ```typescript
-import { useTranslation, LanguageSwitcher } from '@ainflue/frontend-templates';
+import { useTranslation, LanguageSwitcher } from '@iacherie/frontend-templates';
 
 function LocalizedComponent() {
   const { t, changeLanguage } = useTranslation();
@@ -339,7 +339,7 @@ import {
   SwipeComponent, 
   TouchGesture,
   useMobileOptimization 
-} from '@ainflue/frontend-templates';
+} from '@iacherie/frontend-templates';
 
 function MobileApp() {
   const { isMobile, orientation } = useMobileOptimization();
@@ -359,7 +359,7 @@ function MobileApp() {
 
 ### **Performance Monitoring**
 ```typescript
-import { usePerformanceMonitor, AnalyticsTracker } from '@ainflue/frontend-templates';
+import { usePerformanceMonitor, AnalyticsTracker } from '@iacherie/frontend-templates';
 
 function MonitoredComponent() {
   const { renderCount, averageRenderTime } = usePerformanceMonitor('ComponentName');
@@ -379,7 +379,7 @@ function MonitoredComponent() {
 
 ### **Custom Component Factory**
 ```typescript
-import { ComponentFactory, templateRegistry } from '@ainflue/frontend-templates';
+import { ComponentFactory, templateRegistry } from '@iacherie/frontend-templates';
 
 // Register custom template
 templateRegistry.register({
@@ -444,7 +444,7 @@ npm install styled-components @types/styled-components
 **Performance Issues:**
 ```typescript
 // Enable performance monitoring
-import { ComponentFactory } from '@ainflue/frontend-templates';
+import { ComponentFactory } from '@iacherie/frontend-templates';
 
 ComponentFactory.updateOptions({
   enablePerformanceMonitoring: true,
@@ -469,5 +469,5 @@ This software is the exclusive property of Fahed Mlaiel. Commercial use, distrib
 
 ---
 
-**Built with ❤️ by the Ainflue Creator Economy Team**  
+**Built with ❤️ by the IA Chérie Creator Economy Team**  
 **Leading the future of Creator Economy platforms**

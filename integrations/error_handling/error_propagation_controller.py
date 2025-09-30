@@ -2,7 +2,7 @@
 """Error Propagation Controller - Cascading Failure Prevention
 ============================================================
 
-Advanced error propagation control for Ainflue platform error handling.
+Advanced error propagation control for IA Chérie platform error handling.
 Provides cascading failure detection, error boundary enforcement, and
 intelligent error containment across distributed services.
 

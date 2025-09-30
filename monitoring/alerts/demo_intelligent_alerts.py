@@ -3,7 +3,7 @@
 ===============================
 
 Demonstration script showing the capabilities of the unified intelligent alert system
-for the Ainflue platform. This script demonstrates all three alert categories:
+for the IA Chérie platform. This script demonstrates all three alert categories:
 - Business Alerts (Revenue, User Experience)
 - Technical Alerts (Infrastructure, Security)  
 - AI Alerts (Model Drift, Accuracy Degradation)
@@ -153,7 +153,7 @@ async def demonstrate_technical_alerts():
         suspicious_activities=1,
         blocked_ips=2,
         security_events=[],
-        service_name="ainflue-api",
+        service_name="iacherie-api",
         environment="production"
     )
     
@@ -180,7 +180,7 @@ async def demonstrate_technical_alerts():
             {"type": "brute_force", "severity": "high"},
             {"type": "sql_injection", "severity": "critical"}
         ],
-        service_name="ainflue-api",
+        service_name="iacherie-api",
         environment="production"
     )
     
@@ -339,7 +339,7 @@ async def demonstrate_unified_coordination():
             {"type": "ddos_attack", "severity": "emergency"},
             {"type": "data_breach_attempt", "severity": "critical"}
         ],
-        service_name="ainflue-api"
+        service_name="iacherie-api"
     )
     
     ai_metrics = [
@@ -440,7 +440,7 @@ async def main():
     """Main demonstration function"""
     print("🚨 INTELLIGENT ALERT SYSTEM DEMONSTRATION")
     print("=" * 50)
-    print("Demonstrating comprehensive alert management for the Ainflue platform")
+    print("Demonstrating comprehensive alert management for the IA Chérie platform")
     print("Categories: Business, Technical, AI/ML")
     print("=" * 50)
     

@@ -1,12 +1,12 @@
 """
-Monetization Timeout Policies Module - Ainflue Enterprise
+Monetization Timeout Policies Module - IA Chérie Enterprise
 ========================================================
 Politiques timeout pour services monétisation avec compliance financière.
 Payment timeouts + billing processes + financial compliance + revenue optimization.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chérie Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

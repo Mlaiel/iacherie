@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE ROYALTY CALCULATOR - AUTOMATED DOCKERFILE
+# IACHERIE ROYALTY CALCULATOR - AUTOMATED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS royalty-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${ROYALTY_SERVICE_PORT}
 CMD ["python3.11", "-m", "royalty_calculator.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Royalty Calculator"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="royalty_calculator"
-LABEL ainflue.service.port="8043"
+LABEL org.opencontainers.image.title="IA Chérie Royalty Calculator"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="royalty_calculator"
+LABEL iacherie.service.port="8043"

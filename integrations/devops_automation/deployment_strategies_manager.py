@@ -2,7 +2,7 @@
 =====================================================================
 
 Deployment Expert: Deployment strategies avancées avec rollback automation,
-risk assessment et feature flag integration pour plateforme Ainflue.
+risk assessment et feature flag integration pour plateforme IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025
@@ -518,7 +518,7 @@ class DeploymentStrategiesManager:
     🚀 Deployment Strategies Manager Enterprise
     
     Gestionnaire de stratégies de déploiement avec risk management,
-    rollback automation et feature flag integration pour Ainflue.
+    rollback automation et feature flag integration pour IA Chérie.
     
     Fonctionnalités principales:
     - Blue/Green deployment automation avec traffic switching
@@ -1236,17 +1236,17 @@ if __name__ == "__main__":
         # Configuration environnements
         prod_env = DeploymentEnvironment(
             name="production",
-            url="https://api.ainflue.com",
+            url="https://api.iacherie.com",
             cluster="prod-cluster",
-            namespace="ainflue-prod",
+            namespace="iacherie-prod",
             replicas=6
         )
         
         staging_env = DeploymentEnvironment(
             name="staging",
-            url="https://staging-api.ainflue.com",
+            url="https://staging-api.iacherie.com",
             cluster="staging-cluster",
-            namespace="ainflue-staging",
+            namespace="iacherie-staging",
             replicas=3
         )
         

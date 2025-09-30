@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚖️ Enterprise Notification Compliance Manager - Ainflue Platform Core
+⚖️ Enterprise Notification Compliance Manager - IA Chérie Platform Core
 GDPR/CAN-SPAM/CASL/CCPA compliance and legal framework management
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
@@ -1038,7 +1038,7 @@ if __name__ == "__main__":
             content=original_content,
             user_id="user123",
             category=NotificationCategory.MARKETING,
-            sender_info={"company_name": "Ainflue", "company_address": "123 Tech St, City"}
+            sender_info={"company_name": "IA Chérie", "company_address": "123 Tech St, City"}
         )
         print(f"\nOriginal: {original_content}")
         print(f"With footer: {compliant_content}")

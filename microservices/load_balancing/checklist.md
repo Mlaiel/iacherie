@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/load_balancing/`  
+**Location**: `/workspaces/IA Chérie/microservices/load_balancing/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Load Distribution  
-**Purpose**: Load Balancing Enterprise pour distribution trafic microservices Ainflue
+**Purpose**: Load Balancing Enterprise pour distribution trafic microservices IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -559,7 +559,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Load balancing optimise workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Load balancing optimise workflow créateurs → distribution
 - **Code Industriel**: ✅ Algorithmes enterprise + ML + optimization
 - **Scalabilité Enterprise**: ✅ Distribution trafic haute performance
 - **Multi-Cloud Support**: ✅ Load balancing hybride cloud/on-premise
@@ -676,4 +676,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module load balancing enterprise clé en main, algorithmes intelligents IA/ML, geographic routing, session-aware, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module load balancing enterprise clé en main, algorithmes intelligents IA/ML, geographic routing, session-aware, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

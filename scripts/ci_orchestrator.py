@@ -4,7 +4,7 @@ CI/CD Orchestrator - Enterprise CI/CD Pipeline Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced CI/CD pipeline orchestration for Ainflue Platform:
+Advanced CI/CD pipeline orchestration for IA Chérie Platform:
 - Automated code quality checks
 - Security vulnerability scanning
 - Build and test automation
@@ -30,7 +30,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/cicd.log'),
+        logging.FileHandler('/var/log/iacherie/cicd.log'),
         logging.StreamHandler()
     ]
 )
@@ -96,7 +96,7 @@ class CICDOrchestrator:
     - Monitoring and alerting
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/cicd.yaml"):
+    def __init__(self, config_path: str = "/etc/iacherie/cicd.yaml"):
         self.config_path = config_path
         self.active_runs: Dict[str, PipelineRun] = {}
         self.completed_runs: List[PipelineRun] = []
@@ -114,7 +114,7 @@ class CICDOrchestrator:
             # Create default configuration
             self.config = {
                 'repository': {
-                    'url': 'https://github.com/Mlaiel/Ainflue.git',
+                    'url': 'https://github.com/Mlaiel/IA Chérie.git',
                     'default_branch': 'main'
                 },
                 'stages': {
@@ -150,7 +150,7 @@ class CICDOrchestrator:
                 },
                 'artifacts': {
                     'retention_days': 30,
-                    'storage_path': '/var/lib/ainflue/artifacts'
+                    'storage_path': '/var/lib/iacherie/artifacts'
                 }
             }
             
@@ -486,7 +486,7 @@ class CICDOrchestrator:
                 return False
             
             # Build Docker image
-            image_tag = f"ainflue/platform:{pipeline_run.commit_sha[:8]}"
+            image_tag = f"iacherie/platform:{pipeline_run.commit_sha[:8]}"
             
             result = await self._run_command([
                 'docker', 'build', 
@@ -525,7 +525,7 @@ class CICDOrchestrator:
             
             # Use deployment orchestrator
             result = await self._run_command([
-                'python', '/home/runner/work/Ainflue/Ainflue/scripts/deployment_orchestrator.py',
+                'python', '/home/runner/work/IA Chérie/IA Chérie/scripts/deployment_orchestrator.py',
                 '--environment', environment,
                 '--version', pipeline_run.commit_sha[:8]
             ])
@@ -751,13 +751,13 @@ async def main():
     """CLI entry point for CI/CD orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue CI/CD Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chérie CI/CD Orchestrator')
     parser.add_argument('--trigger', metavar='COMMIT_SHA', help='Trigger pipeline for commit')
     parser.add_argument('--branch', default='main', help='Git branch')
     parser.add_argument('--status', metavar='RUN_ID', help='Get pipeline status')
     parser.add_argument('--cancel', metavar='RUN_ID', help='Cancel pipeline run')
     parser.add_argument('--report', action='store_true', help='Generate pipeline report')
-    parser.add_argument('--config', default='/etc/ainflue/cicd.yaml', help='Configuration file')
+    parser.add_argument('--config', default='/etc/iacherie/cicd.yaml', help='Configuration file')
     
     args = parser.parse_args()
     

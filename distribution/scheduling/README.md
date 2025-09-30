@@ -1,6 +1,6 @@
 # 📅 Scheduling Distribution Engine - Advanced Publication Scheduling Platform
 
-**Enterprise-Grade Scheduling System for Ainflue Distribution Platform**
+**Enterprise-Grade Scheduling System for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
@@ -228,9 +228,9 @@ export SCHEDULER_BACKUP_ENABLED="true"
 
 ## 📞 Support & Contact
 
-**Scheduling Team**: scheduling@ainflue.com  
+**Scheduling Team**: scheduling@iacherie.com  
 **Technical Support**: +1-800-SCHEDULE  
-**Enterprise Support**: enterprise@ainflue.com
+**Enterprise Support**: enterprise@iacherie.com
 
 ---
 

@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: vulnerability_scanner.dockerfile
-    container_name: ainflue-vulnerability-scanner
+    container_name: iacherie-vulnerability-scanner
     environment:
       - SCAN_FREQUENCY=${SCAN_FREQUENCY:-daily}
       - SEVERITY_THRESHOLD=${SEVERITY_THRESHOLD:-medium}
@@ -33,7 +33,7 @@ services:
     build:
       context: .
       dockerfile: threat_detector.dockerfile
-    container_name: ainflue-threat-detector
+    container_name: iacherie-threat-detector
     environment:
       - ML_MODEL_PATH=/app/models
       - THREAT_INTELLIGENCE_API=${THREAT_INTELLIGENCE_API}
@@ -68,7 +68,7 @@ services:
     build:
       context: .
       dockerfile: access_controller.dockerfile
-    container_name: ainflue-access-controller
+    container_name: iacherie-access-controller
     environment:
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - MFA_PROVIDER=${MFA_PROVIDER:-totp}
@@ -96,7 +96,7 @@ services:
     build:
       context: .
       dockerfile: audit_logger.dockerfile
-    container_name: ainflue-audit-logger
+    container_name: iacherie-audit-logger
     environment:
       - LOG_RETENTION_DAYS=${LOG_RETENTION_DAYS:-2555}
       - SIEM_INTEGRATION=${SIEM_INTEGRATION:-enabled}
@@ -125,7 +125,7 @@ services:
     build:
       context: .
       dockerfile: encryption_manager.dockerfile
-    container_name: ainflue-encryption-manager
+    container_name: iacherie-encryption-manager
     environment:
       - VAULT_ADDR=${VAULT_ADDR:-http://vault:8200}
       - VAULT_TOKEN=${VAULT_TOKEN}
@@ -153,7 +153,7 @@ services:
     build:
       context: .
       dockerfile: identity_verifier.dockerfile
-    container_name: ainflue-identity-verifier
+    container_name: iacherie-identity-verifier
     environment:
       - VERIFICATION_PROVIDERS=${VERIFICATION_PROVIDERS:-jumio,onfido}
       - JUMIO_API_TOKEN=${JUMIO_API_TOKEN}
@@ -178,7 +178,7 @@ services:
     build:
       context: .
       dockerfile: fraud_detector.dockerfile
-    container_name: ainflue-fraud-detector
+    container_name: iacherie-fraud-detector
     environment:
       - ML_MODEL_PATH=/app/models/fraud
       - REDIS_URL=redis://redis:6379/12
@@ -210,7 +210,7 @@ services:
     build:
       context: .
       dockerfile: compliance_monitor.dockerfile
-    container_name: ainflue-compliance-monitor
+    container_name: iacherie-compliance-monitor
     environment:
       - COMPLIANCE_STANDARDS=${COMPLIANCE_STANDARDS:-ISO27001,SOC2,GDPR,HIPAA,PCI_DSS}
       - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
@@ -235,7 +235,7 @@ services:
     build:
       context: .
       dockerfile: penetration_tester.dockerfile
-    container_name: ainflue-penetration-tester
+    container_name: iacherie-penetration-tester
     environment:
       - TEST_FREQUENCY=${TEST_FREQUENCY:-weekly}
       - TEST_SCOPE=${TEST_SCOPE:-internal,external}
@@ -264,7 +264,7 @@ services:
     build:
       context: .
       dockerfile: security_analytics.dockerfile
-    container_name: ainflue-security-analytics
+    container_name: iacherie-security-analytics
     environment:
       - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
       - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
@@ -298,7 +298,7 @@ services:
     build:
       context: .
       dockerfile: incident_responder.dockerfile
-    container_name: ainflue-incident-responder
+    container_name: iacherie-incident-responder
     environment:
       - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
       - REDIS_URL=redis://redis:6379/14
@@ -323,7 +323,7 @@ services:
   # Supporting Infrastructure
   security-postgres:
     image: postgres:15-alpine
-    container_name: ainflue-security-postgres
+    container_name: iacherie-security-postgres
     environment:
       - POSTGRES_DB=security
       - POSTGRES_USER=security
@@ -342,7 +342,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: ainflue-security-redis
+    container_name: iacherie-security-redis
     command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
     volumes:
       - security_redis_data:/data
@@ -357,7 +357,7 @@ services:
 
   elasticsearch:
     image: elasticsearch:8.8.0
-    container_name: ainflue-security-elasticsearch
+    container_name: iacherie-security-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -376,7 +376,7 @@ services:
 
   vault:
     image: vault:latest
-    container_name: ainflue-vault
+    container_name: iacherie-vault
     environment:
       - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_ROOT_TOKEN}
       - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200

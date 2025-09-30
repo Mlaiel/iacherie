@@ -1,0 +1,118 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "CPU Usage",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "ia_influencer_system_cpu_usage_percent",
+          "legendFormat": "Core {{core}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 2,
+      "title": "Memory Usage",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "ia_influencer_system_memory_usage_bytes",
+          "legendFormat": "{{type}}"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 3,
+      "title": "Disk I/O",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(ia_influencer_disk_reads_total[5m])",
+          "legendFormat": "Disk Reads"
+        },
+        {
+          "expr": "rate(ia_influencer_disk_writes_total[5m])",
+          "legendFormat": "Disk Writes"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 4,
+      "title": "Network Traffic",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(ia_influencer_network_bytes_received_total[5m])",
+          "legendFormat": "Bytes Received"
+        },
+        {
+          "expr": "rate(ia_influencer_network_bytes_sent_total[5m])",
+          "legendFormat": "Bytes Sent"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [
+    "infrastructure",
+    "system",
+    "monitoring"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Infrastructure Monitoring",
+  "uid": null,
+  "version": 1,
+  "description": "System resources and infrastructure metrics"
+}

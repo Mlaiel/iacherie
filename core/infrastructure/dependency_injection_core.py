@@ -1,10 +1,10 @@
 """
-Ainflue Core Infrastructure - Dependency Injection Core
+IA Chérie Core Infrastructure - Dependency Injection Core
 =======================================================
 
 Enterprise-grade dependency injection container with lifecycle management,
 auto-wiring, factory patterns, and advanced container features.
-Provides IoC (Inversion of Control) for all Ainflue core components.
+Provides IoC (Inversion of Control) for all IA Chérie core components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

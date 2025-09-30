@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Cross-Platform Distribution Demo for Ainflue Platform
+Cross-Platform Distribution Demo for IA Chérie Platform
 ===================================================
 
 Demonstrates automated multi-platform content distribution with optimization,

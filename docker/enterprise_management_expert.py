@@ -58,7 +58,7 @@ class EnterpriseDockerManager:
     
     def __init__(self):
         self.docker_client = docker.from_env()
-        self.base_path = Path("/home/runner/work/Ainflue/Ainflue")
+        self.base_path = Path("/home/runner/work/IA Chérie/IA Chérie")
         self.compose_files = self._discover_compose_files()
         self.expert_services = self._initialize_expert_services()
         
@@ -83,7 +83,7 @@ class EnterpriseDockerManager:
             ],
             ExpertRole.BACKEND_SENIOR: [
                 "enterprise-api-gateway",
-                "ainflue-app",
+                "iacherie-app",
                 "service-discovery",
                 "load-balancer"
             ],

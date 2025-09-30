@@ -6,7 +6,7 @@ AWS RDS, Azure SQL, GCP Cloud SQL, MongoDB Atlas, and more.
 
 This module provides unified database lifecycle management, intelligent
 backup and recovery, performance optimization, and cost management
-across multiple cloud database providers for the Ainflue platform.
+across multiple cloud database providers for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -1247,7 +1247,7 @@ async def example_usage():
         
         # Create new database
         database = await manager.create_database(
-            name="ainflue-production-db",
+            name="iacherie-production-db",
             database_type=DatabaseType.POSTGRESQL,
             provider=CloudProvider.AWS,
             region="us-east-1",
@@ -1261,7 +1261,7 @@ async def example_usage():
         
         # Create HA cluster
         cluster = await manager.create_high_availability_cluster(
-            cluster_name="ainflue-ha-cluster",
+            cluster_name="iacherie-ha-cluster",
             database_type=DatabaseType.POSTGRESQL,
             provider=CloudProvider.AWS,
             primary_region="us-east-1",

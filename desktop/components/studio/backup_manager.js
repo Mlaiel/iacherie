@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Backup Manager
+ * IA Chérie Desktop - Backup Manager
  * 
  * Automated backup and recovery system for creative projects
  * 

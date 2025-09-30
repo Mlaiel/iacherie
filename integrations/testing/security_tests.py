@@ -4,7 +4,7 @@
 """Security Tests - Security Testing System
 ==========================================
 
-Security testing capabilities for Ainflue integrations.
+Security testing capabilities for IA Chérie integrations.
 Provides penetration testing, vulnerability assessment, and security validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

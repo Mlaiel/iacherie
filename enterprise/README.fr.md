@@ -1,10 +1,10 @@
 # 🏢 Module Fonctionnalités Entreprise
 
-## Solutions Enterprise Avancées pour la Plateforme Ainflue
+## Solutions Enterprise Avancées pour la Plateforme IA Chérie
 
 ### 🎯 **Aperçu du Projet**
 
-Le Module Fonctionnalités Entreprise offre des capacités complètes de niveau entreprise pour la plateforme Ainflue, livrant la personnalisation white-label, le branding avancé, l'intégration single sign-on, l'entraînement IA personnalisé, les outils de déploiement sur site, l'analytique entreprise, et la gestion de conformité réglementaire.
+Le Module Fonctionnalités Entreprise offre des capacités complètes de niveau entreprise pour la plateforme IA Chérie, livrant la personnalisation white-label, le branding avancé, l'intégration single sign-on, l'entraînement IA personnalisé, les outils de déploiement sur site, l'analytique entreprise, et la gestion de conformité réglementaire.
 
 ### 👥 **Spécialités de l'Équipe de Développement**
 

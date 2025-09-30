@@ -3,7 +3,7 @@
 Revenue Sharing Demonstration - Démonstration Partage Revenus Sophistiqué
 ========================================================================
 
-Démonstration modèles partage revenus ultra sophistiqués pour écosystème Ainflue.
+Démonstration modèles partage revenus ultra sophistiqués pour écosystème IA Chérie.
 Multi-level commissions avec optimization fiscale et analytics temps réel.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -161,7 +161,7 @@ class PerformanceRevenueDemonstration:
 
 class RevenueSharingDemonstration:
     """
-    Démonstration partage revenus ultra sophistiqué pour écosystème Ainflue
+    Démonstration partage revenus ultra sophistiqué pour écosystème IA Chérie
     Multi-level commissions avec optimization fiscale et analytics temps réel
     """
     
@@ -739,7 +739,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS REVENUE SHARING TERMINÉES!")
-        logger.info("💰 Revenue Sharing - Ainflue Platform")
+        logger.info("💰 Revenue Sharing - IA Chérie Platform")
         logger.info("=" * 70)
         
         return True

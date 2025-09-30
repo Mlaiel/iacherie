@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Monetization Dashboard
+IA Chérie Platform - Creator Monetization Dashboard
 ================================================
 
 Enterprise dashboard for creator monetization with AI-powered revenue optimization,

@@ -179,7 +179,7 @@ class ModelMetadataEngine:
                 Column('target_audience', JSON),
                 Column('tags', JSON),
                 Column('categories', JSON),
-                Column('custom_metadata', JSON)
+                Column('custom_meta_data', JSON)
             )
             
             Base.metadata.create_all(self.engine)
@@ -513,7 +513,7 @@ async def demo_metadata_engine():
         creator_type=CreatorType.MUSICIAN,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow(),
-        author="fahed@ainflue.com",
+        author="fahed@iacherie.com",
         description="Classificateur de contenu musical avec analyse d'engagement",
         accuracy=0.92,
         precision=0.89,

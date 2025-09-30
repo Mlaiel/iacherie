@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Capacity Planning Testing Framework for Ainflue Platform
+Capacity Planning Testing Framework for IA Chérie Platform
 ======================================================
 
 Advanced capacity planning with ML-powered prediction models,

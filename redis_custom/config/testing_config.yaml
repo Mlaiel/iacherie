@@ -1,4 +1,4 @@
-# ⚡ Redis Testing Environment Configuration - Ainflue Enterprise
+# ⚡ Redis Testing Environment Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Testing Environment Configuration for Creator Economy Platform
 
@@ -6,9 +6,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-testing-config
-  namespace: ainflue-redis-test
+  namespace: iacherie-redis-test
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: testing-config
     environment: testing
     owner: fahed-mlaiel

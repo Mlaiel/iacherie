@@ -1,4 +1,4 @@
-# 🤝 CONTRIBUTING GUIDE - AINFLUE ENTERPRISE
+# 🤝 CONTRIBUTING GUIDE - IACHERIE ENTERPRISE
 
 **Version:** 1.0 Enterprise  
 **Date:** 15 Décembre 2025  
@@ -64,7 +64,7 @@ Author: [Nom] - Certified Multi-Role Expert
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Classification: PROPRIETARY - CONFIDENTIAL
 
-This module implements advanced AI content processing for the Ainflue platform.
+This module implements advanced AI content processing for the IA Chérie platform.
 All algorithms and implementations are proprietary to Fahed Mlaiel.
 """
 
@@ -248,17 +248,17 @@ class TestEnterpriseAIProcessor:
 1. **🔒 Signature NDA + CLA**
    ```bash
    # Télécharger et signer
-   curl -O https://legal.ainflue.com/cla-2025.pdf
-   curl -O https://legal.ainflue.com/nda-contributor.pdf
+   curl -O https://legal.iacherie.com/cla-2025.pdf
+   curl -O https://legal.iacherie.com/nda-contributor.pdf
    
-   # Envoyer signés à: legal@ainflue.enterprise
+   # Envoyer signés à: legal@iacherie.enterprise
    # Attendre confirmation écrite avant de continuer
    ```
 
 2. **🎓 Certification Expertise**
    ```bash
    # Passer tests certification (obligatoire)
-   curl -X POST https://certification.ainflue.com/expert-assessment \
+   curl -X POST https://certification.iacherie.com/expert-assessment \
      -H "Content-Type: application/json" \
      -d '{"roles": ["lead_dev_ai", "backend_senior", "ml_engineer", ...]}'
    
@@ -507,12 +507,12 @@ jobs:
 
 ### 📞 **CONTACT CONTRIBUTIONS**
 
-**Legal Compliance:** legal@ainflue.enterprise  
+**Legal Compliance:** legal@iacherie.enterprise  
 **Architecture Lead:** Fahed Mlaiel (mlaiel@live.de)  
-**Technical Review:** review@ainflue.enterprise
+**Technical Review:** review@iacherie.enterprise
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Ainflue Platform Contributing Guide**  
+**IA Chérie Platform Contributing Guide**  
 **Version 1.0 - Confidentiel et Propriétaire**

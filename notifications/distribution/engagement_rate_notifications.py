@@ -1,6 +1,6 @@
 """
 📈 ENGAGEMENT RATE NOTIFICATIONS
-Ainflue Platform - Engagement Rate Monitoring System
+IA Chérie Platform - Engagement Rate Monitoring System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

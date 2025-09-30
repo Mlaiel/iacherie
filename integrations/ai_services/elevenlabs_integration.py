@@ -212,7 +212,7 @@ class ElevenLabsIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout_seconds),
                 headers={
                     'xi-api-key': self.config.api_key,
-                    'User-Agent': 'Ainflue-ElevenLabs/1.0',
+                    'User-Agent': 'IA Chérie-ElevenLabs/1.0',
                     'Accept': 'application/json'
                 }
             )

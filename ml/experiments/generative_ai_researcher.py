@@ -2,7 +2,7 @@
 🧠 Generative AI Researcher - Advanced AI Research & Content Creation Module
 
 Cutting-edge generative AI research system for content creation, enhancement, and 
-creative assistance across all creator types on the Ainflue platform. Leverages 
+creative assistance across all creator types on the IA Chérie platform. Leverages 
 state-of-the-art models for multimodal content generation and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,10 +1,10 @@
 """
-Ainflue Core AI - Recommendation Engine Core
+IA Chérie Core AI - Recommendation Engine Core
 ============================================
 
 Enterprise-grade recommendation system with collaborative filtering, content-based
 filtering, hybrid approaches, and real-time personalization. Provides intelligent
-content and creator recommendations for the Ainflue platform.
+content and creator recommendations for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

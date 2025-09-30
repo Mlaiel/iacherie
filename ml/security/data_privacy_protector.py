@@ -8,7 +8,7 @@ Differential privacy + data anonymization + secure computation + privacy budgets
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Data Privacy Protection
+Project: IA Chérie ML Security - Data Privacy Protection
 Version: 1.0 Production
 =======================================================================
 """

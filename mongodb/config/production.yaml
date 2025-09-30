@@ -1,12 +1,12 @@
 # Production Configuration
-# MongoDB Module - Ainflue Platform
+# MongoDB Module - IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
 mongodb:
   # Connection settings
   connection:
-    host: "mongodb-cluster.ainflue.com"
+    host: "mongodb-cluster.iacherie.com"
     port: 27017
     database: "ainflue_prod"
     replica_set: "rs0"
@@ -132,9 +132,9 @@ infrastructure:
     
   # Monitoring
   monitoring:
-    prometheus_endpoint: "https://prometheus.ainflue.com"
-    grafana_dashboard: "https://grafana.ainflue.com"
-    alert_manager: "https://alerts.ainflue.com"
+    prometheus_endpoint: "https://prometheus.iacherie.com"
+    grafana_dashboard: "https://grafana.iacherie.com"
+    alert_manager: "https://alerts.iacherie.com"
     metrics_retention_days: 30
     
   # Backup
@@ -142,7 +142,7 @@ infrastructure:
     enabled: true
     schedule: "0 2 * * *"  # Daily at 2 AM
     retention_days: 30
-    cloud_storage: "s3://ainflue-backups/mongodb"
+    cloud_storage: "s3://iacherie-backups/mongodb"
     encryption: true
     compression: true
     verification: true
@@ -225,6 +225,6 @@ alerts:
     
   # Notification channels
   notifications:
-    email: ["ops-team@ainflue.com", "security@ainflue.com"]
+    email: ["ops-team@iacherie.com", "security@iacherie.com"]
     slack_webhook: "${SLACK_WEBHOOK_URL}"
     pagerduty_key: "${PAGERDUTY_INTEGRATION_KEY}"

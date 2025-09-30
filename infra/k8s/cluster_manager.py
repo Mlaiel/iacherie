@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +13,7 @@
 Kubernetes Cluster Manager
 
 This module provides enterprise-grade Kubernetes cluster management capabilities
-for the Ainflue platform infrastructure.
+for the IA Chérie platform infrastructure.
 
 Features:
     - EKS/GKE/AKS cluster management

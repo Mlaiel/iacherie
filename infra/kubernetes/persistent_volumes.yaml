@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Kubernetes Persistent Volumes for Ainflue platform
+# Enterprise-grade Kubernetes Persistent Volumes for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +13,9 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: ainflue-ssd-fast
+  name: iacherie-ssd-fast
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: storage
     tier: fast
 provisioner: kubernetes.io/aws-ebs
@@ -32,9 +32,9 @@ volumeBindingMode: WaitForFirstConsumer
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: ainflue-ssd-standard
+  name: iacherie-ssd-standard
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: storage
     tier: standard
 provisioner: kubernetes.io/aws-ebs
@@ -51,9 +51,9 @@ volumeBindingMode: WaitForFirstConsumer
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: ainflue-content-storage
+  name: iacherie-content-storage
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: storage
     tier: content
 provisioner: kubernetes.io/aws-ebs
@@ -70,7 +70,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: postgres
     component: database
@@ -78,7 +78,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 100Gi
@@ -88,7 +88,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgres-backup-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: postgres
     component: backup
@@ -96,7 +96,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 200Gi
@@ -107,7 +107,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: redis-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: redis
     component: cache
@@ -115,7 +115,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 50Gi
@@ -126,15 +126,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: content-upload-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: content-storage
     tier: upload
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-content-storage
+  storageClassName: iacherie-content-storage
   resources:
     requests:
       storage: 1Ti
@@ -144,15 +144,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: content-processed-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: content-storage
     tier: processed
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 2Ti
@@ -163,15 +163,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ai-models-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-ai
+    app: iacherie-ai
     component: model-storage
     tier: models
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 500Gi
@@ -181,15 +181,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ai-training-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-ai
+    app: iacherie-ai
     component: training-storage
     tier: training
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-content-storage
+  storageClassName: iacherie-content-storage
   resources:
     requests:
       storage: 5Ti
@@ -200,7 +200,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: prometheus-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: prometheus
     component: monitoring
@@ -208,7 +208,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 100Gi
@@ -218,7 +218,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: grafana
     component: monitoring
@@ -226,7 +226,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 10Gi
@@ -237,7 +237,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: elasticsearch-data-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: elasticsearch
     component: logging
@@ -245,7 +245,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 200Gi
@@ -256,7 +256,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: backup-storage-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: backup
     component: backup-storage
@@ -264,7 +264,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 500Gi
@@ -275,15 +275,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: shared-config-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
     component: shared-config
     tier: config
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-standard
+  storageClassName: iacherie-ssd-standard
   resources:
     requests:
       storage: 10Gi
@@ -294,15 +294,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: audio-processing-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-audio
+    app: iacherie-audio
     component: audio-processing
     tier: processing
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 1Ti
@@ -313,15 +313,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: video-processing-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-video
+    app: iacherie-video
     component: video-processing
     tier: processing
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 5Ti
@@ -332,15 +332,15 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: distributed-cache-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
-    app: ainflue-cache
+    app: iacherie-cache
     component: distributed-cache
     tier: cache
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ainflue-ssd-fast
+  storageClassName: iacherie-ssd-fast
   resources:
     requests:
       storage: 200Gi

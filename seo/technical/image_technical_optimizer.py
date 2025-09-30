@@ -1166,7 +1166,7 @@ class ImageTechnicalOptimizer:
 
 # Enterprise image optimization management
 class ImageOptimizationManager:
-    """High-level image optimization management for Ainflue platform."""
+    """High-level image optimization management for IA Chérie platform."""
     
     def __init__(self, base_config: OptimizationConfig):
         self.base_config = base_config

@@ -1,5 +1,5 @@
 """
-Integration Testing Service for Ainflue Microservices
+Integration Testing Service for IA Chérie Microservices
 End-to-end testing and service integration validation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -352,9 +352,9 @@ class IntegrationTestingService:
 integration_testing_service = IntegrationTestingService()
 
 
-# Example test suites for Ainflue microservices
+# Example test suites for IA Chérie microservices
 async def setup_ainflue_test_suites():
-    """Setup standard Ainflue test suites"""
+    """Setup standard IA Chérie test suites"""
     
     # API Gateway Test Suite
     api_gateway_suite = TestSuite(

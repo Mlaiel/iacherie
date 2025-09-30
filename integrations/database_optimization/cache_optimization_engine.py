@@ -2,7 +2,7 @@
 ========================================================
 
 Multi-level caching strategies with intelligent invalidation,
-adaptive warming, and distributed coordination for Ainflue platform.
+adaptive warming, and distributed coordination for IA Chérie platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Cache strategies + query caching + database buffer optimization

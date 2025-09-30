@@ -5,30 +5,30 @@
   },
   "per_service_strategies": [
     {
-      "service": "ainflue-api",
+      "service": "iacherie-api",
       "type": "probabilistic",
       "param": 0.5
     },
     {
-      "service": "ainflue-ai-engine",
+      "service": "iacherie-ai-engine",
       "type": "probabilistic",
       "param": 1.0
     },
     {
-      "service": "ainflue-auth",
+      "service": "iacherie-auth",
       "type": "ratelimiting",
       "param": 100
     }
   ],
   "per_operation_strategies": [
     {
-      "service": "ainflue-api",
+      "service": "iacherie-api",
       "operation": "POST /upload",
       "type": "probabilistic",
       "param": 1.0
     },
     {
-      "service": "ainflue-api",
+      "service": "iacherie-api",
       "operation": "GET /health",
       "type": "probabilistic",
       "param": 0.01

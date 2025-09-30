@@ -175,8 +175,8 @@ class SendGridProvider(EmailProviderInterface):
     async def send_email(self, request: EmailRequest) -> EmailResult:
         """Send email via SendGrid."""
         try:
-            from_email = Email(request.sender_email or "noreply@ainflue.com", 
-                             request.sender_name or "Ainflue Platform")
+            from_email = Email(request.sender_email or "noreply@iacherie.com", 
+                             request.sender_name or "IA Chérie Platform")
             
             # Create personalized emails for each recipient
             mail = Mail()
@@ -299,7 +299,7 @@ class AWSSESProvider(EmailProviderInterface):
             
             # Send email
             response = self.client.send_email(
-                Source=request.sender_email or "noreply@ainflue.com",
+                Source=request.sender_email or "noreply@iacherie.com",
                 Destination={
                     'ToAddresses': to_addresses,
                     'CcAddresses': cc_addresses,
@@ -371,7 +371,7 @@ class MailgunProvider(EmailProviderInterface):
             to_addresses = [r.email for r in request.recipients if r.type == "to"]
             
             data = {
-                'from': f"{request.sender_name or 'Ainflue Platform'} <{request.sender_email or 'noreply@ainflue.com'}>",
+                'from': f"{request.sender_name or 'IA Chérie Platform'} <{request.sender_email or 'noreply@iacherie.com'}>",
                 'to': to_addresses,
                 'subject': request.subject,
                 'o:tracking': 'yes' if request.tracking_enabled else 'no',

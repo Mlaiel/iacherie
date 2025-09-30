@@ -1,10 +1,10 @@
 # 🧪 Tests Distribution Engine - Enterprise Testing & Validierungs-Plattform
 
-**Enterprise-Grade Testing-System für die Ainflue Distribution Plattform**
+**Enterprise-Grade Testing-System für die IA Chérie Distribution Plattform**
 
 ## 🎯 Überblick
 
-Die Tests Distribution Engine ist ein umfassendes Testing- und Validierungs-Framework, das die Zuverlässigkeit, Performance und Sicherheit des Ainflue Distribution-Systems über 65+ Plattformen gewährleistet. Dieses Modul bietet automatisiertes Testing, Continuous Integration Validierung, Performance-Benchmarking und Qualitätssicherung für Enterprise-Grade Distribution-Operationen.
+Die Tests Distribution Engine ist ein umfassendes Testing- und Validierungs-Framework, das die Zuverlässigkeit, Performance und Sicherheit des IA Chérie Distribution-Systems über 65+ Plattformen gewährleistet. Dieses Modul bietet automatisiertes Testing, Continuous Integration Validierung, Performance-Benchmarking und Qualitätssicherung für Enterprise-Grade Distribution-Operationen.
 
 ## 🚀 Hauptmerkmale
 
@@ -163,9 +163,9 @@ coverage html --directory=coverage_html_report
 
 ## 📞 Support & Kontakt
 
-**QA-Team**: testing@ainflue.com  
-**Test-Engineering**: test-engineering@ainflue.com  
-**Performance-Testing**: performance@ainflue.com
+**QA-Team**: testing@iacherie.com  
+**Test-Engineering**: test-engineering@iacherie.com  
+**Performance-Testing**: performance@iacherie.com
 
 ---
 

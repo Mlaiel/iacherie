@@ -1,10 +1,10 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 Ce module contient des algorithmes propriétaires ultra-confidentiels pour l'analyse 
-comportementale des créateurs et utilisateurs sur la plateforme Ainflue.
+comportementale des créateurs et utilisateurs sur la plateforme IA Chérie.
 
 Behavioral Analytics Platform - Enterprise-grade behavioral intelligence for Creator Economy
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>

@@ -3,7 +3,7 @@
 
 Advanced revenue metrics tracking system for monitoring Monthly Recurring Revenue (MRR),
 Annual Recurring Revenue (ARR), Customer Lifetime Value (CLV), churn rates,
-and comprehensive revenue analytics for the Ainflue platform.
+and comprehensive revenue analytics for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -971,7 +971,7 @@ Update real-time transaction cache"""
                 },
                 'subscription_service': {
                     'status': 'connected',
-                    'webhook_url': 'https://api.ainflue.com/webhooks/subscriptions',
+                    'webhook_url': 'https://api.iacherie.com/webhooks/subscriptions',
                     'last_sync': datetime.now(),
                     'rate_limit_remaining': 5000
                 }

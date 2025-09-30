@@ -140,13 +140,13 @@ test_microservices_routing() {
     log_info "🔄 Testing microservices routing..."
     
     local microservice_routes=(
-        "api.ainflue"
-        "auth.ainflue"  
-        "content.ainflue"
-        "ai.ainflue"
-        "analytics.ainflue"
-        "collaboration.ainflue"
-        "monetization.ainflue"
+        "api.iacherie"
+        "auth.iacherie"  
+        "content.iacherie"
+        "ai.iacherie"
+        "analytics.iacherie"
+        "collaboration.iacherie"
+        "monetization.iacherie"
     )
     
     for service in "${microservice_routes[@]}"; do
@@ -322,7 +322,7 @@ test_compliance_features() {
 main() {
     echo "🔍 NGINX ENTERPRISE INTEGRATION TESTS"
     echo "======================================"
-    echo "Platform: Ainflue AI Creator Platform"
+    echo "Platform: IA Chérie AI Creator Platform"
     echo "Expert Team: All 9 Specialist Roles"
     echo "Test Environment: $TEST_DOMAIN:$TEST_PORT"
     echo

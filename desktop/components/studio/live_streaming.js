@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Live Streaming Interface
+ * IA Chérie Desktop - Live Streaming Interface
  * 
  * Professional live streaming management for content creators
  * 

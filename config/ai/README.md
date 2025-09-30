@@ -1,4 +1,4 @@
-# 🧠 Ainflue AI Configuration Module - Ultra-Advanced Artificial Intelligence Hub
+# 🧠 IA Chérie AI Configuration Module - Ultra-Advanced Artificial Intelligence Hub
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org)
@@ -6,7 +6,7 @@
 [![Transformers](https://img.shields.io/badge/🤗%20Transformers-4.30+-yellow.svg)](https://huggingface.co/transformers)
 [![CUDA](https://img.shields.io/badge/CUDA-12.0+-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 Ultra-Advanced AI Configuration Orchestration Hub**  
 > Revolutionary artificial intelligence configuration management system with quantum-scale neural networks, autonomous model optimization, and next-generation AI orchestration capabilities.
@@ -15,7 +15,7 @@
 
 ## 🌟 **Overview**
 
-The **Ainflue AI Configuration Module** represents the absolute pinnacle of artificial intelligence configuration management technology. This ultra-sophisticated system provides centralized, intelligent, and adaptive AI configuration orchestration for the entire Ainflue AI ecosystem, featuring quantum-level capabilities that redefine how modern AI applications handle model configuration, training pipelines, and inference optimization at unprecedented scale.
+The **IA Chérie AI Configuration Module** represents the absolute pinnacle of artificial intelligence configuration management technology. This ultra-sophisticated system provides centralized, intelligent, and adaptive AI configuration orchestration for the entire IA Chérie AI ecosystem, featuring quantum-level capabilities that redefine how modern AI applications handle model configuration, training pipelines, and inference optimization at unprecedented scale.
 
 ### 🏗️ **Quantum AI Architecture**
 
@@ -117,8 +117,8 @@ This **proprietary ultra-advanced AI configuration orchestration system** contai
 
 ```bash
 # Clone the AI configuration repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/config/ai
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/config/ai
 
 # Install AI dependencies
 pip install -r requirements-ai.txt
@@ -146,7 +146,7 @@ ai_config = AIModelConfig()
 
 # Configure transformer model
 transformer_config = {
-    "model_name": "ainflue-quantum-transformer-7b",
+    "model_name": "iacherie-quantum-transformer-7b",
     "architecture": "transformer",
     "attention_heads": 64,
     "hidden_size": 4096,
@@ -169,7 +169,7 @@ training_config = TrainingConfig(
 
 # Configure inference optimization
 inference_config = InferenceConfig(
-    model_path="/models/ainflue-quantum-transformer-7b",
+    model_path="/models/iacherie-quantum-transformer-7b",
     batch_size=1,
     max_tokens=2048,
     temperature=0.7,
@@ -196,7 +196,7 @@ quantum_config = QuantumAIConfig(
 from config.ai import ModelDeploymentConfig
 
 deployment = ModelDeploymentConfig(
-    model_name="ainflue-quantum-transformer-7b",
+    model_name="iacherie-quantum-transformer-7b",
     deployment_target="kubernetes",
     replicas=5,
     auto_scaling=True,
@@ -403,21 +403,21 @@ class AIOptimizationConfig:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-models
+  name: iacherie-ai-models
   namespace: ai-production
 spec:
   replicas: 10
   selector:
     matchLabels:
-      app: ainflue-ai
+      app: iacherie-ai
   template:
     metadata:
       labels:
-        app: ainflue-ai
+        app: iacherie-ai
     spec:
       containers:
       - name: ai-inference
-        image: ainflue/ai-models:quantum-v2.0
+        image: iacherie/ai-models:quantum-v2.0
         resources:
           requests:
             memory: "32Gi"
@@ -756,11 +756,11 @@ FUTURE_AI_CONFIG = {
 
 ### 🤝 **Getting AI Support**
 
-- **📚 AI Documentation**: [https://docs.ainflue.com/ai](https://docs.ainflue.com/ai)
-- **🧠 AI Research Community**: [Discord AI Channel](https://discord.gg/ainflue-ai)
-- **🐛 AI Bug Reports**: [GitHub AI Issues](https://github.com/Mlaiel/Ainflue/issues/ai)
-- **💡 AI Research Proposals**: [AI Research Portal](https://research.ainflue.com)
-- **🤖 AI Model Hub**: [Hugging Face Ainflue](https://huggingface.co/ainflue)
+- **📚 AI Documentation**: [https://docs.iacherie.com/ai](https://docs.iacherie.com/ai)
+- **🧠 AI Research Community**: [Discord AI Channel](https://discord.gg/iacherie-ai)
+- **🐛 AI Bug Reports**: [GitHub AI Issues](https://github.com/Mlaiel/IA Chérie/issues/ai)
+- **💡 AI Research Proposals**: [AI Research Portal](https://research.iacherie.com)
+- **🤖 AI Model Hub**: [Hugging Face IA Chérie](https://huggingface.co/iacherie)
 
 ### 👨‍🔬 **AI Research Leadership**
 
@@ -807,7 +807,7 @@ We are committed to developing AI technology that is:
 
 ---
 
-**🚀 Ready to revolutionize your AI capabilities? Explore the future of artificial intelligence with Ainflue AI Configuration Module!**
+**🚀 Ready to revolutionize your AI capabilities? Explore the future of artificial intelligence with IA Chérie AI Configuration Module!**
 
 ---
 

@@ -1,4 +1,4 @@
-# 🔧 SDK Module Checklist - Ainflue Platform
+# 🔧 SDK Module Checklist - IA Chérie Platform
 ================================================================
 
 ## 📋 Übersicht
@@ -54,7 +54,7 @@ SDKs ermöglichen Entwicklern die Integration in den kompletten Creator-Workflow
 
 ### 2.1 Core Framework
 - [x] **index.ts** - Main TypeScript SDK Entry Point ✅ IMPLEMENTED
-- [x] **ainflue-client.ts** - Core Client Implementation ✅ IMPLEMENTED
+- [x] **iacherie-client.ts** - Core Client Implementation ✅ IMPLEMENTED
 - [x] **config.ts** - SDK Configuration Management ✅ IMPLEMENTED
 - [x] **types.ts** - TypeScript Type Definitions ✅ IMPLEMENTED
 - [x] **interfaces.ts** - API Interface Definitions ✅ IMPLEMENTED (Multi-Expert)

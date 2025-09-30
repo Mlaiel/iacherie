@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Competitive Analysis Monitor
+IA Chérie Platform - Competitive Analysis Monitor
 ==============================================
 
 Enterprise-grade competitive intelligence system with real-time competitor tracking,
@@ -904,9 +904,9 @@ class CompetitiveAnalysisMonitor:
             "recommendations": []
         }
         
-        # Analyze our position (assuming we're "Ainflue" in the analysis)
-        if "Ainflue" in positioning_analysis:
-            our_scores = positioning_analysis["Ainflue"]
+        # Analyze our position (assuming we're "IA Chérie" in the analysis)
+        if "IA Chérie" in positioning_analysis:
+            our_scores = positioning_analysis["IA Chérie"]
             
             # Identify strengths and weaknesses
             for dimension, score in our_scores.items():
@@ -922,7 +922,7 @@ class CompetitiveAnalysisMonitor:
         
         # Competitive threat insights
         market_leader_name = market_leaders.get("market_leader", [None, None])[0]
-        if market_leader_name and market_leader_name != "Ainflue":
+        if market_leader_name and market_leader_name != "IA Chérie":
             insights["key_findings"].append(f"{market_leader_name} is the current market leader")
             insights["recommendations"].append(f"Monitor {market_leader_name}'s strategy closely")
         

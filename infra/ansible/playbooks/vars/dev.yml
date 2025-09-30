@@ -3,7 +3,7 @@
 
 # Environment configuration
 environment: dev
-project_name: ainflue
+project_name: iacherie
 aws_region: us-west-2
 
 # Infrastructure sizing (smaller for dev)
@@ -11,14 +11,14 @@ cluster_size: 2
 db_instance_class: db.t3.micro
 
 # Domain configuration
-domain_name: dev.ainflue.com
+domain_name: dev.iacherie.com
 
 # Feature flags
 enable_monitoring: true
 enable_backup: false
 
 # Docker configuration
-docker_registry: ainflue
+docker_registry: iacherie
 image_tag: dev
 
 # Database configuration

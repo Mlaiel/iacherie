@@ -530,12 +530,12 @@ class ThemeEngine {
   setupStyleManagement() {
     // Create style element for theme variables
     this.styleElement = document.createElement('style');
-    this.styleElement.id = 'ainflue-theme-variables';
+    this.styleElement.id = 'iacherie-theme-variables';
     document.head.appendChild(this.styleElement);
 
     // Create style element for animations
     this.animationStyleElement = document.createElement('style');
-    this.animationStyleElement.id = 'ainflue-theme-animations';
+    this.animationStyleElement.id = 'iacherie-theme-animations';
     document.head.appendChild(this.animationStyleElement);
 
     // Add default animations
@@ -677,7 +677,7 @@ class ThemeEngine {
     
     // Persist theme preference
     if (this.config.persistTheme) {
-      localStorage.setItem('ainflue-theme', themeName);
+      localStorage.setItem('iacherie-theme', themeName);
     }
 
     // Emit theme change event
@@ -867,7 +867,7 @@ class ThemeEngine {
   loadPersistedTheme() {
     if (!this.config.persistTheme) return;
 
-    const persistedTheme = localStorage.getItem('ainflue-theme');
+    const persistedTheme = localStorage.getItem('iacherie-theme');
     if (persistedTheme && this.themes.has(persistedTheme)) {
       this.applyTheme(persistedTheme);
     }

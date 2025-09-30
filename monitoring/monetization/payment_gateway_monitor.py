@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Ainflue Platform - Payment Gateway Monitor
+IA Chérie Platform - Payment Gateway Monitor
 ==========================================
 
 Enterprise-grade payment gateway monitoring for multi-gateway processing,
@@ -149,7 +149,7 @@ class PaymentGatewayMonitor:
                 # Initialize HTTP session
                 session = aiohttp.ClientSession(
                     timeout=aiohttp.ClientTimeout(total=30),
-                    headers={'User-Agent': 'Ainflue-Monitor/1.0'}
+                    headers={'User-Agent': 'IA Chérie-Monitor/1.0'}
                 )
                 self.session_pool[gateway] = session
                 

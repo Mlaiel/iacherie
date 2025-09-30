@@ -1,6 +1,6 @@
 # 🚨 Moteur de Gestion de Crise
 
-**Système Avancé de Détection, Gestion et Protection de Réputation pour la Plateforme de Distribution Ainflue**
+**Système Avancé de Détection, Gestion et Protection de Réputation pour la Plateforme de Distribution IA Chérie**
 
 ## 📖 Aperçu
 
@@ -254,10 +254,10 @@ response = await influencer_crisis_handler.manage_influencer_scandal(
 
 ### 🆘 Support d'Urgence
 - **Hotline de Crise:** +33 (0) 1 XX XX XX XX
-- **Discord d'Urgence:** discord.gg/ainflue-crisis
-- **Documentation:** docs.ainflue.com/crisis-management
+- **Discord d'Urgence:** discord.gg/iacherie-crisis
+- **Documentation:** docs.iacherie.com/crisis-management
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Plateforme Ainflue - Moteur de Gestion de Crise**
+**Plateforme IA Chérie - Moteur de Gestion de Crise**

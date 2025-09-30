@@ -8,7 +8,7 @@
 
 Advanced intelligent alert system with AI-powered analysis, real-time notifications,
 multi-channel delivery, alert correlation, and enterprise-grade incident management
-for the Ainflue platform ecosystem.
+for the IA Chérie platform ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -434,7 +434,7 @@ class EnterpriseAlertEngine:
                 "war_room_created": alert_data["priority"] == "critical",
                 "communication_channels": {
                     "internal": f"#incident-{incident_id}",
-                    "external": "status.ainflue.com",
+                    "external": "status.iacherie.com",
                     "stakeholder_updates": "enabled"
                 },
                 "response_procedures": [
@@ -715,7 +715,7 @@ class TechnicalMetricsRequest(BaseModel):
     suspicious_activities: int
     blocked_ips: int
     security_events: List[Dict[str, Any]]
-    service_name: str = "ainflue-api"
+    service_name: str = "iacherie-api"
     environment: str = "production"
     region: str = "default"
 

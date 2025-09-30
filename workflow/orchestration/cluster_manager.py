@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🏢 Ainflue Platform - Enterprise Cluster Manager
+🏢 IA Chérie Platform - Enterprise Cluster Manager
 Performance Targets: < 150ms cluster operations
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -753,7 +753,7 @@ class ClusterManager:
     Performance Targets: < 150ms cluster operations
     
     Manages cluster nodes, resource scheduling, health monitoring,
-    and auto-scaling for the Ainflue Creator Economy Platform.
+    and auto-scaling for the IA Chérie Creator Economy Platform.
     """
     
     def __init__(self):

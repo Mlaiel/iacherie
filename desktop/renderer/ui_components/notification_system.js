@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Notification System
+ * IA Chérie Desktop Renderer - Notification System
  * Advanced notification and alert system
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

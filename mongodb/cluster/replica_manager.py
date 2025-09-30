@@ -2,7 +2,7 @@
 ============================
 
 Advanced replica set management with intelligent configuration, monitoring,
-and automatic optimization for the Ainflue platform.
+and automatic optimization for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

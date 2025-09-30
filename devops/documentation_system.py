@@ -194,10 +194,10 @@ class DocumentationSystem:
 {% endfor %}
 """,
             variables={
-                "service_name": "Ainflue API",
-                "service_description": "Comprehensive API for Ainflue platform",
+                "service_name": "IA Chérie API",
+                "service_description": "Comprehensive API for IA Chérie platform",
                 "api_version": "v1.0.0",
-                "base_url": "https://api.ainflue.com/v1"
+                "base_url": "https://api.iacherie.com/v1"
             },
             format=DocumentFormat.MARKDOWN,
             auto_generate=True,
@@ -315,7 +315,7 @@ class DocumentationSystem:
                 "report_type": ReportType.OPERATIONS,
                 "frequency": "daily",
                 "time": "08:00",
-                "recipients": ["ops-team@ainflue.com"],
+                "recipients": ["ops-team@iacherie.com"],
                 "format": DocumentFormat.HTML
             },
             {
@@ -325,7 +325,7 @@ class DocumentationSystem:
                 "frequency": "weekly",
                 "day": "monday",
                 "time": "09:00",
-                "recipients": ["management@ainflue.com"],
+                "recipients": ["management@iacherie.com"],
                 "format": DocumentFormat.PDF
             },
             {
@@ -335,7 +335,7 @@ class DocumentationSystem:
                 "frequency": "monthly",
                 "day": 1,
                 "time": "10:00",
-                "recipients": ["compliance@ainflue.com"],
+                "recipients": ["compliance@iacherie.com"],
                 "format": DocumentFormat.PDF
             }
         ]

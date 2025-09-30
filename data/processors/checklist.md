@@ -81,7 +81,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE ACTUELLE VS REQUISE
 
 ```
-/workspaces/Ainflue/data/processors/                       [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/processors/                       [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers) ✅ COMPLET
 │   ├── README.md ✅                    # Documentation anglais (COMPLET)
 │   ├── README.de.md ✅                 # Documentation allemand (COMPLET)
@@ -346,7 +346,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -470,19 +470,19 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/audio-processor:latest
-- ainflue/video-processor:latest
-- ainflue/image-processor:latest
-- ainflue/text-processor:latest
-- ainflue/metadata-processor:latest
-- ainflue/unified-converter:latest
-- ainflue/workflow-orchestrator:latest
-- ainflue/ai-content-optimizer:latest
-- ainflue/quality-enhancement:latest
-- ainflue/semantic-analysis:latest
-- ainflue/security-content:latest
-- ainflue/compliance-content:latest
-- ainflue/collaboration-content:latest
+- iacherie/audio-processor:latest
+- iacherie/video-processor:latest
+- iacherie/image-processor:latest
+- iacherie/text-processor:latest
+- iacherie/metadata-processor:latest
+- iacherie/unified-converter:latest
+- iacherie/workflow-orchestrator:latest
+- iacherie/ai-content-optimizer:latest
+- iacherie/quality-enhancement:latest
+- iacherie/semantic-analysis:latest
+- iacherie/security-content:latest
+- iacherie/compliance-content:latest
+- iacherie/collaboration-content:latest
 ```
 
 ---

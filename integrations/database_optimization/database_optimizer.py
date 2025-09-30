@@ -3,7 +3,7 @@
 ============================================================================
 
 Optimisation database enterprise avec clustering haute disponibilité,
-réplication multi-region et performance tuning pour la plateforme Ainflue.
+réplication multi-region et performance tuning pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Architecture database distributed + performance tuning avancé
@@ -171,7 +171,7 @@ class PerformanceAlert:
     resolved: bool = False
 
 class EnterpriseDatabaseOptimizer:
-    """🗄️ Optimiseur Database Enterprise pour Ainflue
+    """🗄️ Optimiseur Database Enterprise pour IA Chérie
     
     Implémentation multi-expert pour optimisation database production:
     - Clustering haute disponibilité avec auto-failover
@@ -302,7 +302,7 @@ class EnterpriseDatabaseOptimizer:
                 id="postgres_master_eu",
                 name="PostgreSQL Master EU",
                 db_type=DatabaseType.POSTGRESQL,
-                host="postgres-master-eu.ainflue.com",
+                host="postgres-master-eu.iacherie.com",
                 port=5432,
                 database="ainflue_prod",
                 username="ainflue_app",
@@ -318,7 +318,7 @@ class EnterpriseDatabaseOptimizer:
                 id="postgres_replica_us",
                 name="PostgreSQL Replica US",
                 db_type=DatabaseType.POSTGRESQL,
-                host="postgres-replica-us.ainflue.com",
+                host="postgres-replica-us.iacherie.com",
                 port=5432,
                 database="ainflue_prod",
                 username="ainflue_readonly",
@@ -333,7 +333,7 @@ class EnterpriseDatabaseOptimizer:
                 id="redis_cluster_main",
                 name="Redis Cluster Main",
                 db_type=DatabaseType.REDIS,
-                host="redis-cluster.ainflue.com",
+                host="redis-cluster.iacherie.com",
                 port=6379,
                 database="0",
                 username="",
@@ -348,7 +348,7 @@ class EnterpriseDatabaseOptimizer:
                 id="timescale_analytics",
                 name="TimescaleDB Analytics",
                 db_type=DatabaseType.TIMESCALEDB,
-                host="timescale.ainflue.com",
+                host="timescale.iacherie.com",
                 port=5432,
                 database="ainflue_analytics",
                 username="analytics_user",
@@ -362,7 +362,7 @@ class EnterpriseDatabaseOptimizer:
                 id="clickhouse_bigdata",
                 name="ClickHouse BigData",
                 db_type=DatabaseType.CLICKHOUSE,
-                host="clickhouse.ainflue.com",
+                host="clickhouse.iacherie.com",
                 port=9000,
                 database="ainflue_bigdata",
                 username="bigdata_user",
@@ -376,7 +376,7 @@ class EnterpriseDatabaseOptimizer:
                 id="elasticsearch_search",
                 name="Elasticsearch Search",
                 db_type=DatabaseType.ELASTICSEARCH,
-                host="elasticsearch.ainflue.com",
+                host="elasticsearch.iacherie.com",
                 port=9200,
                 database="ainflue_search",
                 username="search_user",

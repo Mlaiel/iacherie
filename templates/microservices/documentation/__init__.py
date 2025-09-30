@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📚 Documentation Templates - Ainflue Microservices Enterprise
+📚 Documentation Templates - IA Chérie Microservices Enterprise
 
 API documentation, OpenAPI specs, runbooks, and automated
 documentation generation for microservices architecture.

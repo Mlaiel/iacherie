@@ -1,6 +1,6 @@
 # 🎨 Creator Services Modul - Docker Services
 
-**Ainflue Platform Creator Services Infrastruktur**
+**IA Chérie Platform Creator Services Infrastruktur**
 
 Spezialisierte Tools und Services für verschiedene Content-Ersteller-Typen einschließlich Musiker, Fotografen, Blogger, Influencer und Komiker mit KI-gestützter Unterstützung und Optimierung.
 

@@ -1,12 +1,12 @@
-# 🏢 Ainflue SEO Enterprise Modul
+# 🏢 IA Chérie SEO Enterprise Modul
 
-[![Enterprise Level](https://img.shields.io/badge/enterprise-level-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Sicherheit](https://img.shields.io/badge/sicherheit-enterprise-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Compliance](https://img.shields.io/badge/compliance-multi%20regulatorisch-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise Level](https://img.shields.io/badge/enterprise-level-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Sicherheit](https://img.shields.io/badge/sicherheit-enterprise-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Compliance](https://img.shields.io/badge/compliance-multi%20regulatorisch-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🌟 Überblick
 
-Das Ainflue SEO Enterprise Modul ist ein umfassendes, unternehmenstaugliches SEO-Governance- und Managementsystem für große Organisationen. Es bietet erweiterte Compliance-Überwachung, Risikomanagement, Markensicherheit und strategische Analysen für Unternehmens-SEO-Operationen.
+Das IA Chérie SEO Enterprise Modul ist ein umfassendes, unternehmenstaugliches SEO-Governance- und Managementsystem für große Organisationen. Es bietet erweiterte Compliance-Überwachung, Risikomanagement, Markensicherheit und strategische Analysen für Unternehmens-SEO-Operationen.
 
 ## 👨‍💻 Projektleitung & Expertenteam
 
@@ -85,8 +85,8 @@ Kollaboration & Gamification → Sichere Verteilung
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/seo/enterprise
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/seo/enterprise
 
 # Abhängigkeiten installieren
 pip install -r requirements-enterprise.txt
@@ -256,8 +256,8 @@ enterprise:
 ### **Kontaktinformationen**
 - **Enterprise Vertrieb**: mlaiel@live.de
 - **Technischer Support**: Verfügbar mit Enterprise-Lizenz
-- **Sicherheitsprobleme**: security@ainflue.com (mit Enterprise-Lizenz)
-- **Compliance-Fragen**: compliance@ainflue.com (mit Enterprise-Lizenz)
+- **Sicherheitsprobleme**: security@iacherie.com (mit Enterprise-Lizenz)
+- **Compliance-Fragen**: compliance@iacherie.com (mit Enterprise-Lizenz)
 
 ## 📋 Roadmap
 
@@ -285,5 +285,5 @@ Für Enterprise-Lizenzanfragen kontaktieren Sie: mlaiel@live.de
 
 ---
 
-**Betrieben von der Ainflue Enterprise SEO-Plattform**  
+**Betrieben von der IA Chérie Enterprise SEO-Plattform**  
 *Transforming Enterprise Content Management & SEO Governance*

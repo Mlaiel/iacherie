@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🛡️ Resilience Templates - Ainflue Microservices Enterprise
+🛡️ Resilience Templates - IA Chérie Microservices Enterprise
 
 Resilience patterns for fault tolerance, graceful degradation,
 disaster recovery, and system reliability enhancement.

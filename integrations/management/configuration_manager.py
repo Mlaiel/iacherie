@@ -144,7 +144,7 @@ class ConfigurationManager:
         
         # Environment detection
         self.environment = os.getenv('ENVIRONMENT', 'development')
-        self.environment_prefixes = ['AINFLUE_', 'INTEGRATION_']
+        self.environment_prefixes = ['IACHERIE_', 'INTEGRATION_']
         
         # Metrics
         self.metrics = {

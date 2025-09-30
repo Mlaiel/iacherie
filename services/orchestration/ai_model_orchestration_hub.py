@@ -1,5 +1,5 @@
 """
-🧠 AI MODEL ORCHESTRATION HUB - AINFLUE ENTERPRISE
+🧠 AI MODEL ORCHESTRATION HUB - IACHERIE ENTERPRISE
 =================================================
 
 AI model lifecycle orchestration for creator economy platform.
@@ -43,9 +43,24 @@ try:
     from redis import Redis
     from sqlalchemy.ext.asyncio import AsyncSession
     from pydantic import BaseModel, Field, validator
-    import mlflow
     import torch
-    # Import avec gestionnaire TensorFlow singleton
+    import numpy as np
+    from sklearn.metrics import accuracy_score, precision_score, recall_score
+    import joblib
+    ENTERPRISE_FEATURES = True
+except ImportError:
+    ENTERPRISE_FEATURES = False
+    
+# MLflow import with error handling
+try:
+    import mlflow
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    logging.warning("MLflow not available, using fallback tracking")
+    mlflow = None
+    MLFLOW_AVAILABLE = False
+
+# Import avec gestionnaire TensorFlow singleton
 try:
     from core.tensorflow_singleton import get_tensorflow
     tf = get_tensorflow()
@@ -53,11 +68,6 @@ try:
 except ImportError:
     tf = None
     print("⚠️ TensorFlow indisponible")
-    import numpy as np
-    from sklearn.metrics import accuracy_score, precision_score, recall_score
-    import joblib
-except ImportError:
-    # Fallback for basic functionality
     Celery = Redis = AsyncSession = BaseModel = Field = validator = None
     mlflow = torch = tf = np = accuracy_score = precision_score = recall_score = joblib = None
 
@@ -414,8 +424,8 @@ class AIModelOrchestrationHub:
                 strategy=strategy,
                 environment=environment,
                 auto_scaling=auto_scaling,
-                endpoint_url=f"https://api.ainflue.com/models/{model_id}/v{version}",
-                health_check_url=f"https://api.ainflue.com/models/{model_id}/v{version}/health"
+                endpoint_url=f"https://api.iacherie.com/models/{model_id}/v{version}",
+                health_check_url=f"https://api.iacherie.com/models/{model_id}/v{version}/health"
             )
             
             self.deployments[deployment.deployment_id] = deployment

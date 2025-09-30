@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Video Editor Component
+ * IA Chérie Desktop - Video Editor Component
  * 
  * Professional video editing controls with advanced features and AI-powered optimization
  * Provides comprehensive video editing capabilities for content creators

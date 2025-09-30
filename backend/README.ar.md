@@ -1,13 +1,13 @@
-# 🚀 Ainflue Backend - منصة ذكاء المبدعين المؤسسية
+# 🚀 IA Chérie Backend - منصة ذكاء المبدعين المؤسسية
 
-[![Build Status](https://github.com/Mlaiel/Ainflue/workflows/Backend-CI/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![فحص الأمان](https://github.com/Mlaiel/Ainflue/workflows/Backend-Security/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![اختبارات الأداء](https://github.com/Mlaiel/Ainflue/workflows/Backend-Performance/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![جودة الكود](https://img.shields.io/badge/%D8%AC%D9%88%D8%AF%D8%A9%20%D8%A7%D9%84%D9%83%D9%88%D8%AF-A%2B-brightgreen)](https://github.com/Mlaiel/Ainflue)
+[![Build Status](https://github.com/Mlaiel/IA Chérie/workflows/Backend-CI/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![فحص الأمان](https://github.com/Mlaiel/IA Chérie/workflows/Backend-Security/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![اختبارات الأداء](https://github.com/Mlaiel/IA Chérie/workflows/Backend-Performance/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![جودة الكود](https://img.shields.io/badge/%D8%AC%D9%88%D8%AF%D8%A9%20%D8%A7%D9%84%D9%83%D9%88%D8%AF-A%2B-brightgreen)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🌟 نظام بيئي خلفي ثوري
 
-يمثل Ainflue Backend قمة تكنولوجيا ذكاء المبدعين المؤسسية، حيث يوفر نظاماً بيئياً شاملاً لمعالجة المحتوى المدعوم بالذكاء الاصطناعي، والاستثمار المتقدم، والذكاء التعاوني، والبنية التحتية فائقة القابلية للتوسع.
+يمثل IA Chérie Backend قمة تكنولوجيا ذكاء المبدعين المؤسسية، حيث يوفر نظاماً بيئياً شاملاً لمعالجة المحتوى المدعوم بالذكاء الاصطناعي، والاستثمار المتقدم، والذكاء التعاوني، والبنية التحتية فائقة القابلية للتوسع.
 
 ## 👨‍💻 فريق تطوير خبير
 
@@ -159,8 +159,8 @@
 ### **إعداد التطوير**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/backend
 
 # إنشاء بيئة افتراضية
 python -m venv venv
@@ -187,15 +187,15 @@ python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ### **نشر الإنتاج**
 ```bash
 # البناء والنشر مع Docker
-docker build -t ainflue-backend .
+docker build -t iacherie-backend .
 docker-compose -f docker-compose.prod.yml up -d
 
 # النشر على Kubernetes
 kubectl apply -f k8s/backend/
-kubectl get pods -n ainflue-backend
+kubectl get pods -n iacherie-backend
 
 # مراقبة النشر
-kubectl logs -f deployment/ainflue-backend -n ainflue-backend
+kubectl logs -f deployment/iacherie-backend -n iacherie-backend
 ```
 
 ## 📊 وثائق API
@@ -208,7 +208,7 @@ kubectl logs -f deployment/ainflue-backend -n ainflue-backend
 - **الاستثمار**: `GET /monetization/analytics` - تحليلات الإيرادات والرؤى
 
 ### **APIs الوقت الفعلي**
-- **WebSocket**: `ws://api.ainflue.com/ws` - التحديثات والإشعارات في الوقت الفعلي
+- **WebSocket**: `ws://api.iacherie.com/ws` - التحديثات والإشعارات في الوقت الفعلي
 - **GraphQL**: `POST /graphql` - استعلامات البيانات المرنة والطفرات
 - **gRPC**: التواصل بين الخدمات عالي الأداء
 
@@ -326,6 +326,6 @@ backend/
 ---
 
 **© 2025 فهد مليل - جميع الحقوق محفوظة**  
-**🚀 Ainflue Backend - مستقبل ذكاء المبدعين**
+**🚀 IA Chérie Backend - مستقبل ذكاء المبدعين**
 
 *لاستفسارات الترخيص المصرح بها: mlaiel@live.de*

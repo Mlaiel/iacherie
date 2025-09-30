@@ -815,12 +815,12 @@ async def alert_handler():
         escalation_config = {
             "warning": {
                 "channels": ["slack", "email"],
-                "recipients": ["ml-team@ainflue.com"],
+                "recipients": ["ml-team@iacherie.com"],
                 "cooldown_minutes": 15
             },
             "critical": {
                 "channels": ["slack", "email", "pagerduty", "sms"],
-                "recipients": ["ml-team@ainflue.com", "oncall@ainflue.com", "cto@ainflue.com"],
+                "recipients": ["ml-team@iacherie.com", "oncall@iacherie.com", "cto@iacherie.com"],
                 "cooldown_minutes": 5,
                 "auto_actions": ["scale_up", "failover"]
             }

@@ -2,7 +2,7 @@
 """Distributed Error Orchestrator - Distributed Error Management
 ==============================================================
 
-Advanced distributed error orchestration for Ainflue platform error handling.
+Advanced distributed error orchestration for IA Chérie platform error handling.
 Provides distributed error state management, consensus algorithms, and 
 cross-service error coordination for enterprise-scale deployments.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Infrastructure - Advanced Rate Limiter Engine
+IA Chérie Core Infrastructure - Advanced Rate Limiter Engine
 ==========================================================
 
 Enterprise-grade rate limiting system with advanced algorithms,

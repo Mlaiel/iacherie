@@ -1,7 +1,7 @@
-package com.ainflue.sdk.utils;
+package com.iacherie.sdk.utils;
 
 /**
- * Logger Utility for Ainflue Java SDK
+ * Logger Utility for IA Chérie Java SDK
  * Enterprise logging with structured output and security filtering
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

@@ -1,10 +1,10 @@
 # 📝 CONTENT SERVICES - ENTERPRISE CONTENT DIENSTE
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE MICROSERVICES ENTERPRISE**
+**© FAHED MLAIEL 2024-2025 - IACHERIE MICROSERVICES ENTERPRISE**
 
 ## 🎯 Überblick
 
-Enterprise Content-Verarbeitung und -Verwaltung Multi-Format Modul für die Ainflue-Plattform.
+Enterprise Content-Verarbeitung und -Verwaltung Multi-Format Modul für die IA Chérie-Plattform.
 Spezialisierte Microservices-Architektur mit 16+ Content-Verarbeitungsservices.
 
 ## 🏗️ Service Architektur
@@ -85,7 +85,7 @@ optimizer = ContentOptimizationService()
 optimized = await optimizer.optimize_content(processed.id)
 ```
 
-## 🎯 Ainflue Workflow
+## 🎯 IA Chérie Workflow
 
 Integration des 7-Phasen-Workflows mit Content-Processing:
 1. **Upload & Validation** → Validierung + Metadaten

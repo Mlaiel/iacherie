@@ -1,11 +1,11 @@
 """
-Retry Testing Framework - Ainflue
+Retry Testing Framework - IA Chérie
 =================================
 Framework tests retry mechanisms.
 Chaos testing + failure injection + retry validation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

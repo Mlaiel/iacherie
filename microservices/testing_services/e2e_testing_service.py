@@ -1,6 +1,6 @@
 """
 End-to-End Testing Service - Enterprise E2E Testing
-Ainflue Platform - Microservices Architecture
+IA Chérie Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """
@@ -130,10 +130,10 @@ class E2ETestingService:
                 "auth_service": "http://localhost:8003"
             },
             "staging": {
-                "api_gateway": "https://staging-api.ainflue.com",
-                "ai_services": "https://staging-ai.ainflue.com",
-                "content_services": "https://staging-content.ainflue.com",
-                "auth_service": "https://staging-auth.ainflue.com"
+                "api_gateway": "https://staging-api.iacherie.com",
+                "ai_services": "https://staging-ai.iacherie.com",
+                "content_services": "https://staging-content.iacherie.com",
+                "auth_service": "https://staging-auth.iacherie.com"
             }
         }
     
@@ -628,7 +628,7 @@ class E2ETestingService:
         """Get request headers including authentication"""
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-E2E-Test/1.0"
+            "User-Agent": "IA Chérie-E2E-Test/1.0"
         }
         
         session_data = self.session_data.get(session_id, {})

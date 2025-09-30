@@ -1,4 +1,4 @@
-# 🚀 Ainflue Platform Deployment Guide
+# 🚀 IA Chérie Platform Deployment Guide
 
 ## Complete Production Deployment Guide
 
@@ -13,7 +13,7 @@
 
 ### ✅ Platform Completeness Verification
 
-The Ainflue platform is **100% complete** and ready for production deployment:
+The IA Chérie platform is **100% complete** and ready for production deployment:
 
 - ✅ **Frontend Complete (100%)**: Next.js with TypeScript, Tailwind CSS, full component library
 - ✅ **Backend APIs Complete (100%)**: All critical endpoints implemented (fingerprinting, monitoring, monetization, collaboration)
@@ -39,7 +39,7 @@ The Ainflue platform is **100% complete** and ready for production deployment:
 
 #### External Services
 - **SSL Certificates**: Let's Encrypt or custom
-- **Domain**: ainflue.com (or custom domain)
+- **Domain**: iacherie.com (or custom domain)
 - **Email Service**: SendGrid, AWS SES, or similar
 - **Cloud Storage**: AWS S3, Google Cloud Storage
 - **CDN**: CloudFlare, AWS CloudFront
@@ -55,23 +55,23 @@ The Ainflue platform is **100% complete** and ready for production deployment:
 kubectl apply -f kubernetes/production/namespaces.yaml
 
 # Verify namespace creation
-kubectl get namespaces | grep ainflue
+kubectl get namespaces | grep iacherie
 ```
 
 ### Step 2: Secrets Configuration
 
 ```bash
 # Create production secrets
-kubectl create secret generic ainflue-secrets \
-  --from-literal=database-url="postgresql://user:pass@host:5432/ainflue" \
+kubectl create secret generic iacherie-secrets \
+  --from-literal=database-url="postgresql://user:pass@host:5432/iacherie" \
   --from-literal=redis-url="redis://redis-host:6379" \
   --from-literal=jwt-secret="your-super-secret-jwt-key" \
   --from-literal=openai-api-key="your-openai-key" \
   --from-literal=stripe-secret-key="your-stripe-secret" \
-  -n ainflue-production
+  -n iacherie-production
 
 # Verify secrets
-kubectl get secrets -n ainflue-production
+kubectl get secrets -n iacherie-production
 ```
 
 ### Step 3: Database Setup
@@ -90,7 +90,7 @@ kubectl apply -f kubernetes/production/database/mongodb.yaml
 kubectl apply -f kubernetes/production/database/elasticsearch.yaml
 
 # Wait for databases to be ready
-kubectl wait --for=condition=ready pod -l app=postgresql -n ainflue-production --timeout=300s
+kubectl wait --for=condition=ready pod -l app=postgresql -n iacherie-production --timeout=300s
 ```
 
 ### Step 4: Backend Deployment
@@ -109,7 +109,7 @@ kubectl apply -f kubernetes/production/backend/protection.yaml
 kubectl apply -f kubernetes/production/backend/monetization.yaml
 
 # Verify deployments
-kubectl get deployments -n ainflue-production
+kubectl get deployments -n iacherie-production
 ```
 
 ### Step 5: Frontend Deployment
@@ -122,7 +122,7 @@ kubectl apply -f kubernetes/production/frontend/nextjs.yaml
 kubectl apply -f kubernetes/production/frontend/assets.yaml
 
 # Verify frontend deployment
-kubectl get services -n ainflue-production
+kubectl get services -n iacherie-production
 ```
 
 ### Step 6: Load Balancer & Ingress
@@ -132,10 +132,10 @@ kubectl get services -n ainflue-production
 kubectl apply -f kubernetes/production/ingress/nginx-controller.yaml
 
 # Deploy application ingress
-kubectl apply -f kubernetes/production/ingress/ainflue-ingress.yaml
+kubectl apply -f kubernetes/production/ingress/iacherie-ingress.yaml
 
 # Verify ingress
-kubectl get ingress -n ainflue-production
+kubectl get ingress -n iacherie-production
 ```
 
 ### Step 7: SSL Configuration
@@ -148,7 +148,7 @@ kubectl apply -f kubernetes/production/ssl/cert-manager.yaml
 kubectl apply -f kubernetes/production/ssl/ssl-issuer.yaml
 
 # Verify SSL certificates
-kubectl get certificates -n ainflue-production
+kubectl get certificates -n iacherie-production
 ```
 
 ---
@@ -159,13 +159,13 @@ kubectl get certificates -n ainflue-production
 
 ```bash
 # Check API health
-curl https://api.ainflue.com/health
+curl https://api.iacherie.com/health
 
 # Check database connectivity
-curl https://api.ainflue.com/health/db
+curl https://api.iacherie.com/health/db
 
 # Check AI services
-curl https://api.ainflue.com/health/ai
+curl https://api.iacherie.com/health/ai
 ```
 
 ### Smoke Tests
@@ -175,7 +175,7 @@ curl https://api.ainflue.com/health/ai
 kubectl apply -f kubernetes/production/tests/smoke-tests.yaml
 
 # Monitor test results
-kubectl logs -f job/smoke-tests -n ainflue-production
+kubectl logs -f job/smoke-tests -n iacherie-production
 ```
 
 ### Performance Verification
@@ -203,7 +203,7 @@ kubectl apply -f kubernetes/production/monitoring/prometheus.yaml
 # Deploy Grafana dashboards
 kubectl apply -f kubernetes/production/monitoring/grafana.yaml
 
-# Access Grafana: https://grafana.ainflue.com
+# Access Grafana: https://grafana.iacherie.com
 # Default credentials: admin/admin (change immediately)
 ```
 
@@ -232,7 +232,7 @@ kubectl apply -f kubernetes/production/monitoring/grafana.yaml
 ```yaml
 # Critical alerts configuration
 groups:
-  - name: ainflue-critical
+  - name: iacherie-critical
     rules:
       - alert: HighErrorRate
         expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.01
@@ -265,7 +265,7 @@ kubectl apply -f kubernetes/production/scaling/api-hpa.yaml
 kubectl apply -f kubernetes/production/scaling/ai-hpa.yaml
 
 # Monitor scaling
-kubectl get hpa -n ainflue-production
+kubectl get hpa -n iacherie-production
 ```
 
 ### Cluster Autoscaling
@@ -290,7 +290,7 @@ kubectl apply -f kubernetes/production/scaling/cluster-autoscaler.yaml
 kubectl apply -f kubernetes/production/security/network-policies.yaml
 
 # Verify network isolation
-kubectl get networkpolicies -n ainflue-production
+kubectl get networkpolicies -n iacherie-production
 ```
 
 ### Pod Security Policies
@@ -315,7 +315,7 @@ securityContext:
 kubectl apply -f kubernetes/production/security/rbac.yaml
 
 # Verify service accounts
-kubectl get serviceaccounts -n ainflue-production
+kubectl get serviceaccounts -n iacherie-production
 ```
 
 ---
@@ -329,7 +329,7 @@ kubectl get serviceaccounts -n ainflue-production
 kubectl apply -f kubernetes/production/backup/database-backup-cronjob.yaml
 
 # Manual backup
-kubectl create job --from=cronjob/database-backup manual-backup-$(date +%Y%m%d) -n ainflue-production
+kubectl create job --from=cronjob/database-backup manual-backup-$(date +%Y%m%d) -n iacherie-production
 ```
 
 ### Application State Backup
@@ -339,7 +339,7 @@ kubectl create job --from=cronjob/database-backup manual-backup-$(date +%Y%m%d) 
 kubectl apply -f kubernetes/production/backup/volume-backup.yaml
 
 # Backup configuration
-kubectl get configmaps -n ainflue-production -o yaml > backup/configmaps-$(date +%Y%m%d).yaml
+kubectl get configmaps -n iacherie-production -o yaml > backup/configmaps-$(date +%Y%m%d).yaml
 ```
 
 ### Disaster Recovery Plan
@@ -377,25 +377,25 @@ kubectl apply -f kubernetes/production/i18n/language-configs.yaml
 **Pod Not Starting:**
 ```bash
 # Check pod status
-kubectl describe pod <pod-name> -n ainflue-production
+kubectl describe pod <pod-name> -n iacherie-production
 
 # Check logs
-kubectl logs <pod-name> -n ainflue-production --previous
+kubectl logs <pod-name> -n iacherie-production --previous
 ```
 
 **Database Connection Issues:**
 ```bash
 # Test database connectivity
-kubectl run -it --rm debug --image=postgres:14 --restart=Never -- psql -h postgresql.ainflue-production.svc.cluster.local -U username
+kubectl run -it --rm debug --image=postgres:14 --restart=Never -- psql -h postgresql.iacherie-production.svc.cluster.local -U username
 ```
 
 **Performance Issues:**
 ```bash
 # Check resource usage
-kubectl top pods -n ainflue-production
+kubectl top pods -n iacherie-production
 
 # Check HPA status
-kubectl describe hpa -n ainflue-production
+kubectl describe hpa -n iacherie-production
 ```
 
 ### Performance Tuning
@@ -436,9 +436,9 @@ kubectl describe hpa -n ainflue-production
 ### Monitoring Dashboard
 
 Access real-time metrics at:
-- **Grafana**: https://grafana.ainflue.com
-- **Prometheus**: https://prometheus.ainflue.com
-- **Application Dashboard**: https://app.ainflue.com/admin
+- **Grafana**: https://grafana.iacherie.com
+- **Prometheus**: https://prometheus.iacherie.com
+- **Application Dashboard**: https://app.iacherie.com/admin
 
 ---
 
@@ -480,6 +480,6 @@ Access real-time metrics at:
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform - Production Deployment Guide**
+**IA Chérie Platform - Production Deployment Guide**
 
 For technical support and deployment assistance, contact: mlaiel@live.de

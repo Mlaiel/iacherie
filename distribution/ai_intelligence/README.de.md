@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das KI-Intelligenz-Modul ist das Gehirn des Ainflue-Verteilungssystems und verfügt über 53 spezialisierte KI-Agenten, die die Inhaltsverteilung über 65+ Plattformen optimieren.
+Das KI-Intelligenz-Modul ist das Gehirn des IA Chérie-Verteilungssystems und verfügt über 53 spezialisierte KI-Agenten, die die Inhaltsverteilung über 65+ Plattformen optimieren.
 
 ## Architektur
 
@@ -225,4 +225,4 @@ AI_INTELLIGENCE_CONFIG = {
 **🔒 Geschützte Technologie - Alle Rechte vorbehalten**  
 **⚠️ Vertrauliche Unternehmens-KI-Architektur - Nur für autorisierten Gebrauch**
 
-*Dieses Modul stellt die fortschrittlichste KI-Intelligenz-Architektur für globale Content-Verteilung dar und ist vollständig in den Ainflue-Workflow integriert.*
+*Dieses Modul stellt die fortschrittlichste KI-Intelligenz-Architektur für globale Content-Verteilung dar und ist vollständig in den IA Chérie-Workflow integriert.*

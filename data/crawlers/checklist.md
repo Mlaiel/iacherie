@@ -74,7 +74,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE PROPOSÉE COMPLÈTE
 
 ```
-/workspaces/Ainflue/data/crawlers/                           [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/crawlers/                           [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers)
 │   ├── README.md ✅                    # Documentation anglais (EXISTANT - À ENRICHIR)
 │   ├── README.de.md ✅                 # Documentation allemand (EXISTANT - À ENRICHIR)
@@ -498,7 +498,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -581,11 +581,11 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/crawlers-management:latest
-- ainflue/social-media-crawlers:latest
-- ainflue/multimedia-crawlers:latest
-- ainflue/specialized-crawlers:latest
-- ainflue/anti-detection-engine:latest
+- iacherie/crawlers-management:latest
+- iacherie/social-media-crawlers:latest
+- iacherie/multimedia-crawlers:latest
+- iacherie/specialized-crawlers:latest
+- iacherie/anti-detection-engine:latest
 ```
 
 ---

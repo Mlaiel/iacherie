@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Audience Behavior Analyzer
+IA Chérie Platform - Audience Behavior Analyzer
 =============================================
 
 Advanced audience behavior analysis system for understanding user patterns,

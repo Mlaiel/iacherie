@@ -1,11 +1,11 @@
 """
-Data Processing Module - Ainflue Integrations
+Data Processing Module - IA Chérie Integrations
 ============================================
 Enterprise data processing module providing transformation engines,
 caching management, synchronization, and data pipeline orchestration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -41,9 +41,9 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise data processing and transformation for Ainflue platform"
+__description__ = "Enterprise data processing and transformation for IA Chérie platform"
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_DATA_PROCESSING = {
     'platforms': 65,
     'processing_features': [

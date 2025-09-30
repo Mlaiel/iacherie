@@ -1,16 +1,16 @@
 """
-🔗 SERVICE DEPENDENCY ANALYZER - Module Analyseur Dépendances Services Ainflue
+🔗 SERVICE DEPENDENCY ANALYZER - Module Analyseur Dépendances Services IA Chérie
 ============================================================================
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Copyright**: ©2025 Ainflue Platform - Tous droits réservés
+**Copyright**: ©2025 IA Chérie Platform - Tous droits réservés
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ====================================================
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 - Email: mlaiel@live.de  
-- Projet: Ainflue Platform
+- Projet: IA Chérie Platform
 - Licence: Propriétaire - Usage commercial interdit sans autorisation
 - Protection: Code source confidentiel
 

@@ -114,7 +114,7 @@ class PushNotificationEnterpriseService:
     """
     Enterprise push notification service with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chérie platform business logic:
     - Multi-platform notification delivery
     - Creator engagement optimization
     - Real-time analytics and A/B testing
@@ -182,20 +182,20 @@ class PushNotificationEnterpriseService:
                 "new_follower": NotificationContent(
                     title="🎵 New Fan Alert!",
                     body="You have {count} new followers! Your music is reaching more people.",
-                    icon_url="https://ainflue.com/icons/music-note.png",
+                    icon_url="https://iacherie.com/icons/music-note.png",
                     custom_data={"type": "follower_milestone", "creator_type": "musician"}
                 ),
                 "revenue_milestone": NotificationContent(
                     title="💰 Revenue Milestone!",
                     body="Congratulations! You've earned ${amount} this month from your music.",
-                    icon_url="https://ainflue.com/icons/money.png",
+                    icon_url="https://iacherie.com/icons/money.png",
                     custom_data={"type": "revenue_alert", "creator_type": "musician"}
                 ),
                 "collaboration_request": NotificationContent(
                     title="🎤 Collaboration Opportunity",
                     body="{requester_name} wants to collaborate on a music project with you!",
-                    icon_url="https://ainflue.com/icons/collaboration.png",
-                    action_url="https://ainflue.com/collaborations",
+                    icon_url="https://iacherie.com/icons/collaboration.png",
+                    action_url="https://iacherie.com/collaborations",
                     custom_data={"type": "collaboration", "creator_type": "musician"}
                 )
             },
@@ -204,20 +204,20 @@ class PushNotificationEnterpriseService:
                 "content_viral": NotificationContent(
                     title="📈 Your Post is Going Viral!",
                     body="'{post_title}' has reached {views} views and {shares} shares!",
-                    icon_url="https://ainflue.com/icons/trending.png",
+                    icon_url="https://iacherie.com/icons/trending.png",
                     custom_data={"type": "engagement_milestone", "creator_type": "blogger"}
                 ),
                 "seo_improvement": NotificationContent(
                     title="🔍 SEO Opportunity",
                     body="Your blog post '{post_title}' can rank higher with these optimizations.",
-                    icon_url="https://ainflue.com/icons/seo.png",
-                    action_url="https://ainflue.com/seo-dashboard",
+                    icon_url="https://iacherie.com/icons/seo.png",
+                    action_url="https://iacherie.com/seo-dashboard",
                     custom_data={"type": "educational", "creator_type": "blogger"}
                 ),
                 "monetization_tip": NotificationContent(
                     title="💡 Monetization Tip",
                     body="Based on your content, you could earn ${estimated_amount} more with these strategies.",
-                    icon_url="https://ainflue.com/icons/lightbulb.png",
+                    icon_url="https://iacherie.com/icons/lightbulb.png",
                     custom_data={"type": "educational", "creator_type": "blogger"}
                 )
             },
@@ -226,20 +226,20 @@ class PushNotificationEnterpriseService:
                 "portfolio_featured": NotificationContent(
                     title="⭐ Portfolio Featured!",
                     body="Your photography has been featured in the trending gallery!",
-                    icon_url="https://ainflue.com/icons/camera.png",
+                    icon_url="https://iacherie.com/icons/camera.png",
                     custom_data={"type": "engagement_milestone", "creator_type": "photographer"}
                 ),
                 "client_inquiry": NotificationContent(
                     title="📸 New Client Inquiry",
                     body="A potential client is interested in your {photography_style} photography services.",
-                    icon_url="https://ainflue.com/icons/message.png",
-                    action_url="https://ainflue.com/client-messages",
+                    icon_url="https://iacherie.com/icons/message.png",
+                    action_url="https://iacherie.com/client-messages",
                     custom_data={"type": "business_opportunity", "creator_type": "photographer"}
                 ),
                 "equipment_recommendation": NotificationContent(
                     title="📷 Equipment Recommendation",
                     body="Based on your style, these camera upgrades could enhance your work.",
-                    icon_url="https://ainflue.com/icons/camera-gear.png",
+                    icon_url="https://iacherie.com/icons/camera-gear.png",
                     custom_data={"type": "educational", "creator_type": "photographer"}
                 )
             },
@@ -248,20 +248,20 @@ class PushNotificationEnterpriseService:
                 "brand_deal": NotificationContent(
                     title="🤝 Brand Partnership Opportunity",
                     body="{brand_name} wants to partner with you! Potential value: ${deal_value}",
-                    icon_url="https://ainflue.com/icons/handshake.png",
-                    action_url="https://ainflue.com/brand-deals",
+                    icon_url="https://iacherie.com/icons/handshake.png",
+                    action_url="https://iacherie.com/brand-deals",
                     custom_data={"type": "business_opportunity", "creator_type": "influencer"}
                 ),
                 "engagement_rate": NotificationContent(
                     title="📊 Engagement Rate Update",
                     body="Your engagement rate increased to {rate}%! Your content resonates with your audience.",
-                    icon_url="https://ainflue.com/icons/chart.png",
+                    icon_url="https://iacherie.com/icons/chart.png",
                     custom_data={"type": "analytics_update", "creator_type": "influencer"}
                 ),
                 "content_suggestion": NotificationContent(
                     title="💭 Content Idea",
                     body="Trending topic alert: '{topic}' is popular with your audience right now!",
-                    icon_url="https://ainflue.com/icons/idea.png",
+                    icon_url="https://iacherie.com/icons/idea.png",
                     custom_data={"type": "content_suggestion", "creator_type": "influencer"}
                 )
             },
@@ -270,20 +270,20 @@ class PushNotificationEnterpriseService:
                 "joke_performance": NotificationContent(
                     title="😂 Your Joke is Killing It!",
                     body="Your latest joke has {likes} likes and {shares} shares. Keep them laughing!",
-                    icon_url="https://ainflue.com/icons/comedy.png",
+                    icon_url="https://iacherie.com/icons/comedy.png",
                     custom_data={"type": "engagement_milestone", "creator_type": "comedian"}
                 ),
                 "show_opportunity": NotificationContent(
                     title="🎭 Show Opportunity",
                     body="A comedy club is interested in booking you for a show on {date}!",
-                    icon_url="https://ainflue.com/icons/microphone.png",
-                    action_url="https://ainflue.com/bookings",
+                    icon_url="https://iacherie.com/icons/microphone.png",
+                    action_url="https://iacherie.com/bookings",
                     custom_data={"type": "business_opportunity", "creator_type": "comedian"}
                 ),
                 "comedy_trend": NotificationContent(
                     title="📈 Comedy Trend Alert",
                     body="'{trend_topic}' is trending! Perfect opportunity for your next bit.",
-                    icon_url="https://ainflue.com/icons/trending-comedy.png",
+                    icon_url="https://iacherie.com/icons/trending-comedy.png",
                     custom_data={"type": "content_suggestion", "creator_type": "comedian"}
                 )
             }

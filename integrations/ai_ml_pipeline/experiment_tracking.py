@@ -2,7 +2,7 @@
 =====================================================================
 
 Système de tracking d'expérimentations ML avec versioning, comparaison,
-collaboration et reproductibilité pour la plateforme Ainflue.
+collaboration et reproductibilité pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Experiment design + metrics tracking + model comparison
@@ -133,7 +133,7 @@ class ExperimentMetric:
     epoch: Optional[int] = None
     is_primary: bool = False
     higher_is_better: bool = True
-    confidence_interval: Optional[Tuple[float, float]] = None
+    confidence_interval: Optional[tuple[float, float]] = None
 
 @dataclass
 class ExperimentArtifact:
@@ -862,7 +862,7 @@ class ExperimentTrackingSystem:
                                experiment_type: ExperimentType = None,
                                creator_id: str = None,
                                creator_type: str = None,
-                               date_range: Tuple[datetime, datetime] = None,
+                               date_range: tuple[datetime, datetime] = None,
                                tags: Dict[str, str] = None,
                                limit: int = 50) -> List[ExperimentRun]:
         """🔍 Search - Rechercher des expérimentations"""

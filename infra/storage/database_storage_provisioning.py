@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Database Storage Provisioning
+# IA Chérie Infrastructure Module - Database Storage Provisioning
 # ============================================================
 # 
-# Enterprise-grade database storage provisioning for Ainflue platform
+# Enterprise-grade database storage provisioning for IA Chérie platform
 # Supports multi-cloud database deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -527,7 +527,7 @@ async def main():
     result = await provisioner.provision_database_storage(
         CREATOR_DATABASE_CONFIGS['user_profiles'],
         'aws',
-        'ainflue-user-profiles'
+        'iacherie-user-profiles'
     )
     
     print(f"Provisioned database: {result}")

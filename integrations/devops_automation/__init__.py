@@ -2,7 +2,7 @@
 ======================================================
 
 Module d'automation DevOps enterprise avec CI/CD avancé, Infrastructure as Code
-et monitoring distribué pour Ainflue.
+et monitoring distribué pour IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 14 Septembre 2025

@@ -2,7 +2,7 @@
 
 ## 🌟 Overview
 
-The **Backend Orchestration Module** is the neural center of the Ainflue platform, providing ultra-advanced orchestration capabilities for multi-format content creation, AI-powered processing, collaborative workflows, and enterprise-grade distribution across multiple platforms.
+The **Backend Orchestration Module** is the neural center of the IA Chérie platform, providing ultra-advanced orchestration capabilities for multi-format content creation, AI-powered processing, collaborative workflows, and enterprise-grade distribution across multiple platforms.
 
 ## 🎯 Business Logic Pipeline
 
@@ -117,7 +117,7 @@ portfolio_result = await visual_orchestrator.optimize_portfolio(
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/ainflue/backend-orchestration
+git clone https://github.com/iacherie/backend-orchestration
 cd backend-orchestration
 
 # Install dependencies
@@ -206,7 +206,7 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 🎓 Training & Certification
 
 ### Certification Programs
-- **Ainflue Creator Certification**: Platform mastery
+- **IA Chérie Creator Certification**: Platform mastery
 - **AI Optimization Specialist**: Advanced AI features
 - **Enterprise Administrator**: Enterprise deployment
 - **Security Specialist**: Security configuration
@@ -235,15 +235,15 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 📞 Support
 
 ### Technical Support
-- **Email**: support@ainflue.com
+- **Email**: support@iacherie.com
 - **Slack**: #backend-orchestration
 - **GitHub Issues**: Bug reports and feature requests
-- **Documentation**: https://docs.ainflue.com
+- **Documentation**: https://docs.iacherie.com
 
 ### Business Support
-- **Sales**: sales@ainflue.com
-- **Partnerships**: partnerships@ainflue.com
-- **Enterprise**: enterprise@ainflue.com
+- **Sales**: sales@iacherie.com
+- **Partnerships**: partnerships@iacherie.com
+- **Enterprise**: enterprise@iacherie.com
 
 ## ⚖️ Legal & Compliance
 
@@ -293,6 +293,6 @@ Any unauthorized copying, distribution, or use without explicit written permissi
 
 ---
 
-**Made with 💝 by the Ainflue Team**
+**Made with 💝 by the IA Chérie Team**
 
 *Empowering creators worldwide with intelligent technology*

@@ -1,7 +1,7 @@
 """Security Management Engine - Main Interface
 
 Enterprise-grade security system providing unified interface
-for all security, encryption, and threat protection capabilities across the Ainflue platform.
+for all security, encryption, and threat protection capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -84,7 +84,7 @@ class SecurityEngine:
     """Main Security Management Engine
     
     Provides comprehensive security, encryption, access control,
-    and threat protection for the entire Ainflue distribution platform.
+    and threat protection for the entire IA Chérie distribution platform.
     """
     
     def __init__(self):

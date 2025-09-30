@@ -1,5 +1,5 @@
-# 🚀 Exemples Ainflue - Exemples Complets de Plateforme & Démonstrations
-**Plateforme Ainflue - Suite d'Exemples Complète & Showcases de Workflow**
+# 🚀 Exemples IA Chérie - Exemples Complets de Plateforme & Démonstrations
+**Plateforme IA Chérie - Suite d'Exemples Complète & Showcases de Workflow**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Droits d'auteur :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -25,7 +25,7 @@
 
 ## ⚖️ Avertissement Légal Strict
 
-**🚨 Propriété Intellectuelle Exclusive :** Tous les concepts, architectures, spécifications techniques, implémentations de code et documentation contenus dans le module Exemples Ainflue sont la **propriété exclusive** de **Fahed Mlaiel** (mlaiel@live.de).
+**🚨 Propriété Intellectuelle Exclusive :** Tous les concepts, architectures, spécifications techniques, implémentations de code et documentation contenus dans le module Exemples IA Chérie sont la **propriété exclusive** de **Fahed Mlaiel** (mlaiel@live.de).
 
 **⚠️ Interdiction Officielle :** Toute utilisation, reproduction, adaptation, copie ou implémentation sans permission écrite explicite de Fahed Mlaiel entraînera des actions légales immédiates incluant :
 - Réclamations de violation de propriété intellectuelle
@@ -39,7 +39,7 @@
 
 ## 🚀 Aperçu Entreprise
 
-Le module **Exemples Ainflue** fournit une suite complète d'exemples, démonstrations et showcases de workflow pour la plateforme Ainflue, conçu spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système ultra-sophistiqué et prêt pour la production démontre le traitement IA de niveau entreprise, analytics, logique métier, collaboration, monétisation, infrastructure et intégration cross-plateforme avec des scénarios réels et les meilleures pratiques.
+Le module **Exemples IA Chérie** fournit une suite complète d'exemples, démonstrations et showcases de workflow pour la plateforme IA Chérie, conçu spécifiquement pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système ultra-sophistiqué et prêt pour la production démontre le traitement IA de niveau entreprise, analytics, logique métier, collaboration, monétisation, infrastructure et intégration cross-plateforme avec des scénarios réels et les meilleures pratiques.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -302,11 +302,11 @@ print(f"Workflow créateur terminé : {workflow_results['suite_results']['succes
 
 ### **Déploiement Production**
 ```yaml
-# Docker Compose pour Exemples Ainflue
+# Docker Compose pour Exemples IA Chérie
 version: '3.8'
 services:
   examples-orchestrator:
-    image: ainflue/examples-orchestrator:latest
+    image: iacherie/examples-orchestrator:latest
     deploy:
       replicas: 5
       resources:
@@ -319,8 +319,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://examples-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -344,7 +344,7 @@ services:
 
 ## 📝 **Résumé**
 
-Le module Exemples Ainflue représente le summum de la conception d'exemples de plateforme, spécifiquement conçu pour les créateurs de contenu multi-format. Avec des exemples complets, des capacités IA/ML avancées et des fonctionnalités de niveau entreprise, ce système assure une compréhension maximale de la plateforme, l'adoption des fonctionnalités et l'optimisation des performances pour toutes les activités de créateurs tout en fournissant des insights profonds sur les capacités de la plateforme et les opportunités d'optimisation.
+Le module Exemples IA Chérie représente le summum de la conception d'exemples de plateforme, spécifiquement conçu pour les créateurs de contenu multi-format. Avec des exemples complets, des capacités IA/ML avancées et des fonctionnalités de niveau entreprise, ce système assure une compréhension maximale de la plateforme, l'adoption des fonctionnalités et l'optimisation des performances pour toutes les activités de créateurs tout en fournissant des insights profonds sur les capacités de la plateforme et les opportunités d'optimisation.
 
 **🎯 Mission :** Livrer les exemples de plateforme les plus complets au monde pour les créateurs de contenu, permettant une adoption optimale de la plateforme, une utilisation des fonctionnalités et une optimisation des performances à travers l'écosystème complet des créateurs.
 

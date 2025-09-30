@@ -1,10 +1,10 @@
 # ⚡ Optimization Engine - Plateforme d'Amélioration de Performance Avancée
 
-**Système d'Optimisation Enterprise pour la Plateforme de Distribution Ainflue**
+**Système d'Optimisation Enterprise pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Aperçu
 
-L'Optimization Engine est une plateforme complète d'amélioration de performance qui fournit des capacités d'optimisation alimentées par l'IA à travers tous les aspects de l'écosystème de distribution Ainflue. Ce module implémente des algorithmes d'optimisation avancés, des modèles d'apprentissage automatique et des systèmes de prise de décision intelligents pour maximiser la performance du contenu, les taux d'engagement et la génération de revenus sur 65+ plateformes.
+L'Optimization Engine est une plateforme complète d'amélioration de performance qui fournit des capacités d'optimisation alimentées par l'IA à travers tous les aspects de l'écosystème de distribution IA Chérie. Ce module implémente des algorithmes d'optimisation avancés, des modèles d'apprentissage automatique et des systèmes de prise de décision intelligents pour maximiser la performance du contenu, les taux d'engagement et la génération de revenus sur 65+ plateformes.
 
 ## 🚀 Fonctionnalités Principales
 
@@ -102,9 +102,9 @@ python setup_optimization.py --environment=production
 
 ## 📞 Support & Contact
 
-**Équipe Optimisation**: optimization@ainflue.com  
-**Ingénierie ML**: ml-engineering@ainflue.com  
-**Équipe Performance**: performance@ainflue.com
+**Équipe Optimisation**: optimization@iacherie.com  
+**Ingénierie ML**: ml-engineering@iacherie.com  
+**Équipe Performance**: performance@iacherie.com
 
 ---
 

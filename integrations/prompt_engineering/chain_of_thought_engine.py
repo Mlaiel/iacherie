@@ -14,7 +14,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Advanced chain-of-thought techniques et reasoning patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chérie Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 

@@ -1,4 +1,4 @@
-# 🎵 Ainflue Audio-Vorlagen - Enterprise Framework
+# 🎵 IA Chérie Audio-Vorlagen - Enterprise Framework
 
 **© 2025 Fahed Mlaiel <mlaiel@live.de> - Alle Rechte Vorbehalten**
 
@@ -13,7 +13,7 @@
 
 ## 🎯 Enterprise Audio-Vorlagen für die Creator Economy
 
-Das Ainflue Audio-Vorlagen Modul bietet **120+ professionelle Audio-Verarbeitungsvorlagen**, die speziell für die Creator Economy entwickelt wurden. Dieses Enterprise-Framework kombiniert fortschrittliche Audioverarbeitung, KI-Verbesserung und creator-fokussierte Features für außergewöhnliche Audio-Erlebnisse.
+Das IA Chérie Audio-Vorlagen Modul bietet **120+ professionelle Audio-Verarbeitungsvorlagen**, die speziell für die Creator Economy entwickelt wurden. Dieses Enterprise-Framework kombiniert fortschrittliche Audioverarbeitung, KI-Verbesserung und creator-fokussierte Features für außergewöhnliche Audio-Erlebnisse.
 
 ### 🏭 **Expertenteam**
 
@@ -58,7 +58,7 @@ Das Ainflue Audio-Vorlagen Modul bietet **120+ professionelle Audio-Verarbeitung
 #### Installation
 
 ```bash
-pip install ainflue-audio-templates
+pip install iacherie-audio-templates
 ```
 
 #### Grundlegende Verwendung
@@ -104,8 +104,8 @@ print(f"Generierte Komposition: {result.composition_metadata['title']}")
 
 **Technischer Leiter:** Fahed Mlaiel  
 **E-Mail:** mlaiel@live.de  
-**Enterprise-Vertrieb:** enterprise@ainflue.com  
-**Technischer Support:** support@ainflue.com  
+**Enterprise-Vertrieb:** enterprise@iacherie.com  
+**Technischer Support:** support@iacherie.com  
 
 ---
 

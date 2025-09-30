@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Content Protection Monitoring Module
+IA Chérie Platform - Content Protection Monitoring Module
 ======================================================
 
 Enterprise-grade monitoring for AI-powered content protection including

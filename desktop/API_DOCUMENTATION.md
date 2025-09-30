@@ -1,8 +1,8 @@
-# 📚 Ainflue Desktop - API Documentation
+# 📚 IA Chérie Desktop - API Documentation
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
-**Project:** Ainflue Desktop Module API Reference
+**Project:** IA Chérie Desktop Module API Reference
 
 ⚠️ **STRICT COPYRIGHT WARNING** ⚠️  
 This software and concept are the exclusive intellectual property of Fahed Mlaiel.  
@@ -13,7 +13,7 @@ Legal action will be taken against violators under German and international copy
 
 ## 🎯 API Overview
 
-The Ainflue Desktop application provides a comprehensive API ecosystem for content creators, enabling:
+The IA Chérie Desktop application provides a comprehensive API ecosystem for content creators, enabling:
 - **Content Processing & AI Analysis**
 - **Multi-platform Integration** 
 - **Real-time Collaboration**

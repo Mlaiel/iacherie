@@ -3,7 +3,7 @@
 👤 CREATOR ANALYTICS SERVICE
 ===========================
 
-Advanced creator performance analytics and insights service for the Ainflue platform.
+Advanced creator performance analytics and insights service for the IA Chérie platform.
 Provides detailed analytics for creator performance, audience insights, and revenue tracking.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

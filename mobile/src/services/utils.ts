@@ -44,7 +44,7 @@ export function createMobileServiceConfig(
   baseConfig: Partial<MobileAPIConfig>
 ): MobileAPIConfig {
   return {
-    baseUrl: baseConfig.baseUrl || 'https://api.ainflue.com',
+    baseUrl: baseConfig.baseUrl || 'https://api.iacherie.com',
     apiKey: baseConfig.apiKey || '',
     timeout: baseConfig.timeout || SERVICE_DEFAULTS.API.TIMEOUT,
     retryAttempts: baseConfig.retryAttempts || SERVICE_DEFAULTS.API.RETRY_ATTEMPTS,

@@ -1,5 +1,5 @@
 /**
- * Ainflue Notification Service - Professional Push Notification System
+ * IA Chérie Notification Service - Professional Push Notification System
  * 
  * Advanced notification system for content creators
  * Supports Firebase Cloud Messaging, local notifications, and smart delivery
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.app.*
 import android.content.Context
@@ -41,7 +41,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
- * Professional Notification Service for Ainflue Platform
+ * Professional Notification Service for IA Chérie Platform
  * 
  * Features:
  * - Firebase Cloud Messaging integration
@@ -77,10 +77,10 @@ class NotificationService(private val context: Context) {
         const val TYPE_SYSTEM_UPDATE = "system_update"
         
         // Intent actions
-        const val ACTION_NOTIFICATION_CLICKED = "com.ainflue.mobile.NOTIFICATION_CLICKED"
-        const val ACTION_QUICK_REPLY = "com.ainflue.mobile.QUICK_REPLY"
-        const val ACTION_VIOLATION_VIEW = "com.ainflue.mobile.VIOLATION_VIEW"
-        const val ACTION_REVENUE_VIEW = "com.ainflue.mobile.REVENUE_VIEW"
+        const val ACTION_NOTIFICATION_CLICKED = "com.iacherie.mobile.NOTIFICATION_CLICKED"
+        const val ACTION_QUICK_REPLY = "com.iacherie.mobile.QUICK_REPLY"
+        const val ACTION_VIOLATION_VIEW = "com.iacherie.mobile.VIOLATION_VIEW"
+        const val ACTION_REVENUE_VIEW = "com.iacherie.mobile.REVENUE_VIEW"
         
         // Preferences
         private const val PREFS_NAME = "notification_preferences"
@@ -301,7 +301,7 @@ class NotificationService(private val context: Context) {
             message = "Your content \"$contentTitle\" was found on $platform with ${(similarity * 100).toInt()}% similarity",
             channel = CHANNEL_PROTECTION,
             priority = NotificationCompat.PRIORITY_HIGH,
-            deepLink = "ainflue://protection/violations/${UUID.randomUUID()}",
+            deepLink = "iacherie://protection/violations/${UUID.randomUUID()}",
             actions = listOf(
                 NotificationAction(
                     id = "view_violation",
@@ -343,7 +343,7 @@ class NotificationService(private val context: Context) {
             message = "Congratulations! You've earned $${String.format("%.2f", amount)} this $period",
             channel = CHANNEL_REVENUE,
             priority = NotificationCompat.PRIORITY_DEFAULT,
-            deepLink = "ainflue://analytics/revenue",
+            deepLink = "iacherie://analytics/revenue",
             actions = listOf(
                 NotificationAction(
                     id = "view_revenue",
@@ -377,7 +377,7 @@ class NotificationService(private val context: Context) {
             message = "$inviterName invited you to collaborate on \"$projectName\" as $role",
             channel = CHANNEL_COLLABORATION,
             priority = NotificationCompat.PRIORITY_DEFAULT,
-            deepLink = "ainflue://collaborations/invites",
+            deepLink = "iacherie://collaborations/invites",
             actions = listOf(
                 NotificationAction(
                     id = "accept_invite",
@@ -855,7 +855,7 @@ class NotificationService(private val context: Context) {
             Log.i(TAG, "📨 FCM message received from: ${remoteMessage.from}")
             
             // Extract notification data
-            val title = remoteMessage.notification?.title ?: "Ainflue"
+            val title = remoteMessage.notification?.title ?: "IA Chérie"
             val body = remoteMessage.notification?.body ?: ""
             val data = remoteMessage.data
             

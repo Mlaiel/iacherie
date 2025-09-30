@@ -604,7 +604,7 @@ class SitemapGenerator:
             publication_elem = ET.SubElement(news_elem, 'news:publication')
             
             name_elem = ET.SubElement(publication_elem, 'news:name')
-            name_elem.text = "Ainflue Platform"
+            name_elem.text = "IA Chérie Platform"
             
             language_elem = ET.SubElement(publication_elem, 'news:language')
             language_elem.text = "en"

@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chérie Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -62,7 +62,7 @@ class ConsensusState(Enum):
 
 @dataclass
 class ServiceInstance:
-    """Instance de service avec métadonnées complètes Ainflue"""
+    """Instance de service avec métadonnées complètes IA Chérie"""
     service_id: str
     service_name: str
     host: str
@@ -340,7 +340,7 @@ class DistributedRegistryCore:
         - Service versioning avec backward compatibility
         - Health check integration avec auto-deregistration
         - Service mesh sidecar coordination
-        - Business domain classification pour Ainflue workflows
+        - Business domain classification pour IA Chérie workflows
         - Geographic placement avec datacenter awareness
         - Load balancing weight calculation
         - Service dependency mapping
@@ -546,7 +546,7 @@ class DistributedRegistryCore:
         return hashlib.sha256(placement_key.encode()).hexdigest()
     
     async def _validate_ainflue_business_constraints(self, instance: ServiceInstance) -> bool:
-        """Validation contraintes métier Ainflue pour enregistrement."""
+        """Validation contraintes métier IA Chérie pour enregistrement."""
         try:
             # Validate business domain
             valid_domains = {'creator', 'content', 'monetization', 'collaboration', 'distribution', 'general'}
@@ -564,11 +564,11 @@ class DistributedRegistryCore:
                 logger.error(f"Invalid weight: {instance.weight}")
                 return False
             
-            # Validate required metadata for Ainflue services
+            # Validate required metadata for IA Chérie services
             if instance.ainflue_business_domain != 'general':
                 required_fields = {'creator_types', 'content_formats', 'processing_capabilities'}
                 if not any(field in instance.metadata for field in required_fields):
-                    logger.error("Missing required Ainflue business metadata")
+                    logger.error("Missing required IA Chérie business metadata")
                     return False
             
             return True

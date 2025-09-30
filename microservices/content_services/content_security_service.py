@@ -1,6 +1,6 @@
 """
 🔐 Content Security Service - Sécurité de Contenu Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Service spécialisé de sécurité pour contenu avec scan malware, validation et protection.
 Sécurité multi-couches avec IA de détection et compliance automatique.

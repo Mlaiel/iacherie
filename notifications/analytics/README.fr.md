@@ -1,6 +1,6 @@
 # 📊 Module Notifications Analytics - Architecture Enterprise
 
-**Plateforme Ainflue - Système Avancé de Notifications Analytics**
+**Plateforme IA Chérie - Système Avancé de Notifications Analytics**
 
 **Version :** 3.1.0 Enterprise  
 **Date :** 11 septembre 2025  
@@ -22,7 +22,7 @@ Cette architecture, ce concept, ce code et toute propriété intellectuelle asso
 
 ---
 
-## 🎯 LOGIQUE MÉTIER AINFLUE - CONFORMITÉ EXIGENCES
+## 🎯 LOGIQUE MÉTIER IACHERIE - CONFORMITÉ EXIGENCES
 
 ### 🔄 WORKFLOW MÉTIER CENTRAL (NOTIFICATIONS COMPLÈTES REQUISES)
 
@@ -195,7 +195,7 @@ class AIAnalyticsPersonalization:
 
 ### 📧 Informations Contact
 - **Email :** mlaiel@live.de
-- **Site Web :** [Plateforme Ainflue](https://ainflue.com)
+- **Site Web :** [Plateforme IA Chérie](https://iacherie.com)
 - **Lead Developer :** Fahed Mlaiel
 - **Localisation :** Allemagne
 
@@ -209,5 +209,5 @@ class AIAnalyticsPersonalization:
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Plateforme Ainflue - Architecture Enterprise Notifications Analytics  
+**Projet :** Plateforme IA Chérie - Architecture Enterprise Notifications Analytics  
 **Version :** 3.1.0 - Documentation Complète Professionnelle

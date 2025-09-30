@@ -1,7 +1,7 @@
 """🎯 Creator Engagement Analytics - ML-Powered Engagement Intelligence
 ================================================================
 
-Advanced creator engagement analytics with machine learning predictions for the Ainflue platform.
+Advanced creator engagement analytics with machine learning predictions for the IA Chérie platform.
 Provides deep insights into creator behavior, audience interaction, content performance,
 and predictive analytics for creator success optimization.
 

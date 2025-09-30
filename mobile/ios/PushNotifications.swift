@@ -1,6 +1,6 @@
 //
 //  PushNotifications.swift
-//  Ainflue iOS - Professional Push Notification System
+//  IA Chérie iOS - Professional Push Notification System
 //
 //  Enterprise-grade push notification management with intelligent delivery,
 //  rich media support, and advanced user engagement optimization.
@@ -70,9 +70,9 @@ class PushNotificationService: NSObject {
     private var isNetworkAvailable: Bool = true
     
     // MARK: - Processing Queues
-    private let processingQueue = DispatchQueue(label: "com.ainflue.notifications.processing", qos: .userInitiated)
-    private let analyticsQueue = DispatchQueue(label: "com.ainflue.notifications.analytics", qos: .utility)
-    private let deliveryQueue = DispatchQueue(label: "com.ainflue.notifications.delivery", qos: .userInitiated)
+    private let processingQueue = DispatchQueue(label: "com.iacherie.notifications.processing", qos: .userInitiated)
+    private let analyticsQueue = DispatchQueue(label: "com.iacherie.notifications.analytics", qos: .utility)
+    private let deliveryQueue = DispatchQueue(label: "com.iacherie.notifications.delivery", qos: .userInitiated)
     
     // MARK: - Initialization
     
@@ -240,7 +240,7 @@ class PushNotificationService: NSObject {
     }
     
     private func sendDeviceTokenToBackend(_ token: String) {
-        // Implementation would send token to Ainflue backend
+        // Implementation would send token to IA Chérie backend
         let tokenData = [
             "device_token": token,
             "platform": "ios",

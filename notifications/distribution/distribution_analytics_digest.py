@@ -1,6 +1,6 @@
 """
 📊 DISTRIBUTION ANALYTICS DIGEST
-Ainflue Platform - Distribution Analytics Reporting System
+IA Chérie Platform - Distribution Analytics Reporting System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

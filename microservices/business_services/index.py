@@ -7,7 +7,7 @@
 ⚠️ ARCHITECTURE CONFIDENTIELLE - NIVEAU ENTERPRISE UNIQUEMENT
 
 Entry point for Business Services module.
-Provides enterprise-grade business logic services for Ainflue workflow.
+Provides enterprise-grade business logic services for IA Chérie workflow.
 
 Module: business_services/
 Services: 18 Business Logic services
@@ -70,7 +70,7 @@ class BusinessServiceType(Enum):
     PROGRESS_TRACKING = "progress_tracking"
 
 class WorkflowPhase(Enum):
-    """Ainflue workflow phases"""
+    """IA Chérie workflow phases"""
     UPLOAD_VALIDATION = "upload_validation"
     AI_PROCESSING = "ai_processing"
     PROTECTION_IP = "protection_ip"
@@ -122,7 +122,7 @@ class CreatorProfile:
 class BusinessServicesOrchestrator:
     """
     Enterprise Business Services Orchestrator
-    Coordinates all business logic services for Ainflue workflow
+    Coordinates all business logic services for IA Chérie workflow
     """
     
     def __init__(self):
@@ -354,8 +354,8 @@ class BusinessServicesOrchestrator:
     
     async def orchestrate_ainflue_workflow(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Orchestrate complete Ainflue workflow across all 7 phases
-        This is the core business logic for Ainflue platform
+        Orchestrate complete IA Chérie workflow across all 7 phases
+        This is the core business logic for IA Chérie platform
         """
         workflow_id = str(uuid.uuid4())
         workflow_start = datetime.now()
@@ -548,7 +548,7 @@ async def process_business_request(request: BusinessRequest) -> BusinessResponse
     return await business_orchestrator.process_business_request(request)
 
 async def orchestrate_workflow(creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Orchestrate complete Ainflue workflow"""
+    """Orchestrate complete IA Chérie workflow"""
     return await business_orchestrator.orchestrate_ainflue_workflow(creator_id, content_data)
 
 async def get_creator_dashboard(creator_id: str) -> Dict[str, Any]:

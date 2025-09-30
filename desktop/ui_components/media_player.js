@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Advanced Media Player
+ * IA Chérie Desktop - Advanced Media Player
  * 
  * Professional media player supporting multiple formats
  * Audio, video, live streams, playlists, and advanced controls
@@ -61,7 +61,7 @@ class MediaPlayer {
    */
   createPlayerStructure() {
     this.playerContainer = document.createElement('div');
-    this.playerContainer.className = `ainflue-media-player ${this.theme}`;
+    this.playerContainer.className = `iacherie-media-player ${this.theme}`;
     this.playerContainer.innerHTML = `
       <div class="media-viewport">
         <video class="media-element" preload="metadata"></video>
@@ -221,7 +221,7 @@ class MediaPlayer {
     const styles = document.createElement('style');
     styles.id = 'media-player-styles';
     styles.textContent = `
-      .ainflue-media-player {
+      .iacherie-media-player {
         background: #000;
         border-radius: 12px;
         overflow: hidden;
@@ -231,7 +231,7 @@ class MediaPlayer {
         max-width: 100%;
       }
       
-      .ainflue-media-player.professional {
+      .iacherie-media-player.professional {
         background: linear-gradient(145deg, #1a1a2e, #16213e);
       }
       
@@ -531,7 +531,7 @@ class MediaPlayer {
         color: rgba(255, 255, 255, 0.6);
       }
       
-      .ainflue-media-player.fullscreen {
+      .iacherie-media-player.fullscreen {
         position: fixed;
         top: 0;
         left: 0;
@@ -541,7 +541,7 @@ class MediaPlayer {
         border-radius: 0;
       }
       
-      .ainflue-media-player.fullscreen .media-element {
+      .iacherie-media-player.fullscreen .media-element {
         max-height: calc(100vh - 100px);
       }
     `;
@@ -1139,7 +1139,7 @@ class MediaPlayer {
     this.container.removeChild(this.playerContainer);
     
     // Remove styles if no other players exist
-    if (!document.querySelector('.ainflue-media-player')) {
+    if (!document.querySelector('.iacherie-media-player')) {
       const styles = document.getElementById('media-player-styles');
       if (styles) {
         styles.remove();

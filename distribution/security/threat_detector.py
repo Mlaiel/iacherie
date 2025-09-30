@@ -1,6 +1,6 @@
 """
 Enhanced Enterprise Security Threat Detector - Multi-Expert Implementation
-Advanced threat detection system for Ainflue Distribution Platform
+Advanced threat detection system for IA Chérie Distribution Platform
 
 🔐 SECURITY EXPERT: Advanced threat detection & incident response
 ⚙️ BACKEND SENIOR: High-performance security architecture
@@ -143,17 +143,18 @@ class EnhancedThreatEvent:
     description: str = ""
     raw_data: Dict[str, Any] = field(default_factory=dict)
     related_events: List[str] = field(default_factory=list)
-    threat_type: ThreatType
-    level: ThreatLevel
-    source_ip: str
-    user_id: Optional[str]
-    timestamp: datetime
+
+# Alias pour compatibilité
+ThreatEvent = EnhancedThreatEvent
     description: str
     indicators: Dict[str, Any]
     raw_data: Dict[str, Any]
     confidence: float  # 0.0 to 1.0
     automated_response: bool = False
     response_actions: List[str] = field(default_factory=list)
+
+# Alias pour compatibilité
+ThreatEvent = EnhancedThreatEvent
 
 @dataclass
 class ThreatPattern:

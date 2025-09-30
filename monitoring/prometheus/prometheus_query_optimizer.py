@@ -1,8 +1,8 @@
 """
 Prometheus Query Optimizer Module
-Optimiseur queries Prometheus intelligent - Ainflue Platform
+Optimiseur queries Prometheus intelligent - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -456,7 +456,7 @@ class PrometheusQueryOptimizer:
         """Estime la cardinalité d'une requête"""
         try:
             # Extraction des métriques de la requête
-            metrics = re.findall(r'ainflue_[a-zA-Z_]+', query)
+            metrics = re.findall(r'iacherie_[a-zA-Z_]+', query)
             
             total_cardinality = 0
             for metric in metrics:
@@ -833,7 +833,7 @@ class PrometheusQueryOptimizer:
                     
                     pattern = QueryPattern(
                         pattern_id=pattern_id,
-                        pattern_regex=self._create_pattern_regex(normalized_query),
+                        pattern_pattern=self._create_pattern_regex(normalized_query),
                         frequency=stats['count'],
                         avg_execution_time=stats['total_time'] / stats['count'],
                         optimization_strategy=self._suggest_pattern_optimization(normalized_query),

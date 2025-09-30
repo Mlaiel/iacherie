@@ -3,7 +3,7 @@
 
 Enterprise-grade SEO Intelligence system providing comprehensive
 search optimization, intelligent keyword analytics, and advanced SEO
-performance monitoring for the Ainflue Creator Economy. Implements
+performance monitoring for the IA Chérie Creator Economy. Implements
 sophisticated search algorithms, content optimization, and real-time SEO analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

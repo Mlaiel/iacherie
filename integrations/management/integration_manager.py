@@ -97,7 +97,7 @@ class IntegrationConfig:
 class IntegrationManager:
     """Master integration orchestration manager.
     
-    Coordinates all third-party integrations for the Ainflue platform,
+    Coordinates all third-party integrations for the IA Chérie platform,
     ensuring secure, reliable, and performant service communication.
     """
     

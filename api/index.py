@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🚀 Ainflue API Module - Ultra-Advanced Enterprise Index
+"""🚀 IA Chérie API Module - Ultra-Advanced Enterprise Index
 ========================================================
 
 🔥 ENTERPRISE API GATEWAY & ORCHESTRATION HUB
-- Zentraler API-Gateway und Orchestrator für die gesamte Ainflue-Plattform
+- Zentraler API-Gateway und Orchestrator für die gesamte IA Chérie-Plattform
 - Ultra-moderne FastAPI-Architektur mit 15+ spezialisierten Orchestratoren
 - Enterprise-Grade Middleware-Stack mit Security, Monitoring und Performance
 - Hochskalierbare API-Infrastructure für produktive Umgebungen
@@ -68,7 +68,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger("ainflue.api.index")
+logger = logging.getLogger("iacherie.api.index")
 
 # Enhanced imports with error handling
 try:
@@ -170,7 +170,7 @@ class APIConfig:
         self.environment = os.getenv("ENVIRONMENT", "production")
         self.debug_mode = os.getenv("DEBUG", "false").lower() == "true"
         self.version = "3.0.0"
-        self.api_title = "Ainflue Enterprise API Gateway"
+        self.api_title = "IA Chérie Enterprise API Gateway"
         
         # Server configuration
         self.host = os.getenv("API_HOST", "0.0.0.0")
@@ -194,7 +194,7 @@ class APIConfig:
         self.enable_caching = os.getenv("API_ENABLE_CACHING", "true").lower() == "true"
         
         # Database configuration
-        self.database_url = os.getenv("DATABASE_URL", "postgresql+asyncpg://localhost/ainflue")
+        self.database_url = os.getenv("DATABASE_URL", "postgresql+asyncpg://localhost/iacherie")
         self.redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
         
         # Performance settings
@@ -210,10 +210,10 @@ class APIConfig:
             "http://localhost:3000",
             "http://localhost:3001",
             "http://localhost:3002",
-            "https://app.ainflue.com",
-            "https://admin.ainflue.com",
-            "https://dashboard.ainflue.com",
-            "https://api.ainflue.com"
+            "https://app.iacherie.com",
+            "https://admin.iacherie.com",
+            "https://dashboard.iacherie.com",
+            "https://api.iacherie.com"
         ]
         
         custom_origins = os.getenv("CORS_ORIGINS", "").split(",")
@@ -457,8 +457,8 @@ class APIGatewayManager:
             openapi_url="/openapi.json" if config.enable_docs else None,
             lifespan=lifespan,
             servers=[
-                {"url": "https://api.ainflue.com", "description": "Production"},
-                {"url": "https://staging-api.ainflue.com", "description": "Staging"},
+                {"url": "https://api.iacherie.com", "description": "Production"},
+                {"url": "https://staging-api.iacherie.com", "description": "Staging"},
                 {"url": "http://localhost:8000", "description": "Development"}
             ]
         )
@@ -481,10 +481,10 @@ class APIGatewayManager:
     def _get_api_description(self) -> str:
         """Generate comprehensive API description"""
         return f"""
-# 🚀 Ainflue Enterprise API Gateway
+# 🚀 IA Chérie Enterprise API Gateway
 
 ## 🎯 Ultra-Advanced Enterprise API Platform
-Comprehensive API Gateway für die gesamte Ainflue-Plattform mit Enterprise-Grade 
+Comprehensive API Gateway für die gesamte IA Chérie-Plattform mit Enterprise-Grade 
 Features, Real-time Processing und hochskalierbarer Microservices-Architektur.
 
 ### 🔥 Core API Features
@@ -609,7 +609,7 @@ Orchestration Layer → Microservices → Data Layer
         async def api_info():
             """ℹ️ API Gateway information"""
             return {
-                "service": "Ainflue Enterprise API Gateway",
+                "service": "IA Chérie Enterprise API Gateway",
                 "version": config.version,
                 "environment": config.environment,
                 "features": {
@@ -1115,7 +1115,7 @@ def main():
     """🚀 Main entry point for API Gateway"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="🚀 Ainflue API Gateway")
+    parser = argparse.ArgumentParser(description="🚀 IA Chérie API Gateway")
     parser.add_argument("--host", default=config.host, help="Host to bind to")
     parser.add_argument("--port", type=int, default=config.port, help="Port to bind to")
     parser.add_argument("--workers", type=int, default=config.workers, help="Number of worker processes")
@@ -1131,7 +1131,7 @@ def main():
     config.workers = args.workers
     config.debug_mode = args.debug or config.debug_mode
     
-    logger.info(f"🚀 Starting Ainflue API Gateway v{config.version}")
+    logger.info(f"🚀 Starting IA Chérie API Gateway v{config.version}")
     logger.info(f"🌐 Server: {config.host}:{config.port}")
     logger.info(f"👥 Workers: {config.workers}")
     logger.info(f"🔧 Environment: {config.environment}")
@@ -1183,7 +1183,7 @@ try:
 except Exception as e:
     logger.error(f"❌ Failed to create ASGI application: {e}")
     # Create a minimal fallback application
-    api_app = FastAPI(title="Ainflue API Gateway - Error", description="Application failed to initialize")
+    api_app = FastAPI(title="IA Chérie API Gateway - Error", description="Application failed to initialize")
     
     @api_app.get("/")
     async def error_root():

@@ -1,4 +1,4 @@
-# Ainflue Production Deployment Guide
+# IA Chérie Production Deployment Guide
 
 **AI-Powered Content Protection & Monetization Platform**
 
@@ -70,14 +70,14 @@ Last Updated: August 27, 2025
 #### AWS Setup
 ```bash
 # Create VPC and subnets
-aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=ainflue-vpc}]'
+aws ec2 create-vpc --cidr-block 10.0.0.0/16 --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=iacherie-vpc}]'
 
 # Create EKS cluster
 eksctl create cluster \
-  --name ainflue-prod \
+  --name iacherie-prod \
   --version 1.27 \
   --region us-west-2 \
-  --nodegroup-name ainflue-workers \
+  --nodegroup-name iacherie-workers \
   --node-type m5.xlarge \
   --nodes 3 \
   --nodes-min 3 \
@@ -88,12 +88,12 @@ eksctl create cluster \
 #### Azure Setup
 ```bash
 # Create resource group
-az group create --name ainflue-prod --location westus2
+az group create --name iacherie-prod --location westus2
 
 # Create AKS cluster
 az aks create \
-  --resource-group ainflue-prod \
-  --name ainflue-cluster \
+  --resource-group iacherie-prod \
+  --name iacherie-cluster \
   --node-count 3 \
   --node-vm-size Standard_D4s_v3 \
   --enable-addons monitoring \
@@ -103,7 +103,7 @@ az aks create \
 #### Google Cloud Setup
 ```bash
 # Create GKE cluster
-gcloud container clusters create ainflue-prod \
+gcloud container clusters create iacherie-prod \
   --zone us-west1-a \
   --num-nodes 3 \
   --machine-type n1-standard-4 \
@@ -120,7 +120,7 @@ gcloud container clusters create ainflue-prod \
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ainflue-ingress
+  name: iacherie-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -129,28 +129,28 @@ metadata:
 spec:
   tls:
     - hosts:
-        - api.ainflue.com
-        - app.ainflue.com
-      secretName: ainflue-tls
+        - api.iacherie.com
+        - app.iacherie.com
+      secretName: iacherie-tls
   rules:
-    - host: api.ainflue.com
+    - host: api.iacherie.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: ainflue-api
+                name: iacherie-api
                 port:
                   number: 8000
-    - host: app.ainflue.com
+    - host: app.iacherie.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: ainflue-frontend
+                name: iacherie-frontend
                 port:
                   number: 3000
 ```
@@ -165,11 +165,11 @@ spec:
 ```bash
 # AWS RDS
 aws rds create-db-instance \
-  --db-instance-identifier ainflue-prod-db \
+  --db-instance-identifier iacherie-prod-db \
   --db-instance-class db.r5.xlarge \
   --engine postgres \
   --engine-version 14.9 \
-  --master-username ainflue \
+  --master-username iacherie \
   --master-user-password $SECURE_PASSWORD \
   --allocated-storage 100 \
   --storage-type gp2 \
@@ -204,7 +204,7 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: ainflue
+              value: iacherie
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -327,22 +327,22 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-backend
+  name: iacherie-backend
   labels:
-    app: ainflue-backend
+    app: iacherie-backend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-backend
+      app: iacherie-backend
   template:
     metadata:
       labels:
-        app: ainflue-backend
+        app: iacherie-backend
     spec:
       containers:
-        - name: ainflue-backend
-          image: ainflue/backend:latest
+        - name: iacherie-backend
+          image: iacherie/backend:latest
           ports:
             - containerPort: 8000
           env:
@@ -354,7 +354,7 @@ spec:
             - name: REDIS_URL
               valueFrom:
                 configMapKeyRef:
-                  name: ainflue-config
+                  name: iacherie-config
                   key: redis-url
             - name: SECRET_KEY
               valueFrom:
@@ -385,10 +385,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-backend
+  name: iacherie-backend
 spec:
   selector:
-    app: ainflue-backend
+    app: iacherie-backend
   ports:
     - protocol: TCP
       port: 8000
@@ -450,25 +450,25 @@ CMD ["node", "server.js"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-frontend
+  name: iacherie-frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-frontend
+      app: iacherie-frontend
   template:
     metadata:
       labels:
-        app: ainflue-frontend
+        app: iacherie-frontend
     spec:
       containers:
-        - name: ainflue-frontend
-          image: ainflue/frontend:latest
+        - name: iacherie-frontend
+          image: iacherie/frontend:latest
           ports:
             - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_API_URL
-              value: "https://api.ainflue.com"
+              value: "https://api.iacherie.com"
           resources:
             requests:
               memory: "512Mi"
@@ -481,10 +481,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-frontend
+  name: iacherie-frontend
 spec:
   selector:
-    app: ainflue-frontend
+    app: iacherie-frontend
   ports:
     - protocol: TCP
       port: 3000
@@ -504,11 +504,11 @@ spec:
 set -e
 
 # Configuration
-NAMESPACE="ainflue-prod"
-DOCKER_REGISTRY="ainflue"
+NAMESPACE="iacherie-prod"
+DOCKER_REGISTRY="iacherie"
 VERSION="${VERSION:-latest}"
 
-echo "🚀 Starting Ainflue deployment..."
+echo "🚀 Starting IA Chérie deployment..."
 
 # Create namespace
 kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
@@ -539,14 +539,14 @@ echo "🖥️ Deploying backend..."
 envsubst < deployments/backend-deployment.yaml | kubectl apply -f - -n $NAMESPACE
 
 # Wait for backend to be ready
-kubectl wait --for=condition=available deployment/ainflue-backend -n $NAMESPACE --timeout=300s
+kubectl wait --for=condition=available deployment/iacherie-backend -n $NAMESPACE --timeout=300s
 
 # Deploy frontend
 echo "🌐 Deploying frontend..."
 envsubst < deployments/frontend-deployment.yaml | kubectl apply -f - -n $NAMESPACE
 
 # Wait for frontend to be ready
-kubectl wait --for=condition=available deployment/ainflue-frontend -n $NAMESPACE --timeout=300s
+kubectl wait --for=condition=available deployment/iacherie-frontend -n $NAMESPACE --timeout=300s
 
 # Deploy monitoring
 echo "📊 Deploying monitoring..."
@@ -557,9 +557,9 @@ echo "🌍 Configuring ingress..."
 kubectl apply -f ingress/ -n $NAMESPACE
 
 echo "✅ Deployment completed successfully!"
-echo "🔗 Frontend: https://app.ainflue.com"
-echo "🔗 API: https://api.ainflue.com"
-echo "📊 Monitoring: https://monitoring.ainflue.com"
+echo "🔗 Frontend: https://app.iacherie.com"
+echo "🔗 API: https://api.iacherie.com"
+echo "📊 Monitoring: https://monitoring.iacherie.com"
 ```
 
 ---
@@ -592,13 +592,13 @@ data:
             action: keep
             regex: true
 
-      - job_name: 'ainflue-backend'
+      - job_name: 'iacherie-backend'
         static_configs:
-          - targets: ['ainflue-backend:8000']
+          - targets: ['iacherie-backend:8000']
 
-      - job_name: 'ainflue-frontend'
+      - job_name: 'iacherie-frontend'
         static_configs:
-          - targets: ['ainflue-frontend:3000']
+          - targets: ['iacherie-frontend:3000']
 
     alerting:
       alertmanagers:
@@ -613,7 +613,7 @@ data:
 // grafana-dashboard.json
 {
   "dashboard": {
-    "title": "Ainflue Platform Overview",
+    "title": "IA Chérie Platform Overview",
     "panels": [
       {
         "title": "Request Rate",
@@ -665,7 +665,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@ainflue.com
+    email: admin@iacherie.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -681,18 +681,18 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ainflue-tls
+  name: iacherie-tls
 spec:
-  secretName: ainflue-tls
+  secretName: iacherie-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-    - ainflue.com
-    - www.ainflue.com
-    - api.ainflue.com
-    - app.ainflue.com
-    - monitoring.ainflue.com
+    - iacherie.com
+    - www.iacherie.com
+    - api.iacherie.com
+    - app.iacherie.com
+    - monitoring.iacherie.com
 ```
 
 ---
@@ -706,13 +706,13 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-config
+  name: iacherie-config
 data:
   ENVIRONMENT: "production"
   LOG_LEVEL: "INFO"
   API_VERSION: "v2"
-  ALLOWED_HOSTS: "api.ainflue.com,app.ainflue.com"
-  CORS_ORIGINS: "https://app.ainflue.com,https://ainflue.com"
+  ALLOWED_HOSTS: "api.iacherie.com,app.iacherie.com"
+  CORS_ORIGINS: "https://app.iacherie.com,https://iacherie.com"
   
   # Database settings
   DB_POOL_SIZE: "20"
@@ -725,7 +725,7 @@ data:
   
   # File storage
   STORAGE_BACKEND: "s3"
-  AWS_S3_BUCKET: "ainflue-prod-files"
+  AWS_S3_BUCKET: "iacherie-prod-files"
   AWS_S3_REGION: "us-west-2"
   
   # Email settings
@@ -850,22 +850,22 @@ readinessProbe:
 
 BACKUP_DIR="/backups"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-DB_HOST="postgresql.ainflue-prod.svc.cluster.local"
-DB_NAME="ainflue"
+DB_HOST="postgresql.iacherie-prod.svc.cluster.local"
+DB_NAME="iacherie"
 
 # Create backup
-pg_dump -h $DB_HOST -U $DB_USER -d $DB_NAME > $BACKUP_DIR/ainflue_$TIMESTAMP.sql
+pg_dump -h $DB_HOST -U $DB_USER -d $DB_NAME > $BACKUP_DIR/iacherie_$TIMESTAMP.sql
 
 # Compress backup
-gzip $BACKUP_DIR/ainflue_$TIMESTAMP.sql
+gzip $BACKUP_DIR/iacherie_$TIMESTAMP.sql
 
 # Upload to S3
-aws s3 cp $BACKUP_DIR/ainflue_$TIMESTAMP.sql.gz s3://ainflue-backups/database/
+aws s3 cp $BACKUP_DIR/iacherie_$TIMESTAMP.sql.gz s3://iacherie-backups/database/
 
 # Clean up old local backups
 find $BACKUP_DIR -name "*.sql.gz" -mtime +7 -delete
 
-echo "Backup completed: ainflue_$TIMESTAMP.sql.gz"
+echo "Backup completed: iacherie_$TIMESTAMP.sql.gz"
 ```
 
 ### Automated Backup CronJob
@@ -889,7 +889,7 @@ spec:
                 - /bin/bash
                 - -c
                 - |
-                  pg_dump $DATABASE_URL | gzip | aws s3 cp - s3://ainflue-backups/db-$(date +%Y%m%d_%H%M%S).sql.gz
+                  pg_dump $DATABASE_URL | gzip | aws s3 cp - s3://iacherie-backups/db-$(date +%Y%m%d_%H%M%S).sql.gz
               env:
                 - name: DATABASE_URL
                   valueFrom:
@@ -916,17 +916,17 @@ The production HPA configuration implements the following requirements:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-backend-hpa
-  namespace: ainflue
+  name: iacherie-backend-hpa
+  namespace: iacherie
   labels:
-    app: ainflue-backend
+    app: iacherie-backend
     tier: production
     component: autoscaling
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-backend
+    name: iacherie-backend
   minReplicas: 3
   maxReplicas: 50
   metrics:
@@ -1042,7 +1042,7 @@ spec:
             - --cloud-provider=aws
             - --skip-nodes-with-local-storage=false
             - --expander=priority
-            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/ainflue-prod
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/iacherie-prod
             # Multi-AZ configuration
             - --balance-similar-node-groups=true
             - --skip-nodes-with-system-pods=false
@@ -1101,7 +1101,7 @@ spec:
 #### 📋 **Node Groups Configuration**
 ```yaml
 # Spot instances for cost optimization (3 AZs)
-- name: ainflue-nodes-us-east-1a-spot
+- name: iacherie-nodes-us-east-1a-spot
   instance_type: m5.large
   spot_price: $0.08
   min_nodes: 1
@@ -1109,7 +1109,7 @@ spec:
   zone: us-east-1a
 
 # On-demand instances for critical workloads (3 AZs)  
-- name: ainflue-nodes-us-east-1a-ondemand
+- name: iacherie-nodes-us-east-1a-ondemand
   instance_type: m5.xlarge
   min_nodes: 1
   max_nodes: 10
@@ -1139,11 +1139,11 @@ kubectl apply -f kubernetes/production/production-scaling.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-network-policy
+  name: iacherie-network-policy
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-backend
+      app: iacherie-backend
   policyTypes:
     - Ingress
     - Egress
@@ -1151,7 +1151,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: ainflue-frontend
+              app: iacherie-frontend
         - namespaceSelector:
             matchLabels:
               name: ingress-nginx
@@ -1182,7 +1182,7 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-psp
+  name: iacherie-psp
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -1212,13 +1212,13 @@ spec:
 **Pod Startup Issues:**
 ```bash
 # Check pod status
-kubectl get pods -n ainflue-prod
+kubectl get pods -n iacherie-prod
 
 # Check pod logs
-kubectl logs -f deployment/ainflue-backend -n ainflue-prod
+kubectl logs -f deployment/iacherie-backend -n iacherie-prod
 
 # Describe pod for events
-kubectl describe pod <pod-name> -n ainflue-prod
+kubectl describe pod <pod-name> -n iacherie-prod
 ```
 
 **Database Connection Issues:**
@@ -1228,33 +1228,33 @@ kubectl run debug --image=postgres:14 --rm -it -- bash
 psql $DATABASE_URL
 
 # Check database service
-kubectl get svc postgresql -n ainflue-prod
+kubectl get svc postgresql -n iacherie-prod
 ```
 
 **Performance Issues:**
 ```bash
 # Check resource usage
-kubectl top pods -n ainflue-prod
+kubectl top pods -n iacherie-prod
 kubectl top nodes
 
 # Check HPA status
-kubectl get hpa -n ainflue-prod
+kubectl get hpa -n iacherie-prod
 ```
 
 ### Debugging Commands
 
 ```bash
 # Port forward for local debugging
-kubectl port-forward svc/ainflue-backend 8000:8000 -n ainflue-prod
+kubectl port-forward svc/iacherie-backend 8000:8000 -n iacherie-prod
 
 # Execute commands in running pods
-kubectl exec -it deployment/ainflue-backend -- bash
+kubectl exec -it deployment/iacherie-backend -- bash
 
 # Check ingress status
-kubectl get ingress -n ainflue-prod
+kubectl get ingress -n iacherie-prod
 
 # View logs from multiple pods
-kubectl logs -l app=ainflue-backend -n ainflue-prod --tail=100
+kubectl logs -l app=iacherie-backend -n iacherie-prod --tail=100
 ```
 
 ### Recovery Procedures
@@ -1263,7 +1263,7 @@ kubectl logs -l app=ainflue-backend -n ainflue-prod --tail=100
 ```bash
 # Restore from backup
 kubectl run restore --image=postgres:14 --rm -it -- bash
-aws s3 cp s3://ainflue-backups/db-latest.sql.gz /tmp/
+aws s3 cp s3://iacherie-backups/db-latest.sql.gz /tmp/
 gunzip /tmp/db-latest.sql.gz
 psql $DATABASE_URL < /tmp/db-latest.sql
 ```
@@ -1271,11 +1271,11 @@ psql $DATABASE_URL < /tmp/db-latest.sql
 **Complete Service Recovery:**
 ```bash
 # Delete and recreate deployment
-kubectl delete deployment ainflue-backend -n ainflue-prod
-kubectl apply -f deployments/backend-deployment.yaml -n ainflue-prod
+kubectl delete deployment iacherie-backend -n iacherie-prod
+kubectl apply -f deployments/backend-deployment.yaml -n iacherie-prod
 
 # Force pull latest images
-kubectl patch deployment ainflue-backend -p '{"spec":{"template":{"metadata":{"annotations":{"date":"'$(date +'%s')'"}}}}}' -n ainflue-prod
+kubectl patch deployment iacherie-backend -p '{"spec":{"template":{"metadata":{"annotations":{"date":"'$(date +'%s')'"}}}}}' -n iacherie-prod
 ```
 
 ---
@@ -1306,13 +1306,13 @@ kubectl patch deployment ainflue-backend -p '{"spec":{"template":{"metadata":{"a
 
 ```bash
 # Rolling update
-kubectl set image deployment/ainflue-backend ainflue-backend=ainflue/backend:v2.1.0 -n ainflue-prod
+kubectl set image deployment/iacherie-backend iacherie-backend=iacherie/backend:v2.1.0 -n iacherie-prod
 
 # Monitor rollout
-kubectl rollout status deployment/ainflue-backend -n ainflue-prod
+kubectl rollout status deployment/iacherie-backend -n iacherie-prod
 
 # Rollback if needed
-kubectl rollout undo deployment/ainflue-backend -n ainflue-prod
+kubectl rollout undo deployment/iacherie-backend -n iacherie-prod
 ```
 
 ---

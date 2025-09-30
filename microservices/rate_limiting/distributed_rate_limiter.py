@@ -1,11 +1,11 @@
 """
-Distributed Rate Limiter Enterprise - Ainflue
+Distributed Rate Limiter Enterprise - IA Chérie
 =============================================
 Rate limiter distribué avec Redis/etcd pour microservices scalables.
 Support multi-nœuds avec consistance forte.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chérie Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

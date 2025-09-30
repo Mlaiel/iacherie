@@ -1,7 +1,7 @@
 """🚨 Revenue Anomaly Alert System
 =============================
 
-Intelligent revenue anomaly detection and alerting for the Ainflue platform.
+Intelligent revenue anomaly detection and alerting for the IA Chérie platform.
 Detects unusual revenue patterns, drops, spikes, and fraud indicators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

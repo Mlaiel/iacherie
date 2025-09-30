@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Audit Configuration Module
+"""IA Chérie Audit Configuration Module
 ===================================
 
-Enterprise-grade audit configuration for the Ainflue platform.
+Enterprise-grade audit configuration for the IA Chérie platform.
 Comprehensive audit logging, compliance tracking, forensic capabilities,
 real-time monitoring, and tamper-proof audit trails.
 
@@ -130,7 +130,7 @@ class AuditLoggingConfig:
         },
         "file": {
             "enabled": True,
-            "path": "/var/log/ainflue/audit",
+            "path": "/var/log/iacherie/audit",
             "format": "json",
             "rotation": "daily",
             "compression": True
@@ -144,7 +144,7 @@ class AuditLoggingConfig:
         "cloud_storage": {
             "enabled": True,
             "provider": "aws_s3",
-            "bucket": "ainflue-audit-logs",
+            "bucket": "iacherie-audit-logs",
             "encryption": True,
             "immutable": True
         }

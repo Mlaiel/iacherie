@@ -27,7 +27,7 @@ class RedisSettings(BaseSettings):
     
     # Redis Cache Settings
     redis_default_ttl: int = 3600  # 1 hour
-    redis_key_prefix: str = "ainflue:"
+    redis_key_prefix: str = "iacherie:"
     redis_serializer: str = "json"
     redis_compression: bool = False
     
@@ -91,7 +91,7 @@ def get_redis_config() -> dict:
 redis_settings = RedisSettings()
 
 class RedisConfiguration:
-    """Redis configuration manager for Ainflue platform"""
+    """Redis configuration manager for IA Chérie platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

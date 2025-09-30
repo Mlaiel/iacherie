@@ -1,0 +1,582 @@
+# CircleCI Configuration Template for Ainflue Platform
+# Comprehensive CI/CD pipeline using CircleCI
+
+version: 2.1
+
+# Orbs - reusable packages of configuration
+orbs:
+  node: circleci/node@5.1.0
+  python: circleci/python@2.1.1
+  docker: circleci/docker@2.2.0
+  kubernetes: circleci/kubernetes@1.3.1
+  aws-cli: circleci/aws-cli@4.0.0
+  slack: circleci/slack@4.10.1
+  sonarcloud: sonarsource/sonarcloud@1.1.1
+
+# Executors - define the execution environment
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:18.17
+    resource_class: medium
+  
+  python-executor:
+    docker:
+      - image: cimg/python:3.11
+    resource_class: medium
+  
+  docker-executor:
+    docker:
+      - image: cimg/base:stable
+    resource_class: medium
+  
+  integration-executor:
+    docker:
+      - image: cimg/node:18.17
+      - image: cimg/postgres:13.11
+        environment:
+          POSTGRES_DB: ainflue_test
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+      - image: cimg/redis:7.0
+    resource_class: large
+
+# Commands - reusable command sequences
+commands:
+  install-npm-dependencies:
+    description: "Install and cache npm dependencies"
+    parameters:
+      cache-version:
+        type: string
+        default: "v1"
+    steps:
+      - restore_cache:
+          keys:
+            - npm-deps-<< parameters.cache-version >>-{{ checksum "package-lock.json" }}
+            - npm-deps-<< parameters.cache-version >>-
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - save_cache:
+          key: npm-deps-<< parameters.cache-version >>-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+  install-python-dependencies:
+    description: "Install and cache Python dependencies"
+    parameters:
+      requirements-file:
+        type: string
+        default: "requirements.txt"
+    steps:
+      - restore_cache:
+          keys:
+            - python-deps-v1-{{ checksum "<< parameters.requirements-file >>" }}
+            - python-deps-v1-
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r << parameters.requirements-file >>
+      - save_cache:
+          key: python-deps-v1-{{ checksum "<< parameters.requirements-file >>" }}
+          paths:
+            - ~/.cache/pip
+
+  setup-docker-buildx:
+    description: "Setup Docker Buildx for multi-platform builds"
+    steps:
+      - run:
+          name: Setup Docker Buildx
+          command: |
+            docker buildx create --name ainflue-builder --use
+            docker buildx inspect --bootstrap
+
+# Jobs - individual tasks in the pipeline
+jobs:
+  # Code quality and linting
+  code-quality:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Run linting
+          command: npm run lint
+      - run:
+          name: Check code formatting
+          command: npm run format:check
+      - run:
+          name: Type checking
+          command: npm run type-check
+      - store_test_results:
+          path: ./lint-results
+      - store_artifacts:
+          path: ./lint-results
+
+  # API service build and test
+  build-test-api:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Build API service
+          command: |
+            cd services/api
+            npm ci
+            npm run build
+      - run:
+          name: Run API unit tests
+          command: |
+            cd services/api
+            npm run test:unit -- --coverage --reporter=junit --outputFile=test-results.xml
+      - store_test_results:
+          path: services/api/test-results.xml
+      - store_artifacts:
+          path: services/api/coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - services/api/dist
+
+  # Web service build and test
+  build-test-web:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Build Web service
+          command: |
+            cd services/web
+            npm ci
+            npm run build
+      - run:
+          name: Run Web unit tests
+          command: |
+            cd services/web
+            npm run test:unit -- --coverage --reporter=junit --outputFile=test-results.xml
+      - store_test_results:
+          path: services/web/test-results.xml
+      - store_artifacts:
+          path: services/web/coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - services/web/dist
+
+  # ML service build and test
+  build-test-ml:
+    executor: python-executor
+    steps:
+      - checkout
+      - install-python-dependencies:
+          requirements-file: services/ml/requirements.txt
+      - run:
+          name: Install ML dev dependencies
+          command: |
+            cd services/ml
+            pip install -r requirements-dev.txt
+      - run:
+          name: Python code quality checks
+          command: |
+            cd services/ml
+            black --check src/
+            flake8 src/
+            isort --check-only src/
+            mypy src/
+      - run:
+          name: Run ML tests
+          command: |
+            cd services/ml
+            pytest tests/ --cov=src --cov-report=xml --junit-xml=test-results.xml
+      - store_test_results:
+          path: services/ml/test-results.xml
+      - store_artifacts:
+          path: services/ml/htmlcov
+
+  # Integration tests
+  integration-tests:
+    executor: integration-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Wait for services
+          command: |
+            dockerize -wait tcp://localhost:5432 -wait tcp://localhost:6379 -timeout 1m
+      - run:
+          name: Run integration tests
+          command: |
+            export DATABASE_URL="postgresql://test_user:test_password@localhost:5432/ainflue_test"
+            export REDIS_URL="redis://localhost:6379"
+            npm run test:integration
+          environment:
+            NODE_ENV: test
+      - store_test_results:
+          path: ./integration-test-results.xml
+
+  # Security scanning
+  security-scan:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Dependency vulnerability scan
+          command: npm audit --audit-level high
+      - run:
+          name: Secret scanning with GitLeaks
+          command: |
+            wget -O gitleaks.tar.gz https://github.com/zricethezav/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz
+            tar -xzf gitleaks.tar.gz
+            ./gitleaks detect --source . --report-format sarif --report-path gitleaks-report.sarif
+      - store_artifacts:
+          path: gitleaks-report.sarif
+
+  # SonarCloud analysis
+  sonarcloud-analysis:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - attach_workspace:
+          at: .
+      - sonarcloud/scan:
+          cache_version: 1
+
+  # Build Docker images
+  build-docker-images:
+    executor: docker-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - setup-docker-buildx
+      - run:
+          name: Build and push API image
+          command: |
+            echo $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USERNAME --password-stdin $DOCKER_REGISTRY_URL
+            cd services/api
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-api:latest \
+              --push .
+      - run:
+          name: Build and push Web image
+          command: |
+            cd services/web
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-web:latest \
+              --push .
+      - run:
+          name: Build and push ML image
+          command: |
+            cd services/ml
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/ainflue-ml:latest \
+              --push .
+
+  # Container security scanning
+  container-security-scan:
+    executor: docker-executor
+    steps:
+      - run:
+          name: Install Trivy
+          command: |
+            sudo apt-get update
+            sudo apt-get install wget apt-transport-https gnupg lsb-release
+            wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+            echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+            sudo apt-get update
+            sudo apt-get install trivy
+      - run:
+          name: Scan container images
+          command: |
+            echo $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USERNAME --password-stdin $DOCKER_REGISTRY_URL
+            
+            for service in api web ml; do
+              echo "Scanning ainflue-${service} image..."
+              trivy image --security-checks vuln --severity HIGH,CRITICAL \
+                --format sarif --output ${service}-security-report.sarif \
+                $DOCKER_REGISTRY_URL/ainflue-${service}:$CIRCLE_SHA1
+            done
+      - store_artifacts:
+          path: ./*-security-report.sarif
+
+  # Deploy to staging
+  deploy-staging:
+    executor: kubernetes/default
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - run:
+          name: Deploy to staging
+          command: |
+            echo $KUBE_CONFIG | base64 -d > ~/.kube/config
+            
+            # Update image tags in manifests
+            sed -i "s|image: .*ainflue-api.*|image: $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1|g" kubernetes/staging/api-deployment.yaml
+            sed -i "s|image: .*ainflue-web.*|image: $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1|g" kubernetes/staging/web-deployment.yaml
+            sed -i "s|image: .*ainflue-ml.*|image: $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1|g" kubernetes/staging/ml-deployment.yaml
+            
+            # Apply deployments
+            kubectl apply -f kubernetes/staging/ --namespace=ainflue-staging
+            
+            # Wait for rollout
+            kubectl rollout status deployment/ainflue-api --namespace=ainflue-staging --timeout=300s
+            kubectl rollout status deployment/ainflue-web --namespace=ainflue-staging --timeout=300s
+            kubectl rollout status deployment/ainflue-ml --namespace=ainflue-staging --timeout=300s
+
+  # E2E tests on staging
+  e2e-tests-staging:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Install Playwright
+          command: npx playwright install
+      - run:
+          name: Run E2E tests
+          command: |
+            export API_BASE_URL="https://api.staging.ainflue.com"
+            export WEB_BASE_URL="https://staging.ainflue.com"
+            npm run test:e2e:staging
+      - store_test_results:
+          path: ./e2e-test-results.xml
+      - store_artifacts:
+          path: ./e2e-results
+
+  # Performance tests
+  performance-tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install k6
+          command: |
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+            echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+            sudo apt-get update
+            sudo apt-get install k6
+      - run:
+          name: Run performance tests
+          command: |
+            export API_BASE_URL="https://api.staging.ainflue.com"
+            k6 run --vus 50 --duration 5m performance/load-test.js
+            k6 run --vus 100 --duration 2m performance/stress-test.js
+      - store_artifacts:
+          path: ./performance-results
+
+  # Deploy to production
+  deploy-production:
+    executor: kubernetes/default
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - run:
+          name: Deploy to production
+          command: |
+            echo $KUBE_CONFIG | base64 -d > ~/.kube/config
+            
+            # Update image tags in manifests
+            sed -i "s|image: .*ainflue-api.*|image: $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1|g" kubernetes/production/api-deployment.yaml
+            sed -i "s|image: .*ainflue-web.*|image: $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1|g" kubernetes/production/web-deployment.yaml
+            sed -i "s|image: .*ainflue-ml.*|image: $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1|g" kubernetes/production/ml-deployment.yaml
+            
+            # Apply deployments
+            kubectl apply -f kubernetes/production/ --namespace=ainflue-production
+            
+            # Wait for rollout
+            kubectl rollout status deployment/ainflue-api --namespace=ainflue-production --timeout=600s
+            kubectl rollout status deployment/ainflue-web --namespace=ainflue-production --timeout=600s
+            kubectl rollout status deployment/ainflue-ml --namespace=ainflue-production --timeout=600s
+
+  # Production smoke tests
+  smoke-tests-production:
+    executor: node-executor
+    steps:
+      - checkout
+      - install-npm-dependencies
+      - run:
+          name: Run production smoke tests
+          command: |
+            export API_BASE_URL="https://api.ainflue.com"
+            export WEB_BASE_URL="https://app.ainflue.com"
+            npm run test:smoke:production
+      - store_test_results:
+          path: ./smoke-test-results.xml
+      - slack/notify:
+          event: pass
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "✅ *Ainflue deployment to production successful!*\n\n*Build:* $CIRCLE_BUILD_NUM\n*Commit:* $CIRCLE_SHA1\n*Branch:* $CIRCLE_BRANCH\n*Author:* $CIRCLE_USERNAME"
+                  }
+                }
+              ]
+            }
+
+# Workflows - orchestrate job execution
+workflows:
+  version: 2
+  
+  # Main CI/CD pipeline
+  build-test-deploy:
+    jobs:
+      # Parallel code quality and builds
+      - code-quality:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
+      - build-test-api:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
+      - build-test-web:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
+      - build-test-ml:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
+      # Integration tests after builds
+      - integration-tests:
+          requires:
+            - build-test-api
+            - build-test-web
+            - build-test-ml
+
+      # Security scanning
+      - security-scan:
+          requires:
+            - code-quality
+
+      - sonarcloud-analysis:
+          requires:
+            - build-test-api
+            - build-test-web
+            - build-test-ml
+          context:
+            - sonarcloud
+
+      # Build Docker images after tests pass
+      - build-docker-images:
+          requires:
+            - integration-tests
+            - security-scan
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+          context:
+            - docker-registry
+
+      - container-security-scan:
+          requires:
+            - build-docker-images
+          context:
+            - docker-registry
+
+      # Deploy to staging (develop branch)
+      - deploy-staging:
+          requires:
+            - container-security-scan
+          filters:
+            branches:
+              only: develop
+          context:
+            - kubernetes-staging
+
+      - e2e-tests-staging:
+          requires:
+            - deploy-staging
+          context:
+            - kubernetes-staging
+
+      - performance-tests:
+          requires:
+            - deploy-staging
+          context:
+            - kubernetes-staging
+
+      # Deploy to production (main branch with approval)
+      - hold-for-approval:
+          type: approval
+          requires:
+            - container-security-scan
+          filters:
+            branches:
+              only: main
+
+      - deploy-production:
+          requires:
+            - hold-for-approval
+          filters:
+            branches:
+              only: main
+          context:
+            - kubernetes-production
+            - slack-notifications
+
+      - smoke-tests-production:
+          requires:
+            - deploy-production
+          context:
+            - kubernetes-production
+            - slack-notifications
+
+  # Nightly security scan
+  nightly-security:
+    triggers:
+      - schedule:
+          cron: "0 2 * * *"
+          filters:
+            branches:
+              only: main
+    jobs:
+      - security-scan:
+          context:
+            - slack-notifications
+
+  # Weekly dependency update
+  weekly-dependency-check:
+    triggers:
+      - schedule:
+          cron: "0 9 * * 1"
+          filters:
+            branches:
+              only: main
+    jobs:
+      - code-quality
+      - build-test-api
+      - build-test-web
+      - build-test-ml

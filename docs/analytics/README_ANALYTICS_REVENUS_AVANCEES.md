@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le système **Analytics Revenus Avancées** d'Ainflue est une plateforme complète d'intelligence financière qui intègre:
+Le système **Analytics Revenus Avancées** d'IA Chérie est une plateforme complète d'intelligence financière qui intègre:
 
 - **Tracking temps réel par plateforme** - Suivi instantané sur 15+ plateformes
 - **Attribution revenus contenus spécifiques** - Liaison directe revenus/contenu
@@ -132,7 +132,7 @@ pip install -r requirements.txt
 ### Configuration
 ```python
 config = {
-    "database_url": "postgresql://user:pass@localhost/ainflue",
+    "database_url": "postgresql://user:pass@localhost/iacherie",
     "redis_url": "redis://localhost:6379",
     "platforms": ["spotify", "youtube", "instagram", "tiktok", "twitch"],
     "tax_compliance_countries": 67,
@@ -330,4 +330,4 @@ EUR, USD, GBP, CAD, AUD, JPY, CHF, SGD, HKD, CNY, INR, BRL, ZAR, etc.
 
 **© 2025 Fahed Mlaiel. Tous droits réservés.**
 
-*Cette documentation technique décrit le système Analytics Revenus Avancées développé pour la plateforme Ainflue. L'utilisation non autorisée est strictement interdite.*
+*Cette documentation technique décrit le système Analytics Revenus Avancées développé pour la plateforme IA Chérie. L'utilisation non autorisée est strictement interdite.*

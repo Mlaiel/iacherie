@@ -16,17 +16,17 @@
         "scrape_interval": "15s",
         "evaluation_interval": "15s",
         "external_labels": {
-          "cluster": "ainflue-production",
+          "cluster": "iacherie-production",
           "replica": "prometheus-main"
         },
         "rule_files": [
-          "/etc/prometheus/rules/ainflue-alerts.yml",
+          "/etc/prometheus/rules/iacherie-alerts.yml",
           "/etc/prometheus/rules/infrastructure.yml",
           "/etc/prometheus/rules/application.yml"
         ],
         "scrape_configs": [
           {
-            "job_name": "ainflue-backend",
+            "job_name": "iacherie-backend",
             "static_configs": [
               {"targets": ["backend:8000"]}
             ],
@@ -34,7 +34,7 @@
             "scrape_interval": "5s"
           },
           {
-            "job_name": "ainflue-frontend",
+            "job_name": "iacherie-frontend",
             "static_configs": [
               {"targets": ["frontend:3000"]}
             ]
@@ -45,7 +45,7 @@
               {
                 "role": "pod",
                 "namespaces": {
-                  "names": ["ainflue-production", "ainflue-staging"]
+                  "names": ["iacherie-production", "iacherie-staging"]
                 }
               }
             ]
@@ -78,8 +78,8 @@
       "alertmanager": {
         "version": "0.26.0",
         "global": {
-          "smtp_smarthost": "smtp.ainflue.com:587",
-          "smtp_from": "alerts@ainflue.com"
+          "smtp_smarthost": "smtp.iacherie.com:587",
+          "smtp_from": "alerts@iacherie.com"
         },
         "route": {
           "group_by": ["alertname", "cluster", "service"],
@@ -93,8 +93,8 @@
             "name": "default-receiver",
             "email_configs": [
               {
-                "to": "alerts@ainflue.com",
-                "subject": "[AINFLUE ALERT] {{ .GroupLabels.alertname }}",
+                "to": "alerts@iacherie.com",
+                "subject": "[IACHERIE ALERT] {{ .GroupLabels.alertname }}",
                 "body": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
               }
             ],
@@ -102,7 +102,7 @@
               {
                 "api_url": "${SLACK_WEBHOOK_URL}",
                 "channel": "#alerts",
-                "title": "Ainflue Alert: {{ .GroupLabels.alertname }}"
+                "title": "IA Chérie Alert: {{ .GroupLabels.alertname }}"
               }
             ]
           },
@@ -197,12 +197,12 @@
     "log_aggregation": {
       "elasticsearch": {
         "version": "8.8.0",
-        "cluster_name": "ainflue-logs",
+        "cluster_name": "iacherie-logs",
         "node_count": 3,
         "index_templates": [
           {
-            "name": "ainflue-application-logs",
-            "pattern": "ainflue-app-*",
+            "name": "iacherie-application-logs",
+            "pattern": "iacherie-app-*",
             "settings": {
               "number_of_shards": 2,
               "number_of_replicas": 1
@@ -224,11 +224,11 @@
         "version": "8.8.0",
         "pipelines": [
           {
-            "pipeline.id": "ainflue-backend",
+            "pipeline.id": "iacherie-backend",
             "path.config": "/usr/share/logstash/pipeline/backend.conf"
           },
           {
-            "pipeline.id": "ainflue-frontend", 
+            "pipeline.id": "iacherie-frontend", 
             "path.config": "/usr/share/logstash/pipeline/frontend.conf"
           }
         ]
@@ -236,12 +236,12 @@
       "kibana": {
         "version": "8.8.0",
         "elasticsearch_hosts": ["http://elasticsearch:9200"],
-        "server_name": "kibana.ainflue.internal",
+        "server_name": "kibana.iacherie.internal",
         "dashboards": [
-          "ainflue-application-overview",
-          "ainflue-performance-metrics",
-          "ainflue-error-analysis",
-          "ainflue-user-behavior"
+          "iacherie-application-overview",
+          "iacherie-performance-metrics",
+          "iacherie-error-analysis",
+          "iacherie-user-behavior"
         ]
       }
     },
@@ -259,12 +259,12 @@
           },
           "per_service_strategies": [
             {
-              "service": "ainflue-ai-processing",
+              "service": "iacherie-ai-processing",
               "type": "probabilistic", 
               "param": 1.0
             },
             {
-              "service": "ainflue-api-gateway",
+              "service": "iacherie-api-gateway",
               "type": "probabilistic",
               "param": 0.5
             }
@@ -275,7 +275,7 @@
         "enabled": true,
         "collector_endpoint": "http://otel-collector:4317",
         "exporters": ["jaeger", "prometheus"],
-        "service_name": "ainflue-platform"
+        "service_name": "iacherie-platform"
       }
     },
     "health_checks": {

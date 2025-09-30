@@ -1,5 +1,5 @@
 """
-Predictive Health Monitor - Ainflue Health Checks Module
+Predictive Health Monitor - IA Chérie Health Checks Module
 Monitoring santé prédictif avec ML forecasting, capacity planning,
 failure prediction et proactive alerting.
 

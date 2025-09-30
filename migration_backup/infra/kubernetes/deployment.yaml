@@ -1,0 +1,227 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade Kubernetes deployment manifests for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-main-api
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api
+    component: main-api
+    version: v1.0.0
+    environment: production
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: ainflue-api
+      component: main-api
+  template:
+    metadata:
+      labels:
+        app: ainflue-api
+        component: main-api
+        version: v1.0.0
+    spec:
+      serviceAccountName: ainflue-api-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-api
+        image: ainflue/platform-api:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: jwt-secret
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: cloud-credentials
+              key: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloud-credentials
+              key: aws-secret-access-key
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: environment
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: ainflue-config
+              key: log-level
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+        volumeMounts:
+        - name: app-config
+          mountPath: /app/config
+          readOnly: true
+        - name: ssl-certs
+          mountPath: /app/ssl
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: app-config
+        configMap:
+          name: ainflue-config
+      - name: ssl-certs
+        secret:
+          secretName: ainflue-ssl-certs
+      - name: temp-storage
+        emptyDir: {}
+      imagePullSecrets:
+      - name: ainflue-registry-secret
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        node-type: standard
+      tolerations:
+      - key: "node-role"
+        operator: "Equal"
+        value: "api"
+        effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-api
+              topologyKey: kubernetes.io/hostname
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-worker
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-worker
+    component: background-worker
+    version: v1.0.0
+    environment: production
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: ainflue-worker
+      component: background-worker
+  template:
+    metadata:
+      labels:
+        app: ainflue-worker
+        component: background-worker
+        version: v1.0.0
+    spec:
+      serviceAccountName: ainflue-worker-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: ainflue-worker
+        image: ainflue/platform-worker:v1.0.0
+        imagePullPolicy: Always
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: celery-broker-url
+        - name: WORKER_TYPE
+          value: "general"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "300m"
+        volumeMounts:
+        - name: worker-config
+          mountPath: /app/config
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp
+      volumes:
+      - name: worker-config
+        configMap:
+          name: ainflue-worker-config
+      - name: temp-storage
+        emptyDir: {}
+      imagePullSecrets:
+      - name: ainflue-registry-secret

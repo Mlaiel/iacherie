@@ -1,8 +1,8 @@
-# Ainflue - Professional Content Creation Platform
+# IA Chérie - Professional Content Creation Platform
 
 ## App Store Description
 
-Transform your content creation with Ainflue, the revolutionary platform that combines AI-powered protection, multi-platform distribution, and professional-grade tools for content creators, influencers, and digital entrepreneurs.
+Transform your content creation with IA Chérie, the revolutionary platform that combines AI-powered protection, multi-platform distribution, and professional-grade tools for content creators, influencers, and digital entrepreneurs.
 
 ## Key Features
 
@@ -48,7 +48,7 @@ Transform your content creation with Ainflue, the revolutionary platform that co
 - Version control for content
 - Client portal and approval workflows
 
-## What Makes Ainflue Different
+## What Makes IA Chérie Different
 
 **AI-First Approach**: Our proprietary AI algorithms learn from your content style and audience preferences to optimize every aspect of your content strategy.
 
@@ -56,7 +56,7 @@ Transform your content creation with Ainflue, the revolutionary platform that co
 
 **Enterprise-Grade Security**: Your content is your business. We protect it like it's our own with military-grade encryption and advanced monitoring.
 
-**Platform Agnostic**: Stop juggling multiple apps. Ainflue works seamlessly with Instagram, TikTok, YouTube, Twitter, LinkedIn, and more.
+**Platform Agnostic**: Stop juggling multiple apps. IA Chérie works seamlessly with Instagram, TikTok, YouTube, Twitter, LinkedIn, and more.
 
 ## Who It's For
 
@@ -83,14 +83,14 @@ Transform your content creation with Ainflue, the revolutionary platform that co
 
 ## Support & Community
 
-Join thousands of successful content creators who trust Ainflue with their digital empire. Our 24/7 support team and vibrant community are here to help you succeed.
+Join thousands of successful content creators who trust IA Chérie with their digital empire. Our 24/7 support team and vibrant community are here to help you succeed.
 
-**Contact**: support@ainflue.com
-**Website**: https://ainflue.com
-**Community**: https://community.ainflue.com
+**Contact**: support@iacherie.com
+**Website**: https://iacherie.com
+**Community**: https://community.iacherie.com
 
 ---
 
-*Ainflue - Where Creativity Meets Technology*
+*IA Chérie - Where Creativity Meets Technology*
 
 **Copyright © 2025 Fahed Mlaiel. All rights reserved.**

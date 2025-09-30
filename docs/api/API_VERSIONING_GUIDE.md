@@ -1,8 +1,8 @@
-# 📚 API Versioning Guide - Ainflue Platform
+# 📚 API Versioning Guide - IA Chérie Platform
 
 ## 🎯 Overview
 
-This document outlines the API versioning strategy for the Ainflue AI Platform, ensuring backward compatibility, smooth migrations, and clear communication of changes.
+This document outlines the API versioning strategy for the IA Chérie AI Platform, ensuring backward compatibility, smooth migrations, and clear communication of changes.
 
 ## 🏗️ Versioning Strategy
 
@@ -17,8 +17,8 @@ We follow semantic versioning principles adapted for APIs:
 ### URL-Based Versioning
 
 ```
-https://api.ainflue.com/v1/content/upload
-https://api.ainflue.com/v2/content/upload
+https://api.iacherie.com/v1/content/upload
+https://api.iacherie.com/v2/content/upload
 ```
 
 **Benefits:**
@@ -33,7 +33,7 @@ https://api.ainflue.com/v2/content/upload
 - **Release Date**: January 2025
 - **Status**: ✅ Stable - Recommended for all new integrations
 - **EOL Date**: January 2027
-- **Base URL**: `https://api.ainflue.com/v2/`
+- **Base URL**: `https://api.iacherie.com/v2/`
 
 **Key Features:**
 - Enhanced AI fingerprinting with ultra-precision
@@ -47,7 +47,7 @@ https://api.ainflue.com/v2/content/upload
 - **Release Date**: January 2024
 - **Status**: ⚠️ Maintenance Mode - Security fixes only
 - **EOL Date**: July 2025
-- **Base URL**: `https://api.ainflue.com/v1/`
+- **Base URL**: `https://api.iacherie.com/v1/`
 
 **Migration Required:** All v1.x users should migrate to v2.0 before EOL date.
 
@@ -232,7 +232,7 @@ https://api.ainflue.com/v2/content/upload
 ```http
 Deprecation: true
 Sunset: Tue, 01 Jul 2025 23:59:59 GMT
-Link: <https://docs.ainflue.com/api/migration>; rel="successor-version"
+Link: <https://docs.iacherie.com/api/migration>; rel="successor-version"
 ```
 
 ## 🔍 Version Detection
@@ -261,13 +261,13 @@ X-API-Versions-Supported: 1.2, 2.0, 2.1
 ### URL-Based Detection
 ```bash
 # Version in URL (recommended)
-GET https://api.ainflue.com/v2/content
+GET https://api.iacherie.com/v2/content
 
 # Version in subdomain
-GET https://v2.api.ainflue.com/content
+GET https://v2.api.iacherie.com/content
 
 # Version in query parameter (not recommended)
-GET https://api.ainflue.com/content?version=2.0
+GET https://api.iacherie.com/content?version=2.0
 ```
 
 ## 🛠️ Development Guidelines
@@ -277,10 +277,10 @@ GET https://api.ainflue.com/content?version=2.0
 1. **Always Specify Version**
    ```bash
    # Good
-   curl -H "X-API-Version: 2.0" https://api.ainflue.com/v2/content
+   curl -H "X-API-Version: 2.0" https://api.iacherie.com/v2/content
    
    # Avoid
-   curl https://api.ainflue.com/content
+   curl https://api.iacherie.com/content
    ```
 
 2. **Handle Version Errors**
@@ -334,17 +334,17 @@ GET https://api.ainflue.com/content?version=2.0
 
 ### Documentation Links
 
-- **v2.0 Documentation**: https://docs.ainflue.com/api/v2/
-- **v1.x Documentation**: https://docs.ainflue.com/api/v1/
-- **Migration Tools**: https://tools.ainflue.com/migration/
-- **SDKs & Libraries**: https://github.com/ainflue/sdks
+- **v2.0 Documentation**: https://docs.iacherie.com/api/v2/
+- **v1.x Documentation**: https://docs.iacherie.com/api/v1/
+- **Migration Tools**: https://tools.iacherie.com/migration/
+- **SDKs & Libraries**: https://github.com/iacherie/sdks
 
 ### Support Channels
 
-- **Migration Support**: migration@ainflue.com
-- **Technical Support**: api-support@ainflue.com
-- **Community Forum**: https://community.ainflue.com/api
-- **Status Page**: https://status.ainflue.com
+- **Migration Support**: migration@iacherie.com
+- **Technical Support**: api-support@iacherie.com
+- **Community Forum**: https://community.iacherie.com/api
+- **Status Page**: https://status.iacherie.com
 
 ### Migration Assistance
 
@@ -359,13 +359,13 @@ We provide free migration assistance including:
 ### Subscription Options
 
 1. **Email Notifications**
-   - Subscribe at: https://ainflue.com/api/notifications
+   - Subscribe at: https://iacherie.com/api/notifications
    - Weekly digest of changes
    - Critical updates immediately
 
 2. **RSS/Atom Feeds**
-   - Changes: https://api.ainflue.com/changes.rss
-   - Deprecations: https://api.ainflue.com/deprecations.rss
+   - Changes: https://api.iacherie.com/changes.rss
+   - Deprecations: https://api.iacherie.com/deprecations.rss
 
 3. **Webhook Notifications**
    ```bash

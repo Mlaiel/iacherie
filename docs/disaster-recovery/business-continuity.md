@@ -1,8 +1,8 @@
-# 🏢 Ainflue Platform - Business Continuity Plan
+# 🏢 IA Chérie Platform - Business Continuity Plan
 
 ## 📋 Executive Summary
 
-This Business Continuity Plan (BCP) ensures the Ainflue AI-powered content protection and monetization platform maintains critical business operations during and after disruptive events. Our plan prioritizes creator revenue protection, service availability, and stakeholder communication while minimizing business impact and ensuring rapid recovery.
+This Business Continuity Plan (BCP) ensures the IA Chérie AI-powered content protection and monetization platform maintains critical business operations during and after disruptive events. Our plan prioritizes creator revenue protection, service availability, and stakeholder communication while minimizing business impact and ensuring rapid recovery.
 
 ## 🎯 Business Continuity Objectives
 
@@ -396,17 +396,17 @@ customer_communication:
         "We're experiencing technical difficulties affecting [specific services]. 
          Your content protection continues, but [specific impacts]. 
          Expected resolution: [timeframe]. 
-         Creator support: support@ainflue.com"
+         Creator support: support@iacherie.com"
       
       revenue_impact: |
         "Important: Revenue tracking temporarily affected. 
          Your earnings are protected and will be reconciled. 
          No action needed from you. 
-         Updates every 30 minutes at status.ainflue.com"
+         Updates every 30 minutes at status.iacherie.com"
   
   general_users:
     communication_channels:
-      - status_page: "status.ainflue.com"
+      - status_page: "status.iacherie.com"
       - twitter_updates: "@AinfluenceStatus"
       - email_notifications: "service_announcements_list"
     
@@ -649,16 +649,16 @@ external_contacts:
 ### Emergency Resources
 
 #### Emergency Command Center
-- **Physical Location**: Ainflue HQ Conference Room A
-- **Virtual Location**: emergency.ainflue.com/crisis-room
+- **Physical Location**: IA Chérie HQ Conference Room A
+- **Virtual Location**: emergency.iacherie.com/crisis-room
 - **Backup Location**: WeWork Emergency Office Space
 - **Equipment**: Dedicated phones, laptops, whiteboards, projectors
 
 #### Communication Channels
 - **Emergency Slack**: #crisis-management-emergency
-- **Emergency Email**: crisis@ainflue.com
-- **Status Page**: status.ainflue.com
-- **Emergency Hotline**: +1-800-AINFLUE-911
+- **Emergency Email**: crisis@iacherie.com
+- **Status Page**: status.iacherie.com
+- **Emergency Hotline**: +1-800-IACHERIE-911
 
 ---
 
@@ -672,11 +672,11 @@ external_contacts:
 ---
 
 **Quick Reference Guide**
-- **Emergency Activation**: Call +1-800-AINFLUE-911
+- **Emergency Activation**: Call +1-800-IACHERIE-911
 - **Crisis Team Assembly**: <30 minutes
-- **Status Updates**: status.ainflue.com
-- **Creator Support**: support@ainflue.com
-- **Media Inquiries**: media@ainflue.com
+- **Status Updates**: status.iacherie.com
+- **Creator Support**: support@iacherie.com
+- **Media Inquiries**: media@iacherie.com
 
 ---
 

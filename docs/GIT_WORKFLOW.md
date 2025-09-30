@@ -1,4 +1,4 @@
-# 🔄 Ainflue Platform - Git Workflow Guide
+# 🔄 IA Chérie Platform - Git Workflow Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 2.0.0  
@@ -128,8 +128,8 @@ flowchart TD
 #### Initialize Development Environment
 ```bash
 # Clone repository (first time only)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Configure user information
 git config user.name "Your Name"
@@ -312,7 +312,7 @@ git rebase -i origin/develop  # Only if coordinated
 
 ### Conventional Commits
 
-We follow the **Conventional Commits** specification with Ainflue-specific adaptations:
+We follow the **Conventional Commits** specification with IA Chérie-specific adaptations:
 
 #### Commit Message Format
 ```
@@ -341,7 +341,7 @@ We follow the **Conventional Commits** specification with Ainflue-specific adapt
 
 #### Scope Guidelines
 
-Common scopes for Ainflue platform:
+Common scopes for IA Chérie platform:
 
 | Scope | Description |
 |-------|-------------|
@@ -831,7 +831,7 @@ Breaking Changes:
 Migration Guide:
 See docs/migration/v2.1.0.md for detailed upgrade instructions.
 
-Full Changelog: https://github.com/Mlaiel/Ainflue/compare/v2.0.0...v2.1.0"
+Full Changelog: https://github.com/Mlaiel/IA Chérie/compare/v2.0.0...v2.1.0"
 
 # Push release
 git push origin main --tags
@@ -993,10 +993,10 @@ git config --global alias.find "!f() { git log --grep=\"$1\" --oneline; }; f"
 #### Repository Configuration
 ```bash
 # Navigate to project directory
-cd /path/to/Ainflue
+cd /path/to/IA Chérie
 
 # Project-specific email (if different from global)
-git config user.email "developer@ainflue.com"
+git config user.email "developer@iacherie.com"
 
 # Commit message template
 git config commit.template .gitmessage
@@ -1328,4 +1328,4 @@ jobs:
 
 ---
 
-This comprehensive Git workflow guide provides everything needed for effective version control and collaboration on the Ainflue platform. It covers branching strategies, commit standards, pull request processes, release management, and automation tools to ensure high code quality and smooth development workflows.
+This comprehensive Git workflow guide provides everything needed for effective version control and collaboration on the IA Chérie platform. It covers branching strategies, commit standards, pull request processes, release management, and automation tools to ensure high code quality and smooth development workflows.

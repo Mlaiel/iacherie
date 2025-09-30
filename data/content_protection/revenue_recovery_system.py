@@ -4,7 +4,7 @@
 ===================================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/revenue_recovery_system.py
+Module: /workspaces/IA Chérie/data/content_protection/revenue_recovery_system.py
 Expert Team: Lead Dev IA + Financial Tech Expert + Revenue Analyst + ML Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)

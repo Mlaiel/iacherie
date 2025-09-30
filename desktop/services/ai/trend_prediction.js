@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - AI Trend Prediction Service
+ * IA Chérie Desktop - AI Trend Prediction Service
  * 
  * Advanced machine learning system for content trend prediction and viral optimization
  * 

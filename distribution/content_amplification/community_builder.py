@@ -1,5 +1,5 @@
 """
-Community Builder for Ainflue Distribution Platform
+Community Builder for IA Chérie Distribution Platform
 
 Advanced community engagement and building system that creates, nurtures,
 and optimizes content creator communities for maximum engagement and

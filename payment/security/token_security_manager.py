@@ -3,7 +3,7 @@
 🔐 Token Security Manager - Advanced JWT & Session Security
 ==========================================================
 
-Enterprise-grade token and session management for Ainflue platform.
+Enterprise-grade token and session management for IA Chérie platform.
 JWT management, token rotation, secure storage, and session security.
 
 Author: Expert Team (Security + Backend Senior + Microservices)
@@ -174,8 +174,8 @@ class JWTManager:
         }
         
         # Issuer et audience
-        self.issuer = "ainflue.platform"
-        self.audience = "ainflue.creators"
+        self.issuer = "iacherie.platform"
+        self.audience = "iacherie.creators"
         
     async def create_jwt_token(self, 
                               metadata: TokenMetadata,
@@ -217,7 +217,7 @@ class JWTManager:
                 'permissions': metadata.permissions
             }
             
-            # Claims spécifiques Ainflue
+            # Claims spécifiques IA Chérie
             if metadata.creator_id:
                 claims['creator_id'] = metadata.creator_id
                 
@@ -958,7 +958,7 @@ async def get_token_manager() -> TokenSecurityManager:
     return token_manager
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chérie
 async def create_creator_token(creator_id: str, 
                              user_id: str,
                              permissions: List[str],
@@ -974,7 +974,7 @@ async def create_creator_token(creator_id: str,
         ip_address=ip_address,
         custom_claims={
             'creator_verified': True,
-            'platform': 'ainflue',
+            'platform': 'iacherie',
             'token_purpose': 'creator_operations'
         }
     )

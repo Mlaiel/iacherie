@@ -1,8 +1,8 @@
 """
 Creator Incident Classifier Module
-Classification automatique incidents créateur - Ainflue Platform
+Classification automatique incidents créateur - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

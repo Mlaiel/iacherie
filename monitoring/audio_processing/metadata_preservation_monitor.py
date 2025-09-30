@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Metadata Preservation Monitor
+IA Chérie Platform - Metadata Preservation Monitor
 ================================================
 
 Enterprise monitoring for metadata preservation during audio processing,

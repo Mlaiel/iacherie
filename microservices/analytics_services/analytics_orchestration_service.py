@@ -3,7 +3,7 @@
 📊 ANALYTICS ORCHESTRATION SERVICE
 ==================================
 
-Advanced analytics pipeline management service for the Ainflue platform.
+Advanced analytics pipeline management service for the IA Chérie platform.
 Handles data processing, analytics workflows, real-time insights, and reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -141,7 +141,7 @@ class AnalyticsOrchestrationService:
                 id="user_metrics",
                 name="User Metrics",
                 source_type=DataSourceType.DATABASE,
-                connection_string="postgresql://localhost/ainflue",
+                connection_string="postgresql://localhost/iacherie",
                 query="SELECT * FROM user_analytics",
                 refresh_interval=1800
             ),
@@ -149,7 +149,7 @@ class AnalyticsOrchestrationService:
                 id="content_metrics", 
                 name="Content Metrics",
                 source_type=DataSourceType.DATABASE,
-                connection_string="postgresql://localhost/ainflue",
+                connection_string="postgresql://localhost/iacherie",
                 query="SELECT * FROM content_analytics",
                 refresh_interval=900
             ),
@@ -157,7 +157,7 @@ class AnalyticsOrchestrationService:
                 id="revenue_metrics",
                 name="Revenue Metrics", 
                 source_type=DataSourceType.DATABASE,
-                connection_string="postgresql://localhost/ainflue",
+                connection_string="postgresql://localhost/iacherie",
                 query="SELECT * FROM revenue_analytics",
                 refresh_interval=3600
             )

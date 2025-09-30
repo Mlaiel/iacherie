@@ -1,5 +1,5 @@
 """
-External Vendor Alerting for PagerDuty - Ainflue Platform
+External Vendor Alerting for PagerDuty - IA Chérie Platform
 Third-party service monitoring and vendor SLA tracking
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -416,7 +416,7 @@ class ExternalVendorAlerting:
                 )
             
             # Prepare headers
-            headers = {"User-Agent": "Ainflue-Platform/1.0"}
+            headers = {"User-Agent": "IA Chérie-Platform/1.0"}
             if endpoint.api_key:
                 if "stripe" in vendor_name:
                     headers["Authorization"] = f"Bearer {endpoint.api_key}"
@@ -768,7 +768,7 @@ class ExternalVendorAlerting:
                     if alert.pagerduty_incident_id and self.pagerduty_client:
                         await self.pagerduty_client.resolve_incident(
                             alert.pagerduty_incident_id,
-                            resolver="Ainflue Vendor Monitor",
+                            resolver="IA Chérie Vendor Monitor",
                             resolution_details=f"Vendor {vendor_name} health restored"
                         )
                     

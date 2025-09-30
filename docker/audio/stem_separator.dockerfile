@@ -1,11 +1,11 @@
 # Stem Separator Service
-# AI-powered stem separation for Ainflue Platform
+# AI-powered stem separation for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Stem Separator - AI-powered audio stem separation"
+LABEL description="IA Chérie Stem Separator - AI-powered audio stem separation"
 LABEL version="1.0.0"
 
 # Set working directory

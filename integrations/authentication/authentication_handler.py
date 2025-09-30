@@ -596,7 +596,7 @@ class AuthenticationHandler:
             **config.jwt_payload,
             "iat": datetime.utcnow(),
             "exp": datetime.utcnow() + timedelta(seconds=config.jwt_expires_in),
-            "iss": "ainflue-integrations"
+            "iss": "iacherie-integrations"
         }
         
         secret = self._decrypt_credential(config.jwt_secret)

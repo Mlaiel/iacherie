@@ -2,7 +2,7 @@
 Broadcast Standards Monitor - Audio Processing Module
 ===================================================
 
-Professional broadcast standards compliance monitoring for the Ainflue platform.
+Professional broadcast standards compliance monitoring for the IA Chérie platform.
 Implements EBU R128, ITU-R BS.1770, ITU-R BS.1771 and other international
 broadcast standards for enterprise audio processing workflows.
 

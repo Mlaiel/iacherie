@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Grafana Dashboard Manager
+# IA Chérie Infrastructure Module - Grafana Dashboard Manager
 # =======================================================
 # 
-# Enterprise-grade Grafana dashboard management for Ainflue platform
+# Enterprise-grade Grafana dashboard management for IA Chérie platform
 # Supports multi-cloud monitoring and enterprise observability
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,7 +24,7 @@ class GrafanaConfig:
     url: str
     username: str
     password: str
-    organization: str = "Ainflue"
+    organization: str = "IA Chérie"
     timeout: int = 30
     verify_ssl: bool = True
 
@@ -48,7 +48,7 @@ class GrafanaDashboardManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.monitoring.grafana_manager")
+        logger = logging.getLogger(f"iacherie.infra.monitoring.grafana_manager")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -99,7 +99,7 @@ class GrafanaDashboardManager:
             payload = {
                 "dashboard": dashboard,
                 "overwrite": True,
-                "message": f"Created by Ainflue Infrastructure Manager"
+                "message": f"Created by IA Chérie Infrastructure Manager"
             }
             
             response = self.session.post(
@@ -149,7 +149,7 @@ class GrafanaDashboardManager:
             payload = {
                 "dashboard": current_dashboard,
                 "overwrite": True,
-                "message": "Updated by Ainflue Infrastructure Manager"
+                "message": "Updated by IA Chérie Infrastructure Manager"
             }
             
             response = self.session.post(
@@ -253,11 +253,11 @@ class GrafanaDashboardManager:
             return False
     
     def _get_overview_dashboard(self) -> Dict:
-        """Get Ainflue overview dashboard configuration"""
+        """Get IA Chérie overview dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Platform Overview",
-            "tags": ["ainflue", "overview"],
+            "title": "IA Chérie Platform Overview",
+            "tags": ["iacherie", "overview"],
             "timezone": "browser",
             "refresh": "30s",
             "schemaVersion": 16,
@@ -322,8 +322,8 @@ class GrafanaDashboardManager:
         """Get AI engine monitoring dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue AI Engine Metrics",
-            "tags": ["ainflue", "ai", "ml"],
+            "title": "IA Chérie AI Engine Metrics",
+            "tags": ["iacherie", "ai", "ml"],
             "timezone": "browser",
             "refresh": "10s",
             "schemaVersion": 16,
@@ -392,8 +392,8 @@ class GrafanaDashboardManager:
         """Get API performance dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue API Performance",
-            "tags": ["ainflue", "api", "performance"],
+            "title": "IA Chérie API Performance",
+            "tags": ["iacherie", "api", "performance"],
             "timezone": "browser",
             "refresh": "30s",
             "schemaVersion": 16,
@@ -446,8 +446,8 @@ class GrafanaDashboardManager:
         """Get mobile app metrics dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Mobile App Metrics",
-            "tags": ["ainflue", "mobile", "app"],
+            "title": "IA Chérie Mobile App Metrics",
+            "tags": ["iacherie", "mobile", "app"],
             "timezone": "browser",
             "refresh": "1m",
             "schemaVersion": 16,
@@ -500,8 +500,8 @@ class GrafanaDashboardManager:
         """Get infrastructure health dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Infrastructure Health",
-            "tags": ["ainflue", "infrastructure", "kubernetes"],
+            "title": "IA Chérie Infrastructure Health",
+            "tags": ["iacherie", "infrastructure", "kubernetes"],
             "timezone": "browser",
             "refresh": "30s",
             "schemaVersion": 16,
@@ -554,8 +554,8 @@ class GrafanaDashboardManager:
         """Get security monitoring dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Security Monitoring",
-            "tags": ["ainflue", "security", "threats"],
+            "title": "IA Chérie Security Monitoring",
+            "tags": ["iacherie", "security", "threats"],
             "timezone": "browser",
             "refresh": "1m",
             "schemaVersion": 16,
@@ -608,8 +608,8 @@ class GrafanaDashboardManager:
         """Get business metrics dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Business Metrics",
-            "tags": ["ainflue", "business", "revenue"],
+            "title": "IA Chérie Business Metrics",
+            "tags": ["iacherie", "business", "revenue"],
             "timezone": "browser",
             "refresh": "5m",
             "schemaVersion": 16,
@@ -660,9 +660,9 @@ class GrafanaDashboardManager:
 
 # Example usage
 async def setup_ainflue_dashboards():
-    """Setup all Ainflue Grafana dashboards"""
+    """Setup all IA Chérie Grafana dashboards"""
     config = GrafanaConfig(
-        url="http://grafana.ainflue.local",
+        url="http://grafana.iacherie.local",
         username="admin",
         password="admin123"
     )
@@ -673,7 +673,7 @@ async def setup_ainflue_dashboards():
     await manager.create_data_source(
         name="Prometheus",
         ds_type="prometheus",
-        url="http://prometheus.ainflue.local:9090"
+        url="http://prometheus.iacherie.local:9090"
     )
     
     # Create dashboards

@@ -1,6 +1,6 @@
 # 🧠 محرك ذكاء الجمهور (العربية) - تحليل الجمهور المتقدم بالذكاء الاصطناعي
 
-**نظام ذكاء الجمهور على مستوى المؤسسات لمنصة توزيع Ainflue**
+**نظام ذكاء الجمهور على مستوى المؤسسات لمنصة توزيع IA Chérie**
 
 ## 🎯 نظرة عامة
 
@@ -232,7 +232,7 @@ spec:
     spec:
       containers:
       - name: audience-intelligence
-        image: ainflue/audience-intelligence:latest
+        image: iacherie/audience-intelligence:latest
         resources:
           requests:
             memory: "3Gi"

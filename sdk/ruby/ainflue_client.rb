@@ -9,9 +9,9 @@ require 'openssl'
 require 'logger'
 
 ##
-# Ainflue Ruby SDK - Enterprise Server-Side Client
+# IA Chérie Ruby SDK - Enterprise Server-Side Client
 #
-# Provides secure, high-performance access to Ainflue Platform APIs for Ruby applications.
+# Provides secure, high-performance access to IA Chérie Platform APIs for Ruby applications.
 #
 # Features:
 # - JWT Authentication with automatic refresh
@@ -27,7 +27,7 @@ require 'logger'
 # @since 2025-01-01
 # @copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 #
-module Ainflue
+module IA Chérie
   VERSION = '4.0.0'
 
   ##
@@ -313,7 +313,7 @@ module Ainflue
       
       request_headers = {
         'Content-Type' => 'application/json',
-        'User-Agent' => "Ainflue-Ruby-SDK/#{VERSION}",
+        'User-Agent' => "IA Chérie-Ruby-SDK/#{VERSION}",
         'X-Client-Version' => VERSION,
         'X-Platform' => 'Ruby'
       }.merge(headers)
@@ -386,7 +386,7 @@ module Ainflue
   end
 
   ##
-  # Main Ainflue client class
+  # Main IA Chérie client class
   #
   class Client
     attr_reader :config, :logger
@@ -405,11 +405,11 @@ module Ainflue
       @token_expiry = nil
       @websocket_manager = nil
 
-      @logger.info("Ainflue SDK initialized v#{VERSION}")
+      @logger.info("IA Chérie SDK initialized v#{VERSION}")
     end
 
     ##
-    # Authenticate with the Ainflue platform
+    # Authenticate with the IA Chérie platform
     #
     def authenticate(email, password)
       credentials = {
@@ -640,14 +640,14 @@ end
 # Usage example:
 if __FILE__ == $PROGRAM_NAME
   # Configuration
-  config = Ainflue::Configuration.new
-  config.base_url = 'https://api.ainflue.com'
-  config.websocket_url = 'wss://ws.ainflue.com'
+  config = IA Chérie::Configuration.new
+  config.base_url = 'https://api.iacherie.com'
+  config.websocket_url = 'wss://ws.iacherie.com'
   config.api_key = 'your_api_key'
   config.secret_key = 'your_secret_key'
 
   # Initialize client
-  client = Ainflue::Client.new(config)
+  client = IA Chérie::Client.new(config)
 
   # Authenticate
   result = client.authenticate('user@example.com', 'password')
@@ -655,7 +655,7 @@ if __FILE__ == $PROGRAM_NAME
     puts "✅ Authentication successful!"
 
     # Upload content
-    content = Ainflue::ContentUpload.new(
+    content = IA Chérie::ContentUpload.new(
       filename: 'test.jpg',
       data: File.read('test.jpg'),
       content_type: 'image/jpeg',

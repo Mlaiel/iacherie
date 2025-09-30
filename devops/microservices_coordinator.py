@@ -3,7 +3,7 @@
 Advanced Microservices Orchestration & Service Mesh
 =================================================
 
-Enterprise-grade microservices orchestration system for Ainflue platform.
+Enterprise-grade microservices orchestration system for IA Chérie platform.
 Implements service discovery, load balancing, circuit breakers, API gateway,
 distributed tracing, and comprehensive service mesh management.
 
@@ -1130,7 +1130,7 @@ async def main():
     try:
         # Register services
         backend_id = await mesh.register_service(
-            service_name="ainflue-backend",
+            service_name="iacherie-backend",
             host="localhost",
             port=8000,
             version="1.0.0",
@@ -1140,7 +1140,7 @@ async def main():
         )
         
         ai_engine_id = await mesh.register_service(
-            service_name="ainflue-ai-engine",
+            service_name="iacherie-ai-engine",
             host="localhost", 
             port=8001,
             version="1.0.0",
@@ -1151,13 +1151,13 @@ async def main():
         
         # Add routes
         mesh.add_service_route(
-            service_name="ainflue-backend",
+            service_name="iacherie-backend",
             path_pattern="/api/*",
             methods=["GET", "POST", "PUT", "DELETE"]
         )
         
         mesh.add_service_route(
-            service_name="ainflue-ai-engine",
+            service_name="iacherie-ai-engine",
             path_pattern="/ai/*",
             methods=["POST"]
         )

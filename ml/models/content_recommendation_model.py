@@ -1,11 +1,11 @@
 """
-Content Recommendation Model - Ainflue Enterprise
+Content Recommendation Model - IA Chérie Enterprise
 ==============================================
 Modèle recommandation contenu avec collaborative filtering et deep learning.
 Personalization + creator matching + content discovery + business optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chérie ML Models
 Version: 1.0 Production
 """
 
@@ -1095,7 +1095,7 @@ class ContentRecommendationModel:
 
 class ContentRecommendationService:
     """
-    Service principal pour content recommendations Ainflue.
+    Service principal pour content recommendations IA Chérie.
     Orchestration + analytics + A/B testing + performance monitoring.
     """
     

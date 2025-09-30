@@ -10,7 +10,7 @@ log_drivers:
 centralized_logging:
   enabled: true
   driver: fluentd
-  endpoint: fluentd.ainflue.com:24224
+  endpoint: fluentd.iacherie.com:24224
   
 log_levels:
   production: info

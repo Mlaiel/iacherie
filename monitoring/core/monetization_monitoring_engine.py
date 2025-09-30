@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Monetization Monitoring Engine
+IA Chérie Platform - Monetization Monitoring Engine
 ===============================================
 
 Enterprise-grade monitoring engine for monetization systems including revenue

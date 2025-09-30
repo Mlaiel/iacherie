@@ -10,7 +10,7 @@ authentication:
     algorithm: "HS256"
     access_token_expiry: 3600  # 1 hour
     refresh_token_expiry: 86400  # 24 hours
-    issuer: "ainflue-creator-platform"
+    issuer: "iacherie-creator-platform"
     audience: "creator-services"
     
   multi_factor:
@@ -24,7 +24,7 @@ authentication:
     google:
       client_id: "${GOOGLE_OAUTH_CLIENT_ID}"
       client_secret: "${GOOGLE_OAUTH_CLIENT_SECRET}"
-      redirect_uri: "https://creator.ainflue.com/auth/google/callback"
+      redirect_uri: "https://creator.iacherie.com/auth/google/callback"
       
     youtube:
       client_id: "${YOUTUBE_OAUTH_CLIENT_ID}"
@@ -97,8 +97,8 @@ encryption:
       - "TLS_AES_256_GCM_SHA384"
       - "TLS_CHACHA20_POLY1305_SHA256"
       - "TLS_AES_128_GCM_SHA256"
-    certificate_path: "/certs/ainflue.pem"
-    private_key_path: "/certs/ainflue.key"
+    certificate_path: "/certs/iacherie.pem"
+    private_key_path: "/certs/iacherie.key"
     
   database:
     enable_column_encryption: true
@@ -150,9 +150,9 @@ session:
 api_security:
   cors:
     allowed_origins:
-      - "https://creator.ainflue.com"
-      - "https://app.ainflue.com"
-      - "https://admin.ainflue.com"
+      - "https://creator.iacherie.com"
+      - "https://app.iacherie.com"
+      - "https://admin.iacherie.com"
     allowed_methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
     allowed_headers: ["Authorization", "Content-Type", "X-Request-ID"]
     allow_credentials: true

@@ -30,7 +30,7 @@ ALL RIGHTS RESERVED
 
 ---
 
-## 🎯 **AINFLUE BUSINESS LOGIC**
+## 🎯 **IACHERIE BUSINESS LOGIC**
 **Creator Economy Pipeline:** Multi-format creators → AI Processing → IP Protection → Monetization → Collaboration & Gamification → Professional SEO → Multi-platform Distribution
 
 ---
@@ -90,8 +90,8 @@ The Filebeat Creator Economy Monitoring System is an enterprise-grade log aggreg
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/filebeat
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/filebeat
 
 # Install dependencies
 pip install -r requirements.txt
@@ -110,7 +110,7 @@ python index.py
 ```python
 config = {
     "environment": "production",
-    "cluster_name": "ainflue-production",
+    "cluster_name": "iacherie-production",
     "elasticsearch_hosts": ["elasticsearch:9200"],
     "logstash_hosts": ["logstash:5044"],
     "enable_real_time": True,
@@ -313,7 +313,7 @@ await hub.start_background_sync()
 - **LinkedIn** - Professional networking
 - **Pinterest** - Visual discovery platform
 - **Snapchat** - Ephemeral content tracking
-- **Ainflue** - Native platform integration
+- **IA Chérie** - Native platform integration
 
 ## 🔄 **API REFERENCE**
 
@@ -419,4 +419,4 @@ Contact: mlaiel@live.de for licensing information.
 
 ---
 
-**© 2025 Fahed Mlaiel - All Rights Reserved - Proprietary Ainflue Filebeat Architecture**
+**© 2025 Fahed Mlaiel - All Rights Reserved - Proprietary IA Chérie Filebeat Architecture**

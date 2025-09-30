@@ -1,4 +1,4 @@
-# 🎵 Templates Audio Ainflue - Framework Entreprise
+# 🎵 Templates Audio IA Chérie - Framework Entreprise
 
 **© 2025 Fahed Mlaiel <mlaiel@live.de> - Tous Droits Réservés**
 
@@ -13,7 +13,7 @@
 
 ## 🎯 Templates Audio Entreprise pour l'Économie des Créateurs
 
-Le module Templates Audio Ainflue fournit **120+ templates de traitement audio professionnel** conçus spécifiquement pour l'économie des créateurs. Ce framework de niveau entreprise combine traitement audio avancé, amélioration IA, et fonctionnalités centrées créateur pour offrir des expériences audio exceptionnelles.
+Le module Templates Audio IA Chérie fournit **120+ templates de traitement audio professionnel** conçus spécifiquement pour l'économie des créateurs. Ce framework de niveau entreprise combine traitement audio avancé, amélioration IA, et fonctionnalités centrées créateur pour offrir des expériences audio exceptionnelles.
 
 ### 🏭 **Équipe d'Experts**
 
@@ -65,7 +65,7 @@ Le module Templates Audio Ainflue fournit **120+ templates de traitement audio p
 #### Installation
 
 ```bash
-pip install ainflue-audio-templates
+pip install iacherie-audio-templates
 ```
 
 #### Utilisation Basique
@@ -111,8 +111,8 @@ print(f"Composition générée : {result.composition_metadata['title']}")
 
 **Responsable Technique :** Fahed Mlaiel  
 **Email :** mlaiel@live.de  
-**Ventes Entreprise :** enterprise@ainflue.com  
-**Support Technique :** support@ainflue.com  
+**Ventes Entreprise :** enterprise@iacherie.com  
+**Support Technique :** support@iacherie.com  
 
 ---
 

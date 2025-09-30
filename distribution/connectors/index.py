@@ -181,7 +181,7 @@ async def connectors_info():
     total_platforms = sum(len(platform_list) for platform_list in platforms.values())
     
     return {
-        "service": "Ainflue Connectors System",
+        "service": "IA Chérie Connectors System",
         "version": "2.0.0",
         "architecture": "consolidated_connectors",
         "description": "Multi-platform content distribution with 40+ platform support",

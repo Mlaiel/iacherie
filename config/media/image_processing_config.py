@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Image Processing Configuration Module
+"""IA Chérie Image Processing Configuration Module
 =============================================
 
-Enterprise-grade image processing configuration for the Ainflue platform.
+Enterprise-grade image processing configuration for the IA Chérie platform.
 Comprehensive image manipulation, optimization, format conversion, quality control,
 and advanced computer vision features for creator content processing.
 
@@ -1027,12 +1027,12 @@ class ImageProcessingConfiguration:
         return {
             "text_found": True,
             "confidence": 0.91,
-            "text": "Welcome to Ainflue",
+            "text": "Welcome to IA Chérie",
             "language": "en",
             "bounding_boxes": [
                 {"text": "Welcome", "bbox": [50, 50, 150, 80]},
                 {"text": "to", "bbox": [160, 50, 180, 80]},
-                {"text": "Ainflue", "bbox": [190, 50, 280, 80]}
+                {"text": "IA Chérie", "bbox": [190, 50, 280, 80]}
             ]
         }
     

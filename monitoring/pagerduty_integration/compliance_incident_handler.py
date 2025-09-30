@@ -1,5 +1,5 @@
 """
-Compliance Incident Handler for PagerDuty - Ainflue Platform
+Compliance Incident Handler for PagerDuty - IA Chérie Platform
 Regulatory compliance and audit incident management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -183,10 +183,10 @@ class ComplianceIncidentHandler:
                 "low": 72         # 72 hours
             },
             "compliance_officers": {
-                "gdpr": "gdpr-officer@ainflue.com",
-                "ccpa": "privacy-officer@ainflue.com",
-                "pci_dss": "security-officer@ainflue.com",
-                "legal": "legal@ainflue.com"
+                "gdpr": "gdpr-officer@iacherie.com",
+                "ccpa": "privacy-officer@iacherie.com",
+                "pci_dss": "security-officer@iacherie.com",
+                "legal": "legal@iacherie.com"
             }
         }
         
@@ -534,14 +534,14 @@ class ComplianceIncidentHandler:
         """Assign appropriate compliance officer"""
         try:
             framework_officers = {
-                ComplianceFramework.GDPR: "gdpr-officer@ainflue.com",
-                ComplianceFramework.CCPA: "privacy-officer@ainflue.com", 
-                ComplianceFramework.PCI_DSS: "security-officer@ainflue.com",
-                ComplianceFramework.COPPA: "privacy-officer@ainflue.com",
-                ComplianceFramework.DMCA: "legal@ainflue.com"
+                ComplianceFramework.GDPR: "gdpr-officer@iacherie.com",
+                ComplianceFramework.CCPA: "privacy-officer@iacherie.com", 
+                ComplianceFramework.PCI_DSS: "security-officer@iacherie.com",
+                ComplianceFramework.COPPA: "privacy-officer@iacherie.com",
+                ComplianceFramework.DMCA: "legal@iacherie.com"
             }
             
-            officer = framework_officers.get(incident.framework, "compliance@ainflue.com")
+            officer = framework_officers.get(incident.framework, "compliance@iacherie.com")
             incident.assigned_compliance_officer = officer
             
             await self._create_audit_entry(

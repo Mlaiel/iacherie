@@ -1,7 +1,7 @@
-package com.ainflue.mobile.kotlin
+package com.iacherie.mobile.kotlin
 
 /**
- * Ainflue Android SDK - Enterprise Mobile Client
+ * IA Chérie Android SDK - Enterprise Mobile Client
  * @author Fahed Mlaiel (mlaiel@live.de)
  * @version 4.0.0
  */

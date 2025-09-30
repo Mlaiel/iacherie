@@ -1,7 +1,7 @@
-"""Event Correlation Analyzer - Cross-Services for Ainflue Events
+"""Event Correlation Analyzer - Cross-Services for IA Chérie Events
 
 Advanced event correlation analyzer for identifying patterns, dependencies,
-and business relationships across Ainflue services and workflows.
+and business relationships across IA Chérie services and workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -65,7 +65,7 @@ class CorrelationInsight:
 
 class EventCorrelationAnalyzer:
     """
-    Advanced event correlation analyzer for Ainflue cross-services
+    Advanced event correlation analyzer for IA Chérie cross-services
     Identifies patterns, dependencies, and business relationships in event streams
     """
     
@@ -79,7 +79,7 @@ class EventCorrelationAnalyzer:
         logger.info(f"EventCorrelationAnalyzer initialized with {correlation_window_hours}h window")
     
     def _initialize_correlation_rules(self) -> List[CorrelationRule]:
-        """Initialize Ainflue-specific correlation rules"""
+        """Initialize IA Chérie-specific correlation rules"""
         
         return [
             CorrelationRule(

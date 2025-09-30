@@ -1,12 +1,12 @@
 """
-SEO Optimization Pipeline - Ainflue Enterprise
+SEO Optimization Pipeline - IA Chérie Enterprise
 ==============================================
 Pipeline optimisation SEO avec intelligence search engine.
 Keyword optimization + content ranking + search intent + competitive analysis.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chérie ML Pipelines
 Version: 1.0 Production
 """
 

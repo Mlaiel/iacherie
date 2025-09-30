@@ -1,0 +1,947 @@
+# Istio Service Mesh Configuration - Ainflue Creator Economy Platform
+# =======================================================================
+#
+# 🎯 DEVOPS ENGINEER + SERVICE MESH ARCHITECT + MICROSERVICES EXPERT
+# Lead: Fahed Mlaiel (mlaiel@live.de)
+#
+# Enterprise Istio service mesh configuration for Creator Economy Platform:
+# - Advanced traffic management and routing
+# - Security policies and mTLS encryption
+# - Observability and distributed tracing
+# - Creator Economy specific service mesh
+# - AI processing traffic optimization
+# - Content delivery acceleration
+# - Collaboration services mesh
+#
+# ⚠️ INTELLECTUAL PROPERTY PROTECTION:
+# ==========================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS
+#
+# 🚨 PROTECTION INTELLECTUELLE:
+# - Code propriétaire de Fahed Mlaiel
+# - Utilisation commerciale INTERDITE sans autorisation écrite
+# - Reverse engineering STRICTEMENT INTERDIT
+# - Distribution INTERDITE sans licence explicite
+# - Violation = Poursuites judiciaires automatiques
+#
+# Created: 2025-01-18
+# Version: 1.0.0
+
+# ==============================================================================
+# NAMESPACE CONFIGURATION
+# ==============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-platform
+  labels:
+    name: ainflue-platform
+    environment: production
+    istio-injection: enabled
+    business-unit: creator-economy
+    security-level: enterprise
+    project: ainflue
+    owner: fahed-mlaiel
+    managed-by: istio
+annotations:
+  mesh.istio.io/sidecar-inject: "true"
+  security.istio.io/tlsMode: ISTIO_MUTUAL
+---
+# ==============================================================================
+# ISTIO GATEWAY CONFIGURATION
+# ==============================================================================
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ainflue-main-gateway
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-gateway
+    version: v1
+    environment: production
+    business-unit: creator-economy
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  # HTTP to HTTPS redirect
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "ainflue.com"
+    - "api.ainflue.com"
+    - "creators.ainflue.com"
+    - "collaborate.ainflue.com"
+    - "monetize.ainflue.com"
+    - "ai.ainflue.com"
+    - "cdn.ainflue.com"
+    tls:
+      httpsRedirect: true
+  
+  # HTTPS configuration
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ainflue-tls-credentials
+      minProtocolVersion: TLSV1_2
+      maxProtocolVersion: TLSV1_3
+      cipherSuites:
+      - "ECDHE-RSA-AES256-GCM-SHA384"
+      - "ECDHE-RSA-AES128-GCM-SHA256"
+    hosts:
+    - "ainflue.com"
+    - "api.ainflue.com"
+    - "creators.ainflue.com"
+    - "collaborate.ainflue.com"
+    - "monetize.ainflue.com"
+    - "ai.ainflue.com"
+    - "cdn.ainflue.com"
+---
+# Creator Economy API Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ainflue-api-gateway
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api-gateway
+    version: v1
+    environment: production
+    business-unit: creator-economy
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 8443
+      name: https-api
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ainflue-api-tls-credentials
+    hosts:
+    - "api.ainflue.com"
+---
+# ==============================================================================
+# VIRTUAL SERVICE CONFIGURATION
+# ==============================================================================
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ainflue-main-routes
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-main-routes
+    version: v1
+    environment: production
+    business-unit: creator-economy
+spec:
+  hosts:
+  - "ainflue.com"
+  - "api.ainflue.com"
+  - "creators.ainflue.com"
+  - "collaborate.ainflue.com"
+  - "monetize.ainflue.com"
+  - "ai.ainflue.com"
+  - "cdn.ainflue.com"
+  gateways:
+  - ainflue-main-gateway
+  - ainflue-api-gateway
+  http:
+  
+  # Main Platform Routes
+  - match:
+    - uri:
+        prefix: "/"
+    - headers:
+        host:
+          exact: "ainflue.com"
+    route:
+    - destination:
+        host: main-platform-service
+        port:
+          number: 80
+        subset: stable
+      weight: 90
+    - destination:
+        host: main-platform-service
+        port:
+          number: 80
+        subset: canary
+      weight: 10
+    timeout: 30s
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    corsPolicy:
+      allowOrigins:
+      - exact: "https://ainflue.com"
+      - exact: "https://creators.ainflue.com"
+      allowMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+      allowHeaders:
+      - Authorization
+      - Content-Type
+      - x-requested-with
+      allowCredentials: true
+      maxAge: 24h
+  
+  # Creator Platform Routes
+  - match:
+    - uri:
+        prefix: "/creators"
+    - headers:
+        host:
+          exact: "creators.ainflue.com"
+    route:
+    - destination:
+        host: creator-platform-service
+        port:
+          number: 80
+        subset: v1
+    timeout: 60s
+    retries:
+      attempts: 3
+      perTryTimeout: 20s
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-creator-platform: "true"
+          x-business-unit: "creator-economy"
+        remove:
+        - x-internal-debug
+  
+  # API Gateway Routes
+  - match:
+    - uri:
+        prefix: "/api/v1"
+    - headers:
+        host:
+          exact: "api.ainflue.com"
+    route:
+    - destination:
+        host: api-gateway-service
+        port:
+          number: 80
+        subset: production
+    timeout: 120s
+    retries:
+      attempts: 3
+      perTryTimeout: 40s
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-api-version: "v1"
+          x-rate-limit-enabled: "true"
+    fault:
+      delay:
+        percentage:
+          value: 0.1
+        fixedDelay: 100ms
+      abort:
+        percentage:
+          value: 0.01
+        httpStatus: 503
+  
+  # Collaboration Service Routes
+  - match:
+    - uri:
+        prefix: "/collaborate"
+    - headers:
+        host:
+          exact: "collaborate.ainflue.com"
+    route:
+    - destination:
+        host: collaboration-service
+        port:
+          number: 80
+    timeout: 180s # Longer timeout for collaboration
+    retries:
+      attempts: 2
+      perTryTimeout: 60s
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-collaboration-enabled: "true"
+          x-real-time-editing: "true"
+  
+  # WebSocket Routes for Real-time Collaboration
+  - match:
+    - uri:
+        prefix: "/ws"
+    - headers:
+        upgrade:
+          exact: "websocket"
+    route:
+    - destination:
+        host: collaboration-service
+        port:
+          number: 80
+    timeout: 3600s # 1 hour for WebSocket connections
+    headers:
+      request:
+        add:
+          x-websocket-enabled: "true"
+  
+  # Monetization Service Routes
+  - match:
+    - uri:
+        prefix: "/monetize"
+    - headers:
+        host:
+          exact: "monetize.ainflue.com"
+    route:
+    - destination:
+        host: monetization-service
+        port:
+          number: 80
+        subset: secure
+    timeout: 60s
+    retries:
+      attempts: 5 # Higher retry for payment processing
+      perTryTimeout: 15s
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-monetization-enabled: "true"
+          x-payment-processing: "true"
+          x-security-level: "high"
+  
+  # AI Processing Service Routes
+  - match:
+    - uri:
+        prefix: "/ai"
+    - headers:
+        host:
+          exact: "ai.ainflue.com"
+    route:
+    - destination:
+        host: ai-processing-service
+        port:
+          number: 80
+        subset: gpu-enabled
+    timeout: 1800s # 30 minutes for AI processing
+    retries:
+      attempts: 2
+      perTryTimeout: 600s # 10 minutes per try
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-ai-processing: "true"
+          x-gpu-enabled: "true"
+          x-max-processing-time: "1800"
+  
+  # Content Delivery Routes
+  - match:
+    - uri:
+        prefix: "/content"
+    - headers:
+        host:
+          exact: "cdn.ainflue.com"
+    route:
+    - destination:
+        host: content-delivery-service
+        port:
+          number: 80
+    timeout: 300s # 5 minutes for large content
+    retries:
+      attempts: 3
+      perTryTimeout: 100s
+      retryOn: gateway-error,connect-failure,refused-stream
+    headers:
+      request:
+        add:
+          x-content-delivery: "true"
+          x-cdn-enabled: "true"
+      response:
+        add:
+          cache-control: "public, max-age=31536000"
+          x-content-type-options: "nosniff"
+---
+# ==============================================================================
+# DESTINATION RULES CONFIGURATION
+# ==============================================================================
+# Main Platform Service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: main-platform-destination
+  namespace: ainflue-platform
+  labels:
+    app: main-platform-destination
+    version: v1
+    environment: production
+spec:
+  host: main-platform-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 200
+        connectTimeout: 30s
+        keepAlive:
+          time: 7200s
+          interval: 75s
+      http:
+        http1MaxPendingRequests: 100
+        http2MaxRequests: 200
+        maxRequestsPerConnection: 10
+        maxRetries: 5
+        consecutiveGatewayErrors: 5
+        interval: 30s
+        baseEjectionTime: 30s
+        maxEjectionPercent: 50
+        h2UpgradePolicy: UPGRADE
+    loadBalancer:
+      simple: LEAST_REQUEST
+      consistentHash:
+        httpHeaderName: "x-user-id"
+    outlierDetection:
+      consecutiveGatewayErrors: 3
+      consecutive5xxErrors: 3
+      interval: 30s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 50
+      minHealthPercent: 50
+      splitExternalLocalOriginErrors: true
+  subsets:
+  - name: stable
+    labels:
+      version: stable
+    trafficPolicy:
+      connectionPool:
+        tcp:
+          maxConnections: 150
+  - name: canary
+    labels:
+      version: canary
+    trafficPolicy:
+      connectionPool:
+        tcp:
+          maxConnections: 50
+---
+# Creator Platform Service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: creator-platform-destination
+  namespace: ainflue-platform
+  labels:
+    app: creator-platform-destination
+    version: v1
+    environment: production
+spec:
+  host: creator-platform-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 300
+        connectTimeout: 30s
+      http:
+        http1MaxPendingRequests: 150
+        http2MaxRequests: 300
+        maxRequestsPerConnection: 20
+        maxRetries: 3
+        h2UpgradePolicy: UPGRADE
+    loadBalancer:
+      simple: ROUND_ROBIN
+    outlierDetection:
+      consecutiveGatewayErrors: 5
+      consecutive5xxErrors: 5
+      interval: 30s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 30
+      minHealthPercent: 70
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+---
+# AI Processing Service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: ai-processing-destination
+  namespace: ainflue-platform
+  labels:
+    app: ai-processing-destination
+    version: v1
+    environment: production
+spec:
+  host: ai-processing-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 50
+        connectTimeout: 60s
+        keepAlive:
+          time: 7200s
+          interval: 75s
+      http:
+        http1MaxPendingRequests: 20
+        http2MaxRequests: 50
+        maxRequestsPerConnection: 1
+        maxRetries: 2
+        h2UpgradePolicy: UPGRADE
+    loadBalancer:
+      simple: LEAST_REQUEST
+      consistentHash:
+        httpHeaderName: "x-processing-job-id"
+    outlierDetection:
+      consecutiveGatewayErrors: 2
+      consecutive5xxErrors: 2
+      interval: 60s
+      baseEjectionTime: 60s
+      maxEjectionPercent: 25
+      minHealthPercent: 75
+  subsets:
+  - name: gpu-enabled
+    labels:
+      gpu: enabled
+  - name: cpu-only
+    labels:
+      gpu: disabled
+---
+# Monetization Service
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: monetization-destination
+  namespace: ainflue-platform
+  labels:
+    app: monetization-destination
+    version: v1
+    environment: production
+spec:
+  host: monetization-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
+        connectTimeout: 30s
+        keepAlive:
+          time: 7200s
+          interval: 75s
+      http:
+        http1MaxPendingRequests: 50
+        http2MaxRequests: 100
+        maxRequestsPerConnection: 5
+        maxRetries: 5
+        h2UpgradePolicy: UPGRADE
+    loadBalancer:
+      simple: ROUND_ROBIN
+    outlierDetection:
+      consecutiveGatewayErrors: 2
+      consecutive5xxErrors: 2
+      interval: 30s
+      baseEjectionTime: 60s
+      maxEjectionPercent: 20
+      minHealthPercent: 80
+  subsets:
+  - name: secure
+    labels:
+      security: high
+---
+# ==============================================================================
+# SERVICE ENTRY CONFIGURATION
+# ==============================================================================
+# External Payment Providers
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: external-payment-providers
+  namespace: ainflue-platform
+  labels:
+    app: external-payment-providers
+    version: v1
+    environment: production
+spec:
+  hosts:
+  - api.stripe.com
+  - api.paypal.com
+  - api.squareup.com
+  - api.coinbase.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: DNS
+---
+# External AI/ML Services
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: external-ai-services
+  namespace: ainflue-platform
+  labels:
+    app: external-ai-services
+    version: v1
+    environment: production
+spec:
+  hosts:
+  - api.openai.com
+  - api.anthropic.com
+  - api.huggingface.co
+  - api.stability.ai
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: DNS
+---
+# External Social Media APIs
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: external-social-media
+  namespace: ainflue-platform
+  labels:
+    app: external-social-media
+    version: v1
+    environment: production
+spec:
+  hosts:
+  - api.twitter.com
+  - graph.facebook.com
+  - api.instagram.com
+  - api.linkedin.com
+  - api.tiktok.com
+  - www.googleapis.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: DNS
+---
+# ==============================================================================
+# SECURITY POLICIES CONFIGURATION
+# ==============================================================================
+# Peer Authentication - Enable mTLS
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: ainflue-platform
+  labels:
+    app: default-peer-auth
+    version: v1
+    environment: production
+spec:
+  mtls:
+    mode: STRICT
+---
+# Authorization Policy - Creator Platform
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: creator-platform-authz
+  namespace: ainflue-platform
+  labels:
+    app: creator-platform-authz
+    version: v1
+    environment: production
+spec:
+  selector:
+    matchLabels:
+      app: creator-platform
+  rules:
+  # Allow authenticated creator requests
+  - from:
+    - source:
+        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+        paths: ["/creators/*", "/api/v1/creators/*"]
+    when:
+    - key: request.headers[authorization]
+      values: ["Bearer *"]
+  
+  # Allow health checks
+  - from:
+    - source:
+        principals: ["cluster.local/ns/istio-system/sa/istio-proxy"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/health", "/ready", "/metrics"]
+  
+  # Deny all other requests
+  - {}
+---
+# Authorization Policy - AI Processing (High Security)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: ai-processing-authz
+  namespace: ainflue-platform
+  labels:
+    app: ai-processing-authz
+    version: v1
+    environment: production
+spec:
+  selector:
+    matchLabels:
+      app: ai-processing
+  rules:
+  # Only allow requests from creator platform and API gateway
+  - from:
+    - source:
+        principals: 
+        - "cluster.local/ns/ainflue-platform/sa/creator-platform-sa"
+        - "cluster.local/ns/ainflue-platform/sa/api-gateway-sa"
+    to:
+    - operation:
+        methods: ["POST"]
+        paths: ["/ai/process/*"]
+    when:
+    - key: request.headers[x-processing-type]
+      values: ["video", "audio", "image", "text"]
+    - key: request.headers[authorization]
+      values: ["Bearer *"]
+  
+  # Allow monitoring
+  - from:
+    - source:
+        principals: ["cluster.local/ns/istio-system/sa/prometheus"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/metrics"]
+---
+# Authorization Policy - Monetization (Highest Security)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: monetization-authz
+  namespace: ainflue-platform
+  labels:
+    app: monetization-authz
+    version: v1
+    environment: production
+spec:
+  selector:
+    matchLabels:
+      app: monetization
+  rules:
+  # Strict access control for payment processing
+  - from:
+    - source:
+        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+    to:
+    - operation:
+        methods: ["POST", "GET"]
+        paths: ["/monetize/payments/*", "/monetize/revenue/*"]
+    when:
+    - key: request.headers[authorization]
+      values: ["Bearer *"]
+    - key: request.headers[x-user-role]
+      values: ["creator", "admin"]
+    - key: source.ip
+      notValues: ["192.168.0.0/16", "10.0.0.0/8"] # Block internal networks
+  
+  # Allow subscription management
+  - from:
+    - source:
+        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "DELETE"]
+        paths: ["/monetize/subscriptions/*"]
+    when:
+    - key: request.headers[authorization]
+      values: ["Bearer *"]
+    - key: request.headers[x-subscription-action]
+      values: ["create", "update", "cancel", "view"]
+---
+# ==============================================================================
+# TELEMETRY CONFIGURATION
+# ==============================================================================
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: creator-economy-metrics
+  namespace: ainflue-platform
+  labels:
+    app: creator-economy-metrics
+    version: v1
+    environment: production
+spec:
+  metrics:
+  - providers:
+    - name: prometheus
+  - overrides:
+    - match:
+        metric: ALL_METRICS
+      tagOverrides:
+        business_unit:
+          value: "creator-economy"
+        environment:
+          value: "production"
+        project:
+          value: "ainflue"
+        owner:
+          value: "fahed-mlaiel"
+  
+  # Custom Creator Economy metrics
+  - providers:
+    - name: prometheus
+    overrides:
+    - match:
+        metric: requests_total
+      tagOverrides:
+        creator_id:
+          operation: UPSERT
+          value: "%{REQUEST_HEADERS['x-creator-id']}"
+        content_type:
+          operation: UPSERT
+          value: "%{REQUEST_HEADERS['x-content-type']}"
+        processing_type:
+          operation: UPSERT
+          value: "%{REQUEST_HEADERS['x-processing-type']}"
+        monetization_type:
+          operation: UPSERT
+          value: "%{REQUEST_HEADERS['x-monetization-type']}"
+  
+  accessLogging:
+  - providers:
+    - name: otel
+    - name: stackdriver
+  tracing:
+  - providers:
+    - name: jaeger
+  - customTags:
+      creator_id:
+        header:
+          name: x-creator-id
+      content_type:
+        header:
+          name: x-content-type
+      processing_type:
+        header:
+          name: x-processing-type
+      user_role:
+        header:
+          name: x-user-role
+      business_unit:
+        literal:
+          value: creator-economy
+---
+# ==============================================================================
+# WORKLOAD ENTRY CONFIGURATION
+# ==============================================================================
+apiVersion: networking.istio.io/v1beta1
+kind: WorkloadEntry
+metadata:
+  name: external-ai-service-1
+  namespace: ainflue-platform
+  labels:
+    app: external-ai-service
+    version: v1
+    environment: production
+spec:
+  address: "external-ai.ainflue.com"
+  ports:
+    https: 443
+  labels:
+    app: external-ai-service
+    version: v1
+---
+# ==============================================================================
+# ENVOY FILTER CONFIGURATION
+# ==============================================================================
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: creator-economy-rate-limiting
+  namespace: ainflue-platform
+  labels:
+    app: creator-economy-rate-limiting
+    version: v1
+    environment: production
+spec:
+  workloadSelector:
+    labels:
+      app: api-gateway
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_INBOUND
+      listener:
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+    patch:
+      operation: INSERT_BEFORE
+      value:
+        name: envoy.filters.http.local_ratelimit
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
+          stat_prefix: creator_economy_rate_limiter
+          token_bucket:
+            max_tokens: 1000
+            tokens_per_fill: 100
+            fill_interval: 1s
+          filter_enabled:
+            runtime_key: creator_economy_rate_limit_enabled
+            default_value:
+              numerator: 100
+              denominator: HUNDRED
+          filter_enforced:
+            runtime_key: creator_economy_rate_limit_enforced
+            default_value:
+              numerator: 100
+              denominator: HUNDRED
+          response_headers_to_add:
+          - append: false
+            header:
+              key: x-rate-limit-remaining
+              value: "%{DOWNSTREAM_REMOTE_ADDRESS}"
+---
+# ==============================================================================
+# WASM PLUGIN CONFIGURATION
+# ==============================================================================
+apiVersion: extensions.istio.io/v1alpha1
+kind: WasmPlugin
+metadata:
+  name: creator-economy-auth
+  namespace: ainflue-platform
+  labels:
+    app: creator-economy-auth
+    version: v1
+    environment: production
+spec:
+  selector:
+    matchLabels:
+      app: creator-platform
+  url: oci://ghcr.io/ainflue/creator-auth-wasm:latest
+  phase: AUTHN
+  pluginConfig:
+    jwt_issuer: "https://auth.ainflue.com"
+    jwt_audience: "creator-economy-platform"
+    creator_role_claim: "creator_role"
+    permissions_claim: "permissions"
+    rate_limit_per_creator: 1000
+    enable_content_protection: true
+    enable_ip_validation: true

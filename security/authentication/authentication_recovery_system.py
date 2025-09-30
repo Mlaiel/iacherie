@@ -737,7 +737,7 @@ class AuthenticationRecoverySystem:
                 "smtp_port": 587,
                 "username": "",
                 "password": "",
-                "from_address": "noreply@ainflue.com"
+                "from_address": "noreply@iacherie.com"
             },
             "sms": {
                 "provider": "twilio",
@@ -1013,7 +1013,7 @@ class AuthenticationRecoverySystem:
             return {"success": False, "error": "SMS service not configured"}
         
         try:
-            message = f"Your Ainflue recovery code is: {code}. Expires in 15 minutes."
+            message = f"Your IA Chérie recovery code is: {code}. Expires in 15 minutes."
             
             # In production, use proper SMS service
             self.logger.info(f"SMS code sent to {phone}: {code}")

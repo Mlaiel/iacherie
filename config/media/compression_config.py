@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Compression Configuration Module
+"""IA Chérie Compression Configuration Module
 ==========================================
 
-Enterprise-grade compression configuration for the Ainflue platform.
+Enterprise-grade compression configuration for the IA Chérie platform.
 Comprehensive video, audio, and image compression with advanced algorithms,
 quality optimization, and performance tuning for content delivery.
 

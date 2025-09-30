@@ -21,7 +21,7 @@ ML Pipeline Orchestrator - Enterprise AI/ML Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced ML pipeline orchestration for Ainflue Platform:
+Advanced ML pipeline orchestration for IA Chérie Platform:
 - Model training and deployment automation
 - Feature engineering and data preprocessing
 - Model monitoring and drift detection
@@ -66,7 +66,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/ml_pipeline.log'),
+        logging.FileHandler('/var/log/iacherie/ml_pipeline.log'),
         logging.StreamHandler()
     ]
 )
@@ -143,7 +143,7 @@ class MLPipelineOrchestrator:
     - Content analysis and AI processing
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/ml_config.yaml"):
+    def __init__(self, config_path: str = "/etc/iacherie/ml_config.yaml"):
         self.config_path = config_path
         self.models: Dict[str, Any] = {}
         self.experiments: List[ExperimentResult] = []
@@ -165,7 +165,7 @@ class MLPipelineOrchestrator:
             return {
                 'models': {},
                 'feature_store': {
-                    'storage_path': '/var/lib/ainflue/features',
+                    'storage_path': '/var/lib/iacherie/features',
                     'cache_size': 1000
                 },
                 'training': {
@@ -175,14 +175,14 @@ class MLPipelineOrchestrator:
                     'early_stopping': True
                 },
                 'deployment': {
-                    'model_registry': '/var/lib/ainflue/models',
+                    'model_registry': '/var/lib/iacherie/models',
                     'serving_endpoint': 'http://localhost:8080/predict',
                     'auto_deployment': False
                 }
             }
     
     async def create_content_analysis_model(self) -> str:
-        """Create AI content analysis model for Ainflue platform"""
+        """Create AI content analysis model for IA Chérie platform"""
         try:
             if not HAS_ML_LIBS:
                 raise ImportError("ML libraries required for model creation")
@@ -194,7 +194,7 @@ class MLPipelineOrchestrator:
             config = ModelConfig(
                 model_id=model_id,
                 model_type=ModelType.CONTENT_ANALYSIS,
-                name="Ainflue Content Analyzer",
+                name="IA Chérie Content Analyzer",
                 version="1.0.0",
                 parameters={
                     'model_name': 'distilbert-base-uncased',
@@ -305,7 +305,7 @@ class MLPipelineOrchestrator:
                 parameters=config.parameters,
                 status=ExperimentStatus.COMPLETED,
                 duration=duration,
-                artifacts_path=f"/var/lib/ainflue/experiments/{experiment_id}"
+                artifacts_path=f"/var/lib/iacherie/experiments/{experiment_id}"
             )
             
             # Save model artifacts
@@ -504,7 +504,7 @@ class MLPipelineOrchestrator:
             logger.info(f"Deploying model {model_id} to {environment}")
             
             # Create deployment directory
-            deployment_path = f"/var/lib/ainflue/deployments/{environment}/{model_id}"
+            deployment_path = f"/var/lib/iacherie/deployments/{environment}/{model_id}"
             os.makedirs(deployment_path, exist_ok=True)
             
             # Save model for deployment
@@ -536,7 +536,7 @@ export ENVIRONMENT={environment}
 echo "Deploying model {model_id} to {environment}"
 
 # Start model server
-python /home/runner/work/Ainflue/Ainflue/scripts/model_server.py \\
+python /home/runner/work/IA Chérie/IA Chérie/scripts/model_server.py \\
     --model-path $MODEL_PATH \\
     --environment $ENVIRONMENT \\
     --port 8080
@@ -648,7 +648,7 @@ echo "Model deployment completed"
     async def _save_model_artifacts(self, model_id: str, experiment_id: str):
         """Save model training artifacts"""
         try:
-            artifacts_dir = f"/var/lib/ainflue/experiments/{experiment_id}"
+            artifacts_dir = f"/var/lib/iacherie/experiments/{experiment_id}"
             os.makedirs(artifacts_dir, exist_ok=True)
             
             model_data = self.models[model_id]
@@ -760,7 +760,7 @@ async def main():
     """CLI entry point for ML pipeline orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue ML Pipeline Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chérie ML Pipeline Orchestrator')
     parser.add_argument('--create-model', action='store_true', help='Create content analysis model')
     parser.add_argument('--train', metavar='MODEL_ID', help='Train model')
     parser.add_argument('--deploy', metavar='MODEL_ID', help='Deploy model')

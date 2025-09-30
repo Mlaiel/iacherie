@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Gamification Monitoring Module
+IA Chérie Platform - Gamification Monitoring Module
 ================================================
 
 Enterprise-grade monitoring for gamification engagement optimization,

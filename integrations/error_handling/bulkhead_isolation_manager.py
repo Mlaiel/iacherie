@@ -2,7 +2,7 @@
 """Bulkhead Isolation Manager - Resource Protection Pattern
 =========================================================
 
-Advanced bulkhead isolation implementation for Ainflue platform error handling.
+Advanced bulkhead isolation implementation for IA Chérie platform error handling.
 Provides resource pool isolation, thread pool management, and fault containment
 to prevent cascading failures across services.
 

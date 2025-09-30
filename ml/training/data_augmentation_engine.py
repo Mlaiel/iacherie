@@ -1,4 +1,4 @@
-"""Data Augmentation Engine for Ainflue ML Platform
+"""Data Augmentation Engine for IA Chérie ML Platform
 
 Intelligent data augmentation for multi-modal content (audio, video, image, text)
 optimized for creator-specific content types and engagement patterns.
@@ -1012,7 +1012,7 @@ def create_augmentation_engine(
     return DataAugmentationEngine(config)
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chérie creators
 async def example_creator_augmentation():
     """Example of data augmentation for different creator types."""
     

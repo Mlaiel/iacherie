@@ -259,7 +259,7 @@ Hauptkomponenten:
 
 **Lead Developer:** Fahed Mlaiel  
 **E-Mail:** mlaiel@live.de  
-**Website:** https://github.com/Mlaiel/Ainflue  
+**Website:** https://github.com/Mlaiel/IA Chérie  
 
 ### 🔐 Abschließende Warnung
 Dieses System ist durch internationale Urheberrechtsgesetze geschützt. Jede unbefugte Nutzung wird mit sofortigen rechtlichen Schritten verfolgt. Für Lizenzierung oder Nutzungsgenehmigung kontaktieren Sie Fahed Mlaiel unter mlaiel@live.de.

@@ -2,7 +2,7 @@
 
 ## 🎯 Überblick
 
-Das **Multimedia-Formate Modul** bietet umfassende Unterstützung für alle modernen Multimedia-Formate mit KI-gestützter Erkennung, Validierung und Optimierung. Dieses Enterprise-System unterstützt den kompletten Ainflue Creator-Workflow vom Content-Upload bis zur Distribution.
+Das **Multimedia-Formate Modul** bietet umfassende Unterstützung für alle modernen Multimedia-Formate mit KI-gestützter Erkennung, Validierung und Optimierung. Dieses Enterprise-System unterstützt den kompletten IA Chérie Creator-Workflow vom Content-Upload bis zur Distribution.
 
 ## 🚀 Kernfunktionen
 
@@ -145,6 +145,6 @@ formats/
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform**  
 **Kontakt**: mlaiel@live.de  
 **Version**: 3.1.0 Enterprise

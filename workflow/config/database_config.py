@@ -1,5 +1,5 @@
 """
-🗄️ DATABASE CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🗄️ DATABASE CONFIGURATION - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced database configuration with automatic connection pooling and optimization
 Performance Target: < 5ms connection establishment
@@ -43,7 +43,7 @@ class PostgreSQLConfig:
     """PostgreSQL database configuration"""
     host: str = "localhost"
     port: int = 5432
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: str = "ainflue_user"
     password: str = ""
     ssl_mode: str = "prefer"
@@ -76,7 +76,7 @@ class MongoDBConfig:
     """MongoDB document database configuration"""
     host: str = "localhost"
     port: int = 27017
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: str = ""
     password: str = ""
     auth_source: str = "admin"
@@ -511,7 +511,7 @@ class DatabaseConfig:
                     "backup_method": "pg_dump",
                     "compression": True,
                     "encryption": True,
-                    "storage_location": "s3://ainflue-backups/postgresql/",
+                    "storage_location": "s3://iacherie-backups/postgresql/",
                     "point_in_time_recovery": True,
                     "wal_archive_enabled": True
                 },
@@ -520,7 +520,7 @@ class DatabaseConfig:
                     "retention_days": 7,
                     "backup_method": "rdb_snapshot",
                     "compression": True,
-                    "storage_location": "s3://ainflue-backups/redis/"
+                    "storage_location": "s3://iacherie-backups/redis/"
                 },
                 "mongodb": {
                     "backup_schedule": "0 3 * * *",  # Daily at 3 AM
@@ -528,7 +528,7 @@ class DatabaseConfig:
                     "backup_method": "mongodump",
                     "compression": True,
                     "encryption": True,
-                    "storage_location": "s3://ainflue-backups/mongodb/",
+                    "storage_location": "s3://iacherie-backups/mongodb/",
                     "oplog_backup": True,
                     "shard_aware": True
                 }

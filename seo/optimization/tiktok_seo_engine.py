@@ -1,5 +1,5 @@
 """
-TikTok SEO Engine for Ainflue Platform
+TikTok SEO Engine for IA Chérie Platform
 ======================================
 
 Advanced TikTok optimization for creator content discovery and visibility.

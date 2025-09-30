@@ -1,15 +1,15 @@
-# 🚀 Module Distribution Ainflue - Moteur de Distribution Multi-Plateformes
+# 🚀 Module Distribution IA Chérie - Moteur de Distribution Multi-Plateformes
 
 **Système de Distribution de Contenu IA de Niveau Entreprise**
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-3.0.0-blue)](https://github.com/Mlaiel/IA Chérie)
 [![Licence](https://img.shields.io/badge/licence-Proprietary-red)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11+-green)](https://python.org)
 [![IA](https://img.shields.io/badge/IA-Powered-purple)](https://openai.com)
 
 ## 📋 Aperçu
 
-Le Module Distribution Ainflue est le système de distribution de contenu multi-plateformes le plus avancé au monde, conçu spécifiquement pour les créateurs de contenu, influenceurs, musiciens, blogueurs et photographes. Cette solution de niveau entreprise combine l'optimisation alimentée par IA, l'analytique en temps réel et l'automatisation intelligente pour maximiser la portée du contenu et l'engagement sur plus de 35 plateformes simultanément.
+Le Module Distribution IA Chérie est le système de distribution de contenu multi-plateformes le plus avancé au monde, conçu spécifiquement pour les créateurs de contenu, influenceurs, musiciens, blogueurs et photographes. Cette solution de niveau entreprise combine l'optimisation alimentée par IA, l'analytique en temps réel et l'automatisation intelligente pour maximiser la portée du contenu et l'engagement sur plus de 35 plateformes simultanément.
 
 ## 🎯 Fonctionnalités Clés
 
@@ -78,8 +78,8 @@ distribution/
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Installer les dépendances
 pip install -r requirements.txt

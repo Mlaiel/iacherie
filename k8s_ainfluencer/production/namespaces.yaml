@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iacherie-production
+  labels:
+    name: iacherie-production
+    environment: production
+    app: iacherie
+    version: "1.0"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iacherie-staging
+  labels:
+    name: iacherie-staging
+    environment: staging
+    app: iacherie
+    version: "1.0"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iacherie-dev
+  labels:
+    name: iacherie-dev
+    environment: development
+    app: iacherie
+    version: "1.0"

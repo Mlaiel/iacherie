@@ -3,7 +3,7 @@
 📋 Compliance Audit Engine - Multi-Standard Automated Compliance
 ================================================================
 
-Enterprise compliance automation for Ainflue platform.
+Enterprise compliance automation for IA Chérie platform.
 SOX, GDPR, PCI DSS automation, reporting, and regulatory compliance.
 
 Author: Expert Team (Security + Compliance + DBA + Legal)
@@ -1240,7 +1240,7 @@ async def get_audit_engine() -> ComplianceAuditEngine:
     return audit_engine
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chérie
 async def audit_creator_data_compliance(creator_id: str, 
                                       data_processing_activities: List[Dict[str, Any]]) -> List[ComplianceViolation]:
     """Audit de conformité des données créateur"""

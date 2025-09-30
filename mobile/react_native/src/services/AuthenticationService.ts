@@ -235,7 +235,7 @@ export class AuthenticationService {
       case 'settings':
         return 'Authenticate to modify security settings';
       default:
-        return 'Authenticate to access Ainflue';
+        return 'Authenticate to access IA Chérie';
     }
   }
 
@@ -248,7 +248,7 @@ export class AuthenticationService {
       case 'settings':
         return 'Security Settings';
       default:
-        return 'Ainflue Authentication';
+        return 'IA Chérie Authentication';
     }
   }
 

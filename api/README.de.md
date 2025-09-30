@@ -1,4 +1,4 @@
-# 🚀 Ainflue Enterprise API - Fortschrittliche KI-gestützte Content-Plattform
+# 🚀 IA Chérie Enterprise API - Fortschrittliche KI-gestützte Content-Plattform
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Spezialisiertes Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 Plattform-Überblick
 
-Ainflue ist die weltweit fortschrittlichste KI-gestützte Plattform für Content-Schutz, Monetarisierung und Zusammenarbeit für Creators auf über 35 Plattformen. Unsere Enterprise-API bietet umfassende Orchestrierungsdienste für Content-Ersteller, Influencer und Medienunternehmen weltweit.
+IA Chérie ist die weltweit fortschrittlichste KI-gestützte Plattform für Content-Schutz, Monetarisierung und Zusammenarbeit für Creators auf über 35 Plattformen. Unsere Enterprise-API bietet umfassende Orchestrierungsdienste für Content-Ersteller, Influencer und Medienunternehmen weltweit.
 
 ## 🏗️ Enterprise API-Architektur
 
@@ -168,9 +168,9 @@ Enterprise Orchestrators → Geschäftslogik → Datenschicht
 ## 🚀 Erste Schritte
 
 ### API-Basis-URLs
-- **Produktion:** `https://api.ainflue.com`
-- **Staging:** `https://staging-api.ainflue.com`
-- **Entwicklung:** `https://dev-api.ainflue.com`
+- **Produktion:** `https://api.iacherie.com`
+- **Staging:** `https://staging-api.iacherie.com`
+- **Entwicklung:** `https://dev-api.iacherie.com`
 
 ### Dokumentation
 - **Interaktive Docs:** `/docs` - Swagger UI mit Enterprise-Features
@@ -207,7 +207,7 @@ collaboration_data = {
 
 # Kompatible Creators finden
 response = requests.post(
-    "https://api.ainflue.com/api/v1/collaboration/matching/find-creators",
+    "https://api.iacherie.com/api/v1/collaboration/matching/find-creators",
     headers=headers,
     json={
         "creator_id": "creator_123",
@@ -230,9 +230,9 @@ print(f"{len(matches['data']['matches'])} kompatible Creators gefunden")
 - **24/7-Support:** Verfügbar für kritische Probleme
 
 ### Ressourcen
-- **Entwickler-Dokumentation:** [https://docs.ainflue.com](https://docs.ainflue.com)
-- **API-Status-Seite:** [https://status.ainflue.com](https://status.ainflue.com)
-- **Community-Forum:** [https://community.ainflue.com](https://community.ainflue.com)
+- **Entwickler-Dokumentation:** [https://docs.iacherie.com](https://docs.iacherie.com)
+- **API-Status-Seite:** [https://status.iacherie.com](https://status.iacherie.com)
+- **Community-Forum:** [https://community.iacherie.com](https://community.iacherie.com)
 - **GitHub-Repository:** Privater Enterprise-Repository-Zugang
 
 ### Integrations-Support
@@ -251,5 +251,5 @@ Für Lizenzanfragen und Enterprise-Vereinbarungen kontaktieren Sie: **mlaiel@liv
 
 ---
 
-**Mit ❤️ vom Ainflue Enterprise Team entwickelt**  
+**Mit ❤️ vom IA Chérie Enterprise Team entwickelt**  
 **Die Zukunft der KI-gestützten Content-Erstellung und Zusammenarbeit anführend**

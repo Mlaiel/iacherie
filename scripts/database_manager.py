@@ -24,7 +24,7 @@ Database Operations Manager - Enterprise Database Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced database operations for Ainflue Platform:
+Advanced database operations for IA Chérie Platform:
 - Automated database migrations and schema management
 - Backup and restore operations
 - Data integrity validation
@@ -142,7 +142,7 @@ class DatabaseManager:
     - Security and compliance
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/database.json"):
+    def __init__(self, config_path: str = "/etc/iacherie/database.json"):
         self.config_path = config_path
         self.databases: Dict[str, DatabaseConnection] = {}
         self.backup_operations: List[BackupOperation] = []
@@ -162,14 +162,14 @@ class DatabaseManager:
             logger.info(f"Loaded {len(self.databases)} database configurations")
             
         except FileNotFoundError:
-            # Create default Ainflue database configuration
+            # Create default IA Chérie database configuration
             default_databases = [
                 {
                     "name": "ainflue_main",
                     "db_type": "postgresql",
                     "host": "localhost",
                     "port": 5432,
-                    "database": "ainflue",
+                    "database": "iacherie",
                     "username": "ainflue_user",
                     "password": "secure_password"
                 },
@@ -829,7 +829,7 @@ async def main():
     """CLI entry point for database manager"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Database Manager')
+    parser = argparse.ArgumentParser(description='IA Chérie Database Manager')
     parser.add_argument('--backup', metavar='DB_NAME', help='Create database backup')
     parser.add_argument('--restore', nargs=2, metavar=('DB_NAME', 'BACKUP_FILE'), help='Restore from backup')
     parser.add_argument('--migrate', nargs=4, metavar=('DB_NAME', 'SCRIPT', 'FROM_VER', 'TO_VER'), help='Run migration')
@@ -838,7 +838,7 @@ async def main():
     parser.add_argument('--sync', nargs=2, metavar=('SOURCE_DB', 'TARGET_DB'), help='Synchronize databases')
     parser.add_argument('--status', action='store_true', help='Show database status')
     parser.add_argument('--report', action='store_true', help='Generate database report')
-    parser.add_argument('--config', default='/etc/ainflue/database.json', help='Configuration file')
+    parser.add_argument('--config', default='/etc/iacherie/database.json', help='Configuration file')
     
     args = parser.parse_args()
     

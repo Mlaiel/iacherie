@@ -11,7 +11,7 @@
 
 ## 🎯 Gamification Enterprise pour Créateurs
 
-Suite gamification prête pour production avec systèmes d'achievements, classements, matching collaboratif, et psychologie comportementale pour optimisation engagement et retention créateur sur plateforme Ainflue.
+Suite gamification prête pour production avec systèmes d'achievements, classements, matching collaboratif, et psychologie comportementale pour optimisation engagement et retention créateur sur plateforme IA Chérie.
 
 ### 🏆 Fonctionnalités Principales
 
@@ -245,7 +245,7 @@ web3>=5.28.0
 #### **Contact**
 Pour licensing enterprise, implémentations custom, ou support technique:
 - **Email**: mlaiel@live.de
-- **Projet**: Plateforme Créateur Ainflue
+- **Projet**: Plateforme Créateur IA Chérie
 - **License**: Propriétaire - Tous Droits Réservés
 
 ---

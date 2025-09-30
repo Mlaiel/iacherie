@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE QUALITY MONITOR - AINFLUE PLATFORM
+🔥 ENTERPRISE QUALITY MONITOR - IACHERIE PLATFORM
 Ultra-advanced quality monitoring and assurance system
 Real-time quality tracking and alerting
 """

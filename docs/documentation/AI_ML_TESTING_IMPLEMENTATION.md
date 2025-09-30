@@ -2,7 +2,7 @@
 
 ## Overview
 
-This implementation provides comprehensive AI/ML testing capabilities for the Ainflue platform, addressing all requirements from the problem statement:
+This implementation provides comprehensive AI/ML testing capabilities for the IA Chérie platform, addressing all requirements from the problem statement:
 
 ### ✅ Implemented Features
 

@@ -1,8 +1,8 @@
 # 👥 وحدة التعاون في الوسائط المتعددة - البنية المؤسسية
 
-[![جاهز للمؤسسات](https://img.shields.io/badge/المؤسسات-جاهز-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![الوقت الفعلي](https://img.shields.io/badge/الوقت_الفعلي-مفعل-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![WebRTC](https://img.shields.io/badge/WebRTC-مدعوم-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![جاهز للمؤسسات](https://img.shields.io/badge/المؤسسات-جاهز-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![الوقت الفعلي](https://img.shields.io/badge/الوقت_الفعلي-مفعل-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![WebRTC](https://img.shields.io/badge/WebRTC-مدعوم-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 نظرة عامة
 
@@ -177,7 +177,7 @@ insights = await analytics.get_collaboration_insights(
 
 ## 🎯 التكامل التجاري
 
-### تكامل منصة Ainflue
+### تكامل منصة IA Chérie
 
 ```python
 # تكامل تدفق العمل الكامل
@@ -234,7 +234,7 @@ async def setup_creator_collaboration(creator_id: str, project_type: str):
 
 **المؤلف:** فهد مليل  
 **البريد الإلكتروني:** mlaiel@live.de  
-**المشروع:** منصة Ainflue - التعاون في الوسائط المتعددة للمؤسسات  
+**المشروع:** منصة IA Chérie - التعاون في الوسائط المتعددة للمؤسسات  
 **الإصدار:** 3.1.0
 
 ---

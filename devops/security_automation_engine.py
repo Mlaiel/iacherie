@@ -4,7 +4,7 @@ Advanced Security Automation & Compliance Engine
 ===============================================
 
 Enterprise-grade security automation and compliance management system
-for Ainflue platform. Implements comprehensive security scanning,
+for IA Chérie platform. Implements comprehensive security scanning,
 threat detection, vulnerability management, and regulatory compliance.
 
 Author: Expert Team - Security Specialist Role

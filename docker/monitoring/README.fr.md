@@ -1,6 +1,6 @@
 # 📊 Module de Surveillance - Services Docker
 
-**Infrastructure de Surveillance de la Plateforme Ainflue**
+**Infrastructure de Surveillance de la Plateforme IA Chérie**
 
 Infrastructure de surveillance de niveau entreprise avec collecte de métriques Prometheus, tableaux de bord Grafana, traçage distribué et observabilité complète pour créateurs de contenu et influenceurs.
 

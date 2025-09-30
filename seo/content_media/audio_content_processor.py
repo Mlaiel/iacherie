@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎵 Ainflue Audio Content Processor - Enterprise SEO Module
+🎵 IA Chérie Audio Content Processor - Enterprise SEO Module
 
 🎧 ADVANCED AUDIO CONTENT PROCESSING & SEO OPTIMIZATION
 🎯 SPÉCIALISÉ POUR CRÉATEURS AUDIO MULTI-PLATEFORMES
@@ -211,9 +211,9 @@ class AudioContentProcessor:
         """Configuration infrastructure audio enterprise"""
         self.audio_config = {
             'temp_dir': Path('/tmp/ainflue_audio_processing'),
-            'output_dir': Path('/var/lib/ainflue/processed_audio'),
-            'cache_dir': Path('/var/cache/ainflue/audio_cache'),
-            'fingerprint_db': Path('/var/lib/ainflue/audio_fingerprints')
+            'output_dir': Path('/var/lib/iacherie/processed_audio'),
+            'cache_dir': Path('/var/cache/iacherie/audio_cache'),
+            'fingerprint_db': Path('/var/lib/iacherie/audio_fingerprints')
         }
         
         # Création des répertoires

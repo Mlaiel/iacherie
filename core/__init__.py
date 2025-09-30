@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Ainflue Core Engine - Enterprise Master Orchestrator
+"""IA Chérie Core Engine - Enterprise Master Orchestrator
 =====================================================
 
-Core engine orchestrator for the Ainflue platform providing centralized
+Core engine orchestrator for the IA Chérie platform providing centralized
 core functionality management, infrastructure orchestration, AI intelligence
 coordination, and enterprise-grade system integration across all subsystems.
 
@@ -50,7 +50,7 @@ class CoreSystemLevel(str, Enum):
     ULTRA_ADVANCED = "ultra_advanced"
 
 class AinflueCoreFlow(str, Enum):
-    """Ainflue core business logic flow stages"""
+    """IA Chérie core business logic flow stages"""
     SYSTEM_INITIALIZATION = "system_initialization"
     CREATOR_ONBOARDING_CORE = "creator_onboarding_core"
     CONTENT_PROCESSING_CORE = "content_processing_core"
@@ -106,7 +106,7 @@ class CoreSystemProtocol(Protocol):
         ...
 
 class AinflueCoreEngine:
-    """Master core engine orchestrator for Ainflue platform"""
+    """Master core engine orchestrator for IA Chérie platform"""
     
     def __init__(self, level: CoreSystemLevel = CoreSystemLevel.ENTERPRISE):
         """Initialize core engine"""
@@ -134,7 +134,7 @@ class AinflueCoreEngine:
         # Configure core flows
         self._setup_core_flows()
         
-        logger.info(f"🏗️ Ainflue Core Engine initialized - Level: {self.level.value}")
+        logger.info(f"🏗️ IA Chérie Core Engine initialized - Level: {self.level.value}")
     
     def _initialize_core_subsystems(self):
         """Initialize all core subsystems with safe imports"""
@@ -428,7 +428,7 @@ class AinflueCoreEngine:
         """Initialize the complete core system"""
         try:
             self.status = CoreSystemStatus.INITIALIZING
-            logger.info(f"🚀 Initializing Ainflue Core Engine - Level: {self.level.value}")
+            logger.info(f"🚀 Initializing IA Chérie Core Engine - Level: {self.level.value}")
             
             # Initialize systems in dependency order
             initialization_order = self._calculate_initialization_order()
@@ -446,7 +446,7 @@ class AinflueCoreEngine:
                         # Continue with other systems instead of failing completely
             
             self.status = CoreSystemStatus.READY
-            logger.info("🎯 Ainflue Core Engine initialization completed")
+            logger.info("🎯 IA Chérie Core Engine initialization completed")
             return True
             
         except Exception as e:
@@ -484,7 +484,7 @@ class AinflueCoreEngine:
                 await self.initialize_system()
             
             self.status = CoreSystemStatus.RUNNING
-            logger.info("🚀 Starting Ainflue Core Engine")
+            logger.info("🚀 Starting IA Chérie Core Engine")
             
             # Start health monitoring
             self._health_monitor_task = asyncio.create_task(self._health_monitor_loop())
@@ -504,7 +504,7 @@ class AinflueCoreEngine:
                     logger.error(f"💥 Too many system start failures: {failed_starts}/{len(start_tasks)}")
                     # Continue running with partial functionality
             
-            logger.info("✅ Ainflue Core Engine started successfully")
+            logger.info("✅ IA Chérie Core Engine started successfully")
             return True
             
         except Exception as e:
@@ -577,7 +577,7 @@ class AinflueCoreEngine:
     async def stop_system(self) -> bool:
         """Stop the complete core system"""
         try:
-            logger.info("🛑 Stopping Ainflue Core Engine")
+            logger.info("🛑 Stopping IA Chérie Core Engine")
             self.status = CoreSystemStatus.SHUTDOWN
             
             # Signal shutdown
@@ -601,7 +601,7 @@ class AinflueCoreEngine:
             if stop_tasks:
                 await asyncio.gather(*stop_tasks, return_exceptions=True)
             
-            logger.info("✅ Ainflue Core Engine stopped successfully")
+            logger.info("✅ IA Chérie Core Engine stopped successfully")
             return True
             
         except Exception as e:
@@ -701,7 +701,7 @@ __all__ = [
 ]
 
 # Initialize logging
-logger.info(f"🏗️ Ainflue Core Engine initialized - Level: {core_engine.level.value}")
+logger.info(f"🏗️ IA Chérie Core Engine initialized - Level: {core_engine.level.value}")
 logger.info(f"⚙️ Total core systems: {len(core_engine.core_systems)}")
 logger.info(f"🔄 Core business flows: {len(core_engine.core_flows)}")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

@@ -256,8 +256,8 @@ Enterprise security protocols:
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Install dependencies
 pip install -r requirements.txt

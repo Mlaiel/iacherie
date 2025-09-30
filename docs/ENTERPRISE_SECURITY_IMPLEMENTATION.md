@@ -2,7 +2,7 @@
 
 ## Multi-Factor Authentication, JWT Auto-Refresh, OAuth2.0, SAML SSO & Biometric Auth
 
-This document outlines the comprehensive enterprise security implementation for the Ainflue platform, covering multi-factor authentication, JWT token management with auto-refresh, OAuth2.0 integration, SAML SSO, and biometric authentication.
+This document outlines the comprehensive enterprise security implementation for the IA Chérie platform, covering multi-factor authentication, JWT token management with auto-refresh, OAuth2.0 integration, SAML SSO, and biometric authentication.
 
 ## 🏗️ Architecture Overview
 
@@ -159,7 +159,7 @@ APPLE_ENDPOINTS = {
 ```python
 # OAuth configuration with Apple & Google
 oauth_config = OAuthConfig(
-    apple_client_id="com.ainflue.mobile",
+    apple_client_id="com.iacherie.mobile",
     apple_client_secret="apple_client_secret",
     apple_team_id="TEAM123456",
     apple_key_id="KEY123456",
@@ -212,7 +212,7 @@ await enterprise_sso.configure_saml_provider(
 ```swift
 // iOS biometric authentication
 let biometricAuth = AinflueBiometricAuth(config: BiometricConfig(
-    localizedReason: "Authenticate to access your Ainflue account"
+    localizedReason: "Authenticate to access your IA Chérie account"
 ))
 
 let result = await biometricAuth.authenticateUser(userID: "user123")
@@ -232,7 +232,7 @@ if result.success {
 val fingerprintAuth = FingerprintAuth(context)
 fingerprintAuth.authenticateUser(
     config = BiometricConfig(
-        title = "Authenticate with Ainflue",
+        title = "Authenticate with IA Chérie",
         subtitle = "Use your biometric to access your account"
     )
 ) { result ->
@@ -335,7 +335,7 @@ JWT_REFRESH_TOKEN_EXPIRE_DAYS=30
 REDIS_URL=redis://redis:6379/0
 
 # OAuth Providers
-APPLE_CLIENT_ID=com.ainflue.mobile
+APPLE_CLIENT_ID=com.iacherie.mobile
 APPLE_CLIENT_SECRET=your-apple-client-secret
 APPLE_TEAM_ID=YOUR_TEAM_ID
 APPLE_KEY_ID=YOUR_KEY_ID
@@ -345,8 +345,8 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 
 # MFA Configuration
 SMS_PROVIDER_API_KEY=your-sms-provider-key
-FIDO2_RP_ID=ainflue.com
-FIDO2_RP_NAME=Ainflue Platform
+FIDO2_RP_ID=iacherie.com
+FIDO2_RP_NAME=IA Chérie Platform
 
 # Security Policies
 ENFORCE_MFA=true

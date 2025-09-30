@@ -1,4 +1,4 @@
-# 🎵 Ainflue Audio Templates - Enterprise Framework
+# 🎵 IA Chérie Audio Templates - Enterprise Framework
 
 **© 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved**
 
@@ -13,7 +13,7 @@
 
 ## 🎯 Enterprise Audio Templates for Creator Economy
 
-The Ainflue Audio Templates module provides **120+ professional audio processing templates** designed specifically for the creator economy. This enterprise-grade framework combines advanced audio processing, AI enhancement, and creator-focused features to deliver exceptional audio experiences.
+The IA Chérie Audio Templates module provides **120+ professional audio processing templates** designed specifically for the creator economy. This enterprise-grade framework combines advanced audio processing, AI enhancement, and creator-focused features to deliver exceptional audio experiences.
 
 ### 🏭 **Expert Team**
 
@@ -144,7 +144,7 @@ graph TB
 #### Installation
 
 ```bash
-pip install ainflue-audio-templates
+pip install iacherie-audio-templates
 ```
 
 #### Basic Usage
@@ -276,8 +276,8 @@ async for chunk in audio_stream:
 
 **Technical Lead:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Enterprise Sales:** enterprise@ainflue.com  
-**Technical Support:** support@ainflue.com  
+**Enterprise Sales:** enterprise@iacherie.com  
+**Technical Support:** support@iacherie.com  
 
 ---
 

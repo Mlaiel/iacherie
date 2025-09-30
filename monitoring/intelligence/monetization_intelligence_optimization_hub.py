@@ -2,7 +2,7 @@
 ==========================================
 
 Enterprise Monetization Intelligence Optimization Hub for comprehensive
-monetization optimization across the Ainflue Creator Economy platform. Provides
+monetization optimization across the IA Chérie Creator Economy platform. Provides
 sophisticated monetization intelligence including:
 - Monetization intelligence Creator Economy optimization
 - Creator monetization intelligence algorithms sophisticated

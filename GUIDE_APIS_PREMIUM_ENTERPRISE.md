@@ -3,7 +3,7 @@
 
 **Auteur:** Fahed Mlaiel  
 **Date:** 28 Septembre 2025  
-**Projet:** Ainfluencer Enterprise - Qualité Professionnelle Maximum
+**Projet:** IA Chérie Enterprise - Qualité Professionnelle Maximum
 
 ---
 

@@ -6,7 +6,7 @@ supporting Instagram, TikTok, YouTube, Twitter, LinkedIn, Facebook, and more.
 
 This module provides intelligent content scheduling, optimal timing analysis,
 audience engagement optimization, and cross-platform content adaptation
-for the Ainflue platform.
+for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -93,7 +93,7 @@ class MediaAsset:
     url: str
     filename: str
     size_bytes: int
-    dimensions: Optional[Tuple[int, int]] = None
+    dimensions: Optional[tuple[int, int]] = None
     duration_seconds: Optional[float] = None
     format: Optional[str] = None
     thumbnail_url: Optional[str] = None
@@ -1222,12 +1222,12 @@ async def example_usage():
         content = ContentItem(
             id="content-001",
             title="Amazing AI-Generated Content",
-            description="Check out this amazing AI-generated content from Ainflue!",
+            description="Check out this amazing AI-generated content from IA Chérie!",
             platform=SocialPlatform.INSTAGRAM,
             content_type=ContentType.POST,
             scheduled_time=datetime.utcnow() + timedelta(hours=2),
-            caption="🚀 Exciting news from Ainflue! AI is revolutionizing content creation. #AI #ContentCreation #Innovation",
-            hashtags=["AI", "ContentCreation", "Innovation", "Ainflue"],
+            caption="🚀 Exciting news from IA Chérie! AI is revolutionizing content creation. #AI #ContentCreation #Innovation",
+            hashtags=["AI", "ContentCreation", "Innovation", "IA Chérie"],
             media_assets=[media_asset]
         )
         

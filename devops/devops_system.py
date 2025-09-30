@@ -775,22 +775,22 @@ class AdvancedDevOpsEngineer:
             # Mock container information
             mock_containers = [
                 {
-                    "name": "ainflue-api",
-                    "image": "ainflue/api:latest",
+                    "name": "iacherie-api",
+                    "image": "iacherie/api:latest",
                     "status": "running",
                     "cpu": 25.3,
                     "memory": 45.7
                 },
                 {
-                    "name": "ainflue-worker",
-                    "image": "ainflue/worker:latest", 
+                    "name": "iacherie-worker",
+                    "image": "iacherie/worker:latest", 
                     "status": "running",
                     "cpu": 15.8,
                     "memory": 32.1
                 },
                 {
-                    "name": "ainflue-scheduler",
-                    "image": "ainflue/scheduler:latest",
+                    "name": "iacherie-scheduler",
+                    "image": "iacherie/scheduler:latest",
                     "status": "running",
                     "cpu": 8.2,
                     "memory": 28.9

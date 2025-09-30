@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-⚠️ AVERTISSEMENT: Ce module fait partie du système propriétaire Ainflue
+⚠️ AVERTISSEMENT: Ce module fait partie du système propriétaire IA Chérie
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-© 2024 Ainflue - Tous droits réservés
+© 2024 IA Chérie - Tous droits réservés
 
 Cache Optimizer - Enterprise Cache & CDN Management System
 =========================================================
@@ -1221,7 +1221,7 @@ if __name__ == "__main__":
     import sys
     
     async def test_cache_optimizer():
-        print("Test Cache Optimizer Ainflue")
+        print("Test Cache Optimizer IA Chérie")
         
         # Configuration de test
         cache_config = CacheConfig(
@@ -1235,7 +1235,7 @@ if __name__ == "__main__":
         
         try:
             # Test de base
-            test_data = b"Hello Ainflue Cache System!"
+            test_data = b"Hello IA Chérie Cache System!"
             
             # Stockage
             success = await optimizer.put("test_key", test_data)

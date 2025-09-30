@@ -1,5 +1,5 @@
 /**
- * Browser-specific Implementation for Ainflue JavaScript SDK
+ * Browser-specific Implementation for IA Chérie JavaScript SDK
  * Optimized for browser environments with DOM integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -8,14 +8,14 @@
  * Expert Implementation by: Frontend + Security + DevOps + Audio Engineer + Lead Dev IA
  */
 
-import { AinflueClient } from './ainflue-client';
+import { AinflueClient } from './iacherie-client';
 import { AinflueConfig } from './config';
 import { FetchAdapter } from './fetch-adapter';
 import { ApiResponse } from './interfaces';
 import { SecurityError, ConfigurationError } from './errors';
 
 /**
- * Browser-optimized Ainflue SDK Client
+ * Browser-optimized IA Chérie SDK Client
  */
 export class BrowserClient extends AinflueClient {
   private performanceObserver?: PerformanceObserver;
@@ -71,7 +71,7 @@ export class BrowserClient extends AinflueClient {
       this.performanceObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach(entry => {
-          if (entry.entryType === 'measure' && entry.name.startsWith('ainflue-')) {
+          if (entry.entryType === 'measure' && entry.name.startsWith('iacherie-')) {
             console.debug('Performance metric:', {
               name: entry.name,
               duration: entry.duration,
@@ -132,7 +132,7 @@ export class BrowserClient extends AinflueClient {
   private async setupServiceWorkerIntegration(): Promise<void> {
     try {
       // Register service worker for offline caching
-      const registration = await navigator.serviceWorker.register('/ainflue-sw.js', {
+      const registration = await navigator.serviceWorker.register('/iacherie-sw.js', {
         scope: '/',
       });
 
@@ -423,7 +423,7 @@ class BrowserStorageManager {
    */
   get(key: string): any {
     try {
-      const stored = localStorage.getItem(`ainflue_${key}`);
+      const stored = localStorage.getItem(`iacherie_${key}`);
       if (!stored) return null;
 
       const data = JSON.parse(stored);
@@ -465,7 +465,7 @@ class BrowserStorageManager {
         data.encrypted = true;
       }
 
-      localStorage.setItem(`ainflue_${key}`, JSON.stringify(data));
+      localStorage.setItem(`iacherie_${key}`, JSON.stringify(data));
     } catch (error) {
       console.warn(`Failed to set stored data for key ${key}:`, error);
     }
@@ -477,7 +477,7 @@ class BrowserStorageManager {
    */
   remove(key: string): void {
     try {
-      localStorage.removeItem(`ainflue_${key}`);
+      localStorage.removeItem(`iacherie_${key}`);
     } catch (error) {
       console.warn(`Failed to remove stored data for key ${key}:`, error);
     }
@@ -494,8 +494,8 @@ class BrowserStorageManager {
     }
 
     try {
-      // Clear all Ainflue data
-      const keys = Object.keys(localStorage).filter(k => k.startsWith('ainflue_'));
+      // Clear all IA Chérie data
+      const keys = Object.keys(localStorage).filter(k => k.startsWith('iacherie_'));
       keys.forEach(k => localStorage.removeItem(k));
     } catch (error) {
       console.warn('Failed to clear stored data:', error);

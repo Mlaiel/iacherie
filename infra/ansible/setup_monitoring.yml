@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise Monitoring Infrastructure Setup Playbook
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Monitoring Stack Deployment"
+- name: "IA Chérie Enterprise Monitoring Stack Deployment"
   hosts: monitoring_servers
   become: yes
   gather_facts: yes
@@ -79,7 +79,7 @@
             labels:
               name: "{{ monitoring_namespace }}"
               purpose: "enterprise-monitoring"
-              managed-by: "ainflue-infrastructure"
+              managed-by: "iacherie-infrastructure"
       tags: ["namespace", "preparation"]
 
     - name: "Create monitoring storage class"
@@ -407,13 +407,13 @@
     # PHASE 7: MONITORING CONFIGURATION
     # ==========================================
     
-    - name: "Configure ServiceMonitors for Ainflue services"
+    - name: "Configure ServiceMonitors for IA Chérie services"
       kubernetes.core.k8s:
         definition:
           apiVersion: monitoring.coreos.com/v1
           kind: ServiceMonitor
           metadata:
-            name: "ainflue-{{ item.name }}-monitor"
+            name: "iacherie-{{ item.name }}-monitor"
             namespace: "{{ monitoring_namespace }}"
             labels:
               prometheus: cluster
@@ -440,14 +440,14 @@
           apiVersion: v1
           kind: ConfigMap
           metadata:
-            name: "ainflue-{{ item }}-dashboard"
+            name: "iacherie-{{ item }}-dashboard"
             namespace: "{{ monitoring_namespace }}"
             labels:
               grafana_dashboard: "true"
           data:
             dashboard.json: "{{ lookup('file', 'dashboards/' + item + '.json') }}"
       loop:
-        - "ainflue-overview"
+        - "iacherie-overview"
         - "ai-processing-metrics"
         - "content-pipeline-metrics"
         - "user-engagement-metrics"
@@ -464,22 +464,22 @@
           apiVersion: monitoring.coreos.com/v1
           kind: PrometheusRule
           metadata:
-            name: ainflue-alerting-rules
+            name: iacherie-alerting-rules
             namespace: "{{ monitoring_namespace }}"
             labels:
               prometheus: cluster
           spec:
             groups:
-            - name: ainflue.critical
+            - name: iacherie.critical
               interval: 15s
               rules:
               - alert: AinflueCriticalServiceDown
-                expr: up{job=~"ainflue-.*"} == 0
+                expr: up{job=~"iacherie-.*"} == 0
                 for: 1m
                 labels:
                   severity: critical
                 annotations:
-                  summary: "Ainflue critical service is down"
+                  summary: "IA Chérie critical service is down"
                   description: "Service {{ $labels.job }} has been down for more than 1 minute"
               
               - alert: AinflueDatabaseConnectionFailure

@@ -1,0 +1,324 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api-service
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api
+    component: backend-api
+    part-of: ainflue-platform
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /health
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "5"
+    service.beta.kubernetes.io/aws-load-balancer-healthy-threshold: "2"
+    service.beta.kubernetes.io/aws-load-balancer-unhealthy-threshold: "2"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: ainflue-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api-internal
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api
+    component: backend-api
+    part-of: ainflue-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: ainflue-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-ai-engine-service
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-ai-engine
+    component: ai-processing
+    part-of: ainflue-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: ainflue-ai-engine
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-mobile-api-service
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+    part-of: ainflue-platform
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /health
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: ainflue-mobile-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-mobile-api-internal
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+    part-of: ainflue-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: ainflue-mobile-api
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-worker-metrics
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-worker
+    component: background-worker
+    part-of: ainflue-platform
+spec:
+  type: ClusterIP
+  ports:
+  - name: metrics
+    port: 8090
+    targetPort: 8090
+    protocol: TCP
+  selector:
+    app: ainflue-worker
+    version: v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-database
+  namespace: ainflue-platform
+  labels:
+    app: postgresql
+    component: database
+    part-of: ainflue-platform
+spec:
+  type: ExternalName
+  externalName: ainflue-prod-db.cluster-xyz.us-west-2.rds.amazonaws.com
+  ports:
+  - name: postgresql
+    port: 5432
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-redis
+  namespace: ainflue-platform
+  labels:
+    app: redis
+    component: cache
+    part-of: ainflue-platform
+spec:
+  type: ExternalName
+  externalName: ainflue-prod-redis.xyz.cache.amazonaws.com
+  ports:
+  - name: redis
+    port: 6379
+    protocol: TCP
+---
+# Headless service for StatefulSet workloads
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-headless
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-platform
+    component: headless
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: ainflue-api
+---
+# Service for monitoring stack
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-server
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: server
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app: prometheus
+    component: server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    app: grafana
+    component: dashboard
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: grafana
+---
+# Service Monitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-api-monitor
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-api
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: ainflue-api
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-ai-engine-monitor
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-ai-engine
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-mobile-api-monitor
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-mobile-api
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-worker-monitor
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-worker
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: ainflue-worker
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics

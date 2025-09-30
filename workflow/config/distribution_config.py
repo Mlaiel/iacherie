@@ -1,5 +1,5 @@
 """
-🌍 DISTRIBUTION CONFIG - AINFLUE ENTERPRISE PLATFORM
+🌍 DISTRIBUTION CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced multi-platform distribution configuration for global reach
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -164,7 +164,7 @@ class DistributionConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize distribution configuration"""
-        self.config_path = config_path or "/etc/ainflue/distribution.json"
+        self.config_path = config_path or "/etc/iacherie/distribution.json"
         
         # Platform configurations
         self.platform_config = PlatformConfig(

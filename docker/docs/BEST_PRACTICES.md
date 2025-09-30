@@ -1,6 +1,6 @@
 # Docker Best Practices
 
-## Enterprise Docker Best Practices for Ainflue Platform
+## Enterprise Docker Best Practices for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -70,7 +70,7 @@ CMD ["python", "main.py"]
 version: '3.8'
 services:
   api:
-    image: ainflue/api:latest
+    image: iacherie/api:latest
     security_opt:
       - no-new-privileges:true
       - apparmor:docker-default
@@ -94,7 +94,7 @@ services:
       - db_password
       - jwt_secret
     environment:
-      - DATABASE_URL=postgresql://user:@db:5432/ainflue
+      - DATABASE_URL=postgresql://user:@db:5432/iacherie
     configs:
       - source: app_config
         target: /app/config.yml
@@ -215,7 +215,7 @@ services:
 # Automated backup service
 services:
   backup:
-    image: ainflue/backup:latest
+    image: iacherie/backup:latest
     volumes:
       - postgres-data:/data/postgres:ro
       - redis-data:/data/redis:ro
@@ -370,7 +370,7 @@ jobs:
       - name: Login to Container Registry
         uses: docker/login-action@v2
         with:
-          registry: registry.ainflue.com
+          registry: registry.iacherie.com
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
           
@@ -381,8 +381,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            registry.ainflue.com/api:${{ github.sha }}
-            registry.ainflue.com/api:latest
+            registry.iacherie.com/api:${{ github.sha }}
+            registry.iacherie.com/api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 ```
@@ -393,7 +393,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'registry.ainflue.com/api:${{ github.sha }}'
+          image-ref: 'registry.iacherie.com/api:${{ github.sha }}'
           format: 'sarif'
           output: 'trivy-results.sarif'
           
@@ -489,21 +489,21 @@ def cache_result(ttl=3600, prefix="cache"):
 version: '3.8'
 services:
   app-blue:
-    image: ainflue/api:blue
+    image: iacherie/api:blue
     deploy:
       replicas: 3
       labels:
         - "traefik.enable=true"
         - "traefik.http.services.app.loadbalancer.server.port=8000"
-        - "traefik.http.routers.app-blue.rule=Host(`api.ainflue.com`) && Headers(`X-Version`, `blue`)"
+        - "traefik.http.routers.app-blue.rule=Host(`api.iacherie.com`) && Headers(`X-Version`, `blue`)"
         
   app-green:
-    image: ainflue/api:green
+    image: iacherie/api:green
     deploy:
       replicas: 0  # Standby
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.app-green.rule=Host(`api.ainflue.com`) && Headers(`X-Version`, `green`)"
+        - "traefik.http.routers.app-green.rule=Host(`api.iacherie.com`) && Headers(`X-Version`, `green`)"
 ```
 
 #### 2. Rolling Updates
@@ -535,7 +535,7 @@ services:
 version: '3.8'
 services:
   audio-processor:
-    image: ainflue/audio-processor:1.2.0
+    image: iacherie/audio-processor:1.2.0
     # Purpose: Process audio files with AI enhancement
     # Dependencies: Redis for caching, PostgreSQL for metadata
     # Port 8001: HTTP API

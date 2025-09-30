@@ -1,4 +1,4 @@
-"""Loss Function Optimizer for Ainflue ML Platform
+"""Loss Function Optimizer for IA Chérie ML Platform
 
 Custom loss functions optimized for creator-specific objectives and content quality
 with advanced optimization techniques for multi-modal content analysis.
@@ -839,7 +839,7 @@ def create_creator_objectives(
     )
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chérie creators
 async def example_loss_optimization():
     """Example of loss function optimization for creators."""
     

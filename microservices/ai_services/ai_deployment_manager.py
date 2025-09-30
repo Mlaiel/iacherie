@@ -1,6 +1,6 @@
 """
 AI Deployment Manager Service - Enterprise Multi-Cloud AI Deployment
-Ainflue Platform - Microservices Architecture
+IA Chérie Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """
@@ -429,7 +429,7 @@ class AIDeploymentManager:
                     'spec': {
                         'containers': [{
                             'name': 'ai-model',
-                            'image': f'ainflue/ai-model:{config.model_id}',
+                            'image': f'iacherie/ai-model:{config.model_id}',
                             'ports': [{'containerPort': 8080}],
                             'env': [
                                 {'name': k, 'value': v} 
@@ -471,7 +471,7 @@ class AIDeploymentManager:
             'memory': config.resource_requirements.get('memory', '2048'),
             'containerDefinitions': [{
                 'name': 'ai-model',
-                'image': f'ainflue/ai-model:{config.model_id}',
+                'image': f'iacherie/ai-model:{config.model_id}',
                 'portMappings': [{
                     'containerPort': 8080,
                     'protocol': 'tcp'
@@ -506,7 +506,7 @@ class AIDeploymentManager:
                 'containers': [{
                     'name': 'ai-model',
                     'properties': {
-                        'image': f'ainflue/ai-model:{config.model_id}',
+                        'image': f'iacherie/ai-model:{config.model_id}',
                         'ports': [{
                             'port': 8080,
                             'protocol': 'TCP'
@@ -557,7 +557,7 @@ class AIDeploymentManager:
                     },
                     'spec': {
                         'containers': [{
-                            'image': f'gcr.io/ainflue/ai-model:{config.model_id}',
+                            'image': f'gcr.io/iacherie/ai-model:{config.model_id}',
                             'ports': [{
                                 'containerPort': 8080
                             }],

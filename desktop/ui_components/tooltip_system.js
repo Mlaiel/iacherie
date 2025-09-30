@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Advanced Tooltip System
+ * IA Chérie Desktop - Advanced Tooltip System
  * 
  * Professional tooltip management with animations, positioning, and themes
  * Supports rich content, interactive tooltips, and accessibility
@@ -54,7 +54,7 @@ class TooltipSystem {
     const styles = document.createElement('style');
     styles.id = 'tooltip-system-styles';
     styles.textContent = `
-      .ainflue-tooltip {
+      .iacherie-tooltip {
         position: absolute;
         z-index: 10000;
         padding: 8px 12px;
@@ -71,60 +71,60 @@ class TooltipSystem {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       }
       
-      .ainflue-tooltip.visible {
+      .iacherie-tooltip.visible {
         opacity: 1;
         transform: scale(1);
       }
       
-      .ainflue-tooltip.interactive {
+      .iacherie-tooltip.interactive {
         pointer-events: auto;
       }
       
       /* Themes */
-      .ainflue-tooltip.professional {
+      .iacherie-tooltip.professional {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
       
-      .ainflue-tooltip.dark {
+      .iacherie-tooltip.dark {
         background: #2d3748;
         color: #e2e8f0;
         border: 1px solid #4a5568;
       }
       
-      .ainflue-tooltip.light {
+      .iacherie-tooltip.light {
         background: #ffffff;
         color: #2d3748;
         border: 1px solid #e2e8f0;
       }
       
-      .ainflue-tooltip.error {
+      .iacherie-tooltip.error {
         background: #fed7d7;
         color: #c53030;
         border: 1px solid #feb2b2;
       }
       
-      .ainflue-tooltip.success {
+      .iacherie-tooltip.success {
         background: #c6f6d5;
         color: #22543d;
         border: 1px solid #9ae6b4;
       }
       
-      .ainflue-tooltip.warning {
+      .iacherie-tooltip.warning {
         background: #fefcbf;
         color: #744210;
         border: 1px solid #f6e05e;
       }
       
-      .ainflue-tooltip.info {
+      .iacherie-tooltip.info {
         background: #bee3f8;
         color: #2a4365;
         border: 1px solid #90cdf4;
       }
       
       /* Arrow */
-      .ainflue-tooltip::before {
+      .iacherie-tooltip::before {
         content: '';
         position: absolute;
         width: 0;
@@ -133,7 +133,7 @@ class TooltipSystem {
       }
       
       /* Top arrow */
-      .ainflue-tooltip.position-top::before {
+      .iacherie-tooltip.position-top::before {
         top: 100%;
         left: 50%;
         transform: translateX(-50%);
@@ -142,7 +142,7 @@ class TooltipSystem {
       }
       
       /* Bottom arrow */
-      .ainflue-tooltip.position-bottom::before {
+      .iacherie-tooltip.position-bottom::before {
         bottom: 100%;
         left: 50%;
         transform: translateX(-50%);
@@ -151,7 +151,7 @@ class TooltipSystem {
       }
       
       /* Left arrow */
-      .ainflue-tooltip.position-left::before {
+      .iacherie-tooltip.position-left::before {
         top: 50%;
         left: 100%;
         transform: translateY(-50%);
@@ -160,7 +160,7 @@ class TooltipSystem {
       }
       
       /* Right arrow */
-      .ainflue-tooltip.position-right::before {
+      .iacherie-tooltip.position-right::before {
         top: 50%;
         right: 100%;
         transform: translateY(-50%);
@@ -168,7 +168,7 @@ class TooltipSystem {
         border-color: transparent currentColor transparent transparent;
       }
       
-      .ainflue-tooltip.no-arrow::before {
+      .iacherie-tooltip.no-arrow::before {
         display: none;
       }
       
@@ -240,7 +240,7 @@ class TooltipSystem {
       
       /* Responsive */
       @media (max-width: 768px) {
-        .ainflue-tooltip {
+        .iacherie-tooltip {
           max-width: 250px;
           font-size: 13px;
           padding: 6px 10px;
@@ -552,7 +552,7 @@ class TooltipSystem {
    * Build tooltip CSS classes
    */
   buildTooltipClasses(config) {
-    const classes = ['ainflue-tooltip'];
+    const classes = ['iacherie-tooltip'];
     
     classes.push(config.theme);
     classes.push(`position-${config.position}`);

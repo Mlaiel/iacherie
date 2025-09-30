@@ -2,7 +2,7 @@
 📱 Social Streaming Protector - Social Media + Streaming Protection
 ==================================================================
 
-Module: /workspaces/Ainflue/data/content_protection/social_streaming_protector.py
+Module: /workspaces/IA Chérie/data/content_protection/social_streaming_protector.py
 CONSOLIDATION: Réseaux sociaux + plateformes streaming
 """
 

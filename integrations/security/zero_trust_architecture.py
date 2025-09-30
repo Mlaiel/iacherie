@@ -16,7 +16,7 @@ Expert Team Implementation:
 🎨 IA Prompt Engineer: AI safety in zero trust + intelligent access recommendations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 Date: Septembre 2024
 
@@ -1364,7 +1364,7 @@ class ZeroTrustArchitecture:
         trust_score: TrustScore,
         policy_compliance: Dict[str, Any],
         access_context: AccessContext
-    ) -> Tuple[AccessDecision, List[str]]:
+    ) -> tuple[AccessDecision, List[str]]:
         """Décision d'accès finale"""
         conditions = []
         

@@ -1,4 +1,4 @@
-# 🚀 Advanced Analytics System - Ainflue Platform
+# 🚀 Advanced Analytics System - IA Chérie Platform
 
 **Version:** 8.0 Intelligent Analytics Consolidation  
 **Date:** September 11, 2025  
@@ -423,7 +423,7 @@ REDIS_PORT=6379
 REDIS_DB=0
 
 # Database configuration
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 
 # Monitoring configuration
 PROMETHEUS_ENABLED=true
@@ -474,8 +474,8 @@ We welcome contributions to the analytics system! Please follow these guidelines
 ### Development Setup
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/analytics
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/analytics
 
 # Install development dependencies
 pip install -r requirements-dev.txt
@@ -494,7 +494,7 @@ black .
 
 **Principal Architect:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Website:** [Ainflue Platform]
+**Website:** [IA Chérie Platform]
 
 ---
 

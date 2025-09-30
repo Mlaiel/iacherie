@@ -1,6 +1,6 @@
 """Intrusion Prevention System for Events Security
 
-Real-time intrusion detection and prevention for Ainflue platform events.
+Real-time intrusion detection and prevention for IA Chérie platform events.
 Automatically blocks malicious activities and protects business-critical operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -92,7 +92,7 @@ class PreventionResponse:
 
 class IntrusionPreventionSystem:
     """
-    Real-time intrusion prevention system for Ainflue events.
+    Real-time intrusion prevention system for IA Chérie events.
     Detects and prevents various types of security intrusions.
     """
     

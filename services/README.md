@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le module Services de la plateforme Ainflue implémente une architecture microservices enterprise de niveau mondial avec une séparation en 3 niveaux pour une scalabilité, sécurité et performance optimales.
+Le module Services de la plateforme IA Chérie implémente une architecture microservices enterprise de niveau mondial avec une séparation en 3 niveaux pour une scalabilité, sécurité et performance optimales.
 
 ## 🏗️ Architecture 3-Niveaux
 
@@ -251,8 +251,8 @@ JWT_SECRET=votre-secret-jwt
 ## 📞 Support
 
 - **Email**: mlaiel@live.de
-- **Documentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Status**: [status.ainflue.com](https://status.ainflue.com)
+- **Documentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Status**: [status.iacherie.com](https://status.iacherie.com)
 
 ## 📄 Licence
 

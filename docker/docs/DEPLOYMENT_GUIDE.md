@@ -1,6 +1,6 @@
 # Docker Deployment Guide
 
-## Production-Ready Deployment for Ainflue Platform
+## Production-Ready Deployment for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -29,7 +29,7 @@ docker swarm join --token <token> <manager-ip>:2377
 
 #### 3. Create Overlay Networks
 ```bash
-docker network create --driver overlay ainflue-network
+docker network create --driver overlay iacherie-network
 docker network create --driver overlay monitoring-network
 docker network create --driver overlay security-network
 ```
@@ -66,7 +66,7 @@ Create `.env.production` with:
 # Database
 POSTGRES_HOST=postgres-cluster
 POSTGRES_DB=ainflue_prod
-POSTGRES_USER=ainflue
+POSTGRES_USER=iacherie
 POSTGRES_PASSWORD=<secure-password>
 
 # Redis
@@ -109,14 +109,14 @@ docker service logs <service-name>
 #### 1. Generate Certificates
 ```bash
 # Using Let's Encrypt
-certbot certonly --standalone -d api.ainflue.com
+certbot certonly --standalone -d api.iacherie.com
 ```
 
 #### 2. Update nginx Configuration
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name api.ainflue.com;
+    server_name api.iacherie.com;
     
     ssl_certificate /etc/ssl/certs/fullchain.pem;
     ssl_certificate_key /etc/ssl/private/privkey.pem;
@@ -132,10 +132,10 @@ server {
 #### Daily Database Backups
 ```bash
 # PostgreSQL backup
-docker exec postgres pg_dump -U ainflue ainflue_prod > backup_$(date +%Y%m%d).sql
+docker exec postgres pg_dump -U iacherie ainflue_prod > backup_$(date +%Y%m%d).sql
 
 # MongoDB backup
-docker exec mongodb mongodump --db ainflue --out /backup/$(date +%Y%m%d)
+docker exec mongodb mongodump --db iacherie --out /backup/$(date +%Y%m%d)
 ```
 
 #### Configuration Backups
@@ -158,7 +158,7 @@ docker config inspect <config-name> > configs/backup/
 2. **Network Connectivity Issues**
    ```bash
    docker network ls
-   docker network inspect ainflue-network
+   docker network inspect iacherie-network
    ```
 
 3. **Resource Constraints**

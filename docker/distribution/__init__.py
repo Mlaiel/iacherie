@@ -1,5 +1,5 @@
 """
-Distribution Services Module - Ainflue Platform
+Distribution Services Module - IA Chérie Platform
 ===============================================
 
 Enterprise-grade multi-platform content distribution system for creators.

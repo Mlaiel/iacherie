@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Monitoring & Analytics System Demo
+🚀 IA Chérie Monitoring & Analytics System Demo
 ============================================
 
 Comprehensive demonstration of the complete KPI monitoring system
@@ -25,7 +25,7 @@ async def demo_monitoring_system():
     """
 Comprehensive demo of the monitoring & analytics system"""
     
-    print("🎯 AINFLUE MONITORING & ANALYTICS SYSTEM DEMO")
+    print("🎯 IACHERIE MONITORING & ANALYTICS SYSTEM DEMO")
     print("=" * 60)
     print("📊 Comprehensive KPI Tracking System")
     print("📈 Real-time Business Intelligence")
@@ -291,7 +291,7 @@ Comprehensive demo of the monitoring & analytics system"""
         
         # Display some Prometheus metrics
         prometheus_lines = export_data['prometheus_metrics'].split('\n')
-        metric_lines = [line for line in prometheus_lines if line.startswith('ainflue_')][:5]
+        metric_lines = [line for line in prometheus_lines if line.startswith('iacherie_')][:5]
         if metric_lines:
             print("\n📊 Sample Prometheus Metrics:")
             for line in metric_lines:
@@ -321,7 +321,7 @@ Comprehensive demo of the monitoring & analytics system"""
         return False
 
 if __name__ == "__main__":
-    print("Starting Ainflue Monitoring & Analytics System Demo...")
+    print("Starting IA Chérie Monitoring & Analytics System Demo...")
     result = asyncio.run(demo_monitoring_system())
     print(f"\nDemo {'completed successfully' if result else 'failed'}!")
     sys.exit(0 if result else 1)

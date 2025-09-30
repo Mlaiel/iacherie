@@ -2,7 +2,7 @@
 🔒 Rights Enforcement Orchestrator - Digital Rights + Blockchain Security
 ================================================================
 
-Module: /workspaces/Ainflue/data/content_protection/rights_enforcement_orchestrator.py
+Module: /workspaces/IA Chérie/data/content_protection/rights_enforcement_orchestrator.py
 CONSOLIDATION: Application droits + blockchain + sécurité + smart contracts
 
 Enterprise-grade digital rights management with blockchain verification,

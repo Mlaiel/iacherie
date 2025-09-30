@@ -1,6 +1,6 @@
 """
 🔍 Content Indexing Service - Service d'Indexation Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Service spécialisé d'indexation intelligente pour recherche et découverte de contenu.
 Indexation multi-format avec métadonnées enrichies et recherche sémantique.

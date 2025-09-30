@@ -5,7 +5,7 @@
 FROM python:3.12-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Workflow Manager - Intelligent workflow automation service"
+LABEL description="IA Chérie Workflow Manager - Intelligent workflow automation service"
 LABEL version="1.0.0"
 
 # Set working directory

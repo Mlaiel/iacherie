@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Content Lifecycle Comprehensive Demo for Ainflue Platform
+Content Lifecycle Comprehensive Demo for IA Chérie Platform
 =========================================================
 
 Demonstrates complete content lifecycle workflow from upload to distribution
@@ -629,7 +629,7 @@ class ContentLifecycleComprehensiveDemo:
             file_size=random.randint(1024*1024, 100*1024*1024),  # 1MB to 100MB
             duration=random.uniform(30, 300) if content_type in ["audio", "video"] else None,
             quality_score=0.0,  # Will be calculated
-            tags=[creator.creator_type, "demo", "ainflue"],
+            tags=[creator.creator_type, "demo", "iacherie"],
             target_platforms=["youtube", "spotify", "instagram"],
             monetization_enabled=creator.tier != "free",
             collaboration_allowed=True

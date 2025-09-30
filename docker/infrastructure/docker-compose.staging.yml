@@ -1,11 +1,11 @@
 # Docker Compose for Staging Environment
-# Staging environment configuration for Ainflue Platform
+# Staging environment configuration for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 services:
   # Staging API Gateway
   api_gateway:
-    image: ainflue/platform:${VERSION:-latest}
+    image: iacherie/platform:${VERSION:-latest}
     ports:
       - "80:8000"
       - "443:8443"
@@ -121,7 +121,7 @@ services:
   staging_elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
     environment:
-      - cluster.name=ainflue-staging
+      - cluster.name=iacherie-staging
       - node.name=staging-es-01
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -158,7 +158,7 @@ services:
 
   # Staging Backup Service
   staging_backup:
-    image: ainflue/backup-service:latest
+    image: iacherie/backup-service:latest
     environment:
       - BACKUP_SCHEDULE=0 2 * * *
       - BACKUP_RETENTION_DAYS=30

@@ -890,7 +890,7 @@ class CoreWebVitalsOptimizer:
 
 # Enterprise utilities for Core Web Vitals monitoring
 class PerformanceMonitor:
-    """High-level performance monitoring for Ainflue platform."""
+    """High-level performance monitoring for IA Chérie platform."""
     
     def __init__(self, optimizer: CoreWebVitalsOptimizer):
         self.optimizer = optimizer

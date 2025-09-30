@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Ansible Role Manager for Ainflue Platform
+Ansible Role Manager for IA Chérie Platform
 ========================================
 
 Enterprise-grade Ansible role management system for infrastructure automation.
@@ -63,7 +63,7 @@ class RoleManager:
     Provides role generation, dependency management, and deployment coordination.
     """
     
-    def __init__(self, roles_path: str = "/home/runner/work/Ainflue/Ainflue/infra/ansible/roles"):
+    def __init__(self, roles_path: str = "/home/runner/work/IA Chérie/IA Chérie/infra/ansible/roles"):
         self.roles_path = Path(roles_path)
         self.roles_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -163,8 +163,8 @@ class RoleManager:
         meta_content = {
             "galaxy_info": {
                 "author": "Fahed Mlaiel",
-                "description": meta.get("description", "Ainflue infrastructure role"),
-                "company": "Ainflue Platform",
+                "description": meta.get("description", "IA Chérie infrastructure role"),
+                "company": "IA Chérie Platform",
                 "license": "Proprietary",
                 "min_ansible_version": "2.9",
                 "platforms": [
@@ -177,7 +177,7 @@ class RoleManager:
                         "versions": ["7", "8"]
                     }
                 ],
-                "galaxy_tags": ["infrastructure", "enterprise", "ainflue"]
+                "galaxy_tags": ["infrastructure", "enterprise", "iacherie"]
             },
             "dependencies": [{"role": dep} for dep in dependencies]
         }
@@ -304,7 +304,7 @@ class RoleManager:
             return None
     
     def create_standard_roles(self) -> bool:
-        """Create standard Ainflue infrastructure roles"""
+        """Create standard IA Chérie infrastructure roles"""
         try:
             # Common setup role
             common_role = AnsibleRole(

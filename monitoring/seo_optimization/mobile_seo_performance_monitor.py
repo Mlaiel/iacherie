@@ -1,7 +1,7 @@
 """
 Mobile SEO Performance Monitor - Enterprise Mobile Optimization Tracking
 
-This module implements comprehensive mobile SEO performance monitoring for the Ainflue platform,
+This module implements comprehensive mobile SEO performance monitoring for the IA Chérie platform,
 tracking mobile-first indexing, responsive design, and mobile user experience optimization.
 
 Author: Fahed Mlaiel
@@ -112,7 +112,7 @@ class MobileSEOAnalysis:
 
 class MobileSEOPerformanceMonitor:
     """
-    Enterprise mobile SEO performance monitoring system for Ainflue platform.
+    Enterprise mobile SEO performance monitoring system for IA Chérie platform.
     
     Features:
     - Mobile-first indexing optimization
@@ -839,7 +839,7 @@ if __name__ == "__main__":
         monitor = MobileSEOPerformanceMonitor()
         
         # Test mobile SEO analysis
-        url = "https://ainflue.com"
+        url = "https://iacherie.com"
         analysis_result = await monitor.analyze_mobile_seo(url, comprehensive=True)
         print(f"Mobile SEO analysis result: {analysis_result}")
         

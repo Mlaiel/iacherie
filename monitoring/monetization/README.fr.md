@@ -1,10 +1,10 @@
-# Plateforme Ainflue - Module de Surveillance de la Monétisation
+# Plateforme IA Chérie - Module de Surveillance de la Monétisation
 
 Surveillance de monétisation de niveau entreprise pour l'optimisation des revenus, le traitement des paiements et l'intelligence financière dans les plateformes de création de contenu alimentées par l'IA.
 
 ## Aperçu
 
-Le Module de Monétisation fournit une surveillance et une optimisation complètes pour tous les flux de revenus de la plateforme Ainflue, incluant:
+Le Module de Monétisation fournit une surveillance et une optimisation complètes pour tous les flux de revenus de la plateforme IA Chérie, incluant:
 
 - **Intégration de Passerelles de Paiement** - Traitement multi-passerelles avec routage intelligent
 - **Optimisation des Revenus** - Stratégies de tarification et de monétisation pilotées par l'IA
@@ -60,4 +60,4 @@ Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 
 ## Licence
 
-Ce module de surveillance est un logiciel propriétaire développé exclusivement pour la plateforme Ainflue. L'utilisation, la distribution ou la modification non autorisée est strictement interdite.
+Ce module de surveillance est un logiciel propriétaire développé exclusivement pour la plateforme IA Chérie. L'utilisation, la distribution ou la modification non autorisée est strictement interdite.

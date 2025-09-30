@@ -2,7 +2,7 @@
 🚀 Performance Optimization Orchestrator - Enterprise Core
 =========================================================
 
-Orchestrateur d'optimisation avancé pour les performances système Ainflue.
+Orchestrateur d'optimisation avancé pour les performances système IA Chérie.
 Optimisation intelligente des ressources et monitoring performance temps réel.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

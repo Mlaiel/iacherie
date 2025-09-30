@@ -26,7 +26,7 @@ export class FirebaseService {
       // Initialize Firebase app (this would typically import firebase SDK)
       // For now, we'll simulate the initialization
       this.app = {
-        name: 'ainflue-notifications',
+        name: 'iacherie-notifications',
         projectId: this.config.projectId
       };
 
@@ -201,9 +201,9 @@ export class FirebaseService {
     // In a real implementation, this would load from environment variables or config file
     return {
       apiKey: process.env.FIREBASE_API_KEY || 'mock-api-key',
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'ainflue-app.firebaseapp.com',
-      projectId: process.env.FIREBASE_PROJECT_ID || 'ainflue-app',
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'ainflue-app.appspot.com',
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'iacherie-app.firebaseapp.com',
+      projectId: process.env.FIREBASE_PROJECT_ID || 'iacherie-app',
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'iacherie-app.appspot.com',
       messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '123456789',
       appId: process.env.FIREBASE_APP_ID || '1:123456789:web:abcdef123456',
       serverKey: process.env.FIREBASE_SERVER_KEY || 'mock-server-key'

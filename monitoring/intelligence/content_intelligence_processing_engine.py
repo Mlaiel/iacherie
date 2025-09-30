@@ -2,7 +2,7 @@
 =======================================
 
 Enterprise Content Intelligence Processing Engine for comprehensive content
-analysis across the Ainflue Creator Economy platform. Provides sophisticated
+analysis across the IA Chérie Creator Economy platform. Provides sophisticated
 content intelligence including:
 - Content intelligence Creator Economy processing
 - Creator content intelligence analysis sophisticated

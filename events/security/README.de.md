@@ -1,5 +1,5 @@
 # 🔒 Events Security Modul - Erweiterte Event-Sicherheit & Bedrohungsschutz
-**Ainflue Plattform - Enterprise Event-Sicherheitsinfrastruktur**
+**IA Chérie Plattform - Enterprise Event-Sicherheitsinfrastruktur**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Urheberrecht:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise-Übersicht
 
-Das **Events Security Modul** bietet umfassende Sicherheitsinfrastruktur für ereignisgesteuerte Architektur in der Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultramoderne industrielle System liefert Enterprise-Grade-Bedrohungsschutz, Compliance-Validierung, Audit-Trails und Echtzeit-Sicherheitsanalysen für alle Event-Processing-Workflows.
+Das **Events Security Modul** bietet umfassende Sicherheitsinfrastruktur für ereignisgesteuerte Architektur in der IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Comedians). Dieses ultramoderne industrielle System liefert Enterprise-Grade-Bedrohungsschutz, Compliance-Validierung, Audit-Trails und Echtzeit-Sicherheitsanalysen für alle Event-Processing-Workflows.
 
 ### 🎯 **Geschäftslogik-Ablauf**
 ```
@@ -440,7 +440,7 @@ await ips.configure_campaign_security(campaign_security_rules)
 version: '3.8'
 services:
   event-security-orchestrator:
-    image: ainflue/event-security-orchestrator:latest
+    image: iacherie/event-security-orchestrator:latest
     deploy:
       replicas: 5
       resources:
@@ -453,13 +453,13 @@ services:
     environment:
       - HSM_ENDPOINT=https://hsm-cluster.aws.com
       - THREAT_FEED_URL=https://threat-intel.security.com
-      - COMPLIANCE_RULES_URL=https://compliance.ainflue.com
+      - COMPLIANCE_RULES_URL=https://compliance.iacherie.com
       - AUDIT_STORAGE=s3://audit-logs-bucket
     ports:
       - "8443:8443"
       
   threat-detection-engine:
-    image: ainflue/threat-detection:latest
+    image: iacherie/threat-detection:latest
     deploy:
       replicas: 3
       resources:
@@ -504,7 +504,7 @@ active_security_alerts = Gauge('active_security_alerts', 'Number of active secur
 
 ## 📝 **Zusammenfassung**
 
-Das Events Security Modul repräsentiert den Höhepunkt der ereignisgesteuerten Sicherheitsarchitektur für die Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit erweiterter Bedrohungserkennung, umfassender Compliance-Validierung und Echtzeit-Sicherheitsanalysen gewährleistet dieses Modul höchste Schutzebenen für alle Event-Processing-Workflows bei optimaler Performance und Benutzererfahrung.
+Das Events Security Modul repräsentiert den Höhepunkt der ereignisgesteuerten Sicherheitsarchitektur für die IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller. Mit erweiterter Bedrohungserkennung, umfassender Compliance-Validierung und Echtzeit-Sicherheitsanalysen gewährleistet dieses Modul höchste Schutzebenen für alle Event-Processing-Workflows bei optimaler Performance und Benutzererfahrung.
 
 **🎯 Mission:** Die weltweit fortschrittlichste Event-Sicherheitsinfrastruktur für Content-Ersteller liefern, die sichere Event-Verarbeitung, automatisierten Bedrohungsschutz und umfassendes Compliance-Management im gesamten Creator-Ökosystem ermöglicht.
 

@@ -1,13 +1,13 @@
-# 🚀 Ainflue Backend - Enterprise Creator Intelligence Plattform
+# 🚀 IA Chérie Backend - Enterprise Creator Intelligence Plattform
 
-[![Build Status](https://github.com/Mlaiel/Ainflue/workflows/Backend-CI/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![Sicherheitsscan](https://github.com/Mlaiel/Ainflue/workflows/Backend-Security/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![Performance Tests](https://github.com/Mlaiel/Ainflue/workflows/Backend-Performance/badge.svg)](https://github.com/Mlaiel/Ainflue/actions)
-[![Code Qualität](https://img.shields.io/badge/code%20qualit%C3%A4t-A%2B-brightgreen)](https://github.com/Mlaiel/Ainflue)
+[![Build Status](https://github.com/Mlaiel/IA Chérie/workflows/Backend-CI/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![Sicherheitsscan](https://github.com/Mlaiel/IA Chérie/workflows/Backend-Security/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![Performance Tests](https://github.com/Mlaiel/IA Chérie/workflows/Backend-Performance/badge.svg)](https://github.com/Mlaiel/IA Chérie/actions)
+[![Code Qualität](https://img.shields.io/badge/code%20qualit%C3%A4t-A%2B-brightgreen)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🌟 Revolutionäres Backend-Ökosystem
 
-Das Ainflue Backend repräsentiert den Höhepunkt der Enterprise Creator Intelligence Technologie und bietet ein umfassendes Ökosystem für KI-gestützte Inhaltsverarbeitung, erweiterte Monetarisierung, kollaborative Intelligenz und ultra-skalierbare Infrastruktur.
+Das IA Chérie Backend repräsentiert den Höhepunkt der Enterprise Creator Intelligence Technologie und bietet ein umfassendes Ökosystem für KI-gestützte Inhaltsverarbeitung, erweiterte Monetarisierung, kollaborative Intelligenz und ultra-skalierbare Infrastruktur.
 
 ## 👨‍💻 Experten-Entwicklungsteam
 
@@ -159,8 +159,8 @@ Distribution → Monetarisierung → Analytics → Gamification → Skalierung
 ### **Entwicklungssetup**
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/backend
 
 # Virtuelle Umgebung erstellen
 python -m venv venv
@@ -187,15 +187,15 @@ python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ### **Produktionsbereitstellung**
 ```bash
 # Mit Docker erstellen und bereitstellen
-docker build -t ainflue-backend .
+docker build -t iacherie-backend .
 docker-compose -f docker-compose.prod.yml up -d
 
 # Auf Kubernetes bereitstellen
 kubectl apply -f k8s/backend/
-kubectl get pods -n ainflue-backend
+kubectl get pods -n iacherie-backend
 
 # Bereitstellung überwachen
-kubectl logs -f deployment/ainflue-backend -n ainflue-backend
+kubectl logs -f deployment/iacherie-backend -n iacherie-backend
 ```
 
 ## 📊 API-Dokumentation
@@ -208,7 +208,7 @@ kubectl logs -f deployment/ainflue-backend -n ainflue-backend
 - **Monetarisierung**: `GET /monetization/analytics` - Revenue-Analytics und Insights
 
 ### **Echtzeit-APIs**
-- **WebSocket**: `ws://api.ainflue.com/ws` - Echtzeit-Updates und Benachrichtigungen
+- **WebSocket**: `ws://api.iacherie.com/ws` - Echtzeit-Updates und Benachrichtigungen
 - **GraphQL**: `POST /graphql` - Flexible Datenabfrage und Mutationen
 - **gRPC**: Hochleistungs-Inter-Service-Kommunikation
 
@@ -326,6 +326,6 @@ Diese Software ist proprietär und durch internationales Urheberrecht geschützt
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**🚀 Ainflue Backend - Die Zukunft der Creator Intelligence**
+**🚀 IA Chérie Backend - Die Zukunft der Creator Intelligence**
 
 *Für autorisierte Lizenzanfragen: mlaiel@live.de*

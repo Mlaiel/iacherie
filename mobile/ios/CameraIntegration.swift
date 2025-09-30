@@ -1,6 +1,6 @@
 //
 //  CameraIntegration.swift
-//  Ainflue iOS - Professional Camera Integration
+//  IA Chérie iOS - Professional Camera Integration
 //
 //  Advanced native iOS camera system with AI-powered capture optimization,
 //  real-time content analysis, and professional video recording capabilities.
@@ -74,9 +74,9 @@ class CameraIntegrationService: NSObject {
     private var ciContext: CIContext!
     
     // MARK: - Processing Queues
-    private let sessionQueue = DispatchQueue(label: "com.ainflue.camera.session", qos: .userInitiated)
-    private let analysisQueue = DispatchQueue(label: "com.ainflue.camera.analysis", qos: .userInitiated)
-    private let processingQueue = DispatchQueue(label: "com.ainflue.camera.processing", qos: .userInitiated)
+    private let sessionQueue = DispatchQueue(label: "com.iacherie.camera.session", qos: .userInitiated)
+    private let analysisQueue = DispatchQueue(label: "com.iacherie.camera.analysis", qos: .userInitiated)
+    private let processingQueue = DispatchQueue(label: "com.iacherie.camera.processing", qos: .userInitiated)
     
     // MARK: - Initialization
     

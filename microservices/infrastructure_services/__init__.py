@@ -2,7 +2,7 @@
 Infrastructure Services Module
 =============================
 
-Enterprise-grade infrastructure services for Ainflue platform.
+Enterprise-grade infrastructure services for IA Chérie platform.
 Provides core infrastructure functionality, monitoring, and reliability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

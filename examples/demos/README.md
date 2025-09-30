@@ -1,5 +1,5 @@
 # 🚀 Advanced Demos - Comprehensive Platform Demonstrations
-**Ainflue Platform - Complete System Demonstrations & Showcases**
+**IA Chérie Platform - Complete System Demonstrations & Showcases**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise Overview
 
-The **Advanced Demos** module showcases comprehensive platform demonstrations and system showcases for the Ainflue platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated, production-ready system demonstrates enterprise-level AI processing, content lifecycle management, cross-platform distribution, business intelligence, collaboration systems, and monetization ecosystems with real-world scenarios and best practices.
+The **Advanced Demos** module showcases comprehensive platform demonstrations and system showcases for the IA Chérie platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated, production-ready system demonstrates enterprise-level AI processing, content lifecycle management, cross-platform distribution, business intelligence, collaboration systems, and monetization ecosystems with real-world scenarios and best practices.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -428,7 +428,7 @@ print(f"AI/ML demonstration configured with {len(ai_showcase['ai_environment']['
 version: '3.8'
 services:
   advanced-demos:
-    image: ainflue/advanced-demos:latest
+    image: iacherie/advanced-demos:latest
     deploy:
       replicas: 5
       resources:
@@ -441,8 +441,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://demo-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -451,7 +451,7 @@ services:
 ```python
 # API Integration Example
 import requests
-from ainflue.demos import DemoManager
+from iacherie.demos import DemoManager
 
 # Initialize demo manager
 demo_manager = DemoManager(api_key="your-api-key")
@@ -488,7 +488,7 @@ print(f"Demo Progress: {progress.completion_percentage}%")
 
 ## 📝 **Summary**
 
-The Advanced Demos module represents the pinnacle of platform demonstration design for the Ainflue platform, specifically crafted for multi-format content creators. With comprehensive demonstrations, advanced AI/ML capabilities, and enterprise-level features, this system ensures maximum platform understanding, feature adoption, and performance optimization for all creator activities while providing deep insights into platform capabilities and optimization opportunities.
+The Advanced Demos module represents the pinnacle of platform demonstration design for the IA Chérie platform, specifically crafted for multi-format content creators. With comprehensive demonstrations, advanced AI/ML capabilities, and enterprise-level features, this system ensures maximum platform understanding, feature adoption, and performance optimization for all creator activities while providing deep insights into platform capabilities and optimization opportunities.
 
 **🎯 Mission:** Deliver the world's most comprehensive platform demonstrations for content creators, enabling optimal platform adoption, feature utilization, and performance optimization across the complete creator ecosystem.
 

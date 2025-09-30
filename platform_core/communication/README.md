@@ -2,7 +2,7 @@
 
 ## Overview
 
-Enterprise-grade communication system for the Ainflue Creator Economy Platform, providing real-time messaging, voice communication, content moderation, and collaboration tools.
+Enterprise-grade communication system for the IA Chérie Creator Economy Platform, providing real-time messaging, voice communication, content moderation, and collaboration tools.
 
 ## ⚠️ Intellectual Property Notice
 
@@ -336,5 +336,5 @@ For enterprise licensing, technical support, or custom implementation:
 
 ---
 
-**Ainflue Platform - Enterprise Creator Economy Communication System**  
+**IA Chérie Platform - Enterprise Creator Economy Communication System**  
 **© 2025 Fahed Mlaiel. Professional implementation with industrial-grade standards.**

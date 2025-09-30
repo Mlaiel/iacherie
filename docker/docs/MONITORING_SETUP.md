@@ -1,6 +1,6 @@
 # Monitoring Setup Guide
 
-## Comprehensive Monitoring for Ainflue Docker Platform
+## Comprehensive Monitoring for IA Chérie Docker Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -63,7 +63,7 @@ start_http_server(8080)
 ```json
 {
   "dashboard": {
-    "title": "Ainflue Docker Overview",
+    "title": "IA Chérie Docker Overview",
     "panels": [
       {
         "title": "Container CPU Usage",
@@ -146,7 +146,7 @@ groups:
 # alertmanager.yml
 global:
   smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'alerts@ainflue.com'
+  smtp_from: 'alerts@iacherie.com'
 
 route:
   group_by: ['alertname']
@@ -158,8 +158,8 @@ route:
 receivers:
 - name: 'web.hook'
   email_configs:
-  - to: 'admin@ainflue.com'
-    subject: 'Ainflue Alert: {{ .GroupLabels.alertname }}'
+  - to: 'admin@iacherie.com'
+    subject: 'IA Chérie Alert: {{ .GroupLabels.alertname }}'
     body: |
       {{ range .Alerts }}
       Alert: {{ .Annotations.summary }}
@@ -241,7 +241,7 @@ filter {
 output {
   elasticsearch {
     hosts => ["elasticsearch:9200"]
-    index => "ainflue-logs-%{+YYYY.MM.dd}"
+    index => "iacherie-logs-%{+YYYY.MM.dd}"
   }
 }
 ```

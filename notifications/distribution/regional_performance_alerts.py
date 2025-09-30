@@ -1,6 +1,6 @@
 """
 🌍 REGIONAL PERFORMANCE ALERTS
-Ainflue Platform - Regional Performance Analytics
+IA Chérie Platform - Regional Performance Analytics
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

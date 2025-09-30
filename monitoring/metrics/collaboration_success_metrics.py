@@ -2,7 +2,7 @@
 ================================================================
 
 Advanced metrics tracking for collaboration success, creator partnerships,
-and content co-creation effectiveness on the Ainflue platform.
+and content co-creation effectiveness on the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.

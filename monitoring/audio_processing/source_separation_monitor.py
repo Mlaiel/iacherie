@@ -1,5 +1,5 @@
 """
-Source Separation Monitoring Module - Ainflue Platform
+Source Separation Monitoring Module - IA Chérie Platform
 ======================================================
 
 Monitor DEMUCS and Spleeter source separation performance, quality metrics,

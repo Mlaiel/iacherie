@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Ansible Configuration Manager
+# IA Chérie Infrastructure Module - Ansible Configuration Manager
 # ===========================================================
 # 
-# Enterprise-grade Ansible configuration management for Ainflue platform
+# Enterprise-grade Ansible configuration management for IA Chérie platform
 # Supports multi-cloud automation and enterprise deployment
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -75,7 +75,7 @@ class AnsibleConfigurationManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.ansible.config_manager")
+        logger = logging.getLogger(f"iacherie.infra.ansible.config_manager")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -104,7 +104,7 @@ class AnsibleConfigurationManager:
             Path(directory).mkdir(parents=True, exist_ok=True)
     
     def _define_standard_playbooks(self) -> Dict[str, Dict[str, Any]]:
-        """Define standard playbooks for Ainflue platform"""
+        """Define standard playbooks for IA Chérie platform"""
         return {
             "site": {
                 "description": "Main site playbook that coordinates all deployments",
@@ -142,7 +142,7 @@ class AnsibleConfigurationManager:
             },
             
             "application_deployment": {
-                "description": "Deploy Ainflue application components",
+                "description": "Deploy IA Chérie application components",
                 "path": f"{self.config.playbook_directory}/application_deployment.yml",
                 "roles": ["ainflue_api", "ainflue_ai", "ainflue_mobile", "ainflue_worker"],
                 "tags": ["application", "deployment"]
@@ -157,7 +157,7 @@ class AnsibleConfigurationManager:
                     "children": {
                         "web_servers": {
                             "hosts": {
-                                f"web-{i}.ainflue.com": {
+                                f"web-{i}.iacherie.com": {
                                     "ansible_host": f"10.0.1.{10+i}",
                                     "role": "web"
                                 } for i in range(1, 4)
@@ -165,7 +165,7 @@ class AnsibleConfigurationManager:
                         },
                         "app_servers": {
                             "hosts": {
-                                f"app-{i}.ainflue.com": {
+                                f"app-{i}.iacherie.com": {
                                     "ansible_host": f"10.0.2.{10+i}",
                                     "role": "application"
                                 } for i in range(1, 6)
@@ -173,7 +173,7 @@ class AnsibleConfigurationManager:
                         },
                         "ai_servers": {
                             "hosts": {
-                                f"ai-{i}.ainflue.com": {
+                                f"ai-{i}.iacherie.com": {
                                     "ansible_host": f"10.0.3.{10+i}",
                                     "role": "ai_engine",
                                     "gpu_enabled": True
@@ -182,11 +182,11 @@ class AnsibleConfigurationManager:
                         },
                         "database_servers": {
                             "hosts": {
-                                "db-primary.ainflue.com": {
+                                "db-primary.iacherie.com": {
                                     "ansible_host": "10.0.4.10",
                                     "role": "database_primary"
                                 },
-                                "db-replica.ainflue.com": {
+                                "db-replica.iacherie.com": {
                                     "ansible_host": "10.0.4.11",
                                     "role": "database_replica"
                                 }
@@ -194,7 +194,7 @@ class AnsibleConfigurationManager:
                         },
                         "cache_servers": {
                             "hosts": {
-                                f"cache-{i}.ainflue.com": {
+                                f"cache-{i}.iacherie.com": {
                                     "ansible_host": f"10.0.5.{10+i}",
                                     "role": "cache"
                                 } for i in range(1, 3)
@@ -202,7 +202,7 @@ class AnsibleConfigurationManager:
                         },
                         "monitoring_servers": {
                             "hosts": {
-                                "monitor.ainflue.com": {
+                                "monitor.iacherie.com": {
                                     "ansible_host": "10.0.6.10",
                                     "role": "monitoring"
                                 }
@@ -217,7 +217,7 @@ class AnsibleConfigurationManager:
                     "children": {
                         "web_servers": {
                             "hosts": {
-                                "web-staging.ainflue.com": {
+                                "web-staging.iacherie.com": {
                                     "ansible_host": "10.1.1.10",
                                     "role": "web"
                                 }
@@ -225,7 +225,7 @@ class AnsibleConfigurationManager:
                         },
                         "app_servers": {
                             "hosts": {
-                                f"app-staging-{i}.ainflue.com": {
+                                f"app-staging-{i}.iacherie.com": {
                                     "ansible_host": f"10.1.2.{10+i}",
                                     "role": "application"
                                 } for i in range(1, 3)
@@ -233,7 +233,7 @@ class AnsibleConfigurationManager:
                         },
                         "ai_servers": {
                             "hosts": {
-                                "ai-staging.ainflue.com": {
+                                "ai-staging.iacherie.com": {
                                     "ansible_host": "10.1.3.10",
                                     "role": "ai_engine",
                                     "gpu_enabled": True
@@ -242,7 +242,7 @@ class AnsibleConfigurationManager:
                         },
                         "database_servers": {
                             "hosts": {
-                                "db-staging.ainflue.com": {
+                                "db-staging.iacherie.com": {
                                     "ansible_host": "10.1.4.10",
                                     "role": "database_primary"
                                 }
@@ -257,7 +257,7 @@ class AnsibleConfigurationManager:
                     "children": {
                         "dev_servers": {
                             "hosts": {
-                                "dev.ainflue.local": {
+                                "dev.iacherie.local": {
                                     "ansible_host": "192.168.1.100",
                                     "role": "all_in_one"
                                 }
@@ -293,7 +293,7 @@ class AnsibleConfigurationManager:
                 "ansible_become": self.config.become,
                 "ansible_become_method": "sudo",
                 "ansible_python_interpreter": "/usr/bin/python3",
-                "project_name": "ainflue",
+                "project_name": "iacherie",
                 "docker_version": "24.0",
                 "kubernetes_version": "1.28",
                 "timezone": "UTC"
@@ -350,12 +350,12 @@ class AnsibleConfigurationManager:
             # Main site playbook
             return [
                 {
-                    "name": "Ainflue Infrastructure Deployment",
+                    "name": "IA Chérie Infrastructure Deployment",
                     "hosts": "all",
                     "become": True,
                     "gather_facts": True,
                     "vars": {
-                        "project_name": "ainflue",
+                        "project_name": "iacherie",
                         "environment": "{{ environment }}"
                     },
                     "pre_tasks": [
@@ -573,13 +573,13 @@ class AnsibleConfigurationManager:
             # Application deployment playbook
             return [
                 {
-                    "name": "Deploy Ainflue Applications",
+                    "name": "Deploy IA Chérie Applications",
                     "hosts": "app_servers",
                     "become": True,
                     "gather_facts": True,
                     "vars": {
                         "app_version": "{{ deployment_version | default('latest') }}",
-                        "container_registry": "ainflue/registry"
+                        "container_registry": "iacherie/registry"
                     },
                     "tasks": [
                         {
@@ -760,8 +760,8 @@ class AnsibleConfigurationManager:
         meta_content = {
             "galaxy_info": {
                 "author": "Fahed Mlaiel",
-                "description": f"Ainflue {role_name} role",
-                "company": "Ainflue",
+                "description": f"IA Chérie {role_name} role",
+                "company": "IA Chérie",
                 "license": "Proprietary",
                 "min_ansible_version": "2.10",
                 "platforms": [
@@ -770,7 +770,7 @@ class AnsibleConfigurationManager:
                         "versions": ["20.04", "22.04"]
                     }
                 ],
-                "galaxy_tags": ["ainflue", role_type]
+                "galaxy_tags": ["iacherie", role_type]
             },
             "dependencies": []
         }
@@ -805,7 +805,7 @@ class AnsibleConfigurationManager:
                     "name": f"Deploy {role_name} application",
                     "docker_container": {
                         "name": role_name,
-                        "image": f"ainflue/{role_name}:{{ app_version }}",
+                        "image": f"iacherie/{role_name}:{{ app_version }}",
                         "state": "started",
                         "restart_policy": "unless-stopped",
                         "ports": [
@@ -895,14 +895,14 @@ class AnsibleConfigurationManager:
                 "app_version": "latest",
                 "app_port": 8080,
                 "environment": "production",
-                "database_url": "postgresql://localhost:5432/ainflue",
+                "database_url": "postgresql://localhost:5432/iacherie",
                 "redis_url": "redis://localhost:6379/0"
             }
         
         elif role_type == "database":
             return {
-                "database_name": "ainflue",
-                "database_user": "ainflue",
+                "database_name": "iacherie",
+                "database_user": "iacherie",
                 "postgresql_version": "14"
             }
         
@@ -988,7 +988,7 @@ class AnsibleConfigurationManager:
 
 # Enterprise Ansible orchestrator
 class AinflueAnsibleOrchestrator:
-    """High-level Ansible orchestration for Ainflue platform"""
+    """High-level Ansible orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize Ansible orchestrator
@@ -997,20 +997,20 @@ class AinflueAnsibleOrchestrator:
             environment: Deployment environment
         """
         self.environment = environment
-        self.logger = logging.getLogger(f"ainflue.infra.ansible.orchestrator")
+        self.logger = logging.getLogger(f"iacherie.infra.ansible.orchestrator")
         
         # Configuration
         self.config = AnsibleConfig(
             environment=environment,
-            inventory_path=f"/home/runner/work/Ainflue/Ainflue/infra/ansible/inventory",
-            playbook_directory=f"/home/runner/work/Ainflue/Ainflue/infra/ansible",
+            inventory_path=f"/home/runner/work/IA Chérie/IA Chérie/infra/ansible/inventory",
+            playbook_directory=f"/home/runner/work/IA Chérie/IA Chérie/infra/ansible",
             remote_user="ubuntu" if environment == "production" else "vagrant"
         )
         
         self.manager = AnsibleConfigurationManager(self.config)
     
     async def bootstrap_environment(self) -> bool:
-        """Bootstrap the complete Ainflue environment
+        """Bootstrap the complete IA Chérie environment
         
         Returns:
             bool: True if successful, False otherwise

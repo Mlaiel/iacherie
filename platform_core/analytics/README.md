@@ -1,8 +1,8 @@
-# 🚀 Ainflue Platform Core Analytics
+# 🚀 IA Chérie Platform Core Analytics
 
-[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![License](https://img.shields.io/badge/License-Commercial-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![License](https://img.shields.io/badge/License-Commercial-red.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **Enterprise-grade analytics platform for comprehensive creator economy intelligence, performance tracking, revenue analytics, content optimization, and collaboration insights.**
 
@@ -20,7 +20,7 @@
 
 ## 🎯 Overview
 
-The Ainflue Platform Core Analytics module is an enterprise-grade analytics engine designed specifically for the creator economy. It provides comprehensive intelligence across all aspects of creator business operations, from performance tracking to revenue optimization.
+The IA Chérie Platform Core Analytics module is an enterprise-grade analytics engine designed specifically for the creator economy. It provides comprehensive intelligence across all aspects of creator business operations, from performance tracking to revenue optimization.
 
 ### Business Logic Integration
 ```

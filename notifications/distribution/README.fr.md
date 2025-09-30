@@ -1,10 +1,10 @@
 # 🌍 NOTIFICATIONS DISTRIBUTION - DOCUMENTATION FRANÇAISE
 
-**Plateforme Ainflue - Système de Notifications Distribution Enterprise**
+**Plateforme IA Chérie - Système de Notifications Distribution Enterprise**
 
 ## 🎯 APERÇU
 
-Le module Distribution Notifications gère toutes les notifications liées à la distribution de contenu de la plateforme Ainflue, incluant le statut de publication, la synchronisation des plateformes, les performances cross-platform et les analyses de portée d'audience.
+Le module Distribution Notifications gère toutes les notifications liées à la distribution de contenu de la plateforme IA Chérie, incluant le statut de publication, la synchronisation des plateformes, les performances cross-platform et les analyses de portée d'audience.
 
 ## 📋 COMPOSANTS DU MODULE
 
@@ -57,5 +57,5 @@ await distribution.notify_content_published(
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact:** mlaiel@live.de  
-**Projet:** Plateforme Ainflue - Notifications Distribution  
+**Projet:** Plateforme IA Chérie - Notifications Distribution  
 **Version:** 3.1.0 Enterprise

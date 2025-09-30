@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE MONETIZATION DOCKER MODULE
+# IACHERIE MONETIZATION DOCKER MODULE
 # =============================================================================
 # Revenue tracking and payment processing Docker containers
 #

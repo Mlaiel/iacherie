@@ -1,5 +1,5 @@
 """
-Circuit Breaker Metrics & Observability - Ainflue Platform
+Circuit Breaker Metrics & Observability - IA Chérie Platform
 =========================================================
 
 Système metrics et observability pour circuit breakers.

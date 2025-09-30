@@ -5,7 +5,7 @@
 ===========================================================================
 
 Système de sécurisation database enterprise avec chiffrement, contrôle d'accès,
-audit trail et protection contre intrusions pour la plateforme Ainflue.
+audit trail et protection contre intrusions pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🔒 Security Specialist: Encryption at rest/transit + RBAC + vulnerability scanning + audit compliance
@@ -562,7 +562,7 @@ class DatabaseSecurityHardeningManager:
     
     # 🏗️ BACKEND SENIOR - Protection injection SQL
     
-    def validate_query(self, query: str) -> Tuple[bool, Optional[str]]:
+    def validate_query(self, query: str) -> tuple[bool, Optional[str]]:
         """Validation requête contre injection SQL"""
         try:
             # Détection patterns suspects
@@ -710,7 +710,7 @@ class DatabaseSecurityHardeningManager:
     def _add_digital_watermark(self, media_data: bytes, content_type: str) -> bytes:
         """Ajout watermark digital au contenu média"""
         # Watermark simple (production: utiliser bibliothèque spécialisée)
-        watermark = f"AINFLUE_{datetime.utcnow().isoformat()}_{uuid.uuid4().hex[:8]}"
+        watermark = f"IACHERIE_{datetime.utcnow().isoformat()}_{uuid.uuid4().hex[:8]}"
         watermark_bytes = watermark.encode('utf-8')
         
         # Insertion watermark dans metadata

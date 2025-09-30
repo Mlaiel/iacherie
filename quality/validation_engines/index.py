@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 VALIDATION ENGINES ENTERPRISE - AINFLUE QUALITY MODULE
+🔍 VALIDATION ENGINES ENTERPRISE - IACHERIE QUALITY MODULE
 =========================================================
 
 Hub moteurs validation enterprise pour l'écosystème IA Influencer Agent.

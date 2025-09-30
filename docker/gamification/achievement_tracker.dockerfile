@@ -1,5 +1,5 @@
 # ===============================================
-# Achievement Tracker Dockerfile - Ainflue Platform
+# Achievement Tracker Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Achievement Tracking Service
 # Handles achievement unlocking, progress tracking, and milestone detection
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8083/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Achievement Tracker Service for Ainflue Gamification"
+LABEL description="Achievement Tracker Service for IA Chérie Gamification"
 
 EXPOSE 8083
 CMD ["python", "-m", "achievement_tracker.main"]

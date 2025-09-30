@@ -1,9 +1,9 @@
-"""Ainflue Core Billing Engine - Enterprise Billing & Invoicing System
+"""IA Chérie Core Billing Engine - Enterprise Billing & Invoicing System
 ===================================================================
 
 Advanced billing engine providing subscription billing, usage-based billing,
 invoice generation, tax calculation, revenue recognition, and financial
-reporting for the Ainflue platform payment core.
+reporting for the IA Chérie platform payment core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

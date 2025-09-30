@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Security Manager
+ * IA Chérie Desktop - Security Manager
  * 
  * Professional security implementation with content protection and access control
  * 
@@ -20,7 +20,7 @@ class DesktopSecurityManager {
   constructor() {
     this.securityPolicies = {
       csp: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:",
-      allowedDomains: ['ainflue.com', 'api.ainflue.com', 'cdn.ainflue.com'],
+      allowedDomains: ['iacherie.com', 'api.iacherie.com', 'cdn.iacherie.com'],
       blockedDomains: [],
       enableRemoteContent: false,
       strictTransportSecurity: true,
@@ -255,7 +255,7 @@ class DesktopSecurityManager {
     // Handle dangerous protocols
     const dangerousProtocols = ['file:', 'ftp:', 'javascript:', 'data:'];
     
-    app.setAsDefaultProtocolClient('ainflue');
+    app.setAsDefaultProtocolClient('iacherie');
     
     log.info('Protocol security configured');
   }

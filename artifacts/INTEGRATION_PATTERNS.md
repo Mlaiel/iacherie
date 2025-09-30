@@ -1,4 +1,4 @@
-# 🔗 INTEGRATION PATTERNS - AINFLUE ENTERPRISE
+# 🔗 INTEGRATION PATTERNS - IACHERIE ENTERPRISE
 
 **Version:** 1.0 Enterprise  
 **Date:** 15 Décembre 2025  
@@ -397,7 +397,7 @@ class AnalyticsAggregator {
 ```yaml
 services:
   instagram-connector:
-    image: ainflue/instagram-connector:v1.0
+    image: iacherie/instagram-connector:v1.0
     environment:
       - INSTAGRAM_API_VERSION=v18.0
       - RATE_LIMIT_REQUESTS_PER_HOUR=200
@@ -407,7 +407,7 @@ services:
         cpu: "500m"
   
   youtube-connector:
-    image: ainflue/youtube-connector:v1.0
+    image: iacherie/youtube-connector:v1.0
     environment:
       - YOUTUBE_API_VERSION=v3
       - QUOTA_LIMIT_UNITS_PER_DAY=10000
@@ -510,12 +510,12 @@ class IntegrationMonitor {
 
 ### 📞 **CONTACT INTÉGRATION**
 
-**Integration Engineering:** integration@ainflue.enterprise  
+**Integration Engineering:** integration@iacherie.enterprise  
 **Architecture Lead:** Fahed Mlaiel (mlaiel@live.de)  
 **Support Technique:** +33 1 XX XX XX XX
 
 ---
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
-**Ainflue Platform Integration Patterns**  
+**IA Chérie Platform Integration Patterns**  
 **Version 1.0 - Confidentiel et Propriétaire**

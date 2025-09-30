@@ -1,11 +1,11 @@
 """
-🚪 API Gateway Integration Enterprise - Ainflue
+🚪 API Gateway Integration Enterprise - IA Chérie
 ===============================================
 Intégration API Gateway avec service discovery.
 Route discovery + rate limiting + authentication integration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

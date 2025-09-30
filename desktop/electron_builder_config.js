@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Electron Builder Configuration
+ * IA Chérie Desktop - Electron Builder Configuration
  * 
  * Professional build configuration for multi-platform distribution
  * 
@@ -16,8 +16,8 @@ const fs = require('fs');
 class ElectronBuilderConfig {
   constructor() {
     this.baseConfig = {
-      appId: 'com.ainflue.desktop',
-      productName: 'Ainflue Studio',
+      appId: 'com.iacherie.desktop',
+      productName: 'IA Chérie Studio',
       copyright: '© 2025 Fahed Mlaiel. All rights reserved.',
       
       directories: {
@@ -55,14 +55,14 @@ class ElectronBuilderConfig {
       extraMetadata: {
         main: 'main.js',
         author: 'Fahed Mlaiel <mlaiel@live.de>',
-        homepage: 'https://ainflue.com',
+        homepage: 'https://iacherie.com',
         license: 'PROPRIETARY'
       },
       
       publish: {
         provider: 'github',
         owner: 'Mlaiel',
-        repo: 'Ainflue',
+        repo: 'IA Chérie',
         private: false
       },
       
@@ -126,8 +126,8 @@ class ElectronBuilderConfig {
         fileAssociations: [
           {
             ext: 'ainproj',
-            name: 'Ainflue Project',
-            description: 'Ainflue Studio Project File',
+            name: 'IA Chérie Project',
+            description: 'IA Chérie Studio Project File',
             icon: 'assets/icons/project.icns',
             role: 'Editor'
           }
@@ -136,8 +136,8 @@ class ElectronBuilderConfig {
         // URL protocol handlers
         protocols: [
           {
-            name: 'ainflue',
-            schemes: ['ainflue'],
+            name: 'iacherie',
+            schemes: ['iacherie'],
             role: 'Editor'
           }
         ]
@@ -176,7 +176,7 @@ class ElectronBuilderConfig {
         identity: null,
         installLocation: '/Applications',
         mustClose: [
-          'com.ainflue.desktop'
+          'com.iacherie.desktop'
         ]
       }
     };
@@ -218,8 +218,8 @@ class ElectronBuilderConfig {
         fileAssociations: [
           {
             ext: 'ainproj',
-            name: 'Ainflue Project',
-            description: 'Ainflue Studio Project File',
+            name: 'IA Chérie Project',
+            description: 'IA Chérie Studio Project File',
             icon: 'assets/icons/project.ico',
             perMachine: false
           }
@@ -228,8 +228,8 @@ class ElectronBuilderConfig {
         // URL protocol handlers
         protocols: [
           {
-            name: 'ainflue',
-            schemes: ['ainflue']
+            name: 'iacherie',
+            schemes: ['iacherie']
           }
         ],
         
@@ -246,7 +246,7 @@ class ElectronBuilderConfig {
         allowElevation: true,
         createDesktopShortcut: true,
         createStartMenuShortcut: true,
-        shortcutName: 'Ainflue Studio',
+        shortcutName: 'IA Chérie Studio',
         runAfterFinish: true,
         artifactName: '${productName}-${version}-Setup.${ext}',
         deleteAppDataOnUninstall: false,
@@ -319,12 +319,12 @@ class ElectronBuilderConfig {
         description: 'Advanced AI-powered content creation platform with professional editing, protection, and monetization features for modern creators.',
         
         desktop: {
-          Name: 'Ainflue Studio',
+          Name: 'IA Chérie Studio',
           Comment: 'Professional AI Content Creation Studio',
           GenericName: 'Content Creation Studio',
           Keywords: 'audio;video;editing;ai;content;creation;studio',
-          StartupWMClass: 'Ainflue Studio',
-          MimeType: 'application/x-ainflue-project',
+          StartupWMClass: 'IA Chérie Studio',
+          MimeType: 'application/x-iacherie-project',
           Categories: 'AudioVideo;Audio;Video;Player;Recorder;AudioVideoEditing'
         },
         
@@ -332,9 +332,9 @@ class ElectronBuilderConfig {
         fileAssociations: [
           {
             ext: 'ainproj',
-            name: 'Ainflue Project',
-            description: 'Ainflue Studio Project File',
-            mimeType: 'application/x-ainflue-project'
+            name: 'IA Chérie Project',
+            description: 'IA Chérie Studio Project File',
+            mimeType: 'application/x-iacherie-project'
           }
         ]
       },
@@ -343,14 +343,14 @@ class ElectronBuilderConfig {
         artifactName: '${productName}-${version}.${ext}',
         include: [
           'assets/appimage/AppRun',
-          'assets/appimage/ainflue.desktop',
+          'assets/appimage/iacherie.desktop',
           'assets/appimage/icon.png'
         ]
       },
       
       deb: {
         artifactName: '${productName}_${version}_${arch}.${ext}',
-        packageName: 'ainflue-studio',
+        packageName: 'iacherie-studio',
         
         // Debian package information
         maintainer: 'Fahed Mlaiel <mlaiel@live.de>',
@@ -384,7 +384,7 @@ class ElectronBuilderConfig {
       
       rpm: {
         artifactName: '${productName}-${version}.${arch}.${ext}',
-        packageName: 'ainflue-studio',
+        packageName: 'iacherie-studio',
         
         // RPM package information
         vendor: 'Fahed Mlaiel',

@@ -301,7 +301,7 @@ class EvidenceCollectionEngine:
                     'method': 'automated_fingerprinting',
                     'software_version': '2.1.0',
                     'collection_timestamp': datetime.now().isoformat(),
-                    'collector_system': 'Ainflue-Legal-Protection-Engine'
+                    'collector_system': 'IA Chérie-Legal-Protection-Engine'
                 }
             }
             
@@ -333,7 +333,7 @@ class EvidenceCollectionEngine:
                 description=f"Preuve de violation détectée sur {violation_data.get('platform_name', 'plateforme inconnue')}",
                 evidence_data=evidence_data,
                 file_paths=evidence_files,
-                collected_by='Ainflue-Legal-System',
+                collected_by='IA Chérie-Legal-System',
                 collected_at=datetime.now(),
                 custody_chain=[initial_custody],
                 integrity_hash=integrity_hash,

@@ -1,4 +1,4 @@
-# Elasticsearch Configuration for Ainflue Platform
+# Elasticsearch Configuration for IA Chérie Platform
 # ELK Stack configuration for centralized logging
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -47,9 +47,9 @@ spec:
         - name: xpack.security.transport.ssl.enabled
           value: "false"
         - name: cluster.name
-          value: "ainflue-logs"
+          value: "iacherie-logs"
         - name: node.name
-          value: "ainflue-es-node-1"
+          value: "iacherie-es-node-1"
         - name: bootstrap.memory_lock
           value: "true"
         - name: network.host
@@ -117,8 +117,8 @@ metadata:
 data:
   elasticsearch.yml: |
     # Cluster configuration
-    cluster.name: "ainflue-logs"
-    node.name: "ainflue-es-node-1"
+    cluster.name: "iacherie-logs"
+    node.name: "iacherie-es-node-1"
     
     # Network configuration
     network.host: 0.0.0.0
@@ -151,7 +151,7 @@ data:
     indices.query.bool.max_clause_count: 10000
     search.max_buckets: 100000
     
-    # Index templates for Ainflue logs
+    # Index templates for IA Chérie logs
     index.number_of_shards: 1
     index.number_of_replicas: 0
     index.refresh_interval: 30s
@@ -281,10 +281,10 @@ data:
         }
       }
       
-      # Parse Ainflue application logs
-      if [service_name] =~ /^ainflue-/ {
+      # Parse IA Chérie application logs
+      if [service_name] =~ /^iacherie-/ {
         mutate {
-          add_field => { "application" => "ainflue" }
+          add_field => { "application" => "iacherie" }
         }
         
         # Parse JSON logs from application
@@ -318,7 +318,7 @@ data:
       }
       
       # Parse HTTP access logs
-      if [service_name] == "ainflue-api-gateway" and [message] =~ /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ {
+      if [service_name] == "iacherie-api-gateway" and [message] =~ /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ {
         grok {
           match => { 
             "message" => "%{COMBINEDAPACHELOG}"
@@ -344,13 +344,13 @@ data:
     output {
       elasticsearch {
         hosts => ["elasticsearch:9200"]
-        index => "ainflue-logs-%{+YYYY.MM.dd}"
+        index => "iacherie-logs-%{+YYYY.MM.dd}"
         
         # Use document_type for different log types
-        template_name => "ainflue-logs"
-        template_pattern => "ainflue-logs-*"
+        template_name => "iacherie-logs"
+        template_pattern => "iacherie-logs-*"
         template => {
-          "index_patterns" => ["ainflue-logs-*"],
+          "index_patterns" => ["iacherie-logs-*"],
           "settings" => {
             "number_of_shards" => 1,
             "number_of_replicas" => 0,

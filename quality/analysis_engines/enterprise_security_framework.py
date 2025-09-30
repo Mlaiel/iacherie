@@ -210,7 +210,7 @@ class EnterpriseSecurityFramework:
             # Don't start task during init, will be started when needed
             pass
         
-        # Initialisation Ainflue security policies
+        # Initialisation IA Chérie security policies
         self._initialize_ainflue_security()
         
         logger.info("✅ Enterprise Security Framework initialisé")
@@ -485,8 +485,8 @@ class EnterpriseSecurityFramework:
         }
 
     def _initialize_ainflue_security(self):
-        """Initialisation politiques sécurité Ainflue"""
-        logger.info("🎯 Configuration sécurité Ainflue enterprise")
+        """Initialisation politiques sécurité IA Chérie"""
+        logger.info("🎯 Configuration sécurité IA Chérie enterprise")
         
         # Politiques contrôle d'accès créateurs
         self.access_control_policies["creators"] = {
@@ -1327,7 +1327,7 @@ class EnterpriseSecurityFramework:
                 "🤖 ML threat detection achieving 95% accuracy",
                 "⚡ Real-time monitoring and automated response active",
                 "📊 OWASP Top 10 compliance monitoring operational",
-                "🛡️ Multi-layer protection ensuring Ainflue security"
+                "🛡️ Multi-layer protection ensuring IA Chérie security"
             ]
         }
 

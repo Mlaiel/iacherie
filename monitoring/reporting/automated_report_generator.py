@@ -1,7 +1,7 @@
 """Automated Report Generator System
 =================================
 
-Enterprise automated report generation and delivery system for Ainflue Creator Economy.
+Enterprise automated report generation and delivery system for IA Chérie Creator Economy.
 Template-based report generation, dynamic data visualization, multi-format export,
 scheduled delivery, and custom branding integration.
 
@@ -963,7 +963,7 @@ class AutomatedReportGenerator:
         
         configs = {
             "corporate": BrandingConfig(
-                company_name="Ainflue",
+                company_name="IA Chérie",
                 logo_path="/assets/logo_corporate.png",
                 primary_color="#1f4e79",
                 secondary_color="#2980b9",
@@ -974,7 +974,7 @@ class AutomatedReportGenerator:
                 custom_css=".header { background: linear-gradient(45deg, #1f4e79, #2980b9); }"
             ),
             "executive": BrandingConfig(
-                company_name="Ainflue",
+                company_name="IA Chérie",
                 logo_path="/assets/logo_executive.png",
                 primary_color="#2c3e50",
                 secondary_color="#34495e",
@@ -985,7 +985,7 @@ class AutomatedReportGenerator:
                 custom_css=".header { background: #2c3e50; font-weight: bold; }"
             ),
             "creative": BrandingConfig(
-                company_name="Ainflue",
+                company_name="IA Chérie",
                 logo_path="/assets/logo_creative.png",
                 primary_color="#e74c3c",
                 secondary_color="#f39c12",
@@ -996,7 +996,7 @@ class AutomatedReportGenerator:
                 custom_css=".header { background: linear-gradient(45deg, #e74c3c, #f39c12); }"
             ),
             "minimal": BrandingConfig(
-                company_name="Ainflue",
+                company_name="IA Chérie",
                 logo_path="/assets/logo_minimal.png",
                 primary_color="#ffffff",
                 secondary_color="#f8f9fa",

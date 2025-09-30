@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Contract Compliance Monitor
+IA Chérie Platform - Contract Compliance Monitor
 =============================================
 
 Enterprise-grade contract compliance monitoring for collaboration partnerships,

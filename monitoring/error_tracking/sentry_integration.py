@@ -1,5 +1,5 @@
 """
-Sentry Error Tracking Integration for Ainflue Platform
+Sentry Error Tracking Integration for IA Chérie Platform
 Production-ready error tracking with intelligent filtering and context
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -132,7 +132,7 @@ class SentryErrorTracker:
                 before_send_transaction=self._before_send_transaction_filter,
                 release=self._get_release_version(),
                 max_breadcrumbs=50,
-                in_app_include=['ainflue'],
+                in_app_include=['iacherie'],
                 in_app_exclude=[
                     'sentry_sdk',
                     'celery',
@@ -142,7 +142,7 @@ class SentryErrorTracker:
             )
             
             # Set global tags
-            sentry_sdk.set_tag("platform", "ainflue")
+            sentry_sdk.set_tag("platform", "iacherie")
             sentry_sdk.set_tag("service_type", "ai_content_platform")
             
             self.initialized = True

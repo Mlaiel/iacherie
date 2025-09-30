@@ -1,7 +1,7 @@
-# 🎯 Module Qualité - Plateforme Ainflue
+# 🎯 Module Qualité - Plateforme IA Chérie
 
 ## Aperçu
-Le module Qualité fournit une assurance qualité complète, des frameworks de test et des systèmes d'amélioration continue pour la plateforme Ainflue. Il garantit la fiabilité, les performances et la sécurité dans tous les workflows des créateurs.
+Le module Qualité fournit une assurance qualité complète, des frameworks de test et des systèmes d'amélioration continue pour la plateforme IA Chérie. Il garantit la fiabilité, les performances et la sécurité dans tous les workflows des créateurs.
 
 ## Fonctionnalités Principales
 - **Framework de Test Complet**: Tests unitaires, d'intégration, E2E et de performance
@@ -60,7 +60,7 @@ results = await orchestrator.assess_quality()
 ---
 
 ## Mention Légale
-**Copyright © 2025 Plateforme Ainflue**  
+**Copyright © 2025 Plateforme IA Chérie**  
 **Auteur**: Fahed Mlaiel (mlaiel@live.de)  
 **Licence**: Propriétaire - Tous Droits Réservés  
 
@@ -68,9 +68,9 @@ Ce logiciel est protégé par le droit d'auteur et les traités internationaux. 
 
 **Confidentialité**: Ce code contient des algorithmes propriétaires et des secrets commerciaux. Toute divulgation ou utilisation non autorisée est interdite sous les lois applicables sur les secrets commerciaux.
 
-**Avis de Sécurité**: Ce module contient des composants critiques de sécurité. Toute vulnérabilité de sécurité doit être signalée immédiatement à security@ainflue.com suivant les procédures de divulgation responsable.
+**Avis de Sécurité**: Ce module contient des composants critiques de sécurité. Toute vulnérabilité de sécurité doit être signalée immédiatement à security@iacherie.com suivant les procédures de divulgation responsable.
 
-**Licence Entreprise Requise**: L'utilisation commerciale nécessite une Licence Entreprise valide. Contactez licensing@ainflue.com pour les conditions de licence.
+**Licence Entreprise Requise**: L'utilisation commerciale nécessite une Licence Entreprise valide. Contactez licensing@iacherie.com pour les conditions de licence.
 
 **Conformité**: Ce logiciel est conforme au RGPD, CCPA et aux réglementations internationales de protection des données. Toute modification doit maintenir les standards de conformité.
 

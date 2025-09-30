@@ -1,6 +1,6 @@
 {
   "document_info": {
-    "title": "Ainflue Platform - Technical Specifications Enterprise",
+    "title": "IA Chérie Platform - Technical Specifications Enterprise",
     "version": "2.0.0-enterprise",
     "date": "2025-01-15",
     "author": "Fahed Mlaiel",
@@ -503,10 +503,10 @@
       "email": "mlaiel@live.de",
       "role": "Chief Technology Officer & Founder"
     },
-    "enterprise_sales": "enterprise@ainflue.com",
-    "technical_support": "support@ainflue.com",
-    "partnerships": "partnerships@ainflue.com",
-    "security_issues": "security@ainflue.com",
-    "legal_inquiries": "legal@ainflue.com"
+    "enterprise_sales": "enterprise@iacherie.com",
+    "technical_support": "support@iacherie.com",
+    "partnerships": "partnerships@iacherie.com",
+    "security_issues": "security@iacherie.com",
+    "legal_inquiries": "legal@iacherie.com"
   }
 }

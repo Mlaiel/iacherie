@@ -1,8 +1,8 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
-# Ainflue Infrastructure Module - File System Manager
+# IA Chérie Infrastructure Module - File System Manager
 # =================================================
 # 
-# Enterprise-grade file system management for Ainflue platform
+# Enterprise-grade file system management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -120,12 +120,12 @@ class FileSystemManager:
     Enterprise File System Manager
     
     Manages distributed file systems, storage providers, file metadata,
-    and access control across the Ainflue platform.
+    and access control across the IA Chérie platform.
     """
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize file system manager"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/storage"
+        self.config_path = config_path or "/home/runner/work/IA Chérie/IA Chérie/infra/storage"
         self.base_storage_path = f"{self.config_path}/storage_data"
         self.metadata_store: Dict[str, FileMetadata] = {}
         self.storage_quotas: Dict[str, StorageQuota] = {}
@@ -204,7 +204,7 @@ class FileSystemManager:
             
             # AWS S3 provider
             self.provider_configs[StorageProvider.AWS_S3] = {
-                "bucket_name": "ainflue-storage",
+                "bucket_name": "iacherie-storage",
                 "region": "us-east-1",
                 "storage_class": "STANDARD",
                 "encryption": "AES256"
@@ -212,7 +212,7 @@ class FileSystemManager:
             
             # Google Cloud Storage provider
             self.provider_configs[StorageProvider.GOOGLE_CLOUD_STORAGE] = {
-                "bucket_name": "ainflue-gcs-storage",
+                "bucket_name": "iacherie-gcs-storage",
                 "location": "US",
                 "storage_class": "STANDARD",
                 "encryption": "GOOGLE_MANAGED"
@@ -220,7 +220,7 @@ class FileSystemManager:
             
             # Azure Blob Storage provider
             self.provider_configs[StorageProvider.AZURE_BLOB] = {
-                "container_name": "ainflue-blob-storage",
+                "container_name": "iacherie-blob-storage",
                 "account_name": "ainfluestorage",
                 "tier": "Hot",
                 "encryption": "AES256"

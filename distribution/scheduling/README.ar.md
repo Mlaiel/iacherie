@@ -1,6 +1,6 @@
 # 📅 محرك جدولة التوزيع - منصة جدولة النشر المتقدمة
 
-**نظام جدولة على مستوى المؤسسات لمنصة توزيع Ainflue**
+**نظام جدولة على مستوى المؤسسات لمنصة توزيع IA Chérie**
 
 ## 🎯 نظرة عامة
 
@@ -128,9 +128,9 @@ python setup_scheduling.py --environment=production
 
 ## 📞 الدعم والاتصال
 
-**فريق الجدولة**: scheduling@ainflue.com  
+**فريق الجدولة**: scheduling@iacherie.com  
 **الدعم التقني**: +1-800-SCHEDULE  
-**دعم المؤسسات**: enterprise@ainflue.com
+**دعم المؤسسات**: enterprise@iacherie.com
 
 ---
 

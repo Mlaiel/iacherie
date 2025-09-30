@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE REVENUE ANALYTICS - BUSINESS INSIGHTS DOCKERFILE
+# IACHERIE REVENUE ANALYTICS - BUSINESS INSIGHTS DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS analytics-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${ANALYTICS_SERVICE_PORT}
 CMD ["python3.11", "-m", "revenue_analytics.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Revenue Analytics"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="revenue_analytics"
-LABEL ainflue.service.port="8047"
+LABEL org.opencontainers.image.title="IA Chérie Revenue Analytics"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="revenue_analytics"
+LABEL iacherie.service.port="8047"

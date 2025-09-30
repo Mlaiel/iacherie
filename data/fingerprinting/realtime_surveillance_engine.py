@@ -327,7 +327,7 @@ class Platform35PlusMonitor:
             self.session = aiohttp.ClientSession(
                 timeout=timeout,
                 connector=connector,
-                headers={'User-Agent': 'Ainflue-Surveillance-Engine/2.1.0'}
+                headers={'User-Agent': 'IA Chérie-Surveillance-Engine/2.1.0'}
             )
             
             # Initialisation rate limiters

@@ -1,6 +1,6 @@
 # 🔗 Microservices Orchestration - Enterprise Complete
 
-**Complete enterprise-grade microservices orchestration system for Ainflue platform with service mesh, intelligent routing, and comprehensive monitoring.**
+**Complete enterprise-grade microservices orchestration system for IA Chérie platform with service mesh, intelligent routing, and comprehensive monitoring.**
 
 ## 🌟 Architecture Overview
 
@@ -104,7 +104,7 @@ from integrations.microservices_orchestration import initialize_ainflue_microser
 
 # Initialize complete orchestration
 success = await initialize_ainflue_microservices({
-    'cluster_name': 'ainflue-production',
+    'cluster_name': 'iacherie-production',
     'environment': 'production',
     'security_level': 'enterprise'
 })
@@ -121,7 +121,7 @@ orchestrator = get_microservices_orchestrator()
 deployment_result = await orchestrator['container_orchestrator'].orchestrate_containers([
     {
         'name': 'content-service',
-        'image': 'ainflue/content-service:v2.1.0',
+        'image': 'iacherie/content-service:v2.1.0',
         'replicas': 3,
         'resources': {
             'cpu_request': '200m',
@@ -294,7 +294,7 @@ await orchestrator['monitoring_hub'].collect_metric(
 
 ## 🤝 Contributing
 
-This module is part of the Ainflue platform architecture. For contribution guidelines, please refer to the main project documentation.
+This module is part of the IA Chérie platform architecture. For contribution guidelines, please refer to the main project documentation.
 
 ## 📄 License
 

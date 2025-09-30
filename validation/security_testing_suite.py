@@ -4,7 +4,7 @@
 #!/usr/bin/env python3
 """
 🔒 SECURITY PENETRATION TESTING SUITE - ENTERPRISE VALIDATION
-Ainflue Platform - Comprehensive Security Assessment & Vulnerability Scanning
+IA Chérie Platform - Comprehensive Security Assessment & Vulnerability Scanning
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Expertise Multi-Rôles: Lead Dev IA + Backend Senior + ML Engineer + DBA + 

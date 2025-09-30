@@ -1,6 +1,6 @@
 # Module Event Handlers Enterprise
 
-**Système Professionnel de Traitement d'Événements pour Plateforme Ainflue**
+**Système Professionnel de Traitement d'Événements pour Plateforme IA Chérie**
 
 **Architecte Principal:** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe Experte:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer

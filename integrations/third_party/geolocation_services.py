@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Geolocation Services Integration Module
+IA Chérie Platform - Geolocation Services Integration Module
 Enterprise-grade geolocation services for location-based content and analytics
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -979,10 +979,10 @@ def create_geolocation_manager(config: Dict[str, Any]) -> GeolocationServicesMan
     """Create configured geolocation manager"""
     return GeolocationServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def ainflue_location_intelligence_workflow(user_ip: str, content_preferences: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Complete location intelligence workflow for Ainflue creators
+    Complete location intelligence workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -1019,7 +1019,7 @@ async def ainflue_location_intelligence_workflow(user_ip: str, content_preferenc
         
         # Create targeted campaign
         campaign_config = {
-            "name": f"Ainflue Regional Campaign - {location_data.address.country if location_data.address else 'Unknown'}",
+            "name": f"IA Chérie Regional Campaign - {location_data.address.country if location_data.address else 'Unknown'}",
             "target_regions": [
                 {
                     "name": location_data.address.city if location_data.address else "Unknown City",
@@ -1089,5 +1089,5 @@ if __name__ == "__main__":
     # asyncio.run(test_geolocation_services())
     
     print("✅ Geolocation Services Integration Module loaded successfully")
-    print("🌍 Enterprise-grade location intelligence for Ainflue creators")
+    print("🌍 Enterprise-grade location intelligence for IA Chérie creators")
     print("📍 IP geolocation, address geocoding, geofencing, and location analytics ready")

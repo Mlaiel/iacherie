@@ -243,7 +243,7 @@ class ResearchDocumentationGenerator:
 {{ references }}
 
 ---
-*Generated on {{ generation_date }} by Ainflue Research Documentation System*
+*Generated on {{ generation_date }} by IA Chérie Research Documentation System*
 *Authors: {{ authors }}*
 """,
             "technical_report": """
@@ -1297,8 +1297,8 @@ async def example_usage():
     
     # 👥 Authors
     authors = [
-        Author("Dr. Fahed Mlaiel", "mlaiel@live.de", "Ainflue Research Lab", "0000-0000-0000-0000"),
-        Author("ML Research Team", "research@ainflue.com", "Ainflue Technologies")
+        Author("Dr. Fahed Mlaiel", "mlaiel@live.de", "IA Chérie Research Lab", "0000-0000-0000-0000"),
+        Author("ML Research Team", "research@iacherie.com", "IA Chérie Technologies")
     ]
     
     # 🎖️ Lead Dev IA - Generate research paper

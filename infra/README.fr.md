@@ -1,10 +1,10 @@
-# Module d'Infrastructure Ainflue
+# Module d'Infrastructure IA Chérie
 
-**Gestion d'infrastructure de niveau entreprise pour la plateforme d'économie créative Ainflue**
+**Gestion d'infrastructure de niveau entreprise pour la plateforme d'économie créative IA Chérie**
 
 ## Vue d'ensemble
 
-Le Module d'Infrastructure Ainflue fournit des capacités complètes de gestion d'infrastructure de niveau entreprise pour le déploiement multi-cloud avec sécurité d'entreprise, surveillance et fonctionnalités de conformité.
+Le Module d'Infrastructure IA Chérie fournit des capacités complètes de gestion d'infrastructure de niveau entreprise pour le déploiement multi-cloud avec sécurité d'entreprise, surveillance et fonctionnalités de conformité.
 
 ### Fonctionnalités Principales
 
@@ -50,8 +50,8 @@ Optimisation SEO → Distribution de Contenu
 
 1. **Cloner le référentiel**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infra
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/infra
 ```
 
 2. **Configurer les identifiants cloud**
@@ -97,7 +97,7 @@ export AWS_REGION="us-west-2"
 export AZURE_LOCATION="West US 2"
 export GCP_REGION="us-west2"
 export ENVIRONMENT="production"
-export PROJECT_NAME="ainflue"
+export PROJECT_NAME="iacherie"
 ```
 
 ## Déploiement Multi-Cloud
@@ -169,7 +169,7 @@ Ce logiciel est propriétaire et protégé par le droit d'auteur international. 
 ### Contact
 - **Email**: mlaiel@live.de
 - **GitHub**: [@Mlaiel](https://github.com/Mlaiel)
-- **Site Web**: [https://ainflue.com](https://ainflue.com)
+- **Site Web**: [https://iacherie.com](https://iacherie.com)
 
 ---
 

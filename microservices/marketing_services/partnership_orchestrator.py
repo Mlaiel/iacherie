@@ -1,12 +1,12 @@
 """
-Partnership Orchestrator - Ainflue Enterprise
+Partnership Orchestrator - IA Chérie Enterprise
 =============================================
 Orchestrateur partenariats enterprise avec matching IA.
 Brand-creator partnerships + collaboration workflows + contract automation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services - Partnership Orchestration
+Project: IA Chérie Marketing Services - Partnership Orchestration
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

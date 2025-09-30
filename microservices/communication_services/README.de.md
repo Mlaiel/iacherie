@@ -1,10 +1,10 @@
-# 📞 Communication Services Enterprise - Ainflue
+# 📞 Communication Services Enterprise - IA Chérie
 
 **🚀 ENTERPRISE COMMUNICATION & MESSAGING SERVICES**
 
 ## 📋 Overview
 
-Enterprise Communication Services module providing comprehensive messaging, notifications, event streaming, and real-time communication capabilities for the distributed Ainflue microservices ecosystem.
+Enterprise Communication Services module providing comprehensive messaging, notifications, event streaming, and real-time communication capabilities for the distributed IA Chérie microservices ecosystem.
 
 ## 🏗️ Architecture
 
@@ -181,7 +181,7 @@ notification_providers:
   sendgrid:
     enabled: true
     api_key: "${SENDGRID_API_KEY}"
-    from_email: "notifications@ainflue.com"
+    from_email: "notifications@iacherie.com"
     
   twilio:
     enabled: true
@@ -335,14 +335,14 @@ Analytics Engineer:        Expert communication metrics + insights
 
 ### 🆘 Urgent Support
 ```yaml
-Critical Issues:          communication-team@ainflue.com
+Critical Issues:          communication-team@iacherie.com
 Escalation:              Lead Architect (mlaiel@live.de)
 Response Time:           < 10 minutes for P0 incidents
-Documentation:           docs.ainflue.com/communication-services
+Documentation:           docs.iacherie.com/communication-services
 ```
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - COMMUNICATION SERVICES ENTERPRISE AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - COMMUNICATION SERVICES ENTERPRISE IACHERIE**  
 **🔒 PROTECTED INTELLECTUAL PROPERTY**  
 **📡 PRODUCTION-READY COMMUNICATION INFRASTRUCTURE**

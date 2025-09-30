@@ -1,4 +1,4 @@
-"""MongoDB Migration System for Ainflue Platform
+"""MongoDB Migration System for IA Chérie Platform
 =============================================
 
 Database schema migrations, version management, and data transformation

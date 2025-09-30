@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - RBAC Configuration
+# IA Chérie Infrastructure Module - RBAC Configuration
 # =================================================
 # 
-# Enterprise-grade Role-Based Access Control for Ainflue platform
+# Enterprise-grade Role-Based Access Control for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -132,12 +132,12 @@ class RBACConfigurator:
     Enterprise Role-Based Access Control Configurator
     
     Manages roles, permissions, users, and groups for comprehensive
-    access control across the Ainflue platform.
+    access control across the IA Chérie platform.
     """
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize RBAC configurator"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/security"
+        self.config_path = config_path or "/home/runner/work/IA Chérie/IA Chérie/infra/security"
         self.roles: Dict[str, Role] = {}
         self.users: Dict[str, User] = {}
         self.groups: Dict[str, Group] = {}

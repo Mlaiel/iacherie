@@ -3,7 +3,7 @@
 Creator Affiliation Workflow - Workflow Affiliation Créateurs Multi-Format
 =========================================================================
 
-Démonstration workflow complet affiliation créateurs ultra sophistiqué pour Ainflue.
+Démonstration workflow complet affiliation créateurs ultra sophistiqué pour IA Chérie.
 Inclut workflows spécialisés pour musiciens, photographes, influenceurs, et autres créateurs
 avec intégration IA, protection contenu, et optimisation revenus.
 
@@ -249,7 +249,7 @@ class CreatorAffiliationWorkflowDemo:
             }
         )
         
-        # Étape 2: Upload multi-format content selon logique Ainflue
+        # Étape 2: Upload multi-format content selon logique IA Chérie
         upload_results = await self._simulate_content_upload_workflow(musician_profile)
         self.logger.info(f"✅ Upload contenu: {upload_results.files_uploaded} fichiers")
         self.logger.info(f"📊 Formats: {', '.join(upload_results.formats)}")
@@ -1127,7 +1127,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS TERMINÉES AVEC SUCCÈS!")
-        logger.info("🤝 Creator Affiliation Workflows - Ainflue Platform")
+        logger.info("🤝 Creator Affiliation Workflows - IA Chérie Platform")
         logger.info("=" * 70)
         
         return True

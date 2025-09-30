@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Rights Management Monitor
+IA Chérie Platform - Rights Management Monitor
 ============================================
 
 Comprehensive automated rights management monitoring system for tracking

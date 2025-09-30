@@ -48,7 +48,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE ACTUELLE VIOLANT LES RÈGLES :**
 ```
-/workspaces/Ainflue/backend/config/            ← Niveau 3 (LIMITE)
+/workspaces/IA Chérie/backend/config/            ← Niveau 3 (LIMITE)
 └── environments/ (11 fichiers)               ← Niveau 4 ❌ VIOLATION !
 ```
 
@@ -194,7 +194,7 @@ TOTAL CONSOLIDÉ : ~4,800 lignes de code environment management enterprise
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/IA Chérie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── config/                                         ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)

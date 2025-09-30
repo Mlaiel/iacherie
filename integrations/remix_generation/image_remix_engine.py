@@ -4,7 +4,7 @@
 ML Engineer + Audio Engineer Expert: Engine de remix image enterprise avec
 style transfer algorithms, composition optimization et artistic filter generation.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Style transfer intelligent pour créateurs visuels sur 65+ plateformes
 - Composition optimization avec règle des tiers et harmonie visuelle
 - Artistic filter generation pour remixes créatifs et mashups artistiques
@@ -83,7 +83,7 @@ class ImageAsset:
     title: str
     creator: str
     image_path: str
-    dimensions: Tuple[int, int]  # (width, height)
+    dimensions: tuple[int, int]  # (width, height)
     format: ImageFormat
     color_mode: str  # RGB, RGBA, L, etc.
     file_size: int  # en bytes
@@ -93,8 +93,8 @@ class ImageAsset:
 @dataclass
 class ColorAnalysis:
     """Analyse des couleurs d'une image"""
-    dominant_colors: List[Tuple[int, int, int]]
-    color_palette: List[Tuple[int, int, int]]
+    dominant_colors: List[tuple[int, int, int]]
+    color_palette: List[tuple[int, int, int]]
     color_harmony: str  # "complementary", "analogous", "triadic", etc.
     color_temperature: str  # "warm", "cool", "neutral"
     saturation_level: float
@@ -108,8 +108,8 @@ class CompositionAnalysis:
     rule_of_thirds_score: float
     symmetry_score: float
     balance_score: float
-    focal_points: List[Tuple[int, int]]
-    leading_lines: List[List[Tuple[int, int]]]
+    focal_points: List[tuple[int, int]]
+    leading_lines: List[List[tuple[int, int]]]
     negative_space_ratio: float
     visual_weight_distribution: Dict[str, float]
     composition_type: str  # "centered", "rule_of_thirds", "diagonal", etc.
@@ -121,7 +121,7 @@ class StyleTransferResult:
     style_reference: ImageAsset
     transferred_image_path: str
     style_strength: float
-    preservation_areas: List[Tuple[int, int, int, int]]  # zones préservées
+    preservation_areas: List[tuple[int, int, int, int]]  # zones préservées
     transfer_quality: float
     processing_time: float
 
@@ -474,7 +474,7 @@ class ImageRemixEngine:
                 color_distribution={"red": 0.33, "green": 0.33, "blue": 0.34}
             )
     
-    async def _extract_dominant_colors(self, img: Image.Image) -> List[Tuple[int, int, int]]:
+    async def _extract_dominant_colors(self, img: Image.Image) -> List[tuple[int, int, int]]:
         """Extraction des couleurs dominantes avec clustering"""
         # Conversion en array numpy
         img_array = np.array(img)
@@ -499,7 +499,7 @@ class ImageRemixEngine:
         
         return dominant_colors
     
-    async def _generate_color_palette(self, img: Image.Image) -> List[Tuple[int, int, int]]:
+    async def _generate_color_palette(self, img: Image.Image) -> List[tuple[int, int, int]]:
         """Génération d'une palette de couleurs harmonieuse"""
         # Quantification des couleurs pour palette
         img_quantized = img.quantize(colors=8)  # 8 couleurs
@@ -513,7 +513,7 @@ class ImageRemixEngine:
         
         return colors[:8]  # Maximum 8 couleurs
     
-    async def _analyze_color_harmony_type(self, colors: List[Tuple[int, int, int]]) -> str:
+    async def _analyze_color_harmony_type(self, colors: List[tuple[int, int, int]]) -> str:
         """Analyse du type d'harmonie des couleurs"""
         if len(colors) < 2:
             return "monochromatic"
@@ -559,7 +559,7 @@ class ImageRemixEngine:
         else:
             return "mixed"
     
-    async def _analyze_color_temperature(self, colors: List[Tuple[int, int, int]]) -> str:
+    async def _analyze_color_temperature(self, colors: List[tuple[int, int, int]]) -> str:
         """Analyse de la température des couleurs"""
         # Calcul de la température moyenne
         warm_score = 0
@@ -801,7 +801,7 @@ class ImageRemixEngine:
         
         return 0.5
     
-    async def _detect_focal_points(self, img: Image.Image) -> List[Tuple[int, int]]:
+    async def _detect_focal_points(self, img: Image.Image) -> List[tuple[int, int]]:
         """Détection des points focaux"""
         # Conversion en niveaux de gris
         gray_img = img.convert('L')

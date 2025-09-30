@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: platform_optimizer.dockerfile
-    container_name: ainflue-platform-optimizer
+    container_name: iacherie-platform-optimizer
     environment:
       - SERVICE_NAME=platform_optimizer
       - DATABASE_URL=${SEO_DB_URL}
@@ -32,7 +32,7 @@ services:
     build:
       context: .
       dockerfile: keyword_intelligence.dockerfile
-    container_name: ainflue-keyword-intelligence
+    container_name: iacherie-keyword-intelligence
     environment:
       - SERVICE_NAME=keyword_intelligence
       - DATABASE_URL=${SEO_DB_URL}
@@ -54,7 +54,7 @@ services:
     build:
       context: .
       dockerfile: trending_analyzer.dockerfile
-    container_name: ainflue-trending-analyzer
+    container_name: iacherie-trending-analyzer
     environment:
       - SERVICE_NAME=trending_analyzer
       - DATABASE_URL=${SEO_DB_URL}
@@ -76,7 +76,7 @@ services:
     build:
       context: .
       dockerfile: metadata_enhancer.dockerfile
-    container_name: ainflue-metadata-enhancer
+    container_name: iacherie-metadata-enhancer
     environment:
       - SERVICE_NAME=metadata_enhancer
       - DATABASE_URL=${SEO_DB_URL}
@@ -97,7 +97,7 @@ services:
     build:
       context: .
       dockerfile: hashtag_generator.dockerfile
-    container_name: ainflue-hashtag-generator
+    container_name: iacherie-hashtag-generator
     environment:
       - SERVICE_NAME=hashtag_generator
       - DATABASE_URL=${SEO_DB_URL}
@@ -118,7 +118,7 @@ services:
     build:
       context: .
       dockerfile: content_scheduler.dockerfile
-    container_name: ainflue-content-scheduler
+    container_name: iacherie-content-scheduler
     environment:
       - SERVICE_NAME=content_scheduler
       - DATABASE_URL=${SEO_DB_URL}
@@ -140,7 +140,7 @@ services:
     build:
       context: .
       dockerfile: viral_predictor.dockerfile
-    container_name: ainflue-viral-predictor
+    container_name: iacherie-viral-predictor
     environment:
       - SERVICE_NAME=viral_predictor
       - DATABASE_URL=${SEO_DB_URL}
@@ -163,7 +163,7 @@ services:
     build:
       context: .
       dockerfile: competitor_analyzer.dockerfile
-    container_name: ainflue-competitor-analyzer
+    container_name: iacherie-competitor-analyzer
     environment:
       - SERVICE_NAME=competitor_analyzer
       - DATABASE_URL=${SEO_DB_URL}
@@ -184,7 +184,7 @@ services:
     build:
       context: .
       dockerfile: rank_tracker.dockerfile
-    container_name: ainflue-rank-tracker
+    container_name: iacherie-rank-tracker
     environment:
       - SERVICE_NAME=rank_tracker
       - DATABASE_URL=${SEO_DB_URL}
@@ -205,7 +205,7 @@ services:
     build:
       context: .
       dockerfile: backlink_analyzer.dockerfile
-    container_name: ainflue-backlink-analyzer
+    container_name: iacherie-backlink-analyzer
     environment:
       - SERVICE_NAME=backlink_analyzer
       - DATABASE_URL=${SEO_DB_URL}
@@ -226,7 +226,7 @@ services:
     build:
       context: .
       dockerfile: schema_optimizer.dockerfile
-    container_name: ainflue-schema-optimizer
+    container_name: iacherie-schema-optimizer
     environment:
       - SERVICE_NAME=schema_optimizer
       - DATABASE_URL=${SEO_DB_URL}
@@ -245,7 +245,7 @@ services:
   # Infrastructure Services
   seo-db:
     image: postgres:15-alpine
-    container_name: ainflue-seo-postgres
+    container_name: iacherie-seo-postgres
     environment:
       POSTGRES_DB: seo_platform
       POSTGRES_USER: seo_user
@@ -260,7 +260,7 @@ services:
 
   seo-redis:
     image: redis:7-alpine
-    container_name: ainflue-seo-redis
+    container_name: iacherie-seo-redis
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     volumes:
       - seo_redis_data:/data
@@ -273,7 +273,7 @@ services:
   # Elasticsearch for search and analytics
   seo-elasticsearch:
     image: elasticsearch:8.12.0
-    container_name: ainflue-seo-elasticsearch
+    container_name: iacherie-seo-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false

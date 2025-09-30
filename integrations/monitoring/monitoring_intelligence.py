@@ -5,7 +5,7 @@
 =============================================================
 
 Monitoring intelligence enterprise avec ML-powered analytics et predictive insights.
-Infrastructure robuste d'intelligence artificielle pour monitoring prédictif des applications Ainflue.
+Infrastructure robuste d'intelligence artificielle pour monitoring prédictif des applications IA Chérie.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer

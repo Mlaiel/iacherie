@@ -1,12 +1,12 @@
 """
 🌍 DISTRIBUTION NOTIFICATIONS MODULE
-Ainflue Platform - Content Distribution Notification System
+IA Chérie Platform - Content Distribution Notification System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.1.0 Enterprise
 
-This module orchestrates all content distribution-related notifications for the Ainflue Platform,
+This module orchestrates all content distribution-related notifications for the IA Chérie Platform,
 ensuring comprehensive monitoring of content publishing, platform synchronization, and performance tracking.
 """
 

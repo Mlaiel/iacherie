@@ -269,5 +269,5 @@ print(f"Alertes traitées: {health_status['total_alerts_processed']}")
 
 ---
 
-*🏁 Système Alertes Enterprise Creator Economy - Architecture Propriétaire Ainflue*  
+*🏁 Système Alertes Enterprise Creator Economy - Architecture Propriétaire IA Chérie*  
 *© 2025 Fahed Mlaiel - Innovation Technologique Protégée*

@@ -1,5 +1,5 @@
 /**
- * Ainflue Camera Manager - Professional Camera Management Service
+ * IA Chérie Camera Manager - Professional Camera Management Service
  * 
  * Advanced camera system for content creators
  * Supports photo/video capture, real-time processing, and AI integration
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -50,7 +50,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Professional Camera Management Service for Ainflue Platform
+ * Professional Camera Management Service for IA Chérie Platform
  * 
  * Features:
  * - Advanced photo and video capture (up to 4K)

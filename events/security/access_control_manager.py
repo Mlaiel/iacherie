@@ -1,6 +1,6 @@
 """Access Control Manager for Events Security
 
-Advanced RBAC with business context awareness for Ainflue platform.
+Advanced RBAC with business context awareness for IA Chérie platform.
 Manages granular permissions for content, collaboration, and monetization events.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -91,7 +91,7 @@ class PermissionValidationResult:
 
 class AccessControlManager:
     """
-    Advanced access control manager for Ainflue business events.
+    Advanced access control manager for IA Chérie business events.
     Provides RBAC with dynamic business context awareness.
     """
     

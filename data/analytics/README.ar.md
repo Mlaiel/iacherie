@@ -329,7 +329,7 @@ async def predict_content_performance(content_data: ContentPredictionRequest):
 
 ### 📁 البنية النهائية للمستوى 3 الأقصى
 ```
-./workspaces/Ainflue/data/analytics/
+./workspaces/IA Chérie/data/analytics/
 │
 ├── 📄 __init__.py                              ✅ للإثراء (800+ سطر)
 ├── 📄 index.py                                 ✅ للإثراء (400+ سطر)

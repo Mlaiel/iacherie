@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -82,7 +82,7 @@ class PrometheusConfiguration:
             "scrape_interval": "15s",
             "evaluation_interval": "15s",
             "external_labels": {
-                "cluster": "ainflue",
+                "cluster": "iacherie",
                 "environment": "production"
             }
         })
@@ -281,22 +281,22 @@ class PrometheusConfiguration:
             logger.error(f"Failed to save recording rules for {rule_group}: {str(e)}")
     
     async def create_default_monitoring_targets(self):
-        """Create default monitoring targets for Ainflue infrastructure."""
+        """Create default monitoring targets for IA Chérie infrastructure."""
         try:
-            # Ainflue API targets
+            # IA Chérie API targets
             api_target = PrometheusTarget(
-                job_name="ainflue-api",
-                targets=["ainflue-api:8000"],
+                job_name="iacherie-api",
+                targets=["iacherie-api:8000"],
                 scrape_interval="10s",
                 metrics_path="/metrics",
                 labels={"service": "api", "tier": "backend"}
             )
             await self.add_scrape_target(api_target)
             
-            # Ainflue AI Engine targets
+            # IA Chérie AI Engine targets
             ai_target = PrometheusTarget(
-                job_name="ainflue-ai-engine",
-                targets=["ainflue-ai:8001"],
+                job_name="iacherie-ai-engine",
+                targets=["iacherie-ai:8001"],
                 scrape_interval="15s",
                 metrics_path="/metrics",
                 labels={"service": "ai-engine", "tier": "ml"}
@@ -345,7 +345,7 @@ class PrometheusConfiguration:
             logger.error(f"Failed to create default monitoring targets: {str(e)}")
     
     async def create_default_alerting_rules(self):
-        """Create default alerting rules for Ainflue infrastructure."""
+        """Create default alerting rules for IA Chérie infrastructure."""
         try:
             # High CPU usage alert
             cpu_alert = AlertingRule(
@@ -582,7 +582,7 @@ class PrometheusConfiguration:
                     "kubernetes_sd_configs": [{
                         "role": "pod",
                         "namespaces": {
-                            "names": discovery_config.get("namespaces", ["default", "ainflue"])
+                            "names": discovery_config.get("namespaces", ["default", "iacherie"])
                         }
                     }],
                     "relabel_configs": [

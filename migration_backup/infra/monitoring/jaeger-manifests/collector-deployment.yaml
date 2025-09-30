@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-collector
+    component: jaeger
+  name: jaeger-collector
+  namespace: jaeger-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-collector
+  template:
+    metadata:
+      labels:
+        app: jaeger-collector
+        component: jaeger
+    spec:
+      containers:
+      - env:
+        - name: SPAN_STORAGE_TYPE
+          value: elasticsearch
+        - name: COLLECTOR_ZIPKIN_HOST_PORT
+          value: :9411
+        - name: COLLECTOR_OTLP_ENABLED
+          value: 'true'
+        - name: ES_SERVER_URLS
+          value: http://elasticsearch:9200
+        - name: ES_NUM_SHARDS
+          value: '3'
+        - name: ES_NUM_REPLICAS
+          value: '1'
+        - name: ES_INDEX_PREFIX
+          value: jaeger
+        image: jaegertracing/jaeger-collector:1.53.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 14268
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: jaeger-collector
+        ports:
+        - containerPort: 14268
+        - containerPort: 14250
+        - containerPort: 9411
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 14268
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi

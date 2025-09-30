@@ -71,7 +71,7 @@ class iOSBiometricBridge {
       }
 
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: options.promptMessage || 'Authenticate to access Ainflue',
+        promptMessage: options.promptMessage || 'Authenticate to access IA Chérie',
         fallbackLabel: options.fallbackLabel || 'Use Passcode',
         disableDeviceFallback: options.disableDeviceFallback || false,
       });

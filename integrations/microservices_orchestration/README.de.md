@@ -11,7 +11,7 @@
 
 ## 🔗 Enterprise Microservices Orchestration
 
-Produktionsreife Microservices-Orchestrierungssuite mit Service Mesh Management, Container-Orchestrierung, API Gateway und intelligenter Service Discovery für die Ainflue Creator Platform.
+Produktionsreife Microservices-Orchestrierungssuite mit Service Mesh Management, Container-Orchestrierung, API Gateway und intelligenter Service Discovery für die IA Chérie Creator Platform.
 
 ### 🏗️ Kernfunktionen
 
@@ -21,9 +21,9 @@ Produktionsreife Microservices-Orchestrierungssuite mit Service Mesh Management,
 - **Service Discovery**: ML-gestützte Service Routing Optimierung
 - **Sicherheitsmanagement**: Zero-Trust Architektur mit mTLS Verschlüsselung
 
-### 🎯 Ainflue Creator Platform Integration
+### 🎯 IA Chérie Creator Platform Integration
 
-Diese Orchestrierungssuite wurde speziell für die Ainflue Plattform entwickelt und unterstützt:
+Diese Orchestrierungssuite wurde speziell für die IA Chérie Plattform entwickelt und unterstützt:
 
 - **Multi-Creator Workflows**: Spezialisierte Services für Musiker, Fotografen, Blogger, Influencer
 - **Content Processing**: Automatisierte Verarbeitung von Audio, Video, Bildern und Texten
@@ -38,9 +38,9 @@ Diese Orchestrierungssuite wurde speziell für die Ainflue Plattform entwickelt 
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-service-mesh
+  name: iacherie-service-mesh
   annotations:
-    service.istio.io/canonical-name: ainflue-orchestrator
+    service.istio.io/canonical-name: iacherie-orchestrator
 spec:
   selector:
     app: microservices-orchestrator
@@ -124,7 +124,7 @@ class BlueGreenDeployment:
 
 #### Metriken Sammlung
 - **Prometheus Integration**: Umfassende Metriken-Sammlung
-- **Custom Metrics**: Ainflue-spezifische Business-Metriken
+- **Custom Metrics**: IA Chérie-spezifische Business-Metriken
 - **Alerting**: Intelligente Alarmierung basierend auf SLA-Verletzungen
 
 ### 🔧 Konfigurationsmanagement
@@ -236,4 +236,4 @@ spec:
 
 ---
 
-*Diese Microservices Orchestration Architektur wurde entwickelt von **Fahed Mlaiel** für die Ainflue Creator Platform - Alle Rechte vorbehalten*
+*Diese Microservices Orchestration Architektur wurde entwickelt von **Fahed Mlaiel** für die IA Chérie Creator Platform - Alle Rechte vorbehalten*

@@ -1,5 +1,5 @@
 # MongoDB CI/CD Pipeline
-# Ainflue Platform - Enterprise Grade Testing and Deployment
+# IA Chérie Platform - Enterprise Grade Testing and Deployment
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
@@ -15,7 +15,7 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
-  IMAGE_NAME: ainflue/mongodb
+  IMAGE_NAME: iacherie/mongodb
   PYTHON_VERSION: '3.11'
   MONGODB_VERSION: '7.0'
 
@@ -388,7 +388,7 @@ jobs:
     - name: 🧪 Run smoke tests
       run: |
         kubectl run smoke-test-${{ github.run_id }} \
-          --image=ainflue/smoke-tests:latest \
+          --image=iacherie/smoke-tests:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_STAGING }}" \
           --env="TEST_SUITE=smoke" \
           --restart=Never \
@@ -399,7 +399,7 @@ jobs:
     - name: 📊 Performance validation
       run: |
         kubectl run perf-test-${{ github.run_id }} \
-          --image=ainflue/performance-tests:latest \
+          --image=iacherie/performance-tests:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_STAGING }}" \
           --env="TEST_DURATION=60" \
           --restart=Never \
@@ -433,7 +433,7 @@ jobs:
         
         # Verify green deployment
         kubectl run health-check-${{ github.run_id }} \
-          --image=ainflue/health-check:latest \
+          --image=iacherie/health-check:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_PRODUCTION_GREEN }}" \
           --restart=Never \
           -n mongodb-prod
@@ -449,7 +449,7 @@ jobs:
         
         # Verify production health
         kubectl run prod-health-check-${{ github.run_id }} \
-          --image=ainflue/health-check:latest \
+          --image=iacherie/health-check:latest \
           --env="MONGODB_URI=${{ secrets.MONGODB_URI_PRODUCTION }}" \
           --restart=Never \
           -n mongodb-prod

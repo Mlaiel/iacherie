@@ -1,5 +1,5 @@
 # Docker Compose for Testing Infrastructure
-# Comprehensive testing suite for Ainflue Platform
+# Comprehensive testing suite for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 services:
@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: test_runner.dockerfile
-    container_name: ainflue-test-runner
+    container_name: iacherie-test-runner
     ports:
       - "8000:8000"
     volumes:
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: integration_tester.dockerfile
-    container_name: ainflue-integration-tester
+    container_name: iacherie-integration-tester
     ports:
       - "8001:8001"
     volumes:
@@ -56,7 +56,7 @@ services:
     build:
       context: .
       dockerfile: performance_tester.dockerfile
-    container_name: ainflue-performance-tester
+    container_name: iacherie-performance-tester
     ports:
       - "8002:8002"
       - "8089:8089"  # Locust web UI
@@ -79,7 +79,7 @@ services:
     build:
       context: .
       dockerfile: security_tester.dockerfile
-    container_name: ainflue-security-tester
+    container_name: iacherie-security-tester
     ports:
       - "8003:8003"
     volumes:
@@ -101,7 +101,7 @@ services:
     build:
       context: .
       dockerfile: load_tester.dockerfile
-    container_name: ainflue-load-tester
+    container_name: iacherie-load-tester
     ports:
       - "8004:8004"
     volumes:
@@ -120,7 +120,7 @@ services:
     build:
       context: .
       dockerfile: stress_tester.dockerfile
-    container_name: ainflue-stress-tester
+    container_name: iacherie-stress-tester
     ports:
       - "8005:8005"
     volumes:
@@ -139,7 +139,7 @@ services:
     build:
       context: .
       dockerfile: chaos_engineering.dockerfile
-    container_name: ainflue-chaos-engineering
+    container_name: iacherie-chaos-engineering
     ports:
       - "8006:8006"
     volumes:
@@ -162,7 +162,7 @@ services:
     build:
       context: .
       dockerfile: e2e_tester.dockerfile
-    container_name: ainflue-e2e-tester
+    container_name: iacherie-e2e-tester
     ports:
       - "8007:8007"
     volumes:
@@ -182,7 +182,7 @@ services:
     build:
       context: .
       dockerfile: smoke_tester.dockerfile
-    container_name: ainflue-smoke-tester
+    container_name: iacherie-smoke-tester
     ports:
       - "8008:8008"
     volumes:
@@ -201,7 +201,7 @@ services:
     build:
       context: .
       dockerfile: regression_tester.dockerfile
-    container_name: ainflue-regression-tester
+    container_name: iacherie-regression-tester
     ports:
       - "8009:8009"
     volumes:
@@ -219,7 +219,7 @@ services:
   # Testing Database
   test_database:
     image: postgres:14-alpine
-    container_name: ainflue-test-database
+    container_name: iacherie-test-database
     environment:
       POSTGRES_DB: ainflue_test
       POSTGRES_USER: test_user
@@ -237,7 +237,7 @@ services:
   # Testing Redis
   test_redis:
     image: redis:7-alpine
-    container_name: ainflue-test-redis
+    container_name: iacherie-test-redis
     volumes:
       - test_redis_data:/data
     networks:

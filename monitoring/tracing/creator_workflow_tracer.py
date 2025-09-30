@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Workflow Tracer Enterprise
+IA Chérie Platform - Creator Workflow Tracer Enterprise
 ==================================================
 
 Advanced creator workflow tracing system for monitoring end-to-end creator journey,

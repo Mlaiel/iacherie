@@ -1,4 +1,4 @@
-"""🎯 Quality Metrics Orchestrator - Ainflue Platform
+"""🎯 Quality Metrics Orchestrator - IA Chérie Platform
 ================================================================
 Expert: QUALITY_ENGINEER + DEVOPS_ENGINEER  
 Created: 2025-01-XX
@@ -240,7 +240,7 @@ class QualityMetricsOrchestrator:
             
             # Create comprehensive report
             report = QualityReport(
-                project_name="Ainflue",
+                project_name="IA Chérie",
                 version=self._get_project_version(),
                 timestamp=datetime.utcnow(),
                 overall_score=overall_score,

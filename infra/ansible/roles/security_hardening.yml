@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Security Hardening Ansible Role
+# IA Chérie Infrastructure Module - Security Hardening Ansible Role
 # ================================================================
 # 
-# Enterprise-grade security hardening for Ainflue platform
+# Enterprise-grade security hardening for IA Chérie platform
 # Comprehensive security configuration and compliance automation
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,11 +21,11 @@
 # IA Prompt Engineer: AI provider security, prompt injection protection
 
 ---
-- name: "Security Hardening - Ainflue Platform"
+- name: "Security Hardening - IA Chérie Platform"
   hosts: all
   become: yes
   vars:
-    project_name: "ainflue"
+    project_name: "iacherie"
     security_level: "enterprise"
     compliance_frameworks:
       - "CIS"
@@ -268,7 +268,7 @@
           copy:
             content: |
               #!/bin/bash
-              # Ainflue AIDE Security Check
+              # IA Chérie AIDE Security Check
               # Daily file integrity monitoring
               
               AIDE_LOG="/var/log/aide/aide.log"
@@ -283,7 +283,7 @@
               else
                 echo "$(date): AIDE check found changes - see $AIDE_REPORT" >> $AIDE_LOG
                 # Send alert if needed
-                mail -s "AIDE Alert: File integrity changes detected on $(hostname)" admin@ainflue.com < $AIDE_REPORT || true
+                mail -s "AIDE Alert: File integrity changes detected on $(hostname)" admin@iacherie.com < $AIDE_REPORT || true
               fi
             dest: /usr/local/bin/aide-check.sh
             mode: '0755'
@@ -301,7 +301,7 @@
         - name: "Configure audit rules"
           copy:
             content: |
-              # Ainflue Security Audit Rules
+              # IA Chérie Security Audit Rules
               # Monitor critical system activities
               
               # Delete all previous rules
@@ -394,7 +394,7 @@
               Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
               Unattended-Upgrade::Automatic-Reboot-Time "02:00";
               
-              Unattended-Upgrade::Mail "admin@ainflue.com";
+              Unattended-Upgrade::Mail "admin@iacherie.com";
               Unattended-Upgrade::MailOnlyOnError "true";
               Unattended-Upgrade::SyslogEnable "true";
               Unattended-Upgrade::SyslogFacility "daemon";
@@ -443,13 +443,13 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Security Monitoring Script
+          # IA Chérie Security Monitoring Script
           # Comprehensive security status check
           
           LOG_FILE="/var/log/security-monitor.log"
           REPORT_FILE="/var/log/security-report-$(date +%Y%m%d).log"
           
-          echo "=== Ainflue Security Report - $(date) ===" > $REPORT_FILE
+          echo "=== IA Chérie Security Report - $(date) ===" > $REPORT_FILE
           
           # System status
           echo "== System Status ==" >> $REPORT_FILE

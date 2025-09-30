@@ -330,7 +330,7 @@ class SecurityAuditEngine:
             remediation_guidance="Implement strong password policies with complexity requirements"
         ))
         
-        # Règles spécifiques Ainflue
+        # Règles spécifiques IA Chérie
         self.add_audit_rule(AuditRule(
             rule_id="creator_data_protection",
             name="Creator Data Protection Check",
@@ -806,7 +806,7 @@ class SecurityAuditEngine:
             return {'violation': False}
     
     async def check_creator_data_protection(self, asset: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérification protection données créateurs (spécifique Ainflue)"""
+        """Vérification protection données créateurs (spécifique IA Chérie)"""
         try:
             result = {
                 'violation': False,
@@ -1272,7 +1272,7 @@ if __name__ == "__main__":
         audit_id = await audit_engine.start_audit(
             audit_type=AuditType.COMPLIANCE_CHECK,
             target_assets=[
-                "https://ainflue.com",
+                "https://iacherie.com",
                 "creator_db.encrypted",
                 "admin.mfa_enabled",
                 "consent_system.gdpr"
@@ -1296,8 +1296,8 @@ if __name__ == "__main__":
         vuln_audit_id = await audit_engine.start_audit(
             audit_type=AuditType.VULNERABILITY_SCAN,
             target_assets=[
-                "ainflue.com:443",
-                "api.ainflue.com:443",
+                "iacherie.com:443",
+                "api.iacherie.com:443",
                 "creator_panel.weak_password_policy"
             ],
             created_by="security_team"

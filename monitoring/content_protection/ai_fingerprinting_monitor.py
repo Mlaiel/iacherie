@@ -1,5 +1,5 @@
 """
-Ainflue Platform - AI Fingerprinting Monitor
+IA Chérie Platform - AI Fingerprinting Monitor
 ============================================
 
 Advanced AI-powered multi-format fingerprinting monitoring system for

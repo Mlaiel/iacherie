@@ -3,7 +3,7 @@
 Real-Time Intelligence - Live Dashboard Backend
 WebSocket-Based Real-Time Dashboard Infrastructure
 
-This module provides comprehensive real-time dashboard backend services for the Ainflue platform,
+This module provides comprehensive real-time dashboard backend services for the IA Chérie platform,
 enabling live data streaming to multiple frontend clients with efficient WebSocket management,
 authentication, and real-time metrics aggregation.
 
@@ -21,8 +21,8 @@ Business Integration:
 - System health dashboards with proactive monitoring
 - Executive dashboards with high-level KPIs and trend analysis
 
-© 2024 Ainflue - Proprietary and Confidential
-All rights reserved. This code is the intellectual property of Ainflue.
+© 2024 IA Chérie - Proprietary and Confidential
+All rights reserved. This code is the intellectual property of IA Chérie.
 Unauthorized copying, distribution, or modification is strictly prohibited.
 """
 
@@ -664,7 +664,7 @@ class LiveDashboardBackend:
             base_metrics.viral_content_count = 25 + int(time.time()) % 10
             base_metrics.total_content_pieces = 5000 + int(time.time()) % 200
             base_metrics.average_engagement_rate = 6.5 + (time.time() % 3)
-            base_metrics.trending_hashtags = ['#ainflue', '#creator', '#collaboration']
+            base_metrics.trending_hashtags = ['#iacherie', '#creator', '#collaboration']
         
         # Common system metrics
         base_metrics.system_health_score = 98.5 + (time.time() % 3)

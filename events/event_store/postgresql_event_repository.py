@@ -10,10 +10,10 @@ Contact: mlaiel@live.de
 
 🎯 POSTGRESQL HIGH-PERFORMANCE EVENT REPOSITORY
 Enterprise-grade PostgreSQL event storage with optimized schemas,
-partitioning, and indexing for Ainflue business logic patterns.
+partitioning, and indexing for IA Chérie business logic patterns.
 
 Key Features:
-- Optimized for Ainflue content lifecycle events
+- Optimized for IA Chérie content lifecycle events
 - Automatic table partitioning by time and aggregate
 - Specialized indexes for business query patterns
 - High-performance bulk operations
@@ -55,7 +55,7 @@ if not ASYNCPG_AVAILABLE:
 
 class PostgreSQLEventRepository(IEventStoreBackend):
     """
-    High-performance PostgreSQL event repository for Ainflue platform
+    High-performance PostgreSQL event repository for IA Chérie platform
     
     Optimized for:
     - Content lifecycle events (upload, processing, distribution)
@@ -113,7 +113,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             raise
     
     async def _initialize_schema(self):
-        """Initialize optimized database schema for Ainflue events"""
+        """Initialize optimized database schema for IA Chérie events"""
         
         async with self.pool.acquire() as conn:
             # Create extensions
@@ -133,7 +133,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                     occurred_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
                     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                     
-                    -- Ainflue business context fields
+                    -- IA Chérie business context fields
                     creator_id UUID,
                     content_id UUID,
                     content_type VARCHAR(50),
@@ -158,7 +158,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                 ) PARTITION BY RANGE (occurred_at)
             """)
             
-            # Create specialized indexes for Ainflue business patterns
+            # Create specialized indexes for IA Chérie business patterns
             await self._create_business_indexes(conn)
             
             # Create event snapshots table for aggregate reconstruction
@@ -198,7 +198,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             """)
     
     async def _create_business_indexes(self, conn: Connection):
-        """Create specialized indexes for Ainflue business query patterns"""
+        """Create specialized indexes for IA Chérie business query patterns"""
         
         # Content lifecycle events index
         await conn.execute("""
@@ -307,7 +307,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
         
         try:
             async with self.pool.acquire() as conn:
-                # Extract Ainflue business context from event
+                # Extract IA Chérie business context from event
                 business_data = self._extract_business_context(event)
                 
                 # Prepare event data
@@ -388,7 +388,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             )
     
     def _extract_business_context(self, event: BaseEvent) -> Dict[str, Any]:
-        """Extract Ainflue business context from event for optimized storage"""
+        """Extract IA Chérie business context from event for optimized storage"""
         
         context = {
             'creator_id': None,
@@ -543,7 +543,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
         return results
     
     async def retrieve_events(self, query: EventQuery) -> List[BaseEvent]:
-        """Retrieve events with optimized queries for Ainflue business patterns"""
+        """Retrieve events with optimized queries for IA Chérie business patterns"""
         
         try:
             async with self.pool.acquire() as conn:
@@ -568,7 +568,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             raise
     
     def _build_optimized_query(self, query: EventQuery) -> tuple[str, List[Any]]:
-        """Build optimized SQL query for Ainflue business patterns"""
+        """Build optimized SQL query for IA Chérie business patterns"""
         
         base_query = """
             SELECT event_id, aggregate_id, aggregate_type, event_type, event_data,

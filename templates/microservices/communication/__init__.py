@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Communication Templates Module for Ainflue Microservices
+Communication Templates Module for IA Chérie Microservices
 ======================================================
 
 Enterprise-grade communication patterns for microservices:

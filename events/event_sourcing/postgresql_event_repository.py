@@ -52,7 +52,7 @@ class PostgreSQLConfig:
     enable_wal_archiving: bool = True
     enable_streaming_replication: bool = True
     backup_retention_days: int = 30
-    table_prefix: str = "ainflue_"
+    table_prefix: str = "iacherie_"
 
 
 @dataclass

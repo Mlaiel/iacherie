@@ -1,5 +1,5 @@
 # 🏗️ Module Events Saga Patterns - Orchestration de Transactions Distribuées
-**Plateforme Ainflue - Implémentation Avancée de Patterns Saga**
+**Plateforme IA Chérie - Implémentation Avancée de Patterns Saga**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTREPRISE
 
-Le **Module Events Saga Patterns** fournit une orchestration avancée de transactions distribuées et une implémentation de patterns saga pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-sophistiqué offre une gestion fiable de transactions long-running, une gestion de compensation et une coordination d'état distribuée pour des workflows complexes de création de contenu.
+Le **Module Events Saga Patterns** fournit une orchestration avancée de transactions distribuées et une implémentation de patterns saga pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-sophistiqué offre une gestion fiable de transactions long-running, une gestion de compensation et une coordination d'état distribuée pour des workflows complexes de création de contenu.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -444,7 +444,7 @@ await choreography_manager.initiate_choreography("campaign_created", campaign_da
 version: '3.8'
 services:
   saga-orchestrator:
-    image: ainflue/saga-orchestrator:latest
+    image: iacherie/saga-orchestrator:latest
     deploy:
       replicas: 3
       resources:
@@ -463,7 +463,7 @@ services:
       - "8080:8080"
       
   saga-dashboard:
-    image: ainflue/saga-dashboard:latest
+    image: iacherie/saga-dashboard:latest
     deploy:
       replicas: 2
     environment:
@@ -502,7 +502,7 @@ compensation_rate = Counter('saga_compensations_total', 'Total compensation exec
 
 ## 📝 **CONCLUSION**
 
-Le Module Events Saga Patterns représente l'apogée de l'orchestration de transactions distribuées pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format. Avec des patterns saga avancés, une gestion de compensation intelligente et une récupération d'erreur complète, ce module assure une exécution fiable de workflows métier complexes et long-running à travers l'ensemble de l'écosystème créateur.
+Le Module Events Saga Patterns représente l'apogée de l'orchestration de transactions distribuées pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format. Avec des patterns saga avancés, une gestion de compensation intelligente et une récupération d'erreur complète, ce module assure une exécution fiable de workflows métier complexes et long-running à travers l'ensemble de l'écosystème créateur.
 
 **🎯 Mission :** Fournir le système d'orchestration de transactions distribuées le plus avancé au monde pour les créateurs de contenu, permettant une exécution fiable de workflows complexes, une récupération automatique d'échecs et une cohérence de données garantie à travers tous les services de plateforme.
 

@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """
-Redis Failover Coordination Engine - Ainflue Platform
+Redis Failover Coordination Engine - IA Chérie Platform
 ====================================================
 
 Advanced failover coordination with intelligent decision making,

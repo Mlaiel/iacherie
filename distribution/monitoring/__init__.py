@@ -1,5 +1,5 @@
 """
-Monitoring Module for Ainflue Distribution Platform
+Monitoring Module for IA Chérie Distribution Platform
 
 This module provides comprehensive monitoring, observability, and performance
 tracking for the distribution platform with real-time metrics and alerting.

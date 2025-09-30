@@ -129,7 +129,7 @@ class SystemStatus:
 
 class EnterpriseAinflueFingerprintingOrchestrator:
     """
-    Orchestrateur enterprise consolidé pour système fingerprinting Ainflue.
+    Orchestrateur enterprise consolidé pour système fingerprinting IA Chérie.
     
     Architecture unifiée 12-fichiers conforme cahier des charges enterprise
     avec fonctionnalités complètes multi-modal, blockchain et surveillance.

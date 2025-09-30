@@ -2,7 +2,7 @@
 
 ## 🎯 Aperçu
 
-Le **Module Formats Multimédias** fournit un support complet pour tous les formats multimédias modernes avec des capacités de détection, validation et optimisation alimentées par l'IA. Ce système de niveau entreprise prend en charge le workflow complet des créateurs Ainflue, du téléchargement de contenu à la distribution.
+Le **Module Formats Multimédias** fournit un support complet pour tous les formats multimédias modernes avec des capacités de détection, validation et optimisation alimentées par l'IA. Ce système de niveau entreprise prend en charge le workflow complet des créateurs IA Chérie, du téléchargement de contenu à la distribution.
 
 ## 🚀 Fonctionnalités Clés
 
@@ -145,6 +145,6 @@ formats/
 
 ---
 
-**© 2025 Fahed Mlaiel - Plateforme Ainflue**  
+**© 2025 Fahed Mlaiel - Plateforme IA Chérie**  
 **Contact**: mlaiel@live.de  
 **Version**: 3.1.0 Enterprise

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -31,7 +31,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/var/log/ainflue/metrics_collection.log')
+        logging.FileHandler('/var/log/iacherie/metrics_collection.log')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -280,7 +280,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_nodes_total",
                     value=total_nodes,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Total number of nodes in cluster"
                 ),
@@ -288,7 +288,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_nodes_ready",
                     value=ready_nodes,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Number of ready nodes in cluster"
                 )
@@ -306,7 +306,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_pods_total",
                     value=total_pods,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Total number of pods in cluster"
                 ),
@@ -314,7 +314,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_pods_running",
                     value=running_pods,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Number of running pods"
                 ),
@@ -322,7 +322,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_pods_pending",
                     value=pending_pods,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Number of pending pods"
                 ),
@@ -330,7 +330,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_pods_failed",
                     value=failed_pods,
                     timestamp=datetime.utcnow(),
-                    labels={'cluster': 'ainflue-production'},
+                    labels={'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Number of failed pods"
                 )
@@ -344,7 +344,7 @@ class KubernetesMetricsCollector:
                 name="kubernetes_namespaces_total",
                 value=total_namespaces,
                 timestamp=datetime.utcnow(),
-                labels={'cluster': 'ainflue-production'},
+                labels={'cluster': 'iacherie-production'},
                 metric_type='gauge',
                 help_text="Total number of namespaces"
             ))
@@ -378,7 +378,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_node_cpu_usage_cores",
                     value=cpu_usage,
                     timestamp=datetime.utcnow(),
-                    labels={'node': node_name, 'cluster': 'ainflue-production'},
+                    labels={'node': node_name, 'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Node CPU usage in cores",
                     unit="cores"
@@ -390,7 +390,7 @@ class KubernetesMetricsCollector:
                     name="kubernetes_node_memory_usage_bytes",
                     value=memory_usage,
                     timestamp=datetime.utcnow(),
-                    labels={'node': node_name, 'cluster': 'ainflue-production'},
+                    labels={'node': node_name, 'cluster': 'iacherie-production'},
                     metric_type='gauge',
                     help_text="Node memory usage in bytes",
                     unit="bytes"
@@ -421,7 +421,7 @@ class KubernetesMetricsCollector:
                             'pod': pod_name,
                             'container': container_name,
                             'namespace': namespace,
-                            'cluster': 'ainflue-production'
+                            'cluster': 'iacherie-production'
                         },
                         metric_type='gauge',
                         help_text="Container CPU usage in cores",
@@ -438,7 +438,7 @@ class KubernetesMetricsCollector:
                             'pod': pod_name,
                             'container': container_name,
                             'namespace': namespace,
-                            'cluster': 'ainflue-production'
+                            'cluster': 'iacherie-production'
                         },
                         metric_type='gauge',
                         help_text="Container memory usage in bytes",
@@ -697,7 +697,7 @@ class MetricsCollectionEngine:
             # Push to gateway
             push_to_gateway(
                 self.config.push_gateway_endpoint,
-                job='ainflue-metrics-collection',
+                job='iacherie-metrics-collection',
                 registry=registry
             )
             
@@ -715,7 +715,7 @@ class MetricsCollectionEngine:
             for metric_data in metrics_data:
                 metric_data['timestamp'] = metric_data['timestamp'].isoformat()
             
-            filename = f"/var/log/ainflue/metrics_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+            filename = f"/var/log/iacherie/metrics_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
             
             async with aiofiles.open(filename, 'w') as f:
                 await f.write(json.dumps(metrics_data, indent=2))

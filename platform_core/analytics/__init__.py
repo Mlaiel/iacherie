@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform Core Analytics Module
+IA Chérie Platform Core Analytics Module
 ======================================
 
 Enterprise-grade analytics platform for comprehensive creator economy intelligence,
@@ -415,7 +415,7 @@ class AnalyticsPlatformCore:
     def get_platform_status(self) -> Dict[str, Any]:
         """Get comprehensive platform status"""
         return {
-            "platform_name": "Ainflue Analytics Platform Core",
+            "platform_name": "IA Chérie Analytics Platform Core",
             "version": __version__,
             "status": "operational",
             "startup_time": self.startup_time.isoformat(),
@@ -776,7 +776,7 @@ __all__ = [
 ]
 
 # Initialize logging message
-logger.info(f"🎯 Ainflue Analytics Platform Core v{__version__} - Ready for Enterprise Analytics")
+logger.info(f"🎯 IA Chérie Analytics Platform Core v{__version__} - Ready for Enterprise Analytics")
 logger.info(f"📧 Support: {__email__}")
 logger.info(f"📋 Components loaded: {len(__all__)} exports available")
 logger.info(f"⚡ Platform Status: Operational - Ready for analytics workloads")

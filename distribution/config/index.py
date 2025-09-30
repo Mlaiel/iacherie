@@ -1,7 +1,7 @@
 """Configuration Management Engine - Main Interface
 
 Enterprise-grade configuration management engine providing unified interface
-for all configuration management capabilities across the Ainflue platform.
+for all configuration management capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -54,7 +54,7 @@ class ConfigurationManager:
     """Main Configuration Management Engine
     
     Provides centralized configuration management for the entire
-    Ainflue distribution platform with enterprise security and scalability.
+    IA Chérie distribution platform with enterprise security and scalability.
     """
     
     def __init__(self, environment: ConfigEnvironment = ConfigEnvironment.PRODUCTION):

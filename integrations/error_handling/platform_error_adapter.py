@@ -1,5 +1,5 @@
 """
-Platform Error Adapter - Ainflue Platform
+Platform Error Adapter - IA Chérie Platform
 Platform-Specific Error Handling for 65+ Platforms Integration
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -182,7 +182,7 @@ class MusicStreamingAdapter(BasePlatformAdapter):
             retry_strategy=retry_strategy,
             escalation_required=adapted_severity in [ErrorSeverity.CRITICAL, ErrorSeverity.PLATFORM_DOWN],
             user_friendly_message=user_message,
-            documentation_link=f"https://docs.ainflue.com/errors/music/{normalized_code.lower()}",
+            documentation_link=f"https://docs.iacherie.com/errors/music/{normalized_code.lower()}",
             estimated_resolution_time=await self._estimate_resolution_time(normalized_code),
             similar_errors_count=await self._count_similar_errors(error),
             adaptation_confidence=0.95
@@ -371,7 +371,7 @@ class SocialMediaAdapter(BasePlatformAdapter):
             retry_strategy=retry_strategy,
             escalation_required=adapted_severity in [ErrorSeverity.CRITICAL, ErrorSeverity.PLATFORM_DOWN],
             user_friendly_message=user_message,
-            documentation_link=f"https://docs.ainflue.com/errors/social/{normalized_code.lower()}",
+            documentation_link=f"https://docs.iacherie.com/errors/social/{normalized_code.lower()}",
             estimated_resolution_time=await self._estimate_social_resolution_time(normalized_code),
             similar_errors_count=await self._count_similar_errors(error),
             adaptation_confidence=0.9
@@ -536,7 +536,7 @@ class CreatorEconomyAdapter(BasePlatformAdapter):
             retry_strategy=retry_strategy,
             escalation_required=adapted_severity in [ErrorSeverity.CRITICAL, ErrorSeverity.PLATFORM_DOWN],
             user_friendly_message=user_message,
-            documentation_link=f"https://docs.ainflue.com/errors/creator/{normalized_code.lower()}",
+            documentation_link=f"https://docs.iacherie.com/errors/creator/{normalized_code.lower()}",
             estimated_resolution_time=await self._estimate_creator_resolution_time(normalized_code),
             similar_errors_count=await self._count_similar_errors(error),
             adaptation_confidence=0.92
@@ -856,7 +856,7 @@ class PlatformErrorAdapter:
                     retry_strategy={'retry_count': 2, 'backoff_strategy': 'linear', 'base_delay': 30},
                     escalation_required=error.severity in [ErrorSeverity.CRITICAL, ErrorSeverity.PLATFORM_DOWN],
                     user_friendly_message=f"An error occurred on {error.platform}. Please try again later.",
-                    documentation_link="https://docs.ainflue.com/errors/generic",
+                    documentation_link="https://docs.iacherie.com/errors/generic",
                     estimated_resolution_time=120,
                     similar_errors_count=0,
                     adaptation_confidence=0.7
@@ -967,7 +967,7 @@ class PlatformErrorAdapter:
                 retry_strategy={'retry_count': 1, 'backoff_strategy': 'none'},
                 escalation_required=True,
                 user_friendly_message=f"An unexpected error occurred on {platform}.",
-                documentation_link="https://docs.ainflue.com/errors/adapter",
+                documentation_link="https://docs.iacherie.com/errors/adapter",
                 estimated_resolution_time=60,
                 similar_errors_count=0,
                 adaptation_confidence=0.1

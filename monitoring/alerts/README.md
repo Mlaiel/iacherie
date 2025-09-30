@@ -1,8 +1,8 @@
-# 🚨 Intelligent Alert System for Ainflue Platform
+# 🚨 Intelligent Alert System for IA Chérie Platform
 
 ## Overview
 
-The Intelligent Alert System is a comprehensive monitoring and alerting solution designed for the Ainflue AI-powered content protection and monetization platform. It provides unified monitoring across three critical categories:
+The Intelligent Alert System is a comprehensive monitoring and alerting solution designed for the IA Chérie AI-powered content protection and monetization platform. It provides unified monitoring across three critical categories:
 
 - **🏢 Business Alerts** - Revenue monitoring and user experience tracking
 - **🔧 Technical Alerts** - Infrastructure health and security monitoring  
@@ -206,7 +206,7 @@ self.system_health_thresholds = {
 ### Run the Demo
 
 ```bash
-cd /path/to/Ainflue
+cd /path/to/IA Chérie
 python monitoring/alerts/demo_intelligent_alerts.py
 ```
 
@@ -250,9 +250,9 @@ The system provides comprehensive health scoring:
 
 ## 🔗 Integration
 
-### With Existing Ainflue Components
+### With Existing IA Chérie Components
 
-The intelligent alert system integrates seamlessly with existing Ainflue infrastructure:
+The intelligent alert system integrates seamlessly with existing IA Chérie infrastructure:
 
 - **Revenue Tracking**: Extends existing `revenue_anomaly.py`
 - **Security Monitoring**: Builds on existing security alerts
@@ -362,14 +362,14 @@ if status['coordinator_status'] != 'operational':
 
 ## 📝 License
 
-This intelligent alert system is part of the Ainflue platform and is proprietary software owned by Fahed Mlaiel. All rights reserved.
+This intelligent alert system is part of the IA Chérie platform and is proprietary software owned by Fahed Mlaiel. All rights reserved.
 
 ## 👨‍💻 Author
 
 **Fahed Mlaiel** - Lead Developer & AI Architect  
 📧 Email: mlaiel@live.de  
-🔗 GitHub: https://github.com/Mlaiel/Ainflue
+🔗 GitHub: https://github.com/Mlaiel/IA Chérie
 
 ---
 
-*Built with ❤️ for the Ainflue AI-powered content protection and monetization platform*
+*Built with ❤️ for the IA Chérie AI-powered content protection and monetization platform*

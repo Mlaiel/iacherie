@@ -1,7 +1,7 @@
 # 🎯 Erweiterte Metriken Modul - Unternehmens-Analytics & Business Intelligence
 
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Autor](https://img.shields.io/badge/Autor-Fahed%20Mlaiel-green.svg)](mailto:mlaiel@live.de)
 
 ## ⚠️ **KRITISCHE URHEBERRECHTS-WARNUNG** ⚠️
@@ -24,7 +24,7 @@ Jede Person oder Organisation, die beim Nutzen, Kopieren, Verteilen oder Ableite
 
 ## 📖 Überblick
 
-Das Erweiterte Metriken Modul ist ein umfassendes, unternehmenstaugliches Analytics- und Business Intelligence-System, das für die Ainflue-Plattform entwickelt wurde. Dieses Modul bietet mehrdimensionale Analyse, Leistungsoptimierung und strategische Einblicke über alle Inhaltstypen, Benutzerengagement-Muster, Business-KPIs, KI-generierte Inhaltsqualität und Kollaborations-Erfolgsmetriken.
+Das Erweiterte Metriken Modul ist ein umfassendes, unternehmenstaugliches Analytics- und Business Intelligence-System, das für die IA Chérie-Plattform entwickelt wurde. Dieses Modul bietet mehrdimensionale Analyse, Leistungsoptimierung und strategische Einblicke über alle Inhaltstypen, Benutzerengagement-Muster, Business-KPIs, KI-generierte Inhaltsqualität und Kollaborations-Erfolgsmetriken.
 
 ## 👥 Entwicklungsteam-Spezialisierungen
 
@@ -84,8 +84,8 @@ Das Erweiterte Metriken Modul ist ein umfassendes, unternehmenstaugliches Analyt
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/performance_intelligence
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/performance_intelligence
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -125,7 +125,7 @@ engagement_analysis = await manager.analyze_metrics(
 
 ## 📈 Business-Logik-Fluss
 
-Das Erweiterte Metriken Modul folgt der Kern-Business-Logik von Ainflue:
+Das Erweiterte Metriken Modul folgt der Kern-Business-Logik von IA Chérie:
 
 ```
 Benutzer (Musiker/Blogger/Fotograf/Influencer/Komiker)
@@ -244,7 +244,7 @@ spec:
     spec:
       containers:
       - name: advanced-metrics
-        image: ainflue/advanced-metrics:1.0.0
+        image: iacherie/advanced-metrics:1.0.0
         ports:
         - containerPort: 8000
 ```
@@ -270,15 +270,15 @@ spec:
 
 **Für Technischen Support:**
 - Email: mlaiel@live.de
-- Betreff: [Ainflue Advanced Metrics] Support-Anfrage
+- Betreff: [IA Chérie Advanced Metrics] Support-Anfrage
 
 **Für Lizenzanfragen:**
 - Email: mlaiel@live.de
-- Betreff: [Ainflue] Lizenzanfrage
+- Betreff: [IA Chérie] Lizenzanfrage
 
 **Für Partnerschaftsmöglichkeiten:**
 - Email: mlaiel@live.de
-- Betreff: [Ainflue] Partnerschaftsvorschlag
+- Betreff: [IA Chérie] Partnerschaftsvorschlag
 
 ## 📄 Lizenz
 

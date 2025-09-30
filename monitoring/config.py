@@ -2,7 +2,7 @@
 Monitoring Configuration - Main Configuration Module
 ====================================================
 
-Configuration centrale pour le système de monitoring Ainflue.
+Configuration centrale pour le système de monitoring IA Chérie.
 Réorganisation experte par l'équipe Lead Dev IA + Backend Senior + DevOps.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +18,7 @@ class MonitoringConfig(BaseSettings):
     """Configuration principale du système de monitoring."""
     
     # Configuration générale
-    service_name: str = Field(default="ainflue-monitoring", env="MONITORING_SERVICE_NAME")
+    service_name: str = Field(default="iacherie-monitoring", env="MONITORING_SERVICE_NAME")
     environment: str = Field(default="production", env="ENVIRONMENT")
     debug: bool = Field(default=False, env="DEBUG")
     

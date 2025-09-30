@@ -1,4 +1,4 @@
-# 🚀 Ainflue Mikroservice-Vorlagen - Unternehmensarchitektur
+# 🚀 IA Chérie Mikroservice-Vorlagen - Unternehmensarchitektur
 
 > **⚠️ RECHTLICHE WARNUNG - GEISTIGER EIGENTUMSSCHUTZ**  
 > **© 2025 Fahed Mlaiel (mlaiel@live.de) - ALLE RECHTE VORBEHALTEN**
@@ -18,7 +18,7 @@
 
 ## 🎯 Überblick
 
-Unternehmenstaugliche Mikroservice-Vorlagen für die Ainflue Creator Economy Platform. Dieses umfassende Modul bietet über 150 produktionsreife Vorlagen zum Aufbau einer skalierbaren, robusten und intelligenten Mikroservice-Architektur.
+Unternehmenstaugliche Mikroservice-Vorlagen für die IA Chérie Creator Economy Platform. Dieses umfassende Modul bietet über 150 produktionsreife Vorlagen zum Aufbau einer skalierbaren, robusten und intelligenten Mikroservice-Architektur.
 
 ## 👥 Expertenteam
 
@@ -150,10 +150,10 @@ Unternehmenstaugliche Mikroservice-Vorlagen für die Ainflue Creator Economy Pla
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Zu Mikroservice-Vorlagen navigieren
-cd Ainflue/templates/microservices
+cd IA Chérie/templates/microservices
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -216,7 +216,7 @@ await message_queue.register_handler("ai.processing.completed", handle_ai_comple
 
 ```env
 # Datenbank-Konfiguration
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Service URLs
@@ -275,7 +275,7 @@ MAX_CONTENT_PER_DAY=50
 version: '3.8'
 services:
   creator-service:
-    image: ainflue/creator-service:latest
+    image: iacherie/creator-service:latest
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/creators
       - REDIS_URL=redis://redis:6379
@@ -305,7 +305,7 @@ spec:
     spec:
       containers:
       - name: creator-service
-        image: ainflue/creator-service:latest
+        image: iacherie/creator-service:latest
         ports:
         - containerPort: 8000
 ```
@@ -345,8 +345,8 @@ pytest tests/unit/ --cov=templates --cov-report=html
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/microservices
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/microservices
 
 # Entwicklungsabhängigkeiten installieren
 pip install -r requirements-dev.txt

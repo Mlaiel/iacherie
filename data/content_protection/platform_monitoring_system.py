@@ -3,7 +3,7 @@
 ==========================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/platform_monitoring_system.py
+Module: /workspaces/IA Chérie/data/content_protection/platform_monitoring_system.py
 Expert Team: Lead Dev IA + Backend Senior + DevOps + Platform Integration Specialist
 
 Author: Fahed Mlaiel (mlaiel@live.de)

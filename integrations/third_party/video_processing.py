@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - VIDEO PROCESSING SERVICES
+IACHERIE INTEGRATIONS - VIDEO PROCESSING SERVICES
 ===============================================
 
 Enterprise video processing integration for creator economy platform.
 Combines multiple expert roles for comprehensive video content management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chérie - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/third_party)
 
 Expert Roles Applied:
@@ -249,7 +249,7 @@ class VideoSecurityManager:
         )
         return base64.urlsafe_b64encode(kdf.derive(password))
     
-    async def apply_watermark(self, input_path: str, output_path: str, watermark_text: str = "AINFLUE") -> bool:
+    async def apply_watermark(self, input_path: str, output_path: str, watermark_text: str = "IACHERIE") -> bool:
         """Apply watermark to video - Content Protection"""
         try:
             watermark_filter = f"drawtext=text='{watermark_text}':fontcolor=white@0.7:fontsize=24:x=w-tw-10:y=10"
@@ -278,7 +278,7 @@ class VideoSecurityManager:
             ERROR_COUNTER.labels(error_type="watermark_error").inc()
             return False
     
-    async def encrypt_video(self, video_path: str) -> Tuple[str, str]:
+    async def encrypt_video(self, video_path: str) -> tuple[str, str]:
         """Encrypt video file"""
         try:
             with open(video_path, 'rb') as file:
@@ -1161,7 +1161,7 @@ class VideoProcessingOrchestrator:
                 os.makedirs(os.path.dirname(watermarked_path), exist_ok=True)
                 
                 watermark_applied = await self.security_manager.apply_watermark(
-                    video_path, watermarked_path, f"AINFLUE - {creator_id}"
+                    video_path, watermarked_path, f"IACHERIE - {creator_id}"
                 )
                 
                 if watermark_applied:

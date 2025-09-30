@@ -841,8 +841,8 @@ class URLStructureOptimizer:
             },
             'meta_tags': {
                 'profile': {
-                    'title_pattern': '{creator_name} - Creator Profile | Ainflue',
-                    'description_pattern': 'Discover content from {creator_name} on Ainflue. {creator_bio}',
+                    'title_pattern': '{creator_name} - Creator Profile | IA Chérie',
+                    'description_pattern': 'Discover content from {creator_name} on IA Chérie. {creator_bio}',
                     'keywords_pattern': '{creator_name}, creator, {content_types}'
                 }
             },
@@ -1180,7 +1180,7 @@ class URLStructureOptimizer:
 
 # Enterprise URL structure management
 class URLArchitectureManager:
-    """High-level URL architecture management for Ainflue platform."""
+    """High-level URL architecture management for IA Chérie platform."""
     
     def __init__(self, base_domain: str):
         self.optimizer = URLStructureOptimizer(base_domain)

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Legal Compliance Tools
+ * IA Chérie Desktop - Legal Compliance Tools
  * 
  * Comprehensive legal compliance management system for copyright, licensing,
  * GDPR, international regulations, and automated compliance monitoring.

@@ -1,4 +1,4 @@
-# 🚀 Ainflue API-Vorlagen Modul
+# 🚀 IA Chérie API-Vorlagen Modul
 
 **Enterprise-Level API-Vorlagen Sammlung für Creator Economy Plattform**
 
@@ -39,7 +39,7 @@ ALLE RECHTE VORBEHALTEN
 
 ## 🎯 Überblick
 
-Das Ainflue API-Vorlagen Modul bietet eine umfassende Sammlung von Enterprise-Level API-Vorlagen, die speziell für die Creator Economy Plattform entwickelt wurden. Dieses Modul ermöglicht die schnelle Entwicklung sicherer, skalierbarer und hochperformanter APIs für Content-Ersteller, Kollaborationstools und Monetarisierungssysteme.
+Das IA Chérie API-Vorlagen Modul bietet eine umfassende Sammlung von Enterprise-Level API-Vorlagen, die speziell für die Creator Economy Plattform entwickelt wurden. Dieses Modul ermöglicht die schnelle Entwicklung sicherer, skalierbarer und hochperformanter APIs für Content-Ersteller, Kollaborationstools und Monetarisierungssysteme.
 
 ### **Business-Wertschöpfungskette:**
 ```
@@ -187,7 +187,7 @@ websocket = WebSocketTemplate(
 ### **Umgebungsvariablen**
 ```env
 # Datenbank-Konfiguration
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Sicherheits-Konfiguration

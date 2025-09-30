@@ -1,5 +1,5 @@
 /**
- * Fetch API Adapter for Ainflue JavaScript SDK
+ * Fetch API Adapter for IA Chérie JavaScript SDK
  * Native browser fetch implementation with enterprise-grade features
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE SUBSCRIPTION MANAGER - LIFECYCLE DOCKERFILE
+# IACHERIE SUBSCRIPTION MANAGER - LIFECYCLE DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS subscription-base
@@ -49,7 +49,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${SUBSCRIPTION_SERVICE_PORT}
 CMD ["python3.11", "-m", "subscription_manager.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Subscription Manager"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="subscription_manager"
-LABEL ainflue.service.port="8042"
+LABEL org.opencontainers.image.title="IA Chérie Subscription Manager"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="subscription_manager"
+LABEL iacherie.service.port="8042"

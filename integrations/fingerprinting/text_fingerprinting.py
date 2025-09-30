@@ -5,7 +5,7 @@ Système avancé de fingerprinting de texte avec analyse sémantique,
 détection n-gram et identification de plagiat.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 

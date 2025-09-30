@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Digital Signature Management
+ * IA Chérie Desktop - Digital Signature Management
  * 
  * Advanced digital signature system for content authentication and legal protection
  * Implements cryptographic signatures with certificate validation and audit trails
@@ -75,8 +75,8 @@ class DigitalSignatureManager {
   }
 
   async setupDefaultCA() {
-    // Setup Ainflue Certificate Authority
-    const caId = 'ainflue-ca';
+    // Setup IA Chérie Certificate Authority
+    const caId = 'iacherie-ca';
     
     if (!this.certificates.has(caId)) {
       const caCert = await this.createCertificateAuthority();
@@ -84,7 +84,7 @@ class DigitalSignatureManager {
       this.trustedAuthorities.add(caId);
       
       await this.saveCertificate(caCert);
-      console.log('🏛️ Created Ainflue Certificate Authority');
+      console.log('🏛️ Created IA Chérie Certificate Authority');
     }
   }
 
@@ -105,10 +105,10 @@ class DigitalSignatureManager {
     const keyPair = await this.generateKeyPair();
     
     const certificate = {
-      id: 'ainflue-ca',
+      id: 'iacherie-ca',
       type: 'CA',
-      subject: 'CN=Ainflue Certificate Authority, O=Ainflue, C=DE',
-      issuer: 'CN=Ainflue Certificate Authority, O=Ainflue, C=DE',
+      subject: 'CN=IA Chérie Certificate Authority, O=IA Chérie, C=DE',
+      issuer: 'CN=IA Chérie Certificate Authority, O=IA Chérie, C=DE',
       publicKey: keyPair.publicKey,
       privateKey: keyPair.privateKey,
       serialNumber: this.generateSerialNumber(),
@@ -136,7 +136,7 @@ class DigitalSignatureManager {
   }
 
   async createUserCertificate(userInfo) {
-    const caId = 'ainflue-ca';
+    const caId = 'iacherie-ca';
     const ca = this.certificates.get(caId);
     
     if (!ca) {
@@ -149,7 +149,7 @@ class DigitalSignatureManager {
     const certificate = {
       id: certificateId,
       type: 'User',
-      subject: `CN=${userInfo.name}, O=${userInfo.organization || 'Ainflue'}, C=${userInfo.country || 'DE'}`,
+      subject: `CN=${userInfo.name}, O=${userInfo.organization || 'IA Chérie'}, C=${userInfo.country || 'DE'}`,
       issuer: ca.subject,
       publicKey: keyPair.publicKey,
       serialNumber: this.generateSerialNumber(),

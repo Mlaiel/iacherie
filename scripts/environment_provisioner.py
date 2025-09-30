@@ -172,7 +172,7 @@ class EnvironmentProvisioner:
                         'compute': {'type': 'ec2', 'instance_type': 't3.medium', 'count': 2},
                         'database': {'type': 'rds', 'instance_class': 'db.t3.micro', 'storage': '20Gi'},
                         'cache': {'type': 'elasticache', 'node_type': 'cache.t3.micro'},
-                        'storage': {'type': 's3', 'bucket': 'ainflue-staging-assets'}
+                        'storage': {'type': 's3', 'bucket': 'iacherie-staging-assets'}
                     },
                     'networking': {
                         'vpc_cidr': '10.1.0.0/16',
@@ -204,7 +204,7 @@ class EnvironmentProvisioner:
                         'compute': {'type': 'ecs', 'cpu': 4096, 'memory': '8Gi', 'min_capacity': 3, 'max_capacity': 10},
                         'database': {'type': 'rds', 'instance_class': 'db.r5.xlarge', 'multi_az': True, 'storage': '100Gi'},
                         'cache': {'type': 'elasticache', 'node_type': 'cache.r6g.large', 'num_nodes': 3},
-                        'storage': {'type': 's3', 'bucket': 'ainflue-production-assets', 'cdn': True}
+                        'storage': {'type': 's3', 'bucket': 'iacherie-production-assets', 'cdn': True}
                     },
                     'networking': {
                         'vpc_cidr': '10.2.0.0/16',
@@ -426,11 +426,11 @@ class EnvironmentProvisioner:
     def _provision_local_networking(self, env_config: EnvironmentConfig, dry_run: bool) -> Dict[str, Any]:
         """Provision local networking (Docker networks)"""
         if dry_run:
-            return {'network_name': f'ainflue-{env_config.name}-network'}
+            return {'network_name': f'iacherie-{env_config.name}-network'}
         
         try:
             docker_client = self.cloud_clients['docker']
-            network_name = f'ainflue-{env_config.name}-network'
+            network_name = f'iacherie-{env_config.name}-network'
             
             # Check if network already exists
             existing_networks = docker_client.networks.list(names=[network_name])
@@ -500,7 +500,7 @@ class EnvironmentProvisioner:
             'openssl', 'req', '-x509', '-newkey', 'rsa:4096',
             '-keyout', str(key_file), '-out', str(cert_file),
             '-days', '365', '-nodes',
-            '-subj', f'/CN=ainflue-{env_config.name}.local'
+            '-subj', f'/CN=iacherie-{env_config.name}.local'
         ]
         
         try:
@@ -567,7 +567,7 @@ class EnvironmentProvisioner:
         storage = env_config.resources.get('storage', {})
         
         if dry_run:
-            return {'bucket_name': storage.get('bucket', f'ainflue-{env_config.name}')}
+            return {'bucket_name': storage.get('bucket', f'iacherie-{env_config.name}')}
         
         # Provision S3 bucket, EBS volumes, etc.
         return {'bucket_name': 'provisioned-bucket', 'status': 'provisioned'}
@@ -575,11 +575,11 @@ class EnvironmentProvisioner:
     def _provision_local_storage(self, env_config: EnvironmentConfig, dry_run: bool) -> Dict[str, Any]:
         """Provision local storage (Docker volumes)"""
         if dry_run:
-            return {'volume_name': f'ainflue-{env_config.name}-data'}
+            return {'volume_name': f'iacherie-{env_config.name}-data'}
         
         try:
             docker_client = self.cloud_clients['docker']
-            volume_name = f'ainflue-{env_config.name}-data'
+            volume_name = f'iacherie-{env_config.name}-data'
             
             # Check if volume exists
             existing_volumes = docker_client.volumes.list(filters={'name': volume_name})
@@ -615,7 +615,7 @@ class EnvironmentProvisioner:
         
         if dry_run:
             return {
-                'db_instance_id': f'ainflue-{env_config.name}-db',
+                'db_instance_id': f'iacherie-{env_config.name}-db',
                 'engine': database.get('type', 'postgresql')
             }
         
@@ -628,11 +628,11 @@ class EnvironmentProvisioner:
         db_type = database.get('type', 'postgresql')
         
         if dry_run:
-            return {'container_name': f'ainflue-{env_config.name}-{db_type}'}
+            return {'container_name': f'iacherie-{env_config.name}-{db_type}'}
         
         try:
             docker_client = self.cloud_clients['docker']
-            container_name = f'ainflue-{env_config.name}-{db_type}'
+            container_name = f'iacherie-{env_config.name}-{db_type}'
             
             # Check if container exists
             try:
@@ -652,13 +652,13 @@ class EnvironmentProvisioner:
                     image='postgres:14',
                     name=container_name,
                     environment={
-                        'POSTGRES_DB': f'ainflue_{env_config.name}',
-                        'POSTGRES_USER': 'ainflue',
+                        'POSTGRES_DB': f'iacherie_{env_config.name}',
+                        'POSTGRES_USER': 'iacherie',
                         'POSTGRES_PASSWORD': 'ainflue_password'
                     },
                     ports={'5432/tcp': None},
-                    volumes={f'ainflue-{env_config.name}-db-data': {'bind': '/var/lib/postgresql/data', 'mode': 'rw'}},
-                    network=f'ainflue-{env_config.name}-network',
+                    volumes={f'iacherie-{env_config.name}-db-data': {'bind': '/var/lib/postgresql/data', 'mode': 'rw'}},
+                    network=f'iacherie-{env_config.name}-network',
                     detach=True,
                     restart_policy={'Name': 'unless-stopped'}
                 )
@@ -667,14 +667,14 @@ class EnvironmentProvisioner:
                     image='mysql:8.0',
                     name=container_name,
                     environment={
-                        'MYSQL_DATABASE': f'ainflue_{env_config.name}',
-                        'MYSQL_USER': 'ainflue',
+                        'MYSQL_DATABASE': f'iacherie_{env_config.name}',
+                        'MYSQL_USER': 'iacherie',
                         'MYSQL_PASSWORD': 'ainflue_password',
                         'MYSQL_ROOT_PASSWORD': 'root_password'
                     },
                     ports={'3306/tcp': None},
-                    volumes={f'ainflue-{env_config.name}-db-data': {'bind': '/var/lib/mysql', 'mode': 'rw'}},
-                    network=f'ainflue-{env_config.name}-network',
+                    volumes={f'iacherie-{env_config.name}-db-data': {'bind': '/var/lib/mysql', 'mode': 'rw'}},
+                    network=f'iacherie-{env_config.name}-network',
                     detach=True,
                     restart_policy={'Name': 'unless-stopped'}
                 )
@@ -701,11 +701,11 @@ class EnvironmentProvisioner:
         cache_type = cache.get('type', 'redis')
         
         if dry_run:
-            return {'container_name': f'ainflue-{env_config.name}-{cache_type}'}
+            return {'container_name': f'iacherie-{env_config.name}-{cache_type}'}
         
         try:
             docker_client = self.cloud_clients['docker']
-            container_name = f'ainflue-{env_config.name}-{cache_type}'
+            container_name = f'iacherie-{env_config.name}-{cache_type}'
             
             # Check if container exists
             try:
@@ -724,7 +724,7 @@ class EnvironmentProvisioner:
                 image='redis:7-alpine',
                 name=container_name,
                 ports={'6379/tcp': None},
-                network=f'ainflue-{env_config.name}-network',
+                network=f'iacherie-{env_config.name}-network',
                 detach=True,
                 restart_policy={'Name': 'unless-stopped'},
                 command=['redis-server', '--appendonly', 'yes']
@@ -749,7 +749,7 @@ class EnvironmentProvisioner:
     def _provision_local_compute(self, env_config: EnvironmentConfig, dry_run: bool) -> Dict[str, Any]:
         """Provision local compute (Docker containers)"""
         if dry_run:
-            return {'containers': ['ainflue-app', 'ainflue-worker']}
+            return {'containers': ['iacherie-app', 'iacherie-worker']}
         
         # For local development, we'd typically use docker-compose
         # This is handled by the deployment scripts
@@ -905,7 +905,7 @@ class EnvironmentProvisioner:
     def _destroy_local_environment(self, env_config: EnvironmentConfig, results: Dict[str, Any]):
         """Destroy local Docker-based environment"""
         docker_client = self.cloud_clients['docker']
-        prefix = f'ainflue-{env_config.name}'
+        prefix = f'iacherie-{env_config.name}'
         
         # Stop and remove containers
         containers = docker_client.containers.list(all=True, filters={'name': prefix})
@@ -930,7 +930,7 @@ def main():
     """Main function for command-line usage"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Environment Provisioner')
+    parser = argparse.ArgumentParser(description='IA Chérie Environment Provisioner')
     parser.add_argument('action', choices=['provision', 'destroy', 'validate', 'list'])
     parser.add_argument('--environment', '-e', help='Environment name')
     parser.add_argument('--dry-run', action='store_true', help='Perform dry run without actual provisioning')

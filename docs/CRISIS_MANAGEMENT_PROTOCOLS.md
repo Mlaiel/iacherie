@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Ainflue Crisis Management System provides comprehensive protocols for detecting, responding to, and recovering from various types of crises that can affect content creators, influencers, and the distribution platform itself.
+The IA Chérie Crisis Management System provides comprehensive protocols for detecting, responding to, and recovering from various types of crises that can affect content creators, influencers, and the distribution platform itself.
 
 ## Crisis Classification
 
@@ -265,7 +265,7 @@ social_monitor = SocialMediaCrisisMonitor()
 
 # Monitor brand mentions and sentiment
 crisis_signals = await social_monitor.monitor_brand_crisis(
-    brand_keywords=['ainflue', '@ainflue', '#ainflue'],
+    brand_keywords=['iacherie', '@iacherie', '#iacherie'],
     platforms=['twitter', 'reddit', 'tiktok', 'instagram'],
     sentiment_threshold=-0.6,
     volume_spike_threshold=5.0,  # 5x normal volume
@@ -328,7 +328,7 @@ We apologize for any inconvenience and appreciate your patience.
 🚨 SERVICE UPDATE: We're aware of technical issues affecting our platform. 
 Our team is working on a fix. 
 
-📍 Status updates: status.ainflue.com
+📍 Status updates: status.iacherie.com
 ⏰ Next update: {time}
 
 Thank you for your patience. #AinflueTech
@@ -354,14 +354,14 @@ You're not alone in this. Let's work through it together.
 
 Best regards,
 {support_manager_name}
-Ainflue Creator Support Team
+IA Chérie Creator Support Team
 ```
 
 ### Security Crisis Communication
 
 #### User Notification Template
 ```html
-Subject: Important Security Information for Your Ainflue Account
+Subject: Important Security Information for Your IA Chérie Account
 
 Dear {user_name},
 
@@ -390,10 +390,10 @@ WHAT YOU SHOULD DO:
 
 We sincerely apologize for this incident and any concern it may cause.
 
-For questions: security@ainflue.com | 24/7 Support: 1-XXX-XXX-XXXX
+For questions: security@iacherie.com | 24/7 Support: 1-XXX-XXX-XXXX
 
 Regards,
-Ainflue Security Team
+IA Chérie Security Team
 ```
 
 ## Escalation Procedures

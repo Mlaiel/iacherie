@@ -1,4 +1,4 @@
-"""JWT Token Handler for Ainflue SDK
+"""JWT Token Handler for IA Chérie SDK
 
 Multi-expert implementation:
 - Security: Secure JWT handling with validation and encryption
@@ -102,8 +102,8 @@ class JWTConfig(BaseModel):
     validate_issuer: bool = Field(default=True, description="Validate issuer claim")
     
     # Issuer and audience
-    issuer: str = Field(default="ainflue-sdk", description="Token issuer")
-    audience: List[str] = Field(default_factory=lambda: ["ainflue-api"], description="Token audience")
+    issuer: str = Field(default="iacherie-sdk", description="Token issuer")
+    audience: List[str] = Field(default_factory=lambda: ["iacherie-api"], description="Token audience")
     
     # Clock skew tolerance
     leeway: int = Field(default=10, description="Clock skew tolerance (seconds)")
@@ -648,8 +648,8 @@ def example_jwt_usage():
         algorithm=JWTAlgorithm.RS256,
         private_key=private_key,
         public_key=public_key,
-        issuer="ainflue-platform",
-        audience=["ainflue-api", "ainflue-web"]
+        issuer="iacherie-platform",
+        audience=["iacherie-api", "iacherie-web"]
     )
     
     # Create JWT handler

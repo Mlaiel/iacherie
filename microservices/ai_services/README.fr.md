@@ -1,10 +1,10 @@
 # 🤖 Services d'IA et ML - Architecture Microservices Enterprise
 
-**Module d'Intelligence Artificielle Distribuée pour la Plateforme Ainflue**
+**Module d'Intelligence Artificielle Distribuée pour la Plateforme IA Chérie**
 
 ## 🎯 Vue d'Ensemble
 
-Ce module fournit une infrastructure d'IA distribuée de niveau enterprise avec 53 agents IA spécialisés et 18 microservices d'intelligence artificielle pour supporter l'ensemble du workflow Ainflue.
+Ce module fournit une infrastructure d'IA distribuée de niveau enterprise avec 53 agents IA spécialisés et 18 microservices d'intelligence artificielle pour supporter l'ensemble du workflow IA Chérie.
 
 ### 🏗️ Architecture des Services IA
 
@@ -217,7 +217,7 @@ Métriques Business:
 - **Model Registry** - MLflow, DVC
 - **Monitoring** - Prometheus, Grafana, DataDog
 
-## 🎯 Workflow Business Ainflue
+## 🎯 Workflow Business IA Chérie
 
 ### 📋 Phase 2: IA Processing (53 Agents)
 ```yaml
@@ -250,19 +250,19 @@ AI Quality Engineer:         Expert AI testing + validation + monitoring
 ```
 
 ### 🆘 Support Technique
-- **Email**: ai-support@ainflue.com
+- **Email**: ai-support@iacherie.com
 - **Slack**: #ai-services-support
-- **Documentation**: https://docs.ainflue.com/ai-services
-- **Status Page**: https://status.ainflue.com/ai
+- **Documentation**: https://docs.iacherie.com/ai-services
+- **Status Page**: https://status.iacherie.com/ai
 
 ---
 
 ## 📜 Informations Légales
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE AI SERVICES MODULE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE AI SERVICES MODULE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE - TOUS DROITS RÉSERVÉS**  
 **⚠️ MODULE CONFIDENTIEL - USAGE ENTERPRISE UNIQUEMENT**
 
 ---
 
-*Ce module fait partie de l'architecture microservices enterprise Ainflue et constitue le pilier d'intelligence artificielle distribuée de la plateforme.*
+*Ce module fait partie de l'architecture microservices enterprise IA Chérie et constitue le pilier d'intelligence artificielle distribuée de la plateforme.*

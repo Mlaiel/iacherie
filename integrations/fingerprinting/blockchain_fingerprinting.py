@@ -5,7 +5,7 @@ Système avancé de fingerprinting blockchain avec intégration NFT,
 certificats d'ownership et registres décentralisés.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -354,13 +354,13 @@ class BlockchainFingerprinting:
         try:
             # Métadonnées NFT standards
             nft_metadata = {
-                'name': f"Ainflue Content #{content_hash[:8]}",
+                'name': f"IA Chérie Content #{content_hash[:8]}",
                 'description': f"Digital content fingerprint created by {creator_address}",
                 'content_hash': content_hash,
                 'creator': creator_address,
                 'created_at': datetime.utcnow().isoformat(),
                 'fingerprint_type': 'content_protection',
-                'platform': 'Ainflue',
+                'platform': 'IA Chérie',
                 'attributes': []
             }
             
@@ -865,7 +865,7 @@ contract AinfluRoyaltyContract {{
                 'registry_transaction': registry_transaction,
                 'status': 'registered',
                 'global_accessible': True,
-                'verification_url': f"https://registry.ainflue.com/verify/{fingerprint.fingerprint_id}"
+                'verification_url': f"https://registry.iacherie.com/verify/{fingerprint.fingerprint_id}"
             }
             
             logger.info(f"Empreinte enregistrée dans le registre: {result['registry_id']}")

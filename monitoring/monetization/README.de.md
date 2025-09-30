@@ -1,10 +1,10 @@
-# Ainflue Plattform - Monetarisierung Monitoring Modul
+# IA Chérie Plattform - Monetarisierung Monitoring Modul
 
 Enterprise-grade Monetarisierung Monitoring für Umsatzoptimierung, Zahlungsabwicklung und Finanzintelligenz in KI-basierten Content-Erstellungsplattformen.
 
 ## Überblick
 
-Das Monetarisierung Modul bietet umfassendes Monitoring und Optimierung für alle Umsatzströme in der Ainflue Plattform, einschließlich:
+Das Monetarisierung Modul bietet umfassendes Monitoring und Optimierung für alle Umsatzströme in der IA Chérie Plattform, einschließlich:
 
 - **Payment Gateway Integration** - Multi-Gateway Verarbeitung mit intelligenter Weiterleitung
 - **Umsatzoptimierung** - KI-gesteuerte Preis- und Monetarisierungsstrategien
@@ -60,4 +60,4 @@ Copyright © 2025 Fahed Mlaiel. Alle Rechte vorbehalten.
 
 ## Lizenz
 
-Dieses Monitoring-Modul ist proprietäre Software, die ausschließlich für die Ainflue Plattform entwickelt wurde. Unbefugte Nutzung, Verteilung oder Modifikation ist strengstens untersagt.
+Dieses Monitoring-Modul ist proprietäre Software, die ausschließlich für die IA Chérie Plattform entwickelt wurde. Unbefugte Nutzung, Verteilung oder Modifikation ist strengstens untersagt.

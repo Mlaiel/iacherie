@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-artifacts
+  name: iacherie-artifacts
   labels:
-    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/name: iacherie-artifacts
     app.kubernetes.io/component: artifacts-module
-    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/part-of: iacherie-platform
     app.kubernetes.io/managed-by: fahed-mlaiel
     owner: fahed-mlaiel
     environment: production
     classification: confidential
   annotations:
-    description: "Ainflue Artifacts Module - Documentation and Configuration Management"
+    description: "IA Chérie Artifacts Module - Documentation and Configuration Management"
     contact: "mlaiel@live.de"
     legal-notice: "© 2025 Fahed Mlaiel. All rights reserved."
     compliance: "GDPR, SOX, PCI-DSS"
@@ -19,8 +19,8 @@ metadata:
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: ainflue-artifacts-quota
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-quota
+  namespace: iacherie-artifacts
 spec:
   hard:
     # Compute Resources
@@ -49,8 +49,8 @@ spec:
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: ainflue-artifacts-limits
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-limits
+  namespace: iacherie-artifacts
 spec:
   limits:
   - type: "Container"
@@ -75,8 +75,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-artifacts-network-policy
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-network-policy
+  namespace: iacherie-artifacts
 spec:
   podSelector: {}
   policyTypes:
@@ -86,10 +86,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-api-gateway
+          name: iacherie-api-gateway
     - namespaceSelector:
         matchLabels:
-          name: ainflue-backend
+          name: iacherie-backend
     - namespaceSelector:
         matchLabels:
           name: monitoring
@@ -102,7 +102,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
     ports:
     - protocol: TCP
       port: 5432
@@ -122,21 +122,21 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ainflue-artifacts-sa
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-sa
+  namespace: iacherie-artifacts
   labels:
-    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/name: iacherie-artifacts
     app.kubernetes.io/component: service-account
   annotations:
-    description: "Service account for Ainflue Artifacts Module"
+    description: "Service account for IA Chérie Artifacts Module"
     owner: "fahed-mlaiel"
 automountServiceAccountToken: true
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: ainflue-artifacts-role
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-role
+  namespace: iacherie-artifacts
 rules:
 - apiGroups: [""]
   resources: ["configmaps", "secrets", "persistentvolumeclaims"]
@@ -151,24 +151,24 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-artifacts-rolebinding
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-rolebinding
+  namespace: iacherie-artifacts
 subjects:
 - kind: ServiceAccount
-  name: ainflue-artifacts-sa
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-sa
+  namespace: iacherie-artifacts
 roleRef:
   kind: Role
-  name: ainflue-artifacts-role
+  name: iacherie-artifacts-role
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ainflue-artifacts-secrets
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-secrets
+  namespace: iacherie-artifacts
   labels:
-    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/name: iacherie-artifacts
     app.kubernetes.io/component: secrets
 type: Opaque
 data:
@@ -181,10 +181,10 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-artifacts-config
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-config
+  namespace: iacherie-artifacts
   labels:
-    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/name: iacherie-artifacts
     app.kubernetes.io/component: configuration
 data:
   app.yaml: |
@@ -201,8 +201,8 @@ data:
     
     security:
       cors_origins:
-        - "https://artifacts.ainflue.com"
-        - "https://admin.ainflue.com"
+        - "https://artifacts.iacherie.com"
+        - "https://admin.iacherie.com"
       rate_limit:
         requests_per_minute: 1000
         burst_size: 100
@@ -245,7 +245,7 @@ data:
         
         server {
             listen 8080;
-            server_name artifacts.ainflue.com;
+            server_name artifacts.iacherie.com;
             
             # API Endpoints
             location /api/ {
@@ -287,8 +287,8 @@ data:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-artifacts-psp
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-psp
+  namespace: iacherie-artifacts
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -324,15 +324,15 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ainflue-artifacts-metrics
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-metrics
+  namespace: iacherie-artifacts
   labels:
-    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/name: iacherie-artifacts
     app.kubernetes.io/component: monitoring
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ainflue-artifacts
+      app.kubernetes.io/name: iacherie-artifacts
       monitoring: enabled
   endpoints:
   - port: metrics
@@ -344,10 +344,10 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: ainflue-artifacts-pdb
-  namespace: ainflue-artifacts
+  name: iacherie-artifacts-pdb
+  namespace: iacherie-artifacts
 spec:
   minAvailable: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: ainflue-artifacts
+      app.kubernetes.io/name: iacherie-artifacts

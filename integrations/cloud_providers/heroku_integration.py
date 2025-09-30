@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - HEROKU APPLICATION PLATFORM
+IACHERIE INTEGRATIONS - HEROKU APPLICATION PLATFORM
 =================================================
 
 Enterprise Heroku integration for creator economy platform deployment.
 Combines multiple expert roles for comprehensive application hosting management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chérie - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/cloud_providers)
 
 Expert Roles Applied:
@@ -1163,7 +1163,7 @@ if __name__ == "__main__":
         print(f"Service Health: {health}")
         
         # Example deployment (would need actual source path)
-        # app = await service.deploy_app("./my-app", "ainflue-creator-api", "creator123", HerokuAppType.API)
+        # app = await service.deploy_app("./my-app", "iacherie-creator-api", "creator123", HerokuAppType.API)
         # print(f"App deployed: {app}")
     
     # Run example

@@ -1,7 +1,7 @@
 """
 Real-Time Collaboration - Collaboration Module
 ==============================================
-Système de collaboration temps réel pour créateurs Ainflue.
+Système de collaboration temps réel pour créateurs IA Chérie.
 Support WebSocket, synchronisation multi-utilisateurs.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 """
-Service Mesh Integration for PagerDuty - Ainflue Platform
+Service Mesh Integration for PagerDuty - IA Chérie Platform
 Microservices topology monitoring and distributed tracing
 
 Author: Fahed Mlaiel <mlaiel@live.de>

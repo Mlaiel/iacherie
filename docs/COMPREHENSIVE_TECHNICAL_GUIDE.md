@@ -1,4 +1,4 @@
-# 🏭 Ainflue - Comprehensive Technical Development Guide
+# 🏭 IA Chérie - Comprehensive Technical Development Guide
 
 **Version:** 2.0.0 - Ultra-Advanced Industrial Implementation  
 **Last Updated:** August 2025  
@@ -22,7 +22,7 @@
 
 ## 🎯 Executive Summary
 
-Ainflue is an ultra-advanced AI-powered influencer collaboration platform that implements:
+IA Chérie is an ultra-advanced AI-powered influencer collaboration platform that implements:
 
 - **53 Core AI Agents** for comprehensive content lifecycle management
 - **117+ Industrial Crawlers** for real-time web surveillance and content discovery
@@ -384,8 +384,8 @@ System Requirements:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # 2. Setup Python environment
 python -m venv venv
@@ -506,20 +506,20 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api
+  name: iacherie-api
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
     spec:
       containers:
       - name: api
-        image: ainflue/api:latest
+        image: iacherie/api:latest
         ports:
         - containerPort: 8000
         env:
@@ -546,7 +546,7 @@ module "ainflue_infrastructure" {
   database_size = "db.r5.xlarge"
   
   tags = {
-    Project = "Ainflue"
+    Project = "IA Chérie"
     Environment = "Production"
   }
 }
@@ -676,7 +676,7 @@ class PerformanceMonitor:
 #### 1. Import Errors
 ```bash
 # Fix Python path issues
-export PYTHONPATH="/path/to/Ainflue:$PYTHONPATH"
+export PYTHONPATH="/path/to/IA Chérie:$PYTHONPATH"
 
 # Verify imports
 python -c "from ai_agents import ContentAgent; print('Import successful')"
@@ -714,7 +714,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('ainflue.log'),
+        logging.FileHandler('iacherie.log'),
         logging.StreamHandler()
     ]
 )
@@ -731,10 +731,10 @@ Health Check Endpoints:
 
 ### Support Resources
 
-- **Documentation**: [https://docs.ainflue.com](https://docs.ainflue.com)
-- **GitHub Issues**: [https://github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Community Forum**: [https://community.ainflue.com](https://community.ainflue.com)
-- **Technical Support**: technical@ainflue.com
+- **Documentation**: [https://docs.iacherie.com](https://docs.iacherie.com)
+- **GitHub Issues**: [https://github.com/Mlaiel/IA Chérie/issues](https://github.com/Mlaiel/IA Chérie/issues)
+- **Community Forum**: [https://community.iacherie.com](https://community.iacherie.com)
+- **Technical Support**: technical@iacherie.com
 
 ---
 
@@ -747,4 +747,4 @@ Health Check Endpoints:
 
 ---
 
-*This guide represents the complete technical implementation of the Ainflue platform with 53 core AI agents, 117 industrial crawlers, and ultra-advanced testing capabilities. All implementations follow industrial-grade standards with zero-mock testing policies.*
+*This guide represents the complete technical implementation of the IA Chérie platform with 53 core AI agents, 117 industrial crawlers, and ultra-advanced testing capabilities. All implementations follow industrial-grade standards with zero-mock testing policies.*

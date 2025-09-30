@@ -1,0 +1,230 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-cluster-config
+  namespace: ia-influencer
+  labels:
+    app: redis-cluster
+    tier: cache
+    environment: production
+data:
+  redis.conf: |
+    # Redis Cluster Configuration for IA-Influencer Platform
+    # High-Performance Production Configuration
+    # Creator: Fahed Mlaiel <mlaiel@live.de>
+    
+    # Network
+    bind 0.0.0.0
+    port 6379
+    tcp-backlog 511
+    timeout 0
+    tcp-keepalive 300
+    
+    # General
+    daemonize no
+    supervised no
+    pidfile /var/run/redis.pid
+    loglevel notice
+    logfile /var/log/redis/redis-server.log
+    
+    # Cluster Configuration
+    cluster-enabled yes
+    cluster-config-file nodes.conf
+    cluster-node-timeout 15000
+    cluster-announce-hostname redis-cluster
+    cluster-announce-port 6379
+    cluster-announce-bus-port 16379
+    
+    # Memory Management
+    maxmemory 4gb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 5
+    
+    # Persistence
+    save 900 1
+    save 300 10
+    save 60 10000
+    stop-writes-on-bgsave-error yes
+    rdbcompression yes
+    rdbchecksum yes
+    dbfilename dump.rdb
+    dir /data
+    
+    # AOF Persistence
+    appendonly yes
+    appendfilename "appendonly.aof"
+    appendfsync everysec
+    no-appendfsync-on-rewrite no
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+    aof-load-truncated yes
+    
+    # Security
+    requirepass ultra_secure_redis_password_2024
+    masterauth ultra_secure_redis_password_2024
+    
+    # Clients
+    maxclients 10000
+    
+    # Performance Tuning
+    hash-max-ziplist-entries 512
+    hash-max-ziplist-value 64
+    list-max-ziplist-size -2
+    list-compress-depth 0
+    set-max-intset-entries 512
+    zset-max-ziplist-entries 128
+    zset-max-ziplist-value 64
+    hll-sparse-max-bytes 3000
+    
+    # Slow Log
+    slowlog-log-slower-than 10000
+    slowlog-max-len 128
+    
+    # Latency Monitoring
+    latency-monitor-threshold 100
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cluster-service
+  namespace: ia-influencer
+  labels:
+    app: redis-cluster
+    tier: cache
+spec:
+  type: ClusterIP
+  clusterIP: None  # Headless service for StatefulSet
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: 6379
+      protocol: TCP
+    - name: cluster-bus
+      port: 16379
+      targetPort: 16379
+      protocol: TCP
+  selector:
+    app: redis-cluster
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-cluster
+  namespace: ia-influencer
+  labels:
+    app: redis-cluster
+    tier: cache
+    component: database
+spec:
+  serviceName: redis-cluster-service
+  replicas: 6  # 3 masters + 3 slaves
+  selector:
+    matchLabels:
+      app: redis-cluster
+  template:
+    metadata:
+      labels:
+        app: redis-cluster
+        tier: cache
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - redis-cluster
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: redis
+          image: redis:7.2.3-alpine
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+            - name: cluster-bus
+              containerPort: 16379
+              protocol: TCP
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: password
+          command:
+            - redis-server
+            - /usr/local/etc/redis/redis.conf
+          volumeMounts:
+            - name: redis-config
+              mountPath: /usr/local/etc/redis
+              readOnly: true
+            - name: redis-data
+              mountPath: /data
+            - name: redis-logs
+              mountPath: /var/log/redis
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "2000m"
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - redis-cli
+                - ping
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - redis-cli shutdown nosave
+      volumes:
+        - name: redis-config
+          configMap:
+            name: redis-cluster-config
+        - name: redis-logs
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+        labels:
+          app: redis-cluster
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: fast-ssd
+        resources:
+          requests:
+            storage: 50Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret
+  namespace: ia-influencer
+  labels:
+    app: redis-cluster
+type: Opaque
+data:
+  password: dWx0cmFfc2VjdXJlX3JlZGlzX3Bhc3N3b3JkXzIwMjQ=  # base64 encoded

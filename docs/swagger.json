@@ -1,27 +1,27 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Ainflue AI Platform API",
+    "title": "IA Chérie AI Platform API",
     "version": "1.0.0",
-    "description": "\n# Ainflue AI Platform API\n\nComplete API documentation for the Ainflue AI-powered content protection and monetization platform.\n\n## Features\n\n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n- **Creator Management**: Comprehensive creator profiles and content management\n- **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**: Real-time analytics and performance metrics\n- **Multi-platform Support**: Integration with major content platforms\n- **Security**: Enterprise-grade security and compliance features\n\n## Authentication\n\nAll API endpoints require authentication using API keys or JWT tokens.\n                ",
-    "termsOfService": "https://ainflue.com/terms",
+    "description": "\n# IA Chérie AI Platform API\n\nComplete API documentation for the IA Chérie AI-powered content protection and monetization platform.\n\n## Features\n\n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n- **Creator Management**: Comprehensive creator profiles and content management\n- **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**: Real-time analytics and performance metrics\n- **Multi-platform Support**: Integration with major content platforms\n- **Security**: Enterprise-grade security and compliance features\n\n## Authentication\n\nAll API endpoints require authentication using API keys or JWT tokens.\n                ",
+    "termsOfService": "https://iacherie.com/terms",
     "contact": {
-      "name": "Ainflue API Support",
+      "name": "IA Chérie API Support",
       "email": "mlaiel@live.de",
-      "url": "https://ainflue.com/support"
+      "url": "https://iacherie.com/support"
     },
     "license": {
       "name": "Proprietary",
-      "url": "https://ainflue.com/license"
+      "url": "https://iacherie.com/license"
     }
   },
   "servers": [
     {
-      "url": "https://api.ainflue.com/v1",
+      "url": "https://api.iacherie.com/v1",
       "description": "Production server"
     },
     {
-      "url": "https://staging-api.ainflue.com/v1",
+      "url": "https://staging-api.iacherie.com/v1",
       "description": "Staging server"
     },
     {

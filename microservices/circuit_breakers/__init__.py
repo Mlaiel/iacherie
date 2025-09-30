@@ -1,5 +1,5 @@
 """
-Circuit Breakers Module for Ainflue Microservices - Enterprise Edition
+Circuit Breakers Module for IA Chérie Microservices - Enterprise Edition
 =====================================================================
 
 Implements enterprise circuit breaker patterns with advanced features:

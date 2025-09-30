@@ -320,7 +320,7 @@ class RecordingManager:
         if recording_data:
             recording_info = json.loads(recording_data)
             # In production, generate signed URL for cloud storage
-            return f"https://storage.ainflue.com/recordings/{recording_info['file_path']}"
+            return f"https://storage.iacherie.com/recordings/{recording_info['file_path']}"
         return None
 
 class VoiceCommunicationEngine:
@@ -840,6 +840,6 @@ async def schedule_content_review_call(voice_engine: VoiceCommunicationEngine,
 🚀 DevOps: Comprehensive analytics and monitoring capabilities
 📝 IA Prompt Engineer: Auto-transcription for content creation workflows
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chérie Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

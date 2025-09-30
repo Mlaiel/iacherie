@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Encryption Security Module
+ * IA Chérie Desktop - Content Encryption Security Module
  * 
  * Advanced content encryption and security for desktop application
  * 

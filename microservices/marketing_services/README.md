@@ -1,4 +1,4 @@
-# 🚀 Ainflue Marketing Services Enterprise
+# 🚀 IA Chérie Marketing Services Enterprise
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer  
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)  
@@ -11,7 +11,7 @@ Any reproduction, modification, distribution, or theft of ideas/concepts/code wi
 
 ## 🎯 Overview
 
-Enterprise-grade marketing services suite for the Ainflue creator economy platform. Complete AI-powered marketing orchestration with advanced ML models, real-time analytics, and automated partnerships.
+Enterprise-grade marketing services suite for the IA Chérie creator economy platform. Complete AI-powered marketing orchestration with advanced ML models, real-time analytics, and automated partnerships.
 
 ## 🏗️ Architecture
 
@@ -129,7 +129,7 @@ config = {
 
 For licensing inquiries and technical support:
 - **Email**: mlaiel@live.de
-- **Project**: Ainflue Marketing Services Enterprise
+- **Project**: IA Chérie Marketing Services Enterprise
 - **License**: Proprietary - Fahed Mlaiel
 
 ---

@@ -4,7 +4,7 @@ Media Processor - Enterprise Audio/Video Processing
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced media processing for Ainflue Platform:
+Advanced media processing for IA Chérie Platform:
 - Multi-format audio/video transcoding
 - Quality optimization and compression
 - Watermarking and digital protection
@@ -46,7 +46,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/media_processor.log'),
+        logging.FileHandler('/var/log/iacherie/media_processor.log'),
         logging.StreamHandler()
     ]
 )
@@ -114,7 +114,7 @@ class MediaProcessor:
     - Batch processing with queue management
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/media_config.yaml"):
+    def __init__(self, config_path: str = "/etc/iacherie/media_config.yaml"):
         self.config_path = config_path
         self.processing_queue: List[ProcessingJob] = []
         self.completed_jobs: List[ProcessingJob] = []
@@ -132,7 +132,7 @@ class MediaProcessor:
             else:
                 self.config = {
                     'ffmpeg_path': 'ffmpeg',
-                    'output_directory': '/var/lib/ainflue/media/processed',
+                    'output_directory': '/var/lib/iacherie/media/processed',
                     'temp_directory': '/tmp/ainflue_media',
                     'max_concurrent_jobs': 4,
                     'supported_formats': {
@@ -148,7 +148,7 @@ class MediaProcessor:
                     },
                     'watermark': {
                         'enabled': True,
-                        'text': 'Ainflue',
+                        'text': 'IA Chérie',
                         'position': 'bottom-right',
                         'opacity': 0.7
                     }
@@ -897,7 +897,7 @@ async def main():
     """CLI entry point for media processor"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Media Processor')
+    parser = argparse.ArgumentParser(description='IA Chérie Media Processor')
     parser.add_argument('--register', metavar='FILE', help='Register media file')
     parser.add_argument('--process', metavar='FILE_ID', help='Process media file')
     parser.add_argument('--format', default='mp4', help='Target format')

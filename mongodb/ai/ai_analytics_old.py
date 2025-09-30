@@ -2,7 +2,7 @@
 AI Analytics Module - Enhanced AI-driven Analytics and Insights Generation
 
 This module provides comprehensive AI-driven analytics, insights generation,
-and intelligent business intelligence for the Ainflue platform.
+and intelligent business intelligence for the IA Chérie platform.
 
 🎯 Expert Roles Applied:
 - Lead Dev IA: Advanced AI orchestration and model integration

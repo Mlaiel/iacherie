@@ -1,11 +1,11 @@
 # Neural Enhancement Service
-# AI-powered neural audio enhancement for Ainflue Platform
+# AI-powered neural audio enhancement for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Neural Enhancement - AI-powered audio neural enhancement"
+LABEL description="IA Chérie Neural Enhancement - AI-powered audio neural enhancement"
 LABEL version="1.0.0"
 
 # Set working directory

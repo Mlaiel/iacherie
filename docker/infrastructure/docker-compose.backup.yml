@@ -1,5 +1,5 @@
 # Docker Compose for Backup Services
-# Automated backup infrastructure for Ainflue Platform
+# Automated backup infrastructure for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 services:
@@ -114,7 +114,7 @@ services:
 
   # Backup Monitor & Alerting
   backup_monitor:
-    image: ainflue/backup-monitor:latest
+    image: iacherie/backup-monitor:latest
     environment:
       - ALERT_EMAIL=${BACKUP_ALERT_EMAIL}
       - ALERT_SLACK_WEBHOOK=${BACKUP_ALERT_SLACK_WEBHOOK}
@@ -130,7 +130,7 @@ services:
 
   # Backup Verification Service
   backup_verifier:
-    image: ainflue/backup-verifier:latest
+    image: iacherie/backup-verifier:latest
     environment:
       - VERIFICATION_SCHEDULE=0 4 * * *
       - VERIFICATION_SAMPLE_RATE=0.1

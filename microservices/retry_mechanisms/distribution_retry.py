@@ -1,11 +1,11 @@
 """
-Distribution Retry Engine - Ainflue
+Distribution Retry Engine - IA Chérie
 ==================================
 Retry spécialisé pour distribution multi-plateformes.
 Platform API retry + SEO + social media posting patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PAYMENT PROCESSOR - ADVANCED DOCKERFILE
+# IACHERIE PAYMENT PROCESSOR - ADVANCED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced payment processing supporting
 # Stripe, PayPal, crypto payments, and multi-currency processing.
@@ -72,7 +72,7 @@ VOLUME ["/app/storage", "/app/logs", "/app/keys"]
 
 CMD ["python3.11", "-m", "payment_processor.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Payment Processor"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="payment_processor"
-LABEL ainflue.service.port="8041"
+LABEL org.opencontainers.image.title="IA Chérie Payment Processor"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="payment_processor"
+LABEL iacherie.service.port="8041"

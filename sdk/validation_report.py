@@ -129,7 +129,7 @@ class SDKImplementationValidator:
             file_size = file.stat().st_size
             line_count = self.count_lines(file)
             
-            if file.name in ['index.ts', 'ainflue-client.ts', 'types.ts']:
+            if file.name in ['index.ts', 'iacherie-client.ts', 'types.ts']:
                 modules['core_framework'].append({
                     'file': file.name,
                     'size': file_size,
@@ -318,7 +318,7 @@ class SDKImplementationValidator:
         report = self.report
         
         summary = f"""
-🏆 AINFLUE SDK IMPLEMENTATION SUMMARY
+🏆 IACHERIE SDK IMPLEMENTATION SUMMARY
 {'=' * 50}
 
 📅 Generated: {report['timestamp']}
@@ -389,7 +389,7 @@ Business Logic Integration: ✅ COMPLETE
 
 def main():
     """Main validation function"""
-    sdk_path = "/home/runner/work/Ainflue/Ainflue/sdk"
+    sdk_path = "/home/runner/work/IA Chérie/IA Chérie/sdk"
     
     print("🔍 Validating SDK Implementation...")
     

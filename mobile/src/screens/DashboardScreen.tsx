@@ -81,7 +81,7 @@ const DashboardScreen: React.FC = () => {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Dashboard</Text>
-        <Text style={styles.headerSubtitle}>Welcome back to Ainflue</Text>
+        <Text style={styles.headerSubtitle}>Welcome back to IA Chérie</Text>
       </View>
 
       {/* Stats Grid */}

@@ -1,5 +1,5 @@
 """
-🎨 Creator Ecosystem Intelligence - Surveillance Créateurs Ainflue
+🎨 Creator Ecosystem Intelligence - Surveillance Créateurs IA Chérie
 ================================================================
 
 Intelligence spécialisée pour l'écosystème créateurs multi-format.

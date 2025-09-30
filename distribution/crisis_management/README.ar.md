@@ -1,6 +1,6 @@
 # 🚨 محرك إدارة الأزمات
 
-**نظام متقدم للكشف عن الأزمات وإدارتها وحماية السمعة لمنصة توزيع Ainflue**
+**نظام متقدم للكشف عن الأزمات وإدارتها وحماية السمعة لمنصة توزيع IA Chérie**
 
 ## 📖 نظرة عامة
 
@@ -254,10 +254,10 @@ response = await influencer_crisis_handler.manage_influencer_scandal(
 
 ### 🆘 دعم الطوارئ
 - **خط الطوارئ للأزمة:** +49 (0) XXX XXX XXXX
-- **Discord الطوارئ:** discord.gg/ainflue-crisis
-- **الوثائق:** docs.ainflue.com/crisis-management
+- **Discord الطوارئ:** discord.gg/iacherie-crisis
+- **الوثائق:** docs.iacherie.com/crisis-management
 
 ---
 
 **© 2025 فهد ملايل - جميع الحقوق محفوظة**  
-**منصة Ainflue - محرك إدارة الأزمات**
+**منصة IA Chérie - محرك إدارة الأزمات**

@@ -1,5 +1,5 @@
 """
-Semantic Search Optimizer for Ainflue Platform
+Semantic Search Optimizer for IA Chérie Platform
 ==============================================
 
 Advanced semantic search optimization leveraging transformer models and knowledge graphs.

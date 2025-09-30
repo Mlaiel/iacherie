@@ -30,7 +30,7 @@
 
 ## 🎯 منصة اشتراكات المؤسسات لاقتصاد المبدعين
 
-نظام إدارة اشتراكات فائق التطور، جاهز للإنتاج، مصمم خصيصاً لمنصة Ainflue لاقتصاد المبدعين. يوفر هذا النظام على المستوى الصناعي إدارة شاملة للاشتراكات مع ذكاء مدعوم بالذكاء الاصطناعي، وتحسين قائم على التعلم الآلي، وتحليلات متقدمة.
+نظام إدارة اشتراكات فائق التطور، جاهز للإنتاج، مصمم خصيصاً لمنصة IA Chérie لاقتصاد المبدعين. يوفر هذا النظام على المستوى الصناعي إدارة شاملة للاشتراكات مع ذكاء مدعوم بالذكاء الاصطناعي، وتحسين قائم على التعلم الآلي، وتحليلات متقدمة.
 
 ### 🏗️ الهيكل الأساسي
 
@@ -111,8 +111,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/subscription
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/subscription
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -212,7 +212,7 @@ usage_forecast = await usage_forecasting_engine.generate_usage_forecast(
 ### متغيرات البيئة
 ```bash
 # قاعدة البيانات
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # نماذج التعلم الآلي

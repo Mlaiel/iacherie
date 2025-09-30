@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE MASTERING ENGINE - PROFESSIONAL DOCKERFILE
+# IACHERIE MASTERING ENGINE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for automated mastering with EQ, compression,
 # limiting, stereo enhancement, and loudness optimization.
@@ -77,7 +77,7 @@ VOLUME ["/app/storage", "/app/logs", "/app/cache"]
 
 CMD ["python3.11", "-m", "mastering_engine.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Mastering Engine"
-LABEL ainflue.service.category="audio"
-LABEL ainflue.service.name="mastering_engine"
-LABEL ainflue.service.port="8015"
+LABEL org.opencontainers.image.title="IA Chérie Mastering Engine"
+LABEL iacherie.service.category="audio"
+LABEL iacherie.service.name="mastering_engine"
+LABEL iacherie.service.port="8015"

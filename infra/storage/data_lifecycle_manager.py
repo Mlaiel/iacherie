@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - Data Lifecycle Manager
+"""IA Chérie Infrastructure Module - Data Lifecycle Manager
 ======================================================
 
-Advanced data lifecycle management system for the Ainflue platform infrastructure.
+Advanced data lifecycle management system for the IA Chérie platform infrastructure.
 Provides comprehensive data governance, automated lifecycle policies, archival strategies,
 and compliance management for creator economy data protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chérie Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -112,7 +112,7 @@ class LifecycleEvent:
 
 class EnterpriseDataLifecycleManager:
     """
-    Enterprise-grade data lifecycle management system for Ainflue platform.
+    Enterprise-grade data lifecycle management system for IA Chérie platform.
     
     Provides comprehensive data lifecycle capabilities:
     - Automated data governance

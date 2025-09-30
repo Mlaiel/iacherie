@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Payout Configuration Module
+"""IA Chérie Payout Configuration Module
 ====================================
 
-Enterprise-grade payout configuration for the Ainflue platform.
+Enterprise-grade payout configuration for the IA Chérie platform.
 Comprehensive payout management with automated processing, multi-method
 support, compliance tracking, and real-time monitoring.
 

@@ -1,5 +1,5 @@
 ---
-# Ainflue Platform - Production CI/CD Pipeline
+# IA Chérie Platform - Production CI/CD Pipeline
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # GitHub Actions workflow for automated production deployment
 
@@ -36,7 +36,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: mlaiel/ainflue
+  IMAGE_NAME: mlaiel/iacherie
   DEPLOYMENT_TYPE: ${{ inputs.deployment_type || 'blue-green' }}
 
 jobs:
@@ -230,7 +230,7 @@ jobs:
         with:
           event_type: 'deployment-started'
     environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
   secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -267,10 +267,10 @@ jobs:
           kubectl apply -f kubernetes/environments/staging/
 
           # Wait for deployment to complete
-          kubectl rollout status deployment/ainflue-api -n ainflue-staging --timeout=600s
+          kubectl rollout status deployment/iacherie-api -n iacherie-staging --timeout=600s
 
           # Get service URL
-          SERVICE_URL=$(kubectl get service ainflue-api -n ainflue-staging -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          SERVICE_URL=$(kubectl get service iacherie-api -n iacherie-staging -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "service_url=http://$SERVICE_URL" >> $GITHUB_OUTPUT
 
       - name: Basic Health Check
@@ -320,7 +320,7 @@ jobs:
         uses: ./.github/workflows/vault-secrets.yml
         with:
           action: 'read'
-          secret_path: 'secret/ainflue/${{ inputs.environment || "production" }}'
+          secret_path: 'secret/iacherie/${{ inputs.environment || "production" }}'
     environment: ${{ inputs.environment || 'production' }}
         secrets:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
@@ -347,10 +347,10 @@ jobs:
             sed -i "/labels:/a\\    traffic-percentage: \"5\"" kubernetes/environments/production/*.yaml
 
             kubectl apply -f kubernetes/environments/production/
-            kubectl rollout status deployment/ainflue-api-canary -n ainflue --timeout=600s
+            kubectl rollout status deployment/iacherie-api-canary -n iacherie --timeout=600s
 
             # Get canary service URL
-            CANARY_SERVICE_URL=$(kubectl get service ainflue-api-canary -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+            CANARY_SERVICE_URL=$(kubectl get service iacherie-api-canary -n iacherie -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "service_url=http://$CANARY_SERVICE_URL" >> $GITHUB_OUTPUT
             echo "deployment_type=canary" >> $GITHUB_OUTPUT
 
@@ -364,9 +364,9 @@ jobs:
 
             # Deploy green version
             kubectl apply -f kubernetes/environments/production/
-            kubectl rollout status deployment/ainflue-api-green -n ainflue --timeout=900s
+            kubectl rollout status deployment/iacherie-api-green -n iacherie --timeout=900s
 
-            GREEN_SERVICE_URL=$(kubectl get service ainflue-api-green -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+            GREEN_SERVICE_URL=$(kubectl get service iacherie-api-green -n iacherie -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "service_url=http://$GREEN_SERVICE_URL" >> $GITHUB_OUTPUT
             echo "deployment_type=blue-green" >> $GITHUB_OUTPUT
           fi
@@ -415,7 +415,7 @@ jobs:
             echo "🐦 Implementing Canary traffic management with business metrics..."
 
             # Start with 5% traffic to canary
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"canary","traffic-split":"5"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"canary","traffic-split":"5"}}}'
             echo "📊 Canary receiving 5% traffic - Monitoring business metrics..."
 
             # Monitor for 10 minutes with business metrics
@@ -440,16 +440,16 @@ jobs:
               echo "✅ Canary metrics within acceptable range - Proceeding with rollout"
 
               # Gradually increase traffic: 5% -> 25% -> 50% -> 100%
-              kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"canary","traffic-split":"25"}}}'
+              kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"canary","traffic-split":"25"}}}'
               sleep 300  # Monitor for 5 minutes
 
-              kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"canary","traffic-split":"50"}}}'
+              kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"canary","traffic-split":"50"}}}'
               sleep 600  # Monitor for 10 minutes
 
               # Final check before full rollout
               FINAL_ERROR_RATE=$(curl -s "http://prometheus:9090/api/v1/query?query=rate(http_requests_total{status=~\"5..\",version=\"canary\"}[5m])" | jq -r '.data.result[0].value[1] // "0"')
               if (( $(echo "$FINAL_ERROR_RATE < $ERROR_THRESHOLD" | bc -l) )); then
-                kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"canary"}}}'
+                kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"canary"}}}'
                 echo "✅ Canary deployment successful - Full traffic switched"
               else
                 echo "❌ Canary final check failed - Rolling back"
@@ -464,19 +464,19 @@ jobs:
             echo "🔄 Implementing Blue-Green traffic switch..."
 
             # Switch 10% traffic to green
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green","traffic-split":"10"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"green","traffic-split":"10"}}}'
             sleep 60
 
             # Monitor for 2 minutes, then switch 50%
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green","traffic-split":"50"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"green","traffic-split":"50"}}}'
             sleep 120
 
             # Full traffic switch
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"green"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"green"}}}'
           fi
 
           # Verify production traffic
-          PROD_URL="https://api.ainflue.com"
+          PROD_URL="https://api.iacherie.com"
           for i in {1..5}; do
             if curl -f --max-time 30 "$PROD_URL/health"; then
               echo "✅ Production traffic verification passed"
@@ -494,23 +494,23 @@ jobs:
           if ["$DEPLOYMENT_TYPE" = "canary"]; then
             echo "🧹 Cleaning up production deployment after successful canary..."
             # Scale down production deployment gradually
-            kubectl scale deployment ainflue-api-production -n ainflue --replicas=2
+            kubectl scale deployment iacherie-api-production -n iacherie --replicas=2
             sleep 60
-            kubectl scale deployment ainflue-api-production -n ainflue --replicas=1
+            kubectl scale deployment iacherie-api-production -n iacherie --replicas=1
             sleep 60
-            kubectl scale deployment ainflue-api-production -n ainflue --replicas=0
+            kubectl scale deployment iacherie-api-production -n iacherie --replicas=0
 
             # Keep for potential rollback
-            kubectl annotate deployment ainflue-api-production -n ainflue \
+            kubectl annotate deployment iacherie-api-production -n iacherie \
               deployment.kubernetes.io/backup="true" \
               deployment.kubernetes.io/cleanup-after="24h"
           else
             echo "🧹 Cleaning up blue deployment after successful green..."
             # Scale down blue deployment after successful green deployment
-            kubectl scale deployment ainflue-api-blue -n ainflue --replicas=0
+            kubectl scale deployment iacherie-api-blue -n iacherie --replicas=0
 
             # Keep blue deployment for potential rollback, but scaled down
-            kubectl annotate deployment ainflue-api-blue -n ainflue \
+            kubectl annotate deployment iacherie-api-blue -n iacherie \
               deployment.kubernetes.io/backup="true" \
               deployment.kubernetes.io/cleanup-after="24h"
           fi
@@ -520,13 +520,13 @@ jobs:
           DEPLOYMENT_TYPE="${{ steps.deployment-strategy.outputs.deployment_type }}"
 
           if ["$DEPLOYMENT_TYPE" = "canary"]; then
-            DEPLOYMENT_NAME="ainflue-api-canary"
+            DEPLOYMENT_NAME="iacherie-api-canary"
           else
-            DEPLOYMENT_NAME="ainflue-api-green"
+            DEPLOYMENT_NAME="iacherie-api-green"
           fi
 
           # Update deployment annotations for monitoring
-          kubectl annotate deployment $DEPLOYMENT_NAME -n ainflue \
+          kubectl annotate deployment $DEPLOYMENT_NAME -n iacherie \
             deployment.kubernetes.io/revision="$(date +%s)" \
             deployment.kubernetes.io/deployed-by="${{ github.actor }}" \
             deployment.kubernetes.io/commit-sha="${{ github.sha }}" \
@@ -535,7 +535,7 @@ jobs:
             deployment.kubernetes.io/deployment-timestamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
           # Update Prometheus monitoring labels
-          kubectl label deployment $DEPLOYMENT_NAME -n ainflue \
+          kubectl label deployment $DEPLOYMENT_NAME -n iacherie \
             monitoring.prometheus.io/scrape="true" \
             version="${{ github.sha }}" \
             deployment-strategy="${{ env.DEPLOYMENT_TYPE }}" \
@@ -611,10 +611,10 @@ jobs:
               -H "Content-Type: application/json" \
               -H "DD-API-KEY: ${{ secrets.DATADOG_API_KEY }}" \
               -d '{
-                "title": "Ainflue Production Deployment",
+                "title": "IA Chérie Production Deployment",
                 "text": "Successfully deployed version ${{ github.sha }} to production",
                 "priority": "normal",
-                "tags": ["deployment", "production", "ainflue"],
+                "tags": ["deployment", "production", "iacherie"],
                 "alert_type": "success"
               }'
             echo "✅ Datadog event created"
@@ -627,7 +627,7 @@ jobs:
               -H "Content-Type: application/json" \
               -d '{
                 "version": "${{ github.sha }}",
-                "projects": ["ainflue"],
+                "projects": ["iacherie"],
                 "refs": [{
                   "repository": "${{ github.repository }}",
                   "commit": "${{ github.sha }}"
@@ -645,7 +645,7 @@ jobs:
         with:
           event_type: 'deployment-success'
     environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
       deployment_url: ${{ needs.deploy-production.outputs.production-url }}
       additional_info: |
@@ -762,25 +762,25 @@ jobs:
           if ["$DEPLOYMENT_TYPE" = "canary"]; then
             echo "🔄 Rolling back canary deployment..."
             # Switch all traffic back to production version
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"production"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"production"}}}'
             # Scale down canary deployment
-            kubectl scale deployment ainflue-api-canary -n ainflue --replicas=0
+            kubectl scale deployment iacherie-api-canary -n iacherie --replicas=0
           else
             echo "🔄 Rolling back blue-green deployment..."
             # Switch traffic back to blue deployment
-            kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"blue"}}}'
+            kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"blue"}}}'
             # Scale up blue deployment if needed
-            kubectl scale deployment ainflue-api-blue -n ainflue --replicas=3
+            kubectl scale deployment iacherie-api-blue -n iacherie --replicas=3
             # Scale down green deployment
-            kubectl scale deployment ainflue-api-green -n ainflue --replicas=0
+            kubectl scale deployment iacherie-api-green -n iacherie --replicas=0
           fi
 
           # Wait for rollback to complete
-          kubectl rollout status deployment/ainflue-api-blue -n ainflue --timeout=300s || \
-          kubectl rollout status deployment/ainflue-api -n ainflue --timeout=300s
+          kubectl rollout status deployment/iacherie-api-blue -n iacherie --timeout=300s || \
+          kubectl rollout status deployment/iacherie-api -n iacherie --timeout=300s
 
           # Verify rollback success
-          ROLLBACK_SERVICE_URL=$(kubectl get service ainflue-api -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          ROLLBACK_SERVICE_URL=$(kubectl get service iacherie-api -n iacherie -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
           # Health check on rolled back service
           MAX_ATTEMPTS=10
@@ -809,7 +809,7 @@ jobs:
         with:
           event_type: 'rollback-started'
     environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           image_tag: ${{ needs.build-docker.outputs.image-tag }}
         secrets:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -830,16 +830,16 @@ jobs:
           echo "🚨 Executing automated rollback due to deployment failure..."
 
           # Switch traffic back to blue deployment
-          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"blue"}}}'
+          kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"blue"}}}'
 
           # Scale up blue deployment
-          kubectl scale deployment ainflue-api-blue -n ainflue --replicas=3
+          kubectl scale deployment iacherie-api-blue -n iacherie --replicas=3
 
           # Wait for blue deployment to be ready
-          kubectl rollout status deployment/ainflue-api-blue -n ainflue --timeout=300s
+          kubectl rollout status deployment/iacherie-api-blue -n iacherie --timeout=300s
 
           # Verify rollback success
-          BLUE_SERVICE_URL=$(kubectl get service ainflue-api -n ainflue -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          BLUE_SERVICE_URL=$(kubectl get service iacherie-api -n iacherie -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
           # Health check on rolled back service
           MAX_ATTEMPTS=10
@@ -863,10 +863,10 @@ jobs:
       - name: Clean up failed green deployment
         run: |
           # Scale down the failed green deployment
-          kubectl scale deployment ainflue-api-green -n ainflue --replicas=0 || true
+          kubectl scale deployment iacherie-api-green -n iacherie --replicas=0 || true
 
           # Mark green deployment as failed for investigation
-          kubectl annotate deployment ainflue-api-green -n ainflue \
+          kubectl annotate deployment iacherie-api-green -n iacherie \
             deployment.kubernetes.io/status="failed" \
             deployment.kubernetes.io/rollback-reason="health-check-failure" \
             deployment.kubernetes.io/rollback-time="$(date -u +%Y-%m-%dT%H:%M:%SZ)" || true
@@ -903,7 +903,7 @@ jobs:
         with:
           event_type: 'rollback-success'
     environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           image_tag: ${{ needs.build-docker.outputs.image-tag }}
         secrets:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -919,7 +919,7 @@ jobs:
         with:
           event_type: 'deployment-failed'
     environment: ${{ inputs.environment || 'production' }}
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
       additional_info: |
         {

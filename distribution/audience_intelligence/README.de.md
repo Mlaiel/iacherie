@@ -1,6 +1,6 @@
 # 🧠 Audience Intelligence Engine (Deutsch) - Erweiterte KI-gesteuerte Zielgruppenanalyse
 
-**Enterprise-Grade Zielgruppen-Intelligenz-System für Ainflue Distribution Platform**
+**Enterprise-Grade Zielgruppen-Intelligenz-System für IA Chérie Distribution Platform**
 
 ## 🎯 Überblick
 
@@ -232,7 +232,7 @@ spec:
     spec:
       containers:
       - name: audience-intelligence
-        image: ainflue/audience-intelligence:latest
+        image: iacherie/audience-intelligence:latest
         resources:
           requests:
             memory: "3Gi"

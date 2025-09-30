@@ -1,10 +1,10 @@
 # 🏢 Enterprise Features Modul
 
-## Fortgeschrittene Enterprise-Grade Lösungen für die Ainflue Plattform
+## Fortgeschrittene Enterprise-Grade Lösungen für die IA Chérie Plattform
 
 ### 🎯 **Projektübersicht**
 
-Das Enterprise Features Modul bietet umfassende Enterprise-Grade Funktionen für die Ainflue Plattform, mit White-Label Anpassung, fortschrittlichem Branding, Single Sign-On Integration, benutzerdefiniertem KI-Training, On-Premise Deployment Tools, Enterprise Analytics und regulatorischem Compliance Management.
+Das Enterprise Features Modul bietet umfassende Enterprise-Grade Funktionen für die IA Chérie Plattform, mit White-Label Anpassung, fortschrittlichem Branding, Single Sign-On Integration, benutzerdefiniertem KI-Training, On-Premise Deployment Tools, Enterprise Analytics und regulatorischem Compliance Management.
 
 ### 👥 **Entwicklungsteam Spezialisierungen**
 

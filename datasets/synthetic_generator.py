@@ -18,7 +18,7 @@ Contact obligatoire : mlaiel@live.de
 
 MISSION ENTERPRISE:
 Génération de données synthétiques avancée pour les 53 agents IA spécialisés 
-de la plateforme Ainflue, supportant les 65+ plateformes avec conformité 
+de la plateforme IA Chérie, supportant les 65+ plateformes avec conformité 
 GDPR et standards de sécurité enterprise.
 """
 

@@ -1,4 +1,4 @@
-# 🚀 Module Templates API Ainflue
+# 🚀 Module Templates API IA Chérie
 
 **Collection de templates API enterprise pour la plateforme Creator Economy**
 
@@ -39,7 +39,7 @@ TOUS DROITS RÉSERVÉS
 
 ## 🎯 Vue d'ensemble
 
-Le Module Templates API Ainflue fournit une collection complète de templates API de niveau enterprise conçus spécifiquement pour la plateforme Creator Economy. Ce module permet le développement rapide d'APIs sécurisées, évolutives et hautes performances pour les créateurs de contenu, outils de collaboration et systèmes de monétisation.
+Le Module Templates API IA Chérie fournit une collection complète de templates API de niveau enterprise conçus spécifiquement pour la plateforme Creator Economy. Ce module permet le développement rapide d'APIs sécurisées, évolutives et hautes performances pour les créateurs de contenu, outils de collaboration et systèmes de monétisation.
 
 ### **Chaîne de Valeur Métier:**
 ```
@@ -187,7 +187,7 @@ websocket = WebSocketTemplate(
 ### **Variables d'Environnement**
 ```env
 # Configuration Base de Données
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Configuration Sécurité

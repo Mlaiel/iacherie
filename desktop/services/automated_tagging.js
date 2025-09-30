@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Automated Tagging Service
+ * IA Chérie Desktop - Automated Tagging Service
  * 
  * AI-powered content tagging and metadata extraction system
  * Automatically generates relevant tags, categories, and metadata for content

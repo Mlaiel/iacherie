@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: collaboration_matcher.dockerfile
-    container_name: ainflue-collaboration-matcher
+    container_name: iacherie-collaboration-matcher
     environment:
       - SERVICE_NAME=collaboration_matcher
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -44,7 +44,7 @@ services:
     build:
       context: .
       dockerfile: project_orchestrator.dockerfile
-    container_name: ainflue-project-orchestrator
+    container_name: iacherie-project-orchestrator
     environment:
       - SERVICE_NAME=project_orchestrator
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -73,7 +73,7 @@ services:
     build:
       context: .
       dockerfile: workflow_manager.dockerfile
-    container_name: ainflue-workflow-manager
+    container_name: iacherie-workflow-manager
     environment:
       - SERVICE_NAME=workflow_manager
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -102,7 +102,7 @@ services:
     build:
       context: .
       dockerfile: communication_hub.dockerfile
-    container_name: ainflue-communication-hub
+    container_name: iacherie-communication-hub
     environment:
       - SERVICE_NAME=communication_hub
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -130,7 +130,7 @@ services:
     build:
       context: .
       dockerfile: skill_analyzer.dockerfile
-    container_name: ainflue-skill-analyzer
+    container_name: iacherie-skill-analyzer
     environment:
       - SERVICE_NAME=skill_analyzer
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -158,7 +158,7 @@ services:
     build:
       context: .
       dockerfile: compatibility_engine.dockerfile
-    container_name: ainflue-compatibility-engine
+    container_name: iacherie-compatibility-engine
     environment:
       - SERVICE_NAME=compatibility_engine
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -185,7 +185,7 @@ services:
     build:
       context: .
       dockerfile: collaboration_analytics.dockerfile
-    container_name: ainflue-collaboration-analytics
+    container_name: iacherie-collaboration-analytics
     environment:
       - SERVICE_NAME=collaboration_analytics
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -213,7 +213,7 @@ services:
     build:
       context: .
       dockerfile: project_templates.dockerfile
-    container_name: ainflue-project-templates
+    container_name: iacherie-project-templates
     environment:
       - SERVICE_NAME=project_templates
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -240,7 +240,7 @@ services:
     build:
       context: .
       dockerfile: creator_network_builder.dockerfile
-    container_name: ainflue-creator-network-builder
+    container_name: iacherie-creator-network-builder
     environment:
       - SERVICE_NAME=creator_network_builder
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -268,7 +268,7 @@ services:
     build:
       context: .
       dockerfile: partnership_optimizer.dockerfile
-    container_name: ainflue-partnership-optimizer
+    container_name: iacherie-partnership-optimizer
     environment:
       - SERVICE_NAME=partnership_optimizer
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -294,7 +294,7 @@ services:
     build:
       context: .
       dockerfile: revenue_sharing_calculator.dockerfile
-    container_name: ainflue-revenue-sharing-calculator
+    container_name: iacherie-revenue-sharing-calculator
     environment:
       - SERVICE_NAME=revenue_sharing_calculator
       - DATABASE_URL=${COLLABORATION_DB_URL}
@@ -319,7 +319,7 @@ services:
   # Infrastructure Services
   collaboration-db:
     image: postgres:15-alpine
-    container_name: ainflue-collaboration-postgres
+    container_name: iacherie-collaboration-postgres
     environment:
       POSTGRES_DB: collaboration_platform
       POSTGRES_USER: collaboration
@@ -340,7 +340,7 @@ services:
 
   collaboration-redis:
     image: redis:7-alpine
-    container_name: ainflue-collaboration-redis
+    container_name: iacherie-collaboration-redis
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     volumes:
       - collaboration_redis_data:/data
@@ -357,7 +357,7 @@ services:
 
   collaboration-mq:
     image: rabbitmq:3-management-alpine
-    container_name: ainflue-collaboration-rabbitmq
+    container_name: iacherie-collaboration-rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: collaboration
       RABBITMQ_DEFAULT_PASS: ${COLLABORATION_MQ_PASSWORD}
@@ -377,7 +377,7 @@ services:
 
   collaboration-neo4j:
     image: neo4j:5-enterprise
-    container_name: ainflue-collaboration-neo4j
+    container_name: iacherie-collaboration-neo4j
     environment:
       NEO4J_AUTH: neo4j/${COLLABORATION_NEO4J_PASSWORD}
       NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
@@ -399,12 +399,12 @@ services:
 
   collaboration-influxdb:
     image: influxdb:2-alpine
-    container_name: ainflue-collaboration-influxdb
+    container_name: iacherie-collaboration-influxdb
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: collaboration
       DOCKER_INFLUXDB_INIT_PASSWORD: ${COLLABORATION_INFLUXDB_PASSWORD}
-      DOCKER_INFLUXDB_INIT_ORG: ainflue
+      DOCKER_INFLUXDB_INIT_ORG: iacherie
       DOCKER_INFLUXDB_INIT_BUCKET: collaboration_metrics
     volumes:
       - collaboration_influxdb_data:/var/lib/influxdb2

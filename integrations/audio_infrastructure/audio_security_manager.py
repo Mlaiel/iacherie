@@ -2,7 +2,7 @@
 =========================================================
 
 Gestionnaire de sécurité audio enterprise avec DRM, contrôle d'accès,
-chiffrement et protection copyright pour Ainflue.
+chiffrement et protection copyright pour IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Protection techniques audio + watermarking sécurisé + DRM
@@ -152,7 +152,7 @@ class CryptographyManager:
         self.salt_size = 16
         self.iv_size = 16
     
-    async def generate_rsa_keypair(self) -> Tuple[bytes, bytes]:
+    async def generate_rsa_keypair(self) -> tuple[bytes, bytes]:
         """Génère une paire de clés RSA"""
         private_key = rsa.generate_private_key(
             public_exponent=65537,
@@ -203,7 +203,7 @@ class CryptographyManager:
         
         return decrypted
     
-    async def encrypt_with_aes(self, data: bytes, password: str) -> Tuple[bytes, bytes, bytes]:
+    async def encrypt_with_aes(self, data: bytes, password: str) -> tuple[bytes, bytes, bytes]:
         """Chiffre avec AES"""
         # Générer sel et IV
         salt = secrets.token_bytes(self.salt_size)
@@ -359,7 +359,7 @@ class DRMManager:
         self,
         audio_data: bytes,
         config: DRMConfiguration
-    ) -> Tuple[bytes, str]:
+    ) -> tuple[bytes, str]:
         """Applique la protection DRM à l'audio"""
         
         if config.policy == DRMPolicy.NO_DRM:
@@ -413,7 +413,7 @@ class DRMManager:
         drm_id: str,
         user_credentials: SecurityCredentials,
         device_info: Dict[str, Any]
-    ) -> Tuple[bool, Optional[str]]:
+    ) -> tuple[bool, Optional[str]]:
         """Vérifie l'accès DRM"""
         
         if drm_id not in self.drm_database:
@@ -760,7 +760,7 @@ class AudioSecurityManager:
         required_permission: str,
         ip_address: str,
         user_agent: str
-    ) -> Tuple[bool, Optional[str]]:
+    ) -> tuple[bool, Optional[str]]:
         """Autorise l'accès à une ressource"""
         
         # Vérifier le token
@@ -820,7 +820,7 @@ class AudioSecurityManager:
         protection_level: DRMPolicy,
         owner_id: str,
         additional_config: Optional[Dict[str, Any]] = None
-    ) -> Tuple[bytes, str]:
+    ) -> tuple[bytes, str]:
         """Protège l'audio avec DRM"""
         
         # Générer la clé de chiffrement

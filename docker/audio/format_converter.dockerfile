@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE FORMAT CONVERTER - MULTI-FORMAT DOCKERFILE
+# IACHERIE FORMAT CONVERTER - MULTI-FORMAT DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for professional audio format conversion
 # supporting WAV, FLAC, MP3, OPUS, DSD, and high-resolution formats.
@@ -66,7 +66,7 @@ VOLUME ["/app/storage", "/app/logs"]
 
 CMD ["python3.11", "-m", "format_converter.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Format Converter"
-LABEL ainflue.service.category="audio"
-LABEL ainflue.service.name="format_converter"
-LABEL ainflue.service.port="8016"
+LABEL org.opencontainers.image.title="IA Chérie Format Converter"
+LABEL iacherie.service.category="audio"
+LABEL iacherie.service.name="format_converter"
+LABEL iacherie.service.port="8016"

@@ -2,7 +2,7 @@
 🏢 Enterprise Workflow Orchestration Hub - Enterprise Core
 ==========================================================
 
-Hub d'orchestration avancé pour les workflows enterprise Ainflue.
+Hub d'orchestration avancé pour les workflows enterprise IA Chérie.
 Automatisation intelligente des processus métier et coordination workflow.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)
@@ -419,19 +419,19 @@ class EnterpriseWorkflowOrchestrationHub:
             },
             "ai_processing_service": {
                 "enabled": True,
-                "endpoint": "https://ai.ainflue.com",
+                "endpoint": "https://ai.iacherie.com",
                 "timeout": 120,
                 "retry_policy": "default"
             },
             "notification_service": {
                 "enabled": True,
-                "endpoint": "https://notifications.ainflue.com",
+                "endpoint": "https://notifications.iacherie.com",
                 "timeout": 10,
                 "retry_policy": "default"
             },
             "analytics_service": {
                 "enabled": True,
-                "endpoint": "https://analytics.ainflue.com",
+                "endpoint": "https://analytics.iacherie.com",
                 "timeout": 60,
                 "retry_policy": "default"
             }
@@ -490,11 +490,11 @@ class EnterpriseWorkflowOrchestrationHub:
         
         # Initialize approval routing
         self.approval_routing = {
-            "supervisor": {"email": "supervisor@ainflue.com", "sla": timedelta(hours=4)},
-            "manager": {"email": "manager@ainflue.com", "sla": timedelta(hours=8)},
-            "director": {"email": "director@ainflue.com", "sla": timedelta(hours=24)},
-            "compliance_officer": {"email": "compliance@ainflue.com", "sla": timedelta(hours=2)},
-            "legal_counsel": {"email": "legal@ainflue.com", "sla": timedelta(hours=12)}
+            "supervisor": {"email": "supervisor@iacherie.com", "sla": timedelta(hours=4)},
+            "manager": {"email": "manager@iacherie.com", "sla": timedelta(hours=8)},
+            "director": {"email": "director@iacherie.com", "sla": timedelta(hours=24)},
+            "compliance_officer": {"email": "compliance@iacherie.com", "sla": timedelta(hours=2)},
+            "legal_counsel": {"email": "legal@iacherie.com", "sla": timedelta(hours=12)}
         }
         
         self.logger.info("Approval systems initialized")

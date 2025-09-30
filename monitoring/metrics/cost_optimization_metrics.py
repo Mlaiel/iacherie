@@ -1,7 +1,7 @@
 """💰 Cost Optimization Metrics - Financial Efficiency & ROI Analytics System
 ===========================================================================
 
-Advanced cost optimization and financial efficiency metrics system for the Ainflue platform.
+Advanced cost optimization and financial efficiency metrics system for the IA Chérie platform.
 Provides comprehensive cost analysis, ROI optimization, resource utilization tracking,
 and intelligent recommendations for cost reduction and efficiency improvements.
 

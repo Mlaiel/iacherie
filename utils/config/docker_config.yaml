@@ -113,7 +113,7 @@ logging:
 # File Management (Container)
 file_management:
   max_file_size_mb: 50
-  temp_directory: "/tmp/ainflue"  # Container temp directory
+  temp_directory: "/tmp/iacherie"  # Container temp directory
   scan_for_malware: true
   enable_optimization: true
   
@@ -179,8 +179,8 @@ container:
   # Container volumes
   volumes:
     # Data persistence
-    data_volume: "/var/lib/ainflue"
-    logs_volume: "/var/log/ainflue"
+    data_volume: "/var/lib/iacherie"
+    logs_volume: "/var/log/iacherie"
     temp_volume: "/tmp"
     
     # Shared volumes

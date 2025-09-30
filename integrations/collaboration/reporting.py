@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enterprise Reporting Dashboard - Ainflue Collaboration Platform
+Enterprise Reporting Dashboard - IA Chérie Collaboration Platform
 Comprehensive analytics and business intelligence for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -59,7 +59,7 @@ class Report(Base):
     is_active = Column(Boolean, default=True)
     is_public = Column(Boolean, default=False)
     created_by = Column(String)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -79,7 +79,7 @@ class ReportExecution(Base):
     output_url = Column(String)  # Generated report URL
     file_size = Column(Integer)  # File size in bytes
     error_message = Column(Text)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime)
 
@@ -97,7 +97,7 @@ class ReportSnapshot(Base):
     chart_data = Column(JSON)  # Chart configurations and data
     expiry_date = Column(DateTime)
     compression_ratio = Column(Float)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class Dashboard(Base):
@@ -116,7 +116,7 @@ class Dashboard(Base):
     is_default = Column(Boolean, default=False)
     is_public = Column(Boolean, default=False)
     created_by = Column(String)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -150,8 +150,8 @@ class TimeFrame(str, Enum):
 
 class ReportSchedule(BaseModel):
     """Report scheduling configuration"""
-    frequency: str = Field(..., regex="^(daily|weekly|monthly|quarterly)$")
-    time: str = Field(..., regex="^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")  # HH:MM format
+    frequency: str = Field(..., pattern="^(daily|weekly|monthly|quarterly)$")
+    time: str = Field(..., pattern="^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")  # HH:MM format
     timezone: str = Field(default="UTC")
     day_of_week: Optional[int] = Field(None, ge=1, le=7)  # For weekly reports
     day_of_month: Optional[int] = Field(None, ge=1, le=31)  # For monthly reports
@@ -174,7 +174,7 @@ class ReportRequest(BaseModel):
 class DashboardWidget(BaseModel):
     """Dashboard widget configuration"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    type: str = Field(..., regex="^(metric|chart|table|gauge|map)$")
+    type: str = Field(..., pattern="^(metric|chart|table|gauge|map)$")
     title: str
     data_source: str
     query: Dict[str, Any]
@@ -187,7 +187,7 @@ class DashboardRequest(BaseModel):
     """Dashboard creation/update request"""
     name: str
     description: Optional[str] = None
-    dashboard_type: str = Field(..., regex="^(executive|operational|real_time)$")
+    dashboard_type: str = Field(..., pattern="^(executive|operational|real_time)$")
     widgets: List[DashboardWidget]
     layout: Dict[str, Any] = Field(default_factory=dict)
     filters: Dict[str, Any] = Field(default_factory=dict)
@@ -785,7 +785,7 @@ class EnterpriseReportingEngine:
         timeframe: TimeFrame,
         start_date: Optional[datetime],
         end_date: Optional[datetime]
-    ) -> Tuple[datetime, datetime]:
+    ) -> tuple[datetime, datetime]:
         """Get time period for report"""
         now = datetime.utcnow()
         
@@ -899,29 +899,29 @@ class EnterpriseReportingEngine:
         with open(file_path, 'w') as f:
             json.dump(data, f, indent=2, default=str)
         
-        return f"https://reports.ainflue.com/downloads/{filename}"
+        return f"https://reports.iacherie.com/downloads/{filename}"
 
     async def _export_pdf(self, report_data: ReportData, execution_id: str) -> str:
         """Export report as PDF"""
         # This would use a PDF generation library like ReportLab
         filename = f"report_{execution_id}.pdf"
-        return f"https://reports.ainflue.com/downloads/{filename}"
+        return f"https://reports.iacherie.com/downloads/{filename}"
 
     async def _export_excel(self, report_data: ReportData, execution_id: str) -> str:
         """Export report as Excel"""
         # This would use pandas and openpyxl
         filename = f"report_{execution_id}.xlsx"
-        return f"https://reports.ainflue.com/downloads/{filename}"
+        return f"https://reports.iacherie.com/downloads/{filename}"
 
     async def _export_csv(self, report_data: ReportData, execution_id: str) -> str:
         """Export report as CSV"""
         filename = f"report_{execution_id}.csv"
-        return f"https://reports.ainflue.com/downloads/{filename}"
+        return f"https://reports.iacherie.com/downloads/{filename}"
 
     async def _export_html(self, report_data: ReportData, execution_id: str) -> str:
         """Export report as HTML"""
         filename = f"report_{execution_id}.html"
-        return f"https://reports.ainflue.com/downloads/{filename}"
+        return f"https://reports.iacherie.com/downloads/{filename}"
 
     async def _generate_executive_insights(self, metrics: Dict[str, Any]) -> List[str]:
         """Generate executive insights from metrics"""

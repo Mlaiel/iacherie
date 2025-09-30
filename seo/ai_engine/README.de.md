@@ -1,4 +1,4 @@
-# 🤖 Ainflue KI-SEO-Engine - Fortschrittliche KI-gestützte SEO-Optimierung
+# 🤖 IA Chérie KI-SEO-Engine - Fortschrittliche KI-gestützte SEO-Optimierung
 
 **⚠️ WARNUNG GEISTIGES EIGENTUM**  
 © 2025 Fahed Mlaiel (mlaiel@live.de) - ALLE RECHTE VORBEHALTEN  
@@ -9,7 +9,7 @@
 
 ## 🎯 Überblick
 
-Die Ainflue KI-SEO-Engine ist eine KI-gestützte SEO-Optimierungsplattform auf Unternehmensniveau, die speziell für die Creator Economy entwickelt wurde. Sie kombiniert fortschrittliches maschinelles Lernen, natürliche Sprachverarbeitung und Competitive Intelligence, um Content-Erstellern, Influencern und digitalen Unternehmern beispiellose SEO-Performance zu bieten.
+Die IA Chérie KI-SEO-Engine ist eine KI-gestützte SEO-Optimierungsplattform auf Unternehmensniveau, die speziell für die Creator Economy entwickelt wurde. Sie kombiniert fortschrittliches maschinelles Lernen, natürliche Sprachverarbeitung und Competitive Intelligence, um Content-Erstellern, Influencern und digitalen Unternehmern beispiellose SEO-Performance zu bieten.
 
 ## 🚀 Hauptfunktionen
 
@@ -104,7 +104,7 @@ from seo.ai_engine import (
 config = {
     'openai_api_key': 'ihr_openai_schlüssel',
     'db_host': 'localhost',
-    'db_name': 'ainflue',
+    'db_name': 'iacherie',
     'redis_host': 'localhost'
 }
 

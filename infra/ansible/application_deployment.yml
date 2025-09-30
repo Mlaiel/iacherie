@@ -1,8 +1,8 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise Application Deployment Playbook
-# Automated deployment of Ainflue platform applications
+# Automated deployment of IA Chérie platform applications
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Application Deployment"
+- name: "IA Chérie Enterprise Application Deployment"
   hosts: application_servers
   become: yes
   gather_facts: yes
@@ -50,7 +50,7 @@
         
     # Environment configuration
     environment: "{{ ansible_environment | default('production') }}"
-    namespace: "ainflue-{{ environment }}"
+    namespace: "iacherie-{{ environment }}"
     
     # Security configuration
     security_config:
@@ -104,7 +104,7 @@
             labels:
               name: "{{ namespace }}"
               environment: "{{ environment }}"
-              managed-by: "ainflue-infrastructure"
+              managed-by: "iacherie-infrastructure"
               istio-injection: enabled
       tags: ["namespace", "setup"]
 
@@ -149,18 +149,18 @@
                 host: 0.0.0.0
               database:
                 postgresql:
-                  host: "ainflue-postgresql-cluster.postgresql.svc.cluster.local"
+                  host: "iacherie-postgresql-cluster.postgresql.svc.cluster.local"
                   port: 5432
                   database: "{{ item.database }}"
                 mongodb:
-                  host: "ainflue-mongodb-cluster.mongodb.svc.cluster.local"
+                  host: "iacherie-mongodb-cluster.mongodb.svc.cluster.local"
                   port: 27017
                   database: "{{ item.mongo_db }}"
                 redis:
-                  host: "ainflue-redis-cluster.redis.svc.cluster.local"
+                  host: "iacherie-redis-cluster.redis.svc.cluster.local"
                   port: 6379
                 elasticsearch:
-                  host: "ainflue-elasticsearch-cluster-es-http.elasticsearch.svc.cluster.local"
+                  host: "iacherie-elasticsearch-cluster-es-http.elasticsearch.svc.cluster.local"
                   port: 9200
               security:
                 jwt_secret_key: "${JWT_SECRET_KEY}"
@@ -290,7 +290,7 @@
                 serviceAccountName: api-gateway-sa
                 containers:
                 - name: api-gateway
-                  image: "ainflue/api-gateway:{{ application_versions.api_gateway }}"
+                  image: "iacherie/api-gateway:{{ application_versions.api_gateway }}"
                   ports:
                   - containerPort: 8080
                     name: http
@@ -365,7 +365,7 @@
                   accelerator: nvidia-tesla-v100
                 containers:
                 - name: ai-engine
-                  image: "ainflue/ai-engine:{{ application_versions.ai_engine }}"
+                  image: "iacherie/ai-engine:{{ application_versions.ai_engine }}"
                   ports:
                   - containerPort: 8081
                     name: http
@@ -449,7 +449,7 @@
                 serviceAccountName: "{{ item.name }}-sa"
                 containers:
                 - name: "{{ item.name }}"
-                  image: "ainflue/{{ item.name }}:{{ item.version }}"
+                  image: "iacherie/{{ item.name }}:{{ item.version }}"
                   ports:
                   - containerPort: "{{ item.port }}"
                     name: http
@@ -573,7 +573,7 @@
             hosts:
             - "{{ item.host }}"
             gateways:
-            - ainflue-gateway
+            - iacherie-gateway
             http:
             - match:
               - uri:
@@ -593,9 +593,9 @@
                 perTryTimeout: 10s
                 retryOn: 5xx,gateway-error,connect-failure,refused-stream
       loop:
-        - { name: "api-gateway", host: "api.ainflue.com", prefix: "/api/", port: 8080 }
-        - { name: "ai-engine", host: "ai.ainflue.com", prefix: "/ai/", port: 8081 }
-        - { name: "mobile-api", host: "mobile.ainflue.com", prefix: "/mobile/", port: 8087 }
+        - { name: "api-gateway", host: "api.iacherie.com", prefix: "/api/", port: 8080 }
+        - { name: "ai-engine", host: "ai.iacherie.com", prefix: "/ai/", port: 8081 }
+        - { name: "mobile-api", host: "mobile.iacherie.com", prefix: "/mobile/", port: 8087 }
       tags: ["istio", "virtual-services"]
 
     # ==========================================
@@ -759,9 +759,9 @@
     - name: "Display application endpoints"
       debug:
         msg:
-          - "API Gateway: https://api.ainflue.com"
-          - "AI Engine: https://ai.ainflue.com"
-          - "Mobile API: https://mobile.ainflue.com"
+          - "API Gateway: https://api.iacherie.com"
+          - "AI Engine: https://ai.iacherie.com"
+          - "Mobile API: https://mobile.iacherie.com"
           - "Internal Services accessible via service mesh"
       tags: ["endpoints"]
 
@@ -801,7 +801,7 @@
         method: POST
         body_format: json
         body:
-          text: "🚀 Ainflue {{ environment }} application deployment completed successfully"
+          text: "🚀 IA Chérie {{ environment }} application deployment completed successfully"
           attachments:
           - color: "good"
             fields:

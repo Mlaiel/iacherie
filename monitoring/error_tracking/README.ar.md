@@ -28,7 +28,7 @@
 
 ## 🎯 نظرة عامة
 
-نظام **تتبع الأخطاء المؤسسي** هو منصة ذكاء متقدمة لمراقبة وتحليل ومنع الأخطاء في النظام البيئي للاقتصاد الإبداعي لـ Ainflue. مصمم بهندسة Backend Senior وقدرات ML/AI مؤسسية.
+نظام **تتبع الأخطاء المؤسسي** هو منصة ذكاء متقدمة لمراقبة وتحليل ومنع الأخطاء في النظام البيئي للاقتصاد الإبداعي لـ IA Chérie. مصمم بهندسة Backend Senior وقدرات ML/AI مؤسسية.
 
 ### 🌟 الوظائف الرئيسية
 
@@ -237,8 +237,8 @@ collaboration_error_id = await creator_collaboration_intelligence.track_collabor
 
 ### 📞 جهات اتصال الدعم
 
-- **الدعم التقني:** support@ainflue.com
-- **تصعيد الطوارئ:** emergency@ainflue.com
+- **الدعم التقني:** support@iacherie.com
+- **تصعيد الطوارئ:** emergency@iacherie.com
 - **كبير المهندسين المعماريين:** mlaiel@live.de
 
 ### 🔄 الصيانة المجدولة

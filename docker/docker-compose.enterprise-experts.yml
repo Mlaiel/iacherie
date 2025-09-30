@@ -10,7 +10,7 @@ services:
     build:
       context: .
       dockerfile: docker/security_hardening.dockerfile
-    container_name: ainflue-security-hardening
+    container_name: iacherie-security-hardening
     environment:
       - SECURITY_LEVEL=enterprise
       - SCAN_INTERVAL=3600
@@ -20,8 +20,8 @@ services:
       - security_reports:/app/reports
       - security_logs:/app/logs
     networks:
-      - ainflue-security
-      - ainflue-backend
+      - iacherie-security
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/security/health').raise_for_status()"]
@@ -42,7 +42,7 @@ services:
     build:
       context: .
       dockerfile: docker/devops_automation.dockerfile
-    container_name: ainflue-devops-automation
+    container_name: iacherie-devops-automation
     environment:
       - DEPLOYMENT_ENV=production
       - AUTOMATION_LEVEL=enterprise
@@ -53,8 +53,8 @@ services:
       - devops_logs:/app/logs
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - ainflue-management
-      - ainflue-backend
+      - iacherie-management
+      - iacherie-backend
     restart: unless-stopped
     privileged: true
     healthcheck:
@@ -76,7 +76,7 @@ services:
     build:
       context: .
       dockerfile: docker/enterprise_api_gateway.dockerfile
-    container_name: ainflue-api-gateway
+    container_name: iacherie-api-gateway
     environment:
       - NODE_ENV=production
       - CORS_ENABLED=true
@@ -85,8 +85,8 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - ainflue-frontend
-      - ainflue-backend
+      - iacherie-frontend
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
@@ -107,7 +107,7 @@ services:
     build:
       context: .
       dockerfile: docker/ml_pipeline_orchestrator.dockerfile
-    container_name: ainflue-ml-pipeline
+    container_name: iacherie-ml-pipeline
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
       - CUDA_VISIBLE_DEVICES=0
@@ -118,8 +118,8 @@ services:
       - ml_experiments:/app/experiments
       - ml_artifacts:/app/artifacts
     networks:
-      - ainflue-ml
-      - ainflue-backend
+      - iacherie-ml
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/health').raise_for_status()"]
@@ -140,7 +140,7 @@ services:
     build:
       context: .
       dockerfile: docker/database_cluster_manager.dockerfile
-    container_name: ainflue-db-cluster
+    container_name: iacherie-db-cluster
     environment:
       - POSTGRES_DB=ainflue_cluster
       - POSTGRES_USER=ainflue_admin
@@ -153,7 +153,7 @@ services:
     ports:
       - "5433:5432"
     networks:
-      - ainflue-database
+      - iacherie-database
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-h", "localhost", "-p", "5432", "-U", "ainflue_admin"]
@@ -174,7 +174,7 @@ services:
     build:
       context: .
       dockerfile: docker/advanced_audio_processor.dockerfile
-    container_name: ainflue-audio-processor
+    container_name: iacherie-audio-processor
     environment:
       - AUDIO_SAMPLE_RATE=48000
       - AUDIO_CHANNELS=2
@@ -189,8 +189,8 @@ services:
       - "8002:8001"
       - "8003:8002"
     networks:
-      - ainflue-audio
-      - ainflue-backend
+      - iacherie-audio
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/audio/health').raise_for_status()"]
@@ -211,7 +211,7 @@ services:
     build:
       context: .
       dockerfile: docker/service_mesh_orchestrator.dockerfile
-    container_name: ainflue-service-mesh
+    container_name: iacherie-service-mesh
     environment:
       - ENVOY_ADMIN_PORT=9901
       - CIRCUIT_BREAKER_ENABLED=true
@@ -224,8 +224,8 @@ services:
       - service_mesh_configs:/app/configs
       - service_mesh_certs:/app/certificates
     networks:
-      - ainflue-mesh
-      - ainflue-backend
+      - iacherie-mesh
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9901/ready"]
@@ -246,7 +246,7 @@ services:
     build:
       context: .
       dockerfile: docker/ai_orchestration_hub.dockerfile
-    container_name: ainflue-ai-orchestration
+    container_name: iacherie-ai-orchestration
     environment:
       - AI_CACHE_SIZE=1000
       - MAX_CONCURRENT_REQUESTS=10
@@ -259,8 +259,8 @@ services:
     ports:
       - "8004:8000"
     networks:
-      - ainflue-ai
-      - ainflue-backend
+      - iacherie-ai
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/ai/health').raise_for_status()"]
@@ -281,7 +281,7 @@ services:
     build:
       context: .
       dockerfile: docker/prompt_engineering_hub.dockerfile
-    container_name: ainflue-prompt-engineering
+    container_name: iacherie-prompt-engineering
     environment:
       - TEMPLATE_CACHE_SIZE=500
       - OPTIMIZATION_RUNS=100
@@ -294,8 +294,8 @@ services:
     ports:
       - "8005:8000"
     networks:
-      - ainflue-ai
-      - ainflue-backend
+      - iacherie-ai
+      - iacherie-backend
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/prompts/health').raise_for_status()"]
@@ -354,55 +354,55 @@ volumes:
   prompt_cache:
 
 networks:
-  ainflue-frontend:
+  iacherie-frontend:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.1.0/24
   
-  ainflue-backend:
+  iacherie-backend:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.2.0/24
   
-  ainflue-security:
+  iacherie-security:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.3.0/24
   
-  ainflue-management:
+  iacherie-management:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.4.0/24
   
-  ainflue-ml:
+  iacherie-ml:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.5.0/24
   
-  ainflue-database:
+  iacherie-database:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.6.0/24
   
-  ainflue-audio:
+  iacherie-audio:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.7.0/24
   
-  ainflue-mesh:
+  iacherie-mesh:
     driver: bridge
     ipam:
       config:
         - subnet: 172.20.8.0/24
   
-  ainflue-ai:
+  iacherie-ai:
     driver: bridge
     ipam:
       config:

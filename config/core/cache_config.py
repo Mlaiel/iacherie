@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Cache Configuration Module
+"""IA Chérie Cache Configuration Module
 ====================================
 
-Enterprise-grade caching configuration for the Ainflue platform.
+Enterprise-grade caching configuration for the IA Chérie platform.
 Handles multi-level caching, distributed caching, cache invalidation,
 performance optimization, and intelligent cache management strategies.
 
@@ -173,7 +173,7 @@ class L3CacheConfig:
 @dataclass
 class L4CacheConfig:
     """L4 Cache (Persistent/Disk) configuration"""
-    cache_dir: str = "/var/cache/ainflue"
+    cache_dir: str = "/var/cache/iacherie"
     max_disk_size: str = "10GB"
     ttl: int = 86400  # 24 hours
     compression_enabled: bool = True

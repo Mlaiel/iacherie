@@ -1,7 +1,7 @@
 {
   "id": "mongodb-performance-dashboard",
-  "title": "MongoDB Performance Dashboard - Ainflue Platform",
-  "tags": ["mongodb", "ainflue", "database", "performance"],
+  "title": "MongoDB Performance Dashboard - IA Chérie Platform",
+  "tags": ["mongodb", "iacherie", "database", "performance"],
   "style": "dark",
   "timezone": "browser",
   "editable": true,

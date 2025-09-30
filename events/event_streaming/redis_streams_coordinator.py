@@ -1,5 +1,5 @@
 """IA Influencer Agent - Redis Streams Coordinator
-High-Frequency Event Coordination using Redis Streams for Ainflue Platform
+High-Frequency Event Coordination using Redis Streams for IA Chérie Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -47,24 +47,24 @@ class ConsumerGroupState(Enum):
 
 
 class AinflueBusinesRedisStreams:
-    """Redis streams for Ainflue high-frequency events"""
+    """Redis streams for IA Chérie high-frequency events"""
     
     # High-frequency events
-    USER_INTERACTIONS = "ainflue:user:interactions"
-    REAL_TIME_ANALYTICS = "ainflue:analytics:realtime"
-    ENGAGEMENT_TRACKING = "ainflue:engagement:tracking"
+    USER_INTERACTIONS = "iacherie:user:interactions"
+    REAL_TIME_ANALYTICS = "iacherie:analytics:realtime"
+    ENGAGEMENT_TRACKING = "iacherie:engagement:tracking"
     
     # Content processing queues
-    CONTENT_UPLOAD_QUEUE = "ainflue:content:upload:queue"
-    AI_PROCESSING_QUEUE = "ainflue:ai:processing:queue"
+    CONTENT_UPLOAD_QUEUE = "iacherie:content:upload:queue"
+    AI_PROCESSING_QUEUE = "iacherie:ai:processing:queue"
     
     # Collaboration real-time
-    COLLABORATION_NOTIFICATIONS = "ainflue:collaboration:notifications"
-    MATCHING_UPDATES = "ainflue:matching:updates"
+    COLLABORATION_NOTIFICATIONS = "iacherie:collaboration:notifications"
+    MATCHING_UPDATES = "iacherie:matching:updates"
     
     # Revenue tracking
-    REVENUE_EVENTS = "ainflue:revenue:events"
-    PAYMENT_NOTIFICATIONS = "ainflue:payment:notifications"
+    REVENUE_EVENTS = "iacherie:revenue:events"
+    PAYMENT_NOTIFICATIONS = "iacherie:payment:notifications"
 
 
 @dataclass
@@ -447,7 +447,7 @@ class RedisStreamConsumer:
 
 
 class RedisStreamsCoordinator:
-    """Coordinates Redis Streams for high-frequency Ainflue events"""
+    """Coordinates Redis Streams for high-frequency IA Chérie events"""
     
     def __init__(self, redis_client: Any, metrics_collector=None):
         self.redis = redis_client
@@ -466,7 +466,7 @@ class RedisStreamsCoordinator:
             # Start coordinator monitoring task
             self._coordinator_task = asyncio.create_task(self._coordinator_loop())
             
-            # Setup default streams for Ainflue
+            # Setup default streams for IA Chérie
             await self._setup_default_streams()
             
             logger.info("Redis Streams Coordinator started successfully")
@@ -498,7 +498,7 @@ class RedisStreamsCoordinator:
             raise
     
     async def _setup_default_streams(self):
-        """Setup default Redis streams for Ainflue"""
+        """Setup default Redis streams for IA Chérie"""
         try:
             # Create default streams
             default_streams = [
@@ -593,7 +593,7 @@ class RedisStreamsCoordinator:
                 "event_type": event_data.get("event_type", "generic"),
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "data": json.dumps(event_data),
-                "source": "ainflue-platform"
+                "source": "iacherie-platform"
             }
             
             # Add to stream

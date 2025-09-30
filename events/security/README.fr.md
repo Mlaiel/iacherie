@@ -1,5 +1,5 @@
 # 🔒 Module de Sécurité des Événements - Sécurité Avancée & Protection contre les Menaces
-**Plateforme Ainflue - Infrastructure de Sécurité des Événements d'Entreprise**
+**Plateforme IA Chérie - Infrastructure de Sécurité des Événements d'Entreprise**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Vue d'Ensemble Entreprise
 
-Le **Module de Sécurité des Événements** fournit une infrastructure de sécurité complète pour l'architecture événementielle de la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre une protection contre les menaces de niveau entreprise, une validation de conformité, des pistes d'audit et des analyses de sécurité en temps réel pour tous les workflows de traitement d'événements.
+Le **Module de Sécurité des Événements** fournit une infrastructure de sécurité complète pour l'architecture événementielle de la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre une protection contre les menaces de niveau entreprise, une validation de conformité, des pistes d'audit et des analyses de sécurité en temps réel pour tous les workflows de traitement d'événements.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -440,7 +440,7 @@ await ips.configure_campaign_security(campaign_security_rules)
 version: '3.8'
 services:
   event-security-orchestrator:
-    image: ainflue/event-security-orchestrator:latest
+    image: iacherie/event-security-orchestrator:latest
     deploy:
       replicas: 5
       resources:
@@ -453,13 +453,13 @@ services:
     environment:
       - HSM_ENDPOINT=https://hsm-cluster.aws.com
       - THREAT_FEED_URL=https://threat-intel.security.com
-      - COMPLIANCE_RULES_URL=https://compliance.ainflue.com
+      - COMPLIANCE_RULES_URL=https://compliance.iacherie.com
       - AUDIT_STORAGE=s3://audit-logs-bucket
     ports:
       - "8443:8443"
       
   threat-detection-engine:
-    image: ainflue/threat-detection:latest
+    image: iacherie/threat-detection:latest
     deploy:
       replicas: 3
       resources:
@@ -504,7 +504,7 @@ active_security_alerts = Gauge('active_security_alerts', 'Number of active secur
 
 ## 📝 **Résumé**
 
-Le Module de Sécurité des Événements représente le summum de l'architecture de sécurité événementielle pour la plateforme Ainflue, spécialement conçu pour les créateurs de contenu multi-format. Avec une détection avancée des menaces, une validation complète de conformité et des analyses de sécurité en temps réel, ce module assure le plus haut niveau de protection pour tous les workflows de traitement d'événements tout en maintenant une performance optimale et une expérience utilisateur.
+Le Module de Sécurité des Événements représente le summum de l'architecture de sécurité événementielle pour la plateforme IA Chérie, spécialement conçu pour les créateurs de contenu multi-format. Avec une détection avancée des menaces, une validation complète de conformité et des analyses de sécurité en temps réel, ce module assure le plus haut niveau de protection pour tous les workflows de traitement d'événements tout en maintenant une performance optimale et une expérience utilisateur.
 
 **🎯 Mission :** Livrer l'infrastructure de sécurité d'événements la plus avancée au monde pour les créateurs de contenu, permettant un traitement sécurisé d'événements, une protection automatisée contre les menaces et une gestion complète de conformité à travers l'écosystème entier des créateurs.
 

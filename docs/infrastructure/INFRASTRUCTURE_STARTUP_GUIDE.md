@@ -1,5 +1,5 @@
 
-# 🚀 Ainflue Platform Infrastructure Startup Guide
+# 🚀 IA Chérie Platform Infrastructure Startup Guide
 
 ## Prerequisites
 - Docker Engine 20.10+

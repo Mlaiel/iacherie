@@ -1,11 +1,11 @@
-# Docker Compose for Ainflue Platform
+# Docker Compose for IA Chérie Platform
 # Production-ready multi-service deployment
 
 services:
   # Main Application
-  ainflue-app:
+  iacherie-app:
     build: .
-    container_name: ainflue-platform
+    container_name: iacherie-platform
     ports:
       - "8000:8000"
     environment:
@@ -23,15 +23,15 @@ services:
       - ./logs:/app/logs
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # PostgreSQL Database
   postgres:
     image: postgres:15
-    container_name: ainflue-postgres
+    container_name: iacherie-postgres
     environment:
       POSTGRES_DB: ainflue_platform
-      POSTGRES_USER: ainflue
+      POSTGRES_USER: iacherie
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ainflue123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -39,12 +39,12 @@ services:
       - "5432:5432"
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: ainflue-redis
+    container_name: iacherie-redis
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -52,14 +52,14 @@ services:
       - "6379:6379"
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # MongoDB Document Store
   mongodb:
     image: mongo:7
-    container_name: ainflue-mongodb
+    container_name: iacherie-mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ainflue
+      MONGO_INITDB_ROOT_USERNAME: iacherie
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-ainflue123}
       MONGO_INITDB_DATABASE: ainflue_documents
     volumes:
@@ -68,12 +68,12 @@ services:
       - "27017:27017"
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
-    container_name: ainflue-nginx
+    container_name: iacherie-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -81,15 +81,15 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ssl:/etc/nginx/ssl
     depends_on:
-      - ainflue-app
+      - iacherie-app
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # Prometheus Monitoring
   prometheus:
     image: prom/prometheus
-    container_name: ainflue-prometheus
+    container_name: iacherie-prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -102,12 +102,12 @@ services:
       - '--web.console.templates=/etc/prometheus/consoles'
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
   # Grafana Dashboard
   grafana:
     image: grafana/grafana
-    container_name: ainflue-grafana
+    container_name: iacherie-grafana
     ports:
       - "3000:3000"
     environment:
@@ -116,7 +116,7 @@ services:
       - grafana_data:/var/lib/grafana
     restart: unless-stopped
     networks:
-      - ainflue-network
+      - iacherie-network
 
 volumes:
   postgres_data:
@@ -126,5 +126,5 @@ volumes:
   grafana_data:
 
 networks:
-  ainflue-network:
+  iacherie-network:
     driver: bridge

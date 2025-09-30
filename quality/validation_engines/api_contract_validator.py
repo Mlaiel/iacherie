@@ -1,4 +1,4 @@
-"""📋 API Contract Validator - Ainflue Platform
+"""📋 API Contract Validator - IA Chérie Platform
 ================================================================
 Expert: API_ARCHITECT + QUALITY_ENGINEER + BACKEND_SENIOR + TESTING_LEAD
 Created: 2025-01-XX

@@ -1,6 +1,6 @@
 # Performance Optimization Guide
 
-## High-Performance Docker Configuration for Ainflue Platform
+## High-Performance Docker Configuration for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Performance Overview
 
-This guide covers comprehensive performance optimization strategies for the Ainflue Docker infrastructure, ensuring maximum efficiency across all services.
+This guide covers comprehensive performance optimization strategies for the IA Chérie Docker infrastructure, ensuring maximum efficiency across all services.
 
 ### Container Performance
 
@@ -224,7 +224,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     environment:
-      - CDN_ENDPOINT=https://cdn.ainflue.com
+      - CDN_ENDPOINT=https://cdn.iacherie.com
 ```
 
 ### Monitoring Performance
@@ -248,7 +248,7 @@ services:
   app:
     environment:
       - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_KEY}
-      - NEW_RELIC_APP_NAME=Ainflue-Audio-Processor
+      - NEW_RELIC_APP_NAME=IA Chérie-Audio-Processor
     volumes:
       - ./newrelic.ini:/app/newrelic.ini
 ```
@@ -356,7 +356,7 @@ services:
 ```bash
 #!/bin/bash
 # Load testing with Apache Bench
-ab -n 10000 -c 100 -H "Accept-Encoding: gzip,deflate" http://api.ainflue.com/health
+ab -n 10000 -c 100 -H "Accept-Encoding: gzip,deflate" http://api.iacherie.com/health
 
 # Artillery.js for complex scenarios
 artillery run load-test.yml
@@ -366,7 +366,7 @@ artillery run load-test.yml
 ```yaml
 # stress-test.yml
 config:
-  target: 'http://api.ainflue.com'
+  target: 'http://api.iacherie.com'
   phases:
     - duration: 60
       arrivalRate: 10

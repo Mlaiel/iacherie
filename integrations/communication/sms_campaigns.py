@@ -274,7 +274,7 @@ class SMSCampaignManager:
             }
         }
     
-    def _validate_phone_number(self, phone_number: str) -> Tuple[bool, str]:
+    def _validate_phone_number(self, phone_number: str) -> tuple[bool, str]:
         """Validate and format phone number"""
         # Remove all non-digit characters except +
         cleaned = re.sub(r'[^\d+]', '', phone_number)
@@ -840,7 +840,7 @@ async def main():
     # Create template
     template_id = await manager.create_template(
         name="Welcome SMS",
-        content="Hi {{name}}! Welcome to Ainflue. Get started: https://ainflue.com/start",
+        content="Hi {{name}}! Welcome to IA Chérie. Get started: https://iacherie.com/start",
         message_type=MessageType.TRANSACTIONAL
     )
     
@@ -849,7 +849,7 @@ async def main():
         name="Welcome Campaign",
         template_id=template_id,
         recipient_ids=[recipient_id],
-        sender_id="Ainflue",
+        sender_id="IA Chérie",
         message_type=MessageType.TRANSACTIONAL
     )
     

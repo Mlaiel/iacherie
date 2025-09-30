@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Analytics Orchestration Hub
+IA Chérie Platform - Analytics Orchestration Hub
 ==============================================
 
 Central orchestration system for comprehensive analytics across all platforms

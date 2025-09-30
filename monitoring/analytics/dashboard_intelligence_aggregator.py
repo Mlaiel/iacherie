@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - Dashboard Intelligence Aggregator
-Enterprise dashboard intelligence and data aggregation for Ainflue platform
+Enterprise dashboard intelligence and data aggregation for IA Chérie platform
 DevOps + Business Intelligence Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -114,7 +114,7 @@ class AggregatedData:
 
 class DashboardIntelligenceAggregator:
     """
-    📊 Advanced Dashboard Intelligence Aggregator for Ainflue Platform
+    📊 Advanced Dashboard Intelligence Aggregator for IA Chérie Platform
     
     Enterprise dashboard intelligence with:
     - Multi-source data aggregation and integration
@@ -1222,7 +1222,7 @@ async def main():
     try:
         # Initialize aggregator
         aggregator = DashboardIntelligenceAggregator(
-            "postgresql://user:pass@localhost/ainflue",
+            "postgresql://user:pass@localhost/iacherie",
             "redis://localhost:6379"
         )
         

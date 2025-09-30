@@ -1,4 +1,4 @@
-# ⚡ Redis Latency Optimization Configuration - Ainflue Enterprise
+# ⚡ Redis Latency Optimization Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Ultra-Low Latency Configuration for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-latency-optimization
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: latency-optimization
     environment: enterprise
     owner: fahed-mlaiel
@@ -363,11 +363,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-latency-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   optimize_latency.sh: |
     #!/bin/bash
-    # Latency Optimization Script for Ainflue Redis Enterprise
+    # Latency Optimization Script for IA Chérie Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "⚡ Optimizing Redis for Ultra-Low Latency..."

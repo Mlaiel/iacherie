@@ -5,7 +5,7 @@ Assistant SEO IA conversationnel enterprise avec natural language processing,
 automated audits, strategy generation et competitive intelligence.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:

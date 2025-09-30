@@ -1,8 +1,8 @@
-# 🏗️ Ainflue Datasets - Enterprise KI-Trainingsarchitektur
+# 🏗️ IA Chérie Datasets - Enterprise KI-Trainingsarchitektur
 
 ## Professionelle Dateninfrastruktur für 53 KI-Agenten
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Lizenz](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-green.svg)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/tensorflow-2.12+-orange.svg)](https://tensorflow.org)
@@ -38,7 +38,7 @@
 
 ### **📧 Obligatorischer Kontakt für Genehmigung**
 **E-Mail:** mlaiel@live.de  
-**Betreff:** "Genehmigungsanfrage - Ainflue Datasets Architektur"  
+**Betreff:** "Genehmigungsanfrage - IA Chérie Datasets Architektur"  
 **⚖️ Rechtliche Schritte werden gegen unbefugte Nutzer eingeleitet**
 
 ---
@@ -177,7 +177,7 @@ datasets/
 - **📊 Datenqualität:** 95% automatisierte Qualitätsvalidierung
 - **🔄 Skalierbarkeit:** 10x Skalierungskapazitätsverbesserung
 
-### **Ainflue-Plattform-Integration**
+### **IA Chérie-Plattform-Integration**
 - **📤 Upload-Verarbeitung:** Verbesserte Content-Aufnahme und Analyse
 - **🤖 KI-Verarbeitung:** Verbesserte Genauigkeit über alle 53 Agenten
 - **🛡️ IP-Schutz:** Erweiterte Fingerprinting und Erkennung
@@ -237,6 +237,6 @@ Diese Datasets-Infrastruktur ist **enterprise-bereit** und folgt Branchenstandar
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue Platform Datasets Modul**  
+**IA Chérie Platform Datasets Modul**  
 **Version 1.0 - Vertraulich und Proprietär**  
 **Enterprise Produktionsbereite Architektur**

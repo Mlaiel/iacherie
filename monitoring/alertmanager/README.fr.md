@@ -90,8 +90,8 @@ L'AlertManager Enterprise est un système d'alertes sophistiqué, alimenté par 
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/alertmanager
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/alertmanager
 
 # Installer les dépendances
 pip install -r ../../requirements.txt
@@ -123,7 +123,7 @@ channels:
     enabled: true
     smtp_host: smtp.gmail.com
     smtp_port: 587
-    sender: alerts@ainflue.com
+    sender: alerts@iacherie.com
   pagerduty:
     enabled: true
     api_key: "VOTRE_PAGERDUTY_API_KEY"
@@ -378,7 +378,7 @@ Obtenir statut de santé complet de tous les composants.
 
 ```bash
 # Fork le dépôt
-git clone https://github.com/YOUR_USERNAME/Ainflue.git
+git clone https://github.com/YOUR_USERNAME/IA Chérie.git
 
 # Installer dépendances de développement
 pip install -r requirements-dev.txt
@@ -439,7 +439,7 @@ spec:
     spec:
       containers:
       - name: alertmanager
-        image: ainflue/alertmanager:latest
+        image: iacherie/alertmanager:latest
         resources:
           requests:
             memory: "512Mi"
@@ -459,9 +459,9 @@ Ce logiciel est propriétaire à Fahed Mlaiel. Voir fichier LICENSE pour détail
 
 ### Support Technique
 
-- **Email :** support@ainflue.com
-- **Documentation :** https://docs.ainflue.com/alertmanager
-- **Page de Statut :** https://status.ainflue.com
+- **Email :** support@iacherie.com
+- **Documentation :** https://docs.iacherie.com/alertmanager
+- **Page de Statut :** https://status.iacherie.com
 
 ### Support Entreprise
 
@@ -491,6 +491,6 @@ Les clients entreprise reçoivent :
 ---
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
-**Ainflue - Plateforme IA pour l'Économie des Créateurs**
+**IA Chérie - Plateforme IA pour l'Économie des Créateurs**
 
 *Construit avec ❤️ pour l'Économie des Créateurs*

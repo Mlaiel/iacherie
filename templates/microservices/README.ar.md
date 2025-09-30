@@ -1,4 +1,4 @@
-# 🚀 قوالب الخدمات المصغرة لـ Ainflue - العمارة المؤسسية
+# 🚀 قوالب الخدمات المصغرة لـ IA Chérie - العمارة المؤسسية
 
 > **⚠️ تحذير قانوني - حماية الملكية الفكرية**  
 > **© 2025 فاهد ملايل (mlaiel@live.de) - جميع الحقوق محفوظة**
@@ -18,7 +18,7 @@
 
 ## 🎯 نظرة عامة
 
-قوالب خدمات مصغرة على مستوى المؤسسات لمنصة اقتصاد المبدعين Ainflue. يوفر هذا الوحدة الشاملة أكثر من 150 قالب جاهز للإنتاج لبناء عمارة خدمات مصغرة قابلة للتوسع ومرنة وذكية.
+قوالب خدمات مصغرة على مستوى المؤسسات لمنصة اقتصاد المبدعين IA Chérie. يوفر هذا الوحدة الشاملة أكثر من 150 قالب جاهز للإنتاج لبناء عمارة خدمات مصغرة قابلة للتوسع ومرنة وذكية.
 
 ## 👥 فريق الخبراء
 
@@ -150,10 +150,10 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # الانتقال إلى قوالب الخدمات المصغرة
-cd Ainflue/templates/microservices
+cd IA Chérie/templates/microservices
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -216,7 +216,7 @@ await message_queue.register_handler("ai.processing.completed", handle_ai_comple
 
 ```env
 # تكوين قاعدة البيانات
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # عناوين URL للخدمات
@@ -275,7 +275,7 @@ MAX_CONTENT_PER_DAY=50
 version: '3.8'
 services:
   creator-service:
-    image: ainflue/creator-service:latest
+    image: iacherie/creator-service:latest
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/creators
       - REDIS_URL=redis://redis:6379
@@ -305,7 +305,7 @@ spec:
     spec:
       containers:
       - name: creator-service
-        image: ainflue/creator-service:latest
+        image: iacherie/creator-service:latest
         ports:
         - containerPort: 8000
 ```
@@ -345,8 +345,8 @@ pytest tests/unit/ --cov=templates --cov-report=html
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/microservices
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/microservices
 
 # تثبيت تبعيات التطوير
 pip install -r requirements-dev.txt

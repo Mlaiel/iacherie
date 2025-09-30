@@ -488,7 +488,7 @@ class ContentUploadHandler(BaseEventHandler):
         return {
             "primary_location": "/storage/primary/",
             "backup_locations": ["/storage/backup1/", "/storage/backup2/"],
-            "cdn_endpoint": "https://cdn.ainflue.com/" if strategy.get("cdn_enabled") else None,
+            "cdn_endpoint": "https://cdn.iacherie.com/" if strategy.get("cdn_enabled") else None,
             "allocated_at": datetime.utcnow().isoformat()
         }
 

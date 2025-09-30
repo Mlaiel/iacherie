@@ -1,9 +1,9 @@
-"""Ainflue Core Infrastructure - Message Queue Core
+"""IA Chérie Core Infrastructure - Message Queue Core
 ==================================================
 
 Enterprise-grade message queue management providing asynchronous communication,
 event-driven processing, task distribution, and reliable message delivery across
-microservices architecture for the Ainflue platform.
+microservices architecture for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

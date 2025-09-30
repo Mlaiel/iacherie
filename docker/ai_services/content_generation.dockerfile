@@ -4,7 +4,7 @@
 
 FROM python:3.12-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Content Generation - AI content creation service"
+LABEL description="IA Chérie Content Generation - AI content creation service"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \

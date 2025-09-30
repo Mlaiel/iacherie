@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - Attribution Modeling Engine
-Advanced ML-powered attribution analysis for Ainflue creator ecosystem
+Advanced ML-powered attribution analysis for IA Chérie creator ecosystem
 Lead Dev IA + ML Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -98,7 +98,7 @@ class AttributionResult:
 
 class AttributionModelingEngine:
     """
-    🧠 Advanced Attribution Modeling Engine for Ainflue Platform
+    🧠 Advanced Attribution Modeling Engine for IA Chérie Platform
     
     ML-powered multi-touch attribution with advanced models:
     - Data-driven attribution using machine learning
@@ -1089,7 +1089,7 @@ async def main():
     """Test the attribution modeling engine"""
     try:
         # Initialize engine
-        engine = AttributionModelingEngine("postgresql://user:pass@localhost/ainflue")
+        engine = AttributionModelingEngine("postgresql://user:pass@localhost/iacherie")
         
         # Collect data
         end_date = datetime.now()

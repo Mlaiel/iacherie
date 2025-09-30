@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-API Analytics Engine - Ainflue Enterprise API Management
+API Analytics Engine - IA Chérie Enterprise API Management
 =======================================================
 
 Business Intelligence & Usage Analytics Engine for API Management Infrastructure
@@ -469,7 +469,7 @@ class APIAnalyticsEngine:
             }
     
     async def _get_creator_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Get creator-specific analytics for Ainflue business logic"""
+        """Get creator-specific analytics for IA Chérie business logic"""
         async with self.async_session() as session:
             start_time = self._calculate_timeframe_start(timeframe)
             

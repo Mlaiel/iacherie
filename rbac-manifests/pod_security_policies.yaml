@@ -1,15 +1,15 @@
 # Creator Economy RBAC Manifests
 # Type: pod_security_policies
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Generated for Ainflue Creator Economy Platform
+# Generated for IA Chérie Creator Economy Platform
 
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     security-level: restricted
-  name: ainflue-restricted
+  name: iacherie-restricted
 spec:
   allowPrivilegeEscalation: false
   fsGroup:
@@ -35,9 +35,9 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     security-level: ai-processing
-  name: ainflue-ai-privileged
+  name: iacherie-ai-privileged
 spec:
   allowPrivilegeEscalation: false
   allowedCapabilities:

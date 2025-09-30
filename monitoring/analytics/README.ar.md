@@ -2,7 +2,7 @@
 
 ## نظرة عامة
 
-وحدة مراقبة التحليلات هي نظام مؤسسي شامل لذكاء التحليلات وذكاء الأعمال لمنصة Ainflue. يوفر تحليلات في الوقت الفعلي وجمع البيانات عبر المنصات وذكاء أعمال متقدم.
+وحدة مراقبة التحليلات هي نظام مؤسسي شامل لذكاء التحليلات وذكاء الأعمال لمنصة IA Chérie. يوفر تحليلات في الوقت الفعلي وجمع البيانات عبر المنصات وذكاء أعمال متقدم.
 
 ## 🎯 الميزات الأساسية
 
@@ -135,13 +135,13 @@ python -m pytest tests/performance/test_analytics_performance.py -v
 ## 🤝 الدعم والتواصل
 
 ### الدعم التقني
-- **البريد الإلكتروني**: support@ainflue.com
-- **التوثيق**: https://docs.ainflue.com/analytics
-- **مرجع API**: https://api.ainflue.com/docs/analytics
+- **البريد الإلكتروني**: support@iacherie.com
+- **التوثيق**: https://docs.iacherie.com/analytics
+- **مرجع API**: https://api.iacherie.com/docs/analytics
 
 ### دعم التطوير
-- **GitHub**: https://github.com/ainflue/analytics-monitoring
-- **المشكلات**: https://github.com/ainflue/analytics-monitoring/issues
+- **GitHub**: https://github.com/iacherie/analytics-monitoring
+- **المشكلات**: https://github.com/iacherie/analytics-monitoring/issues
 - **المساهمات**: انظر CONTRIBUTING.md
 
 ## 📄 الترخيص

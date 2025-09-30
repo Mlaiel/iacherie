@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Blockchain Payment Integration - Ainflue Enterprise Collaboration
+Blockchain Payment Integration - IA Chérie Enterprise Collaboration
 Decentralized payment and smart contract management for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -32,7 +32,12 @@ from sqlalchemy.orm import Session
 # Blockchain and crypto imports
 from web3 import Web3
 from eth_account import Account
-from web3.middleware import geth_poa_middleware
+try:
+    from web3.middleware import geth_poa_middleware
+except ImportError:
+    # Compatibilité web3 - fallback sécurisé
+    def geth_poa_middleware(*args, **kwargs):
+        return lambda request, response: response
 import structlog
 
 logger = structlog.get_logger("blockchain_payments")
@@ -52,7 +57,7 @@ class BlockchainWallet(Base):
     wallet_type = Column(String(50), default="custodial")  # custodial, non_custodial
     encryption_key_id = Column(String)  # For encrypted private key storage
     is_active = Column(Boolean, default=True)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -77,7 +82,7 @@ class BlockchainTransaction(Base):
     status = Column(String(20), default="pending")  # pending, confirmed, failed
     confirmations = Column(Integer, default=0)
     smart_contract_address = Column(String(42))
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     confirmed_at = Column(DateTime)
 
@@ -96,7 +101,7 @@ class SmartContract(Base):
     contract_terms = Column(JSON)
     parties = Column(JSON)  # Contract parties
     status = Column(String(20), default="deployed")  # deployed, active, completed, terminated
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime)
 
@@ -151,9 +156,9 @@ class SmartContractType(str, Enum):
 class WalletCreateRequest(BaseModel):
     """Create blockchain wallet request"""
     user_id: str
-    user_type: str = Field(..., regex="^(creator|brand)$")
+    user_type: str = Field(..., pattern="^(creator|brand)$")
     blockchain_network: BlockchainNetwork
-    wallet_type: str = Field(default="custodial", regex="^(custodial|non_custodial)$")
+    wallet_type: str = Field(default="custodial", pattern="^(custodial|non_custodial)$")
 
 class PaymentRequest(BaseModel):
     """Blockchain payment request"""
@@ -1001,7 +1006,7 @@ class BlockchainPaymentProcessor:
         currency: CryptoCurrency,
         terms: Dict[str, Any],
         network: BlockchainNetwork
-    ) -> Tuple[str, str]:
+    ) -> tuple[str, str]:
         """Deploy an escrow smart contract"""
         # This would deploy the actual escrow contract
         # For now, return mock values

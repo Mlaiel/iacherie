@@ -4,7 +4,7 @@
 
 FROM python:3.11-slim AS development
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue AI Orchestration Hub - Development Environment"
+LABEL description="IA Chérie AI Orchestration Hub - Development Environment"
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -36,7 +36,7 @@ CMD ["python", "-m", "uvicorn", "ai_hub.main:app", "--host", "0.0.0.0", "--port"
 
 FROM python:3.11-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue AI Orchestration Hub - Advanced AI service coordination"
+LABEL description="IA Chérie AI Orchestration Hub - Advanced AI service coordination"
 LABEL version="1.0.0"
 
 # Install AI and ML system dependencies

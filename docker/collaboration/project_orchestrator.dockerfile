@@ -5,7 +5,7 @@
 FROM python:3.12-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Project Orchestrator - Automated project management service"
+LABEL description="IA Chérie Project Orchestrator - Automated project management service"
 LABEL version="1.0.0"
 
 # Set working directory

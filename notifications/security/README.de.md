@@ -1,10 +1,10 @@
 # 🔒 SICHERHEITSBENACHRICHTIGUNGEN - DEUTSCHE DOKUMENTATION
 
-**Ainflue Platform - Sicherheits-Benachrichtigungssystem Enterprise**
+**IA Chérie Platform - Sicherheits-Benachrichtigungssystem Enterprise**
 
 ## 🎯 ÜBERBLICK
 
-Das Security Notifications Module bietet umfassende Sicherheitsüberwachung und Alarmierung für die Ainflue Platform, einschließlich Urheberrechtsschutz, Betrugserkennung, Kontosicherheit und Compliance-Überwachung.
+Das Security Notifications Module bietet umfassende Sicherheitsüberwachung und Alarmierung für die IA Chérie Platform, einschließlich Urheberrechtsschutz, Betrugserkennung, Kontosicherheit und Compliance-Überwachung.
 
 ## 📋 MODULE KOMPONENTEN
 
@@ -72,5 +72,5 @@ await security.send_dmca_notice({
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Sicherheitsbenachrichtigungen  
+**Projekt:** IA Chérie Platform - Sicherheitsbenachrichtigungen  
 **Version:** 3.1.0 Enterprise

@@ -2,7 +2,7 @@
 ==============================================================================
 
 Optimisateur d'allocation ressources enterprise avec gestion dynamique CPU/mémoire,
-scaling automatique et optimisation coûts pour la plateforme Ainflue.
+scaling automatique et optimisation coûts pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 ⚡ Performance Engineer: Resource optimization + performance tuning + capacity planning + bottleneck resolution
@@ -820,7 +820,7 @@ class ResourceAllocationOptimizer:
         
         return training_data
     
-    def _prepare_training_data(self, training_data: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def _prepare_training_data(self, training_data: List[Dict[str, Any]]) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Préparation données pour entraînement"""
         X = []
         y_cpu = []

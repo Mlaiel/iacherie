@@ -3,7 +3,7 @@
 Advanced ML/AI Orchestration & AutoML Pipeline System
 ===================================================
 
-Enterprise-grade ML/AI orchestration system for Ainflue platform.
+Enterprise-grade ML/AI orchestration system for IA Chérie platform.
 Implements advanced AutoML pipelines, model serving, drift detection,
 A/B testing, and MLOps automation with multi-provider AI integration.
 
@@ -12,6 +12,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited.
 """
 
+import os
 import asyncio
 import json
 import logging
@@ -29,26 +30,59 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import threading
 from abc import ABC, abstractmethod
 
-import mlflow
-import mlflow.sklearn
-import mlflow.pytorch
+# MLflow avec fallbacks
+try:
+    import mlflow
+    import mlflow.sklearn
+    import mlflow.pytorch
+    from mlflow.tracking import MlflowClient
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    logging.warning("MLflow not available, using fallback tracking")
+    MLFLOW_AVAILABLE = False
+    mlflow = None
+
 # MLflow TensorFlow imports avec protection
 try:
     import mlflow.tensorflow
 except ImportError:
-    mlflow = None
-from mlflow.tracking import MlflowClient
-import optuna
-import scikit_learn
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-import xgboost as xgb
-import lightgbm as lgb
-import catboost as cb
+    pass
+
+# Optuna pour optimisation
+try:
+    import optuna
+except ImportError:
+    optuna = None
+
+# Sklearn avec nom correct
+try:
+    import sklearn as scikit_learn
+    from sklearn.model_selection import train_test_split, cross_val_score
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+    from sklearn.preprocessing import StandardScaler, LabelEncoder
+    from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.svm import SVC
+except ImportError:
+    scikit_learn = None
+
+# XGBoost avec fallback
+try:
+    import xgboost as xgb
+except ImportError:
+    xgb = None
+
+# LightGBM avec fallback
+try:
+    import lightgbm as lgb
+except ImportError:
+    lgb = None
+
+# CatBoost avec fallback
+try:
+    import catboost as cb
+except ImportError:
+    cb = None
 
 # Deep Learning frameworks
 import torch
@@ -62,14 +96,29 @@ tf = get_tensorflow()
 # AI Provider integrations
 import openai
 from anthropic import Anthropic
-import google.generativeai as genai
+
+# Google AI avec fallback
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
+
 import boto3
 
 # Monitoring and observability
 import prometheus_client
 from prometheus_client import Counter, Histogram, Gauge
-import wandb
-import neptune
+
+# Experiment tracking avec fallbacks
+try:
+    import wandb
+except ImportError:
+    wandb = None
+    
+try:
+    import neptune
+except ImportError:
+    neptune = None
 
 
 class ModelType(Enum):
@@ -983,7 +1032,10 @@ class AdvancedMLOrchestrator:
     async def _generate_shap_explanation(self, model: Any, input_data: pd.DataFrame) -> Dict[str, Any]:
         """Generate SHAP explanation for model prediction."""
         try:
-            import shap
+            try:
+                import shap
+            except ImportError:
+                return {"error": "SHAP library not available", "explanation": None}
             
             # Create explainer (simplified - would use appropriate explainer type)
             explainer = shap.Explainer(model)
@@ -1001,8 +1053,11 @@ class AdvancedMLOrchestrator:
     async def _generate_lime_explanation(self, model: Any, input_data: pd.DataFrame) -> Dict[str, Any]:
         """Generate LIME explanation for model prediction."""
         try:
-            import lime
-            import lime.lime_tabular
+            try:
+                import lime
+                import lime.lime_tabular
+            except ImportError:
+                return {"error": "LIME library not available", "explanation": None}
             
             # This is a simplified implementation
             return {"feature_importance": {col: 0.1 for col in input_data.columns}}

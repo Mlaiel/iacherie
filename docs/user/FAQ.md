@@ -1,8 +1,8 @@
-# ❓ Ainflue Frequently Asked Questions (FAQ)
+# ❓ IA Chérie Frequently Asked Questions (FAQ)
 
 ## Complete FAQ & Knowledge Base
 
-**Platform:** Ainflue AI-Powered Content Protection & Monetization  
+**Platform:** IA Chérie AI-Powered Content Protection & Monetization  
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Last Updated:** September 2025
@@ -28,19 +28,19 @@
 
 ## 🌟 General Platform Questions
 
-### What is Ainflue?
-**A:** Ainflue is an AI-powered content protection and monetization platform that helps creators protect their digital content from unauthorized use while maximizing revenue across multiple platforms. We use advanced AI fingerprinting technology to detect content violations and provide automated DMCA takedown services.
+### What is IA Chérie?
+**A:** IA Chérie is an AI-powered content protection and monetization platform that helps creators protect their digital content from unauthorized use while maximizing revenue across multiple platforms. We use advanced AI fingerprinting technology to detect content violations and provide automated DMCA takedown services.
 
-### Who can use Ainflue?
-**A:** Ainflue is designed for:
+### Who can use IA Chérie?
+**A:** IA Chérie is designed for:
 - Content creators (musicians, video producers, artists, writers)
 - Digital agencies managing multiple creators
 - Enterprises protecting proprietary content
 - Independent artists and influencers
 - Media companies and publishers
 
-### What makes Ainflue different from other protection platforms?
-**A:** Ainflue combines:
+### What makes IA Chérie different from other protection platforms?
+**A:** IA Chérie combines:
 - **AI-Powered Detection:** Advanced machine learning for accurate content matching
 - **Multi-Platform Monitoring:** 50+ platforms including social media, streaming, and content sites
 - **Revenue Optimization:** Integrated monetization tracking and optimization
@@ -54,7 +54,7 @@
 - **Image Content:** 99.2% accuracy with < 0.05% false positives
 - **Text Content:** 94.7% accuracy with < 0.5% false positives
 
-### What platforms does Ainflue monitor?
+### What platforms does IA Chérie monitor?
 **A:** We monitor 50+ platforms including:
 - **Social Media:** YouTube, Instagram, TikTok, Twitter, Facebook, LinkedIn
 - **Music Platforms:** Spotify, Apple Music, SoundCloud, Bandcamp
@@ -68,7 +68,7 @@
 
 ### How do I create an account?
 **A:** 
-1. Visit [https://app.ainflue.com/register](https://app.ainflue.com/register)
+1. Visit [https://app.iacherie.com/register](https://app.iacherie.com/register)
 2. Choose your account type (Creator, Agency, Enterprise)
 3. Enter your email and create a secure password
 4. Verify your email address
@@ -81,7 +81,7 @@
 - **Premium Plan ($29/month):** 10GB storage, advanced protection, unlimited scans
 - **Enterprise Plan (Custom pricing):** Unlimited storage, custom features, dedicated support
 
-### Can I try Ainflue before subscribing?
+### Can I try IA Chérie before subscribing?
 **A:** Yes! Our Free plan allows you to:
 - Upload up to 100MB of content
 - Test our AI fingerprinting technology
@@ -96,8 +96,8 @@ No credit card required for the Free plan.
 - Profile completion: 3-5 minutes
 - Optional MFA setup: 2 minutes
 
-### Do I need technical knowledge to use Ainflue?
-**A:** No! Ainflue is designed for all skill levels:
+### Do I need technical knowledge to use IA Chérie?
+**A:** No! IA Chérie is designed for all skill levels:
 - **Intuitive Interface:** User-friendly dashboard
 - **Guided Setup:** Step-by-step onboarding
 - **Comprehensive Help:** Video tutorials and documentation
@@ -108,7 +108,7 @@ No credit card required for the Free plan.
 ## 📁 Content Upload & Management
 
 ### What file types are supported?
-**A:** Ainflue supports all major content formats:
+**A:** IA Chérie supports all major content formats:
 
 **Audio:** MP3, WAV, FLAC, AAC, OGG, M4A, WMA
 **Video:** MP4, AVI, MOV, MKV, WEBM, FLV, 3GP
@@ -136,7 +136,7 @@ No credit card required for the Free plan.
 - **API Upload:** Programmatic bulk uploads
 
 ### How do I organize my content?
-**A:** Ainflue provides several organization tools:
+**A:** IA Chérie provides several organization tools:
 - **Folders:** Create custom folder structures
 - **Tags:** Add searchable tags to content
 - **Categories:** Classify by content type
@@ -153,7 +153,7 @@ No credit card required for the Free plan.
 2. **Monitoring:** Continuous scanning across platforms
 3. **Action:** Automated detection and takedown processes
 
-### How often does Ainflue scan for violations?
+### How often does IA Chérie scan for violations?
 **A:** Scanning frequency depends on your plan:
 - **Free:** Weekly scans
 - **Premium:** Daily scans
@@ -193,7 +193,7 @@ No credit card required for the Free plan.
 ## 💰 Monetization & Revenue
 
 ### How does revenue tracking work?
-**A:** Ainflue connects to your platform accounts to track:
+**A:** IA Chérie connects to your platform accounts to track:
 - **Ad Revenue:** YouTube, Facebook, Instagram ad earnings
 - **Streaming Royalties:** Spotify, Apple Music, etc.
 - **Direct Sales:** Content purchases and downloads
@@ -256,7 +256,7 @@ No credit card required for the Free plan.
 - **Custom Agreements:** Upload existing contracts
 - **Automatic Distribution:** Payments sent directly to collaborators
 
-### Can I collaborate with non-Ainflue users?
+### Can I collaborate with non-IA Chérie users?
 **A:** Yes! You can:
 - **Invite Users:** Send collaboration invitations via email
 - **Guest Access:** Temporary access for specific projects
@@ -268,7 +268,7 @@ No credit card required for the Free plan.
 ## ⚙️ Technical & API
 
 ### Is there an API available?
-**A:** Yes! Ainflue offers comprehensive APIs:
+**A:** Yes! IA Chérie offers comprehensive APIs:
 - **REST API:** Standard HTTP endpoints
 - **GraphQL API:** Flexible data queries
 - **Webhooks:** Real-time event notifications
@@ -307,8 +307,8 @@ No credit card required for the Free plan.
 
 ## 🌍 Multi-Language & Localization
 
-### What languages does Ainflue support?
-**A:** Ainflue supports 350+ languages including:
+### What languages does IA Chérie support?
+**A:** IA Chérie supports 350+ languages including:
 - **Major Languages:** English, Spanish, French, German, Arabic, Chinese, Japanese
 - **Regional Dialects:** North African Arabic variants, European language variants
 - **Indigenous Languages:** Amazigh/Berber languages with Tifinagh script support
@@ -328,7 +328,7 @@ No credit card required for the Free plan.
 3. **Regional Settings:** Choose date/time/currency formats
 4. **Save Changes:** Apply immediately without restart
 
-### Does Ainflue support right-to-left (RTL) languages?
+### Does IA Chérie support right-to-left (RTL) languages?
 **A:** Full RTL support includes:
 - **Interface Mirroring:** Automatic layout adjustment
 - **Text Direction:** Proper text flow for Arabic, Hebrew, Persian, Urdu
@@ -381,7 +381,7 @@ No credit card required for the Free plan.
 
 ## 🔒 Security & Privacy
 
-### How secure is my content on Ainflue?
+### How secure is my content on IA Chérie?
 **A:** Security measures include:
 - **Encryption:** AES-256 encryption for all data
 - **Secure Storage:** Cloud infrastructure with SOC 2 compliance
@@ -389,7 +389,7 @@ No credit card required for the Free plan.
 - **Regular Audits:** Third-party security assessments
 - **Backup Systems:** Automated backups with geographic redundancy
 
-### What data does Ainflue collect?
+### What data does IA Chérie collect?
 **A:** We collect only necessary data:
 - **Account Information:** Email, name, payment details
 - **Content Metadata:** File names, upload dates, fingerprints
@@ -397,7 +397,7 @@ No credit card required for the Free plan.
 - **Communication:** Support interactions and feedback
 - **No Content Access:** We never access your actual content files
 
-### Is Ainflue GDPR compliant?
+### Is IA Chérie GDPR compliant?
 **A:** Full GDPR compliance including:
 - **Data Portability:** Export all your data anytime
 - **Right to Deletion:** Delete account and all data
@@ -493,10 +493,10 @@ No credit card required for the Free plan.
 
 ### How do I contact support?
 **A:** Support options:
-- **Email:** support@ainflue.com (24h response)
+- **Email:** support@iacherie.com (24h response)
 - **Live Chat:** Available for Premium+ users
-- **Community Forum:** https://community.ainflue.com
-- **Knowledge Base:** https://help.ainflue.com
+- **Community Forum:** https://community.iacherie.com
+- **Knowledge Base:** https://help.iacherie.com
 - **Phone Support:** Enterprise customers only
 
 ---
@@ -550,7 +550,7 @@ No credit card required for the Free plan.
 **A:** Bug reporting:
 1. **Reproduce Issue:** Confirm the problem persists
 2. **Gather Information:** Browser, OS, steps to reproduce
-3. **Email Details:** Send to bugs@ainflue.com
+3. **Email Details:** Send to bugs@iacherie.com
 4. **Include Screenshots:** Visual evidence if applicable
 5. **Response Time:** Acknowledgment within 4 hours
 
@@ -559,4 +559,4 @@ No credit card required for the Free plan.
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Proprietary and Confidential - Unauthorized use is strictly prohibited.**
 
-*This FAQ is regularly updated. Check [https://help.ainflue.com](https://help.ainflue.com) for the latest information and additional support resources.*
+*This FAQ is regularly updated. Check [https://help.iacherie.com](https://help.iacherie.com) for the latest information and additional support resources.*

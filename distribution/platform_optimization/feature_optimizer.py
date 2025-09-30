@@ -1,5 +1,5 @@
 """
-Feature Optimizer for Ainflue Distribution Platform
+Feature Optimizer for IA Chérie Distribution Platform
 
 Advanced platform feature optimization system that maximizes the utilization
 of platform-specific features to enhance content performance, engagement,

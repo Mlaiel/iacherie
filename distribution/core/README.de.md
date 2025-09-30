@@ -1,10 +1,10 @@
 # 🎯 Core Distribution Engine - Grundkomponenten
 
-**Fundamentale Grundkomponenten für die Ainflue Distribution Plattform**
+**Fundamentale Grundkomponenten für die IA Chérie Distribution Plattform**
 
 ## 🎯 Überblick
 
-Die Core Distribution Engine stellt die fundamentalen Bausteine und wesentlichen Komponenten bereit, die das gesamte Ainflue Distribution Ökosystem antreiben. Dieses Modul enthält die Kernfunktionalität einschließlich Cross-Platform-Synchronisation, Format-Anpassung, Content-Sicherheit und A/B-Testing-Funktionen, die als Grundlage für alle Distribution-Operationen dienen.
+Die Core Distribution Engine stellt die fundamentalen Bausteine und wesentlichen Komponenten bereit, die das gesamte IA Chérie Distribution Ökosystem antreiben. Dieses Modul enthält die Kernfunktionalität einschließlich Cross-Platform-Synchronisation, Format-Anpassung, Content-Sicherheit und A/B-Testing-Funktionen, die als Grundlage für alle Distribution-Operationen dienen.
 
 ## 🚀 Hauptmerkmale
 
@@ -31,6 +31,6 @@ Die Core Distribution Engine stellt die fundamentalen Bausteine und wesentlichen
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE CORE DISTRIBUTION ENGINE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE CORE DISTRIBUTION ENGINE**  
 **🔒 PROPRIETÄRE SOFTWARE - ALLE RECHTE VORBEHALTEN**  
 **⚠️ ENTERPRISE-GRADE-LÖSUNG - NUR AUTORISIERTES PERSONAL**

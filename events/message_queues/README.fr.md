@@ -1,5 +1,5 @@
 # 🏗️ Module Events Message Queues - Infrastructure de Messagerie Entreprise
-**Plateforme Ainflue - Implémentation Avancée de Files d'Attente de Messages**
+**Plateforme IA Chérie - Implémentation Avancée de Files d'Attente de Messages**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTREPRISE
 
-Le **Module Events Message Queues** fournit une infrastructure de messagerie de niveau entreprise et une gestion de files d'attente pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre un traitement de messages à haut débit, un routage intelligent et des modèles de communication résilients pour des workflows de création de contenu évolutifs.
+Le **Module Events Message Queues** fournit une infrastructure de messagerie de niveau entreprise et une gestion de files d'attente pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre un traitement de messages à haut débit, un routage intelligent et des modèles de communication résilients pour des workflows de création de contenu évolutifs.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -159,7 +159,7 @@ music_processing_msg = {
         "tempo_extraction": True,
         "key_detection": True
     },
-    "callback_url": "https://api.ainflue.com/callbacks/audio_analysis"
+    "callback_url": "https://api.iacherie.com/callbacks/audio_analysis"
 }
 
 # Mettre en file avec haute priorité pour performance live
@@ -403,7 +403,7 @@ print(f"Success rate after retry: {retry_stats['success_rate_after_retry']}")
 version: '3.8'
 services:
   message-queues:
-    image: ainflue/message-queues:latest
+    image: iacherie/message-queues:latest
     deploy:
       replicas: 5
       resources:
@@ -422,7 +422,7 @@ services:
       - "8080:8080"
       
   queue-monitor:
-    image: ainflue/queue-monitor:latest
+    image: iacherie/queue-monitor:latest
     deploy:
       replicas: 2
     environment:
@@ -461,7 +461,7 @@ error_rate = Counter('queue_processing_errors_total', 'Total processing errors')
 
 ## 📝 **CONCLUSION**
 
-Le Module Events Message Queues représente l'apogée de l'infrastructure de messagerie entreprise pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format. Avec un traitement de messages à haut débit, un routage intelligent et des mécanismes de résilience complets, ce module assure une gestion de messages fiable, évolutive et intelligente pour l'ensemble de l'écosystème créateur.
+Le Module Events Message Queues représente l'apogée de l'infrastructure de messagerie entreprise pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format. Avec un traitement de messages à haut débit, un routage intelligent et des mécanismes de résilience complets, ce module assure une gestion de messages fiable, évolutive et intelligente pour l'ensemble de l'écosystème créateur.
 
 **🎯 Mission :** Fournir l'infrastructure de messagerie entreprise la plus avancée au monde pour les créateurs de contenu, permettant une communication fiable, une orchestration de workflow intelligente et une intégration transparente sur tous les services de plateforme.
 

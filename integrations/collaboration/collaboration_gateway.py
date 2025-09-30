@@ -1,11 +1,11 @@
 """
-Enterprise Collaboration Gateway - Ainflue Integrations
+Enterprise Collaboration Gateway - IA Chérie Integrations
 =====================================================
 Main API orchestrator for enterprise-grade collaboration management.
 Handles authentication, routing, load balancing, and multi-tenant support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chérie Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

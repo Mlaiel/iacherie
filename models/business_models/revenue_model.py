@@ -113,7 +113,7 @@ class RevenueModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     # Metadata
-    revenue_metadata = Column(JSON, nullable=True)
+    revenue_meta_data = Column(JSON, nullable=True)
     analytics_tags = Column(JSON, nullable=True)
     
     def __repr__(self):
@@ -283,7 +283,7 @@ async def monetization_and_licensing_workflow(creator_id: int, content_data: Dic
                 stream_type=RevenueStreamType.DIRECT_SALES,
                 gross_amount=0.0,  # Will be updated when sales occur
                 content_id=content_data.get('content_id'),
-                source_platform='ainflue'
+                source_platform='iacherie'
             )
             workflow_result["revenue_tracking"] = revenue_entry.to_dict()
         

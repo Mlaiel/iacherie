@@ -1,6 +1,6 @@
 # 🌍 Geografische Optimierung - Globale Content-Distributions-Engine
 
-**Erweiterte KI-gestützte geografische und kulturelle Optimierungs-Engine für die Ainflue-Plattform**
+**Erweiterte KI-gestützte geografische und kulturelle Optimierungs-Engine für die IA Chérie-Plattform**
 
 ## 📋 Überblick
 
@@ -155,4 +155,4 @@ localized_content = await localizer.localize_content(content, target_language, r
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue-Plattform - Geographic Optimization Modul**
+**IA Chérie-Plattform - Geographic Optimization Modul**

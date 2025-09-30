@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +12,7 @@
 """
 AWS Infrastructure Provider
 
-Enterprise AWS infrastructure provider for Ainflue platform.
+Enterprise AWS infrastructure provider for IA Chérie platform.
 Provides comprehensive AWS resource management with enterprise security and optimization.
 """
 
@@ -194,9 +194,9 @@ class AWSInfrastructureProvider:
             logger.error(f"Failed to setup default infrastructure: {str(e)}")
     
     async def _create_default_security_group(self):
-        """Create default security group for Ainflue resources."""
+        """Create default security group for IA Chérie resources."""
         try:
-            sg_name = "ainflue-default-sg"
+            sg_name = "iacherie-default-sg"
             
             # Check if security group already exists
             try:
@@ -216,13 +216,13 @@ class AWSInfrastructureProvider:
             # Create new security group
             response = self.clients['ec2'].create_security_group(
                 GroupName=sg_name,
-                Description="Default security group for Ainflue resources",
+                Description="Default security group for IA Chérie resources",
                 VpcId=self.default_vpc,
                 TagSpecifications=[{
                     'ResourceType': 'security-group',
                     'Tags': [
                         {'Key': 'Name', 'Value': sg_name},
-                        {'Key': 'Project', 'Value': 'Ainflue'},
+                        {'Key': 'Project', 'Value': 'IA Chérie'},
                         {'Key': 'ManagedBy', 'Value': 'AWSInfrastructureProvider'}
                     ]
                 }]

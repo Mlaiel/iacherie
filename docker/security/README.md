@@ -1,6 +1,6 @@
 # 🔐 Security Module - Docker Services
 
-**Ainflue Platform Security Infrastructure**
+**IA Chérie Platform Security Infrastructure**
 
 Enterprise-grade security infrastructure with vulnerability scanning, threat detection, access control, and compliance monitoring for content creators and influencers.
 

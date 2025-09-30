@@ -1,7 +1,7 @@
-package com.ainflue.sdk.exceptions;
+package com.iacherie.sdk.exceptions;
 
 /**
- * Exception Classes for Ainflue Java SDK
+ * Exception Classes for IA Chérie Java SDK
  * Comprehensive error handling for enterprise applications
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

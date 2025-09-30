@@ -662,7 +662,7 @@ class NotificationWebhookManager:
             # Prepare headers
             headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': 'Ainflue-Webhooks/1.0',
+                'User-Agent': 'IA Chérie-Webhooks/1.0',
                 'X-Webhook-Signature': signature,
                 'X-Webhook-Event': delivery.payload.event.value,
                 'X-Webhook-ID': delivery.id,

@@ -1,5 +1,5 @@
 /**
- * Ainflue Audio Recorder - Professional Audio Recording Service
+ * IA Chérie Audio Recorder - Professional Audio Recording Service
  * 
  * Advanced audio recording system for content creators
  * Supports high-quality recording with noise reduction and AI integration
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.Manifest
 import android.content.Context
@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.sqrt
 
 /**
- * Professional Audio Recording Service for Ainflue Platform
+ * Professional Audio Recording Service for IA Chérie Platform
  * 
  * Features:
  * - High-quality audio recording (up to 48kHz/24-bit)

@@ -1,6 +1,6 @@
 # 💰 نظام إدارة إيرادات المدفوعات - إدارة الإيرادات الشاملة للمبدعين
 
-نظام إدارة الإيرادات على مستوى المؤسسات لاقتصاد المبدعين مع التحليلات المتقدمة وتنسيق المدفوعات الشامل على منصة Ainflue.
+نظام إدارة الإيرادات على مستوى المؤسسات لاقتصاد المبدعين مع التحليلات المتقدمة وتنسيق المدفوعات الشامل على منصة IA Chérie.
 
 ## 🏢 **تحذير الملكية الفكرية**
 
@@ -111,7 +111,7 @@
 version: '3.8'
 services:
   revenue-api:
-    image: ainflue/revenue-manager:latest
+    image: iacherie/revenue-manager:latest
     ports:
       - "8080:8080"
     environment:
@@ -152,7 +152,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: revenue-manager
-  namespace: ainflue
+  namespace: iacherie
 spec:
   replicas: 3
   selector:
@@ -165,7 +165,7 @@ spec:
     spec:
       containers:
       - name: revenue-api
-        image: ainflue/revenue-manager:v1.5.0
+        image: iacherie/revenue-manager:v1.5.0
         ports:
         - containerPort: 8080
         env:
@@ -268,7 +268,7 @@ groups:
 // grafana/revenue_dashboard.json
 {
   "dashboard": {
-    "title": "لوحة مراقبة إيرادات Ainflue",
+    "title": "لوحة مراقبة إيرادات IA Chérie",
     "panels": [
       {
         "title": "إجمالي الإيرادات في الوقت الفعلي",
@@ -361,7 +361,7 @@ jobs:
       with:
         context: payment/revenue
         push: true
-        tags: ghcr.io/mlaiel/ainflue-revenue:${{ github.sha }}
+        tags: ghcr.io/mlaiel/iacherie-revenue:${{ github.sha }}
 
   deploy:
     needs: build
@@ -371,9 +371,9 @@ jobs:
     - name: نشر إلى Kubernetes
       run: |
         kubectl set image deployment/revenue-manager \
-          revenue-api=ghcr.io/mlaiel/ainflue-revenue:${{ github.sha }} \
-          -n ainflue
-        kubectl rollout status deployment/revenue-manager -n ainflue
+          revenue-api=ghcr.io/mlaiel/iacherie-revenue:${{ github.sha }} \
+          -n iacherie
+        kubectl rollout status deployment/revenue-manager -n iacherie
 ```
 
 ### 🔧 **الأتمتة والصيانة**
@@ -401,7 +401,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: revenue-backup
-  namespace: ainflue
+  namespace: iacherie
 spec:
   schedule: "0 2 * * *"  # يومياً في الساعة 2 صباحاً
   jobTemplate:
@@ -589,7 +589,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: revenue-manager-service
-  namespace: ainflue
+  namespace: iacherie
 spec:
   selector:
     app: revenue-manager
@@ -604,7 +604,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: revenue-manager-ingress
-  namespace: ainflue
+  namespace: iacherie
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rate-limit: "100"
@@ -612,10 +612,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - revenue-api.ainflue.com
+    - revenue-api.iacherie.com
     secretName: revenue-tls
   rules:
-  - host: revenue-api.ainflue.com
+  - host: revenue-api.iacherie.com
     http:
       paths:
       - path: /
@@ -635,17 +635,17 @@ spec:
 
 ```bash
 # تشخيص مشاكل الأداء
-kubectl top pods -n ainflue | grep revenue
+kubectl top pods -n iacherie | grep revenue
 
 # فحص سجلات التطبيق
-kubectl logs -f deployment/revenue-manager -n ainflue
+kubectl logs -f deployment/revenue-manager -n iacherie
 
 # التحقق من حالة قاعدة البيانات
-kubectl exec -it deployment/revenue-manager -n ainflue -- \
+kubectl exec -it deployment/revenue-manager -n iacherie -- \
   psql $DATABASE_URL -c "SELECT COUNT(*) FROM revenue_transactions;"
 
 # مراقبة استخدام الذاكرة
-kubectl exec -it deployment/revenue-manager -n ainflue -- \
+kubectl exec -it deployment/revenue-manager -n iacherie -- \
   ps aux --sort=-%mem | head -10
 ```
 

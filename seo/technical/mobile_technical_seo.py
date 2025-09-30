@@ -574,8 +574,8 @@ button, a, [role="button"] {
             # PWA Manifest
             code_snippets['pwa_manifest'] = '''
 {
-    "name": "Ainflue Creator Platform",
-    "short_name": "Ainflue",
+    "name": "IA Chérie Creator Platform",
+    "short_name": "IA Chérie",
     "description": "AI-powered creator economy platform",
     "start_url": "/",
     "display": "standalone",
@@ -611,7 +611,7 @@ button, a, [role="button"] {
             # Service Worker
             code_snippets['service_worker'] = '''
 // Service Worker for PWA functionality
-const CACHE_NAME = 'ainflue-v1';
+const CACHE_NAME = 'iacherie-v1';
 const urlsToCache = [
     '/',
     '/css/main.css',
@@ -1079,7 +1079,7 @@ self.addEventListener('sync', event => {
         enhancements['mobile_schema_markup'] = {
             'mobileApplication': {
                 '@type': 'MobileApplication',
-                'name': 'Ainflue Mobile',
+                'name': 'IA Chérie Mobile',
                 'operatingSystem': 'Android, iOS',
                 'applicationCategory': 'BusinessApplication'
             },
@@ -1246,7 +1246,7 @@ self.addEventListener('sync', event => {
 
 # Enterprise mobile optimization management
 class MobileOptimizationManager:
-    """High-level mobile optimization management for Ainflue platform."""
+    """High-level mobile optimization management for IA Chérie platform."""
     
     def __init__(self, optimization_level: MobileOptimizationLevel = MobileOptimizationLevel.ENHANCED):
         self.mobile_seo = MobileTechnicalSEO(optimization_level)

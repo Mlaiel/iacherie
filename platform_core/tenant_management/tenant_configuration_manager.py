@@ -38,7 +38,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/tenant_config.log'),
+        logging.FileHandler('/var/log/iacherie/tenant_config.log'),
         logging.StreamHandler()
     ]
 )
@@ -116,7 +116,7 @@ class TenantConfigurationManager:
     - Hot-reload sans redémarrage
     """
     
-    def __init__(self, config_path: str = '/etc/ainflue/config_manager.yaml'):
+    def __init__(self, config_path: str = '/etc/iacherie/config_manager.yaml'):
         """Initialisation du gestionnaire de configuration"""
         self.config = self._load_config(config_path)
         self.config_cache: Dict[str, ConfigEntry] = {}
@@ -175,7 +175,7 @@ class TenantConfigurationManager:
     
     def _get_encryption_key(self) -> bytes:
         """Récupération de la clé de chiffrement"""
-        key_path = self.config.get('encryption_key_path', '/etc/ainflue/config.key')
+        key_path = self.config.get('encryption_key_path', '/etc/iacherie/config.key')
         try:
             with open(key_path, 'rb') as f:
                 return f.read()
@@ -1109,7 +1109,7 @@ def create_tenant_configuration_manager(config_path: Optional[str] = None) -> Te
     Returns:
         Instance configurée du TenantConfigurationManager
     """
-    return TenantConfigurationManager(config_path or '/etc/ainflue/config_manager.yaml')
+    return TenantConfigurationManager(config_path or '/etc/iacherie/config_manager.yaml')
 
 
 # Exemple d'utilisation

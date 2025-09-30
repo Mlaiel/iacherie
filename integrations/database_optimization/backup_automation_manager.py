@@ -2,7 +2,7 @@
 =========================================================
 
 Enterprise-grade backup and recovery system with intelligent scheduling,
-point-in-time recovery, and cross-region replication for Ainflue platform.
+point-in-time recovery, and cross-region replication for IA Chérie platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Advanced backup strategies + recovery procedures + PITR
@@ -179,7 +179,7 @@ class BackupAutomationManager:
         self.cipher = Fernet(self.encryption_key)
         
         # Configuration storage
-        self.local_storage_path = Path(config.get('local_storage_path', '/opt/ainflue/backups'))
+        self.local_storage_path = Path(config.get('local_storage_path', '/opt/iacherie/backups'))
         self.local_storage_path.mkdir(parents=True, exist_ok=True)
         
         # Thread pool pour opérations I/O
@@ -1227,7 +1227,7 @@ def initialize_backup_automation_manager(config: Dict[str, Any]) -> BackupAutoma
 
 # Configuration par défaut
 DEFAULT_BACKUP_CONFIG = {
-    'local_storage_path': '/opt/ainflue/backups',
+    'local_storage_path': '/opt/iacherie/backups',
     'max_workers': 8,
     'encryption_key': None,  # Sera généré automatiquement
     'databases': {

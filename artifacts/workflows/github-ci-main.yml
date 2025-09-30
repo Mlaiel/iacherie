@@ -1,6 +1,6 @@
-name: "🚀 Ainflue Platform - Main CI/CD Pipeline"
+name: "🚀 IA Chérie Platform - Main CI/CD Pipeline"
 
-# 🏗️ Ainflue Platform - Enterprise CI/CD Workflow
+# 🏗️ IA Chérie Platform - Enterprise CI/CD Workflow
 # Author: Fahed Mlaiel (mlaiel@live.de) 
 # Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 # License: Proprietary
@@ -42,7 +42,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ainflue/platform
+  IMAGE_NAME: iacherie/platform
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.11'
   
@@ -417,7 +417,7 @@ jobs:
           
       - name: "☸️ Update Kubeconfig"
         run: |
-          aws eks update-kubeconfig --name ainflue-staging --region us-west-2
+          aws eks update-kubeconfig --name iacherie-staging --region us-west-2
           
       - name: "🚀 Deploy to Staging"
         run: |
@@ -429,10 +429,10 @@ jobs:
           # Update deployment with new image
           kubectl set image deployment/artifacts-module \
             artifacts-module=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-            -n ainflue-staging
+            -n iacherie-staging
             
           # Wait for rollout
-          kubectl rollout status deployment/artifacts-module -n ainflue-staging --timeout=300s
+          kubectl rollout status deployment/artifacts-module -n iacherie-staging --timeout=300s
           
           echo "✅ Staging deployment completed"
           
@@ -441,7 +441,7 @@ jobs:
           echo "🧪 Running post-deployment tests..."
           
           # Get service endpoint
-          ENDPOINT=$(kubectl get service artifacts-module -n ainflue-staging -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          ENDPOINT=$(kubectl get service artifacts-module -n iacherie-staging -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
           
           # Health check
           curl -f "http://${ENDPOINT}/health" || exit 1
@@ -477,7 +477,7 @@ jobs:
           
       - name: "☸️ Update Kubeconfig"
         run: |
-          aws eks update-kubeconfig --name ainflue-production --region us-west-2
+          aws eks update-kubeconfig --name iacherie-production --region us-west-2
           
       - name: "🚀 Blue-Green Deployment"
         run: |
@@ -487,20 +487,20 @@ jobs:
           kubectl apply -f artifacts/infrastructure/kubernetes-deployment-green.yml
           
           # Wait for green deployment to be ready
-          kubectl rollout status deployment/artifacts-module-green -n ainflue-production --timeout=600s
+          kubectl rollout status deployment/artifacts-module-green -n iacherie-production --timeout=600s
           
           # Run production readiness tests
           kubectl run production-test --image=curlimages/curl:latest --rm -i --restart=Never -- \
             curl -f http://artifacts-module-green-service/health
             
           # Switch traffic to green deployment
-          kubectl patch service artifacts-module -n ainflue-production -p '{"spec":{"selector":{"version":"green"}}}'
+          kubectl patch service artifacts-module -n iacherie-production -p '{"spec":{"selector":{"version":"green"}}}'
           
           # Wait and monitor
           sleep 60
           
           # Clean up blue deployment
-          kubectl delete deployment artifacts-module-blue -n ainflue-production --ignore-not-found=true
+          kubectl delete deployment artifacts-module-blue -n iacherie-production --ignore-not-found=true
           
           echo "✅ Production deployment completed"
 
@@ -532,9 +532,9 @@ jobs:
         if: always()
         with:
           status: ${{ job.status }}
-          channel: '#ainflue-deployments'
+          channel: '#iacherie-deployments'
           text: |
-            🚀 Ainflue Artifacts Module Deployment
+            🚀 IA Chérie Artifacts Module Deployment
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Status: ${{ job.status }}

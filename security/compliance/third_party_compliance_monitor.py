@@ -1,5 +1,5 @@
 """
-🛡️ Third-Party Compliance Monitor - Ainflue Creator Economy
+🛡️ Third-Party Compliance Monitor - IA Chérie Creator Economy
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.

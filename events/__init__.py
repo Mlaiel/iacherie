@@ -1,4 +1,4 @@
-"""🚀 Ainflue Events Module - Ultra-Advanced Event-Driven Architecture
+"""🚀 IA Chérie Events Module - Ultra-Advanced Event-Driven Architecture
 Enterprise-Grade Event Processing System for Multi-Format Content Creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +16,7 @@ Date: September 8, 2025
 ⚖️ STRICT LEGAL WARNING / AVERTISSEMENT LÉGAL STRICT
 ========================================================
 🚨 EXCLUSIVE INTELLECTUAL PROPERTY: All concepts, architectures, technical specifications, 
-code implementations, documentation, and innovations contained within the Ainflue Events Module 
+code implementations, documentation, and innovations contained within the IA Chérie Events Module 
 are the EXCLUSIVE PROPERTY of Fahed Mlaiel (mlaiel@live.de).
 
 ⚠️ FORMAL PROHIBITION: Any use, reproduction, adaptation, copying, or implementation 

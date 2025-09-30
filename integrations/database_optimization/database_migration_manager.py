@@ -2,7 +2,7 @@
 =========================================================================
 
 Manager de migration database enterprise avec zero-downtime deployment,
-blue-green strategies et rollback automatique pour la plateforme Ainflue.
+blue-green strategies et rollback automatique pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Schema versioning + migration strategies + data consistency + performance optimization
@@ -159,7 +159,7 @@ class MigrationEnvironment:
     database_url: str = ""
     backup_url: str = ""
     is_production: bool = False
-    maintenance_window: Optional[Tuple[datetime, datetime]] = None
+    maintenance_window: Optional[tuple[datetime, datetime]] = None
     max_concurrent_migrations: int = 1
     resource_limits: Dict[str, Any] = field(default_factory=dict)
 
@@ -292,7 +292,7 @@ class DatabaseMigrationManager:
 [alembic]
 script_location = versions
 version_path_separator = os
-sqlalchemy.url = postgresql://user:pass@localhost/ainflue
+sqlalchemy.url = postgresql://user:pass@localhost/iacherie
 
 [post_write_hooks]
 

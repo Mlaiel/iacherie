@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Affiliate Commission Tracker
+IA Chérie Platform - Affiliate Commission Tracker
 ==============================================
 
 Enterprise-grade affiliate commission tracking system with real-time analytics,

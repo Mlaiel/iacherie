@@ -1,5 +1,5 @@
 # 🏗️ Events Event Store Module - Enterprise Event Storage Infrastructure
-**Ainflue Platform - Advanced Event Store Implementation**
+**IA Chérie Platform - Advanced Event Store Implementation**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 ENTERPRISE OVERVIEW
 
-The **Events Event Store Module** provides the foundational event storage infrastructure for the Ainflue platform, specifically designed for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-advanced industrial system delivers enterprise-grade event persistence, high-performance storage, and complete data integrity for scalable content creation workflows.
+The **Events Event Store Module** provides the foundational event storage infrastructure for the IA Chérie platform, specifically designed for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-advanced industrial system delivers enterprise-grade event persistence, high-performance storage, and complete data integrity for scalable content creation workflows.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -297,7 +297,7 @@ local_events = await indexer.geo_query(
 version: '3.8'
 services:
   event-store:
-    image: ainflue/event-store:latest
+    image: iacherie/event-store:latest
     deploy:
       replicas: 5
       resources:
@@ -317,7 +317,7 @@ services:
       - backup_data:/var/backup/eventstore
       
   event-indexer:
-    image: ainflue/event-indexer:latest
+    image: iacherie/event-indexer:latest
     deploy:
       replicas: 3
       resources:
@@ -358,7 +358,7 @@ cache_hit_rate = Gauge('cache_hit_rate', 'Cache hit rate percentage')
 
 ## 📝 **CONCLUSION**
 
-The Events Event Store Module represents the cornerstone of event storage infrastructure for the Ainflue platform, specifically engineered for multi-format content creators. With ultra-high performance storage, enterprise-grade security, and comprehensive analytics capabilities, this module ensures reliable, scalable, and secure event management for the entire creator ecosystem.
+The Events Event Store Module represents the cornerstone of event storage infrastructure for the IA Chérie platform, specifically engineered for multi-format content creators. With ultra-high performance storage, enterprise-grade security, and comprehensive analytics capabilities, this module ensures reliable, scalable, and secure event management for the entire creator ecosystem.
 
 **🎯 Mission:** Deliver the most advanced event storage infrastructure globally for content creators, enabling seamless event persistence, real-time analytics, and complete audit trails for all creator types and content formats.
 

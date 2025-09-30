@@ -1,9 +1,9 @@
-"""Ainflue Core AI - Computer Vision Core
+"""IA Chérie Core AI - Computer Vision Core
 ======================================
 
 Enterprise-grade computer vision system providing image analysis, object detection,
 facial recognition, content classification, visual search, and automated moderation
-capabilities for the Ainflue platform.
+capabilities for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

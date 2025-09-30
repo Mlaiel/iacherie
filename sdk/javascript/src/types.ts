@@ -1,5 +1,5 @@
 /**
- * TypeScript Type Definitions for Ainflue SDK
+ * TypeScript Type Definitions for IA Chérie SDK
  * 
  * Comprehensive type system designed with multi-expert approach:
  * - DBA: Optimized data structures and schemas

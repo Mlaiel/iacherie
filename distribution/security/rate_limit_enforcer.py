@@ -1,6 +1,6 @@
 """
 Security Module - Rate Limit Enforcer
-Advanced rate limiting system for Ainflue Distribution Platform
+Advanced rate limiting system for IA Chérie Distribution Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

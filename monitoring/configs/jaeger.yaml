@@ -1,5 +1,5 @@
 # Jaeger Configuration for Distributed Tracing
-# Complete setup for distributed tracing in Ainflue Platform
+# Complete setup for distributed tracing in IA Chérie Platform
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -81,7 +81,7 @@ spec:
         
         # Agent Configuration
         - name: AGENT_TAGS
-          value: "cluster=ainflue-production,environment=production"
+          value: "cluster=iacherie-production,environment=production"
         
         # Performance Configuration
         - name: COLLECTOR_QUEUE_SIZE
@@ -208,7 +208,7 @@ spec:
         - name: REPORTER_TYPE
           value: "grpc"
         - name: AGENT_TAGS
-          value: "cluster=ainflue-production,environment=production"
+          value: "cluster=iacherie-production,environment=production"
         - name: LOG_LEVEL
           value: "info"
         args:
@@ -270,7 +270,7 @@ data:
     {
       "service_strategies": [
         {
-          "service": "ainflue-api-gateway",
+          "service": "iacherie-api-gateway",
           "type": "probabilistic",
           "param": 0.5,
           "max_traces_per_second": 100,
@@ -288,19 +288,19 @@ data:
           ]
         },
         {
-          "service": "ainflue-ai-engine",
+          "service": "iacherie-ai-engine",
           "type": "probabilistic",
           "param": 1.0,
           "max_traces_per_second": 50
         },
         {
-          "service": "ainflue-database",
+          "service": "iacherie-database",
           "type": "probabilistic",
           "param": 0.2,
           "max_traces_per_second": 20
         },
         {
-          "service": "ainflue-redis",
+          "service": "iacherie-redis",
           "type": "probabilistic",
           "param": 0.1,
           "max_traces_per_second": 10
@@ -348,7 +348,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-realm: "Jaeger Tracing UI"
 spec:
   rules:
-  - host: monitoring.ainflue.com
+  - host: monitoring.iacherie.com
     http:
       paths:
       - path: /jaeger(/|$)(.*)
@@ -360,5 +360,5 @@ spec:
               number: 16686
   tls:
   - hosts:
-    - monitoring.ainflue.com
+    - monitoring.iacherie.com
     secretName: monitoring-tls-cert

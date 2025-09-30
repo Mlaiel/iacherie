@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """
-Service Discovery - Ainflue Enterprise API Management
+Service Discovery - IA Chérie Enterprise API Management
 ====================================================
 
 Dynamic Service Discovery & Registry for Microservices Architecture
@@ -43,7 +43,9 @@ except (ImportError, TypeError) as e:
     from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
     import logging
     logging.warning(f"Using Redis compatibility layer: {e}")
+# Import stubs instead of real dependencies
 import consul
+
 import etcd3
 from kubernetes import client, config, watch
 import docker

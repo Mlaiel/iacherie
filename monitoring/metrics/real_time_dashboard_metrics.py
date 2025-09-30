@@ -1,7 +1,7 @@
 """📊 Real-Time Dashboard Metrics - Live Analytics & Monitoring System
 ===================================================================
 
-Advanced real-time dashboard metrics and live monitoring system for the Ainflue platform.
+Advanced real-time dashboard metrics and live monitoring system for the IA Chérie platform.
 Provides instant insights, live data streaming, real-time alerts, performance tracking,
 and interactive dashboard analytics with WebSocket integration and event-driven updates.
 

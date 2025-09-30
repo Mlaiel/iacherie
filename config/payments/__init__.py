@@ -1,10 +1,10 @@
-"""Ainflue Payment System Configuration
+"""IA Chérie Payment System Configuration
 ====================================
 
 Payment system configurations for gateway integration, cryptocurrency support,
 subscription management, billing, revenue sharing, and blockchain integration.
 
-Enterprise payment configuration management for Ainflue platform.
+Enterprise payment configuration management for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -105,5 +105,5 @@ __all__ = [
     "payment_config_manager"
 ]
 
-logger.info("💳 Ainflue Payment System Configuration Module loaded")
+logger.info("💳 IA Chérie Payment System Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

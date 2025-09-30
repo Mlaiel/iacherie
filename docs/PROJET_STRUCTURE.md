@@ -1,4 +1,4 @@
-# Structure du Projet Ainflue
+# Structure du Projet IA Chérie
 
 ## Organisation Professionnelle des Dossiers
 
@@ -7,7 +7,7 @@ Cette structure a été réorganisée pour respecter les meilleures pratiques de
 ### 📁 Structure Principale
 
 ```
-Ainflue/
+IA Chérie/
 ├── 🏗️ Infrastructure & Configuration
 │   ├── config/                 # Configuration centrale
 │   │   ├── environments/       # Variables d'environnement
@@ -129,4 +129,4 @@ Ainflue/
 - **Documentation** : Markdown (.md) avec noms descriptifs
 - **Scripts** : Préfixes descriptifs (test_, run_, demo_)
 
-Cette organisation respecte les standards de l'industrie et facilite la maintenance, le développement et la collaboration sur le projet Ainflue.
+Cette organisation respecte les standards de l'industrie et facilite la maintenance, le développement et la collaboration sur le projet IA Chérie.

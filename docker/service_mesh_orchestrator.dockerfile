@@ -4,7 +4,7 @@
 
 FROM envoyproxy/envoy:v1.28-latest AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Service Mesh Orchestrator - Advanced microservices communication"
+LABEL description="IA Chérie Service Mesh Orchestrator - Advanced microservices communication"
 LABEL version="1.0.0"
 
 # Switch to root for installations

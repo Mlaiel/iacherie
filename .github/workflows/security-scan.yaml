@@ -155,14 +155,14 @@ jobs:
         context: .
         file: ./Dockerfile
         load: true
-        tags: ainflue:security-test
+        tags: iacherie:security-test
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'ainflue:security-test'
+        image-ref: 'iacherie:security-test'
         format: 'sarif'
         output: 'trivy-results.sarif'
 
@@ -178,7 +178,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: ainflue:security-test
+        image: iacherie:security-test
         args: --severity-threshold=high
 
   # Infrastructure Security

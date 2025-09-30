@@ -1,4 +1,4 @@
-# 🏗️ Enterprise Microservices Templates - Ainflue Platform
+# 🏗️ Enterprise Microservices Templates - IA Chérie Platform
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -10,7 +10,7 @@
 
 ## 🎯 Overview
 
-Enterprise-grade microservices templates for building scalable, production-ready services with advanced patterns, observability, and resilience built-in. These templates support the **Ainflue Creator Economy Platform** business logic and provide industrial-strength foundations for rapid microservice development.
+Enterprise-grade microservices templates for building scalable, production-ready services with advanced patterns, observability, and resilience built-in. These templates support the **IA Chérie Creator Economy Platform** business logic and provide industrial-strength foundations for rapid microservice development.
 
 ### 📊 Template Status (18/18 files - 100% Complete) ✅
 
@@ -22,7 +22,7 @@ Enterprise-grade microservices templates for building scalable, production-ready
 
 ## 🚀 Architecture Overview
 
-### **🌍 AINFLUE BUSINESS LOGIC INTEGRATION**
+### **🌍 IACHERIE BUSINESS LOGIC INTEGRATION**
 ```
 Multi-format Creators → AI Processing → Content Protection → Monetization → 
 Collaboration & Gamification → SEO Optimization → Multi-platform Distribution
@@ -380,8 +380,8 @@ Documentation available in multiple languages:
 ### **Technical Support**
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Project**: Ainflue Creator Economy Platform
-- **Repository**: [Ainflue/microservices](https://github.com/Mlaiel/Ainflue)
+- **Project**: IA Chérie Creator Economy Platform
+- **Repository**: [IA Chérie/microservices](https://github.com/Mlaiel/IA Chérie)
 
 ### **Expert Team Specializations**
 - **Lead Dev IA**: Template architecture and AI integration
@@ -402,7 +402,7 @@ This software and all associated templates are proprietary and confidential. Una
 
 ---
 
-**Built with ❤️ by the Ainflue Expert Team for the Creator Economy Platform**
+**Built with ❤️ by the IA Chérie Expert Team for the Creator Economy Platform**
 
 #### **🔥 Core Templates (Production Ready)**
 1. **`service_template.py`** - Base enterprise service with health checks, metrics, lifecycle management
@@ -455,8 +455,8 @@ This software and all associated templates are proprietary and confidential. Una
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/microservices/_templates
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/microservices/_templates
 
 # Install dependencies
 pip install -r requirements.txt
@@ -673,10 +673,10 @@ This software and associated documentation files are the exclusive property of F
 
 **Author**: Fahed Mlaiel  
 **Email**: mlaiel@live.de  
-**Project**: Ainflue Enterprise Microservices  
+**Project**: IA Chérie Enterprise Microservices  
 **Date**: December 2024  
 **Version**: 1.0 Production
 
 ---
 
-> **🎯 FINAL OBJECTIVE**: Enterprise microservices templates ready for production, advanced patterns, integrated observability, production-ready with ultra-advanced industrial code compliant with Ainflue specifications.
+> **🎯 FINAL OBJECTIVE**: Enterprise microservices templates ready for production, advanced patterns, integrated observability, production-ready with ultra-advanced industrial code compliant with IA Chérie specifications.

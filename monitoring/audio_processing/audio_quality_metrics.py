@@ -11,7 +11,7 @@ import logging
 Audio Quality Metrics - Audio Processing Module
 ==============================================
 
-Professional audio quality monitoring and measurement system for the Ainflue platform.
+Professional audio quality monitoring and measurement system for the IA Chérie platform.
 Implements industry-standard audio quality metrics including PESQ, STOI, SNR, THD+N,
 and broadcast standards compliance for enterprise audio processing workflows.
 
@@ -97,7 +97,7 @@ class AudioQualityMetrics:
     Professional audio quality metrics system.
     
     Provides comprehensive audio quality measurement, analysis, and reporting
-    for enterprise audio processing workflows in the Ainflue platform.
+    for enterprise audio processing workflows in the IA Chérie platform.
     Implements industry-standard metrics and broadcast compliance monitoring.
     """
     

@@ -2,7 +2,7 @@
 ============================================================================
 
 Système de sécurité IA enterprise avec défense adversariale, détection d'attaques,
-validation de conformité et protection des modèles pour la plateforme Ainflue.
+validation de conformité et protection des modèles pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🔒 Sécurité: AI security + adversarial defense + secure inference + AI safety + compliance
@@ -193,7 +193,7 @@ class AdversarialDetector:
     async def detect_adversarial_input(self, 
                                      input_data: Any, 
                                      model_id: str,
-                                     context: Dict[str, Any] = None) -> Tuple[bool, float, str]:
+                                     context: Dict[str, Any] = None) -> tuple[bool, float, str]:
         """Détecter les inputs adversariels"""
         
         try:
@@ -330,7 +330,7 @@ class PromptInjectionDetector:
             "<?php"
         ]
     
-    async def detect_prompt_injection(self, prompt: str, context: Dict[str, Any] = None) -> Tuple[bool, float, List[str]]:
+    async def detect_prompt_injection(self, prompt: str, context: Dict[str, Any] = None) -> tuple[bool, float, List[str]]:
         """Détecter les tentatives d'injection de prompt"""
         
         try:
@@ -474,7 +474,7 @@ class SecurityPolicyEngine:
     async def evaluate_request(self, 
                              request_data: Dict[str, Any], 
                              model_id: str,
-                             endpoint: str) -> Tuple[bool, List[str], List[SecurityMeasure]]:
+                             endpoint: str) -> tuple[bool, List[str], List[SecurityMeasure]]:
         """Évaluer une requête contre les politiques"""
         
         violations = []
@@ -788,7 +788,7 @@ class MLSecurityManager:
                                        request_data: Dict[str, Any],
                                        model_id: str,
                                        endpoint: str,
-                                       user_context: Dict[str, Any] = None) -> Tuple[bool, Dict[str, Any]]:
+                                       user_context: Dict[str, Any] = None) -> tuple[bool, Dict[str, Any]]:
         """🛡️ Backend Senior - Valider une requête d'inférence"""
         
         validation_id = f"validation_{uuid.uuid4().hex[:8]}"

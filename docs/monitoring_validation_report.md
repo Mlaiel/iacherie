@@ -22,7 +22,7 @@ Generated: 2025-09-03T03:17:11.811445
 ### ELK Stack
 
 - **Configuration File**: ✅ ELK Stack configuration found with 12 components
-  - Details: {'components': 12, 'file': '/home/runner/work/Ainflue/Ainflue/kubernetes/monitoring/elk_stack.yaml'}
+  - Details: {'components': 12, 'file': '/home/runner/work/IA Chérie/IA Chérie/kubernetes/monitoring/elk_stack.yaml'}
 - **Elasticsearch**: ✅ Elasticsearch configuration found
 - **Logstash**: ✅ Logstash configuration found
 - **Kibana**: ✅ Kibana configuration found
@@ -30,7 +30,7 @@ Generated: 2025-09-03T03:17:11.811445
 ### APM
 
 - **Jaeger Configuration**: ✅ Jaeger configuration found
-  - Details: {'file': '/home/runner/work/Ainflue/Ainflue/monitoring/jaeger-config.yaml'}
+  - Details: {'file': '/home/runner/work/IA Chérie/IA Chérie/monitoring/jaeger-config.yaml'}
 - **New Relic Configuration**: ✅ New Relic configuration found
 - **Distributed Tracing**: ✅ Distributed tracing configuration found
 

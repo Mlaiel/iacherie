@@ -1,10 +1,10 @@
-"""Ainflue AI System Configuration
+"""IA Chérie AI System Configuration
 ================================
 
 AI and Machine Learning configurations for model deployment,
 processing pipelines, neural networks, and intelligent analysis.
 
-Enterprise-grade AI configuration management for Ainflue platform.
+Enterprise-grade AI configuration management for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -87,5 +87,5 @@ __all__ = [
     "ai_config_manager"
 ]
 
-logger.info("🤖 Ainflue AI System Configuration Module loaded")
+logger.info("🤖 IA Chérie AI System Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

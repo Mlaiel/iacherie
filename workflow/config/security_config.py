@@ -2,7 +2,7 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-🔐 SECURITY CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🔐 SECURITY CONFIGURATION - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced security configuration with multi-layer protection and compliance
 Performance Target: < 2ms security validation
@@ -59,7 +59,7 @@ class PasswordPolicy:
     require_numbers: bool = True
     require_symbols: bool = True
     prohibited_patterns: List[str] = field(default_factory=lambda: [
-        "password", "123456", "qwerty", "admin", "ainflue"
+        "password", "123456", "qwerty", "admin", "iacherie"
     ])
     max_age_days: int = 90
     history_count: int = 10
@@ -73,8 +73,8 @@ class JWTConfig:
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 7
-    issuer: str = "ainflue.com"
-    audience: str = "ainflue-api"
+    issuer: str = "iacherie.com"
+    audience: str = "iacherie-api"
     require_https: bool = True
     allow_refresh: bool = True
 
@@ -191,11 +191,11 @@ class SecurityConfig:
     
     def _generate_master_key(self) -> str:
         """Generate master encryption key"""
-# SECURITY: # SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'iacherie-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         password_bytes = password.encode('utf-8')
-        salt = os.getenv('AINFLUE_SALT', 'ainflue-salt').encode('utf-8')
+        salt = os.getenv('AINFLUE_SALT', 'iacherie-salt').encode('utf-8')
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -341,7 +341,7 @@ class SecurityConfig:
                 "action": action,
                 "granted": access_decision["granted"],
                 "ip_address": "127.0.0.1",  # Would be actual IP
-                "user_agent": "Ainflue-API/1.0"
+                "user_agent": "IA Chérie-API/1.0"
             }
             self._audit_log.append(audit_entry)
             

@@ -2,7 +2,7 @@
 ====================================
 
 Comprehensive monitoring system for MongoDB health, performance metrics,
-and operational status in the Ainflue platform.
+and operational status in the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

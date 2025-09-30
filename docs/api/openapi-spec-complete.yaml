@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: Ainflue AI Platform API
+  title: IA Chérie AI Platform API
   version: 2.0.0
   description: |
-    # Ainflue AI Platform API
+    # IA Chérie AI Platform API
     
-    Complete API documentation for the Ainflue AI-powered content protection and monetization platform.
+    Complete API documentation for the IA Chérie AI-powered content protection and monetization platform.
     
     ## Features
     
@@ -38,18 +38,18 @@ info:
     - `X-RateLimit-Reset`: Time when the rate limit resets
     
   contact:
-    name: Ainflue API Support
+    name: IA Chérie API Support
     email: mlaiel@live.de
-    url: https://ainflue.com/support
+    url: https://iacherie.com/support
   license:
     name: Proprietary
-    url: https://ainflue.com/license
-  termsOfService: https://ainflue.com/terms
+    url: https://iacherie.com/license
+  termsOfService: https://iacherie.com/terms
 
 servers:
-  - url: https://api.ainflue.com/v1
+  - url: https://api.iacherie.com/v1
     description: Production server
-  - url: https://staging-api.ainflue.com/v1  
+  - url: https://staging-api.iacherie.com/v1  
     description: Staging server
   - url: http://localhost:8000/api/v1
     description: Development server
@@ -938,7 +938,7 @@ components:
         avatar_url:
           type: string
           format: uri
-          example: "https://avatars.ainflue.com/user123.jpg"
+          example: "https://avatars.iacherie.com/user123.jpg"
         is_verified:
           type: boolean
           example: true

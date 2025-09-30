@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: ml_inference_engine.dockerfile
-    container_name: ainflue-ml-inference
+    container_name: iacherie-ml-inference
     environment:
       - SERVICE_NAME=ml_inference_engine
       - DATABASE_URL=${AI_DB_URL}
@@ -45,7 +45,7 @@ services:
     build:
       context: .
       dockerfile: content_generation.dockerfile
-    container_name: ainflue-content-generation
+    container_name: iacherie-content-generation
     environment:
       - SERVICE_NAME=content_generation
       - DATABASE_URL=${AI_DB_URL}
@@ -69,7 +69,7 @@ services:
     build:
       context: .
       dockerfile: music_remix_engine.dockerfile
-    container_name: ainflue-music-remix
+    container_name: iacherie-music-remix
     environment:
       - SERVICE_NAME=music_remix_engine
       - DATABASE_URL=${AI_DB_URL}
@@ -92,7 +92,7 @@ services:
     build:
       context: .
       dockerfile: style_transfer.dockerfile
-    container_name: ainflue-style-transfer
+    container_name: iacherie-style-transfer
     environment:
       - SERVICE_NAME=style_transfer
       - DATABASE_URL=${AI_DB_URL}
@@ -115,7 +115,7 @@ services:
     build:
       context: .
       dockerfile: content_enhancer.dockerfile
-    container_name: ainflue-content-enhancer
+    container_name: iacherie-content-enhancer
     environment:
       - SERVICE_NAME=content_enhancer
       - DATABASE_URL=${AI_DB_URL}
@@ -138,7 +138,7 @@ services:
     build:
       context: .
       dockerfile: creative_assistant.dockerfile
-    container_name: ainflue-creative-assistant
+    container_name: iacherie-creative-assistant
     environment:
       - SERVICE_NAME=creative_assistant
       - DATABASE_URL=${AI_DB_URL}
@@ -161,7 +161,7 @@ services:
     build:
       context: .
       dockerfile: variation_generator.dockerfile
-    container_name: ainflue-variation-generator
+    container_name: iacherie-variation-generator
     environment:
       - SERVICE_NAME=variation_generator
       - DATABASE_URL=${AI_DB_URL}
@@ -184,7 +184,7 @@ services:
     build:
       context: .
       dockerfile: quality_assessor.dockerfile
-    container_name: ainflue-quality-assessor
+    container_name: iacherie-quality-assessor
     environment:
       - SERVICE_NAME=quality_assessor
       - DATABASE_URL=${AI_DB_URL}
@@ -207,7 +207,7 @@ services:
     build:
       context: .
       dockerfile: trend_adapter.dockerfile
-    container_name: ainflue-trend-adapter
+    container_name: iacherie-trend-adapter
     environment:
       - SERVICE_NAME=trend_adapter
       - DATABASE_URL=${AI_DB_URL}
@@ -230,7 +230,7 @@ services:
     build:
       context: .
       dockerfile: format_converter.dockerfile
-    container_name: ainflue-format-converter
+    container_name: iacherie-format-converter
     environment:
       - SERVICE_NAME=format_converter
       - DATABASE_URL=${AI_DB_URL}
@@ -253,7 +253,7 @@ services:
     build:
       context: .
       dockerfile: neural_processor.dockerfile
-    container_name: ainflue-neural-processor
+    container_name: iacherie-neural-processor
     environment:
       - SERVICE_NAME=neural_processor
       - DATABASE_URL=${AI_DB_URL}
@@ -274,7 +274,7 @@ services:
   # Infrastructure Services
   ai-db:
     image: postgres:15-alpine
-    container_name: ainflue-ai-postgres
+    container_name: iacherie-ai-postgres
     environment:
       POSTGRES_DB: ai_platform
       POSTGRES_USER: ai_user
@@ -294,7 +294,7 @@ services:
 
   ai-redis:
     image: redis:7-alpine
-    container_name: ainflue-ai-redis
+    container_name: iacherie-ai-redis
     command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
     volumes:
       - ai_redis_data:/data
@@ -312,7 +312,7 @@ services:
   # Model Storage & Registry
   ai-minio:
     image: minio/minio:latest
-    container_name: ainflue-ai-minio
+    container_name: iacherie-ai-minio
     environment:
       MINIO_ROOT_USER: ai_admin
       MINIO_ROOT_PASSWORD: ${AI_MINIO_PASSWORD}

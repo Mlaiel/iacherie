@@ -4,7 +4,7 @@
 """Ultra-Sophisticated Authentication Manager for Events Security
 
 Advanced multi-factor authentication, session management, and security enforcement 
-for Ainflue business events with ML-powered anomaly detection.
+for IA Chérie business events with ML-powered anomaly detection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -120,7 +120,7 @@ class AuthenticationResult:
 
 class SecurityManager:
     """
-    Ultra-sophisticated security manager for Ainflue Events Security
+    Ultra-sophisticated security manager for IA Chérie Events Security
     
     Features:
     - Multi-factor authentication with business context
@@ -578,7 +578,7 @@ class ThreatScorer:
 
 
 class BusinessContextAuthenticator:
-    """Business context-aware authentication for Ainflue workflows"""
+    """Business context-aware authentication for IA Chérie workflows"""
     
     async def validate_business_access(self, 
                                      user_id: str,

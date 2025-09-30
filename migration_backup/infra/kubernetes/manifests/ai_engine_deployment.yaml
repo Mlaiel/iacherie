@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-ai-engine
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-engine
+    component: ai-processing
+    environment: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+  template:
+    metadata:
+      labels:
+        app: ainflue-ai-engine
+        component: ai-processing
+    spec:
+      serviceAccountName: ainflue-ai-service-account
+      containers:
+      - name: ai-engine
+        image: ainflue/ai-engine:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8081
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: AI_MODEL_PATH
+          value: "/models"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+            nvidia.com/gpu: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: ai-models
+          mountPath: /models
+          readOnly: true
+        - name: temp-storage
+          mountPath: /tmp/processing
+      volumes:
+      - name: ai-models
+        persistentVolumeClaim:
+          claimName: ai-models-pvc
+      - name: temp-storage
+        emptyDir:
+          sizeLimit: 10Gi
+      nodeSelector:
+        node-type: gpu-enabled
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-ai-engine-service
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-engine
+spec:
+  selector:
+    app: ainflue-ai-engine
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: metrics
+    port: 8081
+    targetPort: 8081
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-ai-engine-hpa
+  namespace: ainflue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-ai-engine
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

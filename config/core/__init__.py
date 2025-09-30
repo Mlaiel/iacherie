@@ -1,10 +1,10 @@
-"""Ainflue Core Infrastructure Configuration
+"""IA Chérie Core Infrastructure Configuration
 ==========================================
 
 Core infrastructure configurations for database, Redis, Celery,
 security, API gateway, monitoring, performance, logging, and caching.
 
-Enterprise-grade configuration management for Ainflue platform.
+Enterprise-grade configuration management for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -68,5 +68,5 @@ __all__ = [
     "core_config_manager"
 ]
 
-logger.info("🔧 Ainflue Core Infrastructure Configuration Module loaded")
+logger.info("🔧 IA Chérie Core Infrastructure Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

@@ -1,5 +1,5 @@
 """
-Algorithm Tracker for Ainflue Distribution Platform
+Algorithm Tracker for IA Chérie Distribution Platform
 
 Advanced algorithm tracking and monitoring system that detects, analyzes,
 and adapts to platform algorithm changes in real-time to maintain optimal

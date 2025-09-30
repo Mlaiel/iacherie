@@ -7,7 +7,7 @@
 ============================================================
 
 Centralized API routing with enterprise orchestrators, advanced middleware,
-and comprehensive route management for the Ainflue AI platform.
+and comprehensive route management for the IA Chérie AI platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -447,7 +447,7 @@ api_router = create_enterprise_api()
 # ============ ENTERPRISE API METADATA ============
 
 API_METADATA = {
-    "title": "Ainflue Enterprise API",
+    "title": "IA Chérie Enterprise API",
     "description": "Advanced AI-powered content platform with enterprise orchestrators",
     "version": "1.0.0",
     "author": "Fahed Mlaiel",
@@ -457,7 +457,7 @@ API_METADATA = {
     },
     "license": {
         "name": "Proprietary",
-        "url": "https://ainflue.com/license"
+        "url": "https://iacherie.com/license"
     },
     "enterprise_features": [
         "AI-Powered Collaboration Orchestration",

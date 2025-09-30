@@ -1,8 +1,8 @@
 """
 AI Model Metrics Exporter Module
-Exporteur métriques modèles IA spécialisé - Ainflue Platform
+Exporteur métriques modèles IA spécialisé - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

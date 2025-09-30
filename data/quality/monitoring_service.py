@@ -117,7 +117,7 @@ class PerformanceMonitor:
         # Prometheus metrics
         self.response_time_histogram = Histogram(
             'ainflue_response_time_seconds',
-            'Response time of Ainflue operations',
+            'Response time of IA Chérie operations',
             ['operation', 'status']
         )
         
@@ -409,7 +409,7 @@ class RealTimeMonitoringService:
             
             # Stockage avec TTL
             await self.redis_client.setex(
-                f"ainflue:monitoring:{key}:{int(time.time())}", 
+                f"iacherie:monitoring:{key}:{int(time.time())}", 
                 3600,  # 1 heure TTL
                 json_data
             )

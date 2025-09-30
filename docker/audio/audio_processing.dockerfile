@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AUDIO PROCESSING ENGINE - PROFESSIONAL DOCKERFILE
+# IACHERIE AUDIO PROCESSING ENGINE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for professional audio processing with DEMUCS
 # source separation, EBU R128 compliance, and enterprise security features.
@@ -220,15 +220,15 @@ CMD ["python3.11", "-m", "audio_processing.main", "--reload"]
 # =============================================================================
 # METADATA AND LABELS
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Audio Processing Engine"
+LABEL org.opencontainers.image.title="IA Chérie Audio Processing Engine"
 LABEL org.opencontainers.image.description="Professional audio processing with DEMUCS separation and broadcast standards"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL org.opencontainers.image.documentation="https://docs.ainflue.com/audio-processing"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chérie"
+LABEL org.opencontainers.image.documentation="https://docs.iacherie.com/audio-processing"
 LABEL org.opencontainers.image.licenses="Proprietary"
-LABEL ainflue.service.category="audio"
-LABEL ainflue.service.name="audio_processing"
-LABEL ainflue.service.port="8010"
-LABEL ainflue.security.non-root="true"
-LABEL ainflue.performance.optimized="true"
+LABEL iacherie.service.category="audio"
+LABEL iacherie.service.name="audio_processing"
+LABEL iacherie.service.port="8010"
+LABEL iacherie.security.non-root="true"
+LABEL iacherie.performance.optimized="true"

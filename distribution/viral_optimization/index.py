@@ -1,7 +1,7 @@
 """Viral Optimization Engine - Main Interface
 
 Enterprise-grade viral optimization engine providing a unified interface
-for all viral optimization capabilities across the Ainflue platform.
+for all viral optimization capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

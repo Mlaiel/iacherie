@@ -1,11 +1,11 @@
 """
-Content Processing Retry - Ainflue
+Content Processing Retry - IA Chérie
 ==================================
-Retry spécialisé pour processing contenu Ainflue.
+Retry spécialisé pour processing contenu IA Chérie.
 Media processing + AI analysis + upload retry patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -87,7 +87,7 @@ class ProcessingResult:
 
 class ContentProcessingRetry:
     """
-    Retry spécialisé pour processing contenu Ainflue.
+    Retry spécialisé pour processing contenu IA Chérie.
     Media processing + AI analysis + upload retry patterns.
     """
     
@@ -730,7 +730,7 @@ def create_content_processing_retry() -> ContentProcessingRetry:
     """Factory pour création retry processing contenu"""
     return ContentProcessingRetry()
 
-# Configuration prédéfinies Ainflue
+# Configuration prédéfinies IA Chérie
 AINFLUE_CONTENT_CONFIGS = {
     'creator_upload': {
         'priority_boost': True,

@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - Threat Intelligence System
+"""IA Chérie Infrastructure Module - Threat Intelligence System
 ===========================================================
 
-Advanced threat intelligence system for the Ainflue platform infrastructure.
+Advanced threat intelligence system for the IA Chérie platform infrastructure.
 Provides real-time threat detection, analysis, and response coordination for
 creator economy platform protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chérie Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -113,7 +113,7 @@ class ThreatIntelligenceReport:
 
 class EnterpriseThreatIntelligence:
     """
-    Enterprise-grade threat intelligence system for Ainflue platform.
+    Enterprise-grade threat intelligence system for IA Chérie platform.
     
     Provides comprehensive threat intelligence capabilities:
     - Real-time threat feed ingestion

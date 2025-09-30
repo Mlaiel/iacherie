@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Format Compatibility Management
+IA Chérie Platform - Multimedia Formats - Format Compatibility Management
 Cross-format compatibility analysis and conversion recommendations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

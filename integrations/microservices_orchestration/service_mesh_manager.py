@@ -58,7 +58,7 @@ class ServiceMeshConfiguration:
     observability_enabled: bool = True
     security_level: MeshSecurityLevel = MeshSecurityLevel.ENTERPRISE
     routing_strategy: TrafficRoutingStrategy = TrafficRoutingStrategy.INTELLIGENT
-    namespace: str = "ainflue-mesh"
+    namespace: str = "iacherie-mesh"
     control_plane_namespace: str = "istio-system"
     
 @dataclass
@@ -705,7 +705,7 @@ class SecurityPolicyManager:
                 'kind': 'AuthorizationPolicy',
                 'metadata': {
                     'name': f"{service['name']}-authz",
-                    'namespace': service.get('namespace', 'ainflue-mesh')
+                    'namespace': service.get('namespace', 'iacherie-mesh')
                 },
                 'spec': {
                     'selector': {
@@ -716,7 +716,7 @@ class SecurityPolicyManager:
                     'rules': [{
                         'from': [{
                             'source': {
-                                'principals': ['cluster.local/ns/ainflue-mesh/sa/default']
+                                'principals': ['cluster.local/ns/iacherie-mesh/sa/default']
                             }
                         }],
                         'to': [{
@@ -741,7 +741,7 @@ class SecurityPolicyManager:
                 'kind': 'NetworkPolicy',
                 'metadata': {
                     'name': f"{service['name']}-netpol",
-                    'namespace': service.get('namespace', 'ainflue-mesh')
+                    'namespace': service.get('namespace', 'iacherie-mesh')
                 },
                 'spec': {
                     'podSelector': {
@@ -754,7 +754,7 @@ class SecurityPolicyManager:
                         'from': [{
                             'namespaceSelector': {
                                 'matchLabels': {
-                                    'name': 'ainflue-mesh'
+                                    'name': 'iacherie-mesh'
                                 }
                             }
                         }]
@@ -763,7 +763,7 @@ class SecurityPolicyManager:
                         'to': [{
                             'namespaceSelector': {
                                 'matchLabels': {
-                                    'name': 'ainflue-mesh'
+                                    'name': 'iacherie-mesh'
                                 }
                             }
                         }]

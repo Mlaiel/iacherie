@@ -193,8 +193,8 @@ export class APNSService {
       teamId: process.env.APNS_TEAM_ID || 'TEAM123456',
       keyFile: process.env.APNS_KEY_FILE || './certificates/apns_key.p8',
       production: process.env.NODE_ENV === 'production',
-      bundleId: process.env.APNS_BUNDLE_ID || 'com.ainflue.app',
-      defaultTopic: process.env.APNS_DEFAULT_TOPIC || 'com.ainflue.app'
+      bundleId: process.env.APNS_BUNDLE_ID || 'com.iacherie.app',
+      defaultTopic: process.env.APNS_DEFAULT_TOPIC || 'com.iacherie.app'
     };
   }
 
@@ -203,7 +203,7 @@ export class APNSService {
    */
   private transformToAPNSPayload(payload: NotificationPayload): any {
     const apnsPayload: any = {
-      topic: this.config?.defaultTopic || 'com.ainflue.app',
+      topic: this.config?.defaultTopic || 'com.iacherie.app',
       payload: {
         aps: {}
       }
@@ -300,7 +300,7 @@ export class APNSService {
   private getCategoryForActions(actions: any[]): string {
     // Generate category based on action types
     const actionTypes = actions.map(action => action.type || 'button').join('_');
-    return `AINFLUE_${actionTypes.toUpperCase()}`;
+    return `IACHERIE_${actionTypes.toUpperCase()}`;
   }
 
   /**

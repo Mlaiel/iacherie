@@ -2,7 +2,7 @@
 ============================================================================
 
 Engine de traitement vocal enterprise avec enhancement IA, biométrie vocale,
-et processing temps réel pour créateurs de contenu vocal sur Ainflue.
+et processing temps réel pour créateurs de contenu vocal sur IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Voice enhancement + denoising + spectral processing + VAD
@@ -119,7 +119,7 @@ class VoiceBiometrics:
     fundamental_frequency: float  # F0 moyen
     formant_frequencies: List[float]  # F1, F2, F3
     vocal_tract_length: float
-    pitch_range: Tuple[float, float]
+    pitch_range: tuple[float, float]
     spectral_centroid: float
     mfcc_features: np.ndarray
     voice_fingerprint: str
@@ -135,7 +135,7 @@ class EmotionAnalysis:
     valence_level: float  # Valence émotionnelle
     energy_level: float
     speech_rate: float
-    pause_patterns: List[Tuple[float, float]]
+    pause_patterns: List[tuple[float, float]]
 
 @dataclass
 class VoiceQualityMetrics:
@@ -174,7 +174,7 @@ class VoiceActivityDetector:
         self.zcr_threshold = 0.3
         self.spectral_rolloff_threshold = 0.85
     
-    def detect_voice_activity(self, audio: np.ndarray) -> List[Tuple[float, float]]:
+    def detect_voice_activity(self, audio: np.ndarray) -> List[tuple[float, float]]:
         """Détecte les segments avec activité vocale"""
         
         # Calcul des features frame par frame
@@ -245,7 +245,7 @@ class VoiceEnhancer:
         self.config = config
         self.vad = VoiceActivityDetector(config.sample_rate)
     
-    def enhance_voice(self, audio: np.ndarray) -> Tuple[np.ndarray, List[str]]:
+    def enhance_voice(self, audio: np.ndarray) -> tuple[np.ndarray, List[str]]:
         """Améliore la qualité vocale"""
         
         enhanced_audio = audio.copy()
@@ -452,7 +452,7 @@ class VoiceEnhancer:
         return audio_eq
     
     def _remove_breath_sounds(self, audio: np.ndarray, 
-                             voice_segments: List[Tuple[float, float]]) -> np.ndarray:
+                             voice_segments: List[tuple[float, float]]) -> np.ndarray:
         """Supprime les bruits de respiration"""
         
         processed_audio = audio.copy()
@@ -869,7 +869,7 @@ class EmotionDetector:
         
         return probs
     
-    def _calculate_emotional_dimensions(self, features: np.ndarray) -> Tuple[float, float]:
+    def _calculate_emotional_dimensions(self, features: np.ndarray) -> tuple[float, float]:
         """Calcule les dimensions émotionnelles (arousal, valence)"""
         
         # Arousal (activation) basé sur l'énergie et la variabilité F0
@@ -893,7 +893,7 @@ class EmotionDetector:
         
         return arousal, valence
     
-    def _analyze_speech_timing(self, audio: np.ndarray) -> Tuple[float, List[Tuple[float, float]]]:
+    def _analyze_speech_timing(self, audio: np.ndarray) -> tuple[float, List[tuple[float, float]]]:
         """Analyse le timing de la parole (débit, pauses)"""
         
         # Détection d'activité vocale

@@ -2,7 +2,7 @@
 ========================================================================
 
 Engine de watermarking audio enterprise avec protection inaudible et intégration DRM
-pour la protection du contenu créateur sur la plateforme Ainflue.
+pour la protection du contenu créateur sur la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Spectral domain embedding + psychoacoustic masking + DSP professional
@@ -93,7 +93,7 @@ class WatermarkConfiguration:
     """Configuration du watermarking"""
     watermark_type: WatermarkType
     strength: WatermarkStrength
-    frequency_range: Tuple[int, int] = (300, 15000)  # Hz
+    frequency_range: tuple[int, int] = (300, 15000)  # Hz
     embedding_rate: float = 1.0  # bits/second
     redundancy_factor: int = 3
     psychoacoustic_masking: bool = True
@@ -119,7 +119,7 @@ class AudioWatermarkResult:
     watermark_payload: WatermarkPayload
     quality_metrics: Dict[str, float]
     processing_time: float
-    embedding_locations: List[Tuple[int, int]]  # (start, end) samples
+    embedding_locations: List[tuple[int, int]]  # (start, end) samples
 
 class PsychoacousticModel:
     """Modèle psychoacoustique pour masquage inaudible"""
@@ -214,7 +214,7 @@ class SpectralWatermarkEmbedder:
         self.psychoacoustic_model = PsychoacousticModel()
     
     def embed_watermark(self, audio: np.ndarray, payload: WatermarkPayload,
-                       sample_rate: int) -> Tuple[np.ndarray, List[Tuple[int, int]]]:
+                       sample_rate: int) -> tuple[np.ndarray, List[tuple[int, int]]]:
         """Embed watermark dans le domaine spectral"""
         
         # Conversion payload en bits
@@ -556,7 +556,7 @@ class AudioWatermarkingEngine:
             content_id=content_id,
             timestamp=datetime.now(),
             copyright_info={
-                "platform": "Ainflue",
+                "platform": "IA Chérie",
                 "creator": creator_id,
                 "created_at": datetime.now().isoformat(),
                 "protection_method": "audio_watermarking"

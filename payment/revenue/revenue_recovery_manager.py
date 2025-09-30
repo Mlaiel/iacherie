@@ -349,7 +349,7 @@ class DunningManager:
     ) -> str:
         """Generate personalized campaign message."""
         templates = {
-            "friendly_reminder": f"Hi! We had trouble processing your payment of ${failed_payment.amount} for your Ainflue account. Please update your payment method to continue enjoying our services.",
+            "friendly_reminder": f"Hi! We had trouble processing your payment of ${failed_payment.amount} for your IA Chérie account. Please update your payment method to continue enjoying our services.",
             "firm_notice": f"Important: Your payment of ${failed_payment.amount} is overdue. Please resolve this within 7 days to avoid service interruption.",
             "final_notice": f"Final Notice: Your account will be suspended if payment of ${failed_payment.amount} is not received within 3 business days."
         }

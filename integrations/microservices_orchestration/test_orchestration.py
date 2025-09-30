@@ -66,7 +66,7 @@ class TestEnterpriseServiceOrchestrator(unittest.TestCase):
         """Set up test environment"""
         self.orchestrator = EnterpriseServiceOrchestrator()
         self.test_service_config = {
-            'name': 'test-ainflue-service',
+            'name': 'test-iacherie-service',
             'version': '1.0.0',
             'replicas': 3,
             'port': 8080,
@@ -216,7 +216,7 @@ class TestAPIGatewayManager(unittest.TestCase):
         """Set up test environment"""
         self.gateway_manager = APIGatewayManager()
         self.test_api_config = {
-            'name': 'ainflue-api-gateway',
+            'name': 'iacherie-api-gateway',
             'port': 80,
             'ssl_enabled': True,
             'rate_limiting': {
@@ -403,8 +403,8 @@ class TestContainerOrchestrator(unittest.TestCase):
         """Set up test environment"""
         self.container_orchestrator = ContainerOrchestrator()
         self.test_deployment_spec = {
-            'name': 'ainflue-creator-service',
-            'image': 'ainflue/creator-service:v1.0.0',
+            'name': 'iacherie-creator-service',
+            'image': 'iacherie/creator-service:v1.0.0',
             'replicas': 3,
             'resources': {
                 'cpu': '500m',
@@ -456,7 +456,7 @@ class TestContainerOrchestrator(unittest.TestCase):
             }
             
             result = await self.container_orchestrator.configure_hpa(
-                'ainflue-creator-service', hpa_config
+                'iacherie-creator-service', hpa_config
             )
             
             self.assertTrue(result['hpa_enabled'])
@@ -480,7 +480,7 @@ class TestContainerOrchestrator(unittest.TestCase):
             }
             
             result = await self.container_orchestrator.optimize_resources(
-                'ainflue-creator-service', workload_pattern
+                'iacherie-creator-service', workload_pattern
             )
             
             self.assertGreater(result['cost_savings'], 0)
@@ -494,7 +494,7 @@ class TestScalingController(unittest.TestCase):
         """Set up test environment"""
         self.scaling_controller = ScalingController()
         self.test_scaling_config = {
-            'service_name': 'ainflue-api-service',
+            'service_name': 'iacherie-api-service',
             'scaling_strategy': 'predictive',
             'metrics': ['cpu', 'memory', 'request_rate', 'response_time'],
             'thresholds': {
@@ -737,7 +737,7 @@ class TestIntegrationScenarios(unittest.TestCase):
         """Test complete service deployment workflow"""
         # Simulate full deployment workflow
         deployment_config = {
-            'service_name': 'ainflue-music-service',
+            'service_name': 'iacherie-music-service',
             'creator_type': 'musician',
             'deployment_strategy': 'blue_green',
             'security_policies': ['mtls', 'rbac'],

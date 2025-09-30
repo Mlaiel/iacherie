@@ -1,4 +1,4 @@
-# 🏗️ ARTEFACTS ARCHITECTURE AINFLUE - CHECKLIST ENTERPRISE COMPLÈTE
+# 🏗️ ARTEFACTS ARCHITECTURE IACHERIE - CHECKLIST ENTERPRISE COMPLÈTE
 
 **Version :** 1.0 Enterprise  
 **Date :** 15 décembre 2024  
@@ -14,7 +14,7 @@
 
 ## 📋 CONFORMITÉ SPÉCIFICATIONS OBLIGATOIRE
 
-### 🎯 **LOGIQUE MÉTIER AINFLUE - WORKFLOW OBLIGATOIRE**
+### 🎯 **LOGIQUE MÉTIER IACHERIE - WORKFLOW OBLIGATOIRE**
 
 **Workflow créateurs obligatoire (7 phases) :**
 1. **📤 Upload Multi-format** → Validation et traitement des contenus (vidéo, audio, image, texte)
@@ -535,11 +535,11 @@ interface EquipeSupport {
     ingenieur_ml: "agents IA et apprentissage automatique";
   };
   canaux_support: {
-    architecture: "architecture@ainflue.enterprise";
-    technique: "technical@ainflue.enterprise";
-    securite: "security@ainflue.enterprise";
-    performance: "performance@ainflue.enterprise";
-    urgence: "emergency@ainflue.enterprise";
+    architecture: "architecture@iacherie.enterprise";
+    technique: "technical@iacherie.enterprise";
+    securite: "security@iacherie.enterprise";
+    performance: "performance@iacherie.enterprise";
+    urgence: "emergency@iacherie.enterprise";
     hotline: "+33 1 XX XX XX XX (24/7)";
   };
 }
@@ -581,5 +581,5 @@ interface ValidationFinale {
 ---
 
 **© 2024 Fahed Mlaiel - Tous droits réservés**  
-**Architecture Enterprise Plateforme Ainflue**  
+**Architecture Enterprise Plateforme IA Chérie**  
 **Version 1.0 - Confidentiel et Propriétaire**

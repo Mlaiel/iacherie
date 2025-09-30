@@ -1,6 +1,6 @@
 # 🤝 Creator Collaboration Hub
 
-**Advanced Creator Collaboration and Partnership Management System for Ainflue Distribution Platform**
+**Advanced Creator Collaboration and Partnership Management System for IA Chérie Distribution Platform**
 
 ## 📖 Overview
 

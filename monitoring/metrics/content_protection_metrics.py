@@ -2,7 +2,7 @@
 ======================================================================
 
 Comprehensive metrics for content protection, copyright detection,
-fingerprinting accuracy, and intellectual property security on the Ainflue platform.
+fingerprinting accuracy, and intellectual property security on the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.

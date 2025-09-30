@@ -1,4 +1,4 @@
-"""🏪 Enterprise Feature Store Manager - Ainflue AI/ML Pipeline
+"""🏪 Enterprise Feature Store Manager - IA Chérie AI/ML Pipeline
 ============================================================
 
 Advanced feature engineering and serving system with real-time
@@ -476,7 +476,7 @@ class EnterpriseFeatureStoreManager:
             raise
     
     async def get_creator_feature_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific feature analytics for Ainflue platform"""
+        """Get creator-specific feature analytics for IA Chérie platform"""
         try:
             # Get time ranges
             now = datetime.utcnow()
@@ -887,7 +887,7 @@ class EnterpriseFeatureStoreManager:
         creator_id: str,
         platform_context: Optional[str] = None
     ) -> FeatureVector:
-        """Apply creator-specific feature optimizations for Ainflue platform"""
+        """Apply creator-specific feature optimizations for IA Chérie platform"""
         optimized_features = feature_vector.features.copy()
         
         # Platform-specific feature adjustments

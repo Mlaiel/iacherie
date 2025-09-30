@@ -194,7 +194,7 @@ class MonetizationInfrastructurePlanner:
         self._configure_fraud_detection()
         self._load_currency_rates()
         
-        logger.info("💰 MonetizationInfrastructurePlanner initialisé - Ainflue Creator Economy")
+        logger.info("💰 MonetizationInfrastructurePlanner initialisé - IA Chérie Creator Economy")
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Configuration enterprise par défaut"""
@@ -1073,7 +1073,7 @@ def create_monetization_planner(
 # Point d'entrée principal
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("💰 Initialisation Monetization Infrastructure Planner - Ainflue Creator Economy")
+    print("💰 Initialisation Monetization Infrastructure Planner - IA Chérie Creator Economy")
     
     planner = create_monetization_planner(
         enable_ml_predictions=True,
@@ -1103,7 +1103,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['revenue_streams_supported']} flux revenus")
     
     print("\n🎯 Monetization Infrastructure Planner - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

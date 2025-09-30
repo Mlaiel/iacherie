@@ -340,7 +340,7 @@ class EnterpriseGatewayOrchestrator:
         self.load_balancer = LoadBalancer()
         self.redis_client = None
         self.app = FastAPI(
-            title="Ainflue Enterprise Gateway",
+            title="IA Chérie Enterprise Gateway",
             description="Enterprise API Gateway with advanced features",
             version="1.0.0"
         )
@@ -569,12 +569,12 @@ class EnterpriseGatewayOrchestrator:
         logger.info("Enterprise Gateway shutdown complete")
 
 
-# Example usage for Ainflue microservices
+# Example usage for IA Chérie microservices
 async def create_ainflue_gateway() -> EnterpriseGatewayOrchestrator:
-    """Create Ainflue enterprise gateway with predefined routes"""
+    """Create IA Chérie enterprise gateway with predefined routes"""
     
     config = GatewayConfig(
-        gateway_id="ainflue-enterprise-gateway",
+        gateway_id="iacherie-enterprise-gateway",
         mode=GatewayMode.CLUSTER,
         port=8080,
         ssl_enabled=True,
@@ -584,7 +584,7 @@ async def create_ainflue_gateway() -> EnterpriseGatewayOrchestrator:
     gateway = EnterpriseGatewayOrchestrator(config)
     await gateway.initialize()
     
-    # Add Ainflue microservices routes
+    # Add IA Chérie microservices routes
     
     # Content Processing Services
     content_route = GatewayRoute(
@@ -666,7 +666,7 @@ async def create_ainflue_gateway() -> EnterpriseGatewayOrchestrator:
 if __name__ == "__main__":
     async def main():
         gateway = await create_ainflue_gateway()
-        logger.info("Ainflue Enterprise Gateway running...")
+        logger.info("IA Chérie Enterprise Gateway running...")
         
         # Keep running
         try:

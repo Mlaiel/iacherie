@@ -16,12 +16,12 @@ logging.basicConfig(
 )
 
 # Create module logger
-logger = logging.getLogger("ainflue")
+logger = logging.getLogger("iacherie")
 
 def get_logger(name: Optional[str] = None) -> logging.Logger:
     """Get a logger instance"""
     if name:
-        return logging.getLogger(f"ainflue.{name}")
+        return logging.getLogger(f"iacherie.{name}")
     return logger
 
 def set_log_level(level: str) -> None:

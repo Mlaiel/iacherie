@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - CDN Configuration
+# IA Chérie Infrastructure Module - CDN Configuration
 # ================================================
 # 
-# Enterprise-grade CDN configuration for Ainflue platform
+# Enterprise-grade CDN configuration for IA Chérie platform
 # Supports multi-cloud content delivery and enterprise optimization
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -77,7 +77,7 @@ class CDNConfigurationManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.networking.cdn_config")
+        logger = logging.getLogger(f"iacherie.infra.networking.cdn_config")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -118,7 +118,7 @@ class CDNConfigurationManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_default_cache_rules(self) -> List[CacheRule]:
-        """Define default cache rules for Ainflue platform"""
+        """Define default cache rules for IA Chérie platform"""
         return [
             # Static assets - long cache
             CacheRule(
@@ -279,8 +279,8 @@ class CDNConfigurationManager:
             
             # Create distribution configuration
             distribution_config = {
-                'CallerReference': f"ainflue-{self.config.environment}-{hash(self.config.origin_domain)}",
-                'Comment': f'Ainflue {self.config.environment} CDN Distribution',
+                'CallerReference': f"iacherie-{self.config.environment}-{hash(self.config.origin_domain)}",
+                'Comment': f'IA Chérie {self.config.environment} CDN Distribution',
                 'DefaultRootObject': 'index.html',
                 'Origins': {
                     'Quantity': 1,
@@ -334,7 +334,7 @@ class CDNConfigurationManager:
                 distribution_config['Logging'] = {
                     'Enabled': True,
                     'IncludeCookies': False,
-                    'Bucket': f'ainflue-{self.config.environment}-cloudfront-logs.s3.amazonaws.com',
+                    'Bucket': f'iacherie-{self.config.environment}-cloudfront-logs.s3.amazonaws.com',
                     'Prefix': 'cloudfront-logs/'
                 }
             
@@ -376,14 +376,14 @@ class CDNConfigurationManager:
     def _get_aws_waf_acl_id(self) -> str:
         """Get AWS WAF ACL ID"""
         # This should be retrieved from terraform output or parameter store
-        return f"arn:aws:wafv2:us-east-1:123456789012:global/webacl/ainflue-{self.config.environment}/12345678-1234-1234-1234-123456789012"
+        return f"arn:aws:wafv2:us-east-1:123456789012:global/webacl/iacherie-{self.config.environment}/12345678-1234-1234-1234-123456789012"
     
     async def _create_azure_cdn_endpoint(self, custom_cache_rules: Optional[List[CacheRule]] = None) -> str:
         """Create Azure CDN endpoint"""
         try:
-            resource_group = f"ainflue-{self.config.environment}-rg"
-            profile_name = f"ainflue-{self.config.environment}-cdn-profile"
-            endpoint_name = f"ainflue-{self.config.environment}-endpoint"
+            resource_group = f"iacherie-{self.config.environment}-rg"
+            profile_name = f"iacherie-{self.config.environment}-cdn-profile"
+            endpoint_name = f"iacherie-{self.config.environment}-endpoint"
             
             # Create CDN profile first
             profile_params = {
@@ -391,7 +391,7 @@ class CDNConfigurationManager:
                 'sku': {'name': 'Standard_Microsoft'},
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue'
+                    'Project': 'IA Chérie'
                 }
             }
             
@@ -420,7 +420,7 @@ class CDNConfigurationManager:
                 'optimization_type': 'GeneralWebDelivery',
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue'
+                    'Project': 'IA Chérie'
                 }
             }
             
@@ -446,11 +446,11 @@ class CDNConfigurationManager:
             project = self._get_gcp_project_id()
             
             # Create backend service with CDN enabled
-            backend_service_name = f"ainflue-{self.config.environment}-backend-service"
+            backend_service_name = f"iacherie-{self.config.environment}-backend-service"
             
             backend_service = {
                 'name': backend_service_name,
-                'description': f'Ainflue {self.config.environment} backend service',
+                'description': f'IA Chérie {self.config.environment} backend service',
                 'protocol': 'HTTPS',
                 'port_name': 'https',
                 'timeout_sec': 30,
@@ -475,7 +475,7 @@ class CDNConfigurationManager:
                 },
                 'backends': [
                     {
-                        'group': f'projects/{project}/zones/{self.config.region}-a/instanceGroups/ainflue-{self.config.environment}-ig',
+                        'group': f'projects/{project}/zones/{self.config.region}-a/instanceGroups/iacherie-{self.config.environment}-ig',
                         'balancing_mode': 'UTILIZATION',
                         'capacity_scaler': 1.0
                     }
@@ -500,7 +500,7 @@ class CDNConfigurationManager:
     def _get_gcp_project_id(self) -> str:
         """Get GCP project ID"""
         import os
-        return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
+        return os.getenv('GOOGLE_CLOUD_PROJECT', 'iacherie-platform')
     
     def _wait_for_gcp_operation(self, operation, project: str):
         """Wait for GCP operation to complete"""
@@ -540,7 +540,7 @@ class CDNConfigurationManager:
                 ValidationMethod='DNS',
                 Tags=[
                     {'Key': 'Environment', 'Value': self.config.environment},
-                    {'Key': 'Project', 'Value': 'Ainflue'},
+                    {'Key': 'Project', 'Value': 'IA Chérie'},
                     {'Key': 'ManagedBy', 'Value': 'AinflueCDNManager'}
                 ]
             )
@@ -562,11 +562,11 @@ class CDNConfigurationManager:
             ssl_cert_client = compute_v1.SslCertificatesClient()
             project = self._get_gcp_project_id()
             
-            cert_name = f"ainflue-{self.config.environment}-ssl-cert"
+            cert_name = f"iacherie-{self.config.environment}-ssl-cert"
             
             ssl_certificate = {
                 'name': cert_name,
-                'description': f'Ainflue {self.config.environment} SSL certificate',
+                'description': f'IA Chérie {self.config.environment} SSL certificate',
                 'managed': {
                     'domains': domains
                 }
@@ -728,8 +728,8 @@ if __name__ == "__main__":
         config = CDNConfig(
             environment="production",
             cloud_provider="aws",
-            origin_domain="api.ainflue.com",
-            custom_domains=["cdn.ainflue.com", "assets.ainflue.com"],
+            origin_domain="api.iacherie.com",
+            custom_domains=["cdn.iacherie.com", "assets.iacherie.com"],
             region="us-west-2"
         )
         

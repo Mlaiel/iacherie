@@ -8,7 +8,7 @@
 Creator Prompt Personalizer - Enterprise Implementation
 ======================================================
 Creator prompt personalizer enterprise avec behavior analysis, personalized optimization,
-creator style adaptation et preference learning algorithms pour Ainflue creators.
+creator style adaptation et preference learning algorithms pour IA Chérie creators.
 
 Expert Roles Applied:
 - Lead Dev IA: Advanced creator behavior analysis et AI-powered personalization
@@ -19,7 +19,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Creator-specific prompt techniques et style adaptation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chérie Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 
@@ -47,7 +47,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types de créateurs supportés par Ainflue"""
+    """Types de créateurs supportés par IA Chérie"""
     MUSICIAN = "musician"
     VIDEO_CREATOR = "video_creator"
     PHOTOGRAPHER = "photographer"

@@ -1,4 +1,4 @@
-# 🧠 قاعدة البيانات الشعاعية - منصة Ainflue
+# 🧠 قاعدة البيانات الشعاعية - منصة IA Chérie
 
 ## 🚨 تحذير حقوق الطبع والنشر الهام
 
@@ -12,7 +12,7 @@
 
 ## 📋 نظرة عامة
 
-قاعدة البيانات الشعاعية لمنصة Ainflue هي النواة المركزية لمعالجة البيانات الذكية والبحث عن التشابه. تدعم حماية المحتوى، مطابقة المتعاونين، والتوصيات المتقدمة.
+قاعدة البيانات الشعاعية لمنصة IA Chérie هي النواة المركزية لمعالجة البيانات الذكية والبحث عن التشابه. تدعم حماية المحتوى، مطابقة المتعاونين، والتوصيات المتقدمة.
 
 ### 🎯 الميزات الرئيسية
 
@@ -194,7 +194,7 @@ pytest tests/performance/vector_db_benchmarks/
 - **وقت الاسترداد**: <5 دقائق
 - **متانة البيانات**: 99.999999999%
 
-## 🔗 التكامل مع منصة Ainflue
+## 🔗 التكامل مع منصة IA Chérie
 
 ### تدفق العمل
 ```
@@ -213,7 +213,7 @@ pytest tests/performance/vector_db_benchmarks/
 **📧 الاتصال الرئيسي**: [mlaiel@live.de](mailto:mlaiel@live.de)  
 **🌐 قائد المشروع**: فاهد ملائل  
 **📍 الموقع**: ألمانيا  
-**🏢 الشركة**: منصة Ainflue
+**🏢 الشركة**: منصة IA Chérie
 
 ### فريق الخبراء
 - **🧠 مطور AI رئيسي**: فاهد ملائل - معمارية AI ومعالجة متقدمة
@@ -235,9 +235,9 @@ pytest tests/performance/vector_db_benchmarks/
 - [أفضل الممارسات](./docs/best_practices/)
 
 ### المجتمع
-- [منتدى المطورين](https://community.ainflue.com)
-- [تتبع المشاكل](https://github.com/Mlaiel/Ainflue/issues)
-- [طلبات الميزات](https://github.com/Mlaiel/Ainflue/discussions)
+- [منتدى المطورين](https://community.iacherie.com)
+- [تتبع المشاكل](https://github.com/Mlaiel/IA Chérie/issues)
+- [طلبات الميزات](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ## ⚖️ الترخيص والقانونية
 

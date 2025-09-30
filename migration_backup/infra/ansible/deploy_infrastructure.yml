@@ -1,0 +1,426 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+- name: Deploy Ainflue Infrastructure Components
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  vars:
+    infrastructure_environment: "{{ env | default('production') }}"
+    deployment_timestamp: "{{ ansible_date_time.epoch }}"
+    
+  pre_tasks:
+    - name: Validate deployment environment
+      assert:
+        that:
+          - infrastructure_environment in ['development', 'staging', 'production']
+        fail_msg: "Invalid environment: {{ infrastructure_environment }}"
+        success_msg: "Deploying to {{ infrastructure_environment }} environment"
+    
+    - name: Create deployment directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /opt/ainflue
+        - /opt/ainflue/config
+        - /opt/ainflue/logs
+        - /opt/ainflue/data
+        - /var/log/ainflue
+    
+    - name: Set deployment facts
+      set_fact:
+        deployment_id: "{{ infrastructure_environment }}-{{ deployment_timestamp }}"
+        config_path: "/opt/ainflue/config"
+        log_path: "/var/log/ainflue"
+
+  tasks:
+    - name: Update system packages
+      package:
+        name: "*"
+        state: latest
+      when: infrastructure_environment != 'production'
+      tags: ['system', 'updates']
+    
+    - name: Install essential packages
+      package:
+        name:
+          - curl
+          - wget
+          - git
+          - htop
+          - vim
+          - unzip
+          - software-properties-common
+          - apt-transport-https
+          - ca-certificates
+          - gnupg
+          - lsb-release
+        state: present
+      tags: ['system', 'packages']
+    
+    - name: Configure system timezone
+      timezone:
+        name: UTC
+      tags: ['system', 'timezone']
+    
+    - name: Install Docker
+      block:
+        - name: Add Docker GPG key
+          apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Add Docker repository
+          apt_repository:
+            repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Install Docker Engine
+          package:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+              - docker-buildx-plugin
+              - docker-compose-plugin
+            state: present
+        
+        - name: Start and enable Docker service
+          systemd:
+            name: docker
+            state: started
+            enabled: true
+        
+        - name: Add user to docker group
+          user:
+            name: "{{ ansible_user }}"
+            groups: docker
+            append: true
+      tags: ['docker', 'containers']
+    
+    - name: Install Kubernetes tools
+      block:
+        - name: Add Kubernetes GPG key
+          apt_key:
+            url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Add Kubernetes repository
+          apt_repository:
+            repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Install Kubernetes tools
+          package:
+            name:
+              - kubectl
+              - kubeadm
+              - kubelet
+            state: present
+        
+        - name: Hold Kubernetes packages
+          dpkg_selections:
+            name: "{{ item }}"
+            selection: hold
+          loop:
+            - kubectl
+            - kubeadm
+            - kubelet
+          when: ansible_os_family == 'Debian'
+      tags: ['kubernetes', 'k8s']
+    
+    - name: Install Helm
+      block:
+        - name: Download Helm installer
+          get_url:
+            url: https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
+            dest: /tmp/helm.tar.gz
+            mode: '0644'
+        
+        - name: Extract Helm
+          unarchive:
+            src: /tmp/helm.tar.gz
+            dest: /tmp
+            remote_src: true
+        
+        - name: Install Helm binary
+          copy:
+            src: /tmp/linux-amd64/helm
+            dest: /usr/local/bin/helm
+            mode: '0755'
+            remote_src: true
+        
+        - name: Verify Helm installation
+          command: helm version
+          register: helm_version
+          changed_when: false
+        
+        - name: Display Helm version
+          debug:
+            msg: "Helm installed: {{ helm_version.stdout }}"
+      tags: ['helm', 'package-manager']
+    
+    - name: Install Terraform
+      block:
+        - name: Add HashiCorp GPG key
+          apt_key:
+            url: https://apt.releases.hashicorp.com/gpg
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Add HashiCorp repository
+          apt_repository:
+            repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Install Terraform
+          package:
+            name: terraform
+            state: present
+        
+        - name: Verify Terraform installation
+          command: terraform version
+          register: terraform_version
+          changed_when: false
+        
+        - name: Display Terraform version
+          debug:
+            msg: "Terraform installed: {{ terraform_version.stdout }}"
+      tags: ['terraform', 'iac']
+    
+    - name: Configure monitoring agents
+      block:
+        - name: Install Node Exporter
+          block:
+            - name: Create node_exporter user
+              user:
+                name: node_exporter
+                shell: /bin/false
+                home: /var/lib/node_exporter
+                system: true
+            
+            - name: Download Node Exporter
+              get_url:
+                url: https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
+                dest: /tmp/node_exporter.tar.gz
+                mode: '0644'
+            
+            - name: Extract Node Exporter
+              unarchive:
+                src: /tmp/node_exporter.tar.gz
+                dest: /tmp
+                remote_src: true
+            
+            - name: Install Node Exporter binary
+              copy:
+                src: /tmp/node_exporter-1.6.0.linux-amd64/node_exporter
+                dest: /usr/local/bin/node_exporter
+                mode: '0755'
+                owner: node_exporter
+                group: node_exporter
+                remote_src: true
+            
+            - name: Create Node Exporter systemd service
+              template:
+                src: node_exporter.service.j2
+                dest: /etc/systemd/system/node_exporter.service
+                mode: '0644'
+              notify: restart node_exporter
+            
+            - name: Start and enable Node Exporter
+              systemd:
+                name: node_exporter
+                state: started
+                enabled: true
+                daemon_reload: true
+        
+        - name: Install Filebeat
+          block:
+            - name: Add Elastic GPG key
+              apt_key:
+                url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+                state: present
+              when: ansible_os_family == 'Debian'
+            
+            - name: Add Elastic repository
+              apt_repository:
+                repo: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+                state: present
+              when: ansible_os_family == 'Debian'
+            
+            - name: Install Filebeat
+              package:
+                name: filebeat
+                state: present
+            
+            - name: Configure Filebeat
+              template:
+                src: filebeat.yml.j2
+                dest: /etc/filebeat/filebeat.yml
+                mode: '0600'
+                backup: true
+              notify: restart filebeat
+            
+            - name: Start and enable Filebeat
+              systemd:
+                name: filebeat
+                state: started
+                enabled: true
+      tags: ['monitoring', 'observability']
+    
+    - name: Configure security settings
+      block:
+        - name: Configure SSH security
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: "{{ item.regexp }}"
+            line: "{{ item.line }}"
+            backup: true
+          loop:
+            - { regexp: '^PermitRootLogin', line: 'PermitRootLogin no' }
+            - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+            - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
+            - { regexp: '^MaxAuthTries', line: 'MaxAuthTries 3' }
+          notify: restart ssh
+        
+        - name: Install and configure fail2ban
+          block:
+            - name: Install fail2ban
+              package:
+                name: fail2ban
+                state: present
+            
+            - name: Configure fail2ban
+              template:
+                src: jail.local.j2
+                dest: /etc/fail2ban/jail.local
+                mode: '0644'
+                backup: true
+              notify: restart fail2ban
+            
+            - name: Start and enable fail2ban
+              systemd:
+                name: fail2ban
+                state: started
+                enabled: true
+        
+        - name: Configure firewall
+          block:
+            - name: Install ufw
+              package:
+                name: ufw
+                state: present
+            
+            - name: Configure UFW defaults
+              ufw:
+                direction: "{{ item.direction }}"
+                policy: "{{ item.policy }}"
+              loop:
+                - { direction: 'incoming', policy: 'deny' }
+                - { direction: 'outgoing', policy: 'allow' }
+            
+            - name: Allow SSH
+              ufw:
+                rule: allow
+                port: '22'
+                proto: tcp
+            
+            - name: Allow HTTP/HTTPS
+              ufw:
+                rule: allow
+                port: "{{ item }}"
+                proto: tcp
+              loop:
+                - '80'
+                - '443'
+            
+            - name: Enable UFW
+              ufw:
+                state: enabled
+      tags: ['security', 'hardening']
+    
+    - name: Create deployment configuration
+      template:
+        src: deployment-config.yml.j2
+        dest: "{{ config_path }}/deployment-{{ deployment_id }}.yml"
+        mode: '0644'
+      tags: ['config']
+    
+    - name: Record deployment
+      lineinfile:
+        path: "{{ log_path }}/deployments.log"
+        line: "{{ ansible_date_time.iso8601 }} - Infrastructure deployment {{ deployment_id }} completed successfully"
+        create: true
+        mode: '0644'
+      tags: ['logging']
+
+  handlers:
+    - name: restart ssh
+      systemd:
+        name: ssh
+        state: restarted
+    
+    - name: restart fail2ban
+      systemd:
+        name: fail2ban
+        state: restarted
+    
+    - name: restart node_exporter
+      systemd:
+        name: node_exporter
+        state: restarted
+    
+    - name: restart filebeat
+      systemd:
+        name: filebeat
+        state: restarted
+
+  post_tasks:
+    - name: Verify infrastructure deployment
+      block:
+        - name: Check Docker status
+          systemd:
+            name: docker
+          register: docker_status
+        
+        - name: Check services status
+          systemd:
+            name: "{{ item }}"
+          register: service_status
+          loop:
+            - node_exporter
+            - fail2ban
+            - filebeat
+        
+        - name: Display deployment summary
+          debug:
+            msg: |
+              Infrastructure Deployment Summary:
+              ==================================
+              Deployment ID: {{ deployment_id }}
+              Environment: {{ infrastructure_environment }}
+              Timestamp: {{ ansible_date_time.iso8601 }}
+              Docker Status: {{ docker_status.status.ActiveState }}
+              Node Exporter: Active
+              Fail2ban: Active
+              Filebeat: Active
+              
+              ✅ Infrastructure deployment completed successfully!
+      tags: ['validation', 'summary']

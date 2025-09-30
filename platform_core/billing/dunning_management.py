@@ -969,7 +969,7 @@ Nous vous rappelons que votre facture #{dunning_case.invoice_id} d'un montant de
 Merci de procéder au paiement dans les plus brefs délais pour éviter toute interruption de service.
 
 Cordialement,
-L'équipe Ainflue"""
+L'équipe IA Chérie"""
         else:
             subject = f"Payment Reminder - Overdue Invoice"
             content = f"""Dear Customer,
@@ -979,7 +979,7 @@ This is a reminder that your invoice #{dunning_case.invoice_id} for {dunning_cas
 Please make payment as soon as possible to avoid service interruption.
 
 Best regards,
-The Ainflue Team"""
+The IA Chérie Team"""
         
         return content
     
@@ -993,9 +993,9 @@ The Ainflue Team"""
         language = customer_profile.language if customer_profile else "en"
         
         if language == "fr":
-            content = f"Ainflue: Votre facture de {dunning_case.amount_due} {dunning_case.currency} est en retard. Payez maintenant: [lien]"
+            content = f"IA Chérie: Votre facture de {dunning_case.amount_due} {dunning_case.currency} est en retard. Payez maintenant: [lien]"
         else:
-            content = f"Ainflue: Your invoice of {dunning_case.amount_due} {dunning_case.currency} is overdue. Pay now: [link]"
+            content = f"IA Chérie: Your invoice of {dunning_case.amount_due} {dunning_case.currency} is overdue. Pay now: [link]"
         
         return content
     

@@ -1,4 +1,4 @@
-# 🐛 Ainflue Platform - Debugging Guide
+# 🐛 IA Chérie Platform - Debugging Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 2.0.0  
@@ -1239,4 +1239,4 @@ class AudioModelDebugger:
             print(f"⚠️ Failed to save debug plots: {e}")
 ```
 
-This comprehensive debugging guide provides practical tools and techniques for debugging every aspect of the Ainflue platform, from development environment issues to production problems. Each section includes real-world examples and actionable debugging code that developers can use immediately.
+This comprehensive debugging guide provides practical tools and techniques for debugging every aspect of the IA Chérie platform, from development environment issues to production problems. Each section includes real-world examples and actionable debugging code that developers can use immediately.

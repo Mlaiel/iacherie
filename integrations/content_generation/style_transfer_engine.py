@@ -5,7 +5,7 @@ Artistic style adaptation with 7 specialized style agents.
 Creative transformation and brand style enforcement for content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -217,7 +217,7 @@ class StyleAgent:
         
         # Generate styled content URL
         file_extension = self._get_file_extension(request.content_type)
-        styled_url = f"https://styled-content.ainflue.com/{request.content_id}_styled_{request.target_style}_{self.agent_name}.{file_extension}"
+        styled_url = f"https://styled-content.iacherie.com/{request.content_id}_styled_{request.target_style}_{self.agent_name}.{file_extension}"
         
         return styled_url
     

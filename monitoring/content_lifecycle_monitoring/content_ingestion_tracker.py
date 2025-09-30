@@ -2,7 +2,7 @@
 🔒 Content Ingestion Tracker - Enterprise Creator Economy Monitoring
 =======================================================================
 
-Module de tracking avancé pour l'ingestion de contenu multi-format Ainflue.
+Module de tracking avancé pour l'ingestion de contenu multi-format IA Chérie.
 Surveillance intelligence upload → validation → conversion → extraction métadonnées.
 
 Fonctionnalités Enterprise:
@@ -79,7 +79,7 @@ class ContentFormat(Enum):
 
 
 class CreatorTier(Enum):
-    """Tiers créateur Ainflue"""
+    """Tiers créateur IA Chérie"""
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"

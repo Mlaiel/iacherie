@@ -2,7 +2,7 @@
 🎨 Creator Ecosystem Intelligence - Intelligence Créateurs
 =========================================================
 
-Module intelligence spécialisé pour l'écosystème créateurs Ainflue.
+Module intelligence spécialisé pour l'écosystème créateurs IA Chérie.
 Surveillance, analyse et optimisation des collaborations créatives.
 
 Fonctionnalités:
@@ -29,7 +29,7 @@ import math
 
 
 class CreatorType(Enum):
-    """Types de créateurs Ainflue"""
+    """Types de créateurs IA Chérie"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -85,7 +85,7 @@ class CollaborationMatch:
 
 
 class CreatorEcosystemIntelligence:
-    """Intelligence écosystème créateurs Ainflue"""
+    """Intelligence écosystème créateurs IA Chérie"""
     
     def __init__(self, config):
         self.config = config

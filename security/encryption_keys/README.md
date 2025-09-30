@@ -4,7 +4,7 @@
 
 ## Overview
 
-This comprehensive encryption keys module provides enterprise-grade security infrastructure specifically designed for the Ainflue Creator Economy platform. It combines cutting-edge cryptographic technologies with Creator-centric optimizations to deliver unparalleled security, performance, and usability.
+This comprehensive encryption keys module provides enterprise-grade security infrastructure specifically designed for the IA Chérie Creator Economy platform. It combines cutting-edge cryptographic technologies with Creator-centric optimizations to deliver unparalleled security, performance, and usability.
 
 ## 🚀 Key Features
 
@@ -300,7 +300,7 @@ key_manager = EnterpriseKeyManager(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-encryption-keys
+  name: iacherie-encryption-keys
 spec:
   replicas: 3
   selector:
@@ -310,7 +310,7 @@ spec:
     spec:
       containers:
       - name: key-manager
-        image: ainflue/encryption-keys:latest
+        image: iacherie/encryption-keys:latest
         env:
         - name: HSM_CLUSTER_ID
           valueFrom:
@@ -422,6 +422,6 @@ Enterprise customers can obtain a commercial license with additional features:
 
 ---
 
-**Built with ❤️ for the Creator Economy by the Ainflue Security Team**
+**Built with ❤️ for the Creator Economy by the IA Chérie Security Team**
 
 *Empowering creators with enterprise-grade security while maintaining the simplicity and performance they need to focus on their craft.*

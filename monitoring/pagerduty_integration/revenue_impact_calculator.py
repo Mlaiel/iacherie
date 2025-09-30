@@ -1,5 +1,5 @@
 """
-Revenue Impact Calculator for Ainflue Platform
+Revenue Impact Calculator for IA Chérie Platform
 Real-time financial impact assessment for Creator Economy incidents
 
 Author: Fahed Mlaiel <mlaiel@live.de>

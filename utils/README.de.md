@@ -2,7 +2,7 @@
 
 ## Ultra-Strenge Enterprise-Architektur
 
-Das Ainflue Utils-Modul implementiert eine ultra-strenge Enterprise-3-Tier-Architektur, die 42 ursprüngliche Utilities in 15 ultra-optimierte Module konsolidiert.
+Das IA Chérie Utils-Modul implementiert eine ultra-strenge Enterprise-3-Tier-Architektur, die 42 ursprüngliche Utilities in 15 ultra-optimierte Module konsolidiert.
 
 ### 🏗️ 3-Tier-Architektur
 

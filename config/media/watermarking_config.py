@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Watermarking Configuration Module
+"""IA Chérie Watermarking Configuration Module
 ===========================================
 
-Enterprise-grade watermarking configuration for the Ainflue platform.
+Enterprise-grade watermarking configuration for the IA Chérie platform.
 Comprehensive digital watermarking for video, audio, and image content
 with advanced protection, detection, and analytics capabilities.
 
@@ -574,7 +574,7 @@ class WatermarkingConfiguration:
             name="Copyright Text",
             description="Standard copyright text watermark",
             content_type=WatermarkFormat.TEXT,
-            text_content="© Ainflue 2025",
+            text_content="© IA Chérie 2025",
             font_family="Arial",
             font_size=20,
             font_weight="bold",
@@ -589,8 +589,8 @@ class WatermarkingConfiguration:
         # Logo watermark
         logo_content = WatermarkContent(
             content_id="ainflue_logo",
-            name="Ainflue Logo",
-            description="Official Ainflue logo watermark",
+            name="IA Chérie Logo",
+            description="Official IA Chérie logo watermark",
             content_type=WatermarkFormat.LOGO,
             logo_path="/assets/logos/ainflue_logo.png",
             image_width=150,
@@ -607,7 +607,7 @@ class WatermarkingConfiguration:
             name="Creator QR Code",
             description="QR code linking to creator profile",
             content_type=WatermarkFormat.QR_CODE,
-            qr_data="https://ainflue.com/creator/{user_id}",
+            qr_data="https://iacherie.com/creator/{user_id}",
             qr_error_correction="M",
             qr_border=4,
             qr_box_size=8
@@ -1016,7 +1016,7 @@ class WatermarkingConfiguration:
             "detected": detected,
             "confidence": confidence,
             "positions": [(100, 100)] if detected else [],
-            "content": "© Ainflue 2025" if detected else "",
+            "content": "© IA Chérie 2025" if detected else "",
             "integrity": random.uniform(0.8, 1.0) if detected else 0.0,
             "tamper_evidence": random.choice([True, False]) if detected else False,
             "modification": random.choice([True, False]) if detected else False,

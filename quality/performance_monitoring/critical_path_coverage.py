@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Critical Path Coverage Analysis Engine for Ainflue Platform
+Critical Path Coverage Analysis Engine for IA Chérie Platform
 ==========================================================
 
 Advanced critical path identification and coverage analysis with AI-powered
@@ -1460,7 +1460,7 @@ if __name__ == "__main__":
         # Perform analysis (using current directory as example)
         analysis_result = await analyzer.analyze_critical_path_coverage(
             project_path=".",
-            project_name="Ainflue Platform",
+            project_name="IA Chérie Platform",
             coverage_data=mock_coverage_data
         )
         

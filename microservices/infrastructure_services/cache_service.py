@@ -399,7 +399,7 @@ class RedisCacheBackend(CacheBackendInterface):
     """Redis cache backend"""
     
     def __init__(self, redis_url: str = "redis://localhost:6379", 
-                 prefix: str = "ainflue:", db: int = 0):
+                 prefix: str = "iacherie:", db: int = 0):
         self.redis_url = redis_url
         self.prefix = prefix
         self.db = db
@@ -775,7 +775,7 @@ class CacheService:
         self.cache_manager.add_backend(name, backend, is_default)
         
     def add_redis_backend(self, name: str = "redis", redis_url: str = "redis://localhost:6379",
-                         prefix: str = "ainflue:", db: int = 0, is_default: bool = False):
+                         prefix: str = "iacherie:", db: int = 0, is_default: bool = False):
         """Add Redis cache backend"""
         backend = RedisCacheBackend(redis_url, prefix, db)
         self.cache_manager.add_backend(name, backend, is_default)
@@ -879,7 +879,7 @@ def create_cache_service(config: Dict[str, Any] = None) -> CacheService:
                 service.add_redis_backend(
                     name=name,
                     redis_url=backend_config.get('redis_url', 'redis://localhost:6379'),
-                    prefix=backend_config.get('prefix', 'ainflue:'),
+                    prefix=backend_config.get('prefix', 'iacherie:'),
                     db=backend_config.get('db', 0),
                     is_default=is_default
                 )

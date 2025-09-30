@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Notification Configuration Module
+"""IA Chérie Notification Configuration Module
 ===========================================
 
-Enterprise-grade notification configuration for the Ainflue platform.
+Enterprise-grade notification configuration for the IA Chérie platform.
 Handles multi-channel notifications, real-time messaging, push notifications,
 email campaigns, SMS alerts, and comprehensive notification analytics.
 
@@ -55,8 +55,8 @@ class EmailNotificationConfig:
     """Email notification configuration"""
     enabled: bool = True
     smtp_provider: str = "sendgrid"  # sendgrid, ses, postmark, mailgun
-    from_email: str = "noreply@ainflue.com"
-    from_name: str = "Ainflue Platform"
+    from_email: str = "noreply@iacherie.com"
+    from_name: str = "IA Chérie Platform"
     
     # Email templates
     template_engine: str = "jinja2"
@@ -107,7 +107,7 @@ class PushNotificationConfig:
     # Mobile platforms
     ios_config: Dict[str, Any] = field(default_factory=lambda: {
         "certificate_path": "/certs/ios_push.p12",
-        "bundle_id": "com.ainflue.app",
+        "bundle_id": "com.iacherie.app",
         "production": True,
         "badge_enabled": True,
         "sound_enabled": True
@@ -115,7 +115,7 @@ class PushNotificationConfig:
     
     android_config: Dict[str, Any] = field(default_factory=lambda: {
         "api_key": "AIzaSy...",
-        "package_name": "com.ainflue.app",
+        "package_name": "com.iacherie.app",
         "collapse_key_enabled": True,
         "priority": "high"
     })
@@ -374,19 +374,19 @@ class NotificationConfiguration:
         templates = {
             NotificationType.CREATOR_ONBOARDING: {
                 NotificationChannel.EMAIL: {
-                    "subject": "Welcome to Ainflue - Start Your Creator Journey!",
+                    "subject": "Welcome to IA Chérie - Start Your Creator Journey!",
                     "template": "creator_welcome.html",
                     "personalization": True
                 },
                 NotificationChannel.PUSH: {
-                    "title": "Welcome to Ainflue!",
+                    "title": "Welcome to IA Chérie!",
                     "body": "Ready to monetize your creativity?",
                     "icon": "welcome_icon.png"
                 }
             },
             NotificationType.COLLABORATION_INVITE: {
                 NotificationChannel.EMAIL: {
-                    "subject": "New Collaboration Opportunity on Ainflue",
+                    "subject": "New Collaboration Opportunity on IA Chérie",
                     "template": "collaboration_invite.html",
                     "priority": "high"
                 },

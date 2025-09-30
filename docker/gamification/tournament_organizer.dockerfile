@@ -1,5 +1,5 @@
 # ===============================================
-# Tournament Organizer Dockerfile - Ainflue Platform
+# Tournament Organizer Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Tournament Management Service
 # Handles tournament creation, management, and competitive events
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8085/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Tournament Organizer Service for Ainflue Gamification"
+LABEL description="Tournament Organizer Service for IA Chérie Gamification"
 
 EXPOSE 8085
 CMD ["python", "-m", "tournament_organizer.main"]

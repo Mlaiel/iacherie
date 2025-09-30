@@ -1,5 +1,5 @@
 """
-🌐 GLOBAL DISTRIBUTION ORCHESTRATOR - AINFLUE ENTERPRISE
+🌐 GLOBAL DISTRIBUTION ORCHESTRATOR - IACHERIE ENTERPRISE
 ======================================================
 
 Multi-region deployment and global distribution orchestration for creator economy platform.
@@ -49,12 +49,13 @@ try:
     from pydantic import BaseModel, Field, validator
     import aiohttp
     import geoip2.database
-    from forex_python.converter import CurrencyRates
-    import googletrans
+from forex_python.converter import CurrencyRates
+    # import googletrans  # Temporarily disabled due to httpcore compatibility
 except ImportError:
     # Fallback for basic functionality
     Celery = Redis = AsyncSession = BaseModel = Field = validator = None
-    aiohttp = geoip2 = CurrencyRates = googletrans = None
+    aiohttp = geoip2 = CurrencyRates = None
+    googletrans = None  # Disabled due to httpcore compatibility
 
 logger = logging.getLogger(__name__)
 

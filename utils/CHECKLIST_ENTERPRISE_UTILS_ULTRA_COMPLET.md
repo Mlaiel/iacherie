@@ -1,4 +1,4 @@
-# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE UTILS - AINFLUE PLATFORM
+# 🔥 CHECKLIST ULTRA-STRICTE ENTERPRISE UTILS - IACHERIE PLATFORM
 
 > **🚨 AVERTISSEMENT LÉGAL ULTRA-CRITIQUE** 🚨  
 > **CETTE CHECKLIST CONSTITUE UN STANDARD ENTERPRISE ULTRA-STRICT**  
@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 EXIGENCES STRICTES ENTERPRISE AINFLUE
+## 📋 EXIGENCES STRICTES ENTERPRISE IACHERIE
 
 ### 🎯 **CONFORMITÉ ULTRA-STRICTE OBLIGATOIRE**
 - ✅ **ARCHITECTURE 3 NIVEAUX MAXIMUM** (core/, security/, performance/) ✅ ACCOMPLI
@@ -473,10 +473,10 @@ semgrep --config=auto utils/
 - **Testing Engineer**: Coverage et validation
 
 ### 📧 **CONTACTS URGENCE UTILITIES**
-- **Utilities Support**: utils-support@ainflue.enterprise
-- **Performance**: performance@ainflue.enterprise
-- **Security**: security@ainflue.enterprise
-- **Escalade Lead**: lead-dev@ainflue.enterprise
+- **Utilities Support**: utils-support@iacherie.enterprise
+- **Performance**: performance@iacherie.enterprise
+- **Security**: security@iacherie.enterprise
+- **Escalade Lead**: lead-dev@iacherie.enterprise
 
 ### 🚨 **PROCÉDURES D'URGENCE UTILITIES**
 - **Performance Degradation**: Profiling immédiat

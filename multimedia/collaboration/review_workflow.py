@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Collaboration - Review Workflow System
+IA Chérie Platform - Multimedia Collaboration - Review Workflow System
 Professional content review and feedback management for collaborative multimedia projects
 
 Author: Fahed Mlaiel (mlaiel@live.de)

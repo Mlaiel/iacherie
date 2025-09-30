@@ -256,4 +256,4 @@ kubernetes/scripts/
 └── security_hardening.py              # Enhanced security auditing
 ```
 
-All implementations are production-ready, tested, and integrate seamlessly with the existing Ainflue platform infrastructure.
+All implementations are production-ready, tested, and integrate seamlessly with the existing IA Chérie platform infrastructure.

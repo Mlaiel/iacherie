@@ -1,7 +1,7 @@
 """Audio Processing Services - Comprehensive Audio Processing and Analysis
 ========================================================================
 
-Advanced audio processing system for the Ainflue platform supporting audio
+Advanced audio processing system for the IA Chérie platform supporting audio
 analysis, enhancement, format conversion, and AI-powered audio generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -210,7 +210,7 @@ class AudioProcessor:
             }
         }
     
-    async def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
+    async def load_audio(self, file_path: str) -> tuple[np.ndarray, int]:
         """Load audio file and return audio data and sample rate."""
         try:
             # Check file size

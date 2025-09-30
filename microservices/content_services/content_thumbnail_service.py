@@ -1,6 +1,6 @@
 """
 📸 Content Thumbnail Service - Génération de Thumbnails Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Service spécialisé de génération automatique de thumbnails pour tous types de contenu.
 Support multi-format avec optimisation IA et génération intelligente.

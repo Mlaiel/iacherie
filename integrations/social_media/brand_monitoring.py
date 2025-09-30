@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Brand Monitoring System
+IA Chérie Platform - Advanced Brand Monitoring System
 ===================================================
 
 Enterprise-grade brand monitoring with real-time mention tracking, sentiment analysis,
@@ -57,7 +57,7 @@ import redis.asyncio as redis
 import aiohttp
 from bs4 import BeautifulSoup
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler
@@ -900,7 +900,7 @@ if __name__ == "__main__":
         
         # Start monitoring
         session = await monitor.start_brand_monitoring(
-            brand_name="Ainflue",
+            brand_name="IA Chérie",
             keywords=["AI platform", "content protection"],
             platforms=['twitter', 'instagram'],
             monitoring_config={'user_id': 'test_user'}

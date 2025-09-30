@@ -2,7 +2,7 @@
 
 ## Architecture Enterprise Ultra-Stricte
 
-Le module Utils d'Ainflue implémente une architecture enterprise 3-tiers ultra-stricte qui consolide 42 utilitaires originaux en 15 modules ultra-optimisés.
+Le module Utils d'IA Chérie implémente une architecture enterprise 3-tiers ultra-stricte qui consolide 42 utilitaires originaux en 15 modules ultra-optimisés.
 
 ### 🏗️ Architecture 3-Tiers
 

@@ -1,4 +1,4 @@
-"""Ainflue Feature Flags Configuration - Enterprise Dynamic Feature Management
+"""IA Chérie Feature Flags Configuration - Enterprise Dynamic Feature Management
 =============================================================================
 
 Advanced feature flags configuration for enterprise-grade dynamic feature
@@ -259,7 +259,7 @@ class EnterpriseFeatureFlagsConfiguration:
         }
     
     def _initialize_core_feature_flags(self):
-        """Initialize core Ainflue feature flags"""
+        """Initialize core IA Chérie feature flags"""
         
         # Core Platform Features
         core_features = [

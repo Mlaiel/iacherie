@@ -1,5 +1,5 @@
 """
-Mobile SEO Optimizer for Ainflue Platform
+Mobile SEO Optimizer for IA Chérie Platform
 Advanced mobile-first SEO optimization and mobile search optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -778,7 +778,7 @@ class MobileSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_mobile_seo_optimizer() -> MobileSEOOptimizer:
-    """Create configured mobile SEO optimizer for Ainflue"""
+    """Create configured mobile SEO optimizer for IA Chérie"""
     return MobileSEOOptimizer()
 
 
@@ -788,7 +788,7 @@ if __name__ == "__main__":
     
     # Sample page data
     page_data = {
-        'url': 'https://ainflue.com/creator/musician-profile',
+        'url': 'https://iacherie.com/creator/musician-profile',
         'mobile_friendly': True,
         'viewport_meta': 'width=device-width, initial-scale=1.0',
         'mobile_page_speed': {

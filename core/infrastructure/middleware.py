@@ -1,5 +1,5 @@
 """
-Core Middleware Components for Ainflue Platform
+Core Middleware Components for IA Chérie Platform
 Provides middleware for request processing, CORS, rate limiting, and security
 """
 

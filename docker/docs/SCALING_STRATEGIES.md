@@ -1,6 +1,6 @@
 # Docker Scaling Strategies
 
-## Auto-Scaling and Performance Optimization for Ainflue Platform
+## Auto-Scaling and Performance Optimization for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Scaling Overview
 
-The Ainflue platform implements intelligent auto-scaling across 80+ containerized services to handle varying workloads efficiently.
+The IA Chérie platform implements intelligent auto-scaling across 80+ containerized services to handle varying workloads efficiently.
 
 ### Horizontal Scaling Strategies
 
@@ -133,7 +133,7 @@ services:
   postgres-master:
     image: postgres:15
     environment:
-      POSTGRES_DB: ainflue
+      POSTGRES_DB: iacherie
       
   postgres-replica:
     image: postgres:15
@@ -313,10 +313,10 @@ groups:
 #### Load Testing
 ```bash
 # Apache Bench
-ab -n 10000 -c 100 http://api.ainflue.com/
+ab -n 10000 -c 100 http://api.iacherie.com/
 
 # Artillery.js
-artillery quick --count 100 --num 10 http://api.ainflue.com/
+artillery quick --count 100 --num 10 http://api.iacherie.com/
 ```
 
 #### Stress Testing

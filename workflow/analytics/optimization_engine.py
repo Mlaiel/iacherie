@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE OPTIMIZATION ENGINE - AINFLUE PLATFORM
+🔥 ENTERPRISE OPTIMIZATION ENGINE - IACHERIE PLATFORM
 Ultra-advanced optimization engine for workflows and performance
 Consolidates: All optimization workflows from optimization/ directory
 """

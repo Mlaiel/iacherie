@@ -1,9 +1,9 @@
 """
-Ainflue Platform Services Module
+IA Chérie Platform Services Module
 Platform Integration & External API Management
 
 This module provides enterprise-grade platform integration services for
-the Ainflue ecosystem, handling 65+ external platforms including social media,
+the IA Chérie ecosystem, handling 65+ external platforms including social media,
 music streaming, creator economy platforms, and more.
 
 Architecture: Platform Services (18 services)

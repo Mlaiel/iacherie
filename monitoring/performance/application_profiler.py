@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 Application Profiler - Enterprise Performance Monitoring
 Advanced Python application profiling for Creator Economy platform

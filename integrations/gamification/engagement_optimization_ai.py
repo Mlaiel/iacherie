@@ -107,7 +107,7 @@ class OptimizationResult:
     strategy_used: OptimizationStrategy
     actions_recommended: List[OptimizationAction]
     expected_engagement_improvement: float
-    confidence_interval: Tuple[float, float]
+    confidence_interval: tuple[float, float]
     implementation_priority: str
     monitoring_requirements: List[str]
     rollback_conditions: List[str]
@@ -287,7 +287,7 @@ class EngagementOptimizationAI:
     🤖 Engagement Optimization AI Enterprise
     
     Système d'optimisation engagement avec reinforcement learning pour
-    personnalisation avancée et maximisation retention créateur Ainflue.
+    personnalisation avancée et maximisation retention créateur IA Chérie.
     
     **Expert Roles Applied:**
     - Lead Dev IA: Intelligent optimization orchestration, reward engineering

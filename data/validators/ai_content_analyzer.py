@@ -192,31 +192,31 @@ class AIContentAnalyzer:
         """
         return {
             'sentiment_model': {
-                'name': 'ainflue-sentiment-v2',
+                'name': 'iacherie-sentiment-v2',
                 'version': '2.1.0',
                 'accuracy': 0.92,
                 'languages': ['en', 'fr', 'de', 'es', 'ar']
             },
             'emotion_model': {
-                'name': 'ainflue-emotion-v2',
+                'name': 'iacherie-emotion-v2',
                 'version': '2.0.0',
                 'accuracy': 0.89,
                 'emotions': ['joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust']
             },
             'quality_model': {
-                'name': 'ainflue-quality-v2',
+                'name': 'iacherie-quality-v2',
                 'version': '2.2.0',
                 'accuracy': 0.85,
                 'dimensions': ['technical', 'creative', 'educational', 'entertainment']
             },
             'genre_model': {
-                'name': 'ainflue-genre-v2',
+                'name': 'iacherie-genre-v2',
                 'version': '2.0.0',
                 'accuracy': 0.88,
                 'genres': ['entertainment', 'educational', 'news', 'lifestyle', 'technology']
             },
             'engagement_model': {
-                'name': 'ainflue-engagement-v2',
+                'name': 'iacherie-engagement-v2',
                 'version': '2.1.0',
                 'accuracy': 0.83,
                 'platforms': ['youtube', 'instagram', 'tiktok', 'twitter']

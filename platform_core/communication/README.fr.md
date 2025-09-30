@@ -2,7 +2,7 @@
 
 ## Aperçu
 
-Système de communication de niveau entreprise pour la plateforme Creator Economy Ainflue, fournissant messagerie temps réel, communication vocale, modération de contenu et outils de collaboration.
+Système de communication de niveau entreprise pour la plateforme Creator Economy IA Chérie, fournissant messagerie temps réel, communication vocale, modération de contenu et outils de collaboration.
 
 ## ⚠️ Avis de Propriété Intellectuelle
 
@@ -288,5 +288,5 @@ Pour licences entreprise, support technique ou implémentation personnalisée:
 
 ---
 
-**Plateforme Ainflue - Système Communication Creator Economy Enterprise**  
+**Plateforme IA Chérie - Système Communication Creator Economy Enterprise**  
 **© 2025 Fahed Mlaiel. Implémentation professionnelle avec standards industriels.**

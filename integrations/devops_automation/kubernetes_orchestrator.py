@@ -4,7 +4,7 @@
 Microservices Expert: Kubernetes orchestration enterprise avec service mesh
 (Istio/Linkerd), ingress management et pod scaling automation.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Orchestration microservices pour 65+ plateformes de distribution
 - Service mesh pour communication sécurisée entre services IA
 - Scaling automatique pour traitement de contenu créateur
@@ -121,7 +121,7 @@ class KubernetesOrchestrator:
     """🔗 Microservices: Kubernetes orchestration enterprise
     
     Orchestration Kubernetes enterprise avec service mesh (Istio/Linkerd),
-    ingress traffic management et pod scaling automation pour Ainflue.
+    ingress traffic management et pod scaling automation pour IA Chérie.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -134,13 +134,13 @@ class KubernetesOrchestrator:
         
         # Kubernetes configuration
         self.kubectl_timeout = self.config.get('kubectl_timeout', 300)
-        self.default_namespace = self.config.get('default_namespace', 'ainflue-system')
+        self.default_namespace = self.config.get('default_namespace', 'iacherie-system')
         
-        # Ainflue-specific service configurations
+        # IA Chérie-specific service configurations
         self.ainflue_services = {
             'content-processing': {
                 'description': 'AI content processing microservice',
-                'image': 'ainflue/content-processor:latest',
+                'image': 'iacherie/content-processor:latest',
                 'replicas': 3,
                 'resources': {
                     'requests': {'cpu': '500m', 'memory': '1Gi', 'nvidia.com/gpu': '1'},
@@ -158,7 +158,7 @@ class KubernetesOrchestrator:
             },
             'distribution-api': {
                 'description': 'Multi-platform distribution API',
-                'image': 'ainflue/distribution-api:latest',
+                'image': 'iacherie/distribution-api:latest',
                 'replicas': 5,
                 'resources': {
                     'requests': {'cpu': '200m', 'memory': '512Mi'},
@@ -178,7 +178,7 @@ class KubernetesOrchestrator:
             },
             'creator-protection': {
                 'description': 'Creator content protection service',
-                'image': 'ainflue/creator-protection:latest',
+                'image': 'iacherie/creator-protection:latest',
                 'replicas': 2,
                 'resources': {
                     'requests': {'cpu': '300m', 'memory': '1Gi'},
@@ -196,7 +196,7 @@ class KubernetesOrchestrator:
             },
             'monetization-engine': {
                 'description': 'Revenue optimization service',
-                'image': 'ainflue/monetization-engine:latest',
+                'image': 'iacherie/monetization-engine:latest',
                 'replicas': 3,
                 'resources': {
                     'requests': {'cpu': '400m', 'memory': '1.5Gi'},
@@ -214,7 +214,7 @@ class KubernetesOrchestrator:
             },
             'ai-optimization': {
                 'description': 'AI model optimization service',
-                'image': 'ainflue/ai-optimizer:latest',
+                'image': 'iacherie/ai-optimizer:latest',
                 'replicas': 2,
                 'resources': {
                     'requests': {'cpu': '1', 'memory': '2Gi', 'nvidia.com/gpu': '1'},
@@ -237,7 +237,7 @@ class KubernetesOrchestrator:
         """🔗 Microservices: Cluster deployment automation
         
         Déploiement automatisé de clusters Kubernetes avec configuration
-        enterprise et préparation pour workloads Ainflue.
+        enterprise et préparation pour workloads IA Chérie.
         """
         try:
             deployment_id = f"cluster-{cluster_config.name}-{int(datetime.now().timestamp())}"
@@ -262,7 +262,7 @@ class KubernetesOrchestrator:
             # Configure ingress controller
             ingress_setup_result = await self._setup_ingress_controller(cluster_config)
             
-            # Apply Ainflue-specific configurations
+            # Apply IA Chérie-specific configurations
             ainflue_config_result = await self._apply_ainflue_cluster_config(cluster_config)
             
             # Store cluster configuration
@@ -289,7 +289,7 @@ class KubernetesOrchestrator:
         """🔗 Microservices: Service mesh configuration
         
         Configuration complète du service mesh avec mTLS, traffic policies
-        et observability pour communications Ainflue sécurisées.
+        et observability pour communications IA Chérie sécurisées.
         """
         try:
             config_id = f"mesh-{mesh_config.type.value}-{int(datetime.now().timestamp())}"
@@ -317,7 +317,7 @@ class KubernetesOrchestrator:
             observability_result = await self._configure_mesh_observability(mesh_config)
             result['observability'] = observability_result
             
-            # Apply Ainflue-specific mesh configuration
+            # Apply IA Chérie-specific mesh configuration
             ainflue_mesh_result = await self._apply_ainflue_mesh_config(mesh_config)
             result['ainflue_config'] = ainflue_mesh_result
             
@@ -340,7 +340,7 @@ class KubernetesOrchestrator:
         """🔗 Microservices: Ingress traffic management
         
         Gestion avancée du trafic ingress avec load balancing, SSL termination
-        et routing intelligent pour APIs Ainflue multi-tenant.
+        et routing intelligent pour APIs IA Chérie multi-tenant.
         """
         try:
             rule_id = f"ingress-{ingress_rule.host.replace('.', '-')}-{int(datetime.now().timestamp())}"
@@ -366,7 +366,7 @@ class KubernetesOrchestrator:
             load_balancing_config = await self._configure_load_balancing(ingress_rule)
             ingress_manifest['load_balancing'] = load_balancing_config
             
-            # Apply Ainflue-specific routing
+            # Apply IA Chérie-specific routing
             ainflue_routing_config = await self._configure_ainflue_routing(ingress_rule)
             ingress_manifest['ainflue_routing'] = ainflue_routing_config
             
@@ -395,7 +395,7 @@ class KubernetesOrchestrator:
         """🔗 Microservices: Pod scaling automation
         
         Scaling automatique des pods avec HPA, VPA et cluster autoscaling
-        pour optimisation des ressources Ainflue selon la charge.
+        pour optimisation des ressources IA Chérie selon la charge.
         """
         try:
             scaling_id = f"scale-{deployment_name}-{int(datetime.now().timestamp())}"
@@ -431,7 +431,7 @@ class KubernetesOrchestrator:
             # Monitor scaling operation
             monitoring_result = await self._monitor_scaling_operation(scaling_id, scaling_result)
             
-            # Apply Ainflue-specific optimizations
+            # Apply IA Chérie-specific optimizations
             optimization_result = await self._apply_ainflue_scaling_optimizations(
                 deployment_name, scaling_result
             )
@@ -456,7 +456,7 @@ class KubernetesOrchestrator:
         """🔗 Microservices: Kubernetes secrets management
         
         Gestion sécurisée des secrets Kubernetes avec rotation automatique,
-        encryption et integration Vault pour credentials Ainflue.
+        encryption et integration Vault pour credentials IA Chérie.
         """
         try:
             operation_id = f"secrets-{operation}-{int(datetime.now().timestamp())}"
@@ -495,7 +495,7 @@ class KubernetesOrchestrator:
             else:
                 raise ValueError(f"Unsupported secrets operation: {operation}")
             
-            # Apply Ainflue-specific security policies
+            # Apply IA Chérie-specific security policies
             security_result = await self._apply_ainflue_secret_policies(operation_id, result)
             
             logger.info(f"Kubernetes secrets operation completed: {operation_id}")
@@ -636,8 +636,8 @@ class KubernetesOrchestrator:
         }
 
     async def _apply_ainflue_cluster_config(self, cluster_config: KubernetesCluster) -> Dict[str, Any]:
-        """Apply Ainflue-specific cluster configuration"""
-        # Create Ainflue namespace
+        """Apply IA Chérie-specific cluster configuration"""
+        # Create IA Chérie namespace
         namespace_result = await self._create_ainflue_namespace()
         
         # Setup GPU nodes for AI processing
@@ -658,13 +658,13 @@ class KubernetesOrchestrator:
         }
 
     async def _create_ainflue_namespace(self) -> Dict[str, Any]:
-        """Create Ainflue namespace with proper configuration"""
+        """Create IA Chérie namespace with proper configuration"""
         return {
             'namespace': self.default_namespace,
             'labels': {
                 'name': self.default_namespace,
                 'istio-injection': 'enabled',
-                'ainflue.com/platform': 'true'
+                'iacherie.com/platform': 'true'
             },
             'resource_quotas': {
                 'cpu': '100',
@@ -697,20 +697,20 @@ class KubernetesOrchestrator:
         }
 
     async def _configure_ainflue_storage(self) -> Dict[str, Any]:
-        """Configure storage classes for Ainflue content"""
+        """Configure storage classes for IA Chérie content"""
         return {
             'storage_classes': {
-                'ainflue-content-fast': {
+                'iacherie-content-fast': {
                     'provisioner': 'kubernetes.io/gce-pd',
                     'type': 'pd-ssd',
                     'replication': 'regional-pd'
                 },
-                'ainflue-content-archive': {
+                'iacherie-content-archive': {
                     'provisioner': 'kubernetes.io/gce-pd',
                     'type': 'pd-standard',
                     'replication': 'regional-pd'
                 },
-                'ainflue-ai-models': {
+                'iacherie-ai-models': {
                     'provisioner': 'kubernetes.io/gce-pd',
                     'type': 'pd-ssd',
                     'allowVolumeExpansion': True
@@ -720,15 +720,15 @@ class KubernetesOrchestrator:
         }
 
     async def _setup_ainflue_network_policies(self) -> Dict[str, Any]:
-        """Setup network policies for Ainflue security"""
+        """Setup network policies for IA Chérie security"""
         return {
             'policies': {
                 'deny-all-ingress': {
                     'description': 'Deny all ingress traffic by default',
                     'policy_type': 'Ingress'
                 },
-                'allow-ainflue-services': {
-                    'description': 'Allow communication between Ainflue services',
+                'allow-iacherie-services': {
+                    'description': 'Allow communication between IA Chérie services',
                     'policy_type': 'Ingress',
                     'allowed_namespaces': [self.default_namespace]
                 },
@@ -807,11 +807,11 @@ class KubernetesOrchestrator:
         }
 
     async def _apply_ainflue_mesh_config(self, mesh_config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Apply Ainflue-specific mesh configuration"""
+        """Apply IA Chérie-specific mesh configuration"""
         # Configure service-to-service authentication
         auth_policies = await self._configure_service_auth_policies()
         
-        # Setup traffic routing for Ainflue services
+        # Setup traffic routing for IA Chérie services
         routing_rules = await self._configure_ainflue_routing_rules()
         
         # Configure rate limiting for API services
@@ -842,7 +842,7 @@ class KubernetesOrchestrator:
         }
 
     async def _configure_ainflue_routing_rules(self) -> Dict[str, Any]:
-        """Configure Ainflue-specific routing rules"""
+        """Configure IA Chérie-specific routing rules"""
         return {
             'rules': {
                 'api-versioning': {
@@ -892,7 +892,7 @@ class KubernetesOrchestrator:
             'apiVersion': 'networking.k8s.io/v1',
             'kind': 'Ingress',
             'metadata': {
-                'name': f"ainflue-{ingress_rule.host.replace('.', '-')}",
+                'name': f"iacherie-{ingress_rule.host.replace('.', '-')}",
                 'namespace': self.default_namespace,
                 'annotations': ingress_rule.annotations
             },
@@ -942,7 +942,7 @@ class KubernetesOrchestrator:
         }
 
     async def _configure_ainflue_routing(self, ingress_rule: IngressRule) -> Dict[str, Any]:
-        """Configure Ainflue-specific routing"""
+        """Configure IA Chérie-specific routing"""
         return {
             'content_routing': {
                 '/api/content': 'content-processing-service',
@@ -1060,7 +1060,7 @@ class KubernetesOrchestrator:
 
     async def _apply_ainflue_scaling_optimizations(self, deployment_name: str, 
                                                   scaling_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific scaling optimizations"""
+        """Apply IA Chérie-specific scaling optimizations"""
         return {
             'cost_optimization': True,
             'gpu_resource_optimization': deployment_name in ['content-processing', 'ai-optimization'],
@@ -1131,7 +1131,7 @@ class KubernetesOrchestrator:
 
     async def _apply_ainflue_secret_policies(self, operation_id: str, 
                                            result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific secret policies"""
+        """Apply IA Chérie-specific secret policies"""
         return {
             'operation_id': operation_id,
             'policies_applied': [
@@ -1159,7 +1159,7 @@ if __name__ == "__main__":
         
         # Test cluster deployment
         cluster = KubernetesCluster(
-            name="ainflue-production",
+            name="iacherie-production",
             context="gke_ainflue_us-central1_production",
             version="1.28",
             nodes=5,
@@ -1182,7 +1182,7 @@ if __name__ == "__main__":
         
         # Test ingress traffic management
         ingress_rule = IngressRule(
-            host="api.ainflue.com",
+            host="api.iacherie.com",
             paths=[
                 {'path': '/api/content', 'pathType': 'Prefix', 'backend': {'service': {'name': 'content-processing', 'port': {'number': 8080}}}}
             ],
@@ -1203,9 +1203,9 @@ if __name__ == "__main__":
         # Test secrets management
         secrets_result = await k8s_orchestrator.kubernetes_secrets_management(
             'create',
-            secret_name='ainflue-api-keys',
+            secret_name='iacherie-api-keys',
             secret_data={'api_key': 'secret_value', 'db_password': 'another_secret'},
-            namespace='ainflue-system'
+            namespace='iacherie-system'
         )
         print("Secrets Management:", secrets_result)
     

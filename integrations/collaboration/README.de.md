@@ -1,4 +1,4 @@
-# 🤝 Kollaborationsmodul - Ainflue Enterprise Creator-Plattform
+# 🤝 Kollaborationsmodul - IA Chérie Enterprise Creator-Plattform
 
 **Expertenteam: Lead Dev KI + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + KI Prompt Engineer**
 
@@ -139,7 +139,7 @@ SUPPORTED_PLATFORMS = {
 
 ## 🎯 KI-Agenten-Integration
 
-Integration mit den **53 spezialisierten KI-Agenten** von Ainflue:
+Integration mit den **53 spezialisierten KI-Agenten** von IA Chérie:
 
 ### **Content-Generierungs-Agenten (12)**
 - Stilanalyse für Matching

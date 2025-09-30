@@ -3,7 +3,7 @@
 =========================================
 
 Comprehensive production database deployment script implementing all
-production requirements for the Ainflue platform.
+production requirements for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -701,7 +701,7 @@ class ProductionDatabaseDeployment:
                 # 2. Validate users and privileges
                 users = await conn.fetch("""
                     SELECT rolname, rolconnlimit FROM pg_roles 
-                    WHERE rolname LIKE 'ainflue_%' ORDER BY rolname
+                    WHERE rolname LIKE 'iacherie_%' ORDER BY rolname
                 """)
                 
                 validation_results["users"] = {
@@ -816,7 +816,7 @@ class ProductionDatabaseDeployment:
 
 async def main():
     """Main deployment function"""
-    parser = argparse.ArgumentParser(description="Deploy Ainflue production database")
+    parser = argparse.ArgumentParser(description="Deploy IA Chérie production database")
     parser.add_argument("--config", help="Configuration file path", default=None)
     parser.add_argument("--dry-run", action="store_true", help="Perform dry run without making changes")
     

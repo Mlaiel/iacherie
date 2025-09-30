@@ -1,12 +1,12 @@
-# AlertManager Configuration for Ainflue Platform
+# AlertManager Configuration for IA Chérie Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Production-ready alerting with multi-channel notifications
 
 global:
   # SMTP configuration for email notifications
   smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'alerts@ainflue.com'
-  smtp_auth_username: 'alerts@ainflue.com'
+  smtp_from: 'alerts@iacherie.com'
+  smtp_auth_username: 'alerts@iacherie.com'
   smtp_auth_password: '${SMTP_PASSWORD}'
   smtp_require_tls: true
   
@@ -91,7 +91,7 @@ receivers:
   # Critical alerts - all channels
   - name: 'critical-alerts'
     email_configs:
-      - to: 'devops@ainflue.com'
+      - to: 'devops@iacherie.com'
         subject: '🔴 CRITICAL ALERT: {{ .GroupLabels.alertname }}'
         body: |
           {{ range .Alerts }}
@@ -133,7 +133,7 @@ receivers:
   # API Critical alerts
   - name: 'api-critical'
     email_configs:
-      - to: 'api-team@ainflue.com,devops@ainflue.com'
+      - to: 'api-team@iacherie.com,devops@iacherie.com'
         subject: '🔴 API CRITICAL: {{ .GroupLabels.alertname }}'
         body: |
           Critical API Alert Detected!
@@ -147,8 +147,8 @@ receivers:
           Instance: {{ .Labels.instance }}
           Time: {{ .StartsAt }}
           
-          Dashboard: http://grafana.ainflue.com/d/api-overview
-          Runbook: https://docs.ainflue.com/runbooks/api-critical
+          Dashboard: http://grafana.iacherie.com/d/api-overview
+          Runbook: https://docs.iacherie.com/runbooks/api-critical
           {{ end }}
     
     slack_configs:
@@ -167,14 +167,14 @@ receivers:
           *Error Rate:* {{ .Labels.error_rate }}
           *Instance:* {{ .Labels.instance }}
           
-          <http://grafana.ainflue.com/d/api-overview|View Dashboard>
-          <https://docs.ainflue.com/runbooks/api-critical|Runbook>
+          <http://grafana.iacherie.com/d/api-overview|View Dashboard>
+          <https://docs.iacherie.com/runbooks/api-critical|Runbook>
           {{ end }}
 
   # Database Critical alerts
   - name: 'database-critical'
     email_configs:
-      - to: 'dba@ainflue.com,devops@ainflue.com'
+      - to: 'dba@iacherie.com,devops@iacherie.com'
         subject: '🔴 DATABASE CRITICAL: {{ .GroupLabels.alertname }}'
         body: |
           Critical Database Alert!
@@ -188,14 +188,14 @@ receivers:
           Instance: {{ .Labels.instance }}
           Time: {{ .StartsAt }}
           
-          Dashboard: http://grafana.ainflue.com/d/database-overview
-          Runbook: https://docs.ainflue.com/runbooks/database-critical
+          Dashboard: http://grafana.iacherie.com/d/database-overview
+          Runbook: https://docs.iacherie.com/runbooks/database-critical
           {{ end }}
 
   # AI Engine Critical alerts
   - name: 'ai-critical'
     email_configs:
-      - to: 'ai-team@ainflue.com,devops@ainflue.com'
+      - to: 'ai-team@iacherie.com,devops@iacherie.com'
         subject: '🔴 AI ENGINE CRITICAL: {{ .GroupLabels.alertname }}'
         body: |
           Critical AI Engine Alert!
@@ -210,14 +210,14 @@ receivers:
           Instance: {{ .Labels.instance }}
           Time: {{ .StartsAt }}
           
-          Dashboard: http://grafana.ainflue.com/d/ai-models
-          Runbook: https://docs.ainflue.com/runbooks/ai-critical
+          Dashboard: http://grafana.iacherie.com/d/ai-models
+          Runbook: https://docs.iacherie.com/runbooks/ai-critical
           {{ end }}
 
   # Warning alerts
   - name: 'warning-alerts'
     email_configs:
-      - to: 'devops@ainflue.com'
+      - to: 'devops@iacherie.com'
         subject: '⚠️ WARNING: {{ .GroupLabels.alertname }}'
         body: |
           {{ range .Alerts }}
@@ -259,7 +259,7 @@ receivers:
   # Business alerts
   - name: 'business-alerts'
     email_configs:
-      - to: 'business@ainflue.com,management@ainflue.com'
+      - to: 'business@iacherie.com,management@iacherie.com'
         subject: '📊 BUSINESS ALERT: {{ .GroupLabels.alertname }}'
         body: |
           Business Metric Alert
@@ -273,7 +273,7 @@ receivers:
           Impact: {{ .Labels.business_impact }}
           Time: {{ .StartsAt }}
           
-          Dashboard: http://grafana.ainflue.com/d/business-metrics
+          Dashboard: http://grafana.iacherie.com/d/business-metrics
           {{ end }}
     
     slack_configs:
@@ -292,13 +292,13 @@ receivers:
           *Threshold:* {{ .Labels.threshold }}
           *Impact:* {{ .Labels.business_impact }}
           
-          <http://grafana.ainflue.com/d/business-metrics|View Dashboard>
+          <http://grafana.iacherie.com/d/business-metrics|View Dashboard>
           {{ end }}
 
   # Security alerts
   - name: 'security-alerts'
     email_configs:
-      - to: 'security@ainflue.com,devops@ainflue.com'
+      - to: 'security@iacherie.com,devops@iacherie.com'
         subject: '🚨 SECURITY ALERT: {{ .GroupLabels.alertname }}'
         body: |
           SECURITY INCIDENT DETECTED!
@@ -312,8 +312,8 @@ receivers:
           Action: {{ .Labels.action }}
           Time: {{ .StartsAt }}
           
-          Security Dashboard: http://grafana.ainflue.com/d/security-monitoring
-          Incident Response: https://docs.ainflue.com/security/incident-response
+          Security Dashboard: http://grafana.iacherie.com/d/security-monitoring
+          Incident Response: https://docs.iacherie.com/security/incident-response
           {{ end }}
     
     slack_configs:
@@ -332,14 +332,14 @@ receivers:
           *User:* {{ .Labels.user_id }}
           *Action:* {{ .Labels.action }}
           
-          <http://grafana.ainflue.com/d/security-monitoring|Security Dashboard>
-          <https://docs.ainflue.com/security/incident-response|Incident Response>
+          <http://grafana.iacherie.com/d/security-monitoring|Security Dashboard>
+          <https://docs.iacherie.com/security/incident-response|Incident Response>
           {{ end }}
 
   # Performance alerts
   - name: 'performance-alerts'
     email_configs:
-      - to: 'performance@ainflue.com'
+      - to: 'performance@iacherie.com'
         subject: '⚡ PERFORMANCE: {{ .GroupLabels.alertname }}'
         body: |
           Performance Alert
@@ -354,7 +354,7 @@ receivers:
           Instance: {{ .Labels.instance }}
           Time: {{ .StartsAt }}
           
-          Performance Dashboard: http://grafana.ainflue.com/d/performance-overview
+          Performance Dashboard: http://grafana.iacherie.com/d/performance-overview
           {{ end }}
     
     slack_configs:
@@ -373,7 +373,7 @@ receivers:
           *Memory Usage:* {{ .Labels.memory_usage }}
           *Instance:* {{ .Labels.instance }}
           
-          <http://grafana.ainflue.com/d/performance-overview|Performance Dashboard>
+          <http://grafana.iacherie.com/d/performance-overview|Performance Dashboard>
           {{ end }}
 
 # Inhibit rules to prevent alert spam

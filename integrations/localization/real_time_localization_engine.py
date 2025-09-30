@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-🌍 Real-Time Localization Engine - Ainflue Localization Intelligence
+🌍 Real-Time Localization Engine - IA Chérie Localization Intelligence
 =====================================================================
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL ⚠️
@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 
 Created: 2024
 Author: Fahed Mlaiel
-Enterprise: Ainflue Platform
+Enterprise: IA Chérie Platform
 """
 
 import asyncio

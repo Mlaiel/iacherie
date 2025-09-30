@@ -1,8 +1,8 @@
 """
 Content Pipeline Monitor Module
-Monitoring pipeline traitement contenu - Ainflue Platform
+Monitoring pipeline traitement contenu - IA Chérie Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

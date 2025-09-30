@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides comprehensive instructions for integrating the Ainflue Distribution Platform with various social media platforms, content management systems, and third-party services.
+This guide provides comprehensive instructions for integrating the IA Chérie Distribution Platform with various social media platforms, content management systems, and third-party services.
 
 ## Supported Platforms
 
@@ -537,10 +537,10 @@ logging.getLogger('distribution').setLevel(logging.DEBUG)
 
 ## Support and Resources
 
-- **Documentation**: [https://docs.ainflue.com](https://docs.ainflue.com)
-- **API Reference**: [https://api.ainflue.com/docs](https://api.ainflue.com/docs)
-- **Support**: [support@ainflue.com](mailto:support@ainflue.com)
-- **Community**: [https://community.ainflue.com](https://community.ainflue.com)
+- **Documentation**: [https://docs.iacherie.com](https://docs.iacherie.com)
+- **API Reference**: [https://api.iacherie.com/docs](https://api.iacherie.com/docs)
+- **Support**: [support@iacherie.com](mailto:support@iacherie.com)
+- **Community**: [https://community.iacherie.com](https://community.iacherie.com)
 
 ---
 

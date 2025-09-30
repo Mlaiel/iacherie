@@ -68,7 +68,7 @@ log() {
 show_header() {
     echo -e "${PURPLE}${BOLD}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║              📊 AINFLUE ANALYTICS INTELLIGENCE                   ║"
+    echo "║              📊 IACHERIE ANALYTICS INTELLIGENCE                   ║"
     echo "║                                                                  ║"
     echo "║        Business Intelligence & Performance Analytics             ║"
     echo "║                                                                  ║"
@@ -486,7 +486,7 @@ generate_html_report() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ainflue Analytics Dashboard</title>
+    <title>IA Chérie Analytics Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
         .header { background: #6c5ce7; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
@@ -502,7 +502,7 @@ generate_html_report() {
 </head>
 <body>
     <div class="header">
-        <h1>📊 Ainflue Analytics Intelligence Dashboard</h1>
+        <h1>📊 IA Chérie Analytics Intelligence Dashboard</h1>
         <p>Real-time business intelligence and performance analytics</p>
     </div>
     
@@ -554,7 +554,7 @@ generate_html_report() {
     </div>
     
     <footer style="text-align: center; margin-top: 30px; color: #666;">
-        <p>© 2025 Fahed Mlaiel - Ainflue Analytics Intelligence</p>
+        <p>© 2025 Fahed Mlaiel - IA Chérie Analytics Intelligence</p>
         <p>Generated at: $(date)</p>
     </footer>
 </body>
@@ -664,7 +664,7 @@ stop_real_time_monitoring() {
 # ═══════════════════════════════════════════════════════════════════
 show_usage() {
     cat << EOF
-${BOLD}Ainflue Analytics Automation${NC}
+${BOLD}IA Chérie Analytics Automation${NC}
 Advanced business intelligence and performance analytics system
 
 ${BOLD}USAGE:${NC}

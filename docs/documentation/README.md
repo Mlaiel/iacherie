@@ -1,4 +1,4 @@
-# Ainflue - AI-Powered Content Protection & Monetization Platform
+# IA Chérie - AI-Powered Content Protection & Monetization Platform
 
 **Project Creator & Lead Developer:** Fahed Mlaiel <mlaiel@live.de>  
 **Team Specialties:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -25,7 +25,7 @@ This code and concept are the exclusive intellectual property of **Fahed Mlaiel*
 
 ## 🎯 Project Overview
 
-**Ainflue** is a comprehensive AI-powered platform designed for content creators (musicians, bloggers, photographers, influencers, comedians, writers) providing advanced content protection, intelligent monetization, and collaborative opportunities across multiple digital platforms.
+**IA Chérie** is a comprehensive AI-powered platform designed for content creators (musicians, bloggers, photographers, influencers, comedians, writers) providing advanced content protection, intelligent monetization, and collaborative opportunities across multiple digital platforms.
 
 ## 🚀 **COMPETITIVE ADVANTAGES - MARKET LEADERSHIP**
 
@@ -201,8 +201,8 @@ Contributions are welcome under the terms of the licensing agreement. Please con
 
 **Project Owner & Lead Architect**: Fahed Mlaiel  
 **Email**: mlaiel@live.de  
-**Repository**: https://github.com/Mlaiel/Ainflue
+**Repository**: https://github.com/Mlaiel/IA Chérie
 
 ---
 
-*Built with ❤️ by the Ainflue development team*
+*Built with ❤️ by the IA Chérie development team*

@@ -1,4 +1,4 @@
-# 🔥 ENTERPRISE WORKFLOW CONFIGURATION - AINFLUE PLATFORM
+# 🔥 ENTERPRISE WORKFLOW CONFIGURATION - IACHERIE PLATFORM
 # Ultra-advanced workflow configuration for enterprise-grade deployment
 
 # === ORCHESTRATION LAYER CONFIGURATION ===
@@ -248,7 +248,7 @@ deployment:
   
   kubernetes:
     enable_k8s_deployment: true
-    namespace: "ainflue-workflow"
+    namespace: "iacherie-workflow"
     replicas: 3
     enable_service_mesh: true
 

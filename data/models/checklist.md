@@ -76,7 +76,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE ACTUELLE VS REQUISE
 
 ```
-/workspaces/Ainflue/data/models/                           [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/models/                           [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers) 🟡 PARTIEL
 │   ├── README.md ✅                    # Documentation anglais (COMPLET)
 │   ├── README.de.md ✅                 # Documentation allemand (COMPLET)
@@ -462,7 +462,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -558,11 +558,11 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/models-core:latest
-- ainflue/models-cache:latest
-- ainflue/models-migration:latest
-- ainflue/models-validation:latest
-- ainflue/models-monitoring:latest
+- iacherie/models-core:latest
+- iacherie/models-cache:latest
+- iacherie/models-migration:latest
+- iacherie/models-validation:latest
+- iacherie/models-monitoring:latest
 ```
 
 ---

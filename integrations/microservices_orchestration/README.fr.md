@@ -11,7 +11,7 @@
 
 ## 🔗 Orchestration Enterprise Microservices
 
-Suite d'orchestration microservices prête pour la production, fournissant la gestion service mesh, l'orchestration conteneurs, API gateway et découverte de services intelligente pour la plateforme créateurs Ainflue.
+Suite d'orchestration microservices prête pour la production, fournissant la gestion service mesh, l'orchestration conteneurs, API gateway et découverte de services intelligente pour la plateforme créateurs IA Chérie.
 
 ### 🏗️ Fonctionnalités Principales
 
@@ -21,9 +21,9 @@ Suite d'orchestration microservices prête pour la production, fournissant la ge
 - **Découverte Services**: Optimisation routage services basée sur ML
 - **Gestion Sécurité**: Architecture zero-trust avec chiffrement mTLS
 
-### 🎯 Intégration Plateforme Créateurs Ainflue
+### 🎯 Intégration Plateforme Créateurs IA Chérie
 
-Cette suite d'orchestration a été spécialement conçue pour la plateforme Ainflue et supporte:
+Cette suite d'orchestration a été spécialement conçue pour la plateforme IA Chérie et supporte:
 
 - **Workflows Multi-Créateurs**: Services spécialisés pour musiciens, photographes, blogueurs, influenceurs
 - **Traitement Contenu**: Traitement automatisé audio, vidéo, images et textes
@@ -38,7 +38,7 @@ Cette suite d'orchestration a été spécialement conçue pour la plateforme Ain
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-creator-service
+  name: iacherie-creator-service
 spec:
   hosts:
   - creator-service
@@ -132,7 +132,7 @@ class DeploiementBlueGreen:
 
 #### Collecte Métriques
 - **Intégration Prometheus**: Collecte complète métriques
-- **Métriques Personnalisées**: Métriques business spécifiques Ainflue
+- **Métriques Personnalisées**: Métriques business spécifiques IA Chérie
 - **Alerting**: Alertes intelligentes basées sur violations SLA
 
 ### 🔧 Gestion Configuration
@@ -314,4 +314,4 @@ interface TableauBordCreateur {
 
 ---
 
-*Cette architecture Orchestration Microservices a été développée par **Fahed Mlaiel** pour la Plateforme Créateurs Ainflue - Tous droits réservés*
+*Cette architecture Orchestration Microservices a été développée par **Fahed Mlaiel** pour la Plateforme Créateurs IA Chérie - Tous droits réservés*

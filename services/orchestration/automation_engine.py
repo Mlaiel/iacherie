@@ -661,7 +661,7 @@ class PipelineEngine:
         # Simulate deployment
         await asyncio.sleep(4)
         
-        deployment_url = f"https://{target_environment}.ainflue.com"
+        deployment_url = f"https://{target_environment}.iacherie.com"
         execution.deployed_environments.append(target_environment)
         execution.deployment_urls[target_environment] = deployment_url
         
@@ -692,7 +692,7 @@ class PipelineEngine:
             notifications_sent.append({
                 "channel": channel,
                 "status": "sent",
-                "recipients": notification_config.get(f"{channel}_recipients", ["team@ainflue.com"])
+                "recipients": notification_config.get(f"{channel}_recipients", ["team@iacherie.com"])
             })
         
         return {
@@ -755,7 +755,7 @@ class DevOpsOrchestrator:
         
         # Initialize providers
         self.providers = {
-            InfrastructureProvider.KUBERNETES: KubernetesProvider({"namespace": "ainflue"}),
+            InfrastructureProvider.KUBERNETES: KubernetesProvider({"namespace": "iacherie"}),
             InfrastructureProvider.AWS: AWSProvider({"region": "us-east-1"})
         }
         

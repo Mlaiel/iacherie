@@ -1,8 +1,8 @@
-# Ainflue Production Configuration Guide
+# IA Chérie Production Configuration Guide
 
 ## Overview
 
-This guide covers the complete production configuration setup for the Ainflue platform, including environment variables, Kubernetes secrets, monitoring with Grafana/Prometheus, and automated CI/CD deployment.
+This guide covers the complete production configuration setup for the IA Chérie platform, including environment variables, Kubernetes secrets, monitoring with Grafana/Prometheus, and automated CI/CD deployment.
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 1.0.0  
@@ -30,7 +30,7 @@ The production environment is configured using the `.env.production` file. This 
 
 #### Application Configuration
 ```bash
-APP_NAME=Ainflue
+APP_NAME=IA Chérie
 ENVIRONMENT=production
 DEBUG=false
 LOG_LEVEL=INFO
@@ -38,9 +38,9 @@ LOG_LEVEL=INFO
 
 #### Database Configuration
 ```bash
-POSTGRES_HOST=ainflue-postgresql-cluster.postgres.svc.cluster.local
-REDIS_HOST=ainflue-redis-cluster.redis.svc.cluster.local
-MONGODB_HOST=ainflue-mongodb-cluster.mongodb.svc.cluster.local
+POSTGRES_HOST=iacherie-postgresql-cluster.postgres.svc.cluster.local
+REDIS_HOST=iacherie-redis-cluster.redis.svc.cluster.local
+MONGODB_HOST=iacherie-mongodb-cluster.mongodb.svc.cluster.local
 ```
 
 #### Security Configuration
@@ -98,7 +98,7 @@ Before deployment, replace all placeholder values in the secrets file:
 nano kubernetes/secrets/production-secrets.yaml
 
 # Apply secrets to Kubernetes
-kubectl apply -f kubernetes/secrets/production-secrets.yaml -n ainflue
+kubectl apply -f kubernetes/secrets/production-secrets.yaml -n iacherie
 ```
 
 ## Monitoring Configuration
@@ -262,11 +262,11 @@ Use the production setup script for streamlined deployment:
 4. **Deploy Infrastructure**
    ```bash
    # Create namespaces
-   kubectl create namespace ainflue
-   kubectl create namespace ainflue-monitoring
+   kubectl create namespace iacherie
+   kubectl create namespace iacherie-monitoring
    
    # Apply secrets
-   kubectl apply -f kubernetes/secrets/production-secrets.yaml -n ainflue
+   kubectl apply -f kubernetes/secrets/production-secrets.yaml -n iacherie
    
    # Deploy monitoring
    docker-compose -f docker-compose.monitoring.yml up -d
@@ -278,16 +278,16 @@ Use the production setup script for streamlined deployment:
    docker-compose -f docker-compose.production.yml up -d
    
    # Or use Kubernetes
-   kubectl apply -f kubernetes/environments/production/ -n ainflue
+   kubectl apply -f kubernetes/environments/production/ -n iacherie
    ```
 
 6. **Verify Deployment**
    ```bash
    # Check pod status
-   kubectl get pods -n ainflue
+   kubectl get pods -n iacherie
    
    # Run health checks
-   curl -f https://api.ainflue.com/health
+   curl -f https://api.iacherie.com/health
    ```
 
 ### 3. Automated Deployment
@@ -313,19 +313,19 @@ python3 scripts/validate_production_security.py --generate-keys
 #### Database Connection Issues
 ```bash
 # Check database pod status
-kubectl get pods -n ainflue | grep postgres
+kubectl get pods -n iacherie | grep postgres
 
 # Check database logs
-kubectl logs deployment/postgresql-master -n ainflue
+kubectl logs deployment/postgresql-master -n iacherie
 ```
 
 #### API Service Unavailable
 ```bash
 # Check API pod status
-kubectl get pods -n ainflue | grep ainflue-api
+kubectl get pods -n iacherie | grep iacherie-api
 
 # Check service endpoints
-kubectl get endpoints -n ainflue
+kubectl get endpoints -n iacherie
 ```
 
 ### 2. Monitoring and Alerts
@@ -338,10 +338,10 @@ kubectl get endpoints -n ainflue
 
 ```bash
 # Application logs
-kubectl logs deployment/ainflue-api -n ainflue --follow
+kubectl logs deployment/iacherie-api -n iacherie --follow
 
 # Database logs
-kubectl logs deployment/postgresql-master -n ainflue
+kubectl logs deployment/postgresql-master -n iacherie
 
 # Monitoring logs
 docker-compose -f docker-compose.monitoring.yml logs -f
@@ -355,7 +355,7 @@ The CI/CD pipeline automatically rolls back on deployment failures.
 #### Manual Rollback
 ```bash
 # Kubernetes rollback
-kubectl rollout undo deployment/ainflue-api -n ainflue
+kubectl rollout undo deployment/iacherie-api -n iacherie
 
 # Docker Compose rollback
 docker-compose -f docker-compose.production.yml down

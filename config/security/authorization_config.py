@@ -4,10 +4,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Authorization Configuration Module
+"""IA Chérie Authorization Configuration Module
 ===========================================
 
-Enterprise-grade authorization configuration for the Ainflue platform.
+Enterprise-grade authorization configuration for the IA Chérie platform.
 Implements role-based access control (RBAC), attribute-based access control (ABAC),
 policy-based authorization, fine-grained permissions, and zero-trust security.
 
@@ -300,7 +300,7 @@ class PolicyBasedAuthConfig:
             "name": "Creator Content Access",
             "description": "Creators can access their own content",
             "policy": """
-                package ainflue.authorization
+                package iacherie.authorization
                 
                 allow {
                     input.action == "read"
@@ -314,7 +314,7 @@ class PolicyBasedAuthConfig:
             "name": "Admin Full Access",
             "description": "Administrators have full access to system resources",
             "policy": """
-                package ainflue.authorization
+                package iacherie.authorization
                 
                 allow {
                     input.subject.role == "admin"

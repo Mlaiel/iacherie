@@ -1,5 +1,5 @@
 """
-🎪 EVENT MANAGEMENT ORCHESTRATOR - AINFLUE ENTERPRISE
+🎪 EVENT MANAGEMENT ORCHESTRATOR - IACHERIE ENTERPRISE
 ===================================================
 
 Live event streaming and virtual event orchestration for creator economy platform.
@@ -733,7 +733,7 @@ class EventManagementOrchestrator:
             
             # Generate recording URL
             if stream.recording_url is None:
-                stream.recording_url = f"https://recordings.ainflue.com/{stream.stream_id}.mp4"
+                stream.recording_url = f"https://recordings.iacherie.com/{stream.stream_id}.mp4"
             
             logger.info(f"Stream stopped: {stream.stream_id}")
             
@@ -1204,7 +1204,7 @@ class EventManagementOrchestrator:
                 if r.event_id == event_id and r.status == RegistrationStatus.ATTENDED
             ]
             
-            survey_url = f"https://surveys.ainflue.com/event/{event_id}"
+            survey_url = f"https://surveys.iacherie.com/event/{event_id}"
             
             for attendee in attendees:
                 # Simulate sending survey

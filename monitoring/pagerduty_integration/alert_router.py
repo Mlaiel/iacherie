@@ -1,5 +1,5 @@
 """
-Intelligent Alert Router for Ainflue Platform
+Intelligent Alert Router for IA Chérie Platform
 Smart routing and filtering of alerts based on context and machine learning
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -244,7 +244,7 @@ class AlertFilter:
 
 class IntelligentAlertRouter:
     """
-    Intelligent alert routing system for Ainflue Platform
+    Intelligent alert routing system for IA Chérie Platform
     Routes alerts to appropriate teams based on context and machine learning
     """
     
@@ -519,11 +519,11 @@ class IntelligentAlertRouter:
             },
             links=[
                 {
-                    "href": f"https://monitoring.ainflue.com/alerts/{alert_context.alert_id}",
+                    "href": f"https://monitoring.iacherie.com/alerts/{alert_context.alert_id}",
                     "text": "View Alert Details"
                 },
                 {
-                    "href": f"https://grafana.ainflue.com/d/{alert_context.service_name}",
+                    "href": f"https://grafana.iacherie.com/d/{alert_context.service_name}",
                     "text": f"{alert_context.service_name} Dashboard"
                 }
             ]

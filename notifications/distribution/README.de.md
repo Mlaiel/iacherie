@@ -1,10 +1,10 @@
 # 🌍 VERTEILUNGS-BENACHRICHTIGUNGEN - DEUTSCHE DOKUMENTATION
 
-**Ainflue Platform - Content Distribution Benachrichtigungssystem Enterprise**
+**IA Chérie Platform - Content Distribution Benachrichtigungssystem Enterprise**
 
 ## 🎯 ÜBERBLICK
 
-Das Distribution Notifications Module verwaltet alle inhaltsbezogenen Verteilungsbenachrichtigungen der Ainflue Platform, einschließlich Veröffentlichungsstatus, Plattform-Synchronisation, plattformübergreifender Performance und Reichweiten-Analysen.
+Das Distribution Notifications Module verwaltet alle inhaltsbezogenen Verteilungsbenachrichtigungen der IA Chérie Platform, einschließlich Veröffentlichungsstatus, Plattform-Synchronisation, plattformübergreifender Performance und Reichweiten-Analysen.
 
 ## 📋 MODULE KOMPONENTEN
 
@@ -57,5 +57,5 @@ await distribution.notify_content_published(
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Verteilungsbenachrichtigungen  
+**Projekt:** IA Chérie Platform - Verteilungsbenachrichtigungen  
 **Version:** 3.1.0 Enterprise

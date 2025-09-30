@@ -2,7 +2,7 @@
 ========================================================
 
 Module d'infrastructure audio enterprise avec traitement temps réel,
-streaming optimization et codecs professionnels pour Ainflue.
+streaming optimization et codecs professionnels pour IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 14 Septembre 2025

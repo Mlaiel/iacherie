@@ -2,7 +2,7 @@
 =========================================================================
 
 Processeur d'effets audio enterprise avec algorithmes studio professionnel,
-chaîne d'effets modulaire et processing temps réel pour créateurs sur Ainflue.
+chaîne d'effets modulaire et processing temps réel pour créateurs sur IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Studio-grade effects algorithms + professional mixing chains
@@ -109,7 +109,7 @@ class EffectParameter:
     max_value: float
     unit: str
     description: str
-    automation_curve: Optional[List[Tuple[float, float]]] = None
+    automation_curve: Optional[List[tuple[float, float]]] = None
 
 @dataclass
 class EffectConfiguration:

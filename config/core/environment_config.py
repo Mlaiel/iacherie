@@ -1,4 +1,4 @@
-"""Ainflue Environment Configuration - Enterprise Multi-Environment Management
+"""IA Chérie Environment Configuration - Enterprise Multi-Environment Management
 ===========================================================================
 
 Advanced environment configuration management for enterprise-grade deployment
@@ -121,7 +121,7 @@ class EnterpriseEnvironmentConfiguration:
         """Load base configuration settings"""
         return {
             "global_settings": {
-                "platform_name": "Ainflue",
+                "platform_name": "IA Chérie",
                 "api_version": "v1",
                 "default_timeout": 30,
                 "max_request_size": "100MB",
@@ -133,10 +133,10 @@ class EnterpriseEnvironmentConfiguration:
             },
             
             "deployment_settings": {
-                "container_registry": "ainflue.azurecr.io",
-                "helm_chart_repository": "https://charts.ainflue.com",
+                "container_registry": "iacherie.azurecr.io",
+                "helm_chart_repository": "https://charts.iacherie.com",
                 "terraform_state_backend": "s3",
-                "kubernetes_namespace_prefix": "ainflue",
+                "kubernetes_namespace_prefix": "iacherie",
                 "service_mesh": "istio",
                 "ingress_controller": "nginx",
                 "certificate_manager": "cert-manager",
@@ -213,10 +213,10 @@ class EnterpriseEnvironmentConfiguration:
         
         # Development Environment
         dev_config = EnvironmentConfiguration(
-            environment_id="ainflue-dev",
+            environment_id="iacherie-dev",
             environment_type=EnvironmentType.DEVELOPMENT,
             region=DeploymentRegion.US_EAST_1,
-            domain="dev.ainflue.com",
+            domain="dev.iacherie.com",
             subdomain="api-dev",
             database_config={
                 "instance_class": "db.t3.medium",
@@ -240,21 +240,21 @@ class EnterpriseEnvironmentConfiguration:
                 "auto_scaling": True
             },
             storage_config={
-                "bucket_name": "ainflue-dev-storage",
+                "bucket_name": "iacherie-dev-storage",
                 "storage_class": "STANDARD",
                 "versioning": True,
                 "lifecycle_rules": ["delete_after_30_days"]
             },
             security_config={
-                "vpc_id": "vpc-dev-ainflue",
+                "vpc_id": "vpc-dev-iacherie",
                 "security_groups": ["sg-dev-web", "sg-dev-db"],
-                "ssl_certificate": "dev.ainflue.com",
+                "ssl_certificate": "dev.iacherie.com",
                 "waf_enabled": True
             },
             monitoring_config={
                 "cloudwatch_enabled": True,
-                "log_groups": ["ainflue-dev-api", "ainflue-dev-worker"],
-                "metrics_namespace": "Ainflue/Dev",
+                "log_groups": ["iacherie-dev-api", "iacherie-dev-worker"],
+                "metrics_namespace": "IA Chérie/Dev",
                 "alert_threshold": "relaxed"
             },
             feature_flags={
@@ -290,10 +290,10 @@ class EnterpriseEnvironmentConfiguration:
         
         # Staging Environment
         staging_config = EnvironmentConfiguration(
-            environment_id="ainflue-staging",
+            environment_id="iacherie-staging",
             environment_type=EnvironmentType.STAGING,
             region=DeploymentRegion.US_WEST_2,
-            domain="staging.ainflue.com",
+            domain="staging.iacherie.com",
             subdomain="api-staging",
             database_config={
                 "instance_class": "db.r5.large",
@@ -320,23 +320,23 @@ class EnterpriseEnvironmentConfiguration:
                 "spot_instances": True
             },
             storage_config={
-                "bucket_name": "ainflue-staging-storage",
+                "bucket_name": "iacherie-staging-storage",
                 "storage_class": "STANDARD_IA",
                 "versioning": True,
                 "lifecycle_rules": ["transition_to_glacier_after_30_days"],
                 "cross_region_replication": True
             },
             security_config={
-                "vpc_id": "vpc-staging-ainflue",
+                "vpc_id": "vpc-staging-iacherie",
                 "security_groups": ["sg-staging-web", "sg-staging-db", "sg-staging-cache"],
-                "ssl_certificate": "staging.ainflue.com",
+                "ssl_certificate": "staging.iacherie.com",
                 "waf_enabled": True,
                 "shield_advanced": True
             },
             monitoring_config={
                 "cloudwatch_enabled": True,
-                "log_groups": ["ainflue-staging-api", "ainflue-staging-worker", "ainflue-staging-scheduler"],
-                "metrics_namespace": "Ainflue/Staging",
+                "log_groups": ["iacherie-staging-api", "iacherie-staging-worker", "iacherie-staging-scheduler"],
+                "metrics_namespace": "IA Chérie/Staging",
                 "alert_threshold": "standard",
                 "custom_dashboards": True
             },
@@ -375,10 +375,10 @@ class EnterpriseEnvironmentConfiguration:
         
         # Production Environment
         production_config = EnvironmentConfiguration(
-            environment_id="ainflue-prod",
+            environment_id="iacherie-prod",
             environment_type=EnvironmentType.PRODUCTION,
             region=DeploymentRegion.EU_WEST_1,
-            domain="ainflue.com",
+            domain="iacherie.com",
             subdomain="api",
             database_config={
                 "instance_class": "db.r5.2xlarge",
@@ -410,7 +410,7 @@ class EnterpriseEnvironmentConfiguration:
                 "availability_zones": 3
             },
             storage_config={
-                "bucket_name": "ainflue-prod-storage",
+                "bucket_name": "iacherie-prod-storage",
                 "storage_class": "STANDARD",
                 "versioning": True,
                 "lifecycle_rules": [
@@ -422,9 +422,9 @@ class EnterpriseEnvironmentConfiguration:
                 "mfa_delete": True
             },
             security_config={
-                "vpc_id": "vpc-prod-ainflue",
+                "vpc_id": "vpc-prod-iacherie",
                 "security_groups": ["sg-prod-web", "sg-prod-db", "sg-prod-cache", "sg-prod-admin"],
-                "ssl_certificate": "ainflue.com",
+                "ssl_certificate": "iacherie.com",
                 "waf_enabled": True,
                 "shield_advanced": True,
                 "cloudtrail_enabled": True,
@@ -434,10 +434,10 @@ class EnterpriseEnvironmentConfiguration:
             monitoring_config={
                 "cloudwatch_enabled": True,
                 "log_groups": [
-                    "ainflue-prod-api", "ainflue-prod-worker", "ainflue-prod-scheduler",
-                    "ainflue-prod-auth", "ainflue-prod-payment", "ainflue-prod-analytics"
+                    "iacherie-prod-api", "iacherie-prod-worker", "iacherie-prod-scheduler",
+                    "iacherie-prod-auth", "iacherie-prod-payment", "iacherie-prod-analytics"
                 ],
-                "metrics_namespace": "Ainflue/Production",
+                "metrics_namespace": "IA Chérie/Production",
                 "alert_threshold": "strict",
                 "custom_dashboards": True,
                 "real_time_monitoring": True,

@@ -3,7 +3,7 @@
 🔄 RETRY POLICY MANAGER
 ======================
 
-Advanced retry mechanism orchestration service for the Ainflue platform.
+Advanced retry mechanism orchestration service for the IA Chérie platform.
 Provides intelligent retry policies, exponential backoff, jitter, and failure analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

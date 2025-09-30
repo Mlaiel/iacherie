@@ -69,7 +69,7 @@ class SwaggerDocumentationGenerator:
     """
 Generates comprehensive Swagger/OpenAPI documentation"""
     
-    def __init__(self, title: str = "Ainflue AI Platform API", version: str = "1.0.0"):
+    def __init__(self, title: str = "IA Chérie AI Platform API", version: str = "1.0.0"):
         self.title = title
         self.version = version
         self.endpoints = []
@@ -102,9 +102,9 @@ Add a schema definition"""
             "info": {
                 "title": self.title,
                 "version": self.version,
-                "description": """# Ainflue AI Platform API
+                "description": """# IA Chérie AI Platform API
 
-Complete API documentation for the Ainflue AI-powered content protection and monetization platform.
+Complete API documentation for the IA Chérie AI-powered content protection and monetization platform.
 
 ## Features
 
@@ -119,24 +119,24 @@ Complete API documentation for the Ainflue AI-powered content protection and mon
 
 All API endpoints require authentication using API keys or JWT tokens.
                 """,
-                "termsOfService": "https://ainflue.com/terms",
+                "termsOfService": "https://iacherie.com/terms",
                 "contact": {
-                    "name": "Ainflue API Support",
+                    "name": "IA Chérie API Support",
                     "email": "mlaiel@live.de",
-                    "url": "https://ainflue.com/support"
+                    "url": "https://iacherie.com/support"
                 },
                 "license": {
                     "name": "Proprietary",
-                    "url": "https://ainflue.com/license"
+                    "url": "https://iacherie.com/license"
                 }
             },
             "servers": [
                 {
-                    "url": "https://api.ainflue.com/v1",
+                    "url": "https://api.iacherie.com/v1",
                     "description": "Production server"
                 },
                 {
-                    "url": "https://staging-api.ainflue.com/v1",
+                    "url": "https://staging-api.iacherie.com/v1",
                     "description": "Staging server"
                 },
                 {
@@ -288,7 +288,7 @@ All API endpoints require authentication using API keys or JWT tokens.
 
 
 def create_comprehensive_api_documentation() -> SwaggerDocumentationGenerator:
-    """Create comprehensive API documentation for Ainflue platform"""
+    """Create comprehensive API documentation for IA Chérie platform"""
     
     doc_generator = SwaggerDocumentationGenerator()
     
@@ -1026,11 +1026,11 @@ if __name__ == "__main__":
     print("Generating comprehensive API documentation...")
     
     # Generate JSON format
-    swagger_spec = generate_swagger_json_file("/home/runner/work/Ainflue/Ainflue/docs/swagger.json")
+    swagger_spec = generate_swagger_json_file("/home/runner/work/IA Chérie/IA Chérie/docs/swagger.json")
     print(f"Generated Swagger JSON documentation with {len(swagger_spec['paths'])} endpoints")
     
     # Try to generate YAML format
-    yaml_spec = generate_swagger_yaml_file("/home/runner/work/Ainflue/Ainflue/docs/swagger.yaml")
+    yaml_spec = generate_swagger_yaml_file("/home/runner/work/IA Chérie/IA Chérie/docs/swagger.yaml")
     if yaml_spec:
         print("Generated Swagger YAML documentation")
     

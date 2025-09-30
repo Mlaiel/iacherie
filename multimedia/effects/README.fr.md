@@ -1,6 +1,6 @@
 # 🎨 Module d'Effets Créatifs Avancés
 
-**Effets créatifs professionnels et filtres pour contenu multimédia sur la plateforme Ainflue**
+**Effets créatifs professionnels et filtres pour contenu multimédia sur la plateforme IA Chérie**
 
 ## Aperçu
 

@@ -1,8 +1,8 @@
 # MongoDB Architecture Documentation
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Database Layer Architecture  
 **Version:** 1.0.0  
 **Last Updated:** September 12, 2025  
@@ -366,7 +366,7 @@ Multi-Platform Distribution → Monetization Tracking
 ## 📞 SUPPORT & CONTACT
 
 **Technical Leadership:** Fahed Mlaiel (mlaiel@live.de)  
-**Project:** Ainflue Platform  
+**Project:** IA Chérie Platform  
 **Module:** MongoDB Architecture  
 **Documentation Version:** 1.0.0  
 

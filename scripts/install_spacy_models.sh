@@ -1,9 +1,9 @@
 #!/bin/bash
 # spaCy Language Models Installation Script
-# Part of Ainflue Platform critical dependency resolution
+# Part of IA Chérie Platform critical dependency resolution
 # Ref: docs/final/PRIORITIES_IMMEDIATES_100_COMPLETION.md
 
-echo "🚀 Installing spaCy language models for Ainflue Platform..."
+echo "🚀 Installing spaCy language models for IA Chérie Platform..."
 echo "Author: Fahed Mlaiel (mlaiel@live.de)"
 echo
 

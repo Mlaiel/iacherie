@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - Platform Optimization
+IA Chérie Platform - Multimedia Optimization - Platform Optimization
 Platform-specific optimization for multimedia content delivery
 
 Author: Fahed Mlaiel (mlaiel@live.de)

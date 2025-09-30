@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -35,7 +35,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/var/log/ainflue/performance_monitoring.log')
+        logging.FileHandler('/var/log/iacherie/performance_monitoring.log')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -319,7 +319,7 @@ class ApplicationMonitor:
             import psycopg2
             conn = psycopg2.connect(
                 host="localhost",
-                database="ainflue",
+                database="iacherie",
                 user="postgres",
                 password="password"
             )
@@ -683,7 +683,7 @@ class PerformanceMonitoringEngine:
     async def start_monitoring(self):
         """Start performance monitoring"""
         self.monitoring = True
-        logger.info("Starting Ainflue Performance Monitoring Engine")
+        logger.info("Starting IA Chérie Performance Monitoring Engine")
         
         monitoring_tasks = [
             self._monitoring_loop(),

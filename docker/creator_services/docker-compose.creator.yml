@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: musician_tools.dockerfile
-    container_name: ainflue-musician-tools
+    container_name: iacherie-musician-tools
     environment:
       - AUDIO_PROCESSING_ENGINE=${AUDIO_ENGINE:-ffmpeg}
       - ML_MODEL_PATH=/app/models/music
@@ -36,7 +36,7 @@ services:
     build:
       context: .
       dockerfile: photographer_tools.dockerfile
-    container_name: ainflue-photographer-tools
+    container_name: iacherie-photographer-tools
     environment:
       - IMAGE_PROCESSING_ENGINE=${IMAGE_ENGINE:-opencv}
       - AI_ENHANCEMENT_MODEL=/app/models/photo
@@ -68,7 +68,7 @@ services:
     build:
       context: .
       dockerfile: blogger_tools.dockerfile
-    container_name: ainflue-blogger-tools
+    container_name: iacherie-blogger-tools
     environment:
       - CONTENT_AI_MODEL=/app/models/writing
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -95,7 +95,7 @@ services:
     build:
       context: .
       dockerfile: influencer_tools.dockerfile
-    container_name: ainflue-influencer-tools
+    container_name: iacherie-influencer-tools
     environment:
       - INSTAGRAM_GRAPH_API=${INSTAGRAM_GRAPH_API}
       - TIKTOK_BUSINESS_API=${TIKTOK_BUSINESS_API}
@@ -122,7 +122,7 @@ services:
     build:
       context: .
       dockerfile: comedian_tools.dockerfile
-    container_name: ainflue-comedian-tools
+    container_name: iacherie-comedian-tools
     environment:
       - COMEDY_AI_MODEL_PATH=/app/models/comedy
       - AUDIENCE_ANALYSIS_API=${AUDIENCE_ANALYSIS_API}
@@ -148,7 +148,7 @@ services:
     build:
       context: .
       dockerfile: creator_profiler.dockerfile
-    container_name: ainflue-creator-profiler
+    container_name: iacherie-creator-profiler
     environment:
       - PROFILING_AI_MODEL=/app/models/profiling
       - SOCIAL_MEDIA_APIS=${SOCIAL_MEDIA_APIS}
@@ -172,7 +172,7 @@ services:
     build:
       context: .
       dockerfile: skill_mapper.dockerfile
-    container_name: ainflue-skill-mapper
+    container_name: iacherie-skill-mapper
     environment:
       - SKILL_ANALYSIS_MODEL=/app/models/skills
       - LEARNING_RECOMMENDATIONS_AI=/app/models/learning
@@ -196,7 +196,7 @@ services:
     build:
       context: .
       dockerfile: growth_tracker.dockerfile
-    container_name: ainflue-growth-tracker
+    container_name: iacherie-growth-tracker
     environment:
       - GROWTH_PREDICTION_MODEL=/app/models/growth
       - ANALYTICS_AGGREGATION_INTERVAL=${ANALYTICS_INTERVAL:-1h}
@@ -221,7 +221,7 @@ services:
     build:
       context: .
       dockerfile: success_predictor.dockerfile
-    container_name: ainflue-success-predictor
+    container_name: iacherie-success-predictor
     environment:
       - SUCCESS_PREDICTION_MODEL=/app/models/success
       - TREND_ANALYSIS_API=${TREND_ANALYSIS_API}
@@ -245,7 +245,7 @@ services:
     build:
       context: .
       dockerfile: mentor_matcher.dockerfile
-    container_name: ainflue-mentor-matcher
+    container_name: iacherie-mentor-matcher
     environment:
       - MATCHING_ALGORITHM_MODEL=/app/models/matching
       - MENTOR_DATABASE_URL=${MENTOR_DATABASE_URL}
@@ -270,7 +270,7 @@ services:
     build:
       context: .
       dockerfile: brand_analyzer.dockerfile
-    container_name: ainflue-brand-analyzer
+    container_name: iacherie-brand-analyzer
     environment:
       - BRAND_ANALYSIS_MODEL=/app/models/brands
       - SOCIAL_LISTENING_APIs=${SOCIAL_LISTENING_APIS}
@@ -293,7 +293,7 @@ services:
   # Supporting Infrastructure
   creator-redis:
     image: redis:7-alpine
-    container_name: ainflue-creator-redis
+    container_name: iacherie-creator-redis
     command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
     volumes:
       - creator_redis_data:/data
@@ -308,7 +308,7 @@ services:
 
   creator-postgres:
     image: postgres:15-alpine
-    container_name: ainflue-creator-postgres
+    container_name: iacherie-creator-postgres
     environment:
       - POSTGRES_DB=creators
       - POSTGRES_USER=creators

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Storage Optimization
+# IA Chérie Infrastructure Module - Storage Optimization
 # ===================================================
 # 
-# Enterprise-grade storage optimization for Ainflue platform
+# Enterprise-grade storage optimization for IA Chérie platform
 # Supports multi-cloud storage optimization and performance tuning
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,0 +1,461 @@
+"""
+Kubernetes Environment Configuration
+===================================
+
+Kubernetes-specific configuration for orchestrated containerized deployment
+with pod management, service discovery, and cloud-native features.
+
+⚠️  LEGAL NOTICE:
+==========================================
+© 2025 Fahed Mlaiel <mlaiel@live.de>
+ALL RIGHTS RESERVED - PROPRIETARY CODE
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+
+# Kubernetes Environment Settings
+environment:
+  name: "kubernetes"
+  debug: false
+  testing: false
+  hot_reload: false
+  profiling_enabled: false
+  orchestrated: true
+  cloud_native: true
+  
+# Performance Settings (Kubernetes-optimized)
+performance:
+  # Kubernetes-optimized performance targets
+  cache_operations_p95: 1
+  database_operations_p95: 50
+  file_operations_p95: 100
+  
+  # Memory settings for Kubernetes pods
+  memory:
+    max_heap_size_mb: 768     # Optimized for pod limits
+    gc_strategy: "g1gc"
+    gc_threshold: 0.75
+    
+  # CPU settings for Kubernetes
+  cpu:
+    max_worker_threads: 12
+    enable_cpu_affinity: false  # Let Kubernetes scheduler handle
+    
+# Security Settings (Kubernetes security)
+security:
+  # Kubernetes-appropriate encryption
+  encryption:
+    symmetric_algorithm: "AES-256-GCM"
+    asymmetric_algorithm: "RSA-4096"
+    key_rotation_days: 30     # Frequent rotation in K8s
+    kdf_iterations: 100000
+    
+  # Kubernetes authentication
+  authentication:
+    jwt_algorithm: "RS256"
+    access_token_expire_minutes: 15
+    refresh_token_expire_days: 7
+    max_login_attempts: 3
+    require_mfa: true
+    password_min_length: 12
+    
+  # Kubernetes validation
+  validation:
+    max_input_size: 5242880   # 5MB strict limit
+    scan_for_xss: true
+    scan_for_sql_injection: true
+    scan_for_nosql_injection: true
+    check_file_headers: true
+    
+# Database Settings (Kubernetes)
+database:
+  # Kubernetes database connection via service
+  url: "postgresql://postgres:${POSTGRES_PASSWORD}@postgres-service:5432/ainflue"
+  pool_size: 15
+  max_overflow: 25
+  pool_timeout: 20
+  echo_sql: false
+  
+  # Kubernetes-specific settings
+  auto_create_tables: false
+  drop_tables_on_startup: false
+  seed_test_data: false
+  
+  # Service discovery
+  service_name: "postgres-service"
+  service_port: 5432
+  
+# Cache Settings (Kubernetes)
+cache:
+  # Kubernetes cache configuration
+  l1_max_size: 1500
+  l1_ttl_seconds: 300
+  l2_ttl_seconds: 3600
+  
+  # Kubernetes Redis service
+  redis_url: "redis://redis-service:6379/0"
+  enable_compression: true
+  
+  # Redis cluster for Kubernetes
+  redis_cluster:
+    enabled: true
+    nodes:
+      - "redis-0.redis-service:6379"
+      - "redis-1.redis-service:6379"
+      - "redis-2.redis-service:6379"
+      
+# Logging Configuration (Kubernetes)
+logging:
+  level: "INFO"
+  format: "json"              # Structured logs for K8s
+  enable_console: true        # Pod stdout/stderr
+  enable_file: false          # No file logging in pods
+  structured_logging: true
+  include_trace: false
+  log_sql_queries: false
+  
+  # Kubernetes-specific logging
+  namespace_label: true       # Include K8s namespace in logs
+  pod_name_label: true        # Include pod name in logs
+  
+# File Management (Kubernetes)
+file_management:
+  max_file_size_mb: 50
+  temp_directory: "/tmp/ainflue"
+  scan_for_malware: true
+  enable_optimization: true
+  
+  # Kubernetes persistent volumes
+  persistent_storage:
+    enabled: true
+    storage_class: "fast-ssd"
+    access_mode: "ReadWriteMany"
+    
+# Rate Limiting (Kubernetes)
+rate_limiting:
+  default_rpm: 30
+  burst_rpm: 60
+  enable_per_user_limits: true
+  enable_ip_blocking: true
+  
+  # Distributed rate limiting across pods
+  distributed_enabled: true
+  redis_backend: "redis-service:6379"
+  
+# Monitoring (Kubernetes)
+monitoring:
+  enable_prometheus: true
+  metrics_retention_days: 90
+  cpu_threshold: 70.0
+  memory_threshold: 75.0
+  disk_threshold: 85.0
+  
+  # Kubernetes monitoring
+  pod_metrics_enabled: true
+  cluster_metrics_enabled: true
+  service_monitor_enabled: true
+  
+# Creator Economy (Kubernetes)
+creator_economy:
+  # Content processing in Kubernetes
+  content_processing:
+    enable_async_processing: true
+    max_processing_time_seconds: 300
+    enable_preview_generation: true
+    worker_pods: 3            # Dedicated worker pods
+    
+  # Kubernetes collaboration
+  collaboration:
+    max_collaborators: 10
+    enable_real_time_features: true
+    websocket_service: "websocket-service"
+    
+  # Kubernetes monetization
+  monetization:
+    test_mode: false
+    commission_rate: 0.15
+    minimum_payout: 10.0
+    
+# Kubernetes Configuration
+kubernetes:
+  # Cluster information
+  cluster:
+    name: "ainflue-cluster"
+    region: "us-west-2"
+    
+  # Namespace
+  namespace: "ainflue-prod"
+  
+  # Service account
+  service_account:
+    name: "ainflue-service-account"
+    automount_token: true
+    
+  # Labels and annotations
+  labels:
+    app: "ainflue"
+    component: "api"
+    version: "v1.0.0"
+    
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
+    
+# Pod Configuration
+pod:
+  # Pod specifications
+  replicas: 3               # 3 pod replicas
+  
+  # Resource requests and limits
+  resources:
+    requests:
+      cpu: "500m"           # 0.5 CPU requested
+      memory: "512Mi"       # 512MB requested
+    limits:
+      cpu: "1000m"          # 1 CPU limit
+      memory: "1Gi"         # 1GB limit
+      
+  # Pod security context
+  security_context:
+    run_as_user: 1001
+    run_as_group: 1001
+    run_as_non_root: true
+    fs_group: 1001
+    
+  # Pod disruption budget
+  disruption_budget:
+    min_available: 2        # Keep at least 2 pods running
+    
+# Health Checks (Kubernetes)
+health_checks:
+  enabled: true
+  
+  # Startup probe
+  startup_probe:
+    http_get:
+      path: "/health/startup"
+      port: 8000
+    initial_delay_seconds: 30
+    period_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 30
+    
+  # Liveness probe
+  liveness_probe:
+    http_get:
+      path: "/health/live"
+      port: 8000
+    initial_delay_seconds: 60
+    period_seconds: 20
+    timeout_seconds: 5
+    failure_threshold: 3
+    
+  # Readiness probe
+  readiness_probe:
+    http_get:
+      path: "/health/ready"
+      port: 8000
+    initial_delay_seconds: 5
+    period_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 3
+    
+# Service Configuration
+service:
+  # Service type and settings
+  type: "ClusterIP"
+  ports:
+    - name: "http"
+      port: 80
+      target_port: 8000
+      protocol: "TCP"
+    - name: "metrics"
+      port: 9090
+      target_port: 9090
+      protocol: "TCP"
+      
+  # Service annotations
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    
+# Ingress Configuration
+ingress:
+  enabled: true
+  class_name: "nginx"
+  
+  # Ingress rules
+  rules:
+    - host: "api.ainflue.com"
+      http:
+        paths:
+          - path: "/"
+            path_type: "Prefix"
+            backend:
+              service:
+                name: "ainflue-api"
+                port:
+                  number: 80
+                  
+  # TLS configuration
+  tls:
+    - hosts:
+        - "api.ainflue.com"
+      secret_name: "ainflue-tls"
+      
+# ConfigMap and Secrets
+config_storage:
+  # ConfigMap for non-sensitive config
+  config_map:
+    name: "ainflue-config"
+    
+  # Secrets for sensitive data
+  secrets:
+    database_secret:
+      name: "ainflue-db-secret"
+      keys:
+        - "DATABASE_URL"
+        - "POSTGRES_PASSWORD"
+        
+    api_secret:
+      name: "ainflue-api-secret"
+      keys:
+        - "SECRET_KEY"
+        - "JWT_SECRET"
+        - "OPENAI_API_KEY"
+        
+# Persistent Volume Claims
+storage:
+  # Data storage
+  data_pvc:
+    name: "ainflue-data"
+    size: "10Gi"
+    access_mode: "ReadWriteMany"
+    storage_class: "fast-ssd"
+    
+  # Logs storage (if needed)
+  logs_pvc:
+    name: "ainflue-logs"
+    size: "5Gi"
+    access_mode: "ReadWriteOnce"
+    storage_class: "standard"
+    
+# Autoscaling
+autoscaling:
+  # Horizontal Pod Autoscaler
+  hpa:
+    enabled: true
+    min_replicas: 3
+    max_replicas: 10
+    target_cpu_utilization: 70
+    target_memory_utilization: 80
+    
+  # Vertical Pod Autoscaler
+  vpa:
+    enabled: false
+    update_mode: "Auto"
+    
+# Network Policies
+network_policies:
+  enabled: true
+  
+  # Ingress rules
+  ingress:
+    - from:
+        - namespace_selector:
+            match_labels:
+              name: "ingress-nginx"
+      ports:
+        - protocol: "TCP"
+          port: 8000
+          
+  # Egress rules
+  egress:
+    - to:
+        - namespace_selector:
+            match_labels:
+              name: "database"
+      ports:
+        - protocol: "TCP"
+          port: 5432
+          
+# Service Mesh (Istio)
+service_mesh:
+  enabled: false            # Can be enabled if Istio is available
+  
+  # Sidecar injection
+  sidecar_injection: false
+  
+  # Traffic management
+  virtual_service:
+    enabled: false
+    
+# Backup and Disaster Recovery
+backup:
+  enabled: true
+  
+  # Velero backup
+  velero:
+    enabled: true
+    schedule: "0 2 * * *"    # Daily at 2 AM
+    retention: "720h"        # 30 days
+    
+# External Services (Kubernetes)
+external_services:
+  # Service discovery
+  service_discovery:
+    enabled: true
+    consul_enabled: false
+    kubernetes_native: true
+    
+  # External service endpoints
+  endpoints:
+    ai_service:
+      url: "https://api.openai.com"
+      
+    payment_service:
+      url: "https://api.stripe.com"
+      
+    email_service:
+      url: "https://api.sendgrid.com"
+      
+# Observability
+observability:
+  # Distributed tracing
+  tracing:
+    enabled: true
+    jaeger_endpoint: "jaeger-collector:14268"
+    
+  # Metrics
+  metrics:
+    prometheus_enabled: true
+    grafana_enabled: true
+    
+  # Logging
+  logging:
+    fluentd_enabled: true
+    elasticsearch_enabled: true
+    
+# Security Policies
+security_policies:
+  # Pod Security Policy
+  pod_security_policy:
+    enabled: true
+    allow_privilege_escalation: false
+    run_as_non_root: true
+    
+  # Network Security
+  network_security:
+    deny_all_by_default: true
+    allow_dns: true
+    
+# Resource Quotas
+resource_quotas:
+  # Namespace resource quota
+  namespace_quota:
+    requests_cpu: "4"
+    requests_memory: "8Gi"
+    limits_cpu: "8"
+    limits_memory: "16Gi"
+    persistentvolumeclaims: "10"

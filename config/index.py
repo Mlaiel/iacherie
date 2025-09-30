@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🚀 Ainflue Config Module - Ultra-Advanced Enterprise Index
+"""🚀 IA Chérie Config Module - Ultra-Advanced Enterprise Index
 ==========================================================
 
 🔥 ENTERPRISE CONFIGURATION ORCHESTRATION HUB
-- Zentraler Configuration Manager für die gesamte Ainflue-Plattform
+- Zentraler Configuration Manager für die gesamte IA Chérie-Plattform
 - Ultra-moderne Multi-Environment Configuration mit Enterprise Security
 - Advanced Settings Management mit Real-time Updates und Validation
 - Production-Ready Configuration Orchestration für skalierbare Deployments
@@ -71,7 +71,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger("ainflue.config.index")
+logger = logging.getLogger("iacherie.config.index")
 
 # Enhanced imports with error handling
 try:
@@ -471,7 +471,7 @@ class EnterpriseConfigurationManager:
         """Load configurations from environment variables"""
         env_vars = {
             key: value for key, value in os.environ.items()
-            if key.startswith(('AINFLUE_', 'CONFIG_', 'API_', 'DATABASE_', 'REDIS_'))
+            if key.startswith(('IACHERIE_', 'CONFIG_', 'API_', 'DATABASE_', 'REDIS_'))
         }
         
         for key, value in env_vars.items():
@@ -566,7 +566,7 @@ class EnterpriseConfigurationManager:
             return
         
         try:
-# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"iacherie:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
             cached_configs = await asyncio.get_event_loop().run_in_executor(
@@ -801,7 +801,7 @@ class EnterpriseConfigurationManager:
         # Save to Redis
         if self.redis_client:
             try:
-# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"iacherie:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 value_data = {
@@ -839,7 +839,7 @@ class EnterpriseConfigurationManager:
         # Remove from Redis
         if self.redis_client:
             try:
-# SECURITY: # SECURITY: cache_key = f"ainflue:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: cache_key = f"iacherie:config:{self.environment.value}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
                 await asyncio.get_event_loop().run_in_executor(
@@ -1071,7 +1071,7 @@ def main():
     """🚀 Main entry point for Configuration Manager"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="🚀 Ainflue Configuration Manager")
+    parser = argparse.ArgumentParser(description="🚀 IA Chérie Configuration Manager")
     parser.add_argument("--environment", "-e", 
                        choices=[env.value for env in ConfigurationEnvironment],
                        default="development",

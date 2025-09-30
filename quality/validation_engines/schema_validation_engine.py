@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🗄️ SCHEMA VALIDATION ENGINE ENTERPRISE - AINFLUE IA INFLUENCER AGENT
+🗄️ SCHEMA VALIDATION ENGINE ENTERPRISE - IACHERIE IA INFLUENCER AGENT
 ====================================================================
 
 Moteur de validation de schémas ultra-avancé pour l'écosystème qualité enterprise,

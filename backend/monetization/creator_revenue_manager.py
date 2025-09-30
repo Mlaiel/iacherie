@@ -95,7 +95,7 @@ class RevenueConfig:
     ml_prediction_enabled: bool = True
     fraud_detection_enabled: bool = True
     redis_url: str = "redis://localhost:6379"
-    database_url: str = "postgresql://user:pass@localhost/ainflue"
+    database_url: str = "postgresql://user:pass@localhost/iacherie"
 
 # Data Models
 @dataclass

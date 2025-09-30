@@ -1,5 +1,5 @@
 # ===========================================
-# AUDIT CONFIGURATION - AINFLUE UTILS
+# AUDIT CONFIGURATION - IACHERIE UTILS
 # ===========================================
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -20,7 +20,7 @@ audit:
     destinations:
       file:
         enabled: true
-        path: "/var/log/ainflue/audit"
+        path: "/var/log/iacherie/audit"
         rotation: "daily"
         retention_days: 2555  # 7 years for compliance
         max_size: "100MB"
@@ -32,7 +32,7 @@ audit:
           - "audit-es-01:9200"
           - "audit-es-02:9200"
           - "audit-es-03:9200"
-        index_pattern: "ainflue-audit-%Y.%m.%d"
+        index_pattern: "iacherie-audit-%Y.%m.%d"
         ssl_enabled: true
         ssl_verify: true
       
@@ -40,13 +40,13 @@ audit:
         enabled: true
         facility: "LOG_AUDIT"
         protocol: "tcp"
-        host: "audit-syslog.ainflue.com"
+        host: "audit-syslog.iacherie.com"
         port: 514
       
       cloud_storage:
         enabled: true
         provider: "aws_s3"
-        bucket: "ainflue-audit-logs"
+        bucket: "iacherie-audit-logs"
         region: "eu-central-1"
         encryption: "AES256"
         lifecycle_policy: "7_years"

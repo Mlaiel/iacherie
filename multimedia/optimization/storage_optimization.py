@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - Storage Optimization
+IA Chérie Platform - Multimedia Optimization - Storage Optimization
 Intelligent storage optimization for multimedia content management
 
 Author: Fahed Mlaiel (mlaiel@live.de)

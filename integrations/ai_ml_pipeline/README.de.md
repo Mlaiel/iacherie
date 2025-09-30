@@ -1,4 +1,4 @@
-# KI/ML Pipeline-Infrastruktur - Ainflue Enterprise
+# KI/ML Pipeline-Infrastruktur - IA Chérie Enterprise
 
 Enterprise KI/ML-Pipeline-System für 53 KI-Agenten zur Bedienung der globalen Creator-Plattform mit vollständiger MLOps-Automatisierung und GPU-Optimierung.
 
@@ -60,7 +60,7 @@ Jede unbefugte Nutzung, Reproduktion, Modifikation oder Verbreitung dieser KI/ML
 16. **GPU-Ressourcen-Manager** - Hardware-Optimierung mit intelligenter Workload-Verteilung
 17. **Modell-Performance-Analyzer** - Performance-Profiling & Optimierung mit Benchmarking
 
-## 🎯 Ainflue Business Logic Integration
+## 🎯 IA Chérie Business Logic Integration
 
 ### Creator-zentrierter KI/ML-Workflow
 ```
@@ -195,8 +195,8 @@ Hochgeschwindigkeits-Netzwerk (25Gbps+) für verteiltes Training
 ### Installation & Setup
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Abhängigkeiten installieren
 pip install -r requirements-ml.txt
@@ -218,7 +218,7 @@ from integrations.ai_ml_pipeline import create_complete_ai_ml_pipeline
 async def main():
     # Konfiguration laden
     config = {
-        'database_url': 'postgresql://localhost/ainflue',
+        'database_url': 'postgresql://localhost/iacherie',
         'redis_url': 'redis://localhost:6379',
         'gpu_enabled': True,
         'monitoring_enabled': True
@@ -273,15 +273,15 @@ if __name__ == "__main__":
 
 ### Technischer Support
 - **E-Mail**: mlaiel@live.de
-- **Dokumentation**: [Ainflue KI/ML Docs](https://docs.ainflue.com/ai-ml)
+- **Dokumentation**: [IA Chérie KI/ML Docs](https://docs.iacherie.com/ai-ml)
 - **Issue-Tracking**: Internes Enterprise-Support-System
 
 ### Enterprise-Lizenzierung
 Für Enterprise-Lizenzierung, kundenspezifische Implementierungen oder Partnerschaftsanfragen:
 - **Kontakt**: mlaiel@live.de
-- **Betreff**: "Ainflue KI/ML Enterprise-Lizenzierung"
+- **Betreff**: "IA Chérie KI/ML Enterprise-Lizenzierung"
 
 ---
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
-**Ainflue KI/ML Pipeline-Infrastruktur - Enterprise Edition v3.0**
+**IA Chérie KI/ML Pipeline-Infrastruktur - Enterprise Edition v3.0**

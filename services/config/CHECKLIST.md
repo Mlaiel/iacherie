@@ -1,4 +1,4 @@
-# ⚡ Checklist Architecture Complète - Ainflue Services Config Module
+# ⚡ Checklist Architecture Complète - IA Chérie Services Config Module
 
 ## ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
 > **Module propriété exclusive de Fahed Mlaiel (mlaiel@live.de)**  
@@ -12,10 +12,10 @@
 ## ⚠️ EXIGENCES STRICTES OBLIGATOIRES
 
 ### 📋 CONFORMITÉ CAHIER DES CHARGES
-- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/Ainflue/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
+- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/IA Chérie/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
 - ✅ **GÉNÈRE TOUS** les fichiers/modules demandés selon la logique métier
 - ✅ **N'OUBLIE RIEN** et **N'IGNORE RIEN** sauf si existant alors **À ENRICHIR**
-- ✅ **Respecte la logique métier Ainflue:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
+- ✅ **Respecte la logique métier IA Chérie:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
 
 ### 🏭 CODE INDUSTRIEL OBLIGATOIRE
 - ✅ **Code industriel ultra avancé, clé en main, production-ready**
@@ -59,7 +59,7 @@ TOUS DROITS RÉSERVÉS
 ---
 
 
-## 🎯 OBJECTIFS BUSINESS AINFLUE CREATOR ECONOMY
+## 🎯 OBJECTIFS BUSINESS IACHERIE CREATOR ECONOMY
 
 ### **Flux Métier Core :**
 ```
@@ -229,18 +229,18 @@ cloud:
   aws:
     region: "eu-west-1"
     s3:
-      bucket_name: "ainflue-creator-content"
+      bucket_name: "iacherie-creator-content"
       encryption: true
       versioning: true
     
     cloudfront:
-      distribution_domain: "cdn.ainflue.com"
+      distribution_domain: "cdn.iacherie.com"
       cache_policy: "creator_optimized"
       
   google_cloud:
-    project_id: "ainflue-creator-platform"
+    project_id: "iacherie-creator-platform"
     storage:
-      bucket_name: "ainflue-gcs-content"
+      bucket_name: "iacherie-gcs-content"
       location: "EU"
       
   azure:
@@ -280,7 +280,7 @@ monitoring:
     scrape_interval: 15
     evaluation_interval: 15
     external_labels:
-      cluster: "ainflue-creator"
+      cluster: "iacherie-creator"
       
   grafana:
     admin_user: "admin"
@@ -434,16 +434,16 @@ mobile:
       
   app_store:
     ios:
-      bundle_id: "com.ainflue.creator"
+      bundle_id: "com.iacherie.creator"
       team_id: "${APPLE_TEAM_ID}"
       
     android:
-      package_name: "com.ainflue.creator"
+      package_name: "com.iacherie.creator"
       keystore_path: "${ANDROID_KEYSTORE_PATH}"
       
   deep_linking:
-    scheme: "ainflue"
-    host: "creator.ainflue.com"
+    scheme: "iacherie"
+    host: "creator.iacherie.com"
 ```
 
 ### **🔧 Development Configuration** ❌
@@ -564,7 +564,7 @@ Database Administrator: Data Configuration Optimization
 
 ---
 
-## 🔄 LOGIQUE MÉTIER AINFLUE
+## 🔄 LOGIQUE MÉTIER IACHERIE
 
 ### **Configuration Management Flow**
 1. **Environment Setup** → Configuration environnement spécifique
@@ -631,7 +631,7 @@ Database Administrator: Data Configuration Optimization
 ### **Configuration Structure**
 ```yaml
 # Configuration Hierarchy
-ainflue:
+iacherie:
   core:
     - services.yaml
     - performance.yaml

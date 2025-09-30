@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Collaboration Services module provides enterprise-grade AI-powered collaboration matching and project orchestration capabilities for the Ainflue platform. This module enables creators to discover, connect, and collaborate through intelligent matching algorithms and automated workflow management.
+The Collaboration Services module provides enterprise-grade AI-powered collaboration matching and project orchestration capabilities for the IA Chérie platform. This module enables creators to discover, connect, and collaborate through intelligent matching algorithms and automated workflow management.
 
 ## Architecture
 
@@ -44,8 +44,8 @@ This module contains 11 specialized Docker services for collaboration management
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/collaboration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/collaboration
 
 # Start collaboration services
 docker-compose -f docker-compose.collaboration.yml up -d
@@ -254,7 +254,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 For technical support and questions:
 - Email: mlaiel@live.de
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues: https://github.com/Mlaiel/IA Chérie/issues
 
 ## Changelog
 

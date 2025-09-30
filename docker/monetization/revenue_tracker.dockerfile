@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE REVENUE TRACKER - MULTI-PLATFORM DOCKERFILE
+# IACHERIE REVENUE TRACKER - MULTI-PLATFORM DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for comprehensive revenue tracking across
 # multiple platforms with real-time analytics and automated reporting.
@@ -208,13 +208,13 @@ CMD ["python3.11", "-m", "revenue_tracker.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Revenue Tracker"
+LABEL org.opencontainers.image.title="IA Chérie Revenue Tracker"
 LABEL org.opencontainers.image.description="Multi-platform revenue tracking and analytics service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="revenue_tracker"
-LABEL ainflue.service.port="8040"
-LABEL ainflue.monetization.platforms="spotify,youtube,apple_music,soundcloud"
-LABEL ainflue.security.non-root="true"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chérie"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="revenue_tracker"
+LABEL iacherie.service.port="8040"
+LABEL iacherie.monetization.platforms="spotify,youtube,apple_music,soundcloud"
+LABEL iacherie.security.non-root="true"

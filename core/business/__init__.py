@@ -1,4 +1,4 @@
-"""Ainflue Core Business Logic - Enterprise Business Operations
+"""IA Chérie Core Business Logic - Enterprise Business Operations
 ==========================================================
 
 Core business logic providing creator management, content processing,

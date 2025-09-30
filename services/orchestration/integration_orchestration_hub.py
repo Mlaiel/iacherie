@@ -1,5 +1,5 @@
 """
-🔗 INTEGRATION ORCHESTRATION HUB - AINFLUE ENTERPRISE
+🔗 INTEGRATION ORCHESTRATION HUB - IACHERIE ENTERPRISE
 ===================================================
 
 Third-party API integration and workflow orchestration for creator economy platform.
@@ -1097,7 +1097,7 @@ class IntegrationOrchestrationHub:
                 "Content-Type": "application/json",
                 "X-Webhook-Signature": signature,
                 "X-Webhook-Event": event.value,
-                "User-Agent": "Ainflue-Webhook/1.0"
+                "User-Agent": "IA Chérie-Webhook/1.0"
             }
             
             # Send webhook
@@ -1299,7 +1299,7 @@ class IntegrationOrchestrationHub:
             try:
                 health_response = await self.make_api_request(
                     integration_id, "GET", "/health", 
-                    headers={"User-Agent": "Ainflue-HealthCheck/1.0"}
+                    headers={"User-Agent": "IA Chérie-HealthCheck/1.0"}
                 )
                 
                 # Update metrics

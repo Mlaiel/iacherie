@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Collaboration Intelligence Engine
+IA Chérie Platform - Collaboration Intelligence Engine
 ===================================================
 
 Advanced AI-powered intelligence engine for collaboration insights, optimization,
-and strategic decision support across the Ainflue creator platform. Integrates
+and strategic decision support across the IA Chérie creator platform. Integrates
 all collaboration monitoring components for comprehensive intelligence.
 
 Features:
@@ -122,7 +122,7 @@ class CollaborationTrend:
 
 class CollaborationIntelligenceEngine:
     """
-    Advanced collaboration intelligence engine for the Ainflue platform.
+    Advanced collaboration intelligence engine for the IA Chérie platform.
     
     Provides comprehensive intelligence, insights, and recommendations
     for optimizing collaborations across the creator ecosystem.

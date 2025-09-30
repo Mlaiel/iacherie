@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Audio Fingerprinting System - Ainflue Data Fingerprinting Module
+Audio Fingerprinting System - IA Chérie Data Fingerprinting Module
 ================================================================
 Advanced audio fingerprinting system with ML-powered analysis,
 chromaprint integration, and specialized audio content protection
-for music creators on the Ainflue platform.
+for music creators on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Data Fingerprinting
+Project: IA Chérie Data Fingerprinting
 Version: 1.0 Enterprise Production
 """
 
@@ -32,7 +32,7 @@ try:
 except ImportError as e:
     logging.error(f"Required audio dependencies not installed: {e}")
 
-# Ainflue core imports
+# IA Chérie core imports
 from .multimodal_fingerprinting_engine import FingerprintResult, FingerprintConfig
 from .vector_database_matching import VectorDatabaseManager
 from .performance_analytics_engine import PerformanceAnalytics

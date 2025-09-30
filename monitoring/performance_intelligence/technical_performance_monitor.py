@@ -3,7 +3,7 @@
 
 Advanced technical performance monitoring system for tracking system performance,
 error rates, uptime metrics, API response times, database performance,
-and infrastructure health for the Ainflue platform.
+and infrastructure health for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -2239,8 +2239,8 @@ Update component status based on error"""
                 "config": {
                     "smtp_server": "smtp.example.com",
                     "smtp_port": 587,
-                    "recipients": ["admin@ainflue.com", "devops@ainflue.com"],
-                    "subject_prefix": "[AINFLUE ALERT]"
+                    "recipients": ["admin@iacherie.com", "devops@iacherie.com"],
+                    "subject_prefix": "[IACHERIE ALERT]"
                 },
                 "severity_filter": ["high", "critical"],
                 "delivery_method": self._send_email_alert
@@ -2255,7 +2255,7 @@ Update component status based on error"""
                 "config": {
                     "webhook_url": "https://hooks.slack.com/services/...",
                     "channel": "#alerts",
-                    "username": "Ainflue Monitor"
+                    "username": "IA Chérie Monitor"
                 },
                 "severity_filter": ["medium", "high", "critical"],
                 "delivery_method": self._send_slack_alert

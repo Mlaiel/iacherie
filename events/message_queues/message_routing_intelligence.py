@@ -2,7 +2,7 @@
 """Message Routing Intelligence Module
 
 Intelligent message routing with load balancing and failover automation
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -156,7 +156,7 @@ class RoutingMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Routing Configuration"""
+    """IA Chérie Business Routing Configuration"""
     
     # Routing destinations by service type
     ROUTING_DESTINATIONS = {
@@ -166,7 +166,7 @@ class AinflueBusiness:
                 destination_id="content_proc_primary",
                 name="Primary Content Processor",
                 destination_type=DestinationType.SERVICE,
-                endpoint="content-processor-primary.ainflue.internal",
+                endpoint="content-processor-primary.iacherie.internal",
                 weight=2.0,
                 max_capacity=500,
                 supported_message_types=["content_upload", "content_validation", "content_transformation"],
@@ -177,7 +177,7 @@ class AinflueBusiness:
                 destination_id="content_proc_secondary",
                 name="Secondary Content Processor", 
                 destination_type=DestinationType.SERVICE,
-                endpoint="content-processor-secondary.ainflue.internal",
+                endpoint="content-processor-secondary.iacherie.internal",
                 weight=1.5,
                 max_capacity=300,
                 supported_message_types=["content_upload", "content_validation"],
@@ -192,7 +192,7 @@ class AinflueBusiness:
                 destination_id="ai_proc_gpu_cluster",
                 name="GPU AI Processing Cluster",
                 destination_type=DestinationType.CLUSTER,
-                endpoint="ai-gpu-cluster.ainflue.internal",
+                endpoint="ai-gpu-cluster.iacherie.internal",
                 weight=3.0,
                 max_capacity=100,
                 supported_message_types=["ai_content_analysis", "ai_generation", "ml_inference"],
@@ -204,7 +204,7 @@ class AinflueBusiness:
                 destination_id="ai_proc_cpu_cluster",
                 name="CPU AI Processing Cluster",
                 destination_type=DestinationType.CLUSTER,
-                endpoint="ai-cpu-cluster.ainflue.internal",
+                endpoint="ai-cpu-cluster.iacherie.internal",
                 weight=1.0,
                 max_capacity=200,
                 supported_message_types=["ai_content_analysis", "text_processing"],
@@ -220,7 +220,7 @@ class AinflueBusiness:
                 destination_id="payment_proc_primary",
                 name="Primary Payment Processor",
                 destination_type=DestinationType.SERVICE,
-                endpoint="payment-processor.ainflue.internal",
+                endpoint="payment-processor.iacherie.internal",
                 weight=1.0,
                 max_capacity=50,
                 supported_message_types=["payment_processing", "payout_request"],
@@ -245,7 +245,7 @@ class AinflueBusiness:
                 destination_id="analytics_realtime",
                 name="Real-time Analytics Processor",
                 destination_type=DestinationType.SERVICE,
-                endpoint="analytics-realtime.ainflue.internal",
+                endpoint="analytics-realtime.iacherie.internal",
                 weight=2.0,
                 max_capacity=500,
                 supported_message_types=["realtime_analytics", "live_metrics"],
@@ -825,7 +825,7 @@ class MessageRoutingIntelligence:
     # Helper methods
     
     async def _load_business_configuration(self):
-        """Load Ainflue business routing configuration"""
+        """Load IA Chérie business routing configuration"""
         # Load destinations
         for service_type, destinations in AinflueBusiness.ROUTING_DESTINATIONS.items():
             for destination in destinations:

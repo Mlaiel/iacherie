@@ -34,7 +34,7 @@ Ce module informatique quantique, ses algorithmes quantiques innovants, concepts
 
 ## 🎯 Aperçu du Module
 
-Le **Module Informatique Quantique** fournit des capacités logique métier quantum-enhanced de pointe pour la plateforme Ainflue. Ce système quantique enterprise-grade délivre une accélération quantique à travers tous les processus métier, de la création de contenu à la distribution, offrant des avantages concurrentiels sans précédent grâce à l'informatique quantique.
+Le **Module Informatique Quantique** fournit des capacités logique métier quantum-enhanced de pointe pour la plateforme IA Chérie. Ce système quantique enterprise-grade délivre une accélération quantique à travers tous les processus métier, de la création de contenu à la distribution, offrant des avantages concurrentiels sans précédent grâce à l'informatique quantique.
 
 ### 🏗️ Architecture Core
 

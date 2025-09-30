@@ -1,5 +1,5 @@
 """IA Influencer Agent - Backpressure Resilience Manager
-Advanced Backpressure Management and System Resilience for Ainflue Event Streaming
+Advanced Backpressure Management and System Resilience for IA Chérie Event Streaming
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -394,7 +394,7 @@ class LoadShedder:
 
 
 class BackpressureResilienceManager:
-    """Main backpressure and resilience manager for Ainflue streaming platform"""
+    """Main backpressure and resilience manager for IA Chérie streaming platform"""
     
     def __init__(self, config: ResilienceConfig = None, metrics_collector=None):
         self.config = config or ResilienceConfig()

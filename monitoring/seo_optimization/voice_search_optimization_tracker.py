@@ -1,7 +1,7 @@
 """
 Voice Search Optimization Tracker - Enterprise Voice SEO & Conversational Search
 
-This module implements comprehensive voice search optimization tracking for the Ainflue platform,
+This module implements comprehensive voice search optimization tracking for the IA Chérie platform,
 monitoring conversational queries, voice search performance, and smart speaker optimization.
 
 Author: Fahed Mlaiel
@@ -122,7 +122,7 @@ class VoiceSearchOptimization:
 
 class VoiceSearchOptimizationTracker:
     """
-    Enterprise voice search optimization tracking system for Ainflue platform.
+    Enterprise voice search optimization tracking system for IA Chérie platform.
     
     Features:
     - Voice search query analysis and tracking
@@ -1153,7 +1153,7 @@ if __name__ == "__main__":
         tracker = VoiceSearchOptimizationTracker()
         
         # Test voice search optimization analysis
-        url = "https://ainflue.com/guide/content-creation"
+        url = "https://iacherie.com/guide/content-creation"
         content_data = {
             "title": "How to Create Viral Content - Complete Guide",
             "description": "Learn the best strategies for creating viral content that engages your audience",

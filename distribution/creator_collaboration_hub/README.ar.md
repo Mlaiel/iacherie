@@ -1,6 +1,6 @@
 # 🤝 مركز التعاون بين المبدعين
 
-**نظام إدارة التعاون والشراكة المتقدم للمبدعين لمنصة توزيع Ainflue**
+**نظام إدارة التعاون والشراكة المتقدم للمبدعين لمنصة توزيع IA Chérie**
 
 ## 📖 نظرة عامة
 
@@ -256,10 +256,10 @@ cross_platform_collab = await orchestrator.create_cross_platform_collaboration(
 
 ### 🆘 دعم الطوارئ
 - **خط الطوارئ للتعاون**: +49 (0) XXX XXX XXXX
-- **دعم Discord**: discord.gg/ainflue-collaboration
-- **الوثائق**: docs.ainflue.com/creator-collaboration
+- **دعم Discord**: discord.gg/iacherie-collaboration
+- **الوثائق**: docs.iacherie.com/creator-collaboration
 
 ---
 
 **© 2025 فهد ملايل - جميع الحقوق محفوظة**  
-**منصة Ainflue - مركز التعاون بين المبدعين**
+**منصة IA Chérie - مركز التعاون بين المبدعين**

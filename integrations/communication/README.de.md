@@ -1,4 +1,4 @@
-# 💬 Kommunikationsmodul - Ainflue Integrations
+# 💬 Kommunikationsmodul - IA Chérie Integrations
 
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

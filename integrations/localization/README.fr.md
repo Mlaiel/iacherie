@@ -1,4 +1,4 @@
-# 🌍 Ainflue Intelligence de Localisation - Grade Enterprise
+# 🌍 IA Chérie Intelligence de Localisation - Grade Enterprise
 
 [![Licence: Propriétaire](https://img.shields.io/badge/Licence-Propriétaire-red.svg)](LICENSE)
 [![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-blue.svg)](VERSION)
@@ -38,7 +38,7 @@ Ce module a été conçu et implémenté par une équipe d'experts de classe mon
 
 ## 📋 Aperçu
 
-Le module **Ainflue Intelligence de Localisation** fournit des capacités de localisation de grade enterprise pour la plateforme d'économie créative Ainflue. Cette solution complète prend en charge 644+ langues, la traduction en temps réel, l'adaptation culturelle et la conformité réglementaire sur les marchés mondiaux.
+Le module **IA Chérie Intelligence de Localisation** fournit des capacités de localisation de grade enterprise pour la plateforme d'économie créative IA Chérie. Cette solution complète prend en charge 644+ langues, la traduction en temps réel, l'adaptation culturelle et la conformité réglementaire sur les marchés mondiaux.
 
 ## 🌟 Fonctionnalités Clés
 
@@ -103,8 +103,8 @@ integrations/localization/
 
 ```bash
 # Cloner le dépôt (utilisateurs autorisés uniquement)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/localization
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/localization
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -124,7 +124,7 @@ localization = get_localization_manager()
 
 # Traduction de base
 result = await localization['translation'].translate(
-    content="Bonjour, bienvenue sur Ainflue !",
+    content="Bonjour, bienvenue sur IA Chérie !",
     source_language="fr",
     target_language="en",
     domain="social_media"
@@ -344,7 +344,7 @@ Pour les contributeurs autorisés :
 Pour le support technique et les demandes de licence :
 
 - **📧 Email** : mlaiel@live.de
-- **🌐 Site Web** : https://ainflue.com
+- **🌐 Site Web** : https://iacherie.com
 - **📱 Support Enterprise** : Disponible 24/7 pour les utilisateurs autorisés
 
 ## 📄 Licence
@@ -362,7 +362,7 @@ Ce logiciel est propriétaire et confidentiel. L'utilisation, reproduction ou di
 
 ---
 
-**© 2024 Fahed Mlaiel - Plateforme Ainflue**  
+**© 2024 Fahed Mlaiel - Plateforme IA Chérie**  
 **Intelligence de Localisation Enterprise - Prêt pour la Production**
 
-*Construit avec ❤️ par l'Équipe d'Experts Ainflue*
+*Construit avec ❤️ par l'Équipe d'Experts IA Chérie*

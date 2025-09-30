@@ -1,13 +1,13 @@
-# 🚀 Ainflue Platform Core - Enterprise Notification System
+# 🚀 IA Chérie Platform Core - Enterprise Notification System
 
-[![Enterprise Ready](https://img.shields.io/badge/Enterprise-Ready-brightgreen.svg)](https://github.com/Mlaiel/Ainflue)
-[![Multi-Channel](https://img.shields.io/badge/Multi--Channel-Email%2BSMS%2BPush%2BInApp-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![AI Powered](https://img.shields.io/badge/AI--Powered-Personalization%2BOptimization-orange.svg)](https://github.com/Mlaiel/Ainflue)
-[![GDPR Compliant](https://img.shields.io/badge/GDPR-Compliant-green.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise Ready](https://img.shields.io/badge/Enterprise-Ready-brightgreen.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Multi-Channel](https://img.shields.io/badge/Multi--Channel-Email%2BSMS%2BPush%2BInApp-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![AI Powered](https://img.shields.io/badge/AI--Powered-Personalization%2BOptimization-orange.svg)](https://github.com/Mlaiel/IA Chérie)
+[![GDPR Compliant](https://img.shields.io/badge/GDPR-Compliant-green.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 Overview
 
-The **Ainflue Platform Core Notification System** is an enterprise-grade, multi-channel notification orchestration platform designed specifically for the creator economy. Built with AI-powered personalization, intelligent delivery optimization, and comprehensive analytics, it provides everything needed to engage creators, brands, and audiences effectively.
+The **IA Chérie Platform Core Notification System** is an enterprise-grade, multi-channel notification orchestration platform designed specifically for the creator economy. Built with AI-powered personalization, intelligent delivery optimization, and comprehensive analytics, it provides everything needed to engage creators, brands, and audiences effectively.
 
 ### ✨ Key Features
 
@@ -24,7 +24,7 @@ The **Ainflue Platform Core Notification System** is an enterprise-grade, multi-
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Ainflue Notification Core                    │
+│                    IA Chérie Notification Core                    │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
@@ -57,8 +57,8 @@ The **Ainflue Platform Core Notification System** is an enterprise-grade, multi-
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/notifications
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/notifications
 
 # Install dependencies
 pip install -r requirements.txt
@@ -118,12 +118,12 @@ notification_manager = NotificationManager(config)
 # Send an email notification
 await notification_manager.send_email(
     to="creator@example.com",
-    subject="Welcome to Ainflue!",
+    subject="Welcome to IA Chérie!",
     template_id="welcome_creator",
     data={
         "creator_name": "Alex",
-        "platform_name": "Ainflue",
-        "onboarding_url": "https://app.ainflue.com/onboarding"
+        "platform_name": "IA Chérie",
+        "onboarding_url": "https://app.iacherie.com/onboarding"
     }
 )
 
@@ -183,8 +183,8 @@ result = await email_service.send_template_email(
         )
     ],
     template_data={
-        "platform_name": "Ainflue",
-        "celebration_gif": "https://cdn.ainflue.com/celebrate.gif"
+        "platform_name": "IA Chérie",
+        "celebration_gif": "https://cdn.iacherie.com/celebrate.gif"
     }
 )
 ```
@@ -254,17 +254,17 @@ result = await push_service.send_push_notification(
         ],
         title="Brand Collaboration Offer",
         body="Premium beauty brand wants to partner with you!",
-        image_url="https://cdn.ainflue.com/brand-offer.jpg",
+        image_url="https://cdn.iacherie.com/brand-offer.jpg",
         actions=[
             PushAction(
                 id="view_offer",
                 title="View Offer",
-                action_url="ainflue://collaboration/offer_123"
+                action_url="iacherie://collaboration/offer_123"
             ),
             PushAction(
                 id="decline",
                 title="Decline",
-                action_url="ainflue://collaboration/decline_123"
+                action_url="iacherie://collaboration/decline_123"
             )
         ]
     )
@@ -610,7 +610,7 @@ webhooks = create_webhook_manager(config)
 endpoint = WebhookEndpoint(
     id="crm_integration",
     name="CRM Integration Webhook",
-    url="https://your-crm.com/webhooks/ainflue",
+    url="https://your-crm.com/webhooks/iacherie",
     secret="your-webhook-secret",
     events=[
         WebhookEvent.NOTIFICATION_SENT,
@@ -711,8 +711,8 @@ config = {
         'default_provider': 'sendgrid',
         'sendgrid': {
             'api_key': 'your-key',
-            'from_email': 'noreply@ainflue.com',
-            'from_name': 'Ainflue Platform'
+            'from_email': 'noreply@iacherie.com',
+            'from_name': 'IA Chérie Platform'
         },
         'aws_ses': {
             'access_key': 'your-key',
@@ -979,7 +979,7 @@ async def creator_onboarding_flow(user_id: str, user_data: dict):
         template_id="creator_welcome",
         data={
             "creator_name": user_data['name'],
-            "verification_url": f"https://app.ainflue.com/verify/{user_data['token']}"
+            "verification_url": f"https://app.iacherie.com/verify/{user_data['token']}"
         }
     )
     
@@ -987,7 +987,7 @@ async def creator_onboarding_flow(user_id: str, user_data: dict):
     if user_data.get('phone'):
         await notification_manager.send_sms(
             to=user_data['phone'],
-            message=f"Welcome to Ainflue! Your verification code: {user_data['sms_code']}"
+            message=f"Welcome to IA Chérie! Your verification code: {user_data['sms_code']}"
         )
     
     # Step 3: Schedule follow-up notifications
@@ -1150,7 +1150,7 @@ async def celebrate_revenue_milestone(user_id: str, milestone_amount: float):
         template_id="revenue_milestone_celebration",
         data={
             **milestone_data,
-            "celebration_gif": "https://cdn.ainflue.com/celebrate-revenue.gif",
+            "celebration_gif": "https://cdn.iacherie.com/celebrate-revenue.gif",
             "tips_for_growth": await get_ai_growth_tips(user_id)
         }
     )
@@ -1367,22 +1367,22 @@ volumes:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-notifications
+  name: iacherie-notifications
   labels:
-    app: ainflue-notifications
+    app: iacherie-notifications
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-notifications
+      app: iacherie-notifications
   template:
     metadata:
       labels:
-        app: ainflue-notifications
+        app: iacherie-notifications
     spec:
       containers:
       - name: notifications
-        image: ainflue/notifications:latest
+        image: iacherie/notifications:latest
         ports:
         - containerPort: 8000
         env:
@@ -1414,10 +1414,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-notifications-service
+  name: iacherie-notifications-service
 spec:
   selector:
-    app: ainflue-notifications
+    app: iacherie-notifications
   ports:
   - protocol: TCP
     port: 80
@@ -1435,7 +1435,7 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'ainflue-notifications'
+  - job_name: 'iacherie-notifications'
     static_configs:
       - targets: ['localhost:8000']
     metrics_path: /metrics
@@ -1447,7 +1447,7 @@ scrape_configs:
 ```json
 {
   "dashboard": {
-    "title": "Ainflue Notifications Dashboard",
+    "title": "IA Chérie Notifications Dashboard",
     "panels": [
       {
         "title": "Notifications per Second",
@@ -1485,14 +1485,14 @@ scrape_configs:
 
 ## 🤝 Contributing
 
-We welcome contributions to the Ainflue Notification System! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions to the IA Chérie Notification System! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Setup
 
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/notifications
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/notifications
 
 # Create virtual environment
 python -m venv venv
@@ -1550,17 +1550,17 @@ For licensing inquiries, contact: **mlaiel@live.de**
 ### Technical Support
 
 - **Email**: mlaiel@live.de
-- **Documentation**: [https://docs.ainflue.com](https://docs.ainflue.com)
-- **GitHub Issues**: [https://github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
+- **Documentation**: [https://docs.iacherie.com](https://docs.iacherie.com)
+- **GitHub Issues**: [https://github.com/Mlaiel/IA Chérie/issues](https://github.com/Mlaiel/IA Chérie/issues)
 
 ### Community
 
-- **Discord**: [https://discord.gg/ainflue](https://discord.gg/ainflue)
+- **Discord**: [https://discord.gg/iacherie](https://discord.gg/iacherie)
 - **Twitter**: [@AinfluePlatform](https://twitter.com/AinfluePlatform)
-- **LinkedIn**: [Ainflue Platform](https://linkedin.com/company/ainflue)
+- **LinkedIn**: [IA Chérie Platform](https://linkedin.com/company/iacherie)
 
 ---
 
-**Built with ❤️ by the Ainflue Team**
+**Built with ❤️ by the IA Chérie Team**
 
 *Empowering the Creator Economy with Intelligent Notifications*

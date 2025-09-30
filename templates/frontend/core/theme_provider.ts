@@ -2,7 +2,7 @@
  * 🎨 THEME PROVIDER - ENTERPRISE THEMING SYSTEM
  * ===============================================
  * 
- * Advanced Theme Management for Ainflue Creator Economy
+ * Advanced Theme Management for IA Chérie Creator Economy
  * Multi-brand theming, dark/light modes, accessibility
  * 
  * © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -225,7 +225,7 @@ export interface Theme {
 
 // Default Light Theme
 export const lightTheme: Theme = {
-  name: 'ainflue-light',
+  name: 'iacherie-light',
   mode: 'light',
   colors: {
     primary: {
@@ -419,7 +419,7 @@ export const lightTheme: Theme = {
 // Dark Theme
 export const darkTheme: Theme = {
   ...lightTheme,
-  name: 'ainflue-dark',
+  name: 'iacherie-dark',
   mode: 'dark',
   colors: {
     ...lightTheme.colors,
@@ -458,7 +458,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = lightTheme,
-  storageKey = 'ainflue-theme',
+  storageKey = 'iacherie-theme',
 }) => {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 

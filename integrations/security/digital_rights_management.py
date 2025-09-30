@@ -1,13 +1,13 @@
 # 🔒 Digital Rights Management: Blockchain-Based Copyright Protection
 """
-Digital Rights Management - Ainflue Integrations
+Digital Rights Management - IA Chérie Integrations
 ==============================================
 Enterprise digital rights management providing blockchain-based copyright protection,
-NFT validation, smart contracts, and automated royalty distribution for Ainflue
+NFT validation, smart contracts, and automated royalty distribution for IA Chérie
 creator platform with advanced DRM and content protection systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -128,7 +128,7 @@ class DigitalRightsModel(Base):
     usage_restrictions = Column(JSON)
     royalty_percentage = Column(Float, default=0.0)
     expiration_date = Column(DateTime)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     blockchain_tx = Column(String(255))
     nft_token_id = Column(String(255))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -144,7 +144,7 @@ class WatermarkModel(Base):
     visibility = Column(String(20), nullable=False)
     position = Column(JSON)
     strength = Column(Float, default=0.5)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class ViolationModel(Base):
@@ -422,7 +422,7 @@ class DigitalRightsManager:
     async def apply_watermark(self, content_data: bytes, content_id: str,
                             watermark_type: str = "visible", 
                             position: Dict[str, Any] = None,
-                            strength: float = 0.5) -> Tuple[bytes, WatermarkInfo]:
+                            strength: float = 0.5) -> tuple[bytes, WatermarkInfo]:
         """
         Application watermark sur contenu
         
@@ -434,7 +434,7 @@ class DigitalRightsManager:
             strength: Force watermark (0.0-1.0)
             
         Returns:
-            Tuple[bytes, WatermarkInfo]: Contenu watermarké et info
+            tuple[bytes, WatermarkInfo]: Contenu watermarké et info
         """
         try:
             watermark_id = f"wm_{uuid.uuid4().hex[:12]}"
@@ -504,7 +504,7 @@ class DigitalRightsManager:
             image = Image.open(io.BytesIO(image_data))
             
             # Création watermark text
-            watermark_text = f"© Ainflue - {content_id[:8]}"
+            watermark_text = f"© IA Chérie - {content_id[:8]}"
             
             # Préparation watermark
             if image.mode != 'RGBA':
@@ -586,7 +586,7 @@ class DigitalRightsManager:
             img_array = np.array(image)
             
             # Message à cacher
-            watermark_message = f"AINFLUE:{content_id}:{datetime.utcnow().isoformat()}"
+            watermark_message = f"IACHERIE:{content_id}:{datetime.utcnow().isoformat()}"
             
             # Conversion message en binaire
             binary_message = ''.join(format(ord(char), '08b') for char in watermark_message)
@@ -689,7 +689,7 @@ class DigitalRightsManager:
             logger.error(f"Erreur détection violation: {e}")
             return None
     
-    async def _find_similar_content(self, content_data: bytes) -> List[Tuple[str, float]]:
+    async def _find_similar_content(self, content_data: bytes) -> List[tuple[str, float]]:
         """Recherche contenus similaires"""
         try:
             similar_contents = []

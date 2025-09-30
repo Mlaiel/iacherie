@@ -6,7 +6,7 @@ rules:
   - privilege_escalation
   - file_integrity_violations
 alerting:
-  email: security@ainflue.com
+  email: security@iacherie.com
   syslog: enabled
   real_time: true
 response:

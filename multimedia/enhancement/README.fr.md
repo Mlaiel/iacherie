@@ -1,6 +1,6 @@
 # ✨ Module d'Amélioration IA Avancée
 
-**Amélioration multimédia alimentée par IA avec mise à l'échelle par réseau neuronal pour la plateforme Ainflue**
+**Amélioration multimédia alimentée par IA avec mise à l'échelle par réseau neuronal pour la plateforme IA Chérie**
 
 ## Aperçu
 

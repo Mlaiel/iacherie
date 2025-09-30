@@ -30,7 +30,7 @@ Dieser Code ist das exklusive geistige Eigentum von Fahed Mlaiel.
 
 ## 🎯 Enterprise Abonnement-Plattform für Creator Economy
 
-Ultra-fortschrittliches, produktionsbereites Abonnement-Management-System, speziell für die Ainflue Creator Economy Platform entwickelt. Dieses System auf Industrieniveau bietet umfassendes Abonnement-Management mit KI-gestützter Intelligenz, ML-basierter Optimierung und fortgeschrittener Analytik.
+Ultra-fortschrittliches, produktionsbereites Abonnement-Management-System, speziell für die IA Chérie Creator Economy Platform entwickelt. Dieses System auf Industrieniveau bietet umfassendes Abonnement-Management mit KI-gestützter Intelligenz, ML-basierter Optimierung und fortgeschrittener Analytik.
 
 ### 🏗️ Hauptarchitektur
 
@@ -111,8 +111,8 @@ Multi-Format Creators → Intelligente Pläne → Nutzungsanalytik → Umsatzopt
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/subscription
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/subscription
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -212,7 +212,7 @@ usage_forecast = await usage_forecasting_engine.generate_usage_forecast(
 ### Umgebungsvariablen
 ```bash
 # Datenbank
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # ML-Modelle

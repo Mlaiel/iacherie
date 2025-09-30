@@ -93,7 +93,7 @@ class EnterpriseTestFramework:
     
     def __init__(self):
         if get_logger and CORE_SERVICES_AVAILABLE:
-            self.logger = get_logger("test_framework", service_name="ainflue-testing")
+            self.logger = get_logger("test_framework", service_name="iacherie-testing")
         else:
             import logging
             self.logger = logging.getLogger(__name__)
@@ -466,7 +466,7 @@ class EnterpriseTestFramework:
             
             # Test authentication
             token = await security_manager.authenticate_user(
-                username="admin@ainflue.com",
+                username="admin@iacherie.com",
                 password="admin123!@#",
                 client_ip="127.0.0.1"
             )

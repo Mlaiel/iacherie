@@ -3,7 +3,7 @@ Redis Configuration - Enterprise Caching & Session Management
 ============================================================
 
 Ultra-optimized Redis configuration for enterprise-grade caching, session
-management, and real-time data operations in the Ainflue creator economy platform.
+management, and real-time data operations in the IA Chérie creator economy platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -55,26 +55,26 @@ caching:
     max_size: "1gb"
     compression: true
     serialization: "json"
-    key_prefix: "ainflue:content:"
+    key_prefix: "iacherie:content:"
   
   # Session Cache
   session_cache:
     ttl: 1800  # 30 minutes
     sliding_expiration: true
-    key_prefix: "ainflue:session:"
+    key_prefix: "iacherie:session:"
     secure_keys: true
   
   # API Response Cache
   api_cache:
     ttl: 300  # 5 minutes
     vary_by_user: true
-    key_prefix: "ainflue:api:"
+    key_prefix: "iacherie:api:"
     cache_control: "private, max-age=300"
   
   # Creator Profile Cache
   creator_cache:
     ttl: 7200  # 2 hours
-    key_prefix: "ainflue:creator:"
+    key_prefix: "iacherie:creator:"
     cache_tags: ["profile", "stats", "content"]
 
 # Real-time Features
@@ -180,7 +180,7 @@ backup:
   # Backup Storage
   storage:
     provider: "aws_s3"
-    bucket: "${REDIS_BACKUP_BUCKET:ainflue-redis-backups}"
+    bucket: "${REDIS_BACKUP_BUCKET:iacherie-redis-backups}"
     encryption: true
     versioning: true
   
@@ -203,7 +203,7 @@ high_availability:
   # Sentinel Configuration
   sentinel:
     enabled: ${REDIS_SENTINEL_ENABLED:false}
-    master_name: "ainflue-master"
+    master_name: "iacherie-master"
     quorum: 2
     down_after_milliseconds: 5000
     parallel_syncs: 1

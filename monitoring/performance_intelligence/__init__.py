@@ -1,7 +1,7 @@
 """🎯 Advanced Metrics Module - Enterprise Analytics & Business Intelligence
 ========================================================================
 
-Comprehensive advanced metrics collection and analysis system for the Ainflue platform.
+Comprehensive advanced metrics collection and analysis system for the IA Chérie platform.
 Provides enterprise-grade business KPIs, user engagement analytics, content performance
 metrics, and collaboration success tracking.
 

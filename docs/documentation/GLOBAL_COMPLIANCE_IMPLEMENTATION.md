@@ -1,7 +1,7 @@
 # Global Legal Compliance Implementation Summary
 
 ## Overview
-This implementation extends Ainflue's compliance framework to support comprehensive global legal requirements, adding three critical regional privacy and data protection regulations to complement existing GDPR, CCPA, and DMCA coverage.
+This implementation extends IA Chérie's compliance framework to support comprehensive global legal requirements, adding three critical regional privacy and data protection regulations to complement existing GDPR, CCPA, and DMCA coverage.
 
 ## Implemented Compliance Frameworks
 

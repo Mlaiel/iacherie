@@ -1,5 +1,5 @@
 """
-Retry_mechanisms Module for Ainflue Microservices
+Retry_mechanisms Module for IA Chérie Microservices
 Implements retry_mechanisms functionality for distributed systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

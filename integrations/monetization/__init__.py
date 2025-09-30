@@ -1,5 +1,5 @@
 """
-Monetization Module - Ainflue Integrations
+Monetization Module - IA Chérie Integrations
 ==========================================
 Module de monétisation enterprise avec pricing intelligent,
 optimisation revenue et analytics business avancés.
@@ -12,7 +12,7 @@ Support pour:
 - Multi-devises et compliance fiscale
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 

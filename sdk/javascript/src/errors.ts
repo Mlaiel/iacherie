@@ -1,5 +1,5 @@
 /**
- * Error Classes for Ainflue JavaScript SDK
+ * Error Classes for IA Chérie JavaScript SDK
  * Comprehensive error handling with enterprise security considerations
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

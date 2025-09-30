@@ -455,7 +455,7 @@ class APIManagementService:
                 name="User Management API",
                 version="v1",
                 description="Comprehensive user management and authentication API",
-                base_url="https://api.ainflue.com/v1/users",
+                base_url="https://api.iacherie.com/v1/users",
                 status=APIStatus.ACTIVE,
                 endpoints=[
                     APIEndpoint(
@@ -531,11 +531,11 @@ class APIManagementService:
                         updated_at=datetime.now()
                     )
                 ],
-                documentation_url="https://docs.ainflue.com/api/users",
-                changelog_url="https://docs.ainflue.com/api/users/changelog",
-                support_contact="api-support@ainflue.com",
+                documentation_url="https://docs.iacherie.com/api/users",
+                changelog_url="https://docs.iacherie.com/api/users/changelog",
+                support_contact="api-support@iacherie.com",
                 license="MIT",
-                terms_of_service_url="https://ainflue.com/terms",
+                terms_of_service_url="https://iacherie.com/terms",
                 rate_limits=self.rate_limit_tiers["basic"],
                 authentication_config={
                     "supported_types": ["bearer_token", "api_key"],
@@ -562,7 +562,7 @@ class APIManagementService:
                 name="Content Management API",
                 version="v2",
                 description="Advanced content creation, management, and optimization API",
-                base_url="https://api.ainflue.com/v2/content",
+                base_url="https://api.iacherie.com/v2/content",
                 status=APIStatus.ACTIVE,
                 endpoints=[
                     APIEndpoint(
@@ -603,11 +603,11 @@ class APIManagementService:
                         updated_at=datetime.now()
                     )
                 ],
-                documentation_url="https://docs.ainflue.com/api/content",
-                changelog_url="https://docs.ainflue.com/api/content/changelog",
-                support_contact="api-support@ainflue.com",
+                documentation_url="https://docs.iacherie.com/api/content",
+                changelog_url="https://docs.iacherie.com/api/content/changelog",
+                support_contact="api-support@iacherie.com",
                 license="MIT",
-                terms_of_service_url="https://ainflue.com/terms",
+                terms_of_service_url="https://iacherie.com/terms",
                 rate_limits=self.rate_limit_tiers["premium"],
                 authentication_config={
                     "supported_types": ["bearer_token", "oauth2"],

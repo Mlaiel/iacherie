@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Menu Manager
+ * IA Chérie Desktop - Menu Manager
  * 
  * Native menu system for cross-platform desktop application
  * 
@@ -386,7 +386,7 @@ class MenuManager {
           },
           { type: 'separator' },
           {
-            label: 'About Ainflue Studio',
+            label: 'About IA Chérie Studio',
             click: () => this.handleAbout()
           }
         ]
@@ -435,7 +435,7 @@ class MenuManager {
         title: 'Open Project',
         properties: ['openFile'],
         filters: [
-          { name: 'Ainflue Projects', extensions: ['ainflue', 'json'] },
+          { name: 'IA Chérie Projects', extensions: ['iacherie', 'json'] },
           { name: 'All Files', extensions: ['*'] }
         ]
       });
@@ -467,9 +467,9 @@ class MenuManager {
     try {
       const result = await dialog.showSaveDialog({
         title: 'Save Project As',
-        defaultPath: 'Untitled Project.ainflue',
+        defaultPath: 'Untitled Project.iacherie',
         filters: [
-          { name: 'Ainflue Projects', extensions: ['ainflue'] },
+          { name: 'IA Chérie Projects', extensions: ['iacherie'] },
           { name: 'JSON Files', extensions: ['json'] }
         ]
       });
@@ -620,15 +620,15 @@ class MenuManager {
 
   // Help Menu Handlers
   handleGettingStarted() {
-    shell.openExternal('https://ainflue.com/docs/getting-started');
+    shell.openExternal('https://iacherie.com/docs/getting-started');
   }
 
   handleUserManual() {
-    shell.openExternal('https://ainflue.com/docs/user-manual');
+    shell.openExternal('https://iacherie.com/docs/user-manual');
   }
 
   handleVideoTutorials() {
-    shell.openExternal('https://ainflue.com/tutorials');
+    shell.openExternal('https://iacherie.com/tutorials');
   }
 
   handleKeyboardShortcuts() {
@@ -639,11 +639,11 @@ class MenuManager {
   }
 
   handleReportIssue() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/issues/new');
+    shell.openExternal('https://github.com/Mlaiel/IA Chérie/issues/new');
   }
 
   handleFeatureRequest() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/discussions/new');
+    shell.openExternal('https://github.com/Mlaiel/IA Chérie/discussions/new');
   }
 
   handleCheckUpdates() {
@@ -654,14 +654,14 @@ class MenuManager {
   }
 
   handleReleaseNotes() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/releases');
+    shell.openExternal('https://github.com/Mlaiel/IA Chérie/releases');
   }
 
   async handleAbout() {
     await dialog.showMessageBox({
       type: 'info',
-      title: 'About Ainflue Studio',
-      message: 'Ainflue Studio',
+      title: 'About IA Chérie Studio',
+      message: 'IA Chérie Studio',
       detail: `Version: ${app.getVersion()}\n\nAI-powered content creation and collaboration platform.\n\n© 2025 Fahed Mlaiel. All rights reserved.\nContact: mlaiel@live.de`,
       buttons: ['OK']
     });

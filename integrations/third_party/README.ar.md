@@ -1,4 +1,4 @@
-# 🔗 وحدة الطرف الثالث - Ainflue Integrations
+# 🔗 وحدة الطرف الثالث - IA Chérie Integrations
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

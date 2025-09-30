@@ -1,12 +1,12 @@
 """
-Communication Module - Ainflue Integrations
+Communication Module - IA Chérie Integrations
 ==========================================
 Enterprise-grade communication infrastructure providing multi-channel
 messaging, collaboration tools, notification systems, and real-time
 communication across platforms and users.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -26,7 +26,7 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise communication infrastructure for multi-platform collaboration"
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 AINFLUE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,

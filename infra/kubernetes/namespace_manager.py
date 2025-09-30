@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Kubernetes Namespace Management
@@ -122,14 +122,14 @@ class NamespaceManager:
                     "labels": {
                         "name": namespace_config.name,
                         "type": namespace_config.namespace_type.value,
-                        "managed-by": "ainflue-infrastructure",
+                        "managed-by": "iacherie-infrastructure",
                         "environment": namespace_config.namespace_type.value,
                         **(namespace_config.labels or {})
                     },
                     "annotations": {
                         "kubectl.kubernetes.io/last-applied-configuration": "",
-                        "ainflue.io/created": datetime.utcnow().isoformat(),
-                        "ainflue.io/managed": "true",
+                        "iacherie.io/created": datetime.utcnow().isoformat(),
+                        "iacherie.io/managed": "true",
                         **(namespace_config.annotations or {})
                     }
                 }
@@ -241,8 +241,8 @@ class NamespaceManager:
                 "auto-cleanup": "enabled"
             },
             annotations={
-                "ainflue.io/ttl": "7d",  # Auto-cleanup after 7 days
-                "ainflue.io/owner": developer
+                "iacherie.io/ttl": "7d",  # Auto-cleanup after 7 days
+                "iacherie.io/owner": developer
             }
         )
         
@@ -437,8 +437,8 @@ class NamespaceManager:
             
             for namespace in namespaces.items:
                 annotations = namespace.metadata.annotations or {}
-                ttl = annotations.get("ainflue.io/ttl")
-                created = annotations.get("ainflue.io/created")
+                ttl = annotations.get("iacherie.io/ttl")
+                created = annotations.get("iacherie.io/created")
                 
                 if ttl and created:
                     if self._is_expired(created, ttl):

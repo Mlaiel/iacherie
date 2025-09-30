@@ -1,11 +1,11 @@
 """
-AI Processing Rate Limiter Enterprise - Ainflue
+AI Processing Rate Limiter Enterprise - IA Chérie
 ===============================================
 Rate Limiter spécialisé pour processing IA/ML.
 GPU/CPU quotas + model complexity + processing queues.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chérie Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

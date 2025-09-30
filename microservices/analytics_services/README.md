@@ -1,6 +1,6 @@
 # 📊 Analytics Services - Enterprise Analytics & Business Intelligence
 
-**Enterprise-grade analytics and business intelligence services for the Ainflue platform.**
+**Enterprise-grade analytics and business intelligence services for the IA Chérie platform.**
 
 ## Overview
 

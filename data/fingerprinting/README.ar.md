@@ -139,8 +139,8 @@
 ### 🔧 التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -269,7 +269,7 @@ fingerprinting:
 ### 📧 الاتصال
 - **البريد الإلكتروني:** mlaiel@live.de
 - **المؤلف:** فاهد ملايل
-- **الموقع:** https://github.com/Mlaiel/Ainflue
+- **الموقع:** https://github.com/Mlaiel/IA Chérie
 
 ### ⚖️ الترخيص
 هذا البرنامج محمي بحقوق الطبع والنشر وهو ملكية فكرية حصرية. 

@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-engine
-  namespace: ainflue
+  name: iacherie-ai-engine
+  namespace: iacherie
   labels:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
     component: ai-processing
     environment: production
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-ai-engine
+      app: iacherie-ai-engine
   template:
     metadata:
       labels:
-        app: ainflue-ai-engine
+        app: iacherie-ai-engine
         component: ai-processing
     spec:
-      serviceAccountName: ainflue-ai-service-account
+      serviceAccountName: iacherie-ai-service-account
       containers:
       - name: ai-engine
-        image: ainflue/ai-engine:latest
+        image: iacherie/ai-engine:latest
         ports:
         - containerPort: 8080
           name: http
@@ -33,12 +33,12 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: database-url
         - name: REDIS_URL
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: redis-url
         - name: AI_MODEL_PATH
           value: "/models"
@@ -87,13 +87,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-ai-engine-service
-  namespace: ainflue
+  name: iacherie-ai-engine-service
+  namespace: iacherie
   labels:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
 spec:
   selector:
-    app: ainflue-ai-engine
+    app: iacherie-ai-engine
   ports:
   - name: http
     port: 80
@@ -107,13 +107,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-ai-engine-hpa
-  namespace: ainflue
+  name: iacherie-ai-engine-hpa
+  namespace: iacherie
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-ai-engine
+    name: iacherie-ai-engine
   minReplicas: 2
   maxReplicas: 10
   metrics:

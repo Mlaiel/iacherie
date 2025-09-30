@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,10 +10,10 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Ainflue Infrastructure Module
+IA Chérie Infrastructure Module
 
 This module provides enterprise-grade infrastructure management capabilities
-for the Ainflue platform, supporting multi-cloud deployment and enterprise security.
+for the IA Chérie platform, supporting multi-cloud deployment and enterprise security.
 
 Features:
     - Multi-cloud provider support (AWS, GCP, Azure)

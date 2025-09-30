@@ -1,4 +1,4 @@
-"""🎯 Multi-Format Processing Health Tracker | Ainflue Enterprise
+"""🎯 Multi-Format Processing Health Tracker | IA Chérie Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

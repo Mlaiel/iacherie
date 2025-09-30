@@ -2,7 +2,7 @@
 ==========================================================================
 
 Moniteur de performance audio enterprise avec analytics avancées,
-optimization temps réel et insights business pour Ainflue.
+optimization temps réel et insights business pour IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Métriques qualité audio + performance DSP + analysis acoustique
@@ -566,7 +566,7 @@ class PerformancePredictor:
         metric_type: MetricType,
         resource_id: Optional[str],
         prediction_horizon: int = 60  # minutes
-    ) -> List[Tuple[datetime, float]]:
+    ) -> List[tuple[datetime, float]]:
         """Prédit les valeurs futures d'une métrique"""
         
         key = f"{metric_type.value}:{resource_id or 'global'}"
@@ -619,7 +619,7 @@ class PerformancePredictor:
         metric_type: MetricType,
         resource_id: Optional[str],
         current_value: float
-    ) -> Tuple[bool, float]:
+    ) -> tuple[bool, float]:
         """Détecte les anomalies dans les métriques"""
         
         key = f"{metric_type.value}:{resource_id or 'global'}"

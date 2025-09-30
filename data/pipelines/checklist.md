@@ -91,7 +91,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE ACTUELLE VS OPTIMISÉE
 
 ```
-/workspaces/Ainflue/data/pipelines/                        [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/pipelines/                        [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers) 🟡 PARTIEL
 │   ├── README.md ✅                    # Documentation anglais (COMPLET)
 │   ├── README.de.md ❌                 # Documentation allemand (MANQUANT)
@@ -234,7 +234,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -343,17 +343,17 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/pipeline-orchestrator:latest
-- ainflue/content-ingestion:latest
-- ainflue/protection-pipeline:latest
-- ainflue/monetization-pipeline:latest
-- ainflue/analytics-pipeline:latest
-- ainflue/collaboration-pipeline:latest
-- ainflue/distribution-pipeline:latest
-- ainflue/monitoring:latest
-- ainflue/ai-optimization:latest
-- ainflue/security-compliance:latest
-- ainflue/notification-intelligence:latest
+- iacherie/pipeline-orchestrator:latest
+- iacherie/content-ingestion:latest
+- iacherie/protection-pipeline:latest
+- iacherie/monetization-pipeline:latest
+- iacherie/analytics-pipeline:latest
+- iacherie/collaboration-pipeline:latest
+- iacherie/distribution-pipeline:latest
+- iacherie/monitoring:latest
+- iacherie/ai-optimization:latest
+- iacherie/security-compliance:latest
+- iacherie/notification-intelligence:latest
 ```
 
 ---
@@ -547,7 +547,7 @@ kubernetes/
 
 ### 🚀 **SYSTEM READY FOR PRODUCTION**
 
-Le module Data Pipelines de la plateforme Ainflue est maintenant:
+Le module Data Pipelines de la plateforme IA Chérie est maintenant:
 - ✅ **Enterprise-Grade**: Architecture scalable et robuste
 - ✅ **Production-Ready**: Tests, monitoring et alerting complets
 - ✅ **Secure**: Sécurité et compliance enterprise

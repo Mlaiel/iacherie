@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 SEO localization optimizer enterprise avec regional search optimization,
 local keyword research AI et multilingual SEO analytics.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Regional SEO optimization pour créateurs globaux
 - Local keyword research AI avec volume analysis
 - Cultural SEO adaptation par région
@@ -591,7 +591,7 @@ class SEOLocalizationOptimizer:
             "title": title,
             "description": description,
             "keywords": ", ".join(keywords[:5]),  # Top 5 keywords
-            "author": "Ainflue Platform",
+            "author": "IA Chérie Platform",
             "robots": "index, follow",
             "viewport": "width=device-width, initial-scale=1",
             "og:title": title,
@@ -618,11 +618,11 @@ class SEOLocalizationOptimizer:
                 "description": content[:200],
                 "author": {
                     "@type": "Organization",
-                    "name": "Ainflue Platform"
+                    "name": "IA Chérie Platform"
                 },
                 "publisher": {
                     "@type": "Organization",
-                    "name": "Ainflue Platform"
+                    "name": "IA Chérie Platform"
                 },
                 "datePublished": datetime.now().isoformat(),
                 "dateModified": datetime.now().isoformat()
@@ -638,7 +638,7 @@ class SEOLocalizationOptimizer:
                 "uploadDate": datetime.now().isoformat(),
                 "publisher": {
                     "@type": "Organization",
-                    "name": "Ainflue Platform"
+                    "name": "IA Chérie Platform"
                 }
             }
             return json.dumps(schema, indent=2)

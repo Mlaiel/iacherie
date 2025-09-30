@@ -1,10 +1,10 @@
 # 🏗️ Core Modul - Enterprise Business Logic Kernkomponenten
 
-**Erweiterte Enterprise-Grade Kernsystem für die Ainflue Plattform**
+**Erweiterte Enterprise-Grade Kernsystem für die IA Chérie Plattform**
 
 ## 🎯 **Projektübersicht**
 
-Das Core Modul stellt die grundlegende Business Logic Infrastruktur für die Ainflue IA Influencer Agent Plattform bereit. Dieses Enterprise-Grade System verwaltet Creator Multi-Format Content-Verarbeitung, KI-gestützte Content-Analyse, Urheberrechtsschutz und Umsatzoptimierung mit >99,99% Uptime-Garantie.
+Das Core Modul stellt die grundlegende Business Logic Infrastruktur für die IA Chérie IA Influencer Agent Plattform bereit. Dieses Enterprise-Grade System verwaltet Creator Multi-Format Content-Verarbeitung, KI-gestützte Content-Analyse, Urheberrechtsschutz und Umsatzoptimierung mit >99,99% Uptime-Garantie.
 
 ### 👥 **Entwicklungsteam Expertise**
 **Projektleiter & Ersteller:** Fahed Mlaiel <mlaiel@live.de>
@@ -283,9 +283,9 @@ revenue_stream = await monetization_business_core.create_revenue_stream(
 - **Individuelle Entwicklung**: Maßgeschneiderte Lösungen für spezifische Anforderungen
 
 **Hauptkontakt**: Fahed Mlaiel <mlaiel@live.de>
-**Geschäftsentwicklung**: business@ainflue.com
-**Technischer Support**: support@ainflue.com
-**Rechtliche Anfragen**: legal@ainflue.com
+**Geschäftsentwicklung**: business@iacherie.com
+**Technischer Support**: support@iacherie.com
+**Rechtliche Anfragen**: legal@iacherie.com
 
 ---
 

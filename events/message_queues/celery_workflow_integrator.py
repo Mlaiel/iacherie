@@ -1,7 +1,7 @@
 """Celery Workflow Integrator Module
 
 Advanced Celery workflow integration for complex multi-step business processes
-in the Ainflue Message Queues Enterprise system.
+in the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -117,43 +117,43 @@ class WorkflowExecution:
 
 
 class AinflueBusiness:
-    """Ainflue Business Celery Workflows"""
+    """IA Chérie Business Celery Workflows"""
     
     # Content processing workflow tasks
     CONTENT_TASKS = {
-        "upload_content": "ainflue.content.upload",
-        "validate_content": "ainflue.content.validate",
-        "ai_content_analysis": "ainflue.content.ai_analysis",
-        "apply_content_protection": "ainflue.content.protection",
-        "seo_optimize_content": "ainflue.seo.optimize",
-        "distribute_content": "ainflue.distribution.publish"
+        "upload_content": "iacherie.content.upload",
+        "validate_content": "iacherie.content.validate",
+        "ai_content_analysis": "iacherie.content.ai_analysis",
+        "apply_content_protection": "iacherie.content.protection",
+        "seo_optimize_content": "iacherie.seo.optimize",
+        "distribute_content": "iacherie.distribution.publish"
     }
     
     # Collaboration workflow tasks
     COLLABORATION_TASKS = {
-        "find_collaboration_matches": "ainflue.collaboration.find_matches",
-        "validate_match_compatibility": "ainflue.collaboration.validate_match",
-        "send_collaboration_notifications": "ainflue.collaboration.notify",
-        "create_collaboration_workspace": "ainflue.collaboration.workspace",
-        "track_collaboration_progress": "ainflue.collaboration.track"
+        "find_collaboration_matches": "iacherie.collaboration.find_matches",
+        "validate_match_compatibility": "iacherie.collaboration.validate_match",
+        "send_collaboration_notifications": "iacherie.collaboration.notify",
+        "create_collaboration_workspace": "iacherie.collaboration.workspace",
+        "track_collaboration_progress": "iacherie.collaboration.track"
     }
     
     # Revenue calculation workflow tasks
     REVENUE_TASKS = {
-        "calculate_creator_revenues": "ainflue.revenue.calculate_creator",
-        "calculate_platform_commissions": "ainflue.revenue.calculate_commission",
-        "calculate_collaboration_bonuses": "ainflue.revenue.calculate_bonus",
-        "reconcile_and_distribute_payments": "ainflue.revenue.reconcile_distribute",
-        "generate_revenue_reports": "ainflue.revenue.generate_reports"
+        "calculate_creator_revenues": "iacherie.revenue.calculate_creator",
+        "calculate_platform_commissions": "iacherie.revenue.calculate_commission",
+        "calculate_collaboration_bonuses": "iacherie.revenue.calculate_bonus",
+        "reconcile_and_distribute_payments": "iacherie.revenue.reconcile_distribute",
+        "generate_revenue_reports": "iacherie.revenue.generate_reports"
     }
     
     # SEO optimization workflow tasks
     SEO_TASKS = {
-        "analyze_content_keywords": "ainflue.seo.analyze_keywords",
-        "analyze_trending_topics": "ainflue.seo.analyze_trends",
-        "optimize_metadata": "ainflue.seo.optimize_metadata",
-        "submit_to_search_engines": "ainflue.seo.submit_indexing",
-        "monitor_seo_performance": "ainflue.seo.monitor_performance"
+        "analyze_content_keywords": "iacherie.seo.analyze_keywords",
+        "analyze_trending_topics": "iacherie.seo.analyze_trends",
+        "optimize_metadata": "iacherie.seo.optimize_metadata",
+        "submit_to_search_engines": "iacherie.seo.submit_indexing",
+        "monitor_seo_performance": "iacherie.seo.monitor_performance"
     }
     
     # Queue routing for specialized workers
@@ -170,7 +170,7 @@ class AinflueBusiness:
 
 class CeleryWorkflowIntegrator:
     """
-    Advanced Celery workflow integration for Ainflue business processes
+    Advanced Celery workflow integration for IA Chérie business processes
     Supporting chains, groups, chords, and complex workflow patterns
     """
     
@@ -212,7 +212,7 @@ class CeleryWorkflowIntegrator:
                 "result_compression": "gzip"
             }
             
-            # Register Ainflue business workflows
+            # Register IA Chérie business workflows
             await self._register_business_workflows()
             
             self.is_initialized = True
@@ -705,7 +705,7 @@ class CeleryWorkflowIntegrator:
         }
     
     async def _register_business_workflows(self):
-        """Register Ainflue business workflow definitions"""
+        """Register IA Chérie business workflow definitions"""
         # Pre-register common workflow patterns
         business_workflows = [
             "content_processing_workflow",

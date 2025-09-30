@@ -175,4 +175,4 @@ The modular design allows for easy extension to support:
 - Real-time streaming analysis
 - Advanced analytics and reporting
 
-This implementation provides a comprehensive, production-ready copyright monitoring solution across all major music platforms while maintaining minimal code changes and maximum compatibility with the existing Ainflue platform infrastructure.
+This implementation provides a comprehensive, production-ready copyright monitoring solution across all major music platforms while maintaining minimal code changes and maximum compatibility with the existing IA Chérie platform infrastructure.

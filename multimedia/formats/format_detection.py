@@ -2,7 +2,7 @@
 🔍 AI FORMAT DETECTION ENGINE - ENTERPRISE ARCHITECTURE
 =======================================================
 
-Advanced AI-powered format detection and analysis for Ainflue Platform
+Advanced AI-powered format detection and analysis for IA Chérie Platform
 Using multiple detection methods and machine learning for accuracy
 
 **Expert Implementation:**

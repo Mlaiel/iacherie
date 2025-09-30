@@ -1,4 +1,4 @@
-"""Ainflue Core Platform - Notification System Core
+"""IA Chérie Core Platform - Notification System Core
 =================================================
 
 Enterprise-grade notification system providing multi-channel messaging,
@@ -319,9 +319,9 @@ class TemplateEngine:
                 name="Welcome Email",
                 template_type=TemplateType.WELCOME,
                 channel=NotificationChannel.EMAIL,
-                subject_template="Welcome to Ainflue, {{user_name}}!",
-                body_template="Welcome to Ainflue! We're excited to have you join our creator community.",
-                html_template="<h1>Welcome to Ainflue!</h1><p>Hello {{user_name}}, we're excited to have you join our creator community.</p>",
+                subject_template="Welcome to IA Chérie, {{user_name}}!",
+                body_template="Welcome to IA Chérie! We're excited to have you join our creator community.",
+                html_template="<h1>Welcome to IA Chérie!</h1><p>Hello {{user_name}}, we're excited to have you join our creator community.</p>",
                 variables=["user_name", "user_email"]
             ),
             NotificationTemplate(
@@ -329,7 +329,7 @@ class TemplateEngine:
                 name="Email Verification",
                 template_type=TemplateType.VERIFICATION,
                 channel=NotificationChannel.EMAIL,
-                subject_template="Verify your Ainflue account",
+                subject_template="Verify your IA Chérie account",
                 body_template="Please verify your email address by clicking this link: {{verification_link}}",
                 html_template="<p>Please verify your email address by <a href='{{verification_link}}'>clicking here</a>.</p>",
                 variables=["verification_link", "user_name"]

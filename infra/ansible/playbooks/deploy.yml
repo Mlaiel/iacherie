@@ -1,29 +1,29 @@
-# Ainflue Platform Deployment Playbook
+# IA Chérie Platform Deployment Playbook
 # =====================================
 #
-# Complete Ansible playbook for deploying Ainflue platform
+# Complete Ansible playbook for deploying IA Chérie platform
 # Supports multi-environment deployment with infrastructure provisioning
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ---
-- name: Deploy Ainflue Platform
+- name: Deploy IA Chérie Platform
   hosts: localhost
   gather_facts: false
   vars:
     # Environment configuration
     environment: "{{ env | default('dev') }}"
-    project_name: ainflue
+    project_name: iacherie
     aws_region: "{{ aws_region | default('us-west-2') }}"
     
     # Infrastructure configuration
     terraform_dir: "../terraform"
     k8s_manifests_dir: "../k8s"
-    helm_chart_dir: "../helm/ainflue-chart"
+    helm_chart_dir: "../helm/iacherie-chart"
     
     # Application configuration
-    docker_registry: "{{ docker_registry | default('ainflue') }}"
+    docker_registry: "{{ docker_registry | default('iacherie') }}"
     image_tag: "{{ image_tag | default('latest') }}"
     
     # Database configuration
@@ -33,7 +33,7 @@
     cluster_size: "{{ cluster_size | default(3) }}"
     
     # Domain configuration
-    domain_name: "{{ domain_name | default('ainflue.com') }}"
+    domain_name: "{{ domain_name | default('iacherie.com') }}"
     
     # Monitoring configuration
     enable_monitoring: "{{ enable_monitoring | default(true) }}"
@@ -43,7 +43,7 @@
     - name: Display deployment information
       debug:
         msg: |
-          Deploying Ainflue Platform
+          Deploying IA Chérie Platform
           ==========================
           Environment: {{ environment }}
           AWS Region: {{ aws_region }}
@@ -64,7 +64,7 @@
     - name: Create temporary directory for deployment
       tempfile:
         state: directory
-        suffix: -ainflue-deploy
+        suffix: -iacherie-deploy
       register: temp_dir
 
     - name: Check if Terraform is installed
@@ -361,7 +361,7 @@
     - name: Save deployment information
       copy:
         content: |
-          # Ainflue Platform Deployment Information
+          # IA Chérie Platform Deployment Information
           
           **Deployment Date:** {{ ansible_date_time.iso8601 }}
           **Environment:** {{ environment }}

@@ -1,17 +1,17 @@
-/* Light Mode Corporate Theme - Ainflue Studio */
+/* Light Mode Corporate Theme - IA Chérie Studio */
 /* © 2025 Fahed Mlaiel - Professional Corporate Design */
 
 :root {
   /* Primary Brand Colors */
-  --ainflue-primary: #00ff88;
-  --ainflue-primary-light: #33ff99;
-  --ainflue-primary-dark: #00cc6a;
-  --ainflue-secondary: #0066ff;
-  --ainflue-secondary-light: #3388ff;
-  --ainflue-secondary-dark: #0044cc;
-  --ainflue-accent: #ff6b00;
-  --ainflue-accent-light: #ff8533;
-  --ainflue-accent-dark: #cc5500;
+  --iacherie-primary: #00ff88;
+  --iacherie-primary-light: #33ff99;
+  --iacherie-primary-dark: #00cc6a;
+  --iacherie-secondary: #0066ff;
+  --iacherie-secondary-light: #3388ff;
+  --iacherie-secondary-dark: #0044cc;
+  --iacherie-accent: #ff6b00;
+  --iacherie-accent-light: #ff8533;
+  --iacherie-accent-dark: #cc5500;
 
   /* Light Mode Colors */
   --bg-primary: #ffffff;
@@ -76,14 +76,14 @@ body {
 }
 
 /* Corporate Container */
-.ainflue-container {
+.iacherie-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: var(--spacing-lg);
 }
 
 /* Professional Header */
-.ainflue-header {
+.iacherie-header {
   background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
   border-bottom: 2px solid var(--border-primary);
   padding: var(--spacing-md) 0;
@@ -94,8 +94,8 @@ body {
 }
 
 /* Corporate Buttons */
-.ainflue-btn {
-  background: linear-gradient(135deg, var(--ainflue-primary), var(--ainflue-primary-dark));
+.iacherie-btn {
+  background: linear-gradient(135deg, var(--iacherie-primary), var(--iacherie-primary-dark));
   color: var(--text-primary);
   border: none;
   padding: var(--spacing-sm) var(--spacing-lg);
@@ -115,7 +115,7 @@ body {
   overflow: hidden;
 }
 
-.ainflue-btn::before {
+.iacherie-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -126,32 +126,32 @@ body {
   transition: left var(--transition-slow);
 }
 
-.ainflue-btn:hover::before {
+.iacherie-btn:hover::before {
   left: 100%;
 }
 
-.ainflue-btn:hover {
+.iacherie-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-.ainflue-btn:active {
+.iacherie-btn:active {
   transform: translateY(0);
   box-shadow: var(--shadow-sm);
 }
 
-.ainflue-btn-secondary {
-  background: linear-gradient(135deg, var(--ainflue-secondary), var(--ainflue-secondary-dark));
+.iacherie-btn-secondary {
+  background: linear-gradient(135deg, var(--iacherie-secondary), var(--iacherie-secondary-dark));
   color: white;
 }
 
-.ainflue-btn-accent {
-  background: linear-gradient(135deg, var(--ainflue-accent), var(--ainflue-accent-dark));
+.iacherie-btn-accent {
+  background: linear-gradient(135deg, var(--iacherie-accent), var(--iacherie-accent-dark));
   color: white;
 }
 
 /* Professional Form Elements */
-.ainflue-input {
+.iacherie-input {
   background-color: var(--bg-primary);
   border: 2px solid var(--border-primary);
   border-radius: var(--radius-md);
@@ -164,19 +164,19 @@ body {
   box-sizing: border-box;
 }
 
-.ainflue-input:focus {
+.iacherie-input:focus {
   outline: none;
-  border-color: var(--ainflue-primary);
+  border-color: var(--iacherie-primary);
   box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
   background-color: var(--bg-secondary);
 }
 
-.ainflue-input::placeholder {
+.iacherie-input::placeholder {
   color: var(--text-quaternary);
 }
 
 /* Professional Cards */
-.ainflue-card {
+.iacherie-card {
   background: var(--bg-primary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
@@ -187,30 +187,30 @@ body {
   overflow: hidden;
 }
 
-.ainflue-card::before {
+.iacherie-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--ainflue-primary), var(--ainflue-secondary));
+  background: linear-gradient(90deg, var(--iacherie-primary), var(--iacherie-secondary));
 }
 
-.ainflue-card:hover {
+.iacherie-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
-  border-color: var(--ainflue-primary);
+  border-color: var(--iacherie-primary);
 }
 
 /* Navigation */
-.ainflue-nav {
+.iacherie-nav {
   display: flex;
   gap: var(--spacing-lg);
   align-items: center;
 }
 
-.ainflue-nav-link {
+.iacherie-nav-link {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
@@ -220,33 +220,33 @@ body {
   position: relative;
 }
 
-.ainflue-nav-link:hover {
-  color: var(--ainflue-primary);
+.iacherie-nav-link:hover {
+  color: var(--iacherie-primary);
   background-color: var(--bg-tertiary);
 }
 
-.ainflue-nav-link.active {
-  color: var(--ainflue-primary);
+.iacherie-nav-link.active {
+  color: var(--iacherie-primary);
   background-color: var(--bg-tertiary);
 }
 
 /* Professional Animations */
-@keyframes ainflue-pulse {
+@keyframes iacherie-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.8; }
 }
 
-@keyframes ainflue-glow {
+@keyframes iacherie-glow {
   0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.3); }
   50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
 }
 
-.ainflue-animate-pulse {
-  animation: ainflue-pulse 2s ease-in-out infinite;
+.iacherie-animate-pulse {
+  animation: iacherie-pulse 2s ease-in-out infinite;
 }
 
-.ainflue-animate-glow {
-  animation: ainflue-glow 2s ease-in-out infinite;
+.iacherie-animate-glow {
+  animation: iacherie-glow 2s ease-in-out infinite;
 }
 
 /* Professional Scrollbars */
@@ -260,16 +260,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ainflue-primary);
+  background: var(--iacherie-primary);
   border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ainflue-primary-light);
+  background: var(--iacherie-primary-light);
 }
 
 /* Corporate Tables */
-.ainflue-table {
+.iacherie-table {
   width: 100%;
   border-collapse: collapse;
   background: var(--bg-primary);
@@ -278,7 +278,7 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-.ainflue-table th {
+.iacherie-table th {
   background: var(--bg-tertiary);
   color: var(--text-primary);
   font-weight: 600;
@@ -287,28 +287,28 @@ body {
   border-bottom: 1px solid var(--border-primary);
 }
 
-.ainflue-table td {
+.iacherie-table td {
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--border-primary);
   color: var(--text-secondary);
 }
 
-.ainflue-table tr:hover {
+.iacherie-table tr:hover {
   background-color: var(--bg-secondary);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .ainflue-container {
+  .iacherie-container {
     padding: var(--spacing-md);
   }
   
-  .ainflue-nav {
+  .iacherie-nav {
     flex-direction: column;
     gap: var(--spacing-sm);
   }
   
-  .ainflue-btn {
+  .iacherie-btn {
     width: 100%;
     justify-content: center;
   }

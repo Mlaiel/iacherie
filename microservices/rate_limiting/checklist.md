@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/rate_limiting/`  
+**Location**: `/workspaces/IA Chérie/microservices/rate_limiting/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Rate Limiting  
-**Purpose**: Rate Limiting Enterprise pour protection API et contrôle de flux Ainflue
+**Purpose**: Rate Limiting Enterprise pour protection API et contrôle de flux IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -35,13 +35,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Distributed Rate Limiter Enterprise - Ainflue
+Distributed Rate Limiter Enterprise - IA Chérie
 =============================================
 Rate limiter distribué avec Redis/etcd pour microservices scalables.
 Support multi-nœuds avec consistance forte.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chérie Rate Limiting
 Version: 1.0 Production
 """
 
@@ -358,7 +358,7 @@ class GeolocationRateLimiter:
 ```python
 class ContentAwareRateLimiter:
     """
-    Rate Limiter spécialisé pour types de contenu Ainflue.
+    Rate Limiter spécialisé pour types de contenu IA Chérie.
     Audio/Video/Image upload limits + processing costs + quality tiers.
     """
     
@@ -611,7 +611,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Rate limiting pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Rate limiting pour workflow créateurs → distribution
 - **Code Industriel**: ✅ Distributed + ML adaptive + hierarchical + compliance
 - **Protection API**: ✅ Rate limiting multi-niveau avec circuit breakers
 - **Creator Economy Focus**: ✅ Content-aware + subscription-based limiting
@@ -670,7 +670,7 @@ Chaque README doit contenir:
 6. `geolocation_rate_limiter.py` - Rate limiter géolocalisé compliance
 
 ### **🎯 PHASE 2 - RATE LIMITING PATTERNS AVANCÉS **
-7. `content_aware_limiter.py` - Rate limiter content-aware Ainflue
+7. `content_aware_limiter.py` - Rate limiter content-aware IA Chérie
 8. `collaborative_rate_limiter.py` - Rate limiter collaboratif gamification
 9. `ai_processing_limiter.py` - Rate limiter IA processing GPU/CPU
 10. `monetization_rate_limiter.py` - Rate limiter monétisation subscription
@@ -707,7 +707,7 @@ Chaque README doit contenir:
 - [ ] Distributed rate limiting Redis intégré
 - [ ] ML adaptive rate limiting configuré
 - [ ] Hierarchical quotas management implémenté
-- [ ] Content-aware limiting Ainflue spécialisé
+- [ ] Content-aware limiting IA Chérie spécialisé
 - [ ] Compliance GDPR/CCPA intégrée
 
 ### **🔍 POST-IMPLEMENTATION**
@@ -725,4 +725,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module rate limiting enterprise clé en main, distributed + ML adaptive + compliance + content-aware, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module rate limiting enterprise clé en main, distributed + ML adaptive + compliance + content-aware, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

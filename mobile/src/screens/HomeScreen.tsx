@@ -102,7 +102,7 @@ export const HomeScreen: React.FC = () => {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Welcome to Ainflue</Text>
+          <Text style={styles.title}>Welcome to IA Chérie</Text>
           <Text style={styles.subtitle}>Your content protection hub</Text>
         </View>
 

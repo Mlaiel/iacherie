@@ -4,7 +4,7 @@
 Backend Senior + ML Engineer + IA Prompt Engineer Expert: Engine de remix collaboratif 
 enterprise avec multi-creator fusion, creative synergy optimization et team creativity enhancement.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Multi-creator content fusion pour collaborations créatives sur 65+ plateformes
 - Creative synergy optimization avec algorithmes de compatibilité créative
 - Collaboration workflow automation pour coordination automatique d'équipes
@@ -546,7 +546,7 @@ class CollaborativeRemixEngine:
     
     async def _identify_collaboration_factors(
         self, style_comp: float, personality_comp: float, skill_comp: float
-    ) -> Tuple[List[str], List[str]]:
+    ) -> tuple[List[str], List[str]]:
         """Identification des forces et défis de collaboration"""
         strengths = []
         challenges = []

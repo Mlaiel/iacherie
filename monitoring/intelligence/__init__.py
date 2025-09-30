@@ -1,7 +1,7 @@
 """Intelligence Monitoring Module
 ===============================
 
-Comprehensive Creator Economy Intelligence Monitoring System for Ainflue platform.
+Comprehensive Creator Economy Intelligence Monitoring System for IA Chérie platform.
 Provides enterprise-grade intelligence monitoring capabilities including:
 
 - Creator Economy Intelligence Orchestration

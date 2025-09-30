@@ -1,6 +1,6 @@
 # 🧠 Moteur d'Intelligence d'Audience (Français) - Analyse d'Audience Avancée par IA
 
-**Système d'Intelligence d'Audience de Niveau Entreprise pour la Plateforme de Distribution Ainflue**
+**Système d'Intelligence d'Audience de Niveau Entreprise pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Aperçu
 
@@ -232,7 +232,7 @@ spec:
     spec:
       containers:
       - name: audience-intelligence
-        image: ainflue/audience-intelligence:latest
+        image: iacherie/audience-intelligence:latest
         resources:
           requests:
             memory: "3Gi"

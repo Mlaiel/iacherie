@@ -179,8 +179,8 @@ class BackupDisasterManager:
             job_id="db_backup_daily",
             name="Daily Database Backup",
             backup_type=BackupType.FULL,
-            source="postgresql://localhost:5432/ainflue",
-            destination="s3://ainflue-backups/database/",
+            source="postgresql://localhost:5432/iacherie",
+            destination="s3://iacherie-backups/database/",
             schedule="0 2 * * *",  # Daily at 2 AM
             retention_days=30,
             compression=True,
@@ -194,8 +194,8 @@ class BackupDisasterManager:
             job_id="app_data_backup",
             name="Application Data Backup",
             backup_type=BackupType.INCREMENTAL,
-            source="/var/lib/ainflue/data/",
-            destination="s3://ainflue-backups/application/",
+            source="/var/lib/iacherie/data/",
+            destination="s3://iacherie-backups/application/",
             schedule="0 */6 * * *",  # Every 6 hours
             retention_days=14,
             compression=True,
@@ -209,8 +209,8 @@ class BackupDisasterManager:
             job_id="config_backup",
             name="Configuration Backup",
             backup_type=BackupType.SNAPSHOT,
-            source="/etc/ainflue/",
-            destination="s3://ainflue-backups/config/",
+            source="/etc/iacherie/",
+            destination="s3://iacherie-backups/config/",
             schedule="0 1 * * *",  # Daily at 1 AM
             retention_days=90,
             compression=False,

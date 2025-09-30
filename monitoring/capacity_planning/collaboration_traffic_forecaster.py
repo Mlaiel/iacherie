@@ -173,7 +173,7 @@ class CollaborationTrafficForecaster:
         self._setup_matching_engine()
         self._load_seasonal_patterns()
         
-        logger.info("🤝 CollaborationTrafficForecaster initialisé - Ainflue Creator Economy")
+        logger.info("🤝 CollaborationTrafficForecaster initialisé - IA Chérie Creator Economy")
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Configuration enterprise par défaut"""
@@ -1254,7 +1254,7 @@ def create_collaboration_forecaster(
 # Point d'entrée principal
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("🤝 Initialisation Collaboration Traffic Forecaster - Ainflue Creator Economy")
+    print("🤝 Initialisation Collaboration Traffic Forecaster - IA Chérie Creator Economy")
     
     forecaster = create_collaboration_forecaster(
         enable_ai_matching=True,
@@ -1284,7 +1284,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['collaboration_types_supported']} types supportés")
     
     print("\n🎯 Collaboration Traffic Forecaster - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

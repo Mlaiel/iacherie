@@ -1,5 +1,5 @@
 """
-Collaboration Incident Manager for Ainflue Platform
+Collaboration Incident Manager for IA Chérie Platform
 Specialized incident handling for creator-brand collaboration disruptions
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -201,10 +201,10 @@ Next Steps:
 If you have any questions, please contact your account manager.
 
 Best regards,
-Ainflue Platform Team
+IA Chérie Platform Team
                 """,
                 "slack_message": "🚨 Collaboration incident: {incident_type} affecting {collaboration_id}. Severity: {severity}. Working on resolution.",
-                "sms_message": "Ainflue Alert: {incident_type} incident affecting collaboration {collaboration_id}. Check email for details."
+                "sms_message": "IA Chérie Alert: {incident_type} incident affecting collaboration {collaboration_id}. Check email for details."
             },
             
             "incident_updated": {
@@ -229,7 +229,7 @@ Estimated Resolution: {estimated_resolution}
 Thank you for your patience.
 
 Best regards,
-Ainflue Platform Team
+IA Chérie Platform Team
                 """,
                 "slack_message": "📊 Update on {incident_id}: {progress_description}",
                 "sms_message": "Incident {incident_id} update: {progress_description}"
@@ -258,7 +258,7 @@ Contact Information:
 - Emergency Hotline: {emergency_contact}
 
 Best regards,
-Ainflue Incident Response Team
+IA Chérie Incident Response Team
                 """,
                 "slack_message": "🔥 ESCALATED: {incident_id} - Level {escalation_level}. {escalation_reason}",
                 "sms_message": "ESCALATED: Incident {incident_id} requires immediate attention. Check email urgently."
@@ -289,7 +289,7 @@ We apologize for any inconvenience caused and appreciate your patience.
 If you have any feedback or concerns, please don't hesitate to reach out.
 
 Best regards,
-Ainflue Platform Team
+IA Chérie Platform Team
                 """,
                 "slack_message": "✅ RESOLVED: {incident_id} after {resolution_time}. Root cause: {root_cause}",
                 "sms_message": "Good news! Incident {incident_id} has been resolved. Check email for details."

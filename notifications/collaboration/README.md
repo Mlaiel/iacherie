@@ -1,6 +1,6 @@
 # 🤝 Collaboration Notifications Module - Enterprise Architecture
 
-**Ainflue Platform - Advanced Collaboration Ecosystem**
+**IA Chérie Platform - Advanced Collaboration Ecosystem**
 
 **Version:** 3.1.0 Enterprise  
 **Date:** September 11, 2025  
@@ -22,7 +22,7 @@ This architecture, concept, code and all associated intellectual property are th
 
 ---
 
-## 🎯 AINFLUE BUSINESS LOGIC - COLLABORATION ECOSYSTEM
+## 🎯 IACHERIE BUSINESS LOGIC - COLLABORATION ECOSYSTEM
 
 ### 🔄 CORE COLLABORATION WORKFLOW
 
@@ -265,7 +265,7 @@ const invitation = await collaboration.sendInvitation({
 
 ### 📧 Contact Information
 - **Email:** mlaiel@live.de
-- **Website:** [Ainflue Platform](https://ainflue.com)
+- **Website:** [IA Chérie Platform](https://iacherie.com)
 - **Lead Developer:** Fahed Mlaiel
 - **Location:** Germany
 
@@ -279,5 +279,5 @@ const invitation = await collaboration.sendInvitation({
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
 **Contact:** mlaiel@live.de  
-**Project:** Ainflue Platform - Collaboration Notifications Enterprise Architecture  
+**Project:** IA Chérie Platform - Collaboration Notifications Enterprise Architecture  
 **Version:** 3.1.0 - Professional Complete Documentation

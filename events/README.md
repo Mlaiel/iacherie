@@ -1,5 +1,5 @@
 # 🚀 Events Architecture - Advanced Event-Driven System
-**Ainflue Platform - Enterprise Event Processing Ecosystem**
+**IA Chérie Platform - Enterprise Event Processing Ecosystem**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise Overview
 
-The **Events Architecture** represents the backbone of the Ainflue platform's event-driven ecosystem, designed specifically for multi-format content creators (Musicians, Bloggers, Photographers, Influencers, Comedians). This ultra-advanced, production-ready system provides comprehensive event processing, streaming, persistence, and analytics capabilities with enterprise-grade scalability, security, and performance optimization.
+The **Events Architecture** represents the backbone of the IA Chérie platform's event-driven ecosystem, designed specifically for multi-format content creators (Musicians, Bloggers, Photographers, Influencers, Comedians). This ultra-advanced, production-ready system provides comprehensive event processing, streaming, persistence, and analytics capabilities with enterprise-grade scalability, security, and performance optimization.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -352,7 +352,7 @@ async def analyze_campaign_engagement(event):
 version: '3.8'
 services:
   event-core:
-    image: ainflue/event-core:latest
+    image: iacherie/event-core:latest
     deploy:
       replicas: 5
       resources:
@@ -370,7 +370,7 @@ services:
       - "8080:8080"
       
   event-streaming:
-    image: ainflue/event-streaming:latest
+    image: iacherie/event-streaming:latest
     deploy:
       replicas: 3
       resources:
@@ -415,7 +415,7 @@ creator_satisfaction = Gauge('creator_satisfaction_score', 'Creator satisfaction
 
 ## 📝 **Summary**
 
-The Events Architecture represents the pinnacle of event-driven system design for the Ainflue platform, specifically crafted for multi-format content creators. With advanced processing capabilities, comprehensive monitoring, and intelligent optimization, this system ensures maximum performance, reliability, and scalability for all creator workflows while providing deep insights into creator success metrics and system optimization opportunities.
+The Events Architecture represents the pinnacle of event-driven system design for the IA Chérie platform, specifically crafted for multi-format content creators. With advanced processing capabilities, comprehensive monitoring, and intelligent optimization, this system ensures maximum performance, reliability, and scalability for all creator workflows while providing deep insights into creator success metrics and system optimization opportunities.
 
 **🎯 Mission:** Deliver the world's most advanced event processing system for content creators, enabling optimal performance, intelligent optimization, and comprehensive monitoring across the entire creator ecosystem.
 

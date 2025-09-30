@@ -1,5 +1,5 @@
 """
-Integration Health Monitor - Ainflue Platform
+Integration Health Monitor - IA Chérie Platform
 Real-Time Integration Health Monitoring & Proactive Error Detection
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -184,7 +184,7 @@ class IntegrationHealthMonitor:
             'overall_availability': 0.0
         }
         
-        # 🎵 Audio + Platform: Configuration plateformes Ainflue
+        # 🎵 Audio + Platform: Configuration plateformes IA Chérie
         self.platform_configs = self._initialize_platform_configs()
         
         # Initialize monitoring
@@ -193,7 +193,7 @@ class IntegrationHealthMonitor:
         logger.info("IntegrationHealthMonitor initialized with comprehensive monitoring")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """🎵 Audio + Platform: Configuration des 65+ plateformes Ainflue"""
+        """🎵 Audio + Platform: Configuration des 65+ plateformes IA Chérie"""
         return {
             # Music Streaming Platforms
             'spotify': {
@@ -328,7 +328,7 @@ class IntegrationHealthMonitor:
                         integration_name=platform,
                         endpoint_url=f"{config['api_base']}{config['health_endpoint']}",
                         method='GET',
-                        headers={'User-Agent': 'Ainflue-HealthMonitor/1.0'},
+                        headers={'User-Agent': 'IA Chérie-HealthMonitor/1.0'},
                         expected_status_codes=[200, 201, 202],
                         timeout_seconds=10,
                         interval_seconds=60,

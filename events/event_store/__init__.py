@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 EVENT STORE ENTERPRISE - COMPLETE IMPLEMENTATION
 
-Ultra-Advanced Event Storage System for Ainflue Platform with:
+Ultra-Advanced Event Storage System for IA Chérie Platform with:
 
 ✅ Multi-Backend Strategy: PostgreSQL + MongoDB + Elasticsearch + Redis
 ✅ Enterprise Store Interface: Unified abstraction with intelligent routing
@@ -158,7 +158,7 @@ except ImportError as e:
 
 class EventStoreManager:
     """
-    Unified Event Store Manager for Ainflue Platform
+    Unified Event Store Manager for IA Chérie Platform
     
     Orchestrates all event store components:
     - Enterprise Store Interface for unified access
@@ -231,4 +231,4 @@ __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __status__ = "Production"
-__description__ = "Event Store Enterprise - Ultra-Advanced Multi-Backend Event Storage for Ainflue Platform"
+__description__ = "Event Store Enterprise - Ultra-Advanced Multi-Backend Event Storage for IA Chérie Platform"

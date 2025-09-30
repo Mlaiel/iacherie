@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚙️ Enterprise DevOps Automation Service - Ainflue
+⚙️ Enterprise DevOps Automation Service - IA Chérie
 Comprehensive CI/CD, infrastructure automation, and deployment orchestration
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
@@ -212,7 +212,7 @@ class EnterpriseDevOpsAutomationService:
         enterprise_pipelines = {
             "microservices_ci_cd": {
                 "name": "Microservices CI/CD Pipeline",
-                "description": "Complete CI/CD for Ainflue microservices",
+                "description": "Complete CI/CD for IA Chérie microservices",
                 "triggers": ["push", "pull_request", "schedule"],
                 "stages": [
                     PipelineStage(
@@ -255,9 +255,9 @@ class EnterpriseDevOpsAutomationService:
                         name="build_images",
                         commands=[
                             "echo 'Building Docker images...'",
-                            "docker build -t ainflue/microservices:${BUILD_ID} .",
-                            "docker build -t ainflue/api-gateway:${BUILD_ID} -f Dockerfile.gateway .",
-                            "docker build -t ainflue/ai-services:${BUILD_ID} -f Dockerfile.ai ."
+                            "docker build -t iacherie/microservices:${BUILD_ID} .",
+                            "docker build -t iacherie/api-gateway:${BUILD_ID} -f Dockerfile.gateway .",
+                            "docker build -t iacherie/ai-services:${BUILD_ID} -f Dockerfile.ai ."
                         ],
                         dependencies=["integration_tests"]
                     ),
@@ -265,8 +265,8 @@ class EnterpriseDevOpsAutomationService:
                         name="security_image_scan",
                         commands=[
                             "echo 'Scanning Docker images for vulnerabilities...'",
-                            "trivy image ainflue/microservices:${BUILD_ID}",
-                            "clair-scanner ainflue/microservices:${BUILD_ID}"
+                            "trivy image iacherie/microservices:${BUILD_ID}",
+                            "clair-scanner iacherie/microservices:${BUILD_ID}"
                         ],
                         dependencies=["build_images"]
                     ),
@@ -351,7 +351,7 @@ class EnterpriseDevOpsAutomationService:
                         commands=[
                             "echo 'Verifying backups...'",
                             "python scripts/verify_backups.py",
-                            "aws s3 ls s3://ainflue-backups/ --recursive"
+                            "aws s3 ls s3://iacherie-backups/ --recursive"
                         ]
                     ),
                     PipelineStage(
@@ -367,7 +367,7 @@ class EnterpriseDevOpsAutomationService:
                         commands=[
                             "echo 'Validating recovery procedures...'",
                             "python scripts/validate_recovery.py",
-                            "curl -f http://health-check.ainflue.com/health"
+                            "curl -f http://health-check.iacherie.com/health"
                         ]
                     )
                 ]
@@ -1018,7 +1018,7 @@ async def main():
         
         # Example: Deploy application
         # deployment_config = DeploymentConfig(
-        #     application_name="ainflue-microservices",
+        #     application_name="iacherie-microservices",
         #     version="1.0.0",
         #     environment=EnvironmentType.PRODUCTION,
         #     strategy=DeploymentStrategy.BLUE_GREEN,

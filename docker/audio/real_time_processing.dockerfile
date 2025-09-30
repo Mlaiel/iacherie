@@ -1,11 +1,11 @@
 # Real Time Processing Service
-# Real-time audio processing for Ainflue Platform
+# Real-time audio processing for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Real Time Processing - Low-latency audio processing"
+LABEL description="IA Chérie Real Time Processing - Low-latency audio processing"
 LABEL version="1.0.0"
 
 # Set working directory

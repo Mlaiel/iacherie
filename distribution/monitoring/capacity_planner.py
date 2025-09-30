@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Monitoring - Capacity Planner
+IA Chérie Platform - Distribution Monitoring - Capacity Planner
 Advanced capacity planning and resource optimization for distribution infrastructure
 
 Author: Fahed Mlaiel (mlaiel@live.de)

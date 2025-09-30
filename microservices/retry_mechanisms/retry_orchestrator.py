@@ -1,11 +1,11 @@
 """
-Intelligent Retry Orchestrator - Ainflue
+Intelligent Retry Orchestrator - IA Chérie
 ========================================
 Orchestrateur retry intelligent avec ML predictions.
 Success rate prediction + adaptive strategies + failure pattern analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

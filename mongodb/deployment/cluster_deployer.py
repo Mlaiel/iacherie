@@ -964,7 +964,7 @@ echo "Replica: {replica_id}" >> /etc/mongodb_instance_info
 async def deploy_production_cluster():
     """Example deployment of production MongoDB cluster."""
     config = DeploymentConfig(
-        cluster_name="ainflue-prod",
+        cluster_name="iacherie-prod",
         environment="production",
         shard_count=3,
         instance_type="m5.2xlarge",

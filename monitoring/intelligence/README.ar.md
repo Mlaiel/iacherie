@@ -210,7 +210,7 @@ ANTHROPIC_API_KEY=your_anthropic_key
 GOOGLE_AI_API_KEY=your_google_ai_key
 
 # تكوين قاعدة البيانات
-MONGODB_URL=mongodb://localhost:27017/ainflue
+MONGODB_URL=mongodb://localhost:27017/iacherie
 REDIS_URL=redis://localhost:6379
 
 # تكوين الأداء
@@ -287,8 +287,8 @@ REAL_TIME_PROCESSING=true
 
 ```bash
 # استنساخ المستودع (الوصول المصرح به فقط)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/intelligence
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/intelligence
 
 # تثبيت التبعيات
 pip install -r requirements.txt

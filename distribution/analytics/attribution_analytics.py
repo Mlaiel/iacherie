@@ -1,5 +1,5 @@
 """
-Attribution Analytics for Ainflue Distribution
+Attribution Analytics for IA Chérie Distribution
 Provides advanced attribution modeling and customer journey tracking
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,6 +1,6 @@
 """Threat Detection Engine for Events Security
 
-Advanced ML-powered threat detection for Ainflue business events.
+Advanced ML-powered threat detection for IA Chérie business events.
 Detects sophisticated threats targeting content, collaboration, and monetization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -70,7 +70,7 @@ class PatternAnalysis:
 
 class ThreatDetectionEngine:
     """
-    Advanced threat detection engine for Ainflue business events.
+    Advanced threat detection engine for IA Chérie business events.
     Uses ML-powered analysis with business context awareness.
     """
     
@@ -177,7 +177,7 @@ class ThreatDetectionEngine:
                                        event_id: str, 
                                        event_type: str, 
                                        event_data: Dict[str, Any]) -> List[ThreatIndicator]:
-        """Analyze event patterns for anomalies based on Ainflue business logic"""
+        """Analyze event patterns for anomalies based on IA Chérie business logic"""
         
         indicators = []
         

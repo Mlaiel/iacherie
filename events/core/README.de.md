@@ -1,5 +1,5 @@
 # 🏗️ Events Core Modul - Enterprise Event System Foundation
-**Ainflue Platform - Core Event Processing Infrastructure**
+**IA Chérie Platform - Core Event Processing Infrastructure**
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. Alle Rechte vorbehalten.  
@@ -39,7 +39,7 @@
 
 ## 🚀 ENTERPRISE ÜBERBLICK
 
-Das **Events Core Modul** ist die grundlegende Event-Processing-Infrastruktur der Ainflue-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Komiker). Dieses ultra-fortschrittliche industrielle System bietet Enterprise-Grade Event-Handling, Echtzeit-Verarbeitung und Business-Logic-Orchestrierung.
+Das **Events Core Modul** ist die grundlegende Event-Processing-Infrastruktur der IA Chérie-Plattform, speziell entwickelt für Multi-Format-Content-Ersteller (Musiker, Blogger, Fotografen, Influencer, Komiker). Dieses ultra-fortschrittliche industrielle System bietet Enterprise-Grade Event-Handling, Echtzeit-Verarbeitung und Business-Logic-Orchestrierung.
 
 ### 🎯 **Business Logic Ablauf**
 ```
@@ -223,7 +223,7 @@ await EventDispatcher.dispatch(revenue_event)
 version: '3.8'
 services:
   events-core:
-    image: ainflue/events-core:latest
+    image: iacherie/events-core:latest
     deploy:
       replicas: 10
       resources:

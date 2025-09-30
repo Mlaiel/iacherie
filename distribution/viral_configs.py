@@ -337,7 +337,7 @@ class ViralConfigManager:
         content_hashtags = [f"#{keyword.lower()}" for keyword in content_keywords[:5]]
         
         # Add branded hashtags (example)
-        branded_hashtags = ["#ainflue", "#contentcreator"][:limits.get("branded_hashtags", 2)]
+        branded_hashtags = ["#iacherie", "#contentcreator"][:limits.get("branded_hashtags", 2)]
         
         return {
             "recommended": content_hashtags,

@@ -1,6 +1,6 @@
 # 📈 Grafana Creator Dashboards Configuration
 # ============================================
-# Configuration dashboards Grafana Creator Economy Ainflue
+# Configuration dashboards Grafana Creator Economy IA Chérie
 # Visualisations intelligentes avec drill-down par tier et type de créateur
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -42,7 +42,7 @@ grafana_config:
       type: "elasticsearch"
       url: "http://elasticsearch:9200"
       access: "proxy"
-      database: "ainflue-logs-*"
+      database: "iacherie-logs-*"
       timeField: "@timestamp"
       
     - name: "InfluxDB-Creator-Timeseries"
@@ -65,7 +65,7 @@ dashboards:
   creator_overview:
     uid: "creator-overview-main"
     title: "🎨 Creator Economy - Vue d'Ensemble"
-    description: "Dashboard principal monitoring Creator Economy Ainflue"
+    description: "Dashboard principal monitoring Creator Economy IA Chérie"
     tags: ["creator", "overview", "kpi", "business"]
     timezone: "UTC"
     refresh: "30s"

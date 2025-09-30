@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Ainflue platform Services module implements a world-class enterprise microservices architecture with 3-tier separation for optimal scalability, security, and performance.
+The IA Chérie platform Services module implements a world-class enterprise microservices architecture with 3-tier separation for optimal scalability, security, and performance.
 
 ## 🏗️ 3-Tier Architecture
 
@@ -251,8 +251,8 @@ JWT_SECRET=your-jwt-secret
 ## 📞 Support
 
 - **Email**: mlaiel@live.de
-- **Documentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Status**: [status.ainflue.com](https://status.ainflue.com)
+- **Documentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Status**: [status.iacherie.com](https://status.iacherie.com)
 
 ## 📄 License
 

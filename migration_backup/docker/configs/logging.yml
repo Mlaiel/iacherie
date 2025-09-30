@@ -1,0 +1,23 @@
+# Logging Configuration
+version: '3.8'
+
+log_drivers:
+  default: json-file
+  options:
+    max-size: 100m
+    max-file: 3
+    
+centralized_logging:
+  enabled: true
+  driver: fluentd
+  endpoint: fluentd.ainflue.com:24224
+  
+log_levels:
+  production: info
+  staging: debug
+  development: debug
+  
+retention:
+  application_logs: 30d
+  access_logs: 90d
+  error_logs: 180d

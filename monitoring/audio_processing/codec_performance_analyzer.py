@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Codec Performance Analyzer
+IA Chérie Platform - Codec Performance Analyzer
 =============================================
 
 Advanced performance analysis for audio codecs including encoding/decoding

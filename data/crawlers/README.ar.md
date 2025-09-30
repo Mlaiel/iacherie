@@ -74,7 +74,7 @@
 ### 🌳 شجرة الهندسة المقترحة الكاملة
 
 ```
-./workspaces/Ainflue/data/crawlers/                           [المستوى 3 - نهائي]
+./workspaces/IA Chérie/data/crawlers/                           [المستوى 3 - نهائي]
 ├── 📋 الوثائق الإجبارية (4 ملفات)
 │   ├── README.md ✅                    # وثائق إنجليزية (موجود - للإثراء)
 │   ├── README.de.md ✅                 # وثائق ألمانية (موجود - للإثراء)
@@ -349,8 +349,8 @@
 ### 🔧 التثبيت والإعداد
 ```bash
 # 1. استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # 2. إعداد البيئة الافتراضية
 python -m venv venv
@@ -548,7 +548,7 @@ logs/performance_metrics.log   # مقاييس الأداء
 
 ### 🛡️ حماية الملكية الفكرية
 - **براءات الاختراع:** طلبات مُقدمة للخوارزميات المبتكرة
-- **العلامات التجارية:** "Ainflue" و"IA-Influencer-Agent" محميان
+- **العلامات التجارية:** "IA Chérie" و"IA-Influencer-Agent" محميان
 - **أسرار تجارية:** خوارزميات الكشف والتحليل سرية
 - **حقوق الطبع:** جميع الكود والوثائق محمية
 

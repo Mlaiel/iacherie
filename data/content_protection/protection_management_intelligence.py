@@ -3,7 +3,7 @@
 ==============================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/protection_management_intelligence.py
+Module: /workspaces/IA Chérie/data/content_protection/protection_management_intelligence.py
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + Microservices Architect + DevOps Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)

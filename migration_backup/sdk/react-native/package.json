@@ -1,0 +1,109 @@
+{
+  "name": "@ainflue/react-native-sdk",
+  "version": "1.0.0",
+  "description": "Official React Native SDK for the Ainflue AI-powered content protection platform",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "lib",
+    "src",
+    "android",
+    "ios",
+    "ainflue-react-native-sdk.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "prepare": "npm run build",
+    "example": "cd example && npm start",
+    "android": "cd example && npx react-native run-android",
+    "ios": "cd example && npx react-native run-ios",
+    "pods": "cd example/ios && pod install"
+  },
+  "keywords": [
+    "react-native",
+    "ainflue",
+    "api",
+    "sdk",
+    "mobile",
+    "ios",
+    "android",
+    "content-protection",
+    "ai",
+    "creator-tools"
+  ],
+  "author": {
+    "name": "Fahed Mlaiel",
+    "email": "mlaiel@live.de",
+    "url": "https://github.com/Mlaiel"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mlaiel/Ainflue.git",
+    "directory": "sdk/react-native"
+  },
+  "bugs": {
+    "url": "https://github.com/Mlaiel/Ainflue/issues"
+  },
+  "homepage": "https://ainflue.com",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.68.0"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.0",
+    "@react-native-community/netinfo": "^11.0.0",
+    "react-native-document-picker": "^9.0.0",
+    "react-native-image-picker": "^7.0.0",
+    "react-native-fs": "^2.20.0"
+  },
+  "devDependencies": {
+    "@react-native/metro-config": "^0.73.0",
+    "@types/jest": "^29.5.0",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.72.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-native": "^4.1.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.0",
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "typescript": "^5.2.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

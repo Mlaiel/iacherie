@@ -2,7 +2,7 @@
 ========================================================================
 
 Engine de transcription audio enterprise avec reconnaissance vocale multi-langue,
-diarisation des locuteurs et IA pour la plateforme de créateurs Ainflue.
+diarisation des locuteurs et IA pour la plateforme de créateurs IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Audio preprocessing + noise reduction + quality optimization
@@ -225,7 +225,7 @@ class AudioPreprocessor:
         enable_noise_reduction: bool = True,
         enable_normalization: bool = True,
         enable_vad: bool = True
-    ) -> Tuple[np.ndarray, int]:
+    ) -> tuple[np.ndarray, int]:
         """Prétraite l'audio pour optimiser la transcription"""
         
         # Convertir en mono si nécessaire
@@ -351,7 +351,7 @@ class LanguageDetector:
         self,
         audio: np.ndarray,
         sample_rate: int
-    ) -> Tuple[str, float]:
+    ) -> tuple[str, float]:
         """Détecte la langue de l'audio"""
         try:
             # Extraction de features audio pour la détection de langue

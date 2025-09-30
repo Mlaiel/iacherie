@@ -3,7 +3,7 @@
 ================================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/integration_api_connectors.py
+Module: /workspaces/IA Chérie/data/content_protection/integration_api_connectors.py
 Expert Team: Lead Dev IA + Integration Specialist + API Expert + DevOps Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)

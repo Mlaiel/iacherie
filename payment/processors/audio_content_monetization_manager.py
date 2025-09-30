@@ -1056,9 +1056,9 @@ class AudioContentMonetizationManager:
     async def _generate_legal_documents(self, agreement: LicenseAgreement) -> Dict[str, Any]:
         """Generate legal documents for licensing"""
         return {
-            'license_agreement_url': f'https://contracts.ainflue.com/license/{agreement.license_id}',
-            'terms_of_use_url': 'https://ainflue.com/terms',
-            'privacy_policy_url': 'https://ainflue.com/privacy',
+            'license_agreement_url': f'https://contracts.iacherie.com/license/{agreement.license_id}',
+            'terms_of_use_url': 'https://iacherie.com/terms',
+            'privacy_policy_url': 'https://iacherie.com/privacy',
             'dispute_resolution': 'Arbitration in accordance with local laws'
         }
     

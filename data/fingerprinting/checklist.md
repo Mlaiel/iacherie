@@ -75,7 +75,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE PROPOSÉE COMPLÈTE
 
 ```
-/workspaces/Ainflue/data/fingerprinting/                    [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/fingerprinting/                    [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers)
 │   ├── README.md ✅                    # Documentation anglais (EXISTANT - À ENRICHIR)
 │   ├── README.de.md ✅                 # Documentation allemand (EXISTANT - À ENRICHIR)
@@ -515,7 +515,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -617,14 +617,14 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/multimodal-fingerprinting:latest
-- ainflue/vector-database-engine:latest
-- ainflue/surveillance-engine:latest
-- ainflue/analytics-engine:latest
-- ainflue/legal-protection:latest
-- ainflue/blockchain-security:latest
-- ainflue/specialized-fingerprinters:latest
-- ainflue/enterprise-systems:latest
+- iacherie/multimodal-fingerprinting:latest
+- iacherie/vector-database-engine:latest
+- iacherie/surveillance-engine:latest
+- iacherie/analytics-engine:latest
+- iacherie/legal-protection:latest
+- iacherie/blockchain-security:latest
+- iacherie/specialized-fingerprinters:latest
+- iacherie/enterprise-systems:latest
 ```
 
 ---

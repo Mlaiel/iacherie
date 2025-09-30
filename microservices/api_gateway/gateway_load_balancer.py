@@ -483,9 +483,9 @@ async def main():
     
     # Add servers
     servers = [
-        BackendServer("server1", "api1.ainflue.com", 8001, weight=3),
-        BackendServer("server2", "api2.ainflue.com", 8002, weight=2),
-        BackendServer("server3", "api3.ainflue.com", 8003, weight=1)
+        BackendServer("server1", "api1.iacherie.com", 8001, weight=3),
+        BackendServer("server2", "api2.iacherie.com", 8002, weight=2),
+        BackendServer("server3", "api3.iacherie.com", 8003, weight=1)
     ]
     
     for server in servers:

@@ -1,5 +1,5 @@
 """
-Health Checks Module for Ainflue Microservices
+Health Checks Module for IA Chérie Microservices
 Implements health monitoring and service availability checks.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

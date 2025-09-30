@@ -1,7 +1,7 @@
 """Delayed Scheduling Coordinator Module
 
 Advanced delayed message scheduling with precision timing and business calendar awareness
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -54,7 +54,7 @@ class RecurrencePattern(Enum):
 
 
 class BusinessCalendarEvent(Enum):
-    """Business calendar events for Ainflue"""
+    """Business calendar events for IA Chérie"""
     CONTENT_DEADLINE = "content_deadline"
     PAYMENT_CYCLE = "payment_cycle"
     ANALYTICS_REPORT = "analytics_report"
@@ -117,7 +117,7 @@ class SchedulingMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Scheduling Rules"""
+    """IA Chérie Business Scheduling Rules"""
     
     # Business calendar schedules
     BUSINESS_SCHEDULES = {

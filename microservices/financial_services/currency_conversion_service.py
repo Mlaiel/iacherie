@@ -1,5 +1,5 @@
 """
-Currency Conversion Service for Ainflue Microservices
+Currency Conversion Service for IA Chérie Microservices
 Real-time currency conversion and exchange rate management
 
 Author: Fahed Mlaiel (mlaiel@live.de)

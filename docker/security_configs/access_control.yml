@@ -19,8 +19,8 @@ roles:
       - "scale:services"
       
 oauth2:
-  provider: oauth.ainflue.com
-  client_id: ainflue-docker
+  provider: oauth.iacherie.com
+  client_id: iacherie-docker
   scopes:
     - docker:admin
     - docker:read

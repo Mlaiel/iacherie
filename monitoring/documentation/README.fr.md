@@ -1,8 +1,8 @@
-# 📚 Système de Documentation Ainflue - Économie des Créateurs
+# 📚 Système de Documentation IA Chérie - Économie des Créateurs
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![Licence](https://img.shields.io/badge/licence-Propriétaire-red.svg)](LICENSE)
-[![Économie Créateurs](https://img.shields.io/badge/Économie%20Créateurs-Propulsé-green.svg)](https://ainflue.com)
+[![Économie Créateurs](https://img.shields.io/badge/Économie%20Créateurs-Propulsé-green.svg)](https://iacherie.com)
 
 ## 🎯 **Architecture de Documentation Avancée pour Plateforme d'Économie des Créateurs**
 
@@ -201,8 +201,8 @@ Node.js >= 18.0
 ### Installation
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Installer dépendances Python
 pip install -r requirements.txt
@@ -343,13 +343,13 @@ else:
 - 🔧 **[Référence API](docs/api-reference.fr.md)** - Documentation API détaillée
 - 🎯 **[Meilleures Pratiques](docs/best-practices.fr.md)** - Guidelines développement
 - 🔍 **[Dépannage](docs/troubleshooting.fr.md)** - Problèmes & solutions courants
-- 🎥 **[Tutoriels Vidéo](https://ainflue.com/fr/tutorials)** - Ressources apprentissage visuel
+- 🎥 **[Tutoriels Vidéo](https://iacherie.com/fr/tutorials)** - Ressources apprentissage visuel
 
 ### Communauté
-- 💬 **[Communauté Discord](https://discord.gg/ainflue-fr)** - Discussions créateurs
-- 📧 **Support:** support@ainflue.com
-- 🐛 **Rapports Bugs:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- 💡 **Demandes Fonctionnalités:** [GitHub Discussions](https://github.com/Mlaiel/Ainflue/discussions)
+- 💬 **[Communauté Discord](https://discord.gg/iacherie-fr)** - Discussions créateurs
+- 📧 **Support:** support@iacherie.com
+- 🐛 **Rapports Bugs:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- 💡 **Demandes Fonctionnalités:** [GitHub Discussions](https://github.com/Mlaiel/IA Chérie/discussions)
 
 ---
 
@@ -380,4 +380,4 @@ Pour demandes de licence: **mlaiel@live.de**
 
 ---
 
-*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture documentation propriétaire Ainflue*
+*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture documentation propriétaire IA Chérie*

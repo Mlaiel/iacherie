@@ -266,7 +266,7 @@ dashboard_config = {
 
 **Développeur et Propriétaire:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Projet:** Plateforme Ainflue - Module d'Analyse Multimédia
+**Projet:** Plateforme IA Chérie - Module d'Analyse Multimédia
 
 **Pour:**
 - Licence commerciale
@@ -278,5 +278,5 @@ dashboard_config = {
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact:** mlaiel@live.de  
-**Projet:** Plateforme Ainflue - Analyse Multimédia Entreprise  
+**Projet:** Plateforme IA Chérie - Analyse Multimédia Entreprise  
 **Version:** 3.1.0 - Documentation d'Analyse Professionnelle

@@ -2,7 +2,7 @@
 ======================================================
 
 Advanced transaction coordination with ACID compliance,
-distributed transaction management, and saga patterns for Ainflue platform.
+distributed transaction management, and saga patterns for IA Chérie platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: ACID compliance + transaction isolation + deadlock detection
@@ -1214,7 +1214,7 @@ DEFAULT_TRANSACTION_CONFIG = {
             'port': 5432,
             'username': 'postgres',
             'password': 'password',
-            'database': 'ainflue'
+            'database': 'iacherie'
         }
     }
 }

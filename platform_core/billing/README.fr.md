@@ -1,4 +1,4 @@
-# 💳 Système de Facturation Enterprise - Ainflue Creator Economy
+# 💳 Système de Facturation Enterprise - IA Chérie Creator Economy
 
 ⚠️  **PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL** ⚠️  
 © 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -8,7 +8,7 @@ Contact: mlaiel@live.de
 
 ## 🎯 Vue d'Ensemble
 
-Le système de facturation enterprise d'Ainflue est une plateforme ultra-avancée de gestion des paiements et de monétisation conçue spécifiquement pour l'économie des créateurs. Il intègre l'intelligence artificielle, la sécurité de niveau bancaire, et la conformité réglementaire pour optimiser les revenus des créateurs de contenu.
+Le système de facturation enterprise d'IA Chérie est une plateforme ultra-avancée de gestion des paiements et de monétisation conçue spécifiquement pour l'économie des créateurs. Il intègre l'intelligence artificielle, la sécurité de niveau bancaire, et la conformité réglementaire pour optimiser les revenus des créateurs de contenu.
 
 ## 🏗️ Architecture Système
 
@@ -189,4 +189,4 @@ pytest tests/security/ -v
 
 ---
 
-© 2025 Fahed Mlaiel. Système de facturation enterprise ultra-avancé pour Ainflue Creator Economy.
+© 2025 Fahed Mlaiel. Système de facturation enterprise ultra-avancé pour IA Chérie Creator Economy.

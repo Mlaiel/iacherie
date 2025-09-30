@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Predictive Analytics Engine
+IA Chérie Platform - Predictive Analytics Engine
 ==============================================
 
 Advanced ML-powered predictive analytics system for forecasting trends, 
@@ -404,7 +404,7 @@ class ChurnPredictor:
         return max(0.0, min(1.0, churn_prob))
 
 class PredictiveAnalyticsEngine:
-    """Main predictive analytics engine for Ainflue platform."""
+    """Main predictive analytics engine for IA Chérie platform."""
     
     def __init__(self):
         self.models = {}

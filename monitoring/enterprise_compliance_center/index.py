@@ -2,7 +2,7 @@
 🛡️ Enterprise Compliance Center - Conformité Enterprise
 =======================================================
 
-Centre compliance ultra-avancé pour conformité réglementaire Ainflue.
+Centre compliance ultra-avancé pour conformité réglementaire IA Chérie.
 GDPR, DMCA, protection données et audit automatisé intelligent.
 
 Fonctionnalités:
@@ -109,7 +109,7 @@ class DMCAProtection:
 
 
 class EnterpriseComplianceCenter:
-    """Centre conformité enterprise Ainflue"""
+    """Centre conformité enterprise IA Chérie"""
     
     def __init__(self, config):
         self.config = config

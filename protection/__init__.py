@@ -1,5 +1,5 @@
 """
-Ainflue Content Protection System
+IA Chérie Content Protection System
 Enterprise-grade content protection and rights management platform.
 """
 

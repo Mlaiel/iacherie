@@ -1,11 +1,11 @@
 """
-🌐 Service Mesh Orchestrator Enterprise - Ainflue
+🌐 Service Mesh Orchestrator Enterprise - IA Chérie
 ================================================
 Orchestrateur service mesh pour communication microservices.
 Sidecar proxy + traffic management + security policies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

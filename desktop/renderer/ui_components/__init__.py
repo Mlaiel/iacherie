@@ -1,5 +1,5 @@
 """
-Ainflue Desktop Renderer - UI Components Module
+IA Chérie Desktop Renderer - UI Components Module
 Base professional interface components
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,4 +13,4 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 # UI Components module initialization
-# Provides base professional interface components for Ainflue Desktop
+# Provides base professional interface components for IA Chérie Desktop

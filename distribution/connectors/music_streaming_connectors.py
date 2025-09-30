@@ -3,7 +3,7 @@ Music Streaming Connectors - Consolidated Music Platform Connectors
 =================================================================
 
 Comprehensive music streaming platform connectors supporting all major
-music distribution and streaming platforms for the Ainflue system.
+music distribution and streaming platforms for the IA Chérie system.
 
 Platforms Supported:
 - Streaming: Spotify, Apple Music, YouTube Music, Amazon Music, Deezer
@@ -163,7 +163,7 @@ class SpotifyConnector(BaseMusicConnector):
             user_id = self.credentials.get("user_id")
             playlist_data = {
                 "name": name,
-                "description": "Created by Ainflue",
+                "description": "Created by IA Chérie",
                 "public": True
             }
             

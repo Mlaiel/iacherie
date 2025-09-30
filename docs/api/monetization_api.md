@@ -1,9 +1,9 @@
-# Ainflue Monetization API Documentation
+# IA Chérie Monetization API Documentation
 
 ## Overview
-The Ainflue Monetization API provides comprehensive revenue calculation, payment processing, and distribution capabilities for content creators across multiple platforms.
+The IA Chérie Monetization API provides comprehensive revenue calculation, payment processing, and distribution capabilities for content creators across multiple platforms.
 
-**Base URL:** `https://api.ainflue.com/v1`  
+**Base URL:** `https://api.iacherie.com/v1`  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 1.0.0  
 
@@ -457,8 +457,8 @@ Official SDKs are available for:
 
 For API support and questions:
 - **Email**: mlaiel@live.de
-- **Documentation**: https://docs.ainflue.com
-- **Status Page**: https://status.ainflue.com
+- **Documentation**: https://docs.iacherie.com
+- **Status Page**: https://status.iacherie.com
 
 ---
 

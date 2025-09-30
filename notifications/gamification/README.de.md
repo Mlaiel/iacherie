@@ -1,10 +1,10 @@
 # 🎮 GAMIFICATION NOTIFICATIONS - DEUTSCHE DOKUMENTATION
 
-**Ainflue Platform - Gamification Benachrichtigungssystem Enterprise**
+**IA Chérie Platform - Gamification Benachrichtigungssystem Enterprise**
 
 ## 🎯 ÜBERBLICK
 
-Das Gamification Notifications Module verwaltet alle spielbasierten Benachrichtigungen der Ainflue Platform, einschließlich Achievement-Freischaltungen, Meilenstein-Feiern, Leaderboard-Updates und Community-Engagement.
+Das Gamification Notifications Module verwaltet alle spielbasierten Benachrichtigungen der IA Chérie Platform, einschließlich Achievement-Freischaltungen, Meilenstein-Feiern, Leaderboard-Updates und Community-Engagement.
 
 ## 📋 MODULE KOMPONENTEN
 
@@ -58,5 +58,5 @@ await gamification.notify_achievement_unlock(
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Gamification Notifications  
+**Projekt:** IA Chérie Platform - Gamification Notifications  
 **Version:** 3.1.0 Enterprise

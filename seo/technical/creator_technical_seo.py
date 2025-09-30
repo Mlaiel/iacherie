@@ -1,5 +1,5 @@
 """Creator Technical SEO
-Creator-specific technical SEO optimization for Ainflue creator economy platform.
+Creator-specific technical SEO optimization for IA Chérie creator economy platform.
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -68,7 +68,7 @@ class PlatformType(Enum):
     TWITTER = "twitter"
     TWITCH = "twitch"
     SOUNDCLOUD = "soundcloud"
-    NATIVE = "native"  # Ainflue native platform
+    NATIVE = "native"  # IA Chérie native platform
 
 
 @dataclass
@@ -367,8 +367,8 @@ class CreatorProfileOptimizer:
         if profile.monetization_enabled:
             schema["memberOf"] = {
                 "@type": "Organization",
-                "name": "Ainflue Creator Network",
-                "url": "https://ainflue.com"
+                "name": "IA Chérie Creator Network",
+                "url": "https://iacherie.com"
             }
         
         return schema
@@ -378,9 +378,9 @@ class CreatorProfileOptimizer:
         content_types_str = ", ".join([ct.value.replace('_', ' ').title() for ct in profile.content_types])
         
         # Generate title
-        title = f"{profile.display_name} - {content_types_str} Creator | Ainflue"
+        title = f"{profile.display_name} - {content_types_str} Creator | IA Chérie"
         if len(title) > 60:
-            title = f"{profile.display_name} - Creator | Ainflue"
+            title = f"{profile.display_name} - Creator | IA Chérie"
         
         # Generate description
         description = f"Discover {content_types_str.lower()} content by {profile.display_name}"
@@ -388,7 +388,7 @@ class CreatorProfileOptimizer:
             description += f" with {profile.follower_count:,} followers"
         if profile.verified:
             description += " (Verified Creator)"
-        description += " on Ainflue creator platform."
+        description += " on IA Chérie creator platform."
         
         # Ensure description is within limits
         if len(description) > 160:
@@ -499,7 +499,7 @@ class CreatorProfileOptimizer:
                 'recommendation': 'Actively pursue cross-platform collaborations',
                 'benefit': 'Increased reach, backlinks, and cross-pollination of audiences',
                 'action_items': [
-                    'Join Ainflue collaboration marketplace',
+                    'Join IA Chérie collaboration marketplace',
                     'Reach out to creators in complementary niches',
                     'Create collaboration-friendly content formats'
                 ]
@@ -689,7 +689,7 @@ class CreatorContentOptimizer:
             if content.title:
                 description_parts.append(f"Discover {content.title}")
             
-            description_parts.append(f"by creator on Ainflue")
+            description_parts.append(f"by creator on IA Chérie")
             
             if content.content_type:
                 description_parts.append(f"High-quality {content.content_type.value} content")
@@ -933,7 +933,7 @@ class CreatorContentOptimizer:
 
 
 class CreatorTechnicalSEO:
-    """Main creator technical SEO manager for Ainflue platform."""
+    """Main creator technical SEO manager for IA Chérie platform."""
     
     def __init__(self):
         self.logger = self._setup_logging()
@@ -960,7 +960,7 @@ class CreatorTechnicalSEO:
     
     def _init_database(self):
         """Initialize database for creator SEO tracking."""
-        # In production, this would connect to the main Ainflue database
+        # In production, this would connect to the main IA Chérie database
         # For now, we'll simulate with a simple structure
         pass
     

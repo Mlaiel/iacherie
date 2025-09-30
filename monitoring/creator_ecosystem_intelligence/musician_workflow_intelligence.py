@@ -2,7 +2,7 @@
 🎵 Musician Workflow Intelligence - Intelligence Workflow Musiciens
 ================================================================
 
-Module intelligence spécialisé pour surveillance workflow musiciens Ainflue.
+Module intelligence spécialisé pour surveillance workflow musiciens IA Chérie.
 Analytics performance, optimisation création musicale et collaboration.
 
 Fonctionnalités:
@@ -108,7 +108,7 @@ class WorkflowMetrics:
 
 
 class MusicianWorkflowIntelligence:
-    """Intelligence workflow musiciens enterprise Ainflue"""
+    """Intelligence workflow musiciens enterprise IA Chérie"""
     
     def __init__(self, config):
         self.config = config

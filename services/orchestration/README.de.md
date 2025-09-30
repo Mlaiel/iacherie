@@ -1,4 +1,4 @@
-# ⚡ Orchestrierungs-Services Modul - Ainflue Enterprise Plattform
+# ⚡ Orchestrierungs-Services Modul - IA Chérie Enterprise Plattform
 
 > **🚨 WARNUNG GEISTIGES EIGENTUM**  
 > **Code im Eigentum von Fahed Mlaiel (mlaiel@live.de)**  
@@ -11,7 +11,7 @@
 
 ## 🏗️ Enterprise Orchestrierungs-Architektur
 
-Das Orchestrierungs-Services Modul bietet Enterprise-Grade Workflow-Management, Business Intelligence, Automatisierung und komplexe Systemkoordination für die Ainflue Creator Economy Plattform.
+Das Orchestrierungs-Services Modul bietet Enterprise-Grade Workflow-Management, Business Intelligence, Automatisierung und komplexe Systemkoordination für die IA Chérie Creator Economy Plattform.
 
 ### 🎯 Hauptgeschäftslogik-Fluss
 ```

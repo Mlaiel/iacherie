@@ -1,7 +1,7 @@
 """🤖 AI/ML Pipeline Module - Enterprise Implementation
 ==================================================
 
-Module principal pour l'orchestration des 53 agents IA d'Ainflue
+Module principal pour l'orchestration des 53 agents IA d'IA Chérie
 avec optimisation GPU, serving production et MLOps automation.
 
 Expert Implementation:
@@ -410,7 +410,7 @@ async def create_complete_ai_ml_pipeline(config: dict) -> dict:
             'aws_secret_key': '...',
             'aws_region': 'us-east-1',
             's3_bucket': 'ml-models-bucket',
-            'alert_email': 'alerts@ainflue.com',
+            'alert_email': 'alerts@iacherie.com',
             'smtp_server': 'smtp.gmail.com',
             # ... other config
         }

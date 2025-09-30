@@ -13,7 +13,7 @@
 
 ## 🚀 **المقدمة**
 
-**Core Orchestration Enterprise** هو المركز العصبي المتقدم لتنسيق منصة Ainflue Creator Economy. هذه الهندسة المعمارية المملوكة والمتطورة للغاية تنسق النظام البيئي الكامل للمبدعين مع ذكاء اصطناعي متطور.
+**Core Orchestration Enterprise** هو المركز العصبي المتقدم لتنسيق منصة IA Chérie Creator Economy. هذه الهندسة المعمارية المملوكة والمتطورة للغاية تنسق النظام البيئي الكامل للمبدعين مع ذكاء اصطناعي متطور.
 
 ### 🎯 **المهمة**
 التنسيق الذكي لجميع جوانب اقتصاد المبدعين: من التسجيل الأولي إلى التوزيع متعدد المنصات، مروراً بالاستثمار الأمثل والألعاب التفاعلية المشاركة.
@@ -194,16 +194,16 @@ await coordinator.record_game_event(
 ## 🏢 **دعم المؤسسة**
 
 ### 📞 **اتصال الدعم**
-- **البريد الإلكتروني :** support@ainflue.com
-- **المؤسسة :** enterprise@ainflue.com
-- **الطوارئ :** urgent@ainflue.com (24/7)
+- **البريد الإلكتروني :** support@iacherie.com
+- **المؤسسة :** enterprise@iacherie.com
+- **الطوارئ :** urgent@iacherie.com (24/7)
 - **المهندس المعماري :** mlaiel@live.de
 
 ### 📚 **الموارد**
-- **الوثائق التقنية :** https://docs.ainflue.com
-- **مرجع API :** https://api.ainflue.com/docs
-- **صفحة الحالة :** https://status.ainflue.com
-- **المجتمع :** https://community.ainflue.com
+- **الوثائق التقنية :** https://docs.iacherie.com
+- **مرجع API :** https://api.iacherie.com/docs
+- **صفحة الحالة :** https://status.iacherie.com
+- **المجتمع :** https://community.iacherie.com
 
 ### 🎓 **التدريب والشهادة**
 - **التدريب التقني :** برنامج شهادة 40 ساعة
@@ -291,7 +291,7 @@ await coordinator.record_game_event(
 
 ## 🌟 **شهادات العملاء**
 
-> *"هندسة Ainflue ثورت في اقتصاد المبدعين لدينا. +300% مشاركة في 6 أشهر!"*  
+> *"هندسة IA Chérie ثورت في اقتصاد المبدعين لدينا. +300% مشاركة في 6 أشهر!"*  
 > **— سارة جونسون، رئيسة اقتصاد المبدعين، MegaCorp**
 
 > *"الحل الأكثر تقدماً في السوق. عائد استثمار استثنائي ودعم مميز."*  
@@ -345,13 +345,13 @@ await coordinator.record_game_event(
 
 ### 🤝 **المجتمع والدعم**
 - **منتدى المطورين :** مناقشات مجتمعية نشطة
-- **علامة Stack Overflow :** [ainflue-orchestration]
+- **علامة Stack Overflow :** [iacherie-orchestration]
 - **مستودع GitHub :** مكونات مفتوحة المصدر
 - **مجتمع Discord :** دعم مطورين في الوقت الفعلي
 - **ندوات شهرية :** محادثات تقنية مباشرة وأسئلة وأجوبة
 
 ---
 
-**🔥 AINFLUE CORE ORCHESTRATION - الدقة العربية للابتكار العالمي**
+**🔥 IACHERIE CORE ORCHESTRATION - الدقة العربية للابتكار العالمي**
 
 *مدعوم بخبرة فهد مليل وفريقه النخبوي متعدد التخصصات*

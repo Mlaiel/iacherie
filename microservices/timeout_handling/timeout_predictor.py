@@ -1,11 +1,11 @@
 """
-Intelligent Timeout Predictor - Ainflue Enterprise
+Intelligent Timeout Predictor - IA Chérie Enterprise
 ================================================
 Prédicteur timeout intelligent avec ML time series.
 Timeout prediction + performance forecasting + resource optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chérie Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -105,7 +105,7 @@ class IntelligentTimeoutPredictor:
         self.model_performance: Dict[str, Dict[str, float]] = {}
         self.is_initialized = False
         
-        # Ainflue business context weights
+        # IA Chérie business context weights
         self.business_context_weights = {
             'file_size': 0.3,
             'complexity': 0.25,
@@ -406,7 +406,7 @@ class IntelligentTimeoutPredictor:
         operation_name = prediction_request.operation_name
         business_context = prediction_request.business_context
         
-        # Get base timeout from Ainflue business patterns
+        # Get base timeout from IA Chérie business patterns
         base_timeout = await self._get_business_rule_timeout(service_name, operation_name)
         
         # Adjust based on business context
@@ -517,7 +517,7 @@ class IntelligentTimeoutPredictor:
     
     async def _get_business_rule_timeout(self, service_name: str, operation_name: str) -> float:
         """Get base timeout from business rules"""
-        # Ainflue business-specific timeout rules
+        # IA Chérie business-specific timeout rules
         business_timeouts = {
             'creator_service': {
                 'upload': 60.0,

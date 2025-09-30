@@ -154,8 +154,8 @@
 ### النشر السريع
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/nginx
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/nginx
 
 # النشر مع Docker
 docker-compose up -d nginx
@@ -182,7 +182,7 @@ systemctl restart nginx
 ### إعداد شهادة SSL
 ```bash
 # إنشاء شهادة Let's Encrypt
-certbot --nginx -d ainflue.com -d www.ainflue.com
+certbot --nginx -d iacherie.com -d www.iacherie.com
 
 # تكوين التجديد التلقائي
 echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
@@ -211,9 +211,9 @@ echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
 - **دليل استكشاف الأخطاء**: المشاكل الشائعة والحلول
 
 ### معلومات الاتصال
-- **الدعم التقني**: support@ainflue.com
-- **مشاكل الأمان**: security@ainflue.com
-- **استفسارات العمل**: business@ainflue.com
+- **الدعم التقني**: support@iacherie.com
+- **مشاكل الأمان**: security@iacherie.com
+- **استفسارات العمل**: business@iacherie.com
 - **دعم الطوارئ**: دعم المؤسسة 24/7 متاح
 
 ## 📄 الترخيص

@@ -556,7 +556,7 @@ class MongoDBHealthChecker:
             
             for collection_name in critical_collections:
                 try:
-                    collection = self.client.ainflue[collection_name]
+                    collection = self.client.iacherie[collection_name]
                     count = collection.count_documents({{}})
                     results["business_checks"][collection_name] = {{
                         "status": "passed",
@@ -572,8 +572,8 @@ class MongoDBHealthChecker:
             # Example: Check data integrity
             try:
                 # Simple data integrity check
-                users_count = self.client.ainflue.users.count_documents({{}})
-                content_count = self.client.ainflue.content.count_documents({{}})
+                users_count = self.client.iacherie.users.count_documents({{}})
+                content_count = self.client.iacherie.content.count_documents({{}})
                 
                 if users_count > 0 and content_count > 0:
                     results["business_checks"]["data_integrity"] = {{"status": "passed"}}

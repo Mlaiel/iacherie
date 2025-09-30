@@ -1,0 +1,539 @@
+# ArgoCD Application Configuration Template for Ainflue Platform
+# GitOps continuous deployment using ArgoCD
+
+# Main Application Configuration
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ainflue-platform
+  namespace: argocd
+  labels:
+    app: ainflue
+    environment: production
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ainflue-project
+  
+  source:
+    repoURL: https://github.com/ainflue/platform-manifests.git
+    targetRevision: main
+    path: environments/production
+    
+    # Helm configuration if using Helm charts
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-production.yaml
+      parameters:
+        - name: image.tag
+          value: "${IMAGE_TAG}"
+        - name: environment
+          value: "production"
+        - name: replicas.api
+          value: "3"
+        - name: replicas.web
+          value: "2"
+        - name: replicas.ml
+          value: "2"
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ainflue-production
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  
+  revisionHistoryLimit: 10
+  
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    - group: ""
+      kind: Service
+      jsonPointers:
+        - /spec/clusterIP
+
+---
+# Staging Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ainflue-staging
+  namespace: argocd
+  labels:
+    app: ainflue
+    environment: staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: ainflue-project
+  
+  source:
+    repoURL: https://github.com/ainflue/platform-manifests.git
+    targetRevision: develop
+    path: environments/staging
+    
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-staging.yaml
+      parameters:
+        - name: image.tag
+          value: "${IMAGE_TAG}"
+        - name: environment
+          value: "staging"
+        - name: replicas.api
+          value: "1"
+        - name: replicas.web
+          value: "1"
+        - name: replicas.ml
+          value: "1"
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ainflue-staging
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
+
+---
+# Development Application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ainflue-development
+  namespace: argocd
+  labels:
+    app: ainflue
+    environment: development
+spec:
+  project: ainflue-project
+  
+  source:
+    repoURL: https://github.com/ainflue/platform-manifests.git
+    targetRevision: develop
+    path: environments/development
+    
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-development.yaml
+      parameters:
+        - name: image.tag
+          value: "latest"
+        - name: environment
+          value: "development"
+        - name: replicas.api
+          value: "1"
+        - name: replicas.web
+          value: "1"
+        - name: replicas.ml
+          value: "1"
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ainflue-development
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+# ArgoCD Project Configuration
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ainflue-project
+  namespace: argocd
+  labels:
+    app: ainflue
+spec:
+  description: "Ainflue Creator Economy Platform Project"
+  
+  sourceRepos:
+    - 'https://github.com/ainflue/platform-manifests.git'
+    - 'https://github.com/ainflue/helm-charts.git'
+    - 'https://charts.bitnami.com/bitnami'
+    - 'https://prometheus-community.github.io/helm-charts'
+    - 'https://grafana.github.io/helm-charts'
+  
+  destinations:
+    - namespace: 'ainflue-*'
+      server: https://kubernetes.default.svc
+    - namespace: 'monitoring'
+      server: https://kubernetes.default.svc
+    - namespace: 'ingress-nginx'
+      server: https://kubernetes.default.svc
+  
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: security.istio.io
+      kind: PeerAuthentication
+    - group: security.istio.io
+      kind: AuthorizationPolicy
+  
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: ConfigMap
+    - group: ''
+      kind: Secret
+    - group: ''
+      kind: Service
+    - group: ''
+      kind: ServiceAccount
+    - group: ''
+      kind: PersistentVolumeClaim
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: apps
+      kind: DaemonSet
+    - group: batch
+      kind: Job
+    - group: batch
+      kind: CronJob
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: policy
+      kind: PodDisruptionBudget
+    - group: monitoring.coreos.com
+      kind: ServiceMonitor
+    - group: monitoring.coreos.com
+      kind: PrometheusRule
+  
+  roles:
+    - name: admin
+      description: "Full access to Ainflue project"
+      policies:
+        - p, proj:ainflue-project:admin, applications, *, ainflue-project/*, allow
+        - p, proj:ainflue-project:admin, logs, get, ainflue-project/*, allow
+        - p, proj:ainflue-project:admin, exec, create, ainflue-project/*, allow
+      groups:
+        - ainflue:admins
+    
+    - name: developer
+      description: "Developer access to Ainflue project"
+      policies:
+        - p, proj:ainflue-project:developer, applications, get, ainflue-project/*, allow
+        - p, proj:ainflue-project:developer, applications, sync, ainflue-project/ainflue-development, allow
+        - p, proj:ainflue-project:developer, applications, sync, ainflue-project/ainflue-staging, allow
+        - p, proj:ainflue-project:developer, logs, get, ainflue-project/*, allow
+      groups:
+        - ainflue:developers
+    
+    - name: readonly
+      description: "Read-only access to Ainflue project"
+      policies:
+        - p, proj:ainflue-project:readonly, applications, get, ainflue-project/*, allow
+        - p, proj:ainflue-project:readonly, logs, get, ainflue-project/*, allow
+      groups:
+        - ainflue:viewers
+
+---
+# Application Set for Multi-Environment Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ainflue-environments
+  namespace: argocd
+  labels:
+    app: ainflue
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            environment: staging
+        values:
+          environment: staging
+          revision: develop
+          replicas: "1"
+    - clusters:
+        selector:
+          matchLabels:
+            environment: production
+        values:
+          environment: production
+          revision: main
+          replicas: "3"
+  
+  template:
+    metadata:
+      name: 'ainflue-{{values.environment}}'
+      labels:
+        app: ainflue
+        environment: '{{values.environment}}'
+    spec:
+      project: ainflue-project
+      
+      source:
+        repoURL: https://github.com/ainflue/platform-manifests.git
+        targetRevision: '{{values.revision}}'
+        path: 'environments/{{values.environment}}'
+        
+        helm:
+          valueFiles:
+            - values.yaml
+            - 'values-{{values.environment}}.yaml'
+          parameters:
+            - name: environment
+              value: '{{values.environment}}'
+            - name: replicas.api
+              value: '{{values.replicas}}'
+      
+      destination:
+        server: '{{server}}'
+        namespace: 'ainflue-{{values.environment}}'
+      
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
+---
+# ArgoCD Repository Configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ainflue-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+type: Opaque
+stringData:
+  type: git
+  url: https://github.com/ainflue/platform-manifests.git
+  username: ${GIT_USERNAME}
+  password: ${GIT_TOKEN}
+
+---
+# ArgoCD Notifications Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  service.slack: |
+    token: ${SLACK_TOKEN}
+    
+  template.app-deployed: |
+    webhook:
+      slack:
+        attachments: |
+          [{
+            "title": "{{ .app.metadata.name}}",
+            "title_link":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+            "color": "#18be52",
+            "fields": [
+            {
+              "title": "Sync Status",
+              "value": "{{.app.status.sync.status}}",
+              "short": true
+            },
+            {
+              "title": "Repository",
+              "value": "{{.app.spec.source.repoURL}}",
+              "short": true
+            },
+            {
+              "title": "Revision",
+              "value": "{{.app.status.sync.revision}}",
+              "short": true
+            }
+            {{range $index, $c := .app.status.conditions}}
+            {{if not $index}},{{end}}
+            {{if $index}},{{end}}
+            {
+              "title": "{{$c.type}}",
+              "value": "{{$c.message}}",
+              "short": true
+            }
+            {{end}}
+            ]
+          }]
+    
+  template.app-health-degraded: |
+    webhook:
+      slack:
+        attachments: |
+          [{
+            "title": "{{ .app.metadata.name}}",
+            "title_link": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+            "color": "#f4c430",
+            "fields": [
+            {
+              "title": "Health Status",
+              "value": "{{.app.status.health.status}}",
+              "short": true
+            },
+            {
+              "title": "Repository",
+              "value": "{{.app.spec.source.repoURL}}",
+              "short": true
+            }
+            {{range $index, $c := .app.status.conditions}}
+            {{if not $index}},{{end}}
+            {{if $index}},{{end}}
+            {
+              "title": "{{$c.type}}",
+              "value": "{{$c.message}}",
+              "short": true
+            }
+            {{end}}
+            ]
+          }]
+    
+  template.app-sync-failed: |
+    webhook:
+      slack:
+        attachments: |
+          [{
+            "title": "{{ .app.metadata.name}}",
+            "title_link":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+            "color": "#E96D76",
+            "fields": [
+            {
+              "title": "Sync Status",
+              "value": "{{.app.status.sync.status}}",
+              "short": true
+            },
+            {
+              "title": "Repository",
+              "value": "{{.app.spec.source.repoURL}}",
+              "short": true
+            }
+            {{range $index, $c := .app.status.conditions}}
+            {{if not $index}},{{end}}
+            {{if $index}},{{end}}
+            {
+              "title": "{{$c.type}}",
+              "value": "{{$c.message}}",
+              "short": true
+            }
+            {{end}}
+            ]
+          }]
+    
+  trigger.on-deployed: |
+    - description: Application is synced and healthy
+      send:
+      - app-deployed
+      when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+    
+  trigger.on-health-degraded: |
+    - description: Application has degraded
+      send:
+      - app-health-degraded
+      when: app.status.health.status == 'Degraded'
+    
+  trigger.on-sync-failed: |
+    - description: Application syncing has failed
+      send:
+      - app-sync-failed
+      when: app.status.operationState.phase in ['Error', 'Failed']
+    
+  subscriptions: |
+    - recipients:
+      - slack:deployments
+      triggers:
+      - on-deployed
+      - on-health-degraded
+      - on-sync-failed
+
+---
+# ArgoCD Webhook Configuration for Automatic Sync
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-webhooks-secret
+  namespace: argocd
+type: Opaque
+stringData:
+  webhook.github.secret: ${GITHUB_WEBHOOK_SECRET}
+
+---
+# ArgoCD Image Updater Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-image-updater-config
+  namespace: argocd
+data:
+  registries.conf: |
+    registries:
+    - name: Docker Hub
+      prefix: docker.io
+      api_url: https://registry-1.docker.io
+      credentials: pullsecret:argocd/dockerhub
+    - name: Ainflue Registry
+      prefix: registry.ainflue.com
+      api_url: https://registry.ainflue.com/v2
+      credentials: secret:argocd/ainflue-registry
+  
+  applications.yaml: |
+    applications:
+    - name: ainflue-staging
+      image_list:
+      - registry.ainflue.com/ainflue-api
+      - registry.ainflue.com/ainflue-web
+      - registry.ainflue.com/ainflue-ml
+      update_strategy: semver
+      
+    - name: ainflue-production
+      image_list:
+      - registry.ainflue.com/ainflue-api
+      - registry.ainflue.com/ainflue-web
+      - registry.ainflue.com/ainflue-ml
+      update_strategy: semver
+      ignore_tags:
+      - latest
+      - develop
+      - alpha
+      - beta

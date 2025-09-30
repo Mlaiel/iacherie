@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Thumbnail Configuration Module
+"""IA Chérie Thumbnail Configuration Module
 ========================================
 
-Enterprise-grade thumbnail generation configuration for the Ainflue platform.
+Enterprise-grade thumbnail generation configuration for the IA Chérie platform.
 Comprehensive thumbnail creation with AI-powered smart cropping, adaptive sizing,
 multi-format support, and intelligent content analysis for optimal preview generation.
 

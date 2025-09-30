@@ -4,7 +4,7 @@ Security Orchestrator - Enterprise Security Automation
 Author: Fahed Mlaiel (mlaiel@live.de) 
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced security automation for Ainflue Platform:
+Advanced security automation for IA Chérie Platform:
 - Vulnerability scanning and assessment
 - Threat detection and response
 - Security policy enforcement
@@ -34,7 +34,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/security.log'),
+        logging.FileHandler('/var/log/iacherie/security.log'),
         logging.StreamHandler()
     ]
 )
@@ -91,7 +91,7 @@ class SecurityOrchestrator:
     - Audit trail maintenance
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/security.yaml"):
+    def __init__(self, config_path: str = "/etc/iacherie/security.yaml"):
         self.config_path = config_path
         self.security_events: List[SecurityEvent] = []
         self.active_incidents: Dict[str, SecurityEvent] = {}
@@ -289,7 +289,7 @@ class SecurityOrchestrator:
             
             # Check for information disclosure
             server_header = headers.get('Server', '')
-            if server_header and not server_header.lower().startswith('ainflue'):
+            if server_header and not server_header.lower().startswith('iacherie'):
                 vulnerabilities.append({
                     'type': 'information_disclosure',
                     'severity': 'low',
@@ -333,7 +333,7 @@ class SecurityOrchestrator:
                 '/etc/passwd',
                 '/etc/shadow',
                 '/etc/ssh/sshd_config',
-                '/etc/ainflue/config.yaml'
+                '/etc/iacherie/config.yaml'
             ]
             
             for file_path in sensitive_files:
@@ -658,7 +658,7 @@ class SecurityOrchestrator:
     async def _collect_security_evidence(self, event: SecurityEvent):
         """Collect evidence for security incident"""
         try:
-            evidence_dir = f"/var/log/ainflue/evidence/{event.event_id}"
+            evidence_dir = f"/var/log/iacherie/evidence/{event.event_id}"
             os.makedirs(evidence_dir, exist_ok=True)
             
             # Collect system information
@@ -740,12 +740,12 @@ async def main():
     """CLI entry point for security orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Security Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chérie Security Orchestrator')
     parser.add_argument('--scan', action='store_true', help='Run vulnerability scan')
     parser.add_argument('--monitor', type=int, metavar='DURATION', help='Monitor for security events (seconds)')
     parser.add_argument('--report', action='store_true', help='Generate security report')
     parser.add_argument('--target', default='localhost', help='Scan target')
-    parser.add_argument('--config', default='/etc/ainflue/security.yaml', help='Configuration file')
+    parser.add_argument('--config', default='/etc/iacherie/security.yaml', help='Configuration file')
     
     args = parser.parse_args()
     

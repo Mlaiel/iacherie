@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PROTECTION RIGHTS DOCKER MODULE
+# IACHERIE PROTECTION RIGHTS DOCKER MODULE
 # =============================================================================
 # Content protection and rights management Docker containers
 #

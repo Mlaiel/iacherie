@@ -1,4 +1,4 @@
-"""🏥 Health Monitoring Module | Ainflue Creator Economy Enterprise
+"""🏥 Health Monitoring Module | IA Chérie Creator Economy Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

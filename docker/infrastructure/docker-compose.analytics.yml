@@ -1,5 +1,5 @@
 # Docker Compose - SEO & Analytics Infrastructure
-# Ainflue Platform - Advanced Analytics and SEO Services
+# IA Chérie Platform - Advanced Analytics and SEO Services
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -10,8 +10,8 @@
 services:
   # SEO Analyzer Service
   seo-analyzer:
-    image: ainflue/seo-analyzer:latest
-    container_name: ainflue-seo
+    image: iacherie/seo-analyzer:latest
+    container_name: iacherie-seo
     deploy:
       resources:
         limits:
@@ -48,7 +48,7 @@ services:
       - elasticsearch-analytics
       - redis-analytics
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     ports:
       - "8094:8080"
     healthcheck:
@@ -61,8 +61,8 @@ services:
 
   # Trending Monitor Service
   trending-monitor:
-    image: ainflue/trending-monitor:latest
-    container_name: ainflue-trending
+    image: iacherie/trending-monitor:latest
+    container_name: iacherie-trending
     deploy:
       resources:
         limits:
@@ -94,8 +94,8 @@ services:
       - elasticsearch-analytics
       - influxdb-metrics
     networks:
-      - ainflue-analytics-network
-      - ainflue-external-network
+      - iacherie-analytics-network
+      - iacherie-external-network
     ports:
       - "8095:8080"
     healthcheck:
@@ -108,7 +108,7 @@ services:
 
   # Analytics Engine Service
   analytics-engine:
-    image: ainflue/analytics-engine:latest
+    image: iacherie/analytics-engine:latest
     deploy:
       replicas: 2
       resources:
@@ -148,7 +148,7 @@ services:
       - influxdb-metrics
       - postgres-analytics
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     ports:
       - "8096:8080"
     healthcheck:
@@ -162,7 +162,7 @@ services:
   # Elasticsearch Analytics Cluster
   elasticsearch-analytics:
     image: elasticsearch:8.11.0
-    container_name: ainflue-elasticsearch
+    container_name: iacherie-elasticsearch
     deploy:
       resources:
         limits:
@@ -176,8 +176,8 @@ services:
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
       - xpack.security.enabled=false
       - xpack.monitoring.enabled=true
-      - cluster.name=ainflue-analytics
-      - node.name=ainflue-analytics-node-1
+      - cluster.name=iacherie-analytics
+      - node.name=iacherie-analytics-node-1
       - bootstrap.memory_lock=true
       - indices.query.bool.max_clause_count=10000
       - search.max_buckets=100000
@@ -193,7 +193,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
       interval: 30s
@@ -205,7 +205,7 @@ services:
   # InfluxDB Metrics Database
   influxdb-metrics:
     image: influxdb:2.7-alpine
-    container_name: ainflue-influxdb
+    container_name: iacherie-influxdb
     deploy:
       resources:
         limits:
@@ -230,7 +230,7 @@ services:
     ports:
       - "8086:8086"
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
       interval: 30s
@@ -242,7 +242,7 @@ services:
   # PostgreSQL Analytics Database
   postgres-analytics:
     image: postgres:15-alpine
-    container_name: ainflue-postgres-analytics
+    container_name: iacherie-postgres-analytics
     deploy:
       resources:
         limits:
@@ -263,7 +263,7 @@ services:
     ports:
       - "5435:5432"
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U analytics_user -d analytics_db"]
       interval: 10s
@@ -285,7 +285,7 @@ services:
   # Redis Cache for Analytics
   redis-analytics:
     image: redis:7-alpine
-    container_name: ainflue-redis-analytics
+    container_name: iacherie-redis-analytics
     deploy:
       resources:
         limits:
@@ -310,7 +310,7 @@ services:
     ports:
       - "6383:6379"
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -321,8 +321,8 @@ services:
 
   # Data Pipeline Processor
   data-pipeline:
-    image: ainflue/data-pipeline:latest
-    container_name: ainflue-data-pipeline
+    image: iacherie/data-pipeline:latest
+    container_name: iacherie-data-pipeline
     deploy:
       resources:
         limits:
@@ -354,7 +354,7 @@ services:
       - postgres-analytics
       - redis-analytics
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     ports:
       - "8097:8080"
     healthcheck:
@@ -367,8 +367,8 @@ services:
 
   # ML Model Server
   ml-model-server:
-    image: ainflue/ml-model-server:latest
-    container_name: ainflue-ml-models
+    image: iacherie/ml-model-server:latest
+    container_name: iacherie-ml-models
     deploy:
       resources:
         limits:
@@ -396,7 +396,7 @@ services:
     depends_on:
       - redis-analytics
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     ports:
       - "8098:8080"
     healthcheck:
@@ -409,8 +409,8 @@ services:
 
   # Analytics API Gateway
   analytics-api-gateway:
-    image: ainflue/analytics-api-gateway:latest
-    container_name: ainflue-analytics-api
+    image: iacherie/analytics-api-gateway:latest
+    container_name: iacherie-analytics-api
     deploy:
       resources:
         limits:
@@ -440,7 +440,7 @@ services:
       - elasticsearch-analytics
       - influxdb-metrics
     networks:
-      - ainflue-analytics-network
+      - iacherie-analytics-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -456,13 +456,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/seo_data
+      device: /data/iacherie/seo_data
   seo_models:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/seo_models
+      device: /data/iacherie/seo_models
   seo_reports:
     driver: local
   seo_logs:
@@ -472,7 +472,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/trending_data
+      device: /data/iacherie/trending_data
   trending_models:
     driver: local
   trending_alerts:
@@ -484,19 +484,19 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/analytics_data
+      device: /data/iacherie/analytics_data
   analytics_models:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/analytics_models
+      device: /data/iacherie/analytics_models
   analytics_reports:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/analytics_reports
+      device: /data/iacherie/analytics_reports
   analytics_cache:
     driver: local
   analytics_logs:
@@ -506,7 +506,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/elasticsearch_data
+      device: /data/iacherie/elasticsearch_data
   elasticsearch_config:
     driver: local
   influxdb_data:
@@ -514,7 +514,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/influxdb_data
+      device: /data/iacherie/influxdb_data
   influxdb_config:
     driver: local
   analytics_postgres_data:
@@ -522,13 +522,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/postgres_analytics
+      device: /data/iacherie/postgres_analytics
   redis_analytics_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/redis_analytics
+      device: /data/iacherie/redis_analytics
   pipeline_data:
     driver: local
   pipeline_logs:
@@ -540,7 +540,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/ml_models
+      device: /data/iacherie/ml_models
   ml_cache:
     driver: local
   ml_logs:
@@ -548,13 +548,13 @@ volumes:
 
 # Networks for analytics services
 networks:
-  ainflue-analytics-network:
+  iacherie-analytics-network:
     driver: bridge
     driver_opts:
-      com.docker.network.bridge.name: br-ainflue-analytics
+      com.docker.network.bridge.name: br-iacherie-analytics
     ipam:
       config:
         - subnet: 172.23.0.0/16
           gateway: 172.23.0.1
-  ainflue-external-network:
+  iacherie-external-network:
     external: true

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PLAGIARISM CHECKER - SPECIALIZED DOCKERFILE
+# IACHERIE PLAGIARISM CHECKER - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced plagiarism detection supporting
 # text, audio, video, and image similarity detection with ML-based analysis.

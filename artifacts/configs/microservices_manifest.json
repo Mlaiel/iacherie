@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name": "Microservices Manifest - Ainflue Enterprise",
+    "name": "Microservices Manifest - IA Chérie Enterprise",
     "version": "1.0.0",
     "author": "Fahed Mlaiel",
     "created": "2025-12-15",
@@ -449,7 +449,7 @@
     },
     "elk_stack": {
       "log_retention": "30d",
-      "indices": "ainflue-logs-*",
+      "indices": "iacherie-logs-*",
       "shards": 5
     }
   },
@@ -521,6 +521,6 @@
     "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
     "license": "Proprietary - Unauthorized use prohibited",
     "classification": "CONFIDENTIAL",
-    "contact": "legal@ainflue.enterprise"
+    "contact": "legal@iacherie.enterprise"
   }
 }

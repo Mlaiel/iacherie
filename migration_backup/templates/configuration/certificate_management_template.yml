@@ -1,0 +1,1104 @@
+# ⚡ Certificate Management Configuration Template - Ainflue Templates Configuration Module
+# 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
+# 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
+
+# ===================================================================
+# CERTIFICATE MANAGEMENT CONFIGURATION TEMPLATE
+# Enterprise-grade certificate management system
+# cert-manager + Vault PKI + Let's Encrypt + Internal CA
+# ===================================================================
+
+# 🔐 Global Certificate Management Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-certificate-config
+  namespace: cert-manager
+  labels:
+    app: certificate-management
+    component: global-config
+data:
+  certificate-management.yaml: |
+    # Global Certificate Management Configuration
+    certificateManagement:
+      # Certificate Authorities
+      certificateAuthorities:
+        letsencrypt:
+          enabled: true
+          environment: "production"  # production, staging
+          email: "certificates@ainflue.com"
+          acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
+          keyAlgorithm: "RSA"
+          keySize: 2048
+        
+        internal:
+          enabled: true
+          provider: "vault"
+          vaultPath: "pki_int"
+          rootCA: "Ainflue Internal CA"
+          intermediateCA: "Ainflue Services CA"
+          keyAlgorithm: "RSA"
+          keySize: 2048
+        
+        venafi:
+          enabled: false
+          tppUrl: "https://tpp.ainflue.internal"
+          zone: "Ainflue\\Kubernetes"
+          
+        selfSigned:
+          enabled: true
+          keyAlgorithm: "RSA"
+          keySize: 2048
+      
+      # Certificate Profiles
+      certificateProfiles:
+        webServer:
+          keyUsage:
+            - "digital signature"
+            - "key encipherment"
+          extKeyUsage:
+            - "server auth"
+          duration: "2160h"  # 90 days
+          renewBefore: "720h"  # 30 days
+          
+        clientAuth:
+          keyUsage:
+            - "digital signature"
+            - "key encipherment"
+          extKeyUsage:
+            - "client auth"
+          duration: "8760h"  # 1 year
+          renewBefore: "2160h"  # 90 days
+          
+        codeSign:
+          keyUsage:
+            - "digital signature"
+          extKeyUsage:
+            - "code signing"
+          duration: "26280h"  # 3 years
+          renewBefore: "8760h"  # 1 year
+          
+        emailProtection:
+          keyUsage:
+            - "digital signature"
+            - "key encipherment"
+          extKeyUsage:
+            - "email protection"
+          duration: "8760h"  # 1 year
+          renewBefore: "2160h"  # 90 days
+      
+      # Automation Settings
+      automation:
+        autoRenewal:
+          enabled: true
+          renewBeforeExpiry: "30d"
+          checkInterval: "1h"
+        
+        certificateTemplating:
+          enabled: true
+          defaultTemplate: "web-server"
+          customTemplates: true
+        
+        compliance:
+          enforceKeySize: true
+          minKeySize: 2048
+          allowedAlgorithms: ["RSA", "ECDSA"]
+          requireSAN: true
+          maxValidityPeriod: "90d"
+        
+        notifications:
+          enabled: true
+          channels: ["slack", "email"]
+          events: ["issued", "renewed", "expiring", "failed"]
+          expiryWarnings: ["30d", "7d", "1d"]
+      
+      # Security Settings
+      security:
+        keyStorage:
+          provider: "kubernetes"
+          encryption: "AES-256-GCM"
+          backup: true
+        
+        accessControl:
+          rbac: true
+          serviceAccounts: true
+          namespaceIsolation: true
+        
+        auditLogging:
+          enabled: true
+          level: "detailed"
+          retention: "2y"
+        
+        certificateValidation:
+          ocsp: true
+          crl: true
+          ctLogs: true
+---
+# 🎯 cert-manager ClusterIssuer for Let's Encrypt
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+  labels:
+    issuer-type: acme
+    environment: production
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: certificates@ainflue.com
+    privateKeySecretRef:
+      name: letsencrypt-production-private-key
+    solvers:
+    # HTTP-01 Challenge Solver
+    - http01:
+        ingress:
+          class: nginx
+          podTemplate:
+            metadata:
+              annotations:
+                "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+            spec:
+              nodeSelector:
+                "kubernetes.io/os": linux
+              tolerations:
+              - key: "node-role.kubernetes.io/master"
+                operator: "Equal"
+                effect: "NoSchedule"
+    # DNS-01 Challenge Solver for Wildcard Certificates
+    - dns01:
+        route53:
+          region: us-west-2
+          hostedZoneID: Z1D633PJN98FT9
+          accessKeyID: AKIAIOSFODNN7EXAMPLE
+          secretAccessKeySecretRef:
+            name: route53-credentials
+            key: secret-access-key
+      selector:
+        dnsNames:
+        - "*.ainflue.com"
+        - "*.api.ainflue.com"
+        - "*.app.ainflue.com"
+    # Alternative DNS-01 with CloudFlare
+    - dns01:
+        cloudflare:
+          email: dns@ainflue.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token
+            key: api-token
+      selector:
+        dnsNames:
+        - "*.staging.ainflue.com"
+        - "*.dev.ainflue.com"
+---
+# 🔒 cert-manager ClusterIssuer for Let's Encrypt Staging
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  labels:
+    issuer-type: acme
+    environment: staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: certificates@ainflue.com
+    privateKeySecretRef:
+      name: letsencrypt-staging-private-key
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+    - dns01:
+        route53:
+          region: us-west-2
+          hostedZoneID: Z1D633PJN98FT9
+          accessKeyID: AKIAIOSFODNN7EXAMPLE
+          secretAccessKeySecretRef:
+            name: route53-credentials
+            key: secret-access-key
+      selector:
+        dnsNames:
+        - "*.staging.ainflue.com"
+        - "*.dev.ainflue.com"
+---
+# 🏦 cert-manager Vault Issuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-issuer
+  labels:
+    issuer-type: vault
+    environment: internal
+spec:
+  vault:
+    server: https://vault.vault.svc.cluster.local:8200
+    path: pki_int/sign/ainflue-dot-com
+    caBundle: |
+      -----BEGIN CERTIFICATE-----
+      MIIDCzCCAfOgAwIBAgIQJ... (Base64 encoded Vault CA certificate)
+      -----END CERTIFICATE-----
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes
+        role: cert-manager
+        secretRef:
+          name: cert-manager-vault-token
+          key: token
+---
+# 🔐 Self-Signed ClusterIssuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+  labels:
+    issuer-type: self-signed
+    environment: development
+spec:
+  selfSigned: {}
+---
+# 🎯 Root CA ClusterIssuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: ainflue-root-ca
+  labels:
+    issuer-type: ca
+    environment: internal
+spec:
+  ca:
+    secretName: ainflue-root-ca-secret
+---
+# 🌐 Main Domain Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ainflue-com-tls
+  namespace: ainflue-production
+  labels:
+    certificate-type: public
+    domain: ainflue.com
+spec:
+  secretName: ainflue-com-tls-secret
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: ainflue.com
+  dnsNames:
+  - ainflue.com
+  - www.ainflue.com
+  duration: 2160h  # 90 days
+  renewBefore: 720h  # 30 days
+  subject:
+    organizationalUnits:
+    - "IT Department"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+    countries:
+    - "US"
+    localities:
+    - "San Francisco"
+    provinces:
+    - "California"
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+    rotationPolicy: Always
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef:
+        name: ainflue-com-jks-password
+        key: password
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: ainflue-com-p12-password
+        key: password
+---
+# 🎯 API Domain Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: api-ainflue-com-tls
+  namespace: ainflue-production
+  labels:
+    certificate-type: public
+    domain: api.ainflue.com
+spec:
+  secretName: api-ainflue-com-tls-secret
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: api.ainflue.com
+  dnsNames:
+  - api.ainflue.com
+  - "*.api.ainflue.com"
+  duration: 2160h
+  renewBefore: 720h
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+---
+# 🔒 Internal Services Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-services-tls
+  namespace: ainflue-production
+  labels:
+    certificate-type: internal
+    scope: cluster
+spec:
+  secretName: internal-services-tls-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: internal.ainflue.local
+  dnsNames:
+  - "*.ainflue-production.svc.cluster.local"
+  - "*.ainflue-staging.svc.cluster.local"
+  - "*.ainflue-database.svc.cluster.local"
+  - vault.vault.svc.cluster.local
+  - postgres.ainflue-database.svc.cluster.local
+  - redis.ainflue-cache.svc.cluster.local
+  duration: 8760h  # 1 year
+  renewBefore: 2160h  # 90 days
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
+---
+# 🎨 Creator Content CDN Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cdn-ainflue-com-tls
+  namespace: ainflue-production
+  labels:
+    certificate-type: public
+    purpose: cdn
+spec:
+  secretName: cdn-ainflue-com-tls-secret
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: cdn.ainflue.com
+  dnsNames:
+  - cdn.ainflue.com
+  - content.ainflue.com
+  - assets.ainflue.com
+  - media.ainflue.com
+  duration: 2160h
+  renewBefore: 720h
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+---
+# 🔐 Client Authentication Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: client-auth-certificate
+  namespace: ainflue-production
+  labels:
+    certificate-type: client-auth
+    purpose: mutual-tls
+spec:
+  secretName: client-auth-tls-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: ainflue-client-auth
+  subject:
+    organizationalUnits:
+    - "Client Authentication"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+  duration: 8760h
+  renewBefore: 2160h
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+  - digital signature
+  - key encipherment
+  - client auth
+---
+# 📱 Mobile App Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mobile-app-certificate
+  namespace: ainflue-production
+  labels:
+    certificate-type: code-signing
+    purpose: mobile-app
+spec:
+  secretName: mobile-app-cert-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: Ainflue Mobile App
+  subject:
+    organizationalUnits:
+    - "Mobile Development"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+    countries:
+    - "US"
+  duration: 26280h  # 3 years
+  renewBefore: 8760h  # 1 year
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  usages:
+  - digital signature
+  - code signing
+
+# ===================================================================
+# 🔐 CERTIFICATE TEMPLATES AND POLICIES
+# ===================================================================
+
+# 🎯 Certificate Template for Web Services
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-service-cert-template
+  namespace: cert-manager
+  labels:
+    template-type: web-service
+data:
+  template.yaml: |
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: "{{ .serviceName }}-tls"
+      namespace: "{{ .namespace }}"
+      labels:
+        certificate-type: web-service
+        service: "{{ .serviceName }}"
+    spec:
+      secretName: "{{ .serviceName }}-tls-secret"
+      issuerRef:
+        name: "{{ .issuer | default "letsencrypt-production" }}"
+        kind: ClusterIssuer
+      commonName: "{{ .domain }}"
+      dnsNames:
+      - "{{ .domain }}"
+      {{- range .additionalDomains }}
+      - "{{ . }}"
+      {{- end }}
+      duration: "{{ .duration | default "2160h" }}"
+      renewBefore: "{{ .renewBefore | default "720h" }}"
+      privateKey:
+        algorithm: RSA
+        size: 2048
+      usages:
+      - digital signature
+      - key encipherment
+      - server auth
+---
+# 🔒 Certificate Template for Microservices
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: microservice-cert-template
+  namespace: cert-manager
+  labels:
+    template-type: microservice
+data:
+  template.yaml: |
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: "{{ .serviceName }}-internal-tls"
+      namespace: "{{ .namespace }}"
+      labels:
+        certificate-type: microservice
+        service: "{{ .serviceName }}"
+    spec:
+      secretName: "{{ .serviceName }}-internal-tls-secret"
+      issuerRef:
+        name: vault-issuer
+        kind: ClusterIssuer
+      commonName: "{{ .serviceName }}.{{ .namespace }}.svc.cluster.local"
+      dnsNames:
+      - "{{ .serviceName }}.{{ .namespace }}.svc.cluster.local"
+      - "{{ .serviceName }}"
+      - "{{ .serviceName }}.{{ .namespace }}"
+      duration: "8760h"
+      renewBefore: "2160h"
+      privateKey:
+        algorithm: RSA
+        size: 2048
+      usages:
+      - digital signature
+      - key encipherment
+      - server auth
+      - client auth
+---
+# 🎯 Certificate Policy
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: certificate-policies
+  namespace: cert-manager
+data:
+  default-policy.yaml: |
+    # Default Certificate Policy
+    certificatePolicy:
+      security:
+        minKeySize: 2048
+        allowedAlgorithms: ["RSA", "ECDSA"]
+        maxValidityPeriod: "90d"
+        requireSAN: true
+        
+      compliance:
+        requireOrganization: true
+        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        requireCountry: true
+        allowedCountries: ["US", "CA", "GB", "DE", "FR"]
+        
+      automation:
+        autoRenewBefore: "30d"
+        retryAttempts: 3
+        retryInterval: "1h"
+        
+      validation:
+        dnsValidation: true
+        httpValidation: true
+        emailValidation: false
+  
+  high-security-policy.yaml: |
+    # High Security Certificate Policy
+    certificatePolicy:
+      security:
+        minKeySize: 4096
+        allowedAlgorithms: ["RSA"]
+        maxValidityPeriod: "30d"
+        requireSAN: true
+        requireEKU: true
+        allowedEKUs: ["server auth", "client auth"]
+        
+      compliance:
+        requireOrganization: true
+        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        requireOU: true
+        allowedOUs: ["Security", "Infrastructure"]
+        requireCountry: true
+        allowedCountries: ["US"]
+        
+      automation:
+        autoRenewBefore: "7d"
+        retryAttempts: 5
+        retryInterval: "30m"
+        
+      validation:
+        dnsValidation: true
+        httpValidation: false
+        emailValidation: false
+        extendedValidation: true
+
+# ===================================================================
+# 🔐 CERTIFICATE AUTOMATION AND MONITORING
+# ===================================================================
+
+# 📊 Certificate Monitoring
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cert-manager-metrics
+  namespace: cert-manager
+  labels:
+    app: cert-manager
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cert-manager
+  endpoints:
+  - port: tcp-prometheus-servicemonitor
+    interval: 30s
+    path: /metrics
+---
+# 🚨 Certificate Alerts
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: certificate-alerts
+  namespace: cert-manager
+  labels:
+    app: cert-manager
+spec:
+  groups:
+  - name: certificate.rules
+    rules:
+    - alert: CertificateExpiresWithin7Days
+      expr: |
+        (
+          certmanager_certificate_expiration_timestamp_seconds - time()
+        ) / 86400 < 7
+      for: 0m
+      labels:
+        severity: critical
+        category: certificate
+      annotations:
+        summary: "Certificate expires within 7 days"
+        description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} expires in {{ $value }} days"
+    
+    - alert: CertificateExpiresWithin30Days
+      expr: |
+        (
+          certmanager_certificate_expiration_timestamp_seconds - time()
+        ) / 86400 < 30
+      for: 0m
+      labels:
+        severity: warning
+        category: certificate
+      annotations:
+        summary: "Certificate expires within 30 days"
+        description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} expires in {{ $value }} days"
+    
+    - alert: CertificateRenewalFailed
+      expr: |
+        increase(certmanager_certificate_renewal_failures_total[1h]) > 0
+      for: 0m
+      labels:
+        severity: critical
+        category: certificate
+      annotations:
+        summary: "Certificate renewal failed"
+        description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} failed to renew"
+    
+    - alert: CertificateNotReady
+      expr: |
+        certmanager_certificate_ready_status == 0
+      for: 15m
+      labels:
+        severity: warning
+        category: certificate
+      annotations:
+        summary: "Certificate not ready"
+        description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} is not ready"
+    
+    - alert: CertManagerDown
+      expr: |
+        up{job="cert-manager"} == 0
+      for: 5m
+      labels:
+        severity: critical
+        category: cert-manager
+      annotations:
+        summary: "cert-manager is down"
+        description: "cert-manager has been down for more than 5 minutes"
+---
+# 🔄 Certificate Renewal Job
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: certificate-renewal-check
+  namespace: cert-manager
+  labels:
+    app: certificate-renewal
+spec:
+  schedule: "0 */6 * * *"  # Every 6 hours
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: certificate-renewal
+          restartPolicy: OnFailure
+          containers:
+          - name: certificate-renewal
+            image: quay.io/jetstack/cert-manager-ctl:v1.13.0
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Check all certificates for renewal
+              kubectl get certificates --all-namespaces -o json | \
+              jq -r '.items[] | select(.status.renewalTime != null and (.status.renewalTime | fromdateiso8601) < now) | "\(.metadata.namespace)/\(.metadata.name)"' | \
+              while read cert; do
+                namespace=$(echo $cert | cut -d'/' -f1)
+                name=$(echo $cert | cut -d'/' -f2)
+                echo "Triggering renewal for certificate $name in namespace $namespace"
+                kubectl annotate certificate $name -n $namespace cert-manager.io/issue-temporary-certificate="$(date +%s)" --overwrite
+              done
+              
+              # Check for certificates expiring within 7 days
+              kubectl get certificates --all-namespaces -o json | \
+              jq -r '.items[] | select(.status.notAfter != null and (.status.notAfter | fromdateiso8601) - now < 604800) | "\(.metadata.namespace)/\(.metadata.name) expires \(.status.notAfter)"' | \
+              while read line; do
+                echo "WARNING: Certificate $line"
+              done
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+---
+# 📋 Certificate Inventory Report
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: certificate-inventory
+  namespace: cert-manager
+  labels:
+    app: certificate-inventory
+spec:
+  schedule: "0 2 * * 0"  # Weekly on Sunday at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: certificate-inventory
+          restartPolicy: OnFailure
+          containers:
+          - name: inventory
+            image: quay.io/jetstack/cert-manager-ctl:v1.13.0
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Generate certificate inventory report
+              echo "Certificate Inventory Report - $(date)" > /tmp/certificate-report.txt
+              echo "=========================================" >> /tmp/certificate-report.txt
+              
+              kubectl get certificates --all-namespaces -o custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,READY:.status.conditions[?(@.type==\"Ready\")].status,SECRET:.spec.secretName,ISSUER:.spec.issuerRef.name,EXPIRES:.status.notAfter --sort-by='.status.notAfter' >> /tmp/certificate-report.txt
+              
+              # Send report via webhook
+              curl -X POST \
+                -H 'Content-Type: application/json' \
+                -d "{\"text\": \"Weekly Certificate Inventory Report\", \"attachments\": [{\"text\": \"$(cat /tmp/certificate-report.txt)\"}]}" \
+                "$SLACK_WEBHOOK_URL"
+            env:
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretRef:
+                  name: notification-webhooks
+                  key: slack-webhook
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+
+# ===================================================================
+# 🔐 CERTIFICATE BACKUP AND RECOVERY
+# ===================================================================
+
+# 💾 Certificate Backup
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: certificate-backup
+  namespace: cert-manager
+  labels:
+    app: certificate-backup
+spec:
+  schedule: "0 3 * * *"  # Daily at 3 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: certificate-backup
+          restartPolicy: OnFailure
+          containers:
+          - name: backup
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/bash
+            - -c
+            - |
+              # Create backup directory
+              BACKUP_DIR="/backup/certificates/$(date +%Y%m%d_%H%M%S)"
+              mkdir -p "$BACKUP_DIR"
+              
+              # Backup all certificate secrets
+              kubectl get secrets --all-namespaces -l certificate.cert-manager.io/certificate-name -o yaml > "$BACKUP_DIR/certificate-secrets.yaml"
+              
+              # Backup all certificates
+              kubectl get certificates --all-namespaces -o yaml > "$BACKUP_DIR/certificates.yaml"
+              
+              # Backup all issuers
+              kubectl get issuers,clusterissuers --all-namespaces -o yaml > "$BACKUP_DIR/issuers.yaml"
+              
+              # Create compressed archive
+              tar -czf "$BACKUP_DIR.tar.gz" -C "$(dirname $BACKUP_DIR)" "$(basename $BACKUP_DIR)"
+              rm -rf "$BACKUP_DIR"
+              
+              # Upload to S3
+              aws s3 cp "$BACKUP_DIR.tar.gz" "s3://ainflue-certificate-backups/"
+              
+              # Cleanup old backups (keep 30 days)
+              find /backup/certificates -name "*.tar.gz" -mtime +30 -delete
+              
+              echo "Certificate backup completed: $BACKUP_DIR.tar.gz"
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretRef:
+                  name: certificate-backup-aws
+                  key: access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretRef:
+                  name: certificate-backup-aws
+                  key: secret-access-key
+            volumeMounts:
+            - name: backup-storage
+              mountPath: /backup
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: certificate-backup-pvc
+
+# ===================================================================
+# 🎯 CREATOR ECONOMY CERTIFICATE CONFIGURATIONS
+# ===================================================================
+
+# 🎨 Creator Content Signing Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: creator-content-signing
+  namespace: ainflue-production
+  labels:
+    certificate-type: content-signing
+    purpose: creator-economy
+spec:
+  secretName: creator-content-signing-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: Ainflue Creator Content Signing
+  subject:
+    organizationalUnits:
+    - "Creator Economy"
+    - "Content Verification"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+  duration: 8760h  # 1 year
+  renewBefore: 2160h  # 90 days
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  usages:
+  - digital signature
+  - content commitment
+  - code signing
+---
+# 💰 Payment Service mTLS Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: payment-service-mtls
+  namespace: ainflue-production
+  labels:
+    certificate-type: mutual-tls
+    purpose: payment-security
+spec:
+  secretName: payment-service-mtls-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: ainflue-payment-service.ainflue-production.svc.cluster.local
+  subject:
+    organizationalUnits:
+    - "Payment Processing"
+    - "Financial Services"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+  dnsNames:
+  - ainflue-payment-service.ainflue-production.svc.cluster.local
+  - payment-service
+  - payment.internal.ainflue.com
+  duration: 2160h  # 90 days
+  renewBefore: 720h  # 30 days
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
+---
+# 🔐 Creator API Client Certificates
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: creator-api-client-template
+  namespace: ainflue-production
+  labels:
+    certificate-type: client-auth
+    purpose: creator-api
+spec:
+  secretName: creator-api-client-template-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: creator-api-client
+  subject:
+    organizationalUnits:
+    - "Creator API Access"
+    organizations:
+    - "Ainflue Creator Economy Platform"
+  duration: 8760h  # 1 year
+  renewBefore: 2160h  # 90 days
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+  - digital signature
+  - key encipherment
+  - client auth
+---
+# 🎯 Certificate Request Template for Creators
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: creator-certificate-template
+  namespace: ainflue-production
+data:
+  creator-cert-request.yaml: |
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: "creator-{{ .creatorId }}-cert"
+      namespace: "{{ .namespace | default "ainflue-production" }}"
+      labels:
+        certificate-type: creator-auth
+        creator-id: "{{ .creatorId }}"
+        tier: "{{ .tier | default "standard" }}"
+    spec:
+      secretName: "creator-{{ .creatorId }}-cert-secret"
+      issuerRef:
+        name: vault-issuer
+        kind: ClusterIssuer
+      commonName: "creator-{{ .creatorId }}.ainflue.com"
+      subject:
+        organizationalUnits:
+        - "Creator"
+        - "{{ .tier | title }} Tier"
+        organizations:
+        - "Ainflue Creator Economy Platform"
+        commonName: "{{ .creatorName }}"
+      dnsNames:
+      - "creator-{{ .creatorId }}.ainflue.com"
+      - "{{ .creatorId }}.creators.ainflue.com"
+      duration: "{{ .duration | default "8760h" }}"
+      renewBefore: "{{ .renewBefore | default "2160h" }}"
+      privateKey:
+        algorithm: RSA
+        size: 2048
+      usages:
+      - digital signature
+      - key encipherment
+      - client auth
+
+# ===================================================================
+# 🔒 CERTIFICATE RBAC AND SECURITY
+# ===================================================================
+
+# 🎯 Certificate Manager Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: certificate-manager
+  namespace: cert-manager
+  labels:
+    app: cert-manager
+---
+# 🔐 Certificate RBAC
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: certificate-manager
+  labels:
+    app: cert-manager
+rules:
+- apiGroups: ["cert-manager.io"]
+  resources: ["certificates", "certificaterequests", "issuers", "clusterissuers"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["validatingadmissionwebhooks", "mutatingadmissionwebhooks"]
+  verbs: ["get", "list", "watch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: certificate-manager
+  labels:
+    app: cert-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: certificate-manager
+subjects:
+- kind: ServiceAccount
+  name: certificate-manager
+  namespace: cert-manager
+---
+# 🔒 Certificate Validation Webhook
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionWebhook
+metadata:
+  name: certificate-validation-webhook
+  labels:
+    app: cert-manager
+webhooks:
+- name: certificates.cert-manager.io
+  clientConfig:
+    service:
+      name: cert-manager-webhook
+      namespace: cert-manager
+      path: /validate
+  rules:
+  - operations: ["CREATE", "UPDATE"]
+    apiGroups: ["cert-manager.io"]
+    apiVersions: ["v1"]
+    resources: ["certificates"]
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  failurePolicy: Fail
+
+# ===================================================================
+# END OF CERTIFICATE MANAGEMENT CONFIGURATION TEMPLATE
+# Creator Economy Certificate Management by Fahed Mlaiel
+# Enterprise-grade certificate management for Ainflue platform
+# ===================================================================

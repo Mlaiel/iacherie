@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Ainfluencer Platform](https://img.shields.io/badge/المنصة-الذكاء%20الاصطناعي%20للمؤسسات-blue?style=for-the-badge)
+![IA Chérie Platform](https://img.shields.io/badge/المنصة-الذكاء%20الاصطناعي%20للمؤسسات-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/الإصدار-2.0.0-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/الحالة-جاهز%20للإنتاج-success?style=for-the-badge)
 ![License](https://img.shields.io/badge/الترخيص-مملوك-red?style=for-the-badge)
@@ -106,8 +106,8 @@ graph TB
 ### ⚡ **إعداد دقيقة واحدة**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainfluencer.git
-cd Ainfluencer
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # إعداد البيئة
 cp .env.example .env
@@ -134,7 +134,7 @@ python backend_server.py & cd frontend && npm run dev
 
 ### 📁 **هيكل المشروع**
 ```
-ainfluencer/
+iacherie/
 ├── 🎨 frontend/              # تطبيق Next.js (React 18)
 ├── 🔧 backend/               # خلفية FastAPI
 ├── 🤖 ai/                    # وحدات الذكاء الاصطناعي/التعلم الآلي

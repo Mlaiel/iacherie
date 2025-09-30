@@ -1,4 +1,4 @@
-# 🔧 Ainflue Services Configuration Module
+# 🔧 IA Chérie Services Configuration Module
 
 **Enterprise Creator Economy Platform Configuration Management**
 
@@ -21,7 +21,7 @@
 
 ## 📋 Overview
 
-The Ainflue Services Configuration Module provides enterprise-grade configuration management for the creator economy platform. This module centralizes all configuration aspects including security, databases, cloud services, AI models, monetization, and more.
+The IA Chérie Services Configuration Module provides enterprise-grade configuration management for the creator economy platform. This module centralizes all configuration aspects including security, databases, cloud services, AI models, monetization, and more.
 
 ## 🎯 Creator Economy Business Logic
 
@@ -267,14 +267,14 @@ Production:
 ### **Docker Deployment**
 ```bash
 # Build configuration container
-docker build -t ainflue-config .
+docker build -t iacherie-config .
 
 # Run with environment-specific config
 docker run -d \
-  --name ainflue-config \
+  --name iacherie-config \
   -e ENVIRONMENT=production \
   -v /config:/app/config \
-  ainflue-config
+  iacherie-config
 ```
 
 ### **Kubernetes Deployment**
@@ -282,10 +282,10 @@ docker run -d \
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-config
+  name: iacherie-config
 data:
   environment: production
-  config-dir: /etc/ainflue/config
+  config-dir: /etc/iacherie/config
 ```
 
 ---

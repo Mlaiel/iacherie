@@ -13,11 +13,11 @@ set -euo pipefail
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_FILE="/var/log/ainflue/mongodb-backup.log"
+LOG_FILE="/var/log/iacherie/mongodb-backup.log"
 
 # Default configuration
 MONGODB_HOST="${MONGODB_HOST:-localhost:27017}"
-MONGODB_DATABASE="${MONGODB_DATABASE:-ainflue}"
+MONGODB_DATABASE="${MONGODB_DATABASE:-iacherie}"
 MONGODB_USERNAME="${MONGODB_USERNAME:-backup_user}"
 MONGODB_PASSWORD="${MONGODB_PASSWORD:-}"
 BACKUP_DIR="${BACKUP_DIR:-/backup/mongodb}"
@@ -512,7 +512,7 @@ main() {
             echo ""
             echo "Environment variables:"
             echo "  MONGODB_HOST           MongoDB connection host (default: localhost:27017)"
-            echo "  MONGODB_DATABASE       Database name (default: ainflue)"
+            echo "  MONGODB_DATABASE       Database name (default: iacherie)"
             echo "  MONGODB_USERNAME       MongoDB username"
             echo "  MONGODB_PASSWORD       MongoDB password"
             echo "  BACKUP_DIR             Backup directory (default: /backup/mongodb)"

@@ -3,7 +3,7 @@
 
 # Environment configuration
 environment: prod
-project_name: ainflue
+project_name: iacherie
 aws_region: us-west-2
 
 # Infrastructure sizing (production scale)
@@ -11,14 +11,14 @@ cluster_size: 5
 db_instance_class: db.r5.xlarge
 
 # Domain configuration
-domain_name: ainflue.com
+domain_name: iacherie.com
 
 # Feature flags
 enable_monitoring: true
 enable_backup: true
 
 # Docker configuration
-docker_registry: ainflue
+docker_registry: iacherie
 image_tag: latest
 
 # Database configuration

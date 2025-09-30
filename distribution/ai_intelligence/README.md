@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AI Intelligence module is the brain of the Ainflue distribution system, featuring 53 specialized AI agents that optimize content distribution across 65+ platforms.
+The AI Intelligence module is the brain of the IA Chérie distribution system, featuring 53 specialized AI agents that optimize content distribution across 65+ platforms.
 
 ## Architecture
 
@@ -262,5 +262,5 @@ prediction = await performance_engine.predict_performance(
 
 ---
 
-**© Fahed Mlaiel 2024 - Ainflue AI Intelligence**  
+**© Fahed Mlaiel 2024 - IA Chérie AI Intelligence**  
 **Propriété Intellectuelle Protégée - Usage Enterprise Uniquement**

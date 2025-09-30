@@ -1,5 +1,5 @@
 # Enhanced Protection & Fingerprinting System
-## ML-Powered Content Protection for Ainflue Platform
+## ML-Powered Content Protection for IA Chérie Platform
 
 ### 🛡️ Overview
 
@@ -214,7 +214,7 @@ The system is designed for enterprise production deployment:
 
 ### 🤝 Integration Points
 
-The system integrates seamlessly with existing Ainflue infrastructure:
+The system integrates seamlessly with existing IA Chérie infrastructure:
 
 - **Existing crawler modules** in `crawlers/` directory
 - **Core fingerprinting** framework in `core/fingerprinting/`

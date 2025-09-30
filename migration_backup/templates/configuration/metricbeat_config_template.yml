@@ -1,0 +1,379 @@
+# Metricbeat Configuration Template for Ainflue Platform
+# Comprehensive system and application metrics collection
+
+# Global configuration
+metricbeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: true
+    reload.period: 10s
+
+# Logging configuration
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/metricbeat
+  name: metricbeat
+  keepfiles: 7
+  permissions: 0644
+  rotateeverybytes: 10485760 # 10MB
+
+# System metrics module
+metricbeat.modules:
+
+# System module - collect CPU, memory, network, disk metrics
+- module: system
+  period: 10s
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+    - process_summary
+    - uptime
+    - socket_summary
+    - core
+    - diskio
+    - filesystem
+    - fsstat
+    - raid
+    - socket
+    - service
+  processes: ['.*']
+  process.include_top_n:
+    by_cpu: 5
+    by_memory: 5
+  process.cgroups.enabled: true
+  cpu.metrics: ["percentages", "normalized_percentages"]
+  core.metrics: ["percentages"]
+
+# Docker module - container metrics
+- module: docker
+  period: 10s
+  hosts: ["unix:///var/run/docker.sock"]
+  metricsets:
+    - "container"
+    - "cpu"
+    - "diskio"
+    - "healthcheck"
+    - "info"
+    - "image"
+    - "memory"
+    - "network"
+
+# Kubernetes module - cluster metrics
+- module: kubernetes
+  period: 10s
+  host: ${NODE_NAME}
+  hosts: ["https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"]
+  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  ssl.certificate_authorities:
+    - /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  metricsets:
+    - node
+    - system
+    - pod
+    - container
+    - volume
+    - event
+    - state_node
+    - state_deployment
+    - state_daemonset
+    - state_replicaset
+    - state_pod
+    - state_container
+    - state_service
+    - state_persistentvolume
+    - state_persistentvolumeclaim
+    - state_storageclass
+
+# PostgreSQL module - database metrics
+- module: postgresql
+  period: 10s
+  hosts: ["postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}?sslmode=disable"]
+  metricsets:
+    - database
+    - bgwriter
+    - activity
+    - statement
+
+# Redis module - cache metrics
+- module: redis
+  period: 10s
+  hosts: ["${REDIS_HOST}:${REDIS_PORT}"]
+  password: "${REDIS_PASSWORD}"
+  metricsets:
+    - info
+    - keyspace
+
+# Nginx module - web server metrics
+- module: nginx
+  period: 10s
+  hosts: ["http://${NGINX_HOST}/nginx_status"]
+  metricsets: ["stubstatus"]
+  server_status_path: "/nginx_status"
+
+# Elasticsearch module - search engine metrics
+- module: elasticsearch
+  period: 10s
+  hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+  username: "${ELASTICSEARCH_USER}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  metricsets:
+    - node
+    - node_stats
+    - cluster_stats
+    - index
+    - index_recovery
+    - index_summary
+    - shard
+    - ml_job
+
+# HTTP module - application endpoint monitoring
+- module: http
+  period: 30s
+  metricsets: ["json"]
+  hosts: 
+    - "${AINFLUE_API_HOST}/health"
+    - "${AINFLUE_API_HOST}/metrics"
+    - "${AINFLUE_WEB_HOST}/health"
+  namespace: "ainflue"
+  path: "/health"
+  method: "GET"
+  headers:
+    Authorization: "Bearer ${API_HEALTH_TOKEN}"
+  json.is_array: false
+
+# Custom application metrics
+- module: http
+  period: 60s
+  metricsets: ["json"]
+  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/business"]
+  namespace: "ainflue.business"
+  headers:
+    Authorization: "Bearer ${API_METRICS_TOKEN}"
+  json.is_array: false
+  json.keys_under_root: true
+  json.add_error_key: true
+
+# Creator economy metrics
+- module: http
+  period: 60s
+  metricsets: ["json"]
+  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/creators"]
+  namespace: "ainflue.creators"
+  headers:
+    Authorization: "Bearer ${API_METRICS_TOKEN}"
+  json.is_array: false
+  json.keys_under_root: true
+
+# Campaign performance metrics
+- module: http
+  period: 300s
+  metricsets: ["json"]
+  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/campaigns"]
+  namespace: "ainflue.campaigns"
+  headers:
+    Authorization: "Bearer ${API_METRICS_TOKEN}"
+  json.is_array: false
+
+# AI/ML model performance metrics
+- module: http
+  period: 120s
+  metricsets: ["json"]
+  hosts: ["${AINFLUE_ML_HOST}/metrics"]
+  namespace: "ainflue.ml"
+  headers:
+    Authorization: "Bearer ${ML_METRICS_TOKEN}"
+  json.is_array: false
+
+# JVM metrics for Java applications
+- module: jolokia
+  period: 10s
+  hosts: ["${JAVA_APP_HOST}:${JOLOKIA_PORT}"]
+  namespace: "jolokia_metrics"
+  path: "/jolokia/?ignoreErrors=true&canonicalNaming=false"
+  jmx.mappings:
+    - mbean: 'java.lang:type=Runtime'
+      attributes:
+        - attr: Uptime
+          field: uptime
+    - mbean: 'java.lang:type=Memory'
+      attributes:
+        - attr: HeapMemoryUsage
+          field: heap
+
+# Beat configuration
+name: "${BEAT_NAME:metricbeat-ainflue}"
+tags: ["ainflue", "platform", "${ENVIRONMENT}"]
+
+fields:
+  environment: "${ENVIRONMENT}"
+  datacenter: "${DATACENTER}"
+  cluster: "${CLUSTER_NAME}"
+  service: "metricbeat"
+
+fields_under_root: true
+
+# Processors for data transformation
+processors:
+- add_host_metadata:
+    when.not.contains.tags: forwarded
+    replace_fields: true
+    netinfo.enabled: true
+
+- add_docker_metadata:
+    host: "unix:///var/run/docker.sock"
+    match_fields: ["system.process.cgroup.id"]
+    match_pids: ["process.pid", "process.ppid"]
+    match_source: true
+    match_source_index: 4
+    match_short_id: false
+    cleanup_timeout: 60
+    labels.dedot: false
+
+- add_kubernetes_metadata:
+    host: ${NODE_NAME}
+    default_indexers.enabled: false
+    default_matchers.enabled: false
+    indexers:
+      - ip_port:
+      - container:
+    matchers:
+      - fields:
+          lookup_fields: ["host.name", "kubernetes.pod.name"]
+
+- drop_event:
+    when:
+      or:
+        - range:
+            system.cpu.total.pct:
+              lt: 0.01
+        - range:
+            system.memory.actual.used.pct:
+              lt: 0.01
+
+- include_fields:
+    fields: 
+      - "@timestamp"
+      - "metricset"
+      - "system"
+      - "docker"
+      - "kubernetes"
+      - "postgresql"
+      - "redis"
+      - "nginx"
+      - "elasticsearch"
+      - "ainflue"
+      - "host"
+      - "event"
+      - "fields"
+
+# Output configuration
+
+# Elasticsearch output
+output.elasticsearch:
+  hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+  username: "${ELASTICSEARCH_USER}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  protocol: "https"
+  ssl.verification_mode: "certificate"
+  ssl.certificate_authorities: ["/etc/ssl/certs/elasticsearch-ca.crt"]
+  
+  index: "metricbeat-ainflue-%{+yyyy.MM.dd}"
+  template.name: "metricbeat-ainflue"
+  template.pattern: "metricbeat-ainflue-*"
+  template.settings:
+    index.number_of_shards: 2
+    index.number_of_replicas: 1
+    index.refresh_interval: "30s"
+    index.codec: "best_compression"
+  
+  # ILM configuration
+  ilm.enabled: true
+  ilm.rollover_alias: "metricbeat-ainflue"
+  ilm.pattern: "{now/d}-000001"
+  ilm.policy: "metricbeat-ainflue-policy"
+
+# Alternative: Logstash output for complex processing
+# output.logstash:
+#   hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
+#   compression_level: 3
+#   bulk_max_size: 2048
+#   template.name: "metricbeat-ainflue"
+#   template.pattern: "metricbeat-ainflue-*"
+
+# Console output for debugging
+# output.console:
+#   pretty: true
+#   enable: false
+
+# File output for backup
+output.file:
+  enabled: false
+  path: "/var/log/metricbeat"
+  filename: metricbeat-backup
+  rotate_every_kb: 10000
+  number_of_files: 7
+
+# Monitoring and management
+monitoring:
+  enabled: true
+  elasticsearch:
+    hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+    username: "${ELASTICSEARCH_USER}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+  cluster_uuid: "${ELASTICSEARCH_CLUSTER_UUID}"
+
+# HTTP endpoint for health checks
+http.enabled: true
+http.host: "0.0.0.0"
+http.port: 5066
+
+# Performance tuning
+queue.mem:
+  events: 4096
+  flush.min_events: 512
+  flush.timeout: 1s
+
+# Autodiscover configuration for dynamic container monitoring
+metricbeat.autodiscover:
+  providers:
+    - type: kubernetes
+      scope: cluster
+      node: ${NODE_NAME}
+      unique: true
+      templates:
+        - condition:
+            contains:
+              kubernetes.labels.app: "ainflue"
+          config:
+            - module: kubernetes
+              period: 10s
+              host: ${data.host}
+              metricsets: ["state_pod", "state_container"]
+              
+        - condition:
+            contains:
+              kubernetes.labels.component: "database"
+          config:
+            - module: postgresql
+              period: 30s
+              hosts: ["postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${data.host}:5432/${POSTGRES_DB}"]
+              metricsets: ["database", "activity"]
+
+# X-Pack monitoring
+xpack.monitoring:
+  enabled: true
+  elasticsearch:
+    hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+    username: "${ELASTICSEARCH_USER}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+
+# Security settings
+ssl.verification_mode: "certificate"
+ssl.supported_protocols: ["TLSv1.2", "TLSv1.3"]
+
+# Migration configuration
+migration.6_to_7.enabled: true

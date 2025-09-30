@@ -1,5 +1,5 @@
 # 🏗️ Module Events Event Streaming - Infrastructure de Traitement d'Événements en Temps Réel
-**Plateforme Ainflue - Implémentation Avancée de Streaming d'Événements**
+**Plateforme IA Chérie - Implémentation Avancée de Streaming d'Événements**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 APERÇU ENTREPRISE
 
-Le **Module Events Event Streaming** fournit une infrastructure de traitement d'événements en temps réel et de streaming pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre un streaming d'événements de niveau entreprise, des analyses en temps réel et un traitement de données à faible latence pour des workflows de création de contenu évolutifs.
+Le **Module Events Event Streaming** fournit une infrastructure de traitement d'événements en temps réel et de streaming pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-avancé offre un streaming d'événements de niveau entreprise, des analyses en temps réel et un traitement de données à faible latence pour des workflows de création de contenu évolutifs.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -359,7 +359,7 @@ await analytics.start()
 version: '3.8'
 services:
   event-streaming:
-    image: ainflue/event-streaming:latest
+    image: iacherie/event-streaming:latest
     deploy:
       replicas: 10
       resources:
@@ -380,7 +380,7 @@ services:
       - "8090:8090"
       
   stream-analytics:
-    image: ainflue/stream-analytics:latest
+    image: iacherie/stream-analytics:latest
     deploy:
       replicas: 5
       resources:
@@ -422,7 +422,7 @@ throughput = Gauge('streaming_throughput_eps', 'Events per second throughput')
 
 ## 📝 **CONCLUSION**
 
-Le Module Events Event Streaming représente l'apogée de l'infrastructure de traitement d'événements temps réel pour la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format. Avec un streaming ultra-haut débit, une latence sous-milliseconde et des analytics temps réel complets, ce module assure un traitement d'événements fluide, évolutif et intelligent pour l'ensemble de l'écosystème créateur.
+Le Module Events Event Streaming représente l'apogée de l'infrastructure de traitement d'événements temps réel pour la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format. Avec un streaming ultra-haut débit, une latence sous-milliseconde et des analytics temps réel complets, ce module assure un traitement d'événements fluide, évolutif et intelligent pour l'ensemble de l'écosystème créateur.
 
 **🎯 Mission :** Fournir l'infrastructure de streaming d'événements temps réel la plus avancée au monde pour les créateurs de contenu, permettant des insights instantanés, une optimisation temps réel et une réaction immédiate aux interactions créateur et audience.
 

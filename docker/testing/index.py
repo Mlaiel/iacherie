@@ -1,7 +1,7 @@
 """
 Docker Testing Infrastructure - Main Interface
 
-Enterprise-grade testing orchestration for Ainflue Platform.
+Enterprise-grade testing orchestration for IA Chérie Platform.
 Coordinates all testing services for 80+ containerized services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -112,12 +112,12 @@ class DockerTestOrchestrator:
         start_time = asyncio.get_event_loop().time()
         
         # Build test container
-        container_name = f"ainflue-{service}-{test_type.value}-tester"
+        container_name = f"iacherie-{service}-{test_type.value}-tester"
         
         try:
             # Run test container
             container = self.docker_client.containers.run(
-                f"ainflue/testing:{test_type.value}",
+                f"iacherie/testing:{test_type.value}",
                 command=f"pytest tests/{service} --cov --json-report",
                 environment={
                     'SERVICE_NAME': service,

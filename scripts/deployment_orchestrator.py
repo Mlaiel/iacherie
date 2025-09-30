@@ -5,7 +5,7 @@ Deployment Orchestration Engine - Enterprise Grade
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced deployment orchestration for Ainflue Platform with enterprise features:
+Advanced deployment orchestration for IA Chérie Platform with enterprise features:
 - Multi-environment deployment management
 - Blue-green deployment support
 - Rollback capabilities
@@ -32,7 +32,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/deployment.log'),
+        logging.FileHandler('/var/log/iacherie/deployment.log'),
         logging.StreamHandler()
     ]
 )
@@ -64,7 +64,7 @@ class DeploymentOrchestrator:
     - Comprehensive audit logging
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/deployment.yaml"):
+    def __init__(self, config_path: str = "/etc/iacherie/deployment.yaml"):
         self.config_path = config_path
         self.docker_client = docker.from_env()
         self.deployment_history: List[Dict] = []
@@ -274,7 +274,7 @@ class DeploymentOrchestrator:
             logger.info("Building and pushing Docker images")
             
             # Build main application image
-            image_tag = f"ainflue/platform:{config.version}"
+            image_tag = f"iacherie/platform:{config.version}"
             
             result = subprocess.run([
                 "docker", "build", 
@@ -311,8 +311,8 @@ class DeploymentOrchestrator:
             # Update deployment image
             result = subprocess.run([
                 "kubectl", "set", "image",
-                f"deployment/ainflue-platform",
-                f"platform=ainflue/platform:{config.version}",
+                f"deployment/iacherie-platform",
+                f"platform=iacherie/platform:{config.version}",
                 f"--namespace={config.namespace}"
             ], capture_output=True, text=True)
             
@@ -323,7 +323,7 @@ class DeploymentOrchestrator:
             # Scale deployment if needed
             result = subprocess.run([
                 "kubectl", "scale",
-                f"deployment/ainflue-platform",
+                f"deployment/iacherie-platform",
                 f"--replicas={config.replicas}",
                 f"--namespace={config.namespace}"
             ], capture_output=True, text=True)
@@ -346,7 +346,7 @@ class DeploymentOrchestrator:
             
             result = subprocess.run([
                 "kubectl", "rollout", "status",
-                f"deployment/ainflue-platform",
+                f"deployment/iacherie-platform",
                 f"--namespace={config.namespace}",
                 f"--timeout={timeout}s"
             ], capture_output=True, text=True, timeout=timeout + 30)
@@ -379,7 +379,7 @@ class DeploymentOrchestrator:
                     response = requests.get(
                         config.health_check_url,
                         timeout=10,
-                        headers={'User-Agent': 'Ainflue-Deployment-Orchestrator'}
+                        headers={'User-Agent': 'IA Chérie-Deployment-Orchestrator'}
                     )
                     
                     if response.status_code == 200:
@@ -406,7 +406,7 @@ class DeploymentOrchestrator:
         try:
             result = subprocess.run([
                 "kubectl", "get", "service",
-                "ainflue-platform-service",
+                "iacherie-platform-service",
                 f"--namespace={config.namespace}",
                 "-o", "json"
             ], capture_output=True, text=True)
@@ -445,7 +445,7 @@ class DeploymentOrchestrator:
             # Update service selector to point to new environment
             result = subprocess.run([
                 "kubectl", "patch", "service",
-                "ainflue-platform-service",
+                "iacherie-platform-service",
                 f"--namespace={config.namespace}",
                 "-p", f'{{"spec":{{"selector":{{"environment":"{target_environment}"}}}}}}'
             ], capture_output=True, text=True)
@@ -469,7 +469,7 @@ class DeploymentOrchestrator:
             # Scale down old deployment
             result = subprocess.run([
                 "kubectl", "scale",
-                f"deployment/ainflue-platform-{environment}",
+                f"deployment/iacherie-platform-{environment}",
                 "--replicas=0",
                 f"--namespace={config.namespace}"
             ], capture_output=True, text=True)
@@ -542,10 +542,10 @@ async def main():
     """CLI entry point for deployment orchestration"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Deployment Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chérie Deployment Orchestrator')
     parser.add_argument('--environment', required=True, help='Target environment')
     parser.add_argument('--version', required=True, help='Version to deploy')
-    parser.add_argument('--config', default='/etc/ainflue/deployment.yaml', help='Configuration file path')
+    parser.add_argument('--config', default='/etc/iacherie/deployment.yaml', help='Configuration file path')
     parser.add_argument('--rollback', action='store_true', help='Rollback to previous version')
     
     args = parser.parse_args()

@@ -24,9 +24,9 @@
 ```python
 # OAuth Configuration Example
 oauth_config = {
-    "authorization_endpoint": "https://api.ainflue.com/oauth/authorize",
-    "token_endpoint": "https://api.ainflue.com/oauth/token",
-    "revocation_endpoint": "https://api.ainflue.com/oauth/revoke",
+    "authorization_endpoint": "https://api.iacherie.com/oauth/authorize",
+    "token_endpoint": "https://api.iacherie.com/oauth/token",
+    "revocation_endpoint": "https://api.iacherie.com/oauth/revoke",
     "scopes": {
         "read": "Read access to content and analytics",
         "write": "Create and modify content",
@@ -75,7 +75,7 @@ def setup_mfa_for_api_access(user_id: str) -> dict:
     
     qr_url = totp.provisioning_uri(
         name=user_id,
-        issuer_name="Ainflue API"
+        issuer_name="IA Chérie API"
     )
     
     return {
@@ -251,7 +251,7 @@ class APIError:
                 "details": self.details,
                 "request_id": self.request_id,
                 "timestamp": self.timestamp,
-                "documentation_url": f"https://docs.ainflue.com/errors/{self.code.value}"
+                "documentation_url": f"https://docs.iacherie.com/errors/{self.code.value}"
             }
         }
 ```
@@ -479,7 +479,7 @@ class ConnectionManager:
         # PostgreSQL connection pool
         self.db_pool = await asyncpg.create_pool(
             host="localhost",
-            database="ainflue",
+            database="iacherie",
             user="api_user",
             password=os.environ.get("DB_PASSWORD"),
             min_size=10,
@@ -632,17 +632,17 @@ class AuditLogger:
 
 ## Security Contacts
 
-**Security Team**: security@ainflue.com  
-**Bug Bounty Program**: [https://bugcrowd.com/ainflue](https://bugcrowd.com/ainflue)  
+**Security Team**: security@iacherie.com  
+**Bug Bounty Program**: [https://bugcrowd.com/iacherie](https://bugcrowd.com/iacherie)  
 **Emergency Contact**: +1-555-SECURITY  
 
 ## Legal Notice
 
-This API management guide contains confidential and proprietary information of Ainflue. Unauthorized access, use, or distribution is prohibited and may result in legal action.
+This API management guide contains confidential and proprietary information of IA Chérie. Unauthorized access, use, or distribution is prohibited and may result in legal action.
 
 **© 2025 Fahed Mlaiel. All rights reserved.**
 
-## Enterprise API Management for Ainflue Integrations
+## Enterprise API Management for IA Chérie Integrations
 
 **Author:** Fahed Mlaiel <mlaiel@live.de>  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -651,7 +651,7 @@ This API management guide contains confidential and proprietary information of A
 
 ## Overview
 
-This guide provides comprehensive best practices for managing APIs across 100+ third-party integrations in the Ainflue platform, ensuring high performance, reliability, and security.
+This guide provides comprehensive best practices for managing APIs across 100+ third-party integrations in the IA Chérie platform, ensuring high performance, reliability, and security.
 
 ## API Gateway Design Principles
 

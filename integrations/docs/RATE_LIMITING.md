@@ -14,7 +14,7 @@
 
 ### Purpose and Benefits
 
-Rate limiting in the Ainflue platform serves multiple critical functions:
+Rate limiting in the IA Chérie platform serves multiple critical functions:
 
 - **API Protection**: Prevent overwhelming external service providers
 - **Cost Control**: Manage usage-based billing from third-party services
@@ -751,4 +751,4 @@ async def send_email():
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Contact**: mlaiel@live.de  
-**Legal**: This documentation is part of the Ainflue platform and is protected by international copyright law.
+**Legal**: This documentation is part of the IA Chérie platform and is protected by international copyright law.

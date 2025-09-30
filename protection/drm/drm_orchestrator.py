@@ -478,7 +478,7 @@ class ContentDeliveryOptimizer:
             {
                 'node_id': 'us-east-1',
                 'region': 'North America',
-                'endpoint': 'https://cdn-us-east.ainflue.com',
+                'endpoint': 'https://cdn-us-east.iacherie.com',
                 'capacity': 10000,
                 'current_load': 0,
                 'latency_ms': 20
@@ -486,7 +486,7 @@ class ContentDeliveryOptimizer:
             {
                 'node_id': 'eu-west-1',
                 'region': 'Europe',
-                'endpoint': 'https://cdn-eu-west.ainflue.com',
+                'endpoint': 'https://cdn-eu-west.iacherie.com',
                 'capacity': 8000,
                 'current_load': 0,
                 'latency_ms': 30
@@ -494,7 +494,7 @@ class ContentDeliveryOptimizer:
             {
                 'node_id': 'ap-south-1',
                 'region': 'Asia Pacific',
-                'endpoint': 'https://cdn-ap-south.ainflue.com',
+                'endpoint': 'https://cdn-ap-south.iacherie.com',
                 'capacity': 6000,
                 'current_load': 0,
                 'latency_ms': 50

@@ -69,7 +69,7 @@ class MetricDefinition:
     metric_type: MetricType
     labels: List[str] = field(default_factory=list)
     buckets: Optional[List[float]] = None
-    namespace: str = "ainflue"
+    namespace: str = "iacherie"
     subsystem: str = ""
 
 
@@ -118,7 +118,7 @@ class PrometheusObservability:
         # Enterprise service metrics
         self.service_metrics = self._initialize_service_metrics()
         
-        # Business metrics for Ainflue platform
+        # Business metrics for IA Chérie platform
         self.business_metrics = self._initialize_business_metrics()
         
         # Performance SLIs
@@ -181,7 +181,7 @@ class PrometheusObservability:
         return metrics
 
     def _initialize_business_metrics(self) -> Dict[str, Any]:
-        """Initialize Ainflue business metrics"""
+        """Initialize IA Chérie business metrics"""
         metrics = {}
         
         # Creator platform metrics
@@ -475,7 +475,7 @@ class PrometheusObservability:
             },
             "scrape_configs": [
                 {
-                    "job_name": "ainflue-core-services",
+                    "job_name": "iacherie-core-services",
                     "static_configs": [
                         {
                             "targets": [
@@ -489,7 +489,7 @@ class PrometheusObservability:
                     "scrape_interval": "10s"
                 },
                 {
-                    "job_name": "ainflue-business-metrics",
+                    "job_name": "iacherie-business-metrics",
                     "static_configs": [
                         {
                             "targets": [
@@ -530,7 +530,7 @@ class PrometheusObservability:
         config = {
             "groups": [
                 {
-                    "name": "ainflue.rules",
+                    "name": "iacherie.rules",
                     "rules": rules
                 }
             ]
@@ -544,8 +544,8 @@ class PrometheusObservability:
         
         # Service Overview Dashboard
         service_dashboard = DashboardConfig(
-            title="Ainflue - Service Overview",
-            tags=["ainflue", "services", "overview"],
+            title="IA Chérie - Service Overview",
+            tags=["iacherie", "services", "overview"],
             panels=[
                 {
                     "title": "Request Rate",
@@ -597,8 +597,8 @@ class PrometheusObservability:
         
         # AI/ML Dashboard
         ai_dashboard = DashboardConfig(
-            title="Ainflue - AI/ML Performance",
-            tags=["ainflue", "ai", "ml", "performance"],
+            title="IA Chérie - AI/ML Performance",
+            tags=["iacherie", "ai", "ml", "performance"],
             panels=[
                 {
                     "title": "AI Inference Duration",
@@ -636,8 +636,8 @@ class PrometheusObservability:
         
         # Business Metrics Dashboard
         business_dashboard = DashboardConfig(
-            title="Ainflue - Business Metrics",
-            tags=["ainflue", "business", "revenue", "creators"],
+            title="IA Chérie - Business Metrics",
+            tags=["iacherie", "business", "revenue", "creators"],
             panels=[
                 {
                     "title": "Active Creators",

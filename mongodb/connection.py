@@ -2,7 +2,7 @@
 ============================
 
 Advanced MongoDB connection handling with async support, connection pooling,
-authentication, SSL, and health monitoring for the Ainflue platform.
+authentication, SSL, and health monitoring for the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -40,7 +40,7 @@ class MongoDBConfig:
     """MongoDB connection configuration."""
     host: str = "localhost"
     port: int = 27017
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: Optional[str] = None
     password: Optional[str] = None
     ssl_enabled: bool = False
@@ -63,7 +63,7 @@ class MongoDBConfig:
         return cls(
             host=os.getenv("MONGODB_HOST", "localhost"),
             port=int(os.getenv("MONGODB_PORT", "27017")),
-            database=os.getenv("MONGODB_DATABASE", "ainflue"),
+            database=os.getenv("MONGODB_DATABASE", "iacherie"),
             username=os.getenv("MONGODB_USERNAME"),
             password=os.getenv("MONGODB_PASSWORD"),
             ssl_enabled=os.getenv("MONGODB_SSL_ENABLED", "false").lower() == "true",

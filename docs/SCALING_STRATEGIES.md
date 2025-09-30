@@ -1,4 +1,4 @@
-# 🚀 SCALING STRATEGIES GUIDE - AINFLUE PLATFORM
+# 🚀 SCALING STRATEGIES GUIDE - IACHERIE PLATFORM
 **Enterprise-Grade Horizontal & Vertical Scaling Architecture**
 
 **Version:** 3.0 (Production-Ready)  
@@ -9,7 +9,7 @@
 
 ## 🎯 OVERVIEW
 
-This comprehensive guide outlines enterprise-level scaling strategies for the Ainflue Distribution Platform, covering horizontal scaling, vertical scaling, microservices architecture, and global distribution patterns to handle massive scale requirements.
+This comprehensive guide outlines enterprise-level scaling strategies for the IA Chérie Distribution Platform, covering horizontal scaling, vertical scaling, microservices architecture, and global distribution patterns to handle massive scale requirements.
 
 ### 📊 **Scaling Targets**
 - **Users**: 10M+ concurrent creators worldwide
@@ -111,7 +111,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: distribution-api-hpa
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -191,7 +191,7 @@ apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
   name: viral-predictor-vpa
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   targetRef:
     apiVersion: apps/v1
@@ -224,12 +224,12 @@ import hashlib
 
 class DatabaseScaler:
     def __init__(self):
-        self.master_db = "postgresql://user:pass@master-db:5432/ainflue"
+        self.master_db = "postgresql://user:pass@master-db:5432/iacherie"
         self.read_replicas = [
-            "postgresql://user:pass@replica-1:5432/ainflue",
-            "postgresql://user:pass@replica-2:5432/ainflue",
-            "postgresql://user:pass@replica-3:5432/ainflue",
-            "postgresql://user:pass@replica-4:5432/ainflue"
+            "postgresql://user:pass@replica-1:5432/iacherie",
+            "postgresql://user:pass@replica-2:5432/iacherie",
+            "postgresql://user:pass@replica-3:5432/iacherie",
+            "postgresql://user:pass@replica-4:5432/iacherie"
         ]
         self.shard_databases = {
             "shard_0": "postgresql://user:pass@shard-0:5432/ainflue_shard_0",
@@ -346,7 +346,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: distribution-kafka
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   kafka:
     version: 3.5.0
@@ -467,11 +467,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: distribution-api-pod
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   containers:
   - name: api
-    image: ainflue/distribution-api:latest
+    image: iacherie/distribution-api:latest
     resources:
       requests:
         memory: "2Gi"
@@ -698,14 +698,14 @@ class GlobalCDNManager:
     async def create_global_distribution(self, content_type: str) -> str:
         """Create global CDN distribution for content type"""
         distribution_config = {
-            'CallerReference': f'ainflue-{content_type}-{int(time.time())}',
-            'Comment': f'Ainflue {content_type} global distribution',
+            'CallerReference': f'iacherie-{content_type}-{int(time.time())}',
+            'Comment': f'IA Chérie {content_type} global distribution',
             'Origins': {
                 'Quantity': len(self.regions),
                 'Items': [
                     {
                         'Id': f'origin-{region}',
-                        'DomainName': f'{content_type}-{region}.ainflue.com',
+                        'DomainName': f'{content_type}-{region}.iacherie.com',
                         'CustomOriginConfig': {
                             'HTTPPort': 80,
                             'HTTPSPort': 443,
@@ -788,12 +788,12 @@ systemctl stop postgresql
 rm -rf /var/lib/postgresql/13/main/*
 
 # Create base backup from master
-pg_basebackup -h master-us-east.ainflue.com -D /var/lib/postgresql/13/main -U replication_user -v -P -W
+pg_basebackup -h master-us-east.iacherie.com -D /var/lib/postgresql/13/main -U replication_user -v -P -W
 
 # Create recovery configuration
 cat > /var/lib/postgresql/13/main/recovery.conf << EOF
 standby_mode = 'on'
-primary_conninfo = 'host=master-us-east.ainflue.com port=5432 user=replication_user'
+primary_conninfo = 'host=master-us-east.iacherie.com port=5432 user=replication_user'
 primary_slot_name = 'replica_eu_slot'
 restore_command = 'cp /var/lib/postgresql/13/wal_archive/%f %p'
 recovery_target_timeline = 'latest'
@@ -812,7 +812,7 @@ systemctl start postgresql
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-global-lb
+  name: iacherie-global-lb
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
@@ -841,7 +841,7 @@ metadata:
   name: us-east-health-check
 spec:
   forProvider:
-    fqdn: api-us-east.ainflue.com
+    fqdn: api-us-east.iacherie.com
     port: 443
     type: HTTPS
     resourcePath: "/health"
@@ -857,14 +857,14 @@ metadata:
   name: global-api-record
 spec:
   forProvider:
-    name: api.ainflue.com
+    name: api.iacherie.com
     type: A
     zoneId: Z123456789
     setIdentifier: "us-east-1"
     healthCheckId: us-east-health-check
     failover: PRIMARY
     alias:
-      name: lb-us-east.ainflue.com
+      name: lb-us-east.iacherie.com
       zoneId: Z215JYRZR1TBD5
       evaluateTargetHealth: true
 ```

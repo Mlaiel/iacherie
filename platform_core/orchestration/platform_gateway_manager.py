@@ -640,7 +640,7 @@ async def example_gateway_management():
             path_pattern="/api/v1/content/*",
             methods=["GET", "POST", "PUT", "DELETE"],
             upstream_service="content-service",
-            upstream_host="content-service.ainflue.svc.cluster.local",
+            upstream_host="content-service.iacherie.svc.cluster.local",
             upstream_port=8080,
             authentication_type=AuthenticationType.JWT,
             load_balancing=LoadBalancingStrategy.ROUND_ROBIN
@@ -651,7 +651,7 @@ async def example_gateway_management():
             path_pattern="/api/v1/users/*",
             methods=["GET", "POST", "PUT"],
             upstream_service="user-service",
-            upstream_host="user-service.ainflue.svc.cluster.local",
+            upstream_host="user-service.iacherie.svc.cluster.local",
             upstream_port=8081,
             authentication_type=AuthenticationType.API_KEY,
             load_balancing=LoadBalancingStrategy.LEAST_CONNECTIONS

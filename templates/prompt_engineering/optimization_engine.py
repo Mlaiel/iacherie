@@ -3,7 +3,7 @@
 ============================================================
 
 Enterprise-grade prompt optimization engine with multiple strategies,
-real-time adaptation, and creator economy focus for Ainflue platform.
+real-time adaptation, and creator economy focus for IA Chérie platform.
 
 ⚠️  PROTECTION INTELLECTUELLE - Fahed Mlaiel (mlaiel@live.de)
 © 2025 Tous droits réservés - Usage commercial interdit sans autorisation

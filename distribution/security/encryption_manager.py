@@ -1,5 +1,5 @@
 """
-Encryption Manager for Ainflue Distribution Security
+Encryption Manager for IA Chérie Distribution Security
 Provides enterprise-grade encryption for sensitive data and communications
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -557,7 +557,7 @@ class EncryptionManager:
             payload.update({
                 'iat': now,
                 'exp': now + timedelta(minutes=expires_minutes),
-                'iss': 'ainflue-distribution'
+                'iss': 'iacherie-distribution'
             })
             
             # Create token

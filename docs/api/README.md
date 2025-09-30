@@ -1,10 +1,10 @@
-# 📚 Ainflue API Documentation Hub
+# 📚 IA Chérie API Documentation Hub
 
-Welcome to the comprehensive API documentation for the Ainflue AI Platform - your complete guide to integrating content protection, monetization, and AI-powered features.
+Welcome to the comprehensive API documentation for the IA Chérie AI Platform - your complete guide to integrating content protection, monetization, and AI-powered features.
 
 ## 🎯 Documentation Overview
 
-This documentation covers all aspects of the Ainflue API v2.0, providing everything you need to build robust integrations with our platform.
+This documentation covers all aspects of the IA Chérie API v2.0, providing everything you need to build robust integrations with our platform.
 
 ## 📋 Complete Documentation Suite
 
@@ -14,8 +14,8 @@ This documentation covers all aspects of the Ainflue API v2.0, providing everyth
 |----------|-------------|----------|
 | **[OpenAPI Specification](./openapi-spec-complete.yaml)** | Complete OpenAPI 3.0 spec with all endpoints | API reference, code generation |
 | **[API Reference](./API_REFERENCE.md)** | Human-readable API documentation | Development guide |
-| **[Postman Collection](./ainflue-api-collection.json)** | Ready-to-use Postman requests | Testing, exploration |
-| **[Postman Environment](./ainflue-api-environment.json)** | Environment variables for testing | Configuration |
+| **[Postman Collection](./iacherie-api-collection.json)** | Ready-to-use Postman requests | Testing, exploration |
+| **[Postman Environment](./iacherie-api-environment.json)** | Environment variables for testing | Configuration |
 
 ### 📖 Guides & Best Practices
 
@@ -38,8 +38,8 @@ This documentation covers all aspects of the Ainflue API v2.0, providing everyth
 #### Option A: Postman Collection (Recommended for Testing)
 ```bash
 # Import collection and environment files into Postman
-1. Download: ainflue-api-collection.json
-2. Download: ainflue-api-environment.json  
+1. Download: iacherie-api-collection.json
+2. Download: iacherie-api-environment.json  
 3. Import both files into Postman
 4. Configure environment variables
 5. Start testing endpoints
@@ -51,19 +51,19 @@ This documentation covers all aspects of the Ainflue API v2.0, providing everyth
 swagger-codegen generate \
   -i openapi-spec-complete.yaml \
   -l python \
-  -o ./ainflue-python-client
+  -o ./iacherie-python-client
 
 # Or use with OpenAPI Generator
 openapi-generator-cli generate \
   -i openapi-spec-complete.yaml \
   -g typescript-axios \
-  -o ./ainflue-typescript-client
+  -o ./iacherie-typescript-client
 ```
 
 #### Option C: Direct API Integration
 ```bash
 # Base URL
-https://api.ainflue.com/v2
+https://api.iacherie.com/v2
 
 # Authentication
 Authorization: Bearer <your_jwt_token>
@@ -128,7 +128,7 @@ Upload content for AI-powered protection and analysis.
 **Request:**
 ```bash
 curl -X POST \
-  https://api.ainflue.com/v1/content/upload \
+  https://api.iacherie.com/v1/content/upload \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Content-Type: multipart/form-data" \
   -F "file=@audio_track.mp3" \
@@ -462,8 +462,8 @@ Search for content across the platform.
       "duration": 245,
       "views": 125000,
       "relevance_score": 0.95,
-      "thumbnail_url": "https://cdn.ainflue.com/thumbnails/...",
-      "preview_url": "https://cdn.ainflue.com/previews/..."
+      "thumbnail_url": "https://cdn.iacherie.com/thumbnails/...",
+      "preview_url": "https://cdn.iacherie.com/previews/..."
     }
   ],
   "filters": {
@@ -582,7 +582,7 @@ Configure webhook endpoints for real-time notifications.
 **Request:**
 ```json
 {
-  "endpoint_url": "https://yourapp.com/ainflue-webhook",
+  "endpoint_url": "https://yourapp.com/iacherie-webhook",
   "events": [
     "content.uploaded",
     "violation.detected",
@@ -652,11 +652,11 @@ Configure webhook endpoints for real-time notifications.
 
 #### JavaScript/Node.js
 ```bash
-npm install @ainflue/api-client
+npm install @iacherie/api-client
 ```
 
 ```javascript
-import { AinfluenceClient } from '@ainflue/api-client';
+import { AinfluenceClient } from '@iacherie/api-client';
 
 const client = new AinfluenceClient({
   apiKey: 'your-api-key',
@@ -675,11 +675,11 @@ const result = await client.content.upload({
 
 #### Python
 ```bash
-pip install ainflue-api
+pip install iacherie-api
 ```
 
 ```python
-from ainflue import AinfluenceClient
+from iacherie import AinfluenceClient
 
 client = AinfluenceClient(
     api_key='your-api-key',
@@ -724,13 +724,13 @@ print(f"Total revenue: ${revenue.total_revenue}")
 ## 📞 Support and Resources
 
 ### API Support
-- **Documentation**: https://docs.ainflue.com/api
-- **Status Page**: https://status.ainflue.com
-- **Support Email**: api-support@ainflue.com
-- **Developer Discord**: https://discord.gg/ainflue-dev
+- **Documentation**: https://docs.iacherie.com/api
+- **Status Page**: https://status.iacherie.com
+- **Support Email**: api-support@iacherie.com
+- **Developer Discord**: https://discord.gg/iacherie-dev
 
 ### Testing Environment
-- **Sandbox URL**: https://api-sandbox.ainflue.com
+- **Sandbox URL**: https://api-sandbox.iacherie.com
 - **Test API Keys**: Available in developer dashboard
 - **Mock Data**: Pre-populated test data available
 

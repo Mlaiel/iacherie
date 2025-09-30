@@ -1,4 +1,4 @@
-"""🎭 Mock Service Manager - Ainflue Platform
+"""🎭 Mock Service Manager - IA Chérie Platform
 ================================================================
 Expert: QUALITY_ENGINEER + TESTING_ARCHITECT + BACKEND_ENGINEER
 Created: 2025-01-XX

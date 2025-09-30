@@ -178,7 +178,7 @@ logging:
     
     # AWS CloudWatch
     aws_cloudwatch:
-      log_group: "/aws/lambda/ainflue"
+      log_group: "/aws/lambda/iacherie"
       retention_days: 90
       
     # Azure Monitor
@@ -192,7 +192,7 @@ logging:
 # File Management (Cloud storage)
 file_management:
   max_file_size_mb: 100     # Larger with cloud storage
-  temp_directory: "/tmp/ainflue"
+  temp_directory: "/tmp/iacherie"
   scan_for_malware: true
   enable_optimization: true
   
@@ -240,7 +240,7 @@ monitoring:
     
     # AWS CloudWatch
     aws_cloudwatch:
-      namespace: "Ainflue/Production"
+      namespace: "IA Chérie/Production"
       detailed_monitoring: true
       
     # Azure Monitor
@@ -353,11 +353,11 @@ api_gateway:
   # Azure API Management
   azure_apim:
     sku_name: "Standard"
-    publisher_name: "Ainflue"
+    publisher_name: "IA Chérie"
     
   # GCP Cloud Endpoints
   gcp_endpoints:
-    service_name: "ainflue-api"
+    service_name: "iacherie-api"
     
 # Security (Cloud security)
 cloud_security:
@@ -368,15 +368,15 @@ cloud_security:
     
     # AWS WAF
     aws_waf:
-      web_acl_name: "ainflue-waf"
+      web_acl_name: "iacherie-waf"
       
     # Azure Web Application Firewall
     azure_waf:
-      policy_name: "ainflue-waf-policy"
+      policy_name: "iacherie-waf-policy"
       
     # GCP Cloud Armor
     gcp_armor:
-      security_policy: "ainflue-security-policy"
+      security_policy: "iacherie-security-policy"
       
   # DDoS Protection
   ddos_protection:

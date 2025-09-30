@@ -1,5 +1,5 @@
 /**
- * Ainflue Permission Manager - Professional Permission Management System
+ * IA Chérie Permission Manager - Professional Permission Management System
  * 
  * Advanced permission management system for content creators
  * Supports runtime permissions, security policies, and user education
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.Manifest
 import android.app.Activity
@@ -33,7 +33,7 @@ import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Professional Permission Management System for Ainflue Platform
+ * Professional Permission Management System for IA Chérie Platform
  * 
  * Features:
  * - Comprehensive runtime permission management
@@ -52,7 +52,7 @@ class PermissionManager(private val context: Context) {
     companion object {
         private const val TAG = "AinfluePermissionManager"
         
-        // Permission groups for Ainflue platform
+        // Permission groups for IA Chérie platform
         const val GROUP_CORE = "core"
         const val GROUP_MEDIA = "media"
         const val GROUP_LOCATION = "location"
@@ -249,7 +249,7 @@ class PermissionManager(private val context: Context) {
     }
 
     /**
-     * Request all required permissions for Ainflue
+     * Request all required permissions for IA Chérie
      */
     suspend fun requestAllPermissions(): Map<String, String> {
         return withContext(Dispatchers.Main) {
@@ -267,25 +267,25 @@ class PermissionManager(private val context: Context) {
                 GROUP_CORE to PermissionRequestConfig(
                     permissions = CORE_PERMISSIONS,
                     title = "Core Permissions",
-                    message = "Ainflue needs these permissions for basic functionality including network access and notifications.",
+                    message = "IA Chérie needs these permissions for basic functionality including network access and notifications.",
                     group = GROUP_CORE
                 ),
                 GROUP_MEDIA to PermissionRequestConfig(
                     permissions = MEDIA_PERMISSIONS,
                     title = "Media Permissions",
-                    message = "Ainflue needs camera and microphone access to capture and protect your creative content.",
+                    message = "IA Chérie needs camera and microphone access to capture and protect your creative content.",
                     group = GROUP_MEDIA
                 ),
                 GROUP_STORAGE to PermissionRequestConfig(
                     permissions = STORAGE_PERMISSIONS,
                     title = "Storage Permissions",
-                    message = "Ainflue needs storage access to save and manage your content files securely.",
+                    message = "IA Chérie needs storage access to save and manage your content files securely.",
                     group = GROUP_STORAGE
                 ),
                 GROUP_LOCATION to PermissionRequestConfig(
                     permissions = LOCATION_PERMISSIONS,
                     title = "Location Permissions",
-                    message = "Ainflue uses location data to enhance content metadata and improve protection accuracy.",
+                    message = "IA Chérie uses location data to enhance content metadata and improve protection accuracy.",
                     isRequired = false,
                     allowSkip = true,
                     group = GROUP_LOCATION
@@ -293,7 +293,7 @@ class PermissionManager(private val context: Context) {
                 GROUP_COMMUNICATION to PermissionRequestConfig(
                     permissions = COMMUNICATION_PERMISSIONS,
                     title = "Communication Permissions",
-                    message = "Ainflue accesses contacts to help you collaborate with other creators more easily.",
+                    message = "IA Chérie accesses contacts to help you collaborate with other creators more easily.",
                     isRequired = false,
                     allowSkip = true,
                     group = GROUP_COMMUNICATION
@@ -301,7 +301,7 @@ class PermissionManager(private val context: Context) {
                 GROUP_BIOMETRIC to PermissionRequestConfig(
                     permissions = BIOMETRIC_PERMISSIONS,
                     title = "Biometric Permissions",
-                    message = "Ainflue uses biometric authentication to secure your account and content.",
+                    message = "IA Chérie uses biometric authentication to secure your account and content.",
                     isRequired = false,
                     allowSkip = true,
                     group = GROUP_BIOMETRIC
@@ -689,7 +689,7 @@ class PermissionManager(private val context: Context) {
                 
                 AlertDialog.Builder(context)
                     .setTitle("Important Permissions Required")
-                    .setMessage("Ainflue needs $permissionNames to provide the best content creation and protection experience. You can grant these permissions in Settings.")
+                    .setMessage("IA Chérie needs $permissionNames to provide the best content creation and protection experience. You can grant these permissions in Settings.")
                     .setPositiveButton("Open Settings") { _, _ ->
                         openSettings()
                     }

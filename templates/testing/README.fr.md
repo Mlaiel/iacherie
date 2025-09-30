@@ -1,4 +1,4 @@
-# 🧪 Ainflue Templates de Tests - Framework de Tests Enterprise
+# 🧪 IA Chérie Templates de Tests - Framework de Tests Enterprise
 
 ## ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
 > **Propriété exclusive de Fahed Mlaiel (mlaiel@live.de)**  
@@ -9,7 +9,7 @@
 
 ## 🎯 Architecture de Tests Enterprise
 
-**Ainflue Templates de Tests** fournit un framework de tests enterprise complet conçu spécifiquement pour la plateforme d'économie créateurs. Ce module livre 130+ templates de tests professionnels couvrant tous les aspects d'une plateforme moderne de création de contenu multi-format.
+**IA Chérie Templates de Tests** fournit un framework de tests enterprise complet conçu spécifiquement pour la plateforme d'économie créateurs. Ce module livre 130+ templates de tests professionnels couvrant tous les aspects d'une plateforme moderne de création de contenu multi-format.
 
 ### 🏗️ Spécialités de l'Équipe Expert
 

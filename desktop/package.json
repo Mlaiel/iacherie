@@ -1,7 +1,7 @@
 {
-  "name": "ainflue-desktop",
+  "name": "iacherie-desktop",
   "version": "1.0.0",
-  "description": "Ainflue Desktop - Advanced AI Content Studio",
+  "description": "IA Chérie Desktop - Advanced AI Content Studio",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -25,8 +25,8 @@
     "coverage": "echo 'Generating test coverage report...' && npm run test"
   },
   "build": {
-    "appId": "com.ainflue.desktop",
-    "productName": "Ainflue Studio",
+    "appId": "com.iacherie.desktop",
+    "productName": "IA Chérie Studio",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -125,7 +125,7 @@
       "icon": "assets/icon.png",
       "category": "AudioVideo",
       "desktop": {
-        "StartupWMClass": "Ainflue Studio"
+        "StartupWMClass": "IA Chérie Studio"
       }
     },
     "nsis": {
@@ -134,7 +134,7 @@
       "allowElevation": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Ainflue Studio",
+      "shortcutName": "IA Chérie Studio",
       "runAfterFinish": true,
       "artifactName": "${productName}-${version}-Setup.${ext}",
       "deleteAppDataOnUninstall": false
@@ -168,7 +168,7 @@
     "publish": {
       "provider": "github",
       "owner": "Mlaiel",
-      "repo": "Ainflue"
+      "repo": "IA Chérie"
     }
   },
   "dependencies": {
@@ -191,10 +191,10 @@
   },
   "author": "Fahed Mlaiel <mlaiel@live.de>",
   "license": "PROPRIETARY",
-  "homepage": "https://ainflue.com",
+  "homepage": "https://iacherie.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mlaiel/Ainflue.git"
+    "url": "https://github.com/Mlaiel/IA Chérie.git"
   },
   "keywords": [
     "ai",

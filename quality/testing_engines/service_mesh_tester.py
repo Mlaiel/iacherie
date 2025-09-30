@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Service Mesh Tester - Ainflue Quality Platform
+Service Mesh Tester - IA Chérie Quality Platform
 ============================================
 
 Enterprise service mesh communication testing system.

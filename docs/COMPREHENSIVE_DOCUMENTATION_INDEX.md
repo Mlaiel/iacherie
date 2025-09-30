@@ -1,8 +1,8 @@
-# 📚 Ainflue Platform - Comprehensive Documentation Index
+# 📚 IA Chérie Platform - Comprehensive Documentation Index
 
 ## 🎯 Documentation Overview
 
-This is the complete documentation suite for the Ainflue AI-powered content protection and monetization platform. All documentation follows enterprise standards and is maintained in sync with the latest platform updates.
+This is the complete documentation suite for the IA Chérie AI-powered content protection and monetization platform. All documentation follows enterprise standards and is maintained in sync with the latest platform updates.
 
 ## 📋 Documentation Categories
 
@@ -157,10 +157,10 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 ## 📞 Documentation Support
 
 ### Contact Information
-- **Documentation Team**: docs@ainflue.com
-- **Technical Support**: support@ainflue.com
-- **Security Issues**: security@ainflue.com
-- **Emergency Contact**: emergency@ainflue.com
+- **Documentation Team**: docs@iacherie.com
+- **Technical Support**: support@iacherie.com
+- **Security Issues**: security@iacherie.com
+- **Emergency Contact**: emergency@iacherie.com
 
 ### Feedback and Improvements
 - **Issue Tracking**: GitHub Issues for documentation bugs
@@ -172,7 +172,7 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 
 **Last Updated**: {{current_date}}  
 **Version**: 1.0.0  
-**Maintained by**: Ainflue Documentation Team  
+**Maintained by**: IA Chérie Documentation Team  
 **Review Cycle**: Monthly
 
 ---

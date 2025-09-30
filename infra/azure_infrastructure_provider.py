@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +12,7 @@
 """
 Azure Infrastructure Provider
 
-Enterprise Azure infrastructure provider for Ainflue platform.
+Enterprise Azure infrastructure provider for IA Chérie platform.
 Provides comprehensive Azure resource management with enterprise security and optimization.
 """
 
@@ -51,7 +51,7 @@ class AzureInfrastructureProvider:
         self.config = config or {}
         self.location = self.config.get("location", "West US 2")
         self.subscription_id = self.config.get("subscription_id")
-        self.resource_group = self.config.get("resource_group", "ainflue-rg")
+        self.resource_group = self.config.get("resource_group", "iacherie-rg")
         
         # Azure clients (would be initialized with azure-mgmt libraries)
         self.clients = {}
@@ -63,7 +63,7 @@ class AzureInfrastructureProvider:
         # Configuration
         self.enable_detailed_monitoring = self.config.get("enable_detailed_monitoring", True)
         self.enable_cost_optimization = self.config.get("enable_cost_optimization", True)
-        self.default_network = self.config.get("default_network", "ainflue-vnet")
+        self.default_network = self.config.get("default_network", "iacherie-vnet")
         self.default_subnet = self.config.get("default_subnet", "default")
         
         # Initialize Azure clients

@@ -1,12 +1,12 @@
 """
-Marketing Services Enterprise - Ainflue
+Marketing Services Enterprise - IA Chérie
 ======================================
 Point d'entrée principal pour services marketing enterprise.
 Orchestration IA des campagnes, influenceurs, et distribution.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chérie Marketing Services
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -34,7 +34,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types de créateurs supportés par la plateforme Ainflue"""
+    """Types de créateurs supportés par la plateforme IA Chérie"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -77,7 +77,7 @@ class CampaignSpec:
     kpis: Dict[str, float]
     compliance_requirements: List[str] = field(default_factory=list)
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 MARKETING_SERVICES_CONFIG = {
     'creator_types_supported': [creator.value for creator in CreatorType],
     'platforms_integrated': 65,

@@ -1,5 +1,5 @@
-"""Ainflue SDK Examples
-Comprehensive examples for using the Ainflue Python SDK
+"""IA Chérie SDK Examples
+Comprehensive examples for using the IA Chérie Python SDK
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 """
@@ -13,7 +13,7 @@ from ainflue_sdk import create_sdk, create_sync_sdk, AinflueSdkConfig
 
 # Configuration
 API_KEY = os.getenv("AINFLUE_API_KEY", "your-api-key-here")
-BASE_URL = os.getenv("AINFLUE_BASE_URL", "https://api.ainflue.com")
+BASE_URL = os.getenv("AINFLUE_BASE_URL", "https://api.iacherie.com")
 
 
 async def public_api_health_check():
@@ -414,7 +414,7 @@ async def error_handling_example():
 
 async def main():
     """Run all examples"""
-    print("🚀 Ainflue SDK Examples")
+    print("🚀 IA Chérie SDK Examples")
     print("=" * 50)
     
     try:

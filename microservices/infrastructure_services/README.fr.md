@@ -1,10 +1,10 @@
-# 🛡️ Infrastructure Services Enterprise - Ainflue
+# 🛡️ Infrastructure Services Enterprise - IA Chérie
 
 **🚀 INFRASTRUCTURE CORE ENTERPRISE POUR MICROSERVICES DISTRIBUÉS**
 
 ## 📋 Aperçu
 
-Module Infrastructure Services Enterprise fournissant les services fondamentaux pour l'architecture microservices Ainflue: monitoring, configuration, sécurité, backup, disaster recovery et observabilité enterprise.
+Module Infrastructure Services Enterprise fournissant les services fondamentaux pour l'architecture microservices IA Chérie: monitoring, configuration, sécurité, backup, disaster recovery et observabilité enterprise.
 
 ## 🏗️ Architecture
 
@@ -351,14 +351,14 @@ DevOps Engineer:          Expert CI/CD + Infrastructure as Code
 
 ### 🆘 Support Urgent
 ```yaml
-Issues Critiques:         infrastructure-team@ainflue.com
+Issues Critiques:         infrastructure-team@iacherie.com
 Escalation:              Lead Architect (mlaiel@live.de)
 Temps Réponse:           < 5 minutes incidents P0
-Documentation:           docs.ainflue.com/infrastructure-services
+Documentation:           docs.iacherie.com/infrastructure-services
 ```
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - INFRASTRUCTURE SERVICES ENTERPRISE AINFLUE**  
+**© FAHED MLAIEL 2024-2025 - INFRASTRUCTURE SERVICES ENTERPRISE IACHERIE**  
 **🔒 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE**  
 **🏗️ INFRASTRUCTURE PRODUCTION-READY ENTERPRISE-GRADE**

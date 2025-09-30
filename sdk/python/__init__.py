@@ -1,6 +1,6 @@
-"""Ainflue Python SDK - Package Initialization
+"""IA Chérie Python SDK - Package Initialization
 
-Official Python SDK for the Ainflue AI-powered content protection platform.
+Official Python SDK for the IA Chérie AI-powered content protection platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -56,9 +56,9 @@ except ImportError:
     _additional_imports_available = False
 
 # Package metadata
-__title__ = "ainflue-sdk"
-__description__ = "Official Python SDK for Ainflue Platform"
-__url__ = "https://github.com/Mlaiel/Ainflue"
+__title__ = "iacherie-sdk"
+__description__ = "Official Python SDK for IA Chérie Platform"
+__url__ = "https://github.com/Mlaiel/IA Chérie"
 __version_info__ = tuple(map(int, __version__.split('.')))
 __license__ = "MIT"
 __copyright__ = "Copyright 2025 Fahed Mlaiel"
@@ -78,7 +78,7 @@ EXPERT_ROLES_IMPLEMENTED = [
 
 # Configuration constants
 DEFAULT_CONFIG = {
-    'base_url': 'https://api.ainflue.com',
+    'base_url': 'https://api.iacherie.com',
     'api_version': 'v1',
     'timeout': 30,
     'max_retries': 3,
@@ -154,5 +154,5 @@ if _additional_imports_available:
 # SDK initialization logging
 import logging
 logger = logging.getLogger(__name__)
-logger.info(f"Ainflue SDK v{__version__} initialized with {len(EXPERT_ROLES_IMPLEMENTED)} expert roles")
+logger.info(f"IA Chérie SDK v{__version__} initialized with {len(EXPERT_ROLES_IMPLEMENTED)} expert roles")
 logger.debug(f"Enterprise features enabled: {sum(ENTERPRISE_FEATURES.values())}/{len(ENTERPRISE_FEATURES)}")

@@ -1,9 +1,9 @@
-"""Ainflue Core Infrastructure - Event Sourcing Core
+"""IA Chérie Core Infrastructure - Event Sourcing Core
 =================================================
 
 Enterprise-grade event sourcing implementation providing event store management,
 aggregate reconstruction, event streaming, snapshots, and CQRS pattern support
-for maintaining complete audit trail and system state in the Ainflue platform.
+for maintaining complete audit trail and system state in the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -2,7 +2,7 @@
 Testing Services Module
 =======================
 
-Enterprise-grade testing and QA services for Ainflue platform.
+Enterprise-grade testing and QA services for IA Chérie platform.
 Provides comprehensive testing automation, validation, and quality assurance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

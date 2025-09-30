@@ -1,6 +1,6 @@
 //
 //  BiometricAuth.swift
-//  Ainflue iOS - Professional Biometric Authentication
+//  IA Chérie iOS - Professional Biometric Authentication
 //
 //  Advanced enterprise-grade biometric authentication system supporting
 //  Face ID, Touch ID, and secure device authentication with privacy protection.
@@ -54,13 +54,13 @@ class BiometricAuthService: NSObject {
     weak var delegate: BiometricAuthDelegate?
     
     // MARK: - Keychain Integration
-    private let keychainService = "com.fahedmlaiel.ainflue"
+    private let keychainService = "com.fahedmlaiel.iacherie"
     private let biometricTokenKey = "ainflue_biometric_token"
     private let authenticationConfigKey = "ainflue_auth_config"
     
     // MARK: - Security Queues
-    private let authQueue = DispatchQueue(label: "com.ainflue.biometric.auth", qos: .userInitiated)
-    private let securityQueue = DispatchQueue(label: "com.ainflue.biometric.security", qos: .userInitiated)
+    private let authQueue = DispatchQueue(label: "com.iacherie.biometric.auth", qos: .userInitiated)
+    private let securityQueue = DispatchQueue(label: "com.iacherie.biometric.security", qos: .userInitiated)
     
     // MARK: - Initialization
     
@@ -165,7 +165,7 @@ class BiometricAuthService: NSObject {
         return isAvailable
     }
     
-    func authenticate(reason: String = "Authenticate to access Ainflue") -> Bool {
+    func authenticate(reason: String = "Authenticate to access IA Chérie") -> Bool {
         guard checkAvailability() else {
             return false
         }
@@ -182,7 +182,7 @@ class BiometricAuthService: NSObject {
         return true
     }
     
-    func authenticateWithPromise(reason: String = "Authenticate to access Ainflue") async -> Result<AuthenticationResult, BiometricAuthError> {
+    func authenticateWithPromise(reason: String = "Authenticate to access IA Chérie") async -> Result<AuthenticationResult, BiometricAuthError> {
         
         guard checkAvailability() else {
             return .failure(.notAvailable("Biometric authentication not available"))

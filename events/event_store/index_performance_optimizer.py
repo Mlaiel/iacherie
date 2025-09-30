@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 INDEX PERFORMANCE OPTIMIZER
 Intelligent database index optimization for maximum query performance
-with automated analysis, tuning, and maintenance for Ainflue event store.
+with automated analysis, tuning, and maintenance for IA Chérie event store.
 
 Key Features:
 - Automated index analysis and optimization
@@ -131,7 +131,7 @@ class OptimizationResult:
 
 class IndexPerformanceOptimizer:
     """
-    Intelligent index performance optimizer for Ainflue event store
+    Intelligent index performance optimizer for IA Chérie event store
     
     Features:
     - Automated index analysis and recommendations
@@ -162,11 +162,11 @@ class IndexPerformanceOptimizer:
             'optimization_timeout_minutes': 60
         }
         
-        # Initialize Ainflue business index patterns
+        # Initialize IA Chérie business index patterns
         self._initialize_business_patterns()
     
     def _initialize_business_patterns(self):
-        """Initialize Ainflue-specific index optimization patterns"""
+        """Initialize IA Chérie-specific index optimization patterns"""
         
         # Content events optimization patterns
         self._business_patterns = {
@@ -222,7 +222,7 @@ class IndexPerformanceOptimizer:
             },
             
             'search_queries': {
-                'table_patterns': ['ainflue-content-events', 'ainflue-search-events'],
+                'table_patterns': ['iacherie-content-events', 'iacherie-search-events'],
                 'common_filters': ['title', 'description', 'tags', 'keywords'],
                 'suggested_indexes': [
                     {
@@ -389,7 +389,7 @@ class IndexPerformanceOptimizer:
             mock_indexes = [
                 {
                     'index_name': 'content_text_search',
-                    'table_name': 'ainflue-content-events',
+                    'table_name': 'iacherie-content-events',
                     'columns': ['title', 'description'],
                     'size_bytes': 80 * 1024 * 1024,  # 80MB
                     'usage_stats': {'queries': 5000, 'cache_hits': 3500}
@@ -686,7 +686,7 @@ class IndexPerformanceOptimizer:
                     )
                     recommendations.append(rec)
         
-        # Analyze business patterns for Ainflue-specific optimizations
+        # Analyze business patterns for IA Chérie-specific optimizations
         business_recommendations = await self._generate_business_pattern_recommendations()
         recommendations.extend(business_recommendations)
         
@@ -747,7 +747,7 @@ class IndexPerformanceOptimizer:
         return None
     
     async def _generate_business_pattern_recommendations(self) -> List[OptimizationRecommendation]:
-        """Generate recommendations based on Ainflue business patterns"""
+        """Generate recommendations based on IA Chérie business patterns"""
         
         recommendations = []
         

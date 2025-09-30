@@ -2,7 +2,7 @@
 
 ## Overview
 
-This system implements comprehensive industrialization success metrics for the Ainflue platform, tracking both technical and business KPIs as specified in the industrialization requirements.
+This system implements comprehensive industrialization success metrics for the IA Chérie platform, tracking both technical and business KPIs as specified in the industrialization requirements.
 
 ## 🎯 Metrics Tracked
 

@@ -30,7 +30,7 @@
 
 ---
 
-## 🎯 **منطق أعمال Ainflue**
+## 🎯 **منطق أعمال IA Chérie**
 **خط إنتاج اقتصاد المبدعين:** المبدعون متعددو التنسيقات → معالجة الذكاء الاصطناعي → حماية الملكية الفكرية → تحقيق الدخل → التعاون والألعاب → تحسين محركات البحث المهني → التوزيع متعدد المنصات
 
 ---
@@ -90,8 +90,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/filebeat
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/filebeat
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -110,7 +110,7 @@ python index.py
 ```python
 config = {
     "environment": "production",
-    "cluster_name": "ainflue-production",
+    "cluster_name": "iacherie-production",
     "elasticsearch_hosts": ["elasticsearch:9200"],
     "logstash_hosts": ["logstash:5044"],
     "enable_real_time": True,
@@ -313,7 +313,7 @@ await مركز.start_background_sync()
 - **LinkedIn** - الشبكات المهنية
 - **Pinterest** - منصة الاكتشاف المرئي
 - **Snapchat** - تتبع المحتوى المؤقت
-- **Ainflue** - تكامل المنصة الأصلية
+- **IA Chérie** - تكامل المنصة الأصلية
 
 ## 🔄 **مرجع API**
 
@@ -419,4 +419,4 @@ python -m pytest tests/performance/
 
 ---
 
-**© 2025 فهد مليل - جميع الحقوق محفوظة - هندسة Filebeat الملكية لـ Ainflue**
+**© 2025 فهد مليل - جميع الحقوق محفوظة - هندسة Filebeat الملكية لـ IA Chérie**

@@ -1,11 +1,11 @@
 """
-Monetization Retry - Ainflue
+Monetization Retry - IA Chérie
 ============================
 Retry spécialisé pour opérations monétisation.
 Payment processing + subscription + billing retry patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -884,7 +884,7 @@ def create_monetization_retry() -> MonetizationRetry:
     """Factory pour création retry monétisation"""
     return MonetizationRetry()
 
-# Configuration prédéfinies Ainflue
+# Configuration prédéfinies IA Chérie
 AINFLUE_MONETIZATION_CONFIGS = {
     'creator_payouts': {
         'enhanced_compliance': True,

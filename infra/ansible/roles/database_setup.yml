@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Database Setup Ansible Role
+# IA Chérie Infrastructure Module - Database Setup Ansible Role
 # ============================================================
 # 
-# Enterprise-grade database setup for Ainflue platform
+# Enterprise-grade database setup for IA Chérie platform
 # PostgreSQL, Redis, and analytics database configuration
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,11 +21,11 @@
 # IA Prompt Engineer: Prompt storage, AI provider configurations
 
 ---
-- name: "Database Setup - Ainflue Platform"
+- name: "Database Setup - IA Chérie Platform"
   hosts: database
   become: yes
   vars:
-    project_name: "ainflue"
+    project_name: "iacherie"
     environment: "{{ env | default('dev') }}"
     
     # PostgreSQL Configuration
@@ -57,11 +57,11 @@
       - name: "ainflue_app"
         password: "{{ app_db_password | default('changeme123!') }}"
         privileges: "ALL"
-        database: "ainflue"
+        database: "iacherie"
       - name: "ainflue_readonly"
         password: "{{ readonly_db_password | default('readonly123!') }}"
         privileges: "SELECT"
-        database: "ainflue"
+        database: "iacherie"
       - name: "ainflue_analytics"
         password: "{{ analytics_db_password | default('analytics123!') }}"
         privileges: "ALL"
@@ -73,7 +73,7 @@
     
     # Databases to create
     databases:
-      - name: "ainflue"
+      - name: "iacherie"
         encoding: "UTF8"
         lc_collate: "en_US.UTF-8"
         lc_ctype: "en_US.UTF-8"
@@ -337,16 +337,16 @@
         db: "{{ item.database }}"
         state: present
       loop:
-        - { extension: "uuid-ossp", database: "ainflue" }
-        - { extension: "pgcrypto", database: "ainflue" }
-        - { extension: "hstore", database: "ainflue" }
-        - { extension: "pg_trgm", database: "ainflue" }
-        - { extension: "btree_gin", database: "ainflue" }
-        - { extension: "btree_gist", database: "ainflue" }
-        - { extension: "pg_stat_statements", database: "ainflue" }
+        - { extension: "uuid-ossp", database: "iacherie" }
+        - { extension: "pgcrypto", database: "iacherie" }
+        - { extension: "hstore", database: "iacherie" }
+        - { extension: "pg_trgm", database: "iacherie" }
+        - { extension: "btree_gin", database: "iacherie" }
+        - { extension: "btree_gist", database: "iacherie" }
+        - { extension: "pg_stat_statements", database: "iacherie" }
         - { extension: "vector", database: "ainflue_ml" }
-        - { extension: "postgis", database: "ainflue" }
-        - { extension: "postgis_topology", database: "ainflue" }
+        - { extension: "postgis", database: "iacherie" }
+        - { extension: "postgis_topology", database: "iacherie" }
       become_user: postgres
 
     - name: "Create database schemas for AI/ML"
@@ -378,7 +378,7 @@
       copy:
         content: |
           [databases]
-          ainflue = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue
+          iacherie = host=127.0.0.1 port={{ postgresql_port }} dbname=iacherie
           ainflue_analytics = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_analytics
           ainflue_ml = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_ml
           
@@ -431,10 +431,10 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Database Backup Script
+          # IA Chérie Database Backup Script
           # Automated PostgreSQL and Redis backups
           
-          BACKUP_DIR="/var/backups/ainflue"
+          BACKUP_DIR="/var/backups/iacherie"
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
           RETENTION_DAYS=30
           
@@ -445,7 +445,7 @@
           # PostgreSQL backups
           echo "Starting PostgreSQL backups..."
           
-          for db in ainflue ainflue_analytics ainflue_ml ainflue_cache; do
+          for db in iacherie ainflue_analytics ainflue_ml ainflue_cache; do
             echo "Backing up database: $db"
             pg_dump -h localhost -U postgres $db | gzip > $BACKUP_DIR/postgresql/${db}_${TIMESTAMP}.sql.gz
             
@@ -471,7 +471,7 @@
           
           # Create backup report
           BACKUP_REPORT="$BACKUP_DIR/backup_report_${TIMESTAMP}.txt"
-          echo "=== Ainflue Database Backup Report - $(date) ===" > $BACKUP_REPORT
+          echo "=== IA Chérie Database Backup Report - $(date) ===" > $BACKUP_REPORT
           echo "PostgreSQL Backups:" >> $BACKUP_REPORT
           ls -lh $BACKUP_DIR/postgresql/*${TIMESTAMP}* >> $BACKUP_REPORT
           echo "Redis Backups:" >> $BACKUP_REPORT
@@ -479,17 +479,17 @@
           echo "Total Backup Size: $(du -sh $BACKUP_DIR | cut -f1)" >> $BACKUP_REPORT
           
           echo "Backup completed successfully!"
-        dest: /usr/local/bin/ainflue-db-backup.sh
+        dest: /usr/local/bin/iacherie-db-backup.sh
         mode: '0755'
 
     - name: "Create database monitoring script"
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Database Monitoring Script
+          # IA Chérie Database Monitoring Script
           # Monitor PostgreSQL and Redis performance
           
-          MONITOR_LOG="/var/log/ainflue-db-monitor.log"
+          MONITOR_LOG="/var/log/iacherie-db-monitor.log"
           ALERT_THRESHOLD_CONNECTIONS=80  # Percentage
           ALERT_THRESHOLD_DISK=85         # Percentage
           
@@ -516,13 +516,13 @@
               datname as database,
               pg_size_pretty(pg_database_size(datname)) as size
             FROM pg_database 
-            WHERE datname LIKE 'ainflue%'
+            WHERE datname LIKE 'iacherie%'
             ORDER BY pg_database_size(datname) DESC;
           " >> $MONITOR_LOG
           
           # Slow queries
           echo "== Slow Queries (>1s) ==" >> $MONITOR_LOG
-          psql -h localhost -U postgres -d ainflue -c "
+          psql -h localhost -U postgres -d iacherie -c "
             SELECT 
               query,
               calls,
@@ -550,22 +550,22 @@
           fi
           
           echo "Monitor check completed" >> $MONITOR_LOG
-        dest: /usr/local/bin/ainflue-db-monitor.sh
+        dest: /usr/local/bin/iacherie-db-monitor.sh
         mode: '0755'
 
     - name: "Add database backup cron job"
       cron:
-        name: "Ainflue database backup"
+        name: "IA Chérie database backup"
         minute: "0"
         hour: "2"
-        job: "/usr/local/bin/ainflue-db-backup.sh"
+        job: "/usr/local/bin/iacherie-db-backup.sh"
         user: postgres
 
     - name: "Add database monitoring cron job"
       cron:
-        name: "Ainflue database monitoring"
+        name: "IA Chérie database monitoring"
         minute: "*/15"
-        job: "/usr/local/bin/ainflue-db-monitor.sh"
+        job: "/usr/local/bin/iacherie-db-monitor.sh"
         user: postgres
 
     - name: "Configure log rotation for database logs"
@@ -584,7 +584,7 @@
               endscript
           }
           
-          /var/log/ainflue-db-*.log {
+          /var/log/iacherie-db-*.log {
               daily
               missingok
               rotate 30
@@ -593,7 +593,7 @@
               notifempty
               create 0640 postgres adm
           }
-        dest: /etc/logrotate.d/ainflue-database
+        dest: /etc/logrotate.d/iacherie-database
 
     - name: "Start and enable pgBouncer"
       service:

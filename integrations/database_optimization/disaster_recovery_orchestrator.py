@@ -2,7 +2,7 @@
 ===============================================================================
 
 Orchestrateur de récupération après sinistre enterprise avec RTO/RPO optimisé,
-failover automatique et coordination multi-région pour la plateforme Ainflue.
+failover automatique et coordination multi-région pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 ⚙️ DevOps Engineer: Infrastructure automation + disaster recovery + multi-cloud orchestration
@@ -420,7 +420,7 @@ class DisasterRecoveryOrchestrator:
         aws_backup = BackupLocation(
             provider="aws",
             region="us-east-1",
-            bucket_name="ainflue-disaster-recovery-primary",
+            bucket_name="iacherie-disaster-recovery-primary",
             path="backups/production",
             encryption_enabled=True
         )
@@ -430,7 +430,7 @@ class DisasterRecoveryOrchestrator:
         azure_backup = BackupLocation(
             provider="azure",
             region="westeurope",
-            bucket_name="ainflue-dr-secondary",
+            bucket_name="iacherie-dr-secondary",
             path="backups/production",
             encryption_enabled=True
         )
@@ -440,7 +440,7 @@ class DisasterRecoveryOrchestrator:
         gcp_backup = BackupLocation(
             provider="gcp",
             region="europe-west1",
-            bucket_name="ainflue-dr-tertiary",
+            bucket_name="iacherie-dr-tertiary",
             path="backups/production",
             encryption_enabled=True
         )
@@ -449,14 +449,14 @@ class DisasterRecoveryOrchestrator:
     def _initialize_service_health_checks(self):
         """Initialisation vérifications santé services"""
         services = [
-            ("api-gateway", "https://api.ainflue.com/health"),
-            ("user-service", "https://users.ainflue.com/health"),
-            ("content-service", "https://content.ainflue.com/health"),
-            ("payment-service", "https://payments.ainflue.com/health"),
-            ("notification-service", "https://notifications.ainflue.com/health"),
-            ("analytics-service", "https://analytics.ainflue.com/health"),
-            ("media-service", "https://media.ainflue.com/health"),
-            ("search-service", "https://search.ainflue.com/health")
+            ("api-gateway", "https://api.iacherie.com/health"),
+            ("user-service", "https://users.iacherie.com/health"),
+            ("content-service", "https://content.iacherie.com/health"),
+            ("payment-service", "https://payments.iacherie.com/health"),
+            ("notification-service", "https://notifications.iacherie.com/health"),
+            ("analytics-service", "https://analytics.iacherie.com/health"),
+            ("media-service", "https://media.iacherie.com/health"),
+            ("search-service", "https://search.iacherie.com/health")
         ]
         
         for service_name, endpoint in services:

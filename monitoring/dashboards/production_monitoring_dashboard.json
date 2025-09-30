@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Production Monitoring",
-    "tags": ["ainflue", "production", "monitoring"],
+    "title": "IA Chérie Production Monitoring",
+    "tags": ["iacherie", "production", "monitoring"],
     "style": "dark",
     "timezone": "browser",
     "panels": [
@@ -12,7 +12,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "up{job=\"ainflue-api\"}",
+            "expr": "up{job=\"iacherie-api\"}",
             "refId": "A"
           }
         ],
@@ -48,12 +48,12 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
             "refId": "A",
             "legendFormat": "95th percentile"
           },
           {
-            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
             "refId": "B",
             "legendFormat": "50th percentile"
           }
@@ -76,7 +76,7 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api\"}[5m])",
+            "expr": "rate(http_requests_total{job=\"iacherie-api\"}[5m])",
             "refId": "A",
             "legendFormat": "{{method}} {{status}}"
           }
@@ -99,7 +99,7 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api\",status=~\"4..|5..\"}[5m])",
+            "expr": "rate(http_requests_total{job=\"iacherie-api\",status=~\"4..|5..\"}[5m])",
             "refId": "A",
             "legendFormat": "{{status}}"
           }
@@ -317,7 +317,7 @@
           "name": "Deployments",
           "datasource": "prometheus",
           "enable": true,
-          "expr": "kube_deployment_status_replicas{namespace=\"ainflue\"}",
+          "expr": "kube_deployment_status_replicas{namespace=\"iacherie\"}",
           "iconColor": "green",
           "name": "Deployments"
         }

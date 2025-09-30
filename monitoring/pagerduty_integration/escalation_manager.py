@@ -1,5 +1,5 @@
 """
-Escalation Manager for Ainflue Platform
+Escalation Manager for IA Chérie Platform
 Intelligent incident escalation and routing based on business rules
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -60,7 +60,7 @@ class IncidentContext:
 
 class EscalationManager:
     """
-    Intelligent escalation manager for Ainflue Platform
+    Intelligent escalation manager for IA Chérie Platform
     Manages incident escalation based on business rules and context
     """
     

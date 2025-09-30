@@ -1,10 +1,10 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 Ce module contient des algorithmes propriétaires ultra-confidentiels pour l'optimisation 
-des performances de la plateforme Ainflue Creator Economy.
+des performances de la plateforme IA Chérie Creator Economy.
 
 Performance Optimization Analytics - Enterprise-grade performance intelligence
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>

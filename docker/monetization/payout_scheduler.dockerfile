@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PAYOUT SCHEDULER - AUTOMATED DOCKERFILE
+# IACHERIE PAYOUT SCHEDULER - AUTOMATED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS payout-base
@@ -49,7 +49,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${PAYOUT_SERVICE_PORT}
 CMD ["python3.11", "-m", "payout_scheduler.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Payout Scheduler"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="payout_scheduler"
-LABEL ainflue.service.port="8046"
+LABEL org.opencontainers.image.title="IA Chérie Payout Scheduler"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="payout_scheduler"
+LABEL iacherie.service.port="8046"

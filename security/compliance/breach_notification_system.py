@@ -832,7 +832,7 @@ class BreachNotificationSystem:
         """Generate content for regulatory notification"""
         return {
             "breach_id": breach.breach_id,
-            "organization_name": "Ainflue Platform",
+            "organization_name": "IA Chérie Platform",
             "contact_person": "Data Protection Officer",
             "incident_date": breach.occurrence_date.isoformat() if breach.occurrence_date else breach.detection_date.isoformat(),
             "detection_date": breach.detection_date.isoformat(),
@@ -897,10 +897,10 @@ class BreachNotificationSystem:
         # Simplified implementation - would connect to actual contact systems
         recipients = {
             StakeholderType.DATA_SUBJECTS: ["affected_users@example.com"],
-            StakeholderType.EMPLOYEES: ["all_employees@ainflue.com"],
-            StakeholderType.BOARD_DIRECTORS: ["board@ainflue.com"],
-            StakeholderType.MEDIA: ["press@ainflue.com"],
-            StakeholderType.BUSINESS_PARTNERS: ["partners@ainflue.com"]
+            StakeholderType.EMPLOYEES: ["all_employees@iacherie.com"],
+            StakeholderType.BOARD_DIRECTORS: ["board@iacherie.com"],
+            StakeholderType.MEDIA: ["press@iacherie.com"],
+            StakeholderType.BUSINESS_PARTNERS: ["partners@iacherie.com"]
         }
         
         return recipients.get(stakeholder_type, [])
@@ -930,8 +930,8 @@ What you can do:
 
 We sincerely apologize for this incident and any inconvenience it may cause.
 
-Ainflue Security Team
-security@ainflue.com
+IA Chérie Security Team
+security@iacherie.com
 """
         else:
             return f"Security incident notification for stakeholder type: {stakeholder_type.value}"

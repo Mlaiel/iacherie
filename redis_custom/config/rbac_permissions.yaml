@@ -1,4 +1,4 @@
-# ⚡ Redis RBAC Permissions Configuration - Ainflue Enterprise
+# ⚡ Redis RBAC Permissions Configuration - IA Chérie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Role-Based Access Control for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-rbac-permissions
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: rbac-permissions
     environment: enterprise
     owner: fahed-mlaiel
@@ -319,7 +319,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-rbac-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   create_users.sh: |
     #!/bin/bash
@@ -329,7 +329,7 @@ data:
     echo "🔐 Creating Redis RBAC users..."
     
     # Connect to Redis with admin privileges
-    REDIS_CLI="redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/certs/admin.crt --key /etc/redis/ssl/private/admin.key --cacert /etc/redis/ssl/ca/ainflue-ca.crt"
+    REDIS_CLI="redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/certs/admin.crt --key /etc/redis/ssl/private/admin.key --cacert /etc/redis/ssl/ca/iacherie-ca.crt"
     
     # Create enterprise admin
     $REDIS_CLI ACL SETUSER admin_enterprise on '>ainflue_admin_enterprise_2025_ultra_secure_key' '~*' '&*' '+@all' '-flushdb' '-flushall' '-debug' '-shutdown' '-config'
@@ -346,7 +346,7 @@ data:
     
     echo "📊 Auditing Redis RBAC permissions..."
     
-    REDIS_CLI="redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/certs/admin.crt --key /etc/redis/ssl/private/admin.key --cacert /etc/redis/ssl/ca/ainflue-ca.crt"
+    REDIS_CLI="redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/certs/admin.crt --key /etc/redis/ssl/private/admin.key --cacert /etc/redis/ssl/ca/iacherie-ca.crt"
     
     # List all users
     echo "Current users:"

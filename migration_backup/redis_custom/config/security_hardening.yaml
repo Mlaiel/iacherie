@@ -1,0 +1,320 @@
+# ⚡ Redis Security Hardening Configuration - Ainflue Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Enterprise Redis Security Hardening for Creator Economy Platform
+
+# ========================================================================================
+# ⚠️  PROTECTION PROPRIÉTÉ INTELLECTUELLE - Fahed Mlaiel (mlaiel@live.de)
+# TOUS DROITS RÉSERVÉS - Utilisation commerciale strictement encadrée
+# ========================================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-security-hardening
+  namespace: ainflue-redis
+  labels:
+    app: ainflue-redis
+    component: security-hardening
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+    description: "Enterprise Redis Security Hardening Configuration"
+    security-level: "maximum"
+    compliance: "GDPR,SOX,PCI-DSS,HIPAA"
+
+data:
+  # ===================================================================================
+  # AUTHENTICATION & ACCESS CONTROL
+  # ===================================================================================
+  auth_config: |
+    # Disable default user access
+    user default off nopass ~* &* -@all
+    
+    # Create enterprise admin user
+    user admin on >ainflue_enterprise_2025_secure_admin_key ~* &* +@all
+    
+    # Create application user with limited permissions
+    user ainflue_app on >ainflue_app_secure_2025_key ~cache:* ~session:* ~creator:* +@read +@write +@list +@string +@hash +@set +@sortedset +@stream
+    
+    # Create read-only monitoring user
+    user monitoring on >ainflue_monitor_secure_2025_key ~* +@read +info +ping +client
+    
+    # Create backup user with minimal permissions
+    user backup on >ainflue_backup_secure_2025_key ~* +@read +bgsave +lastsave +info
+
+  # ===================================================================================
+  # NETWORK SECURITY CONFIGURATION
+  # ===================================================================================
+  network_security: |
+    # Bind to specific interfaces only (no wildcard binding)
+    bind 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+    
+    # Disable protected mode only with proper authentication
+    protected-mode yes
+    
+    # Configure custom port (not default 6379)
+    port 0
+    tls-port 16379
+    
+    # Enable TLS for all connections
+    tls-cert-file /etc/redis/ssl/redis.crt
+    tls-key-file /etc/redis/ssl/redis.key
+    tls-ca-cert-file /etc/redis/ssl/ca.crt
+    tls-protocols "TLSv1.3"
+    tls-ciphersuites TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+    tls-prefer-server-ciphers yes
+    
+    # Client connection limits
+    maxclients 10000
+    timeout 300
+    tcp-keepalive 300
+
+  # ===================================================================================
+  # COMMAND SECURITY & RESTRICTIONS
+  # ===================================================================================
+  command_security: |
+    # Disable dangerous commands
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+    rename-command KEYS ""
+    rename-command CONFIG "CONFIG_b840fc02d524045429941cc15f59e41cb7be6c52"
+    rename-command SHUTDOWN "SHUTDOWN_b840fc02d524045429941cc15f59e41cb7be6c52"
+    rename-command DEBUG ""
+    rename-command EVAL "EVAL_b840fc02d524045429941cc15f59e41cb7be6c52"
+    rename-command SCRIPT ""
+    
+    # Restrict administrative commands
+    rename-command CLIENT "CLIENT_b840fc02d524045429941cc15f59e41cb7be6c52"
+    rename-command CLUSTER "CLUSTER_b840fc02d524045429941cc15f59e41cb7be6c52"
+    rename-command SENTINEL "SENTINEL_b840fc02d524045429941cc15f59e41cb7be6c52"
+
+  # ===================================================================================
+  # MEMORY & RESOURCE PROTECTION
+  # ===================================================================================
+  resource_protection: |
+    # Memory limits and protection
+    maxmemory 8gb
+    maxmemory-policy allkeys-lru
+    maxmemory-samples 10
+    
+    # Connection and command timeouts
+    timeout 300
+    tcp-keepalive 300
+    
+    # Slow log configuration
+    slowlog-log-slower-than 10000
+    slowlog-max-len 1000
+    
+    # Client output buffer limits
+    client-output-buffer-limit normal 0 0 0
+    client-output-buffer-limit replica 256mb 64mb 60
+    client-output-buffer-limit pubsub 32mb 8mb 60
+
+  # ===================================================================================
+  # LOGGING & AUDIT CONFIGURATION
+  # ===================================================================================
+  security_logging: |
+    # Enhanced logging configuration
+    loglevel notice
+    logfile /var/log/redis/redis-security.log
+    syslog-enabled yes
+    syslog-ident redis-security
+    syslog-facility local0
+    
+    # Enable slow log for security monitoring
+    slowlog-log-slower-than 10000
+    slowlog-max-len 1000
+    
+    # ACL log configuration
+    acllog-max-len 1000
+
+  # ===================================================================================
+  # PERSISTENCE SECURITY
+  # ===================================================================================
+  persistence_security: |
+    # Secure RDB configuration
+    save 900 1
+    save 300 10
+    save 60 10000
+    
+    rdbcompression yes
+    rdbchecksum yes
+    
+    # RDB file permissions and location
+    dir /var/lib/redis/secure
+    dbfilename ainflue-dump-encrypted.rdb
+    
+    # AOF security configuration
+    appendonly yes
+    appendfilename "ainflue-appendonly-secure.aof"
+    appendfsync everysec
+    no-appendfsync-on-rewrite no
+    auto-aof-rewrite-percentage 100
+    auto-aof-rewrite-min-size 64mb
+
+  # ===================================================================================
+  # CLUSTER SECURITY CONFIGURATION
+  # ===================================================================================
+  cluster_security: |
+    # Cluster authentication
+    cluster-enabled yes
+    cluster-config-file /etc/redis/cluster/nodes-secure.conf
+    cluster-node-timeout 15000
+    cluster-slave-validity-factor 10
+    cluster-migration-barrier 1
+    cluster-require-full-coverage yes
+    
+    # Cluster TLS configuration
+    tls-cluster yes
+    tls-replication yes
+    
+    # Inter-node authentication
+    masterauth ainflue_cluster_secure_2025_key
+    requirepass ainflue_cluster_secure_2025_key
+
+  # ===================================================================================
+  # CREATOR ECONOMY SECURITY FEATURES
+  # ===================================================================================
+  creator_security: |
+    # Creator data protection patterns
+    creator_data_encryption: true
+    content_ip_protection: maximum
+    collaboration_security: enterprise
+    monetization_data_protection: pci_compliant
+    
+    # Creator-specific ACL patterns
+    creator_read_pattern: "~creator:*:read"
+    creator_write_pattern: "~creator:*:write"
+    content_access_pattern: "~content:*:access"
+    collaboration_pattern: "~collab:*:secure"
+    
+    # Revenue data protection
+    revenue_encryption: true
+    payment_data_isolation: true
+    financial_audit_trail: enabled
+
+  # ===================================================================================
+  # COMPLIANCE & GOVERNANCE
+  # ===================================================================================
+  compliance_config: |
+    # GDPR Compliance
+    gdpr_data_retention: 2557200  # 30 days in seconds
+    gdpr_encryption_at_rest: true
+    gdpr_access_logging: true
+    gdpr_data_minimization: true
+    
+    # SOX Compliance
+    sox_audit_trail: enabled
+    sox_change_tracking: true
+    sox_access_controls: strict
+    sox_data_integrity: verified
+    
+    # PCI DSS Compliance
+    pci_data_encryption: aes-256
+    pci_access_controls: strict
+    pci_network_segmentation: enabled
+    pci_vulnerability_management: active
+    
+    # HIPAA Compliance (for creator health data)
+    hipaa_encryption: true
+    hipaa_access_logs: detailed
+    hipaa_audit_controls: enabled
+    hipaa_transmission_security: tls_1_3
+
+  # ===================================================================================
+  # INTRUSION DETECTION & PREVENTION
+  # ===================================================================================
+  intrusion_protection: |
+    # Rate limiting configuration
+    maxclients 10000
+    tcp-backlog 2048
+    
+    # Connection monitoring
+    connection_monitoring: enabled
+    suspicious_pattern_detection: true
+    geo_blocking: enabled
+    ip_whitelist_only: true
+    
+    # Attack prevention
+    brute_force_protection: enabled
+    ddos_mitigation: active
+    command_injection_prevention: strict
+    
+    # Anomaly detection
+    traffic_pattern_analysis: enabled
+    unusual_command_detection: true
+    data_exfiltration_monitoring: active
+
+  # ===================================================================================
+  # SECURITY METRICS & MONITORING
+  # ===================================================================================
+  security_monitoring: |
+    # Security metrics collection
+    failed_auth_attempts: true
+    suspicious_commands: true
+    unusual_access_patterns: true
+    data_access_frequency: monitored
+    
+    # Alert thresholds
+    max_failed_auth_per_minute: 5
+    max_suspicious_commands_per_hour: 10
+    max_data_transfer_per_session: 1GB
+    
+    # Real-time monitoring
+    real_time_threat_detection: enabled
+    automated_incident_response: active
+    security_event_streaming: true
+
+  # ===================================================================================
+  # ENTERPRISE SECURITY EXTENSIONS
+  # ===================================================================================
+  enterprise_extensions: |
+    # Advanced authentication
+    multi_factor_authentication: required
+    certificate_based_auth: enabled
+    oauth2_integration: active
+    saml_sso_support: enabled
+    
+    # Data loss prevention
+    content_scanning: enabled
+    sensitive_data_detection: active
+    data_classification: automatic
+    exfiltration_prevention: strict
+    
+    # Zero trust architecture
+    network_microsegmentation: enabled
+    continuous_verification: active
+    least_privilege_access: enforced
+    context_aware_security: enabled
+
+---
+# Security validation script
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-security-validation
+  namespace: ainflue-redis
+data:
+  validate_security.sh: |
+    #!/bin/bash
+    # Redis Security Validation Script
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "🔒 Validating Redis Security Configuration..."
+    
+    # Test TLS connection
+    openssl s_client -connect localhost:16379 -tls1_3 -quiet
+    
+    # Validate authentication
+    redis-cli -h localhost -p 16379 --tls auth ainflue_app_secure_2025_key
+    
+    # Check ACL configuration
+    redis-cli -h localhost -p 16379 --tls ACL LIST
+    
+    # Verify disabled commands
+    redis-cli -h localhost -p 16379 --tls FLUSHALL 2>&1 | grep -q "ERR unknown command"
+    
+    echo "✅ Security validation completed"

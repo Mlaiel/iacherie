@@ -1,8 +1,8 @@
-# 🚀 منصة Ainflue الأساسية للتحليلات
+# 🚀 منصة IA Chérie الأساسية للتحليلات
 
-[![درجة المؤسسة](https://img.shields.io/badge/درجة-المؤسسة-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![الإصدار](https://img.shields.io/badge/الإصدار-1.0.0-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![الترخيص](https://img.shields.io/badge/الترخيص-تجاري-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![درجة المؤسسة](https://img.shields.io/badge/درجة-المؤسسة-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![الإصدار](https://img.shields.io/badge/الإصدار-1.0.0-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![الترخيص](https://img.shields.io/badge/الترخيص-تجاري-red.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **منصة تحليلات بدرجة المؤسسة للذكاء الشامل لاقتصاد المبدعين، تتبع الأداء، تحليلات الإيرادات، تحسين المحتوى، ورؤى التعاون.**
 
@@ -20,7 +20,7 @@
 
 ## 🎯 نظرة عامة
 
-وحدة Ainflue Platform Core Analytics هي محرك تحليلات بدرجة المؤسسة مصمم خصيصاً لاقتصاد المبدعين. يوفر ذكاءً شاملاً عبر جميع جوانب عمليات أعمال المبدعين، من تتبع الأداء إلى تحسين الإيرادات.
+وحدة IA Chérie Platform Core Analytics هي محرك تحليلات بدرجة المؤسسة مصمم خصيصاً لاقتصاد المبدعين. يوفر ذكاءً شاملاً عبر جميع جوانب عمليات أعمال المبدعين، من تتبع الأداء إلى تحسين الإيرادات.
 
 ### تكامل منطق الأعمال
 ```

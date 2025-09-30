@@ -1,7 +1,7 @@
 """Retry Resilience Engine Module
 
 Advanced retry mechanisms with intelligent backoff strategies and circuit breaker patterns
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -121,7 +121,7 @@ class CircuitBreakerMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Retry Strategies"""
+    """IA Chérie Business Retry Strategies"""
     
     # Retry policies by event type
     RETRY_POLICIES = {
@@ -261,7 +261,7 @@ class AinflueBusiness:
 class RetryResilienceEngine:
     """
     Advanced retry mechanisms with intelligent backoff and circuit breaker patterns
-    Provides comprehensive error handling and resilience for Ainflue business operations
+    Provides comprehensive error handling and resilience for IA Chérie business operations
     """
     
     def __init__(self,

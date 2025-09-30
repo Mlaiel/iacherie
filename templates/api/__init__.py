@@ -1,4 +1,4 @@
-"""Ainflue API Templates Module
+"""IA Chérie API Templates Module
 Enterprise-grade API template collection for Creator Economy platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -670,7 +670,7 @@ initialize_templates()
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
-__description__ = "Enterprise API Templates for Ainflue Creator Economy Platform"
+__description__ = "Enterprise API Templates for IA Chérie Creator Economy Platform"
 
 # Export public API
 __all__ = [

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Encryption Management for Ainflue Platform
+Encryption Management for IA Chérie Platform
 ==========================================
 
 Enterprise-grade encryption management system for data protection,
@@ -97,7 +97,7 @@ class EncryptionManager:
     data encryption/decryption, and compliance with security standards.
     """
     
-    def __init__(self, key_store_path: str = "/opt/ainflue/security/keystore"):
+    def __init__(self, key_store_path: str = "/opt/iacherie/security/keystore"):
         self.key_store_path = Path(key_store_path)
         self.key_store_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -122,7 +122,7 @@ class EncryptionManager:
         logger.addHandler(console_handler)
         
         # File handler (encrypted logs)
-        log_dir = Path("/var/log/ainflue/security")
+        log_dir = Path("/var/log/iacherie/security")
         log_dir.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_dir / "encryption.log")
         file_handler.setFormatter(console_formatter)

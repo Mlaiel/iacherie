@@ -52,41 +52,41 @@ gh workflow run deployment-scheduling.yml \
 
 ```bash
 # Check deployment status
-kubectl get deployments -n ainflue-production
+kubectl get deployments -n iacherie-production
 
 # Check service health
-curl https://api.ainflue.com/health
+curl https://api.iacherie.com/health
 
 # View deployment logs
-kubectl logs -n ainflue-production deployment/ainflue-api-green
+kubectl logs -n iacherie-production deployment/iacherie-api-green
 
 # Check rollback status
-kubectl get pods -n ainflue-production -l version=blue
+kubectl get pods -n iacherie-production -l version=blue
 ```
 
 ## Emergency Contacts
 
-- **DevOps**: devops@ainflue.com
+- **DevOps**: devops@iacherie.com
 - **On-Call**: +1-xxx-xxx-xxxx
 - **Slack**: #deployment-alerts
-- **Escalation**: cto@ainflue.com
+- **Escalation**: cto@iacherie.com
 
 ## Quick Rollback (Manual)
 
 ```bash
 # Manual rollback to blue deployment
-kubectl patch service ainflue-api -n ainflue \
+kubectl patch service iacherie-api -n iacherie \
   -p '{"spec":{"selector":{"version":"blue"}}}'
 
-kubectl scale deployment ainflue-api-blue -n ainflue --replicas=3
-kubectl scale deployment ainflue-api-green -n ainflue --replicas=0
+kubectl scale deployment iacherie-api-blue -n iacherie --replicas=3
+kubectl scale deployment iacherie-api-green -n iacherie --replicas=0
 ```
 
 ## Feature Flag Emergency Disable
 
 ```bash
 # Disable feature via API (if implemented)
-curl -X POST https://api.ainflue.com/api/v1/features/emergency-disable \
+curl -X POST https://api.iacherie.com/api/v1/features/emergency-disable \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -d '{"feature_key": "problematic_feature", "reason": "deployment issue"}'
 ```

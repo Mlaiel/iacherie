@@ -1,4 +1,4 @@
-# 🏭 Ainflue Database Templates - Enterprise Architecture
+# 🏭 IA Chérie Database Templates - Enterprise Architecture
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-4.1.0-blue.svg)](CHANGELOG.md)
@@ -21,7 +21,7 @@ This database template system and all associated intellectual property are the *
 
 ## 🌟 Overview
 
-The Ainflue Database Templates module provides enterprise-grade database architecture patterns specifically designed for Creator Economy platforms. This comprehensive suite of 120+ production-ready templates covers every aspect of database design, optimization, security, and management.
+The IA Chérie Database Templates module provides enterprise-grade database architecture patterns specifically designed for Creator Economy platforms. This comprehensive suite of 120+ production-ready templates covers every aspect of database design, optimization, security, and management.
 
 **🚀 Latest Release - v4.1.0:**
 - **✅ 120+ Enterprise Templates**: Complete database architecture coverage
@@ -142,7 +142,7 @@ print(f"Available templates: {len(templates)}")
 
 # Create Creator Economy database system
 creator_template = CreatorProfileTemplate(
-    database_url="postgresql+asyncpg://user:pass@localhost/ainflue",
+    database_url="postgresql+asyncpg://user:pass@localhost/iacherie",
     enable_ai_scoring=True,
     enable_platform_sync=True
 )
@@ -210,7 +210,7 @@ from templates.database.query_optimization_template import QueryOptimizationTemp
 
 # Initialize query optimizer
 optimizer = QueryOptimizationTemplate(
-    database_url="postgresql://localhost/ainflue",
+    database_url="postgresql://localhost/iacherie",
     optimization_level=OptimizationLevel.ADVANCED
 )
 
@@ -252,7 +252,7 @@ from templates.database.encryption_at_rest_template import (
 
 # Initialize encryption system
 encryption = EncryptionAtRestTemplate(
-    database_url="postgresql://localhost/ainflue",
+    database_url="postgresql://localhost/iacherie",
     key_management_strategy=KeyManagementStrategy.ENVIRONMENT,
     default_algorithm=EncryptionAlgorithm.AES_256_GCM
 )
@@ -300,7 +300,7 @@ from templates.database.alembic_migration_template import AlembicMigrationTempla
 
 # Initialize migration system
 migration = AlembicMigrationTemplate(
-    database_url="postgresql://localhost/ainflue",
+    database_url="postgresql://localhost/iacherie",
     migration_dir="alembic"
 )
 
@@ -327,7 +327,7 @@ from templates.database.rollback_strategy_template import RollbackStrategyTempla
 
 # Initialize rollback system
 rollback = RollbackStrategyTemplate(
-    database_url="postgresql://localhost/ainflue",
+    database_url="postgresql://localhost/iacherie",
     auto_rollback_enabled=True
 )
 
@@ -539,9 +539,9 @@ print(f"Seeded {results['content_metadata'].rows_inserted} content items")
 
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379/0
-MONGODB_URL=mongodb://localhost:27017/ainflue
+MONGODB_URL=mongodb://localhost:27017/iacherie
 
 # Encryption Keys
 AINFLUE_MASTER_KEY=base64_encoded_256_bit_key_here
@@ -574,7 +574,7 @@ from templates.database.config import TemplateConfig
 
 # Advanced template configuration
 config = TemplateConfig(
-    database_url="postgresql+asyncpg://localhost/ainflue",
+    database_url="postgresql+asyncpg://localhost/iacherie",
     cache_enabled=True,
     performance_monitoring=True,
     ai_optimization=True,
@@ -611,7 +611,7 @@ WORKDIR /app
 
 # Set environment variables
 ENV PYTHONPATH=/app
-ENV DATABASE_URL=postgresql+asyncpg://user:pass@db:5432/ainflue
+ENV DATABASE_URL=postgresql+asyncpg://user:pass@db:5432/iacherie
 ENV REDIS_URL=redis://redis:6379/0
 
 # Run migrations and start application
@@ -624,20 +624,20 @@ CMD ["python", "-m", "templates.database.migrate_and_serve"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-database-templates
+  name: iacherie-database-templates
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-db-templates
+      app: iacherie-db-templates
   template:
     metadata:
       labels:
-        app: ainflue-db-templates
+        app: iacherie-db-templates
     spec:
       containers:
       - name: templates
-        image: ainflue/database-templates:4.1.0
+        image: iacherie/database-templates:4.1.0
         env:
         - name: DATABASE_URL
           valueFrom:
@@ -695,7 +695,7 @@ The system includes pre-built Grafana dashboards for:
 ```yaml
 # Prometheus alerts
 groups:
-- name: ainflue-database-templates
+- name: iacherie-database-templates
   rules:
   - alert: HighQueryLatency
     expr: avg(query_duration_seconds) > 1.0
@@ -722,8 +722,8 @@ groups:
 
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/database
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/database
 
 # Create virtual environment
 python -m venv venv
@@ -794,7 +794,7 @@ For enterprise licensing, custom development, and commercial use:
 - **Documentation**: Comprehensive guides and examples
 
 ### Professional Support
-- **Email**: enterprise@ainflue.com
+- **Email**: enterprise@iacherie.com
 - **Response Time**: 24 hours for enterprise customers
 - **Escalation**: Direct access to development team
 - **Training**: On-site and remote training available
@@ -806,6 +806,6 @@ For enterprise licensing, custom development, and commercial use:
 
 ---
 
-**Made with ❤️ by [Fahed Mlaiel](mailto:mlaiel@live.de) and the Ainflue Expert Team**
+**Made with ❤️ by [Fahed Mlaiel](mailto:mlaiel@live.de) and the IA Chérie Expert Team**
 
 *Empowering the Creator Economy with Enterprise-Grade Database Architecture*

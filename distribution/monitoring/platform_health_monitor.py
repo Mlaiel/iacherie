@@ -1,5 +1,5 @@
 """
-Platform Health Monitor for Ainflue Distribution Platform
+Platform Health Monitor for IA Chérie Distribution Platform
 
 This module provides comprehensive health monitoring for all platform components,
 external APIs, and system dependencies with automated failover capabilities.

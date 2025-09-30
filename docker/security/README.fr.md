@@ -1,6 +1,6 @@
 # 🔐 Module de Sécurité - Services Docker
 
-**Infrastructure de Sécurité de la Plateforme Ainflue**
+**Infrastructure de Sécurité de la Plateforme IA Chérie**
 
 Infrastructure de sécurité de niveau entreprise avec scanning de vulnérabilités, détection de menaces, contrôle d'accès et surveillance de conformité pour créateurs de contenu et influenceurs.
 

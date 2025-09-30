@@ -360,8 +360,8 @@ violations = await drm_manager.detect_violations(
 ### **إعداد التطوير**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/security
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/security
 
 # تثبيت تبعيات التطوير
 pip install -r requirements-dev.txt
@@ -392,7 +392,7 @@ mypy .
 
 ## 🔒 الكشف الأمني
 
-للثغرات الأمنية، يرجى إرسال بريد إلكتروني إلى: **security@ainflue.com**
+للثغرات الأمنية، يرجى إرسال بريد إلكتروني إلى: **security@iacherie.com**
 
 **لا تنشئ قضايا عامة للثغرات الأمنية.**
 
@@ -419,10 +419,10 @@ mypy .
 
 ## 📞 الدعم
 
-- **الوثائق:** [https://docs.ainflue.com/security](https://docs.ainflue.com/security)
-- **القضايا:** [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discord:** [مجتمع أينفلو](https://discord.gg/ainflue)
-- **البريد الإلكتروني:** support@ainflue.com
+- **الوثائق:** [https://docs.iacherie.com/security](https://docs.iacherie.com/security)
+- **القضايا:** [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
+- **Discord:** [مجتمع أينفلو](https://discord.gg/iacherie)
+- **البريد الإلكتروني:** support@iacherie.com
 
 ---
 

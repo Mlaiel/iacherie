@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -105,7 +105,7 @@ class CertificateManager:
         
         # Certificate authority settings
         self.ca_config = self.config.get("ca", {
-            "organization": "Ainflue Platform",
+            "organization": "IA Chérie Platform",
             "organizational_unit": "Infrastructure",
             "locality": "San Francisco",
             "state": "California",
@@ -120,7 +120,7 @@ class CertificateManager:
         # ACME/Let's Encrypt settings
         self.acme_config = self.config.get("acme", {
             "directory_url": "https://acme-v02.api.letsencrypt.org/directory",
-            "contact_email": "admin@ainflue.com",
+            "contact_email": "admin@iacherie.com",
             "key_size": 2048
         })
         
@@ -151,7 +151,7 @@ class CertificateManager:
             logger.error(f"Failed to create directories: {str(e)}")
             raise
     
-    async def create_root_ca(self, ca_name: str = "Ainflue Root CA") -> bool:
+    async def create_root_ca(self, ca_name: str = "IA Chérie Root CA") -> bool:
         """Create root certificate authority."""
         try:
             # Generate private key
@@ -525,60 +525,60 @@ class CertificateManager:
                 await asyncio.sleep(self.renewal_check_interval)
     
     async def create_default_certificates(self):
-        """Create default certificates for Ainflue infrastructure."""
+        """Create default certificates for IA Chérie infrastructure."""
         try:
             # Create root CA if it doesn't exist
             if not any(cert.type == CertificateType.ROOT_CA for cert in self.certificates.values()):
                 await self.create_root_ca()
             
-            # Ainflue API certificate
+            # IA Chérie API certificate
             api_request = CertificateRequest(
-                common_name="api.ainflue.com",
-                organization="Ainflue Platform",
+                common_name="api.iacherie.com",
+                organization="IA Chérie Platform",
                 organizational_unit="API Services",
                 locality="San Francisco",
                 state="California",
                 country="US",
-                san_domains=["api.ainflue.com", "*.api.ainflue.com"],
+                san_domains=["api.iacherie.com", "*.api.iacherie.com"],
                 validity_days=365
             )
             await self.generate_certificate(api_request)
             
-            # Ainflue AI Engine certificate
+            # IA Chérie AI Engine certificate
             ai_request = CertificateRequest(
-                common_name="ai.ainflue.com",
-                organization="Ainflue Platform",
+                common_name="ai.iacherie.com",
+                organization="IA Chérie Platform",
                 organizational_unit="AI Services",
                 locality="San Francisco",
                 state="California",
                 country="US",
-                san_domains=["ai.ainflue.com", "*.ai.ainflue.com"],
+                san_domains=["ai.iacherie.com", "*.ai.iacherie.com"],
                 validity_days=365
             )
             await self.generate_certificate(ai_request)
             
-            # Ainflue Mobile API certificate
+            # IA Chérie Mobile API certificate
             mobile_request = CertificateRequest(
-                common_name="mobile.ainflue.com",
-                organization="Ainflue Platform",
+                common_name="mobile.iacherie.com",
+                organization="IA Chérie Platform",
                 organizational_unit="Mobile Services",
                 locality="San Francisco",
                 state="California",
                 country="US",
-                san_domains=["mobile.ainflue.com", "*.mobile.ainflue.com"],
+                san_domains=["mobile.iacherie.com", "*.mobile.iacherie.com"],
                 validity_days=365
             )
             await self.generate_certificate(mobile_request)
             
             # Wildcard certificate for subdomains
             wildcard_request = CertificateRequest(
-                common_name="*.ainflue.com",
-                organization="Ainflue Platform",
+                common_name="*.iacherie.com",
+                organization="IA Chérie Platform",
                 organizational_unit="Infrastructure",
                 locality="San Francisco",
                 state="California",
                 country="US",
-                san_domains=["*.ainflue.com", "ainflue.com"],
+                san_domains=["*.iacherie.com", "iacherie.com"],
                 validity_days=365
             )
             await self.generate_certificate(wildcard_request)

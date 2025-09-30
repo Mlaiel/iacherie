@@ -1,5 +1,5 @@
 """
-🔥 WORKFLOW CONFIG PACKAGE - AINFLUE ENTERPRISE PLATFORM
+🔥 WORKFLOW CONFIG PACKAGE - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced workflow configuration management for enterprise-grade deployment
 Author: Fahed Mlaiel (mlaiel@live.de)

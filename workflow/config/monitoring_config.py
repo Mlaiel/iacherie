@@ -1,5 +1,5 @@
 """
-📊 MONITORING CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+📊 MONITORING CONFIGURATION - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced monitoring configuration with Prometheus, Grafana, and real-time analytics
 Performance Target: < 10ms monitoring setup
@@ -123,7 +123,7 @@ class MonitoringConfig:
         # Grafana configuration
         self.grafana_config.host = os.getenv('GRAFANA_HOST', self.grafana_config.host)
         self.grafana_config.port = int(os.getenv('GRAFANA_PORT', self.grafana_config.port))
-# SECURITY: # SECURITY: self.grafana_config.admin_password = os.getenv('GRAFANA_ADMIN_PASSWORD', 'ainflue-grafana-2025') # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: self.grafana_config.admin_password = os.getenv('GRAFANA_ADMIN_PASSWORD', 'iacherie-grafana-2025') # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         
@@ -217,8 +217,8 @@ class MonitoringConfig:
         # Application Performance Dashboard
         self._dashboards['application_performance'] = {
             "dashboard": {
-                "title": "Ainflue Application Performance",
-                "tags": ["ainflue", "application", "performance"],
+                "title": "IA Chérie Application Performance",
+                "tags": ["iacherie", "application", "performance"],
                 "timezone": "UTC",
                 "panels": [
                     {
@@ -267,8 +267,8 @@ class MonitoringConfig:
         # Creator Economy Dashboard
         self._dashboards['creator_economy'] = {
             "dashboard": {
-                "title": "Ainflue Creator Economy",
-                "tags": ["ainflue", "creators", "economy"],
+                "title": "IA Chérie Creator Economy",
+                "tags": ["iacherie", "creators", "economy"],
                 "timezone": "UTC",
                 "panels": [
                     {
@@ -323,8 +323,8 @@ class MonitoringConfig:
         # System Health Dashboard
         self._dashboards['system_health'] = {
             "dashboard": {
-                "title": "Ainflue System Health",
-                "tags": ["ainflue", "system", "health"],
+                "title": "IA Chérie System Health",
+                "tags": ["iacherie", "system", "health"],
                 "timezone": "UTC",
                 "panels": [
                     {
@@ -372,7 +372,7 @@ class MonitoringConfig:
         self._alert_rules = {
             "groups": [
                 {
-                    "name": "ainflue.application",
+                    "name": "iacherie.application",
                     "rules": [
                         {
                             "alert": "HighErrorRate",
@@ -403,7 +403,7 @@ class MonitoringConfig:
                     ]
                 },
                 {
-                    "name": "ainflue.system",
+                    "name": "iacherie.system",
                     "rules": [
                         {
                             "alert": "HighCPUUsage",
@@ -447,7 +447,7 @@ class MonitoringConfig:
                     ]
                 },
                 {
-                    "name": "ainflue.business",
+                    "name": "iacherie.business",
                     "rules": [
                         {
                             "alert": "LowContentUploadRate",
@@ -555,7 +555,7 @@ class MonitoringConfig:
         
         scrape_configs = [
             {
-                "job_name": "ainflue-api",
+                "job_name": "iacherie-api",
                 "static_configs": [
                     {"targets": ["localhost:8000"]}
                 ],
@@ -563,7 +563,7 @@ class MonitoringConfig:
                 "metrics_path": "/metrics"
             },
             {
-                "job_name": "ainflue-workers",
+                "job_name": "iacherie-workers",
                 "static_configs": [
                     {"targets": ["localhost:8001", "localhost:8002", "localhost:8003"]}
                 ],
@@ -633,9 +633,9 @@ class MonitoringConfig:
                 "email_configs": [
                     {
                         "to": recipient,
-                        "from": "alerts@ainflue.com",
+                        "from": "alerts@iacherie.com",
                         "smarthost": f"{self.grafana_config.smtp_host}:{self.grafana_config.smtp_port}",
-                        "subject": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                        "subject": "IA Chérie Alert: {{ .GroupLabels.alertname }}",
                         "body": "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ .Annotations.description }}{{ end }}"
                     }
                     for recipient in self.alerting_config.email_recipients
@@ -654,7 +654,7 @@ class MonitoringConfig:
                     {
                         "api_url": self.alerting_config.slack_webhook_url,
                         "channel": "#alerts",
-                        "title": "Ainflue Alert",
+                        "title": "IA Chérie Alert",
                         "text": "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ .Annotations.description }}{{ end }}"
                     }
                 ]
@@ -673,7 +673,7 @@ class MonitoringConfig:
                         "url": self.alerting_config.webhook_url,
                         "http_config": {
                             "basic_auth": {
-                                "username": "ainflue",
+                                "username": "iacherie",
                                 "password": "webhook-secret"
                             }
                         }
@@ -684,7 +684,7 @@ class MonitoringConfig:
         return {
             "global": {
                 "smtp_smarthost": f"{self.grafana_config.smtp_host}:{self.grafana_config.smtp_port}",
-                "smtp_from": "alerts@ainflue.com"
+                "smtp_from": "alerts@iacherie.com"
             },
             "route": {
                 "group_by": ["alertname"],

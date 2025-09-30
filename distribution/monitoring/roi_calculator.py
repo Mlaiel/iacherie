@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Distribution Monitoring - ROI Calculator
+IA Chérie Platform - Distribution Monitoring - ROI Calculator
 Advanced Return on Investment calculation and financial analytics
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 """
-API Package for Ainflue Platform
+API Package for IA Chérie Platform
 ===============================
 
 This package contains all API-related modules including:

@@ -19,7 +19,7 @@ Enterprise-grade collaboration with real-time editing and project management
 - Review and approval pipelines
 
 **Architecture:** Level 3 Enterprise - 18 files maximum
-**Business Logic:** Complete Ainflue collaborative workflow
+**Business Logic:** Complete IA Chérie collaborative workflow
 """
 
 __version__ = "3.1.0"

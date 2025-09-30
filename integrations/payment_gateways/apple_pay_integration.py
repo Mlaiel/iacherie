@@ -1,5 +1,5 @@
 """
-Apple Pay Integration for Ainflue Platform
+Apple Pay Integration for IA Chérie Platform
 Enterprise-grade Apple Pay payment processing with advanced security
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -79,7 +79,7 @@ class ApplePayConfig:
     processing_certificate_path: str
     processing_private_key_path: str
     processing_certificate_password: Optional[str] = None
-    merchant_name: str = "Ainflue"
+    merchant_name: str = "IA Chérie"
     country_code: str = "US"
     currency_code: str = "USD"
     supported_networks: List[ApplePayNetwork] = None
@@ -146,7 +146,7 @@ class ProcessedPayment:
 
 class ApplePayIntegration(BaseIntegration):
     """
-    Enterprise Apple Pay integration for Ainflue platform
+    Enterprise Apple Pay integration for IA Chérie platform
     
     Features:
     - Secure merchant session validation
@@ -685,19 +685,19 @@ def create_apple_pay_integration(
     
     return ApplePayIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_apple_pay_flow():
     """Example Apple Pay integration usage"""
     
     # Initialize Apple Pay integration
     apple_pay = create_apple_pay_integration(
-        merchant_identifier="merchant.com.ainflue.app",
-        merchant_domain="ainflue.com",
+        merchant_identifier="merchant.com.iacherie.app",
+        merchant_domain="iacherie.com",
         merchant_certificate_path="/path/to/merchant.pem",
         merchant_private_key_path="/path/to/merchant-key.pem",
         processing_certificate_path="/path/to/processing.pem",
         processing_private_key_path="/path/to/processing-key.pem",
-        merchant_name="Ainflue Creator Platform",
+        merchant_name="IA Chérie Creator Platform",
         currency_code="USD",
         apple_pay_sandbox=True
     )
@@ -706,7 +706,7 @@ async def example_apple_pay_flow():
         # Create merchant session for domain validation
         session_result = await apple_pay.create_merchant_session(
             validation_url="https://apple-pay-gateway-cert.apple.com/paymentservices/startSession",
-            domain_name="ainflue.com"
+            domain_name="iacherie.com"
         )
         
         print(f"Merchant session created: {session_result['session_id']}")
@@ -737,7 +737,7 @@ async def example_apple_pay_flow():
             metadata={
                 "creator_id": "creator_123",
                 "subscription_type": "premium",
-                "platform": "ainflue"
+                "platform": "iacherie"
             }
         )
         

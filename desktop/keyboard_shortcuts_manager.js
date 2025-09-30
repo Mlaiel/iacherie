@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Keyboard Shortcuts Manager
+ * IA Chérie Desktop - Keyboard Shortcuts Manager
  * 
  * Global and local keyboard shortcuts for professional workflow acceleration
  * 

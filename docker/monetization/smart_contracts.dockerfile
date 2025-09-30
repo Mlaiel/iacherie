@@ -1,11 +1,11 @@
 # Smart Contracts Service
-# Ethereum smart contracts for Ainflue Platform
+# Ethereum smart contracts for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Smart Contracts - Ethereum smart contract management"
+LABEL description="IA Chérie Smart Contracts - Ethereum smart contract management"
 LABEL version="1.0.0"
 
 # Set working directory

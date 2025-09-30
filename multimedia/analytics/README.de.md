@@ -266,7 +266,7 @@ dashboard_config = {
 
 **Entwickler und Eigentümer:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Multimedia Analytics Modul
+**Projekt:** IA Chérie Platform - Multimedia Analytics Modul
 
 **Für:**
 - Kommerzielle Lizenzierung
@@ -278,5 +278,5 @@ dashboard_config = {
 
 **© 2025 Fahed Mlaiel - Alle Rechte Vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Multimedia Enterprise Analytics  
+**Projekt:** IA Chérie Platform - Multimedia Enterprise Analytics  
 **Version:** 3.1.0 - Professionelle Analytics-Dokumentation

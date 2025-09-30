@@ -77,7 +77,7 @@ class VideoConferencingError(Exception):
 
 class VideoConferencingService:
     """
-    Comprehensive video conferencing integration for Ainflue platform.
+    Comprehensive video conferencing integration for IA Chérie platform.
     
     Features:
     - Multi-platform video conferencing (Zoom, Google Meet, Teams, WebEx)
@@ -673,7 +673,7 @@ class VideoConferencingService:
         """Setup live streaming for conference"""
         return {
             'stream_key': str(uuid.uuid4()),
-            'rtmp_url': f"rtmp://stream.ainflue.com/live/{conference.conference_id}",
+            'rtmp_url': f"rtmp://stream.iacherie.com/live/{conference.conference_id}",
             'platforms': stream_config.get('platforms', ['youtube', 'twitch']),
             'quality': stream_config.get('quality', '1080p'),
             'auto_start': stream_config.get('auto_start', False)

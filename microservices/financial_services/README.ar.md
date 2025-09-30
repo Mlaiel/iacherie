@@ -1,10 +1,10 @@
 # 💰 الخدمات المالية والمدفوعات - البنية المؤسسية للخدمات المصغرة
 
-**وحدة الخدمات المالية والمدفوعات لمنصة Ainflue المؤسسية**
+**وحدة الخدمات المالية والمدفوعات لمنصة IA Chérie المؤسسية**
 
 ## 🎯 نظرة عامة
 
-توفر هذه الوحدة بنية تحتية مالية مؤسسية شاملة مع 16 خدمة مصغرة متخصصة لإدارة المدفوعات والفوترة وتوزيع الإيرادات والامتثال المالي على منصة Ainflue.
+توفر هذه الوحدة بنية تحتية مالية مؤسسية شاملة مع 16 خدمة مصغرة متخصصة لإدارة المدفوعات والفوترة وتوزيع الإيرادات والامتثال المالي على منصة IA Chérie.
 
 ### 🏗️ بنية الخدمات المالية
 
@@ -157,7 +157,7 @@ payment_result = await payment_service.process_payment({
     'currency': 'USD',
     'payment_method': 'card',
     'customer_id': 'cust_123',
-    'description': 'اشتراك Ainflue Pro',
+    'description': 'اشتراك IA Chérie Pro',
     'metadata': {
         'subscription_id': 'sub_456',
         'billing_cycle': 'monthly'
@@ -175,12 +175,12 @@ distribution_result = await revenue_service.distribute_revenue({
     'participants': [
         {'creator_id': 'creator_123', 'percentage': 60},
         {'creator_id': 'creator_456', 'percentage': 20},
-        {'platform': 'ainflue', 'percentage': 20}
+        {'platform': 'iacherie', 'percentage': 20}
     ]
 })
 ```
 
-## 🎯 سير العمل التجاري لـ Ainflue
+## 🎯 سير العمل التجاري لـ IA Chérie
 
 ### 📋 المرحلة 4: تحقيق الدخل (النواة المالية)
 ```yaml
@@ -207,20 +207,20 @@ distribution_result = await revenue_service.distribute_revenue({
 ```
 
 ### 🆘 الدعم التقني
-- **البريد الإلكتروني**: financial-support@ainflue.com
-- **الطوارئ 24/7**: +1-800-AINFLUE-FIN
-- **التوثيق**: https://docs.ainflue.com/financial/ar
-- **صفحة الحالة**: https://status.ainflue.com/financial
+- **البريد الإلكتروني**: financial-support@iacherie.com
+- **الطوارئ 24/7**: +1-800-IACHERIE-FIN
+- **التوثيق**: https://docs.iacherie.com/financial/ar
+- **صفحة الحالة**: https://status.iacherie.com/financial
 
 ---
 
 ## 📜 المعلومات القانونية
 
-**© فهد ملائيل 2024-2025 - وحدة الخدمات المالية AINFLUE**  
+**© فهد ملائيل 2024-2025 - وحدة الخدمات المالية IACHERIE**  
 **🔒 الملكية الفكرية محمية - جميع الحقوق محفوظة**  
 **⚠️ وحدة سرية - للاستخدام المؤسسي فقط**  
 **💳 امتثال PCI DSS المستوى 1 - البيانات المالية محمية**
 
 ---
 
-*هذه الوحدة جزء من بنية الخدمات المصغرة المؤسسية لـ Ainflue وتشكل العمود الفقري المالي ومعالجة المدفوعات للمنصة.*
+*هذه الوحدة جزء من بنية الخدمات المصغرة المؤسسية لـ IA Chérie وتشكل العمود الفقري المالي ومعالجة المدفوعات للمنصة.*

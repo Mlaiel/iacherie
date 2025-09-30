@@ -1,7 +1,7 @@
 """Queue Monitoring Dashboard Module
 
 Comprehensive monitoring dashboard with real-time metrics and alerting
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -158,7 +158,7 @@ class SystemHealth:
 
 
 class AinflueBusiness:
-    """Ainflue Business Monitoring Configuration"""
+    """IA Chérie Business Monitoring Configuration"""
     
     # Core metrics definitions
     CORE_METRICS = {
@@ -461,7 +461,7 @@ class AinflueBusiness:
 class QueueMonitoringDashboard:
     """
     Comprehensive monitoring dashboard with real-time metrics and alerting
-    Provides complete visibility into Ainflue message queue operations
+    Provides complete visibility into IA Chérie message queue operations
     """
     
     def __init__(self,
@@ -810,7 +810,7 @@ class QueueMonitoringDashboard:
     # Core monitoring logic
     
     async def _load_business_configuration(self):
-        """Load Ainflue business monitoring configuration"""
+        """Load IA Chérie business monitoring configuration"""
         # Load metric definitions
         for metric_id, metric_def in AinflueBusiness.CORE_METRICS.items():
             self.metric_definitions[metric_id] = metric_def

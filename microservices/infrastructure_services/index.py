@@ -2,7 +2,7 @@
 Infrastructure Services Module Entry Point
 ==========================================
 
-Main entry point for all infrastructure services in the Ainflue platform.
+Main entry point for all infrastructure services in the IA Chérie platform.
 Provides orchestration and coordination for enterprise-grade infrastructure systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +21,7 @@ class InfrastructureServicesOrchestrator:
     Enterprise Infrastructure Services Orchestrator
     
     Coordinates all infrastructure services for optimal performance
-    and enterprise-grade reliability across the Ainflue platform.
+    and enterprise-grade reliability across the IA Chérie platform.
     """
     
     def __init__(self):

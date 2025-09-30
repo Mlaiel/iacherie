@@ -65,8 +65,8 @@ Community Leadership & Mentorship
 ### 1. Production Deployment
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/gamification
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/gamification
 
 # Set environment variables
 cp .env.example .env
@@ -341,7 +341,7 @@ GET /api/leaderboards?category=music&timeframe=weekly&limit=50
                 "level": 12,
                 "badges_count": 25,
                 "streak_days": 45,
-                "profile_image": "https://cdn.ainflue.com/avatars/creator_001.jpg"
+                "profile_image": "https://cdn.iacherie.com/avatars/creator_001.jpg"
             },
             {
                 "rank": 2,

@@ -3,7 +3,7 @@
 ======================================================
 
 Système AutoML enterprise avec neural architecture search, optimization automatique,
-et déploiement seamless pour la plateforme Ainflue.
+et déploiement seamless pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 🧠 ML Engineer: AutoML algorithms + model selection + hyperparameter optimization
@@ -433,7 +433,7 @@ class RandomSearchOptimizer(BaseAutoMLAlgorithm):
         return interpretability_map.get(algorithm, 0.5)
     
     def _calculate_business_score(self, algorithm: str, config: AutoMLConfiguration) -> float:
-        """Calculer le score business spécifique à Ainflue"""
+        """Calculer le score business spécifique à IA Chérie"""
         base_score = 0.8
         
         # Bonus pour certains types de contenu
@@ -655,7 +655,7 @@ class AutoMLPipeline:
             logger.error(f"❌ AutoML pipeline {pipeline_id} failed: {e}")
             raise
     
-    async def _preprocess_data(self, X_train: Any, y_train: Any) -> Tuple[Any, Any, Any, Any]:
+    async def _preprocess_data(self, X_train: Any, y_train: Any) -> tuple[Any, Any, Any, Any]:
         """🔄 Préprocessing des données"""
         
         logger.info("🔄 Starting data preprocessing")
@@ -686,7 +686,7 @@ class AutoMLPipeline:
             logger.error(f"❌ Data preprocessing failed: {e}")
             raise
     
-    async def _engineer_features(self, X_train: Any, X_val: Any, y_train: Any) -> Tuple[Any, Any, Any]:
+    async def _engineer_features(self, X_train: Any, X_val: Any, y_train: Any) -> tuple[Any, Any, Any]:
         """🔧 Feature Engineering automatique"""
         
         logger.info("🔧 Starting automated feature engineering")

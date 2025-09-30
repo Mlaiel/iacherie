@@ -1,0 +1,831 @@
+# Ainflue Kubernetes Deployment Configuration
+# ==========================================
+#
+# Complete Kubernetes deployment manifests for Ainflue platform
+# Includes all core services, configurations, and monitoring
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue
+  labels:
+    name: ainflue
+    environment: production
+    project: ainflue
+
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-config
+  namespace: ainflue
+data:
+  DATABASE_HOST: "ainflue-postgresql.ainflue.svc.cluster.local"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "ainflue"
+  REDIS_HOST: "ainflue-redis.ainflue.svc.cluster.local"
+  REDIS_PORT: "6379"
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "INFO"
+  API_VERSION: "v1"
+  MAX_WORKERS: "4"
+  WORKER_TIMEOUT: "30"
+  CORS_ORIGINS: "*"
+  UPLOAD_MAX_SIZE: "100MB"
+  SESSION_TIMEOUT: "3600"
+  RATE_LIMIT_REQUESTS: "1000"
+  RATE_LIMIT_WINDOW: "3600"
+
+---
+# Secret for sensitive configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ainflue-secrets
+  namespace: ainflue
+type: Opaque
+data:
+  # Base64 encoded secrets - replace with actual values
+  DATABASE_PASSWORD: cGxlYXNlLWNoYW5nZS1tZQ==
+  SECRET_KEY: cGxlYXNlLWNoYW5nZS10aGlzLXNlY3JldC1rZXk=
+  JWT_SECRET: cGxlYXNlLWNoYW5nZS1qd3Qtc2VjcmV0
+  OPENAI_API_KEY: ""
+  ELEVENLABS_API_KEY: ""
+  STRIPE_SECRET_KEY: ""
+  STRIPE_PUBLISHABLE_KEY: ""
+  SHOPIFY_API_KEY: ""
+  MIDJOURNEY_API_TOKEN: ""
+
+---
+# Persistent Volume Claim for media storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ainflue-media-pvc
+  namespace: ainflue
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: efs-sc
+
+---
+# Deployment for main API service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-api
+  namespace: ainflue
+  labels:
+    app: ainflue-api
+    component: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ainflue-api
+  template:
+    metadata:
+      labels:
+        app: ainflue-api
+        component: backend
+    spec:
+      containers:
+      - name: api
+        image: ainflue/api:latest
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: DATABASE_USERNAME
+          value: "ainflue_admin"
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: DATABASE_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: media-storage
+          mountPath: /app/media
+      volumes:
+      - name: media-storage
+        persistentVolumeClaim:
+          claimName: ainflue-media-pvc
+
+---
+# Service for API
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-api-service
+  namespace: ainflue
+  labels:
+    app: ainflue-api
+spec:
+  selector:
+    app: ainflue-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000
+  type: ClusterIP
+
+---
+# Deployment for AI Engine
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-ai-engine
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-engine
+    component: ai
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ainflue-ai-engine
+  template:
+    metadata:
+      labels:
+        app: ainflue-ai-engine
+        component: ai
+    spec:
+      containers:
+      - name: ai-engine
+        image: ainflue/ai-engine:latest
+        ports:
+        - containerPort: 8001
+          name: http
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+            nvidia.com/gpu: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        volumeMounts:
+        - name: model-cache
+          mountPath: /app/models
+      volumes:
+      - name: model-cache
+        emptyDir:
+          sizeLimit: 20Gi
+
+---
+# Service for AI Engine
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-ai-service
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-engine
+spec:
+  selector:
+    app: ainflue-ai-engine
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8001
+  type: ClusterIP
+
+---
+# Deployment for Mobile API
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-mobile-api
+  namespace: ainflue
+  labels:
+    app: ainflue-mobile-api
+    component: mobile
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+  template:
+    metadata:
+      labels:
+        app: ainflue-mobile-api
+        component: mobile
+    spec:
+      containers:
+      - name: mobile-api
+        image: ainflue/mobile-api:latest
+        ports:
+        - containerPort: 8002
+          name: http
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "125m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8002
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+# Service for Mobile API
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-mobile-service
+  namespace: ainflue
+  labels:
+    app: ainflue-mobile-api
+spec:
+  selector:
+    app: ainflue-mobile-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8002
+  type: ClusterIP
+
+---
+# Deployment for Background Workers
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-workers
+  namespace: ainflue
+  labels:
+    app: ainflue-workers
+    component: workers
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ainflue-workers
+  template:
+    metadata:
+      labels:
+        app: ainflue-workers
+        component: workers
+    spec:
+      containers:
+      - name: worker
+        image: ainflue/worker:latest
+        command: ["celery", "worker", "-A", "ainflue.celery", "--loglevel=info"]
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: media-storage
+          mountPath: /app/media
+      volumes:
+      - name: media-storage
+        persistentVolumeClaim:
+          claimName: ainflue-media-pvc
+
+---
+# Deployment for Celery Beat (Scheduler)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-scheduler
+  namespace: ainflue
+  labels:
+    app: ainflue-scheduler
+    component: scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ainflue-scheduler
+  template:
+    metadata:
+      labels:
+        app: ainflue-scheduler
+        component: scheduler
+    spec:
+      containers:
+      - name: scheduler
+        image: ainflue/worker:latest
+        command: ["celery", "beat", "-A", "ainflue.celery", "--loglevel=info"]
+        envFrom:
+        - configMapRef:
+            name: ainflue-config
+        - secretRef:
+            name: ainflue-secrets
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+
+---
+# Deployment for PostgreSQL Database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-postgresql
+  namespace: ainflue
+  labels:
+    app: ainflue-postgresql
+    component: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ainflue-postgresql
+  template:
+    metadata:
+      labels:
+        app: ainflue-postgresql
+        component: database
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "ainflue"
+        - name: POSTGRES_USER
+          value: "ainflue_admin"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: DATABASE_PASSWORD
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: postgresql-data
+          mountPath: /var/lib/postgresql/data
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - ainflue_admin
+            - -d
+            - ainflue
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - ainflue_admin
+            - -d
+            - ainflue
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: ainflue-postgresql-pvc
+
+---
+# PVC for PostgreSQL
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ainflue-postgresql-pvc
+  namespace: ainflue
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: gp3-sc
+
+---
+# Service for PostgreSQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-postgresql
+  namespace: ainflue
+  labels:
+    app: ainflue-postgresql
+spec:
+  selector:
+    app: ainflue-postgresql
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+
+---
+# Deployment for Redis
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-redis
+  namespace: ainflue
+  labels:
+    app: ainflue-redis
+    component: cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ainflue-redis
+  template:
+    metadata:
+      labels:
+        app: ainflue-redis
+        component: cache
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+        command: ["redis-server", "--appendonly", "yes"]
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "125m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: ainflue-redis-pvc
+
+---
+# PVC for Redis
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ainflue-redis-pvc
+  namespace: ainflue
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: gp3-sc
+
+---
+# Service for Redis
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-redis
+  namespace: ainflue
+  labels:
+    app: ainflue-redis
+spec:
+  selector:
+    app: ainflue-redis
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+---
+# Ingress for external access
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ainflue-ingress
+  namespace: ainflue
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.ainflue.com
+    - ai.ainflue.com
+    - mobile.ainflue.com
+    secretName: ainflue-tls
+  rules:
+  - host: api.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-api-service
+            port:
+              number: 80
+  - host: ai.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-ai-service
+            port:
+              number: 80
+  - host: mobile.ainflue.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ainflue-mobile-service
+            port:
+              number: 80
+
+---
+# HorizontalPodAutoscaler for API
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-api-hpa
+  namespace: ainflue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# HorizontalPodAutoscaler for AI Engine
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-ai-hpa
+  namespace: ainflue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-ai-engine
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 85
+
+---
+# HorizontalPodAutoscaler for Workers
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-workers-hpa
+  namespace: ainflue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-workers
+  minReplicas: 3
+  maxReplicas: 15
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+---
+# NetworkPolicy for database security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-database-netpol
+  namespace: ainflue
+spec:
+  podSelector:
+    matchLabels:
+      component: database
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: backend
+    - podSelector:
+        matchLabels:
+          component: workers
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# NetworkPolicy for cache security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-cache-netpol
+  namespace: ainflue
+spec:
+  podSelector:
+    matchLabels:
+      component: cache
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          component: backend
+    - podSelector:
+        matchLabels:
+          component: workers
+    - podSelector:
+        matchLabels:
+          component: mobile
+    ports:
+    - protocol: TCP
+      port: 6379
+
+---
+# ServiceMonitor for Prometheus monitoring
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-monitoring
+  namespace: ainflue
+  labels:
+    app: ainflue
+spec:
+  selector:
+    matchLabels:
+      app: ainflue-api
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+
+---
+# PrometheusRule for alerting
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ainflue-alerts
+  namespace: ainflue
+  labels:
+    app: ainflue
+spec:
+  groups:
+  - name: ainflue.rules
+    rules:
+    - alert: AinfluePodCrashLooping
+      expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Pod {{ $labels.pod }} is crash looping"
+        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is restarting frequently"
+    
+    - alert: AinflueHighMemoryUsage
+      expr: (container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes{namespace="ainflue"}) > 0.9
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage detected"
+        description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of available memory"
+    
+    - alert: AinflueHighCPUUsage
+      expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) > 0.8
+      for: 10m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage detected"
+        description: "Container {{ $labels.container }} is using high CPU"

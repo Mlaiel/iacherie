@@ -2,7 +2,7 @@
 Content Distribution Tracker - Distribution Module
 =================================================
 
-Intelligent content distribution tracking system for the Ainflue platform.
+Intelligent content distribution tracking system for the IA Chérie platform.
 Monitors content flow across platforms, tracks engagement metrics, and 
 provides distribution optimization insights.
 

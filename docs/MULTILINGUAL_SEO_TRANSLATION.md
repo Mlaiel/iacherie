@@ -2,7 +2,7 @@
 
 ## 🚀 Overview
 
-The enhanced Ainflue platform now supports comprehensive multilingual SEO optimization through a robust multi-provider translation system. This implementation provides industrial-grade translation capabilities with automatic fallback and quality optimization.
+The enhanced IA Chérie platform now supports comprehensive multilingual SEO optimization through a robust multi-provider translation system. This implementation provides industrial-grade translation capabilities with automatic fallback and quality optimization.
 
 ## 🔧 Supported Translation Providers
 

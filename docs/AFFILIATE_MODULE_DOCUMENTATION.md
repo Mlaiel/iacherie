@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le Module d'Affiliation (`backend/services/affiliate.py`) fournit une solution complète pour la gestion des programmes partenaires, le tracking des commissions et les paiements automatiques sur la plateforme Ainflue.
+Le Module d'Affiliation (`backend/services/affiliate.py`) fournit une solution complète pour la gestion des programmes partenaires, le tracking des commissions et les paiements automatiques sur la plateforme IA Chérie.
 
 ## Fonctionnalités Principales
 
@@ -268,4 +268,4 @@ Pour toute question ou support technique concernant le Module d'Affiliation:
 
 ---
 
-*Ce module fait partie de la plateforme Ainflue et est protégé par les droits d'auteur. Utilisation non autorisée strictement interdite.*
+*Ce module fait partie de la plateforme IA Chérie et est protégé par les droits d'auteur. Utilisation non autorisée strictement interdite.*

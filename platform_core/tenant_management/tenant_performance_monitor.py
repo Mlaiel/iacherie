@@ -40,7 +40,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/tenant_performance.log'),
+        logging.FileHandler('/var/log/iacherie/tenant_performance.log'),
         logging.StreamHandler()
     ]
 )
@@ -129,7 +129,7 @@ class TenantPerformanceMonitor:
     - Auto-scaling recommendations
     """
     
-    def __init__(self, config_path: str = '/etc/ainflue/performance_config.yaml'):
+    def __init__(self, config_path: str = '/etc/iacherie/performance_config.yaml'):
         """Initialisation du moniteur de performance"""
         self.config = self._load_config(config_path)
         self.metrics_buffer: queue.Queue = queue.Queue(maxsize=10000)
@@ -1342,7 +1342,7 @@ def create_tenant_performance_monitor(config_path: Optional[str] = None) -> Tena
     Returns:
         Instance configurée du TenantPerformanceMonitor
     """
-    return TenantPerformanceMonitor(config_path or '/etc/ainflue/performance_config.yaml')
+    return TenantPerformanceMonitor(config_path or '/etc/iacherie/performance_config.yaml')
 
 
 # Exemple d'utilisation

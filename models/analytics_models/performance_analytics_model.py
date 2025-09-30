@@ -108,7 +108,7 @@ class PerformanceAnalyticsModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     # Metadata
-    analytics_metadata = Column(JSON, nullable=True)
+    analytics_meta_data = Column(JSON, nullable=True)
     tags = Column(JSON, nullable=True)
     
     def __repr__(self):
@@ -383,7 +383,7 @@ def create_initial_performance_metrics(creator_id: int, content_data: Dict[str, 
             metric_type=metric_type,
             metric_value=0.0,
             content_id=content_data.get('content_id'),
-            source_platform='ainflue'
+            source_platform='iacherie'
         )
         metrics.append(metric.to_dict())
     

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Native Integration Manager
+ * IA Chérie Desktop - Native Integration Manager
  * 
  * Platform-specific native OS integration and system features
  * 
@@ -197,7 +197,7 @@ class NativeIntegrationManager {
 
   setupSystemIntegration() {
     // App protocol handler
-    app.setAsDefaultProtocolClient('ainflue');
+    app.setAsDefaultProtocolClient('iacherie');
     
     // File associations (will be handled by electron-builder)
     // But we can register runtime handling
@@ -231,7 +231,7 @@ class NativeIntegrationManager {
         items: [
           {
             type: 'file',
-            path: path.join(os.homedir(), 'Documents', 'Ainflue', 'example.ainproj'),
+            path: path.join(os.homedir(), 'Documents', 'IA Chérie', 'example.ainproj'),
             args: '--open-recent'
           }
         ]
@@ -243,7 +243,7 @@ class NativeIntegrationManager {
           {
             type: 'task',
             title: 'New Project',
-            description: 'Create a new Ainflue project',
+            description: 'Create a new IA Chérie project',
             program: process.execPath,
             args: '--new-project',
             iconPath: process.execPath,

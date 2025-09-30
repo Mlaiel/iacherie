@@ -1,5 +1,5 @@
 """
-ML Ranking Predictor for Ainflue Platform
+ML Ranking Predictor for IA Chérie Platform
 Machine Learning-based ranking prediction and optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -809,7 +809,7 @@ if __name__ == "__main__":
     
     # Sample page data
     page_data = {
-        'url': 'https://ainflue.com/blog/ai-music-creation',
+        'url': 'https://iacherie.com/blog/ai-music-creation',
         'title': 'How to Create Amazing Music with AI Tools',
         'content': '''Creating music with artificial intelligence has become increasingly popular...''' * 50,
         'meta_description': 'Learn how to create amazing music using AI tools and techniques. Complete guide for beginners.',

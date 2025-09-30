@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Modal Manager
+ * IA Chérie Desktop Renderer - Modal Manager
  * Professional modal and dialog management system
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

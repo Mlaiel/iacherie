@@ -184,8 +184,8 @@
 ### إعداد التطوير
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/protection
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/protection
 
 # إعداد البيئة الافتراضية
 python -m venv venv
@@ -237,14 +237,14 @@ kubectl logs -f deployment/protection-api
 ## 📞 الدعم والتواصل
 
 ### الدعم التقني
-- **البريد الإلكتروني**: support@ainflue.com
-- **الوثائق**: docs.ainflue.com
-- **مجتمع المطورين**: community.ainflue.com
+- **البريد الإلكتروني**: support@iacherie.com
+- **الوثائق**: docs.iacherie.com
+- **مجتمع المطورين**: community.iacherie.com
 
 ### التراخيص والشراكات
-- **ترخيص المؤسسات**: enterprise@ainflue.com
-- **الشراكات التقنية**: partnerships@ainflue.com
-- **الاستفسارات القانونية**: legal@ainflue.com
+- **ترخيص المؤسسات**: enterprise@iacherie.com
+- **الشراكات التقنية**: partnerships@iacherie.com
+- **الاستفسارات القانونية**: legal@iacherie.com
 
 ### تواصل المؤلف
 **فهد مليل** - مؤسس ومطور رئيسي  

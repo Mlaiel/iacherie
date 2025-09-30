@@ -1,7 +1,7 @@
 """Custom Visualization Engine - Enterprise Creator Economy Data Visualization
 ===========================================================================
 
-Advanced custom visualization and charting engine for Ainflue Creator Economy platform.
+Advanced custom visualization and charting engine for IA Chérie Creator Economy platform.
 Provides interactive visualizations, branded templates, advanced analytics charts,
 and mobile-optimized visualization capabilities.
 
@@ -516,10 +516,10 @@ class CustomVisualizationEngine:
     # Private helper methods
     def _initialize_default_themes(self):
         """Initialize default visualization themes"""
-        # Ainflue Brand Theme
+        # IA Chérie Brand Theme
         ainflue_theme = VisualizationTheme(
             theme_id="ainflue_brand",
-            name="Ainflue Brand",
+            name="IA Chérie Brand",
             color_scheme=ColorScheme.AINFLUE_BRAND,
             primary_colors=["#2196f3", "#4caf50", "#ff9800", "#e91e63", "#9c27b0"],
             background_color="#ffffff",

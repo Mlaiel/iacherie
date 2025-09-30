@@ -1,8 +1,8 @@
-# 📱 Ainflue Mobile App Store Deployment Guide
+# 📱 IA Chérie Mobile App Store Deployment Guide
 
 ## Overview
 
-This guide provides comprehensive instructions for deploying the Ainflue mobile application to both the iOS App Store and Google Play Store. The deployment system supports React Native with native iOS and Android integrations.
+This guide provides comprehensive instructions for deploying the IA Chérie mobile application to both the iOS App Store and Google Play Store. The deployment system supports React Native with native iOS and Android integrations.
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** © 2025 Fahed Mlaiel. All rights reserved.
@@ -16,7 +16,7 @@ mobile/
 │   ├── App.tsx             # Android-specific React Native code
 │   └── *.kt                # Kotlin native modules
 ├── ios/                    # iOS native code and configuration
-│   ├── Ainflue.xcodeproj/  # Xcode project
+│   ├── IA Chérie.xcodeproj/  # Xcode project
 │   ├── App.tsx             # iOS-specific React Native code
 │   ├── Info.plist          # iOS app configuration
 │   ├── Podfile             # CocoaPods dependencies
@@ -51,8 +51,8 @@ mobile/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mobile
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mobile
 ```
 
 2. Install dependencies:
@@ -103,7 +103,7 @@ export ANDROID_HOME=/path/to/android-sdk
 ### iOS Setup Steps
 
 1. **Configure Xcode Project:**
-   - Open `ios/Ainflue.xcodeproj` in Xcode
+   - Open `ios/IA Chérie.xcodeproj` in Xcode
    - Set your Team ID in project settings
    - Configure signing certificates
 
@@ -155,7 +155,7 @@ export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 2. **Create Release Keystore:**
 ```bash
-keytool -genkeypair -alias ainflue-key -keyalg RSA -keysize 2048 \
+keytool -genkeypair -alias iacherie-key -keyalg RSA -keysize 2048 \
         -validity 10000 -keystore android/app/release-key.keystore
 ```
 
@@ -164,7 +164,7 @@ Create `android/gradle.properties`:
 ```properties
 AINFLUE_UPLOAD_STORE_FILE=release-key.keystore
 AINFLUE_UPLOAD_STORE_PASSWORD=your-keystore-password
-AINFLUE_UPLOAD_KEY_ALIAS=ainflue-key
+AINFLUE_UPLOAD_KEY_ALIAS=iacherie-key
 AINFLUE_UPLOAD_KEY_PASSWORD=your-key-password
 ```
 
@@ -306,9 +306,9 @@ keytool -list -v -keystore android/app/release-key.keystore
 
 ### Getting Help
 
-- **Documentation:** https://ainflue.com/docs
-- **Community:** https://community.ainflue.com  
-- **Support:** support@ainflue.com
+- **Documentation:** https://iacherie.com/docs
+- **Community:** https://community.iacherie.com  
+- **Support:** support@iacherie.com
 - **Developer:** mlaiel@live.de
 
 ### Contributing

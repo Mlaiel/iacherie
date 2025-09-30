@@ -3,11 +3,11 @@
 Infrastructure Performance Optimizer - Enterprise Performance Suite
 ==================================================================
 
-Advanced performance optimization for Ainflue infrastructure components.
+Advanced performance optimization for IA Chérie infrastructure components.
 Provides comprehensive performance monitoring, optimization, and tuning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chérie Infrastructure
 Version: 1.0 Production
 """
 
@@ -72,7 +72,7 @@ class OptimizationRecommendation:
     description: str
 
 class EnterprisePerformanceOptimizer:
-    """Enterprise-grade performance optimizer for Ainflue infrastructure."""
+    """Enterprise-grade performance optimizer for IA Chérie infrastructure."""
     
     def __init__(self, optimization_level: PerformanceLevel = PerformanceLevel.BALANCED):
         """Initialize the performance optimizer."""
@@ -392,7 +392,7 @@ async def quick_performance_check() -> Dict[str, Any]:
     return await performance_optimizer.generate_performance_report()
 
 async def optimize_ainflue_infrastructure() -> Dict[str, Any]:
-    """Optimize Ainflue infrastructure for creator platform performance."""
+    """Optimize IA Chérie infrastructure for creator platform performance."""
     results = {
         "api_optimization": await performance_optimizer.optimize_api_performance("creator_upload_api"),
         "database_optimization": await performance_optimizer.optimize_database_performance("postgresql"),
@@ -400,13 +400,13 @@ async def optimize_ainflue_infrastructure() -> Dict[str, Any]:
         "overall_report": await performance_optimizer.generate_performance_report()
     }
     
-    logger.info("Ainflue infrastructure optimization completed")
+    logger.info("IA Chérie infrastructure optimization completed")
     return results
 
 if __name__ == "__main__":
     async def main():
         """Main optimization routine."""
-        print("🚀 Starting Ainflue Infrastructure Performance Optimization...")
+        print("🚀 Starting IA Chérie Infrastructure Performance Optimization...")
         
         # Run comprehensive optimization
         results = await optimize_ainflue_infrastructure()

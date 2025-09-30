@@ -1,6 +1,6 @@
 # Financial Services - Deutsche Dokumentation
 
-## 💰 Enterprise Financial Services für Ainflue Platform
+## 💰 Enterprise Financial Services für IA Chérie Platform
 
 Umfassende Finanzdienstleistungen für Creator-Monetarisierung, Zahlungsabwicklung und Umsatzoptimierung.
 

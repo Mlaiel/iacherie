@@ -78,7 +78,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 ### 🌳 ARBRE D'ARCHITECTURE PROPOSÉE COMPLÈTE
 
 ```
-/workspaces/Ainflue/data/ingestion/                         [NIVEAU 3 - FINAL]
+/workspaces/IA Chérie/data/ingestion/                         [NIVEAU 3 - FINAL]
 ├── 📋 DOCUMENTATION OBLIGATOIRE (4 fichiers)
 │   ├── README.md ✅                    # Documentation anglais (EXISTANT - À ENRICHIR)
 │   ├── README.de.md ✅                 # Documentation allemand (EXISTANT - À ENRICHIR)
@@ -514,7 +514,7 @@ Cette checklist, l'architecture, les concepts, méthodologies et toutes spécifi
 
 ## 🧪 TESTS ENTERPRISE
 
-### 📊 Tests Centralisés (Intégration avec `/workspaces/Ainflue/tests/`)
+### 📊 Tests Centralisés (Intégration avec `/workspaces/IA Chérie/tests/`)
 ```python
 **Structure requise:**
 tests/
@@ -618,14 +618,14 @@ kubernetes/
 ### 🐳 Docker Configuration
 ```dockerfile
 **Images Docker requises:**
-- ainflue/content-ingestion-engine:latest
-- ainflue/multi-format-processor:latest
-- ainflue/streaming-engine:latest
-- ainflue/validation-quality-engine:latest
-- ainflue/ai-analysis-engine:latest
-- ainflue/optimization-engine:latest
-- ainflue/platform-routing:latest
-- ainflue/specialized-processors:latest
+- iacherie/content-ingestion-engine:latest
+- iacherie/multi-format-processor:latest
+- iacherie/streaming-engine:latest
+- iacherie/validation-quality-engine:latest
+- iacherie/ai-analysis-engine:latest
+- iacherie/optimization-engine:latest
+- iacherie/platform-routing:latest
+- iacherie/specialized-processors:latest
 ```
 
 ---

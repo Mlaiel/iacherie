@@ -2,7 +2,7 @@
 ⚙️ DATASET CONFIGURATION - ENTERPRISE CENTRALIZED SETTINGS
 =========================================================
 
-Centralized configuration management for Ainflue Datasets Module supporting
+Centralized configuration management for IA Chérie Datasets Module supporting
 53 AI agents across 65+ platforms with enterprise-grade settings, security,
 and compliance standards.
 

@@ -1,5 +1,5 @@
 """
-🎬 CONTENT PRODUCTION ORCHESTRATOR - AINFLUE ENTERPRISE
+🎬 CONTENT PRODUCTION ORCHESTRATOR - IACHERIE ENTERPRISE
 =======================================================
 
 Multi-format content workflow orchestration for creator economy platform.

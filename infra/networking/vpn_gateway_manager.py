@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - VPN Gateway Manager
+# IA Chérie Infrastructure Module - VPN Gateway Manager
 # ===================================================
 # 
-# Enterprise-grade VPN gateway management for Ainflue platform
+# Enterprise-grade VPN gateway management for IA Chérie platform
 # Supports multi-cloud VPN connectivity and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -609,7 +609,7 @@ class VPNGatewayManager:
                     x509.NameAttribute(x509.NameOID.COUNTRY_NAME, "US"),
                     x509.NameAttribute(x509.NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                     x509.NameAttribute(x509.NameOID.LOCALITY_NAME, "San Francisco"),
-                    x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "Ainflue"),
+                    x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "IA Chérie"),
                     x509.NameAttribute(x509.NameOID.COMMON_NAME, f"{vpn_name}-ca"),
                 ])
             ).issuer_name(
@@ -617,7 +617,7 @@ class VPNGatewayManager:
                     x509.NameAttribute(x509.NameOID.COUNTRY_NAME, "US"),
                     x509.NameAttribute(x509.NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                     x509.NameAttribute(x509.NameOID.LOCALITY_NAME, "San Francisco"),
-                    x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "Ainflue"),
+                    x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "IA Chérie"),
                     x509.NameAttribute(x509.NameOID.COMMON_NAME, f"{vpn_name}-ca"),
                 ])
             ).public_key(
@@ -655,7 +655,7 @@ class VPNGatewayManager:
                         x509.NameAttribute(x509.NameOID.COUNTRY_NAME, "US"),
                         x509.NameAttribute(x509.NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                         x509.NameAttribute(x509.NameOID.LOCALITY_NAME, "San Francisco"),
-                        x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "Ainflue"),
+                        x509.NameAttribute(x509.NameOID.ORGANIZATION_NAME, "IA Chérie"),
                         x509.NameAttribute(x509.NameOID.COMMON_NAME, f"{vpn_name}-client-{i+1}"),
                     ])
                 ).issuer_name(
@@ -857,7 +857,7 @@ async def main():
     
     # Create VPN gateway
     gateway = await vpn_manager.create_vpn_gateway(
-        'ainflue-main-gateway',
+        'iacherie-main-gateway',
         'aws',
         'us-east-1',
         {'vpc_cidr': '10.0.0.0/16', 'environment': 'production'}
@@ -874,7 +874,7 @@ async def main():
     
     vpn_connection = await vpn_manager.create_site_to_site_vpn(
         'main-to-remote',
-        'ainflue-main-gateway',
+        'iacherie-main-gateway',
         remote_endpoint,
         CREATOR_VPN_CONFIGS['main_office']
     )

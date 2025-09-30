@@ -1,13 +1,13 @@
 # Kubernetes Deployment Guide
 
-**Ainflue Platform - Complete Kubernetes Deployment**  
+**IA Chérie Platform - Complete Kubernetes Deployment**  
 **Author**: Fahed Mlaiel (mlaiel@live.de)  
 **Version**: 1.0  
 **Date**: January 2025
 
 ## Overview
 
-This guide provides comprehensive instructions for deploying the Ainflue platform on Kubernetes, including all microservices, databases, monitoring, and security configurations.
+This guide provides comprehensive instructions for deploying the IA Chérie platform on Kubernetes, including all microservices, databases, monitoring, and security configurations.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ graph TB
         end
         
         subgraph "Application Layer"
-            API[Ainflue API Gateway]
+            API[IA Chérie API Gateway]
             AI[AI Engine Service]
             PROT[Protection Service]
             MON[Monetization Service]
@@ -73,24 +73,24 @@ graph TB
 
 ## Namespace Setup
 
-### Create Ainflue Namespace
+### Create IA Chérie Namespace
 
 ```yaml
 # namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue
+  name: iacherie
   labels:
-    name: ainflue
+    name: iacherie
     environment: production
     owner: fahed-mlaiel
 ---
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: ainflue-quota
-  namespace: ainflue
+  name: iacherie-quota
+  namespace: iacherie
 spec:
   hard:
     requests.cpu: "20"
@@ -115,8 +115,8 @@ kubectl apply -f namespace.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ainflue-secrets
-  namespace: ainflue
+  name: iacherie-secrets
+  namespace: iacherie
 type: Opaque
 stringData:
   # Database Credentials
@@ -153,13 +153,13 @@ stringData:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-config
-  namespace: ainflue
+  name: iacherie-config
+  namespace: iacherie
 data:
   # Application Configuration
   ENVIRONMENT: "production"
   DEBUG: "false"
-  APP_NAME: "Ainflue"
+  APP_NAME: "IA Chérie"
   APP_VERSION: "1.0.0"
   
   # Server Configuration
@@ -167,17 +167,17 @@ data:
   PORT: "8000"
   
   # Database Hosts
-  POSTGRES_HOST: "ainflue-postgresql"
+  POSTGRES_HOST: "iacherie-postgresql"
   POSTGRES_PORT: "5432"
-  POSTGRES_USER: "ainflue"
+  POSTGRES_USER: "iacherie"
   POSTGRES_DB: "ainflue_platform"
   
-  MONGODB_HOST: "ainflue-mongodb"
+  MONGODB_HOST: "iacherie-mongodb"
   MONGODB_PORT: "27017"
-  MONGODB_USER: "ainflue"
+  MONGODB_USER: "iacherie"
   MONGODB_DB: "ainflue_documents"
   
-  REDIS_HOST: "ainflue-redis"
+  REDIS_HOST: "iacherie-redis"
   REDIS_PORT: "6379"
   REDIS_DB: "0"
   
@@ -187,7 +187,7 @@ data:
   
   # Storage Configuration
   AWS_REGION: "eu-central-1"
-  AWS_S3_BUCKET: "ainflue-content-prod"
+  AWS_S3_BUCKET: "iacherie-content-prod"
   
   # Monitoring
   PROMETHEUS_ENABLED: "true"
@@ -209,18 +209,18 @@ kubectl apply -f secrets.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ainflue-postgresql
-  namespace: ainflue
+  name: iacherie-postgresql
+  namespace: iacherie
 spec:
-  serviceName: ainflue-postgresql
+  serviceName: iacherie-postgresql
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-postgresql
+      app: iacherie-postgresql
   template:
     metadata:
       labels:
-        app: ainflue-postgresql
+        app: iacherie-postgresql
     spec:
       containers:
       - name: postgresql
@@ -231,17 +231,17 @@ spec:
         - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: POSTGRES_DB
         - name: POSTGRES_USER
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: POSTGRES_PASSWORD
         - name: POSTGRES_INITDB_ARGS
           value: "--auth-host=scram-sha-256"
@@ -260,7 +260,7 @@ spec:
             command:
             - pg_isready
             - -U
-            - ainflue
+            - iacherie
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
@@ -268,7 +268,7 @@ spec:
             command:
             - pg_isready
             - -U
-            - ainflue
+            - iacherie
           initialDelaySeconds: 5
           periodSeconds: 5
   volumeClaimTemplates:
@@ -284,11 +284,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-postgresql
-  namespace: ainflue
+  name: iacherie-postgresql
+  namespace: iacherie
 spec:
   selector:
-    app: ainflue-postgresql
+    app: iacherie-postgresql
   ports:
   - port: 5432
     targetPort: 5432
@@ -302,18 +302,18 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ainflue-mongodb
-  namespace: ainflue
+  name: iacherie-mongodb
+  namespace: iacherie
 spec:
-  serviceName: ainflue-mongodb
+  serviceName: iacherie-mongodb
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-mongodb
+      app: iacherie-mongodb
   template:
     metadata:
       labels:
-        app: ainflue-mongodb
+        app: iacherie-mongodb
     spec:
       containers:
       - name: mongodb
@@ -324,12 +324,12 @@ spec:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: MONGODB_USER
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: MONGODB_PASSWORD
         volumeMounts:
         - name: mongodb-storage
@@ -362,11 +362,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-mongodb
-  namespace: ainflue
+  name: iacherie-mongodb
+  namespace: iacherie
 spec:
   selector:
-    app: ainflue-mongodb
+    app: iacherie-mongodb
   ports:
   - port: 27017
     targetPort: 27017
@@ -380,18 +380,18 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ainflue-redis
-  namespace: ainflue
+  name: iacherie-redis
+  namespace: iacherie
 spec:
-  serviceName: ainflue-redis
+  serviceName: iacherie-redis
   replicas: 6
   selector:
     matchLabels:
-      app: ainflue-redis
+      app: iacherie-redis
   template:
     metadata:
       labels:
-        app: ainflue-redis
+        app: iacherie-redis
     spec:
       containers:
       - name: redis
@@ -406,7 +406,7 @@ spec:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: REDIS_PASSWORD
         volumeMounts:
         - name: redis-config
@@ -437,11 +437,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-redis
-  namespace: ainflue
+  name: iacherie-redis
+  namespace: iacherie
 spec:
   selector:
-    app: ainflue-redis
+    app: iacherie-redis
   ports:
   - name: redis
     port: 6379
@@ -460,28 +460,28 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-api
-  namespace: ainflue
+  name: iacherie-api
+  namespace: iacherie
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
     spec:
       containers:
       - name: api
-        image: ainflue/platform:1.0.0
+        image: iacherie/platform:1.0.0
         ports:
         - containerPort: 8000
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "2Gi"
@@ -507,16 +507,16 @@ spec:
       volumes:
       - name: storage
         persistentVolumeClaim:
-          claimName: ainflue-api-storage
+          claimName: iacherie-api-storage
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-api
-  namespace: ainflue
+  name: iacherie-api
+  namespace: iacherie
 spec:
   selector:
-    app: ainflue-api
+    app: iacherie-api
   ports:
   - port: 80
     targetPort: 8000
@@ -525,8 +525,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ainflue-api-storage
-  namespace: ainflue
+  name: iacherie-api-storage
+  namespace: iacherie
 spec:
   accessModes:
   - ReadWriteMany
@@ -543,26 +543,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-crawler
-  namespace: ainflue
+  name: iacherie-crawler
+  namespace: iacherie
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: ainflue-crawler
+      app: iacherie-crawler
   template:
     metadata:
       labels:
-        app: ainflue-crawler
+        app: iacherie-crawler
     spec:
       containers:
       - name: crawler
-        image: ainflue/crawler:1.0.0
+        image: iacherie/crawler:1.0.0
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "1Gi"
@@ -577,11 +577,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-crawler
-  namespace: ainflue
+  name: iacherie-crawler
+  namespace: iacherie
 spec:
   selector:
-    app: ainflue-crawler
+    app: iacherie-crawler
   ports:
   - port: 80
     targetPort: 8000
@@ -595,8 +595,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ainflue-ingress
-  namespace: ainflue
+  name: iacherie-ingress
+  namespace: iacherie
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -606,28 +606,28 @@ metadata:
 spec:
   tls:
   - hosts:
-    - api.ainflue.com
-    - www.ainflue.com
-    secretName: ainflue-tls
+    - api.iacherie.com
+    - www.iacherie.com
+    secretName: iacherie-tls
   rules:
-  - host: api.ainflue.com
+  - host: api.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-api
+            name: iacherie-api
             port:
               number: 80
-  - host: www.ainflue.com
+  - host: www.iacherie.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ainflue-api
+            name: iacherie-api
             port:
               number: 80
 ```
@@ -642,7 +642,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  namespace: ainflue
+  namespace: iacherie
 spec:
   replicas: 1
   selector:
@@ -682,7 +682,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: ainflue
+  namespace: iacherie
 spec:
   selector:
     app: prometheus
@@ -698,13 +698,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-api-hpa
-  namespace: ainflue
+  name: iacherie-api-hpa
+  namespace: iacherie
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-api
+    name: iacherie-api
   minReplicas: 3
   maxReplicas: 20
   metrics:
@@ -739,11 +739,11 @@ spec:
 
 ```bash
 #!/bin/bash
-# deploy-ainflue.sh
+# deploy-iacherie.sh
 
 set -e
 
-echo "🚀 Starting Ainflue Platform Deployment"
+echo "🚀 Starting IA Chérie Platform Deployment"
 
 # Check prerequisites
 echo "📋 Checking prerequisites..."
@@ -766,9 +766,9 @@ kubectl apply -f redis-deployment.yaml
 
 # Wait for databases to be ready
 echo "⏳ Waiting for databases to be ready..."
-kubectl wait --for=condition=Ready pod -l app=ainflue-postgresql -n ainflue --timeout=300s
-kubectl wait --for=condition=Ready pod -l app=ainflue-mongodb -n ainflue --timeout=300s
-kubectl wait --for=condition=Ready pod -l app=ainflue-redis -n ainflue --timeout=300s
+kubectl wait --for=condition=Ready pod -l app=iacherie-postgresql -n iacherie --timeout=300s
+kubectl wait --for=condition=Ready pod -l app=iacherie-mongodb -n iacherie --timeout=300s
+kubectl wait --for=condition=Ready pod -l app=iacherie-redis -n iacherie --timeout=300s
 
 # Deploy application services
 echo "🚀 Deploying application services..."
@@ -777,8 +777,8 @@ kubectl apply -f crawler-deployment.yaml
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
-kubectl wait --for=condition=Available deployment/ainflue-api -n ainflue --timeout=300s
-kubectl wait --for=condition=Available deployment/ainflue-crawler -n ainflue --timeout=300s
+kubectl wait --for=condition=Available deployment/iacherie-api -n iacherie --timeout=300s
+kubectl wait --for=condition=Available deployment/iacherie-crawler -n iacherie --timeout=300s
 
 # Deploy ingress
 echo "🌐 Deploying ingress..."
@@ -792,9 +792,9 @@ kubectl apply -f prometheus.yaml
 echo "⚖️ Deploying autoscaling..."
 kubectl apply -f hpa.yaml
 
-echo "✅ Ainflue Platform deployed successfully!"
-echo "🔗 Access the platform at: https://api.ainflue.com"
-echo "📊 Monitoring at: https://monitoring.ainflue.com"
+echo "✅ IA Chérie Platform deployed successfully!"
+echo "🔗 Access the platform at: https://api.iacherie.com"
+echo "📊 Monitoring at: https://monitoring.iacherie.com"
 ```
 
 ## Maintenance Commands
@@ -802,40 +802,40 @@ echo "📊 Monitoring at: https://monitoring.ainflue.com"
 ### Scale Services
 ```bash
 # Scale API service
-kubectl scale deployment ainflue-api --replicas=10 -n ainflue
+kubectl scale deployment iacherie-api --replicas=10 -n iacherie
 
 # Scale crawler service
-kubectl scale deployment ainflue-crawler --replicas=20 -n ainflue
+kubectl scale deployment iacherie-crawler --replicas=20 -n iacherie
 ```
 
 ### Rolling Updates
 ```bash
 # Update API service
-kubectl set image deployment/ainflue-api api=ainflue/platform:1.1.0 -n ainflue
+kubectl set image deployment/iacherie-api api=iacherie/platform:1.1.0 -n iacherie
 
 # Check rollout status
-kubectl rollout status deployment/ainflue-api -n ainflue
+kubectl rollout status deployment/iacherie-api -n iacherie
 ```
 
 ### Backup Database
 ```bash
 # PostgreSQL backup
-kubectl exec -it ainflue-postgresql-0 -n ainflue -- pg_dump -U ainflue ainflue_platform > backup.sql
+kubectl exec -it iacherie-postgresql-0 -n iacherie -- pg_dump -U iacherie ainflue_platform > backup.sql
 
 # MongoDB backup
-kubectl exec -it ainflue-mongodb-0 -n ainflue -- mongodump --db ainflue_documents
+kubectl exec -it iacherie-mongodb-0 -n iacherie -- mongodump --db ainflue_documents
 ```
 
 ### Health Checks
 ```bash
 # Check all pods
-kubectl get pods -n ainflue
+kubectl get pods -n iacherie
 
 # Check service endpoints
-kubectl get endpoints -n ainflue
+kubectl get endpoints -n iacherie
 
 # View logs
-kubectl logs -f deployment/ainflue-api -n ainflue
+kubectl logs -f deployment/iacherie-api -n iacherie
 ```
 
 ## Troubleshooting
@@ -844,26 +844,26 @@ kubectl logs -f deployment/ainflue-api -n ainflue
 
 1. **Pod Not Starting**
    ```bash
-   kubectl describe pod <pod-name> -n ainflue
-   kubectl logs <pod-name> -n ainflue
+   kubectl describe pod <pod-name> -n iacherie
+   kubectl logs <pod-name> -n iacherie
    ```
 
 2. **Database Connection Issues**
    ```bash
-   kubectl exec -it <pod-name> -n ainflue -- env | grep DB
-   kubectl get svc -n ainflue
+   kubectl exec -it <pod-name> -n iacherie -- env | grep DB
+   kubectl get svc -n iacherie
    ```
 
 3. **High Memory Usage**
    ```bash
-   kubectl top pods -n ainflue
-   kubectl describe hpa -n ainflue
+   kubectl top pods -n iacherie
+   kubectl describe hpa -n iacherie
    ```
 
 4. **SSL Certificate Issues**
    ```bash
-   kubectl describe certificate ainflue-tls -n ainflue
-   kubectl get certificaterequest -n ainflue
+   kubectl describe certificate iacherie-tls -n iacherie
+   kubectl get certificaterequest -n iacherie
    ```
 
 ## Security Considerations

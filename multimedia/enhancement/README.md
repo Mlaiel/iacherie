@@ -1,6 +1,6 @@
 # ✨ Advanced Enhancement IA Module
 
-**AI-powered multimedia enhancement with neural network upscaling and restoration for the Ainflue Platform**
+**AI-powered multimedia enhancement with neural network upscaling and restoration for the IA Chérie Platform**
 
 ## Overview
 
@@ -213,4 +213,4 @@ result = await pipeline.process_pipeline(
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
 Contact: mlaiel@live.de  
-Project: Ainflue Platform - Enhancement IA Module
+Project: IA Chérie Platform - Enhancement IA Module

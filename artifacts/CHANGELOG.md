@@ -1,4 +1,4 @@
-# 📝 Changelog - Ainflue Platform
+# 📝 Changelog - IA Chérie Platform
 
 **Document Version:** 1.0 Enterprise  
 **Last Updated:** January 15, 2025  
@@ -13,7 +13,7 @@
 
 ## 📋 **Version History**
 
-All notable changes to the Ainflue Platform will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to the IA Chérie Platform will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
@@ -325,7 +325,7 @@ Features or functionality removed from the platform
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue Changelog License Request"
+**Subject:** "IA Chérie Changelog License Request"
 
 ---
 

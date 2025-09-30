@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Main Electron Process
+ * IA Chérie Desktop - Main Electron Process
  * 
  * Advanced AI-powered content creation studio with professional editing capabilities,
  * multi-monitor support, and system integration features.
@@ -24,8 +24,8 @@ autoUpdater.logger = log;
 
 // Initialize secure store
 const store = new Store({
-  encryptionKey: 'ainflue-desktop-secure-key-2025',
-  name: 'ainflue-preferences'
+  encryptionKey: 'iacherie-desktop-secure-key-2025',
+  name: 'iacherie-preferences'
 });
 
 class AinflueMasterStudio {
@@ -172,7 +172,7 @@ class AinflueMasterStudio {
         backgroundThrottling: false
       },
       icon: path.join(__dirname, 'assets', this.platform.isWindows ? 'icon.ico' : this.platform.isMac ? 'icon.icns' : 'icon.png'),
-      title: 'Ainflue Studio - Professional AI Content Creation',
+      title: 'IA Chérie Studio - Professional AI Content Creation',
       backgroundColor: '#1f2937',
       show: false,
       resizable: true,
@@ -481,7 +481,7 @@ class AinflueMasterStudio {
         submenu: [
           {
             label: 'User Guide',
-            click: () => shell.openExternal('https://ainflue.com/docs')
+            click: () => shell.openExternal('https://iacherie.com/docs')
           },
           {
             label: 'Keyboard Shortcuts',
@@ -490,11 +490,11 @@ class AinflueMasterStudio {
           },
           {
             label: 'Community Forum',
-            click: () => shell.openExternal('https://community.ainflue.com')
+            click: () => shell.openExternal('https://community.iacherie.com')
           },
           { type: 'separator' },
           {
-            label: 'About Ainflue',
+            label: 'About IA Chérie',
             click: () => this.showAbout()
           }
         ]
@@ -544,7 +544,7 @@ class AinflueMasterStudio {
       const result = await dialog.showSaveDialog(this.mainWindow, {
         defaultPath: `${projectData.name || 'Untitled'}.ainproj`,
         filters: [
-          { name: 'Ainflue Project', extensions: ['ainproj'] },
+          { name: 'IA Chérie Project', extensions: ['ainproj'] },
           { name: 'JSON', extensions: ['json'] }
         ]
       });
@@ -701,7 +701,7 @@ class AinflueMasterStudio {
     const result = await dialog.showOpenDialog(this.mainWindow, {
       properties: ['openFile'],
       filters: [
-        { name: 'Ainflue Project', extensions: ['json'] },
+        { name: 'IA Chérie Project', extensions: ['json'] },
         { name: 'All Files', extensions: ['*'] }
       ]
     });
@@ -744,8 +744,8 @@ class AinflueMasterStudio {
   showAbout() {
     dialog.showMessageBox(this.mainWindow, {
       type: 'info',
-      title: 'About Ainflue Studio',
-      message: 'Ainflue Desktop Studio v1.0.0',
+      title: 'About IA Chérie Studio',
+      message: 'IA Chérie Desktop Studio v1.0.0',
       detail: `Professional AI-powered content creation platform\n\nDeveloped by: Fahed Mlaiel\nEmail: mlaiel@live.de\n\n© 2025 Fahed Mlaiel. All rights reserved.`,
       buttons: ['OK']
     });

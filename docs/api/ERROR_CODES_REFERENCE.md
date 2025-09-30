@@ -1,8 +1,8 @@
-# 🚨 Error Codes Reference - Ainflue API
+# 🚨 Error Codes Reference - IA Chérie API
 
 ## 🎯 Overview
 
-This comprehensive reference covers all error codes, response formats, and troubleshooting guidance for the Ainflue API. Understanding these error codes will help you build robust applications with proper error handling.
+This comprehensive reference covers all error codes, response formats, and troubleshooting guidance for the IA Chérie API. Understanding these error codes will help you build robust applications with proper error handling.
 
 ## 📋 Error Response Format
 
@@ -20,7 +20,7 @@ All API errors follow a standardized format for consistency and ease of handling
     },
     "request_id": "req_uuid_for_tracking",
     "timestamp": "2025-01-07T10:00:00Z",
-    "documentation_url": "https://docs.ainflue.com/errors/ERROR_CODE_HERE"
+    "documentation_url": "https://docs.iacherie.com/errors/ERROR_CODE_HERE"
   }
 }
 ```
@@ -124,7 +124,7 @@ Errors related to rate limiting and quota exceeded
     "message": "The provided API key is invalid or revoked",
     "details": {
       "key_prefix": "ak_prod_",
-      "dashboard_url": "https://dashboard.ainflue.com/api-keys"
+      "dashboard_url": "https://dashboard.iacherie.com/api-keys"
     }
   }
 }
@@ -176,7 +176,7 @@ Errors related to rate limiting and quota exceeded
     "details": {
       "reason": "Terms of service violation",
       "suspended_at": "2025-01-06T15:30:00Z",
-      "appeal_url": "https://ainflue.com/appeals"
+      "appeal_url": "https://iacherie.com/appeals"
     }
   }
 }
@@ -194,7 +194,7 @@ Errors related to rate limiting and quota exceeded
       "feature": "Advanced AI Processing",
       "required_tier": "Pro",
       "current_tier": "Free",
-      "upgrade_url": "https://ainflue.com/pricing"
+      "upgrade_url": "https://iacherie.com/pricing"
     }
   }
 }
@@ -211,7 +211,7 @@ Errors related to rate limiting and quota exceeded
     "details": {
       "feature": "Bulk Content Upload",
       "reason": "Enterprise feature",
-      "contact_sales": "sales@ainflue.com"
+      "contact_sales": "sales@iacherie.com"
     }
   }
 }
@@ -678,7 +678,7 @@ Errors related to rate limiting and quota exceeded
     "details": {
       "error_id": "err_567890",
       "timestamp": "2025-01-07T10:15:30Z",
-      "support_contact": "support@ainflue.com"
+      "support_contact": "support@iacherie.com"
     }
   }
 }
@@ -695,7 +695,7 @@ Errors related to rate limiting and quota exceeded
     "details": {
       "reason": "scheduled_maintenance",
       "estimated_recovery": "2025-01-07T12:00:00Z",
-      "status_page": "https://status.ainflue.com"
+      "status_page": "https://status.iacherie.com"
     }
   }
 }
@@ -751,7 +751,7 @@ from typing import Dict, Any
 class AinflueFree:
     def __init__(self, api_key: str):
         self.api_key = api_key
-        self.base_url = "https://api.ainflue.com/v2"
+        self.base_url = "https://api.iacherie.com/v2"
     
     def handle_request(self, method: str, endpoint: str, **kwargs) -> Dict[str, Any]:
         """Make API request with comprehensive error handling."""
@@ -821,7 +821,7 @@ class AinflueFree:
 
 # Custom exception classes
 class AinflueFreeError(Exception):
-    """Base exception for Ainflue API errors."""
+    """Base exception for IA Chérie API errors."""
     pass
 
 class AuthenticationError(AinflueFreeError):
@@ -917,7 +917,7 @@ def track_api_error(error_response):
         scope.set_extra("error_details", error_data.get('details'))
         
         sentry_sdk.capture_message(
-            f"Ainflue API Error: {error_data.get('message')}",
+            f"IA Chérie API Error: {error_data.get('message')}",
             level='error'
         )
 ```
@@ -972,11 +972,11 @@ class ErrorRateMonitor:
 
 ### Support Information
 
-- **General Support**: support@ainflue.com
-- **API Technical Support**: api-support@ainflue.com
-- **Emergency Support**: +1-800-AINFLUE (Enterprise only)
-- **Status Page**: https://status.ainflue.com
-- **Documentation**: https://docs.ainflue.com
+- **General Support**: support@iacherie.com
+- **API Technical Support**: api-support@iacherie.com
+- **Emergency Support**: +1-800-IACHERIE (Enterprise only)
+- **Status Page**: https://status.iacherie.com
+- **Documentation**: https://docs.iacherie.com
 
 ### Debug Information to Include
 

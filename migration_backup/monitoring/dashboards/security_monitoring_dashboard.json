@@ -1,0 +1,110 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "Failed Authentication Attempts",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(ia_influencer_http_requests_total{status_code='401'}[5m])",
+          "legendFormat": "Failed logins"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 2,
+      "title": "Security Incidents by Severity",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "ia_influencer_security_incidents_total",
+          "legendFormat": "{{severity}}"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 3,
+      "title": "Suspicious Activity Score",
+      "type": "heatmap",
+      "targets": [
+        {
+          "expr": "ia_influencer_suspicious_activity_score",
+          "legendFormat": "{{source_ip}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "id": 4,
+      "title": "Rate Limiting Violations",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(ia_influencer_rate_limit_exceeded_total[5m])",
+          "legendFormat": "{{endpoint}} violations"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [
+    "security",
+    "monitoring",
+    "threats"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Security Monitoring",
+  "uid": null,
+  "version": 1,
+  "description": "Security events and threat detection"
+}

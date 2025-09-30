@@ -2,7 +2,7 @@
 =======================================================================
 
 Engine de génération musicale IA enterprise avec composition automatique,
-transfert de style et orchestration pour créateurs musicaux sur Ainflue.
+transfert de style et orchestration pour créateurs musicaux sur IA Chérie.
 
 Expert Roles Implementation:
 🤖 Lead Dev IA: Neural music generation + style transfer + composition algorithms
@@ -121,7 +121,7 @@ class MusicGenerationConfig:
     mood: MusicMood
     structure: MusicalStructure
     key_signature: str = "C_major"
-    time_signature: Tuple[int, int] = (4, 4)
+    time_signature: tuple[int, int] = (4, 4)
     tempo_bpm: int = 120
     duration_seconds: float = 60.0
     complexity: CompositionComplexity = CompositionComplexity.INTERMEDIATE
@@ -137,12 +137,12 @@ class HarmonicProgression:
     roman_numerals: List[str]
     harmonic_rhythm: List[float]  # Durée de chaque accord
     key_center: str
-    modulations: List[Tuple[int, str]]  # (measure, new_key)
+    modulations: List[tuple[int, str]]  # (measure, new_key)
 
 @dataclass
 class MelodicPhrase:
     """Phrase mélodique"""
-    notes: List[Tuple[int, float, float]]  # (pitch, start_time, duration)
+    notes: List[tuple[int, float, float]]  # (pitch, start_time, duration)
     phrase_start: float
     phrase_end: float
     contour: List[int]  # Direction mélodique (-1, 0, 1)
@@ -152,8 +152,8 @@ class MelodicPhrase:
 @dataclass
 class RhythmPattern:
     """Pattern rythmique"""
-    pattern: List[Tuple[float, float, float]]  # (onset, duration, velocity)
-    time_signature: Tuple[int, int]
+    pattern: List[tuple[float, float, float]]  # (onset, duration, velocity)
+    time_signature: tuple[int, int]
     pattern_length: float
     complexity_score: float
     groove_type: str
@@ -337,7 +337,7 @@ class HarmonyGenerator:
         
         return chord_sequence
     
-    def _generate_modulations(self, config: MusicGenerationConfig) -> List[Tuple[int, str]]:
+    def _generate_modulations(self, config: MusicGenerationConfig) -> List[tuple[int, str]]:
         """Génère des modulations pour les compositions longues"""
         
         modulations = []
@@ -450,7 +450,7 @@ class MelodyGenerator:
     
     def _generate_phrase_notes(self, start_time: float, end_time: float,
                               harmony: HarmonicProgression, contour: List[int],
-                              intervals: List[int], config: MusicGenerationConfig) -> List[Tuple[int, float, float]]:
+                              intervals: List[int], config: MusicGenerationConfig) -> List[tuple[int, float, float]]:
         """Génère les notes d'une phrase mélodique"""
         
         notes = []
@@ -744,7 +744,7 @@ class MusicGenerationEngine:
         
         # Métadonnées
         metadata = {
-            "composer": "Ainflue AI Engine",
+            "composer": "IA Chérie AI Engine",
             "genre": config.genre.value,
             "mood": config.mood.value,
             "key": config.key_signature,

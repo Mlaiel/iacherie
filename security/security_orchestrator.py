@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enterprise Security Orchestrator for Ainflue Platform
+Enterprise Security Orchestrator for IA Chérie Platform
 Military-grade security with AI-powered threat detection and compliance automation
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

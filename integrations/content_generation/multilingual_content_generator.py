@@ -5,7 +5,7 @@ Global content localization with 6 specialized language agents.
 Real-time translation and cultural adaptation for 644 languages.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -270,7 +270,7 @@ class MultilingualAgent:
         
         # Generate localized content URL
         file_extension = self._get_file_extension(request.content_type)
-        localized_url = f"https://multilingual-content.ainflue.com/{request.source_content_id}_{target_lang}_{self.agent_name}.{file_extension}"
+        localized_url = f"https://multilingual-content.iacherie.com/{request.source_content_id}_{target_lang}_{self.agent_name}.{file_extension}"
         
         return localized_url
     

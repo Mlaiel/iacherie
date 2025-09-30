@@ -275,7 +275,7 @@ Initialize the advanced metrics system"""
             "metadata": {
                 "author": "Fahed Mlaiel",
                 "email": "mlaiel@live.de",
-                "system": "Ainflue Advanced Metrics",
+                "system": "IA Chérie Advanced Metrics",
                 "version": "1.0.0"
             }
         }

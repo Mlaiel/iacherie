@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Enterprise Infrastructure Orchestrator
+# IA Chérie Infrastructure Module - Enterprise Infrastructure Orchestrator
 # =====================================================================
 # 
-# Master orchestrator for all Ainflue infrastructure components
+# Master orchestrator for all IA Chérie infrastructure components
 # Manages multi-cloud deployment, monitoring, security, and operations
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -88,7 +88,7 @@ class InfrastructureConfig:
     disaster_recovery: bool = True
 
 class AinflueEnterpriseInfrastructureOrchestrator:
-    """Master orchestrator for all Ainflue infrastructure components"""
+    """Master orchestrator for all IA Chérie infrastructure components"""
     
     def __init__(self, config: InfrastructureConfig):
         """Initialize the enterprise infrastructure orchestrator
@@ -108,7 +108,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup comprehensive logging"""
-        logger = logging.getLogger("ainflue.infra.orchestrator")
+        logger = logging.getLogger("iacherie.infra.orchestrator")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -121,7 +121,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             logger.addHandler(console_handler)
             
             # File handler
-            log_dir = f"/var/log/ainflue/{self.config.environment}"
+            log_dir = f"/var/log/iacherie/{self.config.environment}"
             os.makedirs(log_dir, exist_ok=True)
             
             file_handler = logging.FileHandler(
@@ -166,7 +166,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             Complete deployment plan
         """
         try:
-            self.logger.info("Creating deployment plan for Ainflue infrastructure")
+            self.logger.info("Creating deployment plan for IA Chérie infrastructure")
             
             # Define all components in dependency order
             components = [
@@ -421,7 +421,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             if not self.deployment_plan:
                 await self.create_deployment_plan()
             
-            self.logger.info("Starting Ainflue infrastructure deployment")
+            self.logger.info("Starting IA Chérie infrastructure deployment")
             self.current_phase = DeploymentPhase.PROVISIONING
             
             # Execute components in dependency order
@@ -446,7 +446,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             
             if validation_success:
                 self.current_phase = DeploymentPhase.COMPLETED
-                self.logger.info("🎉 Ainflue infrastructure deployment completed successfully!")
+                self.logger.info("🎉 IA Chérie infrastructure deployment completed successfully!")
                 await self._generate_deployment_report()
                 return True
             else:
@@ -565,7 +565,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
                 results = await self.helm_manager.deploy_ainflue_platform()
                 return all(results.values())
             
-            elif component.name.startswith("ainflue_"):
+            elif component.name.startswith("iacherie_"):
                 # Application deployments are handled by Helm
                 return True  # Already deployed in helm_setup
             
@@ -727,7 +727,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             }
             
             # Write report to file
-            report_dir = f"/var/log/ainflue/{self.config.environment}"
+            report_dir = f"/var/log/iacherie/{self.config.environment}"
             os.makedirs(report_dir, exist_ok=True)
             
             report_path = f"{report_dir}/deployment-report-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"

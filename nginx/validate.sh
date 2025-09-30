@@ -2,7 +2,7 @@
 # =============================================================================
 # NGINX ENTERPRISE CONFIGURATION VALIDATION SCRIPT
 # =============================================================================
-# Quick validation script for Ainflue AI Creator Platform nginx configuration
+# Quick validation script for IA Chérie AI Creator Platform nginx configuration
 #
 # Author: Expert Team (All Roles)
 # Copyright: (c) 2024 IA Influencer Agent Platform. All rights reserved.
@@ -28,7 +28,7 @@ log_warning() {
     echo -e "${YELLOW}⚠️  $*${NC}"
 }
 
-echo "🔍 Validating Nginx Enterprise Configuration for Ainflue Platform"
+echo "🔍 Validating Nginx Enterprise Configuration for IA Chérie Platform"
 echo "=================================================================="
 
 # Check if configuration files exist
@@ -93,7 +93,7 @@ echo
 echo "🔍 Configuration Content Analysis:"
 
 # Check for upstream configurations
-if grep -q "upstream.*ainflue\|upstream.*ai_\|upstream.*content\|upstream.*analytics" "$SCRIPT_DIR/enterprise_production.conf"; then
+if grep -q "upstream.*iacherie\|upstream.*ai_\|upstream.*content\|upstream.*analytics" "$SCRIPT_DIR/enterprise_production.conf"; then
     upstream_count=$(grep -c "upstream.*{" "$SCRIPT_DIR/enterprise_production.conf")
     log_success "Found $upstream_count upstream service configurations"
 else

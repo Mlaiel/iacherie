@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - File System Manager
+ * IA Chérie Desktop - File System Manager
  * 
  * Secure file operations and content management for professional workflows
  * 
@@ -465,7 +465,7 @@ class FileSystemManager {
   // Temporary files
   async createTempFile(extension = '.tmp') {
     const tempDir = app.getPath('temp');
-    const tempName = `ainflue-${crypto.randomUUID()}${extension}`;
+    const tempName = `iacherie-${crypto.randomUUID()}${extension}`;
     const tempPath = path.join(tempDir, tempName);
     
     // Create empty file
@@ -478,7 +478,7 @@ class FileSystemManager {
 
   async createTempDirectory() {
     const tempDir = app.getPath('temp');
-    const tempName = `ainflue-${crypto.randomUUID()}`;
+    const tempName = `iacherie-${crypto.randomUUID()}`;
     const tempPath = path.join(tempDir, tempName);
     
     await fs.mkdir(tempPath, { recursive: true });

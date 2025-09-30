@@ -1,6 +1,6 @@
 # 📊 Analytics Benachrichtigungen Modul - Enterprise Architektur
 
-**Ainflue Platform - Erweiterte Analytics Benachrichtigungssystem**
+**IA Chérie Platform - Erweiterte Analytics Benachrichtigungssystem**
 
 **Version:** 3.1.0 Enterprise  
 **Datum:** 11. September 2025  
@@ -22,7 +22,7 @@ Diese Architektur, das Konzept, der Code und alle damit verbundenen geistigen Ei
 
 ---
 
-## 🎯 AINFLUE GESCHÄFTSLOGIK - ANFORDERUNGSKONFORMITÄT
+## 🎯 IACHERIE GESCHÄFTSLOGIK - ANFORDERUNGSKONFORMITÄT
 
 ### 🔄 KERN GESCHÄFTS-WORKFLOW (VOLLSTÄNDIGE BENACHRICHTIGUNGEN ERFORDERLICH)
 
@@ -195,7 +195,7 @@ class AIAnalyticsPersonalization:
 
 ### 📧 Kontaktinformationen
 - **E-Mail:** mlaiel@live.de
-- **Website:** [Ainflue Platform](https://ainflue.com)
+- **Website:** [IA Chérie Platform](https://iacherie.com)
 - **Lead Developer:** Fahed Mlaiel
 - **Standort:** Deutschland
 
@@ -209,5 +209,5 @@ class AIAnalyticsPersonalization:
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Analytics Benachrichtigungen Enterprise Architektur  
+**Projekt:** IA Chérie Platform - Analytics Benachrichtigungen Enterprise Architektur  
 **Version:** 3.1.0 - Professionelle Vollständige Dokumentation

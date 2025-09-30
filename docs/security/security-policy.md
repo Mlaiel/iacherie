@@ -1,8 +1,8 @@
-# 🔐 Ainflue Platform Security Policy
+# 🔐 IA Chérie Platform Security Policy
 
 ## 📋 Executive Summary
 
-This document establishes the comprehensive security framework for the Ainflue AI-powered content protection and monetization platform. Our security policy ensures the protection of creator content, user data, and platform integrity through enterprise-grade security controls and industry best practices.
+This document establishes the comprehensive security framework for the IA Chérie AI-powered content protection and monetization platform. Our security policy ensures the protection of creator content, user data, and platform integrity through enterprise-grade security controls and industry best practices.
 
 ## 🎯 Security Objectives
 

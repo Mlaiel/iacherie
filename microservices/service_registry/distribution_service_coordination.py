@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chérie Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -1003,7 +1003,7 @@ class AnalyticsAggregator:
                 'click_through_rate', 'conversion_rate'
             ],
             'reporting_frequency': 'daily',
-            'dashboard_url': f"https://analytics.ainflue.com/distribution/{request.request_id}",
+            'dashboard_url': f"https://analytics.iacherie.com/distribution/{request.request_id}",
             'export_formats': ['json', 'csv', 'pdf'],
             'real_time_monitoring': True
         }

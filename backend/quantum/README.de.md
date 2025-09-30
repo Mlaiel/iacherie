@@ -34,7 +34,7 @@ Dieses Quantencomputing-Modul, seine innovativen Quantenalgorithmen, Quantum Bus
 
 ## 🎯 Modul-Übersicht
 
-Das **Quantencomputing-Modul** bietet modernste quantum-enhanced Business Logic-Fähigkeiten für die Ainflue-Plattform. Dieses Enterprise-Grade-Quantensystem liefert Quantenbeschleunigung über alle Geschäftsprozesse hinweg, von der Inhaltserstellung bis zur Verteilung, und bietet beispiellose Wettbewerbsvorteile durch Quantencomputing.
+Das **Quantencomputing-Modul** bietet modernste quantum-enhanced Business Logic-Fähigkeiten für die IA Chérie-Plattform. Dieses Enterprise-Grade-Quantensystem liefert Quantenbeschleunigung über alle Geschäftsprozesse hinweg, von der Inhaltserstellung bis zur Verteilung, und bietet beispiellose Wettbewerbsvorteile durch Quantencomputing.
 
 ### 🏗️ Kern-Architektur
 

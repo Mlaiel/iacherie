@@ -1,4 +1,4 @@
-# 🚀 Templates Microservices Ainflue - Architecture d'Entreprise
+# 🚀 Templates Microservices IA Chérie - Architecture d'Entreprise
 
 > **⚠️ AVERTISSEMENT LÉGAL - PROTECTION PROPRIÉTÉ INTELLECTUELLE**  
 > **© 2025 Fahed Mlaiel (mlaiel@live.de) - TOUS DROITS RÉSERVÉS**
@@ -18,7 +18,7 @@
 
 ## 🎯 Aperçu
 
-Templates microservices de niveau entreprise pour la plateforme d'économie créateur Ainflue. Ce module complet fournit plus de 150 templates prêts pour la production pour construire une architecture microservices évolutive, résiliente et intelligente.
+Templates microservices de niveau entreprise pour la plateforme d'économie créateur IA Chérie. Ce module complet fournit plus de 150 templates prêts pour la production pour construire une architecture microservices évolutive, résiliente et intelligente.
 
 ## 👥 Équipe d'Experts
 
@@ -150,10 +150,10 @@ Templates microservices de niveau entreprise pour la plateforme d'économie cré
 
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Naviguer vers les templates microservices
-cd Ainflue/templates/microservices
+cd IA Chérie/templates/microservices
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -216,7 +216,7 @@ await message_queue.register_handler("ai.processing.completed", handle_ai_comple
 
 ```env
 # Configuration Base Données
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # URLs Services
@@ -275,7 +275,7 @@ MAX_CONTENT_PER_DAY=50
 version: '3.8'
 services:
   creator-service:
-    image: ainflue/creator-service:latest
+    image: iacherie/creator-service:latest
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/creators
       - REDIS_URL=redis://redis:6379
@@ -305,7 +305,7 @@ spec:
     spec:
       containers:
       - name: creator-service
-        image: ainflue/creator-service:latest
+        image: iacherie/creator-service:latest
         ports:
         - containerPort: 8000
 ```
@@ -345,8 +345,8 @@ pytest tests/unit/ --cov=templates --cov-report=html
 
 ```bash
 # Cloner repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/microservices
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/microservices
 
 # Installer dépendances développement
 pip install -r requirements-dev.txt

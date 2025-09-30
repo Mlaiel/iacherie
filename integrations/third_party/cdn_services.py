@@ -301,7 +301,7 @@ class CDNServicesIntegration:
             # Create content record
             content = CDNContent(
                 content_id=content_id,
-                url=f"https://cdn.ainflue.com/{content_id}/{filename}",
+                url=f"https://cdn.iacherie.com/{content_id}/{filename}",
                 cdn_urls=cdn_urls,
                 content_type=content_type,
                 file_size=file_size,
@@ -913,7 +913,7 @@ class CDNConnectorBase:
         if not self.session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
-                headers={"User-Agent": "Ainflue-CDN-Integration/1.0"}
+                headers={"User-Agent": "IA Chérie-CDN-Integration/1.0"}
             )
         return self.session
 
@@ -1302,8 +1302,8 @@ async def main():
             zone_id="your_zone_id",
             api_key="your_api_key",
             secret_key=None,
-            domain="cdn.ainflue.com",
-            origin_server="origin.ainflue.com",
+            domain="cdn.iacherie.com",
+            origin_server="origin.iacherie.com",
             ssl_enabled=True,
             compression_enabled=True,
             minification_enabled=True,

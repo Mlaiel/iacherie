@@ -125,9 +125,9 @@ jwt>=1.3.0
 
 ```bash
 # Datenbank-Konfiguration
-DATABASE_URL=postgresql://user:password@localhost:5432/ainflue
+DATABASE_URL=postgresql://user:password@localhost:5432/iacherie
 REDIS_URL=redis://localhost:6379/0
-MONGODB_URL=mongodb://localhost:27017/ainflue
+MONGODB_URL=mongodb://localhost:27017/iacherie
 
 # Cloud-Zugangsdaten
 AWS_ACCESS_KEY_ID=ihr_aws_schlüssel
@@ -364,9 +364,9 @@ Das System unterstützt Compliance mit:
 ## Support
 
 Für technischen Support:
-- Dokumentation: [docs.ainflue.com](https://docs.ainflue.com)
-- GitHub Issues: [github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
-- Community: [community.ainflue.com](https://community.ainflue.com)
+- Dokumentation: [docs.iacherie.com](https://docs.iacherie.com)
+- GitHub Issues: [github.com/Mlaiel/IA Chérie/issues](https://github.com/Mlaiel/IA Chérie/issues)
+- Community: [community.iacherie.com](https://community.iacherie.com)
 
 ## Beitragen
 
@@ -380,8 +380,8 @@ Für technischen Support:
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Virtuelle Umgebung erstellen
 python -m venv venv

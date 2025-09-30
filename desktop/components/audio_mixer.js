@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Audio Mixer Component
+ * IA Chérie Desktop - Audio Mixer Component
  * 
  * Professional multi-channel audio mixer with advanced effects and automation
  * Implements broadcast-quality mixing console with AI-powered enhancement

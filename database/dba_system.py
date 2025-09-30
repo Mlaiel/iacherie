@@ -108,7 +108,7 @@ class QueryPerformance:
     cpu_time_ms: float
     timestamp: datetime = field(default_factory=datetime.now)
     user_id: Optional[str] = None
-    database_name: str = "ainflue"
+    database_name: str = "iacherie"
     explain_plan: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
@@ -219,7 +219,7 @@ class DatabaseAdministrator:
         self.db_config = {
             "host": "localhost",
             "port": 5432,
-            "database": "ainflue",
+            "database": "iacherie",
             "user": "ainflue_admin",
             "password": "secure_password",
             "pool_size": 20,

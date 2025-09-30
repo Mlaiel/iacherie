@@ -1,9 +1,9 @@
-"""Ainflue Core Neural Network - Advanced Neural Network Engine
+"""IA Chérie Core Neural Network - Advanced Neural Network Engine
 =========================================================
 
 Advanced neural network management providing deep learning architectures,
 model training, inference optimization, and distributed neural computation
-for the Ainflue platform AI core.
+for the IA Chérie platform AI core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -105,7 +105,7 @@ class TrainingMetrics:
     gpu_utilization: float = 0.0
 
 class AinflueCoreNeuralNetwork(nn.Module if nn else object):
-    """Core neural network architecture for Ainflue"""
+    """Core neural network architecture for IA Chérie"""
     
     def __init__(self, config: NetworkConfig):
         if nn:

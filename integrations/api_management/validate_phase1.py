@@ -11,12 +11,12 @@ import sys
 from pathlib import Path
 
 # Add the project root to Python path
-sys.path.append('/home/runner/work/Ainflue/Ainflue')
+sys.path.append('/home/runner/work/IA Chérie/IA Chérie')
 
 def validate_phase1_components():
     """Validate Phase 1 enterprise components"""
     
-    print("🚀 AINFLUE ENTERPRISE API MANAGEMENT - PHASE 1 VALIDATION")
+    print("🚀 IACHERIE ENTERPRISE API MANAGEMENT - PHASE 1 VALIDATION")
     print("=" * 65)
     print("Multi-Expert Implementation:")
     print("Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité")
@@ -28,7 +28,7 @@ def validate_phase1_components():
     
     try:
         # Test Authentication Manager
-        sys.path.append('/home/runner/work/Ainflue/Ainflue/integrations/api_management')
+        sys.path.append('/home/runner/work/IA Chérie/IA Chérie/integrations/api_management')
         
         from authentication_manager import EnterpriseAuthenticationManager, CreatorType
         print("✅ Enterprise Authentication Manager imported")

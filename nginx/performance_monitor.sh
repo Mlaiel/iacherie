@@ -2,7 +2,7 @@
 # =============================================================================
 # NGINX PERFORMANCE MONITORING & OPTIMIZATION AUTOMATION
 # =============================================================================
-# Real-time monitoring and auto-optimization for Ainflue AI Creator Platform
+# Real-time monitoring and auto-optimization for IA Chérie AI Creator Platform
 # 
 # Expert Roles: ML Engineer + DevOps + Performance Specialist + DBA
 # Copyright: (c) 2024 IA Influencer Agent Platform. All rights reserved.
@@ -391,7 +391,7 @@ generate_performance_report() {
     cat > "$report_file" << EOF
 # NGINX ENTERPRISE PERFORMANCE REPORT
 # Generated: $(date)
-# Platform: Ainflue AI Creator Platform
+# Platform: IA Chérie AI Creator Platform
 
 ## CONFIGURATION SUMMARY
 - Total Configuration Lines: $(wc -l "$SCRIPT_DIR"/*.conf | tail -1 | awk '{print $1}')
@@ -446,7 +446,7 @@ EOF
 main() {
     echo "🚀 NGINX ENTERPRISE PERFORMANCE MONITOR"
     echo "========================================"
-    echo "Platform: Ainflue AI Creator Platform"
+    echo "Platform: IA Chérie AI Creator Platform"
     echo "Expert Team: ML + DevOps + Audio + Security + DBA"
     echo "Monitor Interval: ${MONITOR_INTERVAL}s"
     echo

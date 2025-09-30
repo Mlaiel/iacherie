@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 📊 Observability Service - Enterprise Service Mesh
-Service d'observabilité complète pour microservices Ainflue
+Service d'observabilité complète pour microservices IA Chérie
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -76,7 +76,7 @@ class MetricDefinition:
     description: str
     labels: List[str] = None
     help_text: str = ""
-    namespace: str = "ainflue"
+    namespace: str = "iacherie"
     
     def __post_init__(self):
         if self.labels is None:
@@ -284,7 +284,7 @@ class ObservabilityService:
             # Configuration exporters Prometheus
             prometheus_client.start_http_server(8000, registry=self.metrics_registry)
             
-            # Métriques custom Ainflue
+            # Métriques custom IA Chérie
             await self._register_ainflue_metrics()
             
             logger.info("✅ Collecte métriques configurée")
@@ -346,7 +346,7 @@ class ObservabilityService:
             raise
     
     async def _register_ainflue_metrics(self):
-        """Métriques spécifiques à Ainflue"""
+        """Métriques spécifiques à IA Chérie"""
         try:
             # Métriques IA
             self.custom_metrics['ai_inference_requests'] = prometheus_client.Counter(
@@ -394,7 +394,7 @@ class ObservabilityService:
             )
             
         except Exception as e:
-            logger.error("❌ Erreur métriques Ainflue", error=str(e))
+            logger.error("❌ Erreur métriques IA Chérie", error=str(e))
             raise
     
     async def _setup_centralized_logging(self, logging_config: Dict[str, Any]):
@@ -407,7 +407,7 @@ class ObservabilityService:
             # Configuration ELK stack
             self.log_aggregator = {
                 'elasticsearch_url': self.elasticsearch_endpoint,
-                'index_pattern': 'ainflue-logs-*',
+                'index_pattern': 'iacherie-logs-*',
                 'buffer_size': 1000,
                 'flush_interval': 30
             }
@@ -416,7 +416,7 @@ class ObservabilityService:
             self.fluent_config = {
                 'host': 'fluentd',
                 'port': 24224,
-                'tag': 'ainflue.microservices'
+                'tag': 'iacherie.microservices'
             }
             
             logger.info("✅ Logging centralisé configuré")
@@ -457,7 +457,7 @@ class ObservabilityService:
                 name="Service Down",
                 description="Service is down or unavailable",
                 severity=AlertSeverity.CRITICAL,
-                condition='up{job="ainflue-services"} == 0',
+                condition='up{job="iacherie-services"} == 0',
                 threshold=0,
                 duration="1m",
                 labels={'team': 'platform', 'severity': 'critical'},
@@ -923,8 +923,8 @@ class ObservabilityService:
         """Dashboard overview des services"""
         return {
             'dashboard': {
-                'title': 'Ainflue Services Overview',
-                'tags': ['ainflue', 'overview'],
+                'title': 'IA Chérie Services Overview',
+                'tags': ['iacherie', 'overview'],
                 'panels': [
                     {
                         'title': 'Service Availability',
@@ -955,8 +955,8 @@ class ObservabilityService:
         """Dashboard métriques IA"""
         return {
             'dashboard': {
-                'title': 'Ainflue AI Metrics',
-                'tags': ['ainflue', 'ai'],
+                'title': 'IA Chérie AI Metrics',
+                'tags': ['iacherie', 'ai'],
                 'panels': [
                     {
                         'title': 'AI Inference Requests',
@@ -980,8 +980,8 @@ class ObservabilityService:
         """Dashboard infrastructure"""
         return {
             'dashboard': {
-                'title': 'Ainflue Infrastructure',
-                'tags': ['ainflue', 'infrastructure'],
+                'title': 'IA Chérie Infrastructure',
+                'tags': ['iacherie', 'infrastructure'],
                 'panels': [
                     {
                         'title': 'CPU Usage',
@@ -1005,8 +1005,8 @@ class ObservabilityService:
         """Dashboard métriques business"""
         return {
             'dashboard': {
-                'title': 'Ainflue Business Metrics',
-                'tags': ['ainflue', 'business'],
+                'title': 'IA Chérie Business Metrics',
+                'tags': ['iacherie', 'business'],
                 'panels': [
                     {
                         'title': 'Creator Registrations',

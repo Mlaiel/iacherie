@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AUDIO QUALITY ANALYZER - PROFESSIONAL DOCKERFILE
+# IACHERIE AUDIO QUALITY ANALYZER - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for comprehensive audio quality analysis
 # including THD, SNR, dynamic range, spectral analysis, and perceptual quality.
@@ -215,13 +215,13 @@ CMD ["python3.11", "-m", "audio_quality_analyzer.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Audio Quality Analyzer"
+LABEL org.opencontainers.image.title="IA Chérie Audio Quality Analyzer"
 LABEL org.opencontainers.image.description="Professional audio quality analysis with THD, SNR, dynamic range"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL ainflue.service.category="audio"
-LABEL ainflue.service.name="audio_quality_analyzer"
-LABEL ainflue.service.port="8014"
-LABEL ainflue.quality.metrics="thd,snr,dynamic_range,clipping"
-LABEL ainflue.security.non-root="true"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chérie"
+LABEL iacherie.service.category="audio"
+LABEL iacherie.service.name="audio_quality_analyzer"
+LABEL iacherie.service.port="8014"
+LABEL iacherie.quality.metrics="thd,snr,dynamic_range,clipping"
+LABEL iacherie.security.non-root="true"

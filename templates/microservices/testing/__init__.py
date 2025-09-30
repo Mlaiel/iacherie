@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🧪 Testing Templates - Ainflue Microservices Enterprise
+🧪 Testing Templates - IA Chérie Microservices Enterprise
 
 Comprehensive testing templates for unit tests, integration tests,
 load testing, security testing, and end-to-end testing automation.

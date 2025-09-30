@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Worker Service Helm Chart
+# IA Chérie Infrastructure Module - Worker Service Helm Chart
 # ==========================================================
 # 
-# Enterprise-grade Worker service chart for Ainflue platform
+# Enterprise-grade Worker service chart for IA Chérie platform
 # Background job processing, media encoding, AI tasks, and analytics
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,14 +10,14 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 apiVersion: v2
-name: ainflue-worker
-description: "Enterprise Worker service for Ainflue platform with multi-queue processing"
+name: iacherie-worker
+description: "Enterprise Worker service for IA Chérie platform with multi-queue processing"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
-home: https://workers.ainflue.com
+home: https://workers.iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de
@@ -26,7 +26,7 @@ keywords:
   - background-jobs
   - queue
   - processing
-  - ainflue
+  - iacherie
 annotations:
   category: Background Processing
   licenses: Proprietary
@@ -47,7 +47,7 @@ dependencies:
     condition: rabbitmq.enabled
 
 ---
-# Default values for ainflue-worker
+# Default values for iacherie-worker
 # Expert roles implementation in configuration
 
 # **EXPERT ROLES IMPLEMENTATION:**
@@ -70,7 +70,7 @@ global:
 # Image configuration
 image:
   registry: docker.io
-  repository: ainflue/worker
+  repository: iacherie/worker
   tag: "1.0.0"
   pullPolicy: IfNotPresent
   pullSecrets: []
@@ -231,7 +231,7 @@ env:
   - name: LOG_LEVEL
     value: "INFO"
   - name: REDIS_URL
-    value: "redis://ainflue-redis:6379"
+    value: "redis://iacherie-redis:6379"
   - name: DATABASE_URL
     valueFrom:
       secretKeyRef:
@@ -292,28 +292,28 @@ queueConfig:
   rabbitmq:
     enabled: true
     exchanges:
-      - name: "ainflue.direct"
+      - name: "iacherie.direct"
         type: "direct"
         durable: true
-      - name: "ainflue.topic"
+      - name: "iacherie.topic"
         type: "topic"
         durable: true
-      - name: "ainflue.fanout"
+      - name: "iacherie.fanout"
         type: "fanout"
         durable: true
     queues:
       - name: "media.processing"
-        exchange: "ainflue.direct"
+        exchange: "iacherie.direct"
         routingKey: "media.process"
         durable: true
         autoDelete: false
       - name: "ai.inference"
-        exchange: "ainflue.direct"
+        exchange: "iacherie.direct"
         routingKey: "ai.infer"
         durable: true
         autoDelete: false
       - name: "notifications"
-        exchange: "ainflue.fanout"
+        exchange: "iacherie.fanout"
         durable: true
         autoDelete: false
 
@@ -479,7 +479,7 @@ affinity:
         podAffinityTerm:
           labelSelector:
             matchLabels:
-              app.kubernetes.io/name: ainflue-worker
+              app.kubernetes.io/name: iacherie-worker
           topologyKey: kubernetes.io/hostname
 
 # Service account
@@ -500,7 +500,7 @@ networkPolicy:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: ainflue
+              name: iacherie
       ports:
         - protocol: TCP
           port: 9393  # Metrics
@@ -531,12 +531,12 @@ configMaps:
       
     queues:
       redis:
-        url: redis://ainflue-redis:6379
+        url: redis://iacherie-redis:6379
         db: 0
         pool_size: 25
         
       rabbitmq:
-        url: amqp://guest:guest@ainflue-rabbitmq:5672/
+        url: amqp://guest:guest@iacherie-rabbitmq:5672/
         connection_pool_size: 10
         channel_pool_size: 25
         
@@ -634,7 +634,7 @@ postgresql:
 rabbitmq:
   enabled: true
   auth:
-    username: "ainflue"
+    username: "iacherie"
     password: "ainflue123!"
   persistence:
     enabled: true

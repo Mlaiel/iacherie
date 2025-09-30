@@ -197,7 +197,7 @@ class ConfigManagerConfig:
     
     # Redis for distributed config
     redis_url: Optional[str] = None
-    redis_key_prefix: str = "ainflue:config"
+    redis_key_prefix: str = "iacherie:config"
     
     # Audit
     enable_audit_trail: bool = True

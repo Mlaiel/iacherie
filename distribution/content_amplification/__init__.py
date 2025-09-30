@@ -1,6 +1,6 @@
 """Content Amplification Engine
 
-Advanced content amplification and reach maximization system for the Ainflue platform.
+Advanced content amplification and reach maximization system for the IA Chérie platform.
 Optimizes organic reach, manages paid boosts, and implements cross-promotion strategies
 using AI-powered amplification techniques.
 

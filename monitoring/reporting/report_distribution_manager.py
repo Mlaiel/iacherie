@@ -1,7 +1,7 @@
 """Report Distribution Manager - Enterprise Creator Economy Report Distribution
 ==============================================================================
 
-Advanced report distribution and delivery system for Ainflue Creator Economy platform.
+Advanced report distribution and delivery system for IA Chérie Creator Economy platform.
 Provides multi-channel delivery, recipient management, scheduling, access control,
 and delivery confirmation tracking.
 

@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Real-time Audio Analytics Monitor
+IA Chérie Platform - Real-time Audio Analytics Monitor
 ===================================================
 
 Advanced real-time analytics for audio processing workflows including

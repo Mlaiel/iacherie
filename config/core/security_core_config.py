@@ -1,4 +1,4 @@
-"""Ainflue Security Core Configuration
+"""IA Chérie Security Core Configuration
 ===================================
 
 Core security configurations for enterprise-grade security management
@@ -297,5 +297,5 @@ __all__ = [
     "security_core_config"
 ]
 
-logger.info("🔐 Ainflue Security Core Configuration loaded")
+logger.info("🔐 IA Chérie Security Core Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

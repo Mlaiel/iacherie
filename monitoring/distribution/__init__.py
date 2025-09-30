@@ -3,7 +3,7 @@ Distribution Monitoring Module - Enterprise Architecture
 =======================================================
 
 Comprehensive monitoring system for multi-platform content distribution
-in the Ainflue ecosystem. Provides real-time sync monitoring, performance
+in the IA Chérie ecosystem. Provides real-time sync monitoring, performance
 optimization, and cross-platform intelligence.
 
 Core Capabilities:

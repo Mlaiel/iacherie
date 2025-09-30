@@ -1,10 +1,10 @@
-# Ainflue Python SDK
+# IA Chérie Python SDK
 
-Official Python SDK for the Ainflue AI-powered content protection and monetization platform.
+Official Python SDK for the IA Chérie AI-powered content protection and monetization platform.
 
 ## 🚀 New: Public API Integration
 
-The SDK now includes full support for the **Ainflue Public API**, providing:
+The SDK now includes full support for the **IA Chérie Public API**, providing:
 - **Health Monitoring**: Check API status and performance
 - **Sandbox Testing**: Test endpoints safely before production
 - **Content Analysis**: AI-powered content analysis and fingerprinting
@@ -15,14 +15,14 @@ See [Public API Documentation](../../docs/api/PUBLIC_API_DOCUMENTATION.md) for c
 ## Installation
 
 ```bash
-pip install ainflue-sdk
+pip install iacherie-sdk
 ```
 
 Or install from source:
 
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/sdk/python
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/sdk/python
 pip install .
 ```
 
@@ -198,7 +198,7 @@ analytics = await sdk.get_analytics(
 
 ```bash
 export AINFLUE_API_KEY="your-api-key"
-export AINFLUE_BASE_URL="https://api.ainflue.com"
+export AINFLUE_BASE_URL="https://api.iacherie.com"
 ```
 
 ### Custom Configuration
@@ -208,7 +208,7 @@ from ainflue_sdk import AinflueSdkConfig, AinflueSdk
 
 config = AinflueSdkConfig(
     api_key="your-api-key",
-    base_url="https://api.ainflue.com",
+    base_url="https://api.iacherie.com",
     timeout=30,
     max_retries=3,
     retry_delay=1.0
@@ -255,8 +255,8 @@ See the `examples.py` file for comprehensive usage examples:
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/sdk/python
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/sdk/python
 pip install -e ".[dev]"
 ```
 
@@ -277,8 +277,8 @@ mypy .
 
 ## Support
 
-- **Documentation**: https://docs.ainflue.com
-- **Issues**: https://github.com/Mlaiel/Ainflue/issues
+- **Documentation**: https://docs.iacherie.com
+- **Issues**: https://github.com/Mlaiel/IA Chérie/issues
 - **Email**: mlaiel@live.de
 
 ## License

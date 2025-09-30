@@ -5,7 +5,7 @@
 ==========================================================
 
 Security Expert: Security automation enterprise avec DevSecOps integration,
-vulnerability scanning et compliance management pour plateforme Ainflue.
+vulnerability scanning et compliance management pour plateforme IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025
@@ -436,7 +436,7 @@ class SecurityAutomationEngine:
     """
     
     def __init__(self,
-                 artifacts_dir: str = "/var/artifacts/ainflue/security",
+                 artifacts_dir: str = "/var/artifacts/iacherie/security",
                  max_concurrent_scans: int = 4):
         """
         Initialise le moteur d'automation de sécurité
@@ -1170,7 +1170,7 @@ class SecurityAutomationEngine:
         }
 
 
-def create_security_automation_engine(artifacts_dir: str = "/var/artifacts/ainflue/security",
+def create_security_automation_engine(artifacts_dir: str = "/var/artifacts/iacherie/security",
                                     max_concurrent_scans: int = 4) -> SecurityAutomationEngine:
     """
     Factory function pour créer instance SecurityAutomationEngine
@@ -1205,7 +1205,7 @@ if __name__ == "__main__":
             },
             {
                 "type": "container",
-                "path": "ainflue/api:latest",
+                "path": "iacherie/api:latest",
                 "scan_types": [SecurityScanType.CONTAINER],
                 "config": {"severity": "HIGH,CRITICAL"}
             }
@@ -1234,7 +1234,7 @@ if __name__ == "__main__":
         detection_sources = [
             {
                 "type": "siem",
-                "config": {"endpoint": "https://siem.ainflue.com/api"}
+                "config": {"endpoint": "https://siem.iacherie.com/api"}
             }
         ]
         

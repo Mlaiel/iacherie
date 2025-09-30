@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE REPORTING ENGINE - AINFLUE PLATFORM
+🔥 ENTERPRISE REPORTING ENGINE - IACHERIE PLATFORM
 Ultra-advanced reporting and analytics engine
 Consolidates: reporting_automation_workflow.py + revenue_analytics_workflow.py + roi_analysis_workflow.py
 """

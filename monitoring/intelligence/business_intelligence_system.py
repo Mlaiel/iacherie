@@ -2,7 +2,7 @@
 ============================
 
 Comprehensive business monitoring and analytics system implementing all business
-monitoring requirements for the Ainflue platform including:
+monitoring requirements for the IA Chérie platform including:
 - Business dashboards (revenue, growth, user retention)
 - KPI alerting for critical business metrics
 - A/B testing framework integration with analytics

@@ -1,4 +1,4 @@
-# Suite Enterprise Orchestration Intégration Ainflue (Français)
+# Suite Enterprise Orchestration Intégration IA Chérie (Français)
 
 **Auteur:** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe d'Experts:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 Aperçu de l'Orchestration d'Intégration Enterprise
 
-Le **Module de Gestion Ainflue** fournit une suite complète d'orchestration d'intégration de niveau entreprise qui combine des capacités IA/ML avancées, une sécurité robuste, un monitoring en temps réel et des analyses prédictives pour gérer des workflows complexes d'économie de créateurs multi-plateformes.
+Le **Module de Gestion IA Chérie** fournit une suite complète d'orchestration d'intégration de niveau entreprise qui combine des capacités IA/ML avancées, une sécurité robuste, un monitoring en temps réel et des analyses prédictives pour gérer des workflows complexes d'économie de créateurs multi-plateformes.
 
 ### 🏗️ Composants d'Architecture Centrale
 
@@ -342,7 +342,7 @@ Cette suite de gestion d'intégration enterprise représente une propriété int
 Pour les opportunités de licence commerciale, le support enterprise ou les implémentations personnalisées, veuillez contacter:
 - **Email:** mlaiel@live.de
 - **Créateur:** Fahed Mlaiel
-- **Entreprise:** Ainflue Enterprise Solutions
+- **Entreprise:** IA Chérie Enterprise Solutions
 
 ### Contribution
 Ceci est une solution enterprise propriétaire. Pour les opportunités de collaboration ou les demandes de partenariat, veuillez vous adresser par les canaux officiels.

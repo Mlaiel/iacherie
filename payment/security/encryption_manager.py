@@ -3,7 +3,7 @@
 🔐 Advanced Encryption Management System
 ==========================================
 
-Enterprise-grade encryption management for Ainflue payment security.
+Enterprise-grade encryption management for IA Chérie payment security.
 Provides AES-256, RSA-4096, Elliptic Curve cryptography with HSM integration.
 
 Author: Expert Team (Security Lead + Backend Senior + Cryptography Specialist)
@@ -574,7 +574,7 @@ async def get_encryption_manager() -> AdvancedEncryptionManager:
     return encryption_manager
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chérie
 async def encrypt_creator_revenue_data(creator_id: str, revenue_data: dict) -> EncryptionResult:
     """Chiffrement spécialisé des données de revenus créateur"""
     # Génération clé spécifique créateur si nécessaire
@@ -671,7 +671,7 @@ if __name__ == "__main__":
         metrics = await manager.get_encryption_metrics()
         print(f"Encryption metrics: {metrics}")
         
-        # Test spécialisé Ainflue
+        # Test spécialisé IA Chérie
         creator_revenue = {
             'creator_id': 'creator_123',
             'revenue_amount': 1250.75,

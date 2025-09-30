@@ -1,12 +1,12 @@
 """
-Distribution Pipeline - Ainflue Enterprise
+Distribution Pipeline - IA Chérie Enterprise
 ==========================================
 Pipeline distribution multi-plateformes avec intelligence cross-platform.
 Platform optimization + content adaptation + scheduling + performance tracking.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chérie ML Pipelines
 Version: 1.0 Production
 """
 

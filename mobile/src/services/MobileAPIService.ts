@@ -171,7 +171,7 @@ class MobileAPIService {
     // Prepare request headers
     const requestHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
-      'User-Agent': 'Ainflue-Mobile/1.0',
+      'User-Agent': 'IA Chérie-Mobile/1.0',
       'X-API-Key': this.config.apiKey,
       ...headers
     };

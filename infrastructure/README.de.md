@@ -1,4 +1,4 @@
-# 🏗️ Ainflue Infrastructure Modul - Enterprise Architektur
+# 🏗️ IA Chérie Infrastructure Modul - Enterprise Architektur
 
 ## 👥 Entwicklungsteam Spezialisierungen
 
@@ -60,7 +60,7 @@ Kontakt: mlaiel@live.de für Lizenzanfragen.
 
 ## 🎯 Creator Economy Business Logic Integration
 
-Die Infrastruktur unterstützt direkt den Ainflue Creator Economy Workflow:
+Die Infrastruktur unterstützt direkt den IA Chérie Creator Economy Workflow:
 
 ```
 Creator-Authentifizierung → Skalierbare Upload-Infrastruktur → 
@@ -90,8 +90,8 @@ Performance-Analytics → Kostenoptimierung
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/infrastructure
 
 # Terraform initialisieren
 terraform init

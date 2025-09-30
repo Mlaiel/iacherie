@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Real-Time Sentiment Analyzer
+IA Chérie Platform - Advanced Real-Time Sentiment Analyzer
 ========================================================
 
 Enterprise-grade real-time sentiment analysis with multi-language support,
@@ -62,7 +62,7 @@ import redis.asyncio as redis
 import aiohttp
 import re
 
-# Ainflue imports
+# IA Chérie imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

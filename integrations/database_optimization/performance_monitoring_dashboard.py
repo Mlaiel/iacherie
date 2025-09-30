@@ -2,7 +2,7 @@
 ================================================================
 
 Real-time database performance monitoring with predictive analytics,
-intelligent alerting, and comprehensive visualization for Ainflue platform.
+intelligent alerting, and comprehensive visualization for IA Chérie platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Advanced performance monitoring + query analysis + tuning
@@ -262,7 +262,7 @@ class PerformanceMonitoringDashboard:
             # Header
             dbc.Row([
                 dbc.Col([
-                    html.H1("🗄️ Ainflue Database Performance Dashboard", 
+                    html.H1("🗄️ IA Chérie Database Performance Dashboard", 
                            className="text-center mb-4"),
                     html.Hr()
                 ])

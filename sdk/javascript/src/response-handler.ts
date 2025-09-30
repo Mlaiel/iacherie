@@ -1,5 +1,5 @@
 /**
- * Response Handler for Ainflue JavaScript SDK
+ * Response Handler for IA Chérie JavaScript SDK
  * Enterprise-grade response processing with analytics and error recovery
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

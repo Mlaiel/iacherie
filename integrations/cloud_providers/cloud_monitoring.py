@@ -6,7 +6,7 @@ supporting AWS CloudWatch, Azure Monitor, GCP Operations, and more.
 
 This module provides unified monitoring, alerting, log aggregation,
 metrics collection, and performance analysis across multiple cloud
-providers for the Ainflue platform.
+providers for the IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -576,7 +576,7 @@ class MultiCloudMonitoringSystem:
             # Parse condition to extract operator and threshold
             operator, threshold = self._parse_condition(alert.condition)
             
-            alarm_name = f"ainflue-{alert.name}-{alert.id}"
+            alarm_name = f"iacherie-{alert.name}-{alert.id}"
             
             self.aws_cloudwatch.put_metric_alarm(
                 AlarmName=alarm_name,
@@ -1173,7 +1173,7 @@ class MultiCloudMonitoringSystem:
         else:
             return LogLevel.INFO
     
-    def _parse_condition(self, condition: str) -> Tuple[str, float]:
+    def _parse_condition(self, condition: str) -> tuple[str, float]:
         """Parse alert condition to extract operator and threshold."""
         # Simple parsing for conditions like "value > 80"
         if '>' in condition:
@@ -1236,7 +1236,7 @@ async def example_usage():
             condition="value > 80",
             severity=AlertSeverity.HIGH,
             provider=CloudProvider.AWS,
-            notification_channels=["email:admin@ainflue.com", "webhook:https://hooks.slack.com/..."]
+            notification_channels=["email:admin@iacherie.com", "webhook:https://hooks.slack.com/..."]
         )
         
         print(f"Created alert: {alert.id}")
@@ -1244,7 +1244,7 @@ async def example_usage():
         # Create health check
         health_check = await monitoring.create_health_check(
             name="API Health Check",
-            url="https://api.ainflue.com/health",
+            url="https://api.iacherie.com/health",
             interval_seconds=60,
             timeout_seconds=30
         )

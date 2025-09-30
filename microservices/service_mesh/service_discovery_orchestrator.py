@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 """
 🕸️ Service Discovery Orchestrator - Enterprise Service Mesh  
-Orchestration complète de la découverte de services pour microservices Ainflue
+Orchestration complète de la découverte de services pour microservices IA Chérie
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -337,8 +337,8 @@ class ServiceDiscoveryOrchestrator:
                         'managed-by': 'service-discovery-orchestrator'
                     },
                     'annotations': {
-                        'discovery.ainflue.com/registered-by': self.service_name,
-                        'discovery.ainflue.com/registered-at': datetime.now().isoformat()
+                        'discovery.iacherie.com/registered-by': self.service_name,
+                        'discovery.iacherie.com/registered-at': datetime.now().isoformat()
                     }
                 },
                 'spec': {

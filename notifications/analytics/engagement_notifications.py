@@ -15,7 +15,7 @@ ENGAGEMENT NOTIFICATIONS ENGINE - ANALYTICS NOTIFICATIONS
 - Alertes engagement en temps réel
 - Personnalisation basée IA pour optimiser engagement
 
-🚀 FONCTIONNALITÉS AINFLUE:
+🚀 FONCTIONNALITÉS IACHERIE:
 - Suivi engagement par type de contenu (audio, video, posts)
 - Notifications nouveaux followers et interactions
 - Alertes baisse engagement et actions correctives
@@ -450,7 +450,7 @@ class EngagementNotificationEngine:
                     previous_value=trend_data['historical_average'],
                     percentage_change=change_percentage,
                     timestamp=datetime.now(),
-                    platform='ainflue',
+                    platform='iacherie',
                     demographic_data=current_engagement['demographic_insights'],
                     metadata={
                         'trend': trend.value,
@@ -471,7 +471,7 @@ class EngagementNotificationEngine:
                     previous_value=trend_data['historical_average'],
                     percentage_change=change_percentage,
                     timestamp=datetime.now(),
-                    platform='ainflue',
+                    platform='iacherie',
                     demographic_data=current_engagement['demographic_insights'],
                     metadata={
                         'trend': trend.value,
@@ -491,7 +491,7 @@ class EngagementNotificationEngine:
                     previous_value=trend_data['historical_average'],
                     percentage_change=change_percentage,
                     timestamp=datetime.now(),
-                    platform='ainflue',
+                    platform='iacherie',
                     demographic_data=current_engagement['demographic_insights'],
                     metadata={
                         'trend': trend.value,
@@ -513,7 +513,7 @@ class EngagementNotificationEngine:
                 previous_value=followers_data['historical_average'],
                 percentage_change=followers_data['change_percentage'],
                 timestamp=datetime.now(),
-                platform='ainflue',
+                platform='iacherie',
                 demographic_data=current_engagement['demographic_insights'],
                 metadata={
                     'new_followers_count': int(followers_data['current_value'] - followers_data['historical_average']),

@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE AUTOMATION ENGINE - AINFLUE PLATFORM
+🔥 ENTERPRISE AUTOMATION ENGINE - IACHERIE PLATFORM
 Ultra-advanced automation and scheduling engine
 Consolidates: automation.py + scheduler.py
 """

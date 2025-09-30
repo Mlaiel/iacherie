@@ -1,8 +1,8 @@
-# 🚨 Ainflue Platform Disaster Recovery Plan
+# 🚨 IA Chérie Platform Disaster Recovery Plan
 
 ## 📋 Executive Summary
 
-This Disaster Recovery Plan (DRP) outlines the comprehensive procedures and strategies for maintaining business continuity and recovering from disasters affecting the Ainflue AI-powered content protection and monetization platform. Our plan ensures minimal service disruption, data protection, and rapid recovery to maintain creator trust and platform integrity.
+This Disaster Recovery Plan (DRP) outlines the comprehensive procedures and strategies for maintaining business continuity and recovering from disasters affecting the IA Chérie AI-powered content protection and monetization platform. Our plan ensures minimal service disruption, data protection, and rapid recovery to maintain creator trust and platform integrity.
 
 ## 🎯 Recovery Objectives
 
@@ -216,46 +216,46 @@ disaster_response_team:
       - overall_coordination
       - decision_making_authority
       - external_communication
-    contact: "incident-commander@ainflue.com"
-    backup: "deputy-commander@ainflue.com"
+    contact: "incident-commander@iacherie.com"
+    backup: "deputy-commander@iacherie.com"
   
   technical_lead:
     responsibilities:
       - technical_recovery_coordination
       - system_restoration_oversight
       - infrastructure_management
-    contact: "tech-lead@ainflue.com"
-    backup: "senior-engineer@ainflue.com"
+    contact: "tech-lead@iacherie.com"
+    backup: "senior-engineer@iacherie.com"
   
   database_administrator:
     responsibilities:
       - database_recovery
       - data_integrity_verification
       - backup_restoration
-    contact: "dba@ainflue.com"
-    backup: "backup-dba@ainflue.com"
+    contact: "dba@iacherie.com"
+    backup: "backup-dba@iacherie.com"
   
   security_officer:
     responsibilities:
       - security_impact_assessment
       - forensic_investigation
       - compliance_verification
-    contact: "security@ainflue.com"
-    backup: "deputy-security@ainflue.com"
+    contact: "security@iacherie.com"
+    backup: "deputy-security@iacherie.com"
   
   communications_manager:
     responsibilities:
       - stakeholder_communication
       - public_relations
       - customer_updates
-    contact: "communications@ainflue.com"
-    backup: "marketing@ainflue.com"
+    contact: "communications@iacherie.com"
+    backup: "marketing@iacherie.com"
 ```
 
 ### Emergency Contacts
 
 #### Internal Contacts
-- **Emergency Hotline**: +1-800-AINFLUE-DR
+- **Emergency Hotline**: +1-800-IACHERIE-DR
 - **Incident Commander**: +1-XXX-XXX-XXXX
 - **Technical Lead**: +1-XXX-XXX-XXXX
 - **Security Officer**: +1-XXX-XXX-XXXX
@@ -614,7 +614,7 @@ improvement_process:
 ## 📞 Emergency Procedures Quick Reference
 
 ### Emergency Activation
-1. **Call Emergency Hotline**: +1-800-AINFLUE-DR
+1. **Call Emergency Hotline**: +1-800-IACHERIE-DR
 2. **Incident Declaration**: Severity level determination
 3. **Team Activation**: Response team notification
 4. **Assessment**: Initial impact and scope assessment
@@ -637,12 +637,12 @@ docker ps -a
 systemctl status critical-services
 
 # Database Emergency Access
-psql -h primary-db -U admin -d ainflue
+psql -h primary-db -U admin -d iacherie
 mongo --host mongodb-cluster
 
 # Log Analysis
-tail -f /var/log/ainflue/error.log
-grep "ERROR" /var/log/ainflue/*.log
+tail -f /var/log/iacherie/error.log
+grep "ERROR" /var/log/iacherie/*.log
 
 # Network Diagnostics
 ping primary-datacenter
@@ -663,11 +663,11 @@ netstat -tuln
 ---
 
 **Emergency Contacts Summary**
-- **Emergency Hotline**: +1-800-AINFLUE-DR
-- **Incident Commander**: incident-commander@ainflue.com
-- **Technical Lead**: tech-lead@ainflue.com
-- **Security Officer**: security@ainflue.com
-- **Executive Escalation**: executives@ainflue.com
+- **Emergency Hotline**: +1-800-IACHERIE-DR
+- **Incident Commander**: incident-commander@iacherie.com
+- **Technical Lead**: tech-lead@iacherie.com
+- **Security Officer**: security@iacherie.com
+- **Executive Escalation**: executives@iacherie.com
 
 ---
 

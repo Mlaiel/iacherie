@@ -1,10 +1,10 @@
 # 🗄️ Database Module - Enterprise Database Management
 
-## Advanced Enterprise-Grade Database Solution for Ainflue Platform
+## Advanced Enterprise-Grade Database Solution for IA Chérie Platform
 
 ### 🎯 **Module Overview**
 
-The Database Module provides comprehensive enterprise-grade database management capabilities for the Ainflue content protection and monetization platform, delivering multi-database connectivity, advanced analytics, security management, and intelligent query optimization.
+The Database Module provides comprehensive enterprise-grade database management capabilities for the IA Chérie content protection and monetization platform, delivering multi-database connectivity, advanced analytics, security management, and intelligent query optimization.
 
 ### 👥 **Development Team Specialties**
 
@@ -285,14 +285,14 @@ compliance_status = await security.check_gdpr_compliance()
 ## ⚠️ **Legal Notice**
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform - Enterprise Database Module**
+**IA Chérie Platform - Enterprise Database Module**
 
 This software is protected by international copyright law and contains proprietary technology owned exclusively by Fahed Mlaiel. Unauthorized use, reproduction, or distribution is strictly prohibited and may result in severe civil and criminal penalties.
 
 **For licensing inquiries:** mlaiel@live.de  
-**For security reports:** security@ainflue.com  
-**For enterprise support:** enterprise@ainflue.com
+**For security reports:** security@iacherie.com  
+**For enterprise support:** enterprise@iacherie.com
 
 ---
 
-**🚀 Experience the power of enterprise-grade database management with Ainflue's Database Module - where performance meets security at scale.**
+**🚀 Experience the power of enterprise-grade database management with IA Chérie's Database Module - where performance meets security at scale.**

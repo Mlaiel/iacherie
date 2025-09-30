@@ -1,5 +1,5 @@
 """
-Ainflue Core AI - Audio AI Processing Core
+IA Chérie Core AI - Audio AI Processing Core
 ==========================================
 
 Enterprise-grade audio AI system for audio content processing, speech recognition,

@@ -27,7 +27,7 @@
 
 ## 🎯 **Module Overview**
 
-The MLOps platform provides comprehensive DevOps for Machine Learning, orchestrating the complete ML model lifecycle with enterprise standards. It seamlessly integrates Ainflue business logic to optimize the creator experience.
+The MLOps platform provides comprehensive DevOps for Machine Learning, orchestrating the complete ML model lifecycle with enterprise standards. It seamlessly integrates IA Chérie business logic to optimize the creator experience.
 
 ### **🚀 Business Logic Flow Integration**
 Creator (Musician/Blogger/Photographer/Influencer/Comedian) → Upload Multi-Format → **AI Processing & MLOps Pipeline** → Protection → Collaboration → SEO → Distribution → Monetization

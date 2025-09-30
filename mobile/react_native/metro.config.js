@@ -1,6 +1,6 @@
 /**
  * Metro configuration for React Native
- * Ainflue Professional Content Creation Platform
+ * IA Chérie Professional Content Creation Platform
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)
  * Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

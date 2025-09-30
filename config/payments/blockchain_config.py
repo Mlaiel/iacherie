@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Blockchain Configuration Module
+"""IA Chérie Blockchain Configuration Module
 ========================================
 
-Enterprise-grade blockchain configuration for the Ainflue platform.
+Enterprise-grade blockchain configuration for the IA Chérie platform.
 Comprehensive blockchain integration with smart contracts, DeFi protocols,
 NFT management, and cross-chain functionality.
 

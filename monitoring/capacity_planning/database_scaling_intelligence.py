@@ -197,7 +197,7 @@ class DatabaseScalingIntelligence:
         self._configure_performance_monitoring()
         self._load_scaling_strategies()
         
-        logger.info("🗄️ DatabaseScalingIntelligence initialisé - Ainflue Creator Economy")
+        logger.info("🗄️ DatabaseScalingIntelligence initialisé - IA Chérie Creator Economy")
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Configuration enterprise par défaut"""
@@ -1198,7 +1198,7 @@ def create_database_scaling_intelligence(
 # Point d'entrée principal
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("🗄️ Initialisation Database Scaling Intelligence - Ainflue Creator Economy")
+    print("🗄️ Initialisation Database Scaling Intelligence - IA Chérie Creator Economy")
     
     intelligence = create_database_scaling_intelligence(
         enable_ml=True,
@@ -1224,7 +1224,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['databases_monitored']} databases")
     
     print("\n🎯 Database Scaling Intelligence - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

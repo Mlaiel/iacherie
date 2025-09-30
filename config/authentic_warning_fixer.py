@@ -38,7 +38,7 @@ class AuthenticWarningFixer:
         """Correction authentique du problème HighPerformanceLoader"""
         print("🔧 Correction du problème datasets.data_loader...")
         
-        datasets_file = "/workspaces/Ainfluencer/datasets/data_loader.py"
+        datasets_file = "/workspaces/IACherie/datasets/data_loader.py"
         
         try:
             # Lire le fichier actuel
@@ -112,7 +112,7 @@ except Exception as e:
 """
             
             # Créer un fichier de configuration authentique
-            config_file = "/workspaces/Ainfluencer/config/essentia_authentic_config.py"
+            config_file = "/workspaces/IACherie/config/essentia_authentic_config.py"
             with open(config_file, 'w', encoding='utf-8') as f:
                 f.write(config_code)
             

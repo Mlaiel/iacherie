@@ -1,6 +1,6 @@
-# 🔗 وحدة التكاملات Ainflue - منصة التكامل المؤسسي
+# 🔗 وحدة التكاملات IA Chérie - منصة التكامل المؤسسي
 
-![شعار Ainflue](https://img.shields.io/badge/Ainflue-منصة%20مؤسسية-blue?style=for-the-badge)
+![شعار IA Chérie](https://img.shields.io/badge/IA Chérie-منصة%20مؤسسية-blue?style=for-the-badge)
 ![الإصدار](https://img.shields.io/badge/الإصدار-1.0.0-green?style=for-the-badge)
 ![الترخيص](https://img.shields.io/badge/الترخيص-ملكية%20خاصة-red?style=for-the-badge)
 
@@ -120,7 +120,7 @@
 
 ### **طبقات التكامل**
 
-1. **المستوى 1: المنصة الأساسية** - تطبيق Ainflue الرئيسي
+1. **المستوى 1: المنصة الأساسية** - تطبيق IA Chérie الرئيسي
 2. **المستوى 2: مركز التكامل** - هذه الوحدة (التنسيق المركزي)
 3. **المستوى 3: موصلات الخدمة** - تنفيذات خاصة بالمنصة
 
@@ -251,8 +251,8 @@ await integration_manager.webhook_manager.register_endpoint(
 ### **إعداد التطوير**
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations
 
 # تثبيت تبعيات التطوير
 pip install -r requirements-dev.txt
@@ -333,4 +333,4 @@ python -m uvicorn main:app --reload
 
 ---
 
-*مبني بـ ❤️ من فريق Ainflue | تمكين المبدعين في جميع أنحاء العالم*
+*مبني بـ ❤️ من فريق IA Chérie | تمكين المبدعين في جميع أنحاء العالم*

@@ -2,7 +2,7 @@
 
 ## 📊 Comprehensive Data Governance Framework
 
-This document outlines the complete data governance and compliance implementation for the Ainflue platform, ensuring GDPR, CCPA, and other regulatory compliance while maintaining data utility and security.
+This document outlines the complete data governance and compliance implementation for the IA Chérie platform, ensuring GDPR, CCPA, and other regulatory compliance while maintaining data utility and security.
 
 ### 🎯 Overview
 
@@ -387,4 +387,4 @@ access_controls:
 **Author**: Fahed Mlaiel <mlaiel@live.de>  
 **Review Cycle**: Quarterly  
 
-For questions or updates to this documentation, please contact the Data Governance Team at governance@ainflue.com.
+For questions or updates to this documentation, please contact the Data Governance Team at governance@iacherie.com.

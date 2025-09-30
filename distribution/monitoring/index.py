@@ -1,7 +1,7 @@
 """Monitoring System Engine - Main Interface
 
 Enterprise-grade monitoring system providing unified interface
-for all monitoring, alerting, and observability capabilities across the Ainflue platform.
+for all monitoring, alerting, and observability capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -80,7 +80,7 @@ class MonitoringEngine:
     """Main Monitoring System Engine
     
     Provides comprehensive monitoring, alerting, and observability
-    for the entire Ainflue distribution platform.
+    for the entire IA Chérie distribution platform.
     """
     
     def __init__(self):

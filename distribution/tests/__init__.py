@@ -2,7 +2,7 @@
 Distribution Module Tests
 ========================
 
-Enterprise-grade test suite for the Ainflue Distribution Module.
+Enterprise-grade test suite for the IA Chérie Distribution Module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

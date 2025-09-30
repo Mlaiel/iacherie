@@ -1,6 +1,6 @@
 # 🤝 Creator Collaboration Hub
 
-**Erweiterte KI-gestützte Creator-Kollaborations-Engine für Ainflue Distribution Platform**
+**Erweiterte KI-gestützte Creator-Kollaborations-Engine für IA Chérie Distribution Platform**
 
 ## 📖 Überblick
 
@@ -285,7 +285,7 @@ spec:
     spec:
       containers:
       - name: collaboration-engine
-        image: ainflue/creator-collaboration:latest
+        image: iacherie/creator-collaboration:latest
         resources:
           requests:
             memory: "3Gi"

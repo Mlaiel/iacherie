@@ -1,6 +1,6 @@
 # 📅 Scheduling Distribution Engine - Plateforme de Planification de Publication Avancée
 
-**Système de Planification Enterprise pour la Plateforme de Distribution Ainflue**
+**Système de Planification Enterprise pour la Plateforme de Distribution IA Chérie**
 
 ## 🎯 Aperçu
 
@@ -128,9 +128,9 @@ python setup_scheduling.py --environment=production
 
 ## 📞 Support & Contact
 
-**Équipe Planification**: scheduling@ainflue.com  
+**Équipe Planification**: scheduling@iacherie.com  
 **Support Technique**: +1-800-SCHEDULE  
-**Support Enterprise**: enterprise@ainflue.com
+**Support Enterprise**: enterprise@iacherie.com
 
 ---
 

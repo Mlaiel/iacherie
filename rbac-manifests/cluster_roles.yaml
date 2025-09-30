@@ -1,15 +1,15 @@
 # Creator Economy RBAC Manifests
 # Type: cluster_roles
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Generated for Ainflue Creator Economy Platform
+# Generated for IA Chérie Creator Economy Platform
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     rbac.authorization.k8s.io/aggregate-to-admin: 'true'
-  name: ainflue-creator-admin
+  name: iacherie-creator-admin
 rules:
 - apiGroups:
   - ''
@@ -54,9 +54,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     creator-economy/role-type: ai-processing
-  name: ainflue-ai-processor
+  name: iacherie-ai-processor
 rules:
 - apiGroups:
   - ''
@@ -109,9 +109,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     creator-economy/role-type: monetization
-  name: ainflue-monetization
+  name: iacherie-monetization
 rules:
 - apiGroups:
   - ''
@@ -145,9 +145,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/part-of: ainflue-creator-economy
+    app.kubernetes.io/part-of: iacherie-creator-economy
     creator-economy/role-type: content-access
-  name: ainflue-content-viewer
+  name: iacherie-content-viewer
 rules:
 - apiGroups:
   - ''

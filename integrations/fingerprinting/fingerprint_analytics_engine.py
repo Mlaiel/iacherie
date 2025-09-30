@@ -5,7 +5,7 @@ Fingerprint analytics avec pattern detection et threat intelligence.
 Système d'analyse avancée des empreintes avec ML et IA.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Fingerprinting Module
+Project: IA Chérie Integrations - Fingerprinting Module
 Version: 1.0 Enterprise Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

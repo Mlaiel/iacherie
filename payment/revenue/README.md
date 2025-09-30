@@ -1,6 +1,6 @@
 # 💰 Payment Revenue Management System
 
-Enterprise-grade revenue management system for creator monetization, advanced analytics, and comprehensive payout orchestration on the Ainflue platform.
+Enterprise-grade revenue management system for creator monetization, advanced analytics, and comprehensive payout orchestration on the IA Chérie platform.
 
 ## 🏢 **INTELLECTUAL PROPERTY WARNING**
 

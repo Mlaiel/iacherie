@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Enterprise Notifications System
+IA Chérie Platform - Enterprise Notifications System
 ==================================================
 
-A comprehensive, AI-powered notification system for the Ainflue platform.
+A comprehensive, AI-powered notification system for the IA Chérie platform.
 Supports multi-channel delivery, intelligent personalization, and enterprise-grade scalability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -56,7 +56,7 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-logger.info(f"Ainflue Notifications System v{__version__} initialized successfully")
+logger.info(f"IA Chérie Notifications System v{__version__} initialized successfully")
 logger.info(f"6 notification orchestrators loaded: Analytics, Collaboration, Gamification, Monetization, Security, Distribution")
 logger.info(f"AI Personalization: {'Enabled' if settings.ai_personalization_enabled else 'Disabled'}")
 logger.info(f"Metrics Collection: {'Enabled' if settings.metrics_enabled else 'Disabled'}")

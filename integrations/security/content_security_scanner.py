@@ -1,13 +1,13 @@
 # 🔒 Content Security Scanner: AI-Powered Content Analysis & Protection
 """
-Content Security Scanner - Ainflue Integrations
+Content Security Scanner - IA Chérie Integrations
 ===============================================
 Enterprise content security providing AI-powered content analysis, deepfake detection,
-content validation, and threat assessment for Ainflue creator platform with advanced
+content validation, and threat assessment for IA Chérie creator platform with advanced
 computer vision and NLP-based security intelligence.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -94,7 +94,7 @@ class ContentSecurityModel(Base):
     threat_score = Column(Float, nullable=False)
     issues_detected = Column(JSON)
     recommendations = Column(JSON)
-    metadata = Column(JSON)
+    meta_data = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     processing_time = Column(Float)
 
@@ -811,7 +811,7 @@ class ContentSecurityScanner:
             logger.error(f"Erreur détection visages: {e}")
             return []
     
-    def _calculate_threat_level(self, analysis_results: List[Dict[str, Any]]) -> Tuple[ThreatLevel, float]:
+    def _calculate_threat_level(self, analysis_results: List[Dict[str, Any]]) -> tuple[ThreatLevel, float]:
         """Calcul niveau menace global"""
         if not analysis_results:
             return ThreatLevel.LOW, 0.0

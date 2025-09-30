@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE TAX CALCULATOR - ADVANCED DOCKERFILE
+# IACHERIE TAX CALCULATOR - ADVANCED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced tax calculation supporting
 # international tax laws, VAT, GST, and automated tax reporting.

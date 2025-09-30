@@ -1,4 +1,4 @@
-"""Synchronous HTTP Client for Ainflue SDK
+"""Synchronous HTTP Client for IA Chérie SDK
 
 Enterprise-grade synchronous client with multi-expert design:
 - Backend Senior: Thread-safe synchronous architecture
@@ -135,7 +135,7 @@ class RateLimiter:
 
 
 class SyncAinflueClient:
-    """High-performance synchronous HTTP client for Ainflue API
+    """High-performance synchronous HTTP client for IA Chérie API
     
     Features:
     - Thread-safe operation
@@ -148,7 +148,7 @@ class SyncAinflueClient:
     
     def __init__(
         self,
-        base_url: str = "https://api.ainflue.com",
+        base_url: str = "https://api.iacherie.com",
         api_key: Optional[str] = None,
         timeout: int = 30,
         max_retries: int = 3,
@@ -195,7 +195,7 @@ class SyncAinflueClient:
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default request headers"""
         headers = {
-            'User-Agent': 'Ainflue-Python-SDK/1.0.0',
+            'User-Agent': 'IA Chérie-Python-SDK/1.0.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-SDK-Version': '1.0.0',

@@ -1,11 +1,11 @@
 """
-Ainflue ML Pipelines - Module d'initialisation Enterprise Complet
+IA Chérie ML Pipelines - Module d'initialisation Enterprise Complet
 ================================================================
 Architecture d'IA Complète pour l'Influence Marketing et la Création de Contenu
 
 Auteur: Mlaiel (Expert Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + DevOps)  
-Copyright: © 2024 Ainflue. Tous droits réservés.
-Licence: Propriétaire - Usage strictement réservé à Ainflue
+Copyright: © 2024 IA Chérie. Tous droits réservés.
+Licence: Propriétaire - Usage strictement réservé à IA Chérie
 Version: 1.0.0 - Architecture Niveau 3 Backend
 
 CONFIDENTIAL - NE PAS DISTRIBUER
@@ -25,7 +25,7 @@ ARCHITECTURE ENTREPRISE COMPLÈTE:
 __version__ = "1.0.0"
 __author__ = "Mlaiel"
 __license__ = "Propriétaire"
-__copyright__ = "© 2024 Ainflue. Tous droits réservés."
+__copyright__ = "© 2024 IA Chérie. Tous droits réservés."
 
 import logging
 from typing import Dict, Type, Optional, Any, List
@@ -55,7 +55,7 @@ from .pipeline_monitoring import PipelineMonitoring, MetricConfig, AlertRule
 from .pipeline_scheduler import PipelineScheduler, ScheduledTask, TaskPriority
 
 class PipelineType(Enum):
-    """Types de pipelines disponibles dans l'écosystème Ainflue Enterprise"""
+    """Types de pipelines disponibles dans l'écosystème IA Chérie Enterprise"""
     # Phase 1: Core Content Processing
     CONTENT_ANALYSIS = "content_analysis"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
@@ -96,7 +96,7 @@ class PipelineFactory:
         
     def _initialize_pipeline_registry(self):
         """Initialisation complète du registre des pipelines Enterprise."""
-        self.logger.info("🏭 Initializing Complete ML Pipelines Factory - Ainflue Enterprise")
+        self.logger.info("🏭 Initializing Complete ML Pipelines Factory - IA Chérie Enterprise")
         
         # Registration de tous les pipelines implémentés
         self._pipeline_registry = {
@@ -316,7 +316,7 @@ def validate_enterprise_compliance():
 
 # Informations de diagnostic système
 SYSTEM_INFO = {
-    "architecture": "Ainflue Enterprise ML Pipeline System",
+    "architecture": "IA Chérie Enterprise ML Pipeline System",
     "version": __version__,
     "pipelines_count": len(PIPELINE_REGISTRY),
     "compliance": validate_enterprise_compliance(),

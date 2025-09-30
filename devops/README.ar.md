@@ -1,4 +1,4 @@
-# 🚀 هندسة DevOps للمؤسسات - منصة Ainflue
+# 🚀 هندسة DevOps للمؤسسات - منصة IA Chérie
 
 ## ⚠️ إشعار حماية حقوق الطبع والنشر
 **© 2025 فاهد مليل. جميع الحقوق محفوظة.**
@@ -11,7 +11,7 @@
 
 ## 📋 نظرة عامة
 
-توفر هندسة Ainflue DevOps للمؤسسات أتمتة شاملة للبنية التحتية وإدارة النشر والمراقبة والأمان وتحسين الأداء لمنصة Ainflue. يدعم هذا النظام على مستوى المؤسسة معالجة المحتوى متعدد التنسيقات وعمليات الذكاء الاصطناعي في الوقت الفعلي وشبكات التوزيع العالمية.
+توفر هندسة IA Chérie DevOps للمؤسسات أتمتة شاملة للبنية التحتية وإدارة النشر والمراقبة والأمان وتحسين الأداء لمنصة IA Chérie. يدعم هذا النظام على مستوى المؤسسة معالجة المحتوى متعدد التنسيقات وعمليات الذكاء الاصطناعي في الوقت الفعلي وشبكات التوزيع العالمية.
 
 ## 🏗️ نظرة عامة على الهندسة
 
@@ -58,8 +58,8 @@
 
 1. **استنساخ وإعداد**
    ```bash
-   git clone https://github.com/Mlaiel/Ainflue.git
-   cd Ainflue/devops
+   git clone https://github.com/Mlaiel/IA Chérie.git
+   cd IA Chérie/devops
    pip install -r ../requirements.txt
    ```
 
@@ -117,14 +117,14 @@ deployment_mgr = DeploymentManager()
 
 # نشر Blue/Green
 await deployment_mgr.blue_green_deployment({
-    "application": "ainflue-api",
+    "application": "iacherie-api",
     "version": "v2.1.0",
     "health_check_url": "/health"
 })
 
 # نشر Canary مع 10% من حركة المرور
 await deployment_mgr.canary_deployment({
-    "application": "ainflue-web",
+    "application": "iacherie-web",
     "version": "v1.5.0",
     "traffic_split": 0.1
 })
@@ -140,7 +140,7 @@ observability = ObservabilityManager()
 
 # إعداد مراقبة الخدمة
 await observability.setup_service_monitoring({
-    "service": "ainflue-api",
+    "service": "iacherie-api",
     "metrics": ["response_time", "error_rate", "throughput"],
     "alerts": {
         "response_time": {"threshold": "100ms", "action": "scale_up"},
@@ -166,12 +166,12 @@ infrastructure:
     target_cpu: 70
 
 monitoring:
-  prometheus_endpoint: https://prometheus.ainflue.com
-  grafana_endpoint: https://grafana.ainflue.com
+  prometheus_endpoint: https://prometheus.iacherie.com
+  grafana_endpoint: https://grafana.iacherie.com
   retention_days: 30
 
 security:
-  vault_endpoint: https://vault.ainflue.com
+  vault_endpoint: https://vault.iacherie.com
   encryption_at_rest: true
   network_policies: strict
 ```
@@ -183,22 +183,22 @@ security:
 #### **فشل النشر**
 ```bash
 # فحص حالة النشر
-python -m devops.deployment_manager status --app ainflue-api
+python -m devops.deployment_manager status --app iacherie-api
 
 # الإرجاع اليدوي
-python -m devops.deployment_manager rollback --app ainflue-api --to-version v1.4.0
+python -m devops.deployment_manager rollback --app iacherie-api --to-version v1.4.0
 
 # فحص السجلات
-python -m devops.observability_manager logs --service ainflue-api --since 1h
+python -m devops.observability_manager logs --service iacherie-api --since 1h
 ```
 
 #### **مشاكل الأداء**
 ```bash
 # تحليل الأداء
-python -m devops.performance_optimizer analyze --service ainflue-api
+python -m devops.performance_optimizer analyze --service iacherie-api
 
 # تعديل التوسع التلقائي
-python -m devops.performance_optimizer scale --service ainflue-api --target-cpu 50
+python -m devops.performance_optimizer scale --service iacherie-api --target-cpu 50
 
 # تحسين الموارد
 python -m devops.performance_optimizer optimize --cost-target 20%
@@ -275,4 +275,4 @@ python -m devops.security_automation monthly-scan
 
 **© 2025 فاهد مليل. جميع الحقوق محفوظة.**
 
-*تمثل هذه الوثائق هندسة DevOps على مستوى المؤسسة المصممة للنشر على نطاق الإنتاج لمنصة Ainflue.*
+*تمثل هذه الوثائق هندسة DevOps على مستوى المؤسسة المصممة للنشر على نطاق الإنتاج لمنصة IA Chérie.*

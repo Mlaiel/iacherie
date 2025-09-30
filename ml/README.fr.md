@@ -11,7 +11,7 @@
 
 ## 🎯 **Aperçu du Module**
 
-Le module ML fournit une infrastructure complète d'apprentissage automatique et d'intelligence artificielle pour la plateforme Ainflue. Il orchestre le cycle de vie complet du ML, du développement des modèles au déploiement en production avec des standards de niveau entreprise.
+Le module ML fournit une infrastructure complète d'apprentissage automatique et d'intelligence artificielle pour la plateforme IA Chérie. Il orchestre le cycle de vie complet du ML, du développement des modèles au déploiement en production avec des standards de niveau entreprise.
 
 ### **🚀 Intégration du Flux de Logique Métier**
 Créateur (Musicien/Blogueur/Photographe/Influenceur/Comédien) → Upload Multi-Format → **Traitement IA & Analyse ML** → Protection → Collaboration → SEO → Distribution → Monétisation

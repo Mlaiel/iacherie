@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "System health and infrastructure monitoring dashboard for Ainflue platform including CPU, memory, network, and database metrics.",
+  "description": "System health and infrastructure monitoring dashboard for IA Chérie platform including CPU, memory, network, and database metrics.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
@@ -73,7 +73,7 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "avg(up{job=~\"ainflue-.*\"})",
+          "expr": "avg(up{job=~\"iacherie-.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -511,13 +511,13 @@
       },
       "targets": [
         {
-          "expr": "kube_pod_status_ready{namespace=\"ainflue\", condition=\"true\"}",
+          "expr": "kube_pod_status_ready{namespace=\"iacherie\", condition=\"true\"}",
           "interval": "",
           "legendFormat": "Ready Pods",
           "refId": "A"
         },
         {
-          "expr": "kube_pod_status_ready{namespace=\"ainflue\", condition=\"false\"}",
+          "expr": "kube_pod_status_ready{namespace=\"iacherie\", condition=\"false\"}",
           "interval": "",
           "legendFormat": "Not Ready Pods",
           "refId": "B"
@@ -685,7 +685,7 @@
       },
       "targets": [
         {
-          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"ainflue\"}[5m]) * 100",
+          "expr": "rate(container_cpu_usage_seconds_total{namespace=\"iacherie\"}[5m]) * 100",
           "interval": "",
           "legendFormat": "CPU Usage - {{pod}}",
           "refId": "A"
@@ -768,7 +768,7 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "up{job=~\"ainflue-.*\"}",
+          "expr": "up{job=~\"iacherie-.*\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -894,7 +894,7 @@
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
-    "ainflue",
+    "iacherie",
     "system",
     "health",
     "infrastructure"
@@ -908,7 +908,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Ainflue System Health Dashboard",
-  "uid": "ainflue-system-health",
+  "title": "IA Chérie System Health Dashboard",
+  "uid": "iacherie-system-health",
   "version": 1
 }

@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 AI translation engine enterprise avec neural machine translation,
 context-aware translation et quality assessment automatisé.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Neural machine translation pour contenu créateur
 - Context preservation pour nuances créatives
 - Domain-specific translation (music, video, art)

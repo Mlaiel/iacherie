@@ -576,7 +576,7 @@ class UnifiedConfigurationService:
     async def _load_from_environment(self):
         """Load configurations from environment variables"""
         for key, value in os.environ.items():
-            if key.startswith('AINFLUE_'):
+            if key.startswith('IACHERIE_'):
                 # Remove prefix and convert to lowercase with dots
 # SECURITY: # SECURITY: config_key = key[8:].lower().replace('_', '.') # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
@@ -977,7 +977,7 @@ if __name__ == "__main__":
             await service.start()
             
             # Example usage
-            await service.set("app.name", "Ainflue")
+            await service.set("app.name", "IA Chérie")
             await service.set("app.version", "1.0.0")
             
             print(f"App name: {service.get('app.name')}")

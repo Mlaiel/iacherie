@@ -10,11 +10,11 @@
 
 ## 🎯 MODULE OVERVIEW
 
-**Location**: `/workspaces/Ainflue/microservices/marketing_services/`  
+**Location**: `/workspaces/IA Chérie/microservices/marketing_services/`  
 **Architecture**: Backend Level 3 (Maximum) | 18 Files Limit | Production-Ready Marketing Intelligence  
-**Purpose**: Marketing Services Enterprise pour orchestration marketing complète Ainflue
+**Purpose**: Marketing Services Enterprise pour orchestration marketing complète IA Chérie
 
-### **🌍 LOGIQUE MÉTIER AINFLUE**
+### **🌍 LOGIQUE MÉTIER IACHERIE**
 ```
 Créateurs multi-format → IA Processing → Protection → Monétisation → 
 Collaboration & Gamification → SEO → Distribution multi-plateformes
@@ -57,13 +57,13 @@ Collaboration & Gamification → SEO → Distribution multi-plateformes
 **Spécifications techniques**:
 ```python
 """
-Marketing Services Enterprise - Ainflue
+Marketing Services Enterprise - IA Chérie
 ======================================
 Point d'entrée principal pour services marketing enterprise.
 Orchestration IA des campagnes, influenceurs, et distribution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chérie Marketing Services
 Version: 1.0 Production
 """
 
@@ -74,7 +74,7 @@ from .marketing_automation_service import MarketingAutomationService
 from .social_media_service import SocialMediaService
 from .brand_management_service import BrandManagementService
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chérie
 MARKETING_SERVICES_CONFIG = {
     'creator_types_supported': ['musician', 'blogger', 'photographer', 'influencer', 'comedian'],
     'platforms_integrated': 65,
@@ -585,7 +585,7 @@ Chaque README doit contenir:
 - **IP Protection**: ✅ Fahed Mlaiel intégré dans tous composants
 
 ### **✅ CONFORMITÉ CAHIER DES CHARGES**
-- **Logique Métier Ainflue**: ✅ Marketing orchestré pour workflow créateurs → distribution
+- **Logique Métier IA Chérie**: ✅ Marketing orchestré pour workflow créateurs → distribution
 - **Code Industriel**: ✅ IA/ML marketing + automation + analytics
 - **Multi-Platform Integration**: ✅ Marketing cross-platform coordonné
 - **Creator Economy Focus**: ✅ Spécialisation créateurs multi-format
@@ -698,4 +698,4 @@ Chaque README doit contenir:
 **Date**: September 16, 2025  
 **Version**: 1.0 Production
 
-> **🎯 OBJECTIF FINAL**: Module marketing services enterprise clé en main, IA/ML optimization, influencer matching, campaign orchestration, cross-platform automation, production-ready avec code industriel ultra avancé conforme au cahier des charges Ainflue.
+> **🎯 OBJECTIF FINAL**: Module marketing services enterprise clé en main, IA/ML optimization, influencer matching, campaign orchestration, cross-platform automation, production-ready avec code industriel ultra avancé conforme au cahier des charges IA Chérie.

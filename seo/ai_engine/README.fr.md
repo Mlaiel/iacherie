@@ -1,4 +1,4 @@
-# 🤖 Moteur IA SEO Ainflue - Optimisation SEO Avancée Powered by IA
+# 🤖 Moteur IA SEO IA Chérie - Optimisation SEO Avancée Powered by IA
 
 **⚠️ AVERTISSEMENT PROPRIÉTÉ INTELLECTUELLE**  
 © 2025 Fahed Mlaiel (mlaiel@live.de) - TOUS DROITS RÉSERVÉS  
@@ -9,7 +9,7 @@
 
 ## 🎯 Présentation
 
-Le Moteur IA SEO Ainflue est une plateforme d'optimisation SEO de niveau entreprise, alimentée par l'intelligence artificielle, spécifiquement conçue pour l'économie des créateurs. Combinant apprentissage automatique avancé, traitement du langage naturel et intelligence concurrentielle pour offrir des performances SEO sans précédent aux créateurs de contenu, influenceurs et entrepreneurs numériques.
+Le Moteur IA SEO IA Chérie est une plateforme d'optimisation SEO de niveau entreprise, alimentée par l'intelligence artificielle, spécifiquement conçue pour l'économie des créateurs. Combinant apprentissage automatique avancé, traitement du langage naturel et intelligence concurrentielle pour offrir des performances SEO sans précédent aux créateurs de contenu, influenceurs et entrepreneurs numériques.
 
 ## 🚀 Fonctionnalités Principales
 
@@ -104,7 +104,7 @@ from seo.ai_engine import (
 config = {
     'openai_api_key': 'votre_clé_openai',
     'db_host': 'localhost',
-    'db_name': 'ainflue',
+    'db_name': 'iacherie',
     'redis_host': 'localhost'
 }
 

@@ -39,8 +39,8 @@ try:
     import importlib
     # Temporarily remove the local redis module from the path
     original_path = sys.path[:]
-    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
-    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    local_redis_path = [p for p in sys.path if 'IA Chérie' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'IA Chérie' not in p] + local_redis_path
     
     redis_module = importlib.import_module('redis')
     # For Redis 5.x, async is typically in redis.asyncio or use redis directly
@@ -281,7 +281,7 @@ class RedisAuthManager:
             # Admin par défaut
             admin_user = await self.create_user(
                 username="admin",
-                email="admin@ainflue.com",
+                email="admin@iacherie.com",
                 password="change_me_in_production",
                 role=UserRole.ADMIN
             )
@@ -298,7 +298,7 @@ class RedisAuthManager:
             # Service account pour intégrations
             service_user = await self.create_user(
                 username="service_account",
-                email="service@ainflue.com", 
+                email="service@iacherie.com", 
                 password=secrets.token_urlsafe(32),
                 role=UserRole.SERVICE
             )
@@ -1004,7 +1004,7 @@ class AuthManager:
             # Add enterprise security claims
             enterprise_payload = payload.copy()
             enterprise_payload.update({
-                'iss': 'ainflue-enterprise',
+                'iss': 'iacherie-enterprise',
                 'aud': 'redis-cluster',
                 'iat': int(time.time()),
                 'exp': enterprise_payload.get('exp', int(time.time() + 3600))
@@ -1039,7 +1039,7 @@ class AuthManager:
                 self.jwt_secret, 
                 algorithms=['HS256'],
                 audience='redis-cluster',  # Specify expected audience
-                issuer='ainflue-enterprise',  # Specify expected issuer
+                issuer='iacherie-enterprise',  # Specify expected issuer
                 options={
                     'verify_exp': True,  # Verify expiration
                     'verify_iss': True,  # Verify issuer
@@ -1048,7 +1048,7 @@ class AuthManager:
             )
             
             # Validate enterprise claims
-            if decoded_payload.get('iss') != 'ainflue-enterprise':
+            if decoded_payload.get('iss') != 'iacherie-enterprise':
                 raise jwt.InvalidTokenError("Invalid issuer")
             
             if decoded_payload.get('aud') != 'redis-cluster':

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - AI Optimization Engine Service
+ * IA Chérie Desktop - AI Optimization Engine Service
  * 
  * Advanced AI-powered content optimization with real-time enhancements
  * Provides intelligent content optimization for maximum performance and engagement

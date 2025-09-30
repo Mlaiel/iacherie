@@ -1,10 +1,10 @@
-# GDPR Compliance Documentation - Ainflue Platform
+# GDPR Compliance Documentation - IA Chérie Platform
 
 **Last Updated: January 2025**
 
 ## 1. Introduction and Scope
 
-This document outlines Ainflue Platform's comprehensive approach to compliance with the General Data Protection Regulation (EU) 2016/679 ("GDPR"). As an AI-powered content protection and creator monetization platform operating globally, we are committed to protecting the personal data of all EU/EEA residents who use our services.
+This document outlines IA Chérie Platform's comprehensive approach to compliance with the General Data Protection Regulation (EU) 2016/679 ("GDPR"). As an AI-powered content protection and creator monetization platform operating globally, we are committed to protecting the personal data of all EU/EEA residents who use our services.
 
 ### 1.1 Regulatory Framework
 - **Primary Regulation:** EU General Data Protection Regulation (GDPR)
@@ -14,12 +14,12 @@ This document outlines Ainflue Platform's comprehensive approach to compliance w
 
 ### 1.2 Data Controller Information
 **Data Controller:**  
-Fahed Mlaiel (Trading as Ainflue Platform)  
-Email: privacy@ainflue.com  
+Fahed Mlaiel (Trading as IA Chérie Platform)  
+Email: privacy@iacherie.com  
 Address: [To be established upon legal entity formation]
 
 **Data Protection Officer:**  
-Email: dpo@ainflue.com  
+Email: dpo@iacherie.com  
 Phone: [To be provided]
 
 ## 2. Lawful Basis for Processing
@@ -414,12 +414,12 @@ We maintain comprehensive records including:
 
 ### 12.1 Data Protection Contacts
 **Data Protection Officer:**  
-Email: dpo@ainflue.com  
+Email: dpo@iacherie.com  
 Phone: [To be provided]  
 Address: [To be provided]
 
 **Privacy Team:**  
-Email: privacy@ainflue.com  
+Email: privacy@iacherie.com  
 Response Time: 48 hours for initial response
 
 ### 12.2 Complaint Process

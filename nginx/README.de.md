@@ -12,7 +12,7 @@ Nutzer sind für die Einhaltung geltender Gesetze und Vorschriften verantwortlic
 DSGVO, DMCA und internationale Urheberrechtsschutz gelten.
 
 ## Zusammenfassung
-Enterprise-Level Nginx Webserver-Infrastruktur für Hochleistungs-Load-Balancing, SSL-Terminierung, intelligente Zwischenspeicherung und DDoS-Schutz für die Ainflue AI Creator-Plattform.
+Enterprise-Level Nginx Webserver-Infrastruktur für Hochleistungs-Load-Balancing, SSL-Terminierung, intelligente Zwischenspeicherung und DDoS-Schutz für die IA Chérie AI Creator-Plattform.
 
 ## Architektur-Überblick
 Level 2 Backend-Komponente für die Verwaltung des gesamten HTTP/HTTPS-Traffic-Routings, Multi-Service-Upstream-Management, Content-Delivery-Optimierung und Sicherheitsdurchsetzung im gesamten Creator-Ökosystem.
@@ -154,8 +154,8 @@ Level 2 Backend-Komponente für die Verwaltung des gesamten HTTP/HTTPS-Traffic-R
 ### Schnelle Bereitstellung
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/nginx
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/nginx
 
 # Mit Docker bereitstellen
 docker-compose up -d nginx
@@ -196,9 +196,9 @@ systemctl restart nginx
 - **Fehlerbehebungshandbuch**: Häufige Probleme und Lösungen
 
 ### Kontaktinformationen
-- **Technischer Support**: support@ainflue.com
-- **Sicherheitsprobleme**: security@ainflue.com
-- **Geschäftsanfragen**: business@ainflue.com
+- **Technischer Support**: support@iacherie.com
+- **Sicherheitsprobleme**: security@iacherie.com
+- **Geschäftsanfragen**: business@iacherie.com
 - **Notfall-Support**: 24/7 Enterprise-Support verfügbar
 
 ## 📄 Lizenz

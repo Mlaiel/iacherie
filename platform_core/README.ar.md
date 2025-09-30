@@ -97,7 +97,7 @@
 ### التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # تثبيت التبعيات
 pip install -r requirements.txt

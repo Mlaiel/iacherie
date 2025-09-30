@@ -1,0 +1,24 @@
+# Storage Configuration
+version: '3.8'
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: ext4
+  redis_data:
+    driver: local
+  audio_files:
+    driver: nfs
+    driver_opts:
+      addr: nfs.ainflue.com
+      
+backup_storage:
+  s3_bucket: ainflue-backups
+  retention_policy: 30d
+  encryption: AES256
+  
+performance:
+  io_scheduler: deadline
+  read_ahead: 256KB
+  write_cache: enabled

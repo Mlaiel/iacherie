@@ -1,13 +1,13 @@
-# MongoDB Database Layer - Ainflue Platform
+# MongoDB Database Layer - IA Chérie Platform
 
-[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](https://github.com/Mlaiel/IA Chérie)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0+-green.svg)](https://www.mongodb.com/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 
 ## 🚀 Overview
 
-The MongoDB Database Layer is the core data management system for the Ainflue Platform - an AI-powered influencer agent platform that revolutionizes content creation, collaboration, and monetization. This module provides enterprise-grade database management with advanced features for scalability, security, and performance optimization.
+The MongoDB Database Layer is the core data management system for the IA Chérie Platform - an AI-powered influencer agent platform that revolutionizes content creation, collaboration, and monetization. This module provides enterprise-grade database management with advanced features for scalability, security, and performance optimization.
 
 ## 👥 Team Specialties
 
@@ -34,7 +34,7 @@ This code, architecture, documentation, and all related intellectual property ar
 
 ## 🎯 Business Logic Architecture
 
-Ainflue follows a sophisticated content creator workflow:
+IA Chérie follows a sophisticated content creator workflow:
 
 ```mermaid
 graph LR
@@ -108,8 +108,8 @@ mongodb/
 
 ```bash
 # Clone the repository (authorized users only)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/mongodb
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/mongodb
 
 # Install dependencies
 pip install -r requirements.txt
@@ -271,8 +271,8 @@ terraform apply terraform/mongodb.tf
 # Production Configuration
 production:
   connection:
-    hosts: ["mongo1.ainflue.com", "mongo2.ainflue.com", "mongo3.ainflue.com"]
-    replica_set: "ainflue-rs"
+    hosts: ["mongo1.iacherie.com", "mongo2.iacherie.com", "mongo3.iacherie.com"]
+    replica_set: "iacherie-rs"
     ssl: true
     auth_source: "admin"
   
@@ -368,4 +368,4 @@ This software and associated documentation files are proprietary and confidentia
 
 ---
 
-*This README is part of the Ainflue Platform MongoDB Database Layer documentation. For complete system documentation, please refer to the main project repository.*
+*This README is part of the IA Chérie Platform MongoDB Database Layer documentation. For complete system documentation, please refer to the main project repository.*

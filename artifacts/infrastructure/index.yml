@@ -1,4 +1,4 @@
-# 🐳 Infrastructure as Code - Ainflue Platform
+# 🐳 Infrastructure as Code - IA Chérie Platform
 
 **Version:** 1.0 Enterprise  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
@@ -168,8 +168,8 @@ auto_scaling:
 network_policies:
   default_deny: true
   allowed_ingress:
-    - from_namespaces: ["ainflue-ingress"]
-    - from_namespaces: ["ainflue-monitoring"]
+    - from_namespaces: ["iacherie-ingress"]
+    - from_namespaces: ["iacherie-monitoring"]
   allowed_egress:
     - to_ports: [443, 53]
     - to_services: ["database", "cache"]
@@ -369,7 +369,7 @@ kubectl describe hpa artifacts-module-hpa
 ```bash
 # Load testing
 kubectl run load-test --image=busybox -it --rm -- /bin/sh
-curl -o /dev/null -s -w "%{time_total}\n" https://api.ainflue.com/health
+curl -o /dev/null -s -w "%{time_total}\n" https://api.iacherie.com/health
 
 # Resource monitoring
 kubectl top pods -l app=artifacts-module
@@ -385,7 +385,7 @@ kubectl describe pod artifacts-module-xxx
 > Any unauthorized use, reproduction, or distribution is strictly prohibited and will result in immediate legal action.
 
 **Contact for licensing:** mlaiel@live.de  
-**Subject:** "Ainflue Infrastructure License Request"
+**Subject:** "IA Chérie Infrastructure License Request"
 
 ---
 

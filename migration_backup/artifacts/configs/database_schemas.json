@@ -1,0 +1,583 @@
+{
+  "metadata": {
+    "name": "Database Schemas - Ainflue Enterprise",
+    "version": "1.0.0",
+    "author": "Fahed Mlaiel",
+    "created": "2025-12-15",
+    "license": "Proprietary - Fahed Mlaiel",
+    "classification": "CONFIDENTIAL"
+  },
+  "database_architecture": {
+    "pattern": "database_per_service",
+    "total_databases": 25,
+    "primary_engine": "PostgreSQL 15",
+    "secondary_engines": ["MongoDB 7.0", "Redis 7.0", "Elasticsearch 8.0"],
+    "backup_strategy": "continuous_replication",
+    "encryption": "AES-256-GCM"
+  },
+  "postgresql_databases": {
+    "count": 15,
+    "replication": "streaming_replication",
+    "schemas": {
+      "users_database": {
+        "name": "ainflue_users",
+        "purpose": "User management and authentication",
+        "tables": {
+          "users": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "email": "VARCHAR(255) UNIQUE NOT NULL",
+              "password_hash": "VARCHAR(255) NOT NULL",
+              "first_name": "VARCHAR(100)",
+              "last_name": "VARCHAR(100)",
+              "avatar_url": "TEXT",
+              "phone": "VARCHAR(20)",
+              "email_verified": "BOOLEAN DEFAULT FALSE",
+              "phone_verified": "BOOLEAN DEFAULT FALSE",
+              "two_factor_enabled": "BOOLEAN DEFAULT FALSE",
+              "status": "user_status_enum DEFAULT 'active'",
+              "subscription_tier": "subscription_tier_enum DEFAULT 'free'",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "updated_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "last_login": "TIMESTAMP WITH TIME ZONE",
+              "metadata": "JSONB DEFAULT '{}'::jsonb"
+            },
+            "indexes": {
+              "idx_users_email": "CREATE UNIQUE INDEX ON users(email)",
+              "idx_users_status": "CREATE INDEX ON users(status)",
+              "idx_users_subscription": "CREATE INDEX ON users(subscription_tier)",
+              "idx_users_created": "CREATE INDEX ON users(created_at)",
+              "idx_users_metadata_gin": "CREATE INDEX ON users USING GIN(metadata)"
+            },
+            "constraints": {
+              "email_format": "CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')",
+              "phone_format": "CHECK (phone ~* '^\\+?[1-9]\\d{1,14}$')"
+            }
+          },
+          "user_profiles": {
+            "columns": {
+              "user_id": "UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE",
+              "display_name": "VARCHAR(100)",
+              "bio": "TEXT",
+              "website": "TEXT",
+              "location": "VARCHAR(255)",
+              "timezone": "VARCHAR(50)",
+              "language": "VARCHAR(10) DEFAULT 'en'",
+              "date_of_birth": "DATE",
+              "gender": "gender_enum",
+              "profession": "VARCHAR(100)",
+              "interests": "TEXT[]",
+              "social_links": "JSONB DEFAULT '{}'::jsonb",
+              "preferences": "JSONB DEFAULT '{}'::jsonb",
+              "privacy_settings": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "updated_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_profiles_display_name": "CREATE INDEX ON user_profiles(display_name)",
+              "idx_profiles_location": "CREATE INDEX ON user_profiles(location)",
+              "idx_profiles_profession": "CREATE INDEX ON user_profiles(profession)",
+              "idx_profiles_interests_gin": "CREATE INDEX ON user_profiles USING GIN(interests)"
+            }
+          },
+          "user_sessions": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "user_id": "UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE",
+              "session_token": "VARCHAR(255) UNIQUE NOT NULL",
+              "refresh_token": "VARCHAR(255) UNIQUE",
+              "ip_address": "INET",
+              "user_agent": "TEXT",
+              "device_fingerprint": "VARCHAR(255)",
+              "location": "JSONB",
+              "expires_at": "TIMESTAMP WITH TIME ZONE NOT NULL",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "last_activity": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "is_active": "BOOLEAN DEFAULT TRUE"
+            },
+            "indexes": {
+              "idx_sessions_token": "CREATE UNIQUE INDEX ON user_sessions(session_token)",
+              "idx_sessions_user": "CREATE INDEX ON user_sessions(user_id)",
+              "idx_sessions_expires": "CREATE INDEX ON user_sessions(expires_at)",
+              "idx_sessions_activity": "CREATE INDEX ON user_sessions(last_activity)"
+            }
+          }
+        },
+        "enums": {
+          "user_status_enum": ["active", "inactive", "suspended", "deleted"],
+          "subscription_tier_enum": ["free", "creator", "professional", "enterprise"],
+          "gender_enum": ["male", "female", "non_binary", "prefer_not_to_say"]
+        }
+      },
+      "content_database": {
+        "name": "ainflue_content",
+        "purpose": "Content storage and management",
+        "tables": {
+          "content_items": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "user_id": "UUID NOT NULL",
+              "title": "VARCHAR(500) NOT NULL",
+              "description": "TEXT",
+              "content_type": "content_type_enum NOT NULL",
+              "file_url": "TEXT",
+              "thumbnail_url": "TEXT",
+              "file_size": "BIGINT",
+              "duration": "INTEGER",
+              "dimensions": "JSONB",
+              "metadata": "JSONB DEFAULT '{}'::jsonb",
+              "ai_analysis": "JSONB DEFAULT '{}'::jsonb",
+              "status": "content_status_enum DEFAULT 'processing'",
+              "visibility": "visibility_enum DEFAULT 'private'",
+              "tags": "TEXT[]",
+              "categories": "TEXT[]",
+              "language": "VARCHAR(10)",
+              "original_filename": "VARCHAR(255)",
+              "mime_type": "VARCHAR(100)",
+              "checksum": "VARCHAR(64)",
+              "processing_stats": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "updated_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "published_at": "TIMESTAMP WITH TIME ZONE"
+            },
+            "indexes": {
+              "idx_content_user": "CREATE INDEX ON content_items(user_id)",
+              "idx_content_type": "CREATE INDEX ON content_items(content_type)",
+              "idx_content_status": "CREATE INDEX ON content_items(status)",
+              "idx_content_visibility": "CREATE INDEX ON content_items(visibility)",
+              "idx_content_created": "CREATE INDEX ON content_items(created_at)",
+              "idx_content_tags_gin": "CREATE INDEX ON content_items USING GIN(tags)",
+              "idx_content_categories_gin": "CREATE INDEX ON content_items USING GIN(categories)",
+              "idx_content_metadata_gin": "CREATE INDEX ON content_items USING GIN(metadata)",
+              "idx_content_ai_analysis_gin": "CREATE INDEX ON content_items USING GIN(ai_analysis)",
+              "idx_content_fulltext": "CREATE INDEX ON content_items USING GIN(to_tsvector('english', title || ' ' || COALESCE(description, '')))"
+            }
+          },
+          "content_versions": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "content_id": "UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE",
+              "version_number": "INTEGER NOT NULL",
+              "file_url": "TEXT NOT NULL",
+              "file_size": "BIGINT",
+              "changes_description": "TEXT",
+              "created_by": "UUID NOT NULL",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_versions_content": "CREATE INDEX ON content_versions(content_id)",
+              "idx_versions_number": "CREATE INDEX ON content_versions(content_id, version_number)"
+            }
+          }
+        },
+        "enums": {
+          "content_type_enum": ["image", "video", "audio", "text", "document", "3d_model", "ar_content"],
+          "content_status_enum": ["uploading", "processing", "ready", "failed", "deleted"],
+          "visibility_enum": ["private", "unlisted", "public", "enterprise_only"]
+        }
+      },
+      "ai_processing_database": {
+        "name": "ainflue_ai",
+        "purpose": "AI processing results and models",
+        "tables": {
+          "ai_processing_jobs": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "content_id": "UUID NOT NULL",
+              "user_id": "UUID NOT NULL",
+              "agent_name": "VARCHAR(100) NOT NULL",
+              "agent_version": "VARCHAR(20) NOT NULL",
+              "input_parameters": "JSONB NOT NULL",
+              "status": "processing_status_enum DEFAULT 'queued'",
+              "progress_percentage": "INTEGER DEFAULT 0",
+              "started_at": "TIMESTAMP WITH TIME ZONE",
+              "completed_at": "TIMESTAMP WITH TIME ZONE",
+              "processing_time_ms": "INTEGER",
+              "error_message": "TEXT",
+              "error_code": "VARCHAR(50)",
+              "resource_usage": "JSONB",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_jobs_content": "CREATE INDEX ON ai_processing_jobs(content_id)",
+              "idx_jobs_user": "CREATE INDEX ON ai_processing_jobs(user_id)",
+              "idx_jobs_agent": "CREATE INDEX ON ai_processing_jobs(agent_name)",
+              "idx_jobs_status": "CREATE INDEX ON ai_processing_jobs(status)",
+              "idx_jobs_created": "CREATE INDEX ON ai_processing_jobs(created_at)"
+            }
+          },
+          "ai_analysis_results": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "job_id": "UUID NOT NULL REFERENCES ai_processing_jobs(id) ON DELETE CASCADE",
+              "content_id": "UUID NOT NULL",
+              "analysis_type": "VARCHAR(50) NOT NULL",
+              "results": "JSONB NOT NULL",
+              "confidence_score": "DECIMAL(5,4)",
+              "metadata": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_results_job": "CREATE INDEX ON ai_analysis_results(job_id)",
+              "idx_results_content": "CREATE INDEX ON ai_analysis_results(content_id)",
+              "idx_results_type": "CREATE INDEX ON ai_analysis_results(analysis_type)",
+              "idx_results_confidence": "CREATE INDEX ON ai_analysis_results(confidence_score)",
+              "idx_results_gin": "CREATE INDEX ON ai_analysis_results USING GIN(results)"
+            }
+          }
+        },
+        "enums": {
+          "processing_status_enum": ["queued", "running", "completed", "failed", "cancelled"]
+        }
+      },
+      "platform_integrations_database": {
+        "name": "ainflue_platforms",
+        "purpose": "Platform connections and publishing",
+        "tables": {
+          "platform_connections": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "user_id": "UUID NOT NULL",
+              "platform_name": "VARCHAR(50) NOT NULL",
+              "platform_user_id": "VARCHAR(255)",
+              "platform_username": "VARCHAR(255)",
+              "access_token": "TEXT",
+              "refresh_token": "TEXT",
+              "token_expires_at": "TIMESTAMP WITH TIME ZONE",
+              "scopes": "TEXT[]",
+              "connection_status": "connection_status_enum DEFAULT 'active'",
+              "last_sync": "TIMESTAMP WITH TIME ZONE",
+              "rate_limit_info": "JSONB",
+              "platform_metadata": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()",
+              "updated_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_connections_user": "CREATE INDEX ON platform_connections(user_id)",
+              "idx_connections_platform": "CREATE INDEX ON platform_connections(platform_name)",
+              "idx_connections_status": "CREATE INDEX ON platform_connections(connection_status)",
+              "idx_connections_expires": "CREATE INDEX ON platform_connections(token_expires_at)"
+            }
+          },
+          "publishing_schedules": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "content_id": "UUID NOT NULL",
+              "platform_connection_id": "UUID NOT NULL REFERENCES platform_connections(id) ON DELETE CASCADE",
+              "scheduled_time": "TIMESTAMP WITH TIME ZONE NOT NULL",
+              "platform_specific_config": "JSONB DEFAULT '{}'::jsonb",
+              "status": "schedule_status_enum DEFAULT 'scheduled'",
+              "published_at": "TIMESTAMP WITH TIME ZONE",
+              "platform_post_id": "VARCHAR(255)",
+              "platform_url": "TEXT",
+              "error_message": "TEXT",
+              "retry_count": "INTEGER DEFAULT 0",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_schedules_content": "CREATE INDEX ON publishing_schedules(content_id)",
+              "idx_schedules_connection": "CREATE INDEX ON publishing_schedules(platform_connection_id)",
+              "idx_schedules_time": "CREATE INDEX ON publishing_schedules(scheduled_time)",
+              "idx_schedules_status": "CREATE INDEX ON publishing_schedules(status)"
+            }
+          }
+        },
+        "enums": {
+          "connection_status_enum": ["active", "expired", "revoked", "error"],
+          "schedule_status_enum": ["scheduled", "publishing", "published", "failed", "cancelled"]
+        }
+      },
+      "analytics_database": {
+        "name": "ainflue_analytics",
+        "purpose": "Performance metrics and analytics",
+        "tables": {
+          "content_metrics": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "content_id": "UUID NOT NULL",
+              "platform_name": "VARCHAR(50)",
+              "metric_date": "DATE NOT NULL",
+              "views": "BIGINT DEFAULT 0",
+              "likes": "BIGINT DEFAULT 0",
+              "comments": "BIGINT DEFAULT 0",
+              "shares": "BIGINT DEFAULT 0",
+              "saves": "BIGINT DEFAULT 0",
+              "clicks": "BIGINT DEFAULT 0",
+              "impressions": "BIGINT DEFAULT 0",
+              "reach": "BIGINT DEFAULT 0",
+              "engagement_rate": "DECIMAL(5,4)",
+              "watch_time_seconds": "BIGINT DEFAULT 0",
+              "revenue": "DECIMAL(10,2) DEFAULT 0",
+              "currency": "VARCHAR(3) DEFAULT 'EUR'",
+              "additional_metrics": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_metrics_content": "CREATE INDEX ON content_metrics(content_id)",
+              "idx_metrics_platform": "CREATE INDEX ON content_metrics(platform_name)",
+              "idx_metrics_date": "CREATE INDEX ON content_metrics(metric_date)",
+              "idx_metrics_engagement": "CREATE INDEX ON content_metrics(engagement_rate)",
+              "idx_metrics_revenue": "CREATE INDEX ON content_metrics(revenue)"
+            }
+          },
+          "user_analytics": {
+            "columns": {
+              "id": "UUID PRIMARY KEY DEFAULT gen_random_uuid()",
+              "user_id": "UUID NOT NULL",
+              "analytics_date": "DATE NOT NULL",
+              "total_content": "INTEGER DEFAULT 0",
+              "total_views": "BIGINT DEFAULT 0",
+              "total_engagement": "BIGINT DEFAULT 0",
+              "total_revenue": "DECIMAL(10,2) DEFAULT 0",
+              "follower_growth": "INTEGER DEFAULT 0",
+              "avg_engagement_rate": "DECIMAL(5,4)",
+              "top_performing_content": "UUID[]",
+              "platform_breakdown": "JSONB DEFAULT '{}'::jsonb",
+              "created_at": "TIMESTAMP WITH TIME ZONE DEFAULT NOW()"
+            },
+            "indexes": {
+              "idx_user_analytics_user": "CREATE INDEX ON user_analytics(user_id)",
+              "idx_user_analytics_date": "CREATE INDEX ON user_analytics(analytics_date)",
+              "idx_user_analytics_revenue": "CREATE INDEX ON user_analytics(total_revenue)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "mongodb_databases": {
+    "count": 5,
+    "purpose": "Document storage and real-time data",
+    "schemas": {
+      "real_time_events": {
+        "database": "ainflue_events",
+        "collections": {
+          "user_activities": {
+            "schema": {
+              "_id": "ObjectId",
+              "userId": "String",
+              "sessionId": "String", 
+              "eventType": "String",
+              "eventData": "Object",
+              "timestamp": "Date",
+              "ipAddress": "String",
+              "userAgent": "String",
+              "location": "Object"
+            },
+            "indexes": [
+              {"userId": 1, "timestamp": -1},
+              {"eventType": 1, "timestamp": -1},
+              {"timestamp": -1}
+            ],
+            "ttl": "90 days"
+          },
+          "system_events": {
+            "schema": {
+              "_id": "ObjectId",
+              "service": "String",
+              "eventType": "String",
+              "severity": "String",
+              "message": "String",
+              "metadata": "Object",
+              "timestamp": "Date"
+            },
+            "indexes": [
+              {"service": 1, "timestamp": -1},
+              {"severity": 1, "timestamp": -1},
+              {"timestamp": -1}
+            ],
+            "ttl": "30 days"
+          }
+        }
+      },
+      "content_cache": {
+        "database": "ainflue_cache",
+        "collections": {
+          "content_thumbnails": {
+            "schema": {
+              "_id": "String",
+              "contentId": "String",
+              "thumbnailData": "String",
+              "size": "String",
+              "format": "String",
+              "generated_at": "Date"
+            },
+            "indexes": [
+              {"contentId": 1},
+              {"generated_at": -1}
+            ],
+            "ttl": "7 days"
+          }
+        }
+      }
+    }
+  },
+  "redis_databases": {
+    "count": 3,
+    "purpose": "Caching and session storage",
+    "configurations": {
+      "session_store": {
+        "database": 0,
+        "purpose": "User sessions",
+        "ttl": "24 hours",
+        "maxmemory_policy": "allkeys-lru"
+      },
+      "cache_store": {
+        "database": 1,
+        "purpose": "Application cache",
+        "ttl": "1 hour",
+        "maxmemory_policy": "allkeys-lru"
+      },
+      "rate_limiting": {
+        "database": 2,
+        "purpose": "Rate limiting counters",
+        "ttl": "1 hour",
+        "maxmemory_policy": "volatile-ttl"
+      }
+    }
+  },
+  "elasticsearch_indexes": {
+    "count": 2,
+    "purpose": "Search and log aggregation",
+    "indexes": {
+      "content_search": {
+        "name": "ainflue-content-search",
+        "mappings": {
+          "properties": {
+            "id": {"type": "keyword"},
+            "title": {"type": "text", "analyzer": "standard"},
+            "description": {"type": "text", "analyzer": "standard"},
+            "tags": {"type": "keyword"},
+            "categories": {"type": "keyword"},
+            "content_type": {"type": "keyword"},
+            "user_id": {"type": "keyword"},
+            "created_at": {"type": "date"},
+            "ai_analysis": {"type": "object", "enabled": false}
+          }
+        },
+        "settings": {
+          "number_of_shards": 3,
+          "number_of_replicas": 1
+        }
+      },
+      "application_logs": {
+        "name": "ainflue-logs-*",
+        "template_pattern": "ainflue-logs-*",
+        "mappings": {
+          "properties": {
+            "@timestamp": {"type": "date"},
+            "level": {"type": "keyword"},
+            "service": {"type": "keyword"},
+            "message": {"type": "text"},
+            "userId": {"type": "keyword"},
+            "requestId": {"type": "keyword"},
+            "duration": {"type": "integer"},
+            "statusCode": {"type": "integer"}
+          }
+        },
+        "settings": {
+          "number_of_shards": 5,
+          "number_of_replicas": 1,
+          "index.lifecycle.name": "logs-policy",
+          "index.lifecycle.rollover_alias": "ainflue-logs"
+        }
+      }
+    }
+  },
+  "performance_optimization": {
+    "postgresql": {
+      "connection_pooling": {
+        "max_connections": 1000,
+        "pool_size": 25,
+        "max_overflow": 50,
+        "pool_timeout": 30
+      },
+      "query_optimization": {
+        "shared_preload_libraries": ["pg_stat_statements", "auto_explain"],
+        "work_mem": "256MB",
+        "maintenance_work_mem": "1GB",
+        "effective_cache_size": "8GB"
+      },
+      "partitioning": {
+        "content_metrics": "PARTITION BY RANGE (metric_date)",
+        "user_activities": "PARTITION BY RANGE (timestamp)",
+        "ai_processing_jobs": "PARTITION BY RANGE (created_at)"
+      }
+    },
+    "mongodb": {
+      "sharding": {
+        "enabled": true,
+        "shard_key": "userId",
+        "zones": ["region-eu", "region-us", "region-asia"]
+      },
+      "read_preference": "secondaryPreferred",
+      "write_concern": {"w": "majority", "j": true}
+    },
+    "redis": {
+      "cluster_enabled": true,
+      "cluster_nodes": 6,
+      "persistence": "rdb",
+      "maxmemory": "8GB"
+    }
+  },
+  "backup_strategy": {
+    "postgresql": {
+      "method": "continuous_archiving",
+      "wal_archive": "s3://ainflue-backups/wal/",
+      "base_backup_frequency": "daily",
+      "retention": "30 days",
+      "encryption": "AES-256"
+    },
+    "mongodb": {
+      "method": "mongodump",
+      "frequency": "every_6_hours",
+      "compression": "gzip",
+      "retention": "30 days"
+    },
+    "redis": {
+      "method": "rdb_snapshot",
+      "frequency": "every_hour",
+      "retention": "7 days"
+    }
+  },
+  "monitoring": {
+    "metrics": {
+      "postgresql": ["connection_count", "query_duration", "deadlocks", "cache_hit_ratio"],
+      "mongodb": ["operation_count", "document_count", "index_usage", "replication_lag"],
+      "redis": ["memory_usage", "keyspace_hits", "connected_clients", "ops_per_sec"],
+      "elasticsearch": ["cluster_health", "index_size", "search_latency", "indexing_rate"]
+    },
+    "alerts": {
+      "high_connection_count": "> 80% of max_connections",
+      "slow_queries": "> 1 second average",
+      "replication_lag": "> 5 seconds",
+      "disk_usage": "> 85%",
+      "memory_usage": "> 90%"
+    }
+  },
+  "security": {
+    "encryption": {
+      "at_rest": "AES-256-GCM",
+      "in_transit": "TLS 1.3",
+      "key_management": "HashiCorp Vault"
+    },
+    "access_control": {
+      "authentication": "certificate_based",
+      "authorization": "role_based",
+      "network_security": "private_subnets_only"
+    },
+    "audit_logging": {
+      "enabled": true,
+      "log_all_queries": false,
+      "log_connections": true,
+      "log_disconnections": true,
+      "retention": "1 year"
+    }
+  },
+  "legal_notice": {
+    "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
+    "license": "Proprietary - Unauthorized use prohibited",
+    "classification": "CONFIDENTIAL",
+    "contact": "legal@ainflue.enterprise"
+  }
+}

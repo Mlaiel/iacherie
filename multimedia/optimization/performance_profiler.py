@@ -2,7 +2,7 @@
 📊 PERFORMANCE PROFILER - ENTERPRISE ARCHITECTURE
 ================================================
 
-Real-time performance monitoring and optimization for Ainflue Platform
+Real-time performance monitoring and optimization for IA Chérie Platform
 Enterprise-grade performance profiling with AI-powered insights
 
 **Expert Implementation:**

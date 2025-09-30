@@ -1,0 +1,409 @@
+# Enterprise Docker Compose - Advanced Expert Services
+# Comprehensive orchestration of all expert role services
+# Author: Fahed Mlaiel (mlaiel@live.de) - Combined Expert Team
+
+version: '3.8'
+
+services:
+  # Security Specialist - Security Hardening
+  security-hardening:
+    build:
+      context: .
+      dockerfile: docker/security_hardening.dockerfile
+    container_name: ainflue-security-hardening
+    environment:
+      - SECURITY_LEVEL=enterprise
+      - SCAN_INTERVAL=3600
+      - LOG_LEVEL=info
+    volumes:
+      - security_scans:/app/scans
+      - security_reports:/app/reports
+      - security_logs:/app/logs
+    networks:
+      - ainflue-security
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/security/health').raise_for_status()"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # DevOps Engineer - Deployment Automation
+  devops-automation:
+    build:
+      context: .
+      dockerfile: docker/devops_automation.dockerfile
+    container_name: ainflue-devops-automation
+    environment:
+      - DEPLOYMENT_ENV=production
+      - AUTOMATION_LEVEL=enterprise
+      - CI_CD_ENABLED=true
+    volumes:
+      - devops_deployments:/app/deployments
+      - devops_backups:/app/backups
+      - devops_logs:/app/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - ainflue-management
+      - ainflue-backend
+    restart: unless-stopped
+    privileged: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/devops/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+
+  # Backend Senior - Enterprise API Gateway
+  enterprise-api-gateway:
+    build:
+      context: .
+      dockerfile: docker/enterprise_api_gateway.dockerfile
+    container_name: ainflue-api-gateway
+    environment:
+      - NODE_ENV=production
+      - CORS_ENABLED=true
+      - RATE_LIMIT_ENABLED=true
+      - JWT_ENABLED=true
+    ports:
+      - "8080:8080"
+    networks:
+      - ainflue-frontend
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+
+  # ML Engineer - ML Pipeline Orchestrator
+  ml-pipeline-orchestrator:
+    build:
+      context: .
+      dockerfile: docker/ml_pipeline_orchestrator.dockerfile
+    container_name: ainflue-ml-pipeline
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - CUDA_VISIBLE_DEVICES=0
+      - OMP_NUM_THREADS=4
+    volumes:
+      - ml_models:/app/models
+      - ml_datasets:/app/datasets
+      - ml_experiments:/app/experiments
+      - ml_artifacts:/app/artifacts
+    networks:
+      - ainflue-ml
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/health').raise_for_status()"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '2.0'
+          memory: 2G
+
+  # DBA - Database Cluster Manager
+  database-cluster-manager:
+    build:
+      context: .
+      dockerfile: docker/database_cluster_manager.dockerfile
+    container_name: ainflue-db-cluster
+    environment:
+      - POSTGRES_DB=ainflue_cluster
+      - POSTGRES_USER=ainflue_admin
+      - POSTGRES_PASSWORD=secure_cluster_password
+      - BACKUP_SCHEDULE=0 2 * * *
+    volumes:
+      - postgres_cluster_data:/var/lib/postgresql/data
+      - postgres_backups:/app/backups
+      - postgres_archive:/var/lib/postgresql/archive
+    ports:
+      - "5433:5432"
+    networks:
+      - ainflue-database
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "5432", "-U", "ainflue_admin"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+  # Audio Engineer - Advanced Audio Processor
+  advanced-audio-processor:
+    build:
+      context: .
+      dockerfile: docker/advanced_audio_processor.dockerfile
+    container_name: ainflue-audio-processor
+    environment:
+      - AUDIO_SAMPLE_RATE=48000
+      - AUDIO_CHANNELS=2
+      - BUFFER_SIZE=512
+    volumes:
+      - audio_input:/app/input
+      - audio_output:/app/output
+      - audio_models:/app/models
+      - audio_cache:/app/cache
+    ports:
+      - "8001:8000"
+      - "8002:8001"
+      - "8003:8002"
+    networks:
+      - ainflue-audio
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/audio/health').raise_for_status()"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 2G
+        reservations:
+          cpus: '1.5'
+          memory: 1G
+
+  # Microservices Architect - Service Mesh Orchestrator
+  service-mesh-orchestrator:
+    build:
+      context: .
+      dockerfile: docker/service_mesh_orchestrator.dockerfile
+    container_name: ainflue-service-mesh
+    environment:
+      - ENVOY_ADMIN_PORT=9901
+      - CIRCUIT_BREAKER_ENABLED=true
+      - LOAD_BALANCING_STRATEGY=round_robin
+      - TLS_ENABLED=true
+    ports:
+      - "9901:9901"
+      - "10000:10000"
+    volumes:
+      - service_mesh_configs:/app/configs
+      - service_mesh_certs:/app/certificates
+    networks:
+      - ainflue-mesh
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9901/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # Lead Dev IA - AI Orchestration Hub
+  ai-orchestration-hub:
+    build:
+      context: .
+      dockerfile: docker/ai_orchestration_hub.dockerfile
+    container_name: ainflue-ai-orchestration
+    environment:
+      - AI_CACHE_SIZE=1000
+      - MAX_CONCURRENT_REQUESTS=10
+      - MODEL_CACHE_TTL=3600
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ai_models:/app/models
+      - ai_cache:/app/cache
+      - ai_workflows:/app/workflows
+    ports:
+      - "8004:8000"
+    networks:
+      - ainflue-ai
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/ai/health').raise_for_status()"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '2.0'
+          memory: 2G
+
+  # IA Prompt Engineer - Prompt Engineering Hub
+  prompt-engineering-hub:
+    build:
+      context: .
+      dockerfile: docker/prompt_engineering_hub.dockerfile
+    container_name: ainflue-prompt-engineering
+    environment:
+      - TEMPLATE_CACHE_SIZE=500
+      - OPTIMIZATION_RUNS=100
+      - A_B_TEST_ENABLED=true
+      - AUTO_OPTIMIZATION=true
+    volumes:
+      - prompt_templates:/app/templates
+      - prompt_experiments:/app/experiments
+      - prompt_cache:/app/cache
+    ports:
+      - "8005:8000"
+    networks:
+      - ainflue-ai
+      - ainflue-backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('http://localhost:8000/prompts/health').raise_for_status()"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+volumes:
+  # Security volumes
+  security_scans:
+  security_reports:
+  security_logs:
+  
+  # DevOps volumes
+  devops_deployments:
+  devops_backups:
+  devops_logs:
+  
+  # ML volumes
+  ml_models:
+  ml_datasets:
+  ml_experiments:
+  ml_artifacts:
+  
+  # Database volumes
+  postgres_cluster_data:
+  postgres_backups:
+  postgres_archive:
+  
+  # Audio volumes
+  audio_input:
+  audio_output:
+  audio_models:
+  audio_cache:
+  
+  # Service mesh volumes
+  service_mesh_configs:
+  service_mesh_certs:
+  
+  # AI volumes
+  ai_models:
+  ai_cache:
+  ai_workflows:
+  
+  # Prompt engineering volumes
+  prompt_templates:
+  prompt_experiments:
+  prompt_cache:
+
+networks:
+  ainflue-frontend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.1.0/24
+  
+  ainflue-backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.2.0/24
+  
+  ainflue-security:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.3.0/24
+  
+  ainflue-management:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.4.0/24
+  
+  ainflue-ml:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.5.0/24
+  
+  ainflue-database:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.6.0/24
+  
+  ainflue-audio:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.7.0/24
+  
+  ainflue-mesh:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.8.0/24
+  
+  ainflue-ai:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.9.0/24

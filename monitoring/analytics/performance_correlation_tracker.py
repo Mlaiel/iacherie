@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - Performance Correlation Tracker
-Enterprise performance correlation analysis for Ainflue platform
+Enterprise performance correlation analysis for IA Chérie platform
 Backend Senior + DevOps Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -95,7 +95,7 @@ class CorrelationAlert:
 
 class PerformanceCorrelationTracker:
     """
-    🔍 Advanced Performance Correlation Tracker for Ainflue Platform
+    🔍 Advanced Performance Correlation Tracker for IA Chérie Platform
     
     Enterprise-grade correlation analysis with:
     - Real-time metric correlation monitoring
@@ -1122,7 +1122,7 @@ async def main():
     """Test the performance correlation tracker"""
     try:
         # Initialize tracker
-        tracker = PerformanceCorrelationTracker("postgresql://user:pass@localhost/ainflue")
+        tracker = PerformanceCorrelationTracker("postgresql://user:pass@localhost/iacherie")
         
         # Collect metrics
         end_time = datetime.now()

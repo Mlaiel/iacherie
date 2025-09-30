@@ -2,7 +2,7 @@
 ===============================================================================
 
 Convertisseur de formats audio enterprise avec support universel, préservation
-qualité et optimisation multi-plateforme pour créateurs sur Ainflue.
+qualité et optimisation multi-plateforme pour créateurs sur IA Chérie.
 
 Expert Roles Implementation:
 🏗️ Backend Senior: Architecture conversion + pipeline parallel + optimization
@@ -170,7 +170,7 @@ class BatchConversionJob:
     conversion_config: ConversionConfig
     progress: float = 0.0
     completed_files: List[ConversionResult] = field(default_factory=list)
-    failed_files: List[Tuple[Path, str]] = field(default_factory=list)
+    failed_files: List[tuple[Path, str]] = field(default_factory=list)
     start_time: Optional[datetime] = None
     estimated_completion: Optional[datetime] = None
 
@@ -466,7 +466,7 @@ class FFmpegConverter:
         
         raise RuntimeError("FFmpeg non trouvé. Installation requise.")
     
-    def _initialize_presets(self) -> Dict[Tuple[AudioCodec, ConversionQuality], List[str]]:
+    def _initialize_presets(self) -> Dict[tuple[AudioCodec, ConversionQuality], List[str]]:
         """Initialise les presets de conversion FFmpeg"""
         
         presets = {}

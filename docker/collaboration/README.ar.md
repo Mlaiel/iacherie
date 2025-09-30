@@ -2,7 +2,7 @@
 
 ## نظرة عامة
 
-توفر وحدة خدمات التعاون قدرات مطابقة التعاون المدعومة بالذكاء الاصطناعي وتنسيق المشاريع على مستوى المؤسسة لمنصة Ainflue. تمكن هذه الوحدة المبدعين من اكتشاف بعضهم البعض والتواصل والتعاون من خلال خوارزميات المطابقة الذكية وإدارة سير العمل الآلية.
+توفر وحدة خدمات التعاون قدرات مطابقة التعاون المدعومة بالذكاء الاصطناعي وتنسيق المشاريع على مستوى المؤسسة لمنصة IA Chérie. تمكن هذه الوحدة المبدعين من اكتشاف بعضهم البعض والتواصل والتعاون من خلال خوارزميات المطابقة الذكية وإدارة سير العمل الآلية.
 
 ## الهندسة المعمارية
 
@@ -44,8 +44,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/docker/collaboration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/docker/collaboration
 
 # بدء خدمات التعاون
 docker-compose -f docker-compose.collaboration.yml up -d
@@ -170,4 +170,4 @@ DELETE /api/v1/projects/{project_id}
 
 للدعم التقني والأسئلة:
 - البريد الإلكتروني: mlaiel@live.de
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- GitHub Issues: https://github.com/Mlaiel/IA Chérie/issues

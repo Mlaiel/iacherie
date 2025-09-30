@@ -1,4 +1,4 @@
-"""Event Compression Optimizer - Advanced for Ainflue Events
+"""Event Compression Optimizer - Advanced for IA Chérie Events
 
 Advanced event compression optimizer with intelligent algorithms,
 real-time optimization, and business-aware compression strategies.
@@ -64,7 +64,7 @@ class CompressionStrategy:
 
 class EventCompressionOptimizer:
     """
-    Advanced event compression optimizer for Ainflue platform
+    Advanced event compression optimizer for IA Chérie platform
     Intelligent algorithms with business-aware compression strategies
     """
     
@@ -76,7 +76,7 @@ class EventCompressionOptimizer:
         self._initialize_compression_strategies()
         self._initialize_algorithm_performance()
         
-        logger.info("EventCompressionOptimizer initialized for Ainflue platform")
+        logger.info("EventCompressionOptimizer initialized for IA Chérie platform")
     
     def _initialize_compression_strategies(self):
         """Initialize compression strategies for different event types"""
@@ -430,7 +430,7 @@ class EventCompressionOptimizer:
     
     async def _compress_custom(self, data: bytes, level: CompressionLevel,
                              business_context: Dict[str, Any]) -> bytes:
-        """Custom compression for Ainflue-specific optimizations"""
+        """Custom compression for IA Chérie-specific optimizations"""
         
         # Custom compression could include:
         # - Dictionary compression for repeated fields

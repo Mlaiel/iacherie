@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 # Add project root to path for imports
 import sys
 import os
-sys.path.insert(0, '/home/runner/work/Ainflue/Ainflue')
+sys.path.insert(0, '/home/runner/work/IA Chérie/IA Chérie')
 
 from backend.ai.analytics import (
     AnalyticsHub,

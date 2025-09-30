@@ -1,6 +1,6 @@
 # 🗜️ Advanced Compression Intelligence Module
 
-**Enterprise-grade multimedia compression with AI-driven optimization for the Ainflue Platform**
+**Enterprise-grade multimedia compression with AI-driven optimization for the IA Chérie Platform**
 
 ## Overview
 
@@ -239,4 +239,4 @@ custom_profile = VideoCompressionConfig(
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
 Contact: mlaiel@live.de  
-Project: Ainflue Platform - Compression Intelligence Module
+Project: IA Chérie Platform - Compression Intelligence Module

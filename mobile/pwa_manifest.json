@@ -1,6 +1,6 @@
 {
-  "name": "Ainflue - AI-Powered Content Protection & Monetization",
-  "short_name": "Ainflue",
+  "name": "IA Chérie - AI-Powered Content Protection & Monetization",
+  "short_name": "IA Chérie",
   "description": "Complete content creator platform with AI protection, collaboration, and monetization",
   "start_url": "/",
   "display": "standalone",
@@ -132,12 +132,12 @@
   "related_applications": [
     {
       "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.ainflue.app",
-      "id": "com.ainflue.app"
+      "url": "https://play.google.com/store/apps/details?id=com.iacherie.app",
+      "id": "com.iacherie.app"
     },
     {
       "platform": "itunes",
-      "url": "https://apps.apple.com/app/ainflue/id123456789",
+      "url": "https://apps.apple.com/app/iacherie/id123456789",
       "id": "123456789"
     }
   ],
@@ -174,7 +174,7 @@
   
   "protocol_handlers": [
     {
-      "protocol": "ainflue",
+      "protocol": "iacherie",
       "url": "/handle-protocol?url=%s"
     }
   ],

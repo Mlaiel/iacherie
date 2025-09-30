@@ -1,4 +1,4 @@
-"""Streaming Data Client for Ainflue SDK
+"""Streaming Data Client for IA Chérie SDK
 
 Multi-expert implementation:
 - ML Engineer: Real-time data processing and ML model serving
@@ -255,7 +255,7 @@ class StreamingClient:
             # WebSocket headers
             headers = {
                 "Authorization": f"Bearer {auth_token}",
-                "User-Agent": "Ainflue-Python-SDK/1.0.0"
+                "User-Agent": "IA Chérie-Python-SDK/1.0.0"
             }
             
             # Connect with circuit breaker protection
@@ -497,7 +497,7 @@ async def example_streaming_usage():
     
     try:
         # Connect to streaming endpoint
-        await client.connect("wss://stream.ainflue.com/realtime")
+        await client.connect("wss://stream.iacherie.com/realtime")
         
         # Send a message
         await client.send_message({

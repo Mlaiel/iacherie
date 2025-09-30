@@ -1,6 +1,6 @@
 # Event Handlers Enterprise Modul
 
-**Professionelles Event-Verarbeitungssystem für Ainflue Platform**
+**Professionelles Event-Verarbeitungssystem für IA Chérie Platform**
 
 **Lead Architekt:** Fahed Mlaiel (mlaiel@live.de)  
 **Expertenteam:** Lead Dev KI + Senior Backend + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + KI Prompt Engineer

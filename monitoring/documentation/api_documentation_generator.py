@@ -112,7 +112,7 @@ class APIDocumentationGenerator:
     with Creator Economy specific enhancements and multi-format output.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chérie/IA Chérie"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.APIDocumentationGenerator")
         
@@ -200,10 +200,10 @@ class APIDocumentationGenerator:
             
             # Create documentation package
             package = APIDocumentationPackage(
-                title="Ainflue Creator Economy API",
+                title="IA Chérie Creator Economy API",
                 version="4.0.0",
                 description="Enterprise API for Creator Economy platform with advanced content processing, monetization, and collaboration features",
-                base_url="https://api.ainflue.com/v4",
+                base_url="https://api.iacherie.com/v4",
                 endpoints=documented_endpoints,
                 security_schemes=security_schemes,
                 tags=tags,
@@ -264,7 +264,7 @@ class APIDocumentationGenerator:
             creator_doc = {
                 'creator_type': creator_type,
                 'language': language,
-                'title': f'Ainflue API for {creator_type.replace("_", " ").title()} Creators',
+                'title': f'IA Chérie API for {creator_type.replace("_", " ").title()} Creators',
                 'description': f'Specialized API endpoints and features for {creator_type.replace("_", " ")} creators',
                 'endpoints': [asdict(endpoint) for endpoint in creator_endpoints],
                 'endpoint_count': len(creator_endpoints),
@@ -625,7 +625,7 @@ class APIDocumentationGenerator:
                 'description': f'Retrieve data from {path}',
                 'request': {
                     'method': method,
-                    'url': f'https://api.ainflue.com/v4{path}',
+                    'url': f'https://api.iacherie.com/v4{path}',
                     'headers': {
                         'Authorization': 'Bearer YOUR_API_TOKEN',
                         'Content-Type': 'application/json'
@@ -646,7 +646,7 @@ class APIDocumentationGenerator:
                 'description': f'Create new resource at {path}',
                 'request': {
                     'method': method,
-                    'url': f'https://api.ainflue.com/v4{path}',
+                    'url': f'https://api.iacherie.com/v4{path}',
                     'headers': {
                         'Authorization': 'Bearer YOUR_API_TOKEN',
                         'Content-Type': 'application/json'
@@ -714,8 +714,8 @@ class APIDocumentationGenerator:
                 'type': 'oauth2',
                 'flows': {
                     'authorizationCode': {
-                        'authorizationUrl': 'https://auth.ainflue.com/oauth/authorize',
-                        'tokenUrl': 'https://auth.ainflue.com/oauth/token',
+                        'authorizationUrl': 'https://auth.iacherie.com/oauth/authorize',
+                        'tokenUrl': 'https://auth.iacherie.com/oauth/token',
                         'scopes': {
                             'read': 'Read access to resources',
                             'write': 'Write access to resources',
@@ -765,7 +765,7 @@ class APIDocumentationGenerator:
                 },
                 'license': {
                     'name': 'Proprietary',
-                    'url': 'https://ainflue.com/license'
+                    'url': 'https://iacherie.com/license'
                 }
             },
             'servers': [

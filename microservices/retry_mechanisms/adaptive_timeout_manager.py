@@ -1,11 +1,11 @@
 """
-Adaptive Timeout Manager - Ainflue
+Adaptive Timeout Manager - IA Chérie
 =================================
 Manager timeout adaptatif avec ML predictions.
 Dynamic timeout adjustment + latency prediction + service profiling.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -891,7 +891,7 @@ def create_adaptive_timeout_manager(
     
     return AdaptiveTimeoutManager(config)
 
-# Configurations prédéfinies pour Ainflue
+# Configurations prédéfinies pour IA Chérie
 AINFLUE_TIMEOUT_CONFIGS = {
     'content_processing': TimeoutConfig(
         base_timeout=120.0,

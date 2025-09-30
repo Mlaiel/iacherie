@@ -1,4 +1,4 @@
-# 🔧 Module de Configuration des Services Ainflue
+# 🔧 Module de Configuration des Services IA Chérie
 
 **Configuration de Plateforme d'Économie Créative Enterprise**
 
@@ -21,7 +21,7 @@
 
 ## 📋 Aperçu
 
-Le Module de Configuration des Services Ainflue fournit une gestion de configuration de niveau entreprise pour la plateforme d'économie créative. Ce module centralise tous les aspects de configuration incluant la sécurité, les bases de données, les services cloud, les modèles IA, la monétisation, et plus.
+Le Module de Configuration des Services IA Chérie fournit une gestion de configuration de niveau entreprise pour la plateforme d'économie créative. Ce module centralise tous les aspects de configuration incluant la sécurité, les bases de données, les services cloud, les modèles IA, la monétisation, et plus.
 
 ## 🎯 Logique Métier Économie Créative
 

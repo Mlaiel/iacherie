@@ -1,11 +1,11 @@
 """
-Timeout Handling Module for Ainflue Microservices Enterprise
+Timeout Handling Module for IA Chérie Microservices Enterprise
 ===========================================================
 Implements enterprise-grade timeout handling functionality for distributed systems.
 Complete timeout management with ML prediction, circuit breaker integration, and business-aware policies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chérie Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -61,7 +61,7 @@ logger = logging.getLogger(__name__)
 
 class EnterpriseTimeoutService:
     """
-    Enterprise Timeout Handling Service - Ainflue Production
+    Enterprise Timeout Handling Service - IA Chérie Production
     ======================================================
     Orchestrates all timeout management components for enterprise-grade resilience.
     

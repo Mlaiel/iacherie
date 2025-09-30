@@ -156,10 +156,10 @@ class PerformanceTuningEngine:
         self.conservative_mode = False  # If true, makes smaller adjustments
         
         # Redis keys
-        self.metrics_key = "ainflue:performance:metrics"
-        self.rules_key = "ainflue:performance:rules"
-        self.profiles_key = "ainflue:performance:profiles"
-        self.config_history_key = "ainflue:performance:config_history"
+        self.metrics_key = "iacherie:performance:metrics"
+        self.rules_key = "iacherie:performance:rules"
+        self.profiles_key = "iacherie:performance:profiles"
+        self.config_history_key = "iacherie:performance:config_history"
         
         # Performance baselines
         self.baseline_metrics: Dict[PerformanceMetricType, float] = {}

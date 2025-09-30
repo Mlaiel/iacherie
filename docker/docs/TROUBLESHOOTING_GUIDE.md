@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-## Docker Troubleshooting for Ainflue Platform
+## Docker Troubleshooting for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -34,10 +34,10 @@ docker service update --force <service-name>
 docker pull <image-name>
 
 # Check registry connectivity
-docker login registry.ainflue.com
+docker login registry.iacherie.com
 
 # Use alternative registry
-docker service update --image backup-registry.com/ainflue/api:latest <service-name>
+docker service update --image backup-registry.com/iacherie/api:latest <service-name>
 ```
 
 #### 2. Network Connectivity Issues
@@ -46,7 +46,7 @@ docker service update --image backup-registry.com/ainflue/api:latest <service-na
 ```bash
 # Check network configuration
 docker network ls
-docker network inspect ainflue-network
+docker network inspect iacherie-network
 
 # Test connectivity between services
 docker exec <container-id> ping <service-name>
@@ -90,10 +90,10 @@ docker service update --limit-cpu 2.0 --limit-memory 4g <service-name>
 **Problem: Slow database queries**
 ```bash
 # PostgreSQL diagnostics
-docker exec postgres psql -U ainflue -c "SELECT * FROM pg_stat_activity WHERE state = 'active';"
+docker exec postgres psql -U iacherie -c "SELECT * FROM pg_stat_activity WHERE state = 'active';"
 
 # Check slow queries
-docker exec postgres psql -U ainflue -c "SELECT query, mean_time, calls FROM pg_stat_statements ORDER BY mean_time DESC LIMIT 10;"
+docker exec postgres psql -U iacherie -c "SELECT query, mean_time, calls FROM pg_stat_statements ORDER BY mean_time DESC LIMIT 10;"
 
 # Redis diagnostics
 docker exec redis redis-cli info memory

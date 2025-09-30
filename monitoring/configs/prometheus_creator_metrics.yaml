@@ -1,6 +1,6 @@
 # 📊 Prometheus Creator Metrics Configuration
 # =============================================
-# Configuration métriques Prometheus spécifiques Creator Economy Ainflue
+# Configuration métriques Prometheus spécifiques Creator Economy IA Chérie
 # Collecte intelligente avec différenciation par tier et type de créateur
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -23,7 +23,7 @@ global:
   scrape_interval: 30s
   evaluation_interval: 30s
   external_labels:
-    cluster: 'ainflue-creator-economy'
+    cluster: 'iacherie-creator-economy'
     environment: 'production'
     region: 'global'
 
@@ -52,14 +52,14 @@ scrape_configs:
     scrape_interval: 15s  # Haute fréquence pour audio
     metrics_path: '/metrics/audio'
     static_configs:
-      - targets: ['ainflue-audio-engine:8080']
+      - targets: ['iacherie-audio-engine:8080']
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 'ainflue-audio-engine:8080'
+        replacement: 'iacherie-audio-engine:8080'
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       processing_type: ['upload', 'transcode', 'streaming', 'collaboration']
@@ -74,7 +74,7 @@ scrape_configs:
     scrape_interval: 60s
     metrics_path: '/metrics/seo'
     static_configs:
-      - targets: ['ainflue-seo-engine:8081']
+      - targets: ['iacherie-seo-engine:8081']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       content_type: ['article', 'tutorial', 'review', 'news']
@@ -90,7 +90,7 @@ scrape_configs:
     scrape_interval: 30s
     metrics_path: '/metrics/images'
     static_configs:
-      - targets: ['ainflue-image-engine:8082']
+      - targets: ['iacherie-image-engine:8082']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       image_format: ['jpeg', 'png', 'raw', 'webp']
@@ -106,7 +106,7 @@ scrape_configs:
     scrape_interval: 45s
     metrics_path: '/metrics/social'
     static_configs:
-      - targets: ['ainflue-social-engine:8083']
+      - targets: ['iacherie-social-engine:8083']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       platform: ['youtube', 'tiktok', 'instagram', 'twitter', 'linkedin']
@@ -122,7 +122,7 @@ scrape_configs:
     scrape_interval: 15s  # Haute fréquence pour IA
     metrics_path: '/metrics/ai'
     static_configs:
-      - targets: ['ainflue-ai-engine:8084']
+      - targets: ['iacherie-ai-engine:8084']
     params:
       model_type: ['classification', 'generation', 'protection', 'recommendation']
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
@@ -138,7 +138,7 @@ scrape_configs:
     scrape_interval: 30s
     metrics_path: '/metrics/revenue'
     static_configs:
-      - targets: ['ainflue-payment-engine:8085']
+      - targets: ['iacherie-payment-engine:8085']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       revenue_stream: ['licensing', 'partnerships', 'subscriptions', 'merchandise']
@@ -154,7 +154,7 @@ scrape_configs:
     scrape_interval: 60s
     metrics_path: '/metrics/collaboration'
     static_configs:
-      - targets: ['ainflue-collaboration-engine:8086']
+      - targets: ['iacherie-collaboration-engine:8086']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       collaboration_type: ['music', 'video', 'photo', 'article', 'campaign']
@@ -170,7 +170,7 @@ scrape_configs:
     scrape_interval: 30s
     metrics_path: '/metrics/protection'
     static_configs:
-      - targets: ['ainflue-protection-engine:8087']
+      - targets: ['iacherie-protection-engine:8087']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       protection_type: ['copyright', 'watermark', 'drm', 'blockchain']
@@ -186,7 +186,7 @@ scrape_configs:
     scrape_interval: 60s
     metrics_path: '/metrics/distribution'
     static_configs:
-      - targets: ['ainflue-distribution-engine:8088']
+      - targets: ['iacherie-distribution-engine:8088']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       distribution_channel: ['youtube', 'spotify', 'instagram', 'tiktok', 'own_website']
@@ -202,7 +202,7 @@ scrape_configs:
     scrape_interval: 60s
     metrics_path: '/metrics/gamification'
     static_configs:
-      - targets: ['ainflue-gamification-engine:8089']
+      - targets: ['iacherie-gamification-engine:8089']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       gamification_type: ['achievements', 'leaderboards', 'challenges', 'rewards']
@@ -218,7 +218,7 @@ scrape_configs:
     scrape_interval: 300s  # 5 minutes - moins fréquent
     metrics_path: '/metrics/seo-performance'
     static_configs:
-      - targets: ['ainflue-seo-tracker:8090']
+      - targets: ['iacherie-seo-tracker:8090']
     params:
       creator_tier: ['premium', 'standard', 'basic', 'enterprise']
       search_engine: ['google', 'bing', 'yahoo', 'duckduckgo']
@@ -230,14 +230,14 @@ scrape_configs:
         replacement: 'seo_performance'
 
   # 🏗️ Infrastructure & Performance Metrics
-  - job_name: 'ainflue-infrastructure'
+  - job_name: 'iacherie-infrastructure'
     scrape_interval: 30s
     static_configs:
       - targets: 
-          - 'ainflue-api-gateway:8080'
-          - 'ainflue-database:5432'
-          - 'ainflue-redis:6379'
-          - 'ainflue-storage:9000'
+          - 'iacherie-api-gateway:8080'
+          - 'iacherie-database:5432'
+          - 'iacherie-redis:6379'
+          - 'iacherie-storage:9000'
     metric_relabel_configs:
       # Enrichissement des métriques infrastructure
       - source_labels: [__name__]
@@ -258,7 +258,7 @@ scrape_configs:
     scrape_interval: 300s  # 5 minutes
     metrics_path: '/metrics/business'
     static_configs:
-      - targets: ['ainflue-bi-engine:8091']
+      - targets: ['iacherie-bi-engine:8091']
     params:
       report_type: ['daily', 'weekly', 'monthly', 'real_time']
       kpi_category: ['revenue', 'engagement', 'growth', 'retention']
@@ -354,35 +354,35 @@ custom_metrics_definitions:
 recording_rules:
   # Agrégations par créateur
   creator_aggregations:
-    - record: 'ainflue:creator_avg_processing_time'
+    - record: 'iacherie:creator_avg_processing_time'
       expr: 'avg by (creator_id, creator_type) (ainflue_processing_duration_ms)'
       
-    - record: 'ainflue:creator_total_revenue_hourly'
+    - record: 'iacherie:creator_total_revenue_hourly'
       expr: 'sum by (creator_id) (increase(ainflue_revenue_usd[1h]))'
       
-    - record: 'ainflue:creator_engagement_rate_daily'
+    - record: 'iacherie:creator_engagement_rate_daily'
       expr: 'avg by (creator_id) (ainflue_engagement_score) * 100'
 
   # Agrégations par tier
   tier_aggregations:
-    - record: 'ainflue:tier_performance_score'
+    - record: 'iacherie:tier_performance_score'
       expr: 'avg by (creator_tier) (ainflue_creator_success_score)'
       
-    - record: 'ainflue:tier_sla_compliance'
+    - record: 'iacherie:tier_sla_compliance'
       expr: 'sum by (creator_tier) (ainflue_sla_met) / sum by (creator_tier) (ainflue_sla_total)'
       
-    - record: 'ainflue:tier_revenue_per_creator'
+    - record: 'iacherie:tier_revenue_per_creator'
       expr: 'sum by (creator_tier) (ainflue_revenue_usd) / count by (creator_tier) (ainflue_active_creators)'
 
   # Agrégations plateforme
   platform_aggregations:
-    - record: 'ainflue:platform_health_score'
+    - record: 'iacherie:platform_health_score'
       expr: 'avg(up{job=~"creator-.*"})'
       
-    - record: 'ainflue:platform_total_creators'
+    - record: 'iacherie:platform_total_creators'
       expr: 'count(count by (creator_id) (ainflue_creator_active))'
       
-    - record: 'ainflue:platform_content_velocity'
+    - record: 'iacherie:platform_content_velocity'
       expr: 'sum(rate(ainflue_content_created_total[5m]))'
 
 # 🚨 Configuration Alerting avancée

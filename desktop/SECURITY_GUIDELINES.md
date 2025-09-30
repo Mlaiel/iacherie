@@ -1,4 +1,4 @@
-# Ainflue Desktop - Security Guidelines
+# IA Chérie Desktop - Security Guidelines
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -30,7 +30,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 ## Security Architecture Overview
 
-Ainflue Desktop implements a comprehensive multi-layered security architecture designed to protect user content, intellectual property, and system integrity.
+IA Chérie Desktop implements a comprehensive multi-layered security architecture designed to protect user content, intellectual property, and system integrity.
 
 ### Security Principles
 
@@ -71,7 +71,7 @@ Ainflue Desktop implements a comprehensive multi-layered security architecture d
 
 ### Process Isolation
 
-Ainflue Desktop follows Electron's multi-process architecture with strict security policies:
+IA Chérie Desktop follows Electron's multi-process architecture with strict security policies:
 
 ```javascript
 // Main process security configuration
@@ -97,7 +97,7 @@ const mainWindow = new BrowserWindow({
   script-src 'self' 'unsafe-inline';
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: https:;
-  connect-src 'self' wss: https://api.ainflue.com;
+  connect-src 'self' wss: https://api.iacherie.com;
   font-src 'self';
   object-src 'none';
   media-src 'self' https:;
@@ -407,7 +407,7 @@ class AccessControl {
 const Store = require('electron-store');
 
 const secureStore = new Store({
-  name: 'ainflue-secure',
+  name: 'iacherie-secure',
   encryptionKey: process.env.ENCRYPTION_KEY || 'default-dev-key',
   schema: {
     userCredentials: {
@@ -485,7 +485,7 @@ class OAuth2Manager {
   constructor() {
     this.clientId = process.env.OAUTH_CLIENT_ID;
     this.clientSecret = process.env.OAUTH_CLIENT_SECRET;
-    this.redirectUri = 'https://ainflue.com/auth/callback';
+    this.redirectUri = 'https://iacherie.com/auth/callback';
     this.scope = 'content:read content:write analytics:read';
   }
   
@@ -508,7 +508,7 @@ class OAuth2Manager {
       code_challenge_method: 'S256'
     });
     
-    return `https://auth.ainflue.com/oauth/authorize?${params}`;
+    return `https://auth.iacherie.com/oauth/authorize?${params}`;
   }
   
   async exchangeCodeForToken(code, state) {
@@ -520,7 +520,7 @@ class OAuth2Manager {
     
     const codeVerifier = secureStore.get('code_verifier');
     
-    const response = await fetch('https://auth.ainflue.com/oauth/token', {
+    const response = await fetch('https://auth.iacherie.com/oauth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -569,8 +569,8 @@ class TokenManager {
     try {
       const decoded = jwt.verify(token, this.publicKey, {
         algorithms: ['RS256'],
-        issuer: 'https://auth.ainflue.com',
-        audience: 'ainflue-desktop'
+        issuer: 'https://auth.iacherie.com',
+        audience: 'iacherie-desktop'
       });
       
       // Check token expiration
@@ -590,7 +590,7 @@ class TokenManager {
       throw new Error('No refresh token available');
     }
     
-    const response = await fetch('https://auth.ainflue.com/oauth/token', {
+    const response = await fetch('https://auth.iacherie.com/oauth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -754,11 +754,11 @@ class SecureAutoUpdater {
     // Configure update server with HTTPS and certificate pinning
     autoUpdater.setFeedURL({
       provider: 'generic',
-      url: 'https://updates.ainflue.com/desktop/',
+      url: 'https://updates.iacherie.com/desktop/',
       channel: 'stable',
       // Custom request options for certificate pinning
       requestHeaders: {
-        'User-Agent': 'Ainflue-Desktop-Updater'
+        'User-Agent': 'IA Chérie-Desktop-Updater'
       }
     });
     
@@ -869,7 +869,7 @@ describe('Security Tests', () => {
 #!/bin/bash
 # Security penetration test script
 
-echo "🔐 Starting Ainflue Desktop Security Tests"
+echo "🔐 Starting IA Chérie Desktop Security Tests"
 
 # Test for common vulnerabilities
 echo "Testing for XSS vulnerabilities..."

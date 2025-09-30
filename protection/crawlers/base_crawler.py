@@ -196,7 +196,7 @@ class CrawlerConfig:
     rate_limit: int = 60
     max_retries: int = 3
     timeout: int = 30
-    user_agent: str = "Ainfluencer-Crawler/1.0"
+    user_agent: str = "IA Chérie-Crawler/1.0"
     enable_caching: bool = True
     cache_ttl: int = 3600
     enable_monitoring: bool = True

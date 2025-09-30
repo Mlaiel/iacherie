@@ -1,7 +1,7 @@
 """Rate Limiting Governor Module
 
 Advanced rate limiting and throttling with intelligent quota management
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -145,7 +145,7 @@ class RateLimitMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Rate Limiting Rules"""
+    """IA Chérie Business Rate Limiting Rules"""
     
     # Rate limiting rules by context
     RATE_LIMIT_RULES = {
@@ -708,7 +708,7 @@ class RateLimitingGovernor:
     # Helper methods
     
     async def _load_business_rules(self):
-        """Load Ainflue business rate limiting rules"""
+        """Load IA Chérie business rate limiting rules"""
         for rule_name, rule_config in AinflueBusiness.RATE_LIMIT_RULES.items():
             rule_config.rule_id = rule_name
             self.rate_limit_rules[rule_name] = rule_config

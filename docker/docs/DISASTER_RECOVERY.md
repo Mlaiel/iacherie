@@ -1,6 +1,6 @@
 # Disaster Recovery Plan
 
-## Enterprise Disaster Recovery for Ainflue Platform
+## Enterprise Disaster Recovery for IA Chérie Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 3.0  
@@ -8,7 +8,7 @@
 
 ### Overview
 
-Comprehensive disaster recovery strategy ensuring 99.99% uptime and RTO < 4 hours for the Ainflue platform.
+Comprehensive disaster recovery strategy ensuring 99.99% uptime and RTO < 4 hours for the IA Chérie platform.
 
 ### Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)
 
@@ -64,8 +64,8 @@ from datetime import datetime, timedelta
 
 class FailoverController:
     def __init__(self):
-        self.primary_endpoint = "https://api.ainflue.com/health"
-        self.dr_endpoint = "https://dr.api.ainflue.com/health"
+        self.primary_endpoint = "https://api.iacherie.com/health"
+        self.dr_endpoint = "https://dr.api.iacherie.com/health"
         self.dns_controller = DNSController()
         
     async def monitor_health(self):
@@ -94,7 +94,7 @@ class FailoverController:
         
         # Update DNS to point to DR region
         await self.dns_controller.update_record(
-            "api.ainflue.com", 
+            "api.iacherie.com", 
             self.dr_endpoint.replace("https://", "")
         )
         
@@ -167,12 +167,12 @@ fi
 version: '3.8'
 services:
   app-blue:
-    image: ainflue/api:blue
+    image: iacherie/api:blue
     deploy:
       replicas: 0  # Standby
       
   app-green:
-    image: ainflue/api:green
+    image: iacherie/api:green
     deploy:
       replicas: 3  # Active
       
@@ -263,7 +263,7 @@ BACKUP_DATE=$2
 echo "Recovering volume: $VOLUME_NAME from backup: $BACKUP_DATE"
 
 # Stop services using the volume
-SERVICES=$(docker service ls --filter label=com.docker.stack.namespace=ainflue -q)
+SERVICES=$(docker service ls --filter label=com.docker.stack.namespace=iacherie -q)
 for service in $SERVICES; do
     docker service scale $service=0
 done
@@ -305,14 +305,14 @@ docker node update --label-add region=primary $(docker node ls -q)
 docker node update --label-add role=manager $(docker node ls -q --filter role=manager)
 
 # Restore networks
-docker network create --driver overlay --attachable ainflue-network
+docker network create --driver overlay --attachable iacherie-network
 docker network create --driver overlay monitoring-network
 
 # Restore secrets and configs
 restore_secrets_and_configs
 
 # Deploy services
-docker stack deploy -c docker-compose.production.yml ainflue
+docker stack deploy -c docker-compose.production.yml iacherie
 ```
 
 #### 2. Configuration Recovery
@@ -437,7 +437,7 @@ configs:
       scrape_configs:
         - job_name: 'dr-endpoints'
           static_configs:
-            - targets: ['dr.api.ainflue.com:443']
+            - targets: ['dr.api.iacherie.com:443']
           metrics_path: /health
           scheme: https
 ```
@@ -465,8 +465,8 @@ class IncidentCommunication:
         # Send email to on-call team
         if severity in ['critical', 'high']:
             await self.email_service.send_alert(
-                recipients=['oncall@ainflue.com'],
-                subject=f"[{severity.upper()}] Ainflue Incident",
+                recipients=['oncall@iacherie.com'],
+                subject=f"[{severity.upper()}] IA Chérie Incident",
                 body=message
             )
     
@@ -487,7 +487,7 @@ class IncidentCommunication:
 ### Immediate Actions (0-5 minutes)
 1. Check service status: `docker service ps ainflue_api`
 2. Check logs: `docker service logs ainflue_api`
-3. Verify load balancer: `curl -I https://api.ainflue.com/health`
+3. Verify load balancer: `curl -I https://api.iacherie.com/health`
 
 ### Recovery Steps (5-15 minutes)
 1. Scale service: `docker service scale ainflue_api=3`

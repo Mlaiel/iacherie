@@ -1,6 +1,6 @@
 # 🚀 محرك تضخيم المحتوى
 
-**نظام متقدم لتضخيم المحتوى وتعظيم الوصول لمنصة Ainflue**
+**نظام متقدم لتضخيم المحتوى وتعظيم الوصول لمنصة IA Chérie**
 
 ## 📖 نظرة عامة
 
@@ -202,7 +202,7 @@ SPOTIFY_API_KEY=your_spotify_api_key
 
 # مراقبة الأداء
 AMPLIFICATION_METRICS_ENABLED=true
-AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.ainflue.com
+AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.iacherie.com
 AMPLIFICATION_ALERT_THRESHOLD=0.1
 ```
 

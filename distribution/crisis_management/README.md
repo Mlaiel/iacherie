@@ -1,6 +1,6 @@
 # 🚨 Crisis Management Engine
 
-**Advanced Crisis Detection, Management, and Reputation Protection System for Ainflue Distribution Platform**
+**Advanced Crisis Detection, Management, and Reputation Protection System for IA Chérie Distribution Platform**
 
 ## 📖 Overview
 

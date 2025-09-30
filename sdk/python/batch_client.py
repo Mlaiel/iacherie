@@ -1,4 +1,4 @@
-"""Batch Operations Client for Ainflue SDK
+"""Batch Operations Client for IA Chérie SDK
 
 Multi-expert implementation:
 - Backend Senior: Robust batch processing architecture

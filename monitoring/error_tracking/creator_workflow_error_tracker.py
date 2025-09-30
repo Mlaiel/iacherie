@@ -1,5 +1,5 @@
 """
-Creator Workflow Error Tracker for Ainflue Creator Economy
+Creator Workflow Error Tracker for IA Chérie Creator Economy
 Comprehensive workflow error tracking with Creator Economy intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Model Compatibility Checker for Ainflue ML Platform
+Model Compatibility Checker for IA Chérie ML Platform
 Model compatibility validation across different deployment environments
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

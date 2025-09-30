@@ -18,7 +18,7 @@ class DockerExpertValidator:
     """Validate all expert role implementations"""
     
     def __init__(self):
-        self.base_path = Path("/home/runner/work/Ainflue/Ainflue")
+        self.base_path = Path("/home/runner/work/IA Chérie/IA Chérie")
         self.docker_path = self.base_path / "docker"
         self.validation_results = {
             "timestamp": datetime.now().isoformat(),

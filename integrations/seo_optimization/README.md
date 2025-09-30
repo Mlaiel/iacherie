@@ -1,4 +1,4 @@
-# 🔍 SEO Optimization - Ainflue Integrations
+# 🔍 SEO Optimization - IA Chérie Integrations
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

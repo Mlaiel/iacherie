@@ -1,7 +1,7 @@
 """RabbitMQ Connector Orchestrator Module
 
 Enterprise RabbitMQ orchestration for critical business events
-in the Ainflue Message Queues Enterprise system.
+in the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -102,32 +102,32 @@ class RabbitMQMessage:
 
 
 class AinflueBusiness:
-    """Ainflue Business RabbitMQ Topology"""
+    """IA Chérie Business RabbitMQ Topology"""
     
     # Main exchanges by business domain
     EXCHANGES = {
         "content": RabbitMQExchange(
-            name="ainflue.content.exchange",
+            name="iacherie.content.exchange",
             type=ExchangeType.TOPIC,
             durable=True
         ),
         "collaboration": RabbitMQExchange(
-            name="ainflue.collaboration.exchange",
+            name="iacherie.collaboration.exchange",
             type=ExchangeType.TOPIC,
             durable=True
         ),
         "revenue": RabbitMQExchange(
-            name="ainflue.revenue.exchange",
+            name="iacherie.revenue.exchange",
             type=ExchangeType.TOPIC,
             durable=True
         ),
         "seo": RabbitMQExchange(
-            name="ainflue.seo.exchange",
+            name="iacherie.seo.exchange",
             type=ExchangeType.TOPIC,
             durable=True
         ),
         "distribution": RabbitMQExchange(
-            name="ainflue.distribution.exchange",
+            name="iacherie.distribution.exchange",
             type=ExchangeType.TOPIC,
             durable=True
         )
@@ -181,48 +181,48 @@ class AinflueBusiness:
     # Specialized queues
     QUEUES = {
         "content_upload_processor": RabbitMQQueue(
-            name="ainflue.content.upload.processor",
+            name="iacherie.content.upload.processor",
             durable=True,
             arguments={
                 "x-max-priority": 10,
                 "x-message-ttl": 3600000,  # 1 hour
-                "x-dead-letter-exchange": "ainflue.content.dlx"
+                "x-dead-letter-exchange": "iacherie.content.dlx"
             }
         ),
         "ai_analysis_processor": RabbitMQQueue(
-            name="ainflue.content.ai.analysis.processor",
+            name="iacherie.content.ai.analysis.processor",
             durable=True,
             arguments={
                 "x-max-priority": 10,
                 "x-message-ttl": 1800000,  # 30 minutes
-                "x-dead-letter-exchange": "ainflue.content.dlx"
+                "x-dead-letter-exchange": "iacherie.content.dlx"
             }
         ),
         "collaboration_matching_processor": RabbitMQQueue(
-            name="ainflue.collaboration.matching.processor",
+            name="iacherie.collaboration.matching.processor",
             durable=True,
             arguments={
                 "x-max-priority": 10,
                 "x-message-ttl": 600000,  # 10 minutes
-                "x-dead-letter-exchange": "ainflue.collaboration.dlx"
+                "x-dead-letter-exchange": "iacherie.collaboration.dlx"
             }
         ),
         "revenue_calculation_processor": RabbitMQQueue(
-            name="ainflue.revenue.calculation.processor",
+            name="iacherie.revenue.calculation.processor",
             durable=True,
             arguments={
                 "x-max-priority": 10,
                 "x-message-ttl": 7200000,  # 2 hours
-                "x-dead-letter-exchange": "ainflue.revenue.dlx"
+                "x-dead-letter-exchange": "iacherie.revenue.dlx"
             }
         ),
         "payment_processing_processor": RabbitMQQueue(
-            name="ainflue.payment.processing.processor",
+            name="iacherie.payment.processing.processor",
             durable=True,
             arguments={
                 "x-max-priority": 10,
                 "x-message-ttl": 1800000,  # 30 minutes
-                "x-dead-letter-exchange": "ainflue.payment.dlx"
+                "x-dead-letter-exchange": "iacherie.payment.dlx"
             }
         )
     }
@@ -304,7 +304,7 @@ class RabbitMQConnectorOrchestrator:
             logger.error(f"Error disconnecting from RabbitMQ: {str(e)}")
     
     async def setup_topology(self) -> bool:
-        """Setup RabbitMQ topology for Ainflue business logic"""
+        """Setup RabbitMQ topology for IA Chérie business logic"""
         try:
             if not self.is_connected:
                 await self.connect()
@@ -337,7 +337,7 @@ class RabbitMQConnectorOrchestrator:
         
         routing_key = f"content.upload.{content_type}"
         message = RabbitMQMessage(
-            exchange="ainflue.content.exchange",
+            exchange="iacherie.content.exchange",
             routing_key=routing_key,
             payload={
                 "event_type": "content_upload",
@@ -369,7 +369,7 @@ class RabbitMQConnectorOrchestrator:
         priority = 9 if urgency == "urgent" else 5
         
         message = RabbitMQMessage(
-            exchange="ainflue.collaboration.exchange",
+            exchange="iacherie.collaboration.exchange",
             routing_key=routing_key,
             payload={
                 "event_type": "collaboration_match",
@@ -401,7 +401,7 @@ class RabbitMQConnectorOrchestrator:
         priority = 10 if calculation_type == "urgent" else 6
         
         message = RabbitMQMessage(
-            exchange="ainflue.revenue.exchange",
+            exchange="iacherie.revenue.exchange",
             routing_key=routing_key,
             payload={
                 "event_type": "revenue_calculation",
@@ -433,7 +433,7 @@ class RabbitMQConnectorOrchestrator:
         routing_key = f"seo.optimization.{optimization_type}"
         
         message = RabbitMQMessage(
-            exchange="ainflue.seo.exchange",
+            exchange="iacherie.seo.exchange",
             routing_key=routing_key,
             payload={
                 "event_type": "seo_optimization",
@@ -593,10 +593,10 @@ class RabbitMQConnectorOrchestrator:
     async def _setup_dead_letter_exchanges(self):
         """Setup dead letter exchanges for error handling"""
         dlx_exchanges = [
-            RabbitMQExchange("ainflue.content.dlx", ExchangeType.DIRECT),
-            RabbitMQExchange("ainflue.collaboration.dlx", ExchangeType.DIRECT),
-            RabbitMQExchange("ainflue.revenue.dlx", ExchangeType.DIRECT),
-            RabbitMQExchange("ainflue.payment.dlx", ExchangeType.DIRECT)
+            RabbitMQExchange("iacherie.content.dlx", ExchangeType.DIRECT),
+            RabbitMQExchange("iacherie.collaboration.dlx", ExchangeType.DIRECT),
+            RabbitMQExchange("iacherie.revenue.dlx", ExchangeType.DIRECT),
+            RabbitMQExchange("iacherie.payment.dlx", ExchangeType.DIRECT)
         ]
         
         for dlx in dlx_exchanges:
@@ -620,30 +620,30 @@ class RabbitMQConnectorOrchestrator:
         bindings = [
             # Content bindings
             RabbitMQBinding(
-                queue="ainflue.content.upload.processor",
-                exchange="ainflue.content.exchange",
+                queue="iacherie.content.upload.processor",
+                exchange="iacherie.content.exchange",
                 routing_key="content.upload.*"
             ),
             RabbitMQBinding(
-                queue="ainflue.content.ai.analysis.processor",
-                exchange="ainflue.content.exchange",
+                queue="iacherie.content.ai.analysis.processor",
+                exchange="iacherie.content.exchange",
                 routing_key="content.ai.analysis.*"
             ),
             # Collaboration bindings
             RabbitMQBinding(
-                queue="ainflue.collaboration.matching.processor",
-                exchange="ainflue.collaboration.exchange",
+                queue="iacherie.collaboration.matching.processor",
+                exchange="iacherie.collaboration.exchange",
                 routing_key="collaboration.match.*"
             ),
             # Revenue bindings
             RabbitMQBinding(
-                queue="ainflue.revenue.calculation.processor",
-                exchange="ainflue.revenue.exchange",
+                queue="iacherie.revenue.calculation.processor",
+                exchange="iacherie.revenue.exchange",
                 routing_key="revenue.calculation.*"
             ),
             RabbitMQBinding(
-                queue="ainflue.payment.processing.processor",
-                exchange="ainflue.revenue.exchange",
+                queue="iacherie.payment.processing.processor",
+                exchange="iacherie.revenue.exchange",
                 routing_key="revenue.payment.*"
             )
         ]

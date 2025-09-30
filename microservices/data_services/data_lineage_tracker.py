@@ -1,6 +1,6 @@
 """
 🔍 Data Lineage Tracker - Traçabilité des Données Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chérie Microservices Enterprise
 
 Service de traçabilité complète des données avec graphe de lignage intelligent.
 Suivi automatique des transformations et analyse d'impact pour gouvernance enterprise.

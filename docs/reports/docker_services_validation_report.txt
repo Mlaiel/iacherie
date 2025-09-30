@@ -12,7 +12,7 @@ BASIC Environment:
 ✅ Dry Run: True
 
 🩺 Health Endpoints:
-   • ainflue-app: http://localhost:8000/health
+   • iacherie-app: http://localhost:8000/health
    • postgres: pg_isready
    • redis: redis-cli ping
    • mongodb: mongosh --eval "db.adminCommand('ping')"
@@ -20,7 +20,7 @@ BASIC Environment:
    • prometheus: http://localhost:9090/-/healthy
    • grafana: http://localhost:3000/api/health
 
-🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_basic_startup.sh
+🧪 Test Script: /home/runner/work/IA Chérie/IA Chérie/test_basic_startup.sh
 
 MONITORING Environment:
 ========================================
@@ -36,7 +36,7 @@ MONITORING Environment:
    • elasticsearch: http://localhost:9200/_cluster/health
    • alertmanager: http://localhost:9093/-/healthy
 
-🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_monitoring_startup.sh
+🧪 Test Script: /home/runner/work/IA Chérie/IA Chérie/test_monitoring_startup.sh
 
 PRODUCTION Environment:
 ========================================
@@ -46,7 +46,7 @@ PRODUCTION Environment:
 ✅ Dependencies: True
 ✅ Dry Run: True
 
-🧪 Test Script: /home/runner/work/Ainflue/Ainflue/test_production_startup.sh
+🧪 Test Script: /home/runner/work/IA Chérie/IA Chérie/test_production_startup.sh
 
 
 SUMMARY

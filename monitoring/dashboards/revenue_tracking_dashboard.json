@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Revenue Tracking Dashboard",
-    "tags": ["ainflue", "revenue", "monetization", "financial"],
+    "title": "IA Chérie Revenue Tracking Dashboard",
+    "tags": ["iacherie", "revenue", "monetization", "financial"],
     "style": "dark",
     "timezone": "browser",
     "editable": true,

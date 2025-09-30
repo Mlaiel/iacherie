@@ -5,7 +5,7 @@ Platform-specific optimization with 8 specialized platform agents.
 Algorithmic content adaptation for 65+ platforms with engagement prediction.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -413,7 +413,7 @@ class PlatformAgent:
         await asyncio.sleep(0.1)
         
         # Generate optimized content URL
-        optimized_url = f"https://platform-optimized.ainflue.com/{request.content_id}_{platform.value}_{self.agent_name}.mp4"
+        optimized_url = f"https://platform-optimized.iacherie.com/{request.content_id}_{platform.value}_{self.agent_name}.mp4"
         
         return optimized_url
     
@@ -520,7 +520,7 @@ class PlatformAgent:
         
         # Generate 3 variations
         for i in range(3):
-            thumbnail_url = f"https://thumbnails.ainflue.com/{request.content_id}_{platform.value}_thumb_{i+1}.jpg"
+            thumbnail_url = f"https://thumbnails.iacherie.com/{request.content_id}_{platform.value}_thumb_{i+1}.jpg"
             thumbnail_urls.append(thumbnail_url)
         
         return thumbnail_urls

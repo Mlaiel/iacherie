@@ -1,4 +1,4 @@
-# 📱 Ainflue Mobile Applications Suite
+# 📱 IA Chérie Mobile Applications Suite
 
 Complete mobile application ecosystem for AI-powered content creation, protection, and monetization.
 
@@ -261,4 +261,4 @@ All mobile applications are production-ready with:
 
 ---
 
-**🎵 Ainflue Mobile Suite - The Complete Solution for AI-Powered Content Creation**
+**🎵 IA Chérie Mobile Suite - The Complete Solution for AI-Powered Content Creation**

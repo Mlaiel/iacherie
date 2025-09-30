@@ -28,7 +28,7 @@
 
 ## 🎯 ÜBERBLICK
 
-Das **Error Tracking Enterprise** System ist eine fortschrittliche Intelligence-Plattform für Überwachung, Analyse und Prävention von Fehlern im Creator Economy Ökosystem von Ainflue. Entwickelt mit Backend Senior Architektur und Enterprise ML/AI Fähigkeiten.
+Das **Error Tracking Enterprise** System ist eine fortschrittliche Intelligence-Plattform für Überwachung, Analyse und Prävention von Fehlern im Creator Economy Ökosystem von IA Chérie. Entwickelt mit Backend Senior Architektur und Enterprise ML/AI Fähigkeiten.
 
 ### 🌟 HAUPTFUNKTIONEN
 
@@ -253,8 +253,8 @@ monetization_error_id = await monetization_detection_system.detect_monetization_
 
 ### 📞 Support-Kontakte
 
-- **Technischer Support:** support@ainflue.com
-- **Notfall-Eskalation:** emergency@ainflue.com
+- **Technischer Support:** support@iacherie.com
+- **Notfall-Eskalation:** emergency@iacherie.com
 - **Chefarchitekt:** mlaiel@live.de
 
 ### 🔄 Geplante Wartung

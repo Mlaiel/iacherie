@@ -11,7 +11,7 @@ services:
       context: ../..
       dockerfile: docker/monetization/revenue_tracker.dockerfile
       target: production
-    container_name: ainflue-revenue-tracker
+    container_name: iacherie-revenue-tracker
     ports:
       - "8040:8040"
     environment:
@@ -44,7 +44,7 @@ services:
       context: ../..
       dockerfile: docker/monetization/payment_processor.dockerfile
       target: production
-    container_name: ainflue-payment-processor
+    container_name: iacherie-payment-processor
     ports:
       - "8041:8041"
     environment:

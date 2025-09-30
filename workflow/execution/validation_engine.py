@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE VALIDATION ENGINE - AINFLUE PLATFORM
+🔥 ENTERPRISE VALIDATION ENGINE - IACHERIE PLATFORM
 Ultra-advanced validation and exception handling system
 Consolidates: validators.py + exceptions.py
 """
@@ -346,8 +346,8 @@ class EnterpriseAuthenticationManager:
                 "session_id": security_context.session_id,
                 "exp": security_context.token_exp,
                 "iat": datetime.utcnow(),
-                "iss": "ainflue-workflow",
-                "aud": "ainflue-platform"
+                "iss": "iacherie-workflow",
+                "aud": "iacherie-platform"
             }
             
             token = jwt.encode(payload, self.secret_key, algorithm=self.algorithm)

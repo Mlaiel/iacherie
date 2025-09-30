@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Distributed Dependency Mapper Enterprise
+IA Chérie Platform - Distributed Dependency Mapper Enterprise
 =========================================================
 
 Advanced distributed dependency mapping system for monitoring service dependency visualization,
@@ -565,7 +565,7 @@ class TopologyDiscoverer:
                 service_name=service_name,
                 service_type=service_type,
                 version=f"v{np.random.randint(1, 5)}.{np.random.randint(0, 10)}.{np.random.randint(0, 20)}",
-                namespace="ainflue-platform",
+                namespace="iacherie-platform",
                 cluster="production",
                 health_status=np.random.choice(list(ServiceHealth)),
                 business_criticality=self._determine_business_criticality(service_name),

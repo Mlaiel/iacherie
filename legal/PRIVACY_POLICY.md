@@ -1,10 +1,10 @@
-# Privacy Policy - Ainflue Platform
+# Privacy Policy - IA Chérie Platform
 
 **Last Updated: January 2025**
 
 ## 1. Introduction
 
-This Privacy Policy describes how Fahed Mlaiel and Ainflue Platform ("Company", "we", "us", or "our") collects, uses, processes, and protects your personal information when you use our AI-powered content protection and creator monetization platform ("Service").
+This Privacy Policy describes how Fahed Mlaiel and IA Chérie Platform ("Company", "we", "us", or "our") collects, uses, processes, and protects your personal information when you use our AI-powered content protection and creator monetization platform ("Service").
 
 We are committed to protecting your privacy and ensuring transparency about our data practices. This policy complies with the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), Lei Geral de Proteção de Dados (LGPD), and other applicable privacy laws.
 
@@ -273,15 +273,15 @@ Your continued use of the Service after policy changes constitutes acceptance of
 For questions about this Privacy Policy or our privacy practices:
 
 **Privacy Officer:**  
-Email: privacy@ainflue.com  
+Email: privacy@iacherie.com  
 Address: [To be provided based on legal entity establishment]
 
 **Data Protection Officer (EU):**  
-Email: dpo@ainflue.com
+Email: dpo@iacherie.com
 
 ### 14.2 Exercising Your Rights
 To exercise your privacy rights:
-- Email: privacy-rights@ainflue.com
+- Email: privacy-rights@iacherie.com
 - Account Settings: Use the privacy controls in your account dashboard
 - Phone: [To be provided]
 

@@ -1,8 +1,8 @@
-# 🎵 Audio-Verarbeitungsüberwachungsmodul - Ainflue Plattform
+# 🎵 Audio-Verarbeitungsüberwachungsmodul - IA Chérie Plattform
 
 ## Überblick
 
-Das Audio-Verarbeitungsüberwachungsmodul bietet umfassende Überwachung und Qualitätskontrolle für professionelle Audio-Verarbeitungsworkflows im Ainflue-Ökosystem. Dieses Enterprise-grade System implementiert Broadcast-Standards (EBU R128, ITU-R), KI-gestützte Quellentrennung und Audio-Qualitätsmetriken für professionelle Content-Produktion.
+Das Audio-Verarbeitungsüberwachungsmodul bietet umfassende Überwachung und Qualitätskontrolle für professionelle Audio-Verarbeitungsworkflows im IA Chérie-Ökosystem. Dieses Enterprise-grade System implementiert Broadcast-Standards (EBU R128, ITU-R), KI-gestützte Quellentrennung und Audio-Qualitätsmetriken für professionelle Content-Produktion.
 
 ## Kernkomponenten
 

@@ -1,8 +1,8 @@
 # MongoDB Troubleshooting Guide
-# Ainflue Platform Database Layer
+# IA Chérie Platform Database Layer
 
 ## 📋 PROJECT INFORMATION
-**Project:** Ainflue - AI-Powered Influencer Agent Platform  
+**Project:** IA Chérie - AI-Powered Influencer Agent Platform  
 **Module:** MongoDB Troubleshooting Guide  
 **Version:** 1.0.0  
 **Last Updated:** September 12, 2025  
@@ -137,18 +137,18 @@ db.createUser({
 })
 
 // Create database user
-use ainflue
+use iacherie
 db.createUser({
   user: "ainflue_user",
   pwd: "user_password",
-  roles: [{role: "readWrite", db: "ainflue"}]
+  roles: [{role: "readWrite", db: "iacherie"}]
 })
 
 // Update user password
 db.changeUserPassword("username", "new_password")
 
 // Grant additional roles
-db.grantRolesToUser("username", [{role: "dbAdmin", db: "ainflue"}])
+db.grantRolesToUser("username", [{role: "dbAdmin", db: "iacherie"}])
 ```
 
 ### 🐌 Performance Issues
@@ -317,7 +317,7 @@ sudo systemctl stop mongod
 mongod --dbpath /var/lib/mongodb --repair --repairpath /tmp/repair
 
 # If repair fails, restore from backup
-mongorestore --host localhost:27017 --db ainflue /backup/path
+mongorestore --host localhost:27017 --db iacherie /backup/path
 
 # Validate collections after repair
 mongo --eval "db.collection.validate({full: true})"
@@ -433,19 +433,19 @@ db.collection.find({}).explain()
 **Solutions:**
 ```javascript
 // Choose better shard key (compound key example)
-sh.shardCollection("ainflue.content", {
+sh.shardCollection("iacherie.content", {
   "user_id": 1,
   "created_at": 1
 })
 
 // Enable balancer if disabled
-sh.enableBalancing("ainflue.content")
+sh.enableBalancing("iacherie.content")
 
 // Split chunks manually if needed
-sh.splitAt("ainflue.content", {"user_id": "middle_value"})
+sh.splitAt("iacherie.content", {"user_id": "middle_value"})
 
 // Move chunks manually for better distribution
-sh.moveChunk("ainflue.content", 
+sh.moveChunk("iacherie.content", 
   {"user_id": "value"}, 
   "shard02"
 )
@@ -497,7 +497,7 @@ rs.initiate({
 ```python
 #!/usr/bin/env python3
 """
-MongoDB Diagnostic Tool for Ainflue Platform
+MongoDB Diagnostic Tool for IA Chérie Platform
 Comprehensive health check and performance analysis
 """
 
@@ -940,7 +940,7 @@ if __name__ == "__main__":
 ## 📞 SUPPORT & CONTACT
 
 **Support Engineering:** Fahed Mlaiel (mlaiel@live.de)  
-**Project:** Ainflue Platform  
+**Project:** IA Chérie Platform  
 **Module:** MongoDB Troubleshooting Guide  
 **Documentation Version:** 1.0.0  
 

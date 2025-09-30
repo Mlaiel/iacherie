@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-🔄 ENTERPRISE EXPORT MANAGER - AINFLUE IA INFLUENCER AGENT
+🔄 ENTERPRISE EXPORT MANAGER - IACHERIE IA INFLUENCER AGENT
 Creator: Fahed Mlaiel
 Multi-Expert Implementation: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 

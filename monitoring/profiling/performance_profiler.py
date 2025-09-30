@@ -1,7 +1,7 @@
 """⚡ Performance Profiling System
 ==============================
 
-Advanced performance monitoring and optimization system for the Ainflue platform.
+Advanced performance monitoring and optimization system for the IA Chérie platform.
 Provides real-time profiling, bottleneck detection, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -374,7 +374,7 @@ Initialize performance profiler"""
             process_cpu = process.cpu_percent()
             
             # Update Prometheus metrics
-            self.cpu_usage.labels(process="ainflue", core="total").set(cpu_percent)
+            self.cpu_usage.labels(process="iacherie", core="total").set(cpu_percent)
             self.memory_usage.labels(type="rss").set(process_memory.rss)
             self.memory_usage.labels(type="vms").set(process_memory.vms)
             self.memory_usage.labels(type="system_total").set(memory.total)

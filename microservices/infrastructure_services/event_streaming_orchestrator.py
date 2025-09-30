@@ -608,7 +608,7 @@ class EventBus:
             raise
     
     async def _setup_default_sagas(self):
-        """Setup default Ainflue workflow sagas"""
+        """Setup default IA Chérie workflow sagas"""
         
         # Content Processing Saga
         async def upload_content(saga_state):
@@ -689,7 +689,7 @@ class EventBus:
             
             # Determine topic
             if not topic:
-                topic = f"ainflue.{event.event_type.value.replace('.', '_')}"
+                topic = f"iacherie.{event.event_type.value.replace('.', '_')}"
             
             # Serialize event
             serialized_event = event.serialize()
@@ -841,7 +841,7 @@ class EventBus:
         logger.info("Event bus shutdown complete")
 
 
-# Example event handlers for Ainflue
+# Example event handlers for IA Chérie
 class ContentUploadHandler(EventHandler):
     """Handler for content upload events"""
     
@@ -911,7 +911,7 @@ class SecurityThreatHandler(EventHandler):
 
 # Example usage
 async def setup_ainflue_event_bus():
-    """Setup Ainflue event bus with handlers"""
+    """Setup IA Chérie event bus with handlers"""
     event_bus = EventBus()
     await event_bus.initialize()
     
@@ -921,9 +921,9 @@ async def setup_ainflue_event_bus():
     event_bus.register_handler(SecurityThreatHandler())
     
     # Subscribe to topics
-    await event_bus.subscribe("ainflue.content_uploaded")
-    await event_bus.subscribe("ainflue.ai_inference_requested")
-    await event_bus.subscribe("ainflue.security_threat_detected")
+    await event_bus.subscribe("iacherie.content_uploaded")
+    await event_bus.subscribe("iacherie.ai_inference_requested")
+    await event_bus.subscribe("iacherie.security_threat_detected")
     
     # Train anomaly detection
     event_bus.event_analytics.train_anomaly_detection()

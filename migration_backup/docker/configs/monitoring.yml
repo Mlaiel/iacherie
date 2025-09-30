@@ -1,0 +1,41 @@
+# Monitoring Configuration
+version: '3.8'
+
+prometheus:
+  image: prom/prometheus:v2.45.0
+  retention: 30d
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  storage_retention: 2160h  # 90 days
+  
+alertmanager:
+  image: prom/alertmanager:v0.25.0
+  smtp_smarthost: smtp.ainflue.com:587
+  slack_webhook: ${SLACK_WEBHOOK_URL}
+  
+grafana:
+  image: grafana/grafana:10.1.0
+  admin_password: ${GRAFANA_ADMIN_PASSWORD}
+  smtp_enabled: true
+  smtp_host: smtp.ainflue.com:587
+  
+jaeger:
+  image: jaegertracing/all-in-one:1.48
+  memory_max_traces: 50000
+  
+elasticsearch:
+  image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+  heap_size: 4g
+  
+logstash:
+  image: docker.elastic.co/logstash/logstash:8.10.0
+  pipeline_workers: 4
+  
+kibana:
+  image: docker.elastic.co/kibana/kibana:8.10.0
+  
+cadvisor:
+  image: gcr.io/cadvisor/cadvisor:v0.47.0
+  
+node_exporter:
+  image: prom/node-exporter:v1.6.0

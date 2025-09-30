@@ -1,6 +1,6 @@
 # 🌍 Geographic Optimization - Global Content Distribution Engine
 
-**Advanced AI-powered geographic and cultural optimization system for the Ainflue platform**
+**Advanced AI-powered geographic and cultural optimization system for the IA Chérie platform**
 
 ## 📋 Overview
 
@@ -155,4 +155,4 @@ localized_content = await localizer.localize_content(content, target_language, r
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform - Geographic Optimization Module**
+**IA Chérie Platform - Geographic Optimization Module**

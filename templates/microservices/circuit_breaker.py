@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Circuit Breaker for Ainflue Microservices Platform
+Circuit Breaker for IA Chérie Microservices Platform
 =================================================
 
 Enterprise-grade circuit breaker pattern providing:

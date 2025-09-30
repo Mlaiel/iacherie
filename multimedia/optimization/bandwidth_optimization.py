@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Ainflue Platform - Multimedia Optimization - Bandwidth Optimization
+IA Chérie Platform - Multimedia Optimization - Bandwidth Optimization
 Professional bandwidth optimization for multimedia content delivery
 
 Author: Fahed Mlaiel (mlaiel@live.de)

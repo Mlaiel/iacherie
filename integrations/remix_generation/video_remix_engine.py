@@ -4,7 +4,7 @@
 ML Engineer + Backend Senior Expert: Engine de remix vidéo enterprise avec
 scene composition IA, visual effects automation et motion tracking algorithms.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Scene composition intelligente pour créateurs vidéo sur 65+ plateformes
 - Visual effects automation pour remixes créatifs et mashups vidéo
 - Motion tracking algorithms pour synchronisation et stabilisation
@@ -72,7 +72,7 @@ class VideoClip:
     video_path: str
     duration: float
     fps: float
-    resolution: Tuple[int, int]  # (width, height)
+    resolution: tuple[int, int]  # (width, height)
     format: VideoFormat
     metadata: Dict[str, Any] = field(default_factory=dict)
     created_at: datetime = field(default_factory=datetime.now)

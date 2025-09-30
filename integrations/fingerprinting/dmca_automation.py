@@ -5,7 +5,7 @@ DMCA automation avec platform integration et legal compliance.
 Automatisation complète des processus DMCA avec API plateformes.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Fingerprinting Module
+Project: IA Chérie Integrations - Fingerprinting Module
 Version: 1.0 Enterprise Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -1204,7 +1204,7 @@ class DMCAAutomation:
     async def get_dmca_analytics(
         self,
         creator_id: Optional[str] = None,
-        time_range: Optional[Tuple[datetime, datetime]] = None
+        time_range: Optional[tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
         """
         Génère des analytics DMCA pour un créateur ou globalement.

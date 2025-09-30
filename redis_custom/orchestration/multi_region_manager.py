@@ -627,7 +627,7 @@ class MultiRegionManager:
             # Endpoint principal pour la plateforme créateur
             creator_endpoint = GlobalEndpoint(
                 id="creator_platform_global",
-                domain="api.ainflue.com",
+                domain="api.iacherie.com",
                 regions=list(self.regions.keys()),
                 load_balancing_method=LoadBalancingMethod.LEAST_LATENCY,
                 routing_policy=TrafficRoutingPolicy.CREATOR_PROXIMITY,
@@ -642,7 +642,7 @@ class MultiRegionManager:
             # Endpoint pour le contenu
             content_endpoint = GlobalEndpoint(
                 id="content_delivery_global",
-                domain="content.ainflue.com",
+                domain="content.iacherie.com",
                 regions=list(self.regions.keys()),
                 load_balancing_method=LoadBalancingMethod.GEOLOCATION,
                 routing_policy=TrafficRoutingPolicy.CONTENT_LOCALITY,
@@ -739,7 +739,7 @@ class MultiRegionManager:
             try:
                 for region in self.regions.keys():
                     # Simulation d'endpoints de santé
-                    endpoints = [f"{region.value}.ainflue.com"]
+                    endpoints = [f"{region.value}.iacherie.com"]
                     
                     health_result = await self.health_checker.check_region_health(region, endpoints)
                     
@@ -1000,7 +1000,7 @@ class MultiRegionManager:
         """Vérifie si une région s'est rétablie"""
         try:
             # Simulation de vérification de récupération
-            endpoints = [f"{region.value}.ainflue.com"]
+            endpoints = [f"{region.value}.iacherie.com"]
             health_result = await self.health_checker.check_region_health(region, endpoints)
             
             return health_result['health_score'] > 0.8

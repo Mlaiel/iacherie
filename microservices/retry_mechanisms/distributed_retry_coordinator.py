@@ -1,11 +1,11 @@
 """
-Distributed Retry Coordinator - Ainflue
+Distributed Retry Coordinator - IA Chérie
 =======================================
 Coordinateur retry distribué pour microservices.
 Cross-node coordination + distributed locks + retry consensus.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

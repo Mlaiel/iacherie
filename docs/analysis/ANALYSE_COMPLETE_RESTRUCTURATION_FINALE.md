@@ -1,4 +1,4 @@
-# 📋 ANALYSE COMPLÈTE ET RESTRUCTURATION PROFESSIONNELLE - PROJET AINFLUE
+# 📋 ANALYSE COMPLÈTE ET RESTRUCTURATION PROFESSIONNELLE - PROJET IACHERIE
 
 **Mission Critique Complétée**  
 **Date:** 3 Septembre 2025  
@@ -101,7 +101,7 @@ intelligence/agents/
 ### 📐 **STRUCTURE MICROSERVICES (9 MODULES)**
 
 ```
-ainflue/
+iacherie/
 ├── users/                          # 12 fichiers max
 │   ├── authentication.py           # Authentification utilisateur
 │   ├── profiles.py                 # Profils & paramètres

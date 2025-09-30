@@ -1,5 +1,5 @@
-"""Ainflue Platform Python SDK
-Official Python SDK for the Ainflue AI-powered content protection platform
+"""IA Chérie Platform Python SDK
+Official Python SDK for the IA Chérie AI-powered content protection platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -22,7 +22,7 @@ __email__ = "mlaiel@live.de"
 # Configuration
 class AinflueSdkConfig(BaseModel):
     """SDK configuration settings"""
-    base_url: str = Field(default="https://api.ainflue.com", description="API base URL")
+    base_url: str = Field(default="https://api.iacherie.com", description="API base URL")
     api_key: str = Field(..., description="API key for authentication")
     timeout: int = Field(default=30, description="Request timeout in seconds")
     max_retries: int = Field(default=3, description="Maximum number of retries")
@@ -32,7 +32,7 @@ class AinflueSdkConfig(BaseModel):
 
 # Exceptions
 class AinflueSdkException(Exception):
-    """Base exception for Ainflue SDK"""
+    """Base exception for IA Chérie SDK"""
     pass
 
 
@@ -85,7 +85,7 @@ class ContentProtectionResult(BaseModel):
 
 # Main SDK Client
 class AinflueSdk:
-    """Main Ainflue SDK client"""
+    """Main IA Chérie SDK client"""
     
     def __init__(self, config: AinflueSdkConfig):
         self.config = config
@@ -100,7 +100,7 @@ class AinflueSdk:
         headers = {
             "Authorization": f"Bearer {self.config.api_key}",
             "Content-Type": "application/json",
-            "User-Agent": f"ainflue-python-sdk/{__version__}",
+            "User-Agent": f"iacherie-python-sdk/{__version__}",
             "X-SDK-Version": __version__
         }
         
@@ -322,7 +322,7 @@ class AinflueSdk:
 
 # Synchronous wrapper
 class AinflueSdkSync:
-    """Synchronous wrapper for Ainflue SDK"""
+    """Synchronous wrapper for IA Chérie SDK"""
     
     def __init__(self, config: AinflueSdkConfig):
         self.config = config
@@ -371,13 +371,13 @@ class AinflueSdkSync:
 
 
 # Factory functions
-def create_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> AinflueSdk:
+def create_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> AinflueSdk:
     """Create async SDK instance"""
     config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
     return AinflueSdk(config)
 
 
-def create_sync_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> AinflueSdkSync:
+def create_sync_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> AinflueSdkSync:
     """Create sync SDK instance"""
     config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
     return AinflueSdkSync(config)

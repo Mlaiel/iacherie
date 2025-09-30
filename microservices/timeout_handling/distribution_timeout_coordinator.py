@@ -1,12 +1,12 @@
 """
-Distribution Timeout Coordinator Module - Ainflue Enterprise
+Distribution Timeout Coordinator Module - IA Chérie Enterprise
 ============================================================
 Coordinateur timeout pour distribution multi-plateformes avec platform API optimization.
 Platform API timeouts + publishing workflows + analytics aggregation + content distribution.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chérie Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the complete gamification system implementation for the Ainflue platform, featuring **89+ achievements** across all major categories as specified in the requirements.
+This document describes the complete gamification system implementation for the IA Chérie platform, featuring **89+ achievements** across all major categories as specified in the requirements.
 
 ## 🏆 Achievement System Architecture
 

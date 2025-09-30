@@ -1,4 +1,4 @@
-"""Ainflue Monitoring Configuration
+"""IA Chérie Monitoring Configuration
 ===============================
 
 Enterprise monitoring configurations for system health, performance metrics,
@@ -113,8 +113,8 @@ class MonitoringConfiguration:
             "alert_channels": {
                 "email": {
                     "enabled": True,
-                    "smtp_server": "smtp.ainflue.com",
-                    "recipients": ["ops@ainflue.com", "mlaiel@live.de"]
+                    "smtp_server": "smtp.iacherie.com",
+                    "recipients": ["ops@iacherie.com", "mlaiel@live.de"]
                 },
                 "slack": {
                     "enabled": True,
@@ -238,31 +238,31 @@ class MonitoringConfiguration:
             "log_sources": {
                 "application_logs": {
                     "enabled": True,
-                    "path": "/var/log/ainflue/app.log",
+                    "path": "/var/log/iacherie/app.log",
                     "format": "json",
                     "rotation": "daily"
                 },
                 "access_logs": {
                     "enabled": True,
-                    "path": "/var/log/ainflue/access.log",
+                    "path": "/var/log/iacherie/access.log",
                     "format": "combined",
                     "rotation": "daily"
                 },
                 "error_logs": {
                     "enabled": True,
-                    "path": "/var/log/ainflue/error.log",
+                    "path": "/var/log/iacherie/error.log",
                     "format": "json",
                     "rotation": "daily"
                 },
                 "security_logs": {
                     "enabled": True,
-                    "path": "/var/log/ainflue/security.log",
+                    "path": "/var/log/iacherie/security.log",
                     "format": "json",
                     "rotation": "daily"
                 },
                 "audit_logs": {
                     "enabled": True,
-                    "path": "/var/log/ainflue/audit.log",
+                    "path": "/var/log/iacherie/audit.log",
                     "format": "json",
                     "rotation": "daily"
                 }
@@ -482,5 +482,5 @@ __all__ = [
     "monitoring_config"
 ]
 
-logger.info("📊 Ainflue Monitoring Configuration loaded")
+logger.info("📊 IA Chérie Monitoring Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

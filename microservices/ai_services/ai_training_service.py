@@ -1,5 +1,5 @@
 """AI Training Service - Automated model training and optimization
-Enterprise-grade AI model training and optimization for the Ainflue AI platform.
+Enterprise-grade AI model training and optimization for the IA Chérie AI platform.
 
 This service provides comprehensive AI model training, hyperparameter optimization,
 distributed training coordination, and model lifecycle management.
@@ -176,8 +176,8 @@ class AITrainingService:
         
         # Configuration
         self.config = {
-            'models_directory': '/var/models/ainflue',
-            'checkpoints_directory': '/var/checkpoints/ainflue',
+            'models_directory': '/var/models/iacherie',
+            'checkpoints_directory': '/var/checkpoints/iacherie',
             'logs_directory': '/var/logs/training',
             'max_concurrent_jobs': 5,
             'gpu_memory_limit_gb': 8,

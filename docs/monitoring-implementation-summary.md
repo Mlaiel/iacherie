@@ -8,7 +8,7 @@
 - **Features**:
   - Production-ready Prometheus configuration with 30-day retention
   - Kubernetes service discovery for pods, services, nodes
-  - Multi-target scraping for Ainflue services (API, AI Engine, Crawler, Analytics)
+  - Multi-target scraping for IA Chérie services (API, AI Engine, Crawler, Analytics)
   - External monitoring endpoints (health checks, blackbox monitoring)
   - Optimized storage with compression and proper sizing
 
@@ -55,7 +55,7 @@
 - **Status**: ✅ COMPLETE
 - **Location**: `config/monitoring/tracing_config.py`
 - **Features**:
-  - Comprehensive service instrumentation for all Ainflue components
+  - Comprehensive service instrumentation for all IA Chérie components
   - Custom span attributes for business context
   - Trace correlation across microservices
   - Performance optimization with batching and sampling
@@ -144,19 +144,19 @@
 ### Service Endpoints (via port-forward)
 ```bash
 # Grafana Dashboard
-kubectl port-forward -n ainflue-monitoring service/grafana 3000:3000
+kubectl port-forward -n iacherie-monitoring service/grafana 3000:3000
 
 # Prometheus Metrics
-kubectl port-forward -n ainflue-monitoring service/prometheus 9090:9090
+kubectl port-forward -n iacherie-monitoring service/prometheus 9090:9090
 
 # Jaeger Tracing
-kubectl port-forward -n ainflue-monitoring service/jaeger 16686:16686
+kubectl port-forward -n iacherie-monitoring service/jaeger 16686:16686
 
 # Kibana Logs
-kubectl port-forward -n ainflue-monitoring service/kibana 5601:5601
+kubectl port-forward -n iacherie-monitoring service/kibana 5601:5601
 
 # AlertManager
-kubectl port-forward -n ainflue-monitoring service/alertmanager 9093:9093
+kubectl port-forward -n iacherie-monitoring service/alertmanager 9093:9093
 ```
 
 ### Default Credentials

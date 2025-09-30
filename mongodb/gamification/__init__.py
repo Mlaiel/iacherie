@@ -34,7 +34,7 @@ class UserAchievement:
     points_earned: int
 
 class GamificationManager:
-    """Comprehensive gamification system for the Ainflue platform."""
+    """Comprehensive gamification system for the IA Chérie platform."""
     
     def __init__(self, client: MongoClient, database_name: str):
         """Initialize gamification manager."""

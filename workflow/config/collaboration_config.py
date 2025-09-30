@@ -1,5 +1,5 @@
 """
-🤝 COLLABORATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+🤝 COLLABORATION CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced collaboration and gamification configuration for creator teams
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -164,7 +164,7 @@ class CollaborationConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize collaboration configuration"""
-        self.config_path = config_path or "/etc/ainflue/collaboration.json"
+        self.config_path = config_path or "/etc/iacherie/collaboration.json"
         
         # Core configurations
         self.workspace_config = WorkspaceConfig(

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌐 Cross-Platform Distribution Dashboard - Ainflue Creator Economy Enterprise
+🌐 Cross-Platform Distribution Dashboard - IA Chérie Creator Economy Enterprise
 Multi-platform analytics, optimization, and distribution intelligence system.
 
 Expert Multi-Role Implementation:

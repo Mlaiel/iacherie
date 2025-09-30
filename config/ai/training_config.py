@@ -1,9 +1,9 @@
-"""Ainflue AI Training Configuration - Enterprise Machine Learning Training Pipeline
+"""IA Chérie AI Training Configuration - Enterprise Machine Learning Training Pipeline
 ================================================================================
 
 Advanced AI training configuration for enterprise-grade machine learning model
 training, hyperparameter optimization, distributed training, and MLOps pipeline
-management for Ainflue's content creation and optimization platform.
+management for IA Chérie's content creation and optimization platform.
 
 Business Logic Integration:
 - Creator behavior prediction models
@@ -370,7 +370,7 @@ class EnterpriseAITrainingConfiguration:
         }
     
     def _initialize_training_pipelines(self):
-        """Initialize default training pipelines for Ainflue business logic"""
+        """Initialize default training pipelines for IA Chérie business logic"""
         
         # Content Recommendation Model
         content_rec_job = TrainingJob(
@@ -512,16 +512,16 @@ class EnterpriseAITrainingConfiguration:
         """Setup experiment tracking configuration"""
         self.experiment_tracking = {
             "wandb_config": {
-                "project": "ainflue-ml-training",
-                "entity": "ainflue-team",
+                "project": "iacherie-ml-training",
+                "entity": "iacherie-team",
                 "tags": ["production", "enterprise"],
                 "save_code": True,
                 "log_frequency": 100
             },
             "mlflow_config": {
-                "tracking_uri": "https://mlflow.ainflue.com",
+                "tracking_uri": "https://mlflow.iacherie.com",
                 "experiment_name": "ainflue_production_training",
-                "artifact_location": "s3://ainflue-ml-artifacts/experiments",
+                "artifact_location": "s3://iacherie-ml-artifacts/experiments",
                 "auto_log": True
             },
             "custom_metrics": {

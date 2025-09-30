@@ -1,7 +1,7 @@
-package com.ainflue.sdk.security;
+package com.iacherie.sdk.security;
 
 /**
- * Security Utilities for Ainflue Java SDK
+ * Security Utilities for IA Chérie Java SDK
  * Enterprise security validation and SSL/TLS configuration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -10,9 +10,9 @@ package com.ainflue.sdk.security;
  * Expert Implementation by: Security + DevOps + Backend Senior
  */
 
-import com.ainflue.sdk.config.SdkConfiguration;
-import com.ainflue.sdk.exceptions.SecurityException;
-import com.ainflue.sdk.utils.Logger;
+import com.iacherie.sdk.config.SdkConfiguration;
+import com.iacherie.sdk.exceptions.SecurityException;
+import com.iacherie.sdk.utils.Logger;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;

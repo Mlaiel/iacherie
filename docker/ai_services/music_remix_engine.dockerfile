@@ -4,7 +4,7 @@
 
 FROM python:3.12-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Music Remix Engine - AI music processing service"
+LABEL description="IA Chérie Music Remix Engine - AI music processing service"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -2,7 +2,7 @@
 ==============================
 
 Enterprise-grade Microsoft Azure integration supporting storage,
-compute, AI services, and media processing for Ainflue platform.
+compute, AI services, and media processing for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -107,7 +107,7 @@ class AzureMediaProcessingRequest:
 
 
 class AzureIntegration:
-    """Enterprise Microsoft Azure integration for Ainflue.
+    """Enterprise Microsoft Azure integration for IA Chérie.
     
     Features:
     - Blob Storage for content and media files

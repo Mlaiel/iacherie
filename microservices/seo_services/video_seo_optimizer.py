@@ -597,10 +597,10 @@ class VideoSEOOptimizer:
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Ainflue",
+                "name": "IA Chérie",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://ainflue.com/logo.png"
+                    "url": "https://iacherie.com/logo.png"
                 }
             }
         }

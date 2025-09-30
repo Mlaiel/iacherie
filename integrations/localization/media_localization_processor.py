@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Media localization processor enterprise avec automated subtitle generation,
 AI-powered dubbing system et multi-format media support.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Automated subtitle generation pour créateurs vidéo
 - AI-powered dubbing system avec voice matching
 - Video content localization avec timing preservation
@@ -769,7 +769,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     
     async def multi_format_media_support(
         self,
-        media_items: List[Tuple[bytes, MediaFormat, MediaType]],
+        media_items: List[tuple[bytes, MediaFormat, MediaType]],
         target_language: str,
         target_region: str
     ) -> List[MediaLocalizationResult]:

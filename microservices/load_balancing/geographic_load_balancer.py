@@ -394,10 +394,10 @@ class CDNIntegrator:
     def setup_cdn_endpoints(self):
         """Configuration endpoints CDN par région"""
         self.cdn_endpoints = {
-            GeographicRegion.NORTH_AMERICA_EAST: ["cdn-na-east-1.ainflue.com", "cdn-na-east-2.ainflue.com"],
-            GeographicRegion.NORTH_AMERICA_WEST: ["cdn-na-west-1.ainflue.com", "cdn-na-west-2.ainflue.com"],
-            GeographicRegion.EUROPE_WEST: ["cdn-eu-west-1.ainflue.com", "cdn-eu-west-2.ainflue.com"],
-            GeographicRegion.ASIA_PACIFIC_EAST: ["cdn-ap-east-1.ainflue.com", "cdn-ap-east-2.ainflue.com"],
+            GeographicRegion.NORTH_AMERICA_EAST: ["cdn-na-east-1.iacherie.com", "cdn-na-east-2.iacherie.com"],
+            GeographicRegion.NORTH_AMERICA_WEST: ["cdn-na-west-1.iacherie.com", "cdn-na-west-2.iacherie.com"],
+            GeographicRegion.EUROPE_WEST: ["cdn-eu-west-1.iacherie.com", "cdn-eu-west-2.iacherie.com"],
+            GeographicRegion.ASIA_PACIFIC_EAST: ["cdn-ap-east-1.iacherie.com", "cdn-ap-east-2.iacherie.com"],
         }
         
         self.content_rules = {
@@ -461,7 +461,7 @@ class GeographicLoadBalancer:
                 server_id="na-east-01",
                 region=GeographicRegion.NORTH_AMERICA_EAST,
                 location=GeoLocation(40.7128, -74.0060, "US", "NY", "New York", "North America", "America/New_York"),
-                endpoint="https://api-na-east.ainflue.com",
+                endpoint="https://api-na-east.iacherie.com",
                 capacity=1000,
                 current_load=450,
                 health_status="healthy",
@@ -473,7 +473,7 @@ class GeographicLoadBalancer:
                 server_id="eu-west-01", 
                 region=GeographicRegion.EUROPE_WEST,
                 location=GeoLocation(51.5074, -0.1278, "GB", "England", "London", "Europe", "Europe/London"),
-                endpoint="https://api-eu-west.ainflue.com",
+                endpoint="https://api-eu-west.iacherie.com",
                 capacity=800,
                 current_load=320,
                 health_status="healthy",
@@ -485,7 +485,7 @@ class GeographicLoadBalancer:
                 server_id="ap-east-01",
                 region=GeographicRegion.ASIA_PACIFIC_EAST,
                 location=GeoLocation(35.6762, 139.6503, "JP", "Tokyo", "Tokyo", "Asia", "Asia/Tokyo"),
-                endpoint="https://api-ap-east.ainflue.com",
+                endpoint="https://api-ap-east.iacherie.com",
                 capacity=600,
                 current_load=180,
                 health_status="healthy",

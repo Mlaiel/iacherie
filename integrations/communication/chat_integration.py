@@ -1,5 +1,5 @@
 """
-Chat Integration Service for Ainflue Platform
+Chat Integration Service for IA Chérie Platform
 Enterprise-grade multi-platform chat integration for creator collaboration
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -184,7 +184,7 @@ class ChatConfig:
 
 class ChatIntegration(BaseIntegration):
     """
-    Enterprise Chat Integration for Ainflue platform
+    Enterprise Chat Integration for IA Chérie platform
     
     Features:
     - Multi-platform chat support (Slack, Discord, Teams, etc.)
@@ -627,11 +627,11 @@ class ChatIntegration(BaseIntegration):
             content_lower = message.content.lower()
             
             if "help" in content_lower:
-                return "I'm here to help! You can ask me about Ainflue features, creator tools, or general questions."
+                return "I'm here to help! You can ask me about IA Chérie features, creator tools, or general questions."
             elif "pricing" in content_lower:
-                return "Check out our pricing plans at https://ainflue.com/pricing"
+                return "Check out our pricing plans at https://iacherie.com/pricing"
             elif "support" in content_lower:
-                return "For support, please contact our team at support@ainflue.com"
+                return "For support, please contact our team at support@iacherie.com"
             else:
                 return "Thanks for your message! How can I assist you today?"
             
@@ -975,7 +975,7 @@ def create_chat_integration(**kwargs) -> ChatIntegration:
     config = ChatConfig(**kwargs)
     return ChatIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_chat_integration_flow():
     """Example chat integration usage"""
     
@@ -995,7 +995,7 @@ async def example_chat_integration_flow():
         creator_user = await chat.create_user({
             "username": "creator_alice",
             "display_name": "Alice Creator",
-            "email": "alice@ainflue.com",
+            "email": "alice@iacherie.com",
             "platform": "webchat",
             "roles": ["creator", "premium"]
         })
@@ -1003,7 +1003,7 @@ async def example_chat_integration_flow():
         collaborator_user = await chat.create_user({
             "username": "collaborator_bob",
             "display_name": "Bob Collaborator",
-            "email": "bob@ainflue.com",
+            "email": "bob@iacherie.com",
             "platform": "slack",
             "roles": ["collaborator"]
         })

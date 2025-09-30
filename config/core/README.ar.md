@@ -1,13 +1,13 @@
-# 🚀 وحدة تكوين النواة Ainflue - الإصدار المؤسسي فائق التطور
+# 🚀 وحدة تكوين النواة IA Chérie - الإصدار المؤسسي فائق التطور
 
-[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.ainflue.com)
-[![هندسة النظام](https://img.shields.io/badge/System-Architecture-blue.svg)](https://architecture.ainflue.com)
-[![الأداء العالي](https://img.shields.io/badge/High-Performance-green.svg)](https://performance.ainflue.com)
-[![أمان المؤسسة](https://img.shields.io/badge/Enterprise-Security-red.svg)](https://security.ainflue.com)
+[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.iacherie.com)
+[![هندسة النظام](https://img.shields.io/badge/System-Architecture-blue.svg)](https://architecture.iacherie.com)
+[![الأداء العالي](https://img.shields.io/badge/High-Performance-green.svg)](https://performance.iacherie.com)
+[![أمان المؤسسة](https://img.shields.io/badge/Enterprise-Security-red.svg)](https://security.iacherie.com)
 
 ## 🎯 الملخص التنفيذي
 
-تمثل **وحدة تكوين النواة Ainflue** البنية التحتية الأساسية على مستوى المؤسسات التي تشغل النظام البيئي الكامل لـ Ainflue. توفر هذه النواة فائقة التطور أداءً على نطاق كمي وأماناً عسكري المستوى وعمليات نظام مستقلة وموثوقية مؤسسية عبر البنية التحتية العالمية الموزعة.
+تمثل **وحدة تكوين النواة IA Chérie** البنية التحتية الأساسية على مستوى المؤسسات التي تشغل النظام البيئي الكامل لـ IA Chérie. توفر هذه النواة فائقة التطور أداءً على نطاق كمي وأماناً عسكري المستوى وعمليات نظام مستقلة وموثوقية مؤسسية عبر البنية التحتية العالمية الموزعة.
 
 ## 🏗️ نظرة عامة على هندسة النظام
 
@@ -121,7 +121,7 @@ from config.core.database import DatabaseConfig
 database = DatabaseConfig(
     primary_database={
         "engine": "postgresql",
-        "host": "primary-db-cluster.ainflue.com",
+        "host": "primary-db-cluster.iacherie.com",
         "port": 5432,
         "connection_pool": {
             "min_connections": 10,
@@ -136,7 +136,7 @@ database = DatabaseConfig(
     },
     analytics_database={
         "engine": "clickhouse",
-        "host": "analytics-cluster.ainflue.com",
+        "host": "analytics-cluster.iacherie.com",
         "sharding": True,
         "compression": "lz4"
     },
@@ -249,9 +249,9 @@ from config.core.cache_config import CacheConfig
 cache = CacheConfig(
     redis_cluster={
         "nodes": [
-            "redis-01.ainflue.com:6379",
-            "redis-02.ainflue.com:6379",
-            "redis-03.ainflue.com:6379"
+            "redis-01.iacherie.com:6379",
+            "redis-02.iacherie.com:6379",
+            "redis-03.iacherie.com:6379"
         ],
         "cluster_mode": True,
         "read_from_replicas": True
@@ -557,10 +557,10 @@ backup_manager.test_disaster_recovery()
 
 ### الدعم والمجتمع
 
-- 💬 [منتدى الأنظمة الأساسية](https://community.ainflue.com/core)
-- 📧 [دعم المؤسسات](mailto:core-support@ainflue.com)
+- 💬 [منتدى الأنظمة الأساسية](https://community.iacherie.com/core)
+- 📧 [دعم المؤسسات](mailto:core-support@iacherie.com)
 - 📞 [الدعم التقني 24/7](tel:+1-800-CORE-SUPPORT)
-- 🎯 [استشارة الهندسة المعمارية](https://ainflue.com/architecture-consultation)
+- 🎯 [استشارة الهندسة المعمارية](https://iacherie.com/architecture-consultation)
 
 ## 🔄 التحديثات وخارطة الطريق
 
@@ -584,7 +584,7 @@ backup_manager.test_disaster_recovery()
 
 ## 🏆 التميز المؤسسي
 
-**وحدة تكوين النواة Ainflue** - البنية التحتية الأساسية التي تشغل منصات اقتصاد المنشئين على نطاق المؤسسات مع الأداء الكمي والأمان العسكري والعمليات المستقلة.
+**وحدة تكوين النواة IA Chérie** - البنية التحتية الأساسية التي تشغل منصات اقتصاد المنشئين على نطاق المؤسسات مع الأداء الكمي والأمان العسكري والعمليات المستقلة.
 
 *مبني للتوسع. محسن للأداء. مصمم للموثوقية.*
 
@@ -594,4 +594,4 @@ backup_manager.test_disaster_recovery()
 
 ---
 
-*© 2025 Ainflue Technologies. جميع الحقوق محفوظة. الإصدار المؤسسي.*
+*© 2025 IA Chérie Technologies. جميع الحقوق محفوظة. الإصدار المؤسسي.*

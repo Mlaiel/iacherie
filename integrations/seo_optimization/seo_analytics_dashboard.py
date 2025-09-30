@@ -5,7 +5,7 @@ Dashboard analytics SEO enterprise temps réel avec visualization avancée,
 custom reporting, predictive analytics et competitive landscape monitoring.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:
@@ -155,7 +155,7 @@ class PredictionResult:
     """Résultat de prédiction"""
     metric: str
     predicted_values: List[float]
-    confidence_intervals: List[Tuple[float, float]]
+    confidence_intervals: List[tuple[float, float]]
     time_periods: List[datetime]
     accuracy_score: float
     model_type: str

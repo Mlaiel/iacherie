@@ -1,5 +1,5 @@
 """
-⚖️ COMPLIANCE CONFIG - AINFLUE ENTERPRISE PLATFORM
+⚖️ COMPLIANCE CONFIG - IACHERIE ENTERPRISE PLATFORM
 
 Ultra-advanced compliance and regulatory configuration for global operations
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -168,7 +168,7 @@ class ComplianceConfig:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize compliance configuration"""
-        self.config_path = config_path or "/etc/ainflue/compliance.json"
+        self.config_path = config_path or "/etc/iacherie/compliance.json"
         
         # Core compliance configurations
         self.gdpr_config = GDPRConfig()

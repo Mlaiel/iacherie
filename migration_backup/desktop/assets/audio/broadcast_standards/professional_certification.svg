@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+  <defs>
+    <linearGradient id="certGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6F00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E65100;stop-opacity:1" />
+    </linearGradient>
+    <filter id="logoGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Certificate Background -->
+  <rect x="5" y="5" width="190" height="70" fill="url(#certGradient)" stroke="#E65100" stroke-width="2" rx="8" filter="url(#logoGlow)"/>
+  
+  <!-- Professional Seal -->
+  <circle cx="50" cy="40" r="22" fill="#FFFFFF" opacity="0.95"/>
+  <circle cx="50" cy="40" r="18" fill="#FF6F00"/>
+  <circle cx="50" cy="40" r="14" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Certificate star -->
+  <polygon points="50,30 52,36 58,36 53,40 55,46 50,42 45,46 47,40 42,36 48,36" fill="#FFFFFF"/>
+  
+  <!-- Checkmark -->
+  <path d="M 46 40 L 49 43 L 54 38" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Main Title -->
+  <text x="85" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">PROFESSIONAL</text>
+  <text x="85" y="42" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">CERTIFICATION</text>
+  <text x="85" y="57" font-family="Arial, sans-serif" font-size="10" fill="#FFE0B2">Audio Engineering Excellence</text>
+  <text x="85" y="68" font-family="Arial, sans-serif" font-size="9" fill="#FFCC80">Ainflue Studio Verified</text>
+  
+  <!-- Quality badges -->
+  <rect x="155" y="15" width="30" height="45" fill="#FFFFFF" opacity="0.1" rx="4"/>
+  <text x="170" y="25" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">AAA</text>
+  <text x="170" y="35" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">GOLD</text>
+  <text x="170" y="45" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CERT</text>
+  <text x="170" y="55" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">2025</text>
+  
+  <!-- Professional emblem -->
+  <rect x="158" y="18" width="3" height="3" fill="#FFFFFF" opacity="1.0"/>
+  <rect x="162" y="18" width="3" height="3" fill="#FFFFFF" opacity="1.0"/>
+  <rect x="166" y="18" width="3" height="3" fill="#FFFFFF" opacity="1.0"/>
+  <rect x="170" y="18" width="3" height="3" fill="#FFFFFF" opacity="1.0"/>
+  <rect x="174" y="18" width="3" height="3" fill="#FFFFFF" opacity="1.0"/>
+  
+  <!-- Copyright -->
+  <text x="100" y="78" font-family="Arial, sans-serif" font-size="8" fill="#E65100" text-anchor="middle">© Ainflue Studio - Fahed Mlaiel Professional Audio</text>
+</svg>

@@ -1,5 +1,5 @@
 """Security Services Interface
-Main entry point for Ainflue Platform security infrastructure.
+Main entry point for IA Chérie Platform security infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

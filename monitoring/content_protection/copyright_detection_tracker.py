@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Copyright Detection Tracker
+IA Chérie Platform - Copyright Detection Tracker
 ==============================================
 
 Real-time copyright detection and tracking system using AI fingerprinting,

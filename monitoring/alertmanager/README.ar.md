@@ -90,8 +90,8 @@ AlertManager Enterprise هو نظام تنبيهات متطور مدعوم با�
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/alertmanager
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/alertmanager
 
 # تثبيت التبعيات
 pip install -r ../../requirements.txt
@@ -123,7 +123,7 @@ channels:
     enabled: true
     smtp_host: smtp.gmail.com
     smtp_port: 587
-    sender: alerts@ainflue.com
+    sender: alerts@iacherie.com
   pagerduty:
     enabled: true
     api_key: "مفتاح_PAGERDUTY_API_الخاص_بك"
@@ -378,7 +378,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 ```bash
 # نسخ المستودع
-git clone https://github.com/اسم_المستخدم_الخاص_بك/Ainflue.git
+git clone https://github.com/اسم_المستخدم_الخاص_بك/IA Chérie.git
 
 # تثبيت تبعيات التطوير
 pip install -r requirements-dev.txt
@@ -439,7 +439,7 @@ spec:
     spec:
       containers:
       - name: alertmanager
-        image: ainflue/alertmanager:latest
+        image: iacherie/alertmanager:latest
         resources:
           requests:
             memory: "512Mi"
@@ -459,9 +459,9 @@ spec:
 
 ### الدعم التقني
 
-- **البريد الإلكتروني:** support@ainflue.com
-- **الوثائق:** https://docs.ainflue.com/alertmanager
-- **صفحة الحالة:** https://status.ainflue.com
+- **البريد الإلكتروني:** support@iacherie.com
+- **الوثائق:** https://docs.iacherie.com/alertmanager
+- **صفحة الحالة:** https://status.iacherie.com
 
 ### دعم المؤسسات
 
@@ -491,6 +491,6 @@ spec:
 ---
 
 **© 2025 فهد مليل - جميع الحقوق محفوظة**  
-**Ainflue - منصة اقتصاد المبدعين المدعومة بالذكاء الاصطناعي**
+**IA Chérie - منصة اقتصاد المبدعين المدعومة بالذكاء الاصطناعي**
 
 *مبني بـ ❤️ لاقتصاد المبدعين*

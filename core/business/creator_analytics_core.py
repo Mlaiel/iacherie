@@ -1,9 +1,9 @@
-"""Ainflue Core Creator Analytics - Advanced Analytics & Business Intelligence
+"""IA Chérie Core Creator Analytics - Advanced Analytics & Business Intelligence
 =======================================================================
 
 Enterprise creator analytics providing performance metrics, audience insights,
 revenue optimization, trend analysis, and predictive analytics
-for the Ainflue platform business core.
+for the IA Chérie platform business core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

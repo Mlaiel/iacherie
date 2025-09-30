@@ -1,0 +1,900 @@
+# Docker Swarm Configuration - Ainflue Creator Economy Platform
+# ===============================================================
+#
+# 🎯 DEVOPS ENGINEER + CONTAINER ORCHESTRATION EXPERT + SWARM ARCHITECT
+# Lead: Fahed Mlaiel (mlaiel@live.de)
+#
+# Enterprise Docker Swarm orchestration for Creator Economy Platform:
+# - Multi-service application stack
+# - High availability and fault tolerance
+# - Auto-scaling and load balancing
+# - Creator Economy specific services
+# - AI processing workers
+# - Content delivery optimization
+# - Security and secrets management
+#
+# ⚠️ INTELLECTUAL PROPERTY PROTECTION:
+# ==========================================
+# © 2025 Fahed Mlaiel <mlaiel@live.de>
+# TOUS DROITS RÉSERVÉS
+#
+# 🚨 PROTECTION INTELLECTUELLE:
+# - Code propriétaire de Fahed Mlaiel
+# - Utilisation commerciale INTERDITE sans autorisation écrite
+# - Reverse engineering STRICTEMENT INTERDIT
+# - Distribution INTERDITE sans licence explicite
+# - Violation = Poursuites judiciaires automatiques
+#
+# Created: 2025-01-18
+# Version: 1.0.0
+
+version: '3.8'
+
+# ==============================================================================
+# NETWORKS CONFIGURATION
+# ==============================================================================
+networks:
+  # Frontend network for public-facing services
+  ainflue_frontend:
+    driver: overlay
+    attachable: true
+    labels:
+      - "com.ainflue.network.type=frontend"
+      - "com.ainflue.network.security=public"
+    driver_opts:
+      encrypted: "true"
+  
+  # Backend network for internal services
+  ainflue_backend:
+    driver: overlay
+    attachable: false
+    internal: true
+    labels:
+      - "com.ainflue.network.type=backend"
+      - "com.ainflue.network.security=internal"
+    driver_opts:
+      encrypted: "true"
+  
+  # Database network for data services
+  ainflue_database:
+    driver: overlay
+    attachable: false
+    internal: true
+    labels:
+      - "com.ainflue.network.type=database"
+      - "com.ainflue.network.security=restricted"
+    driver_opts:
+      encrypted: "true"
+  
+  # AI processing network for ML workloads
+  ainflue_ai_processing:
+    driver: overlay
+    attachable: false
+    internal: true
+    labels:
+      - "com.ainflue.network.type=ai-processing"
+      - "com.ainflue.network.security=compute"
+    driver_opts:
+      encrypted: "true"
+
+# ==============================================================================
+# VOLUMES CONFIGURATION
+# ==============================================================================
+volumes:
+  # Database volumes
+  postgresql_data:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=database"
+      - "com.ainflue.volume.service=postgresql"
+  
+  mysql_data:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=database"
+      - "com.ainflue.volume.service=mysql"
+  
+  redis_data:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=cache"
+      - "com.ainflue.volume.service=redis"
+  
+  # Content storage volumes
+  video_content:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=content"
+      - "com.ainflue.volume.media=video"
+  
+  audio_content:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=content"
+      - "com.ainflue.volume.media=audio"
+  
+  image_content:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=content"
+      - "com.ainflue.volume.media=image"
+  
+  document_content:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=content"
+      - "com.ainflue.volume.media=document"
+  
+  # Application volumes
+  app_logs:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=logs"
+  
+  app_backups:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=backups"
+  
+  # AI model storage
+  ai_models:
+    driver: local
+    labels:
+      - "com.ainflue.volume.type=ai-models"
+
+# ==============================================================================
+# SECRETS CONFIGURATION
+# ==============================================================================
+secrets:
+  db_password:
+    external: true
+    name: ainflue_db_password
+  
+  redis_password:
+    external: true
+    name: ainflue_redis_password
+  
+  jwt_secret:
+    external: true
+    name: ainflue_jwt_secret
+  
+  ssl_certificate:
+    external: true
+    name: ainflue_ssl_cert
+  
+  ssl_private_key:
+    external: true
+    name: ainflue_ssl_key
+
+# ==============================================================================
+# CONFIGS CONFIGURATION
+# ==============================================================================
+configs:
+  nginx_config:
+    external: true
+    name: ainflue_nginx_config
+  
+  prometheus_config:
+    external: true
+    name: ainflue_prometheus_config
+  
+  grafana_config:
+    external: true
+    name: ainflue_grafana_config
+
+# ==============================================================================
+# SERVICES CONFIGURATION
+# ==============================================================================
+services:
+  
+  # ==============================================================================
+  # LOAD BALANCER & REVERSE PROXY
+  # ==============================================================================
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - type: volume
+        source: app_logs
+        target: /var/log/nginx
+        volume:
+          nocopy: true
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
+        mode: 0644
+    secrets:
+      - source: ssl_certificate
+        target: /etc/ssl/certs/ainflue.crt
+        mode: 0644
+      - source: ssl_private_key
+        target: /etc/ssl/private/ainflue.key
+        mode: 0600
+    networks:
+      - ainflue_frontend
+      - ainflue_backend
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - "node.role==worker"
+        preferences:
+          - spread: node.id
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 30s
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        delay: 30s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+      labels:
+        - "com.ainflue.service.type=loadbalancer"
+        - "com.ainflue.service.tier=frontend"
+        - "traefik.enable=true"
+        - "traefik.http.routers.nginx.rule=Host(`ainflue.com`)"
+        - "traefik.http.services.nginx.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+        labels: "service,environment"
+  
+  # ==============================================================================
+  # CREATOR ECONOMY API GATEWAY
+  # ==============================================================================
+  api_gateway:
+    image: ainflue/api-gateway:${API_GATEWAY_VERSION:-latest}
+    environment:
+      - APP_ENV=${ENVIRONMENT:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - JWT_SECRET_FILE=/run/secrets/jwt_secret
+      - CREATOR_ECONOMY_ENABLED=true
+      - AI_PROCESSING_ENABLED=true
+      - COLLABORATION_ENABLED=true
+      - MONETIZATION_ENABLED=true
+      - SEO_OPTIMIZATION_ENABLED=true
+    volumes:
+      - type: volume
+        source: app_logs
+        target: /app/logs
+        volume:
+          nocopy: true
+    secrets:
+      - jwt_secret
+      - db_password
+    networks:
+      - ainflue_frontend
+      - ainflue_backend
+      - ainflue_database
+    deploy:
+      replicas: 5
+      placement:
+        constraints:
+          - "node.role==worker"
+        preferences:
+          - spread: node.labels.zone
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      update_config:
+        parallelism: 2
+        delay: 30s
+        failure_action: rollback
+        monitor: 60s
+      rollback_config:
+        parallelism: 1
+        delay: 30s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      labels:
+        - "com.ainflue.service.type=api-gateway"
+        - "com.ainflue.service.tier=backend"
+        - "com.ainflue.service.business-unit=creator-economy"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - postgresql
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "5"
+  
+  # ==============================================================================
+  # CREATOR PLATFORM SERVICE
+  # ==============================================================================
+  creator_platform:
+    image: ainflue/creator-platform:${CREATOR_PLATFORM_VERSION:-latest}
+    environment:
+      - APP_ENV=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - REDIS_URL=redis://redis:6379
+      - CONTENT_STORAGE_PATH=/app/content
+      - VIDEO_PROCESSING_ENABLED=true
+      - AUDIO_PROCESSING_ENABLED=true
+      - IMAGE_PROCESSING_ENABLED=true
+      - DOCUMENT_PROCESSING_ENABLED=true
+      - COLLABORATION_REAL_TIME=true
+      - MONETIZATION_ENABLED=true
+    volumes:
+      - type: volume
+        source: video_content
+        target: /app/content/video
+      - type: volume
+        source: audio_content
+        target: /app/content/audio
+      - type: volume
+        source: image_content
+        target: /app/content/images
+      - type: volume
+        source: document_content
+        target: /app/content/documents
+      - type: volume
+        source: app_logs
+        target: /app/logs
+    secrets:
+      - db_password
+      - redis_password
+    networks:
+      - ainflue_backend
+      - ainflue_database
+    deploy:
+      replicas: 8
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.workload==creator-economy"
+        preferences:
+          - spread: node.id
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+      update_config:
+        parallelism: 2
+        delay: 45s
+        failure_action: rollback
+        monitor: 120s
+      rollback_config:
+        parallelism: 1
+        delay: 60s
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+      labels:
+        - "com.ainflue.service.type=creator-platform"
+        - "com.ainflue.service.tier=application"
+        - "com.ainflue.service.business-unit=creator-economy"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 90s
+    depends_on:
+      - postgresql
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "10"
+  
+  # ==============================================================================
+  # AI PROCESSING SERVICE
+  # ==============================================================================
+  ai_processor:
+    image: ainflue/ai-processor:${AI_PROCESSOR_VERSION:-latest}
+    environment:
+      - APP_ENV=${ENVIRONMENT:-production}
+      - GPU_ENABLED=${GPU_ENABLED:-false}
+      - CUDA_VISIBLE_DEVICES=all
+      - AI_MODEL_PATH=/app/models
+      - VIDEO_AI_ENABLED=true
+      - AUDIO_AI_ENABLED=true
+      - IMAGE_AI_ENABLED=true
+      - TEXT_AI_ENABLED=true
+      - MAX_CONCURRENT_JOBS=4
+      - JOB_TIMEOUT=3600
+    volumes:
+      - type: volume
+        source: ai_models
+        target: /app/models
+      - type: volume
+        source: video_content
+        target: /app/content/video
+        read_only: false
+      - type: volume
+        source: audio_content
+        target: /app/content/audio
+        read_only: false
+      - type: volume
+        source: image_content
+        target: /app/content/images
+        read_only: false
+      - type: volume
+        source: app_logs
+        target: /app/logs
+    networks:
+      - ainflue_ai_processing
+      - ainflue_backend
+    deploy:
+      replicas: 4
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.workload==ai-processing"
+        preferences:
+          - spread: node.labels.gpu
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 2
+      update_config:
+        parallelism: 1
+        delay: 60s
+        failure_action: rollback
+        monitor: 180s
+      rollback_config:
+        parallelism: 1
+        delay: 120s
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 16G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+        # GPU resources (when available)
+        generic_resources:
+          - discrete_resource_spec:
+              kind: 'NVIDIA-GPU'
+              value: 1
+      labels:
+        - "com.ainflue.service.type=ai-processor"
+        - "com.ainflue.service.tier=compute"
+        - "com.ainflue.service.business-unit=ai-processing"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 180s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+        max-file: "5"
+  
+  # ==============================================================================
+  # COLLABORATION SERVICE
+  # ==============================================================================
+  collaboration_service:
+    image: ainflue/collaboration-service:${COLLABORATION_VERSION:-latest}
+    environment:
+      - APP_ENV=${ENVIRONMENT:-production}
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - WEBSOCKET_ENABLED=true
+      - REAL_TIME_EDITING=true
+      - VERSION_CONTROL=true
+      - COMMENT_SYSTEM=true
+      - APPROVAL_WORKFLOW=true
+      - MAX_COLLABORATORS_PER_PROJECT=10
+    secrets:
+      - db_password
+      - redis_password
+    networks:
+      - ainflue_backend
+      - ainflue_database
+    deploy:
+      replicas: 6
+      placement:
+        constraints:
+          - "node.role==worker"
+        preferences:
+          - spread: node.id
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      update_config:
+        parallelism: 2
+        delay: 30s
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        delay: 30s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      labels:
+        - "com.ainflue.service.type=collaboration"
+        - "com.ainflue.service.tier=application"
+        - "com.ainflue.service.business-unit=creator-economy"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - postgresql
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "5"
+  
+  # ==============================================================================
+  # MONETIZATION SERVICE
+  # ==============================================================================
+  monetization_service:
+    image: ainflue/monetization-service:${MONETIZATION_VERSION:-latest}
+    environment:
+      - APP_ENV=${ENVIRONMENT:-production}
+      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - PAYMENT_PROVIDERS=stripe,paypal,square
+      - REVENUE_SHARING_ENABLED=true
+      - SUBSCRIPTION_MANAGEMENT=true
+      - PLATFORM_FEE_PERCENTAGE=5.0
+      - MINIMUM_PAYOUT=10.0
+      - PAYMENT_SCHEDULE=weekly
+      - SUPPORTED_CURRENCIES=USD,EUR,GBP
+    secrets:
+      - db_password
+    networks:
+      - ainflue_backend
+      - ainflue_database
+    deploy:
+      replicas: 4
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.security==high"
+        preferences:
+          - spread: node.id
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 60s
+        failure_action: rollback
+        monitor: 120s
+      rollback_config:
+        parallelism: 1
+        delay: 60s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      labels:
+        - "com.ainflue.service.type=monetization"
+        - "com.ainflue.service.tier=application"
+        - "com.ainflue.service.business-unit=creator-economy"
+        - "com.ainflue.service.security=high"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - postgresql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "10"
+  
+  # ==============================================================================
+  # DATABASE SERVICES
+  # ==============================================================================
+  
+  # PostgreSQL - Main application database
+  postgresql:
+    image: postgres:15.4-alpine
+    environment:
+      - POSTGRES_DB=ainflue
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - type: volume
+        source: postgresql_data
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+    secrets:
+      - db_password
+    networks:
+      - ainflue_database
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.storage==ssd"
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+      labels:
+        - "com.ainflue.service.type=database"
+        - "com.ainflue.service.tier=data"
+        - "com.ainflue.service.engine=postgresql"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "5"
+  
+  # MySQL - Analytics database
+  mysql:
+    image: mysql:8.0.35
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_DATABASE=ainflue_analytics
+      - MYSQL_USER=analytics_user
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+    volumes:
+      - type: volume
+        source: mysql_data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    secrets:
+      - db_password
+    networks:
+      - ainflue_database
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.storage==ssd"
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+      labels:
+        - "com.ainflue.service.type=database"
+        - "com.ainflue.service.tier=data"
+        - "com.ainflue.service.engine=mysql"
+        - "com.ainflue.service.purpose=analytics"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+  
+  # Redis - Cache and session store
+  redis:
+    image: redis:7.2-alpine
+    command: redis-server --requirepass-file /run/secrets/redis_password --maxmemory 2gb --maxmemory-policy allkeys-lru
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+        volume:
+          nocopy: true
+    secrets:
+      - redis_password
+    networks:
+      - ainflue_database
+      - ainflue_backend
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+          - "node.labels.storage==ssd"
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+      labels:
+        - "com.ainflue.service.type=cache"
+        - "com.ainflue.service.tier=data"
+        - "com.ainflue.service.engine=redis"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+  
+  # ==============================================================================
+  # MONITORING SERVICES
+  # ==============================================================================
+  
+  # Prometheus - Metrics collection
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    volumes:
+      - type: volume
+        source: app_logs
+        target: /prometheus
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+        mode: 0644
+    networks:
+      - ainflue_backend
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+      labels:
+        - "com.ainflue.service.type=monitoring"
+        - "com.ainflue.service.tier=infrastructure"
+        - "com.ainflue.service.component=prometheus"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+  
+  # Grafana - Metrics visualization
+  grafana:
+    image: grafana/grafana:10.2.0
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/jwt_secret
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    volumes:
+      - type: volume
+        source: app_logs
+        target: /var/lib/grafana
+    configs:
+      - source: grafana_config
+        target: /etc/grafana/grafana.ini
+        mode: 0644
+    secrets:
+      - jwt_secret
+    networks:
+      - ainflue_backend
+      - ainflue_frontend
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+      labels:
+        - "com.ainflue.service.type=monitoring"
+        - "com.ainflue.service.tier=infrastructure"
+        - "com.ainflue.service.component=grafana"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - prometheus
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"

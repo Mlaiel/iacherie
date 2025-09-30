@@ -1,8 +1,8 @@
 # 👥 MULTIMEDIA KOLLABORATION MODUL - ENTERPRISE ARCHITEKTUR
 
-[![Enterprise Bereit](https://img.shields.io/badge/Enterprise-Bereit-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Echtzeit](https://img.shields.io/badge/Echtzeit-Aktiviert-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![WebRTC](https://img.shields.io/badge/WebRTC-Unterstützt-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise Bereit](https://img.shields.io/badge/Enterprise-Bereit-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Echtzeit](https://img.shields.io/badge/Echtzeit-Aktiviert-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![WebRTC](https://img.shields.io/badge/WebRTC-Unterstützt-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🎯 ÜBERBLICK
 
@@ -177,7 +177,7 @@ insights = await analytics.get_collaboration_insights(
 
 ## 🎯 BUSINESS-INTEGRATION
 
-### Ainflue-Plattform-Integration
+### IA Chérie-Plattform-Integration
 
 ```python
 # Vollständige Workflow-Integration
@@ -234,7 +234,7 @@ async def setup_creator_collaboration(creator_id: str, project_type: str):
 
 **Autor:** Fahed Mlaiel  
 **E-Mail:** mlaiel@live.de  
-**Projekt:** Ainflue-Plattform - Enterprise Multimedia-Kollaboration  
+**Projekt:** IA Chérie-Plattform - Enterprise Multimedia-Kollaboration  
 **Version:** 3.1.0
 
 ---

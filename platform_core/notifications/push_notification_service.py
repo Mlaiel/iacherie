@@ -958,7 +958,7 @@ class PushNotificationService:
                     PushAction(
                         id="get_started",
                         title="Get Started",
-                        action_url="ainflue://onboarding"
+                        action_url="iacherie://onboarding"
                     )
                 ],
                 category="welcome"

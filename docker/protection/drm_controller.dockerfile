@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE DRM CONTROLLER - DIGITAL RIGHTS DOCKERFILE
+# IACHERIE DRM CONTROLLER - DIGITAL RIGHTS DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS drm-base
@@ -49,7 +49,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${DRM_SERVICE_PORT}
 CMD ["python3.11", "-m", "drm_controller.main"]
 
-LABEL org.opencontainers.image.title="Ainflue DRM Controller"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="drm_controller"
-LABEL ainflue.service.port="8029"
+LABEL org.opencontainers.image.title="IA Chérie DRM Controller"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="drm_controller"
+LABEL iacherie.service.port="8029"

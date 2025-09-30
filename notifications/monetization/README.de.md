@@ -1,10 +1,10 @@
 # 💰 MONETARISIERUNG BENACHRICHTIGUNGEN - DEUTSCHE DOKUMENTATION
 
-**Ainflue Platform - Monetarisierungs-Benachrichtigungssystem Enterprise**
+**IA Chérie Platform - Monetarisierungs-Benachrichtigungssystem Enterprise**
 
 ## 🎯 ÜBERBLICK
 
-Das Monetization Notifications Module verwaltet alle umsatzbezogenen Benachrichtigungen der Ainflue Platform, einschließlich Zahlungsbestätigungen, Verdienstmöglichkeiten, Provisionsalerts und Finanzberichten.
+Das Monetization Notifications Module verwaltet alle umsatzbezogenen Benachrichtigungen der IA Chérie Platform, einschließlich Zahlungsbestätigungen, Verdienstmöglichkeiten, Provisionsalerts und Finanzberichten.
 
 ## 📋 MODULE KOMPONENTEN
 
@@ -57,5 +57,5 @@ await monetization.notify_revenue_milestone(
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 **Kontakt:** mlaiel@live.de  
-**Projekt:** Ainflue Platform - Monetarisierung Benachrichtigungen  
+**Projekt:** IA Chérie Platform - Monetarisierung Benachrichtigungen  
 **Version:** 3.1.0 Enterprise

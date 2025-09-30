@@ -1,10 +1,10 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 Ce module contient des algorithmes propriétaires ultra-confidentiels pour l'analyse 
-de la qualité des données et la gouvernance de données de la plateforme Ainflue.
+de la qualité des données et la gouvernance de données de la plateforme IA Chérie.
 
 Data Quality Analytics - Enterprise-grade data quality intelligence
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>

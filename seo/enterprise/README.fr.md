@@ -1,12 +1,12 @@
-# 🏢 Module SEO Entreprise Ainflue
+# 🏢 Module SEO Entreprise IA Chérie
 
-[![Niveau Entreprise](https://img.shields.io/badge/entreprise-niveau-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Sécurité](https://img.shields.io/badge/sécurité-entreprise-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![Conformité](https://img.shields.io/badge/conformité-multi%20réglementaire-orange.svg)](https://github.com/Mlaiel/Ainflue)
+[![Niveau Entreprise](https://img.shields.io/badge/entreprise-niveau-blue.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Sécurité](https://img.shields.io/badge/sécurité-entreprise-green.svg)](https://github.com/Mlaiel/IA Chérie)
+[![Conformité](https://img.shields.io/badge/conformité-multi%20réglementaire-orange.svg)](https://github.com/Mlaiel/IA Chérie)
 
 ## 🌟 Aperçu
 
-Le Module SEO Entreprise Ainflue est un système complet de gouvernance et de gestion SEO de niveau entreprise, conçu pour les organisations à grande échelle. Il fournit une surveillance avancée de la conformité, une gestion des risques, une sécurité de marque et des analyses stratégiques pour les opérations SEO d'entreprise.
+Le Module SEO Entreprise IA Chérie est un système complet de gouvernance et de gestion SEO de niveau entreprise, conçu pour les organisations à grande échelle. Il fournit une surveillance avancée de la conformité, une gestion des risques, une sécurité de marque et des analyses stratégiques pour les opérations SEO d'entreprise.
 
 ## 👨‍💻 Direction de Projet & Équipe d'Experts
 
@@ -85,8 +85,8 @@ Collaboration & Gamification → Distribution Sécurisée
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/seo/enterprise
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/seo/enterprise
 
 # Installer les dépendances
 pip install -r requirements-enterprise.txt
@@ -256,8 +256,8 @@ enterprise:
 ### **Informations de Contact**
 - **Ventes Entreprise**: mlaiel@live.de
 - **Support Technique**: Disponible avec licence entreprise
-- **Problèmes de Sécurité**: security@ainflue.com (avec licence entreprise)
-- **Questions Conformité**: compliance@ainflue.com (avec licence entreprise)
+- **Problèmes de Sécurité**: security@iacherie.com (avec licence entreprise)
+- **Questions Conformité**: compliance@iacherie.com (avec licence entreprise)
 
 ## 📋 Feuille de Route
 
@@ -285,5 +285,5 @@ Pour les demandes de licence entreprise, contactez: mlaiel@live.de
 
 ---
 
-**Propulsé par la Plateforme SEO Entreprise Ainflue**  
+**Propulsé par la Plateforme SEO Entreprise IA Chérie**  
 *Transformant la Gestion de Contenu Entreprise & la Gouvernance SEO*

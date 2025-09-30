@@ -1,4 +1,4 @@
-"""Ainflue Enterprise AI Optimization Configuration - QUANTUM PERFORMANCE ENGINE
+"""IA Chérie Enterprise AI Optimization Configuration - QUANTUM PERFORMANCE ENGINE
 ==================================================================================
 
 🧠 ENTERPRISE AI OPTIMIZATION FEATURES:
@@ -529,7 +529,7 @@ __all__ = [
     "get_available_techniques", "get_hardware_targets"
 ]
 
-logger.info("🧠 Ainflue AI Optimization Configuration initialized")
+logger.info("🧠 IA Chérie AI Optimization Configuration initialized")
 logger.info(f"📊 Optimization profiles: {len(ai_optimization_config.optimization_profiles)}")
 logger.info(f"🔧 Hardware targets: {len(ai_optimization_config.hardware_optimizations)}")
 logger.info(f"⚡ Optimization techniques: {len(OptimizationTechnique)}")

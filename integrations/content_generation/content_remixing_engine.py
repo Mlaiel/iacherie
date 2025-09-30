@@ -5,7 +5,7 @@ Creative content transformation with 6 specialized remix agents.
 Collaborative content generation and copyright-safe remixing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -238,7 +238,7 @@ class RemixAgent:
         
         # Generate remixed content URL
         file_extension = self._determine_output_format(request, analysis)
-        remixed_url = f"https://remixed-content.ainflue.com/{request.remix_id}_{self.agent_name}.{file_extension}"
+        remixed_url = f"https://remixed-content.iacherie.com/{request.remix_id}_{self.agent_name}.{file_extension}"
         
         return remixed_url
     

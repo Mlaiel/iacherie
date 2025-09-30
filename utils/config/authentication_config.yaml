@@ -81,7 +81,7 @@ mfa:
     digits: 6
     period: 30
     window: 1
-    issuer: "Ainflue"
+    issuer: "IA Chérie"
     
     # TOTP providers
     providers:
@@ -98,7 +98,7 @@ mfa:
   sms:
     enabled: true
     provider: "twilio"
-    template: "Your Ainflue verification code is: {code}"
+    template: "Your IA Chérie verification code is: {code}"
     code_length: 6
     expiry_minutes: 5
     rate_limiting:
@@ -137,11 +137,11 @@ mfa:
 webauthn:
   # Relying Party configuration
   relying_party:
-    id: "ainflue.com"
-    name: "Ainflue"
+    id: "iacherie.com"
+    name: "IA Chérie"
     origins:
-      - "https://ainflue.com"
-      - "https://app.ainflue.com"
+      - "https://iacherie.com"
+      - "https://app.iacherie.com"
       
   # Authenticator requirements
   authenticator_selection:
@@ -342,8 +342,8 @@ api_authentication:
   jwt:
     enabled: true
     algorithm: "RS256"
-    issuer: "https://api.ainflue.com"
-    audience: "ainflue-api"
+    issuer: "https://api.iacherie.com"
+    audience: "iacherie-api"
     expiration: 3600
     
   # OAuth 2.0 for APIs

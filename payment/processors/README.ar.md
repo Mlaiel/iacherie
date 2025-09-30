@@ -251,7 +251,7 @@ analytics = await processor.generate_analytics(
 
 ### التثبيت
 ```bash
-pip install ainflue-payment-processors
+pip install iacherie-payment-processors
 ```
 
 ### الإعداد الأساسي

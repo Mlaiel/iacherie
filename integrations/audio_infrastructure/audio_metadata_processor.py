@@ -2,7 +2,7 @@
 ==============================================================
 
 Processeur de métadonnées audio enterprise avec gestion avancée des tags,
-extraction automatique et enrichissement IA pour Ainflue.
+extraction automatique et enrichissement IA pour IA Chérie.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Standards métadonnées + formats audio + tag preservation
@@ -116,7 +116,7 @@ class TagType(Enum):
     LABEL = "label"
     LICENSE = "license"
     
-    # Tags Ainflue spécifiques
+    # Tags IA Chérie spécifiques
     CREATOR_ID = "ainflue_creator_id"
     CONTENT_TYPE = "ainflue_content_type"
     PROTECTION_LEVEL = "ainflue_protection"
@@ -597,7 +597,7 @@ class MetadataExtractor:
         
         return image_data
     
-    async def _get_image_dimensions(self, image_data: bytes) -> Tuple[Optional[int], Optional[int]]:
+    async def _get_image_dimensions(self, image_data: bytes) -> tuple[Optional[int], Optional[int]]:
         """Obtient les dimensions d'une image"""
         try:
             image = Image.open(io.BytesIO(image_data))

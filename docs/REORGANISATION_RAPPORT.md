@@ -1,4 +1,4 @@
-# 📋 Rapport de Réorganisation du Projet Ainflue
+# 📋 Rapport de Réorganisation du Projet IA Chérie
 
 ## 🎯 Objectif
 Réorganisation complète de la structure du projet pour respecter les meilleures pratiques de développement logiciel et améliorer la maintenabilité.

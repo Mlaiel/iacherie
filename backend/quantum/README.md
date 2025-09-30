@@ -407,14 +407,14 @@ git push origin feature/quantum-enhancement
 ## 📞 Support & Contact
 
 ### Support Technique
-- **Email :** quantum-support@ainflue.com
+- **Email :** quantum-support@iacherie.com
 - **Discord :** [Quantum Computing Community](https://discord.gg/quantum)
-- **Documentation :** [docs.quantum.ainflue.com](https://docs.quantum.ainflue.com)
+- **Documentation :** [docs.quantum.iacherie.com](https://docs.quantum.iacherie.com)
 
 ### Équipe Quantique
 - **Lead Quantum Engineer :** Fahed Mlaiel <mlaiel@live.de>
-- **Quantum Research Team :** research@ainflue.com
-- **Business Development :** partnerships@ainflue.com
+- **Quantum Research Team :** research@iacherie.com
+- **Business Development :** partnerships@iacherie.com
 
 ---
 
@@ -455,7 +455,7 @@ Le Module Quantique représente l'état de l'art en quantum computing enterprise
 
 ---
 
-*Développé avec ❤️ et ⚛️ par l'équipe Quantum AI de Ainflue*
+*Développé avec ❤️ et ⚛️ par l'équipe Quantum AI de IA Chérie*
 
 **FOR LEGITIMATE LICENSE REQUESTS ONLY**: mlaiel@live.de
 
@@ -463,7 +463,7 @@ Le Module Quantique représente l'état de l'art en quantum computing enterprise
 
 ## 🎯 Module Overview
 
-The **Quantum Computing Module** provides cutting-edge quantum-enhanced business logic capabilities for the Ainflue platform. This enterprise-grade quantum system delivers quantum acceleration across all business processes, from content creation to distribution, providing unprecedented competitive advantages through quantum computing.
+The **Quantum Computing Module** provides cutting-edge quantum-enhanced business logic capabilities for the IA Chérie platform. This enterprise-grade quantum system delivers quantum acceleration across all business processes, from content creation to distribution, providing unprecedented competitive advantages through quantum computing.
 
 ### 🏗️ Core Architecture
 

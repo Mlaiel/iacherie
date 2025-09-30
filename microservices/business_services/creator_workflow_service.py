@@ -1,5 +1,5 @@
 """Creator Workflow Service - Creator workflow orchestration and automation
-Enterprise-grade workflow management for the Ainflue AI platform.
+Enterprise-grade workflow management for the IA Chérie AI platform.
 
 This service orchestrates complex creator workflows including onboarding,
 content creation, collaboration, monetization, and growth tracking.
@@ -949,7 +949,7 @@ class CreatorWorkflowService:
             'tracking_enabled': True,
             'milestone_tracking': step.parameters.get('milestone_tracking', False),
             'automated_reminders': step.parameters.get('automated_reminders', False),
-            'progress_dashboard_url': f"https://dashboard.ainflue.com/projects/{workflow.id}"
+            'progress_dashboard_url': f"https://dashboard.iacherie.com/projects/{workflow.id}"
         }
     
     async def _handle_revenue_analysis(self, workflow: Workflow, step: WorkflowStep) -> Dict[str, Any]:

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Kubernetes Pod Orchestrator
+# IA Chérie Infrastructure Module - Kubernetes Pod Orchestrator
 # =========================================================
 # 
-# Enterprise-grade pod orchestration for Ainflue platform
+# Enterprise-grade pod orchestration for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>

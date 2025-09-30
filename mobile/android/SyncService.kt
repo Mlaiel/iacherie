@@ -1,5 +1,5 @@
 /**
- * Ainflue Sync Service - Professional Data Synchronization System
+ * IA Chérie Sync Service - Professional Data Synchronization System
  * 
  * Advanced synchronization system for content creators
  * Supports real-time sync, offline queuing, and conflict resolution
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
 
 /**
- * Professional Data Synchronization Service for Ainflue Platform
+ * Professional Data Synchronization Service for IA Chérie Platform
  * 
  * Features:
  * - Real-time bidirectional synchronization

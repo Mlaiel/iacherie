@@ -2,7 +2,7 @@
 📈 Business Metrics Tracker - ML Impact & ROI Analytics Module
 
 Advanced business impact tracking system that measures ML model performance
-against revenue, engagement, and business KPIs on the Ainflue platform.
+against revenue, engagement, and business KPIs on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -101,7 +101,7 @@ class BusinessMetricsTracker:
             'database': db_name
         }
         
-        # Business metrics configuration for Ainflue platform
+        # Business metrics configuration for IA Chérie platform
         self.business_metrics_config = {
             'revenue_metrics': [
                 BusinessMetric('monthly_revenue', 'revenue', 'USD', 'sum', is_kpi=True),

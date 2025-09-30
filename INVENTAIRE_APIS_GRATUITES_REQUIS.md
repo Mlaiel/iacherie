@@ -1,5 +1,5 @@
 # 🆓 INVENTAIRE COMPLET - APIs GRATUITES REQUISES
-## Ainfluencer Enterprise Platform - 53 Agents IA + 680+ Microservices
+## IA Chérie Enterprise Platform - 53 Agents IA + 680+ Microservices
 
 **Auteur:** Fahed Mlaiel  
 **Date:** 28 Septembre 2025  
@@ -21,7 +21,7 @@
 
 ### **Architecture Découverte:**
 ```
-Ainfluencer/
+IA Chérie/
 ├── 53 AI Agents (Computer Vision, NLP, Audio, Content)
 ├── 680+ Microservices (15 catégories)
 ├── 12 APIs déjà intégrées
@@ -256,7 +256,7 @@ PINATA_SECRET_KEY=your_pinata_secret
 
 **Développé par:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Projet:** Ainfluencer Enterprise Platform  
+**Projet:** IA Chérie Enterprise Platform  
 **Licence:** Propriétaire
 
 ---

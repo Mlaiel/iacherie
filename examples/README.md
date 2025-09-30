@@ -1,5 +1,5 @@
-# 🚀 Ainflue Examples - Comprehensive Platform Examples & Demonstrations
-**Ainflue Platform - Complete Example Suite & Workflow Showcases**
+# 🚀 IA Chérie Examples - Comprehensive Platform Examples & Demonstrations
+**IA Chérie Platform - Complete Example Suite & Workflow Showcases**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.  
@@ -25,7 +25,7 @@
 
 ## ⚖️ Strict Legal Warning
 
-**🚨 Exclusive Intellectual Property:** All concepts, architectures, technical specifications, code implementations, and documentation contained within the Ainflue Examples module are **exclusive property** of **Fahed Mlaiel** (mlaiel@live.de).
+**🚨 Exclusive Intellectual Property:** All concepts, architectures, technical specifications, code implementations, and documentation contained within the IA Chérie Examples module are **exclusive property** of **Fahed Mlaiel** (mlaiel@live.de).
 
 **⚠️ Official Prohibition:** Any use, reproduction, adaptation, copying, or implementation without explicit written permission from Fahed Mlaiel will result in immediate legal action including:
 - Intellectual property infringement claims
@@ -39,7 +39,7 @@
 
 ## 🚀 Enterprise Overview
 
-The **Ainflue Examples** module provides a comprehensive suite of examples, demonstrations, and workflow showcases for the Ainflue platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated, production-ready system demonstrates enterprise-level AI processing, analytics, business logic, collaboration, monetization, infrastructure, and cross-platform integration with real-world scenarios and best practices.
+The **IA Chérie Examples** module provides a comprehensive suite of examples, demonstrations, and workflow showcases for the IA Chérie platform, designed specifically for multi-format content creators (musicians, bloggers, photographers, influencers, comedians). This ultra-sophisticated, production-ready system demonstrates enterprise-level AI processing, analytics, business logic, collaboration, monetization, infrastructure, and cross-platform integration with real-world scenarios and best practices.
 
 ### 🎯 **Business Logic Flow**
 ```
@@ -280,7 +280,7 @@ async def deploy_production_environment():
     
     # Setup Kubernetes infrastructure
     k8s_config = await k8s_orchestrator.setup_cluster({
-        'cluster_name': 'ainflue-production',
+        'cluster_name': 'iacherie-production',
         'node_count': 10,
         'node_type': 'high-performance',
         'auto_scaling': True,
@@ -364,11 +364,11 @@ print(f"Production environment deployed: {production_deployment['deployment_resu
 
 ### **Production Deployment**
 ```yaml
-# Docker Compose for Ainflue Examples
+# Docker Compose for IA Chérie Examples
 version: '3.8'
 services:
   examples-orchestrator:
-    image: ainflue/examples-orchestrator:latest
+    image: iacherie/examples-orchestrator:latest
     deploy:
       replicas: 5
       resources:
@@ -381,8 +381,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://examples-db:5432
       - REDIS_URL=redis://redis-cluster:6379
-      - AI_SERVICE_URL=https://ai.ainflue.com
-      - ANALYTICS_SERVICE=https://analytics.ainflue.com
+      - AI_SERVICE_URL=https://ai.iacherie.com
+      - ANALYTICS_SERVICE=https://analytics.iacherie.com
     ports:
       - "8080:8080"
 ```
@@ -391,7 +391,7 @@ services:
 ```python
 # API Integration Example
 import requests
-from ainflue.examples import ExampleOrchestrator
+from iacherie.examples import ExampleOrchestrator
 
 # Initialize example orchestrator
 orchestrator = ExampleOrchestrator(api_key="your-api-key")
@@ -420,7 +420,7 @@ print(f"Example Suite Results: {results['successful_examples']} successful")
 
 ## 📝 **Summary**
 
-The Ainflue Examples module represents the pinnacle of platform example design, specifically crafted for multi-format content creators. With comprehensive examples, advanced AI/ML capabilities, and enterprise-level features, this system ensures maximum platform understanding, feature adoption, and performance optimization for all creator activities while providing deep insights into platform capabilities and optimization opportunities.
+The IA Chérie Examples module represents the pinnacle of platform example design, specifically crafted for multi-format content creators. With comprehensive examples, advanced AI/ML capabilities, and enterprise-level features, this system ensures maximum platform understanding, feature adoption, and performance optimization for all creator activities while providing deep insights into platform capabilities and optimization opportunities.
 
 **🎯 Mission:** Deliver the world's most comprehensive platform examples for content creators, enabling optimal platform adoption, feature utilization, and performance optimization across the complete creator ecosystem.
 

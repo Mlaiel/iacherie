@@ -421,7 +421,7 @@ class DashboardGenerator:
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Ainflue - Executive Dashboard</title>
+                <title>IA Chérie - Executive Dashboard</title>
                 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
                 <style>
                     body { font-family: Arial, sans-serif; margin: 20px; }
@@ -434,7 +434,7 @@ class DashboardGenerator:
             </head>
             <body>
                 <div class="dashboard-header">
-                    <h1>🚀 Ainflue Platform - Executive Dashboard</h1>
+                    <h1>🚀 IA Chérie Platform - Executive Dashboard</h1>
                     <p>Généré le {{ timestamp }}</p>
                 </div>
                 
@@ -671,7 +671,7 @@ class ReportExporter:
                 {% endfor %}
                 
                 <hr>
-                <p><em>Rapport généré par Ainflue Analytics Engine</em></p>
+                <p><em>Rapport généré par IA Chérie Analytics Engine</em></p>
             </body>
             </html>
             """
@@ -911,7 +911,7 @@ if __name__ == "__main__":
             report_type=ReportType.EXECUTIVE_SUMMARY,
             format=ReportFormat.HTML,
             frequency=ReportFrequency.DAILY,
-            recipients=["admin@ainflue.com"],
+            recipients=["admin@iacherie.com"],
             include_charts=True
         )
         

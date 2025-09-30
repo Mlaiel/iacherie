@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Translation Services Integration Module
+IA Chérie Platform - Translation Services Integration Module
 Enterprise-grade translation services for global content localization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -525,7 +525,7 @@ class TranslationQualityAnalyzer:
         return analysis
         
     async def _analyze_fluency(self, original: str, translated: str, 
-                             target_language: str, domain: str = None) -> Tuple[float, List[str]]:
+                             target_language: str, domain: str = None) -> tuple[float, List[str]]:
         """Analyze translation fluency"""
         issues = []
         score = 0.8  # Base score
@@ -548,7 +548,7 @@ class TranslationQualityAnalyzer:
         return max(score, 0.0), issues
         
     async def _analyze_accuracy(self, original: str, translated: str,
-                              target_language: str, domain: str = None) -> Tuple[float, List[str]]:
+                              target_language: str, domain: str = None) -> tuple[float, List[str]]:
         """Analyze translation accuracy"""
         issues = []
         score = 0.85  # Base score
@@ -573,7 +573,7 @@ class TranslationQualityAnalyzer:
         return max(score, 0.0), issues
         
     async def _analyze_completeness(self, original: str, translated: str,
-                                  target_language: str, domain: str = None) -> Tuple[float, List[str]]:
+                                  target_language: str, domain: str = None) -> tuple[float, List[str]]:
         """Analyze translation completeness"""
         issues = []
         score = 0.9
@@ -594,7 +594,7 @@ class TranslationQualityAnalyzer:
         return max(score, 0.0), issues
         
     async def _analyze_terminology(self, original: str, translated: str,
-                                 target_language: str, domain: str = None) -> Tuple[float, List[str]]:
+                                 target_language: str, domain: str = None) -> tuple[float, List[str]]:
         """Analyze terminology consistency"""
         issues = []
         score = 0.8
@@ -618,7 +618,7 @@ class TranslationQualityAnalyzer:
         return score, issues
         
     async def _analyze_style(self, original: str, translated: str,
-                           target_language: str, domain: str = None) -> Tuple[float, List[str]]:
+                           target_language: str, domain: str = None) -> tuple[float, List[str]]:
         """Analyze translation style consistency"""
         issues = []
         score = 0.85
@@ -934,11 +934,11 @@ def create_translation_manager(config: Dict[str, Any]) -> TranslationServicesMan
     """Create configured translation manager"""
     return TranslationServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def ainflue_content_localization_workflow(content: str, target_languages: List[str], 
                                               content_type: ContentType = ContentType.TEXT) -> Dict[str, Any]:
     """
-    Complete content localization workflow for Ainflue creators
+    Complete content localization workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -974,7 +974,7 @@ async def ainflue_content_localization_workflow(content: str, target_languages: 
             target_language=target_lang,
             content_type=content_type,
             quality_level=QualityLevel.ENHANCED,
-            domain="marketing"  # Ainflue is content marketing platform
+            domain="marketing"  # IA Chérie is content marketing platform
         )
         translation_requests.append(request)
         
@@ -1011,7 +1011,7 @@ if __name__ == "__main__":
     async def test_translation_services():
         """Test translation services functionality"""
         
-        test_content = "Welcome to Ainflue - the AI-powered content creation and monetization platform for creators worldwide!"
+        test_content = "Welcome to IA Chérie - the AI-powered content creation and monetization platform for creators worldwide!"
         test_languages = ["es", "fr", "de", "ja", "zh"]
         
         result = await ainflue_content_localization_workflow(
@@ -1025,5 +1025,5 @@ if __name__ == "__main__":
     # asyncio.run(test_translation_services())
     
     print("✅ Translation Services Integration Module loaded successfully")
-    print("🌍 Enterprise-grade localization for global Ainflue creators")
+    print("🌍 Enterprise-grade localization for global IA Chérie creators")
     print("📝 Multi-provider translation, quality analysis, and memory optimization ready")

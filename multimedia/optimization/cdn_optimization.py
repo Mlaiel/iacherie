@@ -215,7 +215,7 @@ class CDNOptimizer:
             for region in regions:
                 # Generate CDN URL (simplified)
                 file_hash = self._generate_file_hash(file_path)
-                cdn_url = f"https://cdn-{region}.ainflue.com/{file_hash}/{file_path.name}"
+                cdn_url = f"https://cdn-{region}.iacherie.com/{file_hash}/{file_path.name}"
                 cdn_urls[region] = cdn_url
                 
                 # Add edge locations for this region

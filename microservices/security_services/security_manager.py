@@ -161,8 +161,8 @@ class CertificateManager:
                 x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                 x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                 x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue"),
-                x509.NameAttribute(NameOID.COMMON_NAME, "Ainflue Root CA"),
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chérie"),
+                x509.NameAttribute(NameOID.COMMON_NAME, "IA Chérie Root CA"),
             ])
             
             self.ca_cert = x509.CertificateBuilder().subject_name(
@@ -213,7 +213,7 @@ class CertificateManager:
                 x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                 x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "CA"),
                 x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue"),
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chérie"),
                 x509.NameAttribute(NameOID.COMMON_NAME, f"{service_name}.{namespace}.svc.cluster.local"),
             ])
             
@@ -275,7 +275,7 @@ class CertificateManager:
                 expiry_date=datetime.utcnow() + timedelta(days=365),
                 metadata={
                     "issued_at": datetime.utcnow().isoformat(),
-                    "issuer": "Ainflue Root CA",
+                    "issuer": "IA Chérie Root CA",
                     "algorithm": "RSA-2048"
                 }
             )
@@ -858,7 +858,7 @@ class EnterpriseSecurityManager:
         status = await self.get_security_status()
         
         report_lines = [
-            "🛡️ AINFLUE ENTERPRISE SECURITY REPORT",
+            "🛡️ IACHERIE ENTERPRISE SECURITY REPORT",
             "=" * 50,
             f"Generated: {status['timestamp']}",
             f"Overall Status: {status['overall_status'].upper()}",
@@ -899,13 +899,13 @@ class EnterpriseSecurityManager:
         logger.info("Enterprise Security Manager shutdown complete")
 
 
-# Example usage for Ainflue microservices
+# Example usage for IA Chérie microservices
 async def secure_ainflue_microservices():
-    """Secure all Ainflue microservices"""
+    """Secure all IA Chérie microservices"""
     security_manager = EnterpriseSecurityManager()
     await security_manager.initialize()
     
-    # Define Ainflue microservices
+    # Define IA Chérie microservices
     microservices = [
         "api-gateway",
         "content-upload-service",
@@ -923,7 +923,7 @@ async def secure_ainflue_microservices():
     secured_services = {}
     for service in microservices:
         try:
-            config = await security_manager.secure_service(service, "ainflue-production")
+            config = await security_manager.secure_service(service, "iacherie-production")
             secured_services[service] = config
             logger.info(f"✅ Secured service: {service}")
         except Exception as e:

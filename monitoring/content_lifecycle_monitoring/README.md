@@ -25,14 +25,14 @@
 
 ---
 
-## 🎯 **Ainflue Business Logic**
+## 🎯 **IA Chérie Business Logic**
 **Creator Economy Pipeline:** Multi-format Creators → AI Processing → IP Protection → Professional SEO → Collaboration & Gamification → Multi-platform Distribution
 
 ---
 
 ## 🚀 **System Overview**
 
-Advanced enterprise-grade content lifecycle monitoring system for Ainflue Creator Economy platform. Provides comprehensive real-time monitoring, analytics, and optimization across the entire content journey from upload to monetization.
+Advanced enterprise-grade content lifecycle monitoring system for IA Chérie Creator Economy platform. Provides comprehensive real-time monitoring, analytics, and optimization across the entire content journey from upload to monetization.
 
 ### **🏭 Enterprise Architecture Features**
 
@@ -442,7 +442,7 @@ spec:
     spec:
       containers:
       - name: monitoring
-        image: ainflue/content-lifecycle-monitoring:latest
+        image: iacherie/content-lifecycle-monitoring:latest
         ports:
         - containerPort: 8000
         env:
@@ -553,8 +553,8 @@ await monitoring.ai_pipeline_monitor.clear_model_cache()
 
 ### **Development Setup**
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/content_lifecycle_monitoring
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/monitoring/content_lifecycle_monitoring
 pip install -r requirements-dev.txt
 ```
 
@@ -613,4 +613,4 @@ For licensing inquiries, contact: mlaiel@live.de
 
 ---
 
-*Built with ❤️ for the Creator Economy by Fahed Mlaiel and the Ainflue Enterprise Team*
+*Built with ❤️ for the Creator Economy by Fahed Mlaiel and the IA Chérie Enterprise Team*

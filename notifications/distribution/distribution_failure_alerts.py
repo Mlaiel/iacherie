@@ -1,6 +1,6 @@
 """
 ❌ DISTRIBUTION FAILURE ALERTS
-Ainflue Platform - Distribution Failure Alert System
+IA Chérie Platform - Distribution Failure Alert System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

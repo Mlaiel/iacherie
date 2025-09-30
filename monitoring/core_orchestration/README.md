@@ -1,10 +1,10 @@
 # 🚀 Core Orchestration - Enterprise Monitoring Hub
 
-**Point d'entrée principal pour le système de surveillance enterprise Ainflue**
+**Point d'entrée principal pour le système de surveillance enterprise IA Chérie**
 
 ## Vue d'ensemble
 
-Le module Core Orchestration est le cœur intelligent du système de monitoring enterprise Ainflue. Il coordonne tous les agents de surveillance spécialisés et fournit une orchestration centralisée pour l'ensemble de l'écosystème de surveillance.
+Le module Core Orchestration est le cœur intelligent du système de monitoring enterprise IA Chérie. Il coordonne tous les agents de surveillance spécialisés et fournit une orchestration centralisée pour l'ensemble de l'écosystème de surveillance.
 
 ## Fonctionnalités Principales
 
@@ -117,7 +117,7 @@ POST /monitoring/events
 
 ### WebSocket Temps Réel
 ```javascript
-ws://monitoring.ainflue.com/realtime
+ws://monitoring.iacherie.com/realtime
 // Stream événements live
 // Dashboard interactif
 // Alertes instantanées
@@ -125,7 +125,7 @@ ws://monitoring.ainflue.com/realtime
 
 ## Intégration Business Logic
 
-### Workflow Complet Ainflue
+### Workflow Complet IA Chérie
 ```
 👤 Créateur → 📤 Upload → 🤖 IA → 🛡️ Protection → 
 🔍 SEO → 🤝 Collaboration → 🌐 Distribution → 💰 Monétisation
@@ -199,7 +199,7 @@ spec:
     spec:
       containers:
       - name: orchestration
-        image: ainflue/monitoring:latest
+        image: iacherie/monitoring:latest
         ports:
         - containerPort: 8000
 ```

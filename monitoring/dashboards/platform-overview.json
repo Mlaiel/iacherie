@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Platform Overview",
-    "tags": ["ainflue", "platform", "overview"],
+    "title": "IA Chérie Platform Overview",
+    "tags": ["iacherie", "platform", "overview"],
     "style": "dark",
     "timezone": "browser",
     "panels": [
@@ -12,7 +12,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api-gateway\"}[5m])",
+            "expr": "rate(http_requests_total{job=\"iacherie-api-gateway\"}[5m])",
             "legendFormat": "Requests/sec"
           }
         ],
@@ -53,7 +53,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api-gateway\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"ainflue-api-gateway\"}[5m]) * 100",
+            "expr": "rate(http_requests_total{job=\"iacherie-api-gateway\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"iacherie-api-gateway\"}[5m]) * 100",
             "legendFormat": "Error Rate %"
           }
         ],
@@ -94,7 +94,7 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "ai_processing_queue_length{job=\"ainflue-ai-engine\"}",
+            "expr": "ai_processing_queue_length{job=\"iacherie-ai-engine\"}",
             "legendFormat": "Queue Length"
           }
         ],
@@ -117,11 +117,11 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "pg_stat_database_numbackends{job=\"ainflue-database\"}",
+            "expr": "pg_stat_database_numbackends{job=\"iacherie-database\"}",
             "legendFormat": "Active Connections"
           },
           {
-            "expr": "pg_settings_max_connections{job=\"ainflue-database\"}",
+            "expr": "pg_settings_max_connections{job=\"iacherie-database\"}",
             "legendFormat": "Max Connections"
           }
         ],
@@ -138,11 +138,11 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "redis_memory_used_bytes{job=\"ainflue-redis\"}",
+            "expr": "redis_memory_used_bytes{job=\"iacherie-redis\"}",
             "legendFormat": "Used Memory"
           },
           {
-            "expr": "redis_memory_max_bytes{job=\"ainflue-redis\"}",
+            "expr": "redis_memory_max_bytes{job=\"iacherie-redis\"}",
             "legendFormat": "Max Memory"
           }
         ],
@@ -165,11 +165,11 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "count(kube_pod_status_ready{namespace=\"ainflue\", condition=\"true\"})",
+            "expr": "count(kube_pod_status_ready{namespace=\"iacherie\", condition=\"true\"})",
             "legendFormat": "Ready Pods"
           },
           {
-            "expr": "count(kube_pod_status_ready{namespace=\"ainflue\", condition=\"false\"})",
+            "expr": "count(kube_pod_status_ready{namespace=\"iacherie\", condition=\"false\"})",
             "legendFormat": "Not Ready Pods"
           }
         ],

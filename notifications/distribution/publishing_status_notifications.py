@@ -1,6 +1,6 @@
 """
 📤 PUBLISHING STATUS NOTIFICATIONS
-Ainflue Platform - Content Publishing Status System
+IA Chérie Platform - Content Publishing Status System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

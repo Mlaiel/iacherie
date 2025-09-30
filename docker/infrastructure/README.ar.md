@@ -1,6 +1,6 @@
 # 🏗️ البنية التحتية - خدمات Docker
 
-**البنية التحتية Docker لمنصة Ainflue**
+**البنية التحتية Docker لمنصة IA Chérie**
 
 بنية تحتية Docker على مستوى المؤسسة مع دعم بيئات متعددة وتوازن الأحمال واكتشاف الخدمات والتنسيق التلقائي لمنشئي المحتوى والمؤثرين.
 
@@ -71,7 +71,7 @@ SERVICE_TAGS=web,api,backend
 VAULT_ROOT_TOKEN=secret_root_token
 VAULT_ADDR=http://vault:8200
 SECRET_ENGINE=kv-v2
-VAULT_NAMESPACE=ainflue
+VAULT_NAMESPACE=iacherie
 ```
 
 ## 📊 دعم البيئات المتعددة

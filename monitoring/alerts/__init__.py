@@ -1,4 +1,4 @@
-"""🚨 Intelligent Alert System for Ainflue Platform
+"""🚨 Intelligent Alert System for IA Chérie Platform
 ===============================================
 
 Comprehensive intelligent alert management system providing:

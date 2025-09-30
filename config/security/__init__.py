@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Security Configuration Index Module
+"""IA Chérie Security Configuration Index Module
 ==========================================
 
-Centralized security configuration index for the Ainflue platform.
+Centralized security configuration index for the IA Chérie platform.
 This module provides unified access to all security configurations
 and enterprise-grade security management capabilities.
 
@@ -66,7 +66,7 @@ from .incident_response_config import (
 )
 
 class SecurityConfigurationManager:
-    """Central security configuration manager for Ainflue platform"""
+    """Central security configuration manager for IA Chérie platform"""
     
     def __init__(self):
         """Initialize security configuration manager"""
@@ -643,5 +643,5 @@ __all__ = [
     "security_config_manager"
 ]
 
-logger.info("🔒 Ainflue Security Configuration Module loaded")
+logger.info("🔒 IA Chérie Security Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

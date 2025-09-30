@@ -1,7 +1,7 @@
 """🔒 Enterprise Security Integration Module - Multi-Expert Implementation
 ===========================================================================
 
-Module de sécurité enterprise centralisé pour toutes les intégrations Ainflue.
+Module de sécurité enterprise centralisé pour toutes les intégrations IA Chérie.
 Implémentation multi-rôles expert conforme aux standards enterprise.
 
 Expert Roles Implementation:
@@ -139,7 +139,7 @@ class SecurityConfiguration:
     enable_ml_threat_detection: bool = True
 
 class EnterpriseSecurityIntegration:
-    """🔒 Module de sécurité enterprise pour intégrations Ainflue
+    """🔒 Module de sécurité enterprise pour intégrations IA Chérie
     
     Implémentation multi-expert pour sécurité enterprise:
     - Authentification multi-facteurs (JWT, OAuth2, SAML, Biométrie)

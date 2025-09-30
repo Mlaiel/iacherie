@@ -1,5 +1,5 @@
 """Distribution Services Interface
-Main entry point for Ainflue Platform distribution infrastructure.
+Main entry point for IA Chérie Platform distribution infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

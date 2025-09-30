@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Revenue Sharing Configuration Module
+"""IA Chérie Revenue Sharing Configuration Module
 =============================================
 
-Enterprise-grade revenue sharing configuration for the Ainflue platform.
+Enterprise-grade revenue sharing configuration for the IA Chérie platform.
 Comprehensive revenue distribution with automated calculations, multi-tier
 structures, real-time tracking, and compliance management.
 

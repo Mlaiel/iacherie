@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Invoice Configuration Module
+"""IA Chérie Invoice Configuration Module
 ====================================
 
-Enterprise-grade invoice configuration for the Ainflue platform.
+Enterprise-grade invoice configuration for the IA Chérie platform.
 Comprehensive invoice management with automated generation, customization,
 compliance tracking, and multi-format support.
 
@@ -769,7 +769,7 @@ class InvoiceConfiguration:
     
     async def _notify_portal_invoice(self, invoice: InvoiceRecord) -> Dict[str, Any]:
         """Notify customer of new invoice in portal"""
-        return {"success": True, "portal_url": f"https://portal.ainflue.com/invoices/{invoice.invoice_id}"}
+        return {"success": True, "portal_url": f"https://portal.iacherie.com/invoices/{invoice.invoice_id}"}
     
     async def _deliver_via_api(self, invoice: InvoiceRecord) -> Dict[str, Any]:
         """Deliver invoice via API"""

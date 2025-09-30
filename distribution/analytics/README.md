@@ -1,6 +1,6 @@
 # 📊 Analytics Distribution Engine - Advanced Business Intelligence Platform
 
-**Enterprise-Grade Analytics System for Ainflue Distribution Platform**
+**Enterprise-Grade Analytics System for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
@@ -219,9 +219,9 @@ Spotify, Apple Music, YouTube Music, Amazon Music, Deezer, SoundCloud, Bandcamp,
 ### 💰 **Creator Economy Platforms (16)**
 OnlyFans, Patreon, Ko-fi, Buy Me a Coffee, Gumroad, ConvertKit, Substack, and more
 
-## 🔄 Integration with Ainflue Workflow
+## 🔄 Integration with IA Chérie Workflow
 
-This module serves as the **analytics backbone** for the complete Ainflue distribution workflow:
+This module serves as the **analytics backbone** for the complete IA Chérie distribution workflow:
 
 1. **Content Upload** → Data collection begins
 2. **AI Processing** → Performance prediction analysis
@@ -240,6 +240,6 @@ This module serves as the **analytics backbone** for the complete Ainflue distri
 
 ---
 
-**© FAHED MLAIEL 2024-2025 - AINFLUE DISTRIBUTION ANALYTICS ENGINE**  
+**© FAHED MLAIEL 2024-2025 - IACHERIE DISTRIBUTION ANALYTICS ENGINE**  
 **🔒 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED**  
 **⚠️ ENTERPRISE-GRADE SOLUTION - AUTHORIZED PERSONNEL ONLY**

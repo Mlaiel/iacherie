@@ -5,7 +5,7 @@ SEO vidéo spécialisé enterprise avec schema markup automation,
 transcripts optimization, thumbnails analysis et chapters optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:

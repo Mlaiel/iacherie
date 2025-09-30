@@ -1,8 +1,8 @@
 #!/bin/bash
-# Ainflue Production Setup Script
+# IA Chérie Production Setup Script
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # 
-# This script sets up the production environment for Ainflue platform
+# This script sets up the production environment for IA Chérie platform
 
 set -euo pipefail
 
@@ -14,12 +14,12 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-NAMESPACE="ainflue"
-MONITORING_NAMESPACE="ainflue-monitoring"
+NAMESPACE="iacherie"
+MONITORING_NAMESPACE="iacherie-monitoring"
 
 print_header() {
     echo -e "${BLUE}================================================${NC}"
-    echo -e "${BLUE} AINFLUE PRODUCTION DEPLOYMENT SETUP${NC}"
+    echo -e "${BLUE} IACHERIE PRODUCTION DEPLOYMENT SETUP${NC}"
     echo -e "${BLUE}================================================${NC}"
     echo ""
 }
@@ -94,8 +94,8 @@ create_namespaces() {
     kubectl create namespace "$MONITORING_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
     
     # Label namespaces
-    kubectl label namespace "$NAMESPACE" app=ainflue env=production --overwrite
-    kubectl label namespace "$MONITORING_NAMESPACE" app=ainflue-monitoring env=production --overwrite
+    kubectl label namespace "$NAMESPACE" app=iacherie env=production --overwrite
+    kubectl label namespace "$MONITORING_NAMESPACE" app=iacherie-monitoring env=production --overwrite
     
     print_success "Namespaces created successfully"
 }
@@ -200,7 +200,7 @@ wait_for_deployments() {
     done
     
     # Wait for application deployments
-    local app_deployments=("ainflue-api" "ainflue-crawler" "ainflue-ai")
+    local app_deployments=("iacherie-api" "iacherie-crawler" "iacherie-ai")
     for deployment in "${app_deployments[@]}"; do
         if kubectl get deployment "$deployment" -n "$NAMESPACE" &> /dev/null; then
             print_step "Waiting for $deployment..."
@@ -215,7 +215,7 @@ run_health_checks() {
     print_step "Running health checks..."
     
     # Get service endpoints
-    API_SERVICE=$(kubectl get service ainflue-api -n "$NAMESPACE" -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
+    API_SERVICE=$(kubectl get service iacherie-api -n "$NAMESPACE" -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
     
     if [[ -n "$API_SERVICE" ]]; then
         # Test API health endpoint
@@ -240,7 +240,7 @@ generate_summary() {
     
     # Show namespace status
     echo "Namespaces:"
-    kubectl get namespaces | grep -E "(ainflue|monitoring)"
+    kubectl get namespaces | grep -E "(iacherie|monitoring)"
     echo ""
     
     # Show pod status
@@ -317,7 +317,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Options:"
             echo "  --skip-validation    Skip security validation"
-            echo "  --namespace NAME     Use custom namespace (default: ainflue)"
+            echo "  --namespace NAME     Use custom namespace (default: iacherie)"
             echo "  --help              Show this help message"
             exit 0
             ;;

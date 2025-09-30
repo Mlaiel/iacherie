@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ainflue Desktop - Code Quality Check Script
+# IA Chérie Desktop - Code Quality Check Script
 # 
 # Comprehensive code quality validation for desktop application
 # Includes linting, formatting, security checks, and best practices
@@ -23,7 +23,7 @@ PROJECT_ROOT="$(cd "$DESKTOP_DIR/.." && pwd)"
 QUALITY_REPORT_FILE="$PROJECT_ROOT/test_reports/desktop/code_quality_report.json"
 EXIT_CODE=0
 
-echo -e "${BLUE}🔍 AINFLUE DESKTOP - CODE QUALITY CHECK${NC}"
+echo -e "${BLUE}🔍 IACHERIE DESKTOP - CODE QUALITY CHECK${NC}"
 echo "=============================================="
 echo "Desktop Directory: $DESKTOP_DIR"
 echo "Project Root: $PROJECT_ROOT"
@@ -37,7 +37,7 @@ mkdir -p "$(dirname "$QUALITY_REPORT_FILE")"
 cat > "$QUALITY_REPORT_FILE" << EOF
 {
   "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-  "project": "Ainflue Desktop",
+  "project": "IA Chérie Desktop",
   "author": "Fahed Mlaiel",
   "contact": "mlaiel@live.de",
   "checks": {

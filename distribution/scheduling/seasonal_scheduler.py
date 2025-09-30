@@ -2,7 +2,7 @@
 Seasonal Scheduler
 =================
 
-Advanced seasonal content scheduling engine for Ainflue Distribution Platform.
+Advanced seasonal content scheduling engine for IA Chérie Distribution Platform.
 Optimizes content timing based on seasonal trends, holidays, and cultural events.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

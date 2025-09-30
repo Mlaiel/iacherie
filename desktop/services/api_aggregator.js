@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - API Aggregator Service
+ * IA Chérie Desktop - API Aggregator Service
  * 
  * Centralized API management layer that aggregates multiple backend services,
  * handles authentication, rate limiting, caching, and provides a unified interface.
@@ -20,7 +20,7 @@ class APIAggregator {
         this.requestQueue = [];
         this.isProcessingQueue = false;
         this.config = {
-            baseURL: 'https://api.ainflue.com',
+            baseURL: 'https://api.iacherie.com',
             timeout: 30000,
             retryAttempts: 3,
             cacheTimeout: 5 * 60 * 1000, // 5 minutes
@@ -321,7 +321,7 @@ class APIAggregator {
     async buildHeaders(serviceName, options = {}) {
         const headers = {
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainflue-Desktop/1.0.0',
+            'User-Agent': 'IA Chérie-Desktop/1.0.0',
             'X-Client-Version': '1.0.0',
             'X-Platform': process.platform
         };

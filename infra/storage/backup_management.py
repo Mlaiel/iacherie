@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Backup Management System for Ainflue Platform
+Backup Management System for IA Chérie Platform
 ============================================
 
 Enterprise-grade backup management with multi-cloud support, automated
@@ -124,7 +124,7 @@ class BackupManager:
     support, automated scheduling, and enterprise-grade features.
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/backup"):
+    def __init__(self, config_path: str = "/etc/iacherie/backup"):
         self.config_path = Path(config_path)
         self.config_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -133,7 +133,7 @@ class BackupManager:
         self.backup_jobs: Dict[str, BackupJob] = {}
         self.restore_requests: Dict[str, RestoreRequest] = {}
         
-        self.backup_root = Path("/var/backups/ainflue")
+        self.backup_root = Path("/var/backups/iacherie")
         self.backup_root.mkdir(parents=True, exist_ok=True)
         
         self._load_configuration()
@@ -153,7 +153,7 @@ class BackupManager:
         logger.addHandler(console_handler)
         
         # File handler
-        log_dir = Path("/var/log/ainflue/backup")
+        log_dir = Path("/var/log/iacherie/backup")
         log_dir.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_dir / "backup_manager.log")
         file_handler.setFormatter(console_formatter)
@@ -582,7 +582,7 @@ class BackupManager:
                 '--compress-algo', '2',
                 '--symmetric',
                 '--batch', '--yes',
-                '--passphrase-file', '/etc/ainflue/backup/encryption_key',
+                '--passphrase-file', '/etc/iacherie/backup/encryption_key',
                 '--output', str(encrypted_file),
                 str(backup_file)
             ], check=True)
@@ -824,7 +824,7 @@ class BackupManager:
             
             subprocess.run([
                 'gpg', '--batch', '--yes',
-                '--passphrase-file', '/etc/ainflue/backup/encryption_key',
+                '--passphrase-file', '/etc/iacherie/backup/encryption_key',
                 '--decrypt',
                 '--output', str(decrypted_file),
                 str(encrypted_file)

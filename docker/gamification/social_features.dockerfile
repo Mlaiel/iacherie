@@ -1,5 +1,5 @@
 # ===============================================
-# Social Features Dockerfile - Ainflue Platform
+# Social Features Dockerfile - IA Chérie Platform
 # ===============================================
 # Multi-stage Docker build for Social Interaction Service
 # Handles social networking, community features, and user interactions
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8084/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Social Features Service for Ainflue Gamification"
+LABEL description="Social Features Service for IA Chérie Gamification"
 
 EXPOSE 8084
 CMD ["python", "-m", "social_features.main"]

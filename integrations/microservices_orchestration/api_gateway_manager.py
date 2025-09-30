@@ -2,7 +2,7 @@
 =======================================================
 
 API gateway manager enterprise avec intelligent routing, rate limiting adaptatif,
-authentification centralisée et analytics avancés pour l'écosystème Ainflue.
+authentification centralisée et analytics avancés pour l'écosystème IA Chérie.
 
 Expert Roles Implementation:
 🏗️ Backend Senior: API gateway architecture + routing intelligent + load balancing
@@ -590,7 +590,7 @@ class APIGatewayManager:
         return await aioredis.from_url(redis_url)
     
     async def _setup_default_endpoints(self):
-        """Setup default Ainflue platform endpoints"""
+        """Setup default IA Chérie platform endpoints"""
         default_endpoints = [
             {
                 'path': '/api/v1/creators',
@@ -686,7 +686,7 @@ class APIGatewayManager:
         if 'body' in response:
             body_data = json.loads(response['body'])
             body_data['transformed'] = True
-            body_data['transformer'] = 'ainflue-api-gateway'
+            body_data['transformer'] = 'iacherie-api-gateway'
             response['body'] = json.dumps(body_data)
         
         return response
@@ -884,7 +884,7 @@ class AuthenticationManager:
             'enabled': True,
             'algorithm': 'HS256',
             'expiry': jwt_config.get('expiry', 3600),
-            'issuer': jwt_config.get('issuer', 'ainflue-gateway')
+            'issuer': jwt_config.get('issuer', 'iacherie-gateway')
         }
     
     async def configure_oauth2(self, oauth2_config: Dict[str, Any]) -> Dict[str, Any]:

@@ -1,4 +1,4 @@
-# 🚀 DevOps Enterprise Architektur - Ainflue Plattform
+# 🚀 DevOps Enterprise Architektur - IA Chérie Plattform
 
 ## ⚠️ URHEBERRECHTSSCHUTZ-HINWEIS
 **© 2025 Fahed Mlaiel. Alle Rechte vorbehalten.**
@@ -11,7 +11,7 @@ Diese DevOps-Architektur und -Implementierung sind das **EXKLUSIVE EIGENTUM** vo
 
 ## 📋 Überblick
 
-Die Ainflue DevOps Enterprise Architektur bietet umfassende Infrastruktur-Automatisierung, Deployment-Management, Überwachung, Sicherheit und Performance-Optimierung für die Ainflue-Plattform. Dieses Enterprise-Level System unterstützt Multi-Format-Content-Verarbeitung, Echtzeit-KI-Operationen und globale Verteilungsnetzwerke.
+Die IA Chérie DevOps Enterprise Architektur bietet umfassende Infrastruktur-Automatisierung, Deployment-Management, Überwachung, Sicherheit und Performance-Optimierung für die IA Chérie-Plattform. Dieses Enterprise-Level System unterstützt Multi-Format-Content-Verarbeitung, Echtzeit-KI-Operationen und globale Verteilungsnetzwerke.
 
 ## 🏗️ Architektur-Überblick
 
@@ -58,8 +58,8 @@ Die Ainflue DevOps Enterprise Architektur bietet umfassende Infrastruktur-Automa
 
 1. **Klonen und Einrichten**
    ```bash
-   git clone https://github.com/Mlaiel/Ainflue.git
-   cd Ainflue/devops
+   git clone https://github.com/Mlaiel/IA Chérie.git
+   cd IA Chérie/devops
    pip install -r ../requirements.txt
    ```
 
@@ -117,14 +117,14 @@ deployment_mgr = DeploymentManager()
 
 # Blue/Green Deployment
 await deployment_mgr.blue_green_deployment({
-    "application": "ainflue-api",
+    "application": "iacherie-api",
     "version": "v2.1.0",
     "health_check_url": "/health"
 })
 
 # Canary Deployment mit 10% Traffic
 await deployment_mgr.canary_deployment({
-    "application": "ainflue-web",
+    "application": "iacherie-web",
     "version": "v1.5.0",
     "traffic_split": 0.1
 })
@@ -140,7 +140,7 @@ observability = ObservabilityManager()
 
 # Service-Überwachung einrichten
 await observability.setup_service_monitoring({
-    "service": "ainflue-api",
+    "service": "iacherie-api",
     "metrics": ["response_time", "error_rate", "throughput"],
     "alerts": {
         "response_time": {"threshold": "100ms", "action": "scale_up"},
@@ -166,12 +166,12 @@ infrastructure:
     target_cpu: 70
 
 monitoring:
-  prometheus_endpoint: https://prometheus.ainflue.com
-  grafana_endpoint: https://grafana.ainflue.com
+  prometheus_endpoint: https://prometheus.iacherie.com
+  grafana_endpoint: https://grafana.iacherie.com
   retention_days: 30
 
 security:
-  vault_endpoint: https://vault.ainflue.com
+  vault_endpoint: https://vault.iacherie.com
   encryption_at_rest: true
   network_policies: strict
 ```
@@ -183,22 +183,22 @@ security:
 #### **Deployment-Fehler**
 ```bash
 # Deployment-Status prüfen
-python -m devops.deployment_manager status --app ainflue-api
+python -m devops.deployment_manager status --app iacherie-api
 
 # Manueller Rollback
-python -m devops.deployment_manager rollback --app ainflue-api --to-version v1.4.0
+python -m devops.deployment_manager rollback --app iacherie-api --to-version v1.4.0
 
 # Logs prüfen
-python -m devops.observability_manager logs --service ainflue-api --since 1h
+python -m devops.observability_manager logs --service iacherie-api --since 1h
 ```
 
 #### **Performance-Probleme**
 ```bash
 # Performance-Analyse
-python -m devops.performance_optimizer analyze --service ainflue-api
+python -m devops.performance_optimizer analyze --service iacherie-api
 
 # Auto-Scaling-Anpassung
-python -m devops.performance_optimizer scale --service ainflue-api --target-cpu 50
+python -m devops.performance_optimizer scale --service iacherie-api --target-cpu 50
 
 # Ressourcen-Optimierung
 python -m devops.performance_optimizer optimize --cost-target 20%
@@ -275,4 +275,4 @@ python -m devops.security_automation monthly-scan
 
 **© 2025 Fahed Mlaiel. Alle Rechte vorbehalten.**
 
-*Diese Dokumentation repräsentiert Enterprise-Level DevOps-Architektur für produktionsreifen Einsatz der Ainflue-Plattform.*
+*Diese Dokumentation repräsentiert Enterprise-Level DevOps-Architektur für produktionsreifen Einsatz der IA Chérie-Plattform.*

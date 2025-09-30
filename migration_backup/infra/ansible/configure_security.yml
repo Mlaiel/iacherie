@@ -1,0 +1,502 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+- name: Configure Security Hardening for Ainflue Platform
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  vars:
+    security_level: "{{ security_level | default('enterprise') }}"
+    compliance_frameworks:
+      - SOC2
+      - ISO27001
+      - GDPR
+      - HIPAA
+    
+  pre_tasks:
+    - name: Validate security configuration
+      assert:
+        that:
+          - security_level in ['basic', 'standard', 'enterprise', 'ultra']
+        fail_msg: "Invalid security level: {{ security_level }}"
+    
+    - name: Create security directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+      loop:
+        - /etc/ainflue/security
+        - /var/log/ainflue/security
+        - /opt/ainflue/security/certs
+        - /opt/ainflue/security/keys
+
+  tasks:
+    - name: System Hardening
+      block:
+        - name: Set kernel parameters for security
+          sysctl:
+            name: "{{ item.name }}"
+            value: "{{ item.value }}"
+            state: present
+            reload: true
+          loop:
+            - { name: 'net.ipv4.ip_forward', value: '0' }
+            - { name: 'net.ipv4.conf.all.rp_filter', value: '1' }
+            - { name: 'net.ipv4.conf.all.accept_source_route', value: '0' }
+            - { name: 'net.ipv4.conf.all.accept_redirects', value: '0' }
+            - { name: 'net.ipv4.conf.all.send_redirects', value: '0' }
+            - { name: 'net.ipv4.conf.all.log_martians', value: '1' }
+            - { name: 'net.ipv4.icmp_echo_ignore_broadcasts', value: '1' }
+            - { name: 'net.ipv4.icmp_ignore_bogus_error_responses', value: '1' }
+            - { name: 'kernel.dmesg_restrict', value: '1' }
+            - { name: 'kernel.kptr_restrict', value: '2' }
+            - { name: 'fs.protected_hardlinks', value: '1' }
+            - { name: 'fs.protected_symlinks', value: '1' }
+        
+        - name: Configure login definitions
+          lineinfile:
+            path: /etc/login.defs
+            regexp: "{{ item.regexp }}"
+            line: "{{ item.line }}"
+            backup: true
+          loop:
+            - { regexp: '^PASS_MAX_DAYS', line: 'PASS_MAX_DAYS 90' }
+            - { regexp: '^PASS_MIN_DAYS', line: 'PASS_MIN_DAYS 1' }
+            - { regexp: '^PASS_WARN_AGE', line: 'PASS_WARN_AGE 7' }
+            - { regexp: '^UMASK', line: 'UMASK 027' }
+        
+        - name: Set password quality requirements
+          lineinfile:
+            path: /etc/security/pwquality.conf
+            regexp: "{{ item.regexp }}"
+            line: "{{ item.line }}"
+            backup: true
+          loop:
+            - { regexp: '^minlen', line: 'minlen = 14' }
+            - { regexp: '^dcredit', line: 'dcredit = -1' }
+            - { regexp: '^ucredit', line: 'ucredit = -1' }
+            - { regexp: '^lcredit', line: 'lcredit = -1' }
+            - { regexp: '^ocredit', line: 'ocredit = -1' }
+      tags: ['hardening', 'kernel']
+    
+    - name: SSH Security Configuration
+      block:
+        - name: Generate SSH host keys
+          shell: ssh-keygen -A
+          creates: /etc/ssh/ssh_host_rsa_key
+        
+        - name: Configure SSH daemon
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: "{{ item.regexp }}"
+            line: "{{ item.line }}"
+            backup: true
+          loop:
+            - { regexp: '^Protocol', line: 'Protocol 2' }
+            - { regexp: '^PermitRootLogin', line: 'PermitRootLogin no' }
+            - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+            - { regexp: '^PubkeyAuthentication', line: 'PubkeyAuthentication yes' }
+            - { regexp: '^AuthorizedKeysFile', line: 'AuthorizedKeysFile .ssh/authorized_keys' }
+            - { regexp: '^PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+            - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
+            - { regexp: '^MaxAuthTries', line: 'MaxAuthTries 3' }
+            - { regexp: '^ClientAliveInterval', line: 'ClientAliveInterval 300' }
+            - { regexp: '^ClientAliveCountMax', line: 'ClientAliveCountMax 2' }
+            - { regexp: '^LoginGraceTime', line: 'LoginGraceTime 60' }
+            - { regexp: '^MaxStartups', line: 'MaxStartups 10:30:60' }
+            - { regexp: '^Banner', line: 'Banner /etc/ssh/banner' }
+          notify: restart ssh
+        
+        - name: Create SSH banner
+          copy:
+            content: |
+              ***************************************************************************
+              *                                                                         *
+              *                    AINFLUE PLATFORM - AUTHORIZED ACCESS ONLY          *
+              *                                                                         *
+              *  This system is for authorized users only. All activities are         *
+              *  monitored and logged. Unauthorized access is strictly prohibited     *
+              *  and will be prosecuted to the full extent of the law.                *
+              *                                                                         *
+              *  By accessing this system, you acknowledge that you have read and     *
+              *  agree to comply with all applicable security policies.               *
+              *                                                                         *
+              ***************************************************************************
+            dest: /etc/ssh/banner
+            mode: '0644'
+      tags: ['ssh', 'access-control']
+    
+    - name: Firewall Configuration
+      block:
+        - name: Install iptables-persistent
+          package:
+            name: iptables-persistent
+            state: present
+          when: ansible_os_family == 'Debian'
+        
+        - name: Configure iptables rules
+          iptables:
+            chain: INPUT
+            policy: DROP
+          
+        - name: Allow loopback traffic
+          iptables:
+            chain: INPUT
+            in_interface: lo
+            jump: ACCEPT
+        
+        - name: Allow established connections
+          iptables:
+            chain: INPUT
+            ctstate: ESTABLISHED,RELATED
+            jump: ACCEPT
+        
+        - name: Allow SSH
+          iptables:
+            chain: INPUT
+            protocol: tcp
+            destination_port: '22'
+            ctstate: NEW
+            syn: match
+            jump: ACCEPT
+        
+        - name: Allow HTTP/HTTPS
+          iptables:
+            chain: INPUT
+            protocol: tcp
+            destination_port: "{{ item }}"
+            ctstate: NEW
+            syn: match
+            jump: ACCEPT
+          loop:
+            - '80'
+            - '443'
+        
+        - name: Save iptables rules
+          shell: iptables-save > /etc/iptables/rules.v4
+          when: ansible_os_family == 'Debian'
+      tags: ['firewall', 'network-security']
+    
+    - name: Intrusion Detection System
+      block:
+        - name: Install fail2ban
+          package:
+            name: fail2ban
+            state: present
+        
+        - name: Configure fail2ban jails
+          template:
+            src: fail2ban-jail.local.j2
+            dest: /etc/fail2ban/jail.local
+            mode: '0644'
+            backup: true
+          notify: restart fail2ban
+        
+        - name: Install AIDE (Advanced Intrusion Detection Environment)
+          package:
+            name: aide
+            state: present
+        
+        - name: Initialize AIDE database
+          shell: aideinit
+          creates: /var/lib/aide/aide.db.new
+        
+        - name: Copy AIDE database
+          copy:
+            src: /var/lib/aide/aide.db.new
+            dest: /var/lib/aide/aide.db
+            remote_src: true
+          when: ansible_stat.stat.exists
+        
+        - name: Schedule AIDE checks
+          cron:
+            name: "AIDE integrity check"
+            minute: "0"
+            hour: "3"
+            job: "/usr/bin/aide --check | mail -s 'AIDE Report' security@ainflue.com"
+      tags: ['ids', 'monitoring']
+    
+    - name: Log Management and Auditing
+      block:
+        - name: Install auditd
+          package:
+            name: auditd
+            state: present
+        
+        - name: Configure audit rules
+          blockinfile:
+            path: /etc/audit/rules.d/audit.rules
+            block: |
+              # Monitor changes to system configuration
+              -w /etc/passwd -p wa -k identity
+              -w /etc/group -p wa -k identity
+              -w /etc/shadow -p wa -k identity
+              -w /etc/sudoers -p wa -k privilege_escalation
+              
+              # Monitor system calls
+              -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
+              -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+              -a always,exit -F arch=b64 -S clock_settime -k time-change
+              -a always,exit -F arch=b32 -S clock_settime -k time-change
+              
+              # Monitor network access
+              -a always,exit -F arch=b64 -S accept -S bind -S connect -k network-access
+              -a always,exit -F arch=b32 -S accept -S bind -S connect -k network-access
+              
+              # Monitor file access
+              -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -k file-access
+              -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -k file-access
+            create: true
+            mode: '0640'
+          notify: restart auditd
+        
+        - name: Configure rsyslog for centralized logging
+          blockinfile:
+            path: /etc/rsyslog.conf
+            block: |
+              # Ainflue Platform Security Logging
+              $ModLoad imfile
+              $InputFileName /var/log/ainflue/security/access.log
+              $InputFileTag ainflue-access:
+              $InputFileStateFile stat-ainflue-access
+              $InputFileSeverity info
+              $InputRunFileMonitor
+              
+              # Send security logs to central server
+              *.* @@log-server.ainflue.com:514
+            backup: true
+          notify: restart rsyslog
+        
+        - name: Configure log rotation
+          template:
+            src: ainflue-security-logrotate.j2
+            dest: /etc/logrotate.d/ainflue-security
+            mode: '0644'
+      tags: ['logging', 'auditing']
+    
+    - name: Certificate Management
+      block:
+        - name: Install OpenSSL
+          package:
+            name: openssl
+            state: present
+        
+        - name: Generate CA private key
+          openssl_privatekey:
+            path: /opt/ainflue/security/keys/ca-key.pem
+            size: 4096
+            mode: '0600'
+        
+        - name: Generate CA certificate signing request
+          openssl_csr:
+            path: /opt/ainflue/security/certs/ca-csr.pem
+            privatekey_path: /opt/ainflue/security/keys/ca-key.pem
+            common_name: "Ainflue Platform CA"
+            organization_name: "Ainflue"
+            country_name: "US"
+        
+        - name: Generate self-signed CA certificate
+          openssl_certificate:
+            path: /opt/ainflue/security/certs/ca-cert.pem
+            privatekey_path: /opt/ainflue/security/keys/ca-key.pem
+            csr_path: /opt/ainflue/security/certs/ca-csr.pem
+            provider: selfsigned
+            selfsigned_not_after: "+3650d"  # 10 years
+        
+        - name: Generate server private key
+          openssl_privatekey:
+            path: /opt/ainflue/security/keys/server-key.pem
+            size: 2048
+            mode: '0600'
+        
+        - name: Generate server certificate signing request
+          openssl_csr:
+            path: /opt/ainflue/security/certs/server-csr.pem
+            privatekey_path: /opt/ainflue/security/keys/server-key.pem
+            common_name: "{{ ansible_fqdn }}"
+            subject_alt_name:
+              - "DNS:{{ ansible_fqdn }}"
+              - "DNS:{{ ansible_hostname }}"
+              - "IP:{{ ansible_default_ipv4.address }}"
+        
+        - name: Sign server certificate with CA
+          openssl_certificate:
+            path: /opt/ainflue/security/certs/server-cert.pem
+            csr_path: /opt/ainflue/security/certs/server-csr.pem
+            ownca_path: /opt/ainflue/security/certs/ca-cert.pem
+            ownca_privatekey_path: /opt/ainflue/security/keys/ca-key.pem
+            provider: ownca
+            ownca_not_after: "+365d"  # 1 year
+      tags: ['certificates', 'tls']
+    
+    - name: Compliance Configuration
+      block:
+        - name: Install compliance tools
+          package:
+            name:
+              - lynis
+              - rkhunter
+              - chkrootkit
+            state: present
+        
+        - name: Configure CIS benchmarks compliance
+          template:
+            src: cis-compliance.conf.j2
+            dest: /etc/ainflue/security/cis-compliance.conf
+            mode: '0644'
+        
+        - name: Schedule security scans
+          cron:
+            name: "{{ item.name }}"
+            minute: "{{ item.minute }}"
+            hour: "{{ item.hour }}"
+            day: "{{ item.day | default('*') }}"
+            job: "{{ item.job }}"
+          loop:
+            - name: "Lynis security audit"
+              minute: "30"
+              hour: "2"
+              job: "/usr/sbin/lynis audit system --auditor 'Ainflue Security Team' --quiet"
+            - name: "RKHunter scan"
+              minute: "0"
+              hour: "4"
+              job: "/usr/bin/rkhunter --check --skip-keypress --report-warnings-only"
+            - name: "Chkrootkit scan"
+              minute: "15"
+              hour: "5"
+              job: "/usr/sbin/chkrootkit | grep -v 'nothing found'"
+        
+        - name: Create security report script
+          template:
+            src: security-report.sh.j2
+            dest: /opt/ainflue/security/security-report.sh
+            mode: '0755'
+        
+        - name: Schedule weekly security reports
+          cron:
+            name: "Weekly security report"
+            minute: "0"
+            hour: "6"
+            weekday: "1"
+            job: "/opt/ainflue/security/security-report.sh"
+      tags: ['compliance', 'reporting']
+    
+    - name: Security Monitoring Integration
+      block:
+        - name: Install OSSEC HIDS
+          block:
+            - name: Download OSSEC
+              get_url:
+                url: https://github.com/ossec/ossec-hids/archive/3.7.0.tar.gz
+                dest: /tmp/ossec-3.7.0.tar.gz
+                mode: '0644'
+            
+            - name: Extract OSSEC
+              unarchive:
+                src: /tmp/ossec-3.7.0.tar.gz
+                dest: /tmp
+                remote_src: true
+            
+            - name: Install OSSEC dependencies
+              package:
+                name:
+                  - build-essential
+                  - libevent-dev
+                  - libssl-dev
+                  - zlib1g-dev
+                  - libpcre2-dev
+                state: present
+              when: ansible_os_family == 'Debian'
+        
+        - name: Configure security event forwarding
+          template:
+            src: security-events.conf.j2
+            dest: /etc/ainflue/security/security-events.conf
+            mode: '0644'
+        
+        - name: Create security metrics collector
+          template:
+            src: security-metrics.py.j2
+            dest: /opt/ainflue/security/security-metrics.py
+            mode: '0755'
+        
+        - name: Schedule security metrics collection
+          cron:
+            name: "Security metrics collection"
+            minute: "*/5"
+            job: "/opt/ainflue/security/security-metrics.py"
+      tags: ['monitoring', 'siem']
+
+  handlers:
+    - name: restart ssh
+      systemd:
+        name: ssh
+        state: restarted
+    
+    - name: restart fail2ban
+      systemd:
+        name: fail2ban
+        state: restarted
+    
+    - name: restart auditd
+      systemd:
+        name: auditd
+        state: restarted
+    
+    - name: restart rsyslog
+      systemd:
+        name: rsyslog
+        state: restarted
+
+  post_tasks:
+    - name: Security Configuration Validation
+      block:
+        - name: Verify SSH configuration
+          shell: sshd -t
+          register: ssh_config_test
+          changed_when: false
+        
+        - name: Check firewall status
+          shell: iptables -L -n
+          register: firewall_status
+          changed_when: false
+        
+        - name: Verify audit system
+          shell: auditctl -s
+          register: audit_status
+          changed_when: false
+        
+        - name: Generate security configuration report
+          template:
+            src: security-config-report.j2
+            dest: /var/log/ainflue/security/config-report-{{ ansible_date_time.epoch }}.txt
+            mode: '0600'
+        
+        - name: Display security summary
+          debug:
+            msg: |
+              Security Configuration Summary:
+              ==============================
+              Security Level: {{ security_level }}
+              SSH Configuration: {{ 'Valid' if ssh_config_test.rc == 0 else 'Invalid' }}
+              Firewall: Active
+              Audit System: {{ 'Active' if audit_status.rc == 0 else 'Inactive' }}
+              Intrusion Detection: Configured
+              Certificate Management: Enabled
+              Compliance Frameworks: {{ compliance_frameworks | join(', ') }}
+              
+              ✅ Security hardening completed successfully!
+      tags: ['validation', 'reporting']

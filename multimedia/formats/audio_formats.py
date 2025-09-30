@@ -2,7 +2,7 @@
 🎵 AUDIO FORMATS PROCESSOR - ENTERPRISE ARCHITECTURE
 ===================================================
 
-Professional audio format processing and optimization for Ainflue Platform
+Professional audio format processing and optimization for IA Chérie Platform
 Supporting all major audio formats with AI-powered enhancement
 
 **Expert Implementation:**

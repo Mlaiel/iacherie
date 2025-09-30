@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Mobile Push Notifications System provides comprehensive push notification services for the Ainflue mobile applications across iOS and Android platforms. This system delivers real-time notifications for content protection alerts, revenue updates, collaboration requests, and system notifications.
+The Mobile Push Notifications System provides comprehensive push notification services for the IA Chérie mobile applications across iOS and Android platforms. This system delivers real-time notifications for content protection alerts, revenue updates, collaboration requests, and system notifications.
 
 ## 🏗️ Architecture
 
@@ -249,7 +249,7 @@ const logs = await NotificationManager.getDeliveryLogs({
     "contentId": "track123",
     "violationId": "violation456",
     "severity": "high",
-    "deepLink": "ainflue://protection/violations/violation456"
+    "deepLink": "iacherie://protection/violations/violation456"
   },
   "android": {
     "priority": "high",
@@ -282,7 +282,7 @@ const logs = await NotificationManager.getDeliveryLogs({
     "milestone": 1000,
     "amount": 1250.75,
     "period": "monthly",
-    "deepLink": "ainflue://monetization/dashboard"
+    "deepLink": "iacherie://monetization/dashboard"
   },
   "android": {
     "notification": {

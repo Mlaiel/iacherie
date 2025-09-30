@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Performance Configuration Module
+"""IA Chérie Performance Configuration Module
 ==========================================
 
-Enterprise-grade performance optimization configuration for the Ainflue platform.
+Enterprise-grade performance optimization configuration for the IA Chérie platform.
 Handles CPU optimization, memory management, caching strategies, database optimization,
 query performance, load balancing, and real-time performance monitoring.
 

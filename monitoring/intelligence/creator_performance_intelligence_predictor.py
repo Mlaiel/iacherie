@@ -2,7 +2,7 @@
 =============================================
 
 Enterprise-grade Creator Performance Intelligence system providing comprehensive
-performance prediction, analytics, and optimization for the Ainflue Creator Economy.
+performance prediction, analytics, and optimization for the IA Chérie Creator Economy.
 Implements sophisticated ML-powered performance forecasting, creator success prediction,
 and intelligent optimization recommendations for multi-format content creators.
 

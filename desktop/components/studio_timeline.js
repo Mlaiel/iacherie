@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Studio Timeline Component
+ * IA Chérie Desktop - Studio Timeline Component
  * 
  * Professional timeline editing interface for multi-track content creation
  * 

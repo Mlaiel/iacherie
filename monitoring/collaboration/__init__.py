@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Collaboration Monitoring Module
+IA Chérie Platform - Collaboration Monitoring Module
 =================================================
 
 Enterprise-grade monitoring for AI-powered collaboration matching,

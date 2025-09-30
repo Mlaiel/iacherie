@@ -11,7 +11,7 @@
 
 ## 📋 Overview
 
-The Communication Services module provides enterprise-grade communication and messaging capabilities for the Ainflue platform. This module handles all forms of inter-service communication, real-time messaging, notifications, and collaboration features.
+The Communication Services module provides enterprise-grade communication and messaging capabilities for the IA Chérie platform. This module handles all forms of inter-service communication, real-time messaging, notifications, and collaboration features.
 
 ## 🏗️ Architecture
 
@@ -166,7 +166,7 @@ await email_service.create_campaign(
 
 # Webhook registration
 await webhook_service.register_webhook(
-    url="https://partner.com/webhooks/ainflue",
+    url="https://partner.com/webhooks/iacherie",
     events=["content_upload", "collaboration_request"],
     security="signature_validation"
 )
@@ -194,8 +194,8 @@ await webhook_service.register_webhook(
 COMMUNICATION_REDIS_URL=redis://localhost:6379
 COMMUNICATION_DB_URL=postgresql://localhost/communication
 PUSH_NOTIFICATION_API_KEY=your_push_api_key
-VIDEO_CALL_SERVER_URL=https://webrtc.ainflue.com
-EMAIL_SMTP_HOST=smtp.ainflue.com
+VIDEO_CALL_SERVER_URL=https://webrtc.iacherie.com
+EMAIL_SMTP_HOST=smtp.iacherie.com
 WEBHOOK_SECRET_KEY=your_webhook_secret
 ```
 
@@ -255,9 +255,9 @@ result = await video_service._check_webrtc_connectivity()
 
 ### Technical Support
 - **Email**: mlaiel@live.de
-- **Documentation**: [Communication Services Docs](https://docs.ainflue.com/communication)
-- **Status Page**: [Service Status](https://status.ainflue.com)
-- **Community**: [Ainflue Developers](https://community.ainflue.com)
+- **Documentation**: [Communication Services Docs](https://docs.iacherie.com/communication)
+- **Status Page**: [Service Status](https://status.iacherie.com)
+- **Community**: [IA Chérie Developers](https://community.iacherie.com)
 
 ### Enterprise Support
 - **24/7 Support**: Available for enterprise customers
@@ -269,7 +269,7 @@ result = await video_service._check_webrtc_connectivity()
 
 ## 📄 License
 
-This module is part of the Ainflue platform and is proprietary software owned by Fahed Mlaiel.
+This module is part of the IA Chérie platform and is proprietary software owned by Fahed Mlaiel.
 
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Confidential and Proprietary - Enterprise Use Only**

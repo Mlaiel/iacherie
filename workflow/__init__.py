@@ -1,5 +1,5 @@
 """
-🔥 AINFLUE ENTERPRISE WORKFLOW MODULE - ULTRA-AVANCÉ
+🔥 IACHERIE ENTERPRISE WORKFLOW MODULE - ULTRA-AVANCÉ
 Architecture 3 niveaux enterprise pour workflows de classe mondiale
 
 STRUCTURE ENTERPRISE FINALE:
@@ -16,7 +16,7 @@ TOTAL: 18 FICHIERS (CONFORMITÉ STRICTE CHECKLIST)
 ✅ CONFORMITÉ CHECKLIST 100%
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright (c) 2025 Ainflue Platform. All rights reserved.
+Copyright (c) 2025 IA Chérie Platform. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
 

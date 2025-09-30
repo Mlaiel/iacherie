@@ -63,7 +63,7 @@ log() {
 show_header() {
     echo -e "${RED}${BOLD}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║                  🔐 AINFLUE SECURITY AUTOMATION                 ║"
+    echo "║                  🔐 IACHERIE SECURITY AUTOMATION                 ║"
     echo "║                                                                  ║"
     echo "║        Advanced Desktop Security & Monitoring System            ║"
     echo "║                                                                  ║"
@@ -109,7 +109,7 @@ EOF
     
     # Send notification (placeholder for actual notification system)
     if command -v notify-send &> /dev/null; then
-        notify-send "Ainflue Security Alert" "$title: $message" --urgency=critical
+        notify-send "IA Chérie Security Alert" "$title: $message" --urgency=critical
     fi
 }
 
@@ -394,7 +394,7 @@ run_security_audit() {
     mkdir -p "$(dirname "$audit_report")"
     
     cat > "$audit_report" << EOF
-# Ainflue Desktop Security Audit Report
+# IA Chérie Desktop Security Audit Report
 
 **Audit Date**: $(date '+%Y-%m-%d %H:%M:%S')
 **System**: $(uname -a)
@@ -597,7 +597,7 @@ main() {
     
     local start_time=$(date +%s)
     
-    log "INFO" "🔐 Starting Ainflue Desktop Security Automation"
+    log "INFO" "🔐 Starting IA Chérie Desktop Security Automation"
     log "INFO" "🎯 Alert threshold: $ALERT_THRESHOLD"
     
     # Execute security operations based on mode

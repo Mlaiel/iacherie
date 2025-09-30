@@ -5,7 +5,7 @@
 FROM python:3.12-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Communication Hub - Real-time messaging service"
+LABEL description="IA Chérie Communication Hub - Real-time messaging service"
 LABEL version="1.0.0"
 
 WORKDIR /app

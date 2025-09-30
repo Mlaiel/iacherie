@@ -1,4 +1,4 @@
-# Ainflue Desktop - Technical Architecture Documentation
+# IA Chérie Desktop - Technical Architecture Documentation
 
 ⚠️ **STRICT COPYRIGHT WARNING** ⚠️  
 This technical documentation and the associated software architecture are the exclusive intellectual property of Fahed Mlaiel.  
@@ -9,7 +9,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 ## System Architecture Overview
 
 ### Architecture Philosophy
-Ainflue Desktop implements a **4-Level Frontend Architecture** following enterprise-grade design patterns:
+IA Chérie Desktop implements a **4-Level Frontend Architecture** following enterprise-grade design patterns:
 
 - **Level 1**: Platform Core (Backend Integration)
 - **Level 2**: Desktop Application (Main Electron Process)

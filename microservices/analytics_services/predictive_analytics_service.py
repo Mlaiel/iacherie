@@ -3,7 +3,7 @@
 📋 PREDICTIVE ANALYTICS SERVICE
 ==============================
 
-Advanced predictive analytics and machine learning service for the Ainflue platform.
+Advanced predictive analytics and machine learning service for the IA Chérie platform.
 Provides AI-powered forecasting, trend prediction, and intelligent insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

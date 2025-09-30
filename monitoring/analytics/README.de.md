@@ -2,7 +2,7 @@
 
 ## Übersicht
 
-Das Analytics Monitoring Modul ist ein umfassendes Enterprise-System für Analytics-Intelligence und Business Intelligence für die Ainflue-Plattform. Es bietet Echtzeit-Analytik, plattformübergreifende Datensammlung und fortgeschrittene Geschäftsintelligenz.
+Das Analytics Monitoring Modul ist ein umfassendes Enterprise-System für Analytics-Intelligence und Business Intelligence für die IA Chérie-Plattform. Es bietet Echtzeit-Analytik, plattformübergreifende Datensammlung und fortgeschrittene Geschäftsintelligenz.
 
 ## 🎯 Kernfunktionen
 
@@ -135,13 +135,13 @@ python -m pytest tests/performance/test_analytics_performance.py -v
 ## 🤝 Support & Kontakt
 
 ### Technischer Support
-- **Email**: support@ainflue.com
-- **Documentation**: https://docs.ainflue.com/analytics
-- **API Reference**: https://api.ainflue.com/docs/analytics
+- **Email**: support@iacherie.com
+- **Documentation**: https://docs.iacherie.com/analytics
+- **API Reference**: https://api.iacherie.com/docs/analytics
 
 ### Entwicklungsunterstützung
-- **GitHub**: https://github.com/ainflue/analytics-monitoring
-- **Issues**: https://github.com/ainflue/analytics-monitoring/issues
+- **GitHub**: https://github.com/iacherie/analytics-monitoring
+- **Issues**: https://github.com/iacherie/analytics-monitoring/issues
 - **Contributions**: Siehe CONTRIBUTING.md
 
 ## 📄 Lizenz

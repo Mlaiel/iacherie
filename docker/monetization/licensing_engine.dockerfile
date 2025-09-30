@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE LICENSING ENGINE - AUTOMATED DOCKERFILE
+# IACHERIE LICENSING ENGINE - AUTOMATED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS licensing-base
@@ -49,7 +49,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${LICENSING_SERVICE_PORT}
 CMD ["python3.11", "-m", "licensing_engine.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Licensing Engine"
-LABEL ainflue.service.category="monetization"
-LABEL ainflue.service.name="licensing_engine"
-LABEL ainflue.service.port="8045"
+LABEL org.opencontainers.image.title="IA Chérie Licensing Engine"
+LABEL iacherie.service.category="monetization"
+LABEL iacherie.service.name="licensing_engine"
+LABEL iacherie.service.port="8045"

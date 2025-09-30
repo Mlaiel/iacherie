@@ -1,0 +1,155 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Application deployment role defaults
+# Default variables for Ainflue application deployment
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+# Application configuration
+app_name: "ainflue"
+app_version: "{{ git_commit | default('latest') }}"
+app_environment: "{{ environment | default('production') }}"
+
+# Deployment configuration
+deployment_strategy: "blue_green"  # Options: blue_green, rolling, canary
+zero_downtime_enabled: true
+run_migrations: true
+deploy_ai_models: true
+cleanup_enabled: true
+
+# Application directories
+app_base_dir: "/opt/ainflue"
+app_current_dir: "{{ app_base_dir }}/current"
+app_releases_dir: "{{ app_base_dir }}/releases"
+app_shared_dir: "{{ app_base_dir }}/shared"
+app_config_dir: "{{ app_shared_dir }}/config"
+app_logs_dir: "{{ app_shared_dir }}/logs"
+app_uploads_dir: "{{ app_shared_dir }}/uploads"
+
+# Version management
+keep_releases: 5
+release_timestamp: "{{ ansible_date_time.epoch }}"
+current_release_dir: "{{ app_releases_dir }}/{{ release_timestamp }}"
+
+# Application user and group
+app_user: "ainflue"
+app_group: "ainflue"
+
+# Service configuration
+services:
+  - name: "ainflue-api"
+    port: 8000
+    replicas: 3
+    health_check_path: "/health"
+  - name: "ainflue-ai-engine"
+    port: 8001
+    replicas: 2
+    health_check_path: "/health"
+  - name: "ainflue-mobile-api"
+    port: 8002
+    replicas: 2
+    health_check_path: "/health"
+  - name: "ainflue-worker"
+    workers: 4
+    health_check_path: "/health"
+
+# Database configuration
+database:
+  host: "{{ db_host | default('localhost') }}"
+  port: "{{ db_port | default('5432') }}"
+  name: "{{ db_name | default('ainflue') }}"
+  user: "{{ db_user | default('ainflue') }}"
+  password: "{{ db_password }}"
+  migration_timeout: 300
+
+# Redis configuration
+redis:
+  host: "{{ redis_host | default('localhost') }}"
+  port: "{{ redis_port | default('6379') }}"
+  password: "{{ redis_password | default('') }}"
+  db: "{{ redis_db | default('0') }}"
+
+# AI/ML Models configuration
+ai_models:
+  model_registry: "{{ model_registry_url | default('s3://ainflue-models') }}"
+  model_cache_dir: "{{ app_shared_dir }}/models"
+  models_to_deploy:
+    - name: "content_classifier"
+      version: "v1.2.0"
+      gpu_required: false
+    - name: "image_enhancement"
+      version: "v2.1.0"
+      gpu_required: true
+    - name: "text_generation"
+      version: "v1.5.0"
+      gpu_required: true
+
+# Load balancer configuration
+load_balancer:
+  type: "nginx"  # Options: nginx, haproxy, aws_alb
+  config_template: "nginx.conf.j2"
+  upstream_servers: "{{ groups['app_servers'] | default(['127.0.0.1']) }}"
+  health_check_interval: 30
+  health_check_timeout: 5
+
+# Monitoring configuration
+monitoring:
+  prometheus_enabled: true
+  grafana_enabled: true
+  jaeger_enabled: true
+  log_level: "info"
+  metrics_port: 9090
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention_days: 30
+  backup_types:
+    - database
+    - uploads
+    - configuration
+
+# Security configuration
+security:
+  ssl_enabled: true
+  csrf_protection: true
+  rate_limiting: true
+  firewall_enabled: true
+  
+# Health check configuration
+health_checks:
+  startup_delay: 30
+  check_interval: 10
+  timeout: 5
+  retries: 3
+
+# Performance tuning
+performance:
+  worker_processes: "{{ ansible_processor_vcpus }}"
+  worker_connections: 1024
+  max_upload_size: "100M"
+  cache_enabled: true
+  gzip_enabled: true
+
+# Environment-specific overrides
+production:
+  log_level: "warning"
+  debug: false
+  ssl_redirect: true
+  
+staging:
+  log_level: "info"
+  debug: true
+  ssl_redirect: false
+
+development:
+  log_level: "debug"
+  debug: true
+  ssl_redirect: false
+  run_migrations: false

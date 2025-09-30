@@ -2,7 +2,7 @@
 Timezone-Aware Scheduler
 ======================
 
-Advanced timezone-aware publication scheduler for Ainflue Distribution Platform.
+Advanced timezone-aware publication scheduler for IA Chérie Distribution Platform.
 Handles multi-timezone content scheduling with intelligent optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

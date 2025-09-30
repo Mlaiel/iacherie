@@ -1,11 +1,11 @@
-# 🚀 وحدة تكوين Ainflue - مركز إدارة التكوين المؤسسي
+# 🚀 وحدة تكوين IA Chérie - مركز إدارة التكوين المؤسسي
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com)
 [![Redis](https://img.shields.io/badge/Redis-7.0+-red.svg)](https://redis.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://postgresql.org)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **� مركز تنظيم التكوين المؤسسي فائق التطور**  
 > نظام إدارة تكوين ثوري مع تحسين مدعوم بالذكاء الاصطناعي، أمان كمي المقياس، وتوزيع في الوقت الفعلي عبر بيئات سحابية متعددة.
@@ -50,7 +50,7 @@
 
 ## 🌟 **نظرة عامة**
 
-**وحدة تكوين Ainflue** تمثل قمة تقنية إدارة التكوين المؤسسي. هذا النظام فائق التطور يوفر تنظيم تكوين مركزي، آمن وذكي لنظام Ainflue البيئي الكامل، مع قدرات متطورة تعيد تعريف كيفية تعامل التطبيقات الحديثة مع التكوين على نطاق واسع.
+**وحدة تكوين IA Chérie** تمثل قمة تقنية إدارة التكوين المؤسسي. هذا النظام فائق التطور يوفر تنظيم تكوين مركزي، آمن وذكي لنظام IA Chérie البيئي الكامل، مع قدرات متطورة تعيد تعريف كيفية تعامل التطبيقات الحديثة مع التكوين على نطاق واسع.
 
 ### 🏗️ **الهندسة المعمارية المؤسسية**
 
@@ -171,10 +171,10 @@ print(f"نماذج الذكي الاصطناعي: {ai_config.enabled_models}")
 ### **تكوين البيئة**
 ```bash
 # مثال ملف .env
-APP_NAME=Ainflue
+APP_NAME=IA Chérie
 ENVIRONMENT=production
 DEBUG=false
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379/0
 OPENAI_API_KEY=your_api_key
 STRIPE_SECRET_KEY=your_stripe_key

@@ -1,6 +1,6 @@
 # خدمات Docker Audio
 
-خدمات Docker احترافية لوظائف audio في منصة Ainflue.
+خدمات Docker احترافية لوظائف audio في منصة IA Chérie.
 
 ## نظرة عامة
 
@@ -76,7 +76,7 @@ All services include comprehensive health checks:
 For technical support, contact:
 - **Author**: Fahed Mlaiel
 - **Email**: mlaiel@live.de
-- **Platform**: Ainflue Enterprise
+- **Platform**: IA Chérie Enterprise
 
 ## حقوق الطبع والنشر
 

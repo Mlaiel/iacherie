@@ -1,5 +1,5 @@
 """IA Influencer Agent - Streaming Analytics Aggregator
-Real-time Analytics and Aggregations for Ainflue Platform Streaming Events
+Real-time Analytics and Aggregations for IA Chérie Platform Streaming Events
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -711,7 +711,7 @@ class AlertManager:
 
 
 class StreamingAnalyticsAggregator:
-    """Main streaming analytics aggregator for Ainflue platform"""
+    """Main streaming analytics aggregator for IA Chérie platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -758,7 +758,7 @@ class StreamingAnalyticsAggregator:
             raise
     
     def _setup_default_alerts(self):
-        """Setup default alert rules for Ainflue platform"""
+        """Setup default alert rules for IA Chérie platform"""
         try:
             # High revenue alert
             self.alert_manager.add_alert_rule(AlertRule(

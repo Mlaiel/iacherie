@@ -1,14 +1,14 @@
 # 💼 Business Services - Enterprise Business Logic & Workflow
 
-**Enterprise-grade business logic services orchestrating the complete Ainflue workflow.**
+**Enterprise-grade business logic services orchestrating the complete IA Chérie workflow.**
 
 ## Overview
 
-The Business Services module contains the core business logic for the Ainflue platform, orchestrating the complete 7-phase creator workflow from content upload to global distribution.
+The Business Services module contains the core business logic for the IA Chérie platform, orchestrating the complete 7-phase creator workflow from content upload to global distribution.
 
 ## 🎯 Key Features
 
-- **7-Phase Ainflue Workflow**: Complete creator content lifecycle
+- **7-Phase IA Chérie Workflow**: Complete creator content lifecycle
 - **Creator Management**: Profile, onboarding, and support services
 - **Collaboration Engine**: Smart matching and team formation
 - **Gamification System**: Achievements, quests, and leaderboards
@@ -23,7 +23,7 @@ from business_services.index import initialize_business_services, orchestrate_wo
 # Initialize business services
 await initialize_business_services()
 
-# Orchestrate complete Ainflue workflow
+# Orchestrate complete IA Chérie workflow
 content_data = {
     'type': 'video',
     'title': 'Amazing Content',
@@ -34,7 +34,7 @@ result = await orchestrate_workflow("creator_123", content_data)
 print(f"Workflow status: {result['status']}")
 ```
 
-## 🔄 Ainflue 7-Phase Workflow
+## 🔄 IA Chérie 7-Phase Workflow
 
 ### Phase 1: Upload & Validation
 - Content upload and metadata extraction

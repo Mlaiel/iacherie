@@ -1,7 +1,7 @@
 """Batch Processing Optimizer Module
 
 Intelligent batch processing optimization for efficiency and throughput
-in the Ainflue Message Queues Enterprise system.
+in the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -139,7 +139,7 @@ class BatchMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Batch Processing Rules"""
+    """IA Chérie Business Batch Processing Rules"""
     
     # Batch configurations by message type
     BATCH_CONFIGS = {

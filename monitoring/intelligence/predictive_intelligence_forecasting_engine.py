@@ -4,7 +4,7 @@
 
 Enterprise-grade Predictive Intelligence system providing comprehensive
 forecasting, trend analysis, and intelligent prediction capabilities
-for the Ainflue Creator Economy. Implements sophisticated ML algorithms,
+for the IA Chérie Creator Economy. Implements sophisticated ML algorithms,
 time series analysis, and advanced predictive modeling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

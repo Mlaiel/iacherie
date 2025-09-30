@@ -1,4 +1,4 @@
-# 🌍 ذكاء التوطين لمنصة Ainflue - درجة المؤسسة
+# 🌍 ذكاء التوطين لمنصة IA Chérie - درجة المؤسسة
 
 [![الرخصة: مملوكة](https://img.shields.io/badge/الرخصة-مملوكة-red.svg)](LICENSE)
 [![الإصدار: 1.0.0](https://img.shields.io/badge/الإصدار-1.0.0-blue.svg)](VERSION)
@@ -38,7 +38,7 @@
 
 ## 📋 نظرة عامة
 
-وحدة **ذكاء التوطين لمنصة Ainflue** توفر قدرات توطين على مستوى المؤسسة لمنصة اقتصاد المحتوى Ainflue. هذا الحل الشامل يدعم 644+ لغة، والترجمة في الوقت الفعلي، والتكيف الثقافي، والامتثال التنظيمي عبر الأسواق العالمية.
+وحدة **ذكاء التوطين لمنصة IA Chérie** توفر قدرات توطين على مستوى المؤسسة لمنصة اقتصاد المحتوى IA Chérie. هذا الحل الشامل يدعم 644+ لغة، والترجمة في الوقت الفعلي، والتكيف الثقافي، والامتثال التنظيمي عبر الأسواق العالمية.
 
 ## 🌟 الميزات الرئيسية
 
@@ -103,8 +103,8 @@ integrations/localization/
 
 ```bash
 # استنساخ المستودع (المستخدمون المخولون فقط)
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/integrations/localization
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/integrations/localization
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -124,7 +124,7 @@ localization = get_localization_manager()
 
 # ترجمة أساسية
 result = await localization['translation'].translate(
-    content="مرحبا، أهلا بك في Ainflue!",
+    content="مرحبا، أهلا بك في IA Chérie!",
     source_language="ar",
     target_language="en",
     domain="social_media"
@@ -344,7 +344,7 @@ python -m pytest tests/localization/
 للدعم التقني واستفسارات الترخيص:
 
 - **📧 البريد الإلكتروني**: mlaiel@live.de
-- **🌐 الموقع الإلكتروني**: https://ainflue.com
+- **🌐 الموقع الإلكتروني**: https://iacherie.com
 - **📱 دعم المؤسسة**: متاح 24/7 للمستخدمين المخولين
 
 ## 📄 الرخصة
@@ -362,7 +362,7 @@ python -m pytest tests/localization/
 
 ---
 
-**© 2024 فهد ملايل - منصة Ainflue**  
+**© 2024 فهد ملايل - منصة IA Chérie**  
 **ذكاء التوطين للمؤسسة - جاهز للإنتاج**
 
-*بُني بـ ❤️ من فريق خبراء Ainflue*
+*بُني بـ ❤️ من فريق خبراء IA Chérie*

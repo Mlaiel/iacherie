@@ -105,7 +105,7 @@ class CreatorLogEntry:
     collaboration_id: Optional[str] = None
     
     # Technical context
-    service_name: str = "ainflue-platform"
+    service_name: str = "iacherie-platform"
     component: Optional[str] = None
     trace_id: Optional[str] = None
     span_id: Optional[str] = None

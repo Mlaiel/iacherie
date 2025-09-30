@@ -1,11 +1,11 @@
 """
-Collaborative Rate Limiter Enterprise - Ainflue
+Collaborative Rate Limiter Enterprise - IA Chérie
 ===============================================
 Rate Limiter pour collaboration créateurs et gamification.
 Shared quotas + collaboration bonuses + gamification rewards.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chérie Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

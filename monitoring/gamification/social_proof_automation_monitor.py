@@ -1,6 +1,6 @@
 """
 🎮 MONITORING GAMIFICATION - Social Proof Automation Monitor
-Advanced social proof automation and viral mechanics monitoring for Ainflue platform
+Advanced social proof automation and viral mechanics monitoring for IA Chérie platform
 Gaming + UX Engineer + Psychology Expert Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -124,7 +124,7 @@ class SocialProofAnalytics:
 
 class SocialProofAutomationMonitor:
     """
-    🎮 Advanced Social Proof Automation Monitor for Ainflue Platform
+    🎮 Advanced Social Proof Automation Monitor for IA Chérie Platform
     
     Psychology-driven social proof automation with:
     - Real-time social proof event detection and generation

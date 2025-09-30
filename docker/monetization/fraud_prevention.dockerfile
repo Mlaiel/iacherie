@@ -1,11 +1,11 @@
 # Fraud Prevention Service
-# Advanced fraud detection and prevention for Ainflue Platform
+# Advanced fraud detection and prevention for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Fraud Prevention - Advanced fraud detection and prevention"
+LABEL description="IA Chérie Fraud Prevention - Advanced fraud detection and prevention"
 LABEL version="1.0.0"
 
 # Set working directory

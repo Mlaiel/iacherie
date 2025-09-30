@@ -5,7 +5,7 @@ Prédiction tendances SEO avec ML avancé, Google Trends integration,
 algorithmic changes detection, seasonal patterns et emerging keywords discovery.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:
@@ -150,7 +150,7 @@ class ForecastResult:
     model_accuracy: float
     predictions: List[TrendPrediction]
     seasonal_analysis: Optional[SeasonalAnalysis]
-    confidence_intervals: List[Tuple[float, float]]
+    confidence_intervals: List[tuple[float, float]]
     feature_importance: Dict[str, float]
     generated_at: datetime = field(default_factory=datetime.now)
 

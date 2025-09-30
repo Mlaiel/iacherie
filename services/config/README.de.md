@@ -1,4 +1,4 @@
-# 🔧 Ainflue Services Konfigurationsmodul
+# 🔧 IA Chérie Services Konfigurationsmodul
 
 **Enterprise Creator Economy Platform Konfigurationsmanagement**
 
@@ -21,7 +21,7 @@
 
 ## 📋 Überblick
 
-Das Ainflue Services Konfigurationsmodul bietet Enterprise-Grade Konfigurationsmanagement für die Creator Economy Plattform. Dieses Modul zentralisiert alle Konfigurationsaspekte einschließlich Sicherheit, Datenbanken, Cloud-Services, AI-Modelle, Monetarisierung und mehr.
+Das IA Chérie Services Konfigurationsmodul bietet Enterprise-Grade Konfigurationsmanagement für die Creator Economy Plattform. Dieses Modul zentralisiert alle Konfigurationsaspekte einschließlich Sicherheit, Datenbanken, Cloud-Services, AI-Modelle, Monetarisierung und mehr.
 
 ## 🎯 Creator Economy Geschäftslogik
 

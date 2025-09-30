@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-API Contract Testing Module - Ainflue Quality Platform
+API Contract Testing Module - IA Chérie Quality Platform
 =====================================================
 
 Enterprise-grade API contract testing system for microservices validation.

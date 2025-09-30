@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Studio Workspace Manager
+ * IA Chérie Desktop - Studio Workspace Manager
  * 
  * Professional multi-monitor workspace management for content creation studios
  * 
@@ -466,18 +466,18 @@ class StudioWorkspaceManager extends EventEmitter {
 
   getWindowTitle(windowType) {
     const titles = {
-      [this.windowTypes.MAIN]: 'Ainflue Studio - Main',
-      [this.windowTypes.TIMELINE]: 'Ainflue Studio - Timeline',
-      [this.windowTypes.MIXER]: 'Ainflue Studio - Audio Mixer',
-      [this.windowTypes.PREVIEW]: 'Ainflue Studio - Preview Monitor',
-      [this.windowTypes.PROPERTIES]: 'Ainflue Studio - Properties',
-      [this.windowTypes.LIBRARY]: 'Ainflue Studio - Media Library',
-      [this.windowTypes.EFFECTS]: 'Ainflue Studio - Effects',
-      [this.windowTypes.MONITOR]: 'Ainflue Studio - Video Monitor',
-      [this.windowTypes.SCOPES]: 'Ainflue Studio - Audio Scopes'
+      [this.windowTypes.MAIN]: 'IA Chérie Studio - Main',
+      [this.windowTypes.TIMELINE]: 'IA Chérie Studio - Timeline',
+      [this.windowTypes.MIXER]: 'IA Chérie Studio - Audio Mixer',
+      [this.windowTypes.PREVIEW]: 'IA Chérie Studio - Preview Monitor',
+      [this.windowTypes.PROPERTIES]: 'IA Chérie Studio - Properties',
+      [this.windowTypes.LIBRARY]: 'IA Chérie Studio - Media Library',
+      [this.windowTypes.EFFECTS]: 'IA Chérie Studio - Effects',
+      [this.windowTypes.MONITOR]: 'IA Chérie Studio - Video Monitor',
+      [this.windowTypes.SCOPES]: 'IA Chérie Studio - Audio Scopes'
     };
     
-    return titles[windowType] || 'Ainflue Studio';
+    return titles[windowType] || 'IA Chérie Studio';
   }
 
   getWindowHtmlFile(windowType) {

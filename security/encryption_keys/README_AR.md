@@ -4,7 +4,7 @@
 
 ## نظرة عامة
 
-توفر وحدة مفاتيح التشفير الشاملة هذه بنية تحتية أمنية على مستوى المؤسسات مصممة خصيصاً لمنصة Ainflue Creator Economy. تجمع بين أحدث التقنيات التشفيرية مع التحسينات المركزة على المبدعين لتقديم أمان وأداء وسهولة استخدام لا مثيل لها.
+توفر وحدة مفاتيح التشفير الشاملة هذه بنية تحتية أمنية على مستوى المؤسسات مصممة خصيصاً لمنصة IA Chérie Creator Economy. تجمع بين أحدث التقنيات التشفيرية مع التحسينات المركزة على المبدعين لتقديم أمان وأداء وسهولة استخدام لا مثيل لها.
 
 ## 🚀 الميزات الرئيسية
 
@@ -139,7 +139,7 @@ encrypted_content = await encryptor.encrypt_content(
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-encryption-keys
+  name: iacherie-encryption-keys
 spec:
   replicas: 3
   selector:
@@ -149,7 +149,7 @@ spec:
     spec:
       containers:
       - name: key-manager
-        image: ainflue/encryption-keys:latest
+        image: iacherie/encryption-keys:latest
         env:
         - name: HSM_CLUSTER_ID
           valueFrom:
@@ -225,6 +225,6 @@ POST /api/v1/keys/{key_id}/rotate
 
 ---
 
-**بُني بـ ❤️ لاقتصاد المبدعين من قِبل فريق أمان Ainflue**
+**بُني بـ ❤️ لاقتصاد المبدعين من قِبل فريق أمان IA Chérie**
 
 *تمكين المبدعين بأمان على مستوى المؤسسة مع الحفاظ على البساطة والأداء الذي يحتاجونه للتركيز على حرفتهم.*

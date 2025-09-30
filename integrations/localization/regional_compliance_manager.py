@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Regional compliance manager enterprise avec multi-jurisdiction legal compliance,
 data protection regional rules et automated compliance checking.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Legal framework compliance pour 195+ pays
 - Data protection régionale (GDPR, CCPA, LGPD, etc.)
 - Content regulation compliance automatisée

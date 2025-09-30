@@ -1,6 +1,6 @@
 # 🚀 Moteur d'Amplification de Contenu
 
-**Système Avancé d'Amplification de Contenu & Maximisation de Portée pour la Plateforme Ainflue**
+**Système Avancé d'Amplification de Contenu & Maximisation de Portée pour la Plateforme IA Chérie**
 
 ## 📖 Aperçu
 
@@ -202,7 +202,7 @@ SPOTIFY_API_KEY=your_spotify_api_key
 
 # Surveillance Performance
 AMPLIFICATION_METRICS_ENABLED=true
-AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.ainflue.com
+AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.iacherie.com
 AMPLIFICATION_ALERT_THRESHOLD=0.1
 ```
 

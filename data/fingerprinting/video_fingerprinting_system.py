@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Video Fingerprinting System - Ainflue Data Fingerprinting Module
+Video Fingerprinting System - IA Chérie Data Fingerprinting Module
 ================================================================
 Advanced video fingerprinting system with deep learning-powered analysis,
 frame extraction, temporal patterns, and specialized video content protection
-for video creators on the Ainflue platform.
+for video creators on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Data Fingerprinting
+Project: IA Chérie Data Fingerprinting
 Version: 1.0 Enterprise Production
 """
 
@@ -34,7 +34,7 @@ try:
 except ImportError as e:
     logging.error(f"Required video dependencies not installed: {e}")
 
-# Ainflue core imports
+# IA Chérie core imports
 from .multimodal_fingerprinting_engine import FingerprintResult, FingerprintConfig
 from .vector_database_matching import VectorDatabaseManager
 from .performance_analytics_engine import PerformanceAnalytics

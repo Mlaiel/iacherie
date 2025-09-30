@@ -1,4 +1,4 @@
-# فحوصات الصحة المؤسسية - خدمات Ainflue المصغرة
+# فحوصات الصحة المؤسسية - خدمات IA Chérie المصغرة
 
 **فريق الخبراء**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -20,7 +20,7 @@
 
 ### 🏗️ نظرة عامة على الهندسة
 
-توفر وحدة فحوصات الصحة في Ainflue مراقبة صحة بمستوى صناعي لهندسة الخدمات المصغرة الموزعة مع تكامل متقدم للذكاء الاصطناعي/التعلم الآلي والتحليلات التنبؤية وقدرات الإصلاح التلقائي.
+توفر وحدة فحوصات الصحة في IA Chérie مراقبة صحة بمستوى صناعي لهندسة الخدمات المصغرة الموزعة مع تكامل متقدم للذكاء الاصطناعي/التعلم الآلي والتحليلات التنبؤية وقدرات الإصلاح التلقائي.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -414,7 +414,7 @@ from microservices.health_checks import KubernetesHealthIntegration
 # تهيئة تكامل Kubernetes
 k8s_integration = KubernetesHealthIntegration({
     'kubeconfig_path': '/path/to/kubeconfig',
-    'default_namespace': 'ainflue-production'
+    'default_namespace': 'iacherie-production'
 })
 
 # تكامل فحوصات الصحة الأصلية

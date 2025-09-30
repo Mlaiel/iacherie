@@ -2,7 +2,7 @@
 🚀 Enterprise DevOps Orchestrator - DevOps Expert Implementation
 ==============================================================
 
-Advanced DevOps orchestration system for Ainflue platform providing
+Advanced DevOps orchestration system for IA Chérie platform providing
 comprehensive CI/CD pipeline management, infrastructure automation,
 monitoring, and enterprise-grade deployment strategies.
 
@@ -161,7 +161,7 @@ class EnterpriseDevOpsOrchestrator:
         """Setup deployment environments"""
         self.environments = {
             "development": {
-                "namespace": "ainflue-dev",
+                "namespace": "iacherie-dev",
                 "replicas": 1,
                 "resources": {
                     "cpu": "500m",
@@ -174,7 +174,7 @@ class EnterpriseDevOpsOrchestrator:
                 "ssl_enabled": False
             },
             "staging": {
-                "namespace": "ainflue-staging",
+                "namespace": "iacherie-staging",
                 "replicas": 2,
                 "resources": {
                     "cpu": "1000m",
@@ -187,7 +187,7 @@ class EnterpriseDevOpsOrchestrator:
                 "ssl_enabled": True
             },
             "production": {
-                "namespace": "ainflue-prod",
+                "namespace": "iacherie-prod",
                 "replicas": 5,
                 "resources": {
                     "cpu": "2000m",
@@ -202,7 +202,7 @@ class EnterpriseDevOpsOrchestrator:
                 "disaster_recovery": True
             },
             "testing": {
-                "namespace": "ainflue-test",
+                "namespace": "iacherie-test",
                 "replicas": 1,
                 "resources": {
                     "cpu": "500m",
@@ -407,9 +407,9 @@ class EnterpriseDevOpsOrchestrator:
             },
             "helm_charts": {
                 "applications": [
-                    "ainflue-backend",
-                    "ainflue-frontend",
-                    "ainflue-ml-services",
+                    "iacherie-backend",
+                    "iacherie-frontend",
+                    "iacherie-ml-services",
                     "monitoring-stack",
                     "logging-stack",
                     "security-stack"
@@ -524,7 +524,7 @@ class EnterpriseDevOpsOrchestrator:
         
         return InfrastructureMetrics(
             timestamp=current_time,
-            cluster_name="ainflue-production",
+            cluster_name="iacherie-production",
             total_nodes=12,
             healthy_nodes=11 + (current_time.minute % 2),
             cpu_usage_percent=base_cpu + (current_time.second % 10),

@@ -1,4 +1,4 @@
-# 🎨 Templates Frontend - Plateforme Creator Economy Ainflue
+# 🎨 Templates Frontend - Plateforme Creator Economy IA Chérie
 
 > **Collection de templates frontend de niveau entreprise pour applications web modernes avec fonctionnalités Creator Economy spécialisées**
 
@@ -21,7 +21,7 @@
 
 ## 🚀 Présentation
 
-La collection Ainflue Frontend Templates fournit plus de 150 composants et templates de niveau production, prêts pour l'entreprise, conçus spécifiquement pour les applications web modernes avec des fonctionnalités Creator Economy. Construit avec TypeScript, React, Vue, Angular, et plus.
+La collection IA Chérie Frontend Templates fournit plus de 150 composants et templates de niveau production, prêts pour l'entreprise, conçus spécifiquement pour les applications web modernes avec des fonctionnalités Creator Economy. Construit avec TypeScript, React, Vue, Angular, et plus.
 
 ## 🏗️ Architecture
 
@@ -110,7 +110,7 @@ npm install --save-dev @types/react @types/react-dom jest @testing-library/react
 
 ### **Utilisation de Base**
 ```typescript
-import { Button, Input, Modal } from '@ainflue/frontend-templates';
+import { Button, Input, Modal } from '@iacherie/frontend-templates';
 
 function App() {
   return (
@@ -147,7 +147,7 @@ import {
   CreatorAnalytics,
   useContentUpload,
   useCreatorCollaboration 
-} from '@ainflue/frontend-templates';
+} from '@iacherie/frontend-templates';
 
 function CreatorApp() {
   const { uploadFile, isUploading, uploadedFiles } = useContentUpload();
@@ -188,7 +188,7 @@ function CreatorApp() {
 
 ### **Utilisation**
 ```typescript
-import { useTranslation, LanguageSwitcher } from '@ainflue/frontend-templates';
+import { useTranslation, LanguageSwitcher } from '@iacherie/frontend-templates';
 
 function ComposantLocalise() {
   const { t, changeLanguage } = useTranslation();
@@ -245,7 +245,7 @@ function ComposantLocalise() {
 
 ### **Factory de Composants Personnalisés**
 ```typescript
-import { ComponentFactory, templateRegistry } from '@ainflue/frontend-templates';
+import { ComponentFactory, templateRegistry } from '@iacherie/frontend-templates';
 
 // Enregistrer un template personnalisé
 templateRegistry.register({
@@ -299,7 +299,7 @@ npm install styled-components @types/styled-components
 **Problèmes de Performance :**
 ```typescript
 // Activer le monitoring de performance
-import { ComponentFactory } from '@ainflue/frontend-templates';
+import { ComponentFactory } from '@iacherie/frontend-templates';
 
 ComponentFactory.updateOptions({
   enablePerformanceMonitoring: true,
@@ -324,5 +324,5 @@ Ce logiciel est la propriété exclusive de Fahed Mlaiel. L'utilisation commerci
 
 ---
 
-**Construit avec ❤️ par l'équipe Ainflue Creator Economy**  
+**Construit avec ❤️ par l'équipe IA Chérie Creator Economy**  
 **Pionnier de l'avenir des plateformes Creator Economy**

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Communication Manager for Ainflue Microservices Platform
+Communication Manager for IA Chérie Microservices Platform
 =======================================================
 
 Enterprise-grade inter-service communication providing patterns for:

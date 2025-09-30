@@ -2,7 +2,7 @@
 
 ## 🌟 Überblick
 
-Das **Backend-Orchestrierungsmodul** ist das neuronale Zentrum der Ainflue-Plattform und bietet ultramoderne Orchestrierungsfunktionen für die Multi-Format-Content-Erstellung, KI-gestützte Verarbeitung, kollaborative Arbeitsabläufe und unternehmenstaugliche Verteilung über mehrere Plattformen.
+Das **Backend-Orchestrierungsmodul** ist das neuronale Zentrum der IA Chérie-Plattform und bietet ultramoderne Orchestrierungsfunktionen für die Multi-Format-Content-Erstellung, KI-gestützte Verarbeitung, kollaborative Arbeitsabläufe und unternehmenstaugliche Verteilung über mehrere Plattformen.
 
 ## 🎯 Business-Logic-Pipeline
 
@@ -117,7 +117,7 @@ portfolio_result = await visual_orchestrator.optimize_portfolio(
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/ainflue/backend-orchestration
+git clone https://github.com/iacherie/backend-orchestration
 cd backend-orchestration
 
 # Abhängigkeiten installieren
@@ -206,7 +206,7 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 🎓 Schulung & Zertifizierung
 
 ### Zertifizierungsprogramme
-- **Ainflue Creator-Zertifizierung**: Plattform-Beherrschung
+- **IA Chérie Creator-Zertifizierung**: Plattform-Beherrschung
 - **KI-Optimierungs-Spezialist**: Erweiterte KI-Features
 - **Enterprise-Administrator**: Enterprise-Deployment
 - **Sicherheitsspezialist**: Sicherheitskonfiguration
@@ -235,15 +235,15 @@ result = await orchestrator.orchestrate_content_intelligence(
 ## 📞 Support
 
 ### Technischer Support
-- **E-Mail**: support@ainflue.com
+- **E-Mail**: support@iacherie.com
 - **Slack**: #backend-orchestration
 - **GitHub Issues**: Bug-Reports und Feature-Requests
-- **Dokumentation**: https://docs.ainflue.com
+- **Dokumentation**: https://docs.iacherie.com
 
 ### Business-Support
-- **Vertrieb**: sales@ainflue.com
-- **Partnerschaften**: partnerships@ainflue.com
-- **Enterprise**: enterprise@ainflue.com
+- **Vertrieb**: sales@iacherie.com
+- **Partnerschaften**: partnerships@iacherie.com
+- **Enterprise**: enterprise@iacherie.com
 
 ## ⚖️ Recht & Compliance
 
@@ -293,6 +293,6 @@ Jede unbefugte Kopierung, Verteilung oder Verwendung ohne ausdrückliche schrift
 
 ---
 
-**Mit 💝 vom Ainflue-Team erstellt**
+**Mit 💝 vom IA Chérie-Team erstellt**
 
 *Kreative weltweit mit intelligenter Technologie stärken*

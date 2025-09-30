@@ -30,7 +30,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 
 ## 🎯 Plateforme d'Abonnements Enterprise pour l'Économie des Créateurs
 
-Système de gestion d'abonnements ultra-avancé, prêt pour la production, conçu spécifiquement pour la Plateforme Économie des Créateurs Ainflue. Ce système de niveau industriel fournit une gestion complète des abonnements avec intelligence IA, optimisation basée ML, et analytics avancées.
+Système de gestion d'abonnements ultra-avancé, prêt pour la production, conçu spécifiquement pour la Plateforme Économie des Créateurs IA Chérie. Ce système de niveau industriel fournit une gestion complète des abonnements avec intelligence IA, optimisation basée ML, et analytics avancées.
 
 ### 🏗️ Architecture Principale
 
@@ -111,8 +111,8 @@ Créateurs Multi-formats → Plans Intelligents → Analytics d'Usage → Optimi
 
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/subscription
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/subscription
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -212,7 +212,7 @@ usage_forecast = await usage_forecasting_engine.generate_usage_forecast(
 ### Variables d'Environnement
 ```bash
 # Base de données
-DATABASE_URL=postgresql://user:pass@localhost/ainflue
+DATABASE_URL=postgresql://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Modèles ML

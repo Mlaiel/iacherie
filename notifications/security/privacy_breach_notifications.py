@@ -1,6 +1,6 @@
 """
 🔒 PRIVACY BREACH NOTIFICATIONS
-Ainflue Platform - Privacy Breach Detection and Notification System
+IA Chérie Platform - Privacy Breach Detection and Notification System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

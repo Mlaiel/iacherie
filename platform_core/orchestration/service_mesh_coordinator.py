@@ -591,8 +591,8 @@ async def example_service_mesh_coordination():
         # Register services
         content_service = ServiceEndpoint(
             service_name="content-service",
-            namespace="ainflue",
-            host="content-service.ainflue.svc.cluster.local",
+            namespace="iacherie",
+            host="content-service.iacherie.svc.cluster.local",
             port=8080,
             protocol="http",
             version="v1"
@@ -600,8 +600,8 @@ async def example_service_mesh_coordination():
         
         user_service = ServiceEndpoint(
             service_name="user-service",
-            namespace="ainflue",
-            host="user-service.ainflue.svc.cluster.local",
+            namespace="iacherie",
+            host="user-service.iacherie.svc.cluster.local",
             port=8081,
             protocol="http",
             version="v1"

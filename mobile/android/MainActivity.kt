@@ -1,5 +1,5 @@
 /**
- * Ainflue Android MainActivity - Primary Android Activity
+ * IA Chérie Android MainActivity - Primary Android Activity
  * 
  * Advanced mobile content creation platform main activity
  * Handles Android-specific lifecycle, permissions, and native service integration
@@ -12,7 +12,7 @@
  * German and international copyright law.
  */
 
-package com.ainflue.mobile
+package com.iacherie.mobile
 
 import android.app.Activity
 import android.content.Intent
@@ -35,7 +35,7 @@ import kotlinx.coroutines.*
 import java.util.*
 
 /**
- * Main Android Activity for Ainflue Mobile Application
+ * Main Android Activity for IA Chérie Mobile Application
  * 
  * Responsibilities:
  * - React Native integration and lifecycle management
@@ -56,7 +56,7 @@ class MainActivity : ReactActivity() {
         private const val STORAGE_REQUEST_CODE = 1004
         private const val FINGERPRINT_REQUEST_CODE = 1005
         
-        // Required permissions for Ainflue platform
+        // Required permissions for IA Chérie platform
         private val REQUIRED_PERMISSIONS = arrayOf(
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.RECORD_AUDIO,
@@ -111,7 +111,7 @@ class MainActivity : ReactActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        Log.i(TAG, "🚀 Ainflue MainActivity onCreate - Starting initialization")
+        Log.i(TAG, "🚀 IA Chérie MainActivity onCreate - Starting initialization")
         
         try {
             setupSecurityConfiguration()

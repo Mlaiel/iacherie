@@ -1,4 +1,4 @@
-"""🌐 Cross-Platform Distribution Health Engine | Ainflue Enterprise
+"""🌐 Cross-Platform Distribution Health Engine | IA Chérie Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

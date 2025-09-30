@@ -1,6 +1,6 @@
 # 🧠 Audience Intelligence Engine - Advanced AI-Powered Audience Analysis
 
-**Enterprise-Grade Audience Intelligence System for Ainflue Distribution Platform**
+**Enterprise-Grade Audience Intelligence System for IA Chérie Distribution Platform**
 
 ## 🎯 Overview
 
@@ -292,7 +292,7 @@ await intelligence.register_webhook(
 ## 📚 Documentation
 
 ### Quick Start Guide
-1. **Installation**: `pip install ainflue-audience-intelligence`
+1. **Installation**: `pip install iacherie-audience-intelligence`
 2. **Authentication**: Set up API credentials
 3. **Basic Analysis**: Start with simple audience profiling
 4. **Advanced Features**: Explore ML-powered insights
@@ -309,7 +309,7 @@ await intelligence.register_webhook(
 ### Getting Help
 - **Documentation**: Comprehensive guides and tutorials
 - **Community Forum**: Connect with other developers
-- **Direct Support**: Email support@ainflue.com
+- **Direct Support**: Email support@iacherie.com
 - **Emergency Support**: 24/7 support for enterprise customers
 
 ### Troubleshooting
@@ -333,6 +333,6 @@ await intelligence.register_webhook(
 
 **© 2025 Fahed Mlaiel. All rights reserved.**
 
-This audience intelligence engine is proprietary software developed specifically for the Ainflue platform. Unauthorized use, reproduction, or distribution is strictly prohibited and subject to legal action.
+This audience intelligence engine is proprietary software developed specifically for the IA Chérie platform. Unauthorized use, reproduction, or distribution is strictly prohibited and subject to legal action.
 
 **Contact for licensing**: mlaiel@live.de

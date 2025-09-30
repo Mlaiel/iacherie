@@ -2,7 +2,7 @@
 # =============================================================================
 # NGINX ENTERPRISE DEPLOYMENT SCRIPT
 # =============================================================================
-# Automated deployment script for Ainflue AI Creator Platform
+# Automated deployment script for IA Chérie AI Creator Platform
 # Supports multi-environment deployment with zero-downtime updates
 #
 # Author: DevOps Engineer + Infrastructure Expert
@@ -144,11 +144,11 @@ validate_nginx_config() {
 
 test_upstream_connectivity() {
     local upstreams=(
-        "ainflue-app-1:8000"
-        "ainflue-app-2:8000"
-        "ainflue-app-3:8000"
-        "ainflue-ai-1:8001"
-        "ainflue-upload-1:8002"
+        "iacherie-app-1:8000"
+        "iacherie-app-2:8000"
+        "iacherie-app-3:8000"
+        "iacherie-ai-1:8001"
+        "iacherie-upload-1:8002"
     )
     
     log_info "Testing upstream connectivity..."
@@ -185,8 +185,8 @@ check_ssl_certificates() {
     
     local ssl_dir="/etc/nginx/ssl"
     local cert_files=(
-        "$ssl_dir/ainflue.com/fullchain.pem"
-        "$ssl_dir/ainflue.com/privkey.pem"
+        "$ssl_dir/iacherie.com/fullchain.pem"
+        "$ssl_dir/iacherie.com/privkey.pem"
     )
     
     for cert_file in "${cert_files[@]}"; do
@@ -215,7 +215,7 @@ check_ssl_certificates() {
 }
 
 generate_ssl_certificates() {
-    local domain="${1:-ainflue.com}"
+    local domain="${1:-iacherie.com}"
     
     log_info "Generating SSL certificates for $domain..."
     
@@ -473,7 +473,7 @@ EXPOSE 80 443 8080
 CMD ["nginx", "-g", "daemon off;"]
 EOF
     
-    if docker build -t ainflue/nginx:latest -f "$SCRIPT_DIR/Dockerfile.nginx" "$SCRIPT_DIR"; then
+    if docker build -t iacherie/nginx:latest -f "$SCRIPT_DIR/Dockerfile.nginx" "$SCRIPT_DIR"; then
         log_success "Docker image built successfully"
     else
         log_error "Failed to build Docker image"
@@ -488,8 +488,8 @@ version: '3.8'
 
 services:
   nginx:
-    image: ainflue/nginx:latest
-    container_name: ainflue-nginx
+    image: iacherie/nginx:latest
+    container_name: iacherie-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -542,8 +542,8 @@ deploy_kubernetes() {
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-nginx
-  namespace: ainflue
+  name: iacherie-nginx
+  namespace: iacherie
   labels:
     app: nginx
     version: v2024.12.1
@@ -565,7 +565,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: ainflue/nginx:latest
+        image: iacherie/nginx:latest
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -606,13 +606,13 @@ spec:
           name: nginx-config
       - name: ssl-certs
         secret:
-          secretName: ainflue-ssl-certs
+          secretName: iacherie-ssl-certs
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ainflue-nginx-service
-  namespace: ainflue
+  name: iacherie-nginx-service
+  namespace: iacherie
 spec:
   selector:
     app: nginx
@@ -644,7 +644,7 @@ EOF
 # =============================================================================
 
 main() {
-    log_info "Starting Nginx Enterprise deployment for Ainflue platform"
+    log_info "Starting Nginx Enterprise deployment for IA Chérie platform"
     log_info "Environment: $ENVIRONMENT"
     log_info "Deployment type: $DEPLOYMENT_TYPE"
     log_info "Nginx version: $(get_nginx_version)"

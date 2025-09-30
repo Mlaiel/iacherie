@@ -1,4 +1,4 @@
-# 🧪 منصة Ainflue - بنية اختبار Docker التحتية
+# 🧪 منصة IA Chérie - بنية اختبار Docker التحتية
 
 **بنية اختبار على مستوى المؤسسة لتحوية منصة مؤثر الذكاء الاصطناعي. مجموعة اختبارات شاملة مع متطلب تغطية 95%+ تدعم أكثر من 80 خدمة مصغرة.**
 
@@ -6,7 +6,7 @@
 
 ## 📋 نظرة عامة
 
-توفر وحدة الاختبار هذه بنية اختبار شاملة على مستوى المؤسسة لمنصة Ainflue AI Influencer. تدعم البنية اختبارات شاملة عبر أكثر من 80 خدمة مصغرة مع تنفيذ اختبار آلي وتحقق الأداء وفحص الأمان وهندسة الفوضى.
+توفر وحدة الاختبار هذه بنية اختبار شاملة على مستوى المؤسسة لمنصة IA Chérie AI Influencer. تدعم البنية اختبارات شاملة عبر أكثر من 80 خدمة مصغرة مع تنفيذ اختبار آلي وتحقق الأداء وفحص الأمان وهندسة الفوضى.
 
 ### 🎯 تدفق منطق الأعمال
 ```
@@ -67,10 +67,10 @@ docker-compose -f docker-compose.testing.yml up performance_tester
 docker-compose -f docker-compose.testing.yml up security_tester
 
 # اختبارات مع معاملات مخصصة
-docker run --rm ainflue/test-runner:latest pytest --cov --cov-report=html
+docker run --rm iacherie/test-runner:latest pytest --cov --cov-report=html
 
 # اختبار الأداء مع حمولة مخصصة
-docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rate=25
+docker run --rm iacherie/performance-tester:latest locust --users=500 --spawn-rate=25
 ```
 
 ---
@@ -161,7 +161,7 @@ docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rat
 docker-compose -f docker-compose.testing.yml logs test_runner
 
 # تصحيح اختبار محدد
-docker run -it ainflue/test-runner:latest bash
+docker run -it iacherie/test-runner:latest bash
 pytest tests/specific_test.py -v
 ```
 
@@ -171,7 +171,7 @@ pytest tests/specific_test.py -v
 docker stats
 
 # فحص سجلات الحاوية
-docker logs ainflue-performance-tester
+docker logs iacherie-performance-tester
 ```
 
 ---

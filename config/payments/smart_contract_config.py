@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Smart Contract Configuration Module
+"""IA Chérie Smart Contract Configuration Module
 ============================================
 
-Enterprise-grade smart contract configuration for the Ainflue platform.
+Enterprise-grade smart contract configuration for the IA Chérie platform.
 Comprehensive contract management, deployment automation, interaction handling,
 and lifecycle management with advanced security and compliance features.
 
@@ -690,7 +690,7 @@ class SmartContractConfiguration:
             standard=ContractStandard.ERC20,
             source_code=self._get_erc20_source_code(),
             description="Standard ERC20 token implementation",
-            author="Ainflue",
+            author="IA Chérie",
             license="MIT",
             security_level=SecurityLevel.MEDIUM,
             upgradeable=False,
@@ -711,7 +711,7 @@ class SmartContractConfiguration:
             standard=ContractStandard.ERC721,
             source_code=self._get_erc721_source_code(),
             description="Standard ERC721 NFT implementation",
-            author="Ainflue",
+            author="IA Chérie",
             license="MIT",
             security_level=SecurityLevel.HIGH,
             upgradeable=True,
@@ -732,7 +732,7 @@ class SmartContractConfiguration:
             standard=ContractStandard.ERC20,
             source_code=self._get_payment_source_code(),
             description="Multi-token payment contract with escrow",
-            author="Ainflue",
+            author="IA Chérie",
             license="MIT",
             security_level=SecurityLevel.CRITICAL,
             audit_required=True,

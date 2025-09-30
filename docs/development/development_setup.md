@@ -1,7 +1,7 @@
 # Development Environment Setup Guide
 
 ## Overview
-This guide helps developers set up a complete development environment for the Ainflue platform.
+This guide helps developers set up a complete development environment for the IA Chérie platform.
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Platform Version:** 1.0.0  
@@ -28,8 +28,8 @@ This guide helps developers set up a complete development environment for the Ai
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 ```
 
 ### 2. Setup Python Environment
@@ -80,7 +80,7 @@ uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ## Project Structure
 
 ```
-Ainflue/
+IA Chérie/
 ├── api/                    # FastAPI application
 │   ├── main.py            # Main FastAPI app
 │   └── routes/            # API routes
@@ -731,7 +731,7 @@ chore: maintenance tasks
    docker ps | grep postgres
    
    # Check connection
-   psql -h localhost -U ainflue -d ainflue_platform
+   psql -h localhost -U iacherie -d ainflue_platform
    ```
 
 2. **Redis Connection Error**

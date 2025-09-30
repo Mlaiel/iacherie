@@ -1,4 +1,4 @@
-# 🔒 Enterprise Sicherheitskonfiguration - Ainflue Creator Economy Plattform
+# 🔒 Enterprise Sicherheitskonfiguration - IA Chérie Creator Economy Plattform
 
 ⚠️  **RECHTLICHE WARNUNG - GEISTIGES EIGENTUM**  
 © 2025 Fahed Mlaiel <mlaiel@live.de>  
@@ -21,7 +21,7 @@
 
 ## 🎯 Plattform-Überblick
 
-**Ainflue** ist eine KI-gestützte Creator Economy Plattform auf Enterprise-Niveau, die umfassende Tools für Inhaltschutz, Monetarisierung und Zusammenarbeit für digitale Kreative weltweit bietet.
+**IA Chérie** ist eine KI-gestützte Creator Economy Plattform auf Enterprise-Niveau, die umfassende Tools für Inhaltschutz, Monetarisierung und Zusammenarbeit für digitale Kreative weltweit bietet.
 
 ### 🎨 Unterstützte Creator-Typen
 - **Musiker:** Audio-Inhaltschutz, Lizenzgebühren-Management, Kollaborations-Tools
@@ -229,13 +229,13 @@ PUT /api/v1/security/policies/{policy_id}
 
 ### 🆘 Notfall-Sicherheitsreaktion
 - **24/7 Sicherheits-Hotline:** +49-XXX-XXX-XXXX
-- **Notfall-E-Mail:** security-emergency@ainflue.com
+- **Notfall-E-Mail:** security-emergency@iacherie.com
 - **PagerDuty:** Automatische Incident-Eskalation
 
 ### 💼 Geschäftsanfragen
 - **Enterprise-Lizenzierung:** Fahed Mlaiel <mlaiel@live.de>
-- **Technischer Support:** support@ainflue.com
-- **Compliance-Fragen:** compliance@ainflue.com
+- **Technischer Support:** support@iacherie.com
+- **Compliance-Fragen:** compliance@iacherie.com
 
 ## ⚖️ Rechtliches & Lizenzierung
 
@@ -250,13 +250,13 @@ Diese Plattform enthält proprietäre Algorithmen, Sicherheitsimplementierungen 
 
 ### 🚨 Sicherheitsvulnerabilität-Offenlegung
 Sicherheitsvulnerabilitäten verantwortungsvoll melden:
-- **E-Mail:** security@ainflue.com
-- **PGP-Schlüssel:** Verfügbar auf keybase.io/ainflue
+- **E-Mail:** security@iacherie.com
+- **PGP-Schlüssel:** Verfügbar auf keybase.io/iacherie
 - **Bug Bounty:** Belohnungen für verantwortungsvolle Offenlegung
 
 ---
 
-**🌟 Ainflue Creator Economy Plattform - Kreative weltweit mit Enterprise-Sicherheit stärken**
+**🌟 IA Chérie Creator Economy Plattform - Kreative weltweit mit Enterprise-Sicherheit stärken**
 
-*Gebaut mit ❤️ vom Ainflue Sicherheitsteam*  
+*Gebaut mit ❤️ vom IA Chérie Sicherheitsteam*  
 *© 2025 Fahed Mlaiel. Alle Rechte vorbehalten.*

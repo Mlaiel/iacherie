@@ -2,7 +2,7 @@
 =========================================================================
 
 Automation DevOps enterprise avec CI/CD avancé, Infrastructure as Code,
-monitoring distribué et deployment automation pour la plateforme Ainflue.
+monitoring distribué et deployment automation pour la plateforme IA Chérie.
 
 Expert Roles Implementation:
 ⚙️ DevOps Senior: CI/CD pipelines + Infrastructure as Code + automation complète
@@ -176,7 +176,7 @@ class MonitoringAlert:
     notification_sent: bool = False
 
 class EnterpriseDevOpsAutomation:
-    """⚙️ DevOps Automation Enterprise pour Ainflue
+    """⚙️ DevOps Automation Enterprise pour IA Chérie
     
     Implémentation multi-expert pour DevOps production:
     - CI/CD pipelines avec déploiement automatisé multi-environnements
@@ -337,11 +337,11 @@ class EnterpriseDevOpsAutomation:
         ⚙️ DevOps Senior: CI/CD pipeline configuration
         """
         try:
-            # Pipeline principal Ainflue
+            # Pipeline principal IA Chérie
             main_pipeline = PipelineConfiguration(
                 id="ainflue_main_pipeline",
-                name="Ainflue Main Application Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue.git",
+                name="IA Chérie Main Application Pipeline",
+                repository="https://github.com/Mlaiel/IA Chérie.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -352,14 +352,14 @@ class EnterpriseDevOpsAutomation:
                 ],
                 deployment_strategy=DeploymentStrategy.BLUE_GREEN,
                 infrastructure_provider=InfrastructureProvider.KUBERNETES,
-                notification_channels=["slack://devops-alerts", "email://team@ainflue.com"]
+                notification_channels=["slack://devops-alerts", "email://team@iacherie.com"]
             )
             
             # Pipeline microservices
             microservices_pipeline = PipelineConfiguration(
                 id="microservices_pipeline",
                 name="Microservices Deployment Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-Services.git",
+                repository="https://github.com/Mlaiel/IA Chérie-Services.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -377,7 +377,7 @@ class EnterpriseDevOpsAutomation:
             ml_pipeline = PipelineConfiguration(
                 id="ml_models_pipeline",
                 name="ML Models Deployment Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-AI.git",
+                repository="https://github.com/Mlaiel/IA Chérie-AI.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -395,7 +395,7 @@ class EnterpriseDevOpsAutomation:
             infrastructure_pipeline = PipelineConfiguration(
                 id="infrastructure_pipeline",
                 name="Infrastructure as Code Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-Infrastructure.git",
+                repository="https://github.com/Mlaiel/IA Chérie-Infrastructure.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -439,7 +439,7 @@ class EnterpriseDevOpsAutomation:
         🏗️ Backend Senior: Infrastructure resource management
         """
         try:
-            # Ressources d'infrastructure Ainflue
+            # Ressources d'infrastructure IA Chérie
             resources = [
                 InfrastructureResource(
                     id="k8s_cluster_prod",
@@ -643,7 +643,7 @@ class EnterpriseDevOpsAutomation:
             
             # Create artifacts
             job.logs.append("📁 Creating build artifacts...")
-            build_artifact = f"ainflue-{job.commit_hash[:8]}.tar.gz"
+            build_artifact = f"iacherie-{job.commit_hash[:8]}.tar.gz"
             job.artifacts.append(build_artifact)
             
             # Docker image build si nécessaire
@@ -651,7 +651,7 @@ class EnterpriseDevOpsAutomation:
                 job.logs.append("🐳 Building Docker image...")
                 await asyncio.sleep(1.5)
                 
-                docker_image = f"ainflue/app:{job.commit_hash[:8]}"
+                docker_image = f"iacherie/app:{job.commit_hash[:8]}"
                 job.artifacts.append(docker_image)
                 job.logs.append(f"✅ Docker image built: {docker_image}")
             
@@ -989,7 +989,7 @@ class EnterpriseDevOpsAutomation:
             return {
                 "healthy": all_healthy,
                 "checks": health_checks,
-                "endpoint": f"https://{environment}.ainflue.com",
+                "endpoint": f"https://{environment}.iacherie.com",
                 "reason": "All health checks passed" if all_healthy else "Some health checks failed"
             }
             

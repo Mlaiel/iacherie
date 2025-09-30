@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Payment Distribution Tracker
+IA Chérie Platform - Payment Distribution Tracker
 ===============================================
 
 Enterprise-grade payment distribution tracking for collaboration partnerships,

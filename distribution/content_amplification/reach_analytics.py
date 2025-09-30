@@ -1,5 +1,5 @@
 """
-Reach Analytics for Ainflue Distribution Platform
+Reach Analytics for IA Chérie Distribution Platform
 
 Advanced reach analytics and measurement system that provides comprehensive
 insights into content reach, audience analysis, and performance optimization

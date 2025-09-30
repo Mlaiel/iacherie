@@ -1,4 +1,4 @@
-# 🚀 Ainflue Enterprise API - Advanced AI-Powered Content Platform
+# 🚀 IA Chérie Enterprise API - Advanced AI-Powered Content Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Specialized Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🎯 Platform Overview
 
-Ainflue is the world's most advanced AI-powered content protection, monetization, and collaboration platform for creators across 35+ platforms. Our enterprise-grade API provides comprehensive orchestration services for content creators, influencers, and media companies worldwide.
+IA Chérie is the world's most advanced AI-powered content protection, monetization, and collaboration platform for creators across 35+ platforms. Our enterprise-grade API provides comprehensive orchestration services for content creators, influencers, and media companies worldwide.
 
 ## 🏗️ Enterprise API Architecture
 
@@ -168,9 +168,9 @@ Enterprise Orchestrators → Business Logic → Data Layer
 ## 🚀 Getting Started
 
 ### API Base URLs
-- **Production:** `https://api.ainflue.com`
-- **Staging:** `https://staging-api.ainflue.com`
-- **Development:** `https://dev-api.ainflue.com`
+- **Production:** `https://api.iacherie.com`
+- **Staging:** `https://staging-api.iacherie.com`
+- **Development:** `https://dev-api.iacherie.com`
 
 ### Documentation
 - **Interactive Docs:** `/docs` - Swagger UI with enterprise features
@@ -207,7 +207,7 @@ collaboration_data = {
 
 # Find compatible creators
 response = requests.post(
-    "https://api.ainflue.com/api/v1/collaboration/matching/find-creators",
+    "https://api.iacherie.com/api/v1/collaboration/matching/find-creators",
     headers=headers,
     json={
         "creator_id": "creator_123",
@@ -237,7 +237,7 @@ distribution_request = {
 }
 
 response = requests.post(
-    "https://api.ainflue.com/api/v1/distribution/content/distribute",
+    "https://api.iacherie.com/api/v1/distribution/content/distribute",
     headers=headers,
     json=distribution_request
 )
@@ -255,9 +255,9 @@ print(f"Distribution initiated to {len(distribution_request['target_platforms'])
 - **24/7 Support:** Available for critical issues
 
 ### Resources
-- **Developer Documentation:** [https://docs.ainflue.com](https://docs.ainflue.com)
-- **API Status Page:** [https://status.ainflue.com](https://status.ainflue.com)
-- **Community Forum:** [https://community.ainflue.com](https://community.ainflue.com)
+- **Developer Documentation:** [https://docs.iacherie.com](https://docs.iacherie.com)
+- **API Status Page:** [https://status.iacherie.com](https://status.iacherie.com)
+- **Community Forum:** [https://community.iacherie.com](https://community.iacherie.com)
 - **GitHub Repository:** Private enterprise repository access
 
 ### Integration Support
@@ -330,5 +330,5 @@ For licensing inquiries and enterprise agreements, contact: **mlaiel@live.de**
 
 ---
 
-**Built with ❤️ by the Ainflue Enterprise Team**  
+**Built with ❤️ by the IA Chérie Enterprise Team**  
 **Leading the future of AI-powered content creation and collaboration**

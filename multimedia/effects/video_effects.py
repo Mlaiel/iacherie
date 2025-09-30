@@ -516,7 +516,7 @@ class VideoEffectsEngine:
                     
                 elif overlay_type == "watermark":
                     # Create a simple watermark if not provided
-                    watermark_text = overlay_data.get("text", "© Ainflue")
+                    watermark_text = overlay_data.get("text", "© IA Chérie")
                     position = overlay_data.get("position", "bottom_right")
                     opacity = overlay_data.get("opacity", 0.3)
                     

@@ -1,4 +1,4 @@
-# 🛡️ Plateforme Enterprise Sécurité & Conformité - Ainflue Creator Economy
+# 🛡️ Plateforme Enterprise Sécurité & Conformité - IA Chérie Creator Economy
 
 ⚠️  **PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL** ⚠️  
 © 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -84,10 +84,10 @@ Frameworks ML (scikit-learn, TensorFlow)
 
 ```bash
 # Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Naviguer vers le module conformité
-cd Ainflue/security/compliance
+cd IA Chérie/security/compliance
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -257,7 +257,7 @@ python -m compliance.reporting --generate-all
 - Solutions white-label
 - Niveaux accès API
 
-## 👥 Équipe Expert - Ainflue Compliance Engineering
+## 👥 Équipe Expert - IA Chérie Compliance Engineering
 
 ### Direction Projet
 **Fahed Mlaiel** - Chief Technology Officer & Architecte Conformité

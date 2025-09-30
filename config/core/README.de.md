@@ -1,13 +1,13 @@
-# 🚀 Ainflue Core-Konfigurationsmodul - Ultra-Fortgeschrittene Enterprise Edition
+# 🚀 IA Chérie Core-Konfigurationsmodul - Ultra-Fortgeschrittene Enterprise Edition
 
-[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.ainflue.com)
-[![System Architektur](https://img.shields.io/badge/System-Architektur-blue.svg)](https://architecture.ainflue.com)
-[![Hochleistung](https://img.shields.io/badge/Hoch-Leistung-green.svg)](https://performance.ainflue.com)
-[![Enterprise Sicherheit](https://img.shields.io/badge/Enterprise-Sicherheit-red.svg)](https://security.ainflue.com)
+[![Enterprise Core](https://img.shields.io/badge/Enterprise-Core-gold.svg)](https://enterprise.iacherie.com)
+[![System Architektur](https://img.shields.io/badge/System-Architektur-blue.svg)](https://architecture.iacherie.com)
+[![Hochleistung](https://img.shields.io/badge/Hoch-Leistung-green.svg)](https://performance.iacherie.com)
+[![Enterprise Sicherheit](https://img.shields.io/badge/Enterprise-Sicherheit-red.svg)](https://security.iacherie.com)
 
 ## 🎯 Executive Summary
 
-Das **Ainflue Core-Konfigurationsmodul** repräsentiert die grundlegende Enterprise-Grade-Infrastruktur, die das gesamte Ainflue-Ökosystem antreibt. Dieses ultra-fortgeschrittene Core liefert Quanten-Skalierung, militärische Sicherheit, autonome Systemoperationen und Enterprise-Zuverlässigkeit über verteilte globale Infrastruktur.
+Das **IA Chérie Core-Konfigurationsmodul** repräsentiert die grundlegende Enterprise-Grade-Infrastruktur, die das gesamte IA Chérie-Ökosystem antreibt. Dieses ultra-fortgeschrittene Core liefert Quanten-Skalierung, militärische Sicherheit, autonome Systemoperationen und Enterprise-Zuverlässigkeit über verteilte globale Infrastruktur.
 
 ## 🏗️ System-Architektur-Übersicht
 
@@ -121,7 +121,7 @@ from config.core.database import DatabaseConfig
 database = DatabaseConfig(
     primary_database={
         "engine": "postgresql",
-        "host": "primary-db-cluster.ainflue.com",
+        "host": "primary-db-cluster.iacherie.com",
         "port": 5432,
         "connection_pool": {
             "min_connections": 10,
@@ -136,7 +136,7 @@ database = DatabaseConfig(
     },
     analytics_database={
         "engine": "clickhouse",
-        "host": "analytics-cluster.ainflue.com",
+        "host": "analytics-cluster.iacherie.com",
         "sharding": True,
         "compression": "lz4"
     },
@@ -249,9 +249,9 @@ from config.core.cache_config import CacheConfig
 cache = CacheConfig(
     redis_cluster={
         "nodes": [
-            "redis-01.ainflue.com:6379",
-            "redis-02.ainflue.com:6379",
-            "redis-03.ainflue.com:6379"
+            "redis-01.iacherie.com:6379",
+            "redis-02.iacherie.com:6379",
+            "redis-03.iacherie.com:6379"
         ],
         "cluster_mode": True,
         "read_from_replicas": True
@@ -557,10 +557,10 @@ backup_manager.test_disaster_recovery()
 
 ### Support & Community
 
-- 💬 [Core Systems Forum](https://community.ainflue.com/core)
-- 📧 [Enterprise Support](mailto:core-support@ainflue.com)
+- 💬 [Core Systems Forum](https://community.iacherie.com/core)
+- 📧 [Enterprise Support](mailto:core-support@iacherie.com)
 - 📞 [24/7 Technical Support](tel:+1-800-CORE-SUPPORT)
-- 🎯 [Architektur-Beratung](https://ainflue.com/architecture-consultation)
+- 🎯 [Architektur-Beratung](https://iacherie.com/architecture-consultation)
 
 ## 🔄 Updates & Roadmap
 
@@ -584,7 +584,7 @@ backup_manager.test_disaster_recovery()
 
 ## 🏆 Enterprise Exzellenz
 
-**Ainflue Core-Konfigurationsmodul** - Die grundlegende Infrastruktur für Enterprise-Skalierte Creator-Economy-Plattformen mit Quanten-Performance, militärischer Sicherheit und autonomen Operationen.
+**IA Chérie Core-Konfigurationsmodul** - Die grundlegende Infrastruktur für Enterprise-Skalierte Creator-Economy-Plattformen mit Quanten-Performance, militärischer Sicherheit und autonomen Operationen.
 
 *Für Skalierung gebaut. Für Performance optimiert. Für Zuverlässigkeit designed.*
 
@@ -594,4 +594,4 @@ backup_manager.test_disaster_recovery()
 
 ---
 
-*© 2025 Ainflue Technologies. Alle Rechte vorbehalten. Enterprise Edition.*
+*© 2025 IA Chérie Technologies. Alle Rechte vorbehalten. Enterprise Edition.*

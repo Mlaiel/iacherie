@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION ENTERPRISE:
-Datasets spécialisés computer vision pour agents IA de la plateforme Ainflue.
+Datasets spécialisés computer vision pour agents IA de la plateforme IA Chérie.
 Support 15+ agents vision avec datasets haute qualité pour object detection,
 face recognition, scene analysis, image enhancement, et visual fingerprinting.
 """

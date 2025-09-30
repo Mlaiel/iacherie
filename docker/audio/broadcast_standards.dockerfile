@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE BROADCAST STANDARDS COMPLIANCE - PROFESSIONAL DOCKERFILE
+# IACHERIE BROADCAST STANDARDS COMPLIANCE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for broadcast standards compliance including
 # EBU R128, ITU-R BS.1770, ATSC A/85 loudness standards.
@@ -220,15 +220,15 @@ CMD ["python3.11", "-m", "broadcast_standards.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Broadcast Standards Compliance"
+LABEL org.opencontainers.image.title="IA Chérie Broadcast Standards Compliance"
 LABEL org.opencontainers.image.description="EBU R128/ITU-R BS.1770/ATSC A/85 compliance service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL ainflue.service.category="audio"
-LABEL ainflue.service.name="broadcast_standards"
-LABEL ainflue.service.port="8012"
-LABEL ainflue.broadcast.ebu_r128="true"
-LABEL ainflue.broadcast.itu_bs1770="true"
-LABEL ainflue.broadcast.atsc_a85="true"
-LABEL ainflue.security.non-root="true"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chérie"
+LABEL iacherie.service.category="audio"
+LABEL iacherie.service.name="broadcast_standards"
+LABEL iacherie.service.port="8012"
+LABEL iacherie.broadcast.ebu_r128="true"
+LABEL iacherie.broadcast.itu_bs1770="true"
+LABEL iacherie.broadcast.atsc_a85="true"
+LABEL iacherie.security.non-root="true"

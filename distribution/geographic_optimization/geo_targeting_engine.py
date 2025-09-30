@@ -1,5 +1,5 @@
 """
-Geographic Targeting Engine for Ainflue Distribution Platform
+Geographic Targeting Engine for IA Chérie Distribution Platform
 
 This module provides advanced geographic targeting and cultural adaptation
 for optimized content distribution across global markets.

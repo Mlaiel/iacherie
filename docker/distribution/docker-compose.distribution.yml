@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: platform_connectors.dockerfile
-    container_name: ainflue-platform-connectors
+    container_name: iacherie-platform-connectors
     environment:
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
       - YOUTUBE_CLIENT_ID=${YOUTUBE_CLIENT_ID}
@@ -45,7 +45,7 @@ services:
     build:
       context: .
       dockerfile: publication_scheduler.dockerfile
-    container_name: ainflue-publication-scheduler
+    container_name: iacherie-publication-scheduler
     environment:
       - REDIS_URL=redis://redis:6379/1
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
@@ -69,7 +69,7 @@ services:
     build:
       context: .
       dockerfile: format_adapter.dockerfile
-    container_name: ainflue-format-adapter
+    container_name: iacherie-format-adapter
     environment:
       - REDIS_URL=redis://redis:6379/2
       - STORAGE_BACKEND=${STORAGE_BACKEND:-local}
@@ -105,7 +105,7 @@ services:
     build:
       context: .
       dockerfile: analytics_aggregator.dockerfile
-    container_name: ainflue-analytics-aggregator
+    container_name: iacherie-analytics-aggregator
     environment:
       - ANALYTICS_DB_URL=postgresql://analytics:${ANALYTICS_DB_PASSWORD}@analytics-postgres:5432/analytics
       - REDIS_URL=redis://redis:6379/3
@@ -131,7 +131,7 @@ services:
     build:
       context: .
       dockerfile: hashtag_optimizer.dockerfile
-    container_name: ainflue-hashtag-optimizer
+    container_name: iacherie-hashtag-optimizer
     environment:
       - REDIS_URL=redis://redis:6379/4
       - ML_MODEL_ENDPOINT=${ML_MODEL_ENDPOINT}
@@ -154,7 +154,7 @@ services:
     build:
       context: .
       dockerfile: ab_testing_engine.dockerfile
-    container_name: ainflue-ab-testing-engine
+    container_name: iacherie-ab-testing-engine
     environment:
       - REDIS_URL=redis://redis:6379/5
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
@@ -178,7 +178,7 @@ services:
     build:
       context: .
       dockerfile: distribution_intelligence.dockerfile
-    container_name: ainflue-distribution-intelligence
+    container_name: iacherie-distribution-intelligence
     environment:
       - REDIS_URL=redis://redis:6379/6
       - ML_MODELS_PATH=/app/models
@@ -209,7 +209,7 @@ services:
     build:
       context: .
       dockerfile: revenue_distribution.dockerfile
-    container_name: ainflue-revenue-distribution
+    container_name: iacherie-revenue-distribution
     environment:
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
       - PAYMENT_PROCESSOR_API_KEY=${PAYMENT_PROCESSOR_API_KEY}
@@ -231,7 +231,7 @@ services:
     build:
       context: .
       dockerfile: content_security.dockerfile
-    container_name: ainflue-content-security
+    container_name: iacherie-content-security
     environment:
       - REDIS_URL=redis://redis:6379/7
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
@@ -255,7 +255,7 @@ services:
     build:
       context: .
       dockerfile: automation_orchestrator.dockerfile
-    container_name: ainflue-automation-orchestrator
+    container_name: iacherie-automation-orchestrator
     environment:
       - REDIS_URL=redis://redis:6379/8
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
@@ -278,7 +278,7 @@ services:
     build:
       context: .
       dockerfile: cross_platform_sync.dockerfile
-    container_name: ainflue-cross-platform-sync
+    container_name: iacherie-cross-platform-sync
     environment:
       - REDIS_URL=redis://redis:6379/9
       - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
@@ -299,7 +299,7 @@ services:
   # Supporting Infrastructure
   redis:
     image: redis:7-alpine
-    container_name: ainflue-distribution-redis
+    container_name: iacherie-distribution-redis
     command: redis-server --appendonly yes --maxmemory 2gb --maxmemory-policy allkeys-lru
     volumes:
       - redis_data:/data
@@ -314,7 +314,7 @@ services:
 
   postgres:
     image: postgres:15-alpine
-    container_name: ainflue-distribution-postgres
+    container_name: iacherie-distribution-postgres
     environment:
       - POSTGRES_DB=distribution
       - POSTGRES_USER=distribution
@@ -333,7 +333,7 @@ services:
 
   analytics-postgres:
     image: postgres:15-alpine
-    container_name: ainflue-analytics-postgres
+    container_name: iacherie-analytics-postgres
     environment:
       - POSTGRES_DB=analytics
       - POSTGRES_USER=analytics
@@ -351,7 +351,7 @@ services:
 
   elasticsearch:
     image: elasticsearch:8.8.0
-    container_name: ainflue-elasticsearch
+    container_name: iacherie-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false

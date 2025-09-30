@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE PIPELINE MANAGER - AINFLUE PLATFORM
+🔥 ENTERPRISE PIPELINE MANAGER - IACHERIE PLATFORM
 Ultra-advanced pipeline management for enterprise workflows
 Consolidates: collaboration.py + monetization.py + distribution_publishing.py + protection.py + fingerprinting.py
 """

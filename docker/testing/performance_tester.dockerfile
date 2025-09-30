@@ -1,11 +1,11 @@
 # Performance Tester Service
-# Load and performance testing for Ainflue Platform
+# Load and performance testing for IA Chérie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Performance Tester - Load and stress testing"
+LABEL description="IA Chérie Performance Tester - Load and stress testing"
 LABEL version="1.0.0"
 
 # Set working directory

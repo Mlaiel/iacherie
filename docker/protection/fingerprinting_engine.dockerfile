@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE FINGERPRINTING ENGINE - SPECIALIZED DOCKERFILE
+# IACHERIE FINGERPRINTING ENGINE - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced digital fingerprinting supporting
 # audio, video, image, and document fingerprinting with ML-based similarity.
@@ -230,13 +230,13 @@ CMD ["python3.11", "-m", "fingerprinting_engine.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Fingerprinting Engine"
+LABEL org.opencontainers.image.title="IA Chérie Fingerprinting Engine"
 LABEL org.opencontainers.image.description="Advanced multi-format digital fingerprinting service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="fingerprinting_engine"
-LABEL ainflue.service.port="8021"
-LABEL ainflue.fingerprinting.formats="audio,video,image,document"
-LABEL ainflue.security.non-root="true"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chérie"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="fingerprinting_engine"
+LABEL iacherie.service.port="8021"
+LABEL iacherie.fingerprinting.formats="audio,video,image,document"
+LABEL iacherie.security.non-root="true"

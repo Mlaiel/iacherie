@@ -1,4 +1,4 @@
-# 🔒 Ainflue Platform Security Guide
+# 🔒 IA Chérie Platform Security Guide
 
 ## Comprehensive Security Framework
 
@@ -11,7 +11,7 @@
 
 ## 📋 Executive Summary
 
-This document establishes the comprehensive security framework for the Ainflue AI-powered content protection and monetization platform. Our security policy ensures the protection of creator content, user data, and platform integrity through enterprise-grade security controls and industry best practices.
+This document establishes the comprehensive security framework for the IA Chérie AI-powered content protection and monetization platform. Our security policy ensures the protection of creator content, user data, and platform integrity through enterprise-grade security controls and industry best practices.
 
 ## 🎯 Security Objectives
 
@@ -150,8 +150,8 @@ JWT_SETTINGS = {
     "algorithm": "RS256",
     "access_token_expire_minutes": 60,
     "refresh_token_expire_days": 30,
-    "issuer": "api.ainflue.com",
-    "audience": "ainflue-platform"
+    "issuer": "api.iacherie.com",
+    "audience": "iacherie-platform"
 }
 ```
 
@@ -378,7 +378,7 @@ Content-Security-Policy:
   script-src 'self' 'unsafe-inline' https://trusted-cdn.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: https:;
-  connect-src 'self' https://api.ainflue.com;
+  connect-src 'self' https://api.iacherie.com;
   frame-ancestors 'none';
 ```
 
@@ -611,7 +611,7 @@ security_alerts:
 ### Security Team
 
 **Chief Security Officer:** Fahed Mlaiel  
-**Email:** security@ainflue.com  
+**Email:** security@iacherie.com  
 **Emergency Hotline:** +49-XXX-XXX-XXXX (24/7)
 
 ### Reporting Security Issues
@@ -622,7 +622,7 @@ security_alerts:
 - Coordinated vulnerability disclosure
 
 **Contact Methods:**
-- **Email:** security@ainflue.com
+- **Email:** security@iacherie.com
 - **PGP Key:** Available on website
 - **Response Time:** 24 hours for critical issues
 
@@ -660,6 +660,6 @@ security_alerts:
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform - Enterprise Security Guide**
+**IA Chérie Platform - Enterprise Security Guide**
 
-For security inquiries and incident reporting: security@ainflue.com
+For security inquiries and incident reporting: security@iacherie.com

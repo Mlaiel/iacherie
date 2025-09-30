@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chérie Creator Platform ⚠️
 
 Capacity Planning Analyzer Enterprise
 Intelligent capacity planning and forecasting for Creator Economy platform

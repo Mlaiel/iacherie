@@ -1,4 +1,4 @@
-package com.ainflue.sdk.config;
+package com.iacherie.sdk.config;
 
 /**
  * SDK Configuration Class
@@ -12,7 +12,7 @@ package com.ainflue.sdk.config;
  * @author Fahed Mlaiel (mlaiel@live.de)
  */
 
-import com.ainflue.sdk.exceptions.ConfigurationException;
+import com.iacherie.sdk.exceptions.ConfigurationException;
 
 import java.time.Duration;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Immutable configuration class for the Ainflue SDK
+ * Immutable configuration class for the IA Chérie SDK
  */
 public final class SdkConfiguration {
     
@@ -144,7 +144,7 @@ public final class SdkConfiguration {
         private String apiKey;
         
         // Optional fields with defaults
-        private String baseUrl = "https://api.ainflue.com";
+        private String baseUrl = "https://api.iacherie.com";
         private String environment = "production";
         private String region = "us-east-1";
         
@@ -184,7 +184,7 @@ public final class SdkConfiguration {
         
         // Headers
         private Map<String, String> customHeaders = new HashMap<>();
-        private String userAgent = "Ainflue-Java-SDK/1.0.0";
+        private String userAgent = "IA Chérie-Java-SDK/1.0.0";
         
         // Rate limiting defaults
         private int rateLimitPerHour = 10000;
@@ -508,7 +508,7 @@ public final class SdkConfiguration {
     public static SdkConfiguration forDevelopment(String apiKey) {
         return builder()
             .apiKey(apiKey)
-            .baseUrl("https://api-dev.ainflue.com")
+            .baseUrl("https://api-dev.iacherie.com")
             .environment("development")
             .enableLogging(true)
             .logLevel("DEBUG")
@@ -519,7 +519,7 @@ public final class SdkConfiguration {
     public static SdkConfiguration forStaging(String apiKey) {
         return builder()
             .apiKey(apiKey)
-            .baseUrl("https://api-staging.ainflue.com")
+            .baseUrl("https://api-staging.iacherie.com")
             .environment("staging")
             .enableLogging(true)
             .logLevel("INFO")
@@ -530,7 +530,7 @@ public final class SdkConfiguration {
     public static SdkConfiguration forProduction(String apiKey) {
         return builder()
             .apiKey(apiKey)
-            .baseUrl("https://api.ainflue.com")
+            .baseUrl("https://api.iacherie.com")
             .environment("production")
             .enableLogging(true)
             .logLevel("WARN")

@@ -207,12 +207,12 @@ class FilebeatConfigurationManager:
                 "inputs": [
                     {
                         "type": "container",
-                        "paths": ["/var/log/containers/*-ainflue-*.log"],
+                        "paths": ["/var/log/containers/*-iacherie-*.log"],
                         "processors": [
                             {"add_kubernetes_metadata": {"host": "${NODE_NAME}"}},
                             {"add_docker_metadata": {"host": "unix:///var/run/docker.sock"}}
                         ],
-                        "fields": {"environment": "production", "cluster": "ainflue-production"}
+                        "fields": {"environment": "production", "cluster": "iacherie-production"}
                     }
                 ]
             },
@@ -222,7 +222,7 @@ class FilebeatConfigurationManager:
             ],
             "output": {
                 "logstash": {
-                    "hosts": ["logstash.ainflue-monitoring.svc.cluster.local:5044"],
+                    "hosts": ["logstash.iacherie-monitoring.svc.cluster.local:5044"],
                     "loadbalance": True,
                     "compression_level": 3,
                     "worker": 2,
@@ -237,7 +237,7 @@ class FilebeatConfigurationManager:
             "monitoring": {
                 "enabled": True,
                 "elasticsearch": {
-                    "hosts": ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"]
+                    "hosts": ["elasticsearch.iacherie-monitoring.svc.cluster.local:9200"]
                 }
             },
             "queue": {
@@ -252,7 +252,7 @@ class FilebeatConfigurationManager:
                 "inputs": [
                     {
                         "type": "log",
-                        "paths": ["/var/log/ainflue/dev/*.log"],
+                        "paths": ["/var/log/iacherie/dev/*.log"],
                         "fields": {"environment": "development"}
                     }
                 ]
@@ -292,15 +292,15 @@ class FilebeatConfigurationManager:
                 "inputs": [
                     {
                         "type": "container",
-                        "paths": ["/var/log/containers/*-ainflue-staging-*.log"],
+                        "paths": ["/var/log/containers/*-iacherie-staging-*.log"],
                         "fields": {"environment": "staging"}
                     }
                 ]
             },
             "output": {
                 "elasticsearch": {
-                    "hosts": ["elasticsearch-staging.ainflue.dev:9200"],
-                    "index": "ainflue-staging-logs-%{+yyyy.MM.dd}"
+                    "hosts": ["elasticsearch-staging.iacherie.dev:9200"],
+                    "index": "iacherie-staging-logs-%{+yyyy.MM.dd}"
                 }
             },
             "logging": {"level": "info"}
@@ -325,9 +325,9 @@ class FilebeatConfigurationManager:
             "output": {
                 "logstash": {
                     "hosts": [
-                        "logstash-1.ainflue-monitoring.svc.cluster.local:5044",
-                        "logstash-2.ainflue-monitoring.svc.cluster.local:5044",
-                        "logstash-3.ainflue-monitoring.svc.cluster.local:5044"
+                        "logstash-1.iacherie-monitoring.svc.cluster.local:5044",
+                        "logstash-2.iacherie-monitoring.svc.cluster.local:5044",
+                        "logstash-3.iacherie-monitoring.svc.cluster.local:5044"
                     ],
                     "loadbalance": True,
                     "compression_level": 1,
@@ -397,7 +397,7 @@ class FilebeatConfigurationManager:
             ],
             "output": {
                 "logstash": {
-                    "hosts": ["logstash.ainflue-monitoring.svc.cluster.local:5044"],
+                    "hosts": ["logstash.iacherie-monitoring.svc.cluster.local:5044"],
                     "loadbalance": True
                 }
             }
@@ -450,12 +450,12 @@ class FilebeatConfigurationManager:
             ],
             "output": {
                 "elasticsearch": {
-                    "hosts": ["elasticsearch.ainflue-monitoring.svc.cluster.local:9200"],
-                    "index": "ainflue-analytics-%{+yyyy.MM.dd}",
+                    "hosts": ["elasticsearch.iacherie-monitoring.svc.cluster.local:9200"],
+                    "index": "iacherie-analytics-%{+yyyy.MM.dd}",
                     "template": {
                         "enabled": True,
-                        "name": "ainflue-analytics",
-                        "pattern": "ainflue-analytics-*"
+                        "name": "iacherie-analytics",
+                        "pattern": "iacherie-analytics-*"
                     }
                 }
             }

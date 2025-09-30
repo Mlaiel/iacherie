@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - CLOUD STORAGE MANAGER
+IACHERIE INTEGRATIONS - CLOUD STORAGE MANAGER
 ===========================================
 
 Enterprise multi-cloud storage integration for creator economy platform.
 Combines multiple expert roles for comprehensive cloud storage management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chérie - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/cloud_providers)
 
 Expert Roles Applied:
@@ -141,17 +141,17 @@ class CloudStorageConfig(BaseModel):
     aws_access_key_id: Optional[str] = Field(default=None, description="AWS access key ID")
     aws_secret_access_key: Optional[str] = Field(default=None, description="AWS secret access key")
     aws_region: str = Field(default="us-east-1", description="AWS region")
-    aws_bucket: str = Field(default="ainflue-content", description="AWS S3 bucket")
+    aws_bucket: str = Field(default="iacherie-content", description="AWS S3 bucket")
     
     # Google Cloud Configuration
     gcp_project_id: Optional[str] = Field(default=None, description="GCP project ID")
     gcp_credentials_path: Optional[str] = Field(default=None, description="GCP credentials JSON path")
-    gcp_bucket: str = Field(default="ainflue-content-gcp", description="GCP storage bucket")
+    gcp_bucket: str = Field(default="iacherie-content-gcp", description="GCP storage bucket")
     
     # Azure Configuration
     azure_account_name: Optional[str] = Field(default=None, description="Azure storage account name")
     azure_account_key: Optional[str] = Field(default=None, description="Azure account key")
-    azure_container: str = Field(default="ainflue-content", description="Azure blob container")
+    azure_container: str = Field(default="iacherie-content", description="Azure blob container")
     
     # Cloudinary Configuration
     cloudinary_cloud_name: Optional[str] = Field(default=None, description="Cloudinary cloud name")
@@ -211,7 +211,7 @@ class CloudStorageSecurityManager:
         key = base64.urlsafe_b64encode(kdf.derive(password))
         return Fernet(key)
     
-    async def encrypt_file(self, file_data: bytes) -> Tuple[bytes, str]:
+    async def encrypt_file(self, file_data: bytes) -> tuple[bytes, str]:
         """Encrypt file data"""
         if not self.cipher_suite:
             return file_data, ""
@@ -801,7 +801,7 @@ class MultiCloudStorageManager:
             ERROR_COUNTER.labels(provider="multi_cloud", error_type="upload").inc()
             raise
     
-    async def download_file(self, file_id: str, user_id: str = None) -> Tuple[bytes, StorageFile]:
+    async def download_file(self, file_id: str, user_id: str = None) -> tuple[bytes, StorageFile]:
         """Download file with access control and optimization"""
         try:
             # Get file metadata
@@ -1101,7 +1101,7 @@ class CloudStorageService:
         """Upload file with full enterprise features"""
         return await self.manager.upload_file(file_data, filename, creator_id, file_type, metadata)
     
-    async def download_file(self, file_id: str, user_id: str = None) -> Tuple[bytes, StorageFile]:
+    async def download_file(self, file_id: str, user_id: str = None) -> tuple[bytes, StorageFile]:
         """Download file"""
         return await self.manager.download_file(file_id, user_id)
     

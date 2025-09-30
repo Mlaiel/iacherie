@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Notification Manager
+ * IA Chérie Desktop - Notification Manager
  * 
  * Cross-platform notification system with rich media support
  * 
@@ -236,7 +236,7 @@ class NotificationManager extends EventEmitter {
 
   normalizeOptions(options) {
     return {
-      title: options.title || 'Ainflue Studio',
+      title: options.title || 'IA Chérie Studio',
       body: options.body || '',
       subtitle: options.subtitle,
       icon: options.icon || this.getIconForCategory(options.category),

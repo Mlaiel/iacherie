@@ -145,7 +145,7 @@ PLATFORM_CONFIG = {
 - **Optimisation Timing** - Optimisé pour les fuseaux horaires et comportements utilisateurs français
 - **Localisation Langue** - Traduction automatique et adaptation
 
-### 🎯 Intégration Logique Métier Ainflue
+### 🎯 Intégration Logique Métier IA Chérie
 
 Suivant la logique de la plateforme IA-Influencer-Agent :
 

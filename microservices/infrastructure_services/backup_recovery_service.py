@@ -347,7 +347,7 @@ class BackupRecoveryService:
 
     async def _upload_to_s3(self, backup_id: str, file_path: str) -> str:
         """Upload backup to S3"""
-        bucket_name = self.config.get('s3_bucket_name', 'ainflue-backups')
+        bucket_name = self.config.get('s3_bucket_name', 'iacherie-backups')
         key = f"backups/{backup_id}.tar.gz"
         
         try:
@@ -749,7 +749,7 @@ if __name__ == "__main__":
             'aws_access_key': 'your_access_key',
             'aws_secret_key': 'your_secret_key',
             'aws_region': 'us-east-1',
-            's3_bucket_name': 'ainflue-backups',
+            's3_bucket_name': 'iacherie-backups',
             'monitoring_interval': 30,
             'auto_recovery_enabled': True
         }

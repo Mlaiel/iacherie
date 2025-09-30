@@ -1,5 +1,5 @@
 /**
- * Ainflue Platform TypeScript SDK - Main Entry Point
+ * IA Chérie Platform TypeScript SDK - Main Entry Point
  * 
  * Enterprise-grade TypeScript SDK with multi-expert design:
  * - Lead Dev IA: AI orchestration and intelligent API design
@@ -17,7 +17,7 @@
  */
 
 // Core client exports
-export { AinflueClient } from './ainflue-client';
+export { AinflueClient } from './iacherie-client';
 export { AinflueConfig, createDefaultConfig } from './config';
 
 // Type definitions
@@ -77,7 +77,7 @@ export { createClient, createBrowserClient, createNodeClient } from './factory';
 
 // Version and metadata
 export const SDK_VERSION = '1.0.0';
-export const SDK_NAME = '@ainflue/sdk';
+export const SDK_NAME = '@iacherie/sdk';
 export const API_VERSION = 'v1';
 
 // Feature flags for enterprise features
@@ -107,7 +107,7 @@ export const EXPERT_ROLES_IMPLEMENTED = [
 
 // Default configuration
 export const DEFAULT_CONFIG = {
-  baseUrl: 'https://api.ainflue.com',
+  baseUrl: 'https://api.iacherie.com',
   apiVersion: 'v1',
   timeout: 30000,
   maxRetries: 3,
@@ -155,11 +155,11 @@ const isNode = typeof process !== 'undefined' && process.versions && process.ver
 // Environment-specific optimizations
 if (isBrowser) {
   // Browser-specific initialization
-  console.log(`%c🚀 Ainflue SDK v${SDK_VERSION} (Browser)`, 'color: #4CAF50; font-weight: bold');
+  console.log(`%c🚀 IA Chérie SDK v${SDK_VERSION} (Browser)`, 'color: #4CAF50; font-weight: bold');
 } else if (isNode) {
   // Node.js-specific initialization
   process.env.NODE_ENV !== 'production' && 
-    console.log(`🚀 Ainflue SDK v${SDK_VERSION} (Node.js)`);
+    console.log(`🚀 IA Chérie SDK v${SDK_VERSION} (Node.js)`);
 }
 
 // SDK health check function

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Image Fingerprinting System - Ainflue Data Fingerprinting Module
+Image Fingerprinting System - IA Chérie Data Fingerprinting Module
 ================================================================
 Advanced image fingerprinting system with computer vision algorithms,
 perceptual hashing, deep learning features, and specialized image content 
-protection for photography creators on the Ainflue platform.
+protection for photography creators on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Data Fingerprinting
+Project: IA Chérie Data Fingerprinting
 Version: 1.0 Enterprise Production
 """
 
@@ -36,7 +36,7 @@ try:
 except ImportError as e:
     logging.error(f"Required image dependencies not installed: {e}")
 
-# Ainflue core imports
+# IA Chérie core imports
 from .multimodal_fingerprinting_engine import FingerprintResult, FingerprintConfig
 from .vector_database_matching import VectorDatabaseManager
 from .performance_analytics_engine import PerformanceAnalytics

@@ -200,7 +200,7 @@ class EnterpriseDataValidator:
         # Audit logging
         self.audit_log = deque(maxlen=10000)
         
-        # Initialisation schemas Ainflue
+        # Initialisation schemas IA Chérie
         self._initialize_ainflue_schemas()
         
         # Démarrage monitoring
@@ -248,8 +248,8 @@ class EnterpriseDataValidator:
         }
 
     def _initialize_ainflue_schemas(self):
-        """Initialisation schemas Ainflue enterprise - DBA expertise"""
-        logger.info("🎯 Initialisation schemas Ainflue enterprise")
+        """Initialisation schemas IA Chérie enterprise - DBA expertise"""
+        logger.info("🎯 Initialisation schemas IA Chérie enterprise")
         
         # 1. Schema Créateurs/Influenceurs
         creators_schema = TableSchema(
@@ -279,7 +279,7 @@ class EnterpriseDataValidator:
                 {"name": "idx_creators_active", "fields": ["last_active"], "type": "btree"},
                 {"name": "idx_creators_followers", "fields": ["follower_count"], "type": "btree"}
             ],
-            description="Table principale créateurs/influenceurs Ainflue"
+            description="Table principale créateurs/influenceurs IA Chérie"
         )
         
         # 2. Schema Contenu/Uploads
@@ -429,7 +429,7 @@ class EnterpriseDataValidator:
         # Initialisation patterns validation
         self._initialize_validation_patterns()
         
-        logger.info(f"✅ {len(schemas)} schemas Ainflue initialisés")
+        logger.info(f"✅ {len(schemas)} schemas IA Chérie initialisés")
 
     def _initialize_validation_patterns(self):
         """Initialisation patterns validation DBA"""
@@ -1170,7 +1170,7 @@ class EnterpriseDataValidator:
             "recommendations": [
                 "🗄️ DBA expertise delivering enterprise-grade validation",
                 "⚡ Query optimization achieving consistent performance gains",
-                "📊 Schema design optimized for Ainflue business logic",
+                "📊 Schema design optimized for IA Chérie business logic",
                 "🔍 Real-time monitoring ensuring database health"
             ]
         }

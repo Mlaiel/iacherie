@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Gamification Monitoring Engine
+IA Chérie Platform - Gamification Monitoring Engine
 ===============================================
 
 Enterprise-grade gamification monitoring engine for Creator Economy platform.

@@ -429,7 +429,7 @@ class WatermarkEngine {
    */
   async applyInvisibleWatermark(ctx, canvas, options) {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const message = options.message || options.text || `Watermarked by ${options.owner || 'Ainflue'} at ${new Date().toISOString()}`;
+    const message = options.message || options.text || `Watermarked by ${options.owner || 'IA Chérie'} at ${new Date().toISOString()}`;
     
     const watermarkedData = this.steganography.embedLSB(imageData, message);
     ctx.putImageData(watermarkedData, 0, 0);

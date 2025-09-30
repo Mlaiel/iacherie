@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE WATERMARKING SERVICE - ADVANCED DOCKERFILE
+# IACHERIE WATERMARKING SERVICE - ADVANCED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced watermarking with invisible/visible
 # watermarks for audio, video, and image content.
@@ -70,7 +70,7 @@ VOLUME ["/app/storage", "/app/logs", "/app/keys"]
 
 CMD ["python3.11", "-m", "watermarking_service.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Watermarking Service"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="watermarking_service"
-LABEL ainflue.service.port="8022"
+LABEL org.opencontainers.image.title="IA Chérie Watermarking Service"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="watermarking_service"
+LABEL iacherie.service.port="8022"

@@ -25,7 +25,7 @@ DSGVO, DMCA und internationale Urheberrechtsschutz gelten.
 - **KI Prompt Engineer:** Payment-Workflow-Automatisierung
 
 ## Zusammenfassung
-Enterprise-Level Payment Gateway Architektur für Multi-Provider-Zahlungsabwicklung, Kryptowährungsunterstützung, Betrugserkennung und umfassendes Revenue Management für die Ainflue AI Creator-Plattform.
+Enterprise-Level Payment Gateway Architektur für Multi-Provider-Zahlungsabwicklung, Kryptowährungsunterstützung, Betrugserkennung und umfassendes Revenue Management für die IA Chérie AI Creator-Plattform.
 
 ## Architektur-Überblick
 Level 2 Backend-Komponente für komplette Zahlungsabwicklung, Umsatzaufteilung, Creator-Auszahlungen, Lizenzgebühren und Monetarisierungs-Workflows.
@@ -85,9 +85,9 @@ await gateway.initialize()
 
 ## Support & Kontakt
 - **Technischer Support:** mlaiel@live.de
-- **Dokumentation:** https://docs.ainflue.com/payment
-- **Status-Seite:** https://status.ainflue.com
-- **Sicherheitsprobleme:** security@ainflue.com
+- **Dokumentation:** https://docs.iacherie.com/payment
+- **Status-Seite:** https://status.iacherie.com
+- **Sicherheitsprobleme:** security@iacherie.com
 
 ## Lizenz
 Enterprise Commercial License - Siehe LICENSE-Datei für Details.

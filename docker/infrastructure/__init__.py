@@ -1,10 +1,10 @@
 """
-Ainflue Infrastructure Docker Module
+IA Chérie Infrastructure Docker Module
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Infrastructure Docker module initialization for Ainflue platform.
+Infrastructure Docker module initialization for IA Chérie platform.
 Provides Docker Compose orchestration for audio processing, rights protection,
 monetization, and analytics services according to business logic requirements.
 """

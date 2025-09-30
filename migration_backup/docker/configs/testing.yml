@@ -1,0 +1,63 @@
+# Testing Configuration for Ainflue Docker Platform
+version: '3.8'
+
+environment:
+  NODE_ENV: test
+  DEBUG: false
+  LOG_LEVEL: error
+  ENABLE_METRICS: false
+  ENABLE_TRACING: false
+  TEST_MODE: true
+  PARALLEL_TESTS: true
+
+resources:
+  api_gateway:
+    limits:
+      cpus: '0.5'
+      memory: 1G
+  audio_processor:
+    limits:
+      cpus: '1.0'
+      memory: 2G
+  database:
+    limits:
+      cpus: '0.5'
+      memory: 2G
+
+scaling:
+  api_gateway:
+    min_replicas: 1
+    max_replicas: 1
+  audio_processor:
+    min_replicas: 1
+    max_replicas: 1
+
+networks:
+  test:
+    driver: bridge
+
+volumes:
+  test_postgres_data:
+    driver: tmpfs
+  test_redis_data:
+    driver: tmpfs
+
+security:
+  secrets_backend: local
+  image_scanning: disabled
+  network_policies: disabled
+
+monitoring:
+  prometheus:
+    retention: 1h
+  grafana:
+    enabled: false
+
+backup:
+  enabled: false
+
+testing:
+  database_reset: true
+  fixtures_load: true
+  coverage_enabled: true
+  timeout: 300

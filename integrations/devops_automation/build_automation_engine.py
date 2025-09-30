@@ -2,7 +2,7 @@
 ================================================================
 
 Build Engineering Expert: Build automation avec distributed caching,
-parallel execution et artifact management pour plateforme Ainflue.
+parallel execution et artifact management pour plateforme IA Chérie.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025
@@ -123,7 +123,7 @@ class BuildAutomationEngine:
     🔨 Build Automation Engine Enterprise
     
     Système d'automation de build avec caching intelligent, exécution parallèle
-    et gestion d'artifacts optimisée pour la plateforme Ainflue.
+    et gestion d'artifacts optimisée pour la plateforme IA Chérie.
     
     Fonctionnalités principales:
     - Intelligent build caching avec distributed cache
@@ -134,8 +134,8 @@ class BuildAutomationEngine:
     """
     
     def __init__(self, 
-                 cache_dir: str = "/var/cache/ainflue/builds",
-                 artifacts_dir: str = "/var/artifacts/ainflue",
+                 cache_dir: str = "/var/cache/iacherie/builds",
+                 artifacts_dir: str = "/var/artifacts/iacherie",
                  max_parallel_jobs: int = 8,
                  cache_size_limit: int = 50 * 1024 * 1024 * 1024,  # 50GB
                  enable_distributed_cache: bool = True):
@@ -1033,8 +1033,8 @@ class BuildAutomationEngine:
             return False
 
 
-def create_build_automation_engine(cache_dir: str = "/var/cache/ainflue/builds",
-                                 artifacts_dir: str = "/var/artifacts/ainflue",
+def create_build_automation_engine(cache_dir: str = "/var/cache/iacherie/builds",
+                                 artifacts_dir: str = "/var/artifacts/iacherie",
                                  max_parallel_jobs: int = 8,
                                  cache_size_limit: int = 50 * 1024 * 1024 * 1024,
                                  enable_distributed_cache: bool = True) -> BuildAutomationEngine:

@@ -535,7 +535,7 @@ README.ar.md (AR) ✅
 
 ### 🚀 **VERDICT FINAL**
 
-**Le projet Ainflue DÉPASSE LARGEMENT les exigences du cahier des charges sur la plupart des aspects, avec quelques lacunes mineures facilement corrigeables.**
+**Le projet IA Chérie DÉPASSE LARGEMENT les exigences du cahier des charges sur la plupart des aspects, avec quelques lacunes mineures facilement corrigeables.**
 
 **ROI: Projet leader mondial sur son marché**
 

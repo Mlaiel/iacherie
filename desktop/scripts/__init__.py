@@ -44,7 +44,7 @@ DESKTOP_CONFIG = {
 
 def initialize_desktop_environment():
     """Initialize desktop scripts environment"""
-    logger.info("🚀 Initializing Ainflue Desktop Scripts Environment")
+    logger.info("🚀 Initializing IA Chérie Desktop Scripts Environment")
     logger.info(f"📁 Scripts Directory: {DESKTOP_CONFIG['SCRIPTS_DIR']}")
     logger.info(f"🏠 Project Root: {DESKTOP_CONFIG['PROJECT_ROOT']}")
     logger.info(f"🌍 Environment: {DESKTOP_CONFIG['DESKTOP_ENV']}")

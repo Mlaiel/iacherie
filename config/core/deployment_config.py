@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Deployment Configuration - PRODUCTION ORCHESTRATION
+"""IA Chérie Enterprise Deployment Configuration - PRODUCTION ORCHESTRATION
 ===========================================================================
 
 🚀 ENTERPRISE DEPLOYMENT FEATURES:
@@ -115,8 +115,8 @@ class DeploymentConfiguration:
         
         # Global deployment settings
         self.global_settings = {
-            "namespace": "ainflue",
-            "cluster_name": "ainflue-cluster",
+            "namespace": "iacherie",
+            "cluster_name": "iacherie-cluster",
             "region": "us-east-1",
             "availability_zones": ["us-east-1a", "us-east-1b", "us-east-1c"],
             "enable_auto_scaling": True,
@@ -142,7 +142,7 @@ class DeploymentConfiguration:
             "api-gateway": ServiceConfiguration(
                 name="api-gateway",
                 service_type=ServiceType.API_GATEWAY,
-                image="ainflue/api-gateway:latest",
+                image="iacherie/api-gateway:latest",
                 replicas=3,
                 cpu_request="200m",
                 cpu_limit="1000m",
@@ -159,7 +159,7 @@ class DeploymentConfiguration:
             "backend-api": ServiceConfiguration(
                 name="backend-api",
                 service_type=ServiceType.BACKEND_SERVICE,
-                image="ainflue/backend:latest",
+                image="iacherie/backend:latest",
                 replicas=5,
                 cpu_request="300m",
                 cpu_limit="1500m",
@@ -176,7 +176,7 @@ class DeploymentConfiguration:
             "ai-processing": ServiceConfiguration(
                 name="ai-processing",
                 service_type=ServiceType.AI_SERVICE,
-                image="ainflue/ai-processor:latest",
+                image="iacherie/ai-processor:latest",
                 replicas=3,
                 cpu_request="1000m",
                 cpu_limit="4000m",
@@ -193,7 +193,7 @@ class DeploymentConfiguration:
             "content-processor": ServiceConfiguration(
                 name="content-processor",
                 service_type=ServiceType.BACKEND_SERVICE,
-                image="ainflue/content-processor:latest",
+                image="iacherie/content-processor:latest",
                 replicas=4,
                 cpu_request="500m",
                 cpu_limit="2000m",
@@ -205,7 +205,7 @@ class DeploymentConfiguration:
             "analytics-engine": ServiceConfiguration(
                 name="analytics-engine",
                 service_type=ServiceType.BACKEND_SERVICE,
-                image="ainflue/analytics:latest",
+                image="iacherie/analytics:latest",
                 replicas=2,
                 cpu_request="200m",
                 cpu_limit="1000m",
@@ -534,7 +534,7 @@ class DeploymentConfiguration:
             "build_config": {
                 "dockerfile_path": "./Dockerfile",
                 "build_context": ".",
-                "registry": "ainflue.azurecr.io",
+                "registry": "iacherie.azurecr.io",
                 "image_tag_strategy": "git_commit_sha",
                 "parallel_builds": True,
                 "cache_enabled": True
@@ -584,7 +584,7 @@ __all__ = [
     "get_monitoring_stack", "get_security_policies"
 ]
 
-logger.info("🚀 Ainflue Deployment Configuration initialized")
+logger.info("🚀 IA Chérie Deployment Configuration initialized")
 logger.info(f"📊 Services configured: {len(deployment_config.services)}")
 logger.info(f"🔧 Environment: {deployment_config.environment.value}")
 logger.info(f"☁️ Cloud provider: {deployment_config.cloud_provider.value}")

@@ -1,7 +1,7 @@
 """Priority Queue Manager Module
 
 Intelligent priority queue management with fair scheduling and SLA enforcement
-for the Ainflue Message Queues Enterprise system.
+for the IA Chérie Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -110,7 +110,7 @@ class QueueMetrics:
 
 
 class AinflueBusiness:
-    """Ainflue Business Priority Rules"""
+    """IA Chérie Business Priority Rules"""
     
     # Priority rules by event type
     PRIORITY_RULES = {
@@ -481,7 +481,7 @@ class PriorityQueueManager:
         return MessagePriority(priority_value)
     
     async def _apply_business_context(self, message: PriorityMessage):
-        """Apply Ainflue business context to message"""
+        """Apply IA Chérie business context to message"""
         event_type = message.payload.get("event_type", "")
         
         # Set SLA level based on priority

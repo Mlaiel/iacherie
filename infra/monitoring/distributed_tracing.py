@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chérie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chérie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -38,7 +38,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/var/log/ainflue/distributed_tracing.log')
+        logging.FileHandler('/var/log/iacherie/distributed_tracing.log')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -402,7 +402,7 @@ class DistributedTracingEngine:
     
     async def initialize(self):
         """Initialize distributed tracing"""
-        logger.info("Initializing Ainflue Distributed Tracing Engine")
+        logger.info("Initializing IA Chérie Distributed Tracing Engine")
         
         try:
             # Create resource with service information
@@ -733,7 +733,7 @@ class TracingContext:
 async def main():
     """Main function for testing"""
     config = DistributedTracingConfig(
-        service_name="ainflue-api",
+        service_name="iacherie-api",
         jaeger_endpoint="http://localhost:14268"
     )
     

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Base Microservice Class for Ainflue Platform
+Base Microservice Class for IA Chérie Platform
 ===========================================
 
 Enterprise-grade base microservice providing foundational patterns for:
@@ -96,7 +96,7 @@ class ServiceMetrics(BaseModel):
 
 class BaseMicroservice(ABC):
     """
-    Abstract base class for all microservices in Ainflue platform
+    Abstract base class for all microservices in IA Chérie platform
     
     Provides enterprise-grade foundations including:
     - FastAPI application setup and configuration

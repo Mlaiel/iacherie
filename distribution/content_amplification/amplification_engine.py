@@ -1,5 +1,5 @@
 """
-Advanced Content Amplification Engine for Ainflue Distribution Platform
+Advanced Content Amplification Engine for IA Chérie Distribution Platform
 
 This module provides sophisticated content amplification capabilities using AI
 to maximize organic reach, boost engagement, and optimize content distribution strategies.

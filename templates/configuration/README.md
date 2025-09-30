@@ -1,4 +1,4 @@
-# 🚀 Ainflue Configuration Templates - Enterprise Creator Economy Platform
+# 🚀 IA Chérie Configuration Templates - Enterprise Creator Economy Platform
 
 [![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![Author](https://img.shields.io/badge/Author-Fahed%20Mlaiel-blue.svg)](mailto:mlaiel@live.de)
@@ -30,7 +30,7 @@
 
 ## 🎯 Vue d'Ensemble
 
-Le module **Ainflue Configuration Templates** fournit une collection complète de templates de configuration enterprise pour la plateforme Creator Economy. Ces templates couvrent l'infrastructure complète, de l'orchestration des conteneurs à la sécurité avancée, en passant par l'IA processing et la monétisation.
+Le module **IA Chérie Configuration Templates** fournit une collection complète de templates de configuration enterprise pour la plateforme Creator Economy. Ces templates couvrent l'infrastructure complète, de l'orchestration des conteneurs à la sécurité avancée, en passant par l'IA processing et la monétisation.
 
 ### 📊 Statistiques du Module
 
@@ -204,8 +204,8 @@ graph LR
 ### Installation Rapide
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/templates/configuration
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/templates/configuration
 
 # 2. Initialiser Terraform
 terraform init
@@ -486,7 +486,7 @@ jobs:
       - name: Deploy Applications
         run: |
           kubectl apply -f kubernetes/
-          helm upgrade ainflue-platform ./charts/
+          helm upgrade iacherie-platform ./charts/
 ```
 
 ### GitLab CI
@@ -530,7 +530,7 @@ provider "aws" {
   
   default_tags {
     tags = {
-      Project = "Ainflue"
+      Project = "IA Chérie"
       BusinessUnit = "CreatorEconomy"
       Environment = var.environment
     }
@@ -611,10 +611,10 @@ kubectl exec -it <ai-pod> -- nvidia-smi
 
 ### Support et Contact
 
-- **Documentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Support Technique**: support@ainflue.com
+- **Documentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Support Technique**: support@iacherie.com
 - **License Entreprise**: mlaiel@live.de
-- **Issues GitHub**: [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
+- **Issues GitHub**: [GitHub Issues](https://github.com/Mlaiel/IA Chérie/issues)
 
 ---
 

@@ -1,10 +1,10 @@
-# 📊 Ainflue Infrastructure Monitoring Setup
+# 📊 IA Chérie Infrastructure Monitoring Setup
 
 **Enterprise Monitoring Configuration and Alerting Guide**
 
 ## 📋 Overview
 
-This guide provides comprehensive monitoring setup procedures for the Ainflue Infrastructure module, covering observability stack deployment, metrics collection, alerting configuration, and dashboard creation.
+This guide provides comprehensive monitoring setup procedures for the IA Chérie Infrastructure module, covering observability stack deployment, metrics collection, alerting configuration, and dashboard creation.
 
 ## 🎯 Monitoring Objectives
 
@@ -68,7 +68,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
   --create-namespace \
   --set prometheus.prometheusSpec.retention=30d \
   --set prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage=100Gi \
-  --set grafana.adminPassword=ainflue-monitoring \
+  --set grafana.adminPassword=iacherie-monitoring \
   --set alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.resources.requests.storage=10Gi \
   --values infrastructure/monitoring/prometheus-values.yaml
 ```
@@ -171,14 +171,14 @@ spec:
     spec:
       containers:
       - name: exporter
-        image: ainflue/cloud-metrics-exporter:latest
+        image: iacherie/cloud-metrics-exporter:latest
         ports:
         - containerPort: 9090
         env:
         - name: AWS_REGION
           value: "us-east-1"
         - name: GCP_PROJECT_ID
-          value: "ainflue-infrastructure"
+          value: "iacherie-infrastructure"
         - name: AZURE_SUBSCRIPTION_ID
           value: "subscription-id"
         resources:
@@ -211,7 +211,7 @@ spec:
     honorLabels: true
   namespaceSelector:
     matchNames:
-    - ainflue-system
+    - iacherie-system
 ```
 
 #### Database Monitor
@@ -243,7 +243,7 @@ kubectl port-forward svc/prometheus-grafana 3000:80 -n monitoring
 
 # Login credentials
 Username: admin
-Password: ainflue-monitoring  # Set during installation
+Password: iacherie-monitoring  # Set during installation
 
 # Or get password from secret
 kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode
@@ -266,7 +266,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
 ```json
 {
   "dashboard": {
-    "title": "Ainflue Infrastructure Overview",
+    "title": "IA Chérie Infrastructure Overview",
     "panels": [
       {
         "title": "Resource Utilization",
@@ -372,14 +372,14 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
 ```bash
 # Import dashboard via API
 curl -X POST \
-  http://admin:ainflue-monitoring@localhost:3000/api/dashboards/db \
+  http://admin:iacherie-monitoring@localhost:3000/api/dashboards/db \
   -H 'Content-Type: application/json' \
   -d @infrastructure/monitoring/dashboards/infrastructure-overview.json
 
 # Import all dashboards
 for dashboard in infrastructure/monitoring/dashboards/*.json; do
   curl -X POST \
-    http://admin:ainflue-monitoring@localhost:3000/api/dashboards/db \
+    http://admin:iacherie-monitoring@localhost:3000/api/dashboards/db \
     -H 'Content-Type: application/json' \
     -d @$dashboard
 done
@@ -414,7 +414,7 @@ receivers:
 - name: 'default'
   slack_configs:
   - channel: '#infrastructure-alerts'
-    title: 'Ainflue Infrastructure Alert'
+    title: 'IA Chérie Infrastructure Alert'
     text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
 
 - name: 'pagerduty-critical'
@@ -638,7 +638,7 @@ data:
   "query": {
     "bool": {
       "must": [
-        {"match": {"kubernetes.namespace_name": "ainflue-system"}},
+        {"match": {"kubernetes.namespace_name": "iacherie-system"}},
         {"match": {"level": "ERROR"}}
       ],
       "filter": {

@@ -1,5 +1,5 @@
 """
-Canonical URL Manager for Ainflue Platform
+Canonical URL Manager for IA Chérie Platform
 Advanced canonical URL management and duplicate content prevention
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -59,7 +59,7 @@ class CanonicalURLManager:
         self.rules.sort(key=lambda x: x.priority, reverse=True)
         
     def setup_default_rules(self):
-        """Setup default canonical rules for Ainflue platform"""
+        """Setup default canonical rules for IA Chérie platform"""
         
         # Content URLs - highest priority
         self.add_canonical_rule(
@@ -421,10 +421,10 @@ class CanonicalURLMiddleware:
 
 
 # Utility functions for integration
-def create_ainflue_canonical_manager(base_domain: str = "https://ainflue.com",
+def create_ainflue_canonical_manager(base_domain: str = "https://iacherie.com",
                                    creator_type: str = None,
                                    platforms: List[str] = None) -> CanonicalURLManager:
-    """Create configured canonical URL manager for Ainflue"""
+    """Create configured canonical URL manager for IA Chérie"""
     
     manager = CanonicalURLManager(base_domain)
     
@@ -458,10 +458,10 @@ if __name__ == "__main__":
     
     # Test URLs
     test_urls = [
-        "https://ainflue.com/music/artist/song?utm_source=google&autoplay=1",
-        "https://ainflue.com/music/artist/song/",
-        "https://ainflue.com/creator/johndoe?tab=music&sort=date",
-        "https://ainflue.com/creator/johndoe/"
+        "https://iacherie.com/music/artist/song?utm_source=google&autoplay=1",
+        "https://iacherie.com/music/artist/song/",
+        "https://iacherie.com/creator/johndoe?tab=music&sort=date",
+        "https://iacherie.com/creator/johndoe/"
     ]
     
     for url in test_urls:

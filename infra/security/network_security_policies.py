@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Network Security Policies
+# IA Chérie Infrastructure Module - Network Security Policies
 # =======================================================
 # 
-# Enterprise-grade network security policies for Ainflue platform
+# Enterprise-grade network security policies for IA Chérie platform
 # Supports multi-cloud security and enterprise compliance
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -78,7 +78,7 @@ class NetworkSecurityPolicyManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.security.network_policies")
+        logger = logging.getLogger(f"iacherie.infra.security.network_policies")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -119,7 +119,7 @@ class NetworkSecurityPolicyManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_standard_policies(self) -> Dict[str, List[SecurityRule]]:
-        """Define standard security policies for Ainflue platform"""
+        """Define standard security policies for IA Chérie platform"""
         return {
             "web_tier": [
                 SecurityRule(
@@ -313,10 +313,10 @@ class NetworkSecurityPolicyManager:
         """Create AWS security group"""
         try:
             # Create security group
-            sg_name = f"ainflue-{self.config.environment}-{tier_name}-sg"
+            sg_name = f"iacherie-{self.config.environment}-{tier_name}-sg"
             response = self.ec2_client.create_security_group(
                 GroupName=sg_name,
-                Description=f"Ainflue {tier_name} tier security group",
+                Description=f"IA Chérie {tier_name} tier security group",
                 VpcId=self.config.vpc_id,
                 TagSpecifications=[
                     {
@@ -395,7 +395,7 @@ class NetworkSecurityPolicyManager:
                               custom_rules: Optional[List[SecurityRule]] = None) -> str:
         """Create Azure Network Security Group"""
         try:
-            nsg_name = f"ainflue-{self.config.environment}-{tier_name}-nsg"
+            nsg_name = f"iacherie-{self.config.environment}-{tier_name}-nsg"
             
             # Create NSG
             nsg_params = {
@@ -458,7 +458,7 @@ class NetworkSecurityPolicyManager:
     
     def _get_azure_resource_group(self) -> str:
         """Get Azure resource group name"""
-        return f"ainflue-{self.config.environment}-rg"
+        return f"iacherie-{self.config.environment}-rg"
     
     async def _create_gcp_firewall_rules(self, tier_name: str, 
                                        custom_rules: Optional[List[SecurityRule]] = None) -> str:
@@ -470,11 +470,11 @@ class NetworkSecurityPolicyManager:
             created_rules = []
             for rule in rules:
                 firewall_rule = {
-                    'name': f"ainflue-{self.config.environment}-{tier_name}-{rule.name}",
+                    'name': f"iacherie-{self.config.environment}-{tier_name}-{rule.name}",
                     'description': rule.description,
                     'network': f"projects/{project}/global/networks/{self.config.vpc_id}",
                     'priority': rule.priority,
-                    'target_tags': [f"ainflue-{tier_name}"]
+                    'target_tags': [f"iacherie-{tier_name}"]
                 }
                 
                 if rule.direction == "ingress":
@@ -534,7 +534,7 @@ class NetworkSecurityPolicyManager:
     def _get_gcp_project_id(self) -> str:
         """Get GCP project ID"""
         import os
-        return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
+        return os.getenv('GOOGLE_CLOUD_PROJECT', 'iacherie-platform')
     
     def _wait_for_gcp_operation(self, operation, project: str):
         """Wait for GCP operation to complete"""
@@ -567,7 +567,7 @@ class NetworkSecurityPolicyManager:
     async def _create_aws_waf_policy(self, tier_name: str) -> str:
         """Create AWS WAF policy"""
         try:
-            policy_name = f"ainflue-{self.config.environment}-{tier_name}-waf"
+            policy_name = f"iacherie-{self.config.environment}-{tier_name}-waf"
             
             # Create WAF web ACL
             response = self.waf_client.create_web_acl(
@@ -628,11 +628,11 @@ class NetworkSecurityPolicyManager:
         """Create GCP Cloud Armor security policy"""
         try:
             project = self._get_gcp_project_id()
-            policy_name = f"ainflue-{self.config.environment}-{tier_name}-armor"
+            policy_name = f"iacherie-{self.config.environment}-{tier_name}-armor"
             
             security_policy = {
                 'name': policy_name,
-                'description': f'Ainflue {tier_name} tier Cloud Armor policy',
+                'description': f'IA Chérie {tier_name} tier Cloud Armor policy',
                 'rules': [
                     {
                         'priority': 1000,
@@ -715,7 +715,7 @@ class NetworkSecurityPolicyManager:
     async def _validate_aws_security_group(self, tier_name: str) -> bool:
         """Validate AWS security group configuration"""
         try:
-            sg_name = f"ainflue-{self.config.environment}-{tier_name}-sg"
+            sg_name = f"iacherie-{self.config.environment}-{tier_name}-sg"
             
             response = self.ec2_client.describe_security_groups(
                 Filters=[
@@ -758,7 +758,7 @@ class NetworkSecurityPolicyManager:
 
 # Enterprise security policy orchestrator
 class AinflueSecurityPolicyOrchestrator:
-    """High-level security policy orchestration for Ainflue platform"""
+    """High-level security policy orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize security policy orchestrator
@@ -767,7 +767,7 @@ class AinflueSecurityPolicyOrchestrator:
             environment: Deployment environment
         """
         self.environment = environment
-        self.logger = logging.getLogger(f"ainflue.infra.security.orchestrator")
+        self.logger = logging.getLogger(f"iacherie.infra.security.orchestrator")
         
         # Multi-cloud configurations
         self.cloud_configs = self._get_cloud_configurations()
@@ -782,29 +782,29 @@ class AinflueSecurityPolicyOrchestrator:
                 region='us-west-2',
                 tags={
                     'Environment': self.environment,
-                    'Project': 'Ainflue',
+                    'Project': 'IA Chérie',
                     'ManagedBy': 'AinflueSecurityOrchestrator'
                 }
             ),
             'gcp': SecurityPolicyConfig(
                 environment=self.environment,
                 cloud_provider='gcp',
-                vpc_id='ainflue-vpc',
+                vpc_id='iacherie-vpc',
                 region='us-central1',
                 tags={
                     'environment': self.environment,
-                    'project': 'ainflue',
-                    'managed-by': 'ainflue-security-orchestrator'
+                    'project': 'iacherie',
+                    'managed-by': 'iacherie-security-orchestrator'
                 }
             ),
             'azure': SecurityPolicyConfig(
                 environment=self.environment,
                 cloud_provider='azure',
-                vpc_id='ainflue-vnet',
+                vpc_id='iacherie-vnet',
                 region='East US',
                 tags={
                     'Environment': self.environment,
-                    'Project': 'Ainflue',
+                    'Project': 'IA Chérie',
                     'ManagedBy': 'AinflueSecurityOrchestrator'
                 }
             )

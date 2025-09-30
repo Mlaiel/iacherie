@@ -169,7 +169,7 @@ class DataPipelineService:
     """
 
     def __init__(self, redis_url: str = "redis://localhost:6379", 
-                 database_url: str = "postgresql+asyncpg://user:pass@localhost/ainflue"):
+                 database_url: str = "postgresql+asyncpg://user:pass@localhost/iacherie"):
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.database_url = database_url

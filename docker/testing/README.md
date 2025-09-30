@@ -1,4 +1,4 @@
-# 🧪 Ainflue Platform - Docker Testing Infrastructure
+# 🧪 IA Chérie Platform - Docker Testing Infrastructure
 
 **Enterprise-grade testing infrastructure for AI Influencer Platform containerization. Comprehensive testing suite with 95%+ coverage requirement supporting 80+ microservices.**
 
@@ -6,7 +6,7 @@
 
 ## 📋 Overview
 
-This testing module provides a complete, enterprise-grade testing infrastructure for the Ainflue AI Influencer Platform. The architecture supports comprehensive testing across 80+ microservices with automated test execution, performance validation, security scanning, and chaos engineering.
+This testing module provides a complete, enterprise-grade testing infrastructure for the IA Chérie AI Influencer Platform. The architecture supports comprehensive testing across 80+ microservices with automated test execution, performance validation, security scanning, and chaos engineering.
 
 ### 🎯 Business Logic Flow
 ```
@@ -92,10 +92,10 @@ docker-compose -f docker-compose.testing.yml up performance_tester
 docker-compose -f docker-compose.testing.yml up security_tester
 
 # Run tests with custom parameters
-docker run --rm ainflue/test-runner:latest pytest --cov --cov-report=html
+docker run --rm iacherie/test-runner:latest pytest --cov --cov-report=html
 
 # Performance testing with custom load
-docker run --rm ainflue/performance-tester:latest locust --users=500 --spawn-rate=25
+docker run --rm iacherie/performance-tester:latest locust --users=500 --spawn-rate=25
 ```
 
 ---
@@ -293,10 +293,10 @@ curl http://localhost:8003/health
 ### Building Custom Test Images
 ```bash
 # Build test runner
-docker build -t ainflue/test-runner:latest -f test_runner.dockerfile .
+docker build -t iacherie/test-runner:latest -f test_runner.dockerfile .
 
 # Build with custom base
-docker build --build-arg BASE_IMAGE=python:3.11-alpine -t ainflue/test-runner:alpine .
+docker build --build-arg BASE_IMAGE=python:3.11-alpine -t iacherie/test-runner:alpine .
 ```
 
 ### Custom Test Configuration
@@ -333,7 +333,7 @@ security:
 docker-compose -f docker-compose.testing.yml logs test_runner
 
 # Debug specific test
-docker run -it ainflue/test-runner:latest bash
+docker run -it iacherie/test-runner:latest bash
 pytest tests/specific_test.py -v
 ```
 
@@ -343,13 +343,13 @@ pytest tests/specific_test.py -v
 docker stats
 
 # Check container logs
-docker logs ainflue-performance-tester
+docker logs iacherie-performance-tester
 ```
 
 **Security Scan Failures**
 ```bash
 # Manual security scan
-docker run --rm ainflue/security-tester:latest \
+docker run --rm iacherie/security-tester:latest \
   nikto -h http://target-service:8080
 ```
 

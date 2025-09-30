@@ -1,4 +1,4 @@
-"""🚀 Enterprise Model Deployment Manager - Ainflue AI/ML Pipeline
+"""🚀 Enterprise Model Deployment Manager - IA Chérie AI/ML Pipeline
 ================================================================
 
 Automated model deployment with CI/CD, canary releases, and rollback
@@ -625,7 +625,7 @@ class EnterpriseModelDeploymentManager:
             raise
     
     async def get_deployment_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific deployment analytics for Ainflue platform"""
+        """Get creator-specific deployment analytics for IA Chérie platform"""
         try:
             async with self.db_pool.acquire() as connection:
                 # Get deployment statistics

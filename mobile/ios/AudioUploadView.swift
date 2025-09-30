@@ -1,6 +1,6 @@
 //
 //  AudioUploadView.swift
-//  Ainflue iOS - Professional Audio Upload Interface
+//  IA Chérie iOS - Professional Audio Upload Interface
 //
 //  Advanced native iOS audio capture, processing, and upload interface
 //  with enterprise-grade quality control and real-time analysis.
@@ -116,7 +116,7 @@ class AudioUploadView: UIView {
     
     private func setupAudioEngine() {
         audioEngine = AVAudioEngine()
-        processingQueue = DispatchQueue(label: "com.ainflue.audioprocessing", qos: .userInitiated)
+        processingQueue = DispatchQueue(label: "com.iacherie.audioprocessing", qos: .userInitiated)
         
         // Configure audio format for professional recording
         audioFormat = AVAudioFormat(
@@ -219,7 +219,7 @@ class AudioUploadView: UIView {
     private func setupUploadComponents() {
         // Upload Button
         uploadButton = UIButton(type: .system)
-        uploadButton.setTitle("☁️ Upload to Ainflue", for: .normal)
+        uploadButton.setTitle("☁️ Upload to IA Chérie", for: .normal)
         uploadButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         uploadButton.backgroundColor = UIColor.systemGreen
         uploadButton.setTitleColor(.white, for: .normal)
@@ -486,9 +486,9 @@ class AudioUploadView: UIView {
         progressView.isHidden = false
         progressView.progress = 0
         
-        statusLabel.text = "Uploading to Ainflue..."
+        statusLabel.text = "Uploading to IA Chérie..."
         
-        // Upload to Ainflue platform
+        // Upload to IA Chérie platform
         AudioUploadService.shared.upload(
             audioURL: url,
             metadata: createAudioMetadata(),
@@ -942,11 +942,11 @@ class AudioUploadService {
         progress: @escaping (Double) -> Void,
         completion: @escaping (Result<AudioUploadResponse, Error>) -> Void
     ) {
-        // Implementation for uploading to Ainflue platform
+        // Implementation for uploading to IA Chérie platform
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
             completion(.success(AudioUploadResponse(
                 audioId: UUID().uuidString,
-                uploadUrl: "https://api.ainflue.com/audio/\(UUID().uuidString)",
+                uploadUrl: "https://api.iacherie.com/audio/\(UUID().uuidString)",
                 processingStatus: "completed"
             )))
         }

@@ -2,9 +2,9 @@
 =====================================================================
 
 Monitoring Expert: Infrastructure monitoring distributed avec Prometheus/Grafana,
-alerting intelligent et capacity planning pour observability Ainflue.
+alerting intelligent et capacity planning pour observability IA Chérie.
 
-Intégration métier Ainflue:
+Intégration métier IA Chérie:
 - Monitoring performance processing IA pour optimisation créateurs
 - Alerting intelligent pour incidents distribution 65+ plateformes
 - Capacity planning prédictif pour scaling automatique
@@ -119,7 +119,7 @@ class InfrastructureMonitoring:
     """📊 Monitoring: Infrastructure monitoring enterprise
     
     Monitoring infrastructure distributed avec Prometheus/Grafana,
-    alerting intelligent et capacity planning prédictif pour Ainflue.
+    alerting intelligent et capacity planning prédictif pour IA Chérie.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -136,7 +136,7 @@ class InfrastructureMonitoring:
         self.alert_manager_endpoint = self.config.get('alertmanager_endpoint', 'http://alertmanager:9093')
         self.retention_days = self.config.get('retention_days', 30)
         
-        # Ainflue-specific monitoring configurations
+        # IA Chérie-specific monitoring configurations
         self.ainflue_metrics = {
             'content_processing': {
                 'ai_model_inference_time': {
@@ -232,7 +232,7 @@ class InfrastructureMonitoring:
             }
         }
         
-        # SLA definitions for Ainflue services
+        # SLA definitions for IA Chérie services
         self.service_slas = {
             'content-processing': {
                 'availability': 99.9,  # %
@@ -266,7 +266,7 @@ class InfrastructureMonitoring:
         """📊 Monitoring: Resource utilization tracking
         
         Tracking avancé de l'utilisation des ressources avec métriques
-        détaillées et trends analysis pour optimization Ainflue.
+        détaillées et trends analysis pour optimization IA Chérie.
         """
         try:
             tracking_id = f"track-{int(datetime.now().timestamp())}"
@@ -277,7 +277,7 @@ class InfrastructureMonitoring:
             # Collect application metrics
             application_metrics = await self._collect_application_metrics(resource_filter)
             
-            # Collect Ainflue-specific metrics
+            # Collect IA Chérie-specific metrics
             ainflue_metrics = await self._collect_ainflue_metrics(resource_filter)
             
             # Calculate utilization trends
@@ -321,7 +321,7 @@ class InfrastructureMonitoring:
         """📊 Monitoring: Performance metrics collection
         
         Collection complète de métriques performance avec sampling
-        intelligent et storage optimization pour analytics Ainflue.
+        intelligent et storage optimization pour analytics IA Chérie.
         """
         try:
             collection_id = f"perf-{scope.value}-{int(datetime.now().timestamp())}"
@@ -377,7 +377,7 @@ class InfrastructureMonitoring:
         """📊 Monitoring: Infrastructure alerting system
         
         Système d'alerting intelligent avec escalation automatique,
-        suppression de bruit et correlation pour incidents Ainflue.
+        suppression de bruit et correlation pour incidents IA Chérie.
         """
         try:
             alerting_id = f"alert-{alert_config.name}-{int(datetime.now().timestamp())}"
@@ -402,7 +402,7 @@ class InfrastructureMonitoring:
             # Setup alert runbooks and automation
             runbook_setup = await self._setup_alert_automation(alert_config)
             
-            # Apply Ainflue-specific alert logic
+            # Apply IA Chérie-specific alert logic
             ainflue_alert_logic = await self._apply_ainflue_alert_logic(alert_config)
             
             # Store alert configuration
@@ -429,7 +429,7 @@ class InfrastructureMonitoring:
         """📊 Monitoring: Capacity planning analytics
         
         Analytics prédictifs pour capacity planning avec ML models,
-        trend analysis et cost optimization pour scaling Ainflue.
+        trend analysis et cost optimization pour scaling IA Chérie.
         """
         try:
             planning_id = f"capacity-{int(datetime.now().timestamp())}"
@@ -465,7 +465,7 @@ class InfrastructureMonitoring:
                 trend_analysis, capacity_predictions, scaling_recommendations, cost_projections
             )
             
-            # Apply Ainflue-specific capacity planning
+            # Apply IA Chérie-specific capacity planning
             ainflue_capacity_planning = await self._apply_ainflue_capacity_planning(
                 capacity_predictions, scaling_recommendations
             )
@@ -494,7 +494,7 @@ class InfrastructureMonitoring:
         """📊 Monitoring: Predictive scaling algorithms
         
         Algorithmes prédictifs pour auto-scaling avec ML models,
-        seasonal patterns et workload prediction pour Ainflue.
+        seasonal patterns et workload prediction pour IA Chérie.
         """
         try:
             prediction_id = f"predict-{service_name}-{int(datetime.now().timestamp())}"
@@ -528,7 +528,7 @@ class InfrastructureMonitoring:
                 scaling_schedule, service_name
             )
             
-            # Apply Ainflue-specific scaling logic
+            # Apply IA Chérie-specific scaling logic
             ainflue_scaling_logic = await self._apply_ainflue_scaling_logic(
                 service_name, ml_predictions, scaling_schedule
             )
@@ -631,7 +631,7 @@ class InfrastructureMonitoring:
         }
 
     async def _collect_ainflue_metrics(self, resource_filter: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Collect Ainflue-specific metrics"""
+        """Collect IA Chérie-specific metrics"""
         return {
             'content_processing': {
                 'ai_inference_time': 1.85,  # seconds
@@ -704,7 +704,7 @@ class InfrastructureMonitoring:
                 'recommendation': 'scale_up_memory'
             }
         
-        # GPU bottleneck detection (Ainflue-specific)
+        # GPU bottleneck detection (IA Chérie-specific)
         gpu_metrics = infrastructure_metrics.get('gpu_utilization', {})
         if gpu_metrics.get('average', 0) > 85:
             bottlenecks['gpu'] = {
@@ -733,7 +733,7 @@ class InfrastructureMonitoring:
             if trend['direction'] == 'increasing' and trend['rate_of_change'] > 20:
                 recommendations.append(f"Monitor {resource} closely - rapid increase detected")
         
-        # Ainflue-specific recommendations
+        # IA Chérie-specific recommendations
         recommendations.extend([
             "Consider GPU optimization for AI workloads",
             "Implement content caching for distribution API",
@@ -781,7 +781,7 @@ class InfrastructureMonitoring:
             description="Memory utilization percentage"
         ))
         
-        # GPU metrics (Ainflue-specific)
+        # GPU metrics (IA Chérie-specific)
         metrics.append(Metric(
             name="gpu_utilization_percent",
             type=MetricType.GAUGE,
@@ -995,7 +995,7 @@ class InfrastructureMonitoring:
         if critical_anomalies:
             insights.append(f"CRITICAL: {len(critical_anomalies)} critical anomalies detected")
         
-        # Ainflue-specific insights
+        # IA Chérie-specific insights
         insights.extend([
             "AI processing efficiency within acceptable range",
             "Distribution API performance meeting SLA requirements",
@@ -1066,7 +1066,7 @@ class InfrastructureMonitoring:
         }
 
     async def _apply_ainflue_alert_logic(self, alert_config: Alert) -> Dict[str, Any]:
-        """Apply Ainflue-specific alert logic"""
+        """Apply IA Chérie-specific alert logic"""
         ainflue_logic = {
             'creator_impact_assessment': True,
             'revenue_impact_calculation': True,
@@ -1283,7 +1283,7 @@ class InfrastructureMonitoring:
 
     async def _apply_ainflue_capacity_planning(self, predictions: Dict[str, CapacityPrediction],
                                              recommendations: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Ainflue-specific capacity planning"""
+        """Apply IA Chérie-specific capacity planning"""
         return {
             'creator_growth_impact': {
                 'expected_creator_growth': '20% monthly',
@@ -1441,7 +1441,7 @@ class InfrastructureMonitoring:
     async def _apply_ainflue_scaling_logic(self, service_name: str,
                                          predictions: Dict[str, Any],
                                          schedule: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Apply Ainflue-specific scaling logic"""
+        """Apply IA Chérie-specific scaling logic"""
         ainflue_logic = {
             'creator_priority_scaling': True,
             'revenue_impact_consideration': True,

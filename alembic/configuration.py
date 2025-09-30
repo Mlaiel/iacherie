@@ -504,7 +504,7 @@ class EnterpriseConfigurationManager:
             "echo_pool": config.environment == EnvironmentType.DEVELOPMENT,
             "connect_args": {
                 "connect_timeout": config.connection_timeout,
-                "application_name": f"ainflue_{self.environment.value}",
+                "application_name": f"iacherie_{self.environment.value}",
                 "options": f"-c statement_timeout={config.statement_timeout}s"
             }
         }
@@ -586,7 +586,7 @@ class EnterpriseConfigurationManager:
             "default": DatabaseConfiguration(
                 host=os.getenv("DATABASE_HOST", "localhost"),
                 port=int(os.getenv("DATABASE_PORT", "5432")),
-                database=os.getenv("DATABASE_NAME", "ainflue"),
+                database=os.getenv("DATABASE_NAME", "iacherie"),
                 username=os.getenv("DATABASE_USER", "ainflue_user"),
                 password=os.getenv("DATABASE_PASSWORD", "enterprise_password_2025"),
                 driver="postgresql",

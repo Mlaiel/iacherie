@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Monitoring Data Aggregation Engine
+IA Chérie Platform - Monitoring Data Aggregation Engine
 ===================================================
 
 Enterprise-grade data aggregation engine for Creator Economy monitoring.

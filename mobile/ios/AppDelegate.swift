@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Ainflue iOS Application
+//  IA Chérie iOS Application
 //
 //  Professional iOS application delegate implementing advanced content creation,
 //  AI-powered protection, and enterprise-grade functionality.
@@ -35,8 +35,8 @@ import Network
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    private let backgroundTaskIdentifier = "com.ainflue.ios.backgroundprocessing"
-    private let syncTaskIdentifier = "com.ainflue.ios.sync"
+    private let backgroundTaskIdentifier = "com.iacherie.ios.backgroundprocessing"
+    private let syncTaskIdentifier = "com.iacherie.ios.sync"
     private var networkMonitor: NWPathMonitor?
     private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
     
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup analytics and monitoring
         setupAnalyticsAndMonitoring()
         
-        print("✅ Ainflue iOS App launched successfully")
+        print("✅ IA Chérie iOS App launched successfully")
         return true
     }
     

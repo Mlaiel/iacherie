@@ -1,6 +1,6 @@
 # 🗜️ Module d'Intelligence de Compression Avancée
 
-**Compression multimédia de niveau entreprise avec optimisation pilotée par IA pour la plateforme Ainflue**
+**Compression multimédia de niveau entreprise avec optimisation pilotée par IA pour la plateforme IA Chérie**
 
 ## Aperçu
 
@@ -102,4 +102,4 @@ result = await image_engine.compress_image(
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 Contact: mlaiel@live.de  
-Projet: Ainflue Platform - Module d'Intelligence de Compression
+Projet: IA Chérie Platform - Module d'Intelligence de Compression

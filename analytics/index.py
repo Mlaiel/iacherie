@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🎯 Ainflue Analytics Module - Ultra-Advanced Enterprise Index
+"""🎯 IA Chérie Analytics Module - Ultra-Advanced Enterprise Index
 ==============================================================
 
 🔥 ENTERPRISE ANALYTICS ORCHESTRATION HUB
-- Zentraler Orchestrator für alle Analytics-Services der Ainflue-Plattform
+- Zentraler Orchestrator für alle Analytics-Services der IA Chérie-Plattform
 - Ultra-moderne Business Intelligence mit 15+ spezialisierten Analytics-Engines
 - Real-time Dashboards mit KI-gestützten Insights und Predictive Analytics
 - Enterprise-Grade Performance Monitoring und Business Intelligence
@@ -66,7 +66,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger("ainflue.analytics.index")
+logger = logging.getLogger("iacherie.analytics.index")
 
 # Enhanced imports with error handling
 try:
@@ -660,7 +660,7 @@ class AnalyticsAPIApplication:
         
         # Create FastAPI application
         self.app = FastAPI(
-            title="🎯 Ainflue Analytics Intelligence API",
+            title="🎯 IA Chérie Analytics Intelligence API",
             description=self._get_api_description(),
             version=config.version,
             docs_url="/analytics/docs",
@@ -684,7 +684,7 @@ class AnalyticsAPIApplication:
     def _get_api_description(self) -> str:
         """Generate comprehensive API description"""
         return f"""
-# 🎯 Ainflue Analytics Intelligence API
+# 🎯 IA Chérie Analytics Intelligence API
 
 ## 🚀 Ultra-Advanced Enterprise Analytics
 Comprehensive business intelligence and analytics platform with real-time insights, 
@@ -793,7 +793,7 @@ predictive analytics, and advanced performance monitoring.
         async def analytics_root():
             """🏠 Analytics API root endpoint"""
             return {
-                "service": "Ainflue Analytics Intelligence API",
+                "service": "IA Chérie Analytics Intelligence API",
                 "version": config.version,
                 "status": "operational",
                 "engines": list(analytics_manager.engines.keys()),
@@ -1064,7 +1064,7 @@ def main():
     """🚀 Main entry point for Analytics Module"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="🎯 Ainflue Analytics Module")
+    parser = argparse.ArgumentParser(description="🎯 IA Chérie Analytics Module")
     parser.add_argument("--host", default="0.0.0.0", help="Host to bind to")
     parser.add_argument("--port", type=int, default=8001, help="Port to bind to")
     parser.add_argument("--reload", action="store_true", help="Enable auto-reload")
@@ -1075,7 +1075,7 @@ def main():
     # Update configuration
     config.debug_mode = args.debug or config.debug_mode
     
-    logger.info(f"🚀 Starting Ainflue Analytics Module v{config.version}")
+    logger.info(f"🚀 Starting IA Chérie Analytics Module v{config.version}")
     logger.info(f"🌐 Server: {args.host}:{args.port}")
     logger.info(f"🔧 Environment: {config.environment}")
     logger.info(f"🐛 Debug Mode: {config.debug_mode}")

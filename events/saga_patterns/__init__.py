@@ -2,7 +2,7 @@
 """Saga Patterns Module - Enterprise Distributed Transaction Management
 ======================================================================
 
-Complete saga patterns implementation for Ainflue platform providing
+Complete saga patterns implementation for IA Chérie platform providing
 enterprise-grade distributed transaction management, orchestration,
 choreography, compensation, and monitoring capabilities.
 

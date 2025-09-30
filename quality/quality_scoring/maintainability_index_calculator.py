@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Maintainability Index Calculator - Ainflue Quality Platform
+Maintainability Index Calculator - IA Chérie Quality Platform
 ========================================================
 
 Enterprise-grade code maintainability assessment and calculation engine.

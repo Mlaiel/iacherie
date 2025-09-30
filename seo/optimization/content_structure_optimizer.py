@@ -1,5 +1,5 @@
 """
-Content Structure Optimizer for Ainflue Platform
+Content Structure Optimizer for IA Chérie Platform
 ===============================================
 
 Advanced content structure optimization for maximum SEO performance.

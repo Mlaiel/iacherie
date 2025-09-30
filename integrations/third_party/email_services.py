@@ -79,8 +79,8 @@ class EmailContent:
     subject: str
     html_body: str
     text_body: Optional[str] = None
-    from_email: str = "noreply@ainflue.com"
-    from_name: str = "Ainflue Platform"
+    from_email: str = "noreply@iacherie.com"
+    from_name: str = "IA Chérie Platform"
     reply_to: Optional[str] = None
     attachments: List[Dict[str, Any]] = field(default_factory=list)
     template_id: Optional[str] = None
@@ -126,7 +126,7 @@ class EmailEnterpriseService:
     """
     Enterprise email service with multi-provider support and creator workflows.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chérie platform business logic:
     - Multi-provider email delivery with failover
     - Creator-specific email templates and campaigns
     - Advanced analytics and A/B testing
@@ -191,12 +191,12 @@ class EmailEnterpriseService:
         return {
             "musician": {
                 "welcome": EmailContent(
-                    subject="🎵 Welcome to Ainflue - Your Music Career Starts Here!",
+                    subject="🎵 Welcome to IA Chérie - Your Music Career Starts Here!",
                     html_body="""
                     <html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                            <h1 style="color: #4a90e2;">Welcome to Ainflue, {{name}}! 🎵</h1>
+                            <h1 style="color: #4a90e2;">Welcome to IA Chérie, {{name}}! 🎵</h1>
                             <p>Congratulations on joining the premier platform for musicians to protect, promote, and monetize their music!</p>
                             
                             <h2>🚀 Get Started:</h2>
@@ -215,13 +215,13 @@ class EmailEnterpriseService:
                             
                             <p>Need help? Reply to this email or check our <a href="{{help_url}}">musician's guide</a>.</p>
                             
-                            <p>Rock on!<br>The Ainflue Team</p>
+                            <p>Rock on!<br>The IA Chérie Team</p>
                         </div>
                     </body>
                     </html>
                     """,
-                    text_body="Welcome to Ainflue! Start your music career journey with AI-powered tools.",
-                    from_name="Ainflue Music Team"
+                    text_body="Welcome to IA Chérie! Start your music career journey with AI-powered tools.",
+                    from_name="IA Chérie Music Team"
                 ),
                 
                 "revenue_report": EmailContent(
@@ -257,18 +257,18 @@ class EmailEnterpriseService:
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Analytics"
+                    from_name="IA Chérie Analytics"
                 )
             },
             
             "blogger": {
                 "welcome": EmailContent(
-                    subject="✍️ Welcome to Ainflue - Amplify Your Blog's Reach!",
+                    subject="✍️ Welcome to IA Chérie - Amplify Your Blog's Reach!",
                     html_body="""
                     <html>
                     <body style="font-family: Georgia, serif; line-height: 1.6; color: #333;">
                         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                            <h1 style="color: #e74c3c;">Welcome to Ainflue, {{name}}! ✍️</h1>
+                            <h1 style="color: #e74c3c;">Welcome to IA Chérie, {{name}}! ✍️</h1>
                             <p>You've joined the platform that helps bloggers protect their content, grow their audience, and monetize their expertise.</p>
                             
                             <h2>📝 Your Blogging Toolkit:</h2>
@@ -286,12 +286,12 @@ class EmailEnterpriseService:
                             
                             <a href="{{content_dashboard_url}}" style="background: #e74c3c; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 20px 0;">Start Writing ✍️</a>
                             
-                            <p>Happy blogging!<br>The Ainflue Editorial Team</p>
+                            <p>Happy blogging!<br>The IA Chérie Editorial Team</p>
                         </div>
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Editorial"
+                    from_name="IA Chérie Editorial"
                 ),
                 
                 "content_performance": EmailContent(
@@ -326,18 +326,18 @@ class EmailEnterpriseService:
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Analytics"
+                    from_name="IA Chérie Analytics"
                 )
             },
             
             "photographer": {
                 "welcome": EmailContent(
-                    subject="📸 Welcome to Ainflue - Showcase Your Photography!",
+                    subject="📸 Welcome to IA Chérie - Showcase Your Photography!",
                     html_body="""
                     <html>
                     <body style="font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333;">
                         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                            <h1 style="color: #9b59b6;">Welcome to Ainflue, {{name}}! 📸</h1>
+                            <h1 style="color: #9b59b6;">Welcome to IA Chérie, {{name}}! 📸</h1>
                             <p>Your photography deserves the best platform for protection, promotion, and profit.</p>
                             
                             <h2>🎨 Photography Features:</h2>
@@ -355,12 +355,12 @@ class EmailEnterpriseService:
                             
                             <a href="{{portfolio_url}}" style="background: #9b59b6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 20px 0;">Build Your Portfolio 🎨</a>
                             
-                            <p>Capture the moment!<br>The Ainflue Photography Team</p>
+                            <p>Capture the moment!<br>The IA Chérie Photography Team</p>
                         </div>
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Photography"
+                    from_name="IA Chérie Photography"
                 )
             },
             
@@ -397,7 +397,7 @@ class EmailEnterpriseService:
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Brand Partnerships"
+                    from_name="IA Chérie Brand Partnerships"
                 )
             },
             
@@ -431,12 +431,12 @@ class EmailEnterpriseService:
                                 <a href="{{negotiate_url}}" style="background: #ff6b6b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 0 10px;">Negotiate Terms 💬</a>
                             </div>
                             
-                            <p>Break a leg!<br>The Ainflue Comedy Network</p>
+                            <p>Break a leg!<br>The IA Chérie Comedy Network</p>
                         </div>
                     </body>
                     </html>
                     """,
-                    from_name="Ainflue Comedy Network"
+                    from_name="IA Chérie Comedy Network"
                 )
             }
         }
@@ -1038,8 +1038,8 @@ async def example_creator_emails():
             template_name="welcome",
             recipient=musician_recipient,
             template_data={
-                "dashboard_url": "https://ainflue.com/musician/dashboard",
-                "help_url": "https://ainflue.com/musician/guide"
+                "dashboard_url": "https://iacherie.com/musician/dashboard",
+                "help_url": "https://iacherie.com/musician/guide"
             }
         )
         
@@ -1061,7 +1061,7 @@ async def example_creator_emails():
                 "licensing_deals": "2",
                 "merchandise_revenue": "0.00",
                 "projected_revenue": "1,400.00",
-                "analytics_url": "https://ainflue.com/analytics"
+                "analytics_url": "https://iacherie.com/analytics"
             }
         )
         

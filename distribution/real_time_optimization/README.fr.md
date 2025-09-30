@@ -1,6 +1,6 @@
 # ⚡ Moteur d'Optimisation en Temps Réel
 
-**Moteur d'optimisation en temps réel avancé alimenté par l'IA pour Ainflue Distribution Platform**
+**Moteur d'optimisation en temps réel avancé alimenté par l'IA pour IA Chérie Distribution Platform**
 
 ## 📖 Aperçu
 
@@ -304,7 +304,7 @@ spec:
     spec:
       containers:
       - name: optimization-engine
-        image: ainflue/real-time-optimization:latest
+        image: iacherie/real-time-optimization:latest
         resources:
           requests:
             memory: "4Gi"

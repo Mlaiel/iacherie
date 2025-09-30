@@ -2,7 +2,7 @@
 
 ## 🏭 Vue d'ensemble
 
-Cette implémentation fournit un framework de tests industriels ultra-avancés pour la plateforme Ainflue, avec un focus sur des tests **100% réels sans aucun mock** pour la logique métier. Le système est conçu pour tester des charges de **10K+ utilisateurs simultanés** avec des réponses API **sub-100ms**.
+Cette implémentation fournit un framework de tests industriels ultra-avancés pour la plateforme IA Chérie, avec un focus sur des tests **100% réels sans aucun mock** pour la logique métier. Le système est conçu pour tester des charges de **10K+ utilisateurs simultanés** avec des réponses API **sub-100ms**.
 
 ## 📋 Spécifications Complètes
 

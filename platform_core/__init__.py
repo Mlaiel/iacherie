@@ -6,7 +6,7 @@
 Platform Core Enterprise Architecture
 
 Comprehensive platform orchestration, management, and infrastructure services
-for the Ainflue AI creator platform ecosystem.
+for the IA Chérie AI creator platform ecosystem.
 
 This module provides:
 - Platform Orchestration Engine

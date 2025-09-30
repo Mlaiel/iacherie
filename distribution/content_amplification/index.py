@@ -1,7 +1,7 @@
 """Content Amplification Engine - Main Interface
 
 Enterprise-grade content amplification engine providing unified interface
-for all amplification capabilities across the Ainflue platform.
+for all amplification capabilities across the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

@@ -134,7 +134,7 @@ class TechnicalSEOAuditor:
         self.auditor_config = auditor_config
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'Ainflue-SEO-Auditor/1.0 (+https://ainflue.com/seo-auditor)'
+            'User-Agent': 'IA Chérie-SEO-Auditor/1.0 (+https://iacherie.com/seo-auditor)'
         })
         self.crawl_delay = auditor_config.get('crawl_delay', 1)  # Seconds between requests
         self.max_pages = auditor_config.get('max_pages', 100)

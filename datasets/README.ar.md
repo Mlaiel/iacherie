@@ -2,7 +2,7 @@
 
 ## بنية تحتية احترافية للبيانات لـ 53 وكيل ذكاء اصطناعي
 
-[![النسخة](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![النسخة](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Mlaiel/IA Chérie)
 [![الترخيص](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-green.svg)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/tensorflow-2.12+-orange.svg)](https://tensorflow.org)

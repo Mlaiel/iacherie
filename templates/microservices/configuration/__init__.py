@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔧 Configuration Templates - Ainflue Microservices Enterprise
+🔧 Configuration Templates - IA Chérie Microservices Enterprise
 
 Configuration management templates for environment configuration,
 feature flags, secrets management, and service configuration.

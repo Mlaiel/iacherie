@@ -2,7 +2,7 @@
 
 ## Vue d'Ensemble
 
-Cette documentation présente l'implémentation complète des fonctionnalités mobile avancées pour la plateforme Ainflue, développées par Fahed Mlaiel (mlaiel@live.de).
+Cette documentation présente l'implémentation complète des fonctionnalités mobile avancées pour la plateforme IA Chérie, développées par Fahed Mlaiel (mlaiel@live.de).
 
 ## 📱 Fonctionnalités Implémentées
 
@@ -156,7 +156,7 @@ Cette documentation présente l'implémentation complète des fonctionnalités m
 
 ### Démonstration
 ```bash
-cd /home/runner/work/Ainflue/Ainflue
+cd /home/runner/work/IA Chérie/IA Chérie
 python mobile/demo_advanced_mobile_features.py
 ```
 

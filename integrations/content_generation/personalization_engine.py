@@ -5,7 +5,7 @@ User-specific content adaptation with behavioral analysis.
 AI-powered personalization for enhanced engagement and conversion.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -366,7 +366,7 @@ class PersonalizationAgent:
         await asyncio.sleep(complexity_score)
         
         # Generate personalized content URL
-        personalized_url = f"https://personalized-content.ainflue.com/{request.content_id}_pers_{request.user_profile.user_id}_{self.agent_name}.mp4"
+        personalized_url = f"https://personalized-content.iacherie.com/{request.content_id}_pers_{request.user_profile.user_id}_{self.agent_name}.mp4"
         
         return personalized_url
     

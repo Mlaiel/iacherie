@@ -8,14 +8,14 @@
 
 ## 🎯 OVERVIEW
 
-Cette référence API complète couvre tous les endpoints et méthodes du module Distribution d'Ainflue, incluant les 8 modules principaux avec leurs interfaces IA avancées.
+Cette référence API complète couvre tous les endpoints et méthodes du module Distribution d'IA Chérie, incluant les 8 modules principaux avec leurs interfaces IA avancées.
 
 ## 🔗 BASE CONFIGURATION
 
 ### 🌐 Base URLs
 ```
-Production:  https://api.ainflue.com/v1/distribution/
-Staging:     https://staging-api.ainflue.com/v1/distribution/
+Production:  https://api.iacherie.com/v1/distribution/
+Staging:     https://staging-api.iacherie.com/v1/distribution/
 Development: http://localhost:8000/v1/distribution/
 ```
 
@@ -896,7 +896,7 @@ matches = await client.collaboration.match(
 
 ### JavaScript SDK
 ```javascript
-import { DistributionClient } from '@ainflue/distribution-sdk';
+import { DistributionClient } from '@iacherie/distribution-sdk';
 
 const client = new DistributionClient({ apiKey: 'your_api_key' });
 

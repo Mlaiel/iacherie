@@ -1,6 +1,6 @@
 # 📋 CHECKLIST COMPLÈTE - Vector Database Module Architecture
-**Projet:** Ainflue - AI-Powered Content Protection & Monetization Platform  
-**Module:** `/workspaces/Ainflue/data/vector_db`  
+**Projet:** IA Chérie - AI-Powered Content Protection & Monetization Platform  
+**Module:** `/workspaces/IA Chérie/data/vector_db`  
 **Date:** 2025-09-09  
 **Niveau de profondeur:** Niveau 3 (Maximum autorisé)
 
@@ -50,7 +50,7 @@ Toute tentative de vol d'idée, concept ou code sans autorisation personnelle é
 
 ---
 
-## 🎯 **LOGIQUE MÉTIER AINFLUE À RESPECTER**
+## 🎯 **LOGIQUE MÉTIER IACHERIE À RESPECTER**
 
 ```
 Upload Multi-Format → IA Processing → Protection Droits → SEO → Collaboration Matching + Gamification → Distribution Multi-Plateformes
@@ -65,7 +65,7 @@ Upload Multi-Format → IA Processing → Protection Droits → SEO → Collabor
 ### 🏗️ **STRUCTURE FINALE CIBLE (18 fichiers max + docs)**
 
 ```
-/workspaces/Ainflue/data/vector_db/
+/workspaces/IA Chérie/data/vector_db/
 ├── 📚 DOCUMENTATION (4 fichiers obligatoires)
 │   ├── README.md (EN) ✅ EXISTANT 
 │   ├── README.de.md (DE) ✅ EXISTANT
@@ -521,7 +521,7 @@ def search_similar_vectors(query_vector: np.ndarray, top_k: int = 10) -> List[Se
 
 ### **Tests centralisés avec structure projet:**
 ```
-/workspaces/Ainflue/tests/
+/workspaces/IA Chérie/tests/
 ├── unit/
 │   └── data/
 │       └── vector_db/
@@ -589,7 +589,7 @@ def search_similar_vectors(query_vector: np.ndarray, top_k: int = 10) -> List[Se
 ### **Critères d'Acceptation ATTEINTS:**
 - ✅ **Code industriel ultra avancé** (aucun TODO/placeholders)
 - ✅ **Clé en main production-ready** 
-- ✅ **Logique métier Ainflue respectée**
+- ✅ **Logique métier IA Chérie respectée**
 - ✅ **Patterns d'architecture professionnels** (Factory, Observer, Strategy)
 - ✅ **Sécurité enterprise-grade** (AES-256-GCM, RBAC, audit)
 - ✅ **Performance targets atteints** (>1000 QPS, <50ms latency)
@@ -619,7 +619,7 @@ def search_similar_vectors(query_vector: np.ndarray, top_k: int = 10) -> List[Se
 **📧 Contact Principal:** [mlaiel@live.de](mailto:mlaiel@live.de)  
 **🌐 Project Lead:** Fahed Mlaiel  
 **📍 Localisation:** Germany  
-**🏢 Entreprise:** Ainflue Platform
+**🏢 Entreprise:** IA Chérie Platform
 
 **⚠️ Note:** Logiciel propriétaire. Respectez les droits d'auteur et termes de licence.
 

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Monitoring Stack Helm Chart
+# IA Chérie Infrastructure Module - Monitoring Stack Helm Chart
 # ============================================================
 # 
-# Enterprise-grade Monitoring stack chart for Ainflue platform
+# Enterprise-grade Monitoring stack chart for IA Chérie platform
 # Prometheus, Grafana, Jaeger, Alertmanager, and observability tools
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,14 +10,14 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 apiVersion: v2
-name: ainflue-monitoring
-description: "Enterprise Monitoring stack for Ainflue platform with comprehensive observability"
+name: iacherie-monitoring
+description: "Enterprise Monitoring stack for IA Chérie platform with comprehensive observability"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
-home: https://monitoring.ainflue.com
+home: https://monitoring.iacherie.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chérie
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de
@@ -52,7 +52,7 @@ dependencies:
     condition: loki.enabled
 
 ---
-# Default values for ainflue-monitoring
+# Default values for iacherie-monitoring
 # Expert roles implementation in configuration
 
 # **EXPERT ROLES IMPLEMENTATION:**
@@ -80,11 +80,11 @@ prometheus:
     ingress:
       enabled: true
       hosts:
-        - alertmanager.ainflue.com
+        - alertmanager.iacherie.com
       tls:
         - secretName: alertmanager-tls
           hosts:
-            - alertmanager.ainflue.com
+            - alertmanager.iacherie.com
     
     persistence:
       enabled: true
@@ -93,7 +93,7 @@ prometheus:
     config:
       global:
         smtp_smarthost: 'localhost:587'
-        smtp_from: 'alerts@ainflue.com'
+        smtp_from: 'alerts@iacherie.com'
       
       route:
         group_by: ['alertname', 'cluster', 'service']
@@ -115,30 +115,30 @@ prometheus:
       receivers:
         - name: 'default-receiver'
           email_configs:
-            - to: 'admin@ainflue.com'
-              subject: '[Ainflue] Alert: {{ .GroupLabels.alertname }}'
+            - to: 'admin@iacherie.com'
+              subject: '[IA Chérie] Alert: {{ .GroupLabels.alertname }}'
         - name: 'critical-alerts'
           email_configs:
-            - to: 'critical@ainflue.com'
-              subject: '[CRITICAL] Ainflue: {{ .GroupLabels.alertname }}'
+            - to: 'critical@iacherie.com'
+              subject: '[CRITICAL] IA Chérie: {{ .GroupLabels.alertname }}'
         - name: 'ai-team'
           email_configs:
-            - to: 'ai-team@ainflue.com'
-              subject: '[AI Alert] Ainflue: {{ .GroupLabels.alertname }}'
+            - to: 'ai-team@iacherie.com'
+              subject: '[AI Alert] IA Chérie: {{ .GroupLabels.alertname }}'
         - name: 'dba-team'
           email_configs:
-            - to: 'dba-team@ainflue.com'
-              subject: '[Database Alert] Ainflue: {{ .GroupLabels.alertname }}'
+            - to: 'dba-team@iacherie.com'
+              subject: '[Database Alert] IA Chérie: {{ .GroupLabels.alertname }}'
 
   server:
     ingress:
       enabled: true
       hosts:
-        - prometheus.ainflue.com
+        - prometheus.iacherie.com
       tls:
         - secretName: prometheus-tls
           hosts:
-            - prometheus.ainflue.com
+            - prometheus.iacherie.com
     
     persistence:
       enabled: true
@@ -161,7 +161,7 @@ prometheus:
         scrape_interval: 15s
         evaluation_interval: 15s
         external_labels:
-          cluster: 'ainflue-production'
+          cluster: 'iacherie-production'
           environment: 'production'
       
       rule_files:
@@ -211,35 +211,35 @@ prometheus:
               replacement: $1:$2
               target_label: __address__
 
-        # Ainflue specific services
-        - job_name: 'ainflue-api'
+        # IA Chérie specific services
+        - job_name: 'iacherie-api'
           static_configs:
-            - targets: ['ainflue-api:8000']
+            - targets: ['iacherie-api:8000']
           metrics_path: '/metrics'
           scrape_interval: 15s
 
-        - job_name: 'ainflue-mobile-api'
+        - job_name: 'iacherie-mobile-api'
           static_configs:
-            - targets: ['ainflue-mobile-api:8002']
+            - targets: ['iacherie-mobile-api:8002']
           metrics_path: '/metrics'
           scrape_interval: 15s
 
-        - job_name: 'ainflue-ai-engine'
+        - job_name: 'iacherie-ai-engine'
           static_configs:
-            - targets: ['ainflue-ai-engine:8001']
+            - targets: ['iacherie-ai-engine:8001']
           metrics_path: '/metrics'
           scrape_interval: 30s
 
-        - job_name: 'ainflue-workers'
+        - job_name: 'iacherie-workers'
           static_configs:
-            - targets: ['ainflue-worker:9393']
+            - targets: ['iacherie-worker:9393']
           metrics_path: '/metrics'
           scrape_interval: 30s
 
     # Alert rules
     rules:
       groups:
-        - name: ainflue.rules
+        - name: iacherie.rules
           rules:
             # Infrastructure alerts
             - alert: HighCPUUsage
@@ -322,11 +322,11 @@ grafana:
   ingress:
     enabled: true
     hosts:
-      - grafana.ainflue.com
+      - grafana.iacherie.com
     tls:
       - secretName: grafana-tls
         hosts:
-          - grafana.ainflue.com
+          - grafana.iacherie.com
 
   persistence:
     enabled: true
@@ -351,8 +351,8 @@ grafana:
     server:
       protocol: http
       http_port: 3000
-      domain: grafana.ainflue.com
-      root_url: https://grafana.ainflue.com
+      domain: grafana.iacherie.com
+      root_url: https://grafana.iacherie.com
       
     database:
       type: sqlite3
@@ -407,28 +407,28 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        - name: 'ainflue-dashboards'
+        - name: 'iacherie-dashboards'
           orgId: 1
-          folder: 'Ainflue'
+          folder: 'IA Chérie'
           type: file
           disableDeletion: false
           editable: true
           allowUiUpdates: true
           options:
-            path: /var/lib/grafana/dashboards/ainflue
+            path: /var/lib/grafana/dashboards/iacherie
 
   dashboards:
-    ainflue:
+    iacherie:
       kubernetes-cluster:
         gnetId: 7249
         revision: 1
         datasource: Prometheus
       
-      ainflue-api:
+      iacherie-api:
         json: |
           {
             "dashboard": {
-              "title": "Ainflue API Dashboard",
+              "title": "IA Chérie API Dashboard",
               "panels": [
                 {
                   "title": "Request Rate",
@@ -462,11 +462,11 @@ jaeger:
     ingress:
       enabled: true
       hosts:
-        - jaeger.ainflue.com
+        - jaeger.iacherie.com
       tls:
         - secretName: jaeger-tls
           hosts:
-            - jaeger.ainflue.com
+            - jaeger.iacherie.com
     
     resources:
       limits:
@@ -604,7 +604,7 @@ customExporters:
     port: 9121
     env:
       - name: REDIS_ADDR
-        value: "redis://ainflue-redis:6379"
+        value: "redis://iacherie-redis:6379"
 
   # Nginx Exporter
   nginxExporter:
@@ -616,19 +616,19 @@ customExporters:
 
 # Service monitors for automatic discovery
 serviceMonitors:
-  - name: ainflue-api
+  - name: iacherie-api
     selector:
       matchLabels:
-        app: ainflue-api
+        app: iacherie-api
     endpoints:
       - port: metrics
         path: /metrics
         interval: 15s
 
-  - name: ainflue-workers
+  - name: iacherie-workers
     selector:
       matchLabels:
-        app: ainflue-worker
+        app: iacherie-worker
     endpoints:
       - port: metrics
         path: /metrics
@@ -641,7 +641,7 @@ networkPolicy:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: ainflue
+              name: iacherie
         - namespaceSelector:
             matchLabels:
               name: ingress-nginx
@@ -707,8 +707,8 @@ backup:
   
   destinations:
     - type: s3
-      bucket: ainflue-monitoring-backups
+      bucket: iacherie-monitoring-backups
       path: /prometheus
     - type: gcs
-      bucket: ainflue-monitoring-backups
+      bucket: iacherie-monitoring-backups
       path: /grafana

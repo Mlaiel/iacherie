@@ -110,7 +110,7 @@ class CohereEnterpriseClient:
     """
     Enterprise Cohere API client with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chérie platform business logic:
     - Advanced NLP for creator content
     - Multi-language support for global creators
     - Cost-effective model selection
@@ -171,7 +171,7 @@ class CohereEnterpriseClient:
         """Generate request headers with authentication."""
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-Cohere-Integration/1.0"
+            "User-Agent": "IA Chérie-Cohere-Integration/1.0"
         }
         
         if self.api_key:

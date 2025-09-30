@@ -146,7 +146,7 @@ kubectl apply -f kubernetes/
 
 ### 🎉 **FÉLICITATIONS MAJEURES**
 
-**Le projet Ainflue est déjà une plateforme industrielle 100% complète!**
+**Le projet IA Chérie est déjà une plateforme industrielle 100% complète!**
 
 ### ✨ **AVANTAGES STRATÉGIQUES**
 

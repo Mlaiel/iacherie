@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Ainflue Platform - Multimedia Optimization - Adaptive Streaming Optimization
+IA Chérie Platform - Multimedia Optimization - Adaptive Streaming Optimization
 Professional adaptive streaming optimization for multimedia delivery
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,8 +1,8 @@
-# 🎥 Ainflue Video Tutorials
+# 🎥 IA Chérie Video Tutorials
 
 ## Complete Video Tutorial Library
 
-**Platform:** Ainflue AI-Powered Content Protection & Monetization  
+**Platform:** IA Chérie AI-Powered Content Protection & Monetization  
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Last Updated:** September 2025
@@ -15,7 +15,7 @@
 
 #### 1. **Platform Introduction** *(5 minutes)*
 - **What You'll Learn:** Platform overview, key features, and benefits
-- **Video Link:** [Coming Soon - Introduction to Ainflue]
+- **Video Link:** [Coming Soon - Introduction to IA Chérie]
 - **Topics Covered:**
   - Platform capabilities overview
   - AI-powered content protection
@@ -160,7 +160,7 @@
 ### ⚙️ Advanced Features Tutorials
 
 #### 15. **API Integration** *(25 minutes)*
-- **What You'll Learn:** Integrate Ainflue with your existing tools
+- **What You'll Learn:** Integrate IA Chérie with your existing tools
 - **Video Link:** [Coming Soon - API Integration]
 - **Topics Covered:**
   - API key generation
@@ -312,13 +312,13 @@
 
 ## 🎓 Certification Program
 
-### Ainflue Creator Certification
+### IA Chérie Creator Certification
 - **Duration:** Complete all beginner and intermediate tutorials
 - **Assessment:** Practical skills evaluation
 - **Certificate:** Digital badge and PDF certificate
 - **Benefits:** Priority support, beta feature access
 
-### Ainflue Expert Certification
+### IA Chérie Expert Certification
 - **Duration:** Complete all tutorial paths
 - **Requirements:** Pass advanced assessment
 - **Project:** Create and protect original content
@@ -346,9 +346,9 @@
 
 ### Getting Help
 - **Tutorial Comments:** Ask questions directly on videos
-- **Community Forum:** [https://community.ainflue.com/tutorials](https://community.ainflue.com/tutorials)
+- **Community Forum:** [https://community.iacherie.com/tutorials](https://community.iacherie.com/tutorials)
 - **Live Support:** Available during tutorial releases
-- **Email Support:** tutorials@ainflue.com
+- **Email Support:** tutorials@iacherie.com
 
 ### Feedback & Suggestions
 - **Tutorial Requests:** Suggest new tutorial topics
@@ -360,10 +360,10 @@
 
 ## 🔗 Quick Links
 
-- **Tutorial Playlist:** [All Ainflue Tutorials]
-- **Beginner Series:** [Getting Started with Ainflue]
+- **Tutorial Playlist:** [All IA Chérie Tutorials]
+- **Beginner Series:** [Getting Started with IA Chérie]
 - **Advanced Features:** [Power User Tutorials]
-- **Mobile App Tutorials:** [Ainflue Mobile Guide]
+- **Mobile App Tutorials:** [IA Chérie Mobile Guide]
 - **API Documentation:** [Developer Resources]
 
 ---
@@ -371,4 +371,4 @@
 **© 2025 Fahed Mlaiel. All rights reserved.**  
 **Proprietary and Confidential - Unauthorized use is strictly prohibited.**
 
-*This tutorial library is regularly updated. Check [https://learn.ainflue.com](https://learn.ainflue.com) for the latest videos and content.*
+*This tutorial library is regularly updated. Check [https://learn.iacherie.com](https://learn.iacherie.com) for the latest videos and content.*

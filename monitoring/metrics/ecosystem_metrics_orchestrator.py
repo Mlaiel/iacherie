@@ -1,7 +1,7 @@
 """🌐 Ecosystem Metrics Orchestrator - Master Analytics Coordination System
 ========================================================================
 
-Advanced ecosystem metrics orchestration and cross-service correlation system for Ainflue.
+Advanced ecosystem metrics orchestration and cross-service correlation system for IA Chérie.
 Provides centralized metrics coordination, inter-service dependency tracking, global platform 
 analytics, master dashboard management, and comprehensive ecosystem health monitoring.
 

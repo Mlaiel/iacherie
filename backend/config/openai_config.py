@@ -1,5 +1,5 @@
 """
-Configuration Management for Ainfluencer Platform
+Configuration Management for IA Chérie Platform
 Centralized settings and environment variable management
 """
 import os
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     """Application settings"""
     
     # Basic settings
-    app_name: str = "Ainfluencer Platform"
+    app_name: str = "IA Chérie Platform"
     debug: bool = False
     version: str = "1.0.0"
     

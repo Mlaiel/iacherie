@@ -1,5 +1,5 @@
 /**
- * Ainflue iOS Native App - Main Application Entry Point
+ * IA Chérie iOS Native App - Main Application Entry Point
  * 
  * Professional iOS application integrating advanced content creation,
  * AI-powered protection, and multi-platform distribution capabilities.
@@ -106,7 +106,7 @@ const AinflueiOSApp: React.FC = () => {
         backgroundSyncActive: true,
       }));
 
-      console.log('✅ Ainflue iOS App initialized successfully');
+      console.log('✅ IA Chérie iOS App initialized successfully');
     } catch (error) {
       console.error('❌ Failed to initialize iOS app:', error);
     }
@@ -146,7 +146,7 @@ const AinflueiOSApp: React.FC = () => {
             <Stack.Screen
               name="Home"
               component={HomeScreen}
-              options={{ title: 'Ainflue' }}
+              options={{ title: 'IA Chérie' }}
             />
             <Stack.Screen
               name="ContentCreation"
@@ -191,7 +191,7 @@ const AinflueiOSApp: React.FC = () => {
 // Screen Components (references to native implementations)
 const HomeScreen = () => (
   <View style={styles.screen}>
-    <Text style={styles.screenTitle}>Ainflue iOS</Text>
+    <Text style={styles.screenTitle}>IA Chérie iOS</Text>
     <Text style={styles.screenSubtitle}>
       Professional Content Creation Platform
     </Text>

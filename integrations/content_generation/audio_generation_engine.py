@@ -5,7 +5,7 @@ Professional audio synthesis with 8 specialized audio agents.
 Multi-agent audio generation for enterprise content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -119,8 +119,8 @@ class AudioAgent:
             
             result = AudioGenerationResult(
                 audio_id=audio_id,
-                audio_url=f"https://ai-generated-audio.ainflue.com/{audio_id}.{request.format.value}",
-                waveform_url=f"https://ai-generated-audio.ainflue.com/{audio_id}_wave.png",
+                audio_url=f"https://ai-generated-audio.iacherie.com/{audio_id}.{request.format.value}",
+                waveform_url=f"https://ai-generated-audio.iacherie.com/{audio_id}_wave.png",
                 duration=request.duration,
                 file_size=self._estimate_file_size(request),
                 metadata={

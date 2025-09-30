@@ -1,9 +1,9 @@
-# Ainflue Analytics API Documentation
+# IA Chérie Analytics API Documentation
 
 ## Overview
-The Ainflue Analytics API provides comprehensive performance tracking, revenue analytics, and business intelligence for content creators and platform administrators.
+The IA Chérie Analytics API provides comprehensive performance tracking, revenue analytics, and business intelligence for content creators and platform administrators.
 
-**Base URL:** `https://api.ainflue.com/v1`  
+**Base URL:** `https://api.iacherie.com/v1`  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Version:** 1.0.0  
 

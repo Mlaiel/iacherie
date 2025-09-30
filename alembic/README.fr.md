@@ -1,10 +1,10 @@
-# 🗄️ Ainflue Alembic - Système de Migration de Base de Données Enterprise
+# 🗄️ IA Chérie Alembic - Système de Migration de Base de Données Enterprise
 
 **Migration de Base de Données Avancée Alimentée par l'IA & Gestion de Schéma**
 
 ## 🎯 Aperçu
 
-Le module Ainflue Alembic fournit des capacités de migration de base de données et de gestion de schéma de niveau entreprise pour la plateforme de protection et monétisation de contenu alimentée par l'IA. Ce système gère des bases de données multi-tenant complexes avec des fonctionnalités avancées incluant le chiffrement résistant aux quantiques, l'optimisation alimentée par l'IA, et l'automatisation de la conformité.
+Le module IA Chérie Alembic fournit des capacités de migration de base de données et de gestion de schéma de niveau entreprise pour la plateforme de protection et monétisation de contenu alimentée par l'IA. Ce système gère des bases de données multi-tenant complexes avec des fonctionnalités avancées incluant le chiffrement résistant aux quantiques, l'optimisation alimentée par l'IA, et l'automatisation de la conformité.
 
 ## 👨‍💻 Équipe de Développement
 
@@ -107,14 +107,14 @@ pip install psycopg2-binary>=2.9.0
 
 ### Initialiser Alembic
 ```bash
-cd /workspaces/Ainflue/alembic
+cd /workspaces/IA Chérie/alembic
 alembic init .
 ```
 
 ### Configuration d'Environnement
 ```bash
 # Définir l'URL de base de données
-export DATABASE_URL="postgresql://user:password@localhost/ainflue"
+export DATABASE_URL="postgresql://user:password@localhost/iacherie"
 
 # Configurer les clés de chiffrement
 export ENCRYPTION_KEY="your_quantum_safe_key"
@@ -247,4 +247,4 @@ Tous les modules de migration sont prêts pour la production avec :
 
 ---
 
-**🗄️ Ainflue Alembic - Le Système de Migration de Base de Données le Plus Avancé au Monde**
+**🗄️ IA Chérie Alembic - Le Système de Migration de Base de Données le Plus Avancé au Monde**

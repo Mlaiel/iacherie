@@ -323,8 +323,8 @@ class IdentityProviderManager:
             request_id = str(uuid.uuid4())
             timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
             
-            sp_entity_id = self.saml_sp_config.get('entity_id', 'https://ainflue.com/saml/sp')
-            acs_url = self.saml_sp_config.get('acs_url', 'https://ainflue.com/saml/acs')
+            sp_entity_id = self.saml_sp_config.get('entity_id', 'https://iacherie.com/saml/sp')
+            acs_url = self.saml_sp_config.get('acs_url', 'https://iacherie.com/saml/acs')
             
             authn_request = f"""
             <samlp:AuthnRequest
@@ -370,7 +370,7 @@ class IdentityProviderManager:
                 'client_id': provider.configuration['client_id'],
                 'response_type': 'code',
                 'scope': provider.configuration.get('scope', 'openid email profile'),
-                'redirect_uri': provider.configuration.get('redirect_uri', 'https://ainflue.com/auth/callback'),
+                'redirect_uri': provider.configuration.get('redirect_uri', 'https://iacherie.com/auth/callback'),
                 'state': state,
                 'nonce': nonce
             }
@@ -541,7 +541,7 @@ class IdentityProviderManager:
                 'code': code,
                 'client_id': provider.configuration['client_id'],
                 'client_secret': provider.configuration['client_secret'],
-                'redirect_uri': provider.configuration.get('redirect_uri', 'https://ainflue.com/auth/callback')
+                'redirect_uri': provider.configuration.get('redirect_uri', 'https://iacherie.com/auth/callback')
             }
             
             response = requests.post(token_url, data=data, timeout=30)

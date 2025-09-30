@@ -772,7 +772,7 @@ async def main():
     # Register test user
     await auth_manager.register_user(
         user_id="creator_001",
-        email="creator@ainflue.com", 
+        email="creator@iacherie.com", 
         password="SecurePassword123!",
         user_role="creator"
     )

@@ -10,12 +10,12 @@ PERFORMANCE ALERTS ENGINE - ANALYTICS NOTIFICATIONS
 =====================================================
 
 🎯 RÔLE ENTERPRISE:
-- Alertes performance temps réel pour creators Ainflue
+- Alertes performance temps réel pour creators IA Chérie
 - Monitoring KPIs critiques et métriques business
 - Détection anomalies et régressions performance
 - Alertes prédictives basées IA/ML
 
-🚀 FONCTIONNALITÉS AINFLUE:
+🚀 FONCTIONNALITÉS IACHERIE:
 - Performance content tracking (vues, engagement, reach)
 - Revenue performance alerts (CPM, CPC, conversions)
 - Audio quality performance monitoring
@@ -91,7 +91,7 @@ class PerformanceAlert:
 class PerformanceAlertsEngine:
     """
     Engine principal pour les alertes de performance
-    Monitoring intelligent et alertes prédictives pour Ainflue
+    Monitoring intelligent et alertes prédictives pour IA Chérie
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

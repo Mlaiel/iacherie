@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Collaboration Desktop Client
+ * IA Chérie Desktop - Collaboration Desktop Client
  * 
  * Real-time collaboration system for desktop application
  * 

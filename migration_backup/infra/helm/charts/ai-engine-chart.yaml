@@ -1,0 +1,380 @@
+# Ainflue Infrastructure Module - AI Engine Helm Chart
+# =====================================================
+# 
+# Enterprise-grade AI Engine chart for Ainflue platform
+# Supports multiple AI providers, model serving, and inference optimization
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v2
+name: ainflue-ai-engine
+description: "Enterprise AI Engine for Ainflue platform with multi-provider support"
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+keywords:
+  - ai
+  - machine-learning
+  - inference
+  - models
+  - ainflue
+annotations:
+  category: AI/ML
+  licenses: Proprietary
+
+# Chart dependencies
+dependencies:
+  - name: postgresql
+    version: "12.1.6"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
+  - name: redis
+    version: "17.8.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
+  - name: prometheus
+    version: "19.7.2"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: monitoring.prometheus.enabled
+
+---
+# Default values for ainflue-ai-engine
+# Expert roles implementation in configuration
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: Multi-provider orchestration, AI service architecture
+# Backend Senior: Scalable service deployment, load balancing
+# ML Engineer: Model serving, inference optimization, A/B testing
+# DBA: Database integration, model metadata storage
+# Security: API security, model protection, access control
+# Microservices: Service mesh integration, inter-service communication
+# Audio Engineer: Audio/speech model integration, processing pipelines
+# DevOps: Container orchestration, monitoring, auto-scaling
+# IA Prompt Engineer: Prompt optimization, provider management
+
+# Global configuration
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+
+# Image configuration
+image:
+  registry: docker.io
+  repository: ainflue/ai-engine
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+# Deployment configuration
+replicaCount: 3
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8001
+  targetPort: 8001
+  annotations: {}
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+  hosts:
+    - host: ai.ainflue.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: ai-engine-tls
+      hosts:
+        - ai.ainflue.local
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 4000m
+    memory: 8Gi
+    nvidia.com/gpu: 1
+  requests:
+    cpu: 2000m
+    memory: 4Gi
+    nvidia.com/gpu: 1
+
+# Auto-scaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+# Environment variables
+env:
+  - name: AI_ENGINE_PORT
+    value: "8001"
+  - name: LOG_LEVEL
+    value: "INFO"
+  - name: ENVIRONMENT
+    value: "production"
+  - name: REDIS_URL
+    value: "redis://ainflue-redis:6379"
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: ai-engine-secrets
+        key: database-url
+
+# AI Provider configuration
+aiProviders:
+  openai:
+    enabled: true
+    apiKey:
+      secretName: ai-providers-secrets
+      secretKey: openai-api-key
+    models:
+      - gpt-4
+      - gpt-3.5-turbo
+      - dall-e-3
+    rateLimits:
+      requestsPerMinute: 1000
+      tokensPerMinute: 100000
+
+  anthropic:
+    enabled: true
+    apiKey:
+      secretName: ai-providers-secrets
+      secretKey: anthropic-api-key
+    models:
+      - claude-3-opus
+      - claude-3-sonnet
+    rateLimits:
+      requestsPerMinute: 500
+
+  huggingface:
+    enabled: true
+    apiKey:
+      secretName: ai-providers-secrets
+      secretKey: huggingface-api-key
+    models:
+      - meta-llama/Llama-2-70b-chat-hf
+      - microsoft/DialoGPT-large
+    rateLimits:
+      requestsPerMinute: 200
+
+  local:
+    enabled: true
+    models:
+      - ainflue/content-classifier:v1.0
+      - ainflue/sentiment-analyzer:v1.0
+      - ainflue/audio-transcriber:v1.0
+
+# Model serving configuration
+modelServing:
+  enabled: true
+  storage:
+    type: s3
+    bucket: ainflue-ai-models
+    path: /models
+  cache:
+    enabled: true
+    size: 10Gi
+  gpu:
+    enabled: true
+    memory: 8Gi
+
+# Audio processing configuration
+audioProcessing:
+  enabled: true
+  models:
+    transcription: whisper-large-v2
+    synthesis: eleven-labs
+    enhancement: nvidia-nemo
+  formats:
+    - wav
+    - mp3
+    - flac
+    - m4a
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    port: 9090
+    path: /metrics
+  jaeger:
+    enabled: true
+    endpoint: http://jaeger-collector:14268/api/traces
+  logging:
+    level: INFO
+    format: json
+
+# Health checks
+healthChecks:
+  liveness:
+    enabled: true
+    path: /health/live
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    enabled: true
+    path: /health/ready
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# Persistent volumes
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 50Gi
+  annotations: {}
+
+# Node selection
+nodeSelector: {}
+tolerations: []
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: ainflue-ai-engine
+          topologyKey: kubernetes.io/hostname
+
+# Service account
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# RBAC
+rbac:
+  create: true
+
+# Network policies
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue
+      ports:
+        - protocol: TCP
+          port: 8001
+  egress:
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 443
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 5432
+        - protocol: TCP
+          port: 6379
+
+# Configuration maps
+configMaps:
+  aiConfig: |
+    ai:
+      max_concurrent_requests: 100
+      request_timeout: 300
+      model_cache_size: 1000
+      default_temperature: 0.7
+      default_max_tokens: 2048
+      
+    providers:
+      load_balancing:
+        strategy: round_robin
+        health_check_interval: 30
+        retry_attempts: 3
+        
+    audio:
+      max_file_size: 25MB
+      supported_formats: [wav, mp3, flac, m4a]
+      transcription:
+        language_detection: true
+        speaker_diarization: true
+        
+    security:
+      api_key_rotation: 86400  # 24 hours
+      rate_limiting:
+        enabled: true
+        window: 60  # seconds
+        max_requests: 1000
+
+# Secrets (references only - actual values should be provided externally)
+secrets:
+  aiEngineSecrets:
+    database-url: "postgresql://user:pass@db:5432/ainflue_ai"
+    jwt-secret: "change-me-in-production"
+    encryption-key: "change-me-in-production"
+    
+  aiProvidersSecrets:
+    openai-api-key: "sk-..."
+    anthropic-api-key: "sk-ant-..."
+    huggingface-api-key: "hf_..."
+
+# PostgreSQL dependency configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "ainflue123!"
+    username: "ainflue_ai"
+    password: "ainflue123!"
+    database: "ainflue_ai"
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+
+# Redis dependency configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "ainflue123!"
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi

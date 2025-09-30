@@ -16,7 +16,7 @@ class ApiService {
   constructor() {
     this.baseURL = __DEV__ 
       ? 'http://10.0.2.2:8000/api'  // Android emulator localhost
-      : 'https://api.ainflue.com';
+      : 'https://api.iacherie.com';
     
     this.api = axios.create({
       baseURL: this.baseURL,

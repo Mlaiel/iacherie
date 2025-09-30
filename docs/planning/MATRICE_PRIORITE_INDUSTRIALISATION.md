@@ -1,9 +1,9 @@
-# 🎯 MATRICE DE PRIORITÉ - INDUSTRIALISATION AINFLUE
+# 🎯 MATRICE DE PRIORITÉ - INDUSTRIALISATION IACHERIE
 **Guide de Priorisation pour Implémentation Optimale**
 
 **Date:** 1 Septembre 2025  
 **Auteur:** Équipe d'Experts Multidisciplinaires  
-**Projet:** Ainflue Platform Industrialization  
+**Projet:** IA Chérie Platform Industrialization  
 
 ---
 
@@ -123,4 +123,4 @@ Advanced Features:
 
 ---
 
-**Cette matrice de priorité assure une industrialisation efficace avec un risque minimal et un impact maximal pour la plateforme Ainflue.**
+**Cette matrice de priorité assure une industrialisation efficace avec un risque minimal et un impact maximal pour la plateforme IA Chérie.**

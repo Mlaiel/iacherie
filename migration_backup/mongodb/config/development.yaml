@@ -1,0 +1,192 @@
+# Development Configuration
+# MongoDB Module - Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
+
+mongodb:
+  # Connection settings
+  connection:
+    host: "localhost"
+    port: 27017
+    database: "ainflue_dev"
+    replica_set: null  # Single instance for development
+    ssl: false
+    
+  # Authentication (optional for development)
+  auth:
+    mechanism: "SCRAM-SHA-256"
+    source: "admin"
+    username: "dev_user"
+    password: "dev_password"
+    
+  # Connection pool (smaller for development)
+  pool:
+    min_size: 2
+    max_size: 10
+    max_idle_time_ms: 30000
+    wait_queue_timeout_ms: 5000
+    server_selection_timeout_ms: 3000
+    
+  # Performance (relaxed for development)
+  performance:
+    read_preference: "primary"
+    read_concern: "local"
+    write_concern:
+      w: 1
+      j: false
+      wtimeout: 5000
+    max_time_ms: 10000
+    
+  # WiredTiger settings (minimal for development)
+  wired_tiger:
+    cache_size_gb: 1
+    journal_compressor: "snappy"
+    collection_block_compressor: "snappy"
+    
+  # Monitoring (verbose for development)
+  monitoring:
+    enable_command_monitoring: true
+    enable_connection_monitoring: true
+    enable_server_monitoring: true
+    slow_operation_threshold_ms: 50
+    profiling_level: 2  # Profile all operations
+    profiling_slow_ms: 50
+    
+  # Security (relaxed for development)
+  security:
+    encrypt_fields: false
+    audit_logging: true
+    compliance_mode: "development"
+    field_level_encryption: false
+    
+  # Sharding (disabled for development)
+  sharding:
+    enabled: false
+    
+# Application settings
+application:
+  environment: "development"
+  debug: true
+  log_level: "DEBUG"
+  
+  # Feature flags (some disabled for development)
+  features:
+    ai_processing: false  # Expensive, disabled in dev
+    real_time_analytics: false
+    advanced_search: true
+    multi_platform_sync: false
+    gamification: true
+    multimedia_processing: false
+    
+  # Rate limiting (disabled for development)
+  rate_limiting:
+    enabled: false
+    
+  # Caching (local only)
+  caching:
+    enabled: true
+    redis_url: "redis://localhost:6379"
+    default_ttl: 300  # 5 minutes
+    max_memory_mb: 256
+    
+# Infrastructure (local development)
+infrastructure:
+  # Docker development
+  docker:
+    image: "mongo:7.0"
+    ports: ["27017:27017"]
+    volumes: ["mongodb_dev_data:/data/db"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "password"
+      
+  # Resource limits (minimal)
+  resources:
+    cpu_limit: "1000m"
+    memory_limit: "2Gi"
+    storage_limit: "10Gi"
+    
+  # Monitoring (local)
+  monitoring:
+    prometheus_endpoint: "http://localhost:9090"
+    grafana_dashboard: "http://localhost:3000"
+    alert_manager: null
+    
+  # Backup (minimal for development)
+  backup:
+    enabled: false  # Not needed for development
+    
+# Security (relaxed for development)
+security:
+  # TLS/SSL (disabled for development)
+  tls:
+    enabled: false
+    
+  # Access control (minimal)
+  access_control:
+    enable_rbac: false
+    enable_abac: false
+    session_timeout_minutes: 480  # 8 hours
+    
+  # Encryption (disabled for development)
+  encryption:
+    enabled: false
+    
+  # Compliance (development mode)
+  compliance:
+    gdpr_enabled: false
+    ccpa_enabled: false
+    audit_retention_days: 7
+    
+# Logging (verbose for development)
+logging:
+  level: "DEBUG"
+  format: "console"  # Human-readable format
+  output: "stdout"
+  
+  # Log retention (minimal)
+  retention:
+    audit_logs: "7 days"
+    error_logs: "7 days"
+    access_logs: "3 days"
+    performance_logs: "3 days"
+    
+# Alerts (minimal for development)
+alerts:
+  enabled: false  # Disable alerts in development
+  
+# Development tools
+development:
+  # Database seeding
+  seed_data:
+    enabled: true
+    file_path: "seeds/development_data.json"
+    
+  # Hot reload
+  hot_reload:
+    enabled: true
+    watch_directories: ["mongodb/", "tests/"]
+    
+  # Testing
+  testing:
+    test_database: "ainflue_test"
+    parallel_tests: true
+    coverage_threshold: 80
+    
+  # Debugging
+  debugging:
+    enable_query_logging: true
+    enable_performance_logging: true
+    enable_connection_logging: true
+    
+# Mock services for development
+mock_services:
+  # External APIs
+  external_apis:
+    ai_service: "http://localhost:8001"
+    analytics_service: "http://localhost:8002"
+    
+  # Third-party integrations
+  integrations:
+    redis: "redis://localhost:6379"
+    elasticsearch: "http://localhost:9200"

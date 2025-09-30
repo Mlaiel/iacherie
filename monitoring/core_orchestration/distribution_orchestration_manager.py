@@ -2,7 +2,7 @@
 📺 Distribution Orchestration Manager - Enterprise Core
 ======================================================
 
-Manager d'orchestration avancé pour la distribution multi-plateformes Ainflue.
+Manager d'orchestration avancé pour la distribution multi-plateformes IA Chérie.
 Coordination intelligente de la distribution de contenu Creator Economy.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

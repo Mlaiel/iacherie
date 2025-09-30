@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Payment Analytics Configuration Module
+"""IA Chérie Payment Analytics Configuration Module
 ===============================================
 
-Enterprise-grade payment analytics configuration for the Ainflue platform.
+Enterprise-grade payment analytics configuration for the IA Chérie platform.
 Comprehensive payment data analysis, metrics calculation, fraud detection,
 revenue optimization, and advanced business intelligence features.
 
@@ -665,7 +665,7 @@ class PaymentAnalyticsConfiguration:
             severity=AlertSeverity.ERROR,
             time_window=timedelta(hours=1),
             frequency=timedelta(minutes=15),
-            recipients=["finance@ainflue.com", "alerts@ainflue.com"],
+            recipients=["finance@iacherie.com", "alerts@iacherie.com"],
             notification_channels=["email", "slack", "webhook"]
         )
         
@@ -682,7 +682,7 @@ class PaymentAnalyticsConfiguration:
             severity=AlertSeverity.CRITICAL,
             time_window=timedelta(minutes=30),
             frequency=timedelta(minutes=5),
-            recipients=["security@ainflue.com", "alerts@ainflue.com"],
+            recipients=["security@iacherie.com", "alerts@iacherie.com"],
             notification_channels=["email", "slack", "sms", "webhook"]
         )
         
@@ -699,7 +699,7 @@ class PaymentAnalyticsConfiguration:
             severity=AlertSeverity.WARNING,
             time_window=timedelta(hours=2),
             frequency=timedelta(minutes=30),
-            recipients=["payments@ainflue.com", "alerts@ainflue.com"],
+            recipients=["payments@iacherie.com", "alerts@iacherie.com"],
             notification_channels=["email", "slack"]
         )
         

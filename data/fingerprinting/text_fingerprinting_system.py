@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Text Fingerprinting System - Ainflue Data Fingerprinting Module
+Text Fingerprinting System - IA Chérie Data Fingerprinting Module
 ===============================================================
 Advanced text fingerprinting system with NLP-powered analysis,
 semantic embeddings, linguistic patterns, and specialized text content 
-protection for blog/content creators on the Ainflue platform.
+protection for blog/content creators on the IA Chérie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Data Fingerprinting
+Project: IA Chérie Data Fingerprinting
 Version: 1.0 Enterprise Production
 """
 
@@ -37,11 +37,13 @@ try:
     from nltk.tokenize import word_tokenize, sent_tokenize
     from nltk.util import ngrams
     import textstat
-    from langdetect import detect, LangDetectError
+    from langdetect import detect
+    from langdetect.lang_detect_exception import LangDetectException
 except ImportError as e:
     logging.error(f"Required text dependencies not installed: {e}")
+    raise
 
-# Ainflue core imports
+# IA Chérie core imports
 from .multimodal_fingerprinting_engine import FingerprintResult, FingerprintConfig
 from .vector_database_matching import VectorDatabaseManager
 from .performance_analytics_engine import PerformanceAnalytics
@@ -203,18 +205,31 @@ class TextFingerprintingSystem:
                 # Import avec gestionnaire TensorFlow singleton
                 from core.tensorflow_singleton import get_tensorflow
                 tf = get_tensorflow()
-                # from sentence_transformers import SentenceTransformer
-                self.embedding_model = get_sentence_transformer(self.config.embedding_model)
-                self.logger.info("Sentence transformer model loaded successfully")
+                
+                # Import sentence transformers with fallback
+                try:
+                    from sentence_transformers import SentenceTransformer
+                    def get_sentence_transformer(model_name):
+                        return SentenceTransformer(model_name)
+                    self.embedding_model = get_sentence_transformer(self.config.embedding_model)
+                    self.logger.info("Sentence transformer model loaded successfully")
+                except ImportError:
+                    self.embedding_model = None
+                    self.logger.warning("Sentence transformers not available")
             
             # Initialize sentiment analyzer
             if self.config.enable_sentiment_analysis:
-                self.sentiment_analyzer = pipeline(
-                    "sentiment-analysis",
-                    model="cardiffnlp/twitter-roberta-base-sentiment-latest",
-                    return_all_scores=True
-                )
-                self.logger.info("Sentiment analyzer loaded successfully")
+                try:
+                    from transformers import pipeline
+                    self.sentiment_analyzer = pipeline(
+                        "sentiment-analysis",
+                        model="cardiffnlp/twitter-roberta-base-sentiment-latest",
+                        return_all_scores=True
+                    )
+                    self.logger.info("Sentiment analyzer loaded successfully")
+                except ImportError:
+                    self.sentiment_analyzer = None
+                    self.logger.warning("Transformers not available for sentiment analysis")
             
             # Initialize spaCy model
             try:
@@ -469,7 +484,7 @@ class TextFingerprintingSystem:
             
             return lang_mapping.get(detected, TextLanguage.UNKNOWN)
             
-        except LangDetectError:
+        except LangDetectException:
             return TextLanguage.UNKNOWN
         except Exception as e:
             self.logger.warning(f"Language detection failed: {e}")

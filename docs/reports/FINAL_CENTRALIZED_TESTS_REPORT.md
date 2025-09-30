@@ -28,7 +28,7 @@
 
 #### **Direct Test Runner** (`run_critical_tests.py`)
 ```bash
-cd /home/runner/work/Ainflue/Ainflue
+cd /home/runner/work/IA Chérie/IA Chérie
 python run_critical_tests.py
 ```
 
@@ -41,7 +41,7 @@ python run_critical_tests.py
 
 #### **Validation Script** (`validate_centralized_tests.py`)
 ```bash
-cd /home/runner/work/Ainflue/Ainflue
+cd /home/runner/work/IA Chérie/IA Chérie
 python validate_centralized_tests.py
 ```
 
@@ -174,7 +174,7 @@ The centralized unit test infrastructure is now complete and operational:
 
 ### **Production Deployment Ready** 🚀
 
-The Ainflue platform now has:
+The IA Chérie platform now has:
 - ✅ Centralized unit test suite
 - ✅ Quality validation framework
 - ✅ Critical component coverage

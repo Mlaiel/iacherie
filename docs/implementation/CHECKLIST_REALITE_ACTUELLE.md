@@ -1,4 +1,4 @@
-# 📋 CHECKLIST RÉALITÉ ACTUELLE - PROJET AINFLUE
+# 📋 CHECKLIST RÉALITÉ ACTUELLE - PROJET IACHERIE
 **Date d'analyse**: 30 Août 2025  
 **Analyse basée sur**: État RÉEL du code (pas de rapports théoriques)
 

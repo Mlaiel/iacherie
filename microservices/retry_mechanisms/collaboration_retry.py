@@ -1,11 +1,11 @@
 """
-Collaboration Retry Engine - Ainflue
+Collaboration Retry Engine - IA Chérie
 ===================================
 Retry spécialisé pour collaboration créateurs.
 Multi-user operations + sync + gamification retry patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

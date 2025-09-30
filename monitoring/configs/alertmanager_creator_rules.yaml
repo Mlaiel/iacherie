@@ -1,6 +1,6 @@
 # 🚨 AlertManager Creator Rules Configuration
 # ============================================
-# Règles d'alertes intelligentes pour Creator Economy Ainflue
+# Règles d'alertes intelligentes pour Creator Economy IA Chérie
 # Alerting différencié par tier avec escalade automatique et prédictions IA
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,9 +20,9 @@
 
 # Configuration globale AlertManager
 global:
-  smtp_smarthost: 'smtp.ainflue.com:587'
-  smtp_from: 'alerts@ainflue.com'
-  smtp_auth_username: 'alerts@ainflue.com'
+  smtp_smarthost: 'smtp.iacherie.com:587'
+  smtp_from: 'alerts@iacherie.com'
+  smtp_auth_username: 'alerts@iacherie.com'
   smtp_require_tls: true
   resolve_timeout: 5m
 
@@ -31,7 +31,7 @@ receivers:
   # 🔴 Alertes Critiques Enterprise/Premium
   - name: 'creator-critical-enterprise'
     email_configs:
-      - to: 'enterprise-support@ainflue.com'
+      - to: 'enterprise-support@iacherie.com'
         subject: '🚨 CRITIQUE: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
         body: |
           🚨 ALERTE CRITIQUE CREATOR ECONOMY
@@ -48,7 +48,7 @@ receivers:
           {{ end }}
           
           Actions requises IMMÉDIATEMENT.
-          Support Enterprise: +1-800-AINFLUE
+          Support Enterprise: +1-800-IACHERIE
         headers:
           Priority: 'high'
     slack_configs:
@@ -65,7 +65,7 @@ receivers:
   # 🟠 Alertes Haute Priorité Premium/Standard
   - name: 'creator-high-priority'
     email_configs:
-      - to: 'support@ainflue.com'
+      - to: 'support@iacherie.com'
         subject: '⚠️ URGENT: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
         body: |
           ⚠️ ALERTE URGENTE CREATOR ECONOMY
@@ -91,7 +91,7 @@ receivers:
   # 🟡 Alertes Moyennes Standard/Basic
   - name: 'creator-medium-priority'
     email_configs:
-      - to: 'monitoring@ainflue.com'
+      - to: 'monitoring@iacherie.com'
         subject: '💡 INFO: {{ .GroupLabels.alertname }} - {{ .GroupLabels.creator_type }}'
         body: |
           💡 NOTIFICATION CREATOR ECONOMY
@@ -113,7 +113,7 @@ receivers:
   # 🔵 Alertes Business Intelligence & Prédictions
   - name: 'creator-business-intelligence'
     email_configs:
-      - to: 'business-intelligence@ainflue.com'
+      - to: 'business-intelligence@iacherie.com'
         subject: '📊 BI ALERT: {{ .GroupLabels.alertname }}'
         body: |
           📊 ALERTE BUSINESS INTELLIGENCE

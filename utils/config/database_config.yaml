@@ -1,5 +1,5 @@
 # ===========================================
-# DATABASE CONFIGURATION - AINFLUE UTILS
+# DATABASE CONFIGURATION - IACHERIE UTILS
 # ===========================================
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -38,7 +38,7 @@ database:
   postgresql:
     # Connection Details
     connection:
-      host: "postgres-primary.ainflue.com"
+      host: "postgres-primary.iacherie.com"
       port: 5432
       database: "ainflue_production"
       username: "ainflue_app"
@@ -79,12 +79,12 @@ database:
       
     # Read Replicas
     read_replicas:
-      - host: "postgres-replica-1.ainflue.com"
+      - host: "postgres-replica-1.iacherie.com"
         port: 5432
         weight: 50
         lag_threshold: "5s"
         
-      - host: "postgres-replica-2.ainflue.com"
+      - host: "postgres-replica-2.iacherie.com"
         port: 5432
         weight: 50
         lag_threshold: "5s"
@@ -105,7 +105,7 @@ database:
   redis:
     # Primary Redis Instance
     primary:
-      host: "redis-primary.ainflue.com"
+      host: "redis-primary.iacherie.com"
       port: 6379
       password: "${REDIS_PASSWORD}"
       database: 0
@@ -118,12 +118,12 @@ database:
     cluster:
       enabled: true
       nodes:
-        - "redis-cluster-1.ainflue.com:6379"
-        - "redis-cluster-2.ainflue.com:6379"
-        - "redis-cluster-3.ainflue.com:6379"
-        - "redis-cluster-4.ainflue.com:6379"
-        - "redis-cluster-5.ainflue.com:6379"
-        - "redis-cluster-6.ainflue.com:6379"
+        - "redis-cluster-1.iacherie.com:6379"
+        - "redis-cluster-2.iacherie.com:6379"
+        - "redis-cluster-3.iacherie.com:6379"
+        - "redis-cluster-4.iacherie.com:6379"
+        - "redis-cluster-5.iacherie.com:6379"
+        - "redis-cluster-6.iacherie.com:6379"
       
     # Memory Management
     memory:
@@ -151,7 +151,7 @@ database:
   mongodb:
     # Connection String
     connection:
-      uri: "mongodb://ainflue_mongo:${MONGO_PASSWORD}@mongo-cluster.ainflue.com:27017,mongo-cluster-2.ainflue.com:27017,mongo-cluster-3.ainflue.com:27017/ainflue_production?replicaSet=ainflue-rs&ssl=true"
+      uri: "mongodb://ainflue_mongo:${MONGO_PASSWORD}@mongo-cluster.iacherie.com:27017,mongo-cluster-2.iacherie.com:27017,mongo-cluster-3.iacherie.com:27017/ainflue_production?replicaSet=iacherie-rs&ssl=true"
       options:
         retryWrites: true
         w: "majority"
@@ -162,21 +162,21 @@ database:
         
     # Replica Set Configuration
     replica_set:
-      name: "ainflue-rs"
+      name: "iacherie-rs"
       members:
-        - host: "mongo-primary.ainflue.com:27017"
+        - host: "mongo-primary.iacherie.com:27017"
           priority: 2
           votes: 1
           
-        - host: "mongo-secondary-1.ainflue.com:27017"
+        - host: "mongo-secondary-1.iacherie.com:27017"
           priority: 1
           votes: 1
           
-        - host: "mongo-secondary-2.ainflue.com:27017"
+        - host: "mongo-secondary-2.iacherie.com:27017"
           priority: 1
           votes: 1
           
-        - host: "mongo-arbiter.ainflue.com:27017"
+        - host: "mongo-arbiter.iacherie.com:27017"
           arbiterOnly: true
           votes: 1
           
@@ -184,12 +184,12 @@ database:
     sharding:
       enabled: true
       config_servers:
-        - "config-1.ainflue.com:27019"
-        - "config-2.ainflue.com:27019"
-        - "config-3.ainflue.com:27019"
+        - "config-1.iacherie.com:27019"
+        - "config-2.iacherie.com:27019"
+        - "config-3.iacherie.com:27019"
       mongos_routers:
-        - "mongos-1.ainflue.com:27017"
-        - "mongos-2.ainflue.com:27017"
+        - "mongos-1.iacherie.com:27017"
+        - "mongos-2.iacherie.com:27017"
         
     # Performance Settings
     performance:
@@ -204,25 +204,25 @@ database:
   elasticsearch:
     # Cluster Configuration
     cluster:
-      name: "ainflue-search-cluster"
+      name: "iacherie-search-cluster"
       nodes:
-        - host: "es-master-1.ainflue.com"
+        - host: "es-master-1.iacherie.com"
           port: 9200
           roles: ["master", "data", "ingest"]
           
-        - host: "es-master-2.ainflue.com"
+        - host: "es-master-2.iacherie.com"
           port: 9200
           roles: ["master", "data", "ingest"]
           
-        - host: "es-master-3.ainflue.com"
+        - host: "es-master-3.iacherie.com"
           port: 9200
           roles: ["master", "data", "ingest"]
           
-        - host: "es-data-1.ainflue.com"
+        - host: "es-data-1.iacherie.com"
           port: 9200
           roles: ["data", "ingest"]
           
-        - host: "es-data-2.ainflue.com"
+        - host: "es-data-2.iacherie.com"
           port: 9200
           roles: ["data", "ingest"]
           
@@ -253,7 +253,7 @@ database:
   influxdb:
     # Connection Configuration
     connection:
-      host: "influxdb.ainflue.com"
+      host: "influxdb.iacherie.com"
       port: 8086
       database: "ainflue_metrics"
       username: "ainflue_metrics"
@@ -290,22 +290,22 @@ database:
     cluster:
       name: "ainflue_analytics"
       nodes:
-        - host: "clickhouse-1.ainflue.com"
+        - host: "clickhouse-1.iacherie.com"
           port: 9000
           shard: 1
           replica: 1
           
-        - host: "clickhouse-2.ainflue.com"
+        - host: "clickhouse-2.iacherie.com"
           port: 9000
           shard: 1
           replica: 2
           
-        - host: "clickhouse-3.ainflue.com"
+        - host: "clickhouse-3.iacherie.com"
           port: 9000
           shard: 2
           replica: 1
           
-        - host: "clickhouse-4.ainflue.com"
+        - host: "clickhouse-4.iacherie.com"
           port: 9000
           shard: 2
           replica: 2

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE COPYRIGHT MONITOR - REAL-TIME DOCKERFILE
+# IACHERIE COPYRIGHT MONITOR - REAL-TIME DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for real-time copyright violation monitoring
 # across multiple platforms and content types.
@@ -75,7 +75,7 @@ VOLUME ["/app/storage", "/app/logs", "/app/cache"]
 
 CMD ["python3.11", "-m", "copyright_monitor.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Copyright Monitor"
-LABEL ainflue.service.category="protection"
-LABEL ainflue.service.name="copyright_monitor"
-LABEL ainflue.service.port="8023"
+LABEL org.opencontainers.image.title="IA Chérie Copyright Monitor"
+LABEL iacherie.service.category="protection"
+LABEL iacherie.service.name="copyright_monitor"
+LABEL iacherie.service.port="8023"

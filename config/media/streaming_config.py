@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Streaming Configuration Module
+"""IA Chérie Streaming Configuration Module
 ========================================
 
-Enterprise-grade streaming configuration for the Ainflue platform.
+Enterprise-grade streaming configuration for the IA Chérie platform.
 Comprehensive live streaming, video streaming, adaptive bitrate streaming,
 and real-time communication features for creator content delivery.
 
@@ -412,9 +412,9 @@ class VodConfig:
     # Storage settings
     storage_settings: Dict[str, Any] = field(default_factory=lambda: {
         "storage_backend": "s3",  # s3, azure, gcp, local
-        "bucket_name": "ainflue-vod",
+        "bucket_name": "iacherie-vod",
         "cdn_enabled": True,
-        "cdn_domain": "cdn.ainflue.com",
+        "cdn_domain": "cdn.iacherie.com",
         "encryption_enabled": True,
         "compression_enabled": True,
         "backup_enabled": True
@@ -611,7 +611,7 @@ class StreamingConfiguration:
         rtmp_primary = StreamEndpoint(
             endpoint_id="rtmp_primary",
             name="Primary RTMP Server",
-            url="rtmp://stream.ainflue.com/live",
+            url="rtmp://stream.iacherie.com/live",
             protocol=StreamingProtocol.RTMP,
             primary=True,
             region="us-east",
@@ -625,7 +625,7 @@ class StreamingConfiguration:
         rtmp_backup = StreamEndpoint(
             endpoint_id="rtmp_backup",
             name="Backup RTMP Server",
-            url="rtmp://backup.ainflue.com/live",
+            url="rtmp://backup.iacherie.com/live",
             protocol=StreamingProtocol.RTMP,
             backup=True,
             region="us-west",
@@ -639,7 +639,7 @@ class StreamingConfiguration:
         webrtc_endpoint = StreamEndpoint(
             endpoint_id="webrtc_primary",
             name="WebRTC Server",
-            url="wss://webrtc.ainflue.com",
+            url="wss://webrtc.iacherie.com",
             protocol=StreamingProtocol.WEBRTC,
             region="global",
             max_viewers=1000
@@ -651,7 +651,7 @@ class StreamingConfiguration:
         hls_endpoint = StreamEndpoint(
             endpoint_id="hls_primary",
             name="HLS Distribution",
-            url="https://hls.ainflue.com",
+            url="https://hls.iacherie.com",
             protocol=StreamingProtocol.HLS,
             region="global",
             cdn="cloudflare",
@@ -689,10 +689,10 @@ class StreamingConfiguration:
 # SECURITY: # SECURITY: session.stream_key = f"sk_{session.session_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}" # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-        session.rtmp_url = f"rtmp://stream.ainflue.com/live/{session.stream_key}"
-        session.hls_url = f"https://hls.ainflue.com/{session.session_id}/playlist.m3u8"
-        session.dash_url = f"https://dash.ainflue.com/{session.session_id}/manifest.mpd"
-        session.webrtc_url = f"wss://webrtc.ainflue.com/{session.session_id}"
+        session.rtmp_url = f"rtmp://stream.iacherie.com/live/{session.stream_key}"
+        session.hls_url = f"https://hls.iacherie.com/{session.session_id}/playlist.m3u8"
+        session.dash_url = f"https://dash.iacherie.com/{session.session_id}/manifest.mpd"
+        session.webrtc_url = f"wss://webrtc.iacherie.com/{session.session_id}"
         
         self.sessions[session.session_id] = session
         return session

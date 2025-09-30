@@ -1,4 +1,4 @@
-# 🚀 RETRY MECHANISMEN MODUL - AINFLUE ENTERPRISE
+# 🚀 RETRY MECHANISMEN MODUL - IACHERIE ENTERPRISE
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -12,9 +12,9 @@
 
 **Standort**: `/microservices/retry_mechanisms/`  
 **Architektur**: Backend Level 3 (Maximum) | 18 Dateien Komplett | Produktionsbereite Enterprise Retry Patterns  
-**Zweck**: ML-Intelligente Enterprise Retry Mechanismen für Ainflue System Resilienz, Zuverlässigkeit und Business Continuity
+**Zweck**: ML-Intelligente Enterprise Retry Mechanismen für IA Chérie System Resilienz, Zuverlässigkeit und Business Continuity
 
-### **🌍 AINFLUE BUSINESS LOGIK INTEGRATION**
+### **🌍 IACHERIE BUSINESS LOGIK INTEGRATION**
 ```
 Multi-Format Creators → KI Processing → Content Protection → Monetarisierung → 
 Echtzeit Kollaboration & Gamification → SEO Optimierung → Multi-Plattform Distribution
@@ -86,7 +86,7 @@ decision = await orchestrator.orchestrate_intelligent_retry(operation)
 ### ✅ PHASE 2 - SPEZIALISIERTE RETRY PATTERNS (6 Dateien) - ENTERPRISE BEREIT
 
 #### 7. **Content Processing Retry** (`content_processing_retry.py`)
-Spezialisierte Retry Patterns für Ainflue Medien Content Processing.
+Spezialisierte Retry Patterns für IA Chérie Medien Content Processing.
 
 ```python
 # Verwendungsbeispiel

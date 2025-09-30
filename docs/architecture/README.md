@@ -1,8 +1,8 @@
-# Ainflue Platform Architecture
+# IA Chérie Platform Architecture
 
 ## Overview
 
-Ainflue is an AI-powered content protection and monetization platform built with modern microservices architecture. The platform provides comprehensive content analysis, protection, and revenue optimization capabilities.
+IA Chérie is an AI-powered content protection and monetization platform built with modern microservices architecture. The platform provides comprehensive content analysis, protection, and revenue optimization capabilities.
 
 ## System Architecture
 

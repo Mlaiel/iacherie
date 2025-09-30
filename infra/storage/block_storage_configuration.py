@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Block Storage Configuration
+# IA Chérie Infrastructure Module - Block Storage Configuration
 # =========================================================
 # 
-# Enterprise-grade block storage configuration for Ainflue platform
+# Enterprise-grade block storage configuration for IA Chérie platform
 # Supports multi-cloud block storage and enterprise performance
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -78,7 +78,7 @@ class BlockStorageManager:
         
     def _setup_logging(self) -> logging.Logger:
         """Setup logging configuration"""
-        logger = logging.getLogger(f"ainflue.infra.storage.block_storage")
+        logger = logging.getLogger(f"iacherie.infra.storage.block_storage")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -118,17 +118,17 @@ class BlockStorageManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_standard_volumes(self) -> Dict[str, VolumeConfig]:
-        """Define standard volume configurations for Ainflue platform"""
+        """Define standard volume configurations for IA Chérie platform"""
         base_tags = {
             'Environment': self.config.environment,
-            'Project': 'Ainflue',
+            'Project': 'IA Chérie',
             'ManagedBy': 'AinflueBlockStorageManager'
         }
         
         return {
             # Database volumes - high IOPS for transaction processing
             'database_primary': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-db-primary',
+                name=f'iacherie-{self.config.environment}-db-primary',
                 size_gb=500 if self.config.environment == 'production' else 100,
                 volume_type=VolumeType.PROVISIONED_IOPS,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -137,7 +137,7 @@ class BlockStorageManager:
             ),
             
             'database_replica': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-db-replica',
+                name=f'iacherie-{self.config.environment}-db-replica',
                 size_gb=500 if self.config.environment == 'production' else 100,
                 volume_type=VolumeType.PROVISIONED_IOPS,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -147,7 +147,7 @@ class BlockStorageManager:
             
             # AI/ML model storage - high throughput for model loading
             'ai_models': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-ai-models',
+                name=f'iacherie-{self.config.environment}-ai-models',
                 size_gb=1000 if self.config.environment == 'production' else 200,
                 volume_type=VolumeType.THROUGHPUT_OPTIMIZED,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -157,7 +157,7 @@ class BlockStorageManager:
             
             # Content processing - high performance for media processing
             'content_processing': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-content-processing',
+                name=f'iacherie-{self.config.environment}-content-processing',
                 size_gb=2000 if self.config.environment == 'production' else 500,
                 volume_type=VolumeType.HIGH_PERFORMANCE,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -167,7 +167,7 @@ class BlockStorageManager:
             
             # Application logs - general purpose with good performance
             'application_logs': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-app-logs',
+                name=f'iacherie-{self.config.environment}-app-logs',
                 size_gb=200 if self.config.environment == 'production' else 50,
                 volume_type=VolumeType.GENERAL_PURPOSE,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -176,7 +176,7 @@ class BlockStorageManager:
             
             # Backup storage - cost-optimized
             'backup_storage': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-backup',
+                name=f'iacherie-{self.config.environment}-backup',
                 size_gb=5000 if self.config.environment == 'production' else 1000,
                 volume_type=VolumeType.COLD_STORAGE,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -185,7 +185,7 @@ class BlockStorageManager:
             
             # Redis cache storage - high IOPS for cache operations
             'redis_cache': VolumeConfig(
-                name=f'ainflue-{self.config.environment}-redis',
+                name=f'iacherie-{self.config.environment}-redis',
                 size_gb=100 if self.config.environment == 'production' else 20,
                 volume_type=VolumeType.PROVISIONED_IOPS,
                 encryption=EncryptionType.CLOUD_MANAGED,
@@ -299,7 +299,7 @@ class BlockStorageManager:
     async def _create_azure_disk(self, volume_config: VolumeConfig) -> str:
         """Create Azure managed disk"""
         try:
-            resource_group = f"ainflue-{self.config.environment}-rg"
+            resource_group = f"iacherie-{self.config.environment}-rg"
             
             # Map volume types to Azure disk types
             disk_type_map = {
@@ -407,7 +407,7 @@ class BlockStorageManager:
     def _get_gcp_project_id(self) -> str:
         """Get GCP project ID"""
         import os
-        return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
+        return os.getenv('GOOGLE_CLOUD_PROJECT', 'iacherie-platform')
     
     def _wait_for_gcp_operation(self, operation, project: str, zone: str = None):
         """Wait for GCP operation to complete"""
@@ -452,7 +452,7 @@ class BlockStorageManager:
                         'Tags': [
                             {'Key': 'Name', 'Value': snapshot_name},
                             {'Key': 'Environment', 'Value': self.config.environment},
-                            {'Key': 'Project', 'Value': 'Ainflue'},
+                            {'Key': 'Project', 'Value': 'IA Chérie'},
                             {'Key': 'SourceVolume', 'Value': volume_id}
                         ]
                     }
@@ -471,7 +471,7 @@ class BlockStorageManager:
     async def _create_azure_snapshot(self, disk_id: str, snapshot_name: str, description: str) -> str:
         """Create Azure disk snapshot"""
         try:
-            resource_group = f"ainflue-{self.config.environment}-rg"
+            resource_group = f"iacherie-{self.config.environment}-rg"
             
             snapshot_params = {
                 'location': self.config.region,
@@ -481,7 +481,7 @@ class BlockStorageManager:
                 },
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue',
+                    'Project': 'IA Chérie',
                     'SourceDisk': disk_id.split('/')[-1]
                 }
             }
@@ -513,7 +513,7 @@ class BlockStorageManager:
                 'source_disk': f'projects/{project}/zones/{self.config.region}-a/disks/{disk_name}',
                 'labels': {
                     'environment': self.config.environment.replace('_', '-'),
-                    'project': 'ainflue',
+                    'project': 'iacherie',
                     'source-disk': disk_name
                 }
             }
@@ -797,7 +797,7 @@ class BlockStorageManager:
 
 # Enterprise block storage orchestrator
 class AinflueBlockStorageOrchestrator:
-    """High-level block storage orchestration for Ainflue platform"""
+    """High-level block storage orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize block storage orchestrator
@@ -806,7 +806,7 @@ class AinflueBlockStorageOrchestrator:
             environment: Deployment environment
         """
         self.environment = environment
-        self.logger = logging.getLogger(f"ainflue.infra.storage.orchestrator")
+        self.logger = logging.getLogger(f"iacherie.infra.storage.orchestrator")
         
         # Multi-cloud configurations
         self.cloud_configs = self._get_cloud_configurations()

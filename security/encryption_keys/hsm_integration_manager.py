@@ -2,7 +2,7 @@ import os
 #!/usr/bin/env python3
 """
 🔐 HSM Integration Manager - Hardware Security Module Enterprise Integration
-Production-grade HSM management for Ainflue Creator Economy Platform
+Production-grade HSM management for IA Chérie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -130,7 +130,7 @@ class HSMIntegrationManager:
     """
     🔐 HSM Integration Manager - Enterprise Hardware Security Module Management
     
-    Provides comprehensive HSM integration for Ainflue Creator Economy Platform:
+    Provides comprehensive HSM integration for IA Chérie Creator Economy Platform:
     - Network-attached and PCIe HSM support
     - Multi-vendor HSM compatibility (Thales, AWS, Azure, Google)
     - High availability clustering with automatic failover
@@ -164,9 +164,9 @@ class HSMIntegrationManager:
         return HSMConfiguration(
             hsm_type=HSMType.NETWORK_ATTACHED,
             vendor=HSMVendor.THALES_LUNA,
-            connection_url="tcp://hsm-cluster.ainflue.local:1792",
+            connection_url="tcp://hsm-cluster.iacherie.local:1792",
             partition_name="ainflue_creators",
-            cluster_nodes=["hsm1.ainflue.local", "hsm2.ainflue.local", "hsm3.ainflue.local"],
+            cluster_nodes=["hsm1.iacherie.local", "hsm2.iacherie.local", "hsm3.iacherie.local"],
             failover_enabled=True,
             load_balancing=True,
             fips_mode=True,
@@ -320,7 +320,7 @@ class HSMIntegrationManager:
     async def _connect_azure_hsm(self):
         """Connect to Azure Dedicated HSM."""
         connection_config = {
-            "resource_group": "ainflue-hsm-rg",
+            "resource_group": "iacherie-hsm-rg",
             "hsm_name": self.config.partition_name,
             "subscription_id": self.config.credentials.get("subscription_id"),
             "client_id": self.config.credentials.get("client_id"),

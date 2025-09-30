@@ -57,7 +57,7 @@ class EngagementType(Enum):
 
 class PlatformType(Enum):
     """Types de plateformes"""
-    AINFLUE = "ainflue"
+    IACHERIE = "iacherie"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"

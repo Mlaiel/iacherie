@@ -1,10 +1,10 @@
-# 🔧 Ainflue Infrastructure Troubleshooting Guide
+# 🔧 IA Chérie Infrastructure Troubleshooting Guide
 
 **Enterprise Troubleshooting Procedures and Solutions**
 
 ## 📋 Overview
 
-This guide provides comprehensive troubleshooting procedures for the Ainflue Infrastructure module, covering common issues, diagnostic procedures, and resolution steps.
+This guide provides comprehensive troubleshooting procedures for the IA Chérie Infrastructure module, covering common issues, diagnostic procedures, and resolution steps.
 
 ## 🎯 Troubleshooting Methodology
 
@@ -36,8 +36,8 @@ This guide provides comprehensive troubleshooting procedures for the Ainflue Inf
 #### Diagnostic Commands
 ```bash
 # Check resource status
-kubectl get pods -n ainflue-system
-kubectl describe pod <pod-name> -n ainflue-system
+kubectl get pods -n iacherie-system
+kubectl describe pod <pod-name> -n iacherie-system
 
 # Check cloud provider quotas
 aws service-quotas list-service-quotas --service-code ec2
@@ -103,8 +103,8 @@ nslookup management.azure.com
 docker pull <image-name>
 
 # Check imagePullSecrets
-kubectl get secrets -n ainflue-system
-kubectl describe secret <registry-secret> -n ainflue-system
+kubectl get secrets -n iacherie-system
+kubectl describe secret <registry-secret> -n iacherie-system
 
 # Update image pull secret
 kubectl create secret docker-registry <secret-name> \
@@ -121,7 +121,7 @@ kubectl top nodes
 kubectl describe node <node-name>
 
 # Check pod resource requests/limits
-kubectl describe pod <pod-name> -n ainflue-system
+kubectl describe pod <pod-name> -n iacherie-system
 
 # Scale cluster if needed
 eksctl scale nodegroup --cluster=<cluster-name> \
@@ -132,8 +132,8 @@ eksctl scale nodegroup --cluster=<cluster-name> \
 ```bash
 # Check PV/PVC status
 kubectl get pv
-kubectl get pvc -n ainflue-system
-kubectl describe pvc <pvc-name> -n ainflue-system
+kubectl get pvc -n iacherie-system
+kubectl describe pvc <pvc-name> -n iacherie-system
 
 # Check storage class
 kubectl get storageclass
@@ -167,23 +167,23 @@ istioctl proxy-status
 
 # Check sidecar injection
 kubectl get namespace -L istio-injection
-kubectl describe pod <pod-name> -n ainflue-system
+kubectl describe pod <pod-name> -n iacherie-system
 
 # Debug proxy configuration
-istioctl proxy-config cluster <pod-name> -n ainflue-system
+istioctl proxy-config cluster <pod-name> -n iacherie-system
 ```
 
 **Load Balancer Issues**
 ```bash
 # Check service status
-kubectl get svc -n ainflue-system
-kubectl describe svc <service-name> -n ainflue-system
+kubectl get svc -n iacherie-system
+kubectl describe svc <service-name> -n iacherie-system
 
 # Check endpoints
-kubectl get endpoints -n ainflue-system
+kubectl get endpoints -n iacherie-system
 
 # Test service connectivity
-kubectl port-forward svc/<service-name> 8080:80 -n ainflue-system
+kubectl port-forward svc/<service-name> 8080:80 -n iacherie-system
 ```
 
 ### 4. Database Connectivity Issues
@@ -217,14 +217,14 @@ curl http://localhost:9187/metrics | grep postgres_
 #### High CPU/Memory Usage
 ```bash
 # Check resource utilization
-kubectl top pods -n ainflue-system
+kubectl top pods -n iacherie-system
 kubectl top nodes
 
 # Check resource limits
-kubectl describe pod <pod-name> -n ainflue-system | grep -A 5 "Limits\|Requests"
+kubectl describe pod <pod-name> -n iacherie-system | grep -A 5 "Limits\|Requests"
 
 # Scale deployment if needed
-kubectl scale deployment <deployment-name> --replicas=5 -n ainflue-system
+kubectl scale deployment <deployment-name> --replicas=5 -n iacherie-system
 ```
 
 #### Slow Response Times
@@ -237,7 +237,7 @@ kubectl exec -it <postgres-pod> -n database -- \
   psql -U postgres -c "SELECT schemaname,tablename,attname,n_distinct,correlation FROM pg_stats;"
 
 # Check network latency
-kubectl exec -it <pod-name> -n ainflue-system -- ping <target-service>
+kubectl exec -it <pod-name> -n iacherie-system -- ping <target-service>
 ```
 
 ### 6. Storage Issues
@@ -245,13 +245,13 @@ kubectl exec -it <pod-name> -n ainflue-system -- ping <target-service>
 #### Disk Space Problems
 ```bash
 # Check disk usage
-kubectl exec -it <pod-name> -n ainflue-system -- df -h
+kubectl exec -it <pod-name> -n iacherie-system -- df -h
 
 # Check persistent volume usage
 kubectl describe pv | grep -A 5 "Capacity\|Used"
 
 # Clean up old logs
-kubectl exec -it <pod-name> -n ainflue-system -- \
+kubectl exec -it <pod-name> -n iacherie-system -- \
   find /var/log -name "*.log" -mtime +7 -delete
 ```
 
@@ -262,8 +262,8 @@ kubectl get jobs -n backup-system
 kubectl describe job <backup-job> -n backup-system
 
 # Check backup storage
-aws s3 ls s3://ainflue-backups/
-gsutil ls gs://ainflue-backups/
+aws s3 ls s3://iacherie-backups/
+gsutil ls gs://iacherie-backups/
 
 # Test backup restoration
 kubectl apply -f test-restore-job.yaml
@@ -429,8 +429,8 @@ kubectl get jobs -n backup-system
 kubectl logs job/<backup-job> -n backup-system
 
 # Verify backup storage
-aws s3 ls s3://ainflue-backups/ --recursive
-gsutil ls gs://ainflue-backups/ -l
+aws s3 ls s3://iacherie-backups/ --recursive
+gsutil ls gs://iacherie-backups/ -l
 
 # Test backup integrity
 kubectl apply -f backup-verification-job.yaml
@@ -471,16 +471,16 @@ echo "System Pods:"
 kubectl get pods -n kube-system | grep -v Running
 
 echo "Infrastructure Pods:"
-kubectl get pods -n ainflue-system | grep -v Running
+kubectl get pods -n iacherie-system | grep -v Running
 
 # Check critical services
 echo "Critical Services:"
-kubectl get svc -n ainflue-system
+kubectl get svc -n iacherie-system
 
 # Check resource usage
 echo "Resource Usage:"
 kubectl top nodes
-kubectl top pods -n ainflue-system
+kubectl top pods -n iacherie-system
 
 echo "=== Health Check Complete ==="
 ```
@@ -490,22 +490,22 @@ echo "=== Health Check Complete ==="
 #!/bin/bash
 # collect-logs.sh
 
-LOG_DIR="/tmp/ainflue-logs-$(date +%Y%m%d-%H%M%S)"
+LOG_DIR="/tmp/iacherie-logs-$(date +%Y%m%d-%H%M%S)"
 mkdir -p $LOG_DIR
 
 echo "Collecting infrastructure logs..."
 
 # Collect pod logs
-for pod in $(kubectl get pods -n ainflue-system -o name); do
+for pod in $(kubectl get pods -n iacherie-system -o name); do
     pod_name=$(echo $pod | cut -d'/' -f2)
-    kubectl logs $pod -n ainflue-system > $LOG_DIR/$pod_name.log
+    kubectl logs $pod -n iacherie-system > $LOG_DIR/$pod_name.log
 done
 
 # Collect events
-kubectl get events -n ainflue-system --sort-by='.lastTimestamp' > $LOG_DIR/events.log
+kubectl get events -n iacherie-system --sort-by='.lastTimestamp' > $LOG_DIR/events.log
 
 # Collect resource descriptions
-kubectl describe pods -n ainflue-system > $LOG_DIR/pod-descriptions.log
+kubectl describe pods -n iacherie-system > $LOG_DIR/pod-descriptions.log
 
 echo "Logs collected in: $LOG_DIR"
 ```
@@ -650,10 +650,10 @@ echo "=== Connectivity Test Complete ==="
 ### Escalation Contacts
 
 #### Internal Teams
-- **Infrastructure Team**: infrastructure@ainflue.com
-- **Security Team**: security@ainflue.com
-- **Database Team**: database@ainflue.com
-- **Network Team**: network@ainflue.com
+- **Infrastructure Team**: infrastructure@iacherie.com
+- **Security Team**: security@iacherie.com
+- **Database Team**: database@iacherie.com
+- **Network Team**: network@iacherie.com
 
 #### External Vendors
 - **AWS Support**: Enterprise Support Case

@@ -356,15 +356,15 @@ class DataLossPreventionEngine:
             description="Phone number detection"
         ))
         
-        # Propriété intellectuelle Ainflue
+        # Propriété intellectuelle IA Chérie
         self.add_pattern(DataPattern(
             pattern_id="ainflue_ip",
-            name="Ainflue Intellectual Property",
+            name="IA Chérie Intellectual Property",
             data_type=DataType.INTELLECTUAL_PROPERTY,
-            regex_pattern=r'(?:ainflue|fahed\s+mlaiel|propriét[éeè]\s+intellectuelle|copyright.*mlaiel)',
+            regex_pattern=r'(?:iacherie|fahed\s+mlaiel|propriét[éeè]\s+intellectuelle|copyright.*mlaiel)',
             classification=DataClassification.TOP_SECRET,
             confidence_threshold=0.9,
-            description="Ainflue IP and copyright detection"
+            description="IA Chérie IP and copyright detection"
         ))
         
         # Contenu créateur sensible
@@ -393,7 +393,7 @@ class DataLossPreventionEngine:
             channels=[TransmissionChannel.EMAIL, TransmissionChannel.FILE_UPLOAD, TransmissionChannel.WEB_UPLOAD],
             action=ActionType.BLOCK,
             severity=ViolationSeverity.HIGH,
-            notify_recipients=["security@ainflue.com", "compliance@ainflue.com"]
+            notify_recipients=["security@iacherie.com", "compliance@iacherie.com"]
         ))
         
         # Politique protection credentials
@@ -406,20 +406,20 @@ class DataLossPreventionEngine:
             channels=list(TransmissionChannel),
             action=ActionType.BLOCK,
             severity=ViolationSeverity.CRITICAL,
-            notify_recipients=["security@ainflue.com", "ciso@ainflue.com"]
+            notify_recipients=["security@iacherie.com", "ciso@iacherie.com"]
         ))
         
-        # Politique protection IP Ainflue
+        # Politique protection IP IA Chérie
         self.add_policy(DLPPolicy(
             policy_id="ainflue_ip_protection",
-            name="Ainflue IP Protection",
-            description="Protect Ainflue intellectual property",
+            name="IA Chérie IP Protection",
+            description="Protect IA Chérie intellectual property",
             data_types=[DataType.INTELLECTUAL_PROPERTY],
             classifications=[DataClassification.TOP_SECRET, DataClassification.RESTRICTED],
             channels=list(TransmissionChannel),
             action=ActionType.QUARANTINE,
             severity=ViolationSeverity.EMERGENCY,
-            notify_recipients=["legal@ainflue.com", "mlaiel@live.de"]
+            notify_recipients=["legal@iacherie.com", "mlaiel@live.de"]
         ))
         
         # Politique protection contenu créateur
@@ -432,7 +432,7 @@ class DataLossPreventionEngine:
             channels=[TransmissionChannel.EMAIL, TransmissionChannel.WEB_UPLOAD, TransmissionChannel.CLOUD_SYNC],
             action=ActionType.WARN,
             severity=ViolationSeverity.MEDIUM,
-            notify_recipients=["creators@ainflue.com"]
+            notify_recipients=["creators@iacherie.com"]
         ))
         
         # Politique surveillance données personnelles
@@ -445,7 +445,7 @@ class DataLossPreventionEngine:
             channels=list(TransmissionChannel),
             action=ActionType.LOG_ONLY,
             severity=ViolationSeverity.LOW,
-            notify_recipients=["privacy@ainflue.com"]
+            notify_recipients=["privacy@iacherie.com"]
         ))
         
         logger.info(f"Initialized {len(self.policies)} default DLP policies")
@@ -1286,7 +1286,7 @@ if __name__ == "__main__":
         api_key: sk-1234567890abcdef1234567890abcdef
         password: SuperSecret123!
         
-        Ainflue Proprietary Information:
+        IA Chérie Proprietary Information:
         Creator content hash: abc123def456
         Fahed Mlaiel intellectual property notice
         """

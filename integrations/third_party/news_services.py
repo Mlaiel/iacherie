@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - News Services Integration Module
+IA Chérie Platform - News Services Integration Module
 Enterprise-grade news APIs for trending content creation and current events integration
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -295,7 +295,7 @@ class NewsAPIService:
         """Generate unique article ID"""
         return hashlib.md5(url.encode()).hexdigest()
         
-    async def _analyze_sentiment(self, text: str) -> Tuple[NewsSentiment, float]:
+    async def _analyze_sentiment(self, text: str) -> tuple[NewsSentiment, float]:
         """Analyze sentiment (simplified implementation)"""
         # In a real implementation, use sentiment analysis API or model
         positive_words = {"good", "great", "excellent", "amazing", "wonderful", "positive", "success", "win", "victory", "happy", "joy"}
@@ -485,7 +485,7 @@ class GuardianAPI:
         """Generate article ID from Guardian ID"""
         return hashlib.md5(guardian_id.encode()).hexdigest()
         
-    async def _analyze_sentiment(self, text: str) -> Tuple[NewsSentiment, float]:
+    async def _analyze_sentiment(self, text: str) -> tuple[NewsSentiment, float]:
         """Analyze sentiment (simplified implementation)"""
         # Same as NewsAPI implementation
         positive_words = {"good", "great", "excellent", "amazing", "wonderful", "positive", "success", "win", "victory", "happy", "joy"}
@@ -971,10 +971,10 @@ def create_news_manager(config: Dict[str, Any]) -> NewsServicesManager:
     """Create configured news manager"""
     return NewsServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def ainflue_news_content_strategy_workflow(target_topics: List[str], content_categories: List[str]) -> Dict[str, Any]:
     """
-    Complete news-based content strategy workflow for Ainflue creators
+    Complete news-based content strategy workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -1312,5 +1312,5 @@ if __name__ == "__main__":
     # asyncio.run(test_news_services())
     
     print("✅ News Services Integration Module loaded successfully")
-    print("📰 Enterprise-grade news intelligence for Ainflue creators")
+    print("📰 Enterprise-grade news intelligence for IA Chérie creators")
     print("🔥 Trending analysis, content opportunities, and viral prediction ready")

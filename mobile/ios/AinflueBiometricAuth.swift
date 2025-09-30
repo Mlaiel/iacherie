@@ -1,5 +1,5 @@
 /**
- * Ainflue iOS Biometric Authentication - TouchID/FaceID Security Service
+ * IA Chérie iOS Biometric Authentication - TouchID/FaceID Security Service
  * 
  * Advanced biometric authentication system for iOS content creators
  * Supports TouchID, FaceID, and secure authentication with Keychain
@@ -19,7 +19,7 @@ import CryptoKit
 import AuthenticationServices
 
 /**
- * Professional Biometric Authentication Service for Ainflue iOS Platform
+ * Professional Biometric Authentication Service for IA Chérie iOS Platform
  * 
  * Features:
  * - TouchID authentication
@@ -38,7 +38,7 @@ public class AinflueBiometricAuth: NSObject {
     // MARK: - Constants
     
     private struct Constants {
-        static let keychainService = "com.ainflue.mobile.biometric"
+        static let keychainService = "com.iacherie.mobile.biometric"
         static let biometricKeyAlias = "ainflue_biometric_key"
         static let authenticationTimeout: TimeInterval = 30.0
         static let maxAuthenticationAttempts = 5
@@ -116,7 +116,7 @@ public class AinflueBiometricAuth: NSObject {
         
         public init(
             localizedFallbackTitle: String = "Use Passcode",
-            localizedReason: String = "Authenticate to access your Ainflue account",
+            localizedReason: String = "Authenticate to access your IA Chérie account",
             touchIDAuthenticationAllowableReuseDuration: TimeInterval? = nil,
             enableDeviceOwnerAuthentication: Bool = false,
             enableBiometricOnly: Bool = true

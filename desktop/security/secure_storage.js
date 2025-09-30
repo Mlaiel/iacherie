@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Secure Storage Manager
+ * IA Chérie Desktop - Secure Storage Manager
  * 
  * Encrypted local storage for sensitive data with key management
  * 
@@ -19,7 +19,7 @@ class SecureStorageManager {
         this.keyDerivation = options.keyDerivation || 'pbkdf2';
         this.iterations = options.iterations || 100000;
         this.saltLength = options.saltLength || 32;
-        this.storageDir = options.storageDir || path.join(os.homedir(), '.ainflue', 'secure');
+        this.storageDir = options.storageDir || path.join(os.homedir(), '.iacherie', 'secure');
         
         this.masterKey = null;
         this.storageIndex = new Map();

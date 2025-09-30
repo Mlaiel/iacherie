@@ -1,7 +1,7 @@
-"""Event Validation Framework - Ultra-Robust for Ainflue Business Events
+"""Event Validation Framework - Ultra-Robust for IA Chérie Business Events
 
 Comprehensive event validation framework with multi-layer validation,
-business rules enforcement, and compliance checking for Ainflue platform.
+business rules enforcement, and compliance checking for IA Chérie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -132,14 +132,14 @@ class SequenceValidationResult:
 
 
 class BusinessRulesEngine:
-    """Engine for evaluating business rules for Ainflue platform"""
+    """Engine for evaluating business rules for IA Chérie platform"""
     
     def __init__(self):
         self.rules = self._load_ainflue_business_rules()
-        logger.info("BusinessRulesEngine initialized with Ainflue rules")
+        logger.info("BusinessRulesEngine initialized with IA Chérie rules")
     
     def _load_ainflue_business_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load business rules specific to Ainflue platform"""
+        """Load business rules specific to IA Chérie platform"""
         
         return {
             # Content Upload Rules
@@ -385,7 +385,7 @@ class SchemaValidator:
         if "event_type" in event_data:
             event_type = event_data["event_type"]
             if not self._is_valid_event_type(event_type):
-                warnings.append(f"Event type '{event_type}' doesn't follow Ainflue naming conventions")
+                warnings.append(f"Event type '{event_type}' doesn't follow IA Chérie naming conventions")
         
         processing_time = time.time() - start_time
         
@@ -409,21 +409,21 @@ class SchemaValidator:
         return False
     
     def _is_valid_event_type(self, event_type: str) -> bool:
-        """Validate event type follows Ainflue conventions"""
-        # Ainflue event types should follow: category.action.detail pattern
+        """Validate event type follows IA Chérie conventions"""
+        # IA Chérie event types should follow: category.action.detail pattern
         pattern = r'^[a-z_]+\.[a-z_]+(\.[a-z_]+)*$'
         return bool(re.match(pattern, event_type))
 
 
 class BusinessLogicValidator:
-    """Validator for Ainflue business logic rules"""
+    """Validator for IA Chérie business logic rules"""
     
     def __init__(self, business_rules_engine: BusinessRulesEngine):
         self.business_rules_engine = business_rules_engine
     
     async def validate_business_logic(self, event_data: Dict[str, Any],
                                     business_context: Dict[str, Any]) -> ValidationResult:
-        """Validate event against Ainflue business logic"""
+        """Validate event against IA Chérie business logic"""
         
         start_time = time.time()
         violations = []
@@ -593,7 +593,7 @@ class WorkflowSequenceValidator:
         self.workflow_definitions = self._load_workflow_definitions()
     
     def _load_workflow_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Load Ainflue workflow definitions"""
+        """Load IA Chérie workflow definitions"""
         
         return {
             "content_lifecycle": {
@@ -990,7 +990,7 @@ class PerformanceConstraintValidator:
 
 class EventValidationFramework:
     """
-    Ultra-robust event validation framework for Ainflue business events
+    Ultra-robust event validation framework for IA Chérie business events
     Multi-layer validation with business rules enforcement and compliance checking
     """
     
@@ -1002,7 +1002,7 @@ class EventValidationFramework:
         self.compliance_validator = ComplianceValidator()
         self.performance_validator = PerformanceConstraintValidator()
         
-        logger.info("EventValidationFramework initialized for Ainflue business events")
+        logger.info("EventValidationFramework initialized for IA Chérie business events")
     
     async def validate_event_comprehensive(self, 
                                          event_data: Dict[str, Any],
@@ -1160,7 +1160,7 @@ class EventValidationFramework:
                 
                 # Auto-correct event ID format issues
                 if violation.rule_id == "schema.event_id_format" and not event_data.get("event_id"):
-                    corrections["event_id"] = f"ainflue_{int(time.time() * 1000)}_{hash(str(event_data)) % 10000}"
+                    corrections["event_id"] = f"iacherie_{int(time.time() * 1000)}_{hash(str(event_data)) % 10000}"
                 
                 # Auto-correct missing correlation ID
                 if "correlation_id" not in event_data:

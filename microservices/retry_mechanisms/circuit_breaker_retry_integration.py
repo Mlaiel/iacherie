@@ -1,11 +1,11 @@
 """
-Circuit Breaker Retry Integration - Ainflue
+Circuit Breaker Retry Integration - IA Chérie
 ==========================================
 Intégration circuit breaker avec retry mechanisms.
 State-aware retry + gradual recovery + health probing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chérie Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -636,7 +636,7 @@ def create_circuit_breaker_integration(
     
     return CircuitBreakerRetryIntegration(config)
 
-# Configuration prédéfinies pour Ainflue
+# Configuration prédéfinies pour IA Chérie
 AINFLUE_CIRCUIT_CONFIGS = {
     'content_processing': IntegrationConfig(
         failure_threshold=3,

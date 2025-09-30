@@ -1,5 +1,5 @@
 """
-Enterprise SEO Dashboard for Ainflue Platform
+Enterprise SEO Dashboard for IA Chérie Platform
 ==============================================
 
 Advanced enterprise-grade SEO analytics dashboard with AI-powered insights,
@@ -254,7 +254,7 @@ class EnterpriseSEODashboard:
             self.db_pool = await asyncpg.create_pool(
                 host=self.config.get('db_host', 'localhost'),
                 port=self.config.get('db_port', 5432),
-                database=self.config.get('db_name', 'ainflue'),
+                database=self.config.get('db_name', 'iacherie'),
                 user=self.config.get('db_user', 'postgres'),
                 password=self.config.get('db_password', ''),
                 min_size=5,

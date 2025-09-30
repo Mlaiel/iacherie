@@ -5,7 +5,7 @@ Système avancé de watermarking avec embedding invisible/visible,
 steganographie et protection robuste contre les attaques.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chérie Integrations
 Version: 1.0 Production
 """
 
@@ -69,9 +69,9 @@ class WatermarkConfig:
     watermark_type: WatermarkType
     robustness_level: RobustnessLevel
     opacity: float
-    position: Tuple[int, int]
-    size: Tuple[int, int]
-    color: Tuple[int, int, int]
+    position: tuple[int, int]
+    size: tuple[int, int]
+    color: tuple[int, int, int]
     font_family: str
     encoding_strength: float
     resistance_attacks: List[str]

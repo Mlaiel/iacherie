@@ -531,7 +531,7 @@ class SubscriptionMetricsCollector:
             
             dashboard = BusinessDashboard(
                 dashboard_id=dashboard_id,
-                name="Ainflue Subscription Metrics Dashboard",
+                name="IA Chérie Subscription Metrics Dashboard",
                 metrics=list(current_metrics.values()),
                 kpis=kpis,
                 trends=trends,

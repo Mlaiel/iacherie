@@ -25,7 +25,7 @@ GDPR, DMCA, and international copyright protections apply.
 - **AI Prompt Engineer:** Payment workflow automation
 
 ## Executive Summary
-Enterprise-grade payment gateway architecture providing multi-provider payment processing, cryptocurrency support, fraud detection, and comprehensive revenue management for the Ainflue AI creator platform.
+Enterprise-grade payment gateway architecture providing multi-provider payment processing, cryptocurrency support, fraud detection, and comprehensive revenue management for the IA Chérie AI creator platform.
 
 ## Architecture Overview
 Level 2 backend component handling all payment processing, revenue splits, creator payouts, licensing fees, collaboration payments, and monetization workflows across the entire creator ecosystem.
@@ -124,9 +124,9 @@ result = await gateway.process_payment({
 
 ## Support & Contact
 - **Technical Support:** mlaiel@live.de
-- **Documentation:** https://docs.ainflue.com/payment
-- **Status Page:** https://status.ainflue.com
-- **Security Issues:** security@ainflue.com
+- **Documentation:** https://docs.iacherie.com/payment
+- **Status Page:** https://status.iacherie.com
+- **Security Issues:** security@iacherie.com
 
 ## License
 Enterprise Commercial License - See LICENSE file for details.

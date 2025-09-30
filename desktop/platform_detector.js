@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Platform Detector
+ * IA Chérie Desktop - Platform Detector
  * 
  * Cross-platform detection and optimization system
  * 

@@ -1,6 +1,6 @@
 # 🗜️ Fortgeschrittenes Kompressions-Intelligenz-Modul
 
-**Enterprise-Grade Multimedia-Kompression mit KI-gesteuerte Optimierung für die Ainflue-Plattform**
+**Enterprise-Grade Multimedia-Kompression mit KI-gesteuerte Optimierung für die IA Chérie-Plattform**
 
 ## Überblick
 
@@ -102,4 +102,4 @@ result = await image_engine.compress_image(
 
 **© 2025 Fahed Mlaiel - Alle Rechte vorbehalten**  
 Kontakt: mlaiel@live.de  
-Projekt: Ainflue Platform - Kompressions-Intelligenz-Modul
+Projekt: IA Chérie Platform - Kompressions-Intelligenz-Modul

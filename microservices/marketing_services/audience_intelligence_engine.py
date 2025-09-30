@@ -1,12 +1,12 @@
 """
-Audience Intelligence Engine - Ainflue Enterprise
+Audience Intelligence Engine - IA Chérie Enterprise
 =================================================
 Moteur intelligence audience avec segmentation IA.
 Advanced audience segmentation + behavioral analysis + psychographic profiling.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services - Audience Intelligence
+Project: IA Chérie Marketing Services - Audience Intelligence
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

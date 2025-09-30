@@ -3,7 +3,7 @@
 Affiliate Examples Module - Démonstrations Affiliation Ultra Avancées
 ====================================================================
 
-Module de démonstrations ultra sophistiquées pour le système d'affiliation Ainflue.
+Module de démonstrations ultra sophistiquées pour le système d'affiliation IA Chérie.
 Contient des examples industriels pour programmes partenaires, tracking commissions,
 et workflows multi-créateurs.
 
@@ -241,7 +241,7 @@ def get_module_info() -> Dict[str, Any]:
         "available_demos": AVAILABLE_DEMOS,
         "supported_creator_types": SUPPORTED_CREATOR_TYPES,
         "program_tiers": PROGRAM_TIERS,
-        "description": "Module de démonstrations ultra sophistiquées pour système d'affiliation Ainflue"
+        "description": "Module de démonstrations ultra sophistiquées pour système d'affiliation IA Chérie"
     }
 
 

@@ -1,6 +1,6 @@
 """Viral Optimization Engine
 
-Advanced ML-powered viral content optimization system for the Ainflue platform.
+Advanced ML-powered viral content optimization system for the IA Chérie platform.
 Predicts and optimizes content virality potential across all social platforms
 using cutting-edge machine learning algorithms and real-time trend analysis.
 

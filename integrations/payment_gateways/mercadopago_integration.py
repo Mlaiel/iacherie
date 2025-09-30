@@ -1,5 +1,5 @@
 """
-MercadoPago Integration for Ainflue Platform
+MercadoPago Integration for IA Chérie Platform
 Enterprise-grade MercadoPago payment processing for Latin American markets
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -108,14 +108,14 @@ class MercadoPagoConfig:
     external_reference: Optional[str] = None
     marketplace_fee: Optional[Decimal] = None
     differential_pricing_id: Optional[int] = None
-    statement_descriptor: str = "AINFLUE"
+    statement_descriptor: str = "IACHERIE"
     
     def __post_init__(self):
         if self.back_urls is None:
             self.back_urls = {
-                "success": "https://ainflue.com/payment/success",
-                "failure": "https://ainflue.com/payment/failure",
-                "pending": "https://ainflue.com/payment/pending"
+                "success": "https://iacherie.com/payment/success",
+                "failure": "https://iacherie.com/payment/failure",
+                "pending": "https://iacherie.com/payment/pending"
             }
 
 @dataclass
@@ -173,7 +173,7 @@ class ProcessedPayment:
 
 class MercadoPagoIntegration(BaseIntegration):
     """
-    Enterprise MercadoPago integration for Ainflue platform
+    Enterprise MercadoPago integration for IA Chérie platform
     
     Features:
     - Complete Latin American market coverage
@@ -198,7 +198,7 @@ class MercadoPagoIntegration(BaseIntegration):
         self.headers = {
             "Authorization": f"Bearer {config.access_token}",
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue/1.0.0",
+            "User-Agent": "IA Chérie/1.0.0",
             "X-Integrator-Id": "dev_24c65fb163bf11ea96500242ac130004"
         }
         
@@ -876,7 +876,7 @@ def create_mercadopago_integration(
     
     return MercadoPagoIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chérie platform
 async def example_mercadopago_flow():
     """Example MercadoPago integration usage"""
     
@@ -889,7 +889,7 @@ async def example_mercadopago_flow():
         environment=MercadoPagoEnvironment.SANDBOX,
         country="BR",
         currency=Currency.BRL,
-        notification_url="https://ainflue.com/webhooks/mercadopago",
+        notification_url="https://iacherie.com/webhooks/mercadopago",
         webhook_secret="webhook-secret"
     )
     
@@ -902,11 +902,11 @@ async def example_mercadopago_flow():
         payment_request = PaymentRequest(
             transaction_amount=Decimal("29.90"),
             currency_id="BRL",
-            description="Ainflue Premium Subscription",
+            description="IA Chérie Premium Subscription",
             payment_method_id="visa",
             installments=1,
             payer=PayerInfo(
-                email="creator@ainflue.com",
+                email="creator@iacherie.com",
                 identification={
                     "type": "CPF",
                     "number": "12345678901"
@@ -916,7 +916,7 @@ async def example_mercadopago_flow():
             metadata={
                 "creator_id": "creator_123",
                 "subscription_type": "premium",
-                "platform": "ainflue"
+                "platform": "iacherie"
             }
         )
         
@@ -926,7 +926,7 @@ async def example_mercadopago_flow():
         # Create checkout preference
         items = [
             {
-                "title": "Ainflue Premium Subscription",
+                "title": "IA Chérie Premium Subscription",
                 "quantity": 1,
                 "unit_price": 29.90,
                 "currency_id": "BRL"

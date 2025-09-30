@@ -49,7 +49,7 @@ class PlanningPriority(Enum):
 
 
 class CreatorTier(Enum):
-    """Tiers créateurs Ainflue"""
+    """Tiers créateurs IA Chérie"""
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
     EMERGING = "emerging"
@@ -113,7 +113,7 @@ class CapacityPlanningOrchestrator:
         # Initialize components
         self._initialize_capacity_engines()
         
-        logger.info("🚀 CapacityPlanningOrchestrator initialisé - Ainflue Creator Economy")
+        logger.info("🚀 CapacityPlanningOrchestrator initialisé - IA Chérie Creator Economy")
 
     def _initialize_capacity_engines(self) -> None:
         """Initialise les moteurs de planification de capacité"""
@@ -755,7 +755,7 @@ class CapacityPlanningOrchestrator:
 # Point d'entrée principal pour le module
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("🚀 Initialisation Capacity Planning Orchestrator - Ainflue Creator Economy")
+    print("🚀 Initialisation Capacity Planning Orchestrator - IA Chérie Creator Economy")
     
     orchestrator = CapacityPlanningOrchestrator(
         enable_ai_predictions=True,
@@ -785,7 +785,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['capacity_engines_count']} moteurs actifs")
     
     print("\n🎯 Capacity Planning Orchestrator - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chérie")
 
 
 if __name__ == "__main__":

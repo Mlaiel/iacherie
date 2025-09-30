@@ -599,7 +599,7 @@ class ModelArtifactManager:
             distribution_result = {
                 "environment": environment,
                 "status": "completed",
-                "distribution_url": f"https://{environment}.artifacts.ainflue.com/{artifact.artifact_id}",
+                "distribution_url": f"https://{environment}.artifacts.iacherie.com/{artifact.artifact_id}",
                 "size_bytes": artifact.compressed_size_bytes,
                 "checksum": hashlib.sha256(artifact_data).hexdigest(),
                 "distributed_at": datetime.now().isoformat(),
@@ -638,11 +638,11 @@ class ModelArtifactManager:
             await asyncio.sleep(0.05)
             
             cdn_urls = {
-                "global": f"https://cdn.ainflue.com/artifacts/{artifact.artifact_id}",
-                "us-east": f"https://us-east.cdn.ainflue.com/artifacts/{artifact.artifact_id}",
-                "us-west": f"https://us-west.cdn.ainflue.com/artifacts/{artifact.artifact_id}",
-                "eu-central": f"https://eu.cdn.ainflue.com/artifacts/{artifact.artifact_id}",
-                "asia-pacific": f"https://apac.cdn.ainflue.com/artifacts/{artifact.artifact_id}"
+                "global": f"https://cdn.iacherie.com/artifacts/{artifact.artifact_id}",
+                "us-east": f"https://us-east.cdn.iacherie.com/artifacts/{artifact.artifact_id}",
+                "us-west": f"https://us-west.cdn.iacherie.com/artifacts/{artifact.artifact_id}",
+                "eu-central": f"https://eu.cdn.iacherie.com/artifacts/{artifact.artifact_id}",
+                "asia-pacific": f"https://apac.cdn.iacherie.com/artifacts/{artifact.artifact_id}"
             }
             
             # Cache CDN URLs
@@ -670,7 +670,7 @@ class ModelArtifactManager:
             replication_result = {
                 "region": region,
                 "status": "completed",
-                "replica_url": f"https://{region}.artifacts.ainflue.com/{artifact.artifact_id}",
+                "replica_url": f"https://{region}.artifacts.iacherie.com/{artifact.artifact_id}",
                 "replication_time": 45.0,  # seconds
                 "consistency_level": "strong",
                 "backup_enabled": True,
@@ -783,7 +783,7 @@ async def main():
             },
             "s3": {
                 "type": "s3",
-                "bucket": "ainflue-artifacts",
+                "bucket": "iacherie-artifacts",
                 "region": "us-east-1",
                 "encryption": {"enabled": True}
             }

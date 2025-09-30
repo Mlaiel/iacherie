@@ -1,5 +1,5 @@
 # Docker Compose - Monetization Infrastructure
-# Ainflue Platform - Revenue & Payment Processing Services
+# IA Chérie Platform - Revenue & Payment Processing Services
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -10,8 +10,8 @@
 services:
   # Payment Processing Service
   payment-processor:
-    image: ainflue/payment-processor:latest
-    container_name: ainflue-payments
+    image: iacherie/payment-processor:latest
+    container_name: iacherie-payments
     deploy:
       resources:
         limits:
@@ -47,7 +47,7 @@ services:
       - postgres-monetization
       - redis-payments
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     ports:
       - "8087:8080"
     healthcheck:
@@ -60,8 +60,8 @@ services:
 
   # Licensing Manager Service
   licensing-service:
-    image: ainflue/licensing-manager:latest
-    container_name: ainflue-licensing
+    image: iacherie/licensing-manager:latest
+    container_name: iacherie-licensing
     deploy:
       resources:
         limits:
@@ -87,7 +87,7 @@ services:
     depends_on:
       - postgres-monetization
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     ports:
       - "8088:8080"
     healthcheck:
@@ -100,8 +100,8 @@ services:
 
   # Royalties Calculator Service
   royalties-service:
-    image: ainflue/royalties-calculator:latest
-    container_name: ainflue-royalties
+    image: iacherie/royalties-calculator:latest
+    container_name: iacherie-royalties
     deploy:
       resources:
         limits:
@@ -129,8 +129,8 @@ services:
       - postgres-monetization
       - redis-payments
     networks:
-      - ainflue-monetization-network
-      - ainflue-external-network
+      - iacherie-monetization-network
+      - iacherie-external-network
     ports:
       - "8089:8080"
     healthcheck:
@@ -143,8 +143,8 @@ services:
 
   # Pricing Intelligence Service
   pricing-intelligence:
-    image: ainflue/pricing-intelligence:latest
-    container_name: ainflue-pricing
+    image: iacherie/pricing-intelligence:latest
+    container_name: iacherie-pricing
     deploy:
       resources:
         limits:
@@ -170,7 +170,7 @@ services:
     depends_on:
       - postgres-monetization
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     ports:
       - "8090:8080"
     healthcheck:
@@ -183,8 +183,8 @@ services:
 
   # Revenue Analytics Service
   revenue-analytics:
-    image: ainflue/revenue-analytics:latest
-    container_name: ainflue-revenue-analytics
+    image: iacherie/revenue-analytics:latest
+    container_name: iacherie-revenue-analytics
     deploy:
       resources:
         limits:
@@ -210,7 +210,7 @@ services:
       - postgres-monetization
       - royalties-service
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     ports:
       - "8091:8080"
     healthcheck:
@@ -224,7 +224,7 @@ services:
   # PostgreSQL Monetization Database
   postgres-monetization:
     image: postgres:15-alpine
-    container_name: ainflue-postgres-monetization
+    container_name: iacherie-postgres-monetization
     deploy:
       resources:
         limits:
@@ -245,7 +245,7 @@ services:
     ports:
       - "5434:5432"
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U monetization_user -d monetization_db"]
       interval: 10s
@@ -269,7 +269,7 @@ services:
   # Redis Cache for Payments
   redis-payments:
     image: redis:7-alpine
-    container_name: ainflue-redis-payments
+    container_name: iacherie-redis-payments
     deploy:
       resources:
         limits:
@@ -295,7 +295,7 @@ services:
     ports:
       - "6382:6379"
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -306,8 +306,8 @@ services:
 
   # Monetization API Gateway
   monetization-api-gateway:
-    image: ainflue/monetization-api-gateway:latest
-    container_name: ainflue-monetization-api
+    image: iacherie/monetization-api-gateway:latest
+    container_name: iacherie-monetization-api
     deploy:
       resources:
         limits:
@@ -335,7 +335,7 @@ services:
       - royalties-service
       - postgres-monetization
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -346,8 +346,8 @@ services:
 
   # Financial Reporting Service
   financial-reporting:
-    image: ainflue/financial-reporting:latest
-    container_name: ainflue-financial-reports
+    image: iacherie/financial-reporting:latest
+    container_name: iacherie-financial-reports
     deploy:
       resources:
         limits:
@@ -373,7 +373,7 @@ services:
       - postgres-monetization
       - revenue-analytics
     networks:
-      - ainflue-monetization-network
+      - iacherie-monetization-network
     ports:
       - "8093:8080"
     healthcheck:
@@ -400,25 +400,25 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/licensing_templates
+      device: /data/iacherie/licensing_templates
   licensing_contracts:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/licensing_contracts
+      device: /data/iacherie/licensing_contracts
   monetization_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/postgres_monetization
+      device: /data/iacherie/postgres_monetization
   redis_payments_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/redis_payments
+      device: /data/iacherie/redis_payments
   payment_logs:
     driver: local
   payment_receipts:
@@ -448,7 +448,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /data/ainflue/financial_reports
+      device: /data/iacherie/financial_reports
   report_templates:
     driver: local
   financial_logs:
@@ -456,13 +456,13 @@ volumes:
 
 # Networks for monetization services
 networks:
-  ainflue-monetization-network:
+  iacherie-monetization-network:
     driver: bridge
     driver_opts:
-      com.docker.network.bridge.name: br-ainflue-monetization
+      com.docker.network.bridge.name: br-iacherie-monetization
     ipam:
       config:
         - subnet: 172.22.0.0/16
           gateway: 172.22.0.1
-  ainflue-external-network:
+  iacherie-external-network:
     external: true

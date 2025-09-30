@@ -39,7 +39,7 @@ Ce module analytics, son architecture, ses concepts et toute propriété intelle
 ## 🎯 MISSION PRINCIPALE - MODULE DATA/ANALYTICS
 
 ### 📋 Vision Architecture Enterprise
-Le module `data/analytics/` constitue le cerveau analytique central de la plateforme Ainflue, fournissant l'intelligence business avancée pour créateurs multi-format avec traitement temps réel de métriques complexes et insights prédictifs.
+Le module `data/analytics/` constitue le cerveau analytique central de la plateforme IA Chérie, fournissant l'intelligence business avancée pour créateurs multi-format avec traitement temps réel de métriques complexes et insights prédictifs.
 
 ### 🔄 Position dans Pipeline Business Logic
 ```
@@ -345,7 +345,7 @@ SEO Professionnel → Matching Collaboration → Gamification → Distribution �
 
 ### 📁 Structure Complète Niveau 3 Maximum
 ```
-/workspaces/Ainflue/data/analytics/
+/workspaces/IA Chérie/data/analytics/
 │
 ├── 📄 __init__.py                              ✅ ENRICHIR (800+ lignes)
 ├── 📄 index.py                                 ✅ ENRICHIR (400+ lignes)
@@ -472,7 +472,7 @@ SEO Professionnel → Matching Collaboration → Gamification → Distribution �
 ### 📋 **STRATÉGIE TESTING COMPLÈTE**
 ```python
 # Tests Centralisés avec Autres Modules
-├── /workspaces/Ainflue/tests/
+├── /workspaces/IA Chérie/tests/
     ├── test_data_analytics.py
     ├── test_business_intelligence.py
     ├── test_creator_performance.py

@@ -1,5 +1,5 @@
 """
-🔗 Ainflue Enterprise Integration Management - Performance Analyzer with ML
+🔗 IA Chérie Enterprise Integration Management - Performance Analyzer with ML
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -539,7 +539,7 @@ class MLPerformancePredictor:
 
 class EnterprisePerformanceAnalyzer:
     """
-    Analyseur de performance enterprise pour Ainflue
+    Analyseur de performance enterprise pour IA Chérie
     
     Fonctionnalités:
     - Détection ML des goulots d'étranglement
@@ -1157,7 +1157,7 @@ class EnterprisePerformanceAnalyzer:
 # Exemple d'utilisation
 async def main():
     """Fonction principale de démonstration"""
-    print("🔗 Démarrage de l'analyseur de performance enterprise Ainflue")
+    print("🔗 Démarrage de l'analyseur de performance enterprise IA Chérie")
     print("Créé par Fahed Mlaiel (mlaiel@live.de)")
     print("© 2025 Fahed Mlaiel - Tous droits réservés")
     

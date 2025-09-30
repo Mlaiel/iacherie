@@ -1,10 +1,10 @@
 """
-Ainflue Core Infrastructure - Configuration Manager Core
+IA Chérie Core Infrastructure - Configuration Manager Core
 ========================================================
 
 Enterprise-grade configuration management system with multi-environment support,
 encrypted secrets management, hot-reload capabilities, and validation schemas.
-Provides centralized configuration for all Ainflue core components.
+Provides centralized configuration for all IA Chérie core components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -144,8 +144,8 @@ class ConfigurationManagerCore:
         
         # Configuration paths
         self.config_paths = [
-            "/etc/ainflue/config",
-            os.path.expanduser("~/.ainflue"),
+            "/etc/iacherie/config",
+            os.path.expanduser("~/.iacherie"),
             os.path.join(os.getcwd(), "config"),
             os.path.join(os.getcwd(), "core", "config")
         ]
@@ -170,7 +170,7 @@ class ConfigurationManagerCore:
         self.config_data = {
             # Core system configuration
             "core": {
-                "service_name": "ainflue-core",
+                "service_name": "iacherie-core",
                 "service_version": "1.0.0",
                 "environment": self.environment.value,
                 "debug": False,
@@ -181,7 +181,7 @@ class ConfigurationManagerCore:
             "database": {
                 "host": "localhost",
                 "port": 5432,
-                "database": "ainflue",
+                "database": "iacherie",
                 "username": "ainflue_user",
                 "password": "",  # To be encrypted
                 "pool_size": 10,
@@ -213,7 +213,7 @@ class ConfigurationManagerCore:
             
             # AI configuration
             "ai": {
-                "model_path": "/var/lib/ainflue/models",
+                "model_path": "/var/lib/iacherie/models",
                 "max_batch_size": 32,
                 "inference_timeout": 30,
                 "gpu_enabled": True,
@@ -234,7 +234,7 @@ class ConfigurationManagerCore:
                 "api_version": "v1",
                 "max_upload_size": "100MB",
                 "allowed_file_types": [".jpg", ".png", ".mp4", ".mp3", ".pdf"],
-                "cdn_base_url": "https://cdn.ainflue.com",
+                "cdn_base_url": "https://cdn.iacherie.com",
                 "websocket_timeout": 300
             }
         }
@@ -326,7 +326,7 @@ class ConfigurationManagerCore:
 
     def _load_from_environment(self):
         """Load configuration from environment variables"""
-        env_prefix = "AINFLUE_"
+        env_prefix = "IACHERIE_"
         
         for key, value in os.environ.items():
             if key.startswith(env_prefix):

@@ -1,7 +1,7 @@
 """
 Page Speed Optimization Tracker - Enterprise Web Performance Monitoring
 
-This module implements comprehensive page speed optimization tracking for the Ainflue platform,
+This module implements comprehensive page speed optimization tracking for the IA Chérie platform,
 monitoring Core Web Vitals, performance metrics, and automated optimization recommendations.
 
 Author: Fahed Mlaiel
@@ -103,7 +103,7 @@ class OptimizationRecommendation:
 
 class PageSpeedOptimizationTracker:
     """
-    Enterprise page speed optimization tracking system for Ainflue platform.
+    Enterprise page speed optimization tracking system for IA Chérie platform.
     
     Features:
     - Core Web Vitals monitoring
@@ -950,7 +950,7 @@ if __name__ == "__main__":
         tracker = PageSpeedOptimizationTracker()
         
         # Test performance analysis
-        url = "https://ainflue.com"
+        url = "https://iacherie.com"
         test_result = await tracker.run_performance_test(url, "mobile")
         print(f"Performance test result: {test_result}")
         

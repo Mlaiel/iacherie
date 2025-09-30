@@ -65,7 +65,7 @@ class PerformanceTestingService:
             "api_load_test": {
                 "name": "API Load Test",
                 "type": TestType.LOAD_TEST,
-                "target": "https://api.ainflue.com",
+                "target": "https://api.iacherie.com",
                 "concurrent_users": 100,
                 "duration": 300,  # 5 minutes
                 "ramp_up": 60     # 1 minute
@@ -73,7 +73,7 @@ class PerformanceTestingService:
             "upload_stress_test": {
                 "name": "Content Upload Stress Test",
                 "type": TestType.STRESS_TEST,
-                "target": "https://api.ainflue.com/upload",
+                "target": "https://api.iacherie.com/upload",
                 "concurrent_users": 500,
                 "duration": 600,  # 10 minutes
                 "ramp_up": 120    # 2 minutes
@@ -81,7 +81,7 @@ class PerformanceTestingService:
             "ai_processing_load": {
                 "name": "AI Processing Load Test",
                 "type": TestType.LOAD_TEST,
-                "target": "https://ai.ainflue.com/process",
+                "target": "https://ai.iacherie.com/process",
                 "concurrent_users": 50,
                 "duration": 900,  # 15 minutes
                 "ramp_up": 180    # 3 minutes

@@ -1,5 +1,5 @@
 """DMCA Service - DMCA takedown automation and management
-Enterprise-grade DMCA compliance and takedown management for the Ainflue AI platform.
+Enterprise-grade DMCA compliance and takedown management for the IA Chérie AI platform.
 
 This service provides comprehensive DMCA takedown request processing, automated
 detection of copyright infringement, and legal compliance management.
@@ -323,15 +323,15 @@ If you disagree with this determination, you may:
 
 CONTACT INFORMATION:
 Legal Department
-Ainflue Platform
-Email: legal@ainflue.com
+IA Chérie Platform
+Email: legal@iacherie.com
 Phone: +1-555-0199
 
 This response is provided pursuant to the Digital Millennium Copyright Act (DMCA), 
 17 U.S.C. § 512.
 
 Sincerely,
-Ainflue Legal Team
+IA Chérie Legal Team
         """
     
     def _get_repeat_infringer_template(self) -> str:
@@ -366,10 +366,10 @@ If you believe this warning was issued in error, please contact our legal team
 within 7 days.
 
 CONTACT:
-legal@ainflue.com
+legal@iacherie.com
 
 Sincerely,
-Ainflue Copyright Team
+IA Chérie Copyright Team
         """
     
     def _get_platform_notification_template(self) -> str:
@@ -1033,7 +1033,7 @@ Platform: {request.infringement_evidence.platform.value}
 
 If you have questions, please contact our legal team.
 
-Ainflue Legal Department
+IA Chérie Legal Department
         """
     
     def _generate_platform_notification(self, request: DMCARequest) -> str:

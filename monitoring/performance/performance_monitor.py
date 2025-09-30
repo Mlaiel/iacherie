@@ -61,7 +61,7 @@ class PerformanceMonitor:
         
     def _setup_logger(self) -> logging.Logger:
         """Setup structured logging for performance monitoring"""
-        logger = logging.getLogger("ainflue.performance")
+        logger = logging.getLogger("iacherie.performance")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:

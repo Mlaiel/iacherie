@@ -1,6 +1,6 @@
 # 🚀 منصة الدعم الأساسية - نظام الدعم المؤسسي
 
-![شارة Ainflue](https://img.shields.io/badge/Ainflue-اقتصاد%20المبدعين-blue) ![الدعم](https://img.shields.io/badge/الدعم-جاهز%20للمؤسسات-green) ![الذكي](https://img.shields.io/badge/الذكاء%20الاصطناعي-دعم%20ذكي-orange)
+![شارة IA Chérie](https://img.shields.io/badge/IA Chérie-اقتصاد%20المبدعين-blue) ![الدعم](https://img.shields.io/badge/الدعم-جاهز%20للمؤسسات-green) ![الذكي](https://img.shields.io/badge/الذكاء%20الاصطناعي-دعم%20ذكي-orange)
 
 ## ⚠️ تحذير الملكية الفكرية
 
@@ -97,8 +97,8 @@ platform_core/support/
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/platform_core/support
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/platform_core/support
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -294,7 +294,7 @@ POST /api/support/escalate          # التصعيد للبشر
 
 ```javascript
 // الاتصال بالدردشة المباشرة
-const socket = io('wss://api.ainflue.com/support');
+const socket = io('wss://api.iacherie.com/support');
 
 // إرسال رسالة
 socket.emit('message', {
@@ -368,9 +368,9 @@ print(f"الاتصالات النشطة: {metrics['active_connections']}")
 ## 📞 الدعم والاتصال
 
 ### الدعم الفني
-- **البريد الإلكتروني**: support@ainflue.com
-- **الوثائق**: https://docs.ainflue.com/support
-- **صفحة الحالة**: https://status.ainflue.com
+- **البريد الإلكتروني**: support@iacherie.com
+- **الوثائق**: https://docs.iacherie.com/support
+- **صفحة الحالة**: https://status.iacherie.com
 
 ### ترخيص المؤسسات
 - **الاتصال**: فهد مليل <mlaiel@live.de>
@@ -379,5 +379,5 @@ print(f"الاتصالات النشطة: {metrics['active_connections']}")
 
 ---
 
-**© 2025 فهد مليل - منصة اقتصاد المبدعين Ainflue**  
+**© 2025 فهد مليل - منصة اقتصاد المبدعين IA Chérie**  
 *ثورة في دعم المبدعين بحلول المؤسسات المدعومة بالذكاء الاصطناعي*

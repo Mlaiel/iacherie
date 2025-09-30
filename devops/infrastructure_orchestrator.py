@@ -343,8 +343,8 @@ class InfrastructureOrchestrator:
             "vpc_id": "vpc-12345678",
             "subnet_ids": "subnet-11111111,subnet-22222222",
             "security_group_id": "sg-87654321",
-            "load_balancer_dns": "ainflue-lb-123456.us-east-1.elb.amazonaws.com",
-            "database_endpoint": "ainflue-db.cluster-xyz.us-east-1.rds.amazonaws.com"
+            "load_balancer_dns": "iacherie-lb-123456.us-east-1.elb.amazonaws.com",
+            "database_endpoint": "iacherie-db.cluster-xyz.us-east-1.rds.amazonaws.com"
         }
 
     def _generate_mock_resources(
@@ -362,7 +362,7 @@ class InfrastructureOrchestrator:
         # VPC
         resources.append(InfrastructureResource(
             resource_id=str(uuid.uuid4()),
-            name=f"ainflue-vpc-{variables.get('environment', 'dev')}",
+            name=f"iacherie-vpc-{variables.get('environment', 'dev')}",
             type=ResourceType.NETWORK,
             provider=template.provider,
             region=variables.get("region", "us-east-1"),
@@ -378,14 +378,14 @@ class InfrastructureOrchestrator:
         for i in range(variables.get("instance_count", 2)):
             resources.append(InfrastructureResource(
                 resource_id=str(uuid.uuid4()),
-                name=f"ainflue-instance-{i+1}",
+                name=f"iacherie-instance-{i+1}",
                 type=ResourceType.COMPUTE,
                 provider=template.provider,
                 region=variables.get("region", "us-east-1"),
                 configuration={
                     "instance_type": variables.get("instance_type", "t3.medium"),
                     "ami": "ami-0abcdef1234567890",
-                    "key_name": "ainflue-key"
+                    "key_name": "iacherie-key"
                 },
                 state=InfrastructureState.ACTIVE,
                 created_at=current_time,
@@ -397,7 +397,7 @@ class InfrastructureOrchestrator:
         # Database
         resources.append(InfrastructureResource(
             resource_id=str(uuid.uuid4()),
-            name=f"ainflue-db-{variables.get('environment', 'dev')}",
+            name=f"iacherie-db-{variables.get('environment', 'dev')}",
             type=ResourceType.DATABASE,
             provider=template.provider,
             region=variables.get("region", "us-east-1"),
@@ -417,7 +417,7 @@ class InfrastructureOrchestrator:
         # Load balancer
         resources.append(InfrastructureResource(
             resource_id=str(uuid.uuid4()),
-            name=f"ainflue-lb-{variables.get('environment', 'dev')}",
+            name=f"iacherie-lb-{variables.get('environment', 'dev')}",
             type=ResourceType.NETWORK,
             provider=template.provider,
             region=variables.get("region", "us-east-1"),
@@ -436,12 +436,12 @@ class InfrastructureOrchestrator:
         # Storage
         resources.append(InfrastructureResource(
             resource_id=str(uuid.uuid4()),
-            name=f"ainflue-storage-{variables.get('environment', 'dev')}",
+            name=f"iacherie-storage-{variables.get('environment', 'dev')}",
             type=ResourceType.STORAGE,
             provider=template.provider,
             region=variables.get("region", "us-east-1"),
             configuration={
-                "bucket_name": f"ainflue-storage-{uuid.uuid4().hex[:8]}",
+                "bucket_name": f"iacherie-storage-{uuid.uuid4().hex[:8]}",
                 "versioning": True,
                 "encryption": "AES256"
             },
@@ -765,7 +765,7 @@ class InfrastructureOrchestrator:
             template_content=self._get_microservices_terraform_template(),
             variables={
                 "environment": "dev",
-                "cluster_name": "ainflue-cluster",
+                "cluster_name": "iacherie-cluster",
                 "node_count": 3,
                 "node_instance_type": "t3.medium"
             },
@@ -825,14 +825,14 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name        = "ainflue-vpc-${var.environment}"
+    Name        = "iacherie-vpc-${var.environment}"
     Environment = var.environment
   }
 }
 
 # Application Load Balancer
 resource "aws_lb" "main" {
-  name               = "ainflue-lb-${var.environment}"
+  name               = "iacherie-lb-${var.environment}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
@@ -847,14 +847,14 @@ resource "aws_lb" "main" {
 
 # RDS Database
 resource "aws_db_instance" "main" {
-  identifier             = "ainflue-db-${var.environment}"
+  identifier             = "iacherie-db-${var.environment}"
   engine                = "postgresql"
   engine_version        = "14.9"
   instance_class        = var.db_instance_class
   allocated_storage     = 20
   storage_encrypted     = true
 
-  db_name  = "ainflue"
+  db_name  = "iacherie"
   username = "admin"
   password = "changeme123!"
 
@@ -909,7 +909,7 @@ variable "environment" {
 variable "cluster_name" {
   description = "EKS cluster name"
   type        = string
-  default     = "ainflue-cluster"
+  default     = "iacherie-cluster"
 }
 
 variable "node_count" {
@@ -940,7 +940,7 @@ resource "aws_eks_cluster" "main" {
 # EKS Node Group
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.main.name
-  node_group_name = "ainflue-nodes"
+  node_group_name = "iacherie-nodes"
   node_role_arn   = aws_iam_role.node.arn
   subnet_ids      = aws_subnet.private[*].id
 

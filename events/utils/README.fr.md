@@ -1,5 +1,5 @@
 # 🛠️ Module Utils des Événements - Utilitaires Avancés de Traitement & Optimisation
-**Plateforme Ainflue - Infrastructure des Utilitaires d'Événements d'Entreprise**
+**Plateforme IA Chérie - Infrastructure des Utilitaires d'Événements d'Entreprise**
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright :** (c) 2025 Fahed Mlaiel. Tous droits réservés.  
@@ -39,7 +39,7 @@
 
 ## 🚀 Vue d'Ensemble Entreprise
 
-Le **Module Utils des Événements** fournit une suite complète d'utilitaires avancés, d'outils d'optimisation et d'infrastructure de support pour l'architecture événementielle de la plateforme Ainflue, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-sophistiqué offre des utilitaires de traitement d'événements de niveau entreprise, l'optimisation des performances, des outils de débogage et des capacités de surveillance complètes.
+Le **Module Utils des Événements** fournit une suite complète d'utilitaires avancés, d'outils d'optimisation et d'infrastructure de support pour l'architecture événementielle de la plateforme IA Chérie, spécialement conçue pour les créateurs de contenu multi-format (musiciens, blogueurs, photographes, influenceurs, comédiens). Ce système industriel ultra-sophistiqué offre des utilitaires de traitement d'événements de niveau entreprise, l'optimisation des performances, des outils de débogage et des capacités de surveillance complètes.
 
 ### 🎯 **Flux de Logique Métier**
 ```
@@ -544,7 +544,7 @@ async def analyze_campaign_performance(event_batch):
 version: '3.8'
 services:
   event-utils-manager:
-    image: ainflue/event-utils-manager:latest
+    image: iacherie/event-utils-manager:latest
     deploy:
       replicas: 3
       resources:
@@ -563,7 +563,7 @@ services:
       - "8080:8080"
       
   performance-optimizer:
-    image: ainflue/performance-optimizer:latest
+    image: iacherie/performance-optimizer:latest
     deploy:
       replicas: 2
       resources:
@@ -608,7 +608,7 @@ active_creators = Gauge('active_creators_count', 'Number of active creators')
 
 ## 📝 **Résumé**
 
-Le Module Utils des Événements représente le summum des utilitaires de traitement d'événements et de l'optimisation pour la plateforme Ainflue, spécialement conçu pour les créateurs de contenu multi-format. Avec des algorithmes d'optimisation avancés, des capacités de surveillance complètes et des outils de débogage intelligents, ce module assure une performance maximale, une fiabilité et une évolutivité pour tous les workflows événementiels tout en fournissant des insights profonds sur les métriques de succès des créateurs.
+Le Module Utils des Événements représente le summum des utilitaires de traitement d'événements et de l'optimisation pour la plateforme IA Chérie, spécialement conçu pour les créateurs de contenu multi-format. Avec des algorithmes d'optimisation avancés, des capacités de surveillance complètes et des outils de débogage intelligents, ce module assure une performance maximale, une fiabilité et une évolutivité pour tous les workflows événementiels tout en fournissant des insights profonds sur les métriques de succès des créateurs.
 
 **🎯 Mission :** Livrer les utilitaires de traitement d'événements les plus avancés au monde pour les créateurs de contenu, permettant une performance optimale, une optimisation intelligente et une surveillance complète à travers l'écosystème entier des créateurs.
 

@@ -1,9 +1,9 @@
-# 🔄 Workflow Config Enterprise Module - Ainflue Platform
+# 🔄 Workflow Config Enterprise Module - IA Chérie Platform
 
-[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://ainflue.com)
-[![Production Ready](https://img.shields.io/badge/Production-Ready-green.svg)](https://ainflue.com)
-[![Performance](https://img.shields.io/badge/Performance-<500ms-brightgreen.svg)](https://ainflue.com)
-[![Security](https://img.shields.io/badge/Security-Enterprise-red.svg)](https://ainflue.com)
+[![Enterprise Grade](https://img.shields.io/badge/Enterprise-Grade-blue.svg)](https://iacherie.com)
+[![Production Ready](https://img.shields.io/badge/Production-Ready-green.svg)](https://iacherie.com)
+[![Performance](https://img.shields.io/badge/Performance-<500ms-brightgreen.svg)](https://iacherie.com)
+[![Security](https://img.shields.io/badge/Security-Enterprise-red.svg)](https://iacherie.com)
 
 ## 🔒 **Proprietary Software - Fahed Mlaiel**
 
@@ -42,7 +42,7 @@ Contact for licensing: mlaiel@live.de
 
 ## 📋 **Overview**
 
-The Workflow Config Enterprise Module is the core configuration management system for the Ainflue creator economy platform. This module provides ultra-advanced, production-ready configuration management for all aspects of the platform, from AI processing to global content distribution.
+The Workflow Config Enterprise Module is the core configuration management system for the IA Chérie creator economy platform. This module provides ultra-advanced, production-ready configuration management for all aspects of the platform, from AI processing to global content distribution.
 
 ### 🚀 **Key Features**
 
@@ -191,8 +191,8 @@ db_config = DatabaseConfig()
 # Setup multi-database environment
 await db_config.configure_database_cluster({
     'postgresql': {
-        'master': 'postgresql://master:5432/ainflue',
-        'replicas': ['postgresql://replica1:5432/ainflue'],
+        'master': 'postgresql://master:5432/iacherie',
+        'replicas': ['postgresql://replica1:5432/iacherie'],
         'connection_pool_size': 100
     },
     'redis': {
@@ -200,7 +200,7 @@ await db_config.configure_database_cluster({
         'sentinel_enabled': True
     },
     'mongodb': {
-        'replica_set': 'ainflue-rs',
+        'replica_set': 'iacherie-rs',
         'nodes': ['mongo1:27017', 'mongo2:27017']
     }
 })
@@ -552,7 +552,7 @@ monitoring:
 #### Configuration Loading Errors
 ```bash
 # Check configuration file permissions
-chmod 644 /etc/ainflue/workflow.yaml
+chmod 644 /etc/iacherie/workflow.yaml
 
 # Validate configuration syntax
 python -c "from workflow.config import WorkflowConfigManager; WorkflowConfigManager().validate_config()"
@@ -580,7 +580,7 @@ python -c "from workflow.config import DatabaseConfig; DatabaseConfig().get_pool
 
 ### 🏢 **Enterprise Support**
 
-- **Email**: support@ainflue.com
+- **Email**: support@iacherie.com
 - **Phone**: +33 1 234 567 890
 - **Emergency**: +33 6 789 012 345 (24/7)
 

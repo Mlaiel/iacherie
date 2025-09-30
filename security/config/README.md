@@ -1,4 +1,4 @@
-# 🔒 Enterprise Security Configuration - Ainflue Creator Economy Platform
+# 🔒 Enterprise Security Configuration - IA Chérie Creator Economy Platform
 
 ⚠️  **LEGAL WARNING - INTELLECTUAL PROPERTY**  
 © 2025 Fahed Mlaiel <mlaiel@live.de>  
@@ -21,7 +21,7 @@
 
 ## 🎯 Platform Overview
 
-**Ainflue** is an enterprise-grade AI-powered Creator Economy Platform providing comprehensive content protection, monetization, and collaboration tools for digital creators worldwide.
+**IA Chérie** is an enterprise-grade AI-powered Creator Economy Platform providing comprehensive content protection, monetization, and collaboration tools for digital creators worldwide.
 
 ### 🎨 Creator Types Supported
 - **Musicians:** Audio content protection, royalty management, collaboration tools
@@ -229,13 +229,13 @@ PUT /api/v1/security/policies/{policy_id}
 
 ### 🆘 Emergency Security Response
 - **24/7 Security Hotline:** +1-XXX-XXX-XXXX
-- **Emergency Email:** security-emergency@ainflue.com
+- **Emergency Email:** security-emergency@iacherie.com
 - **PagerDuty:** Automatic incident escalation
 
 ### 💼 Business Inquiries
 - **Enterprise Licensing:** Fahed Mlaiel <mlaiel@live.de>
-- **Technical Support:** support@ainflue.com
-- **Compliance Questions:** compliance@ainflue.com
+- **Technical Support:** support@iacherie.com
+- **Compliance Questions:** compliance@iacherie.com
 
 ## ⚖️ Legal & Licensing
 
@@ -250,13 +250,13 @@ This platform contains proprietary algorithms, security implementations, and bus
 
 ### 🚨 Security Vulnerability Disclosure
 Report security vulnerabilities responsibly:
-- **Email:** security@ainflue.com
-- **PGP Key:** Available on keybase.io/ainflue
+- **Email:** security@iacherie.com
+- **PGP Key:** Available on keybase.io/iacherie
 - **Bug Bounty:** Rewards for responsible disclosure
 
 ---
 
-**🌟 Ainflue Creator Economy Platform - Empowering Creators Worldwide with Enterprise Security**
+**🌟 IA Chérie Creator Economy Platform - Empowering Creators Worldwide with Enterprise Security**
 
-*Built with ❤️ by the Ainflue Security Team*  
+*Built with ❤️ by the IA Chérie Security Team*  
 *© 2025 Fahed Mlaiel. All rights reserved.*

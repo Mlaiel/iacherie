@@ -1,11 +1,11 @@
 """
-Ainflue Docker Infrastructure Orchestrator
+IA Chérie Docker Infrastructure Orchestrator
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Advanced infrastructure orchestrator for Docker Compose services management
-according to Ainflue business logic and creator type requirements.
+according to IA Chérie business logic and creator type requirements.
 """
 
 import asyncio
@@ -44,13 +44,13 @@ logger = logging.getLogger(__name__)
 
 class DockerInfrastructureOrchestrator:
     """
-    Advanced Docker infrastructure orchestrator for Ainflue platform.
+    Advanced Docker infrastructure orchestrator for IA Chérie platform.
     
     Manages deployment, scaling, monitoring and backup of specialized
     infrastructure services based on creator type and business logic stages.
     """
     
-    def __init__(self, infrastructure_path: str = "/home/runner/work/Ainflue/Ainflue/docker/infrastructure"):
+    def __init__(self, infrastructure_path: str = "/home/runner/work/IA Chérie/IA Chérie/docker/infrastructure"):
         self.infrastructure_path = Path(infrastructure_path)
         self.business_logic_stages = BUSINESS_LOGIC_STAGES
         self.creator_infrastructure = CREATOR_INFRASTRUCTURE

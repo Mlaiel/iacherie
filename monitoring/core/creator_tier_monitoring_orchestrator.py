@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Creator Tier Monitoring Orchestrator
+IA Chérie Platform - Creator Tier Monitoring Orchestrator
 ======================================================
 
 Enterprise-grade monitoring orchestrator for creator tier management including

@@ -1,8 +1,8 @@
-# 🎨 Ainflue Creator Guide
+# 🎨 IA Chérie Creator Guide
 
 ## Complete Guide for Digital Creators
 
-**Platform:** Ainflue AI-Powered Content Protection & Monetization  
+**Platform:** IA Chérie AI-Powered Content Protection & Monetization  
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Last Updated:** September 2025
@@ -29,7 +29,7 @@
 ### Account Setup
 
 **1. Create Your Creator Account**
-- Visit [https://app.ainflue.com/register](https://app.ainflue.com/register)
+- Visit [https://app.iacherie.com/register](https://app.iacherie.com/register)
 - Select "Creator" as your account type
 - Complete email verification
 - Set up multi-factor authentication (MFA)
@@ -110,7 +110,7 @@ Profile Information:
 6. Click "Process Upload"
 
 # Via API (for developers)
-curl -X POST "https://api.ainflue.com/v1/content/upload" \
+curl -X POST "https://api.iacherie.com/v1/content/upload" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -F "file=@your_content.mp3" \
   -F "metadata={\"title\":\"My Song\",\"protection_level\":\"high\"}"
@@ -515,10 +515,10 @@ upload_schedule = {
 
 **Developer Access:**
 ```python
-import ainflue
+import iacherie
 
 # Initialize API client
-client = ainflue.Client(api_key="your_api_key")
+client = iacherie.Client(api_key="your_api_key")
 
 # Upload content programmatically
 upload_result = client.content.upload(
@@ -640,12 +640,12 @@ Solution:
 ### Getting Help
 
 **Self-Service Resources:**
-- Knowledge base: [docs.ainflue.com](https://docs.ainflue.com)
-- Video tutorials: [tutorials.ainflue.com](https://tutorials.ainflue.com)
-- Community forum: [community.ainflue.com](https://community.ainflue.com)
+- Knowledge base: [docs.iacherie.com](https://docs.iacherie.com)
+- Video tutorials: [tutorials.iacherie.com](https://tutorials.iacherie.com)
+- Community forum: [community.iacherie.com](https://community.iacherie.com)
 
 **Direct Support:**
-- **Email**: support@ainflue.com
+- **Email**: support@iacherie.com
 - **Live Chat**: Available 9 AM - 6 PM EST
 - **Priority Support**: Premium/Enterprise users
 - **Emergency Contact**: For critical issues
@@ -658,7 +658,7 @@ Solution:
 
 **Background:** Solo artist with 50K followers
 **Challenge:** Widespread content theft affecting revenue
-**Solution:** Implemented Ainflue protection + monetization
+**Solution:** Implemented IA Chérie protection + monetization
 **Results:**
 - 89% reduction in unauthorized content
 - 340% increase in legitimate revenue
@@ -668,7 +668,7 @@ Solution:
 
 **Background:** 5-person creative team
 **Challenge:** Managing collaborative projects and revenue
-**Solution:** Used Ainflue collaboration tools
+**Solution:** Used IA Chérie collaboration tools
 **Results:**
 - Streamlined project management
 - Fair automatic revenue distribution
@@ -678,7 +678,7 @@ Solution:
 
 **Background:** Musician seeking brand collaborations
 **Challenge:** Proving content authenticity and reach
-**Solution:** Ainflue analytics and protection verification
+**Solution:** IA Chérie analytics and protection verification
 **Results:**
 - Secured 3 major brand partnerships
 - 200% increase in licensing revenue
@@ -711,7 +711,7 @@ Solution:
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue Platform - Creator Success Guide**
+**IA Chérie Platform - Creator Success Guide**
 
 **Ready to start your creator journey?**  
-Sign up at [https://app.ainflue.com](https://app.ainflue.com) or contact us at mlaiel@live.de for personalized guidance.
+Sign up at [https://app.iacherie.com](https://app.iacherie.com) or contact us at mlaiel@live.de for personalized guidance.

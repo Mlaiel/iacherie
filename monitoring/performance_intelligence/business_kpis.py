@@ -1,7 +1,7 @@
 """💼 Business KPIs - Enterprise Business Intelligence & Key Performance Indicators
 ==============================================================================
 
-Advanced business KPI collection, analysis, and reporting system for the Ainflue platform.
+Advanced business KPI collection, analysis, and reporting system for the IA Chérie platform.
 Tracks critical business metrics including revenue, user acquisition, content creation,
 platform growth, and strategic performance indicators.
 

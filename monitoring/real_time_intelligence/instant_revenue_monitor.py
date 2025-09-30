@@ -299,7 +299,7 @@ class InstantRevenueMonitor:
                 stream_type=RevenueStream(transaction_data.get('stream_type', 'content_sales')),
                 status=PaymentStatus(transaction_data.get('status', 'pending')),
                 timestamp=datetime.now(),
-                platform=transaction_data.get('platform', 'ainflue'),
+                platform=transaction_data.get('platform', 'iacherie'),
                 commission_rate=commission_rate,
                 commission_amount=commission_amount,
                 net_amount=net_amount,

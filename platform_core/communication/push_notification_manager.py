@@ -658,6 +658,6 @@ async def send_content_approval_notification(notification_manager: PushNotificat
 🚀 DevOps: Metrics, monitoring, and operational features
 📝 IA Prompt Engineer: Template system for dynamic content generation
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chérie Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

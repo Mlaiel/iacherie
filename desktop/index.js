@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Application Entry Point
+ * IA Chérie Desktop - Application Entry Point
  * 
  * Professional AI content creation studio with advanced architecture
  * 
@@ -22,7 +22,7 @@ const AutoUpdaterManager = require('./auto_updater_manager');
 
 class AinflueMasterApplication {
   constructor() {
-    this.appName = 'Ainflue Desktop Studio';
+    this.appName = 'IA Chérie Desktop Studio';
     this.version = '1.0.0';
     this.author = 'Fahed Mlaiel';
     this.isProduction = !process.argv.includes('--dev');
@@ -58,7 +58,7 @@ class AinflueMasterApplication {
     
     // Set app user model ID for Windows
     if (process.platform === 'win32') {
-      app.setAppUserModelId('com.ainflue.desktop');
+      app.setAppUserModelId('com.iacherie.desktop');
     }
 
     // Handle application ready event
@@ -143,10 +143,10 @@ class AinflueMasterApplication {
     // Handle protocol schemes
     if (process.defaultApp) {
       if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient('ainflue', process.execPath, [path.resolve(process.argv[1])]);
+        app.setAsDefaultProtocolClient('iacherie', process.execPath, [path.resolve(process.argv[1])]);
       }
     } else {
-      app.setAsDefaultProtocolClient('ainflue');
+      app.setAsDefaultProtocolClient('iacherie');
     }
 
     // Power monitoring for professional workflows

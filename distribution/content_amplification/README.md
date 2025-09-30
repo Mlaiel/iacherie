@@ -1,6 +1,6 @@
 # 🚀 Content Amplification Engine
 
-**Advanced Content Amplification & Reach Maximization System for Ainflue Platform**
+**Advanced Content Amplification & Reach Maximization System for IA Chérie Platform**
 
 ## 📖 Overview
 
@@ -202,7 +202,7 @@ SPOTIFY_API_KEY=your_spotify_api_key
 
 # Performance Monitoring
 AMPLIFICATION_METRICS_ENABLED=true
-AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.ainflue.com
+AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.iacherie.com
 AMPLIFICATION_ALERT_THRESHOLD=0.1
 ```
 
@@ -254,7 +254,7 @@ python -m pytest distribution/tests/test_amplification_performance.py -v
 
 ```bash
 # Test amplification under load
-locust -f distribution/tests/load_test_amplification.py --host=https://api.ainflue.com
+locust -f distribution/tests/load_test_amplification.py --host=https://api.iacherie.com
 ```
 
 ## 📈 Analytics & Reporting

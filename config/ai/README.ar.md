@@ -1,4 +1,4 @@
-# 🧠 وحدة تكوين الذكاء الاصطناعي Ainflue - مركز الذكاء الاصطناعي فائق التطور
+# 🧠 وحدة تكوين الذكاء الاصطناعي IA Chérie - مركز الذكاء الاصطناعي فائق التطور
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org)
@@ -6,7 +6,7 @@
 [![Transformers](https://img.shields.io/badge/🤗%20Transformers-4.30+-yellow.svg)](https://huggingface.co/transformers)
 [![CUDA](https://img.shields.io/badge/CUDA-12.0+-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![License](https://img.shields.io/badge/License-Enterprise-gold.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/Ainflue)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)](https://github.com/Mlaiel/IA Chérie)
 
 > **🔥 مركز تنظيم تكوين الذكاء الاصطناعي فائق التطور**  
 > نظام إدارة تكوين الذكاء الاصطناعي الثوري مع الشبكات العصبية الكمية، تحسين النماذج المستقلة وقدرات تنظيم الذكاء الاصطناعي للجيل القادم.
@@ -15,7 +15,7 @@
 
 ## 🌟 **نظرة عامة**
 
-**وحدة تكوين الذكاء الاصطناعي Ainflue** تمثل القمة المطلقة لتقنية إدارة تكوين الذكاء الاصطناعي. هذا النظام فائق التطور يوفر تنظيم تكوين الذكاء الاصطناعي المركزي والذكي والتكيفي لنظام Ainflue البيئي للذكاء الاصطناعي الكامل، مع قدرات المستوى الكمي التي تعيد تعريف كيفية تعامل تطبيقات الذكاء الاصطناعي الحديثة مع تكوين النماذج وخطوط أنابيب التدريب وتحسين الاستنتاج على نطاق لم يسبق له مثيل.
+**وحدة تكوين الذكاء الاصطناعي IA Chérie** تمثل القمة المطلقة لتقنية إدارة تكوين الذكاء الاصطناعي. هذا النظام فائق التطور يوفر تنظيم تكوين الذكاء الاصطناعي المركزي والذكي والتكيفي لنظام IA Chérie البيئي للذكاء الاصطناعي الكامل، مع قدرات المستوى الكمي التي تعيد تعريف كيفية تعامل تطبيقات الذكاء الاصطناعي الحديثة مع تكوين النماذج وخطوط أنابيب التدريب وتحسين الاستنتاج على نطاق لم يسبق له مثيل.
 
 ### 🏗️ **هندسة الذكاء الاصطناعي الكمي**
 
@@ -117,8 +117,8 @@ graph TB
 
 ```bash
 # استنساخ مستودع تكوين الذكاء الاصطناعي
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/config/ai
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie/config/ai
 
 # تثبيت تبعيات الذكاء الاصطناعي
 pip install -r requirements-ai.txt
@@ -146,7 +146,7 @@ ai_config = AIModelConfig()
 
 # تكوين نموذج المحول
 transformer_config = {
-    "model_name": "ainflue-quantum-transformer-7b",
+    "model_name": "iacherie-quantum-transformer-7b",
     "architecture": "transformer",
     "attention_heads": 64,
     "hidden_size": 4096,
@@ -169,7 +169,7 @@ training_config = TrainingConfig(
 
 # تكوين تحسين الاستنتاج
 inference_config = InferenceConfig(
-    model_path="/models/ainflue-quantum-transformer-7b",
+    model_path="/models/iacherie-quantum-transformer-7b",
     batch_size=1,
     max_tokens=2048,
     temperature=0.7,
@@ -196,7 +196,7 @@ quantum_config = QuantumAIConfig(
 from config.ai import ModelDeploymentConfig
 
 deployment = ModelDeploymentConfig(
-    model_name="ainflue-quantum-transformer-7b",
+    model_name="iacherie-quantum-transformer-7b",
     deployment_target="kubernetes",
     replicas=5,
     auto_scaling=True,
@@ -342,21 +342,21 @@ class AIOptimizationConfig:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-ai-models
+  name: iacherie-ai-models
   namespace: ai-production
 spec:
   replicas: 10
   selector:
     matchLabels:
-      app: ainflue-ai
+      app: iacherie-ai
   template:
     metadata:
       labels:
-        app: ainflue-ai
+        app: iacherie-ai
     spec:
       containers:
       - name: ai-inference
-        image: ainflue/ai-models:quantum-v2.0
+        image: iacherie/ai-models:quantum-v2.0
         resources:
           requests:
             memory: "32Gi"
@@ -489,11 +489,11 @@ AI_ETHICS_CONFIG = {
 
 ### 🤝 **الحصول على دعم الذكاء الاصطناعي**
 
-- **📚 وثائق الذكاء الاصطناعي**: [https://docs.ainflue.com/ai](https://docs.ainflue.com/ai)
-- **🧠 مجتمع أبحاث الذكاء الاصطناعي**: [قناة Discord للذكاء الاصطناعي](https://discord.gg/ainflue-ai)
-- **🐛 تقارير أخطاء الذكاء الاصطناعي**: [مشاكل GitHub للذكاء الاصطناعي](https://github.com/Mlaiel/Ainflue/issues/ai)
-- **💡 مقترحات أبحاث الذكاء الاصطناعي**: [بوابة أبحاث الذكاء الاصطناعي](https://research.ainflue.com)
-- **🤖 مركز نماذج الذكاء الاصطناعي**: [Hugging Face Ainflue](https://huggingface.co/ainflue)
+- **📚 وثائق الذكاء الاصطناعي**: [https://docs.iacherie.com/ai](https://docs.iacherie.com/ai)
+- **🧠 مجتمع أبحاث الذكاء الاصطناعي**: [قناة Discord للذكاء الاصطناعي](https://discord.gg/iacherie-ai)
+- **🐛 تقارير أخطاء الذكاء الاصطناعي**: [مشاكل GitHub للذكاء الاصطناعي](https://github.com/Mlaiel/IA Chérie/issues/ai)
+- **💡 مقترحات أبحاث الذكاء الاصطناعي**: [بوابة أبحاث الذكاء الاصطناعي](https://research.iacherie.com)
+- **🤖 مركز نماذج الذكاء الاصطناعي**: [Hugging Face IA Chérie](https://huggingface.co/iacherie)
 
 ### 👨‍🔬 **قيادة أبحاث الذكاء الاصطناعي**
 
@@ -522,7 +522,7 @@ AI_ETHICS_CONFIG = {
 
 ---
 
-**🚀 هل أنت مستعد لثورة قدرات الذكاء الاصطناعي لديك؟ استكشف مستقبل الذكاء الاصطناعي مع وحدة تكوين الذكاء الاصطناعي Ainflue!**
+**🚀 هل أنت مستعد لثورة قدرات الذكاء الاصطناعي لديك؟ استكشف مستقبل الذكاء الاصطناعي مع وحدة تكوين الذكاء الاصطناعي IA Chérie!**
 
 ---
 

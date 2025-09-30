@@ -279,7 +279,7 @@ class PineconeBackend(BaseVectorBackend):
         # Configuration
         self.api_key = config.get('backend.api_key', '')
         self.environment = config.get('backend.environment', 'us-west1-gcp')
-        self.index_name = config.get('backend.index_name', 'ainflue-vectors')
+        self.index_name = config.get('backend.index_name', 'iacherie-vectors')
         self.dimension = config.get('backend.dimension', 768)
         self.metric = config.get('backend.metric', 'cosine')
         self.namespace = config.get('backend.namespace', 'default')

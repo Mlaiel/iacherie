@@ -1,11 +1,11 @@
 """
-💰 Monetization Service Discovery Enterprise - Ainflue
+💰 Monetization Service Discovery Enterprise - IA Chérie
 =====================================================
 Discovery services monétisation pour créateurs.
 Revenue optimization + payment processing + analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chérie Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -93,7 +93,7 @@ class MonetizationServiceDiscovery:
             ServiceInstance(
                 service_id="payment_stripe_001",
                 service_name="payment_processing_stripe",
-                host="payments.ainflue.com",
+                host="payments.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={
@@ -106,7 +106,7 @@ class MonetizationServiceDiscovery:
             ServiceInstance(
                 service_id="payment_paypal_001", 
                 service_name="payment_processing_paypal",
-                host="payments.ainflue.com",
+                host="payments.iacherie.com",
                 port=443,
                 health_check_url="/health",
                 metadata={
@@ -123,7 +123,7 @@ class MonetizationServiceDiscovery:
             ServiceInstance(
                 service_id="analytics_001",
                 service_name="revenue_analytics",
-                host="analytics.ainflue.com", 
+                host="analytics.iacherie.com", 
                 port=8080,
                 health_check_url="/health",
                 metadata={
@@ -139,7 +139,7 @@ class MonetizationServiceDiscovery:
             ServiceInstance(
                 service_id="ads_001",
                 service_name="ad_optimization",
-                host="ads.ainflue.com",
+                host="ads.iacherie.com",
                 port=8080, 
                 health_check_url="/health",
                 metadata={

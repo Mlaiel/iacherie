@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Gamification Engagement Dashboard
+IA Chérie Platform - Gamification Engagement Dashboard
 ===================================================
 
 Enterprise dashboard for gamification and engagement with AI-powered behavioral

@@ -2,7 +2,7 @@
 Publishing Optimization Engine - Distribution Module
 ==================================================
 
-AI-powered publishing optimization system for the Ainflue platform.
+AI-powered publishing optimization system for the IA Chérie platform.
 Analyzes optimal publishing times, audience targeting, content optimization,
 and cross-platform scheduling for maximum reach and engagement.
 

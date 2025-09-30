@@ -3,7 +3,7 @@
 # Fast-track deployment procedures for critical issues and security patches
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Project: Ainflue Platform Emergency Response
+# Project: IA Chérie Platform Emergency Response
 
 name: 🚨 Emergency Deployment Procedures
 
@@ -208,7 +208,7 @@ jobs:
         with:
           event_type: 'emergency-deployment-start'
           environment: 'production'
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           urgency: 'high'
           additional_info: |
             {
@@ -325,8 +325,8 @@ jobs:
           echo "🚨 Executing emergency rollback due to monitoring failure..."
 
           # Immediate rollback for emergency deployments
-          kubectl patch service ainflue-api -n ainflue -p '{"spec":{"selector":{"version":"blue"}}}'
-          kubectl scale deployment ainflue-api-blue -n ainflue --replicas=3
+          kubectl patch service iacherie-api -n iacherie -p '{"spec":{"selector":{"version":"blue"}}}'
+          kubectl scale deployment iacherie-api-blue -n iacherie --replicas=3
 
           echo "📞 Sending critical alert..."
           # This would trigger immediate alerts to all emergency contacts
@@ -393,7 +393,7 @@ jobs:
         with:
           event_type: 'emergency-deployment-complete'
           environment: 'production'
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           urgency: 'high'
           additional_info: |
             {
@@ -430,7 +430,7 @@ jobs:
         with:
           event_type: 'emergency-deployment-denied'
           environment: 'production'
-          service_name: 'Ainflue Platform'
+          service_name: 'IA Chérie Platform'
           urgency: 'medium'
           additional_info: |
             {

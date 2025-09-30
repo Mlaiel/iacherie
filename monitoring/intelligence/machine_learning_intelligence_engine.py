@@ -2,7 +2,7 @@
 =====================================
 
 Enterprise ML Intelligence Engine for sophisticated machine learning
-operations across the Ainflue Creator Economy platform. Provides
+operations across the IA Chérie Creator Economy platform. Provides
 comprehensive ML intelligence including:
 - ML Creator Economy algorithms sophisticated implementation
 - Creator ML intelligence model training automation

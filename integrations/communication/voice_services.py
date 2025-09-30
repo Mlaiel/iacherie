@@ -89,7 +89,7 @@ class VoiceServicesError(Exception):
 
 class VoiceServices:
     """
-    Comprehensive voice services integration for Ainflue platform.
+    Comprehensive voice services integration for IA Chérie platform.
     
     Features:
     - Podcast creation and distribution
@@ -668,7 +668,7 @@ class VoiceServices:
         """Upload and process audio file"""
         # This would implement audio upload and processing
         return {
-            'audio_url': f"https://cdn.ainflue.com/audio/{uuid.uuid4()}.mp3",
+            'audio_url': f"https://cdn.iacherie.com/audio/{uuid.uuid4()}.mp3",
             'duration': 1800,  # 30 minutes
             'file_size': 25600000,  # 25.6 MB
             'format': 'mp3',
@@ -683,7 +683,7 @@ class VoiceServices:
     async def _enhance_audio_quality(self, audio_url: str) -> Dict[str, Any]:
         """Enhance audio quality using AI"""
         return {
-            'enhanced_url': f"https://cdn.ainflue.com/audio/enhanced_{uuid.uuid4()}.mp3",
+            'enhanced_url': f"https://cdn.iacherie.com/audio/enhanced_{uuid.uuid4()}.mp3",
             'quality_score': 9.2,
             'improvements': ['noise_reduction', 'normalization', 'clarity_enhancement']
         }

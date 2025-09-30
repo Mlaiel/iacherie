@@ -1,0 +1,1180 @@
+# ⚡ Pod Security Policy Configuration Template - Ainflue Templates Configuration Module
+# 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
+# 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
+
+# ===================================================================
+# POD SECURITY POLICY CONFIGURATION TEMPLATE
+# Enterprise-grade pod security policies
+# Kubernetes PSP + Pod Security Standards + OPA Gatekeeper
+# ===================================================================
+
+# 🛡️ Global Pod Security Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-pod-security-config
+  namespace: ainflue-system
+  labels:
+    app: pod-security
+    component: global-config
+data:
+  pod-security.yaml: |
+    # Global Pod Security Configuration
+    podSecurity:
+      # Security Standards
+      standards:
+        default: "restricted"    # restricted, baseline, privileged
+        enforcement: "enforce"   # enforce, audit, warn
+        version: "v1.29"
+        exemptions:
+          usernames: ["system:serviceaccount:kube-system:*"]
+          runtimeClasses: ["gvisor", "kata"]
+          namespaces: ["kube-system", "istio-system", "monitoring"]
+      
+      # Security Contexts
+      securityContexts:
+        runAsNonRoot: true
+        runAsUser: 65534  # nobody user
+        runAsGroup: 65534
+        fsGroup: 65534
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+          add: []  # No capabilities by default
+        seccompProfile:
+          type: "RuntimeDefault"
+        seLinuxOptions:
+          level: "s0:c123,c456"
+      
+      # Resource Management
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
+          ephemeral-storage: "2Gi"
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+          ephemeral-storage: "1Gi"
+        quotas:
+          enabled: true
+          defaultCpuLimit: "2"
+          defaultMemoryLimit: "2Gi"
+          defaultStorageLimit: "10Gi"
+      
+      # Network Security
+      network:
+        hostNetwork: false
+        hostPID: false
+        hostIPC: false
+        hostPorts:
+          min: 0
+          max: 0  # No host ports allowed
+        dnsPolicy: "ClusterFirst"
+        dnsConfig:
+          options:
+            - name: "ndots"
+              value: "2"
+            - name: "edns0"
+      
+      # Volume Security
+      volumes:
+        allowed:
+          - "configMap"
+          - "downwardAPI"
+          - "emptyDir"
+          - "persistentVolumeClaim"
+          - "projected"
+          - "secret"
+        forbidden:
+          - "hostPath"
+          - "nfs"
+          - "glusterfs"
+          - "rbd"
+          - "flexVolume"
+        hostPathAllowed: []  # No host paths allowed
+        readOnlyRootFilesystem: true
+      
+      # Service Account Security
+      serviceAccount:
+        automountToken: false
+        tokenProjection: true
+        tokenExpirationSeconds: 3600
+        tokenAudiences: ["https://kubernetes.default.svc"]
+---
+# 🔒 Restricted Pod Security Policy
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-restricted-psp
+  namespace: ainflue-production
+  labels:
+    security-level: restricted
+    policy-type: production
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
+spec:
+  # Privilege and Access Controls
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities: []
+  defaultAddCapabilities: []
+  
+  # Users and Groups
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  
+  # Host Controls
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  hostPorts: []
+  
+  # Volume Controls
+  volumes:
+    - 'configMap'
+    - 'downwardAPI'
+    - 'emptyDir'
+    - 'persistentVolumeClaim'
+    - 'projected'
+    - 'secret'
+  allowedHostPaths: []
+  
+  # File System
+  readOnlyRootFilesystem: true
+  
+  # SELinux
+  seLinux:
+    rule: 'MustRunAs'
+    seLinuxOptions:
+      level: 's0:c123,c456'
+  
+  # Runtime
+  runtimeClass:
+    allowedRuntimeClassNames: ['gvisor', 'kata-containers']
+    defaultRuntimeClassName: 'gvisor'
+  
+  # Forbidden syscalls
+  forbiddenSysctls:
+    - '*'
+  allowedUnsafeSysctls: []
+---
+# 🎯 Application Pod Security Policy
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-application-psp
+  namespace: ainflue-production
+  labels:
+    security-level: baseline
+    policy-type: application
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities:
+    - NET_BIND_SERVICE  # Allow binding to ports < 1024
+  defaultAddCapabilities: []
+  
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1000
+        max: 65535
+  
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  hostPorts:
+    - min: 8080
+      max: 8080
+  
+  volumes:
+    - 'configMap'
+    - 'downwardAPI'
+    - 'emptyDir'
+    - 'persistentVolumeClaim'
+    - 'projected'
+    - 'secret'
+  
+  readOnlyRootFilesystem: true
+  
+  seLinux:
+    rule: 'RunAsAny'
+---
+# 🔐 Database Pod Security Policy
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-database-psp
+  namespace: ainflue-database
+  labels:
+    security-level: baseline
+    policy-type: database
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities:
+    - CHOWN
+    - DAC_OVERRIDE
+    - FOWNER
+    - SETUID
+    - SETGID
+  
+  runAsUser:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 999    # postgres user
+        max: 999
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 999
+        max: 999
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 999
+        max: 999
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 999
+        max: 999
+  
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  hostPorts: []
+  
+  volumes:
+    - 'configMap'
+    - 'downwardAPI'
+    - 'emptyDir'
+    - 'persistentVolumeClaim'
+    - 'projected'
+    - 'secret'
+  
+  readOnlyRootFilesystem: false  # Database needs write access
+  
+  seLinux:
+    rule: 'RunAsAny'
+---
+# 🛡️ Monitoring Pod Security Policy
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-monitoring-psp
+  namespace: monitoring
+  labels:
+    security-level: baseline
+    policy-type: monitoring
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  allowedCapabilities:
+    - NET_BIND_SERVICE
+    - SYS_TIME  # For time-series databases
+  
+  runAsUser:
+    rule: 'RunAsAny'
+  runAsGroup:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+  
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  hostPorts:
+    - min: 9090
+      max: 9100
+  
+  volumes:
+    - 'configMap'
+    - 'downwardAPI'
+    - 'emptyDir'
+    - 'persistentVolumeClaim'
+    - 'projected'
+    - 'secret'
+    - 'hostPath'  # Limited hostPath for node metrics
+  
+  allowedHostPaths:
+    - pathPrefix: "/proc"
+      readOnly: true
+    - pathPrefix: "/sys"
+      readOnly: true
+    - pathPrefix: "/var/run/docker.sock"
+      readOnly: true
+  
+  readOnlyRootFilesystem: false
+  
+  seLinux:
+    rule: 'RunAsAny'
+
+# ===================================================================
+# 🔒 POD SECURITY STANDARDS (PSS) CONFIGURATIONS
+# ===================================================================
+
+# 🎯 Namespace Security Labels
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-production
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/enforce-version: v1.29
+    security-tier: production
+spec: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-staging
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/enforce-version: v1.29
+    security-tier: staging
+spec: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-development
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/warn: baseline
+    pod-security.kubernetes.io/enforce-version: v1.29
+    security-tier: development
+spec: {}
+---
+# 🛡️ Security Context Constraints (OpenShift)
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: ainflue-restricted-scc
+  labels:
+    security-level: restricted
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false
+allowedCapabilities: null
+defaultAddCapabilities: null
+requiredDropCapabilities:
+- ALL
+fsGroup:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+readOnlyRootFilesystem: true
+runAsUser:
+  type: MustRunAsNonRoot
+seLinuxContext:
+  type: MustRunAs
+  seLinuxOptions:
+    level: "s0:c123,c456"
+supplementalGroups:
+  type: MustRunAs
+  ranges:
+  - min: 1000
+    max: 65535
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
+users:
+- system:serviceaccount:ainflue-production:ainflue-api
+- system:serviceaccount:ainflue-production:ainflue-frontend
+- system:serviceaccount:ainflue-production:ainflue-content-processor
+groups:
+- system:serviceaccounts:ainflue-production
+
+# ===================================================================
+# 🔒 OPA GATEKEEPER CONSTRAINTS
+# ===================================================================
+
+# 🛡️ Required Security Context Constraint
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredsecuritycontext
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredSecurityContext
+      validation:
+        type: object
+        properties:
+          runAsNonRoot:
+            type: boolean
+          readOnlyRootFilesystem:
+            type: boolean
+          allowPrivilegeEscalation:
+            type: boolean
+          requiredDropCapabilities:
+            type: array
+            items:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srequiredsecuritycontext
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.securityContext.runAsNonRoot
+          msg := "Container must run as non-root user"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.securityContext.readOnlyRootFilesystem
+          msg := "Container must have read-only root filesystem"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          container.securityContext.allowPrivilegeEscalation == true
+          msg := "Container must not allow privilege escalation"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          required := {"ALL"}
+          dropped := {cap | cap := container.securityContext.capabilities.drop[_]}
+          missing := required - dropped
+          count(missing) > 0
+          msg := sprintf("Container must drop ALL capabilities, missing: %v", [missing])
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredSecurityContext
+metadata:
+  name: ainflue-security-context
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["ainflue-production", "ainflue-staging"]
+  parameters:
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    requiredDropCapabilities: ["ALL"]
+---
+# 🔐 Container Image Policy
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sallowedrepos
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAllowedRepos
+      validation:
+        type: object
+        properties:
+          repos:
+            type: array
+            items:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sallowedrepos
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          satisfied := [good | repo = input.parameters.repos[_] ; good = startswith(container.image, repo)]
+          not any(satisfied)
+          msg := sprintf("Container image '%v' is not from allowed registry", [container.image])
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          endswith(container.image, ":latest")
+          msg := "Container image must not use 'latest' tag"
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: ainflue-allowed-repos
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["ainflue-production", "ainflue-staging"]
+  parameters:
+    repos:
+      - "ainflue.azurecr.io/"
+      - "gcr.io/ainflue-project/"
+      - "registry.ainflue.com/"
+      - "k8s.gcr.io/"
+      - "quay.io/jetstack/"  # cert-manager
+---
+# 🛡️ Resource Limits Constraint
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredresources
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredResources
+      validation:
+        type: object
+        properties:
+          limits:
+            type: object
+            properties:
+              cpu:
+                type: string
+              memory:
+                type: string
+          requests:
+            type: object
+            properties:
+              cpu:
+                type: string
+              memory:
+                type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srequiredresources
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.resources.limits.cpu
+          msg := "Container must have CPU limits set"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.resources.limits.memory
+          msg := "Container must have memory limits set"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.resources.requests.cpu
+          msg := "Container must have CPU requests set"
+        }
+        
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container.resources.requests.memory
+          msg := "Container must have memory requests set"
+        }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredResources
+metadata:
+  name: ainflue-required-resources
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["ainflue-production", "ainflue-staging"]
+  parameters:
+    limits:
+      cpu: "2000m"
+      memory: "2Gi"
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+
+# ===================================================================
+# 🔒 RBAC FOR POD SECURITY POLICIES
+# ===================================================================
+
+# 🎯 Service Account for Restricted Workloads
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ainflue-restricted-sa
+  namespace: ainflue-production
+  labels:
+    security-level: restricted
+---
+# 🔐 ClusterRole for PSP
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ainflue-restricted-psp-user
+  labels:
+    security-level: restricted
+rules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs: ['use']
+  resourceNames:
+  - ainflue-restricted-psp
+---
+# 🔗 RoleBinding for PSP
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ainflue-restricted-psp-binding
+  namespace: ainflue-production
+roleRef:
+  kind: ClusterRole
+  name: ainflue-restricted-psp-user
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: ainflue-restricted-sa
+  namespace: ainflue-production
+- kind: ServiceAccount
+  name: ainflue-api
+  namespace: ainflue-production
+- kind: ServiceAccount
+  name: ainflue-frontend
+  namespace: ainflue-production
+- kind: ServiceAccount
+  name: ainflue-content-processor
+  namespace: ainflue-production
+---
+# 🎯 Database Service Account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ainflue-database-sa
+  namespace: ainflue-database
+  labels:
+    security-level: baseline
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ainflue-database-psp-user
+rules:
+- apiGroups: ['policy']
+  resources: ['podsecuritypolicies']
+  verbs: ['use']
+  resourceNames:
+  - ainflue-database-psp
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ainflue-database-psp-binding
+  namespace: ainflue-database
+roleRef:
+  kind: ClusterRole
+  name: ainflue-database-psp-user
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: ainflue-database-sa
+  namespace: ainflue-database
+
+# ===================================================================
+# 🔒 ADMISSION CONTROLLERS CONFIGURATION
+# ===================================================================
+
+# 🛡️ Pod Security Admission Controller
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pod-security-webhook-config
+  namespace: kube-system
+data:
+  config.yaml: |
+    # Pod Security Admission Configuration
+    apiVersion: apiserver.config.k8s.io/v1
+    kind: AdmissionConfiguration
+    plugins:
+    - name: PodSecurity
+      configuration:
+        apiVersion: pod-security.admission.config.k8s.io/v1beta1
+        kind: PodSecurityConfiguration
+        defaults:
+          enforce: "baseline"
+          enforce-version: "v1.29"
+          audit: "restricted"
+          audit-version: "v1.29"
+          warn: "restricted"
+          warn-version: "v1.29"
+        exemptions:
+          usernames: []
+          runtimeClasses: []
+          namespaces: ["kube-system", "kube-public", "kube-node-lease"]
+---
+# 🔐 ValidatingAdmissionWebhook for Custom Policies
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionWebhook
+metadata:
+  name: ainflue-pod-security-webhook
+webhooks:
+- name: pod-security.ainflue.com
+  clientConfig:
+    service:
+      name: ainflue-pod-security-webhook
+      namespace: ainflue-system
+      path: "/validate"
+  rules:
+  - operations: ["CREATE", "UPDATE"]
+    apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  failurePolicy: Fail
+  namespaceSelector:
+    matchLabels:
+      pod-security-webhook: enabled
+
+# ===================================================================
+# 🔒 RUNTIME SECURITY CONFIGURATIONS
+# ===================================================================
+
+# 🛡️ Seccomp Profiles
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-seccomp-profiles
+  namespace: ainflue-system
+data:
+  ainflue-default.json: |
+    {
+      "defaultAction": "SCMP_ACT_ERRNO",
+      "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_X86", "SCMP_ARCH_X32"],
+      "syscalls": [
+        {
+          "names": [
+            "accept",
+            "accept4",
+            "access",
+            "arch_prctl",
+            "bind",
+            "brk",
+            "clone",
+            "close",
+            "connect",
+            "dup",
+            "dup2",
+            "epoll_create",
+            "epoll_create1",
+            "epoll_ctl",
+            "epoll_wait",
+            "exit",
+            "exit_group",
+            "fchdir",
+            "fchmod",
+            "fcntl",
+            "fstat",
+            "futex",
+            "getcwd",
+            "getdents",
+            "getdents64",
+            "getegid",
+            "geteuid",
+            "getgid",
+            "getpid",
+            "getppid",
+            "getrandom",
+            "getsockname",
+            "getsockopt",
+            "getuid",
+            "listen",
+            "lseek",
+            "madvise",
+            "mmap",
+            "mprotect",
+            "munmap",
+            "nanosleep",
+            "open",
+            "openat",
+            "pipe",
+            "pipe2",
+            "poll",
+            "pread64",
+            "pwrite64",
+            "read",
+            "readv",
+            "recvfrom",
+            "recvmsg",
+            "rt_sigaction",
+            "rt_sigprocmask",
+            "rt_sigreturn",
+            "sched_getaffinity",
+            "sched_yield",
+            "sendmsg",
+            "sendto",
+            "set_robust_list",
+            "setsockopt",
+            "shutdown",
+            "socket",
+            "stat",
+            "tgkill",
+            "time",
+            "times",
+            "uname",
+            "wait4",
+            "write",
+            "writev"
+          ],
+          "action": "SCMP_ACT_ALLOW"
+        }
+      ]
+    }
+  
+  ainflue-database.json: |
+    {
+      "defaultAction": "SCMP_ACT_ERRNO",
+      "architectures": ["SCMP_ARCH_X86_64"],
+      "syscalls": [
+        {
+          "names": [
+            "accept",
+            "access",
+            "bind",
+            "brk",
+            "chdir",
+            "chmod",
+            "clone",
+            "close",
+            "connect",
+            "dup",
+            "epoll_create",
+            "epoll_ctl",
+            "epoll_wait",
+            "exit",
+            "exit_group",
+            "fchmod",
+            "fchown",
+            "fcntl",
+            "fdatasync",
+            "flock",
+            "fstat",
+            "fsync",
+            "ftruncate",
+            "futex",
+            "getcwd",
+            "getdents",
+            "getegid",
+            "geteuid",
+            "getgid",
+            "getpid",
+            "getuid",
+            "ioctl",
+            "lseek",
+            "lstat",
+            "mkdir",
+            "mmap",
+            "mprotect",
+            "munmap",
+            "open",
+            "openat",
+            "poll",
+            "pread64",
+            "pwrite64",
+            "read",
+            "rename",
+            "rmdir",
+            "select",
+            "sendfile",
+            "setsockopt",
+            "socket",
+            "stat",
+            "sync",
+            "sync_file_range",
+            "time",
+            "unlink",
+            "write"
+          ],
+          "action": "SCMP_ACT_ALLOW"
+        }
+      ]
+    }
+---
+# 🔐 AppArmor Profiles
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-apparmor-profiles
+  namespace: ainflue-system
+data:
+  ainflue-default: |
+    #include <tunables/global>
+    
+    profile ainflue-default flags=(attach_disconnected,mediate_deleted) {
+      #include <abstractions/base>
+      
+      # Network access
+      network inet tcp,
+      network inet udp,
+      network inet6 tcp,
+      network inet6 udp,
+      
+      # File access
+      /usr/bin/** mr,
+      /usr/lib/** mr,
+      /lib/** mr,
+      /etc/ssl/certs/** r,
+      /etc/ca-certificates/** r,
+      
+      # Application directory
+      /app/** mr,
+      
+      # Temporary files
+      /tmp/** rw,
+      /var/tmp/** rw,
+      
+      # Deny dangerous operations
+      deny /proc/sys/** w,
+      deny /sys/** w,
+      deny /dev/** w,
+      deny capability sys_admin,
+      deny capability sys_module,
+      deny capability dac_override,
+      deny capability dac_read_search,
+      deny mount,
+      deny umount,
+      deny pivot_root,
+      deny @{PROC}/sys/kernel/core_pattern w,
+      deny @{PROC}/sysrq-trigger w,
+      deny @{PROC}/mem r,
+      deny @{PROC}/kmem r,
+    }
+
+# ===================================================================
+# 🔒 RUNTIME SECURITY MONITORING
+# ===================================================================
+
+# 📊 Falco Rules for Pod Security
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: falco-pod-security-rules
+  namespace: falco-system
+data:
+  pod_security_rules.yaml: |
+    # Falco Rules for Pod Security Monitoring
+    - rule: Privilege Escalation Attempt
+      desc: Detect attempts to escalate privileges
+      condition: >
+        spawned_process and
+        (proc.args contains "sudo" or
+         proc.args contains "su" or
+         proc.args contains "chmod +s")
+      output: >
+        Privilege escalation attempt detected
+        (user=%user.name command=%proc.cmdline container=%container.name)
+      priority: WARNING
+      tags: [privilege_escalation, security]
+    
+    - rule: Unauthorized Capability Usage
+      desc: Detect use of unauthorized capabilities
+      condition: >
+        spawned_process and
+        proc.name in (ping, ping6) and
+        not container.privileged=true
+      output: >
+        Unauthorized capability usage detected
+        (user=%user.name command=%proc.cmdline container=%container.name)
+      priority: WARNING
+      tags: [capabilities, security]
+    
+    - rule: Suspicious Container Activity
+      desc: Detect suspicious activity in containers
+      condition: >
+        spawned_process and
+        (proc.name in (nc, netcat, ncat, nmap, telnet, socat) or
+         proc.args contains "/dev/tcp/")
+      output: >
+        Suspicious network activity in container
+        (user=%user.name command=%proc.cmdline container=%container.name)
+      priority: WARNING
+      tags: [network, security]
+    
+    - rule: Container Escape Attempt
+      desc: Detect attempts to escape containers
+      condition: >
+        spawned_process and
+        (proc.args contains "docker" or
+         proc.args contains "runc" or
+         proc.args contains "kubectl" or
+         proc.args contains "/var/run/docker.sock")
+      output: >
+        Container escape attempt detected
+        (user=%user.name command=%proc.cmdline container=%container.name)
+      priority: CRITICAL
+      tags: [container_escape, security]
+---
+# 🚨 Pod Security Alerts
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: pod-security-alerts
+  namespace: ainflue-system
+spec:
+  groups:
+  - name: pod.security
+    rules:
+    - alert: PodSecurityPolicyViolation
+      expr: |
+        increase(pod_security_policy_violations_total[5m]) > 0
+      for: 0m
+      labels:
+        severity: critical
+        category: pod-security
+      annotations:
+        summary: "Pod Security Policy violation detected"
+        description: "{{ $value }} PSP violations detected in the last 5 minutes"
+    
+    - alert: PrivilegedPodCreated
+      expr: |
+        increase(kube_pod_container_status_running{container_security_context_privileged="true"}[5m]) > 0
+      for: 0m
+      labels:
+        severity: critical
+        category: pod-security
+      annotations:
+        summary: "Privileged pod created"
+        description: "A privileged pod has been created in namespace {{ $labels.namespace }}"
+    
+    - alert: PodWithHostNetworkCreated
+      expr: |
+        increase(kube_pod_spec_host_network{host_network="true"}[5m]) > 0
+      for: 0m
+      labels:
+        severity: warning
+        category: pod-security
+      annotations:
+        summary: "Pod with host network created"
+        description: "A pod with host network access has been created in namespace {{ $labels.namespace }}"
+
+# ===================================================================
+# 🎯 CREATOR ECONOMY POD SECURITY
+# ===================================================================
+
+# 🎨 Creator Content Processor Security
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ainflue-content-processor-example
+  namespace: ainflue-production
+  labels:
+    app: ainflue-content-processor
+    security-level: restricted
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: "localhost/ainflue-default"
+    apparmor.security.beta.kubernetes.io/container.content-processor: "localhost/ainflue-default"
+spec:
+  serviceAccountName: ainflue-restricted-sa
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: Localhost
+      localhostProfile: ainflue-default.json
+  containers:
+  - name: content-processor
+    image: ainflue.azurecr.io/content-processor:v1.2.3
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 10001
+      runAsGroup: 10001
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+        ephemeral-storage: 1Gi
+      limits:
+        cpu: 2
+        memory: 4Gi
+        ephemeral-storage: 2Gi
+    volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+    - name: config
+      mountPath: /app/config
+      readOnly: true
+    env:
+    - name: PROCESSING_MODE
+      value: "secure"
+    - name: SECURITY_LEVEL
+      value: "high"
+  volumes:
+  - name: tmp
+    emptyDir:
+      sizeLimit: 1Gi
+  - name: config
+    configMap:
+      name: content-processor-config
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+
+# ===================================================================
+# END OF POD SECURITY POLICY CONFIGURATION TEMPLATE
+# Creator Economy Pod Security by Fahed Mlaiel
+# Enterprise-grade pod security policies for Ainflue platform
+# ===================================================================

@@ -1,4 +1,4 @@
-# AI/ML Pipeline Infrastructure - Ainflue Enterprise
+# AI/ML Pipeline Infrastructure - IA Chérie Enterprise
 
 Enterprise AI/ML pipeline system for 53 AI agents serving global creator platform with complete MLOps automation and GPU optimization.
 
@@ -60,7 +60,7 @@ Any unauthorized use, reproduction, modification, or distribution of this AI/ML 
 16. **GPU Resource Manager** - Hardware optimization with intelligent workload distribution
 17. **Model Performance Analyzer** - Performance profiling & optimization with benchmarking
 
-## 🎯 Ainflue Business Logic Integration
+## 🎯 IA Chérie Business Logic Integration
 
 ### Creator-Centric AI/ML Workflow
 ```
@@ -195,8 +195,8 @@ High-speed network (25Gbps+) for distributed training
 ### Installation & Setup
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue
+git clone https://github.com/Mlaiel/IA Chérie.git
+cd IA Chérie
 
 # Install dependencies
 pip install -r requirements-ml.txt
@@ -218,7 +218,7 @@ from integrations.ai_ml_pipeline import create_complete_ai_ml_pipeline
 async def main():
     # Load configuration
     config = {
-        'database_url': 'postgresql://localhost/ainflue',
+        'database_url': 'postgresql://localhost/iacherie',
         'redis_url': 'redis://localhost:6379',
         'gpu_enabled': True,
         'monitoring_enabled': True
@@ -304,15 +304,15 @@ if __name__ == "__main__":
 
 ### Technical Support
 - **Email**: mlaiel@live.de
-- **Documentation**: [Ainflue AI/ML Docs](https://docs.ainflue.com/ai-ml)
+- **Documentation**: [IA Chérie AI/ML Docs](https://docs.iacherie.com/ai-ml)
 - **Issue Tracking**: Internal enterprise support system
 
 ### Enterprise Licensing
 For enterprise licensing, custom implementations, or partnership inquiries:
 - **Contact**: mlaiel@live.de
-- **Subject Line**: "Ainflue AI/ML Enterprise Licensing"
+- **Subject Line**: "IA Chérie AI/ML Enterprise Licensing"
 
 ---
 
 **© 2025 Fahed Mlaiel - All Rights Reserved**  
-**Ainflue AI/ML Pipeline Infrastructure - Enterprise Edition v3.0**
+**IA Chérie AI/ML Pipeline Infrastructure - Enterprise Edition v3.0**

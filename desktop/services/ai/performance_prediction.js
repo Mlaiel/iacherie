@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Performance Prediction AI Service
+ * IA Chérie Desktop - Performance Prediction AI Service
  * 
  * AI-powered performance prediction for content optimization and strategy planning
  * Analyzes content characteristics to predict viral potential and engagement metrics

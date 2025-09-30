@@ -3,7 +3,7 @@
 
 Enterprise-grade Creator Tier Intelligence system providing comprehensive
 tier management, intelligent progression tracking, and advanced tier analytics
-for the Ainflue Creator Economy. Implements sophisticated tier algorithms,
+for the IA Chérie Creator Economy. Implements sophisticated tier algorithms,
 automated progression, and intelligent tier optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

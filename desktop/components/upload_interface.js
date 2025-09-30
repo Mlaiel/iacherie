@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Upload Interface Component
+ * IA Chérie Desktop - Upload Interface Component
  * 
  * Advanced multi-format upload system with drag-and-drop, progress tracking, and AI preprocessing
  * Supports all media formats with intelligent quality analysis and optimization suggestions
@@ -39,8 +39,8 @@ class UploadInterface extends EventEmitter {
       },
       uploadEndpoints: {
         local: 'file://',
-        cloud: 'https://api.ainflue.com/upload',
-        cdn: 'https://cdn.ainflue.com/upload'
+        cloud: 'https://api.iacherie.com/upload',
+        cdn: 'https://cdn.iacherie.com/upload'
       },
       ...options
     };

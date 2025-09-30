@@ -1,22 +1,22 @@
 """
-🛡️ PROTECTION SERVICE ORCHESTRATION - Module Orchestration Services Protection Ainflue
+🛡️ PROTECTION SERVICE ORCHESTRATION - Module Orchestration Services Protection IA Chérie
 ===================================================================================
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Copyright**: ©2025 Ainflue Platform - Tous droits réservés
+**Copyright**: ©2025 IA Chérie Platform - Tous droits réservés
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ====================================================
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 - Email: mlaiel@live.de  
-- Projet: Ainflue Platform
+- Projet: IA Chérie Platform
 - Licence: Propriétaire - Usage commercial interdit sans autorisation
 - Protection: Code source confidentiel
 
-🛡️ LOGIQUE MÉTIER AINFLUE - PROTECTION SERVICE ORCHESTRATION
+🛡️ LOGIQUE MÉTIER IACHERIE - PROTECTION SERVICE ORCHESTRATION
 =========================================================
-Orchestration services protection contenu Ainflue:
+Orchestration services protection contenu IA Chérie:
 - Copyright analysis & DMCA processing services
 - Content moderation & compliance services
 - IP protection & anti-piracy services
@@ -47,14 +47,14 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from collections import defaultdict, deque
 
-# Ainflue Core Imports
+# IA Chérie Core Imports
 from .distributed_service_registry import DistributedServiceRegistry, ServiceInstance
 from .intelligent_load_balancer import IntelligentLoadBalancer
 
 logger = logging.getLogger(__name__)
 
 class ProtectionServiceType(Enum):
-    """Types de services protection Ainflue."""
+    """Types de services protection IA Chérie."""
     COPYRIGHT_ANALYZER = "copyright_analyzer"
     DMCA_PROCESSOR = "dmca_processor"
     CONTENT_MODERATOR = "content_moderator"
@@ -125,7 +125,7 @@ class ProtectionServiceCapability:
     batch_processing: bool
 
 class ProtectionServiceOrchestrator:
-    """Orchestrateur services protection Ainflue."""
+    """Orchestrateur services protection IA Chérie."""
     
     def __init__(self, redis_client: aioredis.Redis,
                  registry: DistributedServiceRegistry,

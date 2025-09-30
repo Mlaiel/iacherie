@@ -1,4 +1,4 @@
-# 🔒 Content Protection Monitoring - Ainflue Platform
+# 🔒 Content Protection Monitoring - IA Chérie Platform
 
 ## Overview
 
@@ -282,5 +282,5 @@ compliance = content_protection.get_dmca_compliance_report()
 
 ---
 
-**© 2025 Fahed Mlaiel - Ainflue Platform Content Protection Monitoring**  
+**© 2025 Fahed Mlaiel - IA Chérie Platform Content Protection Monitoring**  
 Contact: mlaiel@live.de

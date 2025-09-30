@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION:
-Orchestrateur principal pour tous les datasets computer vision de la plateforme Ainflue.
+Orchestrateur principal pour tous les datasets computer vision de la plateforme IA Chérie.
 Coordonne 15+ agents IA vision avec datasets spécialisés haute performance.
 """
 

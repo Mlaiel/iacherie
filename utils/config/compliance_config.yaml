@@ -1,5 +1,5 @@
 # ===========================================
-# COMPLIANCE CONFIGURATION - AINFLUE UTILS
+# COMPLIANCE CONFIGURATION - IACHERIE UTILS
 # ===========================================
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -41,7 +41,7 @@ compliance:
     # Data Protection Officer
     dpo:
       required: true
-      contact_email: "dpo@ainflue.com"
+      contact_email: "dpo@iacherie.com"
       public_contact: true
     
     # Data Breach Notification
@@ -49,7 +49,7 @@ compliance:
       authority_notification_hours: 72
       data_subject_notification_required: true
       high_risk_threshold: "high"
-      incident_response_team: "security@ainflue.com"
+      incident_response_team: "security@iacherie.com"
 
   # =======================
   # SOX Compliance (Sarbanes-Oxley)

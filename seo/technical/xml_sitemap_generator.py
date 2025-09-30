@@ -431,7 +431,7 @@ class XMLSitemapGenerator:
             # Publication info
             pub_elem = ET.SubElement(news_elem, "news:publication")
             name_elem = ET.SubElement(pub_elem, "news:name")
-            name_elem.text = entry.news.get('publication_name', 'Ainflue')
+            name_elem.text = entry.news.get('publication_name', 'IA Chérie')
             
             lang_elem = ET.SubElement(pub_elem, "news:language")
             lang_elem.text = entry.news.get('language', 'en')
@@ -625,7 +625,7 @@ class XMLSitemapGenerator:
 
 # Enterprise usage examples and utilities
 class SitemapManager:
-    """High-level sitemap management for Ainflue platform."""
+    """High-level sitemap management for IA Chérie platform."""
     
     def __init__(self, base_url: str):
         self.base_url = base_url

@@ -251,11 +251,11 @@ monitoring:
   interval: {{ monitoring_interval | default(30) }}
 """,
             variables={
-                "app_name": "ainflue-api",
+                "app_name": "iacherie-api",
                 "app_version": "1.0.0",
                 "app_port": 8080,
                 "db_host": "localhost",
-                "db_name": "ainflue",
+                "db_name": "iacherie",
                 "db_username": "app_user"
             },
             environments=["development", "staging", "production"],

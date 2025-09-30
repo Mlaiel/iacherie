@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Publishing Scheduler Service
+ * IA Chérie Desktop - Publishing Scheduler Service
  * 
  * Automated publishing scheduler for multi-platform content distribution
  * with advanced timing, queue management, and platform-specific optimization.

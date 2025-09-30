@@ -1,4 +1,4 @@
-# Ainflue Desktop - Troubleshooting Guide
+# IA Chérie Desktop - Troubleshooting Guide
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Copyright:** (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -103,9 +103,9 @@ wmic OS get TotalVisibleMemorySize,FreePhysicalMemory  # Windows
 **Clear Application Data:**
 ```bash
 # Remove corrupted user data
-rm -rf ~/Library/Application\ Support/Ainflue  # macOS
-rm -rf ~/.config/Ainflue                       # Linux
-del /q "%APPDATA%\Ainflue"                     # Windows
+rm -rf ~/Library/Application\ Support/IA Chérie  # macOS
+rm -rf ~/.config/IA Chérie                       # Linux
+del /q "%APPDATA%\IA Chérie"                     # Windows
 
 # Restart application
 npm start
@@ -134,7 +134,7 @@ npm install
 npm run monitor
 
 # View resource usage
-top -p $(pgrep -f ainflue)  # Linux
+top -p $(pgrep -f iacherie)  # Linux
 Activity Monitor            # macOS
 Task Manager               # Windows
 ```
@@ -156,9 +156,9 @@ Settings → Performance → {
 npm run clear-cache
 
 # Or manually:
-rm -rf ~/Library/Caches/Ainflue     # macOS
-rm -rf ~/.cache/Ainflue             # Linux
-del /q "%LOCALAPPDATA%\Ainflue\Cache" # Windows
+rm -rf ~/Library/Caches/IA Chérie     # macOS
+rm -rf ~/.cache/IA Chérie             # Linux
+del /q "%LOCALAPPDATA%\IA Chérie\Cache" # Windows
 ```
 
 ### 3. Audio Not Working
@@ -173,7 +173,7 @@ del /q "%LOCALAPPDATA%\Ainflue\Cache" # Windows
 **Check Audio Permissions:**
 ```bash
 # Verify microphone permissions (macOS)
-tccutil reset Microphone com.ainflue.desktop
+tccutil reset Microphone com.iacherie.desktop
 
 # Check audio devices
 npm run check-audio-devices
@@ -232,7 +232,7 @@ npm run clean-temp
 npm run restart-processing
 
 # Or reset configuration
-rm -f ~/Library/Application\ Support/Ainflue/processing.json
+rm -f ~/Library/Application\ Support/IA Chérie/processing.json
 ```
 
 ---
@@ -246,10 +246,10 @@ rm -f ~/Library/Application\ Support/Ainflue/processing.json
 **Antivirus Interference:**
 ```batch
 REM Temporarily disable real-time protection
-REM Add Ainflue to antivirus exclusions:
+REM Add IA Chérie to antivirus exclusions:
 REM - Installation directory
-REM - %APPDATA%\Ainflue
-REM - %LOCALAPPDATA%\Ainflue
+REM - %APPDATA%\IA Chérie
+REM - %LOCALAPPDATA%\IA Chérie
 ```
 
 **Insufficient Permissions:**
@@ -276,17 +276,17 @@ REM Settings → Security → Windows Defender → SmartScreen → Off
 sudo spctl --master-disable
 
 # Or add specific exception:
-sudo spctl --add /Applications/Ainflue\ Studio.app
-sudo xattr -rd com.apple.quarantine /Applications/Ainflue\ Studio.app
+sudo spctl --add /Applications/IA Chérie\ Studio.app
+sudo xattr -rd com.apple.quarantine /Applications/IA Chérie\ Studio.app
 ```
 
 **Notarization Issues:**
 ```bash
 # Check notarization status
-spctl -a -vvv -t install /Applications/Ainflue\ Studio.app
+spctl -a -vvv -t install /Applications/IA Chérie\ Studio.app
 
 # Manual verification:
-codesign -dv --verbose=4 /Applications/Ainflue\ Studio.app
+codesign -dv --verbose=4 /Applications/IA Chérie\ Studio.app
 ```
 
 #### Linux Issues
@@ -304,7 +304,7 @@ sudo yum install gtk3 libXScrnSaver GConf2 alsa-lib
 **AppImage Permissions:**
 ```bash
 # Make AppImage executable
-chmod +x Ainflue-Studio-*.AppImage
+chmod +x IA Chérie-Studio-*.AppImage
 
 # Install FUSE if needed
 sudo apt-get install fuse
@@ -318,7 +318,7 @@ sudo apt-get install fuse
 npm run force-update
 
 # Or download latest version manually
-curl -L https://releases.ainflue.com/latest/download
+curl -L https://releases.iacherie.com/latest/download
 ```
 
 **Rollback Failed Update:**
@@ -327,7 +327,7 @@ curl -L https://releases.ainflue.com/latest/download
 npm run rollback
 
 # Or manual restoration:
-cp ~/Library/Application\ Support/Ainflue/backup/app.asar resources/
+cp ~/Library/Application\ Support/IA Chérie/backup/app.asar resources/
 ```
 
 ---
@@ -444,9 +444,9 @@ npm run cleanup:thumbnails
 ```javascript
 // Redirect temporary files to external drive
 Settings → Storage → {
-  tempDirectory: "/external/drive/ainflue/temp",
-  cacheDirectory: "/external/drive/ainflue/cache",
-  projectsDirectory: "/external/drive/ainflue/projects"
+  tempDirectory: "/external/drive/iacherie/temp",
+  cacheDirectory: "/external/drive/iacherie/cache",
+  projectsDirectory: "/external/drive/iacherie/projects"
 }
 ```
 
@@ -722,27 +722,27 @@ const enhancedContext = {
 **Check Network Status:**
 ```bash
 # Test connectivity
-ping api.ainflue.com
-curl -I https://api.ainflue.com/health
+ping api.iacherie.com
+curl -I https://api.iacherie.com/health
 
 # Check DNS resolution
-nslookup api.ainflue.com
-dig api.ainflue.com
+nslookup api.iacherie.com
+dig api.iacherie.com
 ```
 
 **Verify Firewall Settings:**
 ```bash
-# Common ports used by Ainflue:
+# Common ports used by IA Chérie:
 # 443 (HTTPS API)
 # 80 (HTTP redirect)
 # 8080 (Development server)
 # 5000 (AI services)
 
 # Windows Firewall
-netsh advfirewall firewall add rule name="Ainflue" dir=in action=allow program="path\to\ainflue.exe"
+netsh advfirewall firewall add rule name="IA Chérie" dir=in action=allow program="path\to\iacherie.exe"
 
 # macOS Firewall
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /Applications/Ainflue\ Studio.app
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /Applications/IA Chérie\ Studio.app
 
 # Linux iptables
 sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
@@ -770,7 +770,7 @@ const proxySettings = {
 **Test Proxy Connection:**
 ```bash
 # Test proxy connectivity
-curl --proxy http://proxy.company.com:8080 https://api.ainflue.com/health
+curl --proxy http://proxy.company.com:8080 https://api.iacherie.com/health
 
 # Set system proxy for testing
 export http_proxy=http://proxy.company.com:8080
@@ -822,9 +822,9 @@ const agent = new https.Agent({
 **Clear Stored Credentials:**
 ```bash
 # Remove stored authentication data
-rm -f ~/Library/Application\ Support/Ainflue/credentials.json  # macOS
-rm -f ~/.config/Ainflue/credentials.json                       # Linux
-del "%APPDATA%\Ainflue\credentials.json"                       # Windows
+rm -f ~/Library/Application\ Support/IA Chérie/credentials.json  # macOS
+rm -f ~/.config/IA Chérie/credentials.json                       # Linux
+del "%APPDATA%\IA Chérie\credentials.json"                       # Windows
 ```
 
 **Reset OAuth Flow:**
@@ -843,16 +843,16 @@ const resetOAuth = {
 **Check User Permissions:**
 ```bash
 # Verify user has necessary permissions
-ls -la ~/Library/Application\ Support/Ainflue/  # macOS
-ls -la ~/.config/Ainflue/                        # Linux
-icacls "%APPDATA%\Ainflue"                       # Windows
+ls -la ~/Library/Application\ Support/IA Chérie/  # macOS
+ls -la ~/.config/IA Chérie/                        # Linux
+icacls "%APPDATA%\IA Chérie"                       # Windows
 ```
 
 **Fix Permission Issues:**
 ```bash
 # Fix file permissions
-chmod -R 755 ~/Library/Application\ Support/Ainflue/  # macOS
-chmod -R 755 ~/.config/Ainflue/                       # Linux
+chmod -R 755 ~/Library/Application\ Support/IA Chérie/  # macOS
+chmod -R 755 ~/.config/IA Chérie/                       # Linux
 # Windows: Right-click folder → Properties → Security → Full Control
 ```
 
@@ -888,7 +888,7 @@ const platformCredentials = {
   youtube: {
     clientId: "check_youtube_console",
     clientSecret: "check_youtube_console",
-    redirectUri: "https://ainflue.com/auth/youtube/callback"
+    redirectUri: "https://iacherie.com/auth/youtube/callback"
   },
   tiktok: {
     clientKey: "check_tiktok_developers",
@@ -962,7 +962,7 @@ ffmpeg -i input.mp4 -vf "scale=1080:1080" -c:v libx264 -preset medium -crf 20 in
 DEBUG=* npm start
 
 # Or specific components:
-DEBUG=ainflue:audio,ainflue:video,ainflue:ai npm start
+DEBUG=iacherie:audio,iacherie:video,iacherie:ai npm start
 
 # Windows:
 set DEBUG=* && npm start
@@ -1037,16 +1037,16 @@ npm run network:bandwidth
 
 ```bash
 # macOS
-~/Library/Logs/Ainflue/
-~/Library/Application Support/Ainflue/logs/
+~/Library/Logs/IA Chérie/
+~/Library/Application Support/IA Chérie/logs/
 
 # Windows
-%USERPROFILE%\AppData\Roaming\Ainflue\logs\
-%LOCALAPPDATA%\Ainflue\logs\
+%USERPROFILE%\AppData\Roaming\IA Chérie\logs\
+%LOCALAPPDATA%\IA Chérie\logs\
 
 # Linux
-~/.config/Ainflue/logs/
-/tmp/ainflue-logs/
+~/.config/IA Chérie/logs/
+/tmp/iacherie-logs/
 ```
 
 #### Log Types
@@ -1131,7 +1131,7 @@ npm run reinstall:clean
 **Restore Default Configuration:**
 ```bash
 # Backup current config
-cp ~/Library/Application\ Support/Ainflue/config.json ~/Desktop/config.backup.json
+cp ~/Library/Application\ Support/IA Chérie/config.json ~/Desktop/config.backup.json
 
 # Restore defaults
 npm run config:reset
@@ -1180,12 +1180,12 @@ npm run uploads:clear-failed
 # Backup important data first!
 
 # Stop application
-pkill -f ainflue
+pkill -f iacherie
 
 # Remove all application data
-rm -rf ~/Library/Application\ Support/Ainflue    # macOS
-rm -rf ~/.config/Ainflue                         # Linux
-rd /s /q "%APPDATA%\Ainflue"                     # Windows
+rm -rf ~/Library/Application\ Support/IA Chérie    # macOS
+rm -rf ~/.config/IA Chérie                         # Linux
+rd /s /q "%APPDATA%\IA Chérie"                     # Windows
 
 # Reinstall application
 npm run install:fresh

@@ -1,4 +1,4 @@
-# Module Reporting Enterprise Ainflue
+# Module Reporting Enterprise IA Chérie
 
 **Système de reporting et d'intelligence d'affaires de niveau entreprise pour l'Économie des Créateurs**
 
@@ -29,7 +29,7 @@ TOUS DROITS RÉSERVÉS
 
 ## 📊 Vue d'Ensemble du Module
 
-Le Module Reporting Enterprise Ainflue fournit des capacités complètes d'intelligence d'affaires et de reporting automatisé spécialement conçues pour l'Économie des Créateurs. Cette solution de niveau industriel s'intègre parfaitement avec la logique métier de l'Économie des Créateurs :
+Le Module Reporting Enterprise IA Chérie fournit des capacités complètes d'intelligence d'affaires et de reporting automatisé spécialement conçues pour l'Économie des Créateurs. Cette solution de niveau industriel s'intègre parfaitement avec la logique métier de l'Économie des Créateurs :
 
 **Workflow Créateur:** Contenu Multi-Format → Traitement IA → Protection IP → Monétisation → Collaboration & Gamification → SEO → Distribution
 

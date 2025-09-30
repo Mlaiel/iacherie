@@ -85,7 +85,7 @@ log() {
 show_header() {
     echo -e "${BLUE}${BOLD}"
     echo "╔══════════════════════════════════════════════════════════════════╗"
-    echo "║              🌍 AINFLUE LOCALIZATION AUTOMATION                  ║"
+    echo "║              🌍 IACHERIE LOCALIZATION AUTOMATION                  ║"
     echo "║                                                                  ║"
     echo "║        Multilingual Support & Cultural Adaptation               ║"
     echo "║                                                                  ║"
@@ -231,7 +231,7 @@ EOF
         if [ ! -s "${EXTRACTED_DIR}/strings_temp.json" ]; then
             cat > "${EXTRACTED_DIR}/strings_temp.json" << EOF
     "welcome": {
-        "source": "Welcome to Ainflue",
+        "source": "Welcome to IA Chérie",
         "context": "ui",
         "category": "navigation",
         "extracted_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
@@ -321,7 +321,7 @@ EOF
 generate_pot_template() {
     log "L10N" "📄 Generating POT template file..."
     
-    local pot_file="${EXTRACTED_DIR}/ainflue.pot"
+    local pot_file="${EXTRACTED_DIR}/iacherie.pot"
     local latest_extraction=$(ls "${EXTRACTED_DIR}"/strings_*.json 2>/dev/null | tail -1)
     
     if [ -z "$latest_extraction" ]; then
@@ -331,15 +331,15 @@ generate_pot_template() {
     
     # Create POT header
     cat > "$pot_file" << EOF
-# Ainflue Desktop Application Translation Template
+# IA Chérie Desktop Application Translation Template
 # Copyright (C) 2025 Fahed Mlaiel
-# This file is distributed under the same license as the Ainflue package.
+# This file is distributed under the same license as the IA Chérie package.
 # Fahed Mlaiel <mlaiel@live.de>, 2025.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Ainflue Desktop 1.0.0\\n"
+"Project-Id-Version: IA Chérie Desktop 1.0.0\\n"
 "Report-Msgid-Bugs-To: mlaiel@live.de\\n"
 "POT-Creation-Date: $(date -u +"%Y-%m-%d %H:%M%z")\\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
@@ -359,7 +359,7 @@ EOF
         # Fallback entries
         cat >> "$pot_file" << EOF
 #. ui
-msgid "Welcome to Ainflue"
+msgid "Welcome to IA Chérie"
 msgstr ""
 
 #. ui
@@ -436,7 +436,7 @@ generate_language_translation() {
     
     # Generate translation mappings (simplified mock translations)
     declare -A translations_de=(
-        ["Welcome to Ainflue"]="Willkommen bei Ainflue"
+        ["Welcome to IA Chérie"]="Willkommen bei IA Chérie"
         ["Upload"]="Hochladen"
         ["Process"]="Verarbeiten"
         ["Settings"]="Einstellungen"
@@ -449,7 +449,7 @@ generate_language_translation() {
     )
     
     declare -A translations_fr=(
-        ["Welcome to Ainflue"]="Bienvenue sur Ainflue"
+        ["Welcome to IA Chérie"]="Bienvenue sur IA Chérie"
         ["Upload"]="Télécharger"
         ["Process"]="Traiter"
         ["Settings"]="Paramètres"
@@ -462,7 +462,7 @@ generate_language_translation() {
     )
     
     declare -A translations_ar=(
-        ["Welcome to Ainflue"]="مرحباً بك في أينفلو"
+        ["Welcome to IA Chérie"]="مرحباً بك في أينفلو"
         ["Upload"]="رفع"
         ["Process"]="معالجة"
         ["Settings"]="الإعدادات"
@@ -554,13 +554,13 @@ generate_po_file() {
     
     # Create PO header
     cat > "$po_file" << EOF
-# Ainflue Desktop Application - ${LANGUAGE_NAMES[$lang]} Translation
+# IA Chérie Desktop Application - ${LANGUAGE_NAMES[$lang]} Translation
 # Copyright (C) 2025 Fahed Mlaiel
-# This file is distributed under the same license as the Ainflue package.
+# This file is distributed under the same license as the IA Chérie package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Ainflue Desktop 1.0.0\\n"
+"Project-Id-Version: IA Chérie Desktop 1.0.0\\n"
 "Report-Msgid-Bugs-To: mlaiel@live.de\\n"
 "POT-Creation-Date: $(date -u +"%Y-%m-%d %H:%M%z")\\n"
 "PO-Revision-Date: $(date -u +"%Y-%m-%d %H:%M%z")\\n"
@@ -735,7 +735,7 @@ generate_rtl_styles() {
     
     cat > "$rtl_css_file" << EOF
 /* RTL (Right-to-Left) Styles for Arabic Language */
-/* Ainflue Desktop Application - Arabic Localization */
+/* IA Chérie Desktop Application - Arabic Localization */
 /* Author: Fahed Mlaiel (mlaiel@live.de) */
 /* Copyright: (c) 2025 Fahed Mlaiel. All rights reserved. */
 
@@ -1072,15 +1072,15 @@ EOF
     local install_script="$version_dir/install.sh"
     cat > "$install_script" << EOF
 #!/bin/bash
-# Ainflue Desktop - ${LANGUAGE_NAMES[$lang]} Language Pack Installer
+# IA Chérie Desktop - ${LANGUAGE_NAMES[$lang]} Language Pack Installer
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 set -euo pipefail
 
-echo "🌍 Installing ${LANGUAGE_NAMES[$lang]} language pack for Ainflue Desktop..."
+echo "🌍 Installing ${LANGUAGE_NAMES[$lang]} language pack for IA Chérie Desktop..."
 
-DESKTOP_DIR="\${AINFLUE_DESKTOP_DIR:-\$HOME/.local/share/ainflue/desktop}"
+DESKTOP_DIR="\${AINFLUE_DESKTOP_DIR:-\$HOME/.local/share/iacherie/desktop}"
 LANG_DIR="\$DESKTOP_DIR/locales/$lang"
 
 # Create directories
@@ -1101,7 +1101,7 @@ EOF
     chmod +x "$install_script"
     
     # Create package archive
-    local package_file="${DEPLOYMENT_DIR}/ainflue-desktop-${lang}-v1.0.0.tar.gz"
+    local package_file="${DEPLOYMENT_DIR}/iacherie-desktop-${lang}-v1.0.0.tar.gz"
     tar -czf "$package_file" -C "$deployment_dir" "v1.0.0"
     
     log "SUCCESS" "✅ ${LANGUAGE_NAMES[$lang]} deployment package created: $package_file"
@@ -1151,7 +1151,7 @@ run_full_localization_suite() {
 # ═══════════════════════════════════════════════════════════════════
 show_usage() {
     cat << EOF
-${BOLD}Ainflue Localization Automation${NC}
+${BOLD}IA Chérie Localization Automation${NC}
 Multilingual support and cultural adaptation system
 
 ${BOLD}USAGE:${NC}

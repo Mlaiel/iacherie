@@ -1,6 +1,6 @@
 # 🚀 Content Amplification Engine
 
-**Fortschrittliches Content-Verstärkungs- & Reichweiten-Maximierungssystem für die Ainflue-Plattform**
+**Fortschrittliches Content-Verstärkungs- & Reichweiten-Maximierungssystem für die IA Chérie-Plattform**
 
 ## 📖 Überblick
 
@@ -202,7 +202,7 @@ SPOTIFY_API_KEY=your_spotify_api_key
 
 # Leistungsüberwachung
 AMPLIFICATION_METRICS_ENABLED=true
-AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.ainflue.com
+AMPLIFICATION_ANALYTICS_ENDPOINT=https://analytics.iacherie.com
 AMPLIFICATION_ALERT_THRESHOLD=0.1
 ```
 

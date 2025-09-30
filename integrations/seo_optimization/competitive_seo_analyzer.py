@@ -5,7 +5,7 @@ Analyse concurrentielle SEO enterprise automatisée avec keyword gaps,
 backlink analysis, content gaps et market positioning intelligence.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chérie Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:
@@ -1076,7 +1076,7 @@ class CompetitiveSEOAnalyzer:
         else:
             return 'follower'
     
-    async def _analyze_competitive_position(self, our_domain: str, competitors: List[str]) -> Tuple[List[str], List[str]]:
+    async def _analyze_competitive_position(self, our_domain: str, competitors: List[str]) -> tuple[List[str], List[str]]:
         """Analyse la position concurrentielle"""
         advantages = [
             "Strong technical SEO foundation",
@@ -1094,7 +1094,7 @@ class CompetitiveSEOAnalyzer:
         
         return advantages, disadvantages
     
-    async def _identify_market_opportunities_threats(self, market_data: Dict[str, Any]) -> Tuple[List[str], List[str]]:
+    async def _identify_market_opportunities_threats(self, market_data: Dict[str, Any]) -> tuple[List[str], List[str]]:
         """Identifie les opportunités et menaces du marché"""
         opportunities = [
             "Growing demand for AI-powered solutions",

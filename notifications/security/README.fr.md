@@ -1,10 +1,10 @@
 # 🔒 NOTIFICATIONS SÉCURITÉ - DOCUMENTATION FRANÇAISE
 
-**Plateforme Ainflue - Système de Notifications Sécurité Enterprise**
+**Plateforme IA Chérie - Système de Notifications Sécurité Enterprise**
 
 ## 🎯 APERÇU
 
-Le module Security Notifications fournit une surveillance et alertes de sécurité complètes pour la plateforme Ainflue, incluant la protection des droits d'auteur, la détection de fraude, la sécurité des comptes et la surveillance de la conformité.
+Le module Security Notifications fournit une surveillance et alertes de sécurité complètes pour la plateforme IA Chérie, incluant la protection des droits d'auteur, la détection de fraude, la sécurité des comptes et la surveillance de la conformité.
 
 ## 📋 COMPOSANTS DU MODULE
 
@@ -72,5 +72,5 @@ await security.send_dmca_notice({
 
 **© 2025 Fahed Mlaiel - Tous Droits Réservés**  
 **Contact:** mlaiel@live.de  
-**Projet:** Plateforme Ainflue - Notifications Sécurité  
+**Projet:** Plateforme IA Chérie - Notifications Sécurité  
 **Version:** 3.1.0 Enterprise

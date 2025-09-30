@@ -1,4 +1,4 @@
-# ⚡ PERFORMANCE OPTIMIZATION GUIDE - AINFLUE PLATFORM
+# ⚡ PERFORMANCE OPTIMIZATION GUIDE - IACHERIE PLATFORM
 **Enterprise-Grade Performance Optimization & Scaling**
 
 **Version:** 3.0 (Production-Ready)  
@@ -9,7 +9,7 @@
 
 ## 🎯 OVERVIEW
 
-This comprehensive guide covers enterprise-level performance optimization strategies for the Ainflue Distribution Platform. It addresses optimization across all layers: database, backend services, ML models, real-time processing, and multi-platform distribution.
+This comprehensive guide covers enterprise-level performance optimization strategies for the IA Chérie Distribution Platform. It addresses optimization across all layers: database, backend services, ML models, real-time processing, and multi-platform distribution.
 
 ### 🚀 Performance Targets
 - **API Response Time**: <50ms for 95% of requests
@@ -145,7 +145,7 @@ import uvloop
 
 # High-performance FastAPI setup
 app = FastAPI(
-    title="Ainflue Distribution API",
+    title="IA Chérie Distribution API",
     description="Enterprise Distribution Engine",
     version="3.0.0",
     docs_url="/docs",
@@ -546,7 +546,7 @@ class PerformanceMonitor:
 # Grafana Dashboard Configuration
 dashboard_config = {
     "dashboard": {
-        "title": "Ainflue Distribution Performance",
+        "title": "IA Chérie Distribution Performance",
         "panels": [
             {
                 "title": "API Response Times",
@@ -662,7 +662,7 @@ upstream distribution_api {
 
 server {
     listen 80;
-    server_name api.ainflue.com;
+    server_name api.iacherie.com;
     
     # Performance optimizations
     gzip on;
@@ -814,7 +814,7 @@ class PerformanceLoadTester:
 
 # Run performance test
 async def run_performance_test():
-    tester = PerformanceLoadTester("https://api.ainflue.com")
+    tester = PerformanceLoadTester("https://api.iacherie.com")
     result = await tester.run_load_test(
         concurrent_users=500,
         duration_seconds=600  # 10 minutes

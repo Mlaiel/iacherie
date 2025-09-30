@@ -835,7 +835,7 @@ class DigitalRightsManager:
             start_col = int(width * 0.7)
             
             # Ajout pattern visible simple
-            watermark_text = f"© Ainflue - {payload[:20]}"
+            watermark_text = f"© IA Chérie - {payload[:20]}"
             for i, char in enumerate(watermark_text):
                 if start_row + i < height and start_col + i * 10 < width:
                     if len(watermarked.shape) == 3:
@@ -1378,7 +1378,7 @@ if __name__ == "__main__":
         drm = create_digital_rights_manager(config)
         
         # Test enregistrement droits
-        test_content = b"Test content for DRM protection - Ainflue Creator Platform"
+        test_content = b"Test content for DRM protection - IA Chérie Creator Platform"
         
         print("🔐 Testing Digital Rights Registration...")
         rights = await drm.register_digital_rights(

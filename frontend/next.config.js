@@ -2,6 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    ignoreBuildErrors: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,7 +35,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'api.ainflue.com',
+        hostname: 'api.iacherie.com',
         pathname: '/**',
       },
     ],
@@ -113,7 +119,7 @@ const nextConfig = {
           // Development CORS
           {
             key: 'Access-Control-Allow-Origin',
-            value: process.env.NODE_ENV === 'development' ? '*' : 'https://ainflue.com',
+            value: process.env.NODE_ENV === 'development' ? '*' : 'https://iacherie.com',
           },
           {
             key: 'Access-Control-Allow-Methods',

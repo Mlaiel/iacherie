@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le module **Platform Core Notifications** d'Ainflue est une plateforme de notifications d'entreprise de niveau industriel conçue pour gérer les communications multi-canaux à grande échelle. Cette plateforme intègre l'intelligence artificielle, l'apprentissage automatique et la conformité réglementaire pour offrir des notifications personnalisées et optimisées.
+Le module **Platform Core Notifications** d'IA Chérie est une plateforme de notifications d'entreprise de niveau industriel conçue pour gérer les communications multi-canaux à grande échelle. Cette plateforme intègre l'intelligence artificielle, l'apprentissage automatique et la conformité réglementaire pour offrir des notifications personnalisées et optimisées.
 
 ## 🎯 Fonctionnalités Principales
 
@@ -121,7 +121,7 @@ await manager.initialize()
 # Envoyer notification
 result = await manager.send_notification(
     user_id="user123",
-    content="Bienvenue sur Ainflue! 🎉",
+    content="Bienvenue sur IA Chérie! 🎉",
     channels=["email", "push"],
     priority="high"
 )
@@ -354,14 +354,14 @@ Support complet des 400+ fuseaux horaires avec optimisation automatique des heur
 ## 🤝 Support et Contribution
 
 ### Support Technique
-- **Email** : support@ainflue.com
-- **Discord** : [Serveur Ainflue](https://discord.gg/ainflue)
-- **Documentation** : [docs.ainflue.com](https://docs.ainflue.com)
+- **Email** : support@iacherie.com
+- **Discord** : [Serveur IA Chérie](https://discord.gg/iacherie)
+- **Documentation** : [docs.iacherie.com](https://docs.iacherie.com)
 
 ### Contribution
 ```bash
 # Cloner le repo
-git clone https://github.com/Mlaiel/Ainflue.git
+git clone https://github.com/Mlaiel/IA Chérie.git
 
 # Créer branche feature
 git checkout -b feature/nouvelle-fonctionnalite
@@ -378,6 +378,6 @@ git push origin feature/nouvelle-fonctionnalite
 
 ---
 
-**© 2025 Fahed Mlaiel (mlaiel@live.de) - Plateforme IA-Influencer-Agent Ainflue**
+**© 2025 Fahed Mlaiel (mlaiel@live.de) - Plateforme IA-Influencer-Agent IA Chérie**
 
-*Cette documentation est maintenue par l'équipe d'experts multi-rôles Ainflue combinant Lead Dev IA, Backend Senior, ML Engineer, DBA, Spécialiste Sécurité, Architecte Microservices, Ingénieur Audio, DevOps et IA Prompt Engineer.*
+*Cette documentation est maintenue par l'équipe d'experts multi-rôles IA Chérie combinant Lead Dev IA, Backend Senior, ML Engineer, DBA, Spécialiste Sécurité, Architecte Microservices, Ingénieur Audio, DevOps et IA Prompt Engineer.*
