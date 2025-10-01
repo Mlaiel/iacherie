@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Real-Time Trace Analyzer Enterprise
+IA Chéries Platform - Real-Time Trace Analyzer Enterprise
 ====================================================
 
 Advanced real-time trace analysis system for monitoring live trace analysis,

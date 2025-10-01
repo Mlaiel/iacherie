@@ -96,7 +96,7 @@ class EnterpriseMLSecurityScanner:
         """Génération clé de chiffrement sécurisée"""
         # Simple key generation for demo (in production use proper KDF)
         password = "enterprise_ml_security_key_2025"
-        salt = "ainflue_ml_platform_salt"
+        salt = "iacherie_ml_platform_salt"
         key_material = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000)
         return base64.urlsafe_b64encode(key_material).decode()
 

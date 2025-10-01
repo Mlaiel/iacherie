@@ -4,10 +4,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Authorization Configuration Module
+"""IA Chéries Authorization Configuration Module
 ===========================================
 
-Enterprise-grade authorization configuration for the Ainflue platform.
+Enterprise-grade authorization configuration for the IA Chéries platform.
 Implements role-based access control (RBAC), attribute-based access control (ABAC),
 policy-based authorization, fine-grained permissions, and zero-trust security.
 

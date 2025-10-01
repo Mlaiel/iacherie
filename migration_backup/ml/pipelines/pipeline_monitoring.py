@@ -1,10 +1,10 @@
 """
-Pipeline de Monitoring - Ainflue Enterprise ML Pipeline
+Pipeline de Monitoring - IA Chéries Enterprise ML Pipeline
 Système de surveillance en temps réel avec métriques avancées et alertes
 
 Auteur: Mlaiel (Expert Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + DevOps)  
-Copyright: © 2024 Ainflue. Tous droits réservés.
-Licence: Propriétaire - Usage strictement réservé à Ainflue
+Copyright: © 2024 IA Chéries. Tous droits réservés.
+Licence: Propriétaire - Usage strictement réservé à IA Chéries
 Version: 1.0.0 - Architecture Niveau 3 Backend
 
 CONFIDENTIAL - NE PAS DISTRIBUER
@@ -105,7 +105,7 @@ class SystemHealth:
 
 class PipelineMonitoring:
     """
-    Système de monitoring avancé pour Ainflue
+    Système de monitoring avancé pour IA Chéries
     
     Fonctionnalités:
     - Surveillance en temps réel des performances

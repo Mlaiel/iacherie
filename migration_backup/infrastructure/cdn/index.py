@@ -1,12 +1,12 @@
 """
-CDN Index - Ainflue Global Content Delivery Network Management
+CDN Index - IA Chéries Global Content Delivery Network Management
 ============================================================
 
 Main entry point for CDN operations, edge computing, and global content
 acceleration for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -29,8 +29,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Global CDN Infrastructure for Creator Platform"
 
-# Configuration for Ainflue's CDN infrastructure
-AINFLUE_CDN_ARCHITECTURE = {
+# Configuration for IA Chéries's CDN infrastructure
+IA CHÉRIES_CDN_ARCHITECTURE = {
     'global_edge_network': {
         'edge_locations': 180,
         'regions': ['north_america', 'south_america', 'europe', 'asia_pacific', 'africa', 'middle_east'],
@@ -67,7 +67,7 @@ AINFLUE_CDN_ARCHITECTURE = {
 
 async def get_cdn_status() -> Dict[str, Any]:
     """
-    Get comprehensive CDN status for Ainflue platform.
+    Get comprehensive CDN status for IA Chéries platform.
     
     Returns:
         Dict containing status of all CDN systems and edge locations
@@ -85,7 +85,7 @@ async def get_cdn_status() -> Dict[str, Any]:
     }
     
     # Check each CDN region
-    regions = AINFLUE_CDN_ARCHITECTURE['global_edge_network']['regions']
+    regions = IA CHÉRIES_CDN_ARCHITECTURE['global_edge_network']['regions']
     for region in regions:
         region_status = {
             'status': 'operational',
@@ -122,7 +122,7 @@ async def get_cdn_status() -> Dict[str, Any]:
 
 async def validate_cdn_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Validate CDN configuration for Ainflue requirements.
+    Validate CDN configuration for IA Chéries requirements.
     
     Args:
         config: CDN configuration to validate
@@ -201,7 +201,7 @@ async def get_cdn_metrics() -> Dict[str, Any]:
     }
     
     # Edge utilization by region
-    regions = AINFLUE_CDN_ARCHITECTURE['global_edge_network']['regions']
+    regions = IA CHÉRIES_CDN_ARCHITECTURE['global_edge_network']['regions']
     for region in regions:
         metrics['edge_utilization'][region] = {
             'edge_locations': 25 + len(region) * 2,
@@ -333,8 +333,8 @@ async def optimize_content_delivery(content_type: str, config: Dict[str, Any]) -
     
     # Global impact assessment
     optimization_result['global_impact'] = {
-        'regions_optimized': len(AINFLUE_CDN_ARCHITECTURE['global_edge_network']['regions']),
-        'edge_locations_updated': AINFLUE_CDN_ARCHITECTURE['global_edge_network']['edge_locations'],
+        'regions_optimized': len(IA CHÉRIES_CDN_ARCHITECTURE['global_edge_network']['regions']),
+        'edge_locations_updated': IA CHÉRIES_CDN_ARCHITECTURE['global_edge_network']['edge_locations'],
         'creators_impacted': 25000,
         'content_requests_optimized_per_day': 12000000,
         'bandwidth_savings_tb_per_day': 150.5,
@@ -352,5 +352,5 @@ logging.basicConfig(
 )
 
 logger.info("CDN module initialized")
-logger.info(f"Managing {AINFLUE_CDN_ARCHITECTURE['global_edge_network']['edge_locations']} edge locations globally")
+logger.info(f"Managing {IA CHÉRIES_CDN_ARCHITECTURE['global_edge_network']['edge_locations']} edge locations globally")
 logger.info("Ready for creator platform content delivery optimization")

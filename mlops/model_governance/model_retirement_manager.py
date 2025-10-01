@@ -599,7 +599,7 @@ class ModelRetirementManager:
                         "title": f"Final Notice: {plan.model_name} Sunset Tomorrow",
                         "message": f"Last day to use {plan.model_name}:{plan.model_version}",
                         "urgent": True,
-                        "support_contact": "retirement-support@ainflue.com"
+                        "support_contact": "retirement-support@iacherie.com"
                     }
                 ))
             

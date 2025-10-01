@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AUDIO PROCESSING DOCKER MODULE
+# IA CHÉRIES AUDIO PROCESSING DOCKER MODULE
 # =============================================================================
 # Audio processing Docker containers initialization and registry
 #

@@ -75,7 +75,7 @@ __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 __package_info__ = {
-    "name": "ainflue_sla_monitoring_enterprise",
+    "name": "iacherie_sla_monitoring_enterprise",
     "description": "Complete Enterprise SLA monitoring ecosystem for Creator Economy Platform",
     "version": __version__,
     "author": __author__,

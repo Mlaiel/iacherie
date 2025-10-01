@@ -6,7 +6,7 @@
 
 set -e  # Exit on any error
 
-echo "🚀 AINFLUENCER ENTERPRISE DEPLOYMENT"
+echo "🚀 IACHERIE ENTERPRISE DEPLOYMENT"
 echo "===================================="
 echo "📅 $(date)"
 echo "👨‍💻 Deploying 57 Backend Modules + Frontend Integration"
@@ -221,7 +221,7 @@ services:
 monitoring:
   interval: 30s
   alerts:
-    email: admin@ainfluencer.com
+    email: admin@iacheriencer.com
     webhook: $BACKEND_URL/webhooks/alerts
 
 logging:
@@ -235,7 +235,7 @@ log "✅ Monitoring configuration created"
 log "🎯 PHASE 6: Deployment Summary & Status"
 
 echo ""
-echo "🎊 AINFLUENCER ENTERPRISE DEPLOYMENT COMPLETE! 🎊"
+echo "🎊 IACHERIE ENTERPRISE DEPLOYMENT COMPLETE! 🎊"
 echo "=================================================="
 echo ""
 echo "📊 DEPLOYMENT STATISTICS:"

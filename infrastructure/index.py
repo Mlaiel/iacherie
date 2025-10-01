@@ -65,7 +65,7 @@ __all__ = [
     # Main functions
     'get_infrastructure_status',
     'validate_configuration',
-    'get_ainflue_business_metrics'
+    'get_iacherie_business_metrics'
 ]
 
 # Metadata
@@ -75,7 +75,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise Infrastructure Management for IA Chérie Creator Platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_WORKFLOW = {
+IACHERIE_WORKFLOW = {
     'upload': 'Multi-format content upload via API Gateway',
     'ai_processing': 'AI enhancement using ML infrastructure', 
     'protection': 'Rights protection through security modules',
@@ -185,7 +185,7 @@ async def get_infrastructure_status() -> Dict[str, Any]:
             }
     
     # Business metrics for creator platform
-    status['business_metrics'] = await get_ainflue_business_metrics()
+    status['business_metrics'] = await get_iacherie_business_metrics()
     
     # Creator impact assessment
     status['creator_impact'] = {
@@ -214,7 +214,7 @@ async def validate_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
         'valid': True,
         'errors': [],
         'warnings': [],
-        'ainflue_compliance': {},
+        'iacherie_compliance': {},
         'recommendations': []
     }
     
@@ -234,7 +234,7 @@ async def validate_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
             validation_result['valid'] = False
     
     # IA Chérie business logic compliance checks
-    validation_result['ainflue_compliance'] = {
+    validation_result['iacherie_compliance'] = {
         'supports_65_plus_platforms': True,
         'ai_processing_enabled': True,
         'creator_protection_active': True,
@@ -254,7 +254,7 @@ async def validate_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
     return validation_result
 
 
-async def get_ainflue_business_metrics() -> Dict[str, Any]:
+async def get_iacherie_business_metrics() -> Dict[str, Any]:
     """
     Get business metrics specific to IA Chérie creator platform.
     
@@ -299,5 +299,5 @@ logging.basicConfig(
 )
 
 logger.info("IA Chérie Infrastructure module initialized")
-logger.info(f"Supporting IA Chérie workflow: {list(AINFLUE_WORKFLOW.keys())}")
+logger.info(f"Supporting IA Chérie workflow: {list(IACHERIE_WORKFLOW.keys())}")
 logger.info(f"Managing {len(INFRASTRUCTURE_MODULES)} infrastructure modules")

@@ -1,13 +1,13 @@
 # 🔧 Infrastructure Automation - Enterprise DevOps Platform
 
-[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/Ainflue)
-[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/Ainflue)
-[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/Ainflue)
-[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/Ainflue)
+[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/iacherie)
+[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/iacherie)
+[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/iacherie)
+[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/iacherie)
 
 ## 🌟 Overview
 
-Advanced infrastructure automation platform for the Ainflue creator economy ecosystem. This enterprise-grade automation framework manages CI/CD pipelines, infrastructure provisioning, deployment strategies, monitoring, security, and compliance across 53 AI agents and 65+ platform integrations.
+Advanced infrastructure automation platform for the iacherie creator economy ecosystem. This enterprise-grade automation framework manages CI/CD pipelines, infrastructure provisioning, deployment strategies, monitoring, security, and compliance across 53 AI agents and 65+ platform integrations.
 
 **© FAHED MLAIEL 2024-2025 - STRICT INTELLECTUAL PROPERTY**  
 ⚠️ **STRICT WARNING**: Any unauthorized use, copying, or distribution of this code without explicit written authorization from Fahed Mlaiel is strictly prohibited.  
@@ -141,8 +141,8 @@ creator_workflow = {
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/automation
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/automation
 
 # Install dependencies
 pip install -r requirements.txt
@@ -332,4 +332,4 @@ automation:
 *Created: September 15, 2025*  
 *Version: 1.0.0 - Enterprise Infrastructure Automation Documentation*  
 *Author: Fahed Mlaiel (mlaiel@live.de)*  
-*Project: Ainflue Infrastructure Automation Platform*
+*Project: iacherie Infrastructure Automation Platform*

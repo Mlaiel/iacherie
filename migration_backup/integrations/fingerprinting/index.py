@@ -1,11 +1,11 @@
 """
-Fingerprinting - Ainflue Integrations
+Fingerprinting - IA Chéries Integrations
 ====================================
 Point d'entrée principal pour protection des droits numériques.
 Orchestration fingerprinting, watermarking et DMCA automation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chéries Integrations  
 Version: 1.0 Production
 """
 
@@ -22,7 +22,7 @@ from .blockchain_fingerprinting import BlockchainFingerprinting
 # from .dmca_automation import DMCAAutomation
 # from .rights_management import RightsManagement
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chéries
 FINGERPRINTING_CONFIG = {
     'supported_formats': {
         'audio': ['mp3', 'wav', 'flac', 'aac', 'm4a'],

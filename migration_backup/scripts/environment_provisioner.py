@@ -930,7 +930,7 @@ def main():
     """Main function for command-line usage"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Environment Provisioner')
+    parser = argparse.ArgumentParser(description='IA Chéries Environment Provisioner')
     parser.add_argument('action', choices=['provision', 'destroy', 'validate', 'list'])
     parser.add_argument('--environment', '-e', help='Environment name')
     parser.add_argument('--dry-run', action='store_true', help='Perform dry run without actual provisioning')

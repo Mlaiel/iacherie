@@ -83,7 +83,7 @@ class RedditAPIError(Exception):
 
 class RedditAPI:
     """
-    Comprehensive Reddit API integration for Ainflue platform.
+    Comprehensive Reddit API integration for IA Chéries platform.
     
     Features:
     - Content posting and distribution
@@ -1003,7 +1003,7 @@ async def main():
     reddit_api = RedditAPI(
         client_id="your_client_id",
         client_secret="your_client_secret",
-        user_agent="Ainflue:v1.0 (by /u/yourusername)",
+        user_agent="IA Chéries:v1.0 (by /u/yourusername)",
         redirect_uri="https://yourapp.com/callback"
     )
     

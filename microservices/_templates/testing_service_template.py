@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🧪 Testing Service Template - Ainflue Enterprise
+🧪 Testing Service Template - iacherie Enterprise
 ===============================================
 Template enterprise pour services testing.
 Pytest + test factories + mocking + performance testing + coverage.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

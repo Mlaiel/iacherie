@@ -6,7 +6,7 @@ Specialized AI optimization for creative content generation and enhancement.
 Supports 53 AI agents for creator content optimization across 65+ platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - AI Optimization Module
+Project: iacherie Infrastructure - AI Optimization Module
 Expert Role: Lead Dev IA + ML Engineer
 Version: 1.0 Production Enterprise
 
@@ -76,7 +76,7 @@ class CreativeAIOptimizer:
     Enterprise Creative AI Optimizer
     
     Handles creative content optimization using 53 specialized AI agents
-    for the Ainflue creator platform across 65+ distribution platforms.
+    for the iacherie creator platform across 65+ distribution platforms.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -507,7 +507,7 @@ class CreativeAIOptimizer:
             await asyncio.sleep(0.1)  # Simulate processing time
             
         # Return simulated optimized content URL
-        return f"https://cdn.ainflue.com/optimized/{request.content_id}_{platform}.mp4"
+        return f"https://cdn.iacherie.com/optimized/{request.content_id}_{platform}.mp4"
     
     async def _enhance_creative_quality(self, request: CreativeOptimizationRequest, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Enhance creative quality using AI agents"""
@@ -517,8 +517,8 @@ class CreativeAIOptimizer:
         ]
         
         enhanced_content = {
-            "original_url": f"https://cdn.ainflue.com/original/{request.content_id}",
-            "enhanced_url": f"https://cdn.ainflue.com/enhanced/{request.content_id}",
+            "original_url": f"https://cdn.iacherie.com/original/{request.content_id}",
+            "enhanced_url": f"https://cdn.iacherie.com/enhanced/{request.content_id}",
             "enhancements_applied": []
         }
         

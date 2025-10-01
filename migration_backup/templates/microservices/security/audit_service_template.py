@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Audit Service Template for Ainflue Creator Economy Platform
+Audit Service Template for IA Chéries Creator Economy Platform
 Enterprise audit service with comprehensive logging, compliance tracking and forensic analysis
 """
 
@@ -198,7 +198,7 @@ class ComplianceReport(BaseModel):
 
 class AuditServiceTemplate:
     """
-    Template de service d'audit enterprise pour Ainflue
+    Template de service d'audit enterprise pour IA Chéries
     
     Fonctionnalités:
     - Audit complet de toutes les activités
@@ -214,7 +214,7 @@ class AuditServiceTemplate:
     def __init__(self, config: AuditConfig = None):
         self.config = config or AuditConfig()
         self.app = FastAPI(
-            title="Ainflue Audit Service",
+            title="IA Chéries Audit Service",
             description="Enterprise audit service with compliance tracking",
             version="1.0.0"
         )

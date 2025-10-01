@@ -71,7 +71,7 @@ security:
 # Database Settings (Production)
 database:
   # Production database connection (from environment)
-  url: "${AINFLUE_PROD_DATABASE_URL}"
+  url: "${IACHERIE_PROD_DATABASE_URL}"
   pool_size: 20             # Large pool for production
   max_overflow: 30
   pool_timeout: 10          # Strict timeout
@@ -97,7 +97,7 @@ cache:
   l2_ttl_seconds: 3600
   
   # Production Redis connection
-  redis_url: "${AINFLUE_PROD_REDIS_URL}"
+  redis_url: "${IACHERIE_PROD_REDIS_URL}"
   enable_compression: true  # Compression for efficiency
   enable_clustering: true   # Redis clustering
   
@@ -123,7 +123,7 @@ logging:
 # File Management (Strict for Production)
 file_management:
   max_file_size_mb: 50      # Strict file size limit
-  temp_directory: "/tmp/ainflue_prod"
+  temp_directory: "/tmp/iacherie_prod"
   scan_for_malware: true    # Mandatory malware scanning
   enable_optimization: true
   
@@ -191,7 +191,7 @@ creator_economy:
   collaboration:
     max_collaborators: 10
     enable_real_time_features: true
-    websocket_url: "${AINFLUE_PROD_WS_URL}"
+    websocket_url: "${IACHERIE_PROD_WS_URL}"
     
   # Production monetization
   monetization:
@@ -269,7 +269,7 @@ backup:
   # Backup destinations
   destinations:
     - type: "s3"
-      bucket: "${AINFLUE_BACKUP_BUCKET}"
+      bucket: "${IACHERIE_BACKUP_BUCKET}"
       region: "${AWS_REGION}"
     - type: "azure"
       container: "${AZURE_BACKUP_CONTAINER}"

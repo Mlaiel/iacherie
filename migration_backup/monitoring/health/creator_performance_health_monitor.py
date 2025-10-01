@@ -1,4 +1,4 @@
-"""📊 Creator Performance Health Monitor | Ainflue Enterprise
+"""📊 Creator Performance Health Monitor | IA Chéries Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

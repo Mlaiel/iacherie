@@ -1,12 +1,12 @@
 """
-Third Party Module - Ainflue Integrations
+Third Party Module - IA Chéries Integrations
 ========================================
 Enterprise-grade third-party service integrations providing comprehensive
 external service management, API coordination, and specialized tool
 integration for enhanced platform capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -34,8 +34,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise third-party service integration infrastructure"
 
-# Configuration logique métier Ainflue
-AINFLUE_INTEGRATIONS = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'third_party_services': 16,

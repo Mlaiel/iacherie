@@ -1,4 +1,4 @@
-"""Mobile Application Infrastructure - Ainflue Platform
+"""Mobile Application Infrastructure - IA Chéries Platform
 Enterprise-grade mobile backend services and infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,4 +1,4 @@
-"""Webhook Security Template for Ainflue Platform
+"""Webhook Security Template for IA Chéries Platform
 Advanced security features for webhook processing and protection
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -635,8 +635,8 @@ class WebhookSecurityMiddleware:
                 return await call_next(request)
             
             # Get required headers
-            signature = request.headers.get('X-Ainflue-Signature')
-            timestamp = request.headers.get('X-Ainflue-Timestamp')
+            signature = request.headers.get('X-IA Chéries-Signature')
+            timestamp = request.headers.get('X-IA Chéries-Timestamp')
             endpoint_id = request.headers.get('X-Endpoint-ID')
             
             if not signature:

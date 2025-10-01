@@ -3,7 +3,7 @@
 🚀 Master Expert Team Orchestrator - Unified Multi-Role Coordinator
 =====================================================================
 
-Coordinates all expert roles in the Ainflue platform:
+Coordinates all expert roles in the iacherie platform:
 - Lead Dev IA: AI/ML pipeline orchestration
 - Backend Senior: Enterprise infrastructure management  
 - ML Engineer: Model serving and optimization
@@ -69,7 +69,7 @@ class MasterExpertOrchestrator:
     
     Unified coordination system for the 9 expert roles ensuring
     seamless collaboration and optimal performance across all
-    Ainflue platform components.
+    iacherie platform components.
     """
     
     def __init__(self):

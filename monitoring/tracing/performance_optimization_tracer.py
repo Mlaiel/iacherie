@@ -1036,7 +1036,7 @@ async def main():
         # Exemple d'analyse de performance
         analysis_context = {
             'type': 'system_performance',
-            'service_name': 'ainflue_api',
+            'service_name': 'iacherie_api',
             'environment': 'production',
             'scope': 'full_analysis'
         }
@@ -1052,7 +1052,7 @@ async def main():
         
         # Exemple d'optimisation de requête
         query_context = {
-            'database': 'ainflue_db',
+            'database': 'iacherie_db',
             'table': 'creator_content',
             'type': 'select',
             'execution_time': 2.5,

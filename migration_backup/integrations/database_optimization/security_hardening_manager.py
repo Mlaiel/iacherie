@@ -5,7 +5,7 @@
 ===========================================================================
 
 Système de sécurisation database enterprise avec chiffrement, contrôle d'accès,
-audit trail et protection contre intrusions pour la plateforme Ainflue.
+audit trail et protection contre intrusions pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🔒 Security Specialist: Encryption at rest/transit + RBAC + vulnerability scanning + audit compliance
@@ -710,7 +710,7 @@ class DatabaseSecurityHardeningManager:
     def _add_digital_watermark(self, media_data: bytes, content_type: str) -> bytes:
         """Ajout watermark digital au contenu média"""
         # Watermark simple (production: utiliser bibliothèque spécialisée)
-        watermark = f"AINFLUE_{datetime.utcnow().isoformat()}_{uuid.uuid4().hex[:8]}"
+        watermark = f"IA CHÉRIES_{datetime.utcnow().isoformat()}_{uuid.uuid4().hex[:8]}"
         watermark_bytes = watermark.encode('utf-8')
         
         # Insertion watermark dans metadata

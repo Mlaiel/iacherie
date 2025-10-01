@@ -128,7 +128,7 @@ python setup.py install
 ### تكوين البيئة
 ```env
 # تكوين قاعدة البيانات
-DATABASE_URL=postgresql://user:pass@localhost/ainflue_billing
+DATABASE_URL=postgresql://user:pass@localhost/iacherie_billing
 REDIS_URL=redis://localhost:6379/0
 
 # تكوين الدفعات

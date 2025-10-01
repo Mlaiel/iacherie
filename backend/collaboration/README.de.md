@@ -2,8 +2,8 @@
 
 **Fortgeschrittene Kollaborations-Infrastruktur für KI-Influencer-Agent-Plattform**
 
-[![Enterprise](https://img.shields.io/badge/Enterprise-Bereit-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![KI-gestützt](https://img.shields.io/badge/KI-Gestützt-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise](https://img.shields.io/badge/Enterprise-Bereit-green.svg)](https://github.com/Mlaiel/iacherie)
+[![KI-gestützt](https://img.shields.io/badge/KI-Gestützt-blue.svg)](https://github.com/Mlaiel/iacherie)
 [![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 [![Async](https://img.shields.io/badge/Async-Bereit-orange.svg)](https://docs.python.org/3/library/asyncio.html)
 
@@ -59,8 +59,8 @@ Das **Kollaborations-Modul** ist das Kernmodul unserer KI-gestützten Influencer
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/collaboration
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/collaboration
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
 ```bash
 # Datenbank-Konfiguration
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # KI/ML-Konfiguration
@@ -244,13 +244,13 @@ pytest --cov=backend/collaboration --cov-report=html
 
 ```bash
 # Image erstellen
-docker build -t ainflue-collaboration .
+docker build -t iacherie-collaboration .
 
 # Container ausführen
 docker run -p 8000:8000 \
   -e DATABASE_URL=$DATABASE_URL \
   -e REDIS_URL=$REDIS_URL \
-  ainflue-collaboration
+  iacherie-collaboration
 ```
 
 ### **Kubernetes-Deployment**
@@ -273,7 +273,7 @@ spec:
     spec:
       containers:
       - name: collaboration
-        image: ainflue-collaboration:latest
+        image: iacherie-collaboration:latest
         ports:
         - containerPort: 8000
 ```
@@ -327,16 +327,16 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die [LICENSE](LICENSE
 
 ## 💬 **Support**
 
-- **Dokumentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Issues**: [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discord**: [Unserer Community beitreten](https://discord.gg/ainflue)
-- **Email**: support@ainflue.com
+- **Dokumentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Issues**: [GitHub Issues](https://github.com/Mlaiel/iacherie/issues)
+- **Discord**: [Unserer Community beitreten](https://discord.gg/iacherie)
+- **Email**: support@iacherie.com
 
 ---
 
 ## 🏆 **Danksagungen**
 
-- Mit ❤️ vom Ainflue-Team erstellt
+- Mit ❤️ vom iacherie-Team erstellt
 - Angetrieben von modernsten KI/ML-Technologien
 - Enterprise-bereite Architektur und Sicherheit
 

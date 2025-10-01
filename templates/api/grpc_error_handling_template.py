@@ -1,4 +1,4 @@
-"""gRPC Error Handling Template for Ainflue Platform
+"""gRPC Error Handling Template for iacherie Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================

@@ -1249,7 +1249,7 @@ class RegistryAnalyticsEngine:
                 continue
             if scope.service_types and service.service_type not in scope.service_types:
                 continue
-            if scope.business_domains and service.ainflue_business_domain not in scope.business_domains:
+            if scope.business_domains and service.iacherie_business_domain not in scope.business_domains:
                 continue
             if scope.regions and service.region not in scope.regions:
                 continue
@@ -1311,7 +1311,7 @@ class RegistryAnalyticsEngine:
         
         cost_by_domain = defaultdict(float)
         for service in services:
-            cost_by_domain[service.ainflue_business_domain] += 100
+            cost_by_domain[service.iacherie_business_domain] += 100
         
         return {
             'total_monthly_cost_usd': total_estimated_cost,
@@ -1343,9 +1343,9 @@ class RegistryAnalyticsEngine:
                                        patterns: List[UsagePattern]) -> Dict[str, Any]:
         """Calculate business impact metrics"""
         # IA Chérie-specific business impact
-        creator_services = [s for s in services if s.ainflue_business_domain == 'creator']
-        content_services = [s for s in services if s.ainflue_business_domain == 'content']
-        monetization_services = [s for s in services if s.ainflue_business_domain == 'monetization']
+        creator_services = [s for s in services if s.iacherie_business_domain == 'creator']
+        content_services = [s for s in services if s.iacherie_business_domain == 'content']
+        monetization_services = [s for s in services if s.iacherie_business_domain == 'monetization']
         
         return {
             'creator_experience_score': 0.85,  # Mock score

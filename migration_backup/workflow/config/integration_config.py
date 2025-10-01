@@ -1,5 +1,5 @@
 """
-🔗 INTEGRATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+🔗 INTEGRATION CONFIG - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced integration configuration management for enterprise-grade deployment
 Author: Fahed Mlaiel (mlaiel@live.de)

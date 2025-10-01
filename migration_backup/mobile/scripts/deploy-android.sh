@@ -2,7 +2,7 @@
 
 #
 # Android Google Play Store Deployment Script
-# Ainflue Professional Content Creation Platform
+# IA Chéries Professional Content Creation Platform
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -13,7 +13,7 @@
 set -e
 
 # Configuration
-APP_NAME="Ainflue"
+APP_NAME="IA Chéries"
 PACKAGE_NAME="com.ainflue.mobile"
 BUILD_TYPE="release"
 FLAVOR="pro"
@@ -104,7 +104,7 @@ cd ..
 
 # Generate release keystore if it doesn't exist
 KEYSTORE_PATH="android/app/release-key.keystore"
-if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$AINFLUE_UPLOAD_STORE_FILE" ]; then
+if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$IA CHÉRIES_UPLOAD_STORE_FILE" ]; then
     log_warning "Release keystore not found, generating a new one..."
     log_info "Please provide keystore information:"
     
@@ -133,10 +133,10 @@ if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$AINFLUE_UPLOAD_STORE_FILE" ]; then
     
     # Create gradle.properties for release signing
     cat > android/gradle.properties << EOF
-AINFLUE_UPLOAD_STORE_FILE=$KEYSTORE_PATH
-AINFLUE_UPLOAD_STORE_PASSWORD=$KEYSTORE_PASSWORD
-AINFLUE_UPLOAD_KEY_ALIAS=$KEY_ALIAS
-AINFLUE_UPLOAD_KEY_PASSWORD=$KEY_PASSWORD
+IA CHÉRIES_UPLOAD_STORE_FILE=$KEYSTORE_PATH
+IA CHÉRIES_UPLOAD_STORE_PASSWORD=$KEYSTORE_PASSWORD
+IA CHÉRIES_UPLOAD_KEY_ALIAS=$KEY_ALIAS
+IA CHÉRIES_UPLOAD_KEY_PASSWORD=$KEY_PASSWORD
 EOF
     
     log_info "Gradle properties created for release signing"
@@ -221,7 +221,7 @@ fi
 # Generate release notes template
 log_info "Generating release notes template..."
 cat > "build/android/release-notes.txt" << EOF
-# Release Notes for Ainflue v1.0.0
+# Release Notes for IA Chéries v1.0.0
 
 ## New Features
 - Professional content creation platform

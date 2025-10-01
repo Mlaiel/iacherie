@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Dashboard Exporter Template for Ainflue Platform
+Dashboard Exporter Template for IA Chéries Platform
 ===============================================
 
 Production-ready dashboard exporting with:

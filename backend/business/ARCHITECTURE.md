@@ -498,7 +498,7 @@ spec:
     spec:
       containers:
       - name: business-module
-        image: ainflue/business-module:latest
+        image: iacherie/business-module:latest
         ports:
         - containerPort: 8000
         env:

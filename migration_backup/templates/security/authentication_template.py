@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""{{auth_name}} Authentication Service Template for Ainflue Platform
+"""{{auth_name}} Authentication Service Template for IA Chéries Platform
 {{auth_description}}
 
 Author: {{author_name}} ({{author_email}})

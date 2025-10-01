@@ -1,4 +1,4 @@
-# 🌐 API Gateway Module - Ainflue Infrastructure
+# 🌐 API Gateway Module - iacherie Infrastructure
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Module Purpose
 
-Enterprise-grade API Gateway providing unified access point for all Ainflue creator economy services. This module enables:
+Enterprise-grade API Gateway providing unified access point for all iacherie creator economy services. This module enables:
 
 - **Unified API Access** for 65+ platform integrations
 - **Security & Authentication** with multi-factor authentication
@@ -38,7 +38,7 @@ from infrastructure.api_gateway import APIGateway, RateLimiter
 
 # Initialize API Gateway
 gateway = APIGateway(
-    host="api.ainflue.com",
+    host="api.iacherie.com",
     port=443,
     ssl_enabled=True,
     cors_enabled=True

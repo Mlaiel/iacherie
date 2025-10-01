@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-REST API Template for Ainflue Microservices Platform
+REST API Template for iacherie Microservices Platform
 ===================================================
 
 Enterprise-grade REST API service template providing:
@@ -110,7 +110,7 @@ class SecurityConfig(BaseModel):
 
 class RestApiConfig(ServiceConfig):
     """REST API specific configuration"""
-    api_title: str = Field(default="Ainflue API Service", description="API title")
+    api_title: str = Field(default="iacherie API Service", description="API title")
     api_description: str = Field(default="Enterprise REST API service", description="API description")
     api_version: str = Field(default="1.0.0", description="API version")
     docs_url: str = Field(default="/docs", description="Documentation URL")
@@ -563,8 +563,8 @@ class RestApiTemplate(BaseMicroservice):
 
 def create_rest_api_service(
     service_name: str = "rest-api-service",
-    api_title: str = "Ainflue REST API",
-    api_description: str = "Enterprise REST API service for Ainflue platform"
+    api_title: str = "iacherie REST API",
+    api_description: str = "Enterprise REST API service for iacherie platform"
 ) -> RestApiTemplate:
     """Factory function to create REST API service"""
     

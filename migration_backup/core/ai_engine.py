@@ -1,6 +1,6 @@
 """
 Core AI Engine
-Moteur d'IA central pour Ainfluencer Platform
+Moteur d'IA central pour IA Chéries Platform
 
 Ce module fournit l'orchestration centrale de tous les services d'IA.
 """

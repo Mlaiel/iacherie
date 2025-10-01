@@ -7,7 +7,7 @@
 
 ## 🚀 Overview
 
-The Mobile Backend Module provides enterprise-grade mobile-first backend services for the Ainflue platform. This module has been consolidated from 48 files to exactly 18 files for optimal performance, maintainability, and compliance with architectural standards.
+The Mobile Backend Module provides enterprise-grade mobile-first backend services for the iacherie platform. This module has been consolidated from 48 files to exactly 18 files for optimal performance, maintainability, and compliance with architectural standards.
 
 ## 🏗️ Consolidated Architecture
 

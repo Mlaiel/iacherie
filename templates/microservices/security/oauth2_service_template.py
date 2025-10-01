@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-OAuth2 Service Template for Ainflue Creator Economy Platform
+OAuth2 Service Template for iacherie Creator Economy Platform
 Enterprise OAuth2/OpenID Connect implementation for secure third-party integrations
 """
 
@@ -78,10 +78,10 @@ class OAuth2Config:
     device_code_lifetime: int = 600  # 10 minutes
     require_pkce: bool = True
     require_state: bool = True
-    issuer_url: str = "https://auth.ainflue.com"
+    issuer_url: str = "https://auth.iacherie.com"
     supported_scopes: List[str] = field(default_factory=lambda: [scope.value for scope in Scope])
     supported_grant_types: List[str] = field(default_factory=lambda: [grant.value for grant in GrantType])
-    jwks_uri: str = "https://auth.ainflue.com/.well-known/jwks.json"
+    jwks_uri: str = "https://auth.iacherie.com/.well-known/jwks.json"
 
 
 class OAuth2Client(BaseModel):
@@ -152,7 +152,7 @@ class DeviceAuthResponse(BaseModel):
 
 class OAuth2ServiceTemplate:
     """
-    Template de service OAuth2/OpenID Connect enterprise pour Ainflue
+    Template de service OAuth2/OpenID Connect enterprise pour iacherie
     
     Fonctionnalités:
     - OAuth2 Authorization Code Flow avec PKCE
@@ -168,7 +168,7 @@ class OAuth2ServiceTemplate:
     def __init__(self, config: OAuth2Config = None):
         self.config = config or OAuth2Config()
         self.app = FastAPI(
-            title="Ainflue OAuth2 Service",
+            title="iacherie OAuth2 Service",
             description="Enterprise OAuth2/OpenID Connect service",
             version="1.0.0"
         )
@@ -198,11 +198,11 @@ class OAuth2ServiceTemplate:
         # En production, charger depuis database
         # Client example pour démonstration
         demo_client = OAuth2Client(
-            client_id="ainflue_web_app",
+            client_id="iacherie_web_app",
             client_secret=self._hash_secret("demo_secret_2025"),
-            client_name="Ainflue Web Application",
+            client_name="iacherie Web Application",
             client_type=ClientType.CONFIDENTIAL,
-            redirect_uris=["https://app.ainflue.com/auth/callback"],
+            redirect_uris=["https://app.iacherie.com/auth/callback"],
             allowed_scopes=["openid", "profile", "email", "creator:read", "creator:write"],
             allowed_grant_types=["authorization_code", "refresh_token"],
             created_at=datetime.utcnow()

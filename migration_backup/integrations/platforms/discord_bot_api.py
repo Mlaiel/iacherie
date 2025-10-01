@@ -77,7 +77,7 @@ class DiscordBotAPIError(Exception):
 
 class DiscordBotAPI:
     """
-    Comprehensive Discord Bot API integration for Ainflue platform.
+    Comprehensive Discord Bot API integration for IA Chéries platform.
     
     Features:
     - Community management and moderation

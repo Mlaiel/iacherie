@@ -1,5 +1,5 @@
 """
-⚡ AINFLUE AUDIO TEMPLATES MODULE - ENTERPRISE FRAMEWORK
+⚡ IA CHÉRIES AUDIO TEMPLATES MODULE - ENTERPRISE FRAMEWORK
 =====================================================
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

@@ -193,8 +193,8 @@ groups:
       - alert: CreatorRevenueDropDetected
         expr: |
           (
-            (ainflue_creator_revenue_current - ainflue_creator_revenue_previous) 
-            / ainflue_creator_revenue_previous
+            (iacherie_creator_revenue_current - iacherie_creator_revenue_previous) 
+            / iacherie_creator_revenue_previous
           ) < -0.2
         for: 5m
         labels:
@@ -211,9 +211,9 @@ groups:
           
       - alert: CreatorMonetizationOpportunityMissed
         expr: |
-          ainflue_creator_monetization_opportunities_available > 3
+          iacherie_creator_monetization_opportunities_available > 3
           and
-          ainflue_creator_monetization_activation_rate < 0.3
+          iacherie_creator_monetization_activation_rate < 0.3
         for: 30m
         labels:
           severity: warning
@@ -231,7 +231,7 @@ groups:
       # 🎵 Musicians - Audio Processing
       - alert: MusicianAudioProcessingLatencyHigh
         expr: |
-          ainflue_audio_processing_duration_ms > 
+          iacherie_audio_processing_duration_ms > 
           (
             case(creator_tier == "enterprise", 30,
             case(creator_tier == "premium", 50,
@@ -250,7 +250,7 @@ groups:
       # 📝 Bloggers - SEO Performance
       - alert: BloggerSEORankingDrop
         expr: |
-          increase(ainflue_blog_seo_ranking_drop_total[24h]) > 5
+          increase(iacherie_blog_seo_ranking_drop_total[24h]) > 5
         for: 1h
         labels:
           severity: warning
@@ -264,7 +264,7 @@ groups:
       # 📸 Photographers - Storage & Processing
       - alert: PhotographerStorageNearLimit
         expr: |
-          ainflue_photographer_storage_utilization > 85
+          iacherie_photographer_storage_utilization > 85
         for: 15m
         labels:
           severity: warning
@@ -281,7 +281,7 @@ groups:
     rules:
       - alert: CreatorChurnRiskHigh
         expr: |
-          ainflue_creator_churn_risk_score > 0.75
+          iacherie_creator_churn_risk_score > 0.75
         for: 30m
         labels:
           severity: critical
@@ -297,7 +297,7 @@ groups:
           
       - alert: ContentViralityPredicted
         expr: |
-          ainflue_content_virality_prediction > 0.85
+          iacherie_content_virality_prediction > 0.85
         for: 5m
         labels:
           severity: info
@@ -315,7 +315,7 @@ groups:
     rules:
       - alert: ContentPiracyDetected
         expr: |
-          ainflue_content_piracy_incidents > 0
+          iacherie_content_piracy_incidents > 0
         for: 1m
         labels:
           severity: critical
@@ -329,7 +329,7 @@ groups:
           
       - alert: UnauthorizedContentAccess
         expr: |
-          ainflue_unauthorized_access_attempts > 10
+          iacherie_unauthorized_access_attempts > 10
         for: 5m
         labels:
           severity: warning
@@ -346,8 +346,8 @@ groups:
       - alert: CreatorEngagementDropSignificant
         expr: |
           (
-            (ainflue_creator_engagement_current - ainflue_creator_engagement_avg_30d)
-            / ainflue_creator_engagement_avg_30d
+            (iacherie_creator_engagement_current - iacherie_creator_engagement_avg_30d)
+            / iacherie_creator_engagement_avg_30d
           ) < -0.3
         for: 1h
         labels:
@@ -360,7 +360,7 @@ groups:
           
       - alert: GamificationMilestoneAchieved
         expr: |
-          increase(ainflue_gamification_milestones_achieved[1h]) > 0
+          increase(iacherie_gamification_milestones_achieved[1h]) > 0
         for: 0s
         labels:
           severity: info
@@ -376,7 +376,7 @@ groups:
     rules:
       - alert: PlatformCreatorGrowthSlowing
         expr: |
-          rate(ainflue_new_creators_total[7d]) < rate(ainflue_new_creators_total[30d]) * 0.7
+          rate(iacherie_new_creators_total[7d]) < rate(iacherie_new_creators_total[30d]) * 0.7
         for: 1d
         labels:
           severity: warning
@@ -390,7 +390,7 @@ groups:
           
       - alert: RevenuePerCreatorDecreasing
         expr: |
-          avg(ainflue_revenue_per_creator) < avg(ainflue_revenue_per_creator offset 30d) * 0.9
+          avg(iacherie_revenue_per_creator) < avg(iacherie_revenue_per_creator offset 30d) * 0.9
         for: 2d
         labels:
           severity: critical

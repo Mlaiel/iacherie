@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-WebSocket Service Template for Ainflue Microservices Platform
+WebSocket Service Template for iacherie Microservices Platform
 ============================================================
 
 Enterprise-grade WebSocket service template providing:

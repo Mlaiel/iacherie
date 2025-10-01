@@ -7,7 +7,7 @@ real-time content processing, and AI model distribution for creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: DevOps + ML Engineer + Lead Dev IA
-Project: Ainflue Infrastructure CDN
+Project: iacherie Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -97,7 +97,7 @@ class ProcessingResult:
 
 class EdgeComputingManager:
     """
-    Enterprise Edge Computing Manager for Ainflue Creator Platform.
+    Enterprise Edge Computing Manager for iacherie Creator Platform.
     
     Manages serverless edge functions, AI model distribution, and real-time
     content processing across global edge locations for creators.

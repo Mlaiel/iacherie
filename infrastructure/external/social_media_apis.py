@@ -168,7 +168,7 @@ class SocialMediaApisAPI:
 Configuration des middlewares"""
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=["https://app.ainflue.com", "https://dashboard.ainflue.com", "https://social.ainflue.com"],  # Social media app origins
+            allow_origins=["https://app.iacherie.com", "https://dashboard.iacherie.com", "https://social.iacherie.com"],  # Social media app origins
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],

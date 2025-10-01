@@ -92,15 +92,15 @@ protection_monitoring:
     
     # Métriques surveillance
     monitoring_metrics:
-      - metric: "ainflue_copyright_violations_detected_total"
+      - metric: "iacherie_copyright_violations_detected_total"
         description: "Violations copyright détectées"
         labels: ["creator_id", "content_type", "violation_severity", "platform"]
         
-      - metric: "ainflue_copyright_detection_accuracy"
+      - metric: "iacherie_copyright_detection_accuracy"
         description: "Précision détection copyright"
         labels: ["detection_algorithm", "content_type"]
         
-      - metric: "ainflue_copyright_scan_duration_ms"
+      - metric: "iacherie_copyright_scan_duration_ms"
         description: "Durée scan copyright"
         labels: ["scan_type", "content_size_category"]
 
@@ -150,15 +150,15 @@ protection_monitoring:
     
     # Métriques surveillance
     monitoring_metrics:
-      - metric: "ainflue_watermark_integrity_score"
+      - metric: "iacherie_watermark_integrity_score"
         description: "Score intégrité watermark"
         labels: ["creator_id", "content_id", "watermark_type"]
         
-      - metric: "ainflue_watermark_tampering_attempts"
+      - metric: "iacherie_watermark_tampering_attempts"
         description: "Tentatives altération watermark"
         labels: ["tampering_type", "severity_level"]
         
-      - metric: "ainflue_watermark_verification_duration_ms"
+      - metric: "iacherie_watermark_verification_duration_ms"
         description: "Durée vérification watermark"
         labels: ["content_type", "verification_method"]
 
@@ -222,15 +222,15 @@ protection_monitoring:
     
     # Métriques surveillance
     monitoring_metrics:
-      - metric: "ainflue_ip_protection_violations_total"
+      - metric: "iacherie_ip_protection_violations_total"
         description: "Violations propriété intellectuelle"
         labels: ["creator_id", "violation_type", "severity", "source_country"]
         
-      - metric: "ainflue_unauthorized_access_attempts_total"
+      - metric: "iacherie_unauthorized_access_attempts_total"
         description: "Tentatives accès non autorisé"
         labels: ["access_type", "blocked", "source_ip_country"]
         
-      - metric: "ainflue_protection_action_success_rate"
+      - metric: "iacherie_protection_action_success_rate"
         description: "Taux succès actions protection"
         labels: ["action_type", "content_type"]
 
@@ -299,11 +299,11 @@ advanced_threat_detection:
       
     # Métriques blockchain
     monitoring_metrics:
-      - metric: "ainflue_blockchain_registration_success_rate"
+      - metric: "iacherie_blockchain_registration_success_rate"
         description: "Taux succès enregistrement blockchain"
         labels: ["content_type", "network"]
         
-      - metric: "ainflue_blockchain_verification_latency_ms"
+      - metric: "iacherie_blockchain_verification_latency_ms"
         description: "Latence vérification blockchain"
         labels: ["verification_type"]
 
@@ -334,11 +334,11 @@ legal_compliance:
     
     # Métriques DMCA
     monitoring_metrics:
-      - metric: "ainflue_dmca_takedown_requests_total"
+      - metric: "iacherie_dmca_takedown_requests_total"
         description: "Demandes DMCA reçues"
         labels: ["request_type", "creator_id", "response_status"]
         
-      - metric: "ainflue_dmca_response_time_hours"
+      - metric: "iacherie_dmca_response_time_hours"
         description: "Temps réponse DMCA"
         labels: ["complexity_level"]
 
@@ -360,11 +360,11 @@ legal_compliance:
       
     # Métriques GDPR
     monitoring_metrics:
-      - metric: "ainflue_gdpr_data_requests_total"
+      - metric: "iacherie_gdpr_data_requests_total"
         description: "Demandes RGPD reçues"
         labels: ["request_type", "processing_status"]
         
-      - metric: "ainflue_gdpr_compliance_score"
+      - metric: "iacherie_gdpr_compliance_score"
         description: "Score conformité RGPD"
         labels: ["compliance_area"]
 
@@ -415,15 +415,15 @@ incident_response:
   
   # Métriques réponse incidents
   monitoring_metrics:
-    - metric: "ainflue_security_incidents_total"
+    - metric: "iacherie_security_incidents_total"
       description: "Incidents sécurité total"
       labels: ["incident_type", "severity", "resolution_status"]
       
-    - metric: "ainflue_incident_response_time_minutes"
+    - metric: "iacherie_incident_response_time_minutes"
       description: "Temps réponse incidents"
       labels: ["severity_level", "response_type"]
       
-    - metric: "ainflue_incident_resolution_success_rate"
+    - metric: "iacherie_incident_resolution_success_rate"
       description: "Taux succès résolution incidents"
       labels: ["incident_category"]
 

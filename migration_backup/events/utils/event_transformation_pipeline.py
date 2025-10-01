@@ -1,7 +1,7 @@
-"""Event Transformation Pipeline - Ultra-Optimized for Ainflue Cross-Services
+"""Event Transformation Pipeline - Ultra-Optimized for IA Chéries Cross-Services
 
 High-performance event transformation pipeline with business-aware transformations,
-schema mapping, and real-time streaming support for Ainflue platform.
+schema mapping, and real-time streaming support for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -967,7 +967,7 @@ class TransformationRegistry:
 
 class EventTransformationPipeline:
     """
-    Ultra-optimized event transformation pipeline for Ainflue cross-services
+    Ultra-optimized event transformation pipeline for IA Chéries cross-services
     Business-aware transformations with streaming support and intelligent error recovery
     """
     
@@ -981,7 +981,7 @@ class EventTransformationPipeline:
         # Initialize default transformations
         self._initialize_default_transformations()
         
-        logger.info("EventTransformationPipeline initialized for Ainflue cross-services")
+        logger.info("EventTransformationPipeline initialized for IA Chéries cross-services")
     
     def _initialize_default_transformations(self):
         """Initialize default transformations"""

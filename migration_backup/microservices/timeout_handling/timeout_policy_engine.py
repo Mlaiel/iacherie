@@ -1,11 +1,11 @@
 """
-Timeout Policy Engine - Ainflue Enterprise
+Timeout Policy Engine - IA Chéries Enterprise
 =========================================
 Moteur politiques timeout avec business rules.
 Policy management + rule engine + compliance monitoring + SLA enforcement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chéries Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -135,7 +135,7 @@ class TimeoutPolicyEngine:
         self.compliance_history: Dict[str, List[Dict[str, Any]]] = {}
         self.is_initialized = False
         
-        # Ainflue business domain policies
+        # IA Chéries business domain policies
         self.business_domain_policies = {
             'creator': {
                 'base_timeout': 60.0,
@@ -520,7 +520,7 @@ class TimeoutPolicyEngine:
         return policy
     
     async def _load_default_policies(self):
-        """Load default timeout policies for Ainflue business domains"""
+        """Load default timeout policies for IA Chéries business domains"""
         default_policies = []
         
         # Creator service policies

@@ -247,7 +247,7 @@ class SecurityComplianceIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Security & Compliance Hub",
+                "User-Agent": "iacherie/1.0 Security & Compliance Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
@@ -433,7 +433,7 @@ class SecurityComplianceIntegration:
             processed_at=None,
             deadline=datetime.now() + timedelta(days=14),  # Standard DMCA response time
             platform_responses={},
-            metadata={"auto_generated": True, "source": "ainflue_platform"}
+            metadata={"auto_generated": True, "source": "iacherie_platform"}
         )
         
         # Submit to platform
@@ -622,7 +622,7 @@ class SecurityComplianceIntegration:
         self,
         framework: ComplianceFramework,
         scope: List[str],
-        auditor: str = "Ainflue Compliance Team"
+        auditor: str = "iacherie Compliance Team"
     ) -> ComplianceAudit:
         """Run compliance audit for specified framework."""
         

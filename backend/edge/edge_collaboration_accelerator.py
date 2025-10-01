@@ -2,7 +2,7 @@
 =================================
 
 Accélérateur de collaboration créateurs edge ultra-avancé pour l'écosystème
-Ainflue. Facilite et optimise la collaboration en temps réel entre créateurs
+iacherie. Facilite et optimise la collaboration en temps réel entre créateurs
 avec intelligence artificielle et synchronisation multi-plateforme.
 
 Fonctionnalités clés:
@@ -280,7 +280,7 @@ class PlatformType(str, Enum):
     FACEBOOK = "facebook"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
-    AINFLUE = "ainflue"
+    IACHERIE = "iacherie"
 
 
 @dataclass
@@ -450,7 +450,7 @@ class CrossPlatformSynchronizer:
     def _generate_youtube_tags(self, content: Dict[str, Any]) -> List[str]:
         """Génère des tags optimisés pour YouTube."""
         # TODO: Implémentation génération tags intelligente
-        return ["ainflue", "creator", "content"]
+        return ["iacherie", "creator", "content"]
     
     async def _upload_to_platform(self, platform: str, content: Dict[str, Any]) -> Dict[str, Any]:
         """Upload le contenu vers une plateforme."""
@@ -611,7 +611,7 @@ class CollaborativeContentCreator:
                 "size": len(asset_data),
                 "uploader": uploader_id,
                 "uploaded_at": datetime.now(),
-                "url": f"https://assets.ainflue.com/{asset_id}"
+                "url": f"https://assets.iacherie.com/{asset_id}"
             }
             
             # Ajout à la liste des assets du projet

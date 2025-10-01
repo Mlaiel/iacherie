@@ -7,7 +7,7 @@ adaptation, and creator-focused mobile experience enhancement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Backend Senior + ML Engineer + DevOps
-Project: Ainflue Infrastructure CDN
+Project: iacherie Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -132,7 +132,7 @@ class MobileOptimizationResult:
 
 class MobileCDNOptimizer:
     """
-    Enterprise Mobile CDN Optimizer for Ainflue Creator Platform.
+    Enterprise Mobile CDN Optimizer for iacherie Creator Platform.
     
     Provides mobile-first optimization with device-specific delivery,
     network adaptation, and creator-focused mobile experience.

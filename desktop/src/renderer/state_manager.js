@@ -445,7 +445,7 @@ class StateManager {
     try {
       const value = this.getState(keyPath);
       const serialized = this.serializeValue(value);
-      localStorage.setItem(`ainflue_state_${keyPath}`, serialized);
+      localStorage.setItem(`iacherie_state_${keyPath}`, serialized);
     } catch (error) {
       console.error('Failed to persist state:', error);
     }
@@ -457,7 +457,7 @@ class StateManager {
   loadPersistedState() {
     try {
       for (const keyPath of this.persistentKeys) {
-        const stored = localStorage.getItem(`ainflue_state_${keyPath}`);
+        const stored = localStorage.getItem(`iacherie_state_${keyPath}`);
         if (stored) {
           const value = this.deserializeValue(stored);
           this.setState(keyPath, value, { silent: true, broadcast: false });

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Recognition Service
+ * IA Chéries Desktop - Content Recognition Service
  * 
  * Advanced AI-powered content recognition and classification system
  * 
@@ -557,7 +557,7 @@ class ContentRecognitionService {
         return {
             entities: [
                 { text: 'Fahed Mlaiel', type: 'PERSON', confidence: 0.95 },
-                { text: 'Ainflue', type: 'ORG', confidence: 0.92 },
+                { text: 'IA Chéries', type: 'ORG', confidence: 0.92 },
                 { text: 'Germany', type: 'LOCATION', confidence: 0.89 }
             ],
             totalEntities: 3,

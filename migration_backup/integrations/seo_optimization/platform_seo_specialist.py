@@ -1,5 +1,5 @@
 """
-Platform SEO Specialist - Ainflue SEO Optimization
+Platform SEO Specialist - IA Chéries SEO Optimization
 =================================================
 Advanced platform-specific SEO optimization engine for content creators.
 YouTube, Instagram, TikTok, Spotify algorithm optimization with AI-powered insights.
@@ -9,7 +9,7 @@ Cette architecture est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de)
 Toute reproduction ou utilisation non autorisée est strictement interdite.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue SEO Optimization
+Project: IA Chéries SEO Optimization
 Version: 1.0 Production
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -38,7 +38,7 @@ from mutagen.mp4 import MP4
 import redis
 import asyncpg
 
-# Ainflue core imports
+# IA Chéries core imports
 from core.ai_engine.video_analyzer import VideoAnalyzer
 from core.ai_engine.audio_analyzer import AudioAnalyzer
 from core.ai_engine.image_analyzer import ImageAnalyzer

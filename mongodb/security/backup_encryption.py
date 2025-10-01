@@ -32,13 +32,13 @@ class BackupEncryption:
     def _generate_key(self) -> bytes:
         """Generate encryption key for backups."""
         # Use environment variable or generate new key
-        env_key = os.getenv('AINFLUE_BACKUP_KEY')
+        env_key = os.getenv('IACHERIE_BACKUP_KEY')
         if env_key:
             return env_key.encode()
         
         # Generate new key
         new_key = Fernet.generate_key()
-        logger.warning("Generated new backup encryption key - store in AINFLUE_BACKUP_KEY environment variable")
+        logger.warning("Generated new backup encryption key - store in IACHERIE_BACKUP_KEY environment variable")
         return new_key
     
     def encrypt_backup(self, backup_data: bytes, compress: bool = True) -> Dict[str, Any]:

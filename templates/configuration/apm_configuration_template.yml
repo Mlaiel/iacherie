@@ -1,4 +1,4 @@
-# APM (Application Performance Monitoring) Configuration Template for Ainflue Platform
+# APM (Application Performance Monitoring) Configuration Template for iacherie Platform
 # Comprehensive configuration for monitoring application performance, errors, and user experience
 
 # APM Server Configuration
@@ -54,7 +54,7 @@ nodejs_apm_config: |
     spanFramesMinDuration: '5ms',
     stackTraceLimit: 50,
     
-    // Custom configuration for Ainflue
+    // Custom configuration for iacherie
     serviceNodeName: '${POD_NAME}',
     globalLabels: {
       datacenter: '${DATACENTER}',
@@ -206,7 +206,7 @@ java_apm_config: |
   -Delastic.apm.server_urls=${APM_SERVER_URL}
   -Delastic.apm.secret_token=${APM_SECRET_TOKEN}
   -Delastic.apm.environment=${ENVIRONMENT}
-  -Delastic.apm.application_packages=com.ainflue
+  -Delastic.apm.application_packages=com.iacherie
   
   # Performance settings
   -Delastic.apm.transaction_sample_rate=${TRANSACTION_SAMPLE_RATE:1.0}
@@ -225,7 +225,7 @@ java_apm_config: |
   
   # Instrumentation
   -Delastic.apm.enable_instrumentations=true
-  -Delastic.apm.trace_methods=com.ainflue.service.*
+  -Delastic.apm.trace_methods=com.iacherie.service.*
   
   # Metrics
   -Delastic.apm.metrics_interval=30s
@@ -245,22 +245,22 @@ output.elasticsearch:
   
   # Index configuration
   indices:
-    - index: "apm-ainflue-%{[observer.version]}-sourcemap"
+    - index: "apm-iacherie-%{[observer.version]}-sourcemap"
       when.contains:
         processor.event: "sourcemap"
-    - index: "apm-ainflue-%{[observer.version]}-error-%{+yyyy.MM.dd}"
+    - index: "apm-iacherie-%{[observer.version]}-error-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "error"
-    - index: "apm-ainflue-%{[observer.version]}-transaction-%{+yyyy.MM.dd}"
+    - index: "apm-iacherie-%{[observer.version]}-transaction-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "transaction"
-    - index: "apm-ainflue-%{[observer.version]}-span-%{+yyyy.MM.dd}"
+    - index: "apm-iacherie-%{[observer.version]}-span-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "span"
-    - index: "apm-ainflue-%{[observer.version]}-metric-%{+yyyy.MM.dd}"
+    - index: "apm-iacherie-%{[observer.version]}-metric-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "metric"
-    - index: "apm-ainflue-%{[observer.version]}-onboarding-%{+yyyy.MM.dd}"
+    - index: "apm-iacherie-%{[observer.version]}-onboarding-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "onboarding"
 
@@ -303,7 +303,7 @@ monitoring:
 # X-Pack settings
 xpack.monitoring.enabled: true
 
-# Custom processors for Ainflue business logic
+# Custom processors for iacherie business logic
 processors:
   - add_host_metadata: ~
   - add_docker_metadata: ~
@@ -315,7 +315,7 @@ processors:
       source: >
         function process(event) {
           // Add creator economy context
-          if (event.Get("service.name") === "ainflue-api") {
+          if (event.Get("service.name") === "iacherie-api") {
             var url = event.Get("url.original");
             if (url && url.includes("/api/creators/")) {
               event.Put("business.context", "creator_management");
@@ -347,9 +347,9 @@ apm-server.rum.enabled: true
 apm-server.rum.event_rate.limit: 300
 apm-server.rum.event_rate.lru_size: 1000
 apm-server.rum.allow_origins: 
-  - "https://*.ainflue.com"
-  - "https://app.ainflue.com"
-  - "https://dashboard.ainflue.com"
+  - "https://*.iacherie.com"
+  - "https://app.iacherie.com"
+  - "https://dashboard.iacherie.com"
 apm-server.rum.source_mapping.enabled: true
 apm-server.rum.source_mapping.cache.expiration: 5m
 apm-server.rum.source_mapping.index_pattern: "apm-*-sourcemap*"
@@ -387,7 +387,7 @@ instrumentation_configs:
     import { init as initApm } from '@elastic/apm-rum'
     
     const apm = initApm({
-      serviceName: 'ainflue-frontend',
+      serviceName: 'iacherie-frontend',
       serverUrl: '${APM_SERVER_URL}',
       serviceVersion: '${APP_VERSION}',
       environment: '${ENVIRONMENT}',
@@ -429,7 +429,7 @@ instrumentation_configs:
     import { ElasticApmAgent } from '@elastic/apm-rum-react-native'
     
     const apm = new ElasticApmAgent({
-      serviceName: 'ainflue-mobile',
+      serviceName: 'iacherie-mobile',
       serverUrl: '${APM_SERVER_URL}',
       serviceVersion: '${APP_VERSION}',
       environment: '${ENVIRONMENT}',

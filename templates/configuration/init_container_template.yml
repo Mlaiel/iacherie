@@ -1,5 +1,5 @@
 # =====================================================================================
-# Init Container Template - Ainflue Configuration Module  
+# Init Container Template - iacherie Configuration Module  
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - INIT CONTAINERS PATTERNS
+# IACHERIE CREATOR ECONOMY - INIT CONTAINERS PATTERNS
 # =====================================================================================
 
 # Networks for initialization
@@ -23,7 +23,7 @@ networks:
       config:
         - subnet: 172.50.0.0/16
     labels:
-      - "ainflue.network.type=initialization"
+      - "iacherie.network.type=initialization"
 
   app_network:
     driver: overlay
@@ -34,7 +34,7 @@ networks:
       config:
         - subnet: 172.51.0.0/16
     labels:
-      - "ainflue.network.type=application"
+      - "iacherie.network.type=application"
 
 # Volumes for init data sharing
 volumes:
@@ -42,48 +42,48 @@ volumes:
   init_data:
     driver: local
     labels:
-      - "ainflue.volume.type=init_data"
+      - "iacherie.volume.type=init_data"
 
   # Configuration templates
   config_templates:
     driver: local
     labels:
-      - "ainflue.volume.type=config_templates"
+      - "iacherie.volume.type=config_templates"
 
   # Database initialization
   db_init_scripts:
     driver: local
     labels:
-      - "ainflue.volume.type=db_scripts"
+      - "iacherie.volume.type=db_scripts"
 
   # SSL certificates
   ssl_certificates:
     driver: local
     labels:
-      - "ainflue.volume.type=ssl_certs"
+      - "iacherie.volume.type=ssl_certs"
 
   # Application assets
   app_assets:
     driver: local
     labels:
-      - "ainflue.volume.type=app_assets"
+      - "iacherie.volume.type=app_assets"
 
 # Secrets for initialization
 secrets:
   # Database admin credentials
   db_admin_password:
     external: true
-    external_name: ainflue_db_admin_password_v1
+    external_name: iacherie_db_admin_password_v1
 
   # SSL certificate generation
   ssl_ca_key:
     external: true
-    external_name: ainflue_ssl_ca_key_v1
+    external_name: iacherie_ssl_ca_key_v1
 
   # Configuration encryption key
   config_encryption_key:
     external: true
-    external_name: ainflue_config_encryption_key_v1
+    external_name: iacherie_config_encryption_key_v1
 
 # =====================================================================================
 # SERVICES WITH INIT CONTAINER PATTERNS
@@ -121,8 +121,8 @@ services:
       - db_admin_password
     
     environment:
-      - FLYWAY_URL=jdbc:postgresql://postgres:5432/ainflue_production
-      - FLYWAY_USER=ainflue_admin
+      - FLYWAY_URL=jdbc:postgresql://postgres:5432/iacherie_production
+      - FLYWAY_USER=iacherie_admin
       - FLYWAY_PASSWORD_FILE=/run/secrets/db_admin_password
       - FLYWAY_LOCATIONS=filesystem:/flyway/sql
       - FLYWAY_BASELINE_ON_MIGRATE=true
@@ -142,10 +142,10 @@ services:
       start_period: 60s
     
     labels:
-      - "ainflue.init.type=database_migration"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=1"
-      - "ainflue.database.migration=flyway"
+      - "iacherie.init.type=database_migration"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=1"
+      - "iacherie.database.migration=flyway"
 
   # =====================================================================================
   # INIT CONTAINER: CONFIGURATION TEMPLATING
@@ -180,7 +180,7 @@ services:
     environment:
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - VERSION=${VERSION:-1.0.0}
-      - DOMAIN=${DOMAIN:-ainflue.com}
+      - DOMAIN=${DOMAIN:-iacherie.com}
       - DATABASE_HOST=postgres
       - REDIS_HOST=redis
       - CONSUL_HOST=consul
@@ -198,10 +198,10 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=config_templating"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=2"
-      - "ainflue.config.generator=gomplate"
+      - "iacherie.init.type=config_templating"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=2"
+      - "iacherie.config.generator=gomplate"
 
   # =====================================================================================
   # INIT CONTAINER: SSL CERTIFICATE GENERATION
@@ -234,11 +234,11 @@ services:
       - ssl_ca_key
     
     environment:
-      - CERT_DOMAIN=${DOMAIN:-ainflue.com}
+      - CERT_DOMAIN=${DOMAIN:-iacherie.com}
       - CERT_COUNTRY=US
       - CERT_STATE=California
       - CERT_CITY=San Francisco
-      - CERT_ORG=Ainflue
+      - CERT_ORG=iacherie
       - CERT_OU=Infrastructure
       - CERT_VALIDITY=8760h  # 1 year
     
@@ -278,10 +278,10 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=ssl_certificates"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=3"
-      - "ainflue.security.ssl=cfssl"
+      - "iacherie.init.type=ssl_certificates"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=3"
+      - "iacherie.security.ssl=cfssl"
 
   # =====================================================================================
   # INIT CONTAINER: DEPENDENCY CHECK
@@ -355,10 +355,10 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=dependency_check"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=4"
-      - "ainflue.healthcheck.dependencies=true"
+      - "iacherie.init.type=dependency_check"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=4"
+      - "iacherie.healthcheck.dependencies=true"
 
   # =====================================================================================
   # INIT CONTAINER: ASSET COMPILATION
@@ -427,10 +427,10 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=asset_compilation"
-      - "ainflue.init.phase=build"
-      - "ainflue.init.order=5"
-      - "ainflue.build.assets=webpack"
+      - "iacherie.init.type=asset_compilation"
+      - "iacherie.init.phase=build"
+      - "iacherie.init.order=5"
+      - "iacherie.build.assets=webpack"
 
   # =====================================================================================
   # INIT CONTAINER: CACHE WARMUP
@@ -500,10 +500,10 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=cache_warmup"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=6"
-      - "ainflue.cache.preload=true"
+      - "iacherie.init.type=cache_warmup"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=6"
+      - "iacherie.cache.preload=true"
 
   # =====================================================================================
   # INIT CONTAINER: SECRETS VALIDATION
@@ -573,17 +573,17 @@ services:
       "
     
     labels:
-      - "ainflue.init.type=secrets_validation"
-      - "ainflue.init.phase=pre_deployment"
-      - "ainflue.init.order=0"
-      - "ainflue.security.validation=required"
+      - "iacherie.init.type=secrets_validation"
+      - "iacherie.init.phase=pre_deployment"
+      - "iacherie.init.order=0"
+      - "iacherie.security.validation=required"
 
   # =====================================================================================
   # MAIN APPLICATION (DEPENDS ON INIT CONTAINERS)
   # =====================================================================================
   
   creator_platform_app:
-    image: ainflue/creator-platform:${VERSION:-latest}
+    image: iacherie/creator-platform:${VERSION:-latest}
     hostname: creator-platform
     restart: unless-stopped
     
@@ -640,9 +640,9 @@ services:
       - cache_warmup_init
     
     labels:
-      - "ainflue.service.type=application"
-      - "ainflue.service.name=creator-platform"
-      - "ainflue.init.dependencies=all"
+      - "iacherie.service.type=application"
+      - "iacherie.service.name=creator-platform"
+      - "iacherie.init.dependencies=all"
 
 # =====================================================================================
 # INIT CONTAINER TEMPLATES AND PATTERNS
@@ -693,21 +693,21 @@ x-heavy-init: &heavy-init
 
 # Init container labels
 x-init-labels: &init-labels
-  - "ainflue.container.type=init"
-  - "ainflue.version=${VERSION:-1.0.0}"
-  - "ainflue.environment=${ENVIRONMENT:-production}"
+  - "iacherie.container.type=init"
+  - "iacherie.version=${VERSION:-1.0.0}"
+  - "iacherie.environment=${ENVIRONMENT:-production}"
 
 x-pre-deployment-labels: &pre-deployment-labels
-  - "ainflue.init.phase=pre_deployment"
-  - "ainflue.init.required=true"
+  - "iacherie.init.phase=pre_deployment"
+  - "iacherie.init.required=true"
 
 x-build-labels: &build-labels
-  - "ainflue.init.phase=build"
-  - "ainflue.init.cache=false"
+  - "iacherie.init.phase=build"
+  - "iacherie.init.cache=false"
 
 x-validation-labels: &validation-labels
-  - "ainflue.init.phase=validation"
-  - "ainflue.security.check=required"
+  - "iacherie.init.phase=validation"
+  - "iacherie.security.check=required"
 
 # =====================================================================================
 # HEALTHCHECK TEMPLATES
@@ -734,38 +734,38 @@ x-quick-healthcheck: &quick-healthcheck
 # Phase 0: Validation (security, secrets, environment)
 x-phase-0: &phase-0
   labels:
-    - "ainflue.init.phase=validation"
-    - "ainflue.init.order=0"
+    - "iacherie.init.phase=validation"
+    - "iacherie.init.order=0"
 
 # Phase 1: Infrastructure (database, storage, networking)
 x-phase-1: &phase-1
   labels:
-    - "ainflue.init.phase=infrastructure"
-    - "ainflue.init.order=1"
+    - "iacherie.init.phase=infrastructure"
+    - "iacherie.init.order=1"
 
 # Phase 2: Configuration (templates, secrets, certificates)
 x-phase-2: &phase-2
   labels:
-    - "ainflue.init.phase=configuration"
-    - "ainflue.init.order=2"
+    - "iacherie.init.phase=configuration"
+    - "iacherie.init.order=2"
 
 # Phase 3: Dependencies (external services, APIs)
 x-phase-3: &phase-3
   labels:
-    - "ainflue.init.phase=dependencies"
-    - "ainflue.init.order=3"
+    - "iacherie.init.phase=dependencies"
+    - "iacherie.init.order=3"
 
 # Phase 4: Build (assets, compilation, optimization)
 x-phase-4: &phase-4
   labels:
-    - "ainflue.init.phase=build"
-    - "ainflue.init.order=4"
+    - "iacherie.init.phase=build"
+    - "iacherie.init.order=4"
 
 # Phase 5: Preparation (cache warmup, data loading)
 x-phase-5: &phase-5
   labels:
-    - "ainflue.init.phase=preparation"
-    - "ainflue.init.order=5"
+    - "iacherie.init.phase=preparation"
+    - "iacherie.init.order=5"
 
 # =====================================================================================
 # CREATOR ECONOMY SPECIFIC INIT PATTERNS

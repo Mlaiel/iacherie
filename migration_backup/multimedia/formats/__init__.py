@@ -2,7 +2,7 @@
 🎬 MULTIMEDIA FORMATS MODULE - ENTERPRISE ARCHITECTURE
 ========================================================
 
-Advanced format processing and detection system for Ainflue Platform
+Advanced format processing and detection system for IA Chéries Platform
 Supporting all modern multimedia formats with AI-powered detection
 
 **Expert Team Implementation:**
@@ -21,7 +21,7 @@ Supporting all modern multimedia formats with AI-powered detection
 - Platform-specific optimization
 
 **Architecture:** Level 3 Enterprise - 18 files maximum
-**Business Logic:** Complete Ainflue workflow integration
+**Business Logic:** Complete IA Chéries workflow integration
 """
 
 __version__ = "3.1.0"

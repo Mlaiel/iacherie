@@ -1,6 +1,6 @@
 """
 Kubernetes Cluster Manager
-Enterprise-grade Kubernetes cluster management for Ainflue infrastructure
+Enterprise-grade Kubernetes cluster management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -91,7 +91,7 @@ class WorkloadConfig:
 
 class ClusterManager:
     """
-    Kubernetes Cluster Manager for Ainflue Infrastructure
+    Kubernetes Cluster Manager for iacherie Infrastructure
     
     Provides enterprise-grade Kubernetes cluster management:
     - Multi-cloud cluster provisioning (EKS, GKE, AKS)
@@ -137,13 +137,13 @@ class ClusterManager:
             self.k8s_autoscaling_v2 = None
             self.k8s_rbac_v1 = None
             
-        # Ainflue-specific configurations
-        self.ainflue_namespaces = [
-            "ainflue-system",
-            "ainflue-creators", 
-            "ainflue-ai",
-            "ainflue-storage",
-            "ainflue-monitoring"
+        # iacherie-specific configurations
+        self.iacherie_namespaces = [
+            "iacherie-system",
+            "iacherie-creators", 
+            "iacherie-ai",
+            "iacherie-storage",
+            "iacherie-monitoring"
         ]
         
     async def create_cluster(self, config: ClusterConfig) -> Dict[str, Any]:
@@ -196,8 +196,8 @@ class ClusterManager:
                 monitoring_result = await self._setup_cluster_monitoring(config.name)
                 cluster_result['monitoring'] = monitoring_result
                 
-            # Create Ainflue namespaces
-            namespace_result = await self._create_ainflue_namespaces(config.name)
+            # Create iacherie namespaces
+            namespace_result = await self._create_iacherie_namespaces(config.name)
             cluster_result['namespaces'] = namespace_result
             
             # Store cluster configuration
@@ -417,7 +417,7 @@ class ClusterManager:
     async def _create_self_managed_cluster(self, config: ClusterConfig) -> Dict[str, Any]:
         """Create self-managed cluster"""
         return {
-            'cluster_endpoint': f"https://k8s-{config.name}.ainflue.com:6443",
+            'cluster_endpoint': f"https://k8s-{config.name}.iacherie.com:6443",
             'cluster_ca_certificate': "LS0tLS1CRUdJTi..."
         }
         
@@ -463,18 +463,18 @@ class ClusterManager:
             'grafana_enabled': True,
             'metrics_server_enabled': True,
             'logging_enabled': True,
-            'monitoring_namespace': 'ainflue-monitoring'
+            'monitoring_namespace': 'iacherie-monitoring'
         }
         
-    async def _create_ainflue_namespaces(self, cluster_name: str) -> List[Dict[str, Any]]:
-        """Create Ainflue-specific namespaces"""
+    async def _create_iacherie_namespaces(self, cluster_name: str) -> List[Dict[str, Any]]:
+        """Create iacherie-specific namespaces"""
         results = []
-        for namespace in self.ainflue_namespaces:
+        for namespace in self.iacherie_namespaces:
             namespace_result = {
                 'name': namespace,
                 'status': 'active',
                 'labels': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'managed-by': 'cluster-manager'
                 }
             }
@@ -532,7 +532,7 @@ class ClusterManager:
                         metadata=client.V1ObjectMeta(
                             name=namespace,
                             labels={
-                                'platform': 'ainflue',
+                                'platform': 'iacherie',
                                 'managed-by': 'cluster-manager'
                             }
                         )
@@ -578,7 +578,7 @@ class ClusterManager:
         """Create Kubernetes ingress"""
         return {
             'ingress_name': f"{workload_config.name}-ingress",
-            'host': workload_config.ingress_config.get('host', f"{workload_config.name}.ainflue.com"),
+            'host': workload_config.ingress_config.get('host', f"{workload_config.name}.iacherie.com"),
             'tls_enabled': workload_config.ingress_config.get('tls', True),
             'status': 'created'
         }
@@ -616,7 +616,7 @@ class ClusterManager:
     async def deploy_service(self, service_config: Dict[str, Any], cluster_name: str = None) -> Dict[str, Any]:
         """
         Deploy a service to Kubernetes cluster
-        Backend Senior Role Implementation for Ainflue creator services
+        Backend Senior Role Implementation for iacherie creator services
         
         Args:
             service_config: Service configuration dictionary
@@ -631,11 +631,11 @@ class ClusterManager:
             return self._simulate_service_deployment(service_config)
             
         try:
-            # Ensure service has required Ainflue configuration
-            service_config = self._validate_ainflue_service_config(service_config)
+            # Ensure service has required iacherie configuration
+            service_config = self._validate_iacherie_service_config(service_config)
             
             # Create or update namespace
-            namespace = service_config.get('namespace', 'ainflue-system')
+            namespace = service_config.get('namespace', 'iacherie-system')
             await self._ensure_namespace_exists(namespace)
             
             deployment_result = {
@@ -678,7 +678,7 @@ class ClusterManager:
                 monitoring_info = await self._setup_service_monitoring(service_config)
                 deployment_result['components']['monitoring'] = monitoring_info
                 
-            # Configure service mesh integration for Ainflue services
+            # Configure service mesh integration for iacherie services
             if service_config.get('service_mesh', True):
                 mesh_info = await self._configure_service_mesh_integration(service_config)
                 deployment_result['components']['service_mesh'] = mesh_info
@@ -698,31 +698,31 @@ class ClusterManager:
                 'timestamp': datetime.now().isoformat()
             }
             
-    def _validate_ainflue_service_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate and enhance service config for Ainflue platform"""
+    def _validate_iacherie_service_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate and enhance service config for iacherie platform"""
         if 'name' not in config:
             raise ValueError("Service name is required")
             
-        # Ensure Ainflue-specific labels and annotations
-        ainflue_labels = {
-            'app.kubernetes.io/part-of': 'ainflue',
-            'app.kubernetes.io/managed-by': 'ainflue-infrastructure',
-            'ainflue.platform/service-type': config.get('service_type', 'core'),
-            'ainflue.platform/creator-facing': str(config.get('creator_facing', False)).lower()
+        # Ensure iacherie-specific labels and annotations
+        iacherie_labels = {
+            'app.kubernetes.io/part-of': 'iacherie',
+            'app.kubernetes.io/managed-by': 'iacherie-infrastructure',
+            'iacherie.platform/service-type': config.get('service_type', 'core'),
+            'iacherie.platform/creator-facing': str(config.get('creator_facing', False)).lower()
         }
         
         # Add creator business logic specific configurations
         if config.get('creator_facing'):
-            ainflue_labels.update({
-                'ainflue.platform/supports-upload': str(config.get('supports_upload', False)).lower(),
-                'ainflue.platform/supports-ai-processing': str(config.get('supports_ai', False)).lower(),
-                'ainflue.platform/supports-collaboration': str(config.get('supports_collaboration', False)).lower()
+            iacherie_labels.update({
+                'iacherie.platform/supports-upload': str(config.get('supports_upload', False)).lower(),
+                'iacherie.platform/supports-ai-processing': str(config.get('supports_ai', False)).lower(),
+                'iacherie.platform/supports-collaboration': str(config.get('supports_collaboration', False)).lower()
             })
             
         # Merge with existing labels
         if 'labels' not in config:
             config['labels'] = {}
-        config['labels'].update(ainflue_labels)
+        config['labels'].update(iacherie_labels)
         
         return config
         
@@ -735,7 +735,7 @@ class ClusterManager:
                 'deployment_name': f"{service_config['name']}-deployment",
                 'replicas': deployment_config.get('replicas', 3),
                 'status': 'created',
-                'image': deployment_config.get('image', 'ainflue/service:latest')
+                'image': deployment_config.get('image', 'iacherie/service:latest')
             }
             
         # In production, would create actual K8s deployment
@@ -743,7 +743,7 @@ class ClusterManager:
             'deployment_name': f"{service_config['name']}-deployment",
             'replicas': deployment_config.get('replicas', 3),
             'status': 'created',
-            'image': deployment_config.get('image', 'ainflue/service:latest'),
+            'image': deployment_config.get('image', 'iacherie/service:latest'),
             'strategy': deployment_config.get('strategy', 'RollingUpdate')
         }
         
@@ -764,7 +764,7 @@ class ClusterManager:
         
         return {
             'ingress_name': f"{service_config['name']}-ingress",
-            'host': ingress_spec.get('host', f"{service_config['name']}.ainflue.com"),
+            'host': ingress_spec.get('host', f"{service_config['name']}.iacherie.com"),
             'tls_enabled': ingress_spec.get('tls', True),
             'status': 'created'
         }
@@ -808,7 +808,7 @@ class ClusterManager:
         }
         
     async def _configure_service_mesh_integration(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure service mesh integration for Ainflue services"""
+        """Configure service mesh integration for iacherie services"""
         return {
             'istio_sidecar': True,
             'traffic_policy': 'round_robin',
@@ -823,16 +823,16 @@ class ClusterManager:
     async def _get_service_endpoints(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
         """Get service endpoints"""
         return {
-            'internal': f"{service_config['name']}-service.{service_config.get('namespace', 'ainflue-system')}.svc.cluster.local",
-            'external': f"{service_config['name']}.ainflue.com" if service_config.get('ingress') else None,
-            'health_check': f"{service_config['name']}.ainflue.com/health" if service_config.get('ingress') else None
+            'internal': f"{service_config['name']}-service.{service_config.get('namespace', 'iacherie-system')}.svc.cluster.local",
+            'external': f"{service_config['name']}.iacherie.com" if service_config.get('ingress') else None,
+            'health_check': f"{service_config['name']}.iacherie.com/health" if service_config.get('ingress') else None
         }
         
     def _simulate_service_deployment(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
         """Simulate service deployment when Kubernetes is not available"""
         return {
             'service_name': service_config['name'],
-            'namespace': service_config.get('namespace', 'ainflue-system'),
+            'namespace': service_config.get('namespace', 'iacherie-system'),
             'status': 'deployed',
             'simulation': True,
             'timestamp': datetime.now().isoformat(),
@@ -843,6 +843,6 @@ class ClusterManager:
             },
             'endpoints': {
                 'internal': f"{service_config['name']}-service.simulated.local",
-                'external': f"{service_config['name']}.ainflue.local"
+                'external': f"{service_config['name']}.iacherie.local"
             }
         }

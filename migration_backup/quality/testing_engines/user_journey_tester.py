@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-User Journey Tester - Ainflue Quality Platform
+User Journey Tester - IA Chéries Quality Platform
 ==============================================
 
 End-to-end user journey testing framework for complete workflow validation.

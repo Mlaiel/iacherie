@@ -2,7 +2,7 @@
 Backup Manager - Enterprise Backup and Data Protection
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive backup management for Ainflue creator platform.
+Comprehensive backup management for iacherie creator platform.
 Provides multi-tier backup strategies, cross-region replication, and data protection.
 """
 
@@ -85,8 +85,8 @@ class BackupManager:
         self.backup_schedules = {}
         self.verification_procedures = {}
         
-        # Initialize Ainflue-specific backup configuration
-        self.ainflue_backup_config = self._initialize_ainflue_backup_config()
+        # Initialize iacherie-specific backup configuration
+        self.iacherie_backup_config = self._initialize_iacherie_backup_config()
         
         # Backup monitoring
         self.backup_metrics = {
@@ -99,8 +99,8 @@ class BackupManager:
         
         logger.info("Backup manager initialized for creator platform")
     
-    def _initialize_ainflue_backup_config(self) -> Dict[str, Any]:
-        """Initialize Ainflue creator platform backup configuration"""
+    def _initialize_iacherie_backup_config(self) -> Dict[str, Any]:
+        """Initialize iacherie creator platform backup configuration"""
         
         return {
             'creator_data_protection': {
@@ -217,8 +217,8 @@ class BackupManager:
         }
         
         try:
-            # Create backup policies for all Ainflue data categories
-            for category, data_types in self.ainflue_backup_config.items():
+            # Create backup policies for all iacherie data categories
+            for category, data_types in self.iacherie_backup_config.items():
                 for data_type, config in data_types.items():
                     policy = await self._create_backup_policy(data_type, config)
                     backup_setup['backup_policies'][data_type] = policy
@@ -273,7 +273,7 @@ class BackupManager:
         
         storage_backends = {
             'us_west_2': {
-                'primary_storage': 's3://ainflue-backup-usw2',
+                'primary_storage': 's3://iacherie-backup-usw2',
                 'backup_type': 'incremental',
                 'encryption': 'AES-256',
                 'replication_targets': ['us_east_1', 'eu_west_1'],
@@ -281,7 +281,7 @@ class BackupManager:
                 'lifecycle_policies': True
             },
             'us_east_1': {
-                'primary_storage': 's3://ainflue-backup-use1',
+                'primary_storage': 's3://iacherie-backup-use1',
                 'backup_type': 'incremental',
                 'encryption': 'AES-256',
                 'replication_targets': ['eu_west_1', 'ap_southeast_1'],
@@ -289,7 +289,7 @@ class BackupManager:
                 'lifecycle_policies': True
             },
             'eu_west_1': {
-                'primary_storage': 's3://ainflue-backup-euw1',
+                'primary_storage': 's3://iacherie-backup-euw1',
                 'backup_type': 'incremental',
                 'encryption': 'AES-256',
                 'replication_targets': ['us_west_2', 'ap_southeast_1'],
@@ -297,7 +297,7 @@ class BackupManager:
                 'lifecycle_policies': True
             },
             'ap_southeast_1': {
-                'primary_storage': 's3://ainflue-backup-apse1',
+                'primary_storage': 's3://iacherie-backup-apse1',
                 'backup_type': 'incremental',
                 'encryption': 'AES-256',
                 'replication_targets': ['us_west_2', 'eu_west_1'],
@@ -504,31 +504,31 @@ class BackupManager:
         if policy.backup_strategy == BackupStrategy.CONTINUOUS_REPLICATION:
             backup_result.update({
                 'backup_size': 1024 * 1024 * 100,  # 100MB
-                'backup_location': f's3://ainflue-backup/{resource_name}/continuous/',
+                'backup_location': f's3://iacherie-backup/{resource_name}/continuous/',
                 'replication_lag_seconds': 5
             })
         elif policy.backup_strategy == BackupStrategy.INCREMENTAL_BACKUP:
             backup_result.update({
                 'backup_size': 1024 * 1024 * 50,   # 50MB
-                'backup_location': f's3://ainflue-backup/{resource_name}/incremental/',
+                'backup_location': f's3://iacherie-backup/{resource_name}/incremental/',
                 'incremental_size_reduction': 0.7
             })
         elif policy.backup_strategy == BackupStrategy.SNAPSHOT_BASED:
             backup_result.update({
                 'backup_size': 1024 * 1024 * 200,  # 200MB
-                'backup_location': f's3://ainflue-backup/{resource_name}/snapshots/',
+                'backup_location': f's3://iacherie-backup/{resource_name}/snapshots/',
                 'snapshot_consistency': True
             })
         elif policy.backup_strategy == BackupStrategy.FULL_BACKUP:
             backup_result.update({
                 'backup_size': 1024 * 1024 * 500,  # 500MB
-                'backup_location': f's3://ainflue-backup/{resource_name}/full/',
+                'backup_location': f's3://iacherie-backup/{resource_name}/full/',
                 'compression_ratio': 0.6
             })
         elif policy.backup_strategy == BackupStrategy.LOG_SHIPPING:
             backup_result.update({
                 'backup_size': 1024 * 1024 * 10,   # 10MB
-                'backup_location': f's3://ainflue-backup/{resource_name}/logs/',
+                'backup_location': f's3://iacherie-backup/{resource_name}/logs/',
                 'log_sequence_number': 12345
             })
         

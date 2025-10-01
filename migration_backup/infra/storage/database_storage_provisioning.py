@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Database Storage Provisioning
+# IA Chéries Infrastructure Module - Database Storage Provisioning
 # ============================================================
 # 
-# Enterprise-grade database storage provisioning for Ainflue platform
+# Enterprise-grade database storage provisioning for IA Chéries platform
 # Supports multi-cloud database deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>

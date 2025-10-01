@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📬 Enterprise Notification Service Template - Ainflue
+📬 Enterprise Notification Service Template - iacherie
 ===================================================
 Template enterprise pour services notifications.
 Email + SMS + Push + Webhook + template engine + scheduling.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

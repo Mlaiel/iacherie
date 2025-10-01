@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚓ Helm Chart Template - Ainflue Creator Economy Platform
+⚓ Helm Chart Template - iacherie Creator Economy Platform
 ========================================================
 
 Enterprise Kubernetes Helm Chart Templates for Creator Economy Platform
@@ -45,7 +45,7 @@ class HelmChartConfig:
     app_version: str
     description: str
     environment: EnvironmentType
-    namespace: str = "ainflue"
+    namespace: str = "iacherie"
     enable_ingress: bool = True
     enable_monitoring: bool = True
     enable_autoscaling: bool = True
@@ -112,17 +112,17 @@ class HelmChartTemplate:
                 "monetization", 
                 "collaboration",
                 "content-creation",
-                "ainflue"
+                "iacherie"
             ],
-            "home": "https://ainflue.com",
+            "home": "https://iacherie.com",
             "sources": [
-                "https://github.com/Mlaiel/Ainfluencer"
+                "https://github.com/Mlaiel/iaCherie"
             ],
             "maintainers": [
                 {
                     "name": "Fahed Mlaiel",
                     "email": "mlaiel@live.de",
-                    "url": "https://ainflue.com"
+                    "url": "https://iacherie.com"
                 }
             ],
             "dependencies": [
@@ -154,7 +154,7 @@ class HelmChartTemplate:
             "annotations": {
                 "category": "Creator Economy Platform",
                 "artifacthub.io/license": "Proprietary",
-                "artifacthub.io/links": "[{\"name\": \"Documentation\", \"url\": \"https://docs.ainflue.com\"}]"
+                "artifacthub.io/links": "[{\"name\": \"Documentation\", \"url\": \"https://docs.iacherie.com\"}]"
             }
         }
     
@@ -163,8 +163,8 @@ class HelmChartTemplate:
         return {
             # Global settings
             "global": {
-                "imageRegistry": "registry.ainflue.com",
-                "imagePullSecrets": ["ainflue-registry-secret"],
+                "imageRegistry": "registry.iacherie.com",
+                "imagePullSecrets": ["iacherie-registry-secret"],
                 "storageClass": "fast-ssd"
             },
             
@@ -172,7 +172,7 @@ class HelmChartTemplate:
             "creatorApi": {
                 "enabled": True,
                 "image": {
-                    "repository": "ainflue/creator-api",
+                    "repository": "iacherie/creator-api",
                     "tag": config.app_version,
                     "pullPolicy": "IfNotPresent"
                 },
@@ -196,7 +196,7 @@ class HelmChartTemplate:
                     "DATABASE_URL": "postgresql://creator:password@postgresql:5432/creator_db",
                     "REDIS_URL": "redis://redis:6379/0",
                     "AI_PROCESSING_QUEUE": "creator_ai_queue",
-                    "CONTENT_STORAGE_BUCKET": "ainflue-creator-content"
+                    "CONTENT_STORAGE_BUCKET": "iacherie-creator-content"
                 }
             },
             
@@ -204,7 +204,7 @@ class HelmChartTemplate:
             "aiProcessor": {
                 "enabled": True,
                 "image": {
-                    "repository": "ainflue/ai-processor",
+                    "repository": "iacherie/ai-processor",
                     "tag": config.app_version,
                     "pullPolicy": "IfNotPresent"
                 },
@@ -243,7 +243,7 @@ class HelmChartTemplate:
             "monetization": {
                 "enabled": True,
                 "image": {
-                    "repository": "ainflue/monetization",
+                    "repository": "iacherie/monetization",
                     "tag": config.app_version,
                     "pullPolicy": "IfNotPresent"
                 },
@@ -274,7 +274,7 @@ class HelmChartTemplate:
             "collaboration": {
                 "enabled": True,
                 "image": {
-                    "repository": "ainflue/collaboration",
+                    "repository": "iacherie/collaboration",
                     "tag": config.app_version,
                     "pullPolicy": "IfNotPresent"
                 },
@@ -300,7 +300,7 @@ class HelmChartTemplate:
             "frontend": {
                 "enabled": True,
                 "image": {
-                    "repository": "ainflue/creator-dashboard",
+                    "repository": "iacherie/creator-dashboard",
                     "tag": config.app_version,
                     "pullPolicy": "IfNotPresent"
                 },
@@ -387,7 +387,7 @@ class HelmChartTemplate:
                 },
                 "hosts": [
                     {
-                        "host": f"{config.environment.value}.ainflue.com" if config.environment != EnvironmentType.PRODUCTION else "ainflue.com",
+                        "host": f"{config.environment.value}.iacherie.com" if config.environment != EnvironmentType.PRODUCTION else "iacherie.com",
                         "paths": [
                             {"path": "/", "pathType": "Prefix", "service": "frontend"},
                             {"path": "/api/creator", "pathType": "Prefix", "service": "creator-api"},
@@ -399,8 +399,8 @@ class HelmChartTemplate:
                 ],
                 "tls": [
                     {
-                        "secretName": "ainflue-tls",
-                        "hosts": [f"{config.environment.value}.ainflue.com" if config.environment != EnvironmentType.PRODUCTION else "ainflue.com"]
+                        "secretName": "iacherie-tls",
+                        "hosts": [f"{config.environment.value}.iacherie.com" if config.environment != EnvironmentType.PRODUCTION else "iacherie.com"]
                     }
                 ]
             },
@@ -428,7 +428,7 @@ class HelmChartTemplate:
                 "serviceMonitor": {
                     "enabled": True,
                     "labels": {
-                        "prometheus": "ainflue"
+                        "prometheus": "iacherie"
                     }
                 }
             },
@@ -469,7 +469,7 @@ class HelmChartTemplate:
         """Generate environment-specific values"""
         base_values = {
             "global": {
-                "imageRegistry": "registry.ainflue.com"
+                "imageRegistry": "registry.iacherie.com"
             }
         }
         
@@ -524,9 +524,9 @@ class HelmChartTemplate:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ainflue.fullname" $ }}-{{ $service }}
+  name: {{ include "iacherie.fullname" $ }}-{{ $service }}
   labels:
-    {{- include "ainflue.labels" $ | nindent 4 }}
+    {{- include "iacherie.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ $service }}
 spec:
   {{- if not $.Values.autoscaling.enabled }}
@@ -534,21 +534,21 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ainflue.selectorLabels" $ | nindent 6 }}
+      {{- include "iacherie.selectorLabels" $ | nindent 6 }}
       app.kubernetes.io/component: {{ $service }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
-        {{- include "ainflue.selectorLabels" $ | nindent 8 }}
+        {{- include "iacherie.selectorLabels" $ | nindent 8 }}
         app.kubernetes.io/component: {{ $service }}
     spec:
       {{- with $.Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ainflue.serviceAccountName" $ }}
+      serviceAccountName: {{ include "iacherie.serviceAccountName" $ }}
       securityContext:
         {{- toYaml $.Values.security.podSecurityContext | nindent 8 }}
       containers:
@@ -617,9 +617,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ainflue.fullname" $ }}-{{ $service }}
+  name: {{ include "iacherie.fullname" $ }}-{{ $service }}
   labels:
-    {{- include "ainflue.labels" $ | nindent 4 }}
+    {{- include "iacherie.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ $service }}
 spec:
   type: {{ $values.service.type }}
@@ -629,7 +629,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "ainflue.selectorLabels" $ | nindent 4 }}
+    {{- include "iacherie.selectorLabels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ $service }}
 {{- end }}
 {{- end }}"""
@@ -643,15 +643,15 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "ainflue.fullname" $ }}-{{ $service }}
+  name: {{ include "iacherie.fullname" $ }}-{{ $service }}
   labels:
-    {{- include "ainflue.labels" $ | nindent 4 }}
+    {{- include "iacherie.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ $service }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "ainflue.fullname" $ }}-{{ $service }}
+    name: {{ include "iacherie.fullname" $ }}-{{ $service }}
   minReplicas: {{ $.Values.autoscaling.minReplicas }}
   maxReplicas: {{ $.Values.autoscaling.maxReplicas }}
   metrics:
@@ -680,14 +680,14 @@ spec:
         return """{{/*
 Expand the name of the chart.
 */}}
-{{- define "ainflue.name" -}}
+{{- define "iacherie.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "ainflue.fullname" -}}
+{{- define "iacherie.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -703,37 +703,37 @@ Create a default fully qualified app name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ainflue.chart" -}}
+{{- define "iacherie.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ainflue.labels" -}}
-helm.sh/chart: {{ include "ainflue.chart" . }}
-{{ include "ainflue.selectorLabels" . }}
+{{- define "iacherie.labels" -}}
+helm.sh/chart: {{ include "iacherie.chart" . }}
+{{ include "iacherie.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/part-of: ainflue-creator-economy
+app.kubernetes.io/part-of: iacherie-creator-economy
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "ainflue.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ainflue.name" . }}
+{{- define "iacherie.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "iacherie.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ainflue.serviceAccountName" -}}
+{{- define "iacherie.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ainflue.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "iacherie.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -777,12 +777,12 @@ def main():
     
     for env in environments:
         config = HelmChartConfig(
-            chart_name="ainflue-creator-economy",
+            chart_name="iacherie-creator-economy",
             version="1.0.0",
             app_version="2.0.0",
-            description="Ainflue Creator Economy Platform - Complete Kubernetes Deployment",
+            description="iacherie Creator Economy Platform - Complete Kubernetes Deployment",
             environment=env,
-            namespace="ainflue",
+            namespace="iacherie",
             enable_autoscaling=env == EnvironmentType.PRODUCTION,
             replica_count=5 if env == EnvironmentType.PRODUCTION else 2
         )

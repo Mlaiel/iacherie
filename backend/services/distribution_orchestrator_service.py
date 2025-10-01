@@ -1,7 +1,7 @@
 """Distribution Orchestrator Service - Multi-Platform Content Distribution Engine
 ================================================================================
 
-Advanced content distribution orchestration system for the Ainflue platform,
+Advanced content distribution orchestration system for the iacherie platform,
 managing multi-platform publishing, content optimization, scheduling automation,
 and cross-platform synchronization with intelligent distribution strategies.
 

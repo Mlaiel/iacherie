@@ -177,8 +177,8 @@ class DockerComposeGenerator:
         self.volumes[volume.name] = volume
         logger.info(f"Added volume: {volume.name}")
     
-    def create_ainflue_platform_stack(self) -> Dict[str, Any]:
-        """Create complete Ainflue platform Docker Compose stack"""
+    def create_iacherie_platform_stack(self) -> Dict[str, Any]:
+        """Create complete iacherie platform Docker Compose stack"""
         
         # Add platform networks
         self._add_platform_networks()
@@ -205,7 +205,7 @@ class DockerComposeGenerator:
         frontend_network = NetworkConfig(
             name="frontend_network",
             driver="bridge",
-            options={"com.docker.network.bridge.name": "ainflue_frontend"}
+            options={"com.docker.network.bridge.name": "iacherie_frontend"}
         )
         self.add_network(frontend_network)
         
@@ -213,7 +213,7 @@ class DockerComposeGenerator:
         backend_network = NetworkConfig(
             name="backend_network", 
             driver="bridge",
-            options={"com.docker.network.bridge.name": "ainflue_backend"}
+            options={"com.docker.network.bridge.name": "iacherie_backend"}
         )
         self.add_network(backend_network)
         
@@ -221,7 +221,7 @@ class DockerComposeGenerator:
         db_network = NetworkConfig(
             name="database_network",
             driver="bridge",
-            options={"com.docker.network.bridge.name": "ainflue_db"}
+            options={"com.docker.network.bridge.name": "iacherie_db"}
         )
         self.add_network(db_network)
         
@@ -229,7 +229,7 @@ class DockerComposeGenerator:
         monitoring_network = NetworkConfig(
             name="monitoring_network",
             driver="bridge",
-            options={"com.docker.network.bridge.name": "ainflue_monitoring"}
+            options={"com.docker.network.bridge.name": "iacherie_monitoring"}
         )
         self.add_network(monitoring_network)
     
@@ -278,7 +278,7 @@ class DockerComposeGenerator:
             networks=["frontend_network", "backend_network"],
             labels={
                 "traefik.enable": "true",
-                "traefik.http.routers.api.rule": "Host(`api.ainflue.com`)"
+                "traefik.http.routers.api.rule": "Host(`api.iacherie.com`)"
             }
         )
         
@@ -342,9 +342,9 @@ class DockerComposeGenerator:
             ],
             environment=[
                 EnvironmentVariable("ENVIRONMENT", self.environment.value),
-                EnvironmentVariable("DATABASE_URL", "postgresql://ainflue:password@postgres:5432/ainflue"),
+                EnvironmentVariable("DATABASE_URL", "postgresql://iacherie:password@postgres:5432/iacherie"),
                 EnvironmentVariable("REDIS_URL", "redis://redis:6379/0"),
-                EnvironmentVariable("MONGODB_URL", "mongodb://mongodb:27017/ainflue"),
+                EnvironmentVariable("MONGODB_URL", "mongodb://mongodb:27017/iacherie"),
                 EnvironmentVariable("JWT_SECRET", from_secret="jwt_secret"),
                 EnvironmentVariable("AI_API_KEY", from_secret="ai_api_key"),
                 EnvironmentVariable("LOG_LEVEL", "INFO" if self.environment == Environment.PRODUCTION else "DEBUG")
@@ -449,14 +449,14 @@ class DockerComposeGenerator:
                 VolumeMount("./database/init", "/docker-entrypoint-initdb.d", "ro")
             ],
             environment=[
-                EnvironmentVariable("POSTGRES_DB", "ainflue"),
-                EnvironmentVariable("POSTGRES_USER", "ainflue"),
+                EnvironmentVariable("POSTGRES_DB", "iacherie"),
+                EnvironmentVariable("POSTGRES_USER", "iacherie"),
                 EnvironmentVariable("POSTGRES_PASSWORD", from_secret="postgres_password"),
                 EnvironmentVariable("POSTGRES_INITDB_ARGS", "--auth-host=scram-sha-256")
             ],
             health_check=HealthCheck(
                 type=HealthCheckType.COMMAND,
-                command=["pg_isready", "-U", "ainflue", "-d", "ainflue"]
+                command=["pg_isready", "-U", "iacherie", "-d", "iacherie"]
             ),
             resource_limits=ResourceLimits(
                 cpu_limit="2.0",
@@ -481,7 +481,7 @@ class DockerComposeGenerator:
             environment=[
                 EnvironmentVariable("MONGO_INITDB_ROOT_USERNAME", "admin"),
                 EnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD", from_secret="mongodb_password"),
-                EnvironmentVariable("MONGO_INITDB_DATABASE", "ainflue")
+                EnvironmentVariable("MONGO_INITDB_DATABASE", "iacherie")
             ],
             health_check=HealthCheck(
                 type=HealthCheckType.COMMAND,
@@ -547,7 +547,7 @@ class DockerComposeGenerator:
                 VolumeMount("./rabbitmq/definitions.json", "/etc/rabbitmq/definitions.json", "ro")
             ],
             environment=[
-                EnvironmentVariable("RABBITMQ_DEFAULT_USER", "ainflue"),
+                EnvironmentVariable("RABBITMQ_DEFAULT_USER", "iacherie"),
                 EnvironmentVariable("RABBITMQ_DEFAULT_PASS", from_secret="rabbitmq_password"),
                 EnvironmentVariable("RABBITMQ_MANAGEMENT_LOAD_DEFINITIONS", "/etc/rabbitmq/definitions.json")
             ],
@@ -843,7 +843,7 @@ class DockerComposeGenerator:
         """Generate environment file for Docker Compose"""
         
         env_vars = {
-            "COMPOSE_PROJECT_NAME": "ainflue",
+            "COMPOSE_PROJECT_NAME": "iacherie",
             "ENVIRONMENT": self.environment.value,
             
             # Database configurations
@@ -887,8 +887,8 @@ def main():
             # Initialize generator
             generator = DockerComposeGenerator(env)
             
-            # Create complete Ainflue platform stack
-            compose_config = generator.create_ainflue_platform_stack()
+            # Create complete iacherie platform stack
+            compose_config = generator.create_iacherie_platform_stack()
             
             # Save compose file
             filename = generator.save_compose_file()
@@ -916,7 +916,7 @@ def main():
         
         print(f"\n📋 Docker Compose Template Features:")
         print(f"  ✅ Multi-environment support (dev/staging/prod)")
-        print(f"  ✅ Complete Ainflue platform stack")
+        print(f"  ✅ Complete iacherie platform stack")
         print(f"  ✅ Health checks and monitoring integration")
         print(f"  ✅ Resource limits and scaling configuration")
         print(f"  ✅ Network segmentation and security")

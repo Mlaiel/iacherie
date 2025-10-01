@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔄 GitLab CI/CD Template - Ainflue Creator Economy Platform
+🔄 GitLab CI/CD Template - iacherie Creator Economy Platform
 ===========================================================
 
 Enterprise GitLab CI/CD Pipeline Templates for Creator Economy Platform
@@ -42,7 +42,7 @@ class GitLabCIConfig:
     enable_performance_testing: bool = True
     enable_creator_features: bool = True
     docker_registry: str = "registry.gitlab.com"
-    kubernetes_namespace: str = "ainflue"
+    kubernetes_namespace: str = "iacherie"
 
 class GitLabCITemplate:
     """
@@ -95,10 +95,10 @@ class GitLabCITemplate:
                 "CREATOR_ECONOMY_VERSION": "2.0.0",
                 
                 # Creator Economy specific variables
-                "AI_MODEL_REGISTRY": "model-registry.ainflue.com",
-                "CONTENT_STORAGE_BUCKET": "ainflue-creator-content",
-                "MONETIZATION_SERVICE_URL": "https://monetization.ainflue.com",
-                "COLLABORATION_SERVICE_URL": "https://collaboration.ainflue.com"
+                "AI_MODEL_REGISTRY": "model-registry.iacherie.com",
+                "CONTENT_STORAGE_BUCKET": "iacherie-creator-content",
+                "MONETIZATION_SERVICE_URL": "https://monetization.iacherie.com",
+                "COLLABORATION_SERVICE_URL": "https://collaboration.iacherie.com"
             },
             
             # Cache configuration for faster builds
@@ -303,10 +303,10 @@ class GitLabCITemplate:
                     "redis:7-alpine"
                 ],
                 "variables": {
-                    "POSTGRES_DB": "ainflue_test",
+                    "POSTGRES_DB": "iacherie_test",
                     "POSTGRES_USER": "test",
                     "POSTGRES_PASSWORD": "test",
-                    "DATABASE_URL": "postgresql://test:test@postgres:5432/ainflue_test",
+                    "DATABASE_URL": "postgresql://test:test@postgres:5432/iacherie_test",
                     "REDIS_URL": "redis://redis:6379/0"
                 },
                 "before_script": [
@@ -546,7 +546,7 @@ class GitLabCITemplate:
                 ],
                 "environment": {
                     "name": config.environment.value,
-                    "url": f"https://{config.environment.value}.ainflue.com"
+                    "url": f"https://{config.environment.value}.iacherie.com"
                 },
                 "rules": [
                     {"if": f"$CI_COMMIT_BRANCH == '{config.environment.value}'"}
@@ -570,7 +570,7 @@ class GitLabCITemplate:
                 ],
                 "environment": {
                     "name": "production",
-                    "url": "https://ainflue.com"
+                    "url": "https://iacherie.com"
                 },
                 "when": "manual",
                 "rules": [
@@ -588,10 +588,10 @@ class GitLabCITemplate:
                 "image": "curlimages/curl:latest",
                 "script": [
                     "# Health checks for deployed services",
-                    f"curl -f https://{config.environment.value}.ainflue.com/health",
-                    f"curl -f https://{config.environment.value}.ainflue.com/api/creator/health",
-                    f"curl -f https://{config.environment.value}.ainflue.com/api/ai/health",
-                    f"curl -f https://{config.environment.value}.ainflue.com/api/monetization/health"
+                    f"curl -f https://{config.environment.value}.iacherie.com/health",
+                    f"curl -f https://{config.environment.value}.iacherie.com/api/creator/health",
+                    f"curl -f https://{config.environment.value}.iacherie.com/api/ai/health",
+                    f"curl -f https://{config.environment.value}.iacherie.com/api/monetization/health"
                 ],
                 "rules": [
                     {"if": "$CI_COMMIT_BRANCH == 'main'"},
@@ -655,7 +655,7 @@ def main():
     
     for env in environments:
         config = GitLabCIConfig(
-            project_name="ainflue-creator-economy",
+            project_name="iacherie-creator-economy",
             environment=env,
             enable_security_scanning=True,
             enable_performance_testing=env == EnvironmentType.PRODUCTION,

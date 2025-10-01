@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Container Formats Management
+IA Chéries Platform - Multimedia Formats - Container Formats Management
 Professional multimedia container format handling and processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)

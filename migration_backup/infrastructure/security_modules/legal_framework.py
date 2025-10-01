@@ -2,7 +2,7 @@
 Legal Framework - Enterprise Legal Compliance Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive legal framework for Ainflue creator platform.
+Comprehensive legal framework for IA Chéries creator platform.
 Manages multi-jurisdictional legal compliance and requirements.
 """
 
@@ -616,7 +616,7 @@ class LegalFrameworkManager(ComplianceBaseManager):
             {
                 'section': 'acceptance_of_terms',
                 'title': 'Acceptance of Terms',
-                'content': 'By accessing and using the Ainflue platform, you agree to be bound by these Terms of Service.'
+                'content': 'By accessing and using the IA Chéries platform, you agree to be bound by these Terms of Service.'
             },
             {
                 'section': 'creator_obligations',
@@ -682,12 +682,12 @@ class LegalFrameworkManager(ComplianceBaseManager):
             {
                 'section': 'relationship',
                 'title': 'Creator Relationship',
-                'content': 'This agreement establishes an independent contractor relationship between Creator and Ainflue.'
+                'content': 'This agreement establishes an independent contractor relationship between Creator and IA Chéries.'
             },
             {
                 'section': 'content_licensing',
                 'title': 'Content Licensing',
-                'content': 'Creator grants Ainflue necessary licenses to distribute and monetize content on the platform.'
+                'content': 'Creator grants IA Chéries necessary licenses to distribute and monetize content on the platform.'
             },
             {
                 'section': 'revenue_terms',

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📊 COMPLIANCE ANALYTICS ENGINE - AINFLUE ENTERPRISE
+📊 COMPLIANCE ANALYTICS ENGINE - IACHERIE ENTERPRISE
 Intelligence artificielle pour analytics compliance et insights prédictifs
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -59,7 +59,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/compliance_analytics.log'),
+        logging.FileHandler('/var/log/iacherie/compliance_analytics.log'),
         logging.StreamHandler()
     ]
 )
@@ -1032,7 +1032,7 @@ if __name__ == "__main__":
     async def test_analytics_engine():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue'
+            'database_url': 'postgresql://user:pass@localhost/iacherie'
         }
         
         engine = ComplianceAnalyticsEngine(config)

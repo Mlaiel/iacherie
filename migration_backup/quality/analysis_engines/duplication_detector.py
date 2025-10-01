@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Duplication Detector - Ainflue Quality Platform
+Duplication Detector - IA Chéries Quality Platform
 ==============================================
 
 Enterprise-grade code duplication detection and analysis system.

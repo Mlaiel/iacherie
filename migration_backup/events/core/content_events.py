@@ -1,6 +1,6 @@
 """Content Events Module
 
-Content upload, processing, and lifecycle events for the Ainflue platform.
+Content upload, processing, and lifecycle events for the IA Chéries platform.
 Handles multi-format content (audio, video, image, blog) processing events.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

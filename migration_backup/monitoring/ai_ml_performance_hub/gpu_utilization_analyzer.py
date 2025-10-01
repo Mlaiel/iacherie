@@ -3,7 +3,7 @@
 🎮 GPU Utilization Analyzer - Enterprise AI/ML Performance Hub
 =============================================================
 
-Analyseur utilisation GPU enterprise ultra-avancé pour l'écosystème créateur Ainflue.
+Analyseur utilisation GPU enterprise ultra-avancé pour l'écosystème créateur IA Chéries.
 Monitoring GPU multi-instances, analyse répartition charge par Creator tier,
 détection goulots d'étranglement, optimisation allocation dynamique.
 

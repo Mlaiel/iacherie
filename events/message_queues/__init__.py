@@ -720,7 +720,7 @@ __all__ = [
     "QueueMessage", "MessagePriority", "MessageStatus",
     "MessageQueue", "RedisMessageQueue", "QueueProcessor", "QueueManager",
     # Redis Enterprise Queue
-    "RedisEnterpriseQueue", "AinflueBusiness",
+    "RedisEnterpriseQueue", "iacherieBusiness",
     # RabbitMQ Connector Orchestrator
     "RabbitMQConnectorOrchestrator", "RabbitMQMessage", "RabbitMQExchange", "RabbitMQQueue",
     # Celery Workflow Integrator
@@ -744,7 +744,7 @@ __all__ = [
 ]
 
 # Import all modules for easier access
-from .redis_enterprise_queue import RedisEnterpriseQueue, QueueMessage as RedisQueueMessage, AinflueBusiness
+from .redis_enterprise_queue import RedisEnterpriseQueue, QueueMessage as RedisQueueMessage, iacherieBusiness
 from .rabbitmq_connector_orchestrator import (
     RabbitMQConnectorOrchestrator, RabbitMQMessage, RabbitMQExchange, RabbitMQQueue,
     ExchangeType, MessageDeliveryMode

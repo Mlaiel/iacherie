@@ -19,7 +19,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'api.ainflue.com',
+        hostname: 'api.iacherie.com',
         pathname: '/**',
       },
     ],

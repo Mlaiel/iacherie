@@ -2,7 +2,7 @@
 =================================================================
 
 Advanced SEO performance monitoring, search ranking analytics, and content
-discoverability intelligence for the Ainflue platform.
+discoverability intelligence for the iacherie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

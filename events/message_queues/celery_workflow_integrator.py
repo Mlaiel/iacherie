@@ -116,7 +116,7 @@ class WorkflowExecution:
     metrics: Dict[str, Any] = field(default_factory=dict)
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Celery Workflows"""
     
     # Content processing workflow tasks
@@ -204,7 +204,7 @@ class CeleryWorkflowIntegrator:
             self.celery_app = {
                 "broker_url": self.broker_url,
                 "result_backend": self.result_backend,
-                "task_routes": AinflueBusiness.QUEUE_ROUTING,
+                "task_routes": iacherieBusiness.QUEUE_ROUTING,
                 "worker_prefetch_multiplier": 4,
                 "task_acks_late": True,
                 "worker_disable_rate_limits": False,
@@ -241,7 +241,7 @@ class CeleryWorkflowIntegrator:
             
             # Step 1: Upload and validation
             upload_task = CeleryTask(
-                name=AinflueBusiness.CONTENT_TASKS["upload_content"],
+                name=iacherieBusiness.CONTENT_TASKS["upload_content"],
                 args=[creator_id, content_data],
                 priority=TaskPriority.HIGH,
                 queue="content_workers"
@@ -249,7 +249,7 @@ class CeleryWorkflowIntegrator:
             
             # Step 2: AI Analysis (depends on upload)
             ai_analysis_task = CeleryTask(
-                name=AinflueBusiness.CONTENT_TASKS["ai_content_analysis"],
+                name=iacherieBusiness.CONTENT_TASKS["ai_content_analysis"],
                 args=[],  # Will receive upload result
                 priority=TaskPriority.HIGH,
                 queue="ai_workers",
@@ -258,7 +258,7 @@ class CeleryWorkflowIntegrator:
             
             # Step 3: Protection (parallel with AI)
             protection_task = CeleryTask(
-                name=AinflueBusiness.CONTENT_TASKS["apply_content_protection"],
+                name=iacherieBusiness.CONTENT_TASKS["apply_content_protection"],
                 args=[],  # Will receive upload result
                 priority=TaskPriority.HIGH,
                 queue="content_workers"
@@ -266,7 +266,7 @@ class CeleryWorkflowIntegrator:
             
             # Step 4: SEO optimization (after AI)
             seo_task = CeleryTask(
-                name=AinflueBusiness.CONTENT_TASKS["seo_optimize_content"],
+                name=iacherieBusiness.CONTENT_TASKS["seo_optimize_content"],
                 args=[],  # Will receive AI analysis result
                 priority=TaskPriority.NORMAL,
                 queue="seo_workers"
@@ -274,7 +274,7 @@ class CeleryWorkflowIntegrator:
             
             # Step 5: Distribution (after protection and SEO)
             distribution_task = CeleryTask(
-                name=AinflueBusiness.CONTENT_TASKS["distribute_content"],
+                name=iacherieBusiness.CONTENT_TASKS["distribute_content"],
                 args=[creator_id],
                 priority=TaskPriority.NORMAL,
                 queue="distribution_workers"
@@ -311,26 +311,26 @@ class CeleryWorkflowIntegrator:
             # Chain: Match → Validate → Notify → Create Workspace
             tasks = [
                 CeleryTask(
-                    name=AinflueBusiness.COLLABORATION_TASKS["find_collaboration_matches"],
+                    name=iacherieBusiness.COLLABORATION_TASKS["find_collaboration_matches"],
                     args=[requester_id, criteria],
                     priority=TaskPriority.HIGH,
                     queue="collaboration_workers",
                     time_limit=300
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.COLLABORATION_TASKS["validate_match_compatibility"],
+                    name=iacherieBusiness.COLLABORATION_TASKS["validate_match_compatibility"],
                     args=[],  # Receives match results
                     priority=TaskPriority.HIGH,
                     queue="collaboration_workers"
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.COLLABORATION_TASKS["send_collaboration_notifications"],
+                    name=iacherieBusiness.COLLABORATION_TASKS["send_collaboration_notifications"],
                     args=[],  # Receives validated matches
                     priority=TaskPriority.NORMAL,
                     queue="collaboration_workers"
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.COLLABORATION_TASKS["create_collaboration_workspace"],
+                    name=iacherieBusiness.COLLABORATION_TASKS["create_collaboration_workspace"],
                     args=[],  # Receives notification results
                     priority=TaskPriority.NORMAL,
                     queue="collaboration_workers"
@@ -365,21 +365,21 @@ class CeleryWorkflowIntegrator:
             # Group: Parallel calculations
             parallel_tasks = [
                 CeleryTask(
-                    name=AinflueBusiness.REVENUE_TASKS["calculate_creator_revenues"],
+                    name=iacherieBusiness.REVENUE_TASKS["calculate_creator_revenues"],
                     args=[period, creator_ids],
                     priority=TaskPriority.HIGH,
                     queue="revenue_workers",
                     time_limit=1800  # 30 minutes
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.REVENUE_TASKS["calculate_platform_commissions"],
+                    name=iacherieBusiness.REVENUE_TASKS["calculate_platform_commissions"],
                     args=[period],
                     priority=TaskPriority.HIGH,
                     queue="revenue_workers",
                     time_limit=1800
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.REVENUE_TASKS["calculate_collaboration_bonuses"],
+                    name=iacherieBusiness.REVENUE_TASKS["calculate_collaboration_bonuses"],
                     args=[period],
                     priority=TaskPriority.NORMAL,
                     queue="revenue_workers",
@@ -389,7 +389,7 @@ class CeleryWorkflowIntegrator:
             
             # Chord callback: Reconcile and distribute
             callback_task = CeleryTask(
-                name=AinflueBusiness.REVENUE_TASKS["reconcile_and_distribute_payments"],
+                name=iacherieBusiness.REVENUE_TASKS["reconcile_and_distribute_payments"],
                 args=[],  # Receives all calculation results
                 priority=TaskPriority.CRITICAL,
                 queue="payment_workers",
@@ -425,25 +425,25 @@ class CeleryWorkflowIntegrator:
             
             tasks = [
                 CeleryTask(
-                    name=AinflueBusiness.SEO_TASKS["analyze_content_keywords"],
+                    name=iacherieBusiness.SEO_TASKS["analyze_content_keywords"],
                     args=[content_id],
                     priority=TaskPriority.NORMAL,
                     queue="seo_workers"
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.SEO_TASKS["analyze_trending_topics"],
+                    name=iacherieBusiness.SEO_TASKS["analyze_trending_topics"],
                     args=[target_keywords],
                     priority=TaskPriority.NORMAL,
                     queue="seo_workers"
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.SEO_TASKS["optimize_metadata"],
+                    name=iacherieBusiness.SEO_TASKS["optimize_metadata"],
                     args=[content_id],  # Receives analysis results
                     priority=TaskPriority.NORMAL,
                     queue="seo_workers"
                 ),
                 CeleryTask(
-                    name=AinflueBusiness.SEO_TASKS["submit_to_search_engines"],
+                    name=iacherieBusiness.SEO_TASKS["submit_to_search_engines"],
                     args=[content_id],
                     priority=TaskPriority.LOW,
                     queue="seo_workers"
@@ -747,5 +747,5 @@ __all__ = [
     "WorkflowStatus",
     "TaskPriority",
     "WorkflowPattern",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

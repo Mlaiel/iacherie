@@ -1,4 +1,4 @@
-# ⚡ Observability Mesh Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Observability Mesh Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -148,7 +148,7 @@ data:
               - name: 'critical-alerts'
                 emailConfigs:
                   - to: 'oncall@ainflue.com'
-                    subject: '[CRITICAL] Ainflue Alert'
+                    subject: '[CRITICAL] IA Chéries Alert'
                 slackConfigs:
                   - channel: '#critical-alerts'
                     title: 'Critical Alert'
@@ -417,7 +417,7 @@ data:
             dashboard: |
               {
                 "dashboard": {
-                  "title": "Ainflue Creator Economy - Linkerd",
+                  "title": "IA Chéries Creator Economy - Linkerd",
                   "panels": [
                     {
                       "title": "Creator Requests Rate",
@@ -813,7 +813,7 @@ data:
     {
       "dashboard": {
         "id": null,
-        "title": "Ainflue Platform Overview",
+        "title": "IA Chéries Platform Overview",
         "tags": ["ainflue", "overview"],
         "style": "dark",
         "timezone": "browser",
@@ -1173,5 +1173,5 @@ spec:
 # ===================================================================
 # END OF OBSERVABILITY MESH CONFIGURATION TEMPLATE
 # Creator Economy Observability Solution by Fahed Mlaiel
-# Enterprise-grade observability for Ainflue service mesh platform
+# Enterprise-grade observability for IA Chéries service mesh platform
 # ===================================================================

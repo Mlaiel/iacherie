@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Data Sync Template for Ainflue Creator Economy Platform
+Data Sync Template for iacherie Creator Economy Platform
 Enterprise data synchronization service with real-time CDC, conflict resolution and multi-source support
 """
 
@@ -202,7 +202,7 @@ class SyncConflict(BaseModel):
 
 class DataSyncTemplate:
     """
-    Template de service de synchronisation de données pour Ainflue
+    Template de service de synchronisation de données pour iacherie
     
     Fonctionnalités:
     - Change Data Capture (CDC) en temps réel
@@ -218,7 +218,7 @@ class DataSyncTemplate:
     def __init__(self, config: DataSyncConfig = None):
         self.config = config or DataSyncConfig()
         self.app = FastAPI(
-            title="Ainflue Data Sync Service",
+            title="iacherie Data Sync Service",
             description="Enterprise data synchronization with real-time CDC",
             version="1.0.0"
         )

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Usage Tracking System
+ * IA Chéries Desktop - Usage Tracking System
  * 
  * Comprehensive usage tracking for copyright compliance, licensing enforcement,
  * and detailed analytics with privacy-compliant data collection.

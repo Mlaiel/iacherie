@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Comprehensive Business Logic Validator
+ * iacherie Desktop - Comprehensive Business Logic Validator
  * 
  * Validates complete creator economy workflow integration:
  * Creator → Upload → AI Processing → Protection → SEO → Collaboration → Distribution → Monetization

@@ -236,7 +236,7 @@ services:
     environment:
       POSTGRES_DB: monetization_db
       POSTGRES_USER: monetization_user
-      POSTGRES_PASSWORD: ${MONETIZATION_DB_PASSWORD:-ainflue_monetization_2025}
+      POSTGRES_PASSWORD: ${MONETIZATION_DB_PASSWORD:-iacherie_monetization_2025}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:

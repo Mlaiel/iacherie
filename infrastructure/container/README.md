@@ -1,4 +1,4 @@
-# 🐳 Container Infrastructure - Ainflue Platform
+# 🐳 Container Infrastructure - iacherie Platform
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Module Purpose
 
-Enterprise-grade container orchestration and management for the Ainflue creator platform. Provides comprehensive Docker and Kubernetes infrastructure with advanced networking, service mesh integration, and automated scaling capabilities.
+Enterprise-grade container orchestration and management for the iacherie creator platform. Provides comprehensive Docker and Kubernetes infrastructure with advanced networking, service mesh integration, and automated scaling capabilities.
 
 ## 🏗️ Architecture
 
@@ -34,23 +34,23 @@ from infrastructure.container import KubernetesManager, DockerBuilder, HelmManag
 
 # Initialize Kubernetes manager
 k8s_manager = KubernetesManager(
-    cluster_config='ainflue-prod-cluster',
-    namespace='ainflue-platform'
+    cluster_config='iacherie-prod-cluster',
+    namespace='iacherie-platform'
 )
 
 # Build and deploy containerized application
 docker_builder = DockerBuilder()
 image = docker_builder.build_image(
     dockerfile_path='./deployments/Dockerfile',
-    image_tag='ainflue/creator-api:v1.2.0',
+    image_tag='iacherie/creator-api:v1.2.0',
     build_args={'ENV': 'production'}
 )
 
 # Deploy with Helm
 helm_manager = HelmManager()
 deployment = helm_manager.deploy_chart(
-    chart_name='ainflue-platform',
-    release_name='ainflue-prod',
+    chart_name='iacherie-platform',
+    release_name='iacherie-prod',
     values={
         'image': image,
         'replicas': 5,
@@ -85,14 +85,14 @@ deployment = helm_manager.deploy_chart(
 ### Kubernetes Cluster Health
 ```bash
 # Pod status monitoring
-kubectl get pods -n ainflue-platform --field-selector=status.phase!=Running
+kubectl get pods -n iacherie-platform --field-selector=status.phase!=Running
 
 # Resource usage
 kubectl top nodes
-kubectl top pods -n ainflue-platform
+kubectl top pods -n iacherie-platform
 
 # Auto-scaling status
-kubectl get hpa -n ainflue-platform
+kubectl get hpa -n iacherie-platform
 ```
 
 ## 🔐 Security & Compliance
@@ -128,24 +128,24 @@ kubectl get hpa -n ainflue-platform
 # Platform-specific container deployments
 platform_deployments = {
     'social_media': {
-        'instagram': 'ainflue/instagram-connector:latest',
-        'tiktok': 'ainflue/tiktok-connector:latest',
-        'youtube': 'ainflue/youtube-connector:latest'
+        'instagram': 'iacherie/instagram-connector:latest',
+        'tiktok': 'iacherie/tiktok-connector:latest',
+        'youtube': 'iacherie/youtube-connector:latest'
     },
     'music_streaming': {
-        'spotify': 'ainflue/spotify-connector:latest',
-        'apple_music': 'ainflue/apple-music-connector:latest',
-        'youtube_music': 'ainflue/youtube-music-connector:latest'
+        'spotify': 'iacherie/spotify-connector:latest',
+        'apple_music': 'iacherie/apple-music-connector:latest',
+        'youtube_music': 'iacherie/youtube-music-connector:latest'
     },
     'creator_economy': {
-        'patreon': 'ainflue/patreon-connector:latest',
-        'onlyfans': 'ainflue/onlyfans-connector:latest',
-        'ko_fi': 'ainflue/ko-fi-connector:latest'
+        'patreon': 'iacherie/patreon-connector:latest',
+        'onlyfans': 'iacherie/onlyfans-connector:latest',
+        'ko_fi': 'iacherie/ko-fi-connector:latest'
     }
 }
 ```
 
-## 📈 Ainflue Business Workflow Integration
+## 📈 iacherie Business Workflow Integration
 
 ```
 Creator Upload → Container Processing → AI Enhancement → 
@@ -167,7 +167,7 @@ Protection & Rights → Monetization → Distribution (65+ platforms)
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-creator-api
+  name: iacherie-creator-api
 spec:
   hosts:
   - creator-api
@@ -192,7 +192,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ainflue-creator-api-hpa
+  name: iacherie-creator-api-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

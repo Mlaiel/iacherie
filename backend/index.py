@@ -119,7 +119,7 @@ class EnhancedServiceInfo:
     sla_metrics: Dict[str, float] = field(default_factory=dict)
     error_rates: Dict[str, float] = field(default_factory=dict)
     
-class AinfluePlatformIndex:
+class iacheriePlatformIndex:
     """Ultra-advanced platform index and service discovery system"""
     
     def __init__(self):
@@ -745,7 +745,7 @@ class AinfluePlatformIndex:
         return service_map
 
 # Global platform index instance
-platform_index = AinfluePlatformIndex()
+platform_index = iacheriePlatformIndex()
 
 # Convenience functions for external use
 async def get_platform_status() -> Dict[str, Any]:
@@ -770,7 +770,7 @@ async def generate_platform_map() -> Dict[str, Any]:
 
 # Export functions
 __all__ = [
-    "AinfluePlatformIndex", "ServiceInfo", "ServiceStatus", "ServiceType",
+    "iacheriePlatformIndex", "ServiceInfo", "ServiceStatus", "ServiceType",
     "platform_index", "get_platform_status", "get_service_info",
     "check_service_health", "get_business_flow_info", "generate_platform_map"
 ]

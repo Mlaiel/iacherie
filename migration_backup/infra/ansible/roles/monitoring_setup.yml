@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Monitoring Setup Ansible Role
+# IA Chéries Infrastructure Module - Monitoring Setup Ansible Role
 # ==============================================================
 # 
-# Enterprise-grade monitoring setup for Ainflue platform
+# Enterprise-grade monitoring setup for IA Chéries platform
 # Prometheus, Grafana, Jaeger, and comprehensive observability
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +21,7 @@
 # IA Prompt Engineer: AI provider monitoring, prompt performance tracking
 
 ---
-- name: "Monitoring Setup - Ainflue Platform"
+- name: "Monitoring Setup - IA Chéries Platform"
   hosts: monitoring
   become: yes
   vars:
@@ -228,7 +228,7 @@
     - name: "Configure Prometheus"
       copy:
         content: |
-          # Ainflue Prometheus Configuration
+          # IA Chéries Prometheus Configuration
           # Enterprise monitoring for AI-powered creator platform
           
           global:
@@ -321,7 +321,7 @@
     - name: "Configure Prometheus alert rules"
       copy:
         content: |
-          # Ainflue Alert Rules
+          # IA Chéries Alert Rules
           # Enterprise alerting for AI creator platform
           
           groups:
@@ -460,7 +460,7 @@
     - name: "Configure Alertmanager"
       copy:
         content: |
-          # Ainflue Alertmanager Configuration
+          # IA Chéries Alertmanager Configuration
           # Enterprise alerting and notification
           
           global:
@@ -493,7 +493,7 @@
             - name: 'default-receiver'
               email_configs:
                 - to: '{{ alert_recipients | join(",") }}'
-                  subject: '[Ainflue {{ environment | upper }}] Alert: {{ .GroupLabels.alertname }}'
+                  subject: '[IA Chéries {{ environment | upper }}] Alert: {{ .GroupLabels.alertname }}'
                   body: |
                     {{ range .Alerts }}
                     Alert: {{ .Annotations.summary }}
@@ -505,7 +505,7 @@
             - name: 'critical-alerts'
               email_configs:
                 - to: '{{ alert_recipients | join(",") }}'
-                  subject: '[CRITICAL] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  subject: '[CRITICAL] IA Chéries {{ environment | upper }}: {{ .GroupLabels.alertname }}'
                   body: |
                     CRITICAL ALERT TRIGGERED
                     
@@ -519,7 +519,7 @@
               slack_configs:
                 - api_url: '{{ slack_webhook_url }}'
                   channel: '#alerts-critical'
-                  title: '[CRITICAL] Ainflue {{ environment | upper }}'
+                  title: '[CRITICAL] IA Chéries {{ environment | upper }}'
                   text: |
                     {{ range .Alerts }}
                     *Alert:* {{ .Annotations.summary }}
@@ -532,17 +532,17 @@
             - name: 'ai-team'
               email_configs:
                 - to: 'ai-team@ainflue.com'
-                  subject: '[AI Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  subject: '[AI Alert] IA Chéries {{ environment | upper }}: {{ .GroupLabels.alertname }}'
             
             - name: 'dba-team'
               email_configs:
                 - to: 'dba-team@ainflue.com'
-                  subject: '[Database Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  subject: '[Database Alert] IA Chéries {{ environment | upper }}: {{ .GroupLabels.alertname }}'
             
             - name: 'devops-team'
               email_configs:
                 - to: 'devops-team@ainflue.com'
-                  subject: '[Infrastructure Alert] Ainflue {{ environment | upper }}: {{ .GroupLabels.alertname }}'
+                  subject: '[Infrastructure Alert] IA Chéries {{ environment | upper }}: {{ .GroupLabels.alertname }}'
           
           inhibit_rules:
             - source_match:
@@ -559,7 +559,7 @@
     - name: "Configure Grafana"
       copy:
         content: |
-          # Ainflue Grafana Configuration
+          # IA Chéries Grafana Configuration
           
           [server]
           protocol = http
@@ -725,7 +725,7 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Monitoring Health Check
+          # IA Chéries Monitoring Health Check
           # Verify all monitoring services are running
           
           HEALTH_LOG="/var/log/monitoring/health-check.log"

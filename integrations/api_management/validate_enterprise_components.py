@@ -160,7 +160,7 @@ async def validate_enterprise_api_management():
             "ai_processing": True
         },
         source_ip="192.168.1.100",
-        user_agent="AinflueMobile/1.0",
+        user_agent="iacherieMobile/1.0",
         creator_id="creator_musician_123",
         endpoint="/api/content/upload"
     )

@@ -935,7 +935,7 @@ class BlockchainLicensingEngine:
             contract_parameters={
                 "nft_standard": nft_standard.value,
                 "creator_address": creator_address,
-                "name": f"AinflueLicense_{creator_address[:8]}",
+                "name": f"iacherieLicense_{creator_address[:8]}",
                 "symbol": "AINLIC"
             },
             owner_address=creator_address

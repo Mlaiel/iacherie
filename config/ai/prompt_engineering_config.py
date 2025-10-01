@@ -68,7 +68,7 @@ class ModelProvider(str, Enum):
     HUGGING_FACE = "hugging_face"
     COHERE = "cohere"
     CUSTOM = "custom"
-    AINFLUE_OPTIMIZED = "ainflue_optimized"
+    IACHERIE_OPTIMIZED = "iacherie_optimized"
 
 class PromptComplexity(str, Enum):
     """Prompt complexity levels"""
@@ -198,7 +198,7 @@ class PromptEngineeringConfiguration:
         """Get prompt templates configuration"""
         return {
             "system_prompts": {
-                "ainflue_assistant": {
+                "iacherie_assistant": {
                     "template": """You are an AI assistant for IA Chérie, a cutting-edge creator collaboration platform. 
                     Your role is to help creators, analyze content, facilitate collaborations, and optimize business outcomes.
                     
@@ -461,14 +461,14 @@ class PromptEngineeringConfiguration:
         return {
             "fine_tuning_enabled": True,
             "custom_models": {
-                "ainflue_content_analyzer": {
+                "iacherie_content_analyzer": {
                     "base_model": "gpt-3.5-turbo",
                     "training_data_size": 10000,
                     "validation_split": 0.2,
                     "fine_tuning_epochs": 3,
                     "learning_rate": 5e-5
                 },
-                "ainflue_creator_matcher": {
+                "iacherie_creator_matcher": {
                     "base_model": "claude-3-haiku",
                     "training_data_size": 5000,
                     "validation_split": 0.2,

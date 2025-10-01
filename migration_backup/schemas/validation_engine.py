@@ -1,6 +1,6 @@
 """
 🔍 Advanced Validation Engine with Custom Rules
-Enterprise-grade validation system for Ainflue Platform
+Enterprise-grade validation system for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

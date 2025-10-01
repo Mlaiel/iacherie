@@ -3,7 +3,7 @@
 🔧 SCHEDULER SERVICE
 ===================
 
-Advanced distributed task scheduling and job management service for the Ainflue platform.
+Advanced distributed task scheduling and job management service for the IA Chéries platform.
 Handles periodic tasks, job queuing, and distributed cron-like functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

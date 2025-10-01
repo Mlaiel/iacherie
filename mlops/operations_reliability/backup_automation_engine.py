@@ -253,7 +253,7 @@ class BackupAutomationEngine:
         
         # AWS S3 Configuration
         self.storage_configs[StorageProvider.AWS_S3] = {
-            "bucket_name": "ainflue-backups-primary",
+            "bucket_name": "iacherie-backups-primary",
             "region": "us-east-1",
             "storage_class": "STANDARD_IA",
             "encryption": "AES256",
@@ -267,8 +267,8 @@ class BackupAutomationEngine:
         
         # Azure Blob Storage Configuration
         self.storage_configs[StorageProvider.AZURE_BLOB] = {
-            "container_name": "ainflue-backups-secondary",
-            "account_name": "ainfluebackups",
+            "container_name": "iacherie-backups-secondary",
+            "account_name": "iacheriebackups",
             "tier": "Cool",
             "encryption": "Microsoft.Storage",
             "geo_replication": True
@@ -276,7 +276,7 @@ class BackupAutomationEngine:
         
         # GCP Storage Configuration
         self.storage_configs[StorageProvider.GCP_STORAGE] = {
-            "bucket_name": "ainflue-backups-tertiary",
+            "bucket_name": "iacherie-backups-tertiary",
             "location": "US",
             "storage_class": "NEARLINE",
             "encryption": "GOOGLE_CLOUD_KMS"

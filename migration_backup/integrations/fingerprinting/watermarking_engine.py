@@ -5,7 +5,7 @@ Système avancé de watermarking avec embedding invisible/visible,
 steganographie et protection robuste contre les attaques.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

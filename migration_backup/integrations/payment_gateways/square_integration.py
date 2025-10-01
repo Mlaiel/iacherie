@@ -2,7 +2,7 @@
 ==================================================================
 
 Comprehensive Square API integration for payment processing, invoicing,
-and point-of-sale transactions for the Ainflue platform.
+and point-of-sale transactions for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -219,7 +219,7 @@ class SquareAPIClient:
                 "Authorization": f"Bearer {self.access_token}",
                 "Content-Type": "application/json",
                 "Square-Version": "2023-10-18",
-                "User-Agent": "Ainflue-Integration/1.0"
+                "User-Agent": "IA Chéries-Integration/1.0"
             },
             timeout=aiohttp.ClientTimeout(total=30)
         )
@@ -617,7 +617,7 @@ class SquareAPIClient:
 
 
 class SquareIntegration:
-    """Main Square integration for Ainflue platform."""
+    """Main Square integration for IA Chéries platform."""
     
     def __init__(self, access_token: str, environment: SquareEnvironment = SquareEnvironment.SANDBOX,
                  webhook_signature_key: Optional[str] = None, default_location_id: Optional[str] = None):

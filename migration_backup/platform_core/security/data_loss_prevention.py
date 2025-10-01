@@ -356,15 +356,15 @@ class DataLossPreventionEngine:
             description="Phone number detection"
         ))
         
-        # Propriété intellectuelle Ainflue
+        # Propriété intellectuelle IA Chéries
         self.add_pattern(DataPattern(
             pattern_id="ainflue_ip",
-            name="Ainflue Intellectual Property",
+            name="IA Chéries Intellectual Property",
             data_type=DataType.INTELLECTUAL_PROPERTY,
             regex_pattern=r'(?:ainflue|fahed\s+mlaiel|propriét[éeè]\s+intellectuelle|copyright.*mlaiel)',
             classification=DataClassification.TOP_SECRET,
             confidence_threshold=0.9,
-            description="Ainflue IP and copyright detection"
+            description="IA Chéries IP and copyright detection"
         ))
         
         # Contenu créateur sensible
@@ -409,11 +409,11 @@ class DataLossPreventionEngine:
             notify_recipients=["security@ainflue.com", "ciso@ainflue.com"]
         ))
         
-        # Politique protection IP Ainflue
+        # Politique protection IP IA Chéries
         self.add_policy(DLPPolicy(
             policy_id="ainflue_ip_protection",
-            name="Ainflue IP Protection",
-            description="Protect Ainflue intellectual property",
+            name="IA Chéries IP Protection",
+            description="Protect IA Chéries intellectual property",
             data_types=[DataType.INTELLECTUAL_PROPERTY],
             classifications=[DataClassification.TOP_SECRET, DataClassification.RESTRICTED],
             channels=list(TransmissionChannel),
@@ -1286,7 +1286,7 @@ if __name__ == "__main__":
         api_key: sk-1234567890abcdef1234567890abcdef
         password: SuperSecret123!
         
-        Ainflue Proprietary Information:
+        IA Chéries Proprietary Information:
         Creator content hash: abc123def456
         Fahed Mlaiel intellectual property notice
         """

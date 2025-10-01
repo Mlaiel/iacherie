@@ -1,7 +1,7 @@
 """Enterprise Collaboration Gateway - Advanced Collaboration System
 ================================================================
 
-Enterprise-grade collaboration gateway for Ainfluencer platform integrations.
+Enterprise-grade collaboration gateway for IA Chéries platform integrations.
 Provides comprehensive collaboration, communication, and workflow management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -10,13 +10,13 @@
  * Author: Fahed Mlaiel (mlaiel@live.de)
  */
 
-import { AinflueConfig, APIResponse, PaginationOptions, SortOptions } from './types';
+import { iacherieConfig, APIResponse, PaginationOptions, SortOptions } from './types';
 
 /**
  * Base API interface with common methods
  */
 export interface BaseAPI {
-  readonly config: AinflueConfig;
+  readonly config: iacherieConfig;
   readonly baseUrl: string;
   
   /**

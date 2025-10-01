@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Voice localization engine enterprise avec AI voice synthesis,
 accent adaptation et voice personality localization.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - AI voice synthesis localization pour créateurs multilingues
 - Accent adaptation algorithms pour authenticité régionale
 - Voice personality localization par culture

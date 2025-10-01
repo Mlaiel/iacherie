@@ -64,21 +64,21 @@ class BusinessKPICollector:
         
         # Métriques de revenus
         self.revenue_per_creator = Gauge(
-            'ainflue_business_revenue_per_creator_euros',
+            'iacherie_business_revenue_per_creator_euros',
             'Revenue generated per creator in euros',
             labelnames=['creator_id', 'creator_tier', 'revenue_stream'],
             registry=self.registry
         )
         
         self.total_platform_revenue = Gauge(
-            'ainflue_business_total_revenue_euros',
+            'iacherie_business_total_revenue_euros',
             'Total platform revenue in euros',
             labelnames=['time_period', 'revenue_type'],
             registry=self.registry
         )
         
         self.revenue_growth_rate = Gauge(
-            'ainflue_business_revenue_growth_rate',
+            'iacherie_business_revenue_growth_rate',
             'Revenue growth rate percentage',
             labelnames=['creator_tier', 'time_period'],
             registry=self.registry
@@ -86,21 +86,21 @@ class BusinessKPICollector:
         
         # Métriques de collaboration
         self.collaboration_success_rate = Gauge(
-            'ainflue_business_collaboration_success_rate',
+            'iacherie_business_collaboration_success_rate',
             'Collaboration success rate percentage',
             labelnames=['creator_category', 'brand_category', 'collaboration_type'],
             registry=self.registry
         )
         
         self.collaboration_revenue = Gauge(
-            'ainflue_business_collaboration_revenue_euros',
+            'iacherie_business_collaboration_revenue_euros',
             'Revenue from collaborations in euros',
             labelnames=['creator_id', 'brand_id', 'collaboration_type'],
             registry=self.registry
         )
         
         self.collaboration_count = Counter(
-            'ainflue_business_collaboration_total',
+            'iacherie_business_collaboration_total',
             'Total number of collaborations',
             labelnames=['creator_tier', 'brand_tier', 'status'],
             registry=self.registry
@@ -108,21 +108,21 @@ class BusinessKPICollector:
         
         # Métriques de monétisation de contenu
         self.content_monetization_rate = Gauge(
-            'ainflue_business_content_monetization_rate',
+            'iacherie_business_content_monetization_rate',
             'Content monetization success rate',
             labelnames=['content_type', 'monetization_method'],
             registry=self.registry
         )
         
         self.average_content_value = Gauge(
-            'ainflue_business_average_content_value_euros',
+            'iacherie_business_average_content_value_euros',
             'Average monetary value per content piece',
             labelnames=['content_type', 'creator_tier'],
             registry=self.registry
         )
         
         self.content_roi = Gauge(
-            'ainflue_business_content_roi_ratio',
+            'iacherie_business_content_roi_ratio',
             'Return on investment for content creation',
             labelnames=['creator_id', 'content_type'],
             registry=self.registry
@@ -130,21 +130,21 @@ class BusinessKPICollector:
         
         # Métriques d'engagement créateur
         self.creator_engagement_score = Gauge(
-            'ainflue_business_creator_engagement_score',
+            'iacherie_business_creator_engagement_score',
             'Creator engagement score (0-100)',
             labelnames=['creator_id', 'engagement_type'],
             registry=self.registry
         )
         
         self.creator_retention_rate = Gauge(
-            'ainflue_business_creator_retention_rate',
+            'iacherie_business_creator_retention_rate',
             'Creator retention rate percentage',
             labelnames=['cohort_month', 'creator_tier'],
             registry=self.registry
         )
         
         self.creator_satisfaction_score = Gauge(
-            'ainflue_business_creator_satisfaction_score',
+            'iacherie_business_creator_satisfaction_score',
             'Creator satisfaction score (1-10)',
             labelnames=['creator_id', 'survey_type'],
             registry=self.registry
@@ -152,21 +152,21 @@ class BusinessKPICollector:
         
         # Métriques de croissance plateforme
         self.platform_growth_indicators = Gauge(
-            'ainflue_business_platform_growth_rate',
+            'iacherie_business_platform_growth_rate',
             'Platform growth indicators',
             labelnames=['metric_type', 'time_period'],
             registry=self.registry
         )
         
         self.active_creators = Gauge(
-            'ainflue_business_active_creators_count',
+            'iacherie_business_active_creators_count',
             'Number of active creators',
             labelnames=['activity_level', 'creator_tier'],
             registry=self.registry
         )
         
         self.new_creator_acquisition = Counter(
-            'ainflue_business_new_creator_acquisitions_total',
+            'iacherie_business_new_creator_acquisitions_total',
             'Total new creator acquisitions',
             labelnames=['acquisition_channel', 'creator_tier'],
             registry=self.registry
@@ -174,21 +174,21 @@ class BusinessKPICollector:
         
         # Métriques de performance business spécifiques
         self.ltv_per_creator = Gauge(
-            'ainflue_business_ltv_per_creator_euros',
+            'iacherie_business_ltv_per_creator_euros',
             'Lifetime value per creator in euros',
             labelnames=['creator_tier', 'cohort'],
             registry=self.registry
         )
         
         self.churn_rate = Gauge(
-            'ainflue_business_churn_rate',
+            'iacherie_business_churn_rate',
             'Creator churn rate percentage',
             labelnames=['creator_tier', 'churn_reason'],
             registry=self.registry
         )
         
         self.marketplace_transaction_volume = Gauge(
-            'ainflue_business_marketplace_volume_euros',
+            'iacherie_business_marketplace_volume_euros',
             'Marketplace transaction volume in euros',
             labelnames=['transaction_type', 'creator_tier'],
             registry=self.registry

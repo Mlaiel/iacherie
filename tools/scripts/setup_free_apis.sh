@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# 🆓 SETUP APIS GRATUITES POUR AINFLUENCER
+# 🆓 SETUP APIS GRATUITES POUR IACHERIE
 # Auteur: Multi-Expert Team
 # Date: 24 septembre 2025
 
 set -e
 
-echo "🚀 SETUP APIS GRATUITES POUR TESTS RÉELS - AINFLUENCER"
+echo "🚀 SETUP APIS GRATUITES POUR TESTS RÉELS - IACHERIE"
 echo "="
 echo ""
 
@@ -14,7 +14,7 @@ echo ""
 echo "📝 Création du fichier .env.testing avec APIs gratuites..."
 
 cat > .env.testing << 'EOF'
-# 🆓 APIs GRATUITES POUR TESTS AINFLUENCER
+# 🆓 APIs GRATUITES POUR TESTS IACHERIE
 # Date: 24 septembre 2025
 
 # =============================================================================
@@ -150,7 +150,7 @@ echo "🔧 Création du script de validation des APIs..."
 cat > validate_apis.py << 'EOF'
 #!/usr/bin/env python3
 """
-🧪 VALIDATEUR D'APIs GRATUITES - AINFLUENCER
+🧪 VALIDATEUR D'APIs GRATUITES - IACHERIE
 Teste la connectivité et fonctionnement des APIs gratuites
 """
 
@@ -220,7 +220,7 @@ def test_stripe_api(secret_key):
         return f"❌ Erreur: {str(e)[:30]}"
 
 def main():
-    print("🧪 VALIDATION DES APIs GRATUITES - AINFLUENCER")
+    print("🧪 VALIDATION DES APIs GRATUITES - IACHERIE")
     print("=" * 50)
     print(f"📅 Test exécuté le: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
@@ -275,7 +275,7 @@ echo "📋 PROCHAINES ÉTAPES:"
 echo "1️⃣  Éditez le fichier .env.testing avec vos vraies clés d'API"
 echo "2️⃣  Lancez: python validate_apis.py pour tester"
 echo "3️⃣  Chargez les variables: export \$(cat .env.testing | xargs)"
-echo "4️⃣  Démarrez Ainfluencer avec les APIs gratuites!"
+echo "4️⃣  Démarrez iaCherie avec les APIs gratuites!"
 echo ""
 
 echo "🔗 LIENS D'INSCRIPTION RAPIDE:"
@@ -290,4 +290,4 @@ echo "🎯 TEMPS ESTIMÉ D'INSCRIPTION: 15-30 minutes pour toutes les APIs!"
 echo "💰 COÛT TOTAL: 0€ - 100% GRATUIT pour les tests!"
 
 echo ""
-echo "✅ Setup terminé! Vous pouvez maintenant tester Ainfluencer avec de vraies APIs gratuites! 🚀"
+echo "✅ Setup terminé! Vous pouvez maintenant tester iaCherie avec de vraies APIs gratuites! 🚀"

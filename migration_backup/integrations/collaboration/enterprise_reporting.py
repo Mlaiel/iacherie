@@ -1,6 +1,6 @@
 """
 Enterprise Reporting System
-Module de reporting d'entreprise pour Ainfluencer Platform
+Module de reporting d'entreprise pour IA Chéries Platform
 
 Ce module fournit des fonctionnalités de reporting avancées pour les entreprises.
 """

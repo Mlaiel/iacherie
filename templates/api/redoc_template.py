@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise ReDoc Template - Ainflue API Templates
+⚡ Enterprise ReDoc Template - iacherie API Templates
 Advanced production-ready ReDoc documentation system with enterprise features
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -54,7 +54,7 @@ class ReDocTemplate:
     
     def __init__(
         self,
-        title: str = "Ainflue API Documentation",
+        title: str = "iacherie API Documentation",
         description: str = "Enterprise API Documentation",
         version: str = "1.0.0",
         logo_url: Optional[str] = None,
@@ -165,7 +165,7 @@ class ReDocTemplate:
     <style>
         {{ custom_css }}
         
-        /* Ainflue Enterprise Branding */
+        /* iacherie Enterprise Branding */
         .redoc-wrap {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -502,7 +502,7 @@ class ReDocTemplate:
         """Génère le JavaScript personnalisé"""
         
         js_code = """
-        // Ainflue Enterprise ReDoc Enhancements
+        // iacherie Enterprise ReDoc Enhancements
         
         // Advanced copy functionality
         function addCopyButtons() {
@@ -999,10 +999,10 @@ class ReDocThemeManager:
         }
     
     def _get_enterprise_theme(self) -> Dict[str, str]:
-        """Thème enterprise Ainflue"""
+        """Thème enterprise iacherie"""
         return {
             'css': '''
-                /* Ainflue Enterprise Theme */
+                /* iacherie Enterprise Theme */
                 :root {
                     --primary-color: #667eea;
                     --secondary-color: #764ba2;
@@ -1218,7 +1218,7 @@ class CodeSamplesGenerator:
     def _generate_curl(self, path: str, method: str, operation: Dict[str, Any]) -> str:
         """Génère un exemple cURL"""
         
-        base_url = "https://api.ainflue.com"  # Configuration
+        base_url = "https://api.iacherie.com"  # Configuration
         
         sample = f'''curl -X {method.upper()} "{base_url}{path}"'''
         
@@ -1248,7 +1248,7 @@ class CodeSamplesGenerator:
         sample = '''import requests
 import json
 
-url = "https://api.ainflue.com{path}"
+url = "https://api.iacherie.com{path}"
 
 headers = {{
     "Authorization": "Bearer YOUR_API_KEY",
@@ -1281,7 +1281,7 @@ else:
         """Génère un exemple JavaScript"""
         
         if method.upper() in ['POST', 'PUT', 'PATCH']:
-            sample = f'''fetch('https://api.ainflue.com{path}', {{
+            sample = f'''fetch('https://api.iacherie.com{path}', {{
   method: '{method.upper()}',
   headers: {{
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -1295,7 +1295,7 @@ else:
 .then(data => console.log(data))
 .catch(error => console.error('Error:', error));'''
         else:
-            sample = f'''fetch('https://api.ainflue.com{path}', {{
+            sample = f'''fetch('https://api.iacherie.com{path}', {{
   method: '{method.upper()}',
   headers: {{
     'Authorization': 'Bearer YOUR_API_KEY'
@@ -1314,7 +1314,7 @@ else:
 
 const config = {{
   method: '{method.lower()}',
-  url: 'https://api.ainflue.com{path}',
+  url: 'https://api.iacherie.com{path}',
   headers: {{
     'Authorization': 'Bearer YOUR_API_KEY',
     'Content-Type': 'application/json'
@@ -1343,7 +1343,7 @@ axios(config)
         """Génère un exemple PHP"""
         
         sample = f'''<?php
-$url = 'https://api.ainflue.com{path}';
+$url = 'https://api.iacherie.com{path}';
 
 $headers = [
     'Authorization: Bearer YOUR_API_KEY',
@@ -1392,7 +1392,7 @@ public class ApiExample {{
         HttpClient client = HttpClient.newHttpClient();
         
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-            .uri(URI.create("https://api.ainflue.com{path}"))
+            .uri(URI.create("https://api.iacherie.com{path}"))
             .header("Authorization", "Bearer YOUR_API_KEY")
             .header("Content-Type", "application/json");
         '''
@@ -1447,12 +1447,12 @@ class Program
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             
             HttpResponseMessage response = await client.{method.capitalize()}Async(
-                "https://api.ainflue.com{path}", content);
+                "https://api.iacherie.com{path}", content);
             '''
         else:
             sample += f'''
             HttpResponseMessage response = await client.{method.capitalize()}Async(
-                "https://api.ainflue.com{path}");
+                "https://api.iacherie.com{path}");
             '''
         
         sample += '''
@@ -1483,7 +1483,7 @@ import (
 )
 
 func main() {{
-    url := "https://api.ainflue.com{path}"
+    url := "https://api.iacherie.com{path}"
     '''
         
         if method.upper() in ['POST', 'PUT', 'PATCH']:
@@ -1537,7 +1537,7 @@ func main() {{
 require 'json'
 require 'uri'
 
-uri = URI('https://api.ainflue.com{path}')
+uri = URI('https://api.iacherie.com{path}')
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 
@@ -1642,7 +1642,7 @@ class APIVersionManager:
 
 # Factory et helper functions
 def create_redoc_template(
-    title: str = "Ainflue API Documentation",
+    title: str = "iacherie API Documentation",
     description: str = "Enterprise API Documentation",
     version: str = "1.0.0",
     **kwargs
@@ -1708,12 +1708,12 @@ if __name__ == "__main__":
         openapi_spec = {
             "openapi": "3.0.0",
             "info": {
-                "title": "Ainflue Creator Economy API",
+                "title": "iacherie Creator Economy API",
                 "description": "Advanced API for creator economy platform",
                 "version": "2.0.0"
             },
             "servers": [
-                {"url": "https://api.ainflue.com/v2"}
+                {"url": "https://api.iacherie.com/v2"}
             ],
             "paths": {
                 "/creators": {
@@ -1740,10 +1740,10 @@ if __name__ == "__main__":
         
         # Créer le template ReDoc
         redoc = create_redoc_template(
-            title="Ainflue API Documentation",
+            title="iacherie API Documentation",
             description="Enterprise Creator Economy API",
             version="2.0.0",
-            logo_url="https://ainflue.com/logo.png"
+            logo_url="https://iacherie.com/logo.png"
         )
         
         # Configuration analytics

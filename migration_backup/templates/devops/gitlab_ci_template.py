@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔄 GitLab CI/CD Template - Ainflue Creator Economy Platform
+🔄 GitLab CI/CD Template - IA Chéries Creator Economy Platform
 ===========================================================
 
 Enterprise GitLab CI/CD Pipeline Templates for Creator Economy Platform

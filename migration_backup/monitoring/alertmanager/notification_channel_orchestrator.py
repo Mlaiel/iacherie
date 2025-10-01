@@ -15,7 +15,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chéries - AI-Powered Creator Economy Platform
 Module: Notification Channel Orchestrator
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -221,7 +221,7 @@ class NotificationChannelOrchestrator:
     </div>
     
     <div style="margin-top: 20px; padding: 15px; background-color: #333; color: white; text-align: center;">
-        <p>Ainflue AlertManager Enterprise • AI-Powered Creator Economy Platform</p>
+        <p>IA Chéries AlertManager Enterprise • AI-Powered Creator Economy Platform</p>
         <p>© 2025 Fahed Mlaiel - All Rights Reserved</p>
     </div>
 </body>
@@ -249,7 +249,7 @@ class NotificationChannelOrchestrator:
     <div style="padding: 20px;">
         <p>Dear {creator_name},</p>
         
-        <p>We want to inform you about a service impact that may affect your Creator experience on Ainflue.</p>
+        <p>We want to inform you about a service impact that may affect your Creator experience on IA Chéries.</p>
         
         <h3>Impact Details</h3>
         <ul>
@@ -273,7 +273,7 @@ class NotificationChannelOrchestrator:
         <p>Thank you for your patience as we work to resolve this issue.</p>
         
         <p>Best regards,<br>
-        The Ainflue Team</p>
+        The IA Chéries Team</p>
     </div>
 </body>
 </html>
@@ -950,7 +950,7 @@ class NotificationChannelOrchestrator:
             
             payload = {
                 "channel": slack_channel,
-                "username": "Ainflue AlertManager",
+                "username": "IA Chéries AlertManager",
                 "icon_emoji": ":rotating_light:",
                 "text": message.content
             }

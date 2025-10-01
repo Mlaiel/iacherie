@@ -1,4 +1,4 @@
-# Multi-Stage Dockerfile for Ainflue Creator Economy Platform
+# Multi-Stage Dockerfile for IA Chéries Creator Economy Platform
 # =============================================================
 #
 # 🎯 DEVOPS ENGINEER + CONTAINER EXPERT + SECURITY SPECIALIST
@@ -45,15 +45,15 @@ LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>" \
       org.label-schema.version="${APP_VERSION}" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.vcs-ref="${VCS_REF}" \
-      org.label-schema.vendor="Ainflue Creator Economy" \
+      org.label-schema.vendor="IA Chéries Creator Economy" \
       org.label-schema.description="Creator Economy Platform - Enterprise Container" \
       org.label-schema.url="https://ainflue.com" \
       org.label-schema.schema-version="1.0" \
       org.opencontainers.image.title="${APP_NAME}" \
-      org.opencontainers.image.description="Ainflue Creator Economy Platform" \
+      org.opencontainers.image.description="IA Chéries Creator Economy Platform" \
       org.opencontainers.image.version="${APP_VERSION}" \
       org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>" \
-      org.opencontainers.image.vendor="Ainflue" \
+      org.opencontainers.image.vendor="IA Chéries" \
       org.opencontainers.image.licenses="Proprietary" \
       intellectual.property.owner="Fahed Mlaiel" \
       business.unit="CreatorEconomy" \

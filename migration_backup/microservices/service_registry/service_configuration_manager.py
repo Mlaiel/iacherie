@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chéries Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -468,7 +468,7 @@ class ConfigSchemaValidator:
         self.ainflue_schemas = self._load_ainflue_schemas()
         
     def _load_ainflue_schemas(self) -> Dict[str, Any]:
-        """Load Ainflue-specific configuration schemas"""
+        """Load IA Chéries-specific configuration schemas"""
         return {
             "base_service": {
                 "type": "object",
@@ -530,7 +530,7 @@ class ConfigSchemaValidator:
             validation_errors.extend(validation_result['errors'])
             warnings.extend(validation_result['warnings'])
             
-            # Ainflue-specific business rules
+            # IA Chéries-specific business rules
             business_validation = await self._validate_ainflue_business_rules(configuration)
             validation_errors.extend(business_validation['errors'])
             suggestions.extend(business_validation['suggestions'])
@@ -619,7 +619,7 @@ class ConfigSchemaValidator:
         return {"errors": errors, "warnings": warnings}
     
     async def _validate_ainflue_business_rules(self, config: Dict[str, Any]) -> Dict[str, List]:
-        """Validate Ainflue-specific business rules"""
+        """Validate IA Chéries-specific business rules"""
         errors = []
         suggestions = []
         

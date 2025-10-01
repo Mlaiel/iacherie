@@ -1,5 +1,5 @@
 """
-Creator Service Template for Ainflue Platform
+Creator Service Template for IA Chéries Platform
 ============================================
 
 Production-ready creator management service with:
@@ -152,7 +152,7 @@ class CreatorServiceTemplate(BaseMicroservice):
     def __init__(self, config: CreatorServiceConfig):
         super().__init__()
         self.config = config
-        self.app = FastAPI(title="Ainflue Creator Service", version="1.0.0")
+        self.app = FastAPI(title="IA Chéries Creator Service", version="1.0.0")
         self.redis_client: Optional[redis.Redis] = None
         self.db_session: Optional[AsyncSession] = None
         

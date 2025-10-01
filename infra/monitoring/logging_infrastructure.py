@@ -412,7 +412,7 @@ class LoggingInfrastructure:
   </buffer>
   
   # Template for index creation
-  template_name ainflue_logs
+  template_name iacherie_logs
   template_file /fluentd/etc/elasticsearch_template.json
   customize_template {"settings":{"number_of_shards":3,"number_of_replicas":1}}
 </match>

@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Authentication Implementation - Enterprise Identity & Access Management System
 
-Advanced authentication system for Ainflue creator economy platform with
+Advanced authentication system for IA Chéries creator economy platform with
 multi-factor authentication, biometric support, and enterprise security protocols.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -183,7 +183,7 @@ class DeviceInfo:
 
 class AuthenticationImplementation:
     """
-    Enterprise Authentication Implementation for Ainflue Creator Economy Platform
+    Enterprise Authentication Implementation for IA Chéries Creator Economy Platform
     
     Comprehensive identity and access management system with multi-factor authentication,
     OAuth integration, biometric support, and advanced security monitoring.
@@ -535,7 +535,7 @@ class AuthenticationImplementation:
             user_email = self.user_credentials[user_id].email
             totp_uri = pyotp.totp.TOTP(totp_secret).provisioning_uri(
                 name=user_email,
-                issuer_name="Ainflue"
+                issuer_name="IA Chéries"
             )
             
             qr_img = qrcode.make(totp_uri)

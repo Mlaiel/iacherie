@@ -1,7 +1,7 @@
 """Custom Visualization Engine - Enterprise Creator Economy Data Visualization
 ===========================================================================
 
-Advanced custom visualization and charting engine for Ainflue Creator Economy platform.
+Advanced custom visualization and charting engine for IA Chéries Creator Economy platform.
 Provides interactive visualizations, branded templates, advanced analytics charts,
 and mobile-optimized visualization capabilities.
 
@@ -68,7 +68,7 @@ class VisualizationType(Enum):
 
 class ColorScheme(Enum):
     """Color schemes for visualizations"""
-    AINFLUE_BRAND = "ainflue_brand"
+    IA CHÉRIES_BRAND = "ainflue_brand"
     CREATOR_ECONOMY = "creator_economy"
     CORPORATE_BLUE = "corporate_blue"
     REVENUE_GREEN = "revenue_green"
@@ -162,7 +162,7 @@ class VisualizationConfig:
     title: str
     subtitle: str = ""
     data_mapping: DataMapping = field(default_factory=DataMapping)
-    theme: VisualizationTheme = field(default_factory=lambda: VisualizationTheme("", "", ColorScheme.AINFLUE_BRAND))
+    theme: VisualizationTheme = field(default_factory=lambda: VisualizationTheme("", "", ColorScheme.IA CHÉRIES_BRAND))
     width: int = 800
     height: int = 400
     responsive: bool = True
@@ -516,11 +516,11 @@ class CustomVisualizationEngine:
     # Private helper methods
     def _initialize_default_themes(self):
         """Initialize default visualization themes"""
-        # Ainflue Brand Theme
+        # IA Chéries Brand Theme
         ainflue_theme = VisualizationTheme(
             theme_id="ainflue_brand",
-            name="Ainflue Brand",
-            color_scheme=ColorScheme.AINFLUE_BRAND,
+            name="IA Chéries Brand",
+            color_scheme=ColorScheme.IA CHÉRIES_BRAND,
             primary_colors=["#2196f3", "#4caf50", "#ff9800", "#e91e63", "#9c27b0"],
             background_color="#ffffff",
             text_color="#333333",
@@ -556,7 +556,7 @@ class CustomVisualizationEngine:
     def _initialize_color_palettes(self):
         """Initialize color palettes for different schemes"""
         self.color_palettes = {
-            ColorScheme.AINFLUE_BRAND: [
+            ColorScheme.IA CHÉRIES_BRAND: [
                 "#2196f3", "#4caf50", "#ff9800", "#e91e63", "#9c27b0",
                 "#00bcd4", "#cddc39", "#ff5722", "#795548", "#607d8b"
             ],

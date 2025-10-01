@@ -7,7 +7,7 @@ and creator-optimized cache warming strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Backend Senior + DBA + DevOps
-Project: Ainflue Infrastructure CDN
+Project: iacherie Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -108,7 +108,7 @@ class WarmingRequest:
 
 class CacheInvalidationSystem:
     """
-    Enterprise Cache Invalidation System for Ainflue Creator Platform.
+    Enterprise Cache Invalidation System for iacherie Creator Platform.
     
     Provides intelligent cache management with creator-optimized invalidation,
     distributed coordination, and AI-driven cache warming.

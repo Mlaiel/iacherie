@@ -268,7 +268,7 @@ mock_services:
 # Environment Variables
 environment_variables:
   development:
-    DATABASE_URL: "postgresql://ainflue_dev:dev_password@localhost:5432/ainflue_creator_dev"
+    DATABASE_URL: "postgresql://iacherie_dev:dev_password@localhost:5432/iacherie_creator_dev"
     REDIS_URL: "redis://localhost:6379/0"
     JWT_SECRET: "dev-jwt-secret-not-for-production"
     LOG_LEVEL: "DEBUG"
@@ -292,8 +292,8 @@ development_databases:
   postgresql:
     host: "localhost"
     port: 5432
-    database: "ainflue_creator_dev"
-    username: "ainflue_dev"
+    database: "iacherie_creator_dev"
+    username: "iacherie_dev"
     password: "dev_password_123"
     
     development_features:
@@ -312,8 +312,8 @@ development_databases:
       
   test_databases:
     postgresql_test:
-      database: "ainflue_creator_test"
-      username: "ainflue_test"
+      database: "iacherie_creator_test"
+      username: "iacherie_test"
       
     isolation:
       database_per_test: false
@@ -451,5 +451,5 @@ containerization:
       node_modules: "/app/node_modules"
       
     networking:
-      internal_network: "ainflue_dev"
+      internal_network: "iacherie_dev"
       port_mapping: true

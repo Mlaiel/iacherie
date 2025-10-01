@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Status Indicators
+ * IA Chéries Desktop Renderer - Status Indicators
  * Real-time status indicator components
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

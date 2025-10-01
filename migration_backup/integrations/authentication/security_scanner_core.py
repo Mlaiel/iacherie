@@ -1,7 +1,7 @@
 """Security Scanner Core - Core Security Management System
 ========================================================
 
-Core security scanning infrastructure for Ainflue integrations.
+Core security scanning infrastructure for IA Chéries integrations.
 Provides the main SecurityScanner class and result management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -257,7 +257,7 @@ class SecurityScanner:
                 timeout=timeout,
                 connector=connector,
                 headers={
-                    'User-Agent': 'AinflueSecurity/1.0 SecurityScanner'
+                    'User-Agent': 'IA ChériesSecurity/1.0 SecurityScanner'
                 }
             )
             

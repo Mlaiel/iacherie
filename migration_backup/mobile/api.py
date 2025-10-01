@@ -709,9 +709,9 @@ def create_mobile_api_app() -> FastAPI:
         logger.info("Mobile API Gateway shutting down...")
     
     app = FastAPI(
-        title="Ainflue Mobile API Gateway",
+        title="IA Chéries Mobile API Gateway",
         version="1.0.0",
-        description="Mobile-optimized API gateway for Ainflue creator platform",
+        description="Mobile-optimized API gateway for IA Chéries creator platform",
         lifespan=lifespan
     )
     

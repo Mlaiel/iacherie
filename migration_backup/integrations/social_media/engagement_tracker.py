@@ -6,7 +6,7 @@ supporting Instagram, TikTok, YouTube, Twitter, LinkedIn, Facebook, and more.
 
 This module provides real-time engagement monitoring, performance analytics,
 audience behavior analysis, and engagement optimization recommendations
-for the Ainflue platform.
+for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

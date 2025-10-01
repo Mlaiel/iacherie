@@ -186,7 +186,7 @@ services:
     environment:
       POSTGRES_DB: fingerprints_db
       POSTGRES_USER: fingerprints_user
-      POSTGRES_PASSWORD: ${FINGERPRINTS_DB_PASSWORD:-ainflue_fp_2025}
+      POSTGRES_PASSWORD: ${FINGERPRINTS_DB_PASSWORD:-iacherie_fp_2025}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:

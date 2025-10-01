@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Billing Configuration Module
+"""IA Chéries Billing Configuration Module
 ======================================
 
-Enterprise-grade billing configuration for the Ainflue platform.
+Enterprise-grade billing configuration for the IA Chéries platform.
 Handles subscription billing, usage-based billing, invoicing, tax calculations,
 automated billing processes, and comprehensive billing analytics.
 
@@ -239,7 +239,7 @@ class InvoicingConfig:
     
     # Invoice content
     company_info: Dict[str, str] = field(default_factory=lambda: {
-        "name": "Ainflue Platform",
+        "name": "IA Chéries Platform",
         "address": "123 Innovation Street, Tech City, TC 12345",
         "tax_id": "TAX-123456789",
         "email": "billing@ainflue.com",

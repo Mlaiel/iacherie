@@ -17,7 +17,7 @@ interface NavigationBarProps {
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
   items,
-  brandName = 'Ainflue',
+  brandName = 'IA Chéries',
   className = '',
   onItemClick,
 }) => {

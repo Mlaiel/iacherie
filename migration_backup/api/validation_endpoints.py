@@ -3,7 +3,7 @@
 
 Advanced data validation and verification API endpoints with comprehensive
 business rules, schema validation, security checks, and compliance validation
-for the Ainflue enterprise platform.
+for the IA Chéries enterprise platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

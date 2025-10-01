@@ -1,4 +1,4 @@
-"""🚪 Pre-Commit Gate Orchestrator - Ainflue Platform
+"""🚪 Pre-Commit Gate Orchestrator - IA Chéries Platform
 ================================================================
 Expert: QUALITY_ENGINEER + DEVOPS_ENGINEER + SECURITY_ENGINEER
 Created: 2025-01-XX
@@ -824,7 +824,7 @@ class PreCommitGateOrchestrator:
         pre_commit_hook = hooks_dir / "pre-commit"
         
         hook_content = f"""#!/bin/sh
-# Auto-generated pre-commit hook for Ainflue quality gates
+# Auto-generated pre-commit hook for IA Chéries quality gates
 
 cd "{self.project_root}"
 python -c "

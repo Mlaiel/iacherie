@@ -260,7 +260,7 @@ class BusinessLogicFlow(str, Enum):
     ANALYTICS_TRACKING = "analytics_tracking"
     GAMIFICATION_ENGAGEMENT = "gamification_engagement"
 
-class AinflueMasterConfiguration:
+class iacherieMasterConfiguration:
     """Master configuration orchestrator for IA Chérie platform"""
     
     def __init__(self, level: ConfigurationLevel = ConfigurationLevel.ENTERPRISE):
@@ -482,7 +482,7 @@ class AinflueMasterConfiguration:
         }
 
 # Global configuration instances
-master_config = AinflueMasterConfiguration(ConfigurationLevel.ENTERPRISE)
+master_config = iacherieMasterConfiguration(ConfigurationLevel.ENTERPRISE)
 
 # Convenience functions
 def get_config(config_name: str) -> Optional[Any]:
@@ -504,7 +504,7 @@ async def initialize_platform_config():
 
 # Module exports
 __all__ = [
-    "AinflueMasterConfiguration", "ConfigurationLevel", "BusinessLogicFlow",
+    "iacherieMasterConfiguration", "ConfigurationLevel", "BusinessLogicFlow",
     "master_config", "get_config", "validate_flow", "get_business_flow_config",
     "initialize_platform_config"
 ]

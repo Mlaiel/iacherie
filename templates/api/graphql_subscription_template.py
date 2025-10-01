@@ -1,4 +1,4 @@
-"""GraphQL Subscription Template for Ainflue Platform
+"""GraphQL Subscription Template for iacherie Platform
 Enterprise-grade real-time GraphQL subscriptions with WebSocket support
 
 ⚠️  AVERTISSEMENT LÉGAL:

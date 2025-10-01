@@ -1,4 +1,4 @@
-"""Session Management Template for Ainflue Platform
+"""Session Management Template for IA Chéries Platform
 Advanced session management with concurrent session control, security monitoring,
 automatic session cleanup, and creator-specific session protection features.
 
@@ -161,7 +161,7 @@ class ConcurrentSessionPolicy(BaseModel):
 
 
 class SessionManagementService:
-    """Comprehensive session management service for Ainflue platform
+    """Comprehensive session management service for IA Chéries platform
     
     Provides enterprise-grade session management with:
     - Advanced session lifecycle management

@@ -1,4 +1,4 @@
-"""Ainflue Core Security - Enterprise Security & Protection
+"""IA Chéries Core Security - Enterprise Security & Protection
 =======================================================
 
 Core security providing authentication, authorization, protection systems,

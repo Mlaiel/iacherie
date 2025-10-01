@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Format Converter Service
+ * IA Chéries Desktop - Format Converter Service
  * 
  * Professional multi-format content conversion with AI optimization
  * Supports audio, video, image, and document format conversions

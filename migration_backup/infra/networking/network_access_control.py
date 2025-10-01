@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Network Access Control for Multi-Cloud Infrastructure

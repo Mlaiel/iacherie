@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Professional Image Editor
+ * IA Chéries Desktop - Professional Image Editor
  * 
  * Advanced image editing and manipulation tools for content creators
  * 

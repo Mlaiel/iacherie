@@ -1,7 +1,7 @@
 """RabbitMQ Connector Orchestrator Module
 
 Enterprise RabbitMQ orchestration for critical business events
-in the Ainflue Message Queues Enterprise system.
+in the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -101,8 +101,8 @@ class RabbitMQMessage:
         }
 
 
-class AinflueBusiness:
-    """Ainflue Business RabbitMQ Topology"""
+class IA ChériesBusiness:
+    """IA Chéries Business RabbitMQ Topology"""
     
     # Main exchanges by business domain
     EXCHANGES = {
@@ -304,18 +304,18 @@ class RabbitMQConnectorOrchestrator:
             logger.error(f"Error disconnecting from RabbitMQ: {str(e)}")
     
     async def setup_topology(self) -> bool:
-        """Setup RabbitMQ topology for Ainflue business logic"""
+        """Setup RabbitMQ topology for IA Chéries business logic"""
         try:
             if not self.is_connected:
                 await self.connect()
             
             # Declare exchanges
-            for domain, exchange in AinflueBusiness.EXCHANGES.items():
+            for domain, exchange in IA ChériesBusiness.EXCHANGES.items():
                 await self._declare_exchange(exchange)
                 logger.info(f"Declared exchange: {exchange.name}")
             
             # Declare queues
-            for queue_name, queue in AinflueBusiness.QUEUES.items():
+            for queue_name, queue in IA ChériesBusiness.QUEUES.items():
                 await self._declare_queue(queue)
                 logger.info(f"Declared queue: {queue.name}")
             
@@ -682,5 +682,5 @@ __all__ = [
     "RabbitMQBinding",
     "ExchangeType",
     "MessageDeliveryMode",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

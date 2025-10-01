@@ -1,6 +1,6 @@
 """
 Threat Detector - Enterprise Security Threat Detection and Response
-Advanced threat detection system for Ainflue creator platform protection
+Advanced threat detection system for IA Chéries creator platform protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -88,7 +88,7 @@ class SecurityEvent:
 
 class ThreatDetector:
     """
-    Enterprise threat detection system for Ainflue creator platform
+    Enterprise threat detection system for IA Chéries creator platform
     
     Security Role Enhancement - Advanced Features:
     - Real-time behavioral analysis using ML algorithms
@@ -129,7 +129,7 @@ class ThreatDetector:
         self.request_counters: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
         self.failed_login_attempts: Dict[str, List[datetime]] = defaultdict(list)
         
-        logger.info("Enterprise threat detector initialized for Ainflue creator protection")
+        logger.info("Enterprise threat detector initialized for IA Chéries creator protection")
         
     async def detect_threats(self, data_source: str, event_data: Dict[str, Any]) -> List[ThreatIndicator]:
         """

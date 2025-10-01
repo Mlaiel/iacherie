@@ -3,7 +3,7 @@
 Compliance Reporting Example - Example Reporting Conformité
 =========================================================
 
-Démonstration reporting conformité ultra sophistiqué pour système d'affiliation Ainflue.
+Démonstration reporting conformité ultra sophistiqué pour système d'affiliation IA Chéries.
 Inclut audit trails, compliance automation, et regulatory reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -679,7 +679,7 @@ class ComplianceReportingExample:
                     user_id=random.choice(users),
                     session_id=str(uuid.uuid4())[:8],
                     ip_address=f"192.168.{random.randint(1,255)}.{random.randint(1,255)}",
-                    user_agent="AinflueApp/1.0",
+                    user_agent="IA ChériesApp/1.0",
                     action=random.choice(template["actions"]),
                     resource=random.choice(template["resources"]),
                     result="success" if random.random() > 0.1 else "failure",
@@ -1109,7 +1109,7 @@ async def main(**kwargs) -> Dict[str, Any]:
 if __name__ == "__main__":
     """Exécution directe du module"""
     print("=" * 70)
-    print("📋 COMPLIANCE REPORTING EXAMPLE - AINFLUE SYSTEM")
+    print("📋 COMPLIANCE REPORTING EXAMPLE - IA CHÉRIES SYSTEM")
     print("=" * 70)
     
     try:

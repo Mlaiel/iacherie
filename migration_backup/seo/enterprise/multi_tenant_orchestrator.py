@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Multi-Tenant Orchestrator Enterprise
 ====================================
 
-Enterprise-grade multi-tenant orchestration system for Ainflue SEO platform.
+Enterprise-grade multi-tenant orchestration system for IA Chéries SEO platform.
 Provides comprehensive tenant isolation, resource management, and enterprise governance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

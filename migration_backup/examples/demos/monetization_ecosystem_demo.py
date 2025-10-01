@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Monetization Ecosystem Comprehensive Demo for Ainflue Platform
+Monetization Ecosystem Comprehensive Demo for IA Chéries Platform
 ============================================================
 
 Demonstrates complete monetization ecosystem with revenue streams,

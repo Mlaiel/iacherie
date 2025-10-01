@@ -1,11 +1,11 @@
-# 🔐 Modules de Sécurité Infrastructure - Ainflue Enterprise
+# 🔐 Modules de Sécurité Infrastructure - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure sécurité de niveau enterprise fournissant sécurité zero-trust, détection menaces, gestion conformité, et protection complète pour la plateforme créateurs Ainflue servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
+Infrastructure sécurité de niveau enterprise fournissant sécurité zero-trust, détection menaces, gestion conformité, et protection complète pour la plateforme créateurs iacherie servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
 
 ## 🏗️ Composants Architecture
 - **Sécurité Zero Trust** : Segmentation réseau complète et contrôle accès

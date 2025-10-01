@@ -1,4 +1,4 @@
-# Ainflue Backend Audio - Enterprise Audio Processing Platform (Deutsch)
+# iacherie Backend Audio - Enterprise Audio Processing Platform (Deutsch)
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Spezialisiertes Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer

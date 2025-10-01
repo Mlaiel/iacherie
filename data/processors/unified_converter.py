@@ -103,7 +103,7 @@ class UnifiedConverter:
     
     def __init__(self, cache_dir: Optional[Path] = None):
         self.logger = logging.getLogger(__name__)
-        self.cache_dir = cache_dir or Path(tempfile.gettempdir()) / "ainflue_converter"
+        self.cache_dir = cache_dir or Path(tempfile.gettempdir()) / "iacherie_converter"
         self.cache_dir.mkdir(exist_ok=True)
         
         # Processeurs spécialisés

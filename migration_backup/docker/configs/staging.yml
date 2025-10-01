@@ -1,4 +1,4 @@
-# Staging Configuration for Ainflue Docker Platform
+# Staging Configuration for IA Chéries Docker Platform
 version: '3.8'
 
 # Staging environment variables

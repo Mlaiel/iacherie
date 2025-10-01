@@ -1,11 +1,11 @@
 # Regression Tester Service
-# Regression testing for Ainflue Platform
+# Regression testing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Regression Tester - Automated regression testing"
+LABEL description="IA Chéries Regression Tester - Automated regression testing"
 LABEL version="1.0.0"
 
 # Set working directory

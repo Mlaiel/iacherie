@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Resource Provisioner
+🏗️ iacherie Infrastructure - Cloud Resource Provisioner
 Automated cloud resource provisioning and lifecycle management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
@@ -173,13 +173,13 @@ class CloudResourceProvisioner:
                         "instance_type": "t3.medium",
                         "ami_id": "ami-0abcdef1234567890",
                         "security_groups": ["web-server-sg"],
-                        "key_pair": "ainflue-key",
+                        "key_pair": "iacherie-key",
                         "storage": {"size": 20, "type": "gp3"},
                         "monitoring": True
                     },
                     cost_estimate=50.0,
                     provisioning_time_minutes=10,
-                    tags={"Environment": "{{environment}}", "Project": "ainflue"}
+                    tags={"Environment": "{{environment}}", "Project": "iacherie"}
                 ),
                 ResourceTemplate(
                     template_id="aws_rds_postgresql",
@@ -1070,7 +1070,7 @@ if __name__ == "__main__":
         # Request a new resource
         request_data = {
             'template_id': 'aws_ec2_web_server',
-            'requested_by': 'developer@ainflue.com',
+            'requested_by': 'developer@iacherie.com',
             'environment': 'dev',
             'priority': 'medium',
             'strategy': 'immediate',

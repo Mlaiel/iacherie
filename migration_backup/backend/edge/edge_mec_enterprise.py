@@ -2,7 +2,7 @@
 ====================
 
 Mobile Edge Computing Enterprise consolidé - Fusion de tous les composants MEC
-en un système unifié pour optimisation créateurs Ainflue.
+en un système unifié pour optimisation créateurs IA Chéries.
 
 Consolidation des 8 fichiers MEC:
 - context_awareness.py - Conscience contextuelle  

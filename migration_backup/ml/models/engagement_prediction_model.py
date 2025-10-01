@@ -1,11 +1,11 @@
 """
-Engagement Prediction Model - Ainflue Enterprise
+Engagement Prediction Model - IA Chéries Enterprise
 ==============================================
 Modèle prédiction engagement avec time series et social signals.
 Engagement forecasting + viral prediction + audience behavior + monetization impact.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -1000,7 +1000,7 @@ class EngagementPredictionModel:
 
 class EngagementPredictionService:
     """
-    Service principal pour engagement prediction Ainflue.
+    Service principal pour engagement prediction IA Chéries.
     Orchestration + batch processing + analytics + A/B testing.
     """
     

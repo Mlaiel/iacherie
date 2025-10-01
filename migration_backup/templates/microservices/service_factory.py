@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Service Factory for Ainflue Microservices Platform
+Service Factory for IA Chéries Microservices Platform
 =================================================
 
 Enterprise-grade service factory providing patterns for:

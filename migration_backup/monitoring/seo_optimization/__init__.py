@@ -1,5 +1,5 @@
 """
-Ainflue Platform - SEO Optimization Monitoring Module
+IA Chéries Platform - SEO Optimization Monitoring Module
 ====================================================
 
 Enterprise-grade monitoring for multi-platform SEO optimization,

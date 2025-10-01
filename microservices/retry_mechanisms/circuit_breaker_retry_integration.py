@@ -637,7 +637,7 @@ def create_circuit_breaker_integration(
     return CircuitBreakerRetryIntegration(config)
 
 # Configuration prédéfinies pour IA Chérie
-AINFLUE_CIRCUIT_CONFIGS = {
+IACHERIE_CIRCUIT_CONFIGS = {
     'content_processing': IntegrationConfig(
         failure_threshold=3,
         timeout_duration=120.0,
@@ -676,5 +676,5 @@ __all__ = [
     'HealthProbe',
     'ProbeResult',
     'create_circuit_breaker_integration',
-    'AINFLUE_CIRCUIT_CONFIGS'
+    'IACHERIE_CIRCUIT_CONFIGS'
 ]

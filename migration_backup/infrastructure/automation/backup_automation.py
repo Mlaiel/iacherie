@@ -1,12 +1,12 @@
 """
-Backup Automation - Enterprise Backup and Disaster Recovery for Ainflue
+Backup Automation - Enterprise Backup and Disaster Recovery for IA Chéries
 =====================================================================
 
 Advanced backup automation for comprehensive data protection, disaster recovery,
 and business continuity for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -1172,7 +1172,7 @@ class BackupAutomationManager:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "IA Chéries Creator Platform",
             "backup_summary": {
                 "total_targets": len(self.backup_targets),
                 "total_backups": metrics.total_backups,

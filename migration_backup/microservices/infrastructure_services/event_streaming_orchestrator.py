@@ -608,7 +608,7 @@ class EventBus:
             raise
     
     async def _setup_default_sagas(self):
-        """Setup default Ainflue workflow sagas"""
+        """Setup default IA Chéries workflow sagas"""
         
         # Content Processing Saga
         async def upload_content(saga_state):
@@ -841,7 +841,7 @@ class EventBus:
         logger.info("Event bus shutdown complete")
 
 
-# Example event handlers for Ainflue
+# Example event handlers for IA Chéries
 class ContentUploadHandler(EventHandler):
     """Handler for content upload events"""
     
@@ -911,7 +911,7 @@ class SecurityThreatHandler(EventHandler):
 
 # Example usage
 async def setup_ainflue_event_bus():
-    """Setup Ainflue event bus with handlers"""
+    """Setup IA Chéries event bus with handlers"""
     event_bus = EventBus()
     await event_bus.initialize()
     

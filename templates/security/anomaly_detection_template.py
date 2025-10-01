@@ -1,4 +1,4 @@
-"""Anomaly Detection Template for Ainflue Creator Protection
+"""Anomaly Detection Template for iacherie Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

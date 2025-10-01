@@ -310,7 +310,7 @@ all:
     kubernetes_ingress: "nginx"
     
     # Database Configuration
-    database_name: "ainflue_production"
+    database_name: "iacherie_production"
     database_username: "iacherie"
     database_backup_schedule: "0 1 * * *"
     

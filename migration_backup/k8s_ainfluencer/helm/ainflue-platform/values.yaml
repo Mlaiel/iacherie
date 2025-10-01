@@ -1,4 +1,4 @@
-# Ainflue Platform Helm Chart Values
+# IA Chéries Platform Helm Chart Values
 # ===================================
 #
 # Complete configuration for enterprise Kubernetes deployment
@@ -538,7 +538,7 @@ monitoring:
     prometheusRule:
       enabled: true
       rules:
-        - alert: AinflueHighCPU
+        - alert: IA ChériesHighCPU
           expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) > 0.8
           for: 5m
           labels:
@@ -546,7 +546,7 @@ monitoring:
           annotations:
             summary: "High CPU usage detected"
         
-        - alert: AinflueHighMemory
+        - alert: IA ChériesHighMemory
           expr: (container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes{namespace="ainflue"}) > 0.9
           for: 5m
           labels:
@@ -554,7 +554,7 @@ monitoring:
           annotations:
             summary: "High memory usage detected"
         
-        - alert: AinfluePodCrashLooping
+        - alert: IA ChériesPodCrashLooping
           expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
           for: 5m
           labels:

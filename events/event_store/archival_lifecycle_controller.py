@@ -146,7 +146,7 @@ class ArchivalLifecycleController:
         self.config = {
             'migration_batch_size': 1000,
             'compression_threshold_bytes': 1024,  # 1KB
-            'encryption_key': 'ainflue_archive_key_2025',  # In production, use proper key management
+            'encryption_key': 'iacherie_archive_key_2025',  # In production, use proper key management
             'cost_per_gb_hot': 0.15,     # $0.15 per GB for hot storage
             'cost_per_gb_warm': 0.08,    # $0.08 per GB for warm storage
             'cost_per_gb_cold': 0.02,    # $0.02 per GB for cold storage

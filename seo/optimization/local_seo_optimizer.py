@@ -128,7 +128,7 @@ class LocalSEOOptimizer:
     def __init__(self, db_pool: asyncpg.Pool, api_keys: Dict[str, str]):
         self.db_pool = db_pool
         self.api_keys = api_keys
-        self.geocoder = Nominatim(user_agent="ainflue_local_seo")
+        self.geocoder = Nominatim(user_agent="iacherie_local_seo")
         self.session = None
         
     async def __aenter__(self):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Audio Processing Endpoints - Ainflue Platform
+Audio Processing Endpoints - iacherie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Audio Engineer + ML Engineer + Backend Senior
 Purpose: Enterprise audio processing, analysis and streaming endpoints

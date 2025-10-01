@@ -310,7 +310,7 @@ class MFAHandler:
         totp = pyotp.TOTP(secret)
         provisioning_uri = totp.provisioning_uri(
             name=user_id,
-            issuer_name="Ainflue Platform"
+            issuer_name="IA Chéries Platform"
         )
         
         return {
@@ -578,7 +578,7 @@ class AuthenticationHandler:
     """
     Enterprise Authentication Handler with multi-provider OAuth and SSO
     
-    Provides comprehensive authentication services for the Ainflue creator platform
+    Provides comprehensive authentication services for the IA Chéries creator platform
     with support for multiple OAuth providers, JWT tokens, MFA, and session management.
     """
     

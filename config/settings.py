@@ -39,8 +39,8 @@ class ApplicationSettings(BaseSettings):
     cors_origins: str = "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003"
     
     # Security Settings
-    secret_key: str = "ainflue_super_secret_key_2024"
-    jwt_secret: str = "jwt_secret_key_ainflue"
+    secret_key: str = "iacherie_super_secret_key_2024"
+    jwt_secret: str = "jwt_secret_key_iacherie"
     jwt_algorithm: str = "HS256"
     jwt_expiration: int = 3600  # 1 hour
     
@@ -61,7 +61,7 @@ class ApplicationSettings(BaseSettings):
     tiktok_api_key: Optional[str] = None
     
     # File Storage
-    upload_dir: str = "/tmp/ainflue_uploads"
+    upload_dir: str = "/tmp/iacherie_uploads"
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     allowed_file_types: List[str] = [".mp3", ".mp4", ".wav", ".avi", ".mov", ".jpg", ".png", ".pdf"]
     

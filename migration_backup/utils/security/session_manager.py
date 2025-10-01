@@ -5,7 +5,7 @@ Session Manager - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade session management system for Ainflue creator economy platform.
+Enterprise-grade session management system for IA Chéries creator economy platform.
 Secure session handling with < 10ms session operations.
 
 Performance: < 10ms session operations

@@ -724,7 +724,7 @@ class EnterpriseSecurityManager:
     ) -> bool:
         """Check contextual permissions based on business rules"""
         try:
-            # Creator-specific access controls for Ainflue platform
+            # Creator-specific access controls for IA Chéries platform
             if "creator_type" in context:
                 creator_type = context["creator_type"]
                 

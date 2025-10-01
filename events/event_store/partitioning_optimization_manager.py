@@ -235,19 +235,19 @@ class PartitioningOptimizationManager:
                     pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size,
                     pg_total_relation_size(schemaname||'.'||tablename) as size_bytes
                 FROM pg_tables 
-                WHERE tablename LIKE 'ainflue_events_%'
+                WHERE tablename LIKE 'iacherie_events_%'
                 ORDER BY tablename
             """
             
             # Simulate partition discovery (in real implementation, execute query)
             mock_partitions = [
                 {
-                    'partition_name': 'ainflue_events_2025_09',
+                    'partition_name': 'iacherie_events_2025_09',
                     'size_bytes': 1024 * 1024 * 500,  # 500MB
                     'strategy': PartitioningStrategy.TIME_BASED
                 },
                 {
-                    'partition_name': 'ainflue_events_2025_10',
+                    'partition_name': 'iacherie_events_2025_10',
                     'size_bytes': 1024 * 1024 * 200,  # 200MB
                     'strategy': PartitioningStrategy.TIME_BASED
                 }
@@ -379,7 +379,7 @@ class PartitioningOptimizationManager:
                                 event_type: str, event_data: Dict[str, Any]) -> str:
         """Generate partition name based on rule and event data"""
         
-        base_name = "ainflue_events"
+        base_name = "iacherie_events"
         
         if rule.strategy == PartitioningStrategy.TIME_BASED:
             interval = rule.criteria.get('time_interval', 'monthly')
@@ -485,7 +485,7 @@ class PartitioningOptimizationManager:
                     end_date = start_date + timedelta(days=1)
                 
                 create_sql = f"""
-                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF ainflue_events
+                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF iacherie_events
                     FOR VALUES FROM ('{start_date.isoformat()}') TO ('{end_date.isoformat()}')
                 """
                 
@@ -495,7 +495,7 @@ class PartitioningOptimizationManager:
                 partition_num = int(partition_name.split('_')[-1])
                 
                 create_sql = f"""
-                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF ainflue_events
+                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF iacherie_events
                     FOR VALUES WITH (MODULUS {partition_count}, REMAINDER {partition_num})
                 """
             
@@ -849,7 +849,7 @@ class PartitioningOptimizationManager:
     def _generate_future_partition_name(self, rule: PartitioningRule, interval: str) -> str:
         """Generate future partition name for pre-creation"""
         
-        base_name = "ainflue_events"
+        base_name = "iacherie_events"
         now = datetime.utcnow()
         
         if interval == 'daily':

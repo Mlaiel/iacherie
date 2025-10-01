@@ -4,7 +4,7 @@ CI/CD Orchestrator - Enterprise CI/CD Pipeline Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced CI/CD pipeline orchestration for Ainflue Platform:
+Advanced CI/CD pipeline orchestration for IA Chéries Platform:
 - Automated code quality checks
 - Security vulnerability scanning
 - Build and test automation
@@ -114,7 +114,7 @@ class CICDOrchestrator:
             # Create default configuration
             self.config = {
                 'repository': {
-                    'url': 'https://github.com/Mlaiel/Ainflue.git',
+                    'url': 'https://github.com/Mlaiel/IA Chéries.git',
                     'default_branch': 'main'
                 },
                 'stages': {
@@ -525,7 +525,7 @@ class CICDOrchestrator:
             
             # Use deployment orchestrator
             result = await self._run_command([
-                'python', '/home/runner/work/Ainflue/Ainflue/scripts/deployment_orchestrator.py',
+                'python', '/home/runner/work/IA Chéries/IA Chéries/scripts/deployment_orchestrator.py',
                 '--environment', environment,
                 '--version', pipeline_run.commit_sha[:8]
             ])
@@ -751,7 +751,7 @@ async def main():
     """CLI entry point for CI/CD orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue CI/CD Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chéries CI/CD Orchestrator')
     parser.add_argument('--trigger', metavar='COMMIT_SHA', help='Trigger pipeline for commit')
     parser.add_argument('--branch', default='main', help='Git branch')
     parser.add_argument('--status', metavar='RUN_ID', help='Get pipeline status')

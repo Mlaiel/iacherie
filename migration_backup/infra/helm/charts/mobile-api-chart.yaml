@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Mobile API Helm Chart
+# IA Chéries Infrastructure Module - Mobile API Helm Chart
 # ======================================================
 # 
-# Enterprise-grade Mobile API chart for Ainflue platform
+# Enterprise-grade Mobile API chart for IA Chéries platform
 # Optimized for mobile apps, creator tools, and real-time features
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,13 +11,13 @@
 
 apiVersion: v2
 name: ainflue-mobile-api
-description: "Enterprise Mobile API for Ainflue creator platform with real-time features"
+description: "Enterprise Mobile API for IA Chéries creator platform with real-time features"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 home: https://mobile.ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de

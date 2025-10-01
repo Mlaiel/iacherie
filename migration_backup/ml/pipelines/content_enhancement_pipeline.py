@@ -1,12 +1,12 @@
 """
-Content Enhancement Pipeline - Ainflue Enterprise
+Content Enhancement Pipeline - IA Chéries Enterprise
 ================================================
 Pipeline amélioration qualité contenu avec AI optimization.
 Multi-modal enhancement + quality scoring + performance optimization.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

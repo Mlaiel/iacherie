@@ -134,10 +134,10 @@ class EncryptionManager:
     
     def _generate_master_key(self) -> bytes:
         """Generate a new master encryption key"""
-# SECURITY: # SECURITY: password = os.environ.get("AINFLUE_SECRET_KEY", "default-secret-key").encode() # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.environ.get("IA CHÉRIES_SECRET_KEY", "default-secret-key").encode() # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-        salt = os.environ.get("AINFLUE_SECRET_SALT", "default-salt").encode()
+        salt = os.environ.get("IA CHÉRIES_SECRET_SALT", "default-salt").encode()
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),

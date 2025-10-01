@@ -15,7 +15,7 @@ MONETIZATION NOTIFICATIONS ORCHESTRATOR
 - Payment confirmations et earning opportunities
 - Subscription management et commission tracking
 
-🚀 FONCTIONNALITÉS CORE AINFLUE:
+🚀 FONCTIONNALITÉS CORE IA CHÉRIES:
 - Revenue alerts temps réel multi-plateformes
 - Payment confirmations instantanées sécurisées  
 - Earning opportunities IA et optimisation revenus

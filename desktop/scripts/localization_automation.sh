@@ -1080,7 +1080,7 @@ set -euo pipefail
 
 echo "🌍 Installing ${LANGUAGE_NAMES[$lang]} language pack for IA Chérie Desktop..."
 
-DESKTOP_DIR="\${AINFLUE_DESKTOP_DIR:-\$HOME/.local/share/iacherie/desktop}"
+DESKTOP_DIR="\${IACHERIE_DESKTOP_DIR:-\$HOME/.local/share/iacherie/desktop}"
 LANG_DIR="\$DESKTOP_DIR/locales/$lang"
 
 # Create directories

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Health Check Template for Ainflue Platform
+Health Check Template for iacherie Platform
 ==========================================
 
 Production-ready health check system with:
@@ -327,7 +327,7 @@ class HealthChecker:
 
 class HealthMonitor:
     """
-    Production-ready health monitoring system for Ainflue Platform
+    Production-ready health monitoring system for iacherie Platform
     
     Features:
     - Comprehensive health checking
@@ -589,7 +589,7 @@ class HealthMonitor:
 
 class HealthCheckTemplate:
     """
-    Health Check Template for Ainflue Platform
+    Health Check Template for iacherie Platform
     
     A comprehensive health monitoring system that provides:
     - Multi-type health checking (HTTP, TCP, Database, Redis, Custom)

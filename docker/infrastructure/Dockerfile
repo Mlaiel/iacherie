@@ -1,11 +1,11 @@
-# Multi-stage Production Dockerfile for Ainflue Platform
+# Multi-stage Production Dockerfile for iacherie Platform
 # ==================================================
 
 # Build stage
 FROM python:3.11-slim as builder
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue - AI-Powered Content Protection & Monetization Platform - Builder"
+LABEL description="iacherie - AI-Powered Content Protection & Monetization Platform - Builder"
 
 # Set build environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -40,7 +40,7 @@ COPY . .
 FROM python:3.11-slim as development
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue - AI-Powered Content Protection & Monetization Platform - Development"
+LABEL description="iacherie - AI-Powered Content Protection & Monetization Platform - Development"
 
 # Set development environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -63,8 +63,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create development user
-RUN groupadd --gid 1000 ainflue && \
-    useradd --uid 1000 --gid ainflue --shell /bin/bash --create-home ainflue
+RUN groupadd --gid 1000 iacherie && \
+    useradd --uid 1000 --gid iacherie --shell /bin/bash --create-home iacherie
 
 WORKDIR /app
 
@@ -75,7 +75,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir debugpy pytest pytest-asyncio
 
 # Copy source code
-COPY --chown=ainflue:ainflue . .
+COPY --chown=iacherie:iacherie . .
 
 # Create necessary directories
 RUN mkdir -p \
@@ -84,9 +84,9 @@ RUN mkdir -p \
     /app/logs \
     /app/tmp \
     /app/uploads \
-    && chown -R ainflue:ainflue /app
+    && chown -R iacherie:iacherie /app
 
-USER ainflue
+USER iacherie
 
 EXPOSE 8000 8001 8765 5678
 
@@ -100,9 +100,9 @@ CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000
 FROM python:3.11-slim as production
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue - AI-Powered Content Protection & Monetization Platform"
+LABEL description="iacherie - AI-Powered Content Protection & Monetization Platform"
 LABEL version="1.0.0"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/iacherie"
 
 # Set production environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -135,8 +135,8 @@ RUN apt-get update && apt-get install -y \
     && apt-get autoremove -y
 
 # Security: Create non-root user with minimal privileges
-RUN groupadd --gid 1000 ainflue && \
-    useradd --uid 1000 --gid ainflue --shell /bin/bash --create-home ainflue
+RUN groupadd --gid 1000 iacherie && \
+    useradd --uid 1000 --gid iacherie --shell /bin/bash --create-home iacherie
 
 # Set Chrome/Chromium path for Selenium
 ENV CHROME_BIN=/usr/bin/chromium
@@ -149,7 +149,7 @@ COPY --from=builder /opt/venv /opt/venv
 WORKDIR /app
 
 # Copy application code with proper ownership
-COPY --chown=ainflue:ainflue . .
+COPY --chown=iacherie:iacherie . .
 
 # Create necessary directories with proper permissions
 RUN mkdir -p \
@@ -158,7 +158,7 @@ RUN mkdir -p \
     /app/logs \
     /app/tmp \
     /app/uploads \
-    && chown -R ainflue:ainflue /app
+    && chown -R iacherie:iacherie /app
 
 # Security: Set read-only filesystem for application code
 RUN chmod -R 755 /app && \
@@ -173,10 +173,10 @@ RUN apt-get remove -y \
     && find /app -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
 # Switch to non-root user
-USER ainflue
+USER iacherie
 
 # Security: Set secure umask
-RUN echo "umask 022" >> /home/ainflue/.bashrc
+RUN echo "umask 022" >> /home/iacherie/.bashrc
 
 # Expose port
 EXPOSE 8000

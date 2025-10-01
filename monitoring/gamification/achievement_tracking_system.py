@@ -592,7 +592,7 @@ class AchievementTrackingSystem:
     async def _create_social_content(self, user_id: str, achievement: Achievement, platform: str) -> Dict[str, str]:
         """Create social media content for achievement sharing."""
         content_templates = {
-            'twitter': f"🏆 Just unlocked '{achievement.name}' on @AinfluePlatform! {achievement.badge_icon} #{achievement.category.value} #Achievement",
+            'twitter': f"🏆 Just unlocked '{achievement.name}' on @iacheriePlatform! {achievement.badge_icon} #{achievement.category.value} #Achievement",
             'instagram': f"New achievement unlocked! {achievement.badge_icon}\n\n{achievement.name}\n{achievement.description}\n\n#IA Chérie #Achievement #{achievement.category.value}",
             'linkedin': f"Proud to share that I've achieved '{achievement.name}' on the IA Chérie platform! This milestone represents {achievement.description.lower()}. Continuing to grow and learn! 🚀",
             'facebook': f"Achievement unlocked! {achievement.badge_icon} Just earned '{achievement.name}' - {achievement.description}. Loving the journey on IA Chérie!"

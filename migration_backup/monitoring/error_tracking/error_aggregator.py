@@ -1,5 +1,5 @@
 """
-Error Aggregation System for Ainflue Platform
+Error Aggregation System for IA Chéries Platform
 Centralized error collection and statistical analysis
 
 Author: Fahed Mlaiel <mlaiel@live.de>

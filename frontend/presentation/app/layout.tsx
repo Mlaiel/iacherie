@@ -3,7 +3,7 @@ import { Providers } from './providers';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
-  title: 'Ainflue - AI-Powered Content Protection & Monetization',
+  title: 'iacherie - AI-Powered Content Protection & Monetization',
   description: 'Advanced content protection, fingerprinting, and monetization platform powered by AI',
   keywords: 'content protection, AI, fingerprinting, monetization, DMCA, copyright',
   authors: [{ name: 'Fahed Mlaiel' }],

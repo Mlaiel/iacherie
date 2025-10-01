@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Incident Response Configuration Module
+"""IA Chéries Incident Response Configuration Module
 =============================================
 
-Enterprise-grade incident response configuration for the Ainflue platform.
+Enterprise-grade incident response configuration for the IA Chéries platform.
 Comprehensive incident response lifecycle management, automated workflows,
 escalation procedures, and crisis management capabilities.
 

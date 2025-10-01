@@ -1,4 +1,4 @@
-"""Terraform Infrastructure Template for Ainflue Platform
+"""Terraform Infrastructure Template for IA Chéries Platform
 Enterprise-grade Infrastructure as Code template for scalable creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -60,7 +60,7 @@ class TerraformConfig:
 
 
 class TerraformInfrastructureTemplate:
-    """Enterprise Terraform Infrastructure Template for Ainflue Platform"""
+    """Enterprise Terraform Infrastructure Template for IA Chéries Platform"""
     
     def __init__(self, config: TerraformConfig, provider: CloudProvider = CloudProvider.AWS):
         self.config = config
@@ -80,7 +80,7 @@ class TerraformInfrastructureTemplate:
     
     def _generate_aws_provider(self) -> str:
         """Generate AWS provider configuration"""
-        return f'''# Terraform AWS Provider Configuration - Ainflue Platform
+        return f'''# Terraform AWS Provider Configuration - IA Chéries Platform
 terraform {{
   required_version = ">= 1.5"
   required_providers {{
@@ -136,7 +136,7 @@ locals {{
     def generate_complete_template(self) -> str:
         """Generate complete Terraform template"""
         template_parts = [
-            "# Ainflue Platform - Enterprise Terraform Infrastructure Template",
+            "# IA Chéries Platform - Enterprise Terraform Infrastructure Template",
             "# Creator Economy Platform - Production-Ready Infrastructure",
             "# Author: Fahed Mlaiel (mlaiel@live.de)",
             "# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.",
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     prod_template = TerraformInfrastructureTemplate(prod_config, CloudProvider.AWS)
     
     # This would typically be used in a deployment script
-    print("Terraform Infrastructure Template for Ainflue Platform")
+    print("Terraform Infrastructure Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment.value}")
     print(f"- Region: {prod_config.region}")

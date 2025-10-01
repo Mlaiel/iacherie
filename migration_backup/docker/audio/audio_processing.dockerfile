@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AUDIO PROCESSING ENGINE - PROFESSIONAL DOCKERFILE
+# IA CHÉRIES AUDIO PROCESSING ENGINE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for professional audio processing with DEMUCS
 # source separation, EBU R128 compliance, and enterprise security features.
@@ -220,11 +220,11 @@ CMD ["python3.11", "-m", "audio_processing.main", "--reload"]
 # =============================================================================
 # METADATA AND LABELS
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Audio Processing Engine"
+LABEL org.opencontainers.image.title="IA Chéries Audio Processing Engine"
 LABEL org.opencontainers.image.description="Professional audio processing with DEMUCS separation and broadcast standards"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL org.opencontainers.image.documentation="https://docs.ainflue.com/audio-processing"
 LABEL org.opencontainers.image.licenses="Proprietary"
 LABEL ainflue.service.category="audio"

@@ -1,5 +1,5 @@
 """
-Gestionnaire d'authentification pour l'écosystème Ainfluencer
+Gestionnaire d'authentification pour l'écosystème IA Chéries
 """
 from typing import Optional, Dict, Any, List
 from enum import Enum

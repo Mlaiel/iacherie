@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Business - Advanced Trend Analysis Engine
+IA Chéries Core Business - Advanced Trend Analysis Engine
 ======================================================
 
 Enterprise-grade trend analysis system for real-time trend detection,

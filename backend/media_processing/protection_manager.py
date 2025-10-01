@@ -195,8 +195,8 @@ class EnterpriseProtectionManager:
     def _init_encryption(self):
         """Initialize encryption for sensitive data"""
         # In production: Load from secure key management system
-        password = b"ainflue_protection_key_2025"
-        salt = b"ainflue_salt_2025_secure"
+        password = b"iacherie_protection_key_2025"
+        salt = b"iacherie_salt_2025_secure"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

@@ -93,7 +93,7 @@ class CollaborationToolsError(Exception):
 
 class CollaborationTools:
     """
-    Comprehensive collaboration tools integration for Ainflue platform.
+    Comprehensive collaboration tools integration for IA Chéries platform.
     
     Features:
     - Project management and tracking

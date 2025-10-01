@@ -266,7 +266,7 @@ class CollaborationEvent:
     communication_channel: Optional[str] = None
     
     # Platform context
-    platform_location: str = "ainflue"
+    platform_location: str = "iacherie"
     integration_source: Optional[str] = None
     automation_triggered: bool = False
     

@@ -1,4 +1,4 @@
-# Drone CI Configuration Template for Ainflue Platform
+# Drone CI Configuration Template for IA Chéries Platform
 # Cloud-native CI/CD pipeline using Drone
 
 kind: pipeline
@@ -146,7 +146,7 @@ steps:
     commands:
       - sonar-scanner
         -Dsonar.projectKey=ainflue
-        -Dsonar.projectName=Ainflue
+        -Dsonar.projectName=IA Chéries
         -Dsonar.sources=.
         -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**
         -Dsonar.javascript.lcov.reportPaths=*/coverage/lcov.info
@@ -453,7 +453,7 @@ steps:
   - name: dependency-check
     image: owasp/dependency-check:latest
     commands:
-      - /usr/share/dependency-check/bin/dependency-check.sh --project "Ainflue" --scan . --format JSON --out dependency-check-report.json
+      - /usr/share/dependency-check/bin/dependency-check.sh --project "IA Chéries" --scan . --format JSON --out dependency-check-report.json
       
   - name: upload-security-reports
     image: plugins/s3

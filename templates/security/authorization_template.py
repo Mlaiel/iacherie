@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""{{auth_name}} Authorization Template for Ainflue Platform
+"""{{auth_name}} Authorization Template for iacherie Platform
 {{auth_description}}
 
 Author: {{author_name}} ({{author_email}})

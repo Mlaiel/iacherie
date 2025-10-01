@@ -1,6 +1,6 @@
 """
 🚨 FRAUD DETECTION NOTIFICATIONS
-Ainflue Platform - Fraud Detection and Prevention System
+IA Chéries Platform - Fraud Detection and Prevention System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

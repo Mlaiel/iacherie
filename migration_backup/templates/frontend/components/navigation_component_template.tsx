@@ -1259,7 +1259,7 @@ export const NavigationExamples: React.FC = () => {
         <h3 style={{ padding: '0 1rem' }}>Horizontal Navigation</h3>
         <Navigation
           items={sampleItems}
-          logo={<span style={{ fontSize: '1.5rem' }}>🚀 Ainflue</span>}
+          logo={<span style={{ fontSize: '1.5rem' }}>🚀 IA Chéries</span>}
           logoHref="/"
           activeItem={activeItem}
           variant="horizontal"
@@ -1296,7 +1296,7 @@ export const NavigationExamples: React.FC = () => {
         <div style={{ width: collapsed ? '64px' : '280px', height: '400px', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
           <Navigation
             items={sampleItems}
-            logo={collapsed ? '🚀' : <span>🚀 Ainflue</span>}
+            logo={collapsed ? '🚀' : <span>🚀 IA Chéries</span>}
             activeItem={activeItem}
             variant="sidebar"
             theme="dark"

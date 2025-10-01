@@ -173,7 +173,7 @@ EOF
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-class AinfluePricingEngine {
+class iacheriePricingEngine {
     constructor() {
         this.dynamicPricing = true;
         this.marketAnalysis = true;
@@ -214,7 +214,7 @@ class AinfluePricingEngine {
 class AinfluPaymentProcessor {
     constructor() {
         this.stripe = stripe;
-        this.pricingEngine = new AinfluePricingEngine();
+        this.pricingEngine = new iacheriePricingEngine();
     }
     
     async createPaymentIntent(amount, currency = 'usd', metadata = {}) {
@@ -223,7 +223,7 @@ class AinfluPaymentProcessor {
                 amount: Math.round(amount * 100), // Convert to cents
                 currency: currency,
                 metadata: {
-                    platform: 'ainflue_desktop',
+                    platform: 'iacherie_desktop',
                     creator: metadata.creator || 'unknown',
                     content_id: metadata.content_id || '',
                     protection_id: metadata.protection_id || '',
@@ -252,7 +252,7 @@ class AinfluPaymentProcessor {
                 customer: customerId,
                 items: [{ price: priceId }],
                 metadata: {
-                    platform: 'ainflue_desktop',
+                    platform: 'iacherie_desktop',
                     subscription_type: 'creator_premium',
                     ...metadata
                 },
@@ -280,7 +280,7 @@ class AinfluPaymentProcessor {
                 destination: creatorId,
                 metadata: {
                     type: 'royalty_payment',
-                    platform: 'ainflue_desktop',
+                    platform: 'iacherie_desktop',
                     timestamp: new Date().toISOString()
                 }
             });
@@ -298,7 +298,7 @@ class AinfluPaymentProcessor {
     }
 }
 
-module.exports = { AinfluePricingEngine, AinfluPaymentProcessor };
+module.exports = { iacheriePricingEngine, AinfluPaymentProcessor };
 EOF
     
     log "SUCCESS" "✅ Stripe integration configured"

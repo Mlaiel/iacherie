@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Enterprise Notification Rate Limiter - Ainflue Platform Core
+🚀 Enterprise Notification Rate Limiter - IA Chéries Platform Core
 Advanced anti-spam intelligent rate limiting with ML detection
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform

@@ -1,4 +1,4 @@
-# 🗄️ Database Module - Ainflue Infrastructure
+# 🗄️ Database Module - iacherie Infrastructure
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Module Purpose
 
-Enterprise-grade database management infrastructure supporting the complete Ainflue creator economy workflow. This module provides high-performance, scalable database solutions optimized for:
+Enterprise-grade database management infrastructure supporting the complete iacherie creator economy workflow. This module provides high-performance, scalable database solutions optimized for:
 
 - **Multi-format content storage** with vector indexing for AI/ML workloads
 - **Creator economy data** including monetization, collaboration, and protection
@@ -43,7 +43,7 @@ from infrastructure.database import (
 
 # Initialize database clusters
 postgres = PostgreSQLCluster(
-    cluster_name="ainflue-main",
+    cluster_name="iacherie-main",
     read_replicas=3,
     auto_scaling=True
 )

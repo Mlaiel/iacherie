@@ -2,7 +2,7 @@
 Backend AI Module - Consolidated AI Agents System
 ================================================
 
-This module provides a consolidated interface to all AI agents in the Ainflue platform.
+This module provides a consolidated interface to all AI agents in the iacherie platform.
 Organizes 53+ specialized AI agents into 5 manageable files for improved maintainability.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,7 +1,7 @@
 """📊 Enterprise Business Metrics - Advanced KPI Tracking System
 ============================================================
 
-Enterprise-grade business metrics collection and analysis for the Ainflue platform.
+Enterprise-grade business metrics collection and analysis for the IA Chéries platform.
 Tracks revenue, user engagement, content performance, collaboration success, monetization,
 gamification, SEO performance, distribution analytics, and AI-powered insights.
 
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of business metrics for Ainflue platform."""
+    """Types of business metrics for IA Chéries platform."""
     # Core Metric Types
     COUNTER = "counter"
     GAUGE = "gauge"

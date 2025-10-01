@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 🚀 Events Index - Centralized Event System Management & Orchestration
-Ainflue Enterprise Platform - Advanced Event-Driven Architecture Index
+IA Chéries Enterprise Platform - Advanced Event-Driven Architecture Index
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -375,7 +375,7 @@ class EventSystemIndex:
     """
     🚀 Ultra-Advanced Event System Index & Orchestrator
     
-    Central hub for managing the entire event-driven architecture of the Ainflue platform.
+    Central hub for managing the entire event-driven architecture of the IA Chéries platform.
     Provides advanced orchestration, monitoring, optimization, and management capabilities
     for all event processing across the multi-creator ecosystem.
     """

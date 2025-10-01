@@ -1,6 +1,6 @@
 """
 PostgreSQL Cluster Management
-Enterprise PostgreSQL cluster management for Ainflue infrastructure
+Enterprise PostgreSQL cluster management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class PostgreSQLCluster:
-    """PostgreSQL cluster management for Ainflue creator data"""
+    """PostgreSQL cluster management for iacherie creator data"""
     
     def __init__(self):
         """Initialize PostgreSQL cluster manager"""
@@ -24,12 +24,12 @@ class PostgreSQLCluster:
     async def create_cluster(self, cluster_config: Dict[str, Any]) -> Dict[str, Any]:
         """Create PostgreSQL cluster"""
         return {
-            'cluster_name': cluster_config.get('name', 'ainflue-postgres'),
+            'cluster_name': cluster_config.get('name', 'iacherie-postgres'),
             'version': cluster_config.get('version', '15'),
             'instances': cluster_config.get('instances', 3),
             'status': 'creating',
-            'primary_endpoint': 'postgres-primary.ainflue.com:5432',
-            'read_endpoints': ['postgres-read-1.ainflue.com:5432', 'postgres-read-2.ainflue.com:5432']
+            'primary_endpoint': 'postgres-primary.iacherie.com:5432',
+            'read_endpoints': ['postgres-read-1.iacherie.com:5432', 'postgres-read-2.iacherie.com:5432']
         }
         
     async def setup_replication(self, replication_config: Dict[str, Any]) -> Dict[str, Any]:

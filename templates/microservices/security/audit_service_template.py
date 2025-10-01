@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Audit Service Template for Ainflue Creator Economy Platform
+Audit Service Template for iacherie Creator Economy Platform
 Enterprise audit service with comprehensive logging, compliance tracking and forensic analysis
 """
 
@@ -198,7 +198,7 @@ class ComplianceReport(BaseModel):
 
 class AuditServiceTemplate:
     """
-    Template de service d'audit enterprise pour Ainflue
+    Template de service d'audit enterprise pour iacherie
     
     Fonctionnalités:
     - Audit complet de toutes les activités
@@ -214,7 +214,7 @@ class AuditServiceTemplate:
     def __init__(self, config: AuditConfig = None):
         self.config = config or AuditConfig()
         self.app = FastAPI(
-            title="Ainflue Audit Service",
+            title="iacherie Audit Service",
             description="Enterprise audit service with compliance tracking",
             version="1.0.0"
         )
@@ -256,7 +256,7 @@ class AuditServiceTemplate:
             # MongoDB
             if self.config.backup_storage == "mongodb" or self.config.primary_storage == "mongodb":
                 self.mongo_client = MongoClient('mongodb://localhost:27017/')
-                self.mongo_db = self.mongo_client['ainflue_audit']
+                self.mongo_db = self.mongo_client['iacherie_audit']
                 self._create_mongodb_collections()
             
             self.logger.info("Storage backends initialized successfully")

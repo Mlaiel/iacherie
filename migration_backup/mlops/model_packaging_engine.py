@@ -530,7 +530,7 @@ MODEL_FRAMEWORK = os.getenv("MODEL_FRAMEWORK", "{framework}")
 # Initialize FastAPI app
 app = FastAPI(
     title=f"Model {MODEL_ID} Inference API",
-    description="AI model inference service for Ainflue platform",
+    description="AI model inference service for IA Chéries platform",
     version=MODEL_VERSION
 )
 

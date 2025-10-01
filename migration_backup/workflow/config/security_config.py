@@ -2,7 +2,7 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-🔐 SECURITY CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🔐 SECURITY CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced security configuration with multi-layer protection and compliance
 Performance Target: < 2ms security validation
@@ -191,11 +191,11 @@ class SecurityConfig:
     
     def _generate_master_key(self) -> str:
         """Generate master encryption key"""
-# SECURITY: # SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv('IA CHÉRIES_MASTER_PASSWORD', 'ainflue-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         password_bytes = password.encode('utf-8')
-        salt = os.getenv('AINFLUE_SALT', 'ainflue-salt').encode('utf-8')
+        salt = os.getenv('IA CHÉRIES_SALT', 'ainflue-salt').encode('utf-8')
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -341,7 +341,7 @@ class SecurityConfig:
                 "action": action,
                 "granted": access_decision["granted"],
                 "ip_address": "127.0.0.1",  # Would be actual IP
-                "user_agent": "Ainflue-API/1.0"
+                "user_agent": "IA Chéries-API/1.0"
             }
             self._audit_log.append(audit_entry)
             

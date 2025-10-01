@@ -6,7 +6,7 @@ Specialized AI optimization for creative content generation and enhancement.
 Supports 53 AI agents for creator content optimization across 65+ platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - AI Optimization Module
+Project: IA Chéries Infrastructure - AI Optimization Module
 Expert Role: Lead Dev IA + ML Engineer
 Version: 1.0 Production Enterprise
 
@@ -76,7 +76,7 @@ class CreativeAIOptimizer:
     Enterprise Creative AI Optimizer
     
     Handles creative content optimization using 53 specialized AI agents
-    for the Ainflue creator platform across 65+ distribution platforms.
+    for the IA Chéries creator platform across 65+ distribution platforms.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

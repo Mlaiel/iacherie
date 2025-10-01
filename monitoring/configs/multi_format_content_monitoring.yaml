@@ -129,15 +129,15 @@ content_format_monitoring:
     
     # Métriques audio
     audio_metrics:
-      - metric: "ainflue_audio_quality_score"
+      - metric: "iacherie_audio_quality_score"
         description: "Score qualité audio contenu"
         labels: ["creator_id", "audio_format", "quality_tier", "processing_stage"]
         
-      - metric: "ainflue_audio_processing_duration_ms"
+      - metric: "iacherie_audio_processing_duration_ms"
         description: "Durée processing audio"
         labels: ["format_conversion", "quality_analysis", "file_size_category"]
         
-      - metric: "ainflue_audio_streaming_performance"
+      - metric: "iacherie_audio_streaming_performance"
         description: "Performance streaming audio"
         labels: ["quality_level", "network_conditions", "device_type"]
 
@@ -239,15 +239,15 @@ content_format_monitoring:
     
     # Métriques vidéo
     video_metrics:
-      - metric: "ainflue_video_transcoding_performance"
+      - metric: "iacherie_video_transcoding_performance"
         description: "Performance transcodage vidéo"
         labels: ["input_format", "output_profile", "processing_time_category"]
         
-      - metric: "ainflue_video_quality_score"
+      - metric: "iacherie_video_quality_score"
         description: "Score qualité vidéo"
         labels: ["resolution", "bitrate_category", "quality_metric_type"]
         
-      - metric: "ainflue_video_playback_experience"
+      - metric: "iacherie_video_playback_experience"
         description: "Expérience lecture vidéo"
         labels: ["device_type", "network_speed", "quality_adaptation"]
 
@@ -335,15 +335,15 @@ content_format_monitoring:
     
     # Métriques image
     image_metrics:
-      - metric: "ainflue_image_optimization_effectiveness"
+      - metric: "iacherie_image_optimization_effectiveness"
         description: "Efficacité optimisation images"
         labels: ["original_format", "optimized_format", "size_reduction_category"]
         
-      - metric: "ainflue_image_quality_preservation_score"
+      - metric: "iacherie_image_quality_preservation_score"
         description: "Score préservation qualité image"
         labels: ["optimization_level", "image_category", "quality_metric_type"]
         
-      - metric: "ainflue_image_processing_performance"
+      - metric: "iacherie_image_processing_performance"
         description: "Performance traitement images"
         labels: ["processing_type", "image_size_category", "format_conversion"]
 
@@ -439,15 +439,15 @@ content_format_monitoring:
     
     # Métriques texte
     text_metrics:
-      - metric: "ainflue_text_nlp_processing_accuracy"
+      - metric: "iacherie_text_nlp_processing_accuracy"
         description: "Précision traitement NLP texte"
         labels: ["language", "processing_type", "content_category"]
         
-      - metric: "ainflue_text_moderation_effectiveness"
+      - metric: "iacherie_text_moderation_effectiveness"
         description: "Efficacité modération contenu texte"
         labels: ["moderation_category", "confidence_level", "review_type"]
         
-      - metric: "ainflue_text_quality_score"
+      - metric: "iacherie_text_quality_score"
         description: "Score qualité contenu texte"
         labels: ["content_type", "readability_level", "engagement_prediction"]
 
@@ -491,15 +491,15 @@ cross_format_integration:
   
   # Métriques intégration
   integration_metrics:
-    - metric: "ainflue_cross_format_sync_accuracy"
+    - metric: "iacherie_cross_format_sync_accuracy"
       description: "Précision synchronisation cross-format"
       labels: ["format_combination", "sync_type", "accuracy_level"]
       
-    - metric: "ainflue_multi_format_engagement_correlation"
+    - metric: "iacherie_multi_format_engagement_correlation"
       description: "Corrélation engagement multi-format"
       labels: ["format_pair", "correlation_strength", "content_category"]
       
-    - metric: "ainflue_unified_content_performance_score"
+    - metric: "iacherie_unified_content_performance_score"
       description: "Score performance contenu unifié"
       labels: ["creator_id", "format_mix", "audience_segment"]
 
@@ -571,15 +571,15 @@ creator_format_optimization:
   
   # Métriques optimisation créateurs
   creator_optimization_metrics:
-    - metric: "ainflue_creator_format_expertise_score"
+    - metric: "iacherie_creator_format_expertise_score"
       description: "Score expertise créateur par format"
       labels: ["creator_id", "content_format", "expertise_category"]
       
-    - metric: "ainflue_format_recommendation_adoption_rate"
+    - metric: "iacherie_format_recommendation_adoption_rate"
       description: "Taux adoption recommandations format"
       labels: ["recommendation_type", "creator_tier", "format_category"]
       
-    - metric: "ainflue_multi_format_creator_success_index"
+    - metric: "iacherie_multi_format_creator_success_index"
       description: "Index succès créateur multi-format"
       labels: ["creator_id", "format_diversity_score", "performance_consistency"]
 
@@ -607,15 +607,15 @@ quality_assurance:
   
   # Métriques assurance qualité
   quality_assurance_metrics:
-    - metric: "ainflue_content_quality_gate_pass_rate"
+    - metric: "iacherie_content_quality_gate_pass_rate"
       description: "Taux passage contrôles qualité"
       labels: ["content_format", "quality_gate_type", "creator_tier"]
       
-    - metric: "ainflue_automated_quality_improvement_success"
+    - metric: "iacherie_automated_quality_improvement_success"
       description: "Succès amélioration qualité automatique"
       labels: ["improvement_type", "original_quality_score", "format_category"]
       
-    - metric: "ainflue_quality_consistency_score"
+    - metric: "iacherie_quality_consistency_score"
       description: "Score cohérence qualité créateur"
       labels: ["creator_id", "format_type", "time_period"]
 

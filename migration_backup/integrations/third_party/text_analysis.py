@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 TEXTRAZOR ENGINE - Analyse de texte avancée pour Ainfluencer
+🔍 TEXTRAZOR ENGINE - Analyse de texte avancée pour IA Chéries
 ════════════════════════════════════════════════════════════════
 
 Fonctionnalités:
@@ -40,9 +40,9 @@ class TextAnalysisResult:
     success: bool
     error: Optional[str] = None
 
-class AinfluencerTextRazor:
+class IaCheriesTextRazor:
     """
-    🧠 Moteur d'analyse de texte TextRazor pour Ainfluencer
+    🧠 Moteur d'analyse de texte TextRazor pour IA Chéries
     """
     
     def __init__(self):
@@ -215,11 +215,11 @@ async def test_textrazor_engine():
     print("=" * 60)
     
     try:
-        engine = AinfluencerTextRazor()
+        engine = IaCheriesTextRazor()
         
         # Texte de test
         test_text = """
-        Ainfluencer est une plateforme révolutionnaire d'intelligence artificielle 
+        IA Chéries est une plateforme révolutionnaire d'intelligence artificielle 
         qui transforme la création de contenu. Grâce à ses 53 agents IA et 680 microservices, 
         la plateforme permet aux entreprises de générer du contenu de haute qualité 
         automatiquement. L'entreprise, basée à Berlin, vise un chiffre d'affaires 

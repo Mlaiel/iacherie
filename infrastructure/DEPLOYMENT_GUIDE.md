@@ -53,7 +53,7 @@ This guide provides comprehensive deployment procedures for the IA Chérie Infra
 ### Environment Setup
 ```bash
 # Set environment variables
-export AINFLUE_ENV=production  # dev, staging, production
+export IACHERIE_ENV=production  # dev, staging, production
 export CLOUD_PROVIDER=aws      # aws, gcp, azure, multi
 export REGION=us-east-1
 export CLUSTER_NAME=iacherie-infrastructure
@@ -79,7 +79,7 @@ aws s3api put-bucket-versioning \
 # Provision infrastructure
 cd infrastructure/terraform/aws
 terraform init
-terraform plan -var="environment=${AINFLUE_ENV}"
+terraform plan -var="environment=${IACHERIE_ENV}"
 terraform apply -auto-approve
 ```
 
@@ -100,7 +100,7 @@ gsutil mb gs://iacherie-terraform-state-${REGION}
 # Provision infrastructure
 cd infrastructure/terraform/gcp
 terraform init
-terraform plan -var="environment=${AINFLUE_ENV}"
+terraform plan -var="environment=${IACHERIE_ENV}"
 terraform apply -auto-approve
 ```
 
@@ -114,7 +114,7 @@ az group create --name iacherie-infrastructure --location ${REGION}
 
 # Create storage account for Terraform state
 az storage account create \
-  --name ainfluestoragestate \
+  --name iacheriestoragestate \
   --resource-group iacherie-infrastructure \
   --location ${REGION} \
   --sku Standard_LRS
@@ -122,7 +122,7 @@ az storage account create \
 # Provision infrastructure
 cd infrastructure/terraform/azure
 terraform init
-terraform plan -var="environment=${AINFLUE_ENV}"
+terraform plan -var="environment=${IACHERIE_ENV}"
 terraform apply -auto-approve
 ```
 
@@ -274,10 +274,10 @@ docker tag iacherie/infrastructure-orchestrator:latest \
 docker push gcr.io/${PROJECT_ID}/iacherie/infrastructure-orchestrator:latest
 
 # Azure Container Registry
-az acr login --name ainflueregistry
+az acr login --name iacherieregistry
 docker tag iacherie/infrastructure-orchestrator:latest \
-  ainflueregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
-docker push ainflueregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
+  iacherieregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
+docker push iacherieregistry.azurecr.io/iacherie/infrastructure-orchestrator:latest
 ```
 
 ### 2. Helm Chart Deployment
@@ -292,13 +292,13 @@ helm repo update
 helm install iacherie-infrastructure iacherie/infrastructure \
   --namespace iacherie-system \
   --create-namespace \
-  --set environment=${AINFLUE_ENV} \
+  --set environment=${IACHERIE_ENV} \
   --set cloudProvider=${CLOUD_PROVIDER} \
   --set region=${REGION} \
   --set image.tag=latest \
   --set monitoring.enabled=true \
   --set security.enabled=true \
-  --values infrastructure/helm/values-${AINFLUE_ENV}.yaml
+  --values infrastructure/helm/values-${IACHERIE_ENV}.yaml
 ```
 
 #### Verify Deployment

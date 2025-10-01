@@ -454,7 +454,7 @@ class DevelopmentConfig:
                     "type": "postgresql",
                     "host": "localhost",
                     "port": 5432,
-                    "name": "ainflue_dev"
+                    "name": "iacherie_dev"
                 },
                 "redis": {
                     "host": "localhost",

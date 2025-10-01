@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Helm Ingress template for Ainflue platform
+# Enterprise-grade Helm Ingress template for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -245,7 +245,7 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.ingress.className | default "nginx" }}
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: {{ .Values.ingress.monitoring.authSecret | default (printf "%s-monitoring-auth" $fullName) }}
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Ainflue Monitoring'
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - IA Chéries Monitoring'
 spec:
   ingressClassName: {{ .Values.ingress.className | default "nginx" }}
   {{- if .Values.ingress.tls }}

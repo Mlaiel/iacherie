@@ -1,5 +1,5 @@
 #!/bin/bash
-# Production Environment Deployment Script - Ainflue Platform
+# Production Environment Deployment Script - IA Chéries Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Comprehensive production setup with secrets, environment variables, and monitoring
 
@@ -18,7 +18,7 @@ MONITORING_NAMESPACE=${MONITORING_NAMESPACE:-"ainflue-monitoring"}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KUBERNETES_DIR="$(dirname "$SCRIPT_DIR")"
 
-echo -e "${BLUE}🚀 Starting Ainflue Production Environment Deployment${NC}"
+echo -e "${BLUE}🚀 Starting IA Chéries Production Environment Deployment${NC}"
 echo -e "${BLUE}=================================================${NC}"
 
 # Function to print status
@@ -173,4 +173,4 @@ echo "✅ Monitoring: Prometheus, Grafana, Jaeger"
 echo "✅ Dashboards: System Overview, AI Models, Database Performance, Business Metrics"
 echo "✅ Security: Production-hardened settings"
 
-echo -e "${GREEN}🚀 Ainflue Platform is ready for production!${NC}"
+echo -e "${GREEN}🚀 IA Chéries Platform is ready for production!${NC}"

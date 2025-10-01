@@ -12,7 +12,7 @@ class BackendConfig:
     """Backend configuration settings"""
     
     def __init__(self):
-        self.database_url = os.getenv('DATABASE_URL', 'sqlite:///ainflue.db')
+        self.database_url = os.getenv('DATABASE_URL', 'sqlite:///iacherie.db')
         self.redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
         self.environment = os.getenv('ENVIRONMENT', 'development')
         self.debug = os.getenv('DEBUG', 'true').lower() == 'true'

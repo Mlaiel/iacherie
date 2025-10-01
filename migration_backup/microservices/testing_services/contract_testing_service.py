@@ -1,6 +1,6 @@
 """
 Contract Testing Service - Enterprise API Contract Validation
-Ainflue Platform - Microservices Architecture
+IA Chéries Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """
@@ -107,7 +107,7 @@ class ContractTestingService:
     
     async def _load_service_contracts(self):
         """Load service contracts from configuration"""
-        # Default contracts for Ainflue services
+        # Default contracts for IA Chéries services
         self.contracts = {
             "api_gateway": ServiceContract(
                 service_name="api_gateway",

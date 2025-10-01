@@ -1,5 +1,5 @@
 /**
- * Node.js-specific Implementation for Ainflue JavaScript SDK
+ * Node.js-specific Implementation for IA Chéries JavaScript SDK
  * Optimized for server-side environments with file system and OS integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -8,8 +8,8 @@
  * Expert Implementation by: Backend Senior + DevOps + Security + Audio Engineer + DBA
  */
 
-import { AinflueClient } from './ainflue-client';
-import { AinflueConfig } from './config';
+import { IA ChériesClient } from './ainflue-client';
+import { IA ChériesConfig } from './config';
 import { AxiosAdapter } from './axios-adapter';
 import { ApiResponse } from './interfaces';
 import { SecurityError, ConfigurationError, NetworkError } from './errors';
@@ -20,15 +20,15 @@ import * as crypto from 'crypto';
 import { performance } from 'perf_hooks';
 
 /**
- * Node.js-optimized Ainflue SDK Client
+ * Node.js-optimized IA Chéries SDK Client
  */
-export class NodeClient extends AinflueClient {
+export class NodeClient extends IA ChériesClient {
   private fileSystemWatcher?: fs.FSWatcher;
   private processMonitor: ProcessMonitor;
   private storageManager: NodeStorageManager;
   private networkMonitor: NetworkMonitor;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: IA ChériesConfig) {
     // Use AxiosAdapter for Node.js with better HTTP/2 support
     super({
       ...config,

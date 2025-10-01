@@ -211,7 +211,7 @@ class EnterpriseSecurityFramework:
             pass
         
         # Initialisation IA Chérie security policies
-        self._initialize_ainflue_security()
+        self._initialize_iacherie_security()
         
         logger.info("✅ Enterprise Security Framework initialisé")
 
@@ -484,7 +484,7 @@ class EnterpriseSecurityFramework:
             }
         }
 
-    def _initialize_ainflue_security(self):
+    def _initialize_iacherie_security(self):
         """Initialisation politiques sécurité IA Chérie"""
         logger.info("🎯 Configuration sécurité IA Chérie enterprise")
         

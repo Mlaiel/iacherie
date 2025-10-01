@@ -1,5 +1,5 @@
 /**
- * 🔧 Ainflue API Client - Enterprise HTTP Client
+ * 🔧 IA Chéries API Client - Enterprise HTTP Client
  * 
  * @fileoverview Configured HTTP client for backend API integration
  * @author Fahed Mlaiel <mlaiel@live.de>

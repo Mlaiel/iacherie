@@ -210,7 +210,7 @@ class MultiTenantKeyIsolator:
     def _derive_master_tenant_key(self) -> bytes:
         """Derive master tenant isolation key."""
         # In production, this would come from HSM or secure key store
-        seed = b"ainflue_multi_tenant_master_key_v1_2025"
+        seed = b"iacherie_multi_tenant_master_key_v1_2025"
         return hashlib.pbkdf2_hmac('sha256', seed, b'tenant_isolation_salt', 100000)
 
     def _initialize_default_configurations(self):
@@ -648,7 +648,7 @@ class MultiTenantKeyIsolator:
         hkdf = HKDF(
             algorithm=hashes.SHA256(),
             length=32,  # 256-bit key
-            salt=b"ainflue_tenant_isolation_salt_v1",
+            salt=b"iacherie_tenant_isolation_salt_v1",
             info=context
         )
         

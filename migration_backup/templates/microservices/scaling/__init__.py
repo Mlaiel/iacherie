@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📈 Scaling Templates - Ainflue Microservices Enterprise
+📈 Scaling Templates - IA Chéries Microservices Enterprise
 
 Auto-scaling and resource management templates for horizontal scaling,
 vertical scaling, load balancing, and capacity planning.

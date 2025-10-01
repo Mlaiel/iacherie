@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Gateway Rate Limiting Service - Enterprise Grade
-Service de limitation de débit enterprise pour API Gateway Ainflue
+Service de limitation de débit enterprise pour API Gateway IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

@@ -782,7 +782,7 @@ class DataLoader:
         await asyncio.sleep(1.0)
         
         table_name = config.get("table", "etl_output")
-        database_url = config.get("connection_string", "postgresql://localhost/ainflue")
+        database_url = config.get("connection_string", "postgresql://localhost/iacherie")
         
         # In production, would use actual database connection
         logger.info(f"Loaded {len(data)} records to table {table_name}")
@@ -824,7 +824,7 @@ class DataLoader:
         # Simulate API loading
         await asyncio.sleep(1.5)
         
-        api_url = config.get("url", "https://api.ainflue.com/data")
+        api_url = config.get("url", "https://api.iacherie.com/data")
         batch_size = config.get("batch_size", 100)
         
         # Simulate batch upload

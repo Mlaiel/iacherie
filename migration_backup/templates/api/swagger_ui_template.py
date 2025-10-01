@@ -1,4 +1,4 @@
-"""Swagger UI Template for Ainflue Platform
+"""Swagger UI Template for IA Chéries Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================
@@ -38,7 +38,7 @@ class SwaggerUICustomizer:
     def __init__(
         self,
         app: FastAPI,
-        title: str = "Ainflue API Documentation",
+        title: str = "IA Chéries API Documentation",
         description: str = "Enterprise Creator Economy Platform APIs",
         version: str = "1.0.0",
         terms_of_service: str = "https://ainflue.com/terms",
@@ -227,7 +227,7 @@ class SwaggerUICustomizer:
             # Add custom extensions
             openapi_schema["x-logo"] = {
                 "url": "https://ainflue.com/logo.png",
-                "altText": "Ainflue Logo"
+                "altText": "IA Chéries Logo"
             }
             
             # Add tags with descriptions
@@ -245,7 +245,7 @@ class SwaggerUICustomizer:
 
 ## 🚀 Creator Economy Platform
 
-The Ainflue API provides comprehensive functionality for content creators, collaboration tools, and monetization systems.
+The IA Chéries API provides comprehensive functionality for content creators, collaboration tools, and monetization systems.
 
 ### 🔑 Key Features
 
@@ -595,7 +595,7 @@ Commercial use requires explicit written authorization.
             
             /* Custom branding */
             .swagger-ui .topbar .download-url-wrapper:after {
-                content: "Powered by Ainflue";
+                content: "Powered by IA Chéries";
                 color: #e2e8f0;
                 font-size: 12px;
                 margin-left: 20px;
@@ -658,7 +658,7 @@ Commercial use requires explicit written authorization.
 # Example usage function
 def setup_swagger_ui(
     app: FastAPI,
-    title: str = "Ainflue Creator Economy API",
+    title: str = "IA Chéries Creator Economy API",
     description: str = "Enterprise-grade APIs for content creators and collaboration",
     version: str = "1.0.0",
     enable_authentication: bool = True,
@@ -686,7 +686,7 @@ def setup_swagger_ui(
 
 # Configuration template
 SWAGGER_UI_CONFIG = {
-    "title": "Ainflue Creator Economy API",
+    "title": "IA Chéries Creator Economy API",
     "description": "Enterprise-grade APIs for content creators and collaboration",
     "version": "1.0.0",
     "theme": "default",  # "default" or "dark"
@@ -724,7 +724,7 @@ if __name__ == "__main__":
     # Setup Swagger UI
     swagger_ui = setup_swagger_ui(
         app,
-        title="Ainflue API Documentation",
+        title="IA Chéries API Documentation",
         description="Creator Economy Platform APIs",
         version="1.0.0"
     )

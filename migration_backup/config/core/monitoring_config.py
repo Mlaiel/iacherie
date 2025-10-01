@@ -1,4 +1,4 @@
-"""Ainflue Monitoring Configuration
+"""IA Chéries Monitoring Configuration
 ===============================
 
 Enterprise monitoring configurations for system health, performance metrics,
@@ -482,5 +482,5 @@ __all__ = [
     "monitoring_config"
 ]
 
-logger.info("📊 Ainflue Monitoring Configuration loaded")
+logger.info("📊 IA Chéries Monitoring Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

@@ -1,5 +1,5 @@
 /**
- * Axios HTTP Adapter for Ainflue JavaScript SDK
+ * Axios HTTP Adapter for IA Chéries JavaScript SDK
  * Axios-based implementation with enterprise features and interceptors
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

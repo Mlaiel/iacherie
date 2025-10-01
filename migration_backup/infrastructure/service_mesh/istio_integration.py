@@ -1,9 +1,9 @@
 """Istio Service Mesh Integration - Enterprise Microservices Management
 ====================================================================
-Production-ready Istio integration for Ainflue microservices
+Production-ready Istio integration for IA Chéries microservices
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 WARNING: This code and concept are protected by copyright.
@@ -101,7 +101,7 @@ class IstioServiceMesh:
         self.services_registry: Dict[str, Dict[str, Any]] = {}
         
     async def initialize_mesh(self) -> Dict[str, Any]:
-        """Initialize Istio service mesh for Ainflue"""
+        """Initialize Istio service mesh for IA Chéries"""
         try:
             # Create namespace
             await self._create_namespace()
@@ -118,7 +118,7 @@ class IstioServiceMesh:
             # Enable observability
             await self._enable_observability()
             
-            # Register Ainflue services
+            # Register IA Chéries services
             await self._register_ainflue_services()
             
             initialization_result = {
@@ -383,10 +383,10 @@ class IstioServiceMesh:
         return True
         
     async def _register_ainflue_services(self) -> bool:
-        """Register all Ainflue services in the mesh"""
-        from . import AINFLUE_SERVICES
+        """Register all IA Chéries services in the mesh"""
+        from . import IA CHÉRIES_SERVICES
         
-        for service_name, service_config in AINFLUE_SERVICES.items():
+        for service_name, service_config in IA CHÉRIES_SERVICES.items():
             self.services_registry[service_name] = {
                 'name': service_name,
                 'port': service_config['port'],
@@ -396,7 +396,7 @@ class IstioServiceMesh:
                 'registration_time': datetime.utcnow().isoformat()
             }
             
-        logger.info(f"Registered {len(AINFLUE_SERVICES)} Ainflue services")
+        logger.info(f"Registered {len(IA CHÉRIES_SERVICES)} IA Chéries services")
         return True
         
     async def _register_service_in_mesh(self, service_name: str, service_config: Dict[str, Any]) -> bool:

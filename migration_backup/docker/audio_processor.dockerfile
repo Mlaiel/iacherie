@@ -4,7 +4,7 @@
 
 FROM ubuntu:22.04 AS development
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Advanced Audio Processor - Development Environment"
+LABEL description="IA Chéries Advanced Audio Processor - Development Environment"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -31,7 +31,7 @@ CMD ["python3", "-m", "uvicorn", "audio.main:app", "--host", "0.0.0.0", "--port"
 
 FROM ubuntu:22.04 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Advanced Audio Processor - Real-time AI-enhanced audio processing"
+LABEL description="IA Chéries Advanced Audio Processor - Real-time AI-enhanced audio processing"
 LABEL version="1.0.0"
 
 # Prevent interactive prompts

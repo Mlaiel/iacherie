@@ -147,7 +147,7 @@ class MultiFormatContentCapacityAnalyzer:
         self._initialize_format_pipelines()
         self._setup_ml_models()
         
-        logger.info("🎬 MultiFormatContentCapacityAnalyzer initialisé - Ainflue Creator Economy")
+        logger.info("🎬 MultiFormatContentCapacityAnalyzer initialisé - IA Chéries Creator Economy")
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Configuration par défaut enterprise"""
@@ -1126,7 +1126,7 @@ def create_multi_format_analyzer(
 # Point d'entrée principal
 async def main():
     """Point d'entrée principal pour tests et démonstration"""
-    print("🎬 Initialisation Multi-Format Content Capacity Analyzer - Ainflue Creator Economy")
+    print("🎬 Initialisation Multi-Format Content Capacity Analyzer - IA Chéries Creator Economy")
     
     analyzer = create_multi_format_analyzer(enable_ml=True, creator_optimization=True)
     
@@ -1157,7 +1157,7 @@ async def main():
     print(f"\n🏥 Status: {health['status']} - {health['formats_supported']} formats supportés")
     
     print("\n🎯 Multi-Format Content Capacity Analyzer - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chéries")
 
 
 if __name__ == "__main__":

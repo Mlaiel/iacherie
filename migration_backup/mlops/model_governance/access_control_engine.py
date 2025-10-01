@@ -374,7 +374,7 @@ class AccessControlEngine:
         
         # Additional business logic checks based on context
         if context:
-            # Example: Check creator type permissions for Ainflue business logic
+            # Example: Check creator type permissions for IA Chéries business logic
             creator_type = context.get('creator_type')
             if creator_type and not await self._check_creator_permissions(user, creator_type):
                 return False
@@ -382,7 +382,7 @@ class AccessControlEngine:
         return True
     
     async def _check_creator_permissions(self, user: User, creator_type: str) -> bool:
-        """Vérifie les permissions spécifiques aux créateurs Ainflue"""
+        """Vérifie les permissions spécifiques aux créateurs IA Chéries"""
         # Business logic: Different permissions for musicians, bloggers, etc.
         creator_permissions = user.attributes.get('creator_permissions', [])
         return creator_type in creator_permissions or 'all' in creator_permissions

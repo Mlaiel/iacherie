@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enterprise Reporting Dashboard - Ainflue Collaboration Platform
+Enterprise Reporting Dashboard - IA Chéries Collaboration Platform
 Comprehensive analytics and business intelligence for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

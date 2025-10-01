@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ainflue Desktop - Performance Benchmark Script
+# IA Chéries Desktop - Performance Benchmark Script
 # 
 # Comprehensive performance testing and benchmarking for desktop application
 # Includes startup time, memory usage, CPU usage, and responsiveness metrics
@@ -26,7 +26,7 @@ BENCHMARK_REPORT_FILE="$PROJECT_ROOT/test_reports/desktop/performance_benchmark_
 BENCHMARK_ITERATIONS=3
 EXIT_CODE=0
 
-echo -e "${BLUE}⚡ AINFLUE DESKTOP - PERFORMANCE BENCHMARK${NC}"
+echo -e "${BLUE}⚡ IA CHÉRIES DESKTOP - PERFORMANCE BENCHMARK${NC}"
 echo "==========================================="
 echo "Desktop Directory: $DESKTOP_DIR"
 echo "Project Root: $PROJECT_ROOT"
@@ -41,7 +41,7 @@ mkdir -p "$(dirname "$BENCHMARK_REPORT_FILE")"
 cat > "$BENCHMARK_REPORT_FILE" << EOF
 {
   "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-  "project": "Ainflue Desktop",
+  "project": "IA Chéries Desktop",
   "author": "Fahed Mlaiel",
   "contact": "mlaiel@live.de",
   "benchmark_version": "1.0.0",

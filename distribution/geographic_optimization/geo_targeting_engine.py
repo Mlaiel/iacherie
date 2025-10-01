@@ -117,7 +117,7 @@ class AdvancedGeoTargetingEngine:
         self._initialize_cultural_profiles()
         
         # Geocoding service
-        self.geocoder = Nominatim(user_agent="ainflue_geo_targeting")
+        self.geocoder = Nominatim(user_agent="iacherie_geo_targeting")
 
     def _initialize_geographic_database(self):
         """Initialize comprehensive geographic database"""

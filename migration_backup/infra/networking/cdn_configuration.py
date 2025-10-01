@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - CDN Configuration
+# IA Chéries Infrastructure Module - CDN Configuration
 # ================================================
 # 
-# Enterprise-grade CDN configuration for Ainflue platform
+# Enterprise-grade CDN configuration for IA Chéries platform
 # Supports multi-cloud content delivery and enterprise optimization
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -118,7 +118,7 @@ class CDNConfigurationManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_default_cache_rules(self) -> List[CacheRule]:
-        """Define default cache rules for Ainflue platform"""
+        """Define default cache rules for IA Chéries platform"""
         return [
             # Static assets - long cache
             CacheRule(
@@ -280,7 +280,7 @@ class CDNConfigurationManager:
             # Create distribution configuration
             distribution_config = {
                 'CallerReference': f"ainflue-{self.config.environment}-{hash(self.config.origin_domain)}",
-                'Comment': f'Ainflue {self.config.environment} CDN Distribution',
+                'Comment': f'IA Chéries {self.config.environment} CDN Distribution',
                 'DefaultRootObject': 'index.html',
                 'Origins': {
                     'Quantity': 1,
@@ -391,7 +391,7 @@ class CDNConfigurationManager:
                 'sku': {'name': 'Standard_Microsoft'},
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue'
+                    'Project': 'IA Chéries'
                 }
             }
             
@@ -420,7 +420,7 @@ class CDNConfigurationManager:
                 'optimization_type': 'GeneralWebDelivery',
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue'
+                    'Project': 'IA Chéries'
                 }
             }
             
@@ -450,7 +450,7 @@ class CDNConfigurationManager:
             
             backend_service = {
                 'name': backend_service_name,
-                'description': f'Ainflue {self.config.environment} backend service',
+                'description': f'IA Chéries {self.config.environment} backend service',
                 'protocol': 'HTTPS',
                 'port_name': 'https',
                 'timeout_sec': 30,
@@ -540,8 +540,8 @@ class CDNConfigurationManager:
                 ValidationMethod='DNS',
                 Tags=[
                     {'Key': 'Environment', 'Value': self.config.environment},
-                    {'Key': 'Project', 'Value': 'Ainflue'},
-                    {'Key': 'ManagedBy', 'Value': 'AinflueCDNManager'}
+                    {'Key': 'Project', 'Value': 'IA Chéries'},
+                    {'Key': 'ManagedBy', 'Value': 'IA ChériesCDNManager'}
                 ]
             )
             
@@ -566,7 +566,7 @@ class CDNConfigurationManager:
             
             ssl_certificate = {
                 'name': cert_name,
-                'description': f'Ainflue {self.config.environment} SSL certificate',
+                'description': f'IA Chéries {self.config.environment} SSL certificate',
                 'managed': {
                     'domains': domains
                 }

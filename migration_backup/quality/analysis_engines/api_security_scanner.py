@@ -1,4 +1,4 @@
-"""🔐 API Security Scanner - Ainflue Platform
+"""🔐 API Security Scanner - IA Chéries Platform
 ================================================================
 Expert: SECURITY_ENGINEER + API_ARCHITECT + PENETRATION_TESTER + BACKEND_SENIOR
 Created: 2025-01-XX

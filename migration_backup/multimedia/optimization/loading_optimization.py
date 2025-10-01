@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - Loading Optimization
+IA Chéries Platform - Multimedia Optimization - Loading Optimization
 Professional loading time optimization for multimedia content
 
 Author: Fahed Mlaiel (mlaiel@live.de)

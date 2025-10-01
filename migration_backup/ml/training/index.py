@@ -1,11 +1,11 @@
 """
-🚀 ML Training Module Index - Ainflue Enterprise
+🚀 ML Training Module Index - IA Chéries Enterprise
 ==============================================
 Orchestrator principal pour tous les composants d'entraînement ML enterprise.
 Training pipeline coordination + model optimization + distributed learning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Training
+Project: IA Chéries ML Training
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -76,7 +76,7 @@ class TrainingMode(Enum):
     AUTOML = "automl"
 
 class ModelType(Enum):
-    """Types de modèles Ainflue"""
+    """Types de modèles IA Chéries"""
     CONTENT_CLASSIFIER = "content_classifier"
     QUALITY_ASSESSOR = "quality_assessor"
     SENTIMENT_ANALYZER = "sentiment_analyzer"
@@ -138,11 +138,11 @@ class TrainingResult:
     business_impact_score: float
     deployment_readiness: bool
 
-class AinflueTRainingOrchestrator:
+class IA ChériesTRainingOrchestrator:
     """
-    Orchestrateur principal entraînement ML Ainflue Enterprise.
+    Orchestrateur principal entraînement ML IA Chéries Enterprise.
     
-    Logique Métier Ainflue:
+    Logique Métier IA Chéries:
     Créateurs multi-format → IA Processing → Protection → Monétisation → 
     Collaboration & Gamification → SEO → Distribution multi-plateformes
     
@@ -543,9 +543,9 @@ class BusinessIntegrationException(Exception):
     pass
 
 # Factory Functions
-def create_training_orchestrator(config: TrainingConfiguration) -> AinflueTRainingOrchestrator:
+def create_training_orchestrator(config: TrainingConfiguration) -> IA ChériesTRainingOrchestrator:
     """Factory création orchestrateur entraînement."""
-    return AinflueTRainingOrchestrator(config)
+    return IA ChériesTRainingOrchestrator(config)
 
 def create_automl_pipeline(model_type: ModelType) -> AutoMLPipeline:
     """Factory création pipeline AutoML."""
@@ -559,7 +559,7 @@ def create_distributed_training_manager(num_gpus: int) -> DistributedTrainingMan
 async def train_ainflue_model(model_type: ModelType, training_mode: TrainingMode, 
                              dataset_path: str, **kwargs) -> TrainingResult:
     """
-    Interface principale entraînement modèles Ainflue.
+    Interface principale entraînement modèles IA Chéries.
     
     Creator Economy Training pour:
     - Content Classification (audio, video, image, text)
@@ -582,7 +582,7 @@ async def train_ainflue_model(model_type: ModelType, training_mode: TrainingMode
 
 # Export API
 __all__ = [
-    'AinflueTRainingOrchestrator',
+    'IA ChériesTRainingOrchestrator',
     'TrainingConfiguration',
     'TrainingResult',
     'TrainingMode',

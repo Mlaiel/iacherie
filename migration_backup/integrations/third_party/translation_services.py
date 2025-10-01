@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Translation Services Integration Module
+IA Chéries Platform - Translation Services Integration Module
 Enterprise-grade translation services for global content localization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -934,11 +934,11 @@ def create_translation_manager(config: Dict[str, Any]) -> TranslationServicesMan
     """Create configured translation manager"""
     return TranslationServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def ainflue_content_localization_workflow(content: str, target_languages: List[str], 
                                               content_type: ContentType = ContentType.TEXT) -> Dict[str, Any]:
     """
-    Complete content localization workflow for Ainflue creators
+    Complete content localization workflow for IA Chéries creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -974,7 +974,7 @@ async def ainflue_content_localization_workflow(content: str, target_languages: 
             target_language=target_lang,
             content_type=content_type,
             quality_level=QualityLevel.ENHANCED,
-            domain="marketing"  # Ainflue is content marketing platform
+            domain="marketing"  # IA Chéries is content marketing platform
         )
         translation_requests.append(request)
         
@@ -1011,7 +1011,7 @@ if __name__ == "__main__":
     async def test_translation_services():
         """Test translation services functionality"""
         
-        test_content = "Welcome to Ainflue - the AI-powered content creation and monetization platform for creators worldwide!"
+        test_content = "Welcome to IA Chéries - the AI-powered content creation and monetization platform for creators worldwide!"
         test_languages = ["es", "fr", "de", "ja", "zh"]
         
         result = await ainflue_content_localization_workflow(
@@ -1025,5 +1025,5 @@ if __name__ == "__main__":
     # asyncio.run(test_translation_services())
     
     print("✅ Translation Services Integration Module loaded successfully")
-    print("🌍 Enterprise-grade localization for global Ainflue creators")
+    print("🌍 Enterprise-grade localization for global IA Chéries creators")
     print("📝 Multi-provider translation, quality analysis, and memory optimization ready")

@@ -1,8 +1,8 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise Application Deployment Playbook
-# Automated deployment of Ainflue platform applications
+# Automated deployment of IA Chéries platform applications
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Application Deployment"
+- name: "IA Chéries Enterprise Application Deployment"
   hosts: application_servers
   become: yes
   gather_facts: yes
@@ -801,7 +801,7 @@
         method: POST
         body_format: json
         body:
-          text: "🚀 Ainflue {{ environment }} application deployment completed successfully"
+          text: "🚀 IA Chéries {{ environment }} application deployment completed successfully"
           attachments:
           - color: "good"
             fields:

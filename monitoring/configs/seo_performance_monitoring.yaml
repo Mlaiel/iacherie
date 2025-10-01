@@ -113,15 +113,15 @@ seo_monitoring:
     
     # Métriques rankings
     ranking_metrics:
-      - metric: "ainflue_seo_keyword_position"
+      - metric: "iacherie_seo_keyword_position"
         description: "Position mot-clé dans résultats recherche"
         labels: ["creator_id", "keyword", "search_engine", "geo_location", "device_type"]
         
-      - metric: "ainflue_seo_ranking_change"
+      - metric: "iacherie_seo_ranking_change"
         description: "Changement position ranking"
         labels: ["keyword_category", "change_direction", "magnitude"]
         
-      - metric: "ainflue_seo_serp_features"
+      - metric: "iacherie_seo_serp_features"
         description: "Présence fonctionnalités SERP"
         labels: ["feature_type", "keyword", "search_engine"]
 
@@ -207,15 +207,15 @@ seo_monitoring:
     
     # Métriques optimisation contenu
     optimization_metrics:
-      - metric: "ainflue_seo_content_score"
+      - metric: "iacherie_seo_content_score"
         description: "Score SEO contenu créateur"
         labels: ["creator_id", "content_type", "optimization_level"]
         
-      - metric: "ainflue_seo_optimization_impact"
+      - metric: "iacherie_seo_optimization_impact"
         description: "Impact optimisations SEO sur performance"
         labels: ["optimization_type", "content_category", "time_since_optimization"]
         
-      - metric: "ainflue_seo_content_freshness"
+      - metric: "iacherie_seo_content_freshness"
         description: "Fraîcheur contenu pour SEO"
         labels: ["content_age_category", "update_frequency", "performance_trend"]
 
@@ -271,15 +271,15 @@ seo_monitoring:
     
     # Métriques performance
     performance_metrics:
-      - metric: "ainflue_seo_organic_traffic"
+      - metric: "iacherie_seo_organic_traffic"
         description: "Trafic organique créateur"
         labels: ["creator_id", "traffic_source", "landing_page_type", "user_intent"]
         
-      - metric: "ainflue_seo_page_speed_score"
+      - metric: "iacherie_seo_page_speed_score"
         description: "Score vitesse pages créateur"
         labels: ["page_type", "device_type", "geographic_region"]
         
-      - metric: "ainflue_seo_conversion_rate"
+      - metric: "iacherie_seo_conversion_rate"
         description: "Taux conversion trafic organique"
         labels: ["conversion_type", "traffic_source", "creator_tier"]
 
@@ -342,15 +342,15 @@ seo_monitoring:
     
     # Métriques visibilité
     visibility_metrics:
-      - metric: "ainflue_seo_visibility_score"
+      - metric: "iacherie_seo_visibility_score"
         description: "Score visibilité SEO créateur"
         labels: ["creator_id", "visibility_category", "geographic_market"]
         
-      - metric: "ainflue_seo_brand_mentions"
+      - metric: "iacherie_seo_brand_mentions"
         description: "Mentions marque créateur en ligne"
         labels: ["mention_source", "mention_sentiment", "mention_context"]
         
-      - metric: "ainflue_seo_share_of_voice"
+      - metric: "iacherie_seo_share_of_voice"
         description: "Part de voix créateur vs concurrents"
         labels: ["topic_category", "competitor_comparison", "market_segment"]
 
@@ -428,15 +428,15 @@ ai_seo_insights:
   
   # Métriques IA SEO
   ai_seo_metrics:
-    - metric: "ainflue_seo_ai_prediction_accuracy"
+    - metric: "iacherie_seo_ai_prediction_accuracy"
       description: "Précision prédictions IA SEO"
       labels: ["prediction_type", "time_horizon", "creator_segment"]
       
-    - metric: "ainflue_seo_recommendation_adoption_rate"
+    - metric: "iacherie_seo_recommendation_adoption_rate"
       description: "Taux adoption recommandations SEO IA"
       labels: ["recommendation_type", "creator_tier", "implementation_difficulty"]
       
-    - metric: "ainflue_seo_competitive_advantage_score"
+    - metric: "iacherie_seo_competitive_advantage_score"
       description: "Score avantage concurrentiel SEO"
       labels: ["creator_id", "competitive_factor", "market_position"]
 
@@ -469,11 +469,11 @@ local_seo_optimization:
   
   # Métriques SEO local
   local_seo_metrics:
-    - metric: "ainflue_local_seo_ranking"
+    - metric: "iacherie_local_seo_ranking"
       description: "Position locale dans résultats recherche"
       labels: ["creator_id", "local_keyword", "geographic_area", "device_type"]
       
-    - metric: "ainflue_local_seo_visibility"
+    - metric: "iacherie_local_seo_visibility"
       description: "Visibilité SEO local créateur"
       labels: ["business_category", "competition_level", "geographic_radius"]
 
@@ -513,11 +513,11 @@ technical_seo_monitoring:
     
   # Métriques SEO technique
   technical_seo_metrics:
-    - metric: "ainflue_technical_seo_health_score"
+    - metric: "iacherie_technical_seo_health_score"
       description: "Score santé SEO technique"
       labels: ["site_section", "issue_category", "severity_level"]
       
-    - metric: "ainflue_seo_crawl_efficiency"
+    - metric: "iacherie_seo_crawl_efficiency"
       description: "Efficacité crawl moteurs recherche"
       labels: ["crawler_type", "page_category", "crawl_depth"]
 

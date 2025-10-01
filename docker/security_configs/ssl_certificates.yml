@@ -2,14 +2,14 @@
 version: '3.8'
 
 certificates:
-  api_ainflue_com:
+  api_iacherie_com:
     domains:
       - api.iacherie.com
       - www.api.iacherie.com
     provider: letsencrypt
     renewal: automatic
     
-  admin_ainflue_com:
+  admin_iacherie_com:
     domains:
       - admin.iacherie.com
     provider: internal_ca

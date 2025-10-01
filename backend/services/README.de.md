@@ -34,7 +34,7 @@ Diese Services-Architektur, ihre innovativen KI-Algorithmen, erweiterten Microse
 
 ## 🎯 Executive Summary
 
-Das **Services Backend** Modul ist Ainflues Enterprise-Microservices-Architektur, die skalierbare Business-Services, KI-gesteuerte Intelligence, sichere Datenverarbeitung und Enterprise-Grade-Infrastructure für die komplette Creator-Economy-Plattform bereitstellt.
+Das **Services Backend** Modul ist iacheries Enterprise-Microservices-Architektur, die skalierbare Business-Services, KI-gesteuerte Intelligence, sichere Datenverarbeitung und Enterprise-Grade-Infrastructure für die komplette Creator-Economy-Plattform bereitstellt.
 
 ### Kern Business Value
 
@@ -294,16 +294,16 @@ payment_result = await payment_service.process_payment(
 - **Training & Onboarding**: Professionelles Team-Training und Workshops
 
 ### Entwickler-Ressourcen
-- **[Entwickler-Portal](https://developers.ainflue.com)** - APIs, SDKs und Tools
-- **[Community-Forum](https://community.ainflue.com)** - Entwickler-Diskussionen und Support
-- **[Open Source](https://github.com/ainflue)** - Open Source Tools und Bibliotheken
+- **[Entwickler-Portal](https://developers.iacherie.com)** - APIs, SDKs und Tools
+- **[Community-Forum](https://community.iacherie.com)** - Entwickler-Diskussionen und Support
+- **[Open Source](https://github.com/iacherie)** - Open Source Tools und Bibliotheken
 
 ## 📞 Kontakt & Support
 
-**Technischer Support**: [support@ainflue.com](mailto:support@ainflue.com)
-**Enterprise-Vertrieb**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**Entwickler-Relations**: [developers@ainflue.com](mailto:developers@ainflue.com)
-**Sicherheitsfragen**: [security@ainflue.com](mailto:security@ainflue.com)
+**Technischer Support**: [support@iacherie.com](mailto:support@iacherie.com)
+**Enterprise-Vertrieb**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**Entwickler-Relations**: [developers@iacherie.com](mailto:developers@iacherie.com)
+**Sicherheitsfragen**: [security@iacherie.com](mailto:security@iacherie.com)
 
 **Projektleitung**: [Fahed Mlaiel](mailto:mlaiel@live.de)
 

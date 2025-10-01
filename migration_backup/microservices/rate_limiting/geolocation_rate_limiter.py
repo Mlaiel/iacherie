@@ -1,11 +1,11 @@
 """
-Geolocation Rate Limiter Enterprise - Ainflue
+Geolocation Rate Limiter Enterprise - IA Chéries
 =============================================
 Rate Limiter avec géolocalisation pour compliance régionale.
 Geographic limits + compliance + fraud detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chéries Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

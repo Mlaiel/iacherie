@@ -49,7 +49,7 @@ grafana_config:
       type: "influxdb"
       url: "http://influxdb:8086"
       access: "proxy"
-      database: "ainflue_creator_metrics"
+      database: "iacherie_creator_metrics"
       
   # Global Dashboard Settings
   global_settings:
@@ -105,7 +105,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 6, x: 0, y: 1}
         targets:
-          - expr: 'sum(ainflue_active_creators_total{creator_tier=~"$creator_tier", creator_type=~"$creator_type"})'
+          - expr: 'sum(iacherie_active_creators_total{creator_tier=~"$creator_tier", creator_type=~"$creator_type"})'
         fieldConfig:
           defaults:
             unit: "short"
@@ -120,7 +120,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 6, x: 6, y: 1}
         targets:
-          - expr: 'sum(increase(ainflue_revenue_usd_total{creator_tier=~"$creator_tier"}[24h]))'
+          - expr: 'sum(increase(iacherie_revenue_usd_total{creator_tier=~"$creator_tier"}[24h]))'
         fieldConfig:
           defaults:
             unit: "currencyUSD"
@@ -133,7 +133,7 @@ dashboards:
         type: "gauge"
         gridPos: {h: 4, w: 6, x: 12, y: 1}
         targets:
-          - expr: 'avg(ainflue_creator_satisfaction_score{creator_tier=~"$creator_tier"})'
+          - expr: 'avg(iacherie_creator_satisfaction_score{creator_tier=~"$creator_tier"})'
         fieldConfig:
           defaults:
             min: 0
@@ -152,7 +152,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 6, x: 18, y: 1}
         targets:
-          - expr: 'rate(ainflue_new_creators_total[7d]) * 86400 * 7'
+          - expr: 'rate(iacherie_new_creators_total[7d]) * 86400 * 7'
         fieldConfig:
           defaults:
             unit: "percent"
@@ -167,7 +167,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 12, x: 0, y: 6}
         targets:
-          - expr: 'sum by (creator_type) (rate(ainflue_revenue_usd_total{creator_tier=~"$creator_tier", creator_type=~"$creator_type"}[1h]))'
+          - expr: 'sum by (creator_type) (rate(iacherie_revenue_usd_total{creator_tier=~"$creator_tier", creator_type=~"$creator_type"}[1h]))'
             legendFormat: "{{creator_type}}"
         fieldConfig:
           defaults:
@@ -180,7 +180,7 @@ dashboards:
         type: "barchart"
         gridPos: {h: 8, w: 12, x: 12, y: 6}
         targets:
-          - expr: 'avg by (creator_type) (ainflue_creator_engagement_score{creator_tier=~"$creator_tier", creator_type=~"$creator_type"})'
+          - expr: 'avg by (creator_type) (iacherie_creator_engagement_score{creator_tier=~"$creator_tier", creator_type=~"$creator_type"})'
             legendFormat: "{{creator_type}}"
         fieldConfig:
           defaults:
@@ -199,7 +199,7 @@ dashboards:
       list:
         - name: "musician_id"
           type: "query"
-          query: 'label_values(ainflue_audio_processing_duration_ms{creator_type="musician"}, creator_id)'
+          query: 'label_values(iacherie_audio_processing_duration_ms{creator_type="musician"}, creator_id)'
           multi: true
           includeAll: true
           
@@ -219,7 +219,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 12, x: 0, y: 1}
         targets:
-          - expr: 'avg by (creator_id) (ainflue_audio_processing_duration_ms{creator_id=~"$musician_id", audio_format=~"$audio_format"})'
+          - expr: 'avg by (creator_id) (iacherie_audio_processing_duration_ms{creator_id=~"$musician_id", audio_format=~"$audio_format"})'
             legendFormat: "{{creator_id}}"
         fieldConfig:
           defaults:
@@ -237,7 +237,7 @@ dashboards:
         type: "gauge"
         gridPos: {h: 8, w: 12, x: 12, y: 1}
         targets:
-          - expr: 'avg(ainflue_audio_streaming_quality_score{creator_id=~"$musician_id"})'
+          - expr: 'avg(iacherie_audio_streaming_quality_score{creator_id=~"$musician_id"})'
         fieldConfig:
           defaults:
             min: 0
@@ -253,7 +253,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 8, x: 0, y: 10}
         targets:
-          - expr: 'avg(ainflue_music_collaboration_success_rate{creator_id=~"$musician_id"})'
+          - expr: 'avg(iacherie_music_collaboration_success_rate{creator_id=~"$musician_id"})'
         fieldConfig:
           defaults:
             unit: "percent"
@@ -262,7 +262,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 4, w: 16, x: 8, y: 10}
         targets:
-          - expr: 'sum by (platform) (ainflue_music_revenue_per_stream{creator_id=~"$musician_id"})'
+          - expr: 'sum by (platform) (iacherie_music_revenue_per_stream{creator_id=~"$musician_id"})'
             legendFormat: "{{platform}}"
 
   # 📝 3. Bloggers Dashboard - Dashboard blogueurs
@@ -282,7 +282,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 24, x: 0, y: 1}
         targets:
-          - expr: 'avg by (keyword) (ainflue_blog_seo_ranking_position{creator_type="blogger"})'
+          - expr: 'avg by (keyword) (iacherie_blog_seo_ranking_position{creator_type="blogger"})'
             legendFormat: "{{keyword}}"
         fieldConfig:
           defaults:
@@ -301,7 +301,7 @@ dashboards:
         type: "heatmap"
         gridPos: {h: 8, w: 12, x: 0, y: 10}
         targets:
-          - expr: 'ainflue_blog_content_delivery_ms{creator_type="blogger"}'
+          - expr: 'iacherie_blog_content_delivery_ms{creator_type="blogger"}'
         fieldConfig:
           defaults:
             unit: "ms"
@@ -310,7 +310,7 @@ dashboards:
         type: "table"
         gridPos: {h: 8, w: 12, x: 12, y: 10}
         targets:
-          - expr: 'sum by (article_id) (ainflue_blog_engagement_metrics{creator_type="blogger"})'
+          - expr: 'sum by (article_id) (iacherie_blog_engagement_metrics{creator_type="blogger"})'
             format: "table"
         fieldConfig:
           defaults:
@@ -334,16 +334,16 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 12, x: 0, y: 1}
         targets:
-          - expr: 'histogram_quantile(0.95, rate(ainflue_image_processing_duration_ms_bucket{creator_type="photographer"}[5m]))'
+          - expr: 'histogram_quantile(0.95, rate(iacherie_image_processing_duration_ms_bucket{creator_type="photographer"}[5m]))'
             legendFormat: "95th percentile"
-          - expr: 'histogram_quantile(0.50, rate(ainflue_image_processing_duration_ms_bucket{creator_type="photographer"}[5m]))'
+          - expr: 'histogram_quantile(0.50, rate(iacherie_image_processing_duration_ms_bucket{creator_type="photographer"}[5m]))'
             legendFormat: "50th percentile"
             
       - title: "Utilisation Stockage"
         type: "piechart"
         gridPos: {h: 8, w: 12, x: 12, y: 1}
         targets:
-          - expr: 'sum by (storage_tier) (ainflue_photographer_storage_utilization{creator_type="photographer"})'
+          - expr: 'sum by (storage_tier) (iacherie_photographer_storage_utilization{creator_type="photographer"})'
             legendFormat: "{{storage_tier}}"
 
   # 🎬 5. Influencers Dashboard
@@ -363,14 +363,14 @@ dashboards:
         type: "barchart"
         gridPos: {h: 8, w: 12, x: 0, y: 1}
         targets:
-          - expr: 'sum by (platform) (ainflue_influencer_followers_total{creator_type="influencer"})'
+          - expr: 'sum by (platform) (iacherie_influencer_followers_total{creator_type="influencer"})'
             legendFormat: "{{platform}}"
             
       - title: "Taux Engagement par Plateforme"
         type: "timeseries"
         gridPos: {h: 8, w: 12, x: 12, y: 1}
         targets:
-          - expr: 'avg by (platform) (ainflue_influencer_engagement_rate{creator_type="influencer"})'
+          - expr: 'avg by (platform) (iacherie_influencer_engagement_rate{creator_type="influencer"})'
             legendFormat: "{{platform}}"
 
   # 🏆 6. Creator Tier Performance Dashboard
@@ -390,7 +390,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 6, x: 0, y: 1}
         targets:
-          - expr: 'avg by (creator_tier) (ainflue_sla_compliance_rate)'
+          - expr: 'avg by (creator_tier) (iacherie_sla_compliance_rate)'
         fieldConfig:
           defaults:
             unit: "percent"
@@ -407,7 +407,7 @@ dashboards:
         type: "bargauge"
         gridPos: {h: 4, w: 18, x: 6, y: 1}
         targets:
-          - expr: 'avg by (creator_tier) (ainflue_support_response_time_minutes)'
+          - expr: 'avg by (creator_tier) (iacherie_support_response_time_minutes)'
             legendFormat: "{{creator_tier}}"
         fieldConfig:
           defaults:
@@ -431,7 +431,7 @@ dashboards:
         type: "piechart"
         gridPos: {h: 8, w: 12, x: 0, y: 1}
         targets:
-          - expr: 'sum by (revenue_stream) (ainflue_revenue_by_stream_usd)'
+          - expr: 'sum by (revenue_stream) (iacherie_revenue_by_stream_usd)'
             legendFormat: "{{revenue_stream}}"
         options:
           pieType: "donut"
@@ -440,7 +440,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 12, x: 12, y: 1}
         targets:
-          - expr: 'sum(increase(ainflue_revenue_usd_total[30d]))'
+          - expr: 'sum(increase(iacherie_revenue_usd_total[30d]))'
             legendFormat: "Revenus Mensuels"
         fieldConfig:
           defaults:
@@ -463,7 +463,7 @@ dashboards:
         type: "gauge"
         gridPos: {h: 8, w: 8, x: 0, y: 1}
         targets:
-          - expr: 'avg by (model_type) (ainflue_ml_model_accuracy)'
+          - expr: 'avg by (model_type) (iacherie_ml_model_accuracy)'
             legendFormat: "{{model_type}}"
         fieldConfig:
           defaults:
@@ -475,14 +475,14 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 8, w: 8, x: 8, y: 1}
         targets:
-          - expr: 'histogram_quantile(0.95, rate(ainflue_ai_inference_duration_ms_bucket[5m]))'
+          - expr: 'histogram_quantile(0.95, rate(iacherie_ai_inference_duration_ms_bucket[5m]))'
             legendFormat: "95th percentile"
             
       - title: "Drift Detection Modèles"
         type: "table"
         gridPos: {h: 8, w: 8, x: 16, y: 1}
         targets:
-          - expr: 'ainflue_ml_model_drift_score'
+          - expr: 'iacherie_ml_model_drift_score'
             format: "table"
 
   # 🛡️ 9. Security & Protection Dashboard
@@ -502,7 +502,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 8, x: 0, y: 1}
         targets:
-          - expr: 'sum(increase(ainflue_content_piracy_incidents_total[24h]))'
+          - expr: 'sum(increase(iacherie_content_piracy_incidents_total[24h]))'
         fieldConfig:
           defaults:
             unit: "short"
@@ -520,7 +520,7 @@ dashboards:
         type: "bargauge"
         gridPos: {h: 4, w: 16, x: 8, y: 1}
         targets:
-          - expr: 'avg by (protection_type) (ainflue_protection_effectiveness_rate)'
+          - expr: 'avg by (protection_type) (iacherie_protection_effectiveness_rate)'
             legendFormat: "{{protection_type}}"
 
   # 🎮 10. Gamification Dashboard
@@ -540,7 +540,7 @@ dashboards:
         type: "stat"
         gridPos: {h: 4, w: 6, x: 0, y: 1}
         targets:
-          - expr: 'sum(increase(ainflue_achievements_unlocked_total[24h]))'
+          - expr: 'sum(increase(iacherie_achievements_unlocked_total[24h]))'
         fieldConfig:
           defaults:
             unit: "short"
@@ -550,7 +550,7 @@ dashboards:
         type: "timeseries"
         gridPos: {h: 4, w: 18, x: 6, y: 1}
         targets:
-          - expr: 'sum by (challenge_type) (ainflue_challenge_participation_rate)'
+          - expr: 'sum by (challenge_type) (iacherie_challenge_participation_rate)'
             legendFormat: "{{challenge_type}}"
 
 # 🔄 Configuration Templates & Themes
@@ -575,7 +575,7 @@ dashboard_templates:
 
 # 🎨 Custom Themes
 themes:
-  ainflue_dark:
+  iacherie_dark:
     colors:
       primary: "#1a1a2e"
       secondary: "#16213e"
@@ -584,7 +584,7 @@ themes:
       warning: "#ffb400"
       error: "#ff4757"
       
-  ainflue_light:
+  iacherie_light:
     colors:
       primary: "#ffffff"
       secondary: "#f8f9fa"

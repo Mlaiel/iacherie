@@ -247,7 +247,7 @@ class SecurityComplianceIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Security & Compliance Hub",
+                "User-Agent": "IA Chéries/1.0 Security & Compliance Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
@@ -622,7 +622,7 @@ class SecurityComplianceIntegration:
         self,
         framework: ComplianceFramework,
         scope: List[str],
-        auditor: str = "Ainflue Compliance Team"
+        auditor: str = "IA Chéries Compliance Team"
     ) -> ComplianceAudit:
         """Run compliance audit for specified framework."""
         

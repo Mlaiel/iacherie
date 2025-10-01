@@ -2,7 +2,7 @@
 """Message Routing Intelligence Module
 
 Intelligent message routing with load balancing and failover automation
-for the Ainflue Message Queues Enterprise system.
+for the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -155,8 +155,8 @@ class RoutingMetrics:
     health_status_distribution: Dict[str, int] = field(default_factory=dict)
 
 
-class AinflueBusiness:
-    """Ainflue Business Routing Configuration"""
+class IA ChériesBusiness:
+    """IA Chéries Business Routing Configuration"""
     
     # Routing destinations by service type
     ROUTING_DESTINATIONS = {
@@ -751,7 +751,7 @@ class MessageRoutingIntelligence:
     async def _select_geographic(self, business_context: Dict[str, Any], destinations: List[str]) -> str:
         """Geographic proximity selection"""
         user_region = business_context.get("user_region", "us-east")
-        preferred_regions = AinflueBusiness.GEOGRAPHIC_PREFERENCES.get(user_region, ["us-east-1"])
+        preferred_regions = IA ChériesBusiness.GEOGRAPHIC_PREFERENCES.get(user_region, ["us-east-1"])
         
         # Find destinations in preferred regions
         for region in preferred_regions:
@@ -825,18 +825,18 @@ class MessageRoutingIntelligence:
     # Helper methods
     
     async def _load_business_configuration(self):
-        """Load Ainflue business routing configuration"""
+        """Load IA Chéries business routing configuration"""
         # Load destinations
-        for service_type, destinations in AinflueBusiness.ROUTING_DESTINATIONS.items():
+        for service_type, destinations in IA ChériesBusiness.ROUTING_DESTINATIONS.items():
             for destination in destinations:
                 await self.register_destination(destination)
         
         # Load routing rules
-        for rule_name, rule in AinflueBusiness.ROUTING_RULES.items():
+        for rule_name, rule in IA ChériesBusiness.ROUTING_RULES.items():
             await self.register_routing_rule(rule)
         
         # Load custom routing functions
-        self.custom_routing_functions.update(AinflueBusiness.CUSTOM_ROUTING_FUNCTIONS)
+        self.custom_routing_functions.update(IA ChériesBusiness.CUSTOM_ROUTING_FUNCTIONS)
         
         logger.info("Loaded business routing configuration")
     
@@ -1084,5 +1084,5 @@ __all__ = [
     "RoutingStrategy",
     "DestinationType",
     "HealthStatus",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

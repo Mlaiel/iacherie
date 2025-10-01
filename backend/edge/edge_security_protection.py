@@ -1,7 +1,7 @@
 """Edge Security Protection
 =========================
 
-Protection sécurité edge ultra-sécurisée pour créateurs Ainflue.
+Protection sécurité edge ultra-sécurisée pour créateurs iacherie.
 Consolidation de tous les composants security en un système unifié.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

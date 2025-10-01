@@ -595,7 +595,7 @@ class DataAnonymizer:
     def _generic_anonymization(self, value: str) -> str:
         """Anonymisation générique"""
         # Hash avec sel pour anonymisation déterministe
-        salt = b"ainflue_anonymization_salt_2025"
+        salt = b"iacherie_anonymization_salt_2025"
         hash_value = hashlib.pbkdf2_hmac('sha256', value.encode(), salt, 100000)
         return base64.b64encode(hash_value).decode('ascii')[:16]
 

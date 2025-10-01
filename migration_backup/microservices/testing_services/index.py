@@ -2,7 +2,7 @@
 Testing Services Module Entry Point
 ===================================
 
-Main entry point for all testing and QA services in the Ainflue platform.
+Main entry point for all testing and QA services in the IA Chéries platform.
 Provides orchestration for enterprise-grade testing automation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +21,7 @@ class TestingServicesOrchestrator:
     Enterprise Testing Services Orchestrator
     
     Coordinates all testing services for comprehensive quality assurance
-    and automated testing across the Ainflue platform.
+    and automated testing across the IA Chéries platform.
     """
     
     def __init__(self):

@@ -22,7 +22,7 @@ ALL RIGHTS RESERVED
 - Maintenance and updates provided
 - Team training included
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -1136,7 +1136,7 @@ if __name__ == "__main__":
     # Create collector for musician creator
     collector = create_real_time_collector(
         creator_type="musician",
-        model_id="ainflue_music_recommendation_v3",
+        model_id="iacherie_music_recommendation_v3",
         buffer_size=5000,
         flush_interval=10,
         high_throughput=False

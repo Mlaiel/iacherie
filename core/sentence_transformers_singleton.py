@@ -58,8 +58,8 @@ class SentenceTransformersManager:
                 
                 # Import protégé de sentence-transformers
                 try:
-                    # import sentence_transformers
-                    # from sentence_transformers import SentenceTransformer
+                    import sentence_transformers
+                    from sentence_transformers import SentenceTransformer
                     
                     self._sentence_transformers_module = sentence_transformers
                     self._sentence_transformer_class = SentenceTransformer
@@ -67,15 +67,15 @@ class SentenceTransformersManager:
                     logger.info("✅ Sentence-transformers initialisé avec succès via singleton")
                     
                 except Exception as e:
-                    logger.error(f"Erreur lors de l'import sentence-transformers: {e}")
-                    # Créer des mocks pour éviter les erreurs
+                    logger.debug(f"Sentence-transformers non disponible: {e}")
+                    # Module non disponible - ne pas créer de mocks
                     self._sentence_transformers_module = None
                     self._sentence_transformer_class = None
                     
                 self._initialized = True
                 
             except Exception as e:
-                logger.error(f"Erreur fatale lors de l'initialisation sentence-transformers: {e}")
+                logger.error(f"Erreur lors de l'initialisation sentence-transformers: {e}")
                 self._initialized = True  # Éviter les boucles infinies
     
     def get_sentence_transformers(self):

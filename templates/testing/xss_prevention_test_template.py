@@ -2,7 +2,7 @@
 🛡️ XSS PREVENTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ==================================================================
 
-Enterprise-grade XSS prevention testing template for Ainflue Creator Economy Platform.
+Enterprise-grade XSS prevention testing template for iacherie Creator Economy Platform.
 Comprehensive XSS security testing covering:
 - Reflected XSS attack prevention
 - Stored XSS attack prevention
@@ -293,7 +293,7 @@ class XSSPreventionTestTemplate:
             
             # Profile injection
             XSSTestPayload(
-                payload="<script>if(document.location.hostname=='ainflue.com')alert('Profile XSS')</script>",
+                payload="<script>if(document.location.hostname=='iacherie.com')alert('Profile XSS')</script>",
                 xss_type=XSSType.STORED,
                 content_type=ContentType.USER_PROFILE,
                 description="Profile conditional XSS",
@@ -347,11 +347,11 @@ class XSSPreventionTestTemplate:
         
         csp_policy = (
             "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' https://cdn.ainflue.com; "
+            "script-src 'self' 'unsafe-inline' https://cdn.iacherie.com; "
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "img-src 'self' data: https:; "
-            "media-src 'self' https://media.ainflue.com; "
-            "connect-src 'self' https://api.ainflue.com; "
+            "media-src 'self' https://media.iacherie.com; "
+            "connect-src 'self' https://api.iacherie.com; "
             "font-src 'self' https://fonts.gstatic.com; "
             "object-src 'none'; "
             "base-uri 'self'; "
@@ -400,7 +400,7 @@ class XSSPreventionTestTemplate:
             
             for payload in reflected_payloads:
                 # Test URL parameter injection
-                url_test = f"https://ainflue.com/search?q={urllib.parse.quote(payload.payload)}"
+                url_test = f"https://iacherie.com/search?q={urllib.parse.quote(payload.payload)}"
                 
                 is_safe = await self.xss_protection.validate_url_parameters(
                     url_test,
@@ -807,14 +807,14 @@ class XSSPreventionTestTemplate:
             
             # Should allow media sources
             assert "media-src" in creator_csp
-            assert "https://media.ainflue.com" in creator_csp
+            assert "https://media.iacherie.com" in creator_csp
             
             # Should restrict object sources
             assert "object-src 'none'" in creator_csp
             
             # Should allow connect to API
             assert "connect-src" in creator_csp
-            assert "https://api.ainflue.com" in creator_csp
+            assert "https://api.iacherie.com" in creator_csp
             
             self.metrics_collector.record_success(
                 "content_security_policy",

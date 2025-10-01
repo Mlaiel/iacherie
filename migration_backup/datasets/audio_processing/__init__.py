@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION ENTERPRISE:
-Datasets spécialisés audio pour agents IA de la plateforme Ainflue.
+Datasets spécialisés audio pour agents IA de la plateforme IA Chéries.
 Support 13+ agents audio avec datasets haute qualité pour speech, music,
 fingerprinting, enhancement, et generation.
 """

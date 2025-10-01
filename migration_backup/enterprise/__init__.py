@@ -1,7 +1,7 @@
 """Enterprise Features Module
 ==========================
 
-Advanced enterprise-grade features for the Ainflue platform including
+Advanced enterprise-grade features for the IA Chéries platform including
 white-label management, custom branding, SSO integration, custom AI training,
 on-premise deployment tools, enterprise analytics, and compliance management.
 

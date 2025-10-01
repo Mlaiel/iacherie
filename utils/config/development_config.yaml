@@ -67,7 +67,7 @@ security:
 # Database Settings (Development)
 database:
   # Development database connection
-  url: "${AINFLUE_DEV_DATABASE_URL:-postgresql://localhost:5432/ainflue_dev}"
+  url: "${IACHERIE_DEV_DATABASE_URL:-postgresql://localhost:5432/iacherie_dev}"
   pool_size: 5             # Smaller pool for development
   max_overflow: 5
   pool_timeout: 60         # Longer timeout for debugging
@@ -86,7 +86,7 @@ cache:
   l2_ttl_seconds: 300
   
   # Redis connection for development
-  redis_url: "${AINFLUE_DEV_REDIS_URL:-redis://localhost:6379/0}"
+  redis_url: "${IACHERIE_DEV_REDIS_URL:-redis://localhost:6379/0}"
   enable_compression: false # Disabled for debugging
   
 # Logging Configuration (Verbose for Development)
@@ -103,7 +103,7 @@ logging:
 # File Management (Relaxed for Development)
 file_management:
   max_file_size_mb: 200    # Larger files for testing
-  temp_directory: "/tmp/ainflue_dev"
+  temp_directory: "/tmp/iacherie_dev"
   scan_for_malware: false  # Disabled for speed
   enable_optimization: false
   

@@ -54,7 +54,7 @@ class SnapchatCreatorAPIError(Exception):
 
 class SnapchatCreatorAPI:
     """
-    Comprehensive Snapchat Creator API integration for Ainflue platform.
+    Comprehensive Snapchat Creator API integration for IA Chéries platform.
     
     Features:
     - AR filter creation and monetization
@@ -274,7 +274,7 @@ class SnapchatCreatorAPI:
         
         profile_data = await self._make_request('GET', endpoint)
         
-        # Enhanced profile with Ainflue-specific metrics
+        # Enhanced profile with IA Chéries-specific metrics
         enhanced_profile = {
             'user_id': profile_data.get('id'),
             'username': profile_data.get('name'),
@@ -538,7 +538,7 @@ class SnapchatCreatorAPI:
         
         dashboard = await self._make_request('GET', endpoint, params=params)
         
-        # Enhanced dashboard with Ainflue-specific insights
+        # Enhanced dashboard with IA Chéries-specific insights
         enhanced_dashboard = {
             'creator_id': dashboard.get('creator_id'),
             'revenue_summary': {
@@ -643,7 +643,7 @@ class SnapchatCreatorAPI:
         
         opportunities = await self._make_request('GET', endpoint, params=params)
         
-        # Enhance opportunities with Ainflue matching algorithm
+        # Enhance opportunities with IA Chéries matching algorithm
         enhanced_opportunities = []
         for opp in opportunities.get('partnerships', []):
             enhanced_opp = {
@@ -1133,7 +1133,7 @@ async def main():
             
             # Create AR filter
             # filter_data = {
-            #     'name': 'Ainflue Beauty Filter',
+            #     'name': 'IA Chéries Beauty Filter',
             #     'description': 'Premium beauty enhancement AR filter',
             #     'assets': ['filter_asset_url'],
             #     'monetization_enabled': True

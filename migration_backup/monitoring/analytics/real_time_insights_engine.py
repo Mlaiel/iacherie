@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Real-Time Insights Engine
+IA Chéries Platform - Real-Time Insights Engine
 ===========================================
 
-Advanced real-time analytics insights engine for the Ainflue platform.
+Advanced real-time analytics insights engine for the IA Chéries platform.
 Processes streaming data to generate immediate insights, detect anomalies,
 and provide actionable recommendations for content creators and marketers.
 
@@ -134,7 +134,7 @@ class AnomalyDetection:
 
 class RealTimeInsightsEngine:
     """
-    Advanced real-time insights engine for the Ainflue platform.
+    Advanced real-time insights engine for the IA Chéries platform.
     
     Processes streaming analytics data to generate immediate insights,
     detect anomalies, and provide actionable recommendations.

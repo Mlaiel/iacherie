@@ -1,5 +1,5 @@
 """
-Pinterest Business API Integration for Ainflue Platform
+Pinterest Business API Integration for IA Chéries Platform
 Enterprise-grade Pinterest creator and visual content management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -191,7 +191,7 @@ class PinterestAd:
 
 class PinterestBusinessAPI(BaseIntegration):
     """
-    Enterprise Pinterest Business API integration for Ainflue platform
+    Enterprise Pinterest Business API integration for IA Chéries platform
     
     Features:
     - Complete Pinterest OAuth 2.0 authentication
@@ -220,7 +220,7 @@ class PinterestBusinessAPI(BaseIntegration):
         # Headers template
         self.headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue/1.0.0"
+            "User-Agent": "IA Chéries/1.0.0"
         }
         
         # Rate limiting
@@ -1144,7 +1144,7 @@ def create_pinterest_business_integration(
     
     return PinterestBusinessAPI(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def example_pinterest_business_flow():
     """Example Pinterest Business API integration usage"""
     
@@ -1181,8 +1181,8 @@ async def example_pinterest_business_flow():
         # Create board
         # board = await pinterest.create_board(
         #     access_token=access_token,
-        #     name="Ainflue Creations",
-        #     description="Creative content from Ainflue platform",
+        #     name="IA Chéries Creations",
+        #     description="Creative content from IA Chéries platform",
         #     privacy=BoardPrivacy.PUBLIC
         # )
         # print(f"Board created: {board.name}")
@@ -1200,9 +1200,9 @@ async def example_pinterest_business_flow():
         # pin = await pinterest.create_pin(
         #     access_token=access_token,
         #     board_id=board.id,
-        #     title="Amazing Content Created with Ainflue",
+        #     title="Amazing Content Created with IA Chéries",
         #     media_url=media_url,
-        #     description="Check out this stunning visual content created using Ainflue's AI tools!",
+        #     description="Check out this stunning visual content created using IA Chéries's AI tools!",
         #     link="https://ainflue.com",
         #     alt_text="Beautiful AI-generated visual content"
         # )

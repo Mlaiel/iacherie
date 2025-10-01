@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📝 Logging Service Template - Ainflue Enterprise
+📝 Logging Service Template - IA Chéries Enterprise
 ===============================================
 Template enterprise pour services logging.
 Structured logging + audit trails + log aggregation + compliance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

@@ -2,11 +2,11 @@
 AI Workload Scheduler - Intelligent Scheduling for 53 AI Agents
 ===============================================================
 
-Intelligent workload scheduling and orchestration for Ainflue's 53 AI agents.
+Intelligent workload scheduling and orchestration for IA Chéries's 53 AI agents.
 Optimizes resource allocation, priority management, and execution planning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -69,7 +69,7 @@ class ScheduledExecution:
 
 class AIWorkloadScheduler:
     """
-    AI Workload Scheduler for Ainflue Creator Platform
+    AI Workload Scheduler for IA Chéries Creator Platform
     
     Intelligently schedules and orchestrates workloads across 53 AI agents,
     optimizing for creator satisfaction, resource efficiency, and business priorities.

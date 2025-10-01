@@ -488,7 +488,7 @@ interface HeaderLayoutProps {
 
 export const HeaderLayoutTemplate: React.FC<HeaderLayoutProps> = ({
   logo,
-  logoText = 'Ainflue',
+  logoText = 'IA Chéries',
   navigation,
   user,
   notifications = 0,

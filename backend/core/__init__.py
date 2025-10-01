@@ -129,12 +129,12 @@ except ImportError as e:
 
 # Database Cluster Architecture
 try:
-    from .database_cluster import AinflueDataArchitecture, create_ainflue_data_architecture
+    from .database_cluster import iacherieDataArchitecture, create_iacherie_data_architecture
     logger.info("Database Cluster loaded successfully")
 except ImportError as e:
     logger.warning(f"Database Cluster import failed: {e}")
-    AinflueDataArchitecture = None
-    create_ainflue_data_architecture = None
+    iacherieDataArchitecture = None
+    create_iacherie_data_architecture = None
 
 # Database Core
 try:
@@ -367,7 +367,7 @@ __all__ = [
     # ===========================================
     
     # Database Components
-    'AinflueDataArchitecture', 'create_ainflue_data_architecture',
+    'iacherieDataArchitecture', 'create_iacherie_data_architecture',
     'database'  # Legacy support
 ]
 

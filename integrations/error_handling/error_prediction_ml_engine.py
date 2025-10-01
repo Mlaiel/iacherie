@@ -1140,7 +1140,7 @@ class ErrorPredictionMLEngine:
                     'real_time_features': True,
                     'proactive_recommendations': True
                 },
-                'ainflue_integration': {
+                'iacherie_integration': {
                     'platform_support': len(self.platform_configs),
                     'business_impact_assessment': True,
                     'creator_economy_focus': True,

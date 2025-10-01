@@ -443,7 +443,7 @@ async def get_badges(
         Badge(
             id="badge_newcomer",
             name="Newcomer",
-            description="Welcome to the Ainflue platform!",
+            description="Welcome to the IA Chéries platform!",
             rarity=BadgeRarity.COMMON,
             icon_url="https://cdn.ainflue.com/badges/newcomer.png",
             points_value=100,
@@ -466,7 +466,7 @@ async def get_badges(
             icon_url="https://cdn.ainflue.com/badges/collaborator.png",
             points_value=1500,
             earned_count=156,
-            nft_metadata={"contract": "0x...", "collection": "Ainflue Badges"}
+            nft_metadata={"contract": "0x...", "collection": "IA Chéries Badges"}
         ),
         Badge(
             id="badge_protector",
@@ -478,7 +478,7 @@ async def get_badges(
             earned_count=23,
             is_limited_edition=True,
             max_supply=100,
-            nft_metadata={"contract": "0x...", "collection": "Ainflue Elite"}
+            nft_metadata={"contract": "0x...", "collection": "IA Chéries Elite"}
         )
     ]
     

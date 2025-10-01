@@ -2,7 +2,7 @@
 🎨 Photographer Aesthetic Analyzer - Creator Intelligence Research Module
 
 Advanced AI-powered aesthetic analysis and trend prediction system specifically designed 
-for photographer creators on the Ainflue platform. Analyzes visual composition, style 
+for photographer creators on the IA Chéries platform. Analyzes visual composition, style 
 patterns, and predicts aesthetic trends for content optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

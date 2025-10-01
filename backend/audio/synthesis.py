@@ -105,9 +105,9 @@ class SynthesisModel(Enum):
     WAVEFLOW = "waveflow"
     
     # Enterprise Models
-    AINFLUE_NEURAL_TTS = "ainflue_neural_tts"
-    AINFLUE_VOCODER = "ainflue_vocoder"
-    AINFLUE_COMPOSER = "ainflue_composer"
+    IACHERIE_NEURAL_TTS = "iacherie_neural_tts"
+    IACHERIE_VOCODER = "iacherie_vocoder"
+    IACHERIE_COMPOSER = "iacherie_composer"
     
     # Real-time Models
     REALTIME_TTS = "realtime_tts"
@@ -229,7 +229,7 @@ class AdvancedSynthesisRequest:
     language: str = "en-US"
     quality: SynthesisQuality = SynthesisQuality.HIGH
     sample_rate: int = 48000
-    model: SynthesisModel = SynthesisModel.AINFLUE_NEURAL_TTS
+    model: SynthesisModel = SynthesisModel.IACHERIE_NEURAL_TTS
     
     # Advanced Controls
     ssml_enabled: bool = False
@@ -310,7 +310,7 @@ class SynthesisResult:
 class EnterpriseNeuralTTSEngine:
     """🧠 Enterprise Neural Text-to-Speech Engine"""
     
-    def __init__(self, sample_rate: int = 48000, model: SynthesisModel = SynthesisModel.AINFLUE_NEURAL_TTS):
+    def __init__(self, sample_rate: int = 48000, model: SynthesisModel = SynthesisModel.IACHERIE_NEURAL_TTS):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.model = model
@@ -803,7 +803,7 @@ class EnterpriseNeuralTTSEngine:
         audio_length = mel_spectrogram.shape[1] * hop_length
         
         # Generate high-quality audio using advanced vocoder
-        if model in [SynthesisModel.HIFIGAN, SynthesisModel.AINFLUE_VOCODER]:
+        if model in [SynthesisModel.HIFIGAN, SynthesisModel.IACHERIE_VOCODER]:
             audio = self._hifigan_vocoder(mel_spectrogram, hop_length, window_length)
         elif model == SynthesisModel.WAVENET:
             audio = self._wavenet_vocoder(mel_spectrogram, hop_length)

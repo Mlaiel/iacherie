@@ -39,7 +39,7 @@ Toute violation entraînera des **POURSUITES LÉGALES IMMÉDIATES** incluant:
 
 ## 🎯 Aperçu Logique Métier
 
-Ce module implémente le système de gamification central pour la plateforme Ainflue, suivant la logique métier stricte:
+Ce module implémente le système de gamification central pour la plateforme iacherie, suivant la logique métier stricte:
 
 ```
 Utilisateur (musicien/blogueur/photographe/influenceur/comédien)

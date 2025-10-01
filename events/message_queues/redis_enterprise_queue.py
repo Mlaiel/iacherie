@@ -91,7 +91,7 @@ class QueueMessage:
         )
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Logic Constants for Redis Queues"""
     
     # Content processing queues
@@ -610,5 +610,5 @@ __all__ = [
     "QueueMessage", 
     "MessagePriority",
     "RedisQueueConfig",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

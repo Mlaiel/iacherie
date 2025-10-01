@@ -1,4 +1,4 @@
-# 🐳 Container-Infrastruktur - Ainflue-Plattform
+# 🐳 Container-Infrastruktur - iacherie-Plattform
 
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Modulzweck
 
-Enterprise-Grade Container-Orchestrierung und -Verwaltung für die Ainflue Creator-Plattform. Bietet umfassende Docker- und Kubernetes-Infrastruktur mit erweiterten Netzwerk-, Service-Mesh-Integration und automatisierten Skalierungsfähigkeiten.
+Enterprise-Grade Container-Orchestrierung und -Verwaltung für die iacherie Creator-Plattform. Bietet umfassende Docker- und Kubernetes-Infrastruktur mit erweiterten Netzwerk-, Service-Mesh-Integration und automatisierten Skalierungsfähigkeiten.
 
 ## 🏗️ Architektur
 
@@ -34,23 +34,23 @@ from infrastructure.container import KubernetesManager, DockerBuilder, HelmManag
 
 # Kubernetes-Manager initialisieren
 k8s_manager = KubernetesManager(
-    cluster_config='ainflue-prod-cluster',
-    namespace='ainflue-platform'
+    cluster_config='iacherie-prod-cluster',
+    namespace='iacherie-platform'
 )
 
 # Containerisierte Anwendung erstellen und bereitstellen
 docker_builder = DockerBuilder()
 image = docker_builder.build_image(
     dockerfile_path='./deployments/Dockerfile',
-    image_tag='ainflue/creator-api:v1.2.0',
+    image_tag='iacherie/creator-api:v1.2.0',
     build_args={'ENV': 'production'}
 )
 
 # Mit Helm bereitstellen
 helm_manager = HelmManager()
 deployment = helm_manager.deploy_chart(
-    chart_name='ainflue-platform',
-    release_name='ainflue-prod',
+    chart_name='iacherie-platform',
+    release_name='iacherie-prod',
     values={
         'image': image,
         'replicas': 5,

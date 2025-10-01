@@ -1,4 +1,4 @@
-# ⚡ Network Policy Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Network Policy Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: global-network-policy-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: network-security
     component: global-config
@@ -53,17 +53,17 @@ data:
       securityZones:
         dmz:
           description: "Demilitarized zone for public services"
-          namespaces: ["ainflue-public", "ainflue-ingress"]
+          namespaces: ["iacherie-public", "iacherie-ingress"]
           allowedTraffic: ["public", "internal"]
           securityLevel: "medium"
         application:
           description: "Application tier"
-          namespaces: ["ainflue-production", "ainflue-staging"]
+          namespaces: ["iacherie-production", "iacherie-staging"]
           allowedTraffic: ["internal"]
           securityLevel: "high"
         database:
           description: "Database tier"
-          namespaces: ["ainflue-database", "ainflue-storage"]
+          namespaces: ["iacherie-database", "iacherie-storage"]
           allowedTraffic: ["database"]
           securityLevel: "critical"
         management:
@@ -99,7 +99,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-deny-all
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     policy-type: default
     security-level: high
@@ -114,7 +114,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-dns-access
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     policy-type: system
     security-level: medium
@@ -139,20 +139,20 @@ spec:
     - protocol: TCP
       port: 53
 ---
-# 🎯 Ainflue API Network Policy
+# 🎯 iacherie API Network Policy
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-api-network-policy
-  namespace: ainflue-production
+  name: iacherie-api-network-policy
+  namespace: iacherie-production
   labels:
-    app: ainflue-api
+    app: iacherie-api
     policy-type: application
     security-level: high
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   policyTypes:
   - Ingress
   - Egress
@@ -161,16 +161,16 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-frontend
+          app: iacherie-frontend
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-mobile
+          app: iacherie-mobile
     ports:
     - protocol: TCP
       port: 8080
@@ -209,7 +209,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
       podSelector:
         matchLabels:
           app: postgresql
@@ -220,7 +220,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-cache
+          name: iacherie-cache
       podSelector:
         matchLabels:
           app: redis
@@ -231,30 +231,30 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-content-processor
+          app: iacherie-content-processor
     ports:
     - protocol: TCP
       port: 8080
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-payment-service
+          app: iacherie-payment-service
     ports:
     - protocol: TCP
       port: 8080
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-auth-service
+          app: iacherie-auth-service
     ports:
     - protocol: TCP
       port: 8080
@@ -277,16 +277,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-content-processor-network-policy
-  namespace: ainflue-production
+  name: iacherie-content-processor-network-policy
+  namespace: iacherie-production
   labels:
-    app: ainflue-content-processor
+    app: iacherie-content-processor
     policy-type: application
     security-level: high
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-content-processor
+      app: iacherie-content-processor
   policyTypes:
   - Ingress
   - Egress
@@ -295,10 +295,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     ports:
     - protocol: TCP
       port: 8080
@@ -306,10 +306,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-upload-service
+          app: iacherie-upload-service
     ports:
     - protocol: TCP
       port: 8080
@@ -329,10 +329,10 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-ai
+          name: iacherie-ai
       podSelector:
         matchLabels:
-          app: ainflue-ai-engine
+          app: iacherie-ai-engine
     ports:
     - protocol: TCP
       port: 8080
@@ -342,7 +342,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-storage
+          name: iacherie-storage
       podSelector:
         matchLabels:
           app: minio
@@ -353,7 +353,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
       podSelector:
         matchLabels:
           app: postgresql
@@ -375,16 +375,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-payment-service-network-policy
-  namespace: ainflue-production
+  name: iacherie-payment-service-network-policy
+  namespace: iacherie-production
   labels:
-    app: ainflue-payment-service
+    app: iacherie-payment-service
     policy-type: application
     security-level: critical
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-payment-service
+      app: iacherie-payment-service
   policyTypes:
   - Ingress
   - Egress
@@ -393,10 +393,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     ports:
     - protocol: TCP
       port: 8080
@@ -404,10 +404,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-monetization
+          app: iacherie-monetization
     ports:
     - protocol: TCP
       port: 8080
@@ -432,7 +432,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
       podSelector:
         matchLabels:
           app: postgresql
@@ -454,8 +454,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-database-network-policy
-  namespace: ainflue-database
+  name: iacherie-database-network-policy
+  namespace: iacherie-database
   labels:
     app: postgresql
     policy-type: database
@@ -472,28 +472,28 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-content-processor
+          app: iacherie-content-processor
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-payment-service
+          app: iacherie-payment-service
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-auth-service
+          app: iacherie-auth-service
     ports:
     - protocol: TCP
       port: 5432
@@ -501,7 +501,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
       podSelector:
         matchLabels:
           app: pg-backup
@@ -535,8 +535,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-cache-network-policy
-  namespace: ainflue-cache
+  name: iacherie-cache-network-policy
+  namespace: iacherie-cache
   labels:
     app: redis
     policy-type: cache
@@ -553,22 +553,22 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-content-processor
+          app: iacherie-content-processor
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-auth-service
+          app: iacherie-auth-service
     ports:
     - protocol: TCP
       port: 6379
@@ -576,7 +576,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-cache
+          name: iacherie-cache
       podSelector:
         matchLabels:
           app: redis-sentinel
@@ -601,7 +601,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-cache
+          name: iacherie-cache
       podSelector:
         matchLabels:
           app: redis
@@ -624,11 +624,11 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: ainflue-global-security-policy
+  name: iacherie-global-security-policy
 spec:
   tier: security
   order: 100
-  namespaceSelector: 'has(projectcalico.org/name) && projectcalico.org/name startsWith "ainflue"'
+  namespaceSelector: 'has(projectcalico.org/name) && projectcalico.org/name startsWith "iacherie"'
   types:
   - Ingress
   - Egress
@@ -661,12 +661,12 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: NetworkPolicy
 metadata:
-  name: ainflue-external-access-policy
-  namespace: ainflue-production
+  name: iacherie-external-access-policy
+  namespace: iacherie-production
 spec:
   tier: platform
   order: 200
-  selector: 'app == "ainflue-api"'
+  selector: 'app == "iacherie-api"'
   types:
   - Egress
   egress:
@@ -707,7 +707,7 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: HostEndpoint
 metadata:
-  name: ainflue-node-security
+  name: iacherie-node-security
   labels:
     environment: production
     security-zone: restricted
@@ -718,7 +718,7 @@ spec:
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: ainflue-host-security-policy
+  name: iacherie-host-security-policy
 spec:
   tier: host
   order: 0
@@ -786,16 +786,16 @@ spec:
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
-  name: ainflue-api-l7-policy
-  namespace: ainflue-production
+  name: iacherie-api-l7-policy
+  namespace: iacherie-production
 spec:
   endpointSelector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   ingress:
   - fromEndpoints:
     - matchLabels:
-        app: ainflue-frontend
+        app: iacherie-frontend
     toPorts:
     - ports:
       - port: "8080"
@@ -847,7 +847,7 @@ spec:
 apiVersion: "cilium.io/v2"
 kind: CiliumClusterwideNetworkPolicy
 metadata:
-  name: ainflue-global-security
+  name: iacherie-global-security
 spec:
   endpointSelector: {}
   ingress:
@@ -873,17 +873,17 @@ spec:
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
-  name: ainflue-identity-based-policy
-  namespace: ainflue-production
+  name: iacherie-identity-based-policy
+  namespace: iacherie-production
 spec:
   endpointSelector:
     matchLabels:
-      app: ainflue-payment-service
+      app: iacherie-payment-service
   ingress:
   - fromEndpoints:
     - matchLabels:
-        "security.ainflue.com/clearance": "high"
-        app: ainflue-api
+        "security.iacherie.com/clearance": "high"
+        app: iacherie-api
     toPorts:
     - ports:
       - port: "8080"
@@ -912,13 +912,13 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-service-authz
-  namespace: ainflue-production
+  name: iacherie-service-authz
+  namespace: iacherie-production
 spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-frontend"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-frontend"]
     to:
     - operation:
         methods: ["GET", "POST", "PUT", "DELETE"]
@@ -940,14 +940,14 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-workspace-isolation
-  namespace: ainflue-production
+  name: iacherie-workspace-isolation
+  namespace: iacherie-production
 spec:
   action: DENY
   rules:
   - from:
     - source:
-        namespaces: ["ainflue-development", "ainflue-testing"]
+        namespaces: ["iacherie-development", "iacherie-testing"]
     to:
     - operation:
         methods: ["*"]
@@ -956,12 +956,12 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-rate-limiting
-  namespace: ainflue-production
+  name: iacherie-rate-limiting
+  namespace: iacherie-production
 spec:
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   rules:
   - from:
     - source:
@@ -983,7 +983,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: network-policy-monitoring
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   monitoring.yaml: |
     # Network Policy Monitoring Configuration
@@ -1056,7 +1056,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: network-security-alerts
-  namespace: ainflue-system
+  namespace: iacherie-system
 spec:
   groups:
   - name: network.security
@@ -1103,7 +1103,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: creator-content-upload-policy
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     app: creator-upload
     policy-type: creator-economy
@@ -1111,7 +1111,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-upload-service
+      app: iacherie-upload-service
   policyTypes:
   - Ingress
   - Egress
@@ -1120,16 +1120,16 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-frontend
+          app: iacherie-frontend
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-mobile
+          app: iacherie-mobile
     ports:
     - protocol: TCP
       port: 8080
@@ -1138,10 +1138,10 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-content-processor
+          app: iacherie-content-processor
     ports:
     - protocol: TCP
       port: 8080
@@ -1149,7 +1149,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-storage
+          name: iacherie-storage
       podSelector:
         matchLabels:
           app: minio
@@ -1167,7 +1167,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: creator-monetization-policy
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     app: creator-monetization
     policy-type: creator-economy
@@ -1175,7 +1175,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-monetization
+      app: iacherie-monetization
   policyTypes:
   - Ingress
   - Egress
@@ -1184,10 +1184,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     ports:
     - protocol: TCP
       port: 8080
@@ -1201,10 +1201,10 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-payment-service
+          app: iacherie-payment-service
     ports:
     - protocol: TCP
       port: 8080
@@ -1212,7 +1212,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-analytics
+          name: iacherie-analytics
       podSelector:
         matchLabels:
           app: analytics-engine
@@ -1223,7 +1223,7 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-database
+          name: iacherie-database
       podSelector:
         matchLabels:
           app: postgresql
@@ -1234,5 +1234,5 @@ spec:
 # ===================================================================
 # END OF NETWORK POLICY CONFIGURATION TEMPLATE
 # Creator Economy Network Security by Fahed Mlaiel
-# Enterprise-grade network policies for Ainflue platform
+# Enterprise-grade network policies for iacherie platform
 # ===================================================================

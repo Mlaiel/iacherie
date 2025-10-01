@@ -72,7 +72,7 @@ class ValidationSchema:
         self._setup_default_rules()
         
     def _setup_default_rules(self) -> None:
-        """Setup default validation rules for Ainflue configuration."""
+        """Setup default validation rules for IA Chéries configuration."""
         
         # Performance configuration validation
         self.add_performance_rules()

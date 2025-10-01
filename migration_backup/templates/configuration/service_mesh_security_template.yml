@@ -1,4 +1,4 @@
-# ⚡ Service Mesh Security Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Service Mesh Security Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -545,9 +545,9 @@ spec:
   renewBefore: 360h  # 15 days
   subject:
     organizationalUnits:
-    - "Ainflue Creator Economy"
+    - "IA Chéries Creator Economy"
     organizations:
-    - "Ainflue Platform"
+    - "IA Chéries Platform"
     countries:
     - "US"
   privateKey:
@@ -662,7 +662,7 @@ metadata:
   namespace: consul
 data:
   service-intentions.hcl: |
-    # Ainflue API Service Intentions
+    # IA Chéries API Service Intentions
     Kind = "service-intentions"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -816,7 +816,7 @@ metadata:
   namespace: consul
 data:
   ainflue-api-security-policy.hcl: |
-    # Ainflue API Service Security ACL Policy
+    # IA Chéries API Service Security ACL Policy
     service "ainflue-api" {
       policy = "write"
     }
@@ -1295,5 +1295,5 @@ data:
 # ===================================================================
 # END OF SERVICE MESH SECURITY CONFIGURATION TEMPLATE
 # Creator Economy Security Solution by Fahed Mlaiel
-# Enterprise-grade security configuration for Ainflue service mesh
+# Enterprise-grade security configuration for IA Chéries service mesh
 # ===================================================================

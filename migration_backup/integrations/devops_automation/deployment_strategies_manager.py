@@ -2,7 +2,7 @@
 =====================================================================
 
 Deployment Expert: Deployment strategies avancées avec rollback automation,
-risk assessment et feature flag integration pour plateforme Ainflue.
+risk assessment et feature flag integration pour plateforme IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025
@@ -518,7 +518,7 @@ class DeploymentStrategiesManager:
     🚀 Deployment Strategies Manager Enterprise
     
     Gestionnaire de stratégies de déploiement avec risk management,
-    rollback automation et feature flag integration pour Ainflue.
+    rollback automation et feature flag integration pour IA Chéries.
     
     Fonctionnalités principales:
     - Blue/Green deployment automation avec traffic switching

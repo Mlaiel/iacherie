@@ -600,7 +600,7 @@ class MultiCloudDatabaseManager:
                 EnablePerformanceInsights=kwargs.get('performance_insights', True),
                 Tags=[
                     {'Key': 'Name', 'Value': name},
-                    {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                    {'Key': 'CreatedBy', 'Value': 'iacheriePlatform'},
                     {'Key': 'Environment', 'Value': kwargs.get('environment', 'production')}
                 ]
             )
@@ -625,7 +625,7 @@ class MultiCloudDatabaseManager:
                 performance_insights=kwargs.get('performance_insights', True),
                 tags={
                     'Name': name,
-                    'CreatedBy': 'AinfluePlatform',
+                    'CreatedBy': 'iacheriePlatform',
                     'Environment': kwargs.get('environment', 'production')
                 }
             )
@@ -791,7 +791,7 @@ class MultiCloudDatabaseManager:
                     DBInstanceIdentifier=database.id,
                     Tags=[
                         {'Key': 'BackupType', 'Value': backup_type.value},
-                        {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'}
+                        {'Key': 'CreatedBy', 'Value': 'iacheriePlatform'}
                     ]
                 )
                 

@@ -1,5 +1,5 @@
 /**
- * API Client Implementation for Ainflue JavaScript SDK
+ * API Client Implementation for IA Chéries JavaScript SDK
  * High-level API client with intelligent routing and business logic integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -9,19 +9,19 @@
  */
 
 import { HttpClient } from './http-client';
-import { AinflueConfig } from './config';
+import { IA ChériesConfig } from './config';
 import { ApiResponse, CreatorProfile, ContentItem, AnalyticsData, AIProcessingRequest, AIProcessingResponse } from './interfaces';
 import { AuthenticationError, ValidationError, ErrorHandler } from './errors';
 
 /**
- * Main API Client for Ainflue Platform
+ * Main API Client for IA Chéries Platform
  * Provides business logic integration across the complete Creator workflow
  */
 export class ApiClient {
   private httpClient: HttpClient;
-  private config: AinflueConfig;
+  private config: IA ChériesConfig;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: IA ChériesConfig) {
     this.config = config;
     this.httpClient = new HttpClient(config);
   }

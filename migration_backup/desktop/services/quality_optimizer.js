@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Quality Optimizer Service
+ * IA Chéries Desktop - Quality Optimizer Service
  * 
  * AI-powered content quality optimization and enhancement
  * Professional-grade audio, video, and image quality improvements

@@ -1,5 +1,5 @@
 """
-🌍 ENVIRONMENT CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🌍 ENVIRONMENT CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced environment management with automatic configuration switching
 Performance Target: < 1ms configuration loading
@@ -160,7 +160,7 @@ class EnvironmentConfig:
             
             # Auto-detect environment from ENV vars if not specified
             if not env_type:
-                env_name = os.getenv('AINFLUE_ENV', 'development').lower()
+                env_name = os.getenv('IA CHÉRIES_ENV', 'development').lower()
                 self.current_environment = EnvironmentType(env_name)
             
             config = self.environments[self.current_environment]
@@ -181,20 +181,20 @@ class EnvironmentConfig:
         """Apply environment variable overrides"""
         
         # Override debug setting
-        if os.getenv('AINFLUE_DEBUG'):
-            config.debug = os.getenv('AINFLUE_DEBUG').lower() == 'true'
+        if os.getenv('IA CHÉRIES_DEBUG'):
+            config.debug = os.getenv('IA CHÉRIES_DEBUG').lower() == 'true'
         
         # Override log level
-        if os.getenv('AINFLUE_LOG_LEVEL'):
-            config.log_level = os.getenv('AINFLUE_LOG_LEVEL').upper()
+        if os.getenv('IA CHÉRIES_LOG_LEVEL'):
+            config.log_level = os.getenv('IA CHÉRIES_LOG_LEVEL').upper()
         
         # Override worker count
-        if os.getenv('AINFLUE_WORKERS'):
-            config.worker_count = int(os.getenv('AINFLUE_WORKERS'))
+        if os.getenv('IA CHÉRIES_WORKERS'):
+            config.worker_count = int(os.getenv('IA CHÉRIES_WORKERS'))
         
         # Override database pool size
-        if os.getenv('AINFLUE_DB_POOL_SIZE'):
-            config.database_pool_size = int(os.getenv('AINFLUE_DB_POOL_SIZE'))
+        if os.getenv('IA CHÉRIES_DB_POOL_SIZE'):
+            config.database_pool_size = int(os.getenv('IA CHÉRIES_DB_POOL_SIZE'))
         
         return config
     
@@ -267,7 +267,7 @@ class EnvironmentConfig:
             health_status["checks"]["configuration"] = "passed" if is_valid else "failed"
             
             # Check environment variables
-            required_vars = ["AINFLUE_ENV"]
+            required_vars = ["IA CHÉRIES_ENV"]
             missing_vars = [var for var in required_vars if not os.getenv(var)]
             health_status["checks"]["environment_vars"] = "passed" if not missing_vars else f"missing: {missing_vars}"
             

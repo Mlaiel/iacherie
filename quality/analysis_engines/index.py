@@ -523,7 +523,7 @@ async def main():
     logger.info("🔍 UNIVERSAL ANALYSIS ENGINE - DÉMONSTRATION ENTERPRISE")
     
     # Analyse complète
-    report = await run_comprehensive_quality_analysis("./ainflue_project")
+    report = await run_comprehensive_quality_analysis("./iacherie_project")
     
     print(f"📊 Report ID: {report.report_id}")
     print(f"🎯 Score Global: {report.overall_score:.1f}/100")

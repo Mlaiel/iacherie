@@ -574,8 +574,8 @@ button, a, [role="button"] {
             # PWA Manifest
             code_snippets['pwa_manifest'] = '''
 {
-    "name": "Ainflue Creator Platform",
-    "short_name": "Ainflue",
+    "name": "IA Chéries Creator Platform",
+    "short_name": "IA Chéries",
     "description": "AI-powered creator economy platform",
     "start_url": "/",
     "display": "standalone",
@@ -1079,7 +1079,7 @@ self.addEventListener('sync', event => {
         enhancements['mobile_schema_markup'] = {
             'mobileApplication': {
                 '@type': 'MobileApplication',
-                'name': 'Ainflue Mobile',
+                'name': 'IA Chéries Mobile',
                 'operatingSystem': 'Android, iOS',
                 'applicationCategory': 'BusinessApplication'
             },
@@ -1246,7 +1246,7 @@ self.addEventListener('sync', event => {
 
 # Enterprise mobile optimization management
 class MobileOptimizationManager:
-    """High-level mobile optimization management for Ainflue platform."""
+    """High-level mobile optimization management for IA Chéries platform."""
     
     def __init__(self, optimization_level: MobileOptimizationLevel = MobileOptimizationLevel.ENHANCED):
         self.mobile_seo = MobileTechnicalSEO(optimization_level)

@@ -3,7 +3,7 @@
 
 Advanced AI model performance monitoring system for tracking model accuracy,
 processing times, inference performance, model drift detection,
-and comprehensive AI operations analytics for the Ainflue platform.
+and comprehensive AI operations analytics for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

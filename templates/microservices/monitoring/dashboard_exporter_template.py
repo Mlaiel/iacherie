@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Dashboard Exporter Template for Ainflue Platform
+Dashboard Exporter Template for iacherie Platform
 ===============================================
 
 Production-ready dashboard exporting with:
@@ -61,7 +61,7 @@ class DashboardExporter:
     - Automated deployment
     """
     
-    def __init__(self, service_name: str = "ainflue-service"):
+    def __init__(self, service_name: str = "iacherie-service"):
         self.service_name = service_name
         self.dashboards: Dict[str, Dashboard] = {}
     
@@ -141,7 +141,7 @@ class DashboardExporterTemplate:
     """Dashboard Exporter Template"""
     
     def create_exporter(self, config: Dict[str, Any]) -> DashboardExporter:
-        return DashboardExporter(service_name=config.get("service_name", "ainflue"))
+        return DashboardExporter(service_name=config.get("service_name", "iacherie"))
     
     def get_template_info(self) -> Dict[str, Any]:
         return {

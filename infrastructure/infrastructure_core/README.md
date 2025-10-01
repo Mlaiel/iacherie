@@ -1,4 +1,4 @@
-# 🏗️ Infrastructure Core - Ainflue Enterprise Infrastructure
+# 🏗️ Infrastructure Core - iacherie Enterprise Infrastructure
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -7,7 +7,7 @@
 
 ## 🎯 Module Purpose
 
-The Infrastructure Core module provides enterprise-grade disaster recovery, orchestration, and performance optimization for the Ainflue creator economy platform. This comprehensive module ensures business continuity with 99.99% uptime, intelligent resource management, and creator-focused optimization.
+The Infrastructure Core module provides enterprise-grade disaster recovery, orchestration, and performance optimization for the iacherie creator economy platform. This comprehensive module ensures business continuity with 99.99% uptime, intelligent resource management, and creator-focused optimization.
 
 ### Core Components
 

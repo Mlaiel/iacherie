@@ -1,12 +1,12 @@
 """
-Ansible Automation Engine - Enterprise Configuration Management for Ainflue
+Ansible Automation Engine - Enterprise Configuration Management for iacherie
 =========================================================================
 
 Advanced Ansible automation for configuration management, application deployment,
 security hardening, and creator platform operational orchestration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -74,7 +74,7 @@ class AnsibleConfig:
     def __post_init__(self):
         """Set default creator platform variables."""
         default_vars = {
-            "ainflue_project": "creator_platform",
+            "iacherie_project": "creator_platform",
             "ai_agents_count": 53,
             "platform_integrations": 65,
             "environment": "production",
@@ -353,7 +353,7 @@ content_processing_timeout = 3600
     def _generate_playbook(self, config: AnsibleConfig) -> str:
         """Generate main playbook YAML."""
         playbook_data = [{
-            "name": f"Ainflue Creator Platform - {config.playbook_name}",
+            "name": f"iacherie Creator Platform - {config.playbook_name}",
             "hosts": "all" if not config.limit else config.limit,
             "become": config.become,
             "gather_facts": True,
@@ -449,7 +449,7 @@ content_processing_timeout = 3600
                     "name": "Deploy AI agent containers",
                     "docker_container": {
                         "name": "ai-agent-{{ item }}",
-                        "image": "ainflue/ai-agent:latest",
+                        "image": "iacherie/ai-agent:latest",
                         "state": "started",
                         "restart_policy": "always",
                         "env": {
@@ -468,7 +468,7 @@ content_processing_timeout = 3600
                     "name": "Configure platform integrations",
                     "template": {
                         "src": "platform_config.j2",
-                        "dest": "/etc/ainflue/platform_config.yml"
+                        "dest": "/etc/iacherie/platform_config.yml"
                     },
                     "notify": "restart api gateway",
                     "tags": ["config"]
@@ -482,7 +482,7 @@ content_processing_timeout = 3600
         group_vars = {
             "# Creator Platform Global Variables": None,
             "creator_platform": {
-                "project_name": "Ainflue",
+                "project_name": "iacherie",
                 "version": "1.0.0",
                 "environment": config.variables.get("environment", "production"),
                 "ai_agents_count": config.variables.get("ai_agents_count", 53),
@@ -699,8 +699,8 @@ content_processing_timeout = 3600
         meta = {
             "galaxy_info": {
                 "author": "Fahed Mlaiel",
-                "description": f"Ainflue Creator Platform - {role_name} role",
-                "company": "Ainflue",
+                "description": f"iacherie Creator Platform - {role_name} role",
+                "company": "iacherie",
                 "license": "Proprietary",
                 "min_ansible_version": "2.9",
                 "platforms": [

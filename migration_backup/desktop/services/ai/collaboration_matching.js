@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - AI Collaboration Matching Service
+ * IA Chéries Desktop - AI Collaboration Matching Service
  * 
  * Intelligent collaboration matching system using AI to connect compatible creators
  * Analyzes content styles, audience demographics, and collaboration history for optimal matching

@@ -1,4 +1,4 @@
-"""{{test_name}} Service Test Template for Ainflue Platform
+"""{{test_name}} Service Test Template for IA Chéries Platform
 {{test_description}}
 
 Author: {{author_name}} ({{author_email}})

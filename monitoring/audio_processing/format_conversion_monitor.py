@@ -116,7 +116,7 @@ class FormatConversionMonitor:
             "processing_timeout_minutes": 15,
             "metadata_preservation": True,
             "parallel_conversions": 8,
-            "temp_directory": "/tmp/ainflue_audio_conversion",
+            "temp_directory": "/tmp/iacherie_audio_conversion",
             "cleanup_temp_files": True,
             "dithering_enabled": True,
             "normalize_before_conversion": False

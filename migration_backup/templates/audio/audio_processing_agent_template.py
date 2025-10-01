@@ -1,4 +1,4 @@
-"""{{audio_name}} Audio Processing Agent Template for Ainflue Platform
+"""{{audio_name}} Audio Processing Agent Template for IA Chéries Platform
 {{audio_description}}
 
 Author: {{author_name}} ({{author_email}})

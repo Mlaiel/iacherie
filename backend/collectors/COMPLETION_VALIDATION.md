@@ -127,7 +127,7 @@
 - [x] APIs unifiées cross-platform
 
 ### 🏆 SUCCÈS CONFIRMÉ ENTERPRISE
-**L'architecture Backend Collectors Enterprise de la plateforme Ainflue est désormais 100% complète et opérationnelle au niveau enterprise mondial avec fonctionnalités avancées.**
+**L'architecture Backend Collectors Enterprise de la plateforme iacherie est désormais 100% complète et opérationnelle au niveau enterprise mondial avec fonctionnalités avancées.**
 
 ### 🚀 PRÊT POUR PRODUCTION ENTERPRISE
 Le système est maintenant prêt pour :
@@ -148,4 +148,4 @@ Le système est maintenant prêt pour :
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Ainflue Platform Enterprise Backend Collectors - COMPLÉTÉ ✅
+**Projet :** iacherie Platform Enterprise Backend Collectors - COMPLÉTÉ ✅

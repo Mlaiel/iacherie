@@ -1,12 +1,12 @@
 """
-Storage Optimizer - Intelligent Storage Performance Optimization for Ainflue
+Storage Optimizer - Intelligent Storage Performance Optimization for IA Chéries
 ============================================================================
 
 Advanced storage optimization for creator content, AI models, and platform data
 with intelligent tiering, caching, and performance optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -47,7 +47,7 @@ class StorageMetrics:
 
 class StorageOptimizer:
     """
-    Intelligent Storage Optimizer for Ainflue Creator Platform
+    Intelligent Storage Optimizer for IA Chéries Creator Platform
     
     Optimizes storage performance for creator content, AI models, and data
     with intelligent tiering and caching strategies for optimal creator experience.

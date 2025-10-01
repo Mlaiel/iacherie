@@ -483,7 +483,7 @@ DECLARE
     backup_filename TEXT;
     backup_command TEXT;
 BEGIN
-    backup_filename := backup_path || 'ainflue_backup_' || to_char(CURRENT_TIMESTAMP, 'YYYY_MM_DD_HH24_MI_SS') || '.sql';
+    backup_filename := backup_path || 'iacherie_backup_' || to_char(CURRENT_TIMESTAMP, 'YYYY_MM_DD_HH24_MI_SS') || '.sql';
     backup_command := 'pg_dump -h localhost -U postgres -d iacherie > ' || backup_filename;
     
     -- Note: This would need to be executed outside PostgreSQL

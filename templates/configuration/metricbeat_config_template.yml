@@ -1,4 +1,4 @@
-# Metricbeat Configuration Template for Ainflue Platform
+# Metricbeat Configuration Template for iacherie Platform
 # Comprehensive system and application metrics collection
 
 # Global configuration
@@ -135,10 +135,10 @@ metricbeat.modules:
   period: 30s
   metricsets: ["json"]
   hosts: 
-    - "${AINFLUE_API_HOST}/health"
-    - "${AINFLUE_API_HOST}/metrics"
-    - "${AINFLUE_WEB_HOST}/health"
-  namespace: "ainflue"
+    - "${IACHERIE_API_HOST}/health"
+    - "${IACHERIE_API_HOST}/metrics"
+    - "${IACHERIE_WEB_HOST}/health"
+  namespace: "iacherie"
   path: "/health"
   method: "GET"
   headers:
@@ -149,8 +149,8 @@ metricbeat.modules:
 - module: http
   period: 60s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/business"]
-  namespace: "ainflue.business"
+  hosts: ["${IACHERIE_API_HOST}/api/v1/metrics/business"]
+  namespace: "iacherie.business"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
   json.is_array: false
@@ -161,8 +161,8 @@ metricbeat.modules:
 - module: http
   period: 60s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/creators"]
-  namespace: "ainflue.creators"
+  hosts: ["${IACHERIE_API_HOST}/api/v1/metrics/creators"]
+  namespace: "iacherie.creators"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
   json.is_array: false
@@ -172,8 +172,8 @@ metricbeat.modules:
 - module: http
   period: 300s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/campaigns"]
-  namespace: "ainflue.campaigns"
+  hosts: ["${IACHERIE_API_HOST}/api/v1/metrics/campaigns"]
+  namespace: "iacherie.campaigns"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
   json.is_array: false
@@ -182,8 +182,8 @@ metricbeat.modules:
 - module: http
   period: 120s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_ML_HOST}/metrics"]
-  namespace: "ainflue.ml"
+  hosts: ["${IACHERIE_ML_HOST}/metrics"]
+  namespace: "iacherie.ml"
   headers:
     Authorization: "Bearer ${ML_METRICS_TOKEN}"
   json.is_array: false
@@ -205,8 +205,8 @@ metricbeat.modules:
           field: heap
 
 # Beat configuration
-name: "${BEAT_NAME:metricbeat-ainflue}"
-tags: ["ainflue", "platform", "${ENVIRONMENT}"]
+name: "${BEAT_NAME:metricbeat-iacherie}"
+tags: ["iacherie", "platform", "${ENVIRONMENT}"]
 
 fields:
   environment: "${ENVIRONMENT}"
@@ -265,7 +265,7 @@ processors:
       - "redis"
       - "nginx"
       - "elasticsearch"
-      - "ainflue"
+      - "iacherie"
       - "host"
       - "event"
       - "fields"
@@ -281,9 +281,9 @@ output.elasticsearch:
   ssl.verification_mode: "certificate"
   ssl.certificate_authorities: ["/etc/ssl/certs/elasticsearch-ca.crt"]
   
-  index: "metricbeat-ainflue-%{+yyyy.MM.dd}"
-  template.name: "metricbeat-ainflue"
-  template.pattern: "metricbeat-ainflue-*"
+  index: "metricbeat-iacherie-%{+yyyy.MM.dd}"
+  template.name: "metricbeat-iacherie"
+  template.pattern: "metricbeat-iacherie-*"
   template.settings:
     index.number_of_shards: 2
     index.number_of_replicas: 1
@@ -292,17 +292,17 @@ output.elasticsearch:
   
   # ILM configuration
   ilm.enabled: true
-  ilm.rollover_alias: "metricbeat-ainflue"
+  ilm.rollover_alias: "metricbeat-iacherie"
   ilm.pattern: "{now/d}-000001"
-  ilm.policy: "metricbeat-ainflue-policy"
+  ilm.policy: "metricbeat-iacherie-policy"
 
 # Alternative: Logstash output for complex processing
 # output.logstash:
 #   hosts: ["${LOGSTASH_HOST}:${LOGSTASH_PORT}"]
 #   compression_level: 3
 #   bulk_max_size: 2048
-#   template.name: "metricbeat-ainflue"
-#   template.pattern: "metricbeat-ainflue-*"
+#   template.name: "metricbeat-iacherie"
+#   template.pattern: "metricbeat-iacherie-*"
 
 # Console output for debugging
 # output.console:
@@ -347,7 +347,7 @@ metricbeat.autodiscover:
       templates:
         - condition:
             contains:
-              kubernetes.labels.app: "ainflue"
+              kubernetes.labels.app: "iacherie"
           config:
             - module: kubernetes
               period: 10s

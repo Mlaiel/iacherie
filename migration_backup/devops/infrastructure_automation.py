@@ -72,12 +72,12 @@ class InfrastructureAutomation:
         hpa_config = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
-            "metadata": {"name": "ainfluencer-hpa"},
+            "metadata": {"name": "iacheries-hpa"},
             "spec": {
                 "scaleTargetRef": {
                     "apiVersion": "apps/v1",
                     "kind": "Deployment", 
-                    "name": "ainfluencer-api"
+                    "name": "iacheries-api"
                 },
                 "minReplicas": 2,
                 "maxReplicas": 20,

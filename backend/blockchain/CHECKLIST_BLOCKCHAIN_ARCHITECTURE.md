@@ -191,7 +191,7 @@ TOTAL CONSOLIDÉ : ~3,700 lignes de code sécurité enterprise
 ```python
 """Tokenomics & Governance Hub - Platform token economy"""
 # Fonctionnalités:
-# - Platform token (AINFLUE) emission management
+# - Platform token (IACHERIE) emission management
 # - Staking mechanisms & reward distribution
 # - Token burning algorithms & deflation
 # - Governance token voting power calculation
@@ -299,7 +299,7 @@ from .blockchain_security_suite import (
 ```python
 """Tokenomics Manager - Platform token economy management"""
 # Fonctionnalités:
-# - Platform token (AINFLUE) emission management
+# - Platform token (IACHERIE) emission management
 # - Staking mechanisms & reward distribution
 # - Token burning algorithms & deflation
 # - Governance token voting power calculation
@@ -546,7 +546,7 @@ TOTAL: ~3,700 lignes de code sécurité enterprise à préserver
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── blockchain/                                     ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)
@@ -643,7 +643,7 @@ TOTAL: ~3,700 lignes de code sécurité enterprise à préserver
         │
         ├── 📄 tokenomics_governance_hub.py            🆕 (680+ lignes)
         │   ├── TokenomicsManager + GovernanceEngine
-        │   ├── PlatformTokenManager + AINFLUEToken
+        │   ├── PlatformTokenManager + IACHERIEToken
         │   ├── StakingMechanisms + RewardDistribution
         │   ├── TokenBurningAlgorithms + DeflationEngine
         │   ├── GovernanceVotingCalculator + VotingPower

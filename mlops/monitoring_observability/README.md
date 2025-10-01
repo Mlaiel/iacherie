@@ -122,7 +122,7 @@ from mlops.monitoring_observability import create_monitoring_orchestrator
 
 # Create orchestrator for musician creator
 orchestrator = create_monitoring_orchestrator(
-    model_id="ainflue_music_recommendation_v2",
+    model_id="iacherie_music_recommendation_v2",
     creator_type="musician",
     monitoring_mode="production"
 )
@@ -156,7 +156,7 @@ from mlops.monitoring_observability import create_distributed_tracer
 
 # Create tracer for service
 tracer = create_distributed_tracer(
-    service_name="ainflue_music_service",
+    service_name="iacherie_music_service",
     creator_type="musician"
 )
 
@@ -176,7 +176,7 @@ from mlops.monitoring_observability import create_alert_engine
 
 # Create alert engine
 alert_engine = create_alert_engine(
-    service_name="ainflue_music_service",
+    service_name="iacherie_music_service",
     creator_type="musician"
 )
 
@@ -228,7 +228,7 @@ alert_engine.send_alert(
 ```bash
 # Elasticsearch Configuration
 ELASTICSEARCH_HOSTS=localhost:9200
-ELASTICSEARCH_INDEX_PREFIX=ainflue-monitoring
+ELASTICSEARCH_INDEX_PREFIX=iacherie-monitoring
 
 # Jaeger Tracing
 JAEGER_ENDPOINT=http://localhost:14268/api/traces
@@ -339,10 +339,10 @@ BLOGGER_CONFIG = {
 - **Premium Support:** On-site consulting and custom development
 
 ### **Contact Information**
-- **Technical Support:** support@ainflue.com
+- **Technical Support:** support@iacherie.com
 - **Enterprise Licensing:** mlaiel@live.de
-- **Training Programs:** training@ainflue.com
-- **Partnership Inquiries:** partnerships@ainflue.com
+- **Training Programs:** training@iacherie.com
+- **Partnership Inquiries:** partnerships@iacherie.com
 
 ---
 

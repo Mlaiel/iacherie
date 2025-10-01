@@ -498,12 +498,12 @@ memory_usage_bytes{service="audio-processor"} 2147483648
 
 #### 1. Python SDK
 ```python
-# ainflue_sdk.py
+# iacherie_sdk.py
 import aiohttp
 import asyncio
 from typing import Optional, Dict, Any
 
-class AinfluePlatformSDK:
+class iacheriePlatformSDK:
     def __init__(self, api_key: str, base_url: str = "https://api.iacherie.com"):
         self.api_key = api_key
         self.base_url = base_url
@@ -553,7 +553,7 @@ class AinfluePlatformSDK:
 
 # Usage example
 async def main():
-    async with AinfluePlatformSDK('your-api-key') as sdk:
+    async with iacheriePlatformSDK('your-api-key') as sdk:
         # Process audio
         result = await sdk.process_audio('audio.wav', {'enhance': True})
         print(f"Processing job: {result['job_id']}")
@@ -569,7 +569,7 @@ asyncio.run(main())
 #### 2. JavaScript SDK
 ```javascript
 // iacherie-sdk.js
-class AinfluePlatformSDK {
+class iacheriePlatformSDK {
     constructor(apiKey, baseUrl = 'https://api.iacherie.com') {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
@@ -625,7 +625,7 @@ class AinfluePlatformSDK {
 }
 
 // Usage
-const sdk = new AinfluePlatformSDK('your-api-key');
+const sdk = new iacheriePlatformSDK('your-api-key');
 
 // Process audio file
 const fileInput = document.getElementById('audio-file');

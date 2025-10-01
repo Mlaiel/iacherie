@@ -1,4 +1,4 @@
-# Enterprise Business Metrics Monitoring for Ainflue Platform
+# Enterprise Business Metrics Monitoring for IA Chéries Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Comprehensive business intelligence and operational metrics
 
@@ -142,7 +142,7 @@ data:
     {
       "dashboard": {
         "id": null,
-        "title": "Ainflue Business Intelligence Dashboard",
+        "title": "IA Chéries Business Intelligence Dashboard",
         "tags": ["business", "revenue", "performance", "seo"],
         "timezone": "browser",
         "refresh": "30s",
@@ -432,7 +432,7 @@ data:
     {
       "dashboard": {
         "id": null,
-        "title": "Ainflue Enterprise Business Dashboard",
+        "title": "IA Chéries Enterprise Business Dashboard",
         "tags": ["business", "enterprise", "revenue", "seo", "collaboration"],
         "timezone": "UTC",
         "refresh": "30s",

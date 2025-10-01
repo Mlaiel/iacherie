@@ -253,7 +253,7 @@ azure:
     client_secret: "${AZURE_CLIENT_SECRET}"
     
   storage_account:
-    name: "ainfluestorage"
+    name: "iacheriestorage"
     resource_group: "iacherie-rg"
     location: "West Europe"
     account_tier: "Standard"
@@ -321,7 +321,7 @@ azure:
       
     endpoint:
       name: "iacherie-content"
-      origin_host_header: "ainfluestorage.blob.core.windows.net"
+      origin_host_header: "iacheriestorage.blob.core.windows.net"
 
 # Multi-Cloud Configuration
 multi_cloud:

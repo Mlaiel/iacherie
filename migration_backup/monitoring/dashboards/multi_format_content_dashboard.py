@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multi-Format Content Dashboard
+IA Chéries Platform - Multi-Format Content Dashboard
 ================================================
 
 Enterprise dashboard for multi-format content analytics with AI-powered

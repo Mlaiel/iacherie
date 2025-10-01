@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Redis __init__.py - Ainflue Enterprise
+⚡ Redis __init__.py - IA Chéries Enterprise
 © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 Redis Configuration Module Initialization for Creator Economy Platform
 """
@@ -11,10 +11,10 @@ Redis Configuration Module Initialization for Creator Economy Platform
 # ========================================================================================
 
 """
-Ainflue Redis Configuration Module
+IA Chéries Redis Configuration Module
 
 This module provides comprehensive Redis configuration management for the
-Ainflue Creator Economy Platform. It includes:
+IA Chéries Creator Economy Platform. It includes:
 
 - Security configurations with enterprise-grade protection
 - Performance optimizations for 1.8M+ ops/sec throughput
@@ -123,7 +123,7 @@ def get_configuration_manager(config_dir: str = None) -> RedisConfigManager:
         RedisConfigManager: Configured manager instance
     """
     if config_dir is None:
-        config_dir = "/home/runner/work/Ainflue/Ainflue/redis/config"
+        config_dir = "/home/runner/work/IA Chéries/IA Chéries/redis/config"
     
     return RedisConfigManager(config_dir)
 
@@ -183,13 +183,13 @@ def get_creator_economy_status(config_dir: str = None) -> dict:
 
 # Module metadata for compliance and tracking
 MODULE_INFO = {
-    'name': 'Ainflue Redis Configuration Module',
+    'name': 'IA Chéries Redis Configuration Module',
     'version': __version__,
     'author': __author__,
     'license': __license__,
     'copyright': __copyright__,
     'description': 'Enterprise Redis configuration management for Creator Economy Platform',
-    'platform': 'Ainflue Creator Economy',
+    'platform': 'IA Chéries Creator Economy',
     'security_level': 'Enterprise',
     'compliance': ['GDPR', 'SOX', 'PCI-DSS', 'HIPAA'],
     'performance_tier': 'Ultra-High Performance',
@@ -216,7 +216,7 @@ def get_module_info() -> dict:
 def print_module_banner():
     """Print the module banner with key information"""
     print(f"""
-⚡ Ainflue Redis Configuration Module v{__version__}
+⚡ IA Chéries Redis Configuration Module v{__version__}
 © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 
 🏗️  Enterprise Redis Configuration Management
@@ -236,7 +236,7 @@ def print_module_banner():
 # Initialize module banner when imported
 if __name__ != "__main__":
     import os
-    if os.getenv('AINFLUE_SHOW_BANNER', '1') == '1':
+    if os.getenv('IA CHÉRIES_SHOW_BANNER', '1') == '1':
         print_module_banner()
 
 

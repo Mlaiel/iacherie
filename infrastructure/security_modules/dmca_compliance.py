@@ -1,10 +1,10 @@
 """
-DMCA Compliance Module - Ainflue Infrastructure Enterprise
+DMCA Compliance Module - iacherie Infrastructure Enterprise
 =========================================================
 Digital Millennium Copyright Act compliance management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 License: Proprietary - All rights reserved
 """
 
@@ -43,7 +43,7 @@ class DMCATakedownNotice:
 
 
 class DMCAComplianceManager:
-    """DMCA compliance management for Ainflue platform"""
+    """DMCA compliance management for iacherie platform"""
     
     def __init__(self):
         self.takedown_notices = {}
@@ -52,7 +52,7 @@ class DMCAComplianceManager:
         logger.info("DMCA compliance manager initialized")
     
     def _initialize_dmca_policies(self) -> Dict[str, Any]:
-        """Initialize DMCA policies for Ainflue"""
+        """Initialize DMCA policies for iacherie"""
         
         return {
             'safe_harbor_provisions': True,
@@ -63,7 +63,7 @@ class DMCAComplianceManager:
         }
     
     async def check_dmca_compliance(self, infrastructure_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check DMCA compliance for Ainflue infrastructure"""
+        """Check DMCA compliance for iacherie infrastructure"""
         
         logger.info("Starting DMCA compliance assessment")
         

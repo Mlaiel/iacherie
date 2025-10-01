@@ -332,7 +332,7 @@ class AnalyticsQueryProcessor:
         try:
             # PostgreSQL pour OLTP
             self.pg_engine = create_async_engine(
-                "postgresql+asyncpg://user:pass@localhost/ainflue_analytics",
+                "postgresql+asyncpg://user:pass@localhost/iacherie_analytics",
                 pool_size=20,
                 max_overflow=30
             )
@@ -341,7 +341,7 @@ class AnalyticsQueryProcessor:
             self.clickhouse_client = clickhouse_connect.get_client(
                 host='localhost',
                 port=8123,
-                database='ainflue_analytics'
+                database='iacherie_analytics'
             )
             
             # MongoDB pour documents

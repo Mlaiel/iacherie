@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 """
-Authentication Endpoints - Ainflue Platform
+Authentication Endpoints - iacherie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Backend Senior + Security Expert
 Purpose: Enterprise authentication and authorization endpoints
@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Security configuration
-SECRET_KEY = "ainflue_secret_key_change_in_production_2025"  # Change in production!
+SECRET_KEY = "iacherie_secret_key_change_in_production_2025"  # Change in production!
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
@@ -74,10 +74,10 @@ security = HTTPBearer()
 
 # Mock user database (replace with real database in production)
 MOCK_USERS = {
-    "admin@ainflue.com": {
+    "admin@iacherie.com": {
         "id": "user_001",
         "username": "admin_user",
-        "email": "admin@ainflue.com",
+        "email": "admin@iacherie.com",
         "password_hash": hashlib.sha256("password123".encode()).hexdigest(),
         "full_name": "Admin User",
         "bio": "Platform Administrator",
@@ -106,10 +106,10 @@ MOCK_USERS = {
             "collaboration_matching": True
         }
     },
-    "creator@ainflue.com": {
+    "creator@iacherie.com": {
         "id": "user_002",
         "username": "creator_pro",
-        "email": "creator@ainflue.com",
+        "email": "creator@iacherie.com",
         "password_hash": hashlib.sha256("creator123".encode()).hexdigest(),
         "full_name": "Pro Creator",
         "bio": "Professional content creator specializing in tech reviews",

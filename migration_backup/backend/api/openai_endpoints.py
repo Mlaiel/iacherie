@@ -1,5 +1,5 @@
 """
-OpenAI API Routes for Ainfluencer Platform
+OpenAI API Routes for IA Chéries Platform
 Provides REST endpoints for OpenAI services integration
 """
 from typing import Dict, List, Optional, Any
@@ -25,7 +25,7 @@ router = APIRouter(prefix="/api/openai", tags=["OpenAI Integration"])
 class QuickChatRequest(BaseModel):
     """Quick chat request for simple interactions"""
     message: str
-    system_prompt: Optional[str] = "You are a helpful AI assistant for the Ainfluencer platform."
+    system_prompt: Optional[str] = "You are a helpful AI assistant for the IA Chéries platform."
     model: Optional[str] = None
     temperature: Optional[float] = None
 
@@ -97,7 +97,7 @@ async def generate_content(
     """Generate social media content using AI"""
     
     # Build context-aware prompt
-    system_prompt = f"""You are an expert social media content creator for the Ainfluencer platform. 
+    system_prompt = f"""You are an expert social media content creator for the IA Chéries platform. 
     Generate engaging {request.content_type} content for {request.platform} with a {request.tone} tone.
     Target audience: {request.target_audience or 'general'}
     Keywords to include: {', '.join(request.keywords) if request.keywords else 'none specified'}
@@ -148,7 +148,7 @@ async def generate_script(
 ):
     """Generate video scripts for content creators"""
     
-    system_prompt = f"""You are a professional video script writer for the Ainfluencer platform.
+    system_prompt = f"""You are a professional video script writer for the IA Chéries platform.
     Create engaging {request.video_type} video scripts that are approximately {request.duration_minutes} minutes long.
     Style: {request.style}
     Include attention-grabbing hooks: {request.include_hooks}
@@ -286,7 +286,7 @@ async def analyze_content(
     if analysis_type not in analysis_prompts:
         raise HTTPException(status_code=400, detail="Invalid analysis type")
     
-    system_prompt = f"""You are an AI content analyst for the Ainfluencer platform.
+    system_prompt = f"""You are an AI content analyst for the IA Chéries platform.
     Provide detailed {analysis_type} analysis with actionable insights and recommendations.
     Format your response as JSON with clear metrics and suggestions."""
     

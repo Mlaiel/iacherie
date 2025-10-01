@@ -4,7 +4,7 @@
 ===========================================================
 
 Module FreesoundAPI - Intégration API Freesound.org
-Conçu pour la plateforme Ainfluencer avec intégration complète
+Conçu pour la plateforme IA Chéries avec intégration complète
 
 🎯 OBJECTIF: ATTEINDRE 100% IMPORT SUCCÈS POUR SATISFACTION UTILISATEUR
 """

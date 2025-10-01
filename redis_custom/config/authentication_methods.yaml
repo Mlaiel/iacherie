@@ -241,7 +241,7 @@ data:
     ldap_url: "ldaps://ldap.iacherie.com:636"
     ldap_base_dn: "dc=iacherie,dc=com"
     ldap_bind_dn: "cn=redis-service,ou=services,dc=iacherie,dc=com"
-    ldap_bind_password: "ainflue_ldap_2025_secure_password"
+    ldap_bind_password: "iacherie_ldap_2025_secure_password"
     
     # User Search Configuration
     user_search_base: "ou=users,dc=iacherie,dc=com"
@@ -398,7 +398,7 @@ data:
     
     # Test password authentication
     echo "Testing password authentication..."
-    redis-cli -h localhost -p 16379 --tls auth admin_enterprise ainflue_admin_enterprise_2025_ultra_secure_key
+    redis-cli -h localhost -p 16379 --tls auth admin_enterprise iacherie_admin_enterprise_2025_ultra_secure_key
     
     # Test certificate authentication
     echo "Testing certificate authentication..."

@@ -1147,16 +1147,16 @@ class EnterpriseMonitoringSystem:
         logger.info("Enterprise Monitoring System shutdown complete")
 
 
-# Example usage for Ainflue microservices
+# Example usage for IA Chéries microservices
 async def setup_ainflue_monitoring():
-    """Setup Ainflue monitoring system"""
+    """Setup IA Chéries monitoring system"""
     monitoring = EnterpriseMonitoringSystem()
     await monitoring.initialize("ainflue-platform")
     
     # Create custom business metrics
     monitoring.metrics_collector.create_custom_metric(
         "ainflue_content_uploads",
-        "Total content uploads to Ainflue platform",
+        "Total content uploads to IA Chéries platform",
         MetricType.COUNTER,
         ["content_type", "user_type"]
     )

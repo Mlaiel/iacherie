@@ -266,7 +266,7 @@ class DataReplicationEngine:
                     id="azure_backup",
                     name="Azure Backup Storage",
                     provider="azure",
-                    connection_string="azure://ainfluebackup.blob.core.windows.net/data",
+                    connection_string="azure://iacheriebackup.blob.core.windows.net/data",
                     region="east-us",
                     is_primary=False,
                     priority=3
@@ -971,7 +971,7 @@ if __name__ == "__main__":
         },
         "azure": {
             "enabled": True,
-            "storage_account": "ainfluebackup"
+            "storage_account": "iacheriebackup"
         },
         "gcp": {
             "enabled": True,

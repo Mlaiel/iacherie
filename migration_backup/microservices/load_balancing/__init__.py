@@ -1,5 +1,5 @@
 """
-Load Balancing Module for Ainflue Microservices
+Load Balancing Module for IA Chéries Microservices
 Implements various load balancing strategies for service distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

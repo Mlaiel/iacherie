@@ -2,7 +2,7 @@
 =============================================================
 
 Advanced user engagement analytics and behavioral analysis system
-for Ainflue Creator Economy platform. Provides comprehensive user journey
+for IA Chéries Creator Economy platform. Provides comprehensive user journey
 tracking, retention analysis, and lifetime value calculations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

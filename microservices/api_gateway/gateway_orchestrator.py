@@ -570,7 +570,7 @@ class EnterpriseGatewayOrchestrator:
 
 
 # Example usage for IA Chérie microservices
-async def create_ainflue_gateway() -> EnterpriseGatewayOrchestrator:
+async def create_iacherie_gateway() -> EnterpriseGatewayOrchestrator:
     """Create IA Chérie enterprise gateway with predefined routes"""
     
     config = GatewayConfig(
@@ -665,7 +665,7 @@ async def create_ainflue_gateway() -> EnterpriseGatewayOrchestrator:
 
 if __name__ == "__main__":
     async def main():
-        gateway = await create_ainflue_gateway()
+        gateway = await create_iacherie_gateway()
         logger.info("IA Chérie Enterprise Gateway running...")
         
         # Keep running

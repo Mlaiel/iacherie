@@ -1,4 +1,4 @@
-# GitLab CI/CD Pipeline Template for Ainflue Platform
+# GitLab CI/CD Pipeline Template for IA Chéries Platform
 # Comprehensive CI/CD configuration for multi-service creator economy platform
 
 # Global configuration
@@ -422,7 +422,7 @@ notify-success:
       curl -X POST \
         -H "Content-Type: application/json" \
         -d "{
-          \"text\": \"✅ Ainflue deployment to production successful!\",
+          \"text\": \"✅ IA Chéries deployment to production successful!\",
           \"attachments\": [{
             \"color\": \"good\",
             \"fields\": [
@@ -448,7 +448,7 @@ notify-failure:
       curl -X POST \
         -H "Content-Type: application/json" \
         -d "{
-          \"text\": \"❌ Ainflue pipeline failed!\",
+          \"text\": \"❌ IA Chéries pipeline failed!\",
           \"attachments\": [{
             \"color\": \"danger\",
             \"fields\": [

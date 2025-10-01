@@ -6,7 +6,7 @@ Advanced file system backup with intelligent handling, deduplication,
 compression, and creator content protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

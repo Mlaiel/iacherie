@@ -2,7 +2,7 @@
 ==========================================================================
 
 Moniteur de performance audio enterprise avec analytics avancées,
-optimization temps réel et insights business pour Ainflue.
+optimization temps réel et insights business pour IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Métriques qualité audio + performance DSP + analysis acoustique

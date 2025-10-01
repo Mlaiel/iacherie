@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Backend Starter - Version Simplifiée
+IA Chéries Backend Starter - Version Simplifiée
 ===========================================
 Démarre le backend sans les modules IA complexes pour le développement.
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -35,8 +35,8 @@ logger = logging.getLogger(__name__)
 
 # Créer l'application FastAPI
 app = FastAPI(
-    title="Ainflue Backend API",
-    description="Backend API pour la plateforme Ainflue",
+    title="IA Chéries Backend API",
+    description="Backend API pour la plateforme IA Chéries",
     version="1.0.0"
 )
 
@@ -54,7 +54,7 @@ start_time = time.time()
 @app.get("/")
 async def root():
     return {
-        "message": "Ainflue Backend API",
+        "message": "IA Chéries Backend API",
         "status": "running",
         "version": "1.0.0",
         "uptime": time.time() - start_time
@@ -72,7 +72,7 @@ async def health_check():
 async def system_status():
     """Status système simplifié pour le développement"""
     return {
-        "platform": "Ainflue AI Platform - Development Mode",
+        "platform": "IA Chéries AI Platform - Development Mode",
         "status": "operational",
         "version": "1.0.0-dev",
         "uptime": time.time() - start_time,
@@ -151,7 +151,7 @@ async def monitoring():
     }
 
 if __name__ == "__main__":
-    logger.info("🚀 Démarrage du serveur Ainflue en mode développement")
+    logger.info("🚀 Démarrage du serveur IA Chéries en mode développement")
     logger.info("📍 API: http://localhost:8000")
     logger.info("📚 Docs: http://localhost:8000/docs")
     

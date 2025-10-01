@@ -1,7 +1,7 @@
 """
 Content SEO Scoring Engine - Enterprise Content SEO Analysis & Optimization
 
-This module implements comprehensive content SEO scoring for the Ainflue platform,
+This module implements comprehensive content SEO scoring for the IA Chéries platform,
 providing real-time SEO analysis, content optimization recommendations, and automated SEO scoring.
 
 Author: Fahed Mlaiel
@@ -104,7 +104,7 @@ class SEOOptimization:
 
 class ContentSEOScoringEngine:
     """
-    Enterprise content SEO scoring engine for Ainflue platform.
+    Enterprise content SEO scoring engine for IA Chéries platform.
     
     Features:
     - Real-time SEO analysis and scoring
@@ -1144,7 +1144,7 @@ if __name__ == "__main__":
             "meta_tags": {
                 "description": "Complete guide to creating viral content on social media platforms",
                 "keywords": "viral content, social media, content creator, engagement",
-                "author": "Ainflue Team"
+                "author": "IA Chéries Team"
             },
             "images": [
                 {"alt_text": "Content creator filming video showing viral content strategies"},

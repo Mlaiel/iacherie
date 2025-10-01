@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ gRPC Interceptor Template - Enterprise Microservices
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -588,7 +588,7 @@ class ClientUnaryInterceptor(BaseInterceptor, grpc.aio.UnaryUnaryClientIntercept
         metadata.append(('x-trace-id', trace_id))
         
         # Add client identification
-        metadata.append(('x-client-id', 'ainflue-client'))
+        metadata.append(('x-client-id', 'iacherie-client'))
         metadata.append(('x-client-version', '1.0.0'))
         
         # Add creator context if available
@@ -687,7 +687,7 @@ class ClientStreamingInterceptor(BaseInterceptor, grpc.aio.StreamUnaryClientInte
         metadata = list(client_call_details.metadata or [])
         trace_id = self._generate_trace_id()
         metadata.append(('x-trace-id', trace_id))
-        metadata.append(('x-client-id', 'ainflue-client'))
+        metadata.append(('x-client-id', 'iacherie-client'))
         
         new_details = client_call_details._replace(metadata=metadata)
         
@@ -955,7 +955,7 @@ if __name__ == "__main__":
     
     # Run example
     print("gRPC Interceptor Template Example")
-    print("This demonstrates enterprise gRPC interceptors for the Ainflue platform")
+    print("This demonstrates enterprise gRPC interceptors for the iacherie platform")
     
     # Show metrics example
     creator_chain = setup_creator_interceptors()

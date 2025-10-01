@@ -73,7 +73,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise error handling and recovery for IA Chérie platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_ERROR_HANDLING = {
+IACHERIE_ERROR_HANDLING = {
     'platforms': 65,
     'error_features': [
         'intelligent_recovery', 

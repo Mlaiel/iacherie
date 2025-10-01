@@ -972,7 +972,7 @@ def create_news_manager(config: Dict[str, Any]) -> NewsServicesManager:
     return NewsServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_news_content_strategy_workflow(target_topics: List[str], content_categories: List[str]) -> Dict[str, Any]:
+async def iacherie_news_content_strategy_workflow(target_topics: List[str], content_categories: List[str]) -> Dict[str, Any]:
     """
     Complete news-based content strategy workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -1303,7 +1303,7 @@ if __name__ == "__main__":
         test_topics = ["artificial intelligence", "climate change", "cryptocurrency"]
         test_categories = ["tech", "science", "business"]
         
-        result = await ainflue_news_content_strategy_workflow(test_topics, test_categories)
+        result = await iacherie_news_content_strategy_workflow(test_topics, test_categories)
         
         print("News Content Strategy Workflow Result:")
         print(json.dumps(result, indent=2, default=str))

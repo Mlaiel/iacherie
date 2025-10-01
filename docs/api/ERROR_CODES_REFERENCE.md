@@ -748,7 +748,7 @@ import requests
 import time
 from typing import Dict, Any
 
-class AinflueFree:
+class iacherieFree:
     def __init__(self, api_key: str):
         self.api_key = api_key
         self.base_url = "https://api.iacherie.com/v2"
@@ -820,23 +820,23 @@ class AinflueFree:
                 time.sleep(wait_time)
 
 # Custom exception classes
-class AinflueFreeError(Exception):
+class iacherieFreeError(Exception):
     """Base exception for IA Chérie API errors."""
     pass
 
-class AuthenticationError(AinflueFreeError):
+class AuthenticationError(iacherieFreeError):
     """Authentication related errors."""
     pass
 
-class ValidationError(AinflueFreeError):
+class ValidationError(iacherieFreeError):
     """Validation related errors."""
     pass
 
-class ServerError(AinflueFreeError):
+class ServerError(iacherieFreeError):
     """Server related errors."""
     pass
 
-class NetworkError(AinflueFreeError):
+class NetworkError(iacherieFreeError):
     """Network related errors."""
     pass
 ```

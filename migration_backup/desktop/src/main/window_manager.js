@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Window Manager
+ * IA Chéries Desktop - Window Manager
  * 
  * Advanced window management for multi-monitor desktop environments
  * 
@@ -50,7 +50,7 @@ class WindowManager {
       height: Math.min(900, primaryDisplay.workAreaSize.height - 100),
       x: primaryDisplay.workArea.x + 50,
       y: primaryDisplay.workArea.y + 50,
-      title: 'Ainflue Studio',
+      title: 'IA Chéries Studio',
       icon: path.join(__dirname, '..', '..', 'assets', 'icon.png'),
       show: false,
       webPreferences: {

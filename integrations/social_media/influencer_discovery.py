@@ -1396,7 +1396,7 @@ async def example_usage():
         
         # Find collaboration matches
         brand_profile = {
-            'brand_id': 'ainflue_brand',
+            'brand_id': 'iacherie_brand',
             'target_niches': ['fashion', 'lifestyle'],
             'target_audience': {
                 'age_ranges': ['18-24', '25-34'],

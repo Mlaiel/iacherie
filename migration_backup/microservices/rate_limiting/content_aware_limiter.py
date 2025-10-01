@@ -1,11 +1,11 @@
 """
-Content-Aware Rate Limiter Enterprise - Ainflue
+Content-Aware Rate Limiter Enterprise - IA Chéries
 ===============================================
-Rate Limiter spécialisé pour types de contenu Ainflue.
+Rate Limiter spécialisé pour types de contenu IA Chéries.
 Audio/Video/Image upload limits + processing costs + quality tiers.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chéries Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -426,7 +426,7 @@ class ContentAnalyzer:
 
 class ContentAwareRateLimiter:
     """
-    Rate Limiter spécialisé pour types de contenu Ainflue.
+    Rate Limiter spécialisé pour types de contenu IA Chéries.
     Audio/Video/Image upload limits + processing costs + quality tiers.
     """
     

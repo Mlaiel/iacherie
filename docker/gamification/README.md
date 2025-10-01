@@ -213,7 +213,7 @@ GAMIFICATION_DEBUG=false
 # Database Configuration
 GAMIFICATION_DB_HOST=postgres_gamification
 GAMIFICATION_DB_PORT=5432
-GAMIFICATION_DB_NAME=ainflue_gamification
+GAMIFICATION_DB_NAME=iacherie_gamification
 GAMIFICATION_DB_USER=gamification_user
 GAMIFICATION_DB_PASSWORD=secure_gamification_password
 
@@ -402,7 +402,7 @@ GET /api/leaderboards?category=music&timeframe=weekly&limit=50
 
 ### Creator Workflow Integration
 ```python
-from ainflue_gamification import GamificationManager
+from iacherie_gamification import GamificationManager
 
 # Initialize gamification for creator workflow
 async def handle_content_upload(creator_id, content_data):

@@ -2,7 +2,7 @@
 """🔗 Enterprise Microservices Orchestration - Multi-Expert Implementation
 ============================================================================
 
-Orchestrateur enterprise pour microservices Ainflue avec service mesh avancé,
+Orchestrateur enterprise pour microservices IA Chéries avec service mesh avancé,
 load balancing intelligent, circuit breakers et communication inter-services optimisée.
 
 Expert Roles Implementation:
@@ -81,7 +81,7 @@ class CircuitBreakerState(Enum):
     HALF_OPEN = "half_open"
 
 class ServiceType(Enum):
-    """Types de services dans l'écosystème Ainflue"""
+    """Types de services dans l'écosystème IA Chéries"""
     AI_SERVICE = "ai_service"
     AUDIO_PROCESSING = "audio_processing"
     CONTENT_GENERATION = "content_generation"
@@ -184,7 +184,7 @@ class ServiceCall:
     response_size_bytes: int = 0
 
 class EnterpriseServiceOrchestrator:
-    """🔗 Orchestrateur Enterprise pour Microservices Ainflue
+    """🔗 Orchestrateur Enterprise pour Microservices IA Chéries
     
     Implémentation multi-expert pour orchestration microservices:
     - Service discovery automatique avec santé monitoring
@@ -628,7 +628,7 @@ class EnterpriseServiceOrchestrator:
                 "X-Request-ID": call_id,
                 "X-Source-Service": source_service,
                 "X-Client-IP": client_ip or "unknown",
-                "User-Agent": "Ainflue-Orchestrator/2.0"
+                "User-Agent": "IA Chéries-Orchestrator/2.0"
             })
             
             # Ajouter authentification JWT si configurée

@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """
-Service Discovery - Ainflue Enterprise API Management
+Service Discovery - IA Chéries Enterprise API Management
 ====================================================
 
 Dynamic Service Discovery & Registry for Microservices Architecture

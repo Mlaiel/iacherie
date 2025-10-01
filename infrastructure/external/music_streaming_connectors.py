@@ -2,11 +2,11 @@
 Music Streaming Connectors - 20 Platform Music Distribution
 ==========================================================
 
-Comprehensive music streaming platform integrations for Ainflue musician creators.
+Comprehensive music streaming platform integrations for iacherie musician creators.
 Enables distribution, monetization, and analytics across major music platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure  
+Project: iacherie Infrastructure  
 Version: 1.0 Production
 
 Platforms Supported (20):
@@ -123,7 +123,7 @@ class MusicPlatformCredentials:
 
 class MusicStreamingConnectors:
     """
-    Music Streaming Platform Connectors for Ainflue Musicians
+    Music Streaming Platform Connectors for iacherie Musicians
     
     Manages music distribution, monetization, and analytics across 20 major 
     music platforms, enabling musicians to maximize reach and revenue.

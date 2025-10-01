@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - NETLIFY HOSTING PLATFORM
+IA CHÉRIES INTEGRATIONS - NETLIFY HOSTING PLATFORM
 ==============================================
 
 Enterprise Netlify integration for creator economy platform deployment.
 Combines multiple expert roles for comprehensive JAMstack deployment management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chéries - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/cloud_providers)
 
 Expert Roles Applied:

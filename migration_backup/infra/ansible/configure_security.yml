@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: Configure Security Hardening for Ainflue Platform
+- name: Configure Security Hardening for IA Chéries Platform
   hosts: all
   become: true
   gather_facts: true
@@ -125,7 +125,7 @@
             content: |
               ***************************************************************************
               *                                                                         *
-              *                    AINFLUE PLATFORM - AUTHORIZED ACCESS ONLY          *
+              *                    IA CHÉRIES PLATFORM - AUTHORIZED ACCESS ONLY          *
               *                                                                         *
               *  This system is for authorized users only. All activities are         *
               *  monitored and logged. Unauthorized access is strictly prohibited     *
@@ -267,7 +267,7 @@
           blockinfile:
             path: /etc/rsyslog.conf
             block: |
-              # Ainflue Platform Security Logging
+              # IA Chéries Platform Security Logging
               $ModLoad imfile
               $InputFileName /var/log/ainflue/security/access.log
               $InputFileTag ainflue-access:
@@ -304,8 +304,8 @@
           openssl_csr:
             path: /opt/ainflue/security/certs/ca-csr.pem
             privatekey_path: /opt/ainflue/security/keys/ca-key.pem
-            common_name: "Ainflue Platform CA"
-            organization_name: "Ainflue"
+            common_name: "IA Chéries Platform CA"
+            organization_name: "IA Chéries"
             country_name: "US"
         
         - name: Generate self-signed CA certificate
@@ -369,7 +369,7 @@
             - name: "Lynis security audit"
               minute: "30"
               hour: "2"
-              job: "/usr/sbin/lynis audit system --auditor 'Ainflue Security Team' --quiet"
+              job: "/usr/sbin/lynis audit system --auditor 'IA Chéries Security Team' --quiet"
             - name: "RKHunter scan"
               minute: "0"
               hour: "4"

@@ -910,7 +910,7 @@ class SecurityThreatHandler(EventHandler):
 
 
 # Example usage
-async def setup_ainflue_event_bus():
+async def setup_iacherie_event_bus():
     """Setup IA Chérie event bus with handlers"""
     event_bus = EventBus()
     await event_bus.initialize()
@@ -933,7 +933,7 @@ async def setup_ainflue_event_bus():
 
 if __name__ == "__main__":
     async def main():
-        event_bus = await setup_ainflue_event_bus()
+        event_bus = await setup_iacherie_event_bus()
         
         # Example: Publish some events
         test_events = [

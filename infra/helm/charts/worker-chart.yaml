@@ -589,7 +589,7 @@ configMaps:
 # Secrets (references only)
 secrets:
   workerSecrets:
-    database-url: "postgresql://user:pass@db:5432/ainflue_workers"
+    database-url: "postgresql://user:pass@db:5432/iacherie_workers"
     rabbitmq-url: "amqp://user:pass@rabbitmq:5672/"
     redis-password: "redis123!"
     jwt-secret: "change-me-in-production"
@@ -604,7 +604,7 @@ redis:
   enabled: true
   auth:
     enabled: true
-    password: "ainflue123!"
+    password: "iacherie123!"
   master:
     persistence:
       enabled: true
@@ -621,10 +621,10 @@ redis:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "ainflue123!"
-    username: "ainflue_worker"
-    password: "ainflue123!"
-    database: "ainflue_workers"
+    postgresPassword: "iacherie123!"
+    username: "iacherie_worker"
+    password: "iacherie123!"
+    database: "iacherie_workers"
   primary:
     persistence:
       enabled: true
@@ -635,7 +635,7 @@ rabbitmq:
   enabled: true
   auth:
     username: "iacherie"
-    password: "ainflue123!"
+    password: "iacherie123!"
   persistence:
     enabled: true
     size: 8Gi

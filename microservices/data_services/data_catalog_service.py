@@ -1,6 +1,6 @@
 """
 🗂️ Data Catalog Service - Catalogue de Données Intelligent Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - iacherie Microservices Enterprise
 
 Service de catalogue intelligent pour découverte et gouvernance des données.
 Classification automatique avec IA et métadonnées enrichies pour data discovery.
@@ -95,7 +95,7 @@ class DataCatalogService:
     """Service de catalogue intelligent pour données enterprise"""
     
     def __init__(self):
-        self.catalog_index = "ainflue_data_catalog"
+        self.catalog_index = "iacherie_data_catalog"
         self.elasticsearch_client = None
         self.datasets: Dict[str, DatasetMetadata] = {}
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')

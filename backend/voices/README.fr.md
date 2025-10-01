@@ -33,11 +33,11 @@ Cette architecture vocale IA avancée, ses innovations technologiques de synthè
 
 ## 📋 Vue d'Ensemble du Module Voices
 
-Le module **Backend Voices** constitue le cœur technologique du système de synthèse vocale intelligent d'Ainflue, offrant des capacités vocales avancées avec intelligence artificielle, protection sécurisée du contenu vocal, monétisation en temps réel et distribution multi-plateforme.
+Le module **Backend Voices** constitue le cœur technologique du système de synthèse vocale intelligent d'iacherie, offrant des capacités vocales avancées avec intelligence artificielle, protection sécurisée du contenu vocal, monétisation en temps réel et distribution multi-plateforme.
 
 ### 🎯 Mission et Objectifs
 
-**Mission Principale**: Fournir une infrastructure vocale enterprise complète permettant aux créateurs Ainflue de générer, traiter et distribuer du contenu vocal haute qualité avec intelligence artificielle intégrée, monétisation optimisée et sécurité maximale.
+**Mission Principale**: Fournir une infrastructure vocale enterprise complète permettant aux créateurs iacherie de générer, traiter et distribuer du contenu vocal haute qualité avec intelligence artificielle intégrée, monétisation optimisée et sécurité maximale.
 
 **Objectifs Vocaux**:
 - **Synthèse Vocale Professional**: IA générative, émotions, accents, clonage célébrités
@@ -263,7 +263,7 @@ POST /api/voice/clone
 ```python
 GET /api/voice/analyze/{voice_id}
 POST /api/voice/fingerprint
-WebSocket: ws://voice.ainflue.com/analysis/{voice_id}
+WebSocket: ws://voice.iacherie.com/analysis/{voice_id}
 ```
 
 ### Intégrations Vocales
@@ -310,13 +310,13 @@ WebSocket: ws://voice.ainflue.com/analysis/{voice_id}
 
 ### Contacts Support
 - **Technical Lead**: Fahed Mlaiel (mlaiel@live.de)
-- **Voice Support**: voice-support@ainflue.com
+- **Voice Support**: voice-support@iacherie.com
 - **Emergency**: +49-xxx-xxx-xxxx (24/7)
 
 ### Ressources Développement
-- **Documentation API**: [docs.ainflue.com/voice](https://docs.ainflue.com/voice)
-- **Voice SDK**: [github.com/ainflue/voice-sdk](https://github.com/ainflue/voice-sdk)
-- **Community**: [community.ainflue.com/voice](https://community.ainflue.com/voice)
+- **Documentation API**: [docs.iacherie.com/voice](https://docs.iacherie.com/voice)
+- **Voice SDK**: [github.com/iacherie/voice-sdk](https://github.com/iacherie/voice-sdk)
+- **Community**: [community.iacherie.com/voice](https://community.iacherie.com/voice)
 
 ---
 

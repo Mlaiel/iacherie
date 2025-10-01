@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🚀 PERFORMANCE TESTING SUITE - ENTERPRISE VALIDATION
-Ainflue Platform - Comprehensive Performance Benchmarking & Load Testing
+IA Chéries Platform - Comprehensive Performance Benchmarking & Load Testing
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Expertise Multi-Rôles: Lead Dev IA + Backend Senior + ML Engineer + DBA + 

@@ -1,12 +1,12 @@
 """
-Core Orchestrator - Master Infrastructure Orchestration for Ainflue
+Core Orchestrator - Master Infrastructure Orchestration for iacherie
 ==================================================================
 
 Central orchestration engine for enterprise-grade infrastructure coordination.
 Manages multi-cloud deployments, business logic integration, and creator platform optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 """
 
@@ -45,7 +45,7 @@ class BusinessTier(Enum):
 
 @dataclass
 class InfrastructureConfig:
-    """Infrastructure configuration for Ainflue platform"""
+    """Infrastructure configuration for iacherie platform"""
     environment: str = "production"
     regions: List[str] = None
     creator_capacity: int = 10000
@@ -77,7 +77,7 @@ class OrchestrationResult:
 
 class CoreOrchestrator:
     """
-    Core Infrastructure Orchestrator for Ainflue Creator Platform
+    Core Infrastructure Orchestrator for iacherie Creator Platform
     
     Master orchestration system that coordinates all infrastructure components
     with specific optimization for creator economy business logic and workflows.
@@ -587,7 +587,7 @@ class CoreOrchestrator:
         logger.info("Collaboration features configured")
         
     async def _integrate_creator_business_logic(self, operation: OrchestrationResult) -> None:
-        """Integrate Ainflue creator platform business logic"""
+        """Integrate iacherie creator platform business logic"""
         
         # Integrate creator workflow logic
         workflow_integration = await self._integrate_creator_workflows()

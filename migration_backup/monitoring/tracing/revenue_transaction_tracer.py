@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Revenue Transaction Tracer Enterprise
+IA Chéries Platform - Revenue Transaction Tracer Enterprise
 ======================================================
 
 Advanced revenue transaction tracing system for monitoring end-to-end financial flows,

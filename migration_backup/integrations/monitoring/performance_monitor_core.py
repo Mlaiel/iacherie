@@ -1,7 +1,7 @@
 """Performance Monitor Core - Core Performance Monitoring System
 ================================================================
 
-Core performance monitoring infrastructure for Ainflue integrations.
+Core performance monitoring infrastructure for IA Chéries integrations.
 Provides the main PerformanceMonitor class and result management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

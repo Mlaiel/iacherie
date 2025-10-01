@@ -6,7 +6,7 @@ Advanced DMCA compliance system for creator content protection, takedown procedu
 and safe harbor provisions for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -95,7 +95,7 @@ class CreatorContent:
 
 class DMCAComplianceManager:
     """
-    Enterprise DMCA compliance manager for Ainflue creator platform.
+    Enterprise DMCA compliance manager for IA Chéries creator platform.
     Handles takedown notices, counter-notices, and safe harbor protections.
     """
     

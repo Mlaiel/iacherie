@@ -1,4 +1,4 @@
-# Prometheus Configuration Template - Ainflue Creator Economy Platform
+# Prometheus Configuration Template - iacherie Creator Economy Platform
 # =====================================================================
 #
 # 🎯 MONITORING EXPERT + DEVOPS ENGINEER + OBSERVABILITY SPECIALIST
@@ -42,12 +42,12 @@ global:
   
   # External labels applied to all metrics
   external_labels:
-    cluster: 'ainflue-creator-economy'
+    cluster: 'iacherie-creator-economy'
     environment: 'production'
     region: 'us-east-1'
     business_unit: 'creator-economy'
     owner: 'fahed-mlaiel'
-    project: 'ainflue'
+    project: 'iacherie'
     security_level: 'enterprise'
 
 # ==============================================================================
@@ -141,7 +141,7 @@ scrape_configs:
       - role: pod
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
             - monitoring
             - istio-system
     relabel_configs:
@@ -177,7 +177,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: keep
@@ -210,7 +210,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: keep
@@ -244,7 +244,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: keep
@@ -277,7 +277,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: keep
@@ -312,7 +312,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: keep
@@ -346,7 +346,7 @@ scrape_configs:
   # PostgreSQL Exporter
   - job_name: 'postgresql'
     static_configs:
-      - targets: ['postgresql-exporter.ainflue-platform.svc.cluster.local:9187']
+      - targets: ['postgresql-exporter.iacherie-platform.svc.cluster.local:9187']
     scrape_interval: 30s
     metrics_path: /metrics
     relabel_configs:
@@ -360,7 +360,7 @@ scrape_configs:
   # MySQL Exporter (Analytics DB)
   - job_name: 'mysql'
     static_configs:
-      - targets: ['mysql-exporter.ainflue-platform.svc.cluster.local:9104']
+      - targets: ['mysql-exporter.iacherie-platform.svc.cluster.local:9104']
     scrape_interval: 30s
     metrics_path: /metrics
     relabel_configs:
@@ -374,7 +374,7 @@ scrape_configs:
   # Redis Exporter
   - job_name: 'redis'
     static_configs:
-      - targets: ['redis-exporter.ainflue-platform.svc.cluster.local:9121']
+      - targets: ['redis-exporter.iacherie-platform.svc.cluster.local:9121']
     scrape_interval: 30s
     metrics_path: /metrics
     relabel_configs:
@@ -395,7 +395,7 @@ scrape_configs:
       - role: endpoints
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
         action: keep
@@ -443,7 +443,7 @@ scrape_configs:
       - role: pod
         namespaces:
           names:
-            - ainflue-platform
+            - iacherie-platform
     relabel_configs:
       - source_labels: [__meta_kubernetes_pod_label_app]
         action: keep
@@ -476,7 +476,7 @@ scrape_configs:
   # Creator Economy Business Metrics
   - job_name: 'business-metrics'
     static_configs:
-      - targets: ['business-metrics-exporter.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['business-metrics-exporter.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 60s  # Business metrics don't need high frequency
     metrics_path: /metrics
     relabel_configs:
@@ -494,7 +494,7 @@ scrape_configs:
   # Content Processing Metrics
   - job_name: 'content-processing-metrics'
     static_configs:
-      - targets: ['content-processor.ainflue-platform.svc.cluster.local:9090']
+      - targets: ['content-processor.iacherie-platform.svc.cluster.local:9090']
     scrape_interval: 30s
     metrics_path: /metrics
     relabel_configs:
@@ -510,7 +510,7 @@ scrape_configs:
   # Payment Provider Health Checks
   - job_name: 'payment-providers'
     static_configs:
-      - targets: ['payment-health-checker.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['payment-health-checker.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 120s  # Less frequent for external services
     metrics_path: /metrics
     relabel_configs:
@@ -524,7 +524,7 @@ scrape_configs:
   # AI Service Providers Health
   - job_name: 'ai-service-providers'
     static_configs:
-      - targets: ['ai-health-checker.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['ai-health-checker.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 180s
     metrics_path: /metrics
     relabel_configs:
@@ -568,7 +568,7 @@ scrape_configs:
   # Creator Engagement Metrics
   - job_name: 'creator-engagement'
     static_configs:
-      - targets: ['engagement-metrics.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['engagement-metrics.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 300s
     metrics_path: /metrics
     params:
@@ -583,7 +583,7 @@ scrape_configs:
   # Revenue and Monetization Metrics
   - job_name: 'revenue-metrics'
     static_configs:
-      - targets: ['revenue-metrics.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['revenue-metrics.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 300s
     metrics_path: /metrics
     relabel_configs:
@@ -597,7 +597,7 @@ scrape_configs:
   # Content Performance Metrics
   - job_name: 'content-performance'
     static_configs:
-      - targets: ['content-analytics.ainflue-platform.svc.cluster.local:8080']
+      - targets: ['content-analytics.iacherie-platform.svc.cluster.local:8080']
     scrape_interval: 180s
     metrics_path: /metrics
     relabel_configs:
@@ -626,7 +626,7 @@ remote_write:
     write_relabel_configs:
       # Add tenant information for multi-tenancy
       - target_label: __tmp_tenant_id
-        replacement: "ainflue-creator-economy"
+        replacement: "iacherie-creator-economy"
       - source_labels: [__tmp_tenant_id]
         target_label: tenant_id
 
@@ -638,7 +638,7 @@ remote_write:
     write_relabel_configs:
       # Only send business metrics to Timestream
       - source_labels: [__name__]
-        regex: '(ainflue_creator_.*|ainflue_revenue_.*|ainflue_engagement_.*)'
+        regex: '(iacherie_creator_.*|iacherie_revenue_.*|iacherie_engagement_.*)'
         action: keep
 
 remote_read:
@@ -646,7 +646,7 @@ remote_read:
   - url: "https://cortex-gateway.monitoring.svc.cluster.local/api/v1/read"
     read_recent: true
     required_matchers:
-      tenant_id: "ainflue-creator-economy"
+      tenant_id: "iacherie-creator-economy"
 
 # ==============================================================================
 # STORAGE CONFIGURATION

@@ -654,7 +654,7 @@ class EnvironmentProvisioner:
                     environment={
                         'POSTGRES_DB': f'iacherie_{env_config.name}',
                         'POSTGRES_USER': 'iacherie',
-                        'POSTGRES_PASSWORD': 'ainflue_password'
+                        'POSTGRES_PASSWORD': 'iacherie_password'
                     },
                     ports={'5432/tcp': None},
                     volumes={f'iacherie-{env_config.name}-db-data': {'bind': '/var/lib/postgresql/data', 'mode': 'rw'}},
@@ -669,7 +669,7 @@ class EnvironmentProvisioner:
                     environment={
                         'MYSQL_DATABASE': f'iacherie_{env_config.name}',
                         'MYSQL_USER': 'iacherie',
-                        'MYSQL_PASSWORD': 'ainflue_password',
+                        'MYSQL_PASSWORD': 'iacherie_password',
                         'MYSQL_ROOT_PASSWORD': 'root_password'
                     },
                     ports={'3306/tcp': None},

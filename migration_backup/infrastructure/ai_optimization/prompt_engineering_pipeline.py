@@ -1,12 +1,12 @@
 """
-Prompt Engineering Pipeline - Advanced AI Prompt Optimization for Ainflue
+Prompt Engineering Pipeline - Advanced AI Prompt Optimization for IA Chéries
 ========================================================================
 
 Enterprise-grade prompt engineering pipeline for optimizing AI interactions
 across 53 specialized AI agents serving the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -75,7 +75,7 @@ class PromptOptimizationResult:
 
 class PromptEngineeringPipeline:
     """
-    Advanced prompt engineering pipeline for Ainflue's 53 AI agents.
+    Advanced prompt engineering pipeline for IA Chéries's 53 AI agents.
     Optimizes prompts for maximum effectiveness in creator economy workflows.
     """
     
@@ -85,10 +85,10 @@ class PromptEngineeringPipeline:
         self.performance_cache: Dict[str, Dict[str, Any]] = {}
         self.creator_feedback_data: Dict[str, Any] = {}
         
-        # Initialize default templates for Ainflue workflow
+        # Initialize default templates for IA Chéries workflow
         self._initialize_creator_prompt_templates()
         
-        logger.info("Prompt Engineering Pipeline initialized for Ainflue creator platform")
+        logger.info("Prompt Engineering Pipeline initialized for IA Chéries creator platform")
     
     def _initialize_creator_prompt_templates(self):
         """Initialize default prompt templates for creator economy workflows."""

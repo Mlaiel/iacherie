@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Enterprise - API Documentation Generator
+🚀 IA Chéries Enterprise - API Documentation Generator
 Enterprise API documentation with auto-generation and interactive features
 
 🎯 BUSINESS LOGIC INTEGRATION:
@@ -13,7 +13,7 @@ Enterprise API documentation with auto-generation and interactive features
 
 👨‍💻 AUTHOR: Fahed Mlaiel (mlaiel@live.de)
 📧 CONTACT: mlaiel@live.de  
-🏢 ENTERPRISE: Ainflue Platform
+🏢 ENTERPRISE: IA Chéries Platform
 📅 CREATED: 2025
 🔒 LICENSE: PROPRIETARY - All Rights Reserved
 
@@ -152,7 +152,7 @@ class APIEndpoint:
 class APIDocumentationSpec:
     """Complete API documentation specification"""
     spec_id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    title: str = "Ainflue Enterprise API"
+    title: str = "IA Chéries Enterprise API"
     version: str = "1.0.0"
     description: str = ""
     base_url: str = "https://api.ainflue.com"
@@ -228,7 +228,7 @@ class CodeExampleGenerator:
         code = "import requests\nimport json\n\n"
         
         # API configuration
-        code += f"# Ainflue Enterprise API - {endpoint.summary}\n"
+        code += f"# IA Chéries Enterprise API - {endpoint.summary}\n"
         code += f"api_base_url = \"{base_url}\"\n"
         code += f"endpoint = \"{path}\"\n\n"
         
@@ -299,7 +299,7 @@ class CodeExampleGenerator:
         method = endpoint.method.value.upper()
         path = endpoint.path
         
-        code = f"// Ainflue Enterprise API - {endpoint.summary}\n"
+        code = f"// IA Chéries Enterprise API - {endpoint.summary}\n"
         code += f"const API_BASE_URL = '{base_url}';\n"
         code += f"const endpoint = '{path}';\n\n"
         
@@ -364,7 +364,7 @@ class CodeExampleGenerator:
         path = endpoint.path
         url = f"{base_url}{path}"
         
-        code = f"# Ainflue Enterprise API - {endpoint.summary}\n"
+        code = f"# IA Chéries Enterprise API - {endpoint.summary}\n"
         code += f"curl -X {method} \\\n"
         code += f"  '{url}' \\\n"
         
@@ -415,7 +415,7 @@ class CodeExampleGenerator:
         path = endpoint.path
         
         code = "<?php\n"
-        code += f"// Ainflue Enterprise API - {endpoint.summary}\n\n"
+        code += f"// IA Chéries Enterprise API - {endpoint.summary}\n\n"
         code += f"$apiBaseUrl = '{base_url}';\n"
         code += f"$endpoint = '{path}';\n"
         code += "$url = $apiBaseUrl . $endpoint;\n\n"
@@ -606,9 +606,9 @@ class OpenAPIGenerator:
             "externalDocs": spec.external_docs
         }
         
-        # Add custom Ainflue extensions
+        # Add custom IA Chéries extensions
         openapi_spec["x-ainflue-enterprise"] = {
-            "platform": "Ainflue Enterprise",
+            "platform": "IA Chéries Enterprise",
             "creator_economy": True,
             "multi_platform_support": "65+ platforms",
             "ai_powered": True,
@@ -642,7 +642,7 @@ class OpenAPIGenerator:
             "security": []
         }
         
-        # Add Ainflue business logic annotations
+        # Add IA Chéries business logic annotations
         if endpoint.creator_type_specific:
             spec["x-creator-type"] = endpoint.creator_type_specific
         
@@ -762,14 +762,14 @@ class APIDocumentationGenerator:
         self.registered_specs: Dict[str, APIDocumentationSpec] = {}
         self.generated_docs: Dict[str, Any] = {}
         
-        # Ainflue-specific configurations
+        # IA Chéries-specific configurations
         self.ainflue_endpoints: List[APIEndpoint] = []
         
-        # Initialize Ainflue business logic documentation
+        # Initialize IA Chéries business logic documentation
         self._initialize_ainflue_documentation()
     
     def _initialize_ainflue_documentation(self) -> None:
-        """Initialize Ainflue business logic API documentation"""
+        """Initialize IA Chéries business logic API documentation"""
         
         # Creator Content APIs
         creator_content_endpoints = [
@@ -1087,7 +1087,7 @@ class APIDocumentationGenerator:
         start_time = datetime.now(timezone.utc)
         
         try:
-            # Add Ainflue endpoints to spec if not already present
+            # Add IA Chéries endpoints to spec if not already present
             if not spec.endpoints:
                 spec.endpoints = self.ainflue_endpoints.copy()
             

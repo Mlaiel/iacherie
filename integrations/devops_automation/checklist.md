@@ -320,7 +320,7 @@ spec:
 ### Infrastructure as Code Structure
 ```hcl
 # Terraform Configuration
-module "ainflue_infrastructure" {
+module "iacherie_infrastructure" {
   source = "./modules/infrastructure"
   
   environment = var.environment

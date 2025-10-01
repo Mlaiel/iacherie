@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Key Management Template for Ainflue Creator Economy Platform
+Key Management Template for iacherie Creator Economy Platform
 Enterprise key management service with HSM, Vault integration and automated rotation
 """
 
@@ -162,7 +162,7 @@ class KeyRestoreRequest(BaseModel):
 
 class KeyManagementTemplate:
     """
-    Template de gestion de clés enterprise pour Ainflue
+    Template de gestion de clés enterprise pour iacherie
     
     Fonctionnalités:
     - Multi-provider (Local, Vault, AWS KMS, Azure, HSM)
@@ -179,7 +179,7 @@ class KeyManagementTemplate:
     def __init__(self, config: KeyManagementConfig = None):
         self.config = config or KeyManagementConfig()
         self.app = FastAPI(
-            title="Ainflue Key Management Service",
+            title="iacherie Key Management Service",
             description="Enterprise key management with multi-provider support",
             version="1.0.0"
         )
@@ -573,11 +573,11 @@ class KeyManagementTemplate:
     async def _generate_aws_kms_key(self, request: KeyGenerationRequest, kms_client) -> str:
         """Génère clé dans AWS KMS"""
         response = kms_client.create_key(
-            Description=f"Ainflue key: {request.key_name}",
+            Description=f"iacherie key: {request.key_name}",
             KeyUsage='ENCRYPT_DECRYPT' if KeyUsage.ENCRYPT_DECRYPT in request.usage else 'SIGN_VERIFY',
             CustomerMasterKeySpec='SYMMETRIC_DEFAULT' if request.key_type.upper() == 'AES' else 'RSA_2048',
             Tags=[
-                {'TagKey': 'Service', 'TagValue': 'Ainflue'},
+                {'TagKey': 'Service', 'TagValue': 'iacherie'},
                 {'TagKey': 'Owner', 'TagValue': request.owner},
                 {'TagKey': 'KeyType', 'TagValue': request.key_type}
             ]

@@ -1,6 +1,6 @@
 """
 Core Monitoring Alerts Module
-Module d'alertes pour le système de monitoring Ainfluencer
+Module d'alertes pour le système de monitoring IA Chéries
 SOUS-MODULE MANQUANT POUR 100% VICTOIRE!
 """
 

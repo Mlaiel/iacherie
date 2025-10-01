@@ -203,9 +203,9 @@ def get_events(event_type: Optional[str] = None,
     return analytics_tracker.get_events(event_type, user_id)
 
 # Fonctions spécialisées pour les modules principaux
-def track_ainfluencer_auth_success(user_id: str) -> str:
+def track_iacheriencer_auth_success(user_id: str) -> str:
     """Track le succès de l'authentification IA Chérie"""
-    return track_authentication('ainfluencer_auth', True, user_id)
+    return track_authentication('iacheriencer_auth', True, user_id)
 
 def track_security_scanner_run(scan_results: Dict[str, Any], user_id: Optional[str] = None) -> str:
     """Track l'exécution du scanner de sécurité"""

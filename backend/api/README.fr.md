@@ -1,10 +1,10 @@
-# 🔌 Ainflue Backend API - Système de Passerelle API Enterprise
+# 🔌 iacherie Backend API - Système de Passerelle API Enterprise
 
 **Infrastructure API Multi-Plateforme Avancée pour la Création de Contenu Alimentée par l'IA**
 
 ## 🎯 Aperçu
 
-Le module Ainflue Backend API fournit un système de passerelle API complet et de niveau entreprise pour la plateforme de protection et monétisation de contenu alimentée par l'IA. Ce système gère l'orchestration API complexe avec des fonctionnalités avancées incluant l'authentification multi-plateforme, l'optimisation GraphQL, la communication WebSocket en temps réel, et le traitement middleware intelligent.
+Le module iacherie Backend API fournit un système de passerelle API complet et de niveau entreprise pour la plateforme de protection et monétisation de contenu alimentée par l'IA. Ce système gère l'orchestration API complexe avec des fonctionnalités avancées incluant l'authentification multi-plateforme, l'optimisation GraphQL, la communication WebSocket en temps réel, et le traitement middleware intelligent.
 
 ## 👨‍💻 Équipe de Développement
 
@@ -195,7 +195,7 @@ await realtime.subscribe_to_collaboration_events("creator_123")
 ### Variables d'Environnement
 ```bash
 # Configuration Base de Données
-export DATABASE_URL="postgresql://user:password@localhost/ainflue"
+export DATABASE_URL="postgresql://user:password@localhost/iacherie"
 export REDIS_URL="redis://localhost:6379"
 
 # Configuration OAuth
@@ -366,4 +366,4 @@ Tous les composants API sont prêts pour la production avec :
 
 ---
 
-**🔌 Ainflue Backend API - La Plateforme API de Création de Contenu la Plus Avancée au Monde**
+**🔌 iacherie Backend API - La Plateforme API de Création de Contenu la Plus Avancée au Monde**

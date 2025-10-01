@@ -48,7 +48,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE PRÉCÉDENTE VIOLANT LES RÈGLES (CORRIGÉE) :**
 ```
-/workspaces/Ainflue/backend/business/          ← Niveau 3 (LIMITE)
+/workspaces/iacherie/backend/business/          ← Niveau 3 (LIMITE)
 ├── monetization/                              ← Niveau 4 ❌ SUPPRIMÉ !
 │   ├── bidding_system.py (8 fichiers)
 ├── protection/                               ← Niveau 4 ❌ SUPPRIMÉ !
@@ -59,7 +59,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **✅ STRUCTURE ACTUELLE CONFORME :**
 ```
-/workspaces/Ainflue/backend/business/          ← Niveau 3 (FINAL)
+/workspaces/iacherie/backend/business/          ← Niveau 3 (FINAL)
 ├── 📄 23 fichiers Python niveau 3            ✅ CONFORME !
 ├── 📄 Aucun sous-dossier                     ✅ CONFORME !
 └── 📄 Architecture consolidée                ✅ CONFORME !
@@ -275,7 +275,7 @@ TOTAL CONSOLIDÉ : ~4,400 lignes de code revenus enterprise
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── business/                                       ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)

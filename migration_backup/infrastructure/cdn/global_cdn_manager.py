@@ -7,7 +7,7 @@ for ultra-low latency content delivery and creator platform optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Lead Dev IA + Backend Senior + DevOps
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -88,7 +88,7 @@ class DeliveryResult:
 
 class GlobalCDNManager:
     """
-    Enterprise Global CDN Manager for Ainflue Creator Platform.
+    Enterprise Global CDN Manager for IA Chéries Creator Platform.
     
     Orchestrates 180+ edge locations worldwide with intelligent routing,
     multi-provider failover, and creator-optimized content delivery.

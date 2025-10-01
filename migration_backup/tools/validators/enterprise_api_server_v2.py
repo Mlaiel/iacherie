@@ -23,7 +23,7 @@ except ImportError as e:
 
 # Configuration FastAPI
 app = FastAPI(
-    title="Ainfluencer Enterprise API v2.3 - Modules 1-40",
+    title="IA Chéries Enterprise API v2.3 - Modules 1-40",
     description="API complète avec tous les modules 1-40 (70.2% completion)",
     version="2.3.0"
 )
@@ -691,7 +691,7 @@ app.include_router(router, prefix="/api")
 @app.get("/")
 async def root():
     return {
-        "message": "� AInfluencer Enterprise API v2.1 - Critical Infrastructure",
+        "message": "� IA Chéries Enterprise API v2.1 - Critical Infrastructure",
         "version": "2.1.0", 
         "modules_implemented": 35,
         "phase_1_completed": True,
@@ -709,7 +709,7 @@ async def root():
     }
 
 if __name__ == "__main__":
-    print("� Starting AInfluencer Enterprise API Server v2.1...")
+    print("� Starting IA Chéries Enterprise API Server v2.1...")
     print("📊 Modules 1-35 implemented (61.4% complete)")
     print("🔒 Critical infrastructure modules operational:")
     print("   ✅ Authentication & Authorization")

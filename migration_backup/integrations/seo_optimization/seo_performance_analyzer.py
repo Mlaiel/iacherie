@@ -1,5 +1,5 @@
 """
-SEO Performance Analyzer - Ainflue SEO Optimization
+SEO Performance Analyzer - IA Chéries SEO Optimization
 ==================================================
 Advanced real-time SEO analytics and performance tracking engine for enterprise.
 Multi-platform monitoring with attribution modeling and predictive insights.
@@ -9,7 +9,7 @@ Cette architecture est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de)
 Toute reproduction ou utilisation non autorisée est strictement interdite.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue SEO Optimization
+Project: IA Chéries SEO Optimization
 Version: 1.0 Production
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -36,7 +36,7 @@ import re
 import time
 from collections import defaultdict, deque
 
-# Ainflue core imports
+# IA Chéries core imports
 from core.analytics.metrics_collector import MetricsCollector
 from core.database.performance_db import PerformanceDatabase
 from core.security.audit_logger import AuditLogger

@@ -24,7 +24,7 @@ jobs:
         image: postgres:15
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ainflue_perf_test
+          POSTGRES_DB: iacherie_perf_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -63,7 +63,7 @@ jobs:
         uvicorn main:app --host 0.0.0.0 --port 8000 &
         sleep 15
       env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ainflue_perf_test
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/iacherie_perf_test
         REDIS_URL: redis://localhost:6379
         PERFORMANCE_TESTING: true
 
@@ -121,7 +121,7 @@ jobs:
         image: postgres:15
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ainflue_db_perf_test
+          POSTGRES_DB: iacherie_db_perf_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -155,7 +155,7 @@ jobs:
 
         async def create_test_data():
             conn = await asyncpg.connect(
-                'postgresql://postgres:postgres@localhost:5432/ainflue_db_perf_test'
+                'postgresql://postgres:postgres@localhost:5432/iacherie_db_perf_test'
             )
 
             # Create tables
@@ -208,7 +208,7 @@ jobs:
 
         async def run_db_performance_tests():
             conn = await asyncpg.connect(
-                'postgresql://postgres:postgres@localhost:5432/ainflue_db_perf_test'
+                'postgresql://postgres:postgres@localhost:5432/iacherie_db_perf_test'
             )
 
             # Test 1: Simple SELECT

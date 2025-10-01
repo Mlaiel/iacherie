@@ -69,7 +69,7 @@ security:
 # Database Settings (Local)
 database:
   # Local database connection
-  url: "${AINFLUE_LOCAL_DATABASE_URL:-sqlite:///./local_ainflue.db}"
+  url: "${IACHERIE_LOCAL_DATABASE_URL:-sqlite:///./local_iacherie.db}"
   pool_size: 1                # Single connection locally
   max_overflow: 1
   pool_timeout: 300           # Long timeout for debugging
@@ -88,7 +88,7 @@ cache:
   l2_ttl_seconds: 300
   
   # Local Redis or in-memory cache
-  redis_url: "${AINFLUE_LOCAL_REDIS_URL:-redis://localhost:6379/1}"
+  redis_url: "${IACHERIE_LOCAL_REDIS_URL:-redis://localhost:6379/1}"
   enable_compression: false   # Disabled for debugging
   
 # Logging Configuration (Verbose for local)
@@ -305,7 +305,7 @@ error_handling:
 # Local Environment Variables
 local_env_vars:
   # Default local environment variables
-  AINFLUE_ENV: "local"
+  IACHERIE_ENV: "local"
   FLASK_ENV: "development"
   DEBUG: "true"
   

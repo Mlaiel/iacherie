@@ -205,7 +205,7 @@ class PostgreSQLAdapter(BackendAdapter):
             return
             
         create_table_sql = """
-        CREATE TABLE IF NOT EXISTS ainflue_events (
+        CREATE TABLE IF NOT EXISTS iacherie_events (
             event_id UUID PRIMARY KEY,
             aggregate_id UUID NOT NULL,
             aggregate_type VARCHAR(100) NOT NULL,
@@ -218,10 +218,10 @@ class PostgreSQLAdapter(BackendAdapter):
         );
         
         CREATE INDEX IF NOT EXISTS idx_events_aggregate 
-        ON ainflue_events (aggregate_id, event_version);
+        ON iacherie_events (aggregate_id, event_version);
         
         CREATE INDEX IF NOT EXISTS idx_events_type 
-        ON ainflue_events (event_type, occurred_at);
+        ON iacherie_events (event_type, occurred_at);
         """
         
         try:
@@ -250,7 +250,7 @@ class PostgreSQLAdapter(BackendAdapter):
                             event_data = self.compressor.compress_event_data(event_data)
                         
                         await conn.execute("""
-                            INSERT INTO ainflue_events 
+                            INSERT INTO iacherie_events 
                             (event_id, aggregate_id, aggregate_type, event_type, 
                              event_data, event_version, occurred_at)
                             VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -276,7 +276,7 @@ class PostgreSQLAdapter(BackendAdapter):
                 rows = await conn.fetch("""
                     SELECT event_id, aggregate_id, aggregate_type, event_type,
                            event_data, event_version, occurred_at
-                    FROM ainflue_events
+                    FROM iacherie_events
                     WHERE aggregate_id = $1 AND event_version >= $2
                     ORDER BY event_version
                 """, aggregate_id, from_version)
@@ -311,7 +311,7 @@ class PostgreSQLAdapter(BackendAdapter):
                 sql = """
                     SELECT event_id, aggregate_id, aggregate_type, event_type,
                            event_data, event_version, occurred_at
-                    FROM ainflue_events
+                    FROM iacherie_events
                     ORDER BY occurred_at
                     LIMIT $1
                 """
@@ -368,7 +368,7 @@ class MongoDBAdapter(BackendAdapter):
                 maxPoolSize=self.config.max_connections,
                 serverSelectionTimeoutMS=self.config.timeout_seconds * 1000
             )
-            self.database = self.client.ainflue_events
+            self.database = self.client.iacherie_events
             self.collection = self.database.events
             
             # Create indexes

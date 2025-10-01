@@ -2,7 +2,7 @@
  * 🔄 REDUX SLICE TEMPLATE - ENTERPRISE STATE MANAGEMENT
  * =====================================================
  * 
- * Advanced Redux Slice Templates for Ainflue Creator Economy
+ * Advanced Redux Slice Templates for IA Chéries Creator Economy
  * Type-safe reducers, async thunks, RTK Query integration
  * 
  * © 2025 Fahed Mlaiel <mlaiel@live.de>

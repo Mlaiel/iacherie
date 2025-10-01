@@ -5,7 +5,7 @@
 =============================================================
 
 Observability platform enterprise avec unified monitoring et correlation.
-Infrastructure robuste d'observabilité pour monitoring complet des applications Ainflue.
+Infrastructure robuste d'observabilité pour monitoring complet des applications IA Chéries.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -810,7 +810,7 @@ class PlatformIntelligenceEngine:
     ) -> Optional[ObservabilityInsight]:
         """Analyse l'impact business"""
         
-        # Services critiques pour Ainflue
+        # Services critiques pour IA Chéries
         critical_services = {
             'upload_service': 'Pipeline création contenu',
             'ai_service': 'Processing IA',

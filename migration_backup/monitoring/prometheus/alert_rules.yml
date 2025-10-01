@@ -1,4 +1,4 @@
-# Prometheus Alert Rules for Ainflue Platform
+# Prometheus Alert Rules for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready alert rules with comprehensive coverage
 
@@ -18,7 +18,7 @@ groups:
           team: platform
           priority: P1
         annotations:
-          summary: "🚨 CRITICAL: Ainflue API service is down"
+          summary: "🚨 CRITICAL: IA Chéries API service is down"
           description: "API service {{ $labels.instance }} has been down for more than 1 minute. This affects all platform functionality."
           runbook_url: "https://docs.ainflue.com/runbooks/api-service-down"
           action: "Immediate escalation to on-call engineer"
@@ -426,7 +426,7 @@ groups:
           action: "Review costs and revenue optimization"
           team: platform
         annotations:
-          summary: "High error rate detected in Ainflue API"
+          summary: "High error rate detected in IA Chéries API"
           description: "Error rate is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
 
       # High Response Time
@@ -438,7 +438,7 @@ groups:
           service: api
           team: platform
         annotations:
-          summary: "High response time in Ainflue API"
+          summary: "High response time in IA Chéries API"
           description: "95th percentile response time is {{ $value }}s for {{ $labels.instance }}"
 
       # No Requests (Traffic Drop)
@@ -450,7 +450,7 @@ groups:
           service: api
           team: platform
         annotations:
-          summary: "Very low traffic to Ainflue API"
+          summary: "Very low traffic to IA Chéries API"
           description: "Request rate is {{ $value }} requests/second for {{ $labels.instance }}"
 
   # =================================================================
@@ -520,7 +520,7 @@ groups:
           service: infrastructure
           team: platform
         annotations:
-          summary: "High CPU usage in Ainflue namespace"
+          summary: "High CPU usage in IA Chéries namespace"
           description: "CPU usage is {{ $value }}% for {{ $labels.pod }}"
 
       # High Memory Usage
@@ -532,7 +532,7 @@ groups:
           service: infrastructure
           team: platform
         annotations:
-          summary: "High memory usage in Ainflue pod"
+          summary: "High memory usage in IA Chéries pod"
           description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod }}"
 
       # Pod Restart Loops
@@ -556,7 +556,7 @@ groups:
           service: infrastructure
           team: platform
         annotations:
-          summary: "Low disk space on Ainflue node"
+          summary: "Low disk space on IA Chéries node"
           description: "Disk space is {{ $value }}% available on {{ $labels.instance }}"
 
   # =================================================================

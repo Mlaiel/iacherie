@@ -162,10 +162,10 @@ keytool -genkeypair -alias iacherie-key -keyalg RSA -keysize 2048 \
 3. **Configure Gradle Properties:**
 Create `android/gradle.properties`:
 ```properties
-AINFLUE_UPLOAD_STORE_FILE=release-key.keystore
-AINFLUE_UPLOAD_STORE_PASSWORD=your-keystore-password
-AINFLUE_UPLOAD_KEY_ALIAS=iacherie-key
-AINFLUE_UPLOAD_KEY_PASSWORD=your-key-password
+IACHERIE_UPLOAD_STORE_FILE=release-key.keystore
+IACHERIE_UPLOAD_STORE_PASSWORD=your-keystore-password
+IACHERIE_UPLOAD_KEY_ALIAS=iacherie-key
+IACHERIE_UPLOAD_KEY_PASSWORD=your-key-password
 ```
 
 4. **Build and Deploy:**

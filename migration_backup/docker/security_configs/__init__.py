@@ -1,5 +1,5 @@
 # Docker Security Configurations Module
-# Advanced security configuration management for Ainflue Docker infrastructure
+# Advanced security configuration management for IA Chéries Docker infrastructure
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 from .ssl_certificates import SSLCertificateManager

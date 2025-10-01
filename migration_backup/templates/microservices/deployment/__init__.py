@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Deployment Templates - Ainflue Microservices Enterprise
+🚀 Deployment Templates - IA Chéries Microservices Enterprise
 
 DevOps deployment automation templates for Kubernetes, Docker, Helm,
 Terraform, CI/CD pipelines, and advanced deployment strategies.

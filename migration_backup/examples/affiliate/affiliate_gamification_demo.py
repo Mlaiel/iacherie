@@ -3,7 +3,7 @@
 Affiliate Gamification Demo - Démonstration Gamification Affiliation
 ==================================================================
 
-Démonstration gamification affiliation ultra sophistiquée pour écosystème Ainflue.
+Démonstration gamification affiliation ultra sophistiquée pour écosystème IA Chéries.
 Inclut système de points, badges, leaderboards, et rewards avec psychologie comportementale.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1057,7 +1057,7 @@ class AffiliateGamificationDemo:
             ],
             "physical_rewards": [
                 {
-                    "name": "Ainflue T-Shirt Premium",
+                    "name": "IA Chéries T-Shirt Premium",
                     "description": "T-shirt édition limitée en coton bio",
                     "cost": 800,
                     "availability": "En stock"
@@ -1190,7 +1190,7 @@ async def main(**kwargs) -> Dict[str, Any]:
 if __name__ == "__main__":
     """Exécution directe du module"""
     print("=" * 70)
-    print("🎮 AFFILIATE GAMIFICATION DEMO - AINFLUE SYSTEM")
+    print("🎮 AFFILIATE GAMIFICATION DEMO - IA CHÉRIES SYSTEM")
     print("=" * 70)
     
     try:

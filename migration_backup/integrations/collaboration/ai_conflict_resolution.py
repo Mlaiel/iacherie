@@ -1,11 +1,11 @@
 """
-AI Conflict Resolution System - Ainflue Integrations
+AI Conflict Resolution System - IA Chéries Integrations
 ==================================================
 Automated mediation and dispute resolution for creator collaborations.
 Intelligent conflict detection, evidence analysis, and fair resolution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chéries Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

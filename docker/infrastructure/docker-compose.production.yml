@@ -210,7 +210,7 @@ services:
     image: postgres:15
     container_name: iacherie-postgres-master
     environment:
-      POSTGRES_DB: ainflue_platform
+      POSTGRES_DB: iacherie_platform
       POSTGRES_USER: ${POSTGRES_USER:-iacherie}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_REPLICATION_USER: ${POSTGRES_REPLICATION_USER:-replicator}
@@ -239,7 +239,7 @@ services:
           cpus: '1.0'
           memory: 2G
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iacherie} -d ainflue_platform"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iacherie} -d iacherie_platform"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -467,7 +467,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ainflue_documents
+      MONGO_INITDB_DATABASE: iacherie_documents
       MONGO_REPLICA_SET_NAME: iacherie-rs
     volumes:
       - mongodb_primary_data:/data/db

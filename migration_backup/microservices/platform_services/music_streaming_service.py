@@ -1,5 +1,5 @@
 """
-Music Streaming Service for Ainflue Microservices
+Music Streaming Service for IA Chéries Microservices
 Integration with major music streaming platforms
 
 Author: Fahed Mlaiel (mlaiel@live.de)

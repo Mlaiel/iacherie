@@ -6,7 +6,7 @@ Advanced media backup system specifically designed for creator economy content.
 Handles audio, video, image, and document backup with versioning and optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -102,7 +102,7 @@ class BackupRecord:
 
 class MediaBackupManager:
     """
-    Enterprise media backup manager for Ainflue creator content.
+    Enterprise media backup manager for IA Chéries creator content.
     Handles backup, versioning, deduplication, and recovery of creator media.
     """
     

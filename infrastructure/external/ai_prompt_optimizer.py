@@ -55,7 +55,7 @@ class PromptTemplate:
 
 class AIPromptInfrastructureOptimizer:
     """
-    AI Prompt Infrastructure Optimizer for Ainflue
+    AI Prompt Infrastructure Optimizer for iacherie
     
     IA Prompt Engineer Role: Optimize AI prompts for infrastructure automation
     """
@@ -66,8 +66,8 @@ class AIPromptInfrastructureOptimizer:
         self.prompt_performance_metrics = {}
         self.active_optimizations = {}
         
-        # Initialize Ainflue-specific prompt templates
-        self._initialize_ainflue_prompt_templates()
+        # Initialize iacherie-specific prompt templates
+        self._initialize_iacherie_prompt_templates()
         
         self.logger.info("AI Prompt Infrastructure Optimizer initialized")
     
@@ -162,7 +162,7 @@ class AIPromptInfrastructureOptimizer:
             # Creator-specific infrastructure prompt templates
             if operation_type == 'scaling':
                 base_prompt = """
-                You are an expert infrastructure engineer managing the Ainflue creator economy platform.
+                You are an expert infrastructure engineer managing the iacherie creator economy platform.
                 Analyze the following infrastructure metrics and provide scaling recommendations:
                 
                 Current Infrastructure State:
@@ -183,7 +183,7 @@ class AIPromptInfrastructureOptimizer:
                 
             elif operation_type == 'security':
                 base_prompt = """
-                You are a cybersecurity expert protecting the Ainflue creator platform.
+                You are a cybersecurity expert protecting the iacherie creator platform.
                 Analyze the following security events and recommend actions:
                 
                 Security Context:
@@ -203,7 +203,7 @@ class AIPromptInfrastructureOptimizer:
                 
             elif operation_type == 'performance':
                 base_prompt = """
-                You are a performance optimization expert for the Ainflue creator platform.
+                You are a performance optimization expert for the iacherie creator platform.
                 Analyze the performance metrics and optimize for creator experience:
                 
                 Performance Metrics:
@@ -224,7 +224,7 @@ class AIPromptInfrastructureOptimizer:
                 
             else:
                 base_prompt = """
-                You are an infrastructure expert managing the Ainflue creator economy platform.
+                You are an infrastructure expert managing the iacherie creator economy platform.
                 Operation: {operation_type}
                 Context: {context}
                 
@@ -240,8 +240,8 @@ class AIPromptInfrastructureOptimizer:
             self.logger.error(f"Prompt generation failed: {e}")
             return f"Error generating prompt for {operation_type}: {str(e)}"
     
-    def _initialize_ainflue_prompt_templates(self):
-        """Initialize Ainflue-specific prompt templates"""
+    def _initialize_iacherie_prompt_templates(self):
+        """Initialize iacherie-specific prompt templates"""
         templates = [
             PromptTemplate(
                 template_id="creator_scaling_optimization",
@@ -480,7 +480,7 @@ class AIPromptInfrastructureOptimizer:
         """
         if optimization_config is None:
             optimization_config = {
-                'infrastructure_context': {'platform': 'ainflue', 'environment': 'production'},
+                'infrastructure_context': {'platform': 'iacherie', 'environment': 'production'},
                 'prompt_types': [PromptType.INFRASTRUCTURE_AUTOMATION, PromptType.CREATOR_WORKFLOW_OPTIMIZATION],
                 'optimization_goals': ['performance', 'creator_satisfaction', 'cost_efficiency']
             }
@@ -502,7 +502,7 @@ class AIPromptInfrastructureOptimizer:
         if automation_config is None:
             automation_config = {
                 'automation_scope': ['scaling', 'deployment', 'monitoring'],
-                'target_platform': 'ainflue_creator_platform'
+                'target_platform': 'iacherie_creator_platform'
             }
         
         return {

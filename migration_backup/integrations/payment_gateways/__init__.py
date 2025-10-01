@@ -1,7 +1,7 @@
 """Payment Gateways Integration Module
 =====================================
 
-Enterprise payment processing integrations for Ainflue platform.
+Enterprise payment processing integrations for IA Chéries platform.
 Supports multiple payment providers for global creator monetization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

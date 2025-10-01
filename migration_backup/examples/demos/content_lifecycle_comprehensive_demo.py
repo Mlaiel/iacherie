@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Content Lifecycle Comprehensive Demo for Ainflue Platform
+Content Lifecycle Comprehensive Demo for IA Chéries Platform
 =========================================================
 
 Demonstrates complete content lifecycle workflow from upload to distribution

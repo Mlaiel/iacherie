@@ -1,9 +1,9 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Enterprise Load Balancer - Ainflue Platform
+Enterprise Load Balancer - IA Chéries Platform
 ==========================================
 Multi-expert implementation combining Backend Senior + DevOps + ML Engineer +
-Microservices expertise for intelligent load balancing with Ainflue creator
+Microservices expertise for intelligent load balancing with IA Chéries creator
 economy traffic optimization.
 
 Architecture Features:
@@ -16,7 +16,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator traffic patterns and platform optimization
+Business Logic: IA Chéries creator traffic patterns and platform optimization
 """
 
 import asyncio
@@ -302,7 +302,7 @@ class IntelligentLoadBalancer:
     
     def _initialize_server_pool(self):
         """Initialize server pool with default configuration"""
-        # Default server configurations for Ainflue workloads
+        # Default server configurations for IA Chéries workloads
         default_servers = [
             {
                 'instance_id': 'api-gateway-1',
@@ -853,8 +853,8 @@ class IntelligentLoadBalancer:
         }
 
 
-# Ainflue Business Logic Integration Constants
-AINFLUE_LOAD_BALANCING_CONFIG = {
+# IA Chéries Business Logic Integration Constants
+IA CHÉRIES_LOAD_BALANCING_CONFIG = {
     'creator_traffic_patterns': {
         'upload_peak_hours': [18, 19, 20, 21],  # 6-9 PM
         'streaming_peak_hours': [12, 13, 19, 20, 21],  # Lunch + Evening

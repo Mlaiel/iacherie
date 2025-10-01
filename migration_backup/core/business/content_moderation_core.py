@@ -1,9 +1,9 @@
-"""Ainflue Core Business - Content Moderation Core
+"""IA Chéries Core Business - Content Moderation Core
 ===============================================
 
 Enterprise-grade content moderation system providing automated content analysis,
 toxicity detection, NSFW filtering, spam detection, community guidelines enforcement,
-and human moderation workflows for the Ainflue platform.
+and human moderation workflows for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

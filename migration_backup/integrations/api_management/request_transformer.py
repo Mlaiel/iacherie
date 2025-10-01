@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Enterprise - Request Transformer
+🚀 IA Chéries Enterprise - Request Transformer
 Enterprise request/response transformation with intelligent data mapping
 
 🎯 BUSINESS LOGIC INTEGRATION:
@@ -13,7 +13,7 @@ Enterprise request/response transformation with intelligent data mapping
 
 👨‍💻 AUTHOR: Fahed Mlaiel (mlaiel@live.de)
 📧 CONTACT: mlaiel@live.de  
-🏢 ENTERPRISE: Ainflue Platform
+🏢 ENTERPRISE: IA Chéries Platform
 📅 CREATED: 2025
 🔒 LICENSE: PROPRIETARY - All Rights Reserved
 
@@ -465,11 +465,11 @@ class RequestTransformer:
             "validation_success_rates": []
         }
         
-        # Initialize Ainflue-specific schema mappings
+        # Initialize IA Chéries-specific schema mappings
         self._initialize_ainflue_schemas()
     
     def _initialize_ainflue_schemas(self) -> None:
-        """Initialize Ainflue business logic schema mappings"""
+        """Initialize IA Chéries business logic schema mappings"""
         
         # Creator content schemas
         self.schema_mapper.add_mapping("creator_content", {
@@ -557,7 +557,7 @@ class RequestTransformer:
                     }
                 }
                 
-                # Apply default enrichment for Ainflue business logic
+                # Apply default enrichment for IA Chéries business logic
                 default_enrichments = ["add_timestamp", "add_content_hash"]
                 if request.creator_context:
                     default_enrichments.append("add_creator_metadata")

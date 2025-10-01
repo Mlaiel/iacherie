@@ -6,7 +6,7 @@
 🛠️ Security Configuration Manager - Centralized Security Management
 ===================================================================
 
-Enterprise security configuration management for Ainflue platform.
+Enterprise security configuration management for IA Chéries platform.
 Secure config, secrets management, environment validation, and compliance.
 
 Author: Expert Team (Security + DevOps + Backend Senior)
@@ -934,13 +934,13 @@ class SecurityConfigManager:
         
         # Mapper variables d'environnement
         env_mapping = {
-            'AINFLUE_DATABASE_URL': ['database', 'url'],
-            'AINFLUE_SECRET_KEY': ['secret_key'],
-            'AINFLUE_DEBUG': ['debug'],
-            'AINFLUE_FORCE_HTTPS': ['security', 'force_https'],
-            'AINFLUE_MFA_REQUIRED': ['authentication', 'mfa_required'],
-            'AINFLUE_SESSION_TIMEOUT': ['session', 'timeout_minutes'],
-            'AINFLUE_RATE_LIMIT': ['rate_limiting', 'requests_per_minute']
+            'IA CHÉRIES_DATABASE_URL': ['database', 'url'],
+            'IA CHÉRIES_SECRET_KEY': ['secret_key'],
+            'IA CHÉRIES_DEBUG': ['debug'],
+            'IA CHÉRIES_FORCE_HTTPS': ['security', 'force_https'],
+            'IA CHÉRIES_MFA_REQUIRED': ['authentication', 'mfa_required'],
+            'IA CHÉRIES_SESSION_TIMEOUT': ['session', 'timeout_minutes'],
+            'IA CHÉRIES_RATE_LIMIT': ['rate_limiting', 'requests_per_minute']
         }
         
         for env_var, config_path in env_mapping.items():
@@ -1220,7 +1220,7 @@ async def get_config_manager() -> SecurityConfigManager:
     return config_manager
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chéries
 async def setup_creator_environment_config(creator_id: str) -> EnvironmentConfig:
     """Configuration spécifique créateur"""
     creator_config = {

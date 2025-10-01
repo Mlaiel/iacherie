@@ -462,7 +462,7 @@ configMaps:
 # Secrets (references only)
 secrets:
   mobileApiSecrets:
-    database-url: "postgresql://user:pass@db:5432/ainflue_mobile"
+    database-url: "postgresql://user:pass@db:5432/iacherie_mobile"
     jwt-secret: "change-me-in-production"
     encryption-key: "change-me-in-production"
     
@@ -476,10 +476,10 @@ secrets:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "ainflue123!"
-    username: "ainflue_mobile"
-    password: "ainflue123!"
-    database: "ainflue_mobile"
+    postgresPassword: "iacherie123!"
+    username: "iacherie_mobile"
+    password: "iacherie123!"
+    database: "iacherie_mobile"
   primary:
     persistence:
       enabled: true
@@ -497,7 +497,7 @@ redis:
   enabled: true
   auth:
     enabled: true
-    password: "ainflue123!"
+    password: "iacherie123!"
   master:
     persistence:
       enabled: true

@@ -1,4 +1,4 @@
-"""{{model_name}} MongoDB Model Template for Ainflue Platform
+"""{{model_name}} MongoDB Model Template for IA Chéries Platform
 {{model_description}}
 
 Author: {{author_name}} ({{author_email}})

@@ -1,6 +1,6 @@
 """
 Secret Manager
-Kubernetes secrets management for Ainflue infrastructure
+Kubernetes secrets management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

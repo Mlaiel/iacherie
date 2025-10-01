@@ -6,7 +6,7 @@ Advanced analytics system for backup performance analysis, trend detection,
 predictive insights, and business intelligence for creator platform backups.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

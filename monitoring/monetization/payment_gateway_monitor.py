@@ -26,13 +26,13 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 # Metrics
-gateway_transactions_total = Counter('ainflue_gateway_transactions_total',
+gateway_transactions_total = Counter('iacherie_gateway_transactions_total',
                                     'Total payment gateway transactions', ['gateway', 'status', 'currency'])
-gateway_response_time = Histogram('ainflue_gateway_response_time_seconds',
+gateway_response_time = Histogram('iacherie_gateway_response_time_seconds',
                                 'Payment gateway response time', ['gateway'])
-gateway_success_rate = Gauge('ainflue_gateway_success_rate',
+gateway_success_rate = Gauge('iacherie_gateway_success_rate',
                            'Payment gateway success rate', ['gateway'])
-gateway_health_score = Gauge('ainflue_gateway_health_score',
+gateway_health_score = Gauge('iacherie_gateway_health_score',
                            'Payment gateway health score', ['gateway'])
 
 class PaymentGateway(Enum):

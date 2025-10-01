@@ -40,7 +40,7 @@ class TextAnalysisResult:
     success: bool
     error: Optional[str] = None
 
-class AinfluencerTextRazor:
+class iaCherieTextRazor:
     """
     🧠 Moteur d'analyse de texte TextRazor pour IA Chérie
     """
@@ -215,7 +215,7 @@ async def test_textrazor_engine():
     print("=" * 60)
     
     try:
-        engine = AinfluencerTextRazor()
+        engine = iaCherieTextRazor()
         
         # Texte de test
         test_text = """

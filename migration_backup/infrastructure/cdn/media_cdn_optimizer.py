@@ -7,7 +7,7 @@ streaming, and creator-focused multi-format content delivery optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Audio Engineer + ML Engineer + Backend Senior
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -52,7 +52,7 @@ class DeliveryPlatform(Enum):
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
-    AINFLUE = "ainflue"
+    IA CHÉRIES = "ainflue"
     UNIVERSAL = "universal"
 
 @dataclass
@@ -107,7 +107,7 @@ class OptimizationResult:
 
 class MediaCDNOptimizer:
     """
-    Enterprise Media CDN Optimizer for Ainflue Creator Platform.
+    Enterprise Media CDN Optimizer for IA Chéries Creator Platform.
     
     Provides content-aware optimization, adaptive bitrate streaming,
     and creator-focused multi-format content delivery optimization.
@@ -263,7 +263,7 @@ class MediaCDNOptimizer:
                     "metadata_enhancement": True
                 }
             },
-            DeliveryPlatform.AINFLUE: {
+            DeliveryPlatform.IA CHÉRIES: {
                 "all_formats_supported": True,
                 "adaptive_optimization": True,
                 "ai_enhancement": True,
@@ -441,7 +441,7 @@ class MediaCDNOptimizer:
         
         # Generate quality ladder variants
         for quality in profile["quality_levels"]:
-            if quality == "4K" and platform not in [DeliveryPlatform.YOUTUBE, DeliveryPlatform.AINFLUE]:
+            if quality == "4K" and platform not in [DeliveryPlatform.YOUTUBE, DeliveryPlatform.IA CHÉRIES]:
                 continue  # Skip 4K for platforms that don't support it well
                 
             bitrate_info = profile["bitrate_ladder"][quality]
@@ -479,7 +479,7 @@ class MediaCDNOptimizer:
         
         # Generate quality variants
         for quality in profile["quality_levels"]:
-            if quality == "lossless" and platform not in [DeliveryPlatform.APPLE_MUSIC, DeliveryPlatform.AINFLUE]:
+            if quality == "lossless" and platform not in [DeliveryPlatform.APPLE_MUSIC, DeliveryPlatform.IA CHÉRIES]:
                 continue  # Skip lossless for platforms that don't support it
                 
             bitrate_info = profile["bitrate_ladder"][quality]
@@ -527,7 +527,7 @@ class MediaCDNOptimizer:
         for format_type in profile["target_formats"]:
             for quality in profile["quality_levels"]:
                 # Skip AVIF for older platforms
-                if format_type == "avif" and platform not in [DeliveryPlatform.AINFLUE]:
+                if format_type == "avif" and platform not in [DeliveryPlatform.IA CHÉRIES]:
                     continue
                     
                 quality_multiplier = {"ultra": 0.9, "high": 0.7, "medium": 0.5, "low": 0.3}[quality]

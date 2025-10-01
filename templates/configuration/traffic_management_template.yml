@@ -1,4 +1,4 @@
-# ⚡ Traffic Management Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Traffic Management Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: global-traffic-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: traffic-management
     component: global-config
@@ -38,7 +38,7 @@ data:
           path: "/health"
           httpHeaders:
             - name: "User-Agent"
-              value: "ainflue-health-checker/1.0"
+              value: "iacherie-health-checker/1.0"
         outlierDetection:
           enabled: true
           consecutiveErrors: 5
@@ -111,19 +111,19 @@ data:
             - name: "critical"
               priority: 0
               weight: 100
-              services: ["ainflue-payment-service"]
+              services: ["iacherie-payment-service"]
             - name: "high"
               priority: 1
               weight: 80
-              services: ["ainflue-api", "ainflue-auth"]
+              services: ["iacherie-api", "iacherie-auth"]
             - name: "normal"
               priority: 2
               weight: 60
-              services: ["ainflue-content-processor"]
+              services: ["iacherie-content-processor"]
             - name: "low"
               priority: 3
               weight: 40
-              services: ["ainflue-analytics"]
+              services: ["iacherie-analytics"]
         bandwidthLimits:
           upload: "100Mbps"
           download: "1Gbps"
@@ -133,14 +133,14 @@ data:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-api-vs
-  namespace: ainflue-production
+  name: iacherie-api-vs
+  namespace: iacherie-production
 spec:
   hosts:
-  - api.ainflue.com
-  - ainflue-api.ainflue-production.svc.cluster.local
+  - api.iacherie.com
+  - iacherie-api.iacherie-production.svc.cluster.local
   gateways:
-  - ainflue-gateway
+  - iacherie-gateway
   - mesh
   http:
   - match:
@@ -148,12 +148,12 @@ spec:
         prefix: "/api/v1/creators"
     route:
     - destination:
-        host: ainflue-creator-service.ainflue-production.svc.cluster.local
+        host: iacherie-creator-service.iacherie-production.svc.cluster.local
         port:
           number: 8080
       weight: 90
     - destination:
-        host: ainflue-creator-service-v2.ainflue-production.svc.cluster.local
+        host: iacherie-creator-service-v2.iacherie-production.svc.cluster.local
         port:
           number: 8080
       weight: 10
@@ -175,7 +175,7 @@ spec:
           x-request-id: "%REQ(x-request-id)%"
       response:
         set:
-          x-served-by: "ainflue-creator-service"
+          x-served-by: "iacherie-creator-service"
         remove:
         - x-internal-header
   - match:
@@ -183,7 +183,7 @@ spec:
         prefix: "/api/v1/content"
     route:
     - destination:
-        host: ainflue-content-processor.ainflue-production.svc.cluster.local
+        host: iacherie-content-processor.iacherie-production.svc.cluster.local
         port:
           number: 8080
     fault:
@@ -205,7 +205,7 @@ spec:
         prefix: "/api/v1/payments"
     route:
     - destination:
-        host: ainflue-payment-service.ainflue-production.svc.cluster.local
+        host: iacherie-payment-service.iacherie-production.svc.cluster.local
         port:
           number: 8080
     retries:
@@ -225,7 +225,7 @@ spec:
         prefix: "/api/v1/"
     route:
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         port:
           number: 8080
     retries:
@@ -236,10 +236,10 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: ainflue-api-dr
-  namespace: ainflue-production
+  name: iacherie-api-dr
+  namespace: iacherie-production
 spec:
-  host: ainflue-api.ainflue-production.svc.cluster.local
+  host: iacherie-api.iacherie-production.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: LEAST_REQUEST
@@ -314,8 +314,8 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: ainflue-gateway
-  namespace: ainflue-production
+  name: iacherie-gateway
+  namespace: iacherie-production
 spec:
   selector:
     istio: ingressgateway
@@ -325,8 +325,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - api.ainflue.com
-    - app.ainflue.com
+    - api.iacherie.com
+    - app.iacherie.com
     tls:
       httpsRedirect: true
   - port:
@@ -335,7 +335,7 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: ainflue-tls-secret
+      credentialName: iacherie-tls-secret
       minProtocolVersion: TLSV1_2
       maxProtocolVersion: TLSV1_3
       cipherSuites:
@@ -344,24 +344,24 @@ spec:
       - ECDHE-ECDSA-AES256-GCM-SHA384
       - ECDHE-RSA-AES256-GCM-SHA384
     hosts:
-    - api.ainflue.com
-    - app.ainflue.com
+    - api.iacherie.com
+    - app.iacherie.com
   - port:
       number: 8080
       name: grpc
       protocol: GRPC
     hosts:
-    - grpc.ainflue.com
+    - grpc.iacherie.com
     tls:
       mode: SIMPLE
-      credentialName: ainflue-grpc-tls-secret
+      credentialName: iacherie-grpc-tls-secret
 ---
 # 🚀 Istio Service Entry for External Services
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: external-payment-gateway
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   hosts:
   - api.stripe.com
@@ -377,7 +377,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: external-cloud-storage
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   hosts:
   - s3.amazonaws.com
@@ -394,12 +394,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: ainflue-rate-limiting
-  namespace: ainflue-production
+  name: iacherie-rate-limiting
+  namespace: iacherie-production
 spec:
   workloadSelector:
     labels:
-      app: ainflue-api
+      app: iacherie-api
   configPatches:
   - applyTo: HTTP_FILTER
     match:
@@ -440,12 +440,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: ainflue-compression
-  namespace: ainflue-production
+  name: iacherie-compression
+  namespace: iacherie-production
 spec:
   workloadSelector:
     labels:
-      app: ainflue-api
+      app: iacherie-api
   configPatches:
   - applyTo: HTTP_FILTER
     match:
@@ -487,8 +487,8 @@ spec:
 apiVersion: linkerd.io/v1alpha2
 kind: ServiceProfile
 metadata:
-  name: ainflue-api-traffic
-  namespace: ainflue-production
+  name: iacherie-api-traffic
+  namespace: iacherie-production
 spec:
   routes:
   - name: creators-api
@@ -566,27 +566,27 @@ spec:
 apiVersion: split.smi-spec.io/v1alpha1
 kind: TrafficSplit
 metadata:
-  name: ainflue-api-canary-split
-  namespace: ainflue-production
+  name: iacherie-api-canary-split
+  namespace: iacherie-production
 spec:
-  service: ainflue-api
+  service: iacherie-api
   backends:
-  - service: ainflue-api-v1
+  - service: iacherie-api-v1
     weight: 90
-  - service: ainflue-api-canary
+  - service: iacherie-api-canary
     weight: 10
 ---
 apiVersion: split.smi-spec.io/v1alpha1
 kind: TrafficSplit
 metadata:
-  name: ainflue-content-processor-split
-  namespace: ainflue-production
+  name: iacherie-content-processor-split
+  namespace: iacherie-production
 spec:
-  service: ainflue-content-processor
+  service: iacherie-content-processor
   backends:
-  - service: ainflue-content-processor-stable
+  - service: iacherie-content-processor-stable
     weight: 95
-  - service: ainflue-content-processor-beta
+  - service: iacherie-content-processor-beta
     weight: 5
 
 # ===================================================================
@@ -601,10 +601,10 @@ metadata:
   namespace: consul
 data:
   service-router.hcl: |
-    # Ainflue API Service Router
+    # iacherie API Service Router
     Kind = "service-router"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Routes = [
       {
         Match {
@@ -620,8 +620,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-creator-service"
-          Namespace = "ainflue-production"
+          Service = "iacherie-creator-service"
+          Namespace = "iacherie-production"
           RequestTimeout = "30s"
           NumRetries = 3
           RetryOnConnectFailure = true
@@ -654,8 +654,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-content-processor"
-          Namespace = "ainflue-production"
+          Service = "iacherie-content-processor"
+          Namespace = "iacherie-production"
           RequestTimeout = "120s"
           NumRetries = 2
           RetryOnConnectFailure = true
@@ -682,8 +682,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-payment-service"
-          Namespace = "ainflue-production"
+          Service = "iacherie-payment-service"
+          Namespace = "iacherie-production"
           RequestTimeout = "15s"
           NumRetries = 5
           RetryOnConnectFailure = true
@@ -708,8 +708,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-api"
-          Namespace = "ainflue-production"
+          Service = "iacherie-api"
+          Namespace = "iacherie-production"
           RequestTimeout = "30s"
           NumRetries = 3
           RetryOnConnectFailure = true
@@ -726,15 +726,15 @@ metadata:
   namespace: consul
 data:
   service-splitter.hcl: |
-    # Ainflue API Service Splitter
+    # iacherie API Service Splitter
     Kind = "service-splitter"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Splits = [
       {
         Weight = 90
-        Service = "ainflue-api-stable"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-stable"
+        Namespace = "iacherie-production"
         ServiceSubset = "v1"
         RequestHeaders {
           Set = {
@@ -750,8 +750,8 @@ data:
       },
       {
         Weight = 10
-        Service = "ainflue-api-canary"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-canary"
+        Namespace = "iacherie-production"
         ServiceSubset = "v2"
         RequestHeaders {
           Set = {
@@ -770,19 +770,19 @@ data:
     
     # Content Processor Service Splitter
     Kind = "service-splitter"
-    Name = "ainflue-content-processor"
-    Namespace = "ainflue-production"
+    Name = "iacherie-content-processor"
+    Namespace = "iacherie-production"
     Splits = [
       {
         Weight = 95
-        Service = "ainflue-content-processor-stable"
-        Namespace = "ainflue-production"
+        Service = "iacherie-content-processor-stable"
+        Namespace = "iacherie-production"
         ServiceSubset = "stable"
       },
       {
         Weight = 5
-        Service = "ainflue-content-processor-beta"
-        Namespace = "ainflue-production"
+        Service = "iacherie-content-processor-beta"
+        Namespace = "iacherie-production"
         ServiceSubset = "beta"
         RequestHeaders {
           Set = {
@@ -800,10 +800,10 @@ metadata:
   namespace: consul
 data:
   service-resolver.hcl: |
-    # Ainflue API Service Resolver
+    # iacherie API Service Resolver
     Kind = "service-resolver"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     
     DefaultSubset = "v1"
     
@@ -843,16 +843,16 @@ data:
     
     Failover = {
       "*" = {
-        Service = "ainflue-api-fallback"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-fallback"
+        Namespace = "iacherie-production"
         Datacenters = ["dc2", "dc3"]
       }
     }
     
     # Content Processor Service Resolver
     Kind = "service-resolver"
-    Name = "ainflue-content-processor"
-    Namespace = "ainflue-production"
+    Name = "iacherie-content-processor"
+    Namespace = "iacherie-production"
     
     DefaultSubset = "stable"
     
@@ -882,7 +882,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: progressive-delivery-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   progressive-delivery.yaml: |
     # Progressive Delivery Configuration
@@ -923,15 +923,15 @@ data:
           - templateName: success-rate
           args:
           - name: service-name
-            value: "ainflue-api"
+            value: "iacherie-api"
         postPromotionAnalysis:
           templates:
           - templateName: success-rate
           args:
           - name: service-name
-            value: "ainflue-api"
-        activeService: "ainflue-api-active"
-        previewService: "ainflue-api-preview"
+            value: "iacherie-api"
+        activeService: "iacherie-api-active"
+        previewService: "iacherie-api-preview"
       
       # Feature Flags Integration
       featureFlags:
@@ -955,23 +955,23 @@ data:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-api-mirror
-  namespace: ainflue-production
+  name: iacherie-api-mirror
+  namespace: iacherie-production
 spec:
   hosts:
-  - ainflue-api.ainflue-production.svc.cluster.local
+  - iacherie-api.iacherie-production.svc.cluster.local
   http:
   - match:
     - uri:
         prefix: "/api/v1/"
     route:
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         port:
           number: 8080
       weight: 100
     mirror:
-      host: ainflue-api-test.ainflue-staging.svc.cluster.local
+      host: iacherie-api-test.iacherie-staging.svc.cluster.local
       port:
         number: 8080
     mirrorPercentage:
@@ -986,7 +986,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: circuit-breaker-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   circuit-breaker.yaml: |
     # Circuit Breaker Configuration
@@ -1002,19 +1002,19 @@ data:
       
       # Service-Specific Settings
       services:
-        ainflue-api:
+        iacherie-api:
           requestVolumeThreshold: 50
           sleepWindow: "10s"
           errorThresholdPercentage: 30
           timeout: "2s"
           maxConcurrentRequests: 200
-        ainflue-content-processor:
+        iacherie-content-processor:
           requestVolumeThreshold: 10
           sleepWindow: "30s"
           errorThresholdPercentage: 20
           timeout: "10s"
           maxConcurrentRequests: 50
-        ainflue-payment-service:
+        iacherie-payment-service:
           requestVolumeThreshold: 100
           sleepWindow: "5s"
           errorThresholdPercentage: 10
@@ -1025,16 +1025,16 @@ data:
       fallback:
         enabled: true
         strategies:
-          - service: "ainflue-api"
-            fallbackService: "ainflue-api-fallback"
+          - service: "iacherie-api"
+            fallbackService: "iacherie-api-fallback"
             fallbackResponse: |
               {
                 "status": "service_unavailable",
                 "message": "Service temporarily unavailable. Please try again later.",
                 "retry_after": 30
               }
-          - service: "ainflue-content-processor"
-            fallbackService: "ainflue-content-processor-basic"
+          - service: "iacherie-content-processor"
+            fallbackService: "iacherie-content-processor-basic"
             fallbackResponse: |
               {
                 "status": "degraded_service",
@@ -1047,7 +1047,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: load-balancing-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   load-balancing.yaml: |
     # Load Balancing Configuration
@@ -1056,10 +1056,10 @@ data:
       algorithms:
         default: "least_request"
         services:
-          ainflue-api: "round_robin"
-          ainflue-content-processor: "least_request"
-          ainflue-payment-service: "ip_hash"
-          ainflue-database: "least_connections"
+          iacherie-api: "round_robin"
+          iacherie-content-processor: "least_request"
+          iacherie-payment-service: "ip_hash"
+          iacherie-database: "least_connections"
       
       # Health Check Configuration
       healthCheck:
@@ -1073,7 +1073,7 @@ data:
           scheme: "HTTP"
           httpHeaders:
           - name: "User-Agent"
-            value: "ainflue-lb-health-checker/1.0"
+            value: "iacherie-lb-health-checker/1.0"
           - name: "Accept"
             value: "application/json"
       
@@ -1082,7 +1082,7 @@ data:
         enabled: true
         type: "ClientIP"  # ClientIP, Cookie, Header
         cookieConfig:
-          name: "ainflue-session"
+          name: "iacherie-session"
           maxAge: "86400"
           path: "/"
           secure: true
@@ -1094,8 +1094,8 @@ data:
       weightedRouting:
         enabled: true
         weights:
-          ainflue-api-v1: 90
-          ainflue-api-v2: 10
+          iacherie-api-v1: 90
+          iacherie-api-v2: 10
         dynamicWeights:
           enabled: true
           adjustmentInterval: "1m"
@@ -1110,18 +1110,18 @@ data:
         regions:
           - name: "us-west"
             endpoints:
-              - "us-west-1a.ainflue.com"
-              - "us-west-1b.ainflue.com"
+              - "us-west-1a.iacherie.com"
+              - "us-west-1b.iacherie.com"
             weight: 40
           - name: "us-east"
             endpoints:
-              - "us-east-1a.ainflue.com"
-              - "us-east-1b.ainflue.com"
+              - "us-east-1a.iacherie.com"
+              - "us-east-1b.iacherie.com"
             weight: 40
           - name: "eu-west"
             endpoints:
-              - "eu-west-1a.ainflue.com"
-              - "eu-west-1b.ainflue.com"
+              - "eu-west-1a.iacherie.com"
+              - "eu-west-1b.iacherie.com"
             weight: 20
         failover:
           - from: "us-west"
@@ -1140,7 +1140,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traffic-metrics-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   traffic-metrics.yaml: |
     # Traffic Metrics Configuration
@@ -1150,20 +1150,20 @@ data:
         enabled: true
         scrapeInterval: "15s"
         metrics:
-          - name: "ainflue_request_total"
+          - name: "iacherie_request_total"
             help: "Total number of requests"
             type: "counter"
             labels: ["service", "method", "status_code", "path"]
-          - name: "ainflue_request_duration_seconds"
+          - name: "iacherie_request_duration_seconds"
             help: "Request duration in seconds"
             type: "histogram"
             buckets: [0.001, 0.01, 0.1, 0.5, 1.0, 2.5, 5.0, 10.0]
             labels: ["service", "method", "status_code"]
-          - name: "ainflue_active_connections"
+          - name: "iacherie_active_connections"
             help: "Number of active connections"
             type: "gauge"
             labels: ["service", "backend"]
-          - name: "ainflue_traffic_split_weight"
+          - name: "iacherie_traffic_split_weight"
             help: "Current traffic split weight"
             type: "gauge"
             labels: ["service", "version", "deployment"]
@@ -1172,16 +1172,16 @@ data:
       customMetrics:
         enabled: true
         metrics:
-          - name: "ainflue_creator_requests_total"
+          - name: "iacherie_creator_requests_total"
             help: "Total requests by creator"
             type: "counter"
             labels: ["creator_id", "content_type", "processing_stage"]
-          - name: "ainflue_revenue_per_request"
+          - name: "iacherie_revenue_per_request"
             help: "Revenue generated per request"
             type: "histogram"
             buckets: [0.01, 0.1, 1.0, 10.0, 100.0]
             labels: ["creator_id", "revenue_source"]
-          - name: "ainflue_content_processing_queue"
+          - name: "iacherie_content_processing_queue"
             help: "Content processing queue length"
             type: "gauge"
             labels: ["queue_type", "priority"]
@@ -1240,7 +1240,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: creator-traffic-config
-  namespace: ainflue-production
+  namespace: iacherie-production
 data:
   creator-traffic.yaml: |
     # Creator Economy Traffic Management
@@ -1340,5 +1340,5 @@ data:
 # ===================================================================
 # END OF TRAFFIC MANAGEMENT CONFIGURATION TEMPLATE
 # Creator Economy Traffic Solution by Fahed Mlaiel
-# Enterprise-grade traffic management for Ainflue platform
+# Enterprise-grade traffic management for iacherie platform
 # ===================================================================

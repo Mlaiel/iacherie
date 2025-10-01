@@ -5,7 +5,7 @@
 🛡️ AUTHORIZATION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ================================================================
 
-Enterprise-grade authorization testing template for Ainflue Creator Economy Platform.
+Enterprise-grade authorization testing template for IA Chéries Creator Economy Platform.
 Comprehensive authorization testing covering:
 - Role-Based Access Control (RBAC) validation
 - Attribute-Based Access Control (ABAC) testing
@@ -58,7 +58,7 @@ settings = get_settings()
 
 
 class UserRole(Enum):
-    """User role definitions for Ainflue Creator Economy"""
+    """User role definitions for IA Chéries Creator Economy"""
     SUPER_ADMIN = "super_admin"
     ADMIN = "admin"
     MODERATOR = "moderator"
@@ -70,7 +70,7 @@ class UserRole(Enum):
 
 
 class Permission(Enum):
-    """Permission definitions for Ainflue platform"""
+    """Permission definitions for IA Chéries platform"""
     # Content Management
     CREATE_CONTENT = "content:create"
     READ_CONTENT = "content:read"

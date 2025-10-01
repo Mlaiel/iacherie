@@ -437,7 +437,7 @@ class MultiChannelNotificationEngine:
             
             # Create email message
             msg = MIMEMultipart()
-            msg['From'] = email_config.get('from_address', 'noreply@ainflue.com')
+            msg['From'] = email_config.get('from_address', 'noreply@iacherie.com')
             msg['To'] = recipient_email
             msg['Subject'] = message.subject
             
@@ -1098,8 +1098,8 @@ class NotificationEngineCore:
                 template_id="welcome_email",
                 template_name="Welcome Email",
                 channel=NotificationChannel.EMAIL,
-                subject_template="Welcome to Ainflue, {user_name}!",
-                body_template="Hello {user_name},\n\nWelcome to the Ainflue platform! We're excited to have you join our community of creators and influencers.\n\nBest regards,\nThe Ainflue Team",
+                subject_template="Welcome to iacherie, {user_name}!",
+                body_template="Hello {user_name},\n\nWelcome to the iacherie platform! We're excited to have you join our community of creators and influencers.\n\nBest regards,\nThe iacherie Team",
                 variables=["user_name"]
             ),
             NotificationTemplate(
@@ -1168,7 +1168,7 @@ async def quick_notification_setup() -> NotificationEngineCore:
     """Quick setup for development environment"""
     core = create_notification_engine_core({
         'channels': {
-            'email': {'from_address': 'noreply@ainflue.com'}
+            'email': {'from_address': 'noreply@iacherie.com'}
         },
         'messaging': {}
     })

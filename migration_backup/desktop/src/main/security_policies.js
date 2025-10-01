@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Security Policies Enforcement
+ * IA Chéries Desktop - Security Policies Enforcement
  * 
  * Advanced security policies for content protection, user privacy, and system integrity
  * Implements enterprise-grade security with multi-layer protection mechanisms

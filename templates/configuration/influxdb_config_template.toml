@@ -1,4 +1,4 @@
-# InfluxDB Configuration Template for Ainflue Platform
+# InfluxDB Configuration Template for iacherie Platform
 # Time-series database for metrics, analytics, and real-time monitoring
 
 [meta]
@@ -226,13 +226,13 @@
   run-interval = "1s"
 
 ---
-# InfluxDB Database Schema for Ainflue Platform
+# InfluxDB Database Schema for iacherie Platform
 
 # Create database and retention policies
-CREATE DATABASE ainflue
-CREATE RETENTION POLICY "default" ON "ainflue" DURATION 30d REPLICATION 1 DEFAULT
-CREATE RETENTION POLICY "long_term" ON "ainflue" DURATION 365d REPLICATION 1
-CREATE RETENTION POLICY "short_term" ON "ainflue" DURATION 7d REPLICATION 1
+CREATE DATABASE iacherie
+CREATE RETENTION POLICY "default" ON "iacherie" DURATION 30d REPLICATION 1 DEFAULT
+CREATE RETENTION POLICY "long_term" ON "iacherie" DURATION 365d REPLICATION 1
+CREATE RETENTION POLICY "short_term" ON "iacherie" DURATION 7d REPLICATION 1
 
 # User engagement metrics
 # Measurement: user_engagement
@@ -278,26 +278,26 @@ CREATE RETENTION POLICY "short_term" ON "ainflue" DURATION 7d REPLICATION 1
 # InfluxDB Users and Permissions
 
 # Create admin user
-CREATE USER "ainflue_admin" WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES
+CREATE USER "iacherie_admin" WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES
 
 # Create application user
-CREATE USER "ainflue_app" WITH PASSWORD '${INFLUXDB_APP_PASSWORD}'
-GRANT ALL ON "ainflue" TO "ainflue_app"
+CREATE USER "iacherie_app" WITH PASSWORD '${INFLUXDB_APP_PASSWORD}'
+GRANT ALL ON "iacherie" TO "iacherie_app"
 
 # Create read-only user for analytics
-CREATE USER "ainflue_readonly" WITH PASSWORD '${INFLUXDB_READONLY_PASSWORD}'
-GRANT READ ON "ainflue" TO "ainflue_readonly"
+CREATE USER "iacherie_readonly" WITH PASSWORD '${INFLUXDB_READONLY_PASSWORD}'
+GRANT READ ON "iacherie" TO "iacherie_readonly"
 
 # Create monitoring user
-CREATE USER "ainflue_monitor" WITH PASSWORD '${INFLUXDB_MONITOR_PASSWORD}'
-GRANT READ ON "_internal" TO "ainflue_monitor"
-GRANT READ ON "ainflue" TO "ainflue_monitor"
+CREATE USER "iacherie_monitor" WITH PASSWORD '${INFLUXDB_MONITOR_PASSWORD}'
+GRANT READ ON "_internal" TO "iacherie_monitor"
+GRANT READ ON "iacherie" TO "iacherie_monitor"
 
 ---
 # Continuous Queries for Data Aggregation
 
 # Hourly creator performance aggregation
-CREATE CONTINUOUS QUERY "cq_creator_performance_hourly" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_creator_performance_hourly" ON "iacherie"
 BEGIN
   SELECT 
     mean("follower_count") AS "avg_followers",
@@ -310,7 +310,7 @@ BEGIN
 END
 
 # Daily campaign analytics
-CREATE CONTINUOUS QUERY "cq_campaign_analytics_daily" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_campaign_analytics_daily" ON "iacherie"
 BEGIN
   SELECT 
     sum("total_reach") AS "daily_reach",
@@ -324,7 +324,7 @@ BEGIN
 END
 
 # Content performance aggregation
-CREATE CONTINUOUS QUERY "cq_content_performance_hourly" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_content_performance_hourly" ON "iacherie"
 BEGIN
   SELECT 
     sum("views") AS "total_views",
@@ -338,7 +338,7 @@ BEGIN
 END
 
 # API performance monitoring
-CREATE CONTINUOUS QUERY "cq_api_performance_5m" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_api_performance_5m" ON "iacherie"
 BEGIN
   SELECT 
     mean("response_time") AS "avg_response_time",
@@ -352,7 +352,7 @@ BEGIN
 END
 
 # Revenue aggregation
-CREATE CONTINUOUS QUERY "cq_revenue_daily" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_revenue_daily" ON "iacherie"
 BEGIN
   SELECT 
     sum("amount") AS "daily_revenue",
@@ -365,7 +365,7 @@ BEGIN
 END
 
 # System health monitoring
-CREATE CONTINUOUS QUERY "cq_system_health_1m" ON "ainflue"
+CREATE CONTINUOUS QUERY "cq_system_health_1m" ON "iacherie"
 BEGIN
   SELECT 
     mean("cpu_usage") AS "avg_cpu",
@@ -379,7 +379,7 @@ BEGIN
 END
 
 ---
-# InfluxDB Queries for Ainflue Analytics
+# InfluxDB Queries for iacherie Analytics
 
 # Top performing creators by engagement rate (last 24 hours)
 SELECT creator_id, platform, mean(engagement_rate) as avg_engagement
@@ -457,7 +457,7 @@ BACKUP_DIR="/backups/influxdb/$(date +%Y%m%d_%H%M%S)"
 mkdir -p $BACKUP_DIR
 
 # Create backup
-influxd backup -portable -database ainflue $BACKUP_DIR
+influxd backup -portable -database iacherie $BACKUP_DIR
 
 # Backup metadata
 influxd backup -portable $BACKUP_DIR/meta
@@ -466,7 +466,7 @@ influxd backup -portable $BACKUP_DIR/meta
 tar -czf $BACKUP_DIR.tar.gz $BACKUP_DIR
 
 # Upload to S3
-aws s3 cp $BACKUP_DIR.tar.gz s3://ainflue-db-backups/influxdb/
+aws s3 cp $BACKUP_DIR.tar.gz s3://iacherie-db-backups/influxdb/
 
 # Clean up local files
 rm -rf $BACKUP_DIR
@@ -489,7 +489,7 @@ systemctl stop influxdb
 tar -xzf $BACKUP_FILE
 
 # Restore database
-influxd restore -portable -database ainflue /path/to/backup/
+influxd restore -portable -database iacherie /path/to/backup/
 
 # Restore metadata
 influxd restore -portable /path/to/backup/meta/
@@ -512,23 +512,23 @@ SHOW STATS
 SHOW CARDINALITY
 
 # Check retention policies
-SHOW RETENTION POLICIES ON ainflue
+SHOW RETENTION POLICIES ON iacherie
 
 # Monitor continuous queries
 SHOW CONTINUOUS QUERIES
 
 # Check measurement statistics
-SHOW MEASUREMENTS ON ainflue
+SHOW MEASUREMENTS ON iacherie
 
 # Monitor tag values
-SHOW TAG VALUES ON ainflue FROM "creator_performance" WITH KEY = "platform"
+SHOW TAG VALUES ON iacherie FROM "creator_performance" WITH KEY = "platform"
 
 # Performance optimization queries
 # Drop series with high cardinality
 DROP SERIES FROM measurement_name WHERE tag_key = 'problematic_value'
 
 # Optimize retention policies
-ALTER RETENTION POLICY "default" ON "ainflue" DURATION 15d
+ALTER RETENTION POLICY "default" ON "iacherie" DURATION 15d
 
 ---
 # Kapacitor Configuration for Alerting
@@ -563,7 +563,7 @@ ALTER RETENTION POLICY "default" ON "ainflue" DURATION 15d
   name = "default"
   default = false
   urls = ["http://localhost:8086"]
-  username = "ainflue_monitor"
+  username = "iacherie_monitor"
   password = "${INFLUXDB_MONITOR_PASSWORD}"
   timeout = 0
   insecure-skip-verify = false

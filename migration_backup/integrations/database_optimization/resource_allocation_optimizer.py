@@ -2,7 +2,7 @@
 ==============================================================================
 
 Optimisateur d'allocation ressources enterprise avec gestion dynamique CPU/mémoire,
-scaling automatique et optimisation coûts pour la plateforme Ainflue.
+scaling automatique et optimisation coûts pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 ⚡ Performance Engineer: Resource optimization + performance tuning + capacity planning + bottleneck resolution

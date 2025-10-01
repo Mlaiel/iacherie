@@ -5,7 +5,7 @@ Rights management avec ownership tracking et global protection orchestration.
 Système de gestion des droits globale avec protection automatisée.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Fingerprinting Module
+Project: IA Chéries Integrations - Fingerprinting Module
 Version: 1.0 Enterprise Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -198,7 +198,7 @@ class OwnershipCertificateManager:
                 'digital_signature': None,  # Signature numérique
                 'issued_timestamp': datetime.utcnow(),
                 'validity_period': timedelta(days=365),  # 1 an par défaut
-                'issuing_authority': 'Ainflue Rights Management System',
+                'issuing_authority': 'IA Chéries Rights Management System',
                 'certificate_version': '1.0'
             }
             

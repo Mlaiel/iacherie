@@ -25,11 +25,11 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 # Metrics
-fair_use_analyses_total = Counter('ainflue_fair_use_analyses_total',
+fair_use_analyses_total = Counter('iacherie_fair_use_analyses_total',
                                 'Total fair use analyses performed', ['result', 'content_type'])
-fair_use_analysis_duration = Histogram('ainflue_fair_use_analysis_duration_seconds',
+fair_use_analysis_duration = Histogram('iacherie_fair_use_analysis_duration_seconds',
                                       'Time spent analyzing fair use claims')
-fair_use_confidence_score = Gauge('ainflue_fair_use_confidence_score',
+fair_use_confidence_score = Gauge('iacherie_fair_use_confidence_score',
                                  'Fair use analysis confidence score', ['content_id'])
 
 class FairUseFactor(Enum):

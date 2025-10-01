@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Das Collectors-Modul bietet eine einheitliche, unternehmenstaugliche Content-Monitoring-Infrastruktur für die Ainflue-Plattform. Dieses Modul konsolidiert 16 individuelle Plattform-Collectors in 6 logische, zusammengefasste Collectors, während die Rückwärtskompatibilität erhalten bleibt.
+Das Collectors-Modul bietet eine einheitliche, unternehmenstaugliche Content-Monitoring-Infrastruktur für die iacherie-Plattform. Dieses Modul konsolidiert 16 individuelle Plattform-Collectors in 6 logische, zusammengefasste Collectors, während die Rückwärtskompatibilität erhalten bleibt.
 
 ## Architektur
 
@@ -339,6 +339,6 @@ Kontakt für Genehmigungen: mlaiel@live.de
 Für technischen Support, Feature-Anfragen oder Lizenzanfragen:
 
 **E-Mail**: mlaiel@live.de  
-**Plattform**: Ainflue Creator Monitoring System  
+**Plattform**: iacherie Creator Monitoring System  
 **Version**: Enterprise v1.0  
 **Lizenz**: Proprietär - Alle Rechte vorbehalten

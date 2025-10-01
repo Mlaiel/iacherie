@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎵 Enterprise Audio Processing Service - Ainflue
+🎵 Enterprise Audio Processing Service - IA Chéries
 Comprehensive audio processing, analysis, and optimization for creators
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte

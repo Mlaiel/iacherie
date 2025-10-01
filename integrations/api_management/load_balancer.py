@@ -854,7 +854,7 @@ class IntelligentLoadBalancer:
 
 
 # IA Chérie Business Logic Integration Constants
-AINFLUE_LOAD_BALANCING_CONFIG = {
+IACHERIE_LOAD_BALANCING_CONFIG = {
     'creator_traffic_patterns': {
         'upload_peak_hours': [18, 19, 20, 21],  # 6-9 PM
         'streaming_peak_hours': [12, 13, 19, 20, 21],  # Lunch + Evening

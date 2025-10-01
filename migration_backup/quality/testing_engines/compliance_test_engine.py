@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Compliance Test Engine - Ainflue Quality Platform
+Compliance Test Engine - IA Chéries Quality Platform
 ===============================================
 
 Enterprise-grade compliance testing engine for regulatory and security compliance.

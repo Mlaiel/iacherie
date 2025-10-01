@@ -1,5 +1,5 @@
 """Creator Workflow Service - Creator workflow orchestration and automation
-Enterprise-grade workflow management for the Ainflue AI platform.
+Enterprise-grade workflow management for the IA Chéries AI platform.
 
 This service orchestrates complex creator workflows including onboarding,
 content creation, collaboration, monetization, and growth tracking.

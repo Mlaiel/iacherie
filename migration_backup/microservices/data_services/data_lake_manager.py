@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🗃️ Data Lake Manager Service - Enterprise Data Management
-Gestionnaire de data lake enterprise pour microservices Ainflue
+Gestionnaire de data lake enterprise pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -269,7 +269,7 @@ class DataLakeManager:
             creators_dataset = DataLakeDataset(
                 dataset_id="creators_profiles",
                 name="Creator Profiles",
-                description="Profils des créateurs Ainflue",
+                description="Profils des créateurs IA Chéries",
                 storage_layer=StorageLayer.SILVER,
                 source_system="user_management",
                 partition_strategy=DataPartitionStrategy.YEAR_MONTH,

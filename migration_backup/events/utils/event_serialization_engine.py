@@ -1,7 +1,7 @@
-"""Event Serialization Engine - Ultra-Optimized for Ainflue Business Events
+"""Event Serialization Engine - Ultra-Optimized for IA Chéries Business Events
 
 High performance event serialization engine with intelligent compression,
-multi-format support, and schema evolution for Ainflue platform business logic.
+multi-format support, and schema evolution for IA Chéries platform business logic.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class SerializationFormat(Enum):
-    """Supported serialization formats for Ainflue events"""
+    """Supported serialization formats for IA Chéries events"""
     JSON = "json"
     MSGPACK = "msgpack"
     AVRO = "avro"
@@ -221,12 +221,12 @@ class SchemaRegistry:
 
 
 class JSONSerializationStrategy:
-    """Strategy for JSON serialization optimized for Ainflue business events"""
+    """Strategy for JSON serialization optimized for IA Chéries business events"""
     
     async def serialize(self, event_data: Dict[str, Any], schema: Dict[str, Any]) -> bytes:
         """Serialize event data to JSON with business optimizations"""
         
-        # Order fields for optimal parsing in Ainflue business context
+        # Order fields for optimal parsing in IA Chéries business context
         ordered_data = self._order_fields_for_business_logic(event_data)
         
         # Use compact JSON representation
@@ -234,9 +234,9 @@ class JSONSerializationStrategy:
         return json_str.encode('utf-8')
     
     def _order_fields_for_business_logic(self, event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Order fields to optimize parsing for Ainflue business logic"""
+        """Order fields to optimize parsing for IA Chéries business logic"""
         
-        # Priority order for Ainflue business events
+        # Priority order for IA Chéries business events
         field_priority = [
             "event_id", "event_type", "timestamp", "user_id",
             "payload", "business_metadata", "workflow_stage",
@@ -304,7 +304,7 @@ class SerializationPerformanceOptimizer:
 
 class EventSerializationEngine:
     """
-    Ultra-optimized event serialization engine for Ainflue business events
+    Ultra-optimized event serialization engine for IA Chéries business events
     Supports multi-format serialization with intelligent compression and schema evolution
     """
     
@@ -316,7 +316,7 @@ class EventSerializationEngine:
             SerializationFormat.MSGPACK.value: MessagePackSerializationStrategy(),
         }
         self.performance_optimizer = SerializationPerformanceOptimizer()
-        logger.info("EventSerializationEngine initialized for Ainflue business events")
+        logger.info("EventSerializationEngine initialized for IA Chéries business events")
     
     async def serialize_business_event(self, 
                                      event_data: Dict[str, Any],
@@ -327,7 +327,7 @@ class EventSerializationEngine:
         start_time = time.time()
         business_context = business_context or {}
         
-        # Determine optimal format for Ainflue business context
+        # Determine optimal format for IA Chéries business context
         optimal_format = await self._determine_optimal_format(event_data, business_context)
         format_to_use = target_format if target_format != "auto" else optimal_format
         
@@ -378,7 +378,7 @@ class EventSerializationEngine:
     async def _determine_optimal_format(self, 
                                       event_data: Dict[str, Any],
                                       business_context: Dict[str, Any]) -> str:
-        """Determine optimal serialization format based on Ainflue business logic"""
+        """Determine optimal serialization format based on IA Chéries business logic"""
         
         event_type = event_data.get("event_type", "")
         payload_size = len(str(event_data.get("payload", {})))
@@ -430,7 +430,7 @@ class EventSerializationEngine:
             "processing_tier": business_context.get("user_tier", "free")
         })
         
-        # Ensure required fields for Ainflue business logic
+        # Ensure required fields for IA Chéries business logic
         if "timestamp" not in prepared_event:
             prepared_event["timestamp"] = datetime.utcnow().isoformat()
         

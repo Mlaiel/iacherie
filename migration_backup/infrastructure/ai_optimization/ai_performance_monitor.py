@@ -2,11 +2,11 @@
 AI Performance Monitor - Real-time Performance Monitoring for 53 AI Agents
 ==========================================================================
 
-Enterprise-grade performance monitoring system for Ainflue's AI infrastructure.
+Enterprise-grade performance monitoring system for IA Chéries's AI infrastructure.
 Provides real-time monitoring, analytics, and optimization insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -90,7 +90,7 @@ class AIPerformanceReport:
 
 class AIPerformanceMonitor:
     """
-    Real-time performance monitoring system for Ainflue's 53 AI agents.
+    Real-time performance monitoring system for IA Chéries's 53 AI agents.
     Provides comprehensive monitoring, alerting, and analytics.
     """
     
@@ -100,7 +100,7 @@ class AIPerformanceMonitor:
         self.alert_history: List[PerformanceAlert] = []
         self.performance_reports: List[AIPerformanceReport] = []
         
-        # Monitoring configuration for Ainflue's 53 agents
+        # Monitoring configuration for IA Chéries's 53 agents
         self.agent_categories = {
             "content_analysis": list(range(12)),
             "creative_enhancement": list(range(10)),
@@ -301,7 +301,7 @@ class AIPerformanceMonitor:
             ),
             PerformanceMetric(
                 name="creator_satisfaction",
-                value=random.uniform(8.5, 9.5),  # High satisfaction for Ainflue
+                value=random.uniform(8.5, 9.5),  # High satisfaction for IA Chéries
                 unit="score",
                 timestamp=timestamp,
                 agent_id=agent_id,

@@ -2,7 +2,7 @@
 ======================================================
 
 Advanced transaction coordination with ACID compliance,
-distributed transaction management, and saga patterns for Ainflue platform.
+distributed transaction management, and saga patterns for IA Chéries platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: ACID compliance + transaction isolation + deadlock detection

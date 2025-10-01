@@ -15,7 +15,7 @@ ENGAGEMENT NOTIFICATIONS ENGINE - ANALYTICS NOTIFICATIONS
 - Alertes engagement en temps réel
 - Personnalisation basée IA pour optimiser engagement
 
-🚀 FONCTIONNALITÉS AINFLUE:
+🚀 FONCTIONNALITÉS IA CHÉRIES:
 - Suivi engagement par type de contenu (audio, video, posts)
 - Notifications nouveaux followers et interactions
 - Alertes baisse engagement et actions correctives

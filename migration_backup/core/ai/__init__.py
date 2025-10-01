@@ -1,4 +1,4 @@
-"""Ainflue Core AI Intelligence - Advanced AI & Machine Learning
+"""IA Chéries Core AI Intelligence - Advanced AI & Machine Learning
 ===========================================================
 
 Core AI intelligence providing AI models, ML pipelines, neural networks,

@@ -1611,11 +1611,11 @@ Génère des recommandations de compliance"""
             msg = MIMEMultipart()
             msg['From'] = smtp_user
             msg['To'] = ', '.join(recipients)
-            msg['Subject'] = f"[AINFLUE AUDIT] {notification_data['severity'].upper()}: {notification_data['alert_type']}"
+            msg['Subject'] = f"[IA CHÉRIES AUDIT] {notification_data['severity'].upper()}: {notification_data['alert_type']}"
             
             # Corps du message
             body = f"""
-            AINFLUE AUDIT ALERT
+            IA CHÉRIES AUDIT ALERT
             ==================
             
             Type: {notification_data['alert_type']}
@@ -1664,7 +1664,7 @@ Génère des recommandations de compliance"""
             }
             
             slack_payload = {
-                "text": f"🚨 Ainflue Audit Alert: {notification_data['alert_type']}",
+                "text": f"🚨 IA Chéries Audit Alert: {notification_data['alert_type']}",
                 "attachments": [
                     {
                         "color": color_map.get(notification_data['severity'], "#808080"),
@@ -1685,7 +1685,7 @@ Génère des recommandations de compliance"""
                                 "short": False
                             }
                         ],
-                        "footer": "Ainflue Audit Manager",
+                        "footer": "IA Chéries Audit Manager",
                         "ts": int(datetime.utcnow().timestamp())
                     }
                 ]
@@ -1737,7 +1737,7 @@ Génère des recommandations de compliance"""
                 return
             
             # Message SMS court
-            sms_message = f"AINFLUE CRITICAL ALERT: {notification_data['alert_type']} at {notification_data['timestamp'][:19]}. Check logs immediately."
+            sms_message = f"IA CHÉRIES CRITICAL ALERT: {notification_data['alert_type']} at {notification_data['timestamp'][:19]}. Check logs immediately."
             
             # Simulation de l'envoi SMS (remplacer par vraie API)
             self.logger.info(f"SMS notification would be sent to {len(to_numbers)} recipients")

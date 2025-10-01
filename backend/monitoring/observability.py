@@ -235,7 +235,7 @@ class EnterpriseObservability:
                     },
                     'logging': True,
                 },
-                service_name='ainflue-enterprise',
+                service_name='iacherie-enterprise',
                 validate=True,
             )
             self._tracer = config.initialize_tracer()
@@ -270,7 +270,7 @@ class EnterpriseObservability:
                 loki_config = {
                     'endpoint': self.config.loki_endpoint,
                     'labels': {
-                        'service': 'ainflue-enterprise',
+                        'service': 'iacherie-enterprise',
                         'environment': os.getenv('ENVIRONMENT', 'production')
                     }
                 }

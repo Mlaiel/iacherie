@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-RBAC Middleware Template for Ainflue Creator Economy Platform
+RBAC Middleware Template for IA Chéries Creator Economy Platform
 Role-Based Access Control middleware with fine-grained permissions and audit
 """
 
@@ -153,7 +153,7 @@ class AuthorizationResult(BaseModel):
 
 class RBACMiddlewareTemplate:
     """
-    Template middleware RBAC enterprise pour Ainflue Creator Economy
+    Template middleware RBAC enterprise pour IA Chéries Creator Economy
     
     Fonctionnalités:
     - Contrôle d'accès basé sur les rôles

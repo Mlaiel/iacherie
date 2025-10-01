@@ -192,7 +192,7 @@ class MidjourneyIntegration:
             headers = {
                 "Authorization": f"Bearer {self.api_token}",
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue/1.0"
+                "User-Agent": "IA Chéries/1.0"
             }
             
             self.session = aiohttp.ClientSession(

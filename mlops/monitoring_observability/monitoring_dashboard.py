@@ -853,7 +853,7 @@ class RealTimeMonitoringDashboard:
         }
 
     async def _get_creator_specific_metrics(self, model_id: str) -> Dict[str, float]:
-        """Get creator-specific metrics for Ainflue platform"""
+        """Get creator-specific metrics for iacherie platform"""
         # Implementation would query creator-specific data
         return {
             'content_optimization_score': np.random.uniform(70, 95),
@@ -1134,7 +1134,7 @@ class RealTimeMonitoringDashboard:
 class CreatorMonitoringDashboard(RealTimeMonitoringDashboard):
     """
     Specialized monitoring dashboard for creator-specific metrics
-    Enhanced for Ainflue platform with musician, blogger, photographer, influencer, comedian metrics
+    Enhanced for iacherie platform with musician, blogger, photographer, influencer, comedian metrics
     """
     
     def __init__(self, creator_type: str, *args, **kwargs):

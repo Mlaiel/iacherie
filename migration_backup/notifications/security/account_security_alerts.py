@@ -1,6 +1,6 @@
 """
 🔐 ACCOUNT SECURITY ALERTS
-Ainflue Platform - Account Security Monitoring System
+IA Chéries Platform - Account Security Monitoring System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

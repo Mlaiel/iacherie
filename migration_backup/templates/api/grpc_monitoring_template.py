@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise gRPC Monitoring Template - Ainflue API Templates
+⚡ Enterprise gRPC Monitoring Template - IA Chéries API Templates
 Advanced production-ready gRPC monitoring and observability system
 
 ⚠️ PROTECTION INTELLECTUELLE:

@@ -6,7 +6,7 @@ Optimizes AI model inference for real-time creator platform operations.
 Provides low-latency, high-throughput inference for 53 specialized AI agents.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -48,7 +48,7 @@ class InferenceRequest:
 
 class InferenceOptimizer:
     """
-    AI Inference Optimizer for Ainflue Creator Platform
+    AI Inference Optimizer for IA Chéries Creator Platform
     
     Optimizes inference performance for 53 AI agents serving creator workflows
     with real-time processing requirements and cost efficiency.

@@ -2,7 +2,7 @@
 """Compensation Transaction Manager - Saga Pattern Implementation
 ===============================================================
 
-Advanced compensation transaction management for Ainflue platform error handling.
+Advanced compensation transaction management for IA Chéries platform error handling.
 Provides saga pattern implementation, distributed transaction rollback,
 and automated compensation workflows for enterprise-scale deployments.
 

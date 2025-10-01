@@ -447,7 +447,7 @@ class AudioCDNSpecialist:
         segments = [
             {
                 'duration': 10,  # 10-second segments for audio
-                'url': f"https://cdn.ainflue.com/{edge_location}/{request.audio_id}/segment_{i}.m4a",
+                'url': f"https://cdn.iacherie.com/{edge_location}/{request.audio_id}/segment_{i}.m4a",
                 'size_bytes': 128000  # Estimated size
             }
             for i in range(200)  # Segments for a longer audio file
@@ -473,7 +473,7 @@ class AudioCDNSpecialist:
                 'content_type': request.content_type.value
             },
             encryption_key=None,
-            manifest_url=f"https://cdn.ainflue.com/{edge_location}/{request.audio_id}/manifest.m3u8"
+            manifest_url=f"https://cdn.iacherie.com/{edge_location}/{request.audio_id}/manifest.m3u8"
         )
         
         return manifest

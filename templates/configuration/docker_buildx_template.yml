@@ -1,4 +1,4 @@
-# Docker Buildx Multi-Platform Build Configuration - Ainflue Creator Economy Platform
+# Docker Buildx Multi-Platform Build Configuration - iacherie Creator Economy Platform
 # ===================================================================================
 #
 # 🎯 DEVOPS ENGINEER + CONTAINER EXPERT + BUILD AUTOMATION SPECIALIST
@@ -35,7 +35,7 @@ version: "3.8"
 
 # Create a custom builder instance for Creator Economy builds
 x-builder-config: &builder-config
-  name: ainflue-creator-economy-builder
+  name: iacherie-creator-economy-builder
   driver: docker-container
   driver-opts:
     - image=moby/buildkit:buildx-stable-1
@@ -81,10 +81,10 @@ services:
         - PYTHON_VERSION=3.11
         - NODE_VERSION=18
       cache_from:
-        - type=registry,ref=ghcr.io/ainflue/creator-platform:buildcache
+        - type=registry,ref=ghcr.io/iacherie/creator-platform:buildcache
         - type=local,src=/tmp/.buildx-cache
       cache_to:
-        - type=registry,ref=ghcr.io/ainflue/creator-platform:buildcache,mode=max
+        - type=registry,ref=ghcr.io/iacherie/creator-platform:buildcache,mode=max
         - type=local,dest=/tmp/.buildx-cache-new,mode=max
       secrets:
         - id=github_token,src=./secrets/github_token
@@ -92,19 +92,19 @@ services:
       ssh:
         default: $SSH_AUTH_SOCK
       labels:
-        - "org.opencontainers.image.title=Ainflue Creator Platform"
+        - "org.opencontainers.image.title=iacherie Creator Platform"
         - "org.opencontainers.image.description=Creator Economy Platform Service"
         - "org.opencontainers.image.version=${CREATOR_PLATFORM_VERSION:-latest}"
         - "org.opencontainers.image.authors=Fahed Mlaiel <mlaiel@live.de>"
-        - "org.opencontainers.image.vendor=Ainflue"
+        - "org.opencontainers.image.vendor=iacherie"
         - "org.opencontainers.image.licenses=Proprietary"
-        - "org.opencontainers.image.source=https://github.com/Mlaiel/Ainflue"
+        - "org.opencontainers.image.source=https://github.com/Mlaiel/iacherie"
         - "org.opencontainers.image.revision=${GIT_COMMIT}"
         - "org.opencontainers.image.created=${BUILD_DATE}"
-        - "ainflue.business.unit=creator-economy"
-        - "ainflue.service.type=platform"
-        - "ainflue.security.level=enterprise"
-    image: ghcr.io/ainflue/creator-platform:${CREATOR_PLATFORM_VERSION:-latest}
+        - "iacherie.business.unit=creator-economy"
+        - "iacherie.service.type=platform"
+        - "iacherie.security.level=enterprise"
+    image: ghcr.io/iacherie/creator-platform:${CREATOR_PLATFORM_VERSION:-latest}
     
   # ==============================================================================
   # AI PROCESSING SERVICE BUILD
@@ -127,29 +127,29 @@ services:
         - PYTORCH_VERSION=2.1.0
         - TENSORFLOW_VERSION=2.13.0
       cache_from:
-        - type=registry,ref=ghcr.io/ainflue/ai-processor:buildcache
+        - type=registry,ref=ghcr.io/iacherie/ai-processor:buildcache
         - type=local,src=/tmp/.buildx-cache-ai
       cache_to:
-        - type=registry,ref=ghcr.io/ainflue/ai-processor:buildcache,mode=max
+        - type=registry,ref=ghcr.io/iacherie/ai-processor:buildcache,mode=max
         - type=local,dest=/tmp/.buildx-cache-ai-new,mode=max
       secrets:
         - id=huggingface_token,src=./secrets/huggingface_token
         - id=pytorch_token,src=./secrets/pytorch_token
       labels:
-        - "org.opencontainers.image.title=Ainflue AI Processor"
+        - "org.opencontainers.image.title=iacherie AI Processor"
         - "org.opencontainers.image.description=AI Processing Service with GPU Support"
         - "org.opencontainers.image.version=${AI_PROCESSOR_VERSION:-latest}"
         - "org.opencontainers.image.authors=Fahed Mlaiel <mlaiel@live.de>"
-        - "org.opencontainers.image.vendor=Ainflue"
+        - "org.opencontainers.image.vendor=iacherie"
         - "org.opencontainers.image.licenses=Proprietary"
-        - "org.opencontainers.image.source=https://github.com/Mlaiel/Ainflue"
+        - "org.opencontainers.image.source=https://github.com/Mlaiel/iacherie"
         - "org.opencontainers.image.revision=${GIT_COMMIT}"
         - "org.opencontainers.image.created=${BUILD_DATE}"
-        - "ainflue.business.unit=ai-processing"
-        - "ainflue.service.type=compute"
-        - "ainflue.gpu.enabled=true"
-        - "ainflue.security.level=enterprise"
-    image: ghcr.io/ainflue/ai-processor:${AI_PROCESSOR_VERSION:-latest}
+        - "iacherie.business.unit=ai-processing"
+        - "iacherie.service.type=compute"
+        - "iacherie.gpu.enabled=true"
+        - "iacherie.security.level=enterprise"
+    image: ghcr.io/iacherie/ai-processor:${AI_PROCESSOR_VERSION:-latest}
     
   # ==============================================================================
   # COLLABORATION SERVICE BUILD  
@@ -172,22 +172,22 @@ services:
         - WEBSOCKET_ENABLED=true
         - REAL_TIME_EDITING=true
       cache_from:
-        - type=registry,ref=ghcr.io/ainflue/collaboration-service:buildcache
+        - type=registry,ref=ghcr.io/iacherie/collaboration-service:buildcache
       cache_to:
-        - type=registry,ref=ghcr.io/ainflue/collaboration-service:buildcache,mode=max
+        - type=registry,ref=ghcr.io/iacherie/collaboration-service:buildcache,mode=max
       secrets:
         - id=npm_token,src=./secrets/npm_token
       labels:
-        - "org.opencontainers.image.title=Ainflue Collaboration Service"
+        - "org.opencontainers.image.title=iacherie Collaboration Service"
         - "org.opencontainers.image.description=Real-time Collaboration Service"
         - "org.opencontainers.image.version=${COLLABORATION_VERSION:-latest}"
         - "org.opencontainers.image.authors=Fahed Mlaiel <mlaiel@live.de>"
-        - "org.opencontainers.image.vendor=Ainflue"
+        - "org.opencontainers.image.vendor=iacherie"
         - "org.opencontainers.image.licenses=Proprietary"
-        - "ainflue.business.unit=creator-economy"
-        - "ainflue.service.type=collaboration"
-        - "ainflue.realtime.enabled=true"
-    image: ghcr.io/ainflue/collaboration-service:${COLLABORATION_VERSION:-latest}
+        - "iacherie.business.unit=creator-economy"
+        - "iacherie.service.type=collaboration"
+        - "iacherie.realtime.enabled=true"
+    image: ghcr.io/iacherie/collaboration-service:${COLLABORATION_VERSION:-latest}
     
   # ==============================================================================
   # MONETIZATION SERVICE BUILD
@@ -210,24 +210,24 @@ services:
         - PAYMENT_PROVIDERS=stripe,paypal,square
         - SECURITY_LEVEL=high
       cache_from:
-        - type=registry,ref=ghcr.io/ainflue/monetization-service:buildcache
+        - type=registry,ref=ghcr.io/iacherie/monetization-service:buildcache
       cache_to:
-        - type=registry,ref=ghcr.io/ainflue/monetization-service:buildcache,mode=max
+        - type=registry,ref=ghcr.io/iacherie/monetization-service:buildcache,mode=max
       secrets:
         - id=stripe_key,src=./secrets/stripe_key
         - id=paypal_key,src=./secrets/paypal_key
       labels:
-        - "org.opencontainers.image.title=Ainflue Monetization Service"
+        - "org.opencontainers.image.title=iacherie Monetization Service"
         - "org.opencontainers.image.description=Payment and Revenue Sharing Service"
         - "org.opencontainers.image.version=${MONETIZATION_VERSION:-latest}"
         - "org.opencontainers.image.authors=Fahed Mlaiel <mlaiel@live.de>"
-        - "org.opencontainers.image.vendor=Ainflue"
+        - "org.opencontainers.image.vendor=iacherie"
         - "org.opencontainers.image.licenses=Proprietary"
-        - "ainflue.business.unit=creator-economy"
-        - "ainflue.service.type=monetization"
-        - "ainflue.security.level=high"
-        - "ainflue.compliance.pci=required"
-    image: ghcr.io/ainflue/monetization-service:${MONETIZATION_VERSION:-latest}
+        - "iacherie.business.unit=creator-economy"
+        - "iacherie.service.type=monetization"
+        - "iacherie.security.level=high"
+        - "iacherie.compliance.pci=required"
+    image: ghcr.io/iacherie/monetization-service:${MONETIZATION_VERSION:-latest}
     
   # ==============================================================================
   # API GATEWAY BUILD
@@ -250,20 +250,20 @@ services:
         - RATE_LIMITING=true
         - AUTHENTICATION=jwt
       cache_from:
-        - type=registry,ref=ghcr.io/ainflue/api-gateway:buildcache
+        - type=registry,ref=ghcr.io/iacherie/api-gateway:buildcache
       cache_to:
-        - type=registry,ref=ghcr.io/ainflue/api-gateway:buildcache,mode=max
+        - type=registry,ref=ghcr.io/iacherie/api-gateway:buildcache,mode=max
       labels:
-        - "org.opencontainers.image.title=Ainflue API Gateway"
+        - "org.opencontainers.image.title=iacherie API Gateway"
         - "org.opencontainers.image.description=Creator Economy API Gateway"
         - "org.opencontainers.image.version=${API_GATEWAY_VERSION:-latest}"
         - "org.opencontainers.image.authors=Fahed Mlaiel <mlaiel@live.de>"
-        - "org.opencontainers.image.vendor=Ainflue"
+        - "org.opencontainers.image.vendor=iacherie"
         - "org.opencontainers.image.licenses=Proprietary"
-        - "ainflue.business.unit=creator-economy"
-        - "ainflue.service.type=gateway"
-        - "ainflue.rate.limiting=enabled"
-    image: ghcr.io/ainflue/api-gateway:${API_GATEWAY_VERSION:-latest}
+        - "iacherie.business.unit=creator-economy"
+        - "iacherie.service.type=gateway"
+        - "iacherie.rate.limiting=enabled"
+    image: ghcr.io/iacherie/api-gateway:${API_GATEWAY_VERSION:-latest}
 
 # ==============================================================================
 # BUILDX BAKE CONFIGURATION
@@ -371,7 +371,7 @@ x-security-scanning: &security-scanning
   license_scanning:
     - scanner: "fossa"
       config:
-        project: "ainflue-creator-economy"
+        project: "iacherie-creator-economy"
         revision: "${GIT_COMMIT}"
         output: "./security-reports/license-report.json"
   
@@ -411,7 +411,7 @@ x-cicd-integration: &cicd-integration
       - type: "gha"
         scope: "buildx"
       - type: "registry"
-        ref: "ghcr.io/ainflue/buildcache"
+        ref: "ghcr.io/iacherie/buildcache"
   
   # GitLab CI integration
   gitlab_ci:
@@ -499,8 +499,8 @@ x-build-monitoring: &build-monitoring
     
     - type: "email"
       recipients:
-        - "devops@ainflue.com"
-        - "security@ainflue.com"
+        - "devops@iacherie.com"
+        - "security@iacherie.com"
       events:
         - build_failure
         - security_scan_failure
@@ -517,7 +517,7 @@ x-environment-variables: &environment-variables
   BUILD_NUMBER: "${BUILD_NUMBER:-local}"
   
   # Registry configuration
-  REGISTRY_URL: "ghcr.io/ainflue"
+  REGISTRY_URL: "ghcr.io/iacherie"
   IMAGE_TAG_STRATEGY: "semantic"
   
   # Creator Economy specific

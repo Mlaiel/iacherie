@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Contact: mlaiel@live.de
 
 🎯 STORAGE METRICS COLLECTOR
-Comprehensive metrics collection and analysis for Ainflue event store
+Comprehensive metrics collection and analysis for IA Chéries event store
 with real-time monitoring, alerting, and performance optimization insights.
 
 Key Features:
@@ -130,7 +130,7 @@ class CostAnalysis:
 
 class StorageMetricsCollector:
     """
-    Comprehensive storage metrics collector for Ainflue event store
+    Comprehensive storage metrics collector for IA Chéries event store
     
     Features:
     - Real-time metrics collection from all backends
@@ -164,13 +164,13 @@ class StorageMetricsCollector:
             }
         }
         
-        # Initialize Ainflue business metrics
+        # Initialize IA Chéries business metrics
         self._initialize_business_metrics()
     
     def _initialize_business_metrics(self):
-        """Initialize Ainflue-specific business metrics and thresholds"""
+        """Initialize IA Chéries-specific business metrics and thresholds"""
         
-        # Define metric configurations for Ainflue business logic
+        # Define metric configurations for IA Chéries business logic
         self._metric_configs = {
             # Performance metrics
             'query_latency_ms': {
@@ -226,7 +226,7 @@ class StorageMetricsCollector:
                 'description': 'Database connection pool utilization'
             },
             
-            # Business metrics specific to Ainflue
+            # Business metrics specific to IA Chéries
             'content_events_per_hour': {
                 'type': MetricType.BUSINESS,
                 'unit': 'events/hour',

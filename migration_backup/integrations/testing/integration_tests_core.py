@@ -1,7 +1,7 @@
 """Integration Tests Core - Core Integration Testing System
 =========================================================
 
-Core integration testing infrastructure for Ainflue integrations.
+Core integration testing infrastructure for IA Chéries integrations.
 Provides the main testing framework and test orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -31,7 +31,7 @@ class IntegrationTestsCore:
     
     def __init__(self):
         self.test_results: List[TestResult] = []
-        self.test_suite_name = "Ainflue Integration Tests"
+        self.test_suite_name = "IA Chéries Integration Tests"
         
     async def run_all_tests(self) -> Dict[str, Any]:
         """Run all integration tests."""

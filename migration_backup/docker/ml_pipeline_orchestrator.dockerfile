@@ -4,7 +4,7 @@
 
 FROM python:3.11-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue ML Pipeline Orchestrator - Advanced ML workflow management"
+LABEL description="IA Chéries ML Pipeline Orchestrator - Advanced ML workflow management"
 LABEL version="1.0.0"
 
 # Install system dependencies for ML

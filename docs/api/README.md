@@ -656,9 +656,9 @@ npm install @iacherie/api-client
 ```
 
 ```javascript
-import { AinfluenceClient } from '@iacherie/api-client';
+import { iacherienceClient } from '@iacherie/api-client';
 
-const client = new AinfluenceClient({
+const client = new iacherienceClient({
   apiKey: 'your-api-key',
   environment: 'production' // or 'sandbox'
 });
@@ -679,9 +679,9 @@ pip install iacherie-api
 ```
 
 ```python
-from iacherie import AinfluenceClient
+from iacherie import iacherienceClient
 
-client = AinfluenceClient(
+client = iacherienceClient(
     api_key='your-api-key',
     environment='production'
 )

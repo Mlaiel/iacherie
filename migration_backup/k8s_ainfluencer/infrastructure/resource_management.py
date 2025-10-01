@@ -2,7 +2,7 @@
 ========================================
 
 Kubernetes resource management with quotas and limits per namespace
-for the Ainflue platform resource governance.
+for the IA Chéries platform resource governance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

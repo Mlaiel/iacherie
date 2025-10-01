@@ -27,9 +27,7 @@ from functools import wraps
 import hashlib
 import weakref
 
-# Redis import with fallback
-try:
-    # # Safe Redis import with Python 3.12 compatibility
+# Redis import with fallback - Safe Redis import with Python 3.12 compatibility
 try:
     import aioredis
     REDIS_AVAILABLE = True

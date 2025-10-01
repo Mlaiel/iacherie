@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Emerging Formats Support
+IA Chéries Platform - Multimedia Formats - Emerging Formats Support
 Support for next-generation and emerging multimedia formats
 
 Author: Fahed Mlaiel (mlaiel@live.de)

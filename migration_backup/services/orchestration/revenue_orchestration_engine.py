@@ -1,5 +1,5 @@
 """
-💰 REVENUE ORCHESTRATION ENGINE - AINFLUE ENTERPRISE
+💰 REVENUE ORCHESTRATION ENGINE - IA CHÉRIES ENTERPRISE
 ====================================================
 
 Revenue sharing automation and payment processing orchestration for creator economy platform.
@@ -646,7 +646,7 @@ class RevenueOrchestrationEngine:
                     amount=int(transaction.amount * 100),  # Stripe uses cents
                     currency=transaction.currency.lower(),
                     source=payment_method_data.get("stripe_token"),
-                    description=f"Ainflue content payment - {transaction.content_id}"
+                    description=f"IA Chéries content payment - {transaction.content_id}"
                 )
                 return True, charge.id
             

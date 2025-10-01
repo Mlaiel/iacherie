@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Analytics Monitoring Module
+IA Chéries Platform - Analytics Monitoring Module
 ==============================================
 
 Enterprise-grade monitoring for cross-platform analytics aggregation,

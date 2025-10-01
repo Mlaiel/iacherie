@@ -476,7 +476,7 @@ IA Chérie supports **350+ languages and dialects**, including:
 - Beta testing opportunities
 
 **Social Media:**
-- Twitter: @AinfluePlatform
+- Twitter: @iacheriePlatform
 - LinkedIn: IA Chérie Official
 - YouTube: IA Chérie Tutorials
 

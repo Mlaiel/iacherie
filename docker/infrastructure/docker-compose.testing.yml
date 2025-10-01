@@ -30,7 +30,7 @@ services:
       dockerfile: integration_tester.dockerfile
     environment:
       - PLATFORM_API_URL=http://api_gateway:8000
-      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/iacherie_test
     volumes:
       - test_results:/app/reports
       - /var/run/docker.sock:/var/run/docker.sock
@@ -81,7 +81,7 @@ services:
     image: iacherie/platform:test
     environment:
       - ENV=testing
-      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/iacherie_test
       - REDIS_URL=redis://test_redis:6379/0
     networks:
       - platform_network
@@ -117,7 +117,7 @@ services:
     environment:
       - ENV=testing
       - API_GATEWAY_URL=http://api_gateway:8000
-      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/iacherie_test
     networks:
       - platform_network
     depends_on:
@@ -128,7 +128,7 @@ services:
   test_database:
     image: postgres:14-alpine
     environment:
-      POSTGRES_DB: ainflue_test
+      POSTGRES_DB: iacherie_test
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: test_password
     networks:

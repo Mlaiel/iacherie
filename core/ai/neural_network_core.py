@@ -104,7 +104,7 @@ class TrainingMetrics:
     memory_usage: float = 0.0
     gpu_utilization: float = 0.0
 
-class AinflueCoreNeuralNetwork(nn.Module if nn else object):
+class iacherieCoreNeuralNetwork(nn.Module if nn else object):
     """Core neural network architecture for IA Chérie"""
     
     def __init__(self, config: NetworkConfig):
@@ -295,7 +295,7 @@ class NeuralNetworkCore:
         self.level = level
         
         # Model and training
-        self.model: Optional[AinflueCoreNeuralNetwork] = None
+        self.model: Optional[iacherieCoreNeuralNetwork] = None
         self.optimizer: Optional[Any] = None
         self.scheduler: Optional[Any] = None
         self.device = self._get_device()
@@ -331,7 +331,7 @@ class NeuralNetworkCore:
             logger.info("🚀 Initializing neural network core")
             
             # Create model
-            self.model = AinflueCoreNeuralNetwork(self.config)
+            self.model = iacherieCoreNeuralNetwork(self.config)
             
             if torch and self.model:
                 self.model.to(self.device)
@@ -544,7 +544,7 @@ class NeuralNetworkCore:
             
             # Recreate model with saved config
             saved_config = NetworkConfig(**model_data["config"])
-            self.model = AinflueCoreNeuralNetwork(saved_config)
+            self.model = iacherieCoreNeuralNetwork(saved_config)
             
             if torch:
                 self.model.load_state_dict(model_data["state_dict"])
@@ -600,5 +600,5 @@ class NeuralNetworkCore:
 __all__ = [
     "NeuralNetworkCore", "NetworkConfig", "TrainingMetrics", 
     "NetworkArchitecture", "ActivationFunction", "OptimizationAlgorithm",
-    "AinflueCoreNeuralNetwork"
+    "iacherieCoreNeuralNetwork"
 ]

@@ -1,7 +1,7 @@
 """Edge Cache Intelligence
 ==========================
 
-Cache intelligent edge ultra-optimisé pour l'écosystème Ainflue.
+Cache intelligent edge ultra-optimisé pour l'écosystème iacherie.
 Système de cache multi-niveaux avec intelligence artificielle, prédiction
 de contenu, invalidation intelligente et optimisation géographique.
 

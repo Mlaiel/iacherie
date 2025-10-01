@@ -48,7 +48,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE AVANT CORRECTION (VIOLATION) :**
 ```
-/workspaces/Ainflue/backend/compliance/        ← Niveau 3 (LIMITE)
+/workspaces/iacherie/backend/compliance/        ← Niveau 3 (LIMITE)
 ├── audit/ (12 fichiers)                      ← Niveau 4 ❌ VIOLATION !
 ├── content_safety/ (12 fichiers)             ← Niveau 4 ❌ VIOLATION !
 ├── privacy/ (12 fichiers)                    ← Niveau 4 ❌ VIOLATION !
@@ -58,7 +58,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE APRÈS CORRECTION (CONFORME) :**
 ```
-/workspaces/Ainflue/backend/compliance/        ← Niveau 3 (CONFORME)
+/workspaces/iacherie/backend/compliance/        ← Niveau 3 (CONFORME)
 ├── 19 fichiers Python consolidés             ← Niveau 3 ✅ CONFORME !
 ├── 7 fichiers de documentation               ← Niveau 3 ✅ CONFORME !
 └── 0 sous-dossiers                           ← Niveau 3 ✅ CONFORME !
@@ -326,7 +326,7 @@ TOTAL CONSOLIDÉ : ~4,800 lignes de code regulatory compliance enterprise
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── compliance/                                     ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)
@@ -1092,7 +1092,7 @@ NOUVELLES CAPACITÉS: +10 modules enterprise
 ### 🔄 **Phase 1: Intégration Tests (Immédiat)**
 ```bash
 # Migration tests vers structure centralisée
-mkdir -p /workspaces/Ainflue/tests/backend/compliance/
+mkdir -p /workspaces/iacherie/tests/backend/compliance/
 # Tests d'intégration avec autres modules backend
 # Validation performance sous charge
 ```

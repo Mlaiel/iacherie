@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - SEO Performance Monitoring Core
+IA Chéries Platform - SEO Performance Monitoring Core
 ================================================
 
 Enterprise-grade SEO monitoring core for Creator Economy platform.

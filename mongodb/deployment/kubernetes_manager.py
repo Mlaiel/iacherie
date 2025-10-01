@@ -345,7 +345,7 @@ db.createUser({
 // Create application users
 use iacherie;
 db.createUser({
-    user: 'ainflue_app',
+    user: 'iacherie_app',
     pwd: 'app_password',
     roles: [
         { role: 'readWrite', db: 'iacherie' },

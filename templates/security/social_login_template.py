@@ -1,4 +1,4 @@
-"""Social Login Authentication Template for Ainflue Platform
+"""Social Login Authentication Template for iacherie Platform
 Comprehensive social login integration supporting OAuth 2.0, OpenID Connect,
 and major social platforms for creator authentication and audience growth.
 
@@ -119,10 +119,10 @@ class SocialAuthResponse(BaseModel):
     """Social authentication response"""
     success: bool = Field(..., description="Authentication success")
     provider: SocialProvider = Field(..., description="Social provider")
-    user_id: Optional[str] = Field(default=None, description="Ainflue user ID")
+    user_id: Optional[str] = Field(default=None, description="iacherie user ID")
     social_user_id: Optional[str] = Field(default=None, description="Provider user ID")
-    access_token: Optional[str] = Field(default=None, description="Ainflue access token")
-    refresh_token: Optional[str] = Field(default=None, description="Ainflue refresh token")
+    access_token: Optional[str] = Field(default=None, description="iacherie access token")
+    refresh_token: Optional[str] = Field(default=None, description="iacherie refresh token")
     social_access_token: Optional[str] = Field(default=None, description="Provider access token")
     social_refresh_token: Optional[str] = Field(default=None, description="Provider refresh token")
     token_expires_in: Optional[int] = Field(default=None, description="Token expiration seconds")
@@ -150,7 +150,7 @@ class OAuthToken(BaseModel):
 class SocialAccount(BaseModel):
     """Social account link model"""
     account_id: str = Field(..., description="Unique account link ID")
-    user_id: str = Field(..., description="Ainflue user ID")
+    user_id: str = Field(..., description="iacherie user ID")
     provider: SocialProvider = Field(..., description="Social provider")
     provider_user_id: str = Field(..., description="Provider user ID")
     username: Optional[str] = Field(default=None)
@@ -170,7 +170,7 @@ class SocialAccount(BaseModel):
 
 
 class SocialLoginService:
-    """Comprehensive social login authentication service for Ainflue platform
+    """Comprehensive social login authentication service for iacherie platform
     
     Provides enterprise-grade social authentication with:
     - OAuth 2.0 and OpenID Connect support
@@ -474,8 +474,8 @@ class SocialLoginService:
                 request
             )
             
-            # Generate Ainflue access token
-            ainflue_token = await self._generate_ainflue_token(user_id, social_account)
+            # Generate iacherie access token
+            iacherie_token = await self._generate_iacherie_token(user_id, social_account)
             
             processing_time = int((datetime.utcnow() - start_time).total_seconds() * 1000)
             
@@ -492,8 +492,8 @@ class SocialLoginService:
                 provider=request.provider,
                 user_id=user_id,
                 social_user_id=profile.provider_id,
-                access_token=ainflue_token["access_token"],
-                refresh_token=ainflue_token["refresh_token"],
+                access_token=iacherie_token["access_token"],
+                refresh_token=iacherie_token["refresh_token"],
                 social_access_token=token.access_token,
                 social_refresh_token=token.refresh_token,
                 token_expires_in=token.expires_in,
@@ -603,8 +603,8 @@ class SocialLoginService:
             self.social_accounts[user_id].append(social_account)
             return social_account
     
-    async def _generate_ainflue_token(self, user_id: str, social_account: SocialAccount) -> Dict[str, str]:
-        """Generate Ainflue platform tokens"""
+    async def _generate_iacherie_token(self, user_id: str, social_account: SocialAccount) -> Dict[str, str]:
+        """Generate iacherie platform tokens"""
         # JWT payload
         payload = {
             "user_id": user_id,

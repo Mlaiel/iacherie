@@ -1,11 +1,11 @@
 """
-💰 Monetization Service Discovery Enterprise - Ainflue
+💰 Monetization Service Discovery Enterprise - IA Chéries
 =====================================================
 Discovery services monétisation pour créateurs.
 Revenue optimization + payment processing + analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

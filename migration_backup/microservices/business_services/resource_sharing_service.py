@@ -3,7 +3,7 @@
 🤝 RESOURCE SHARING SERVICE
 ==========================
 
-Advanced resource sharing and collaborative management service for the Ainflue platform.
+Advanced resource sharing and collaborative management service for the IA Chéries platform.
 Handles asset sharing, collaborative resource allocation, and team resource optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

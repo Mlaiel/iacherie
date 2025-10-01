@@ -1,11 +1,11 @@
-# 📈 Infrastructure de Mise à l'Échelle - Ainflue Enterprise
+# 📈 Infrastructure de Mise à l'Échelle - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure auto-scaling de niveau enterprise supportant la mise à l'échelle horizontale et verticale, la mise à l'échelle prédictive, et l'allocation intelligente de ressources pour la plateforme créateurs Ainflue servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
+Infrastructure auto-scaling de niveau enterprise supportant la mise à l'échelle horizontale et verticale, la mise à l'échelle prédictive, et l'allocation intelligente de ressources pour la plateforme créateurs iacherie servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
 
 ## 🏗️ Composants Architecture
 - **Auto-Scaling Horizontal** : Mise à l'échelle dynamique pods/conteneurs basée demande

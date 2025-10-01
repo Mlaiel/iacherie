@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core AI - Advanced Natural Language Processing Engine
+IA Chéries Core AI - Advanced Natural Language Processing Engine
 ============================================================
 
 Enterprise-grade NLP engine with advanced language understanding,

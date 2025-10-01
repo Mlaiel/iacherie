@@ -3,7 +3,7 @@
 Collaboration Prompt Matcher - Enterprise Implementation
 ========================================================
 Collaboration prompt matcher enterprise avec intelligent creator pairing,
-synergy optimization algorithms et collaboration success prediction pour Ainflue.
+synergy optimization algorithms et collaboration success prediction pour IA Chéries.
 
 Expert Roles Applied:
 - Lead Dev IA: Advanced collaboration algorithms et intelligent creator matching
@@ -14,7 +14,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Collaboration-specific prompt techniques et pairing optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chéries Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 

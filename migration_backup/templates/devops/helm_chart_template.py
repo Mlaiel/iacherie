@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚓ Helm Chart Template - Ainflue Creator Economy Platform
+⚓ Helm Chart Template - IA Chéries Creator Economy Platform
 ========================================================
 
 Enterprise Kubernetes Helm Chart Templates for Creator Economy Platform
@@ -116,7 +116,7 @@ class HelmChartTemplate:
             ],
             "home": "https://ainflue.com",
             "sources": [
-                "https://github.com/Mlaiel/Ainfluencer"
+                "https://github.com/Mlaiel/IA Chéries"
             ],
             "maintainers": [
                 {
@@ -780,7 +780,7 @@ def main():
             chart_name="ainflue-creator-economy",
             version="1.0.0",
             app_version="2.0.0",
-            description="Ainflue Creator Economy Platform - Complete Kubernetes Deployment",
+            description="IA Chéries Creator Economy Platform - Complete Kubernetes Deployment",
             environment=env,
             namespace="ainflue",
             enable_autoscaling=env == EnvironmentType.PRODUCTION,

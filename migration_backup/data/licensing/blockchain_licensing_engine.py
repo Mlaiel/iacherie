@@ -935,7 +935,7 @@ class BlockchainLicensingEngine:
             contract_parameters={
                 "nft_standard": nft_standard.value,
                 "creator_address": creator_address,
-                "name": f"AinflueLicense_{creator_address[:8]}",
+                "name": f"IA ChériesLicense_{creator_address[:8]}",
                 "symbol": "AINLIC"
             },
             owner_address=creator_address
@@ -992,7 +992,7 @@ class BlockchainLicensingEngine:
             network=network,
             contract_type=ContractType.ROYALTY_DISTRIBUTION,
             contract_parameters={
-                "name": "Ainflue Royalty Distributor",
+                "name": "IA Chéries Royalty Distributor",
                 "version": "1.0",
                 "batch_size_limit": 100
             },
@@ -1114,7 +1114,7 @@ class BlockchainLicensingEngine:
             network=network,
             contract_type=ContractType.DISPUTE_RESOLUTION,
             contract_parameters={
-                "name": "Ainflue Dispute Arbitrator",
+                "name": "IA Chéries Dispute Arbitrator",
                 "ai_arbitration_enabled": True,
                 "evidence_weight_algorithm": "ml_confidence"
             },

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Penetration Testing Configuration Module
+"""IA Chéries Penetration Testing Configuration Module
 ================================================
 
-Enterprise-grade penetration testing configuration for the Ainflue platform.
+Enterprise-grade penetration testing configuration for the IA Chéries platform.
 Automated security testing, vulnerability assessment, red team exercises,
 continuous security validation, and comprehensive testing frameworks.
 

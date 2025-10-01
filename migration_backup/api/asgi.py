@@ -1,6 +1,6 @@
 """ASGI Application Entry Point
 ---------------------------
-- Complete FastAPI-ASGI App for Ainflue AI Platform
+- Complete FastAPI-ASGI App for IA Chéries AI Platform
 - Integrates Security, CORS, Observability, Health, Multilingual, Sentry, OpenTelemetry
 - Comprehensive Swagger API Documentation
 
@@ -114,13 +114,13 @@ def custom_openapi():
         return app.openapi_schema
     
     openapi_schema = get_openapi(
-        title="Ainflue AI Platform - Complete API Documentation",
+        title="IA Chéries AI Platform - Complete API Documentation",
         version="2.0.0",
         description="""
-        # 🚀 Ainflue AI Platform - Enterprise Content Protection & Monetization
+        # 🚀 IA Chéries AI Platform - Enterprise Content Protection & Monetization
 
         ## Overview
-        The Ainflue AI Platform provides comprehensive AI-powered content protection, monetization, 
+        The IA Chéries AI Platform provides comprehensive AI-powered content protection, monetization, 
         and collaboration services for content creators worldwide. Our platform supports multiple 
         content formats including audio, video, images, and documents.
 
@@ -754,19 +754,19 @@ async def enterprise_readiness():
 @app.on_event("startup")
 async def startup_event():
     """Enterprise application startup procedures"""
-    logger.info("🚀 Starting Ainflue Enterprise API Platform...")
+    logger.info("🚀 Starting IA Chéries Enterprise API Platform...")
     logger.info(f"📋 Environment: {settings.app.environment}")
     logger.info(f"🔧 Configuration: Enterprise features enabled")
     logger.info(f"🤝 Orchestrators: 5 orchestrators loaded")
     logger.info(f"🔐 Security: Enhanced security stack active")
     logger.info(f"📊 Monitoring: Advanced monitoring enabled")
-    logger.info("✅ Ainflue Enterprise API Platform started successfully")
+    logger.info("✅ IA Chéries Enterprise API Platform started successfully")
 
 # Application shutdown event
 @app.on_event("shutdown")
 async def shutdown_event():
     """Enterprise application shutdown procedures"""
-    logger.info("🔄 Shutting down Ainflue Enterprise API Platform...")
+    logger.info("🔄 Shutting down IA Chéries Enterprise API Platform...")
     logger.info("✅ Shutdown completed gracefully")
 
 # Export the ASGI application

@@ -1,7 +1,7 @@
 """💰 Revenue Tracking Metrics - Advanced Revenue Analytics
 ======================================================
 
-Comprehensive revenue tracking and analysis system for the Ainflue platform.
+Comprehensive revenue tracking and analysis system for the IA Chéries platform.
 Tracks all revenue streams, analyzes patterns, and provides predictive insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

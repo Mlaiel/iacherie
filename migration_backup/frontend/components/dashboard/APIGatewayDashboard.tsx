@@ -297,7 +297,7 @@ const APIGatewayDashboard: React.FC = () => {
       // Configuration sécurité simulée
       const mockSecurityConfig: SecurityConfig = {
         corsEnabled: true,
-        corsOrigins: ['https://app.ainfluencer.com', 'https://dashboard.ainfluencer.com'],
+        corsOrigins: ['https://app.iacheries.com', 'https://dashboard.iacheries.com'],
         rateLimitGlobal: 10000,
         authenticationRequired: true,
         jwtValidation: true,

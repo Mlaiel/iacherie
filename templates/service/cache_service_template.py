@@ -1,4 +1,4 @@
-"""{{service_name}} Cache Service for Ainflue Platform
+"""{{service_name}} Cache Service for iacherie Platform
 {{service_description}}
 
 Enterprise-grade distributed caching service with Redis, Memcached, and in-memory support,
@@ -171,7 +171,7 @@ class CacheStatsResponse(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise Cache Service for Ainflue Platform
+    Enterprise Cache Service for iacherie Platform
     
     Handles comprehensive caching management including:
     - Multi-backend support (Redis, Memcached, In-memory)

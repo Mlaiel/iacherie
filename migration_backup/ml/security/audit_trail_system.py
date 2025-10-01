@@ -8,7 +8,7 @@ Decision logging + model traceability + compliance reporting + forensic analysis
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Audit Trail System
+Project: IA Chéries ML Security - Audit Trail System
 Version: 1.0 Production
 =======================================================================
 """
@@ -47,7 +47,7 @@ class AuditEventType(Enum):
     MODEL_VALIDATION = "model_validation"
     DATA_EXPORT = "data_export"
     PRIVACY_OPERATION = "privacy_operation"
-    CREATOR_ACTIVITY = "creator_activity"  # Ainflue-specific
+    CREATOR_ACTIVITY = "creator_activity"  # IA Chéries-specific
 
 class AuditSeverity(Enum):
     """Niveaux de sévérité audit"""
@@ -82,7 +82,7 @@ class AuditTrailConfig:
     ])
     forensic_mode: bool = True
     blockchain_anchoring: bool = False  # For immutability proof
-    creator_activity_tracking: bool = True  # Ainflue-specific
+    creator_activity_tracking: bool = True  # IA Chéries-specific
     ip_protection_logging: bool = True  # Fahed Mlaiel IP tracking
 
 @dataclass
@@ -181,7 +181,7 @@ class MLDecisionLogger:
                     "model_explainability": decision_data.get("explainability", {}),
                     "bias_metrics": decision_data.get("bias_metrics", {}),
                     "fairness_score": decision_data.get("fairness_score", 0.0),
-                    "creator_context": decision_data.get("creator_context", {})  # Ainflue-specific
+                    "creator_context": decision_data.get("creator_context", {})  # IA Chéries-specific
                 },
                 ip_address=decision_data.get("ip_address"),
                 compliance_tags=["AI_TRANSPARENCY", "ALGORITHMIC_ACCOUNTABILITY"]
@@ -243,7 +243,7 @@ class MLDecisionLogger:
                     "cross_validation_scores": training_data.get("cv_scores", []),
                     "feature_selection": training_data.get("feature_selection", {}),
                     "regularization": training_data.get("regularization", {}),
-                    "creator_attribution": training_data.get("creator_id")  # Ainflue-specific
+                    "creator_attribution": training_data.get("creator_id")  # IA Chéries-specific
                 },
                 compliance_tags=["MODEL_GOVERNANCE", "TRAINING_TRANSPARENCY"]
             )
@@ -1162,7 +1162,7 @@ class AuditTrailSystem:
         - Immutable storage avec cryptographic integrity
         - Data retention policies avec automated cleanup
         - Privacy-preserving logging avec data minimization
-        - Creator activity tracking pour Ainflue creators
+        - Creator activity tracking pour IA Chéries creators
         - IP protection logging pour Fahed Mlaiel components
         """
         try:

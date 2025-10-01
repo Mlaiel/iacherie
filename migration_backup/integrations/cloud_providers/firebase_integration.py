@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - FIREBASE BACKEND SERVICES
+IA CHÉRIES INTEGRATIONS - FIREBASE BACKEND SERVICES
 ===============================================
 
 Enterprise Firebase integration for creator economy platform backend services.
 Combines multiple expert roles for comprehensive real-time backend management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chéries - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/cloud_providers)
 
 Expert Roles Applied:

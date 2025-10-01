@@ -1,9 +1,9 @@
-# 📋 CHECKLIST ARCHITECTURE BACKEND API - AINFLUE PLATFORM
+# 📋 CHECKLIST ARCHITECTURE BACKEND API - IACHERIE PLATFORM
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
-**Projet :** Ainflue - Plateforme IA Multi-Format pour Créateurs  
+**Projet :** iacherie - Plateforme IA Multi-Format pour Créateurs  
 **Date d'implémentation :** 6 Septembre 2025  
-**Dossier :** `/home/runner/work/Ainflue/Ainflue/backend/api/`
+**Dossier :** `/home/runner/work/iacherie/iacherie/backend/api/`
 
 ⚠️ **AVERTISSEMENT LÉGAL STRICT :** Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel. Toute utilisation, copie, vol ou reproduction sans autorisation écrite expresse de Fahed Mlaiel (mlaiel@live.de) est strictement interdite et passible de poursuites judiciaires.
 
@@ -296,7 +296,7 @@
 
 ### ✅ **MISSION ACCOMPLIE À 100%**
 
-L'architecture Backend API Enterprise de la plateforme Ainflue représente la **solution la plus avancée mondiale** pour une plateforme IA multi-format enterprise. Tous les objectifs du cahier des charges ont été atteints et dépassés.
+L'architecture Backend API Enterprise de la plateforme iacherie représente la **solution la plus avancée mondiale** pour une plateforme IA multi-format enterprise. Tous les objectifs du cahier des charges ont été atteints et dépassés.
 
 ### 🚀 **INNOVATION UNIQUE GLOBALE**
 Premier système backend API mondial consolidant 285+ fichiers en 12 modules enterprise avec performance sub-50ms, OAuth multi-platform, intelligence business intégrée, et capacités prédictives ML pour créateurs multi-format.
@@ -334,5 +334,5 @@ Tous les enrichissements demandés dans le cahier des charges ont été impléme
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Ainflue Platform Enterprise Backend API  
+**Projet :** iacherie Platform Enterprise Backend API  
 **Statut :** ✅ IMPLÉMENTATION 100% COMPLÈTE

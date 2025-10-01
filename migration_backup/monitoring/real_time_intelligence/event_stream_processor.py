@@ -3,7 +3,7 @@
 Real-Time Intelligence - Event Stream Processor
 High-Throughput Event Processing with Apache Kafka Integration
 
-This module provides enterprise-grade event stream processing capabilities for the Ainflue platform,
+This module provides enterprise-grade event stream processing capabilities for the IA Chéries platform,
 handling millions of real-time events with fault tolerance, load balancing, and comprehensive monitoring.
 
 Architecture:
@@ -19,8 +19,8 @@ Business Integration:
 - System monitoring events (performance, errors, anomalies)
 - User interaction events (clicks, views, conversions)
 
-© 2024 Ainflue - Proprietary and Confidential
-All rights reserved. This code is the intellectual property of Ainflue.
+© 2024 IA Chéries - Proprietary and Confidential
+All rights reserved. This code is the intellectual property of IA Chéries.
 Unauthorized copying, distribution, or modification is strictly prohibited.
 """
 
@@ -196,7 +196,7 @@ class EventProcessor:
 
 class RealTimeEventStreamProcessor:
     """
-    High-throughput real-time event stream processor for Ainflue platform.
+    High-throughput real-time event stream processor for IA Chéries platform.
     
     Provides enterprise-grade event processing with:
     - Multi-partition processing with load balancing

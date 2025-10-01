@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Circuit Breaker Template for Ainflue Microservices Platform
+Circuit Breaker Template for iacherie Microservices Platform
 ==========================================================
 
 Enterprise-grade circuit breaker pattern template providing:

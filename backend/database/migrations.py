@@ -151,7 +151,7 @@ class EnterpriseMigrationManager:
         try:
             async with self._connection_manager.get_postgres_session() as session:
                 await session.execute(text("""
-                    CREATE TABLE IF NOT EXISTS ainflue_migrations (
+                    CREATE TABLE IF NOT EXISTS iacherie_migrations (
                         migration_id VARCHAR(255) PRIMARY KEY,
                         migration_type VARCHAR(50) NOT NULL,
                         version VARCHAR(50) NOT NULL,
@@ -171,18 +171,18 @@ class EnterpriseMigrationManager:
                 
                 # Create indexes for performance
                 await session.execute(text("""
-                    CREATE INDEX IF NOT EXISTS idx_ainflue_migrations_status 
-                    ON ainflue_migrations(status)
+                    CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_status 
+                    ON iacherie_migrations(status)
                 """))
                 
                 await session.execute(text("""
-                    CREATE INDEX IF NOT EXISTS idx_ainflue_migrations_type 
-                    ON ainflue_migrations(migration_type)
+                    CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_type 
+                    ON iacherie_migrations(migration_type)
                 """))
                 
                 await session.execute(text("""
-                    CREATE INDEX IF NOT EXISTS idx_ainflue_migrations_version 
-                    ON ainflue_migrations(version)
+                    CREATE INDEX IF NOT EXISTS idx_iacherie_migrations_version 
+                    ON iacherie_migrations(version)
                 """))
                 
                 logger.info("✅ Migration tracking table created")
@@ -199,7 +199,7 @@ class EnterpriseMigrationManager:
                     SELECT migration_id, migration_type, version, description, status, 
                            priority, started_at, completed_at, error_message, rollback_script,
                            dependencies, tags
-                    FROM ainflue_migrations 
+                    FROM iacherie_migrations 
                     ORDER BY created_at ASC
                 """))
                 
@@ -242,7 +242,7 @@ class EnterpriseMigrationManager:
             
             async with self._connection_manager.get_postgres_session() as session:
                 await session.execute(text("""
-                    INSERT INTO ainflue_migrations 
+                    INSERT INTO iacherie_migrations 
                     (migration_id, migration_type, version, description, status, priority,
                      dependencies, tags, checksum)
                     VALUES (:migration_id, :migration_type, :version, :description, :status,
@@ -491,7 +491,7 @@ class EnterpriseMigrationManager:
         try:
             async with self._connection_manager.get_postgres_session() as session:
                 await session.execute(text("""
-                    UPDATE ainflue_migrations SET 
+                    UPDATE iacherie_migrations SET 
                         status = :status,
                         started_at = :started_at,
                         completed_at = :completed_at,

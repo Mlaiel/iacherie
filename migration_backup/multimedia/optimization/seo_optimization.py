@@ -148,8 +148,8 @@ class MetadataOptimizationEngine:
                 'robots': 'index, follow',
                 'viewport': 'width=device-width, initial-scale=1.0',
                 'canonical_url': f"https://ainflue.com/media/{file_path.stem}",
-                'author': 'Ainflue Platform',
-                'generator': 'Ainflue SEO Optimizer'
+                'author': 'IA Chéries Platform',
+                'generator': 'IA Chéries SEO Optimizer'
             })
             
             return optimized_metadata
@@ -565,7 +565,7 @@ class SEOOptimizer:
                 'og:type': 'website',
                 'og:url': f"https://ainflue.com/media/{file_path.stem}",
                 'og:image': f"https://cdn.ainflue.com/media/{file_path.name}",
-                'og:site_name': 'Ainflue Platform'
+                'og:site_name': 'IA Chéries Platform'
             })
             
             # Twitter Card
@@ -574,7 +574,7 @@ class SEOOptimizer:
                 'twitter:title': title[:70],  # Twitter title limit
                 'twitter:description': description[:200],  # Twitter description limit
                 'twitter:image': f"https://cdn.ainflue.com/media/{file_path.name}",
-                'twitter:site': '@AinfluePlatform'
+                'twitter:site': '@IA ChériesPlatform'
             })
             
             # LinkedIn
@@ -604,7 +604,7 @@ class SEOOptimizer:
                 "url": f"https://ainflue.com/media/{file_path.stem}",
                 "creator": {
                     "@type": "Organization",
-                    "name": "Ainflue Platform"
+                    "name": "IA Chéries Platform"
                 },
                 "keywords": keywords[:5] if keywords else []
             }

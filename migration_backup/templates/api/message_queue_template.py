@@ -1,4 +1,4 @@
-"""Message Queue Template for Ainflue Platform
+"""Message Queue Template for IA Chéries Platform
 Enterprise-grade asynchronous message processing and task management
 
 ⚠️  AVERTISSEMENT LÉGAL:

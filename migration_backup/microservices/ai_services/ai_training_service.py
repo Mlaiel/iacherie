@@ -1,5 +1,5 @@
 """AI Training Service - Automated model training and optimization
-Enterprise-grade AI model training and optimization for the Ainflue AI platform.
+Enterprise-grade AI model training and optimization for the IA Chéries AI platform.
 
 This service provides comprehensive AI model training, hyperparameter optimization,
 distributed training coordination, and model lifecycle management.

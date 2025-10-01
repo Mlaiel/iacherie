@@ -591,7 +591,7 @@ services:
     image: postgres:15.4
     environment:
       POSTGRES_DB: ia_influencer_platform
-      POSTGRES_USER: iainfluencer
+      POSTGRES_USER: iiacheries
       POSTGRES_PASSWORD: secure-password-123
     ports:
       - "5432:5432"
@@ -1234,7 +1234,7 @@ validate_databases() {{
     log "Validating databases..."
     
     # Check PostgreSQL connectivity
-    check "PostgreSQL Connectivity" "kubectl run postgresql-test --rm -i --tty --image=postgres:15.4 --restart=Never -- psql -h ia-influencer-postgresql.ia-influencer.svc.cluster.local -U iainfluencer -d ia_influencer_platform -c 'SELECT 1;'"
+    check "PostgreSQL Connectivity" "kubectl run postgresql-test --rm -i --tty --image=postgres:15.4 --restart=Never -- psql -h ia-influencer-postgresql.ia-influencer.svc.cluster.local -U iiacheries -d ia_influencer_platform -c 'SELECT 1;'"
     
     # Check Redis connectivity
     check "Redis Connectivity" "kubectl run redis-test --rm -i --tty --image=redis:7-alpine --restart=Never -- redis-cli -h ia-influencer-redis.ia-influencer.svc.cluster.local ping"

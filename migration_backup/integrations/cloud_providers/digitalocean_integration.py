@@ -2,7 +2,7 @@
 ==========================
 
 Enterprise-grade DigitalOcean integration supporting droplets,
-spaces, databases, and cloud services for Ainflue platform.
+spaces, databases, and cloud services for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -110,7 +110,7 @@ class DODatabaseRequest:
 
 
 class DigitalOceanIntegration:
-    """Enterprise DigitalOcean integration for Ainflue.
+    """Enterprise DigitalOcean integration for IA Chéries.
     
     Features:
     - Droplets for scalable virtual machines

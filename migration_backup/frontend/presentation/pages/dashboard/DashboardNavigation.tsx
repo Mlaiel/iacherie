@@ -46,7 +46,7 @@ export function DashboardNavigation() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <h1 className="text-xl font-semibold text-gray-900">
-                Ainflue Dashboard
+                IA Chéries Dashboard
               </h1>
             </div>
           </div>

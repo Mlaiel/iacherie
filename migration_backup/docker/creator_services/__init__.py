@@ -1,4 +1,4 @@
-"""Creator Services Module for Ainflue Platform
+"""Creator Services Module for IA Chéries Platform
 Specialized tools and services for different types of content creators.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

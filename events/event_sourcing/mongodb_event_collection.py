@@ -44,7 +44,7 @@ class CompressionLevel(Enum):
 class MongoDBConfig:
     """MongoDB collection configuration"""
     connection_string: str
-    database_name: str = "ainflue_events"
+    database_name: str = "iacherie_events"
     collection_name: str = "events"
     max_pool_size: int = 100
     min_pool_size: int = 10

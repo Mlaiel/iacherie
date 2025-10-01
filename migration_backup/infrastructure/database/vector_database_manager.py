@@ -1,6 +1,6 @@
 """
 Vector Database Manager - Enterprise AI Infrastructure
-High-performance vector database management for Ainflue AI content analysis and recommendations
+High-performance vector database management for IA Chéries AI content analysis and recommendations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -89,18 +89,18 @@ class SearchResult:
 
 
 class VectorDatabaseManager:
-    """Enterprise vector database management for Ainflue AI content analysis"""
+    """Enterprise vector database management for IA Chéries AI content analysis"""
     
     def __init__(self):
         """Initialize vector database manager"""
         self.vector_stores: Dict[str, Dict[str, Any]] = {}
         self.embedding_cache: Dict[str, np.ndarray] = {}
         self.metadata_cache: Dict[str, EmbeddingMetadata] = {}
-        logger.info("Vector database manager initialized for Ainflue AI processing")
+        logger.info("Vector database manager initialized for IA Chéries AI processing")
         
     async def setup_vector_store(self, config: VectorConfig, collection_name: str) -> Dict[str, Any]:
         """
-        Setup vector database for Ainflue content embeddings
+        Setup vector database for IA Chéries content embeddings
         
         Optimized for:
         - Content similarity matching
@@ -200,7 +200,7 @@ class VectorDatabaseManager:
         logger.info(f"Configured {len(indexes)} specialized indexes for content types")
         
     async def _setup_embedding_collections(self, config: VectorConfig) -> Dict[str, Any]:
-        """Setup embedding collections for Ainflue business logic"""
+        """Setup embedding collections for IA Chéries business logic"""
         collections = {
             'content_fingerprints': {
                 'purpose': 'Copyright protection and duplicate detection',
@@ -244,7 +244,7 @@ class VectorDatabaseManager:
             }
         }
         
-        logger.info(f"Configured {len(collections)} embedding collections for Ainflue AI")
+        logger.info(f"Configured {len(collections)} embedding collections for IA Chéries AI")
         return collections
         
     async def store_embedding(
@@ -443,7 +443,7 @@ class VectorDatabaseManager:
     async def store_embeddings(self, collection_id: str, embeddings_batch: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         Store multiple embeddings in batch for efficient processing
-        ML Engineer Role Implementation for Ainflue AI content analysis
+        ML Engineer Role Implementation for IA Chéries AI content analysis
         
         Args:
             collection_id: Collection identifier

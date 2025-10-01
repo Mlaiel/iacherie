@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Sidebar Navigation
+ * IA Chéries Desktop Renderer - Sidebar Navigation
  * Professional sidebar navigation component
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)
@@ -57,7 +57,7 @@ class SidebarNavigation {
         header.innerHTML = `
             <div class="sidebar-nav__logo">
                 <span class="logo-icon">🎵</span>
-                <span class="logo-text">Ainflue</span>
+                <span class="logo-text">IA Chéries</span>
             </div>
             ${this.config.collapsible ? '<button class="sidebar-nav__toggle" title="Toggle sidebar">☰</button>' : ''}
         `;

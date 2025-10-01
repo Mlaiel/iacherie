@@ -199,8 +199,8 @@ class EnterpriseConfigurationManager:
     
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv("ALEMBIC_CONFIG_PATH", "alembic.ini")
-        self.environment = EnvironmentType(os.getenv("AINFLUE_ENV", "development"))
-        self.tenant_id = os.getenv("AINFLUE_TENANT_ID")
+        self.environment = EnvironmentType(os.getenv("IA CHÉRIES_ENV", "development"))
+        self.tenant_id = os.getenv("IA CHÉRIES_TENANT_ID")
         
         # Enterprise Security
         self.encryption_key = self._initialize_encryption()
@@ -226,10 +226,10 @@ class EnterpriseConfigurationManager:
     
     def _initialize_encryption(self) -> Fernet:
         """Initialize enterprise-grade encryption for sensitive data"""
-# SECURITY: # SECURITY: password = os.getenv("AINFLUE_ENCRYPTION_KEY", "default_enterprise_key").encode() # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv("IA CHÉRIES_ENCRYPTION_KEY", "default_enterprise_key").encode() # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
-        salt = os.getenv("AINFLUE_ENCRYPTION_SALT", "enterprise_salt_2025").encode()
+        salt = os.getenv("IA CHÉRIES_ENCRYPTION_SALT", "enterprise_salt_2025").encode()
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -244,7 +244,7 @@ class EnterpriseConfigurationManager:
         """Initialize enterprise security context"""
         return {
             "session_id": str(uuid.uuid4()),
-            "user_context": os.getenv("AINFLUE_USER_CONTEXT"),
+            "user_context": os.getenv("IA CHÉRIES_USER_CONTEXT"),
             "security_level": SecurityLevel.CONFIDENTIAL,
             "audit_enabled": True,
             "compliance_mode": True,

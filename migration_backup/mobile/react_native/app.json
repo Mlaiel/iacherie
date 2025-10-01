@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Ainflue",
+    "name": "IA Chéries",
     "slug": "ainflue-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,18 +24,18 @@
         "usesNonExemptEncryption": true
       },
       "infoPlist": {
-        "NSCameraUsageDescription": "Ainflue requires camera access for professional video content creation, live streaming, and advanced visual content capture with AI-powered enhancement.",
-        "NSMicrophoneUsageDescription": "Ainflue requires microphone access for high-quality audio recording, voice content creation, and advanced audio processing with AI enhancement.",
-        "NSPhotoLibraryUsageDescription": "Ainflue requires photo library access to import, enhance, and distribute your existing content with AI-powered protection and optimization.",
-        "NSPhotoLibraryAddUsageDescription": "Ainflue saves your created and enhanced content to your photo library for easy access and sharing across platforms.",
-        "NSLocationWhenInUseUsageDescription": "Ainflue uses location data to provide geo-targeted content optimization, platform-specific distribution, and location-based analytics insights.",
-        "NSFaceIDUsageDescription": "Ainflue uses Face ID for secure authentication, protecting your valuable content and revenue data with enterprise-grade biometric security.",
-        "NSContactsUsageDescription": "Ainflue accesses contacts to facilitate collaboration invitations and streamline professional networking for content creators.",
-        "NSCalendarsUsageDescription": "Ainflue integrates with your calendar to schedule content uploads, manage publishing schedules, and optimize posting times.",
-        "NSUserTrackingUsageDescription": "Ainflue uses tracking data to provide personalized content recommendations, optimize platform performance, and deliver targeted analytics insights for your content strategy.",
-        "NSSpeechRecognitionUsageDescription": "Ainflue uses speech recognition for voice-to-text transcription, automated captions, and voice command functionality to enhance content creation workflow.",
-        "NSMotionUsageDescription": "Ainflue uses motion sensors for advanced camera stabilization, gesture-based controls, and immersive content creation features.",
-        "NSLocalNetworkUsageDescription": "Ainflue discovers and connects to local devices for content transfer, wireless collaboration, and professional studio equipment integration.",
+        "NSCameraUsageDescription": "IA Chéries requires camera access for professional video content creation, live streaming, and advanced visual content capture with AI-powered enhancement.",
+        "NSMicrophoneUsageDescription": "IA Chéries requires microphone access for high-quality audio recording, voice content creation, and advanced audio processing with AI enhancement.",
+        "NSPhotoLibraryUsageDescription": "IA Chéries requires photo library access to import, enhance, and distribute your existing content with AI-powered protection and optimization.",
+        "NSPhotoLibraryAddUsageDescription": "IA Chéries saves your created and enhanced content to your photo library for easy access and sharing across platforms.",
+        "NSLocationWhenInUseUsageDescription": "IA Chéries uses location data to provide geo-targeted content optimization, platform-specific distribution, and location-based analytics insights.",
+        "NSFaceIDUsageDescription": "IA Chéries uses Face ID for secure authentication, protecting your valuable content and revenue data with enterprise-grade biometric security.",
+        "NSContactsUsageDescription": "IA Chéries accesses contacts to facilitate collaboration invitations and streamline professional networking for content creators.",
+        "NSCalendarsUsageDescription": "IA Chéries integrates with your calendar to schedule content uploads, manage publishing schedules, and optimize posting times.",
+        "NSUserTrackingUsageDescription": "IA Chéries uses tracking data to provide personalized content recommendations, optimize platform performance, and deliver targeted analytics insights for your content strategy.",
+        "NSSpeechRecognitionUsageDescription": "IA Chéries uses speech recognition for voice-to-text transcription, automated captions, and voice command functionality to enhance content creation workflow.",
+        "NSMotionUsageDescription": "IA Chéries uses motion sensors for advanced camera stabilization, gesture-based controls, and immersive content creation features.",
+        "NSLocalNetworkUsageDescription": "IA Chéries discovers and connects to local devices for content transfer, wireless collaboration, and professional studio equipment integration.",
         "ITSAppUsesNonExemptEncryption": true,
         "CFBundleURLTypes": [
           {
@@ -145,15 +145,15 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Ainflue to access your camera for content creation.",
-          "microphonePermission": "Allow Ainflue to access your microphone for audio recording.",
+          "cameraPermission": "Allow IA Chéries to access your camera for content creation.",
+          "microphonePermission": "Allow IA Chéries to access your microphone for audio recording.",
           "recordAudioAndroid": true
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Ainflue accesses your photo library to import and enhance your content."
+          "photosPermission": "IA Chéries accesses your photo library to import and enhance your content."
         }
       ],
       [
@@ -174,7 +174,7 @@
       [
         "expo-local-authentication",
         {
-          "faceIDPermission": "Ainflue uses Face ID for secure authentication to protect your valuable content and revenue data."
+          "faceIDPermission": "IA Chéries uses Face ID for secure authentication to protect your valuable content and revenue data."
         }
       ],
       [
@@ -183,7 +183,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "Allow Ainflue to access your microphone for audio recording and processing."
+          "microphonePermission": "Allow IA Chéries to access your microphone for audio recording and processing."
         }
       ]
     ],

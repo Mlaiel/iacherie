@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Chargeback Prevention System
+IA Chéries Platform - Chargeback Prevention System
 ==============================================
 
 Advanced chargeback prevention and management system for monitoring,
 predicting, and preventing chargebacks with ML-powered risk assessment
-for the Ainflue platform.
+for the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

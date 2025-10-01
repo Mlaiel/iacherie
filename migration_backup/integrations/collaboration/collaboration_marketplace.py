@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Collaboration Marketplace - Ainflue Enterprise Creator Platform
+Collaboration Marketplace - IA Chéries Enterprise Creator Platform
 Advanced creator-brand matching and bidding platform with AI-powered recommendations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

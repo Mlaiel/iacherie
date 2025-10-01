@@ -156,7 +156,7 @@ class EncryptionCacheLayer:
             'rsa_key_size': 2048,
             'aes_key_size': 32,  # AES-256
             'master_password': None,  # À définir en production
-            'salt': b'ainflue_encryption_salt_2025',
+            'salt': b'iacherie_encryption_salt_2025',
             'enable_compression_before_encryption': True,
             'max_cache_size_mb': 100,
             'enable_audit_logging': True,

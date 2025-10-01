@@ -104,7 +104,7 @@ cd ..
 
 # Generate release keystore if it doesn't exist
 KEYSTORE_PATH="android/app/release-key.keystore"
-if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$AINFLUE_UPLOAD_STORE_FILE" ]; then
+if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$IACHERIE_UPLOAD_STORE_FILE" ]; then
     log_warning "Release keystore not found, generating a new one..."
     log_info "Please provide keystore information:"
     
@@ -133,10 +133,10 @@ if [ ! -f "$KEYSTORE_PATH" ] && [ -z "$AINFLUE_UPLOAD_STORE_FILE" ]; then
     
     # Create gradle.properties for release signing
     cat > android/gradle.properties << EOF
-AINFLUE_UPLOAD_STORE_FILE=$KEYSTORE_PATH
-AINFLUE_UPLOAD_STORE_PASSWORD=$KEYSTORE_PASSWORD
-AINFLUE_UPLOAD_KEY_ALIAS=$KEY_ALIAS
-AINFLUE_UPLOAD_KEY_PASSWORD=$KEY_PASSWORD
+IACHERIE_UPLOAD_STORE_FILE=$KEYSTORE_PATH
+IACHERIE_UPLOAD_STORE_PASSWORD=$KEYSTORE_PASSWORD
+IACHERIE_UPLOAD_KEY_ALIAS=$KEY_ALIAS
+IACHERIE_UPLOAD_KEY_PASSWORD=$KEY_PASSWORD
 EOF
     
     log_info "Gradle properties created for release signing"

@@ -319,7 +319,7 @@ class ContainerMonitoringManager:
         try:
             alert_rules = [
                 AlertRule(
-                    name="IAInfluencerHighCPUUsage",
+                    name="IIA ChériesHighCPUUsage",
                     expression="ia_influencer_container_cpu_usage > 80",
                     severity=AlertSeverity.WARNING,
                     duration="5m",
@@ -331,7 +331,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerHighMemoryUsage",
+                    name="IIA ChériesHighMemoryUsage",
                     expression="ia_influencer_container_memory_usage / (1024*1024*1024) > 7",
                     severity=AlertSeverity.WARNING,
                     duration="5m",
@@ -343,7 +343,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerAPIHighErrorRate",
+                    name="IIA ChériesAPIHighErrorRate",
                     expression="rate(ia_influencer_api_requests_total{status_code=~\"5..\"}[5m]) > 0.1",
                     severity=AlertSeverity.CRITICAL,
                     duration="2m",
@@ -355,7 +355,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerAPISlowResponse",
+                    name="IIA ChériesAPISlowResponse",
                     expression="histogram_quantile(0.95, rate(ia_influencer_api_request_duration_bucket[5m])) > 2",
                     severity=AlertSeverity.WARNING,
                     duration="5m",
@@ -367,7 +367,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerContainerDown",
+                    name="IIA ChériesContainerDown",
                     expression="up{job=\"ia-influencer\"} == 0",
                     severity=AlertSeverity.CRITICAL,
                     duration="1m",
@@ -379,7 +379,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerDatabaseConnectionsHigh",
+                    name="IIA ChériesDatabaseConnectionsHigh",
                     expression="ia_influencer_database_connections > 80",
                     severity=AlertSeverity.WARNING,
                     duration="3m",
@@ -391,7 +391,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerQueueBacklog",
+                    name="IIA ChériesQueueBacklog",
                     expression="ia_influencer_queue_size > 1000",
                     severity=AlertSeverity.WARNING,
                     duration="5m",
@@ -403,7 +403,7 @@ class ContainerMonitoringManager:
                     }
                 ),
                 AlertRule(
-                    name="IAInfluencerStorageSpaceHigh",
+                    name="IIA ChériesStorageSpaceHigh",
                     expression="ia_influencer_storage_usage / (1024*1024*1024*1024) > 80",
                     severity=AlertSeverity.WARNING,
                     duration="5m",

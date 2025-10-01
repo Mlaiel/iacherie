@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
-# AINFLUE PLATFORM - SCALING AUTOMATION SCRIPT
+# IA CHÉRIES PLATFORM - SCALING AUTOMATION SCRIPT
 # =============================================================================
-# Intelligent scaling for Ainflue services based on load, metrics, and usage patterns.
+# Intelligent scaling for IA Chéries services based on load, metrics, and usage patterns.
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -134,7 +134,7 @@ check_cooldown() {
 
 # Main scaling loop
 main() {
-    info "Starting Ainflue auto-scaling service..."
+    info "Starting IA Chéries auto-scaling service..."
     
     # Define services to monitor
     local services=(

@@ -1,4 +1,4 @@
-"""GitHub Actions CI/CD Template for Ainflue Platform
+"""GitHub Actions CI/CD Template for IA Chéries Platform
 Enterprise-grade continuous integration and deployment pipeline template.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -44,7 +44,7 @@ class GitHubActionsConfig:
     node_version: str = "18"
     docker_registry: str = "ghcr.io"
     
-    # Ainflue specific
+    # IA Chéries specific
     enable_ai_tests: bool = True
     enable_security_scan: bool = True
     enable_performance_tests: bool = True
@@ -57,7 +57,7 @@ class GitHubActionsConfig:
 
 
 class GitHubActionsTemplate:
-    """Enterprise GitHub Actions Template for Ainflue Platform"""
+    """Enterprise GitHub Actions Template for IA Chéries Platform"""
     
     def __init__(self, config: GitHubActionsConfig):
         self.config = config
@@ -65,7 +65,7 @@ class GitHubActionsTemplate:
     def generate_ci_workflow(self) -> Dict[str, Any]:
         """Generate continuous integration workflow"""
         return {
-            "name": "🚀 Ainflue Platform CI",
+            "name": "🚀 IA Chéries Platform CI",
             "on": {
                 "push": {
                     "branches": ["main", "develop", "feature/*"]
@@ -85,10 +85,10 @@ class GitHubActionsTemplate:
     def generate_cd_workflow(self) -> Dict[str, Any]:
         """Generate continuous deployment workflow"""
         return {
-            "name": "🚀 Ainflue Platform CD",
+            "name": "🚀 IA Chéries Platform CD",
             "on": {
                 "workflow_run": {
-                    "workflows": ["🚀 Ainflue Platform CI"],
+                    "workflows": ["🚀 IA Chéries Platform CI"],
                     "types": ["completed"],
                     "branches": ["main", "develop"]
                 },
@@ -549,7 +549,7 @@ class GitHubActionsTemplate:
     def generate_release_workflow(self) -> Dict[str, Any]:
         """Generate release workflow"""
         return {
-            "name": "🎉 Release Ainflue Platform",
+            "name": "🎉 Release IA Chéries Platform",
             "on": {
                 "push": {
                     "tags": ["v*.*.*"]
@@ -569,7 +569,7 @@ class GitHubActionsTemplate:
                             },
                             "with": {
                                 "tag_name": "${{ github.ref }}",
-                                "release_name": "Ainflue Platform ${{ github.ref }}",
+                                "release_name": "IA Chéries Platform ${{ github.ref }}",
                                 "draft": False,
                                 "prerelease": False
                             }
@@ -620,7 +620,7 @@ if __name__ == "__main__":
     config = create_production_config()
     template = GitHubActionsTemplate(config)
     
-    print("GitHub Actions Template for Ainflue Platform")
+    print("GitHub Actions Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Python Version: {config.python_version}")
     print(f"- AI Tests: {config.enable_ai_tests}")

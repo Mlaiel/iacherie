@@ -1,4 +1,4 @@
-# Ainflue AI Protection - Système Enterprise de Protection des Droits d'Auteur
+# iacherie AI Protection - Système Enterprise de Protection des Droits d'Auteur
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe Spécialisée :** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## Architecture AI Protection
 
-Le système Ainflue AI Protection représente la solution la plus avancée au monde pour la protection automatique des droits d'auteur de contenu créateur multi-format, combinant tatouage invisible, registre blockchain immutable, détection IA temps réel et application légale automatisée.
+Le système iacherie AI Protection représente la solution la plus avancée au monde pour la protection automatique des droits d'auteur de contenu créateur multi-format, combinant tatouage invisible, registre blockchain immutable, détection IA temps réel et application légale automatisée.
 
 ### Composants Principaux
 
@@ -173,7 +173,7 @@ result = await orchestrator.protect_content(
 Ce système enterprise AI protection est un logiciel propriétaire. L'utilisation, la distribution ou la modification non autorisée est interdite par la loi.
 
 **Contact :** mlaiel@live.de  
-**Projet :** Ainflue Platform Enterprise AI Protection
+**Projet :** iacherie Platform Enterprise AI Protection
 
 ---
 

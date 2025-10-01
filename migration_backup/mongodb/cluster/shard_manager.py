@@ -2,7 +2,7 @@
 ========================
 
 Advanced MongoDB sharding configuration and management for horizontal scaling
-of the Ainflue platform database infrastructure.
+of the IA Chéries platform database infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

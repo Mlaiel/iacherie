@@ -1,8 +1,8 @@
 ---
-# Ainflue Infrastructure Module - Ansible Inventory Management
+# IA Chéries Infrastructure Module - Ansible Inventory Management
 # ============================================================
 # 
-# Enterprise-grade Ansible inventory for Ainflue platform
+# Enterprise-grade Ansible inventory for IA Chéries platform
 # Supports multi-cloud deployment and enterprise orchestration
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>

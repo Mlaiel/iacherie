@@ -2,7 +2,7 @@
 
 ##############################################################################
 # 🔍 ENTERPRISE MONITORING LAUNCHER - DevOps + Monitoring Expert
-# Script de démarrage complet du système de monitoring Ainfluencer
+# Script de démarrage complet du système de monitoring IA Chéries
 # Author: Fahed Mlaiel - Multi-Expert Implementation
 ##############################################################################
 

@@ -2,7 +2,7 @@
 """Retry Policy Engine - Intelligent Retry Strategies
 ===================================================
 
-Advanced retry policy engine for Ainflue platform error handling.
+Advanced retry policy engine for IA Chéries platform error handling.
 Provides intelligent retry policies with exponential backoff, jitter,
 ML-based optimization, and integration with error handling infrastructure.
 

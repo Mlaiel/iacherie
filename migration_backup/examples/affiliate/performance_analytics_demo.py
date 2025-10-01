@@ -3,7 +3,7 @@
 Performance Analytics Demo - Démonstration Analytics Performance Affiliation
 ==========================================================================
 
-Démonstration analytics performance ultra sophistiquées pour système d'affiliation Ainflue.
+Démonstration analytics performance ultra sophistiquées pour système d'affiliation IA Chéries.
 Inclut tracking temps réel, analytics prédictives, et insights business actionables.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -686,7 +686,7 @@ async def main(**kwargs) -> Dict[str, Any]:
 if __name__ == "__main__":
     """Exécution directe du module"""
     print("=" * 70)
-    print("📊 PERFORMANCE ANALYTICS DEMO - AINFLUE AFFILIATE SYSTEM")
+    print("📊 PERFORMANCE ANALYTICS DEMO - IA CHÉRIES AFFILIATE SYSTEM")
     print("=" * 70)
     
     try:

@@ -1,5 +1,5 @@
 """
-Istio Integration Service for Ainflue Microservices
+Istio Integration Service for IA Chéries Microservices
 Service mesh integration with Istio for traffic management and security
 
 Author: Fahed Mlaiel (mlaiel@live.de)

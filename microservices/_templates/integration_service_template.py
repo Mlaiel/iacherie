@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🔗 Integration Service Template - Ainflue Enterprise
+🔗 Integration Service Template - iacherie Enterprise
 ==================================================
 Template enterprise pour services intégration.
 API connectors + ETL pipelines + data transformation + error handling.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

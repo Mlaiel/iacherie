@@ -5,7 +5,7 @@ Enterprise-grade video generation with 12 specialized video agents.
 Multi-modal AI video synthesis for professional content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

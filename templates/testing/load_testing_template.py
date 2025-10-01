@@ -2,7 +2,7 @@
 ⚡ LOAD TESTING TEMPLATE - PERFORMANCE EXPERT IMPLEMENTATION
 ============================================================
 
-Enterprise-grade load testing template for Ainflue Creator Economy Platform.
+Enterprise-grade load testing template for iacherie Creator Economy Platform.
 Comprehensive load testing covering:
 - HTTP load testing with realistic user patterns
 - Database load testing and connection pooling
@@ -151,7 +151,7 @@ class LoadTestMetrics:
 class LoadTestContext:
     """Load testing context"""
     
-    base_url: str = "https://api.ainflue.com"
+    base_url: str = "https://api.iacherie.com"
     auth_tokens: List[str] = field(default_factory=list)
     test_users: List[Dict[str, Any]] = field(default_factory=list)
     test_content: List[Dict[str, Any]] = field(default_factory=list)
@@ -305,7 +305,7 @@ class LoadTestingTemplate:
             user = {
                 "id": f"load_test_user_{i}",
                 "username": f"loadtest_{i}",
-                "email": f"loadtest_{i}@ainflue.com",
+                "email": f"loadtest_{i}@iacherie.com",
                 "auth_token": f"token_{uuid.uuid4()}",
                 "role": random.choice(["creator", "collaborator", "viewer"]),
                 "subscription": random.choice(["free", "pro", "enterprise"])
@@ -338,7 +338,7 @@ class LoadTestingTemplate:
                 port=5432,
                 user="test",
                 password="test",
-                database="ainflue_test",
+                database="iacherie_test",
                 min_size=10,
                 max_size=100,
                 command_timeout=60

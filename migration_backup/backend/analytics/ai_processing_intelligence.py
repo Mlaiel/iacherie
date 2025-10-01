@@ -3,7 +3,7 @@
 
 Comprehensive AI processing analytics system providing deep insights into
 ML/DL algorithm performance, resource optimization, processing efficiency,
-and quality metrics for the Ainflue platform's AI infrastructure.
+and quality metrics for the IA Chéries platform's AI infrastructure.
 
 Monitors and optimizes AI processing pipelines, model performance, cost analysis,
 scalability metrics, and processing quality across all AI operations.

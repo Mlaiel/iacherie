@@ -5,7 +5,7 @@ Global content localization with 6 specialized language agents.
 Real-time translation and cultural adaptation for 644 languages.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

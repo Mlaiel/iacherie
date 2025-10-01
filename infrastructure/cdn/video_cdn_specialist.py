@@ -409,7 +409,7 @@ class VideoCDNSpecialist:
             protocol=StreamingProtocol.HLS,
             segments=segments,
             encryption_key=None,
-            manifest_url=f"https://cdn.ainflue.com/{edge_location}/{request.video_id}/manifest.m3u8"
+            manifest_url=f"https://cdn.iacherie.com/{edge_location}/{request.video_id}/manifest.m3u8"
         )
         
         return manifest

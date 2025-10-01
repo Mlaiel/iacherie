@@ -1,7 +1,7 @@
 """🏢 Business Logic Core - Core Business Processing Engine
 ========================================================
 
-Professional business logic orchestration system for the Ainfluencer platform.
+Professional business logic orchestration system for the iaCherie platform.
 Central engine for managing business rules, workflow processing, and 
 enterprise business operations with robust error handling.
 

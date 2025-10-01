@@ -1,4 +1,4 @@
-"""🔧 Technical Debt Tracker - Ainflue Platform
+"""🔧 Technical Debt Tracker - IA Chéries Platform
 ================================================================
 Expert: QUALITY_ENGINEER + SOFTWARE_ARCHITECT
 Created: 2025-01-XX

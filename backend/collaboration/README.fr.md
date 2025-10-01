@@ -2,8 +2,8 @@
 
 **Infrastructure de Collaboration Avancée pour la Plateforme d'Agents-Influenceurs IA**
 
-[![Entreprise](https://img.shields.io/badge/Entreprise-Prêt-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![IA](https://img.shields.io/badge/IA-Alimenté-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Entreprise](https://img.shields.io/badge/Entreprise-Prêt-green.svg)](https://github.com/Mlaiel/iacherie)
+[![IA](https://img.shields.io/badge/IA-Alimenté-blue.svg)](https://github.com/Mlaiel/iacherie)
 [![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 [![Async](https://img.shields.io/badge/Async-Prêt-orange.svg)](https://docs.python.org/3/library/asyncio.html)
 
@@ -59,8 +59,8 @@ Le **Module de Collaboration** est le moteur central de notre plateforme d'agent
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/collaboration
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/collaboration
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
 ```bash
 # Configuration Base de Données
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # Configuration IA/ML
@@ -244,13 +244,13 @@ pytest --cov=backend/collaboration --cov-report=html
 
 ```bash
 # Construire l'image
-docker build -t ainflue-collaboration .
+docker build -t iacherie-collaboration .
 
 # Exécuter le conteneur
 docker run -p 8000:8000 \
   -e DATABASE_URL=$DATABASE_URL \
   -e REDIS_URL=$REDIS_URL \
-  ainflue-collaboration
+  iacherie-collaboration
 ```
 
 ### **Déploiement Kubernetes**
@@ -273,7 +273,7 @@ spec:
     spec:
       containers:
       - name: collaboration
-        image: ainflue-collaboration:latest
+        image: iacherie-collaboration:latest
         ports:
         - containerPort: 8000
 ```
@@ -327,16 +327,16 @@ Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de
 
 ## 💬 **Support**
 
-- **Documentation** : [docs.ainflue.com](https://docs.ainflue.com)
-- **Issues** : [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discord** : [Rejoindre notre communauté](https://discord.gg/ainflue)
-- **Email** : support@ainflue.com
+- **Documentation** : [docs.iacherie.com](https://docs.iacherie.com)
+- **Issues** : [GitHub Issues](https://github.com/Mlaiel/iacherie/issues)
+- **Discord** : [Rejoindre notre communauté](https://discord.gg/iacherie)
+- **Email** : support@iacherie.com
 
 ---
 
 ## 🏆 **Remerciements**
 
-- Construit avec ❤️ par l'équipe Ainflue
+- Construit avec ❤️ par l'équipe iacherie
 - Alimenté par des technologies IA/ML de pointe
 - Architecture et sécurité prêtes pour l'entreprise
 

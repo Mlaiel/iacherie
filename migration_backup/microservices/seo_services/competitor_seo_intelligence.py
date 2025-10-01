@@ -137,7 +137,7 @@ class CompetitorSEOIntelligence:
         self.intelligence_config = intelligence_config
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'Ainflue-SEO-Intelligence/1.0 (+https://ainflue.com/seo-intelligence)'
+            'User-Agent': 'IA Chéries-SEO-Intelligence/1.0 (+https://ainflue.com/seo-intelligence)'
         })
         
         # Analysis parameters

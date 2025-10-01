@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Enterprise Infrastructure Orchestrator
+# IA Chéries Infrastructure Module - Enterprise Infrastructure Orchestrator
 # =====================================================================
 # 
-# Master orchestrator for all Ainflue infrastructure components
+# Master orchestrator for all IA Chéries infrastructure components
 # Manages multi-cloud deployment, monitoring, security, and operations
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,13 +24,13 @@ import subprocess
 # Import all infrastructure managers
 from infra.cloud_platform_manager import CloudPlatformManager
 from infra.enterprise_deployment_orchestrator import EnterpriseDeploymentOrchestrator
-from infra.kubernetes.cluster_manager import AinflueClusterManager
-from infra.ansible.ansible_configuration_manager import AinflueAnsibleOrchestrator
-from infra.helm.chart_deployment_engine import AinflueHelmOrchestrator
+from infra.kubernetes.cluster_manager import IA ChériesClusterManager
+from infra.ansible.ansible_configuration_manager import IA ChériesAnsibleOrchestrator
+from infra.helm.chart_deployment_engine import IA ChériesHelmOrchestrator
 from infra.monitoring.grafana_dashboard_manager import GrafanaDashboardManager
-from infra.security.network_security_policies import AinflueSecurityPolicyOrchestrator
+from infra.security.network_security_policies import IA ChériesSecurityPolicyOrchestrator
 from infra.networking.cdn_configuration import CDNConfigurationManager
-from infra.storage.block_storage_configuration import AinflueBlockStorageOrchestrator
+from infra.storage.block_storage_configuration import IA ChériesBlockStorageOrchestrator
 
 class DeploymentPhase(Enum):
     """Infrastructure deployment phases"""
@@ -87,8 +87,8 @@ class InfrastructureConfig:
     high_availability: bool = True
     disaster_recovery: bool = True
 
-class AinflueEnterpriseInfrastructureOrchestrator:
-    """Master orchestrator for all Ainflue infrastructure components"""
+class IA ChériesEnterpriseInfrastructureOrchestrator:
+    """Master orchestrator for all IA Chéries infrastructure components"""
     
     def __init__(self, config: InfrastructureConfig):
         """Initialize the enterprise infrastructure orchestrator
@@ -143,15 +143,15 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             self.deployment_manager = EnterpriseDeploymentOrchestrator(self.config.environment)
             
             # Container and orchestration
-            self.k8s_manager = AinflueClusterManager(self.config.environment)
-            self.ansible_manager = AinflueAnsibleOrchestrator(self.config.environment)
-            self.helm_manager = AinflueHelmOrchestrator(self.config.environment)
+            self.k8s_manager = IA ChériesClusterManager(self.config.environment)
+            self.ansible_manager = IA ChériesAnsibleOrchestrator(self.config.environment)
+            self.helm_manager = IA ChériesHelmOrchestrator(self.config.environment)
             
             # Security and networking
-            self.security_manager = AinflueSecurityPolicyOrchestrator(self.config.environment)
+            self.security_manager = IA ChériesSecurityPolicyOrchestrator(self.config.environment)
             
             # Storage
-            self.storage_manager = AinflueBlockStorageOrchestrator(self.config.environment)
+            self.storage_manager = IA ChériesBlockStorageOrchestrator(self.config.environment)
             
             self.logger.info("Successfully initialized all infrastructure managers")
             
@@ -166,7 +166,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             Complete deployment plan
         """
         try:
-            self.logger.info("Creating deployment plan for Ainflue infrastructure")
+            self.logger.info("Creating deployment plan for IA Chéries infrastructure")
             
             # Define all components in dependency order
             components = [
@@ -421,7 +421,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             if not self.deployment_plan:
                 await self.create_deployment_plan()
             
-            self.logger.info("Starting Ainflue infrastructure deployment")
+            self.logger.info("Starting IA Chéries infrastructure deployment")
             self.current_phase = DeploymentPhase.PROVISIONING
             
             # Execute components in dependency order
@@ -446,7 +446,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             
             if validation_success:
                 self.current_phase = DeploymentPhase.COMPLETED
-                self.logger.info("🎉 Ainflue infrastructure deployment completed successfully!")
+                self.logger.info("🎉 IA Chéries infrastructure deployment completed successfully!")
                 await self._generate_deployment_report()
                 return True
             else:
@@ -781,7 +781,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
 
 # Factory function for easy instantiation
 def create_enterprise_orchestrator(environment: str = "production", 
-                                 cloud_providers: List[str] = None) -> AinflueEnterpriseInfrastructureOrchestrator:
+                                 cloud_providers: List[str] = None) -> IA ChériesEnterpriseInfrastructureOrchestrator:
     """Create an enterprise infrastructure orchestrator
     
     Args:
@@ -811,7 +811,7 @@ def create_enterprise_orchestrator(environment: str = "production",
         disaster_recovery=environment == "production"
     )
     
-    return AinflueEnterpriseInfrastructureOrchestrator(config)
+    return IA ChériesEnterpriseInfrastructureOrchestrator(config)
 
 # Example usage
 async def main():

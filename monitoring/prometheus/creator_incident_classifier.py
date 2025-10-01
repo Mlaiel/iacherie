@@ -97,21 +97,21 @@ class CreatorIncidentClassifier:
         
         # Métriques de classification
         self.incident_classification_accuracy = Gauge(
-            'ainflue_incidents_classification_accuracy',
+            'iacherie_incidents_classification_accuracy',
             'Incident classification accuracy',
             labelnames=['classification_type', 'model_version'],
             registry=self.registry
         )
         
         self.incidents_by_category = Counter(
-            'ainflue_incidents_category_total',
+            'iacherie_incidents_category_total',
             'Total incidents by category',
             labelnames=['category', 'creator_tier', 'severity'],
             registry=self.registry
         )
         
         self.incident_resolution_prediction_accuracy = Gauge(
-            'ainflue_incidents_resolution_prediction_accuracy',
+            'iacherie_incidents_resolution_prediction_accuracy',
             'Resolution time prediction accuracy',
             labelnames=['prediction_model', 'incident_category'],
             registry=self.registry
@@ -119,21 +119,21 @@ class CreatorIncidentClassifier:
         
         # Métriques d'impact créateur
         self.creator_impact_score = Gauge(
-            'ainflue_incidents_creator_impact_score',
+            'iacherie_incidents_creator_impact_score',
             'Creator impact score for incidents',
             labelnames=['creator_id', 'creator_tier', 'impact_type'],
             registry=self.registry
         )
         
         self.affected_creators_count = Gauge(
-            'ainflue_incidents_affected_creators_count',
+            'iacherie_incidents_affected_creators_count',
             'Number of creators affected by incidents',
             labelnames=['incident_category', 'severity'],
             registry=self.registry
         )
         
         self.creator_satisfaction_impact = Gauge(
-            'ainflue_incidents_creator_satisfaction_impact',
+            'iacherie_incidents_creator_satisfaction_impact',
             'Impact on creator satisfaction',
             labelnames=['creator_tier', 'incident_type'],
             registry=self.registry
@@ -141,21 +141,21 @@ class CreatorIncidentClassifier:
         
         # Métriques de routage business
         self.stakeholder_notification_time = Histogram(
-            'ainflue_incidents_stakeholder_notification_time_seconds',
+            'iacherie_incidents_stakeholder_notification_time_seconds',
             'Time to notify stakeholders',
             labelnames=['stakeholder_type', 'notification_method'],
             registry=self.registry
         )
         
         self.business_priority_score = Gauge(
-            'ainflue_incidents_business_priority_score',
+            'iacherie_incidents_business_priority_score',
             'Business priority score for incidents',
             labelnames=['incident_category', 'business_unit'],
             registry=self.registry
         )
         
         self.escalation_rate = Gauge(
-            'ainflue_incidents_escalation_rate',
+            'iacherie_incidents_escalation_rate',
             'Rate of incident escalations',
             labelnames=['escalation_level', 'incident_type'],
             registry=self.registry
@@ -163,14 +163,14 @@ class CreatorIncidentClassifier:
         
         # Métriques de prédiction de résolution
         self.resolution_time_prediction = Histogram(
-            'ainflue_incidents_resolution_time_prediction_seconds',
+            'iacherie_incidents_resolution_time_prediction_seconds',
             'Predicted resolution time',
             labelnames=['incident_category', 'complexity_level'],
             registry=self.registry
         )
         
         self.actual_vs_predicted_resolution = Gauge(
-            'ainflue_incidents_resolution_prediction_error',
+            'iacherie_incidents_resolution_prediction_error',
             'Error between actual and predicted resolution time',
             labelnames=['prediction_model', 'error_type'],
             registry=self.registry

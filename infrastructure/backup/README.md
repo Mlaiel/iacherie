@@ -8,7 +8,7 @@
 
 ## 🏗️ Enterprise Architecture Overview
 
-This enterprise backup infrastructure provides comprehensive data protection for the Ainflue creator economy platform, protecting creator content, AI models, and platform data with military-grade security and 99.9% availability guarantee.
+This enterprise backup infrastructure provides comprehensive data protection for the iacherie creator economy platform, protecting creator content, AI models, and platform data with military-grade security and 99.9% availability guarantee.
 
 ### 🎯 Key Features
 
@@ -55,8 +55,8 @@ This enterprise backup infrastructure provides comprehensive data protection for
 pip install -r requirements.txt
 
 # Configure environment variables
-export AINFLUE_BACKUP_CONFIG="/path/to/backup/config.json"
-export AINFLUE_ENCRYPTION_KEY_PATH="/secure/path/to/keys/"
+export IACHERIE_BACKUP_CONFIG="/path/to/backup/config.json"
+export IACHERIE_ENCRYPTION_KEY_PATH="/secure/path/to/keys/"
 ```
 
 ### Basic Usage

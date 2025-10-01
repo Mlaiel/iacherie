@@ -13,10 +13,10 @@
 ## ⚠️ EXIGENCES STRICTES OBLIGATOIRES
 
 ### 📋 CONFORMITÉ CAHIER DES CHARGES
-- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/Ainflue/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
+- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/iacherie/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
 - ✅ **GÉNÈRE TOUS** les fichiers/modules demandés selon la logique métier
 - ✅ **N'OUBLIE RIEN** et **N'IGNORE RIEN** sauf si existant alors **À ENRICHIR**
-- ✅ **Respecte la logique métier Ainflue:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
+- ✅ **Respecte la logique métier iacherie:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
 
 ### 🏭 CODE INDUSTRIEL OBLIGATOIRE
 - ✅ **Code industriel ultra avancé, clé en main, production-ready**
@@ -66,7 +66,7 @@ TOUS DROITS RÉSERVÉS
 
 ---
 
-## 🎯 **LOGIQUE MÉTIER AINFLUE**
+## 🎯 **LOGIQUE MÉTIER IACHERIE**
 **Creator Economy Pipeline :** Créateurs multi-format → IA Processing → Protection IP → Monétisation → Collaboration & Gamification → SEO Professionnel → Distribution Multi-plateformes
 
 ---
@@ -80,7 +80,7 @@ TOUS DROITS RÉSERVÉS
 - 🎯 **Objectif :** Operations reliability complète Creator Economy
 
 ```
-/workspaces/Ainflue/mlops/operations_reliability/
+/workspaces/iacherie/mlops/operations_reliability/
 ├── __init__.py                                    # [MANQUANT] Module initialization
 ├── index.py                                       # [MANQUANT] Orchestrateur principal operations
 ├── cost_optimizer.py                              # [EXISTANT] Optimisation coûts cloud
@@ -334,7 +334,7 @@ Actions correctives :
 ### **🔄 Migration Required**
 ```bash
 # Actions correctives à effectuer :
-rm -rf /workspaces/Ainflue/mlops/operations_reliability/rollback/
+rm -rf /workspaces/iacherie/mlops/operations_reliability/rollback/
 # Le composant rollback sera implémenté comme rollback_automation_engine.py
 ```
 
@@ -475,4 +475,4 @@ rm -rf /workspaces/Ainflue/mlops/operations_reliability/rollback/
 
 ---
 
-*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire Ainflue*
+*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire iacherie*

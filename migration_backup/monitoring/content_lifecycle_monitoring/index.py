@@ -2,7 +2,7 @@
 📋 Content Lifecycle Monitoring - Module d'Index Principal Enterprise
 ====================================================================
 
-Module principal de surveillance cycle de vie contenu Ainflue Creator Economy.
+Module principal de surveillance cycle de vie contenu IA Chéries Creator Economy.
 Orchestration intelligence ultra-avancée du workflow complet:
 upload → IA processing → protection → SEO → collaboration → gamification → distribution → monétisation
 
@@ -114,7 +114,7 @@ class StageMetrics:
 
 
 class ContentLifecycleMonitoring:
-    """Surveillance cycle de vie contenu enterprise Ainflue - Orchestrateur Principal"""
+    """Surveillance cycle de vie contenu enterprise IA Chéries - Orchestrateur Principal"""
     
     def __init__(self, config):
         self.config = config

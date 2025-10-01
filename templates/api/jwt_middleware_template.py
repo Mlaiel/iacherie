@@ -84,8 +84,8 @@ class JWTConfig:
     reset_token_expire_minutes: int = 15
     
     # Issuer and audience
-    issuer: str = "ainflue-platform"
-    audience: List[str] = field(default_factory=lambda: ["ainflue-api"])
+    issuer: str = "iacherie-platform"
+    audience: List[str] = field(default_factory=lambda: ["iacherie-api"])
     
     # Token validation
     verify_signature: bool = True
@@ -841,8 +841,8 @@ async def main():
         public_key=public_key,
         access_token_expire_minutes=15,
         refresh_token_expire_days=30,
-        issuer="ainflue-platform",
-        audience=["ainflue-api", "ainflue-web"],
+        issuer="iacherie-platform",
+        audience=["iacherie-api", "iacherie-web"],
         enable_audit_logging=True
     )
     

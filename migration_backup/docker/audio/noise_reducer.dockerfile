@@ -1,11 +1,11 @@
 # Noise Reducer Service
-# Advanced noise reduction for Ainflue Platform
+# Advanced noise reduction for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Noise Reducer - Advanced audio noise reduction"
+LABEL description="IA Chéries Noise Reducer - Advanced audio noise reduction"
 LABEL version="1.0.0"
 
 # Set working directory

@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "id": null,
-    "title": "MongoDB Enterprise Dashboard - Ainflue Platform",
+    "title": "MongoDB Enterprise Dashboard - IA Chéries Platform",
     "description": "Comprehensive MongoDB monitoring for enterprise production environments",
     "tags": ["mongodb", "ainflue", "enterprise"],
     "timezone": "browser",

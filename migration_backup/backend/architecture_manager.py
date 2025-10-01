@@ -464,7 +464,7 @@ class EnterpriseBackendManager:
         headers.update({
             'X-Request-ID': self._generate_request_id(),
             'X-Timestamp': str(int(time.time())),
-            'User-Agent': 'Ainflue-Backend-Manager/1.0'
+            'User-Agent': 'IA Chéries-Backend-Manager/1.0'
         })
         
         start_time = time.time()

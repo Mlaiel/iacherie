@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Monetization Intelligence Hub
+IA Chéries Platform - Monetization Intelligence Hub
 ==============================================
 
 Central intelligence hub for monetization insights, revenue optimization,
-and strategic decision support across the Ainflue platform. Integrates all
+and strategic decision support across the IA Chéries platform. Integrates all
 monetization modules to provide comprehensive business intelligence.
 
 Features:

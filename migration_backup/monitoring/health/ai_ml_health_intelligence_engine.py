@@ -1,4 +1,4 @@
-"""🤖 AI/ML Health Intelligence Engine | Ainflue Enterprise
+"""🤖 AI/ML Health Intelligence Engine | IA Chéries Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

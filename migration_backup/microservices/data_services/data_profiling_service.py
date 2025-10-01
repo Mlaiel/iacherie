@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 📊 Data Profiling Service - Enterprise Data Management
-Service de profilage de données enterprise pour microservices Ainflue
+Service de profilage de données enterprise pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

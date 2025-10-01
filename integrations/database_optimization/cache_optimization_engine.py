@@ -1035,7 +1035,7 @@ class DiskCacheLayer(CacheLayer):
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
-        self.cache_dir = Path(config.get('cache_dir', '/tmp/ainflue_cache'))
+        self.cache_dir = Path(config.get('cache_dir', '/tmp/iacherie_cache'))
         self.max_size_mb = config.get('max_size_mb', 2048)
         self.current_size = 0
         self.lock = asyncio.Lock()
@@ -1530,7 +1530,7 @@ DEFAULT_CACHE_CONFIG = {
             'db': 0
         },
         'l3_disk': {
-            'cache_dir': '/tmp/ainflue_cache',
+            'cache_dir': '/tmp/iacherie_cache',
             'max_size_mb': 2048
         }
     }

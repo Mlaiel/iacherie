@@ -1,11 +1,11 @@
 """
 📄 DMCA NOTICES
-Ainflue Platform - Automated DMCA Notice Generation System
+IA Chéries Platform - Automated DMCA Notice Generation System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This module handles automated DMCA notice generation and sending for the Ainflue Platform,
+This module handles automated DMCA notice generation and sending for the IA Chéries Platform,
 providing legal compliance for copyright protection.
 """
 
@@ -98,7 +98,7 @@ I am writing to notify you of copyright infringement on your platform.
 Original Content Information:
 - Content ID: {infringement_data.get('original_content_id')}
 - Owner: {infringement_data.get('owner_name')}
-- Platform: Ainflue Platform
+- Platform: IA Chéries Platform
 - Original URL: {infringement_data.get('original_url', 'Available upon request')}
 
 Infringing Content Information:
@@ -112,12 +112,12 @@ I swear, under penalty of perjury, that the information in this notification is 
 Please remove or disable access to the infringing content immediately.
 
 Contact Information:
-- Platform: Ainflue
+- Platform: IA Chéries
 - Email: legal@ainflue.com
 - Notice ID: {notice_id}
 
 Sincerely,
-Ainflue Legal Team
+IA Chéries Legal Team
         """
         
         return DMCANotice(

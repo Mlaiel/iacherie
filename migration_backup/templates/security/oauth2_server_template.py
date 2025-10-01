@@ -1,4 +1,4 @@
-"""OAuth2 Server Template for Ainflue Platform
+"""OAuth2 Server Template for IA Chéries Platform
 RFC 6749 compliant OAuth 2.0 authorization server with PKCE, OpenID Connect,
 and creator-specific authorization flows for secure API access management.
 
@@ -211,7 +211,7 @@ class DeviceAuthorizationResponse(BaseModel):
 
 
 class OAuth2ServerService:
-    """Comprehensive OAuth 2.0 authorization server for Ainflue platform
+    """Comprehensive OAuth 2.0 authorization server for IA Chéries platform
     
     Provides RFC 6749 compliant OAuth 2.0 server with:
     - Multiple grant type support (authorization code, client credentials, etc.)

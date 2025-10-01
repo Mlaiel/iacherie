@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Audit Logger Template for Ainflue Platform
+Audit Logger Template for IA Chéries Platform
 =========================================
 
 Production-ready audit logging with:

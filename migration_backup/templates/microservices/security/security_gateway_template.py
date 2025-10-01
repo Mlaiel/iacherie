@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Security Gateway Template for Ainflue Creator Economy Platform
+Security Gateway Template for IA Chéries Creator Economy Platform
 Enterprise security gateway with WAF, DDoS protection, threat detection and zero-trust architecture
 """
 
@@ -132,7 +132,7 @@ class ThreatEvent(BaseModel):
 
 class SecurityGatewayTemplate:
     """
-    Template de gateway de sécurité enterprise pour Ainflue
+    Template de gateway de sécurité enterprise pour IA Chéries
     
     Fonctionnalités:
     - Web Application Firewall (WAF)
@@ -150,7 +150,7 @@ class SecurityGatewayTemplate:
     def __init__(self, config: SecurityGatewayConfig = None):
         self.config = config or SecurityGatewayConfig()
         self.app = FastAPI(
-            title="Ainflue Security Gateway",
+            title="IA Chéries Security Gateway",
             description="Enterprise security gateway with advanced threat protection",
             version="1.0.0"
         )

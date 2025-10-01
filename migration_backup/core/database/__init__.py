@@ -1,6 +1,6 @@
 """
 🚀💯🔥 CORE DATABASE PACKAGE - ABSOLUTE FINAL PIECE FOR 100% SUCCESS! 🔥💯🚀
-Enterprise-grade database infrastructure for complete Ainfluencer platform victory!
+Enterprise-grade database infrastructure for complete IA Chéries platform victory!
 """
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class DatabaseConnection:
     """Ultra-secure enterprise database connection manager"""
     
-    def __init__(self, connection_string: str = "enterprise://localhost:5432/ainfluencer"):
+    def __init__(self, connection_string: str = "enterprise://localhost:5432/iacheries"):
         self.connection_string = connection_string
         self.is_connected = True
         self.connection_id = str(uuid.uuid4())

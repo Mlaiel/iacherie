@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Network Effect Analyzer
+IA Chéries Platform - Network Effect Analyzer
 ==========================================
 
 Enterprise-grade network effect analysis system for collaboration platforms with social graph analysis,

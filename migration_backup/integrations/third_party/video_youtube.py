@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-📺 AINFLUENCER YOUTUBE ENGINE
+📺 IA CHÉRIES YOUTUBE ENGINE
 =============================
 
 Module d'intégration avec l'API YouTube Data v3 pour :
@@ -26,9 +26,9 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerYouTubeAPI:
+class IaCheriesYouTubeAPI:
     """
-    📺 Moteur YouTube pour Ainfluencer
+    📺 Moteur YouTube pour IA Chéries
     
     Fonctionnalités:
     - Recherche intelligente de vidéos
@@ -850,12 +850,12 @@ async def test_youtube_engine():
     """
     Test complet du moteur YouTube
     """
-    print("📺 Test Ainfluencer YouTube Engine")
+    print("📺 Test IA Chéries YouTube Engine")
     print("=" * 50)
     
     try:
         # Initialisation
-        engine = AinfluencerYouTubeAPI()
+        engine = IaCheriesYouTubeAPI()
         
         # Test 1: Recherche de vidéos
         print("📝 Test 1: Recherche de vidéos...")

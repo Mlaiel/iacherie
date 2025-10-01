@@ -212,7 +212,7 @@ class ErrorAnalyticsEngine:
             patterns = await self._detect_patterns_ml(features_matrix, error_events)
             
             # Enrichissement avec analyse business IA Chérie
-            enriched_patterns = await self._enrich_patterns_ainflue(patterns, error_events)
+            enriched_patterns = await self._enrich_patterns_iacherie(patterns, error_events)
             
             # Calcul des scores de confiance
             for pattern in enriched_patterns:
@@ -978,7 +978,7 @@ class ErrorAnalyticsEngine:
                     'ml_prediction': True,
                     'platform_support': 65
                 },
-                'ainflue_integration': {
+                'iacherie_integration': {
                     'creator_economy_support': True,
                     'multi_platform_analytics': True,
                     'business_impact_assessment': True,

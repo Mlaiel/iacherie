@@ -116,19 +116,19 @@ class PerformanceMonitor:
         
         # Prometheus metrics
         self.response_time_histogram = Histogram(
-            'ainflue_response_time_seconds',
+            'iacherie_response_time_seconds',
             'Response time of IA Chérie operations',
             ['operation', 'status']
         )
         
         self.quality_score_gauge = Gauge(
-            'ainflue_quality_score',
+            'iacherie_quality_score',
             'Current quality score',
             ['component', 'metric']
         )
         
         self.alert_counter = Counter(
-            'ainflue_alerts_total',
+            'iacherie_alerts_total',
             'Total number of alerts',
             ['severity', 'component']
         )

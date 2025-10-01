@@ -134,8 +134,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/edge
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/edge
 
 # تثبيت التبعيات
 pip install -r requirements.txt

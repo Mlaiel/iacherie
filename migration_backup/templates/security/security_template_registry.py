@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Security Template Registry for Ainflue Enterprise Platform
+"""Security Template Registry for IA Chéries Enterprise Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -117,7 +117,7 @@ class TemplateRegistration(BaseModel):
 
 
 class SecurityTemplateRegistry:
-    """Central registry for all security templates in the Ainflue platform"""
+    """Central registry for all security templates in the IA Chéries platform"""
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         """Initialize security template registry
@@ -684,7 +684,7 @@ class SecurityTemplateRegistry:
         return TemplateMetadata(
             template_id=template_id,
             name=class_name,
-            description=f"Core {category.value} template for Ainflue platform",
+            description=f"Core {category.value} template for IA Chéries platform",
             category=category,
             version="4.0.0",
             author="Fahed Mlaiel",

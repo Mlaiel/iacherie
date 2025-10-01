@@ -1,11 +1,11 @@
-# 📈 Scaling Infrastructure - Ainflue Enterprise
+# 📈 Scaling Infrastructure - iacherie Enterprise
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR:** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Module Purpose
-Enterprise-grade auto-scaling infrastructure supporting horizontal and vertical scaling, predictive scaling, and intelligent resource allocation for the Ainflue creator platform serving 65+ social media and streaming platforms with 53 AI agents.
+Enterprise-grade auto-scaling infrastructure supporting horizontal and vertical scaling, predictive scaling, and intelligent resource allocation for the iacherie creator platform serving 65+ social media and streaming platforms with 53 AI agents.
 
 ## 🏗️ Architecture Components
 - **Horizontal Auto-Scaling**: Dynamic pod/container scaling based on demand

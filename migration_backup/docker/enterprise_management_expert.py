@@ -58,7 +58,7 @@ class EnterpriseDockerManager:
     
     def __init__(self):
         self.docker_client = docker.from_env()
-        self.base_path = Path("/home/runner/work/Ainflue/Ainflue")
+        self.base_path = Path("/home/runner/work/IA Chéries/IA Chéries")
         self.compose_files = self._discover_compose_files()
         self.expert_services = self._initialize_expert_services()
         

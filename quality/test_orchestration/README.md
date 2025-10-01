@@ -19,10 +19,10 @@ Advanced multi-level test orchestration hub for the IA Chérie IA Influencer Age
 ## 🚀 Quick Start
 
 ```python
-from quality.test_orchestration import run_ainflue_quality_tests
+from quality.test_orchestration import run_iacherie_quality_tests
 
 # Run complete enterprise test suite
-results = await run_ainflue_quality_tests("development")
+results = await run_iacherie_quality_tests("development")
 print(f"Quality Score: {results['quality_score']}")
 print(f"Coverage: {results['overall_coverage']}%")
 ```

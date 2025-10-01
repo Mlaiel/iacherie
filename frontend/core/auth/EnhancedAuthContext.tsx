@@ -200,9 +200,9 @@ export function useAuth(): AuthContextValue {
 // === SECURE STORAGE UTILITY ===
 
 class SecureStorage {
-  private static readonly ACCESS_TOKEN_KEY = 'ainflue_access_token';
-  private static readonly REFRESH_TOKEN_KEY = 'ainflue_refresh_token';
-  private static readonly USER_KEY = 'ainflue_user';
+  private static readonly ACCESS_TOKEN_KEY = 'iacherie_access_token';
+  private static readonly REFRESH_TOKEN_KEY = 'iacherie_refresh_token';
+  private static readonly USER_KEY = 'iacherie_user';
 
   static setTokens(tokens: AuthTokens): void {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, tokens.access_token);

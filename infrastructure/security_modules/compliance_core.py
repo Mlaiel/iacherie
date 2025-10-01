@@ -2,7 +2,7 @@
 Compliance Core - Central Compliance Management System
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Central coordination of all compliance frameworks for Ainflue creator platform.
+Central coordination of all compliance frameworks for iacherie creator platform.
 Provides unified compliance management and orchestration.
 """
 

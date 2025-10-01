@@ -2,7 +2,7 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Core Security Components for Ainflue Platform
+Core Security Components for IA Chéries Platform
 Provides encryption, hashing, token management, and security utilities
 """
 

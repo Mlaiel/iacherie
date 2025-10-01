@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Mobile End-to-End Testing Framework for Ainflue Platform
+Mobile End-to-End Testing Framework for IA Chéries Platform
 =======================================================
 
 Advanced mobile E2E testing with device emulation, touch gestures,

@@ -54,22 +54,22 @@
     
     # Database Users
     database_users:
-      - name: "ainflue_app"
+      - name: "iacherie_app"
         password: "{{ app_db_password | default('changeme123!') }}"
         privileges: "ALL"
         database: "iacherie"
-      - name: "ainflue_readonly"
+      - name: "iacherie_readonly"
         password: "{{ readonly_db_password | default('readonly123!') }}"
         privileges: "SELECT"
         database: "iacherie"
-      - name: "ainflue_analytics"
+      - name: "iacherie_analytics"
         password: "{{ analytics_db_password | default('analytics123!') }}"
         privileges: "ALL"
-        database: "ainflue_analytics"
-      - name: "ainflue_ml"
+        database: "iacherie_analytics"
+      - name: "iacherie_ml"
         password: "{{ ml_db_password | default('ml123!') }}"
         privileges: "ALL"
-        database: "ainflue_ml"
+        database: "iacherie_ml"
     
     # Databases to create
     databases:
@@ -78,17 +78,17 @@
         lc_collate: "en_US.UTF-8"
         lc_ctype: "en_US.UTF-8"
         template: "template0"
-      - name: "ainflue_analytics"
+      - name: "iacherie_analytics"
         encoding: "UTF8"
         lc_collate: "en_US.UTF-8"
         lc_ctype: "en_US.UTF-8"
         template: "template0"
-      - name: "ainflue_ml"
+      - name: "iacherie_ml"
         encoding: "UTF8"
         lc_collate: "en_US.UTF-8"
         lc_ctype: "en_US.UTF-8"
         template: "template0"
-      - name: "ainflue_cache"
+      - name: "iacherie_cache"
         encoding: "UTF8"
         lc_collate: "en_US.UTF-8"
         lc_ctype: "en_US.UTF-8"
@@ -306,7 +306,7 @@
         - key: "rename-command DEBUG"
           value: "DEBUG_DISABLED"
         - key: "rename-command CONFIG"
-          value: "CONFIG_AINFLUE"
+          value: "CONFIG_IACHERIE"
       notify: restart redis
 
     - name: "Create PostgreSQL databases"
@@ -344,7 +344,7 @@
         - { extension: "btree_gin", database: "iacherie" }
         - { extension: "btree_gist", database: "iacherie" }
         - { extension: "pg_stat_statements", database: "iacherie" }
-        - { extension: "vector", database: "ainflue_ml" }
+        - { extension: "vector", database: "iacherie_ml" }
         - { extension: "postgis", database: "iacherie" }
         - { extension: "postgis_topology", database: "iacherie" }
       become_user: postgres
@@ -354,24 +354,24 @@
         db: "{{ item.database }}"
         query: "{{ item.query }}"
       loop:
-        - database: "ainflue_ml"
+        - database: "iacherie_ml"
           query: |
             CREATE SCHEMA IF NOT EXISTS models;
             CREATE SCHEMA IF NOT EXISTS features;
             CREATE SCHEMA IF NOT EXISTS experiments;
             CREATE SCHEMA IF NOT EXISTS training;
-            GRANT USAGE ON SCHEMA models TO ainflue_ml;
-            GRANT USAGE ON SCHEMA features TO ainflue_ml;
-            GRANT USAGE ON SCHEMA experiments TO ainflue_ml;
-            GRANT USAGE ON SCHEMA training TO ainflue_ml;
-        - database: "ainflue_analytics"
+            GRANT USAGE ON SCHEMA models TO iacherie_ml;
+            GRANT USAGE ON SCHEMA features TO iacherie_ml;
+            GRANT USAGE ON SCHEMA experiments TO iacherie_ml;
+            GRANT USAGE ON SCHEMA training TO iacherie_ml;
+        - database: "iacherie_analytics"
           query: |
             CREATE SCHEMA IF NOT EXISTS metrics;
             CREATE SCHEMA IF NOT EXISTS events;
             CREATE SCHEMA IF NOT EXISTS reports;
-            GRANT USAGE ON SCHEMA metrics TO ainflue_analytics;
-            GRANT USAGE ON SCHEMA events TO ainflue_analytics;
-            GRANT USAGE ON SCHEMA reports TO ainflue_analytics;
+            GRANT USAGE ON SCHEMA metrics TO iacherie_analytics;
+            GRANT USAGE ON SCHEMA events TO iacherie_analytics;
+            GRANT USAGE ON SCHEMA reports TO iacherie_analytics;
       become_user: postgres
 
     - name: "Configure pgBouncer connection pooler"
@@ -379,8 +379,8 @@
         content: |
           [databases]
           iacherie = host=127.0.0.1 port={{ postgresql_port }} dbname=iacherie
-          ainflue_analytics = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_analytics
-          ainflue_ml = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_ml
+          iacherie_analytics = host=127.0.0.1 port={{ postgresql_port }} dbname=iacherie_analytics
+          iacherie_ml = host=127.0.0.1 port={{ postgresql_port }} dbname=iacherie_ml
           
           [pgbouncer]
           listen_addr = *
@@ -418,10 +418,10 @@
     - name: "Create pgBouncer user list"
       copy:
         content: |
-          "ainflue_app" "{{ app_db_password | default('changeme123!') | password_hash('md5', 'ainflue_app') }}"
-          "ainflue_readonly" "{{ readonly_db_password | default('readonly123!') | password_hash('md5', 'ainflue_readonly') }}"
-          "ainflue_analytics" "{{ analytics_db_password | default('analytics123!') | password_hash('md5', 'ainflue_analytics') }}"
-          "ainflue_ml" "{{ ml_db_password | default('ml123!') | password_hash('md5', 'ainflue_ml') }}"
+          "iacherie_app" "{{ app_db_password | default('changeme123!') | password_hash('md5', 'iacherie_app') }}"
+          "iacherie_readonly" "{{ readonly_db_password | default('readonly123!') | password_hash('md5', 'iacherie_readonly') }}"
+          "iacherie_analytics" "{{ analytics_db_password | default('analytics123!') | password_hash('md5', 'iacherie_analytics') }}"
+          "iacherie_ml" "{{ ml_db_password | default('ml123!') | password_hash('md5', 'iacherie_ml') }}"
         dest: /etc/pgbouncer/userlist.txt
         owner: postgres
         group: postgres
@@ -445,7 +445,7 @@
           # PostgreSQL backups
           echo "Starting PostgreSQL backups..."
           
-          for db in iacherie ainflue_analytics ainflue_ml ainflue_cache; do
+          for db in iacherie iacherie_analytics iacherie_ml iacherie_cache; do
             echo "Backing up database: $db"
             pg_dump -h localhost -U postgres $db | gzip > $BACKUP_DIR/postgresql/${db}_${TIMESTAMP}.sql.gz
             

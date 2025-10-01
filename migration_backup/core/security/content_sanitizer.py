@@ -1,7 +1,7 @@
 """
 🛡️🔥 CORE SECURITY CONTENT SANITIZER - ULTIMATE FINAL DEPENDENCY! 🔥🛡️
-Enterprise Content Sanitization Engine for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Content Sanitization Engine for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

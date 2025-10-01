@@ -50,7 +50,7 @@ class AinfluServiceDiscoveryOrchestrator:
         self.config = config or {}
         
         # Statut orchestrateur
-        self.service_name = "ainflue_service_discovery"
+        self.service_name = "iacherie_service_discovery"
         self.status = "initialized"
         self.created_at = datetime.now()
         
@@ -159,7 +159,7 @@ class service_discoveryService:
         }
 
 # Factory Functions
-async def create_ainflue_service_discovery_orchestrator(
+async def create_iacherie_service_discovery_orchestrator(
     redis_client: aioredis.Redis, 
     config: Dict[str, Any] = None
 ) -> AinfluServiceDiscoveryOrchestrator:
@@ -178,7 +178,7 @@ def create_service_discovery_service(config: Dict[str, Any] = None) -> service_d
 __all__ = [
     # Orchestrateur principal
     'AinfluServiceDiscoveryOrchestrator',
-    'create_ainflue_service_discovery_orchestrator',
+    'create_iacherie_service_discovery_orchestrator',
     
     # Legacy
     'service_discoveryService',

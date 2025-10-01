@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE BROADCAST STANDARDS COMPLIANCE - PROFESSIONAL DOCKERFILE
+# IA CHÉRIES BROADCAST STANDARDS COMPLIANCE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for broadcast standards compliance including
 # EBU R128, ITU-R BS.1770, ATSC A/85 loudness standards.
@@ -220,11 +220,11 @@ CMD ["python3.11", "-m", "broadcast_standards.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Broadcast Standards Compliance"
+LABEL org.opencontainers.image.title="IA Chéries Broadcast Standards Compliance"
 LABEL org.opencontainers.image.description="EBU R128/ITU-R BS.1770/ATSC A/85 compliance service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL ainflue.service.category="audio"
 LABEL ainflue.service.name="broadcast_standards"
 LABEL ainflue.service.port="8012"

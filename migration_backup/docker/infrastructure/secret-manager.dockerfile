@@ -1,11 +1,11 @@
 # Secret Manager Service
-# HashiCorp Vault-based secret management for Ainflue Platform
+# HashiCorp Vault-based secret management for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM vault:1.15 AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Secret Manager - HashiCorp Vault-based secret management"
+LABEL description="IA Chéries Secret Manager - HashiCorp Vault-based secret management"
 LABEL version="1.0.0"
 
 # Create vault user for security

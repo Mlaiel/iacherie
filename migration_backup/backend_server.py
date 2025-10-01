@@ -273,10 +273,10 @@ async def generate_audio_with_hf(prompt: str, content_type: str, agent_id: str, 
         # Importer le module TTS
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.audio_infrastructure.tts_synthesis_engine import tts_generate_for_ainfluencer
+        from integrations.audio_infrastructure.tts_synthesis_engine import tts_generate_for_iacheries
         
         # Générer l'audio avec notre moteur TTS
-        tts_result = await tts_generate_for_ainfluencer(
+        tts_result = await tts_generate_for_iacheries(
             text=prompt, 
             language='fr', 
             engine='auto'
@@ -653,7 +653,7 @@ async def generate_tts(request: GenerateRequest):
         # Importer le module TTS
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.audio_infrastructure.tts_synthesis_engine import tts_generate_for_ainfluencer
+        from integrations.audio_infrastructure.tts_synthesis_engine import tts_generate_for_iacheries
         
         # Validation
         if not request.prompt or len(request.prompt.strip()) == 0:
@@ -670,7 +670,7 @@ async def generate_tts(request: GenerateRequest):
         # Génération TTS
         from datetime import datetime
         start_time = datetime.now()
-        tts_result = await tts_generate_for_ainfluencer(
+        tts_result = await tts_generate_for_iacheries(
             text=request.prompt,
             language=language,
             engine=engine
@@ -692,7 +692,7 @@ async def generate_tts(request: GenerateRequest):
                     "processing_time_ms": processing_time,
                     "estimated_duration": f"{len(request.prompt) * 0.1:.1f}s"
                 },
-                "metadata": tts_result.get('ainfluencer_metadata', {}),
+                "metadata": tts_result.get('iacheries_metadata', {}),
                 "tts_info": tts_result['metadata']
             }
         else:
@@ -725,9 +725,9 @@ async def get_available_voices():
         )
         tts_module = importlib.util.module_from_spec(tts_spec)
         tts_spec.loader.exec_module(tts_module)
-        AinfluencerTTS = tts_module.AinfluencerTTS
+        IaCheriesTTS = tts_module.IaCheriesTTS
         
-        tts_engine = AinfluencerTTS()
+        tts_engine = IaCheriesTTS()
         voices_info = tts_engine.get_available_voices()
         
         return {
@@ -757,10 +757,10 @@ async def search_freesound_sounds(request: FreesoundSearchRequest):
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )
@@ -818,10 +818,10 @@ async def download_freesound_sound(sound_id: int, quality: str = Query(default="
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )
@@ -857,10 +857,10 @@ async def create_freesound_playlist(request: PlaylistRequest):
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )
@@ -906,10 +906,10 @@ async def get_user_sounds(username: str, limit: int = Query(default=50, le=150))
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )
@@ -951,10 +951,10 @@ async def get_freesound_stats():
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )
@@ -989,10 +989,10 @@ async def clear_freesound_cache(older_than_days: int = Query(default=7, ge=1, le
         # Importer le module Freesound
         import sys
         sys.path.append('/workspaces/IACherie')
-        from integrations.third_party.audio_freesound import AinfluencerFreesoundAPI
+        from integrations.third_party.audio_freesound import IaCheriesFreesoundAPI
         
         # Initialiser l'API Freesound
-        freesound = AinfluencerFreesoundAPI(
+        freesound = IaCheriesFreesoundAPI(
             api_key=FREESOUND_API_KEY,
             client_id=FREESOUND_CLIENT_ID
         )

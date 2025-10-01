@@ -1556,7 +1556,7 @@ For licensing inquiries, contact: **mlaiel@live.de**
 ### Community
 
 - **Discord**: [https://discord.gg/iacherie](https://discord.gg/iacherie)
-- **Twitter**: [@AinfluePlatform](https://twitter.com/AinfluePlatform)
+- **Twitter**: [@iacheriePlatform](https://twitter.com/iacheriePlatform)
 - **LinkedIn**: [IA Chérie Platform](https://linkedin.com/company/iacherie)
 
 ---

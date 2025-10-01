@@ -1,4 +1,4 @@
-# ⚡ Certificate Management Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Certificate Management Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -35,15 +35,15 @@ data:
           enabled: true
           provider: "vault"
           vaultPath: "pki_int"
-          rootCA: "Ainflue Internal CA"
-          intermediateCA: "Ainflue Services CA"
+          rootCA: "IA Chéries Internal CA"
+          intermediateCA: "IA Chéries Services CA"
           keyAlgorithm: "RSA"
           keySize: 2048
         
         venafi:
           enabled: false
           tppUrl: "https://tpp.ainflue.internal"
-          zone: "Ainflue\\Kubernetes"
+          zone: "IA Chéries\\Kubernetes"
           
         selfSigned:
           enabled: true
@@ -292,7 +292,7 @@ spec:
     organizationalUnits:
     - "IT Department"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
     countries:
     - "US"
     localities:
@@ -430,7 +430,7 @@ spec:
     organizationalUnits:
     - "Client Authentication"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
   duration: 8760h
   renewBefore: 2160h
   privateKey:
@@ -455,12 +455,12 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: Ainflue Mobile App
+  commonName: IA Chéries Mobile App
   subject:
     organizationalUnits:
     - "Mobile Development"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
     countries:
     - "US"
   duration: 26280h  # 3 years
@@ -572,7 +572,7 @@ data:
         
       compliance:
         requireOrganization: true
-        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        allowedOrganizations: ["IA Chéries Creator Economy Platform"]
         requireCountry: true
         allowedCountries: ["US", "CA", "GB", "DE", "FR"]
         
@@ -599,7 +599,7 @@ data:
         
       compliance:
         requireOrganization: true
-        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        allowedOrganizations: ["IA Chéries Creator Economy Platform"]
         requireOU: true
         allowedOUs: ["Security", "Infrastructure"]
         requireCountry: true
@@ -899,13 +899,13 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: Ainflue Creator Content Signing
+  commonName: IA Chéries Creator Content Signing
   subject:
     organizationalUnits:
     - "Creator Economy"
     - "Content Verification"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
   duration: 8760h  # 1 year
   renewBefore: 2160h  # 90 days
   privateKey:
@@ -936,7 +936,7 @@ spec:
     - "Payment Processing"
     - "Financial Services"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
   dnsNames:
   - ainflue-payment-service.ainflue-production.svc.cluster.local
   - payment-service
@@ -971,7 +971,7 @@ spec:
     organizationalUnits:
     - "Creator API Access"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "IA Chéries Creator Economy Platform"
   duration: 8760h  # 1 year
   renewBefore: 2160h  # 90 days
   privateKey:
@@ -1010,7 +1010,7 @@ data:
         - "Creator"
         - "{{ .tier | title }} Tier"
         organizations:
-        - "Ainflue Creator Economy Platform"
+        - "IA Chéries Creator Economy Platform"
         commonName: "{{ .creatorName }}"
       dnsNames:
       - "creator-{{ .creatorId }}.ainflue.com"
@@ -1100,5 +1100,5 @@ webhooks:
 # ===================================================================
 # END OF CERTIFICATE MANAGEMENT CONFIGURATION TEMPLATE
 # Creator Economy Certificate Management by Fahed Mlaiel
-# Enterprise-grade certificate management for Ainflue platform
+# Enterprise-grade certificate management for IA Chéries platform
 # ===================================================================

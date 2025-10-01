@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Escrow Manager - Enterprise Cryptographic Key Escrow and Recovery System
-Production-grade key escrow management for Ainflue Creator Economy Platform
+Production-grade key escrow management for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -169,7 +169,7 @@ class KeyEscrowManager:
     """
     🔐 Key Escrow Manager - Enterprise Key Escrow and Recovery System
     
-    Provides comprehensive key escrow management for Ainflue Creator Economy:
+    Provides comprehensive key escrow management for IA Chéries Creator Economy:
     - Multi-agent secret sharing with geographic distribution
     - Compliance-driven escrow policies (GDPR, CCPA, industry regulations)
     - Creator-focused recovery procedures
@@ -282,7 +282,7 @@ class KeyEscrowManager:
         self.escrow_agents["internal_custodian_001"] = EscrowAgent(
             agent_id="internal_custodian_001",
             agent_type=EscrowAgent.INTERNAL_CUSTODIAN,
-            name="Ainflue Internal Security Custodian",
+            name="IA Chéries Internal Security Custodian",
             contact_info={
                 "email": "security-custodian@ainflue.com",
                 "phone": "+1-555-0123",
@@ -503,7 +503,7 @@ class KeyEscrowManager:
         return {
             "compliance_frameworks": policy.compliance_frameworks,
             "attestation_timestamp": datetime.utcnow().isoformat(),
-            "attestation_authority": "Ainflue Security Compliance Office",
+            "attestation_authority": "IA Chéries Security Compliance Office",
             "retention_compliance": True,
             "access_control_compliance": True,
             "geographic_compliance": len(policy.geographic_distribution) > 0,

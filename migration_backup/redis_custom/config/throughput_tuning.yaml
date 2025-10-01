@@ -1,4 +1,4 @@
-# ⚡ Redis Throughput Tuning Configuration - Ainflue Enterprise
+# ⚡ Redis Throughput Tuning Configuration - IA Chéries Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Maximum Throughput Configuration for Creator Economy Platform
 
@@ -377,7 +377,7 @@ metadata:
 data:
   optimize_throughput.sh: |
     #!/bin/bash
-    # Throughput Optimization Script for Ainflue Redis Enterprise
+    # Throughput Optimization Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🚀 Optimizing Redis for Maximum Throughput..."

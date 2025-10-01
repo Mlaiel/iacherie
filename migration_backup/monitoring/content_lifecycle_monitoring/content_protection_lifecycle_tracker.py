@@ -2,7 +2,7 @@
 🛡️ Content Protection Lifecycle Tracker - Enterprise IP Security Intelligence
 ============================================================================
 
-Module de tracking avancé protection contenu et propriété intellectuelle Ainflue.
+Module de tracking avancé protection contenu et propriété intellectuelle IA Chéries.
 Surveillance intelligence cycle protection IP → détection copyright → watermarking → authentification.
 
 Fonctionnalités Enterprise Ultra-Sécurisées:
@@ -376,7 +376,7 @@ class ContentProtectionLifecycleTracker:
         """Configuration templates DMCA"""
         self.dmca_templates = {
             'standard_notice': """
-DMCA Takedown Notice - Ainflue Platform
+DMCA Takedown Notice - IA Chéries Platform
 
 Dear Platform Administrator,
 
@@ -393,7 +393,7 @@ We request immediate removal of this infringing content.
 Evidence of infringement is available upon request.
 
 Best regards,
-Ainflue Legal Team
+IA Chéries Legal Team
             """,
             'premium_notice': """
 URGENT: DMCA Takedown Notice - Premium Protection

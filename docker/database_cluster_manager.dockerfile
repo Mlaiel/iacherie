@@ -76,8 +76,8 @@ RUN useradd -r -g postgres -d /home/dbadmin -s /bin/bash -c "Database Administra
 USER postgres
 
 # Database environment variables
-ENV POSTGRES_DB=ainflue_cluster \
-    POSTGRES_USER=ainflue_admin \
+ENV POSTGRES_DB=iacherie_cluster \
+    POSTGRES_USER=iacherie_admin \
     POSTGRES_PASSWORD=secure_cluster_password \
     PGDATA=/var/lib/postgresql/data/cluster \
     POSTGRES_INITDB_ARGS="--auth-host=md5" \

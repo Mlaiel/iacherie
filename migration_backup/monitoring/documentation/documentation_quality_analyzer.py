@@ -101,7 +101,7 @@ class DocumentationQualityAnalyzer:
     documentation using multiple metrics and AI-powered analysis.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chéries/IA Chéries"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.DocumentationQualityAnalyzer")
         

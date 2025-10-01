@@ -40,7 +40,7 @@ class TranslationResult:
     error: Optional[str] = None
     chunks_count: int = 1
 
-class AinfluencerLibreTranslate:
+class iaCherieLibreTranslate:
     """
     🌍 Moteur de traduction LibreTranslate pour IA Chérie
     """
@@ -302,7 +302,7 @@ async def test_libretranslate_engine():
     print("=" * 60)
     
     try:
-        engine = AinfluencerLibreTranslate()
+        engine = iaCherieLibreTranslate()
         
         # Test langues supportées
         languages = await engine.get_supported_languages()

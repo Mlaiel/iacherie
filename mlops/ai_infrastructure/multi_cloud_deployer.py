@@ -189,7 +189,7 @@ class AWSDeploymentHandler:
                 'service_arn': service_response['service']['serviceArn'],
                 'task_definition_arn': task_def_response['taskDefinition']['taskDefinitionArn'],
                 'status': 'deployed',
-                'endpoint': f"https://{deployment.model_id}-{region.region}.aws.ainflue.com",
+                'endpoint': f"https://{deployment.model_id}-{region.region}.aws.iacherie.com",
                 'region': region.region
             }
             
@@ -302,7 +302,7 @@ class AzureDeploymentHandler:
             return {
                 'container_group_id': result.id,
                 'status': 'deployed',
-                'endpoint': f"https://{deployment.model_id}-{region.region}.azure.ainflue.com",
+                'endpoint': f"https://{deployment.model_id}-{region.region}.azure.iacherie.com",
                 'ip_address': result.ip_address.ip,
                 'region': region.region
             }
@@ -365,7 +365,7 @@ class GCPDeploymentHandler:
                 'model_id': model.name,
                 'deployed_model_id': deployed_model.id,
                 'status': 'deployed',
-                'endpoint': f"https://{deployment.model_id}-{region.region}.gcp.ainflue.com",
+                'endpoint': f"https://{deployment.model_id}-{region.region}.gcp.iacherie.com",
                 'region': region.region
             }
             
@@ -519,7 +519,7 @@ class MultiCloudDeployer:
         try:
             # Configuration du DNS avec routing géographique
             dns_config = {
-                'domain': f"{deployment.model_id}.ainflue.com",
+                'domain': f"{deployment.model_id}.iacherie.com",
                 'regions': [
                     {
                         'region': region.region,
@@ -721,7 +721,7 @@ async def main():
     deployment = ModelDeployment(
         model_id="creator-optimizer-v2",
         version="2.1.0",
-        image_uri="gcr.io/ainflue/creator-optimizer:v2.1.0",
+        image_uri="gcr.io/iacherie/creator-optimizer:v2.1.0",
         resource_requirements={"cpu": 1024, "memory": 2048},
         environment_variables={
             "MODEL_TYPE": "creator_optimizer",

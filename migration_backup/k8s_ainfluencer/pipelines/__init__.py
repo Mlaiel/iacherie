@@ -170,7 +170,7 @@ except ImportError:
 # Import unified system
 try:
     from .index import (
-        IAInfluencerPipelineSystem,
+        IIA ChériesPipelineSystem,
         initialize_pipeline_system,
         get_pipeline_system,
         start_pipeline_system,
@@ -241,7 +241,7 @@ if AI_PROCESSING_AVAILABLE:
 # Add unified system if available
 if UNIFIED_SYSTEM_AVAILABLE:
     __all__.extend([
-        "IAInfluencerPipelineSystem",
+        "IIA ChériesPipelineSystem",
         "initialize_pipeline_system",
         "get_pipeline_system",
         "start_pipeline_system", 

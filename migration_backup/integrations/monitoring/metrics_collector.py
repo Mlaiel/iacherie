@@ -1,7 +1,7 @@
 """Metrics Collector - Advanced Metrics Collection System
 =======================================================
 
-Advanced metrics collection and analysis capabilities for Ainflue integrations.
+Advanced metrics collection and analysis capabilities for IA Chéries integrations.
 Provides comprehensive data gathering, statistical analysis, and performance insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

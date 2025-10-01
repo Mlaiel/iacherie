@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Rapport complet des dépendances - Système Enterprise Ainfluencer
+Rapport complet des dépendances - Système Enterprise IA Chéries
 ================================================================
 
 Vérification systématique de TOUS les modules installés pour l'écosystème complet.
@@ -143,7 +143,7 @@ class ComprehensiveDependencyReport:
         
         report = {
             "timestamp": datetime.now().isoformat(),
-            "system": "Ainfluencer Enterprise Platform",
+            "system": "IA Chéries Enterprise Platform",
             "total_categories": len(self.categories),
             "categories": {},
             "summary": {
@@ -207,7 +207,7 @@ class ComprehensiveDependencyReport:
     def display_final_summary(self, report: Dict):
         """Affichage du résumé final professionnel"""
         print("\n" + "="*80)
-        print("🎯 RAPPORT FINAL - DÉPENDANCES ENTERPRISE AINFLUENCER")
+        print("🎯 RAPPORT FINAL - DÉPENDANCES ENTERPRISE IA CHÉRIES")
         print("="*80)
         
         print(f"📊 Packages totaux: {report['summary']['total_packages']}")
@@ -234,14 +234,14 @@ def main():
     """Exécution principale du rapport complet"""
     checker = ComprehensiveDependencyReport()
     
-    print("🚀 DÉMARRAGE - Audit complet des dépendances Enterprise Ainfluencer")
+    print("🚀 DÉMARRAGE - Audit complet des dépendances Enterprise IA Chéries")
     print("Approche professionnelle sans contournement")
     
     # Génération du rapport complet
     report = checker.generate_comprehensive_report()
     
     # Sauvegarde du rapport
-    report_file = "/workspaces/Ainfluencer/COMPREHENSIVE_DEPENDENCY_REPORT.json"
+    report_file = "/workspaces/IA Chéries/COMPREHENSIVE_DEPENDENCY_REPORT.json"
     with open(report_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     

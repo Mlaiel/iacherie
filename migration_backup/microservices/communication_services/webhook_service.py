@@ -244,8 +244,8 @@ class WebhookService:
             'rate_limits': defaultdict(lambda: {'count': 0, 'reset_time': time.time() + 3600}),
             'blocked_urls': set(),
             'security_headers': {
-                'User-Agent': 'Ainflue-Webhook/1.0',
-                'X-Webhook-Source': 'Ainflue-Platform'
+                'User-Agent': 'IA Chéries-Webhook/1.0',
+                'X-Webhook-Source': 'IA Chéries-Platform'
             }
         }
         

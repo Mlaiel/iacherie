@@ -1,4 +1,4 @@
-# ⚡ Redis Audit Logging Configuration - Ainflue Enterprise
+# ⚡ Redis Audit Logging Configuration - iacherie Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Comprehensive Audit Logging for Creator Economy Platform
 
@@ -11,9 +11,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-audit-logging
-  namespace: ainflue-redis
+  namespace: iacherie-redis
   labels:
-    app: ainflue-redis
+    app: iacherie-redis
     component: audit-logging
     environment: enterprise
     owner: fahed-mlaiel
@@ -46,10 +46,10 @@ data:
         facility: "local1"
         priority: "info"
       - type: "elasticsearch"
-        url: "https://elasticsearch.ainflue.com:9200"
+        url: "https://elasticsearch.iacherie.com:9200"
         index: "redis-audit-logs"
       - type: "splunk"
-        url: "https://splunk.ainflue.com:8088"
+        url: "https://splunk.iacherie.com:8088"
         token: "HEC-TOKEN-HERE"
     
     # Log Buffering
@@ -299,25 +299,25 @@ data:
       - name: "sox_compliance_report"
         frequency: "monthly"
         format: "pdf"
-        recipients: ["compliance@ainflue.com", "audit@ainflue.com"]
+        recipients: ["compliance@iacherie.com", "audit@iacherie.com"]
         includes: ["financial_data_access", "administrative_changes", "privilege_changes"]
       
       - name: "gdpr_data_processing_report"
         frequency: "monthly"
         format: "json"
-        recipients: ["dpo@ainflue.com", "privacy@ainflue.com"]
+        recipients: ["dpo@iacherie.com", "privacy@iacherie.com"]
         includes: ["pii_access", "data_modifications", "consent_changes"]
       
       - name: "pci_audit_report"
         frequency: "quarterly"
         format: "pdf"
-        recipients: ["security@ainflue.com", "pci-compliance@ainflue.com"]
+        recipients: ["security@iacherie.com", "pci-compliance@iacherie.com"]
         includes: ["payment_transactions", "cardholder_data_access", "security_events"]
       
       - name: "security_incident_report"
         frequency: "weekly"
         format: "html"
-        recipients: ["security-team@ainflue.com", "incident-response@ainflue.com"]
+        recipients: ["security-team@iacherie.com", "incident-response@iacherie.com"]
         includes: ["security_events", "suspicious_activities", "failed_authentications"]
     
     # Report Retention
@@ -331,7 +331,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-audit-management
-  namespace: ainflue-redis
+  namespace: iacherie-redis
 data:
   setup_audit_logging.sh: |
     #!/bin/bash

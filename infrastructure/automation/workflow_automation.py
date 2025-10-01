@@ -1,12 +1,12 @@
 """
-Workflow Automation - Enterprise Business Process Automation for Ainflue
+Workflow Automation - Enterprise Business Process Automation for iacherie
 =====================================================================
 
 Advanced workflow automation for business process orchestration, creator workflows,
 and intelligent automation for the creator platform ecosystem.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -1295,7 +1295,7 @@ class WorkflowAutomationEngine:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "iacherie Creator Platform",
             "workflow_summary": {
                 "total_workflows": metrics.total_workflows,
                 "active_workflows": metrics.active_workflows,

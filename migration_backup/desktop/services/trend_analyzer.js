@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Trend Analyzer Service
+ * IA Chéries Desktop - Trend Analyzer Service
  * 
  * Advanced trend analysis and prediction service for content optimization
  * Implements real-time trend detection, viral prediction, and content timing optimization

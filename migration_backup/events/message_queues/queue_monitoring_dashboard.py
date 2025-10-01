@@ -1,7 +1,7 @@
 """Queue Monitoring Dashboard Module
 
 Comprehensive monitoring dashboard with real-time metrics and alerting
-for the Ainflue Message Queues Enterprise system.
+for the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -157,8 +157,8 @@ class SystemHealth:
     last_updated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class AinflueBusiness:
-    """Ainflue Business Monitoring Configuration"""
+class IA ChériesBusiness:
+    """IA Chéries Business Monitoring Configuration"""
     
     # Core metrics definitions
     CORE_METRICS = {
@@ -461,7 +461,7 @@ class AinflueBusiness:
 class QueueMonitoringDashboard:
     """
     Comprehensive monitoring dashboard with real-time metrics and alerting
-    Provides complete visibility into Ainflue message queue operations
+    Provides complete visibility into IA Chéries message queue operations
     """
     
     def __init__(self,
@@ -589,10 +589,10 @@ class QueueMonitoringDashboard:
     async def get_dashboard_data(self, dashboard_name: str, time_range: str = "1h") -> Dict[str, Any]:
         """Get dashboard data for rendering"""
         try:
-            if dashboard_name not in AinflueBusiness.DASHBOARD_PANELS:
+            if dashboard_name not in IA ChériesBusiness.DASHBOARD_PANELS:
                 return {"error": "Dashboard not found"}
             
-            panels = AinflueBusiness.DASHBOARD_PANELS[dashboard_name]
+            panels = IA ChériesBusiness.DASHBOARD_PANELS[dashboard_name]
             dashboard_data = {
                 "dashboard_name": dashboard_name,
                 "panels": [],
@@ -810,13 +810,13 @@ class QueueMonitoringDashboard:
     # Core monitoring logic
     
     async def _load_business_configuration(self):
-        """Load Ainflue business monitoring configuration"""
+        """Load IA Chéries business monitoring configuration"""
         # Load metric definitions
-        for metric_id, metric_def in AinflueBusiness.CORE_METRICS.items():
+        for metric_id, metric_def in IA ChériesBusiness.CORE_METRICS.items():
             self.metric_definitions[metric_id] = metric_def
         
         # Load dashboard panels
-        for dashboard_name, panels in AinflueBusiness.DASHBOARD_PANELS.items():
+        for dashboard_name, panels in IA ChériesBusiness.DASHBOARD_PANELS.items():
             for panel in panels:
                 self.dashboard_panels[panel.panel_id] = panel
         
@@ -1089,7 +1089,7 @@ class QueueMonitoringDashboard:
         """Calculate SLA compliance for business services"""
         sla_compliance = {}
         
-        for service_name, thresholds in AinflueBusiness.SLA_THRESHOLDS.items():
+        for service_name, thresholds in IA ChériesBusiness.SLA_THRESHOLDS.items():
             # This would calculate actual SLA compliance based on metrics
             # For now, return mock data
             sla_compliance[service_name] = {
@@ -1103,7 +1103,7 @@ class QueueMonitoringDashboard:
     
     async def _send_alert_notification(self, alert: Alert):
         """Send alert notification"""
-        notification_rules = AinflueBusiness.ALERT_NOTIFICATION_RULES.get(alert.severity, {})
+        notification_rules = IA ChériesBusiness.ALERT_NOTIFICATION_RULES.get(alert.severity, {})
         
         # Send to registered callbacks
         callbacks = self.alert_callbacks.get(alert.severity, [])
@@ -1149,5 +1149,5 @@ __all__ = [
     "AlertSeverity",
     "MetricType",
     "DashboardWidget",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

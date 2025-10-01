@@ -1,7 +1,7 @@
-"""SEO Module for Ainflue Platform
+"""SEO Module for IA Chéries Platform
 
 This module provides comprehensive SEO automation and optimization capabilities
-for the Ainflue AI-powered content platform including automated meta optimization,
+for the IA Chéries AI-powered content platform including automated meta optimization,
 AMP pages, Core Web Vitals optimization, multilingual SEO, and sitemap generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

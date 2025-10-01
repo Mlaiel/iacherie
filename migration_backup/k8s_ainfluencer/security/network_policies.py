@@ -2,7 +2,7 @@
 ====================================================
 
 Comprehensive network policy implementation for secure micro-segmentation
-of the Ainflue platform with zero-trust architecture.
+of the IA Chéries platform with zero-trust architecture.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

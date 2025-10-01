@@ -31,9 +31,9 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Comprehensive voice ecosystem providing AI-powered voice synthesis,
 real-time voice processing, voice protection, monetization, collaboration,
-and analytics for the Ainflue platform ecosystem.
+and analytics for the iacherie platform ecosystem.
 
-Business Logic Flow (Ainflue Voice):
+Business Logic Flow (iacherie Voice):
 Creator Upload → Voice Analysis → AI Enhancement → Security Protection → 
 SEO Optimization → Collaboration Matching → Gamification → 
 Distribution Multi-Platform → Analytics & Monetization

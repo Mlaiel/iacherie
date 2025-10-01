@@ -88,21 +88,21 @@ class IntelligentAlertManager:
         
         # Métriques des alertes
         self.alert_count = Gauge(
-            'ainflue_alerts_active_count',
+            'iacherie_alerts_active_count',
             'Number of active alerts',
             labelnames=['severity', 'rule_name', 'creator_tier'],
             registry=self.registry
         )
         
         self.alert_processing_time = Histogram(
-            'ainflue_alerts_processing_time_seconds',
+            'iacherie_alerts_processing_time_seconds',
             'Alert processing time in seconds',
             labelnames=['processing_stage', 'alert_type'],
             registry=self.registry
         )
         
         self.alert_correlation_count = Gauge(
-            'ainflue_alerts_correlation_groups_count',
+            'iacherie_alerts_correlation_groups_count',
             'Number of alert correlation groups',
             labelnames=['correlation_type', 'severity'],
             registry=self.registry
@@ -110,21 +110,21 @@ class IntelligentAlertManager:
         
         # Métriques de machine learning
         self.ml_prediction_accuracy = Gauge(
-            'ainflue_alerts_ml_prediction_accuracy',
+            'iacherie_alerts_ml_prediction_accuracy',
             'ML model prediction accuracy for alerts',
             labelnames=['model_type', 'prediction_type'],
             registry=self.registry
         )
         
         self.anomaly_detection_rate = Gauge(
-            'ainflue_alerts_anomaly_detection_rate',
+            'iacherie_alerts_anomaly_detection_rate',
             'Anomaly detection success rate',
             labelnames=['anomaly_type', 'detection_method'],
             registry=self.registry
         )
         
         self.alert_fatigue_score = Gauge(
-            'ainflue_alerts_fatigue_score',
+            'iacherie_alerts_fatigue_score',
             'Alert fatigue score for operators',
             labelnames=['operator_id', 'alert_category'],
             registry=self.registry
@@ -132,14 +132,14 @@ class IntelligentAlertManager:
         
         # Métriques de notification
         self.notification_delivery_rate = Gauge(
-            'ainflue_alerts_notification_delivery_rate',
+            'iacherie_alerts_notification_delivery_rate',
             'Notification delivery success rate',
             labelnames=['channel', 'notification_type'],
             registry=self.registry
         )
         
         self.notification_response_time = Histogram(
-            'ainflue_alerts_notification_response_time_seconds',
+            'iacherie_alerts_notification_response_time_seconds',
             'Notification response time in seconds',
             labelnames=['channel', 'priority'],
             registry=self.registry
@@ -147,14 +147,14 @@ class IntelligentAlertManager:
         
         # Métriques business
         self.business_impact_score = Gauge(
-            'ainflue_alerts_business_impact_score',
+            'iacherie_alerts_business_impact_score',
             'Business impact score of alerts',
             labelnames=['impact_category', 'creator_tier'],
             registry=self.registry
         )
         
         self.alert_resolution_efficiency = Gauge(
-            'ainflue_alerts_resolution_efficiency',
+            'iacherie_alerts_resolution_efficiency',
             'Alert resolution efficiency score',
             labelnames=['alert_category', 'resolution_method'],
             registry=self.registry

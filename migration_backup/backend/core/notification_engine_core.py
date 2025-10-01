@@ -1098,8 +1098,8 @@ class NotificationEngineCore:
                 template_id="welcome_email",
                 template_name="Welcome Email",
                 channel=NotificationChannel.EMAIL,
-                subject_template="Welcome to Ainflue, {user_name}!",
-                body_template="Hello {user_name},\n\nWelcome to the Ainflue platform! We're excited to have you join our community of creators and influencers.\n\nBest regards,\nThe Ainflue Team",
+                subject_template="Welcome to IA Chéries, {user_name}!",
+                body_template="Hello {user_name},\n\nWelcome to the IA Chéries platform! We're excited to have you join our community of creators and influencers.\n\nBest regards,\nThe IA Chéries Team",
                 variables=["user_name"]
             ),
             NotificationTemplate(

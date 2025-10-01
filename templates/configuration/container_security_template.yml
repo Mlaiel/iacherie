@@ -1,5 +1,5 @@
 # =====================================================================================
-# Container Security Template - Ainflue Configuration Module
+# Container Security Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - CONTAINER SECURITY CONFIGURATION
+# IACHERIE CREATOR ECONOMY - CONTAINER SECURITY CONFIGURATION
 # =====================================================================================
 
 # Networks with security constraints
@@ -28,9 +28,9 @@ networks:
           ip_range: 172.20.1.0/24
           gateway: 172.20.0.1
     labels:
-      - "ainflue.network.type=dmz"
-      - "ainflue.security.level=high"
-      - "ainflue.compliance.pci-dss=enabled"
+      - "iacherie.network.type=dmz"
+      - "iacherie.security.level=high"
+      - "iacherie.compliance.pci-dss=enabled"
 
   # Internal network for backend services
   internal_network:
@@ -46,9 +46,9 @@ networks:
           ip_range: 172.21.1.0/24
           gateway: 172.21.0.1
     labels:
-      - "ainflue.network.type=internal"
-      - "ainflue.security.level=maximum"
-      - "ainflue.data.classification=confidential"
+      - "iacherie.network.type=internal"
+      - "iacherie.security.level=maximum"
+      - "iacherie.data.classification=confidential"
 
   # Database network (isolated)
   database_network:
@@ -63,9 +63,9 @@ networks:
           ip_range: 172.22.1.0/24
           gateway: 172.22.0.1
     labels:
-      - "ainflue.network.type=database"
-      - "ainflue.security.level=critical"
-      - "ainflue.encryption=required"
+      - "iacherie.network.type=database"
+      - "iacherie.security.level=critical"
+      - "iacherie.encryption=required"
 
   # Cache network (Redis/Memcached)
   cache_network:
@@ -78,8 +78,8 @@ networks:
           ip_range: 172.23.1.0/24
           gateway: 172.23.0.1
     labels:
-      - "ainflue.network.type=cache"
-      - "ainflue.security.level=high"
+      - "iacherie.network.type=cache"
+      - "iacherie.security.level=high"
 
 # =====================================================================================
 # VOLUMES WITH SECURITY CONFIGURATIONS
@@ -94,21 +94,21 @@ volumes:
       device: tmpfs
       o: "size=1G,uid=1000,gid=1000,mode=0700"
     labels:
-      - "ainflue.volume.type=encrypted"
-      - "ainflue.data.classification=sensitive"
-      - "ainflue.backup.required=true"
+      - "iacherie.volume.type=encrypted"
+      - "iacherie.data.classification=sensitive"
+      - "iacherie.backup.required=true"
 
   # Database volume with encryption
   postgres_data_encrypted:
     driver: local
     driver_opts:
       type: none
-      device: /opt/ainflue/data/postgres
+      device: /opt/iacherie/data/postgres
       o: bind,rw,noexec,nosuid,nodev
     labels:
-      - "ainflue.volume.type=database"
-      - "ainflue.encryption=luks"
-      - "ainflue.backup.frequency=hourly"
+      - "iacherie.volume.type=database"
+      - "iacherie.encryption=luks"
+      - "iacherie.backup.frequency=hourly"
 
   # Redis data with memory protection
   redis_data_secure:
@@ -118,20 +118,20 @@ volumes:
       device: tmpfs
       o: "size=512M,uid=999,gid=999,mode=0600"
     labels:
-      - "ainflue.volume.type=cache"
-      - "ainflue.security.memory_protection=enabled"
+      - "iacherie.volume.type=cache"
+      - "iacherie.security.memory_protection=enabled"
 
   # Log volumes with audit trail
   audit_logs:
     driver: local
     driver_opts:
       type: none
-      device: /var/log/ainflue/audit
+      device: /var/log/iacherie/audit
       o: bind,ro
     labels:
-      - "ainflue.volume.type=audit"
-      - "ainflue.compliance.sox=required"
-      - "ainflue.retention.period=7years"
+      - "iacherie.volume.type=audit"
+      - "iacherie.compliance.sox=required"
+      - "iacherie.retention.period=7years"
 
 # =====================================================================================
 # SECRETS MANAGEMENT
@@ -141,41 +141,41 @@ secrets:
   # Database credentials
   postgres_password:
     external: true
-    external_name: ainflue_postgres_password_v1
+    external_name: iacherie_postgres_password_v1
     labels:
-      - "ainflue.secret.type=database"
-      - "ainflue.secret.rotation=monthly"
+      - "iacherie.secret.type=database"
+      - "iacherie.secret.rotation=monthly"
 
   # API keys for creator services
   openai_api_key:
     external: true
-    external_name: ainflue_openai_api_key_v1
+    external_name: iacherie_openai_api_key_v1
     labels:
-      - "ainflue.secret.type=api_key"
-      - "ainflue.secret.provider=openai"
+      - "iacherie.secret.type=api_key"
+      - "iacherie.secret.provider=openai"
 
   # JWT signing key
   jwt_signing_key:
     external: true
-    external_name: ainflue_jwt_signing_key_v1
+    external_name: iacherie_jwt_signing_key_v1
     labels:
-      - "ainflue.secret.type=signing_key"
-      - "ainflue.secret.algorithm=rs256"
+      - "iacherie.secret.type=signing_key"
+      - "iacherie.secret.algorithm=rs256"
 
   # SSL certificates
   ssl_certificate:
     external: true
-    external_name: ainflue_ssl_certificate_v1
+    external_name: iacherie_ssl_certificate_v1
     labels:
-      - "ainflue.secret.type=tls_cert"
-      - "ainflue.secret.validity=90days"
+      - "iacherie.secret.type=tls_cert"
+      - "iacherie.secret.validity=90days"
 
   ssl_private_key:
     external: true
-    external_name: ainflue_ssl_private_key_v1
+    external_name: iacherie_ssl_private_key_v1
     labels:
-      - "ainflue.secret.type=tls_key"
-      - "ainflue.secret.algorithm=rsa4096"
+      - "iacherie.secret.type=tls_key"
+      - "iacherie.secret.algorithm=rsa4096"
 
 # =====================================================================================
 # CONFIGS
@@ -185,26 +185,26 @@ configs:
   # Security configuration
   security_config:
     external: true
-    external_name: ainflue_security_config_v1
+    external_name: iacherie_security_config_v1
     labels:
-      - "ainflue.config.type=security"
-      - "ainflue.config.validation=required"
+      - "iacherie.config.type=security"
+      - "iacherie.config.validation=required"
 
   # NGINX security configuration
   nginx_security_conf:
     external: true
-    external_name: ainflue_nginx_security_v1
+    external_name: iacherie_nginx_security_v1
     labels:
-      - "ainflue.config.type=nginx_security"
-      - "ainflue.config.waf=enabled"
+      - "iacherie.config.type=nginx_security"
+      - "iacherie.config.waf=enabled"
 
   # Application firewall rules
   modsecurity_rules:
     external: true
-    external_name: ainflue_modsecurity_rules_v1
+    external_name: iacherie_modsecurity_rules_v1
     labels:
-      - "ainflue.config.type=waf_rules"
-      - "ainflue.config.owasp=enabled"
+      - "iacherie.config.type=waf_rules"
+      - "iacherie.config.owasp=enabled"
 
 # =====================================================================================
 # SERVICES WITH SECURITY HARDENING
@@ -218,7 +218,7 @@ services:
   
   reverse_proxy:
     image: owasp/modsecurity-crs:3.3.4-nginx-202310120947
-    container_name: ainflue_reverse_proxy_secure
+    container_name: iacherie_reverse_proxy_secure
     restart: unless-stopped
     
     # Security context
@@ -311,10 +311,10 @@ services:
       start_period: 40s
     
     labels:
-      - "ainflue.service.type=reverse_proxy"
-      - "ainflue.security.waf=enabled"
-      - "ainflue.security.level=critical"
-      - "ainflue.compliance.pci-dss=required"
+      - "iacherie.service.type=reverse_proxy"
+      - "iacherie.security.waf=enabled"
+      - "iacherie.security.level=critical"
+      - "iacherie.compliance.pci-dss=required"
 
   # =====================================================================================
   # API GATEWAY WITH AUTHENTICATION
@@ -322,7 +322,7 @@ services:
   
   api_gateway:
     image: kong/kong-gateway:3.4.2-alpine
-    container_name: ainflue_api_gateway_secure
+    container_name: iacherie_api_gateway_secure
     restart: unless-stopped
     
     # Security context
@@ -387,17 +387,17 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=api_gateway"
-      - "ainflue.security.auth=jwt"
-      - "ainflue.security.rate_limiting=enabled"
+      - "iacherie.service.type=api_gateway"
+      - "iacherie.security.auth=jwt"
+      - "iacherie.security.rate_limiting=enabled"
 
   # =====================================================================================
   # APPLICATION SERVICE (HARDENED)
   # =====================================================================================
   
   app_service:
-    image: ainflue/creator-platform:${APP_VERSION:-latest}
-    container_name: ainflue_app_secure
+    image: iacherie/creator-platform:${APP_VERSION:-latest}
+    container_name: iacherie_app_secure
     restart: unless-stopped
     
     # Security context
@@ -451,7 +451,7 @@ services:
       - RATE_LIMIT_MAX=100
       - SESSION_TIMEOUT=3600
       - BCRYPT_ROUNDS=12
-      - CORS_ORIGIN=${CORS_ORIGIN:-https://app.ainflue.com}
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://app.iacherie.com}
     
     volumes:
       - creator_content_encrypted:/app/uploads:rw
@@ -469,9 +469,9 @@ services:
       start_period: 60s
     
     labels:
-      - "ainflue.service.type=application"
-      - "ainflue.security.level=high"
-      - "ainflue.data.encryption=required"
+      - "iacherie.service.type=application"
+      - "iacherie.security.level=high"
+      - "iacherie.data.encryption=required"
 
   # =====================================================================================
   # DATABASE (POSTGRESQL WITH SECURITY)
@@ -479,7 +479,7 @@ services:
   
   postgres_secure:
     image: postgres:15.4-alpine
-    container_name: ainflue_postgres_secure
+    container_name: iacherie_postgres_secure
     restart: unless-stopped
     
     # Security context
@@ -517,8 +517,8 @@ services:
       - postgres_password
     
     environment:
-      - POSTGRES_DB=ainflue_production
-      - POSTGRES_USER=ainflue
+      - POSTGRES_DB=iacherie_production
+      - POSTGRES_USER=iacherie
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=scram-sha-256
       - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
@@ -561,16 +561,16 @@ services:
       -c effective_io_concurrency=200
     
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ainflue -d ainflue_production"]
+      test: ["CMD-SHELL", "pg_isready -U iacherie -d iacherie_production"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=database"
-      - "ainflue.security.encryption=tde"
-      - "ainflue.backup.schedule=hourly"
+      - "iacherie.service.type=database"
+      - "iacherie.security.encryption=tde"
+      - "iacherie.backup.schedule=hourly"
 
   # =====================================================================================
   # REDIS CACHE (SECURED)
@@ -578,7 +578,7 @@ services:
   
   redis_secure:
     image: redis:7.2.1-alpine
-    container_name: ainflue_redis_secure
+    container_name: iacherie_redis_secure
     restart: unless-stopped
     
     # Security context
@@ -644,9 +644,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=cache"
-      - "ainflue.security.auth=required"
-      - "ainflue.data.persistence=enabled"
+      - "iacherie.service.type=cache"
+      - "iacherie.security.auth=required"
+      - "iacherie.data.persistence=enabled"
 
   # =====================================================================================
   # SECURITY MONITORING (FALCO)
@@ -654,7 +654,7 @@ services:
   
   security_monitor:
     image: falcosecurity/falco:0.36.1
-    container_name: ainflue_security_monitor
+    container_name: iacherie_security_monitor
     restart: unless-stopped
     
     privileged: true  # Required for kernel monitoring
@@ -699,9 +699,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=security_monitor"
-      - "ainflue.security.monitoring=runtime"
-      - "ainflue.compliance.required=true"
+      - "iacherie.service.type=security_monitor"
+      - "iacherie.security.monitoring=runtime"
+      - "iacherie.compliance.required=true"
 
   # =====================================================================================
   # LOG AGGREGATION (FLUENTD)
@@ -709,7 +709,7 @@ services:
   
   log_aggregator:
     image: fluent/fluentd:v1.16.2-debian-1.0
-    container_name: ainflue_log_aggregator
+    container_name: iacherie_log_aggregator
     restart: unless-stopped
     
     # Security context
@@ -757,9 +757,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=log_aggregator"
-      - "ainflue.security.audit=enabled"
-      - "ainflue.compliance.logging=required"
+      - "iacherie.service.type=log_aggregator"
+      - "iacherie.security.audit=enabled"
+      - "iacherie.compliance.logging=required"
 
 # =====================================================================================
 # SECURITY LABELS AND METADATA
@@ -786,21 +786,21 @@ x-security-policy: &security-policy
         pids: 100
         
 x-monitoring-labels: &monitoring-labels
-  - "ainflue.monitoring.enabled=true"
-  - "ainflue.metrics.endpoint=/metrics"
-  - "ainflue.health.endpoint=/health"
-  - "ainflue.logs.driver=fluentd"
+  - "iacherie.monitoring.enabled=true"
+  - "iacherie.metrics.endpoint=/metrics"
+  - "iacherie.health.endpoint=/health"
+  - "iacherie.logs.driver=fluentd"
 
 x-backup-labels: &backup-labels
-  - "ainflue.backup.enabled=true"
-  - "ainflue.backup.retention=30d"
-  - "ainflue.backup.encryption=aes256"
+  - "iacherie.backup.enabled=true"
+  - "iacherie.backup.retention=30d"
+  - "iacherie.backup.encryption=aes256"
 
 x-compliance-labels: &compliance-labels
-  - "ainflue.compliance.pci-dss=required"
-  - "ainflue.compliance.gdpr=required"
-  - "ainflue.compliance.sox=required"
-  - "ainflue.audit.required=true"
+  - "iacherie.compliance.pci-dss=required"
+  - "iacherie.compliance.gdpr=required"
+  - "iacherie.compliance.sox=required"
+  - "iacherie.audit.required=true"
 
 # =====================================================================================
 # SECURITY EXTENSIONS AND ANCHORS

@@ -214,7 +214,7 @@ async def get_public_documentation():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Ainflue Public API Documentation</title>
+        <title>IA Chéries Public API Documentation</title>
         <style>
             body { font-family: Arial, sans-serif; margin: 40px; }
             .endpoint { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 5px; }
@@ -225,8 +225,8 @@ async def get_public_documentation():
         </style>
     </head>
     <body>
-        <h1>🚀 Ainflue Public API Documentation</h1>
-        <p>Welcome to the Ainflue AI-powered content protection platform public API.</p>
+        <h1>🚀 IA Chéries Public API Documentation</h1>
+        <p>Welcome to the IA Chéries AI-powered content protection platform public API.</p>
         
         <h2>📋 Available Endpoints</h2>
         
@@ -433,7 +433,7 @@ async def download_python_sdk():
     """Download Python SDK"""
     try:
         # Read SDK file
-        with open("/home/runner/work/Ainflue/Ainflue/sdk/python/ainflue_sdk.py", "r") as f:
+        with open("/home/runner/work/IA Chéries/IA Chéries/sdk/python/ainflue_sdk.py", "r") as f:
             sdk_content = f.read()
         
         return JSONResponse(
@@ -458,8 +458,8 @@ async def get_postman_collection():
     """Get Postman collection for API testing"""
     postman_collection = {
         "info": {
-            "name": "Ainflue Public API",
-            "description": "Ainflue AI-powered content protection platform public API",
+            "name": "IA Chéries Public API",
+            "description": "IA Chéries AI-powered content protection platform public API",
             "version": "1.0.0"
         },
         "auth": {
@@ -658,8 +658,8 @@ async def get_creator_profile(creator_id: str):
                 "youtube": f"/{creator_id}"
             },
             seo_metadata=SEOMetadata(
-                title=f"{creator_id} - Professional Content Creator | Ainflue",
-                description=f"Discover {creator_id}'s amazing content on Ainflue. Professional creator with 15K followers specializing in music, video, and art.",
+                title=f"{creator_id} - Professional Content Creator | IA Chéries",
+                description=f"Discover {creator_id}'s amazing content on IA Chéries. Professional creator with 15K followers specializing in music, video, and art.",
                 keywords=["content creator", "artist", "music", "video", "professional", creator_id],
                 canonical_url=f"https://ainflue.com/creators/{creator_id}",
                 og_image=f"https://example.com/og/{creator_id}.jpg",
@@ -1081,15 +1081,15 @@ class SEOOptimizationEngine:
         bio = creator_data.get("bio", "Content creator")
         
         return {
-            "title": f"{name} - Content Creator | Ainflue Platform",
-            "description": f"{bio}. Follow {name} on Ainflue for amazing content. {', '.join(keywords[:5])}",
+            "title": f"{name} - Content Creator | IA Chéries Platform",
+            "description": f"{bio}. Follow {name} on IA Chéries for amazing content. {', '.join(keywords[:5])}",
             "keywords": ", ".join(keywords),
-            "og:title": f"{name} on Ainflue",
+            "og:title": f"{name} on IA Chéries",
             "og:description": bio,
             "og:image": creator_data.get("profile_image", ""),
             "og:type": "profile",
             "twitter:card": "summary_large_image",
-            "twitter:title": f"{name} | Ainflue Creator",
+            "twitter:title": f"{name} | IA Chéries Creator",
             "twitter:description": bio,
             "twitter:image": creator_data.get("profile_image", "")
         }
@@ -1178,7 +1178,7 @@ class StructuredDataGenerator:
             ],
             "worksFor": {
                 "@type": "Organization",
-                "name": "Ainflue Platform"
+                "name": "IA Chéries Platform"
             },
             "knowsAbout": creator_data.get("categories", []),
             "interactionStatistic": [
@@ -1198,7 +1198,7 @@ class SocialMediaOptimizer:
         """Generate social media optimization"""
         return {
             "open_graph": {
-                "og:site_name": "Ainflue",
+                "og:site_name": "IA Chéries",
                 "og:locale": "en_US",
                 "og:url": f"/creators/{creator_data.get('username', creator_data['id'])}",
                 "fb:app_id": "123456789"  # Would be actual app ID

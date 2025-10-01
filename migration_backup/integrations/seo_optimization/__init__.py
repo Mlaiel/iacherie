@@ -1,5 +1,5 @@
 """
-SEO Optimization Module - Ainflue Integrations
+SEO Optimization Module - IA Chéries Integrations
 ==============================================
 Module d'optimisation SEO enterprise avec support 644 langues,
 analytics avancés et optimization multi-plateformes.
@@ -12,7 +12,7 @@ Support pour:
 - Competitive intelligence SEO
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

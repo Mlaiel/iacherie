@@ -1,4 +1,4 @@
-"""Plagiarism Detection Template for Ainflue Creator Protection
+"""Plagiarism Detection Template for IA Chéries Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

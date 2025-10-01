@@ -2,11 +2,11 @@
 Model Serving Optimizer - Enterprise ML Model Serving Infrastructure
 ===================================================================
 
-Advanced model serving optimization for Ainflue's 53 AI agents ecosystem.
+Advanced model serving optimization for IA Chéries's 53 AI agents ecosystem.
 Provides high-performance, scalable model serving with intelligent optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """Types of ML models in Ainflue ecosystem."""
+    """Types of ML models in IA Chéries ecosystem."""
     CONTENT_ANALYSIS = "content_analysis"
     CREATIVE_ENHANCEMENT = "creative_enhancement"
     PROTECTION_DETECTION = "protection_detection"
@@ -96,7 +96,7 @@ class ServingOptimizationResult:
 
 class ModelServingOptimizer:
     """
-    Enterprise-grade model serving optimizer for Ainflue's AI infrastructure.
+    Enterprise-grade model serving optimizer for IA Chéries's AI infrastructure.
     Manages 53 AI agents with intelligent optimization and scaling.
     """
     
@@ -111,10 +111,10 @@ class ModelServingOptimizer:
         # Thread pool for concurrent operations
         self.executor = ThreadPoolExecutor(max_workers=20)
         
-        # Initialize default model endpoints for Ainflue
+        # Initialize default model endpoints for IA Chéries
         self._initialize_ainflue_model_endpoints()
         
-        logger.info("Model Serving Optimizer initialized for Ainflue creator platform")
+        logger.info("Model Serving Optimizer initialized for IA Chéries creator platform")
     
     def _initialize_ainflue_model_endpoints(self):
         """Initialize default model endpoints for creator economy workflow."""
@@ -604,7 +604,7 @@ class LoadBalancer:
     
     async def distribute_request(self, request: Dict[str, Any], endpoints: List[ModelEndpoint]) -> str:
         """Distribute request to optimal endpoint."""
-        # Performance-based routing (default for Ainflue)
+        # Performance-based routing (default for IA Chéries)
         if self.current_strategy == "performance_based":
             best_endpoint = min(endpoints, 
                               key=lambda e: e.performance_metrics.get("avg_latency_ms", float('inf')))

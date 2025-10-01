@@ -121,9 +121,9 @@ helm install iacherie-platform ./charts/iacherie
 ### 1. Configuration Environnement
 ```bash
 # Variables d'environnement
-export AINFLUE_ENVIRONMENT=production
-export AINFLUE_REGION=us-east-1
-export AINFLUE_DOMAIN=app.iacherie.com
+export IACHERIE_ENVIRONMENT=production
+export IACHERIE_REGION=us-east-1
+export IACHERIE_DOMAIN=app.iacherie.com
 ```
 
 ### 2. Déploiement Infrastructure

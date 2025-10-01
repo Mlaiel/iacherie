@@ -15,7 +15,7 @@ GAMIFICATION NOTIFICATIONS ORCHESTRATOR
 - Achievements, badges et rewards intelligents
 - Analytics comportement et progression utilisateur
 
-🚀 FONCTIONNALITÉS CORE AINFLUE:
+🚀 FONCTIONNALITÉS CORE IA CHÉRIES:
 - Achievement unlocks automatiques personnalisés
 - Milestone celebrations avec rewards système
 - Leaderboard updates temps réel compétitifs
@@ -124,7 +124,7 @@ class UserGamificationProfile:
 class GamificationNotificationsOrchestrator:
     """
     Orchestrateur principal des notifications gamification
-    Gère l'écosystème complet d'engagement Ainflue
+    Gère l'écosystème complet d'engagement IA Chéries
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

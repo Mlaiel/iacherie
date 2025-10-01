@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE REPUTATION GUARDIAN - SPECIALIZED DOCKERFILE
+# IA CHÉRIES REPUTATION GUARDIAN - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for reputation protection and monitoring
 # supporting social media monitoring, sentiment analysis, and reputation management.

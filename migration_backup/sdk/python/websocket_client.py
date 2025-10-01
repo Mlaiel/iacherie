@@ -1,4 +1,4 @@
-"""WebSocket Real-time Client for Ainflue SDK
+"""WebSocket Real-time Client for IA Chéries SDK
 
 Enterprise-grade WebSocket client with multi-expert design:
 - DevOps: Connection monitoring and automatic reconnection
@@ -22,7 +22,7 @@ import websockets
 import certifi
 
 from .exceptions import (
-    NetworkError, AuthenticationError, AinflueSdkException,
+    NetworkError, AuthenticationError, IA ChériesSdkException,
     ConfigurationError
 )
 
@@ -110,7 +110,7 @@ class ConnectionMetrics:
 
 
 class WebSocketClient:
-    """Enterprise WebSocket client for Ainflue real-time communication
+    """Enterprise WebSocket client for IA Chéries real-time communication
     
     Features:
     - Automatic reconnection with exponential backoff
@@ -170,7 +170,7 @@ class WebSocketClient:
     def _build_auth_headers(self) -> Dict[str, str]:
         """Build authentication headers (Sécurité expertise)"""
         headers = {
-            'User-Agent': 'Ainflue-WebSocket-Client/1.0.0'
+            'User-Agent': 'IA Chéries-WebSocket-Client/1.0.0'
         }
         
         if self.api_key:

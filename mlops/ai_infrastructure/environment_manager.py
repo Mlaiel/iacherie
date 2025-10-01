@@ -212,7 +212,7 @@ class EnvironmentProvisioner:
         # Simulate namespace creation
         await asyncio.sleep(1)
         return {
-            "namespace": f"ainflue-{config.name}",
+            "namespace": f"iacherie-{config.name}",
             "region": config.region,
             "created": True
         }
@@ -243,8 +243,8 @@ class EnvironmentProvisioner:
             "subnet_ids": [f"subnet-{uuid.uuid4().hex[:8]}" for _ in range(2)],
             "security_groups": config.security_groups,
             "endpoints": {
-                "api": f"https://api-{config.name}.ainflue.com",
-                "monitoring": f"https://metrics-{config.name}.ainflue.com"
+                "api": f"https://api-{config.name}.iacherie.com",
+                "monitoring": f"https://metrics-{config.name}.iacherie.com"
             }
         }
     
@@ -252,9 +252,9 @@ class EnvironmentProvisioner:
         """Configure security settings"""
         await asyncio.sleep(1)
         return {
-            "iam_roles": [f"AinflueMlops{config.name.title()}Role"],
-            "secrets_manager": f"ainflue/{config.name}/secrets",
-            "ssl_certificates": [f"*.{config.name}.ainflue.com"],
+            "iam_roles": [f"iacherieMlops{config.name.title()}Role"],
+            "secrets_manager": f"iacherie/{config.name}/secrets",
+            "ssl_certificates": [f"*.{config.name}.iacherie.com"],
             "security_groups_created": len(config.security_groups)
         }
     
@@ -267,8 +267,8 @@ class EnvironmentProvisioner:
         
         return {
             "monitoring_enabled": True,
-            "metrics_endpoint": f"https://metrics-{config.name}.ainflue.com",
-            "logging_endpoint": f"https://logs-{config.name}.ainflue.com",
+            "metrics_endpoint": f"https://metrics-{config.name}.iacherie.com",
+            "logging_endpoint": f"https://logs-{config.name}.iacherie.com",
             "alerting_rules": [
                 "cpu_usage_high",
                 "memory_usage_high",
@@ -521,7 +521,7 @@ class ModelPromotionManager:
             await asyncio.sleep(2)
             
             deployment_id = f"deploy-{uuid.uuid4().hex[:8]}"
-            endpoint_url = f"https://api-{promotion_request.target_environment}.ainflue.com/models/{promotion_request.model_id}"
+            endpoint_url = f"https://api-{promotion_request.target_environment}.iacherie.com/models/{promotion_request.model_id}"
             
             return {
                 "status": "success",
@@ -655,8 +655,8 @@ class EnvironmentManager:
             model_version=model_version,
             environment_name=environment_name,
             replicas=replicas,
-            endpoint_url=f"https://api-{environment_name}.ainflue.com/models/{model_id}",
-            health_check_url=f"https://api-{environment_name}.ainflue.com/models/{model_id}/health"
+            endpoint_url=f"https://api-{environment_name}.iacherie.com/models/{model_id}",
+            health_check_url=f"https://api-{environment_name}.iacherie.com/models/{model_id}/health"
         )
         
         # Store deployment

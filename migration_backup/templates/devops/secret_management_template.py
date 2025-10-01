@@ -1,4 +1,4 @@
-"""Secret Management Template for Ainflue Platform
+"""Secret Management Template for IA Chéries Platform
 Enterprise-grade secret management and encryption templates using HashiCorp Vault and AWS Secrets Manager.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -63,7 +63,7 @@ class SecretManagementConfig:
     rotation_enabled: bool = True
     rotation_interval_days: int = 90
     
-    # Ainflue specific secrets
+    # IA Chéries specific secrets
     secrets_to_manage: List[SecretType] = None
     
     def __post_init__(self):
@@ -79,7 +79,7 @@ class SecretManagementConfig:
 
 
 class SecretManagementTemplate:
-    """Enterprise Secret Management Template for Ainflue Platform"""
+    """Enterprise Secret Management Template for IA Chéries Platform"""
     
     def __init__(self, config: SecretManagementConfig):
         self.config = config
@@ -138,9 +138,9 @@ path "*" {
 }
 '''
         
-        # Application policy for Ainflue services
+        # Application policy for IA Chéries services
         policies["ainflue-app"] = f'''
-# Application policy for Ainflue platform services
+# Application policy for IA Chéries platform services
 path "secret/data/{self.config.environment}/*" {{
   capabilities = ["read"]
 }}
@@ -185,7 +185,7 @@ path "secret/data/{self.config.environment}/monitoring/*" {{
         return policies
     
     def generate_secret_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Generate secret definitions for Ainflue platform"""
+        """Generate secret definitions for IA Chéries platform"""
         secrets = {}
         
         if SecretType.DATABASE_CREDENTIALS in self.config.secrets_to_manage:
@@ -381,7 +381,7 @@ path "secret/data/{self.config.environment}/monitoring/*" {{
     def generate_vault_init_script(self) -> str:
         """Generate Vault initialization script"""
         return f'''#!/bin/bash
-# Vault Initialization Script for Ainflue Platform
+# Vault Initialization Script for IA Chéries Platform
 # Environment: {self.config.environment}
 
 set -e
@@ -389,7 +389,7 @@ set -e
 VAULT_ADDR="{self.config.vault_address}"
 VAULT_NAMESPACE="{self.config.vault_namespace}"
 
-echo "Initializing Vault for Ainflue Platform..."
+echo "Initializing Vault for IA Chéries Platform..."
 
 # Initialize Vault if not already initialized
 if ! vault status >/dev/null 2>&1; then
@@ -484,7 +484,7 @@ echo "Vault initialization complete!"
     def generate_secret_rotation_script(self) -> str:
         """Generate secret rotation script"""
         return f'''#!/bin/bash
-# Secret Rotation Script for Ainflue Platform
+# Secret Rotation Script for IA Chéries Platform
 # Environment: {self.config.environment}
 
 set -e
@@ -681,7 +681,7 @@ if __name__ == "__main__":
     config = create_production_secret_config()
     template = SecretManagementTemplate(config)
     
-    print("Secret Management Template for Ainflue Platform")
+    print("Secret Management Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Backend: {config.backend.value}")
     print(f"- Environment: {config.environment}")

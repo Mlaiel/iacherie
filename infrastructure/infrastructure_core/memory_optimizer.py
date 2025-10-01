@@ -1,12 +1,12 @@
 """
-Memory Optimizer - Intelligent Memory Management for Ainflue
+Memory Optimizer - Intelligent Memory Management for iacherie
 ===========================================================
 
 Advanced memory optimization with intelligent allocation and garbage collection
 tuning for creator platform workloads and AI processing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 """
 
@@ -48,7 +48,7 @@ class MemoryMetrics:
 
 class MemoryOptimizer:
     """
-    Intelligent Memory Optimizer for Ainflue Creator Platform
+    Intelligent Memory Optimizer for iacherie Creator Platform
     
     Optimizes memory allocation, garbage collection, and caching
     for optimal creator experience and AI processing performance.

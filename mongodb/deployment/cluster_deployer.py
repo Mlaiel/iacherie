@@ -581,7 +581,7 @@ WantedBy=multi-user.target
     
     async def _enable_database_sharding(self) -> None:
         """Enable sharding for databases."""
-        databases_to_shard = ["ainflue_content", "ainflue_analytics", "ainflue_users"]
+        databases_to_shard = ["iacherie_content", "iacherie_analytics", "iacherie_users"]
         
         for database in databases_to_shard:
             self.logger.info(f"Enabling sharding for database: {database}")
@@ -614,14 +614,14 @@ WantedBy=multi-user.target
         # Create application users
         app_users = [
             {
-                "user": "ainflue_app",
+                "user": "iacherie_app",
                 "pwd": "app_password",
-                "roles": [{"role": "readWrite", "db": "ainflue_content"}]
+                "roles": [{"role": "readWrite", "db": "iacherie_content"}]
             },
             {
-                "user": "ainflue_analytics",
+                "user": "iacherie_analytics",
                 "pwd": "analytics_password",
-                "roles": [{"role": "readWrite", "db": "ainflue_analytics"}]
+                "roles": [{"role": "readWrite", "db": "iacherie_analytics"}]
             }
         ]
         

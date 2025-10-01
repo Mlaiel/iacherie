@@ -3,7 +3,7 @@
 
 Consolidated voice synthesis engine providing emotion-based voice generation,
 age-specific voice synthesis, celebrity voice cloning, and comprehensive
-voice synthesis capabilities for the Ainflue platform.
+voice synthesis capabilities for the IA Chéries platform.
 
 Consolidates:
 - Emotional voice generation with 50+ emotions

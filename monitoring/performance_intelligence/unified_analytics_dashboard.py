@@ -144,16 +144,16 @@ class UnifiedAnalyticsDashboard:
         if not _dashboard_metrics_registered:
             self.prometheus_metrics = {
                 "dashboard_health_score": Gauge(
-                    "ainflue_dashboard_overall_health_score",
+                    "iacherie_dashboard_overall_health_score",
                     "Overall dashboard health score (0-100)"
                 ),
                 "kpi_target_performance": Gauge(
-                    "ainflue_kpi_target_performance_ratio",
+                    "iacherie_kpi_target_performance_ratio",
                     "KPI performance vs target ratio",
                     ["kpi_name"]
                 ),
                 "active_alerts_count": Gauge(
-                    "ainflue_dashboard_active_alerts_total",
+                    "iacherie_dashboard_active_alerts_total",
                     "Total number of active alerts",
                     ["severity"]
                 )

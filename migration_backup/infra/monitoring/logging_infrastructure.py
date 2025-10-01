@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Logging Infrastructure Management
@@ -269,7 +269,7 @@ class LoggingInfrastructure:
         """Setup Fluentd configuration for log collection"""
         try:
             fluentd_config = """
-# Ainflue Enterprise Fluentd Configuration
+# IA Chéries Enterprise Fluentd Configuration
 # ========================================
 
 # Input plugins for Kubernetes logs

@@ -1,5 +1,5 @@
 /**
- * 🌐 Vue Component Template - Ainflue Creator Economy
+ * 🌐 Vue Component Template - iacherie Creator Economy
  * 
  * @fileoverview Template enterprise pour composants Vue.js
  * @version 1.0.0

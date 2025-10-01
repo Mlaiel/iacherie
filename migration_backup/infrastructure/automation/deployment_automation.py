@@ -1,12 +1,12 @@
 """
-Deployment Automation - Enterprise Deployment Strategies for Ainflue
+Deployment Automation - Enterprise Deployment Strategies for IA Chéries
 ==================================================================
 
 Advanced deployment automation supporting blue-green, canary, rolling updates,
 and zero-downtime deployments for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Payment Success Rate Tracker
+IA Chéries Platform - Payment Success Rate Tracker
 ===============================================
 
 Advanced payment success rate tracking system for monitoring payment
 gateway performance, failure analysis, and optimization recommendations
-for the Ainflue platform.
+for the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

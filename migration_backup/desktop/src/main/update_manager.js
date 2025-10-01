@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Update Manager
+ * IA Chéries Desktop - Update Manager
  * 
  * Advanced auto-update system with security validation and rollback capabilities
  * Implements professional update distribution with integrity verification
@@ -45,7 +45,7 @@ class UpdateManager {
     autoUpdater.setFeedURL({
       provider: 'github',
       owner: 'Mlaiel',
-      repo: 'Ainflue',
+      repo: 'IA Chéries',
       private: false,
       releaseType: 'release'
     });
@@ -284,7 +284,7 @@ class UpdateManager {
       const result = await dialog.showMessageBox(this.mainWindow, {
         type: 'question',
         title: 'Install Update',
-        message: `Install Ainflue Studio v${this.updateInfo.version}?`,
+        message: `Install IA Chéries Studio v${this.updateInfo.version}?`,
         detail: 'The application will restart to complete the installation.',
         buttons: ['Install Now', 'Install Later'],
         defaultId: 0,
@@ -462,7 +462,7 @@ class UpdateManager {
     if (Notification.isSupported()) {
       new Notification({
         title: 'Update Available',
-        body: `Ainflue Studio v${info.version} is available`,
+        body: `IA Chéries Studio v${info.version} is available`,
         icon: path.join(__dirname, '../../assets/icon.png')
       }).show();
     }
@@ -500,7 +500,7 @@ class UpdateManager {
     await dialog.showMessageBox(this.mainWindow, {
       type: 'info',
       title: 'No Updates Available',
-      message: 'You are running the latest version of Ainflue Studio.',
+      message: 'You are running the latest version of IA Chéries Studio.',
       buttons: ['OK']
     });
   }

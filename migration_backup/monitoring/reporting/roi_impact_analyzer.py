@@ -1,7 +1,7 @@
 """ROI Impact Analyzer - Enterprise Creator Economy Return on Investment Analysis
 ==============================================================================
 
-Advanced ROI calculation and business impact analysis system for Ainflue Creator Economy platform.
+Advanced ROI calculation and business impact analysis system for IA Chéries Creator Economy platform.
 Provides feature ROI calculation, business impact measurement, investment analysis,
 cost-benefit analysis, and performance attribution.
 

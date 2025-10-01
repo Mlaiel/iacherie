@@ -1,4 +1,4 @@
-"""Ainflue Video Processing Configuration
+"""IA Chéries Video Processing Configuration
 =======================================
 
 Video processing configurations for video analysis, enhancement, format conversion,
@@ -556,5 +556,5 @@ __all__ = [
     "video_processing_config"
 ]
 
-logger.info("🎬 Ainflue Video Processing Configuration loaded")
+logger.info("🎬 IA Chéries Video Processing Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

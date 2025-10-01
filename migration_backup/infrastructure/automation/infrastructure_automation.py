@@ -1,12 +1,12 @@
 """
-Infrastructure Automation - Enterprise Auto-scaling and Resource Management for Ainflue
+Infrastructure Automation - Enterprise Auto-scaling and Resource Management for IA Chéries
 ====================================================================================
 
 Advanced infrastructure automation for auto-scaling, load balancing, resource optimization,
 and capacity planning for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

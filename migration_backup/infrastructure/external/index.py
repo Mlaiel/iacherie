@@ -1,10 +1,10 @@
 """
-External Module - Ainflue Infrastructure Enterprise
+External Module - IA Chéries Infrastructure Enterprise
 ==================================================
 Point d'entrée principal pour toutes les intégrations externes
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 2.0 Production
 """
 
@@ -25,10 +25,10 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise external integrations for Ainflue platform"
+__description__ = "Enterprise external integrations for IA Chéries platform"
 
-# Configuration intégrations métier Ainflue
-AINFLUE_EXTERNAL_WORKFLOW = {
+# Configuration intégrations métier IA Chéries
+IA CHÉRIES_EXTERNAL_WORKFLOW = {
     'upload': 'External content validation and enrichment APIs',
     'ai_processing': 'AI prompt optimization for 644 languages', 
     'protection': 'Blockchain and copyright protection APIs',

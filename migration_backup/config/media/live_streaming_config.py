@@ -1,9 +1,9 @@
-"""Ainflue Live Streaming Configuration - Enterprise Real-Time Streaming Platform
+"""IA Chéries Live Streaming Configuration - Enterprise Real-Time Streaming Platform
 ================================================================================
 
 Advanced live streaming configuration for enterprise-grade real-time content
 delivery, multi-protocol streaming, adaptive bitrate, global CDN integration,
-and professional broadcasting features for Ainflue's creator platform.
+and professional broadcasting features for IA Chéries's creator platform.
 
 Business Logic Integration:
 - Creator-specific streaming tiers and capabilities
@@ -184,7 +184,7 @@ class EnterpriseLiveStreamingConfiguration:
         """Load live streaming configuration settings"""
         return {
             "global_settings": {
-                "platform_name": "Ainflue Live",
+                "platform_name": "IA Chéries Live",
                 "max_concurrent_streams": 10000,
                 "default_cdn_provider": "cloudflare",
                 "backup_cdn_provider": "amazon_cloudfront",

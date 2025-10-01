@@ -538,7 +538,7 @@ provider "aws" {
   region = "us-west-2"
 }
 
-module "ainflue_infrastructure" {
+module "iacherie_infrastructure" {
   source = "./modules/infrastructure"
   
   environment = "production"

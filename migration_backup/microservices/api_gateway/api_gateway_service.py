@@ -246,7 +246,7 @@ class APIGatewayService:
     
     def __init__(self, name: str = "api_gateway"):
         self.name = name
-        self.app = FastAPI(title="Ainflue API Gateway", version="1.0.0")
+        self.app = FastAPI(title="IA Chéries API Gateway", version="1.0.0")
         self.routes: Dict[str, RouteConfiguration] = {}
         self.services: Dict[str, List[ServiceInstance]] = {}
         self.load_balancer = LoadBalancer()

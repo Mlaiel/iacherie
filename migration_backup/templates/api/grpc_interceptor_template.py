@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ gRPC Interceptor Template - Enterprise Microservices
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: IA Chéries Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -955,7 +955,7 @@ if __name__ == "__main__":
     
     # Run example
     print("gRPC Interceptor Template Example")
-    print("This demonstrates enterprise gRPC interceptors for the Ainflue platform")
+    print("This demonstrates enterprise gRPC interceptors for the IA Chéries platform")
     
     # Show metrics example
     creator_chain = setup_creator_interceptors()

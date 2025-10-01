@@ -1,6 +1,6 @@
-name: "🚀 Ainflue Platform - Main CI/CD Pipeline"
+name: "🚀 IA Chéries Platform - Main CI/CD Pipeline"
 
-# 🏗️ Ainflue Platform - Enterprise CI/CD Workflow
+# 🏗️ IA Chéries Platform - Enterprise CI/CD Workflow
 # Author: Fahed Mlaiel (mlaiel@live.de) 
 # Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 # License: Proprietary
@@ -534,7 +534,7 @@ jobs:
           status: ${{ job.status }}
           channel: '#ainflue-deployments'
           text: |
-            🚀 Ainflue Artifacts Module Deployment
+            🚀 IA Chéries Artifacts Module Deployment
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Status: ${{ job.status }}

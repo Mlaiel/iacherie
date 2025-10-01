@@ -318,7 +318,7 @@ class SDKImplementationValidator:
         report = self.report
         
         summary = f"""
-🏆 AINFLUE SDK IMPLEMENTATION SUMMARY
+🏆 IA CHÉRIES SDK IMPLEMENTATION SUMMARY
 {'=' * 50}
 
 📅 Generated: {report['timestamp']}
@@ -389,7 +389,7 @@ Business Logic Integration: ✅ COMPLETE
 
 def main():
     """Main validation function"""
-    sdk_path = "/home/runner/work/Ainflue/Ainflue/sdk"
+    sdk_path = "/home/runner/work/IA Chéries/IA Chéries/sdk"
     
     print("🔍 Validating SDK Implementation...")
     

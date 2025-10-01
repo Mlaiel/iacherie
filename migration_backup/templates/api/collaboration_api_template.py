@@ -1,4 +1,4 @@
-"""Collaboration API Template for Ainflue Platform
+"""Collaboration API Template for IA Chéries Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================

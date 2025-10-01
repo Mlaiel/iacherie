@@ -332,7 +332,7 @@ class DockerInfrastructureOrchestrator:
         }
         
         try:
-            backup_dir = Path(f"/tmp/ainflue_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+            backup_dir = Path(f"/tmp/iacherie_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
             backup_dir.mkdir(parents=True, exist_ok=True)
             backup_report["backup_path"] = str(backup_dir)
             

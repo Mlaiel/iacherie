@@ -1,6 +1,6 @@
 # 🤖 AI/ML Monitoring Configuration - Creator Economy
 # =================================================
-# Configuration monitoring IA/ML pour processing contenu Creator Economy Ainflue
+# Configuration monitoring IA/ML pour processing contenu Creator Economy IA Chéries
 # Surveillance intelligente modèles ML, inférence temps réel et pipeline données
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +21,7 @@
 version: "2.0.0"
 metadata:
   name: "ai-ml-monitoring-creator-economy"
-  description: "Monitoring IA/ML Creator Economy Ainflue"
+  description: "Monitoring IA/ML Creator Economy IA Chéries"
   created_by: "Fahed Mlaiel"
   created_date: "2025-01-08"
   compliance_level: "enterprise"

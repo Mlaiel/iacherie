@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🧪 TESTING ENGINES ENTERPRISE - AINFLUE QUALITY MODULE
+🧪 TESTING ENGINES ENTERPRISE - IA CHÉRIES QUALITY MODULE
 ======================================================
 
 Hub moteurs testing enterprise pour l'écosystème IA Influencer Agent.

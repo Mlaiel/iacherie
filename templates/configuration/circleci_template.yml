@@ -1,4 +1,4 @@
-# CircleCI Configuration Template for Ainflue Platform
+# CircleCI Configuration Template for iacherie Platform
 # Comprehensive CI/CD pipeline using CircleCI
 
 version: 2.1
@@ -35,7 +35,7 @@ executors:
       - image: cimg/node:18.17
       - image: cimg/postgres:13.11
         environment:
-          POSTGRES_DB: ainflue_test
+          POSTGRES_DB: iacherie_test
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
       - image: cimg/redis:7.0
@@ -89,7 +89,7 @@ commands:
       - run:
           name: Setup Docker Buildx
           command: |
-            docker buildx create --name ainflue-builder --use
+            docker buildx create --name iacherie-builder --use
             docker buildx inspect --bootstrap
 
 # Jobs - individual tasks in the pipeline
@@ -209,7 +209,7 @@ jobs:
       - run:
           name: Run integration tests
           command: |
-            export DATABASE_URL="postgresql://test_user:test_password@localhost:5432/ainflue_test"
+            export DATABASE_URL="postgresql://test_user:test_password@localhost:5432/iacherie_test"
             export REDIS_URL="redis://localhost:6379"
             npm run test:integration
           environment:
@@ -264,8 +264,8 @@ jobs:
             cd services/api
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-api:latest \
+              --tag $DOCKER_REGISTRY_URL/iacherie-api:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/iacherie-api:latest \
               --push .
       - run:
           name: Build and push Web image
@@ -273,8 +273,8 @@ jobs:
             cd services/web
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-web:latest \
+              --tag $DOCKER_REGISTRY_URL/iacherie-web:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/iacherie-web:latest \
               --push .
       - run:
           name: Build and push ML image
@@ -282,8 +282,8 @@ jobs:
             cd services/ml
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1 \
-              --tag $DOCKER_REGISTRY_URL/ainflue-ml:latest \
+              --tag $DOCKER_REGISTRY_URL/iacherie-ml:$CIRCLE_SHA1 \
+              --tag $DOCKER_REGISTRY_URL/iacherie-ml:latest \
               --push .
 
   # Container security scanning
@@ -305,10 +305,10 @@ jobs:
             echo $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USERNAME --password-stdin $DOCKER_REGISTRY_URL
             
             for service in api web ml; do
-              echo "Scanning ainflue-${service} image..."
+              echo "Scanning iacherie-${service} image..."
               trivy image --security-checks vuln --severity HIGH,CRITICAL \
                 --format sarif --output ${service}-security-report.sarif \
-                $DOCKER_REGISTRY_URL/ainflue-${service}:$CIRCLE_SHA1
+                $DOCKER_REGISTRY_URL/iacherie-${service}:$CIRCLE_SHA1
             done
       - store_artifacts:
           path: ./*-security-report.sarif
@@ -325,17 +325,17 @@ jobs:
             echo $KUBE_CONFIG | base64 -d > ~/.kube/config
             
             # Update image tags in manifests
-            sed -i "s|image: .*ainflue-api.*|image: $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1|g" kubernetes/staging/api-deployment.yaml
-            sed -i "s|image: .*ainflue-web.*|image: $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1|g" kubernetes/staging/web-deployment.yaml
-            sed -i "s|image: .*ainflue-ml.*|image: $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1|g" kubernetes/staging/ml-deployment.yaml
+            sed -i "s|image: .*iacherie-api.*|image: $DOCKER_REGISTRY_URL/iacherie-api:$CIRCLE_SHA1|g" kubernetes/staging/api-deployment.yaml
+            sed -i "s|image: .*iacherie-web.*|image: $DOCKER_REGISTRY_URL/iacherie-web:$CIRCLE_SHA1|g" kubernetes/staging/web-deployment.yaml
+            sed -i "s|image: .*iacherie-ml.*|image: $DOCKER_REGISTRY_URL/iacherie-ml:$CIRCLE_SHA1|g" kubernetes/staging/ml-deployment.yaml
             
             # Apply deployments
-            kubectl apply -f kubernetes/staging/ --namespace=ainflue-staging
+            kubectl apply -f kubernetes/staging/ --namespace=iacherie-staging
             
             # Wait for rollout
-            kubectl rollout status deployment/ainflue-api --namespace=ainflue-staging --timeout=300s
-            kubectl rollout status deployment/ainflue-web --namespace=ainflue-staging --timeout=300s
-            kubectl rollout status deployment/ainflue-ml --namespace=ainflue-staging --timeout=300s
+            kubectl rollout status deployment/iacherie-api --namespace=iacherie-staging --timeout=300s
+            kubectl rollout status deployment/iacherie-web --namespace=iacherie-staging --timeout=300s
+            kubectl rollout status deployment/iacherie-ml --namespace=iacherie-staging --timeout=300s
 
   # E2E tests on staging
   e2e-tests-staging:
@@ -349,8 +349,8 @@ jobs:
       - run:
           name: Run E2E tests
           command: |
-            export API_BASE_URL="https://api.staging.ainflue.com"
-            export WEB_BASE_URL="https://staging.ainflue.com"
+            export API_BASE_URL="https://api.staging.iacherie.com"
+            export WEB_BASE_URL="https://staging.iacherie.com"
             npm run test:e2e:staging
       - store_test_results:
           path: ./e2e-test-results.xml
@@ -372,7 +372,7 @@ jobs:
       - run:
           name: Run performance tests
           command: |
-            export API_BASE_URL="https://api.staging.ainflue.com"
+            export API_BASE_URL="https://api.staging.iacherie.com"
             k6 run --vus 50 --duration 5m performance/load-test.js
             k6 run --vus 100 --duration 2m performance/stress-test.js
       - store_artifacts:
@@ -390,17 +390,17 @@ jobs:
             echo $KUBE_CONFIG | base64 -d > ~/.kube/config
             
             # Update image tags in manifests
-            sed -i "s|image: .*ainflue-api.*|image: $DOCKER_REGISTRY_URL/ainflue-api:$CIRCLE_SHA1|g" kubernetes/production/api-deployment.yaml
-            sed -i "s|image: .*ainflue-web.*|image: $DOCKER_REGISTRY_URL/ainflue-web:$CIRCLE_SHA1|g" kubernetes/production/web-deployment.yaml
-            sed -i "s|image: .*ainflue-ml.*|image: $DOCKER_REGISTRY_URL/ainflue-ml:$CIRCLE_SHA1|g" kubernetes/production/ml-deployment.yaml
+            sed -i "s|image: .*iacherie-api.*|image: $DOCKER_REGISTRY_URL/iacherie-api:$CIRCLE_SHA1|g" kubernetes/production/api-deployment.yaml
+            sed -i "s|image: .*iacherie-web.*|image: $DOCKER_REGISTRY_URL/iacherie-web:$CIRCLE_SHA1|g" kubernetes/production/web-deployment.yaml
+            sed -i "s|image: .*iacherie-ml.*|image: $DOCKER_REGISTRY_URL/iacherie-ml:$CIRCLE_SHA1|g" kubernetes/production/ml-deployment.yaml
             
             # Apply deployments
-            kubectl apply -f kubernetes/production/ --namespace=ainflue-production
+            kubectl apply -f kubernetes/production/ --namespace=iacherie-production
             
             # Wait for rollout
-            kubectl rollout status deployment/ainflue-api --namespace=ainflue-production --timeout=600s
-            kubectl rollout status deployment/ainflue-web --namespace=ainflue-production --timeout=600s
-            kubectl rollout status deployment/ainflue-ml --namespace=ainflue-production --timeout=600s
+            kubectl rollout status deployment/iacherie-api --namespace=iacherie-production --timeout=600s
+            kubectl rollout status deployment/iacherie-web --namespace=iacherie-production --timeout=600s
+            kubectl rollout status deployment/iacherie-ml --namespace=iacherie-production --timeout=600s
 
   # Production smoke tests
   smoke-tests-production:
@@ -411,8 +411,8 @@ jobs:
       - run:
           name: Run production smoke tests
           command: |
-            export API_BASE_URL="https://api.ainflue.com"
-            export WEB_BASE_URL="https://app.ainflue.com"
+            export API_BASE_URL="https://api.iacherie.com"
+            export WEB_BASE_URL="https://app.iacherie.com"
             npm run test:smoke:production
       - store_test_results:
           path: ./smoke-test-results.xml
@@ -425,7 +425,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "✅ *Ainflue deployment to production successful!*\n\n*Build:* $CIRCLE_BUILD_NUM\n*Commit:* $CIRCLE_SHA1\n*Branch:* $CIRCLE_BRANCH\n*Author:* $CIRCLE_USERNAME"
+                    "text": "✅ *iacherie deployment to production successful!*\n\n*Build:* $CIRCLE_BUILD_NUM\n*Commit:* $CIRCLE_SHA1\n*Branch:* $CIRCLE_BRANCH\n*Author:* $CIRCLE_USERNAME"
                   }
                 }
               ]

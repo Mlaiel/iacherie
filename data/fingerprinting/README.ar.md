@@ -155,7 +155,7 @@ python main.py
 
 ### 💻 الاستخدام الأساسي
 ```python
-from data.fingerprinting import EnterpriseAinflueFingerprintingOrchestrator
+from data.fingerprinting import EnterpriseiacherieFingerprintingOrchestrator
 
 # إنشاء منسق النظام
 orchestrator = await create_enterprise_fingerprinting_system()

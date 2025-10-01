@@ -885,7 +885,7 @@ class EnterpriseAPIVersioningManager:
 
 
 # IA Chérie Business Logic Integration Constants
-AINFLUE_API_EVOLUTION_PATTERNS = {
+IACHERIE_API_EVOLUTION_PATTERNS = {
     'creator_api_evolution': {
         'v1': 'basic_content_upload + platform_auth',
         'v2': 'multi_platform + collaboration + basic_monetization',

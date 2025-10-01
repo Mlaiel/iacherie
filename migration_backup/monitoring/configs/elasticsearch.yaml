@@ -1,4 +1,4 @@
-# Elasticsearch Configuration for Ainflue Platform
+# Elasticsearch Configuration for IA Chéries Platform
 # ELK Stack configuration for centralized logging
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -151,7 +151,7 @@ data:
     indices.query.bool.max_clause_count: 10000
     search.max_buckets: 100000
     
-    # Index templates for Ainflue logs
+    # Index templates for IA Chéries logs
     index.number_of_shards: 1
     index.number_of_replicas: 0
     index.refresh_interval: 30s
@@ -281,7 +281,7 @@ data:
         }
       }
       
-      # Parse Ainflue application logs
+      # Parse IA Chéries application logs
       if [service_name] =~ /^ainflue-/ {
         mutate {
           add_field => { "application" => "ainflue" }

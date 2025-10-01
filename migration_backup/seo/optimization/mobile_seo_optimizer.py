@@ -1,5 +1,5 @@
 """
-Mobile SEO Optimizer for Ainflue Platform
+Mobile SEO Optimizer for IA Chéries Platform
 Advanced mobile-first SEO optimization and mobile search optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -778,7 +778,7 @@ class MobileSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_mobile_seo_optimizer() -> MobileSEOOptimizer:
-    """Create configured mobile SEO optimizer for Ainflue"""
+    """Create configured mobile SEO optimizer for IA Chéries"""
     return MobileSEOOptimizer()
 
 

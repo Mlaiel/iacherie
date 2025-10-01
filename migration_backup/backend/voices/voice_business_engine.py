@@ -3,7 +3,7 @@
 
 Consolidated business engine providing monetization, brand management,
 partnership matching, and comprehensive business intelligence for voice
-content creators in the Ainflue ecosystem.
+content creators in the IA Chéries ecosystem.
 
 Consolidates:
 - Voice monetization engine with multiple revenue streams

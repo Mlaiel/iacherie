@@ -1,6 +1,6 @@
 """
 Google Cloud Platform Infrastructure Provider
-Enterprise-grade GCP infrastructure management for Ainflue platform
+Enterprise-grade GCP infrastructure management for iacherie platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -131,7 +131,7 @@ class GCPProvider:
         self.clients = {}
         self._initialize_clients()
         
-        # Ainflue-specific configurations
+        # iacherie-specific configurations
         self.creator_services = {
             "content_processing": {
                 "machine_type": "n1-standard-4",
@@ -198,7 +198,7 @@ class GCPProvider:
             return self._simulate_compute_creation(instance_name, config)
             
         try:
-            # Instance configuration for Ainflue content processing
+            # Instance configuration for iacherie content processing
             instance_config = {
                 'name': instance_name,
                 'machine_type': f"zones/{config.zone}/machineTypes/{config.machine_type}",
@@ -217,13 +217,13 @@ class GCPProvider:
                 }],
                 'metadata': {
                     'items': [
-                        {'key': 'startup-script', 'value': self._get_ainflue_startup_script()},
-                        {'key': 'creator-platform', 'value': 'ainflue'},
+                        {'key': 'startup-script', 'value': self._get_iacherie_startup_script()},
+                        {'key': 'creator-platform', 'value': 'iacherie'},
                         {'key': 'content-processing', 'value': 'enabled'}
                     ]
                 },
                 'labels': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'creator-economy': 'true',
                     **config.labels
                 },
@@ -255,7 +255,7 @@ class GCPProvider:
             return self._simulate_gke_creation(config)
             
         try:
-            # GKE cluster optimized for Ainflue creator workloads
+            # GKE cluster optimized for iacherie creator workloads
             cluster_config = {
                 'name': config.cluster_name,
                 'initial_node_count': config.node_count,
@@ -266,13 +266,13 @@ class GCPProvider:
                         'https://www.googleapis.com/auth/cloud-platform'
                     ],
                     'labels': {
-                        'platform': 'ainflue',
+                        'platform': 'iacherie',
                         'content-processing': 'enabled',
                         'creator-services': 'true'
                     },
                     'metadata': {
                         'disable-legacy-endpoints': 'true',
-                        'creator-platform': 'ainflue'
+                        'creator-platform': 'iacherie'
                     }
                 },
                 'addons_config': {
@@ -338,7 +338,7 @@ class GCPProvider:
             return self._simulate_cloudsql_creation(config)
             
         try:
-            # Cloud SQL configuration for Ainflue creator data
+            # Cloud SQL configuration for iacherie creator data
             sql_config = {
                 'name': config.instance_id,
                 'database_version': config.database_version,
@@ -373,7 +373,7 @@ class GCPProvider:
                         'update_track': 'stable'
                     },
                     'user_labels': {
-                        'platform': 'ainflue',
+                        'platform': 'iacherie',
                         'environment': 'production',
                         'creator-data': 'true'
                     }
@@ -409,7 +409,7 @@ class GCPProvider:
             bucket.storage_class = config.storage_class
             bucket.location = config.location
             
-            # Ainflue creator content storage configuration
+            # iacherie creator content storage configuration
             if config.versioning_enabled:
                 bucket.versioning_enabled = True
                 
@@ -446,7 +446,7 @@ class GCPProvider:
                 
             # Labels for organization
             bucket.labels = {
-                'platform': 'ainflue',
+                'platform': 'iacherie',
                 'content-type': 'creator-uploads',
                 'cost-center': 'infrastructure'
             }
@@ -467,7 +467,7 @@ class GCPProvider:
             raise
             
     async def setup_ai_platform_environment(self, region: str = "us-central1") -> Dict[str, Any]:
-        """Setup AI Platform environment for Ainflue ML workloads"""
+        """Setup AI Platform environment for iacherie ML workloads"""
         if not GCP_AVAILABLE:
             return self._simulate_ai_platform_setup(region)
             
@@ -475,7 +475,7 @@ class GCPProvider:
             # Configure AI Platform for creator content analysis
             config = {
                 'region': region,
-                'staging_bucket': f"gs://ainflue-ml-staging-{self.project_id}",
+                'staging_bucket': f"gs://iacherie-ml-staging-{self.project_id}",
                 'training': {
                     'machine_type': 'n1-standard-4',
                     'accelerator_type': 'NVIDIA_TESLA_T4',
@@ -516,13 +516,13 @@ class GCPProvider:
             return self._simulate_pubsub_creation(topic_name, subscription_name)
             
         try:
-            # Create topic for Ainflue real-time events
+            # Create topic for iacherie real-time events
             topic_path = self.clients['pubsub'].topic_path(self.project_id, topic_name)
             
             topic_config = {
                 'name': topic_path,
                 'labels': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'event-type': 'creator-activity',
                     'real-time': 'true'
                 }
@@ -551,7 +551,7 @@ class GCPProvider:
                         'ack_deadline_seconds': 60,
                         'message_retention_duration': {'seconds': 604800},  # 7 days
                         'labels': {
-                            'platform': 'ainflue',
+                            'platform': 'iacherie',
                             'subscriber-type': 'creator-events'
                         }
                     }
@@ -569,11 +569,11 @@ class GCPProvider:
             logger.error(f"Failed to create Pub/Sub topic {topic_name}: {e}")
             raise
             
-    def _get_ainflue_startup_script(self) -> str:
-        """Get startup script for Ainflue compute instances"""
+    def _get_iacherie_startup_script(self) -> str:
+        """Get startup script for iacherie compute instances"""
         return """#!/bin/bash
         
-        # Ainflue Creator Platform Instance Setup
+        # iacherie Creator Platform Instance Setup
         apt-get update
         apt-get install -y docker.io nginx python3-pip
         
@@ -581,8 +581,8 @@ class GCPProvider:
         pip3 install tensorflow opencv-python pillow ffmpeg-python
         
         # Configure for creator uploads
-        mkdir -p /opt/ainflue/{uploads,processing,cache}
-        chown -R www-data:www-data /opt/ainflue
+        mkdir -p /opt/iacherie/{uploads,processing,cache}
+        chown -R www-data:www-data /opt/iacherie
         
         # Setup monitoring agent
         curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
@@ -593,7 +593,7 @@ class GCPProvider:
         systemctl start docker nginx
         
         # Creator platform ready
-        echo "Ainflue creator processing node ready" > /opt/ainflue/status
+        echo "iacherie creator processing node ready" > /opt/iacherie/status
         """
         
     def _simulate_compute_creation(self, instance_name: str, 
@@ -755,9 +755,9 @@ class GCPProvider:
         cleaned_resources = []
         
         try:
-            # Default filter for Ainflue resources
+            # Default filter for iacherie resources
             if not resource_filter:
-                resource_filter = {'platform': 'ainflue'}
+                resource_filter = {'platform': 'iacherie'}
                 
             # Cleanup compute instances
             zones = [zone.value for zone in GCPZone]
@@ -804,18 +804,18 @@ class GCPProvider:
                 
         return True
         
-    def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized GCP configurations"""
+    def get_iacherie_optimized_configs(self) -> Dict[str, Any]:
+        """Get iacherie-optimized GCP configurations"""
         return {
             'content_processing': {
                 'compute': GCPComputeConfig(
                     machine_type="n1-standard-4",
                     zone=GCPZone.US_CENTRAL1_A.value,
                     boot_disk_size=50,
-                    labels={'service': 'content-processing', 'platform': 'ainflue'}
+                    labels={'service': 'content-processing', 'platform': 'iacherie'}
                 ),
                 'storage': GCPStorageConfig(
-                    bucket_name=f"ainflue-content-{self.project_id}",
+                    bucket_name=f"iacherie-content-{self.project_id}",
                     storage_class="STANDARD",
                     versioning_enabled=True
                 )
@@ -825,10 +825,10 @@ class GCPProvider:
                     machine_type="n1-highmem-8",
                     zone=GCPZone.US_CENTRAL1_A.value,
                     boot_disk_size=100,
-                    labels={'service': 'ai-processing', 'platform': 'ainflue'}
+                    labels={'service': 'ai-processing', 'platform': 'iacherie'}
                 ),
                 'gke': GKEClusterConfig(
-                    cluster_name=f"ainflue-ai-cluster",
+                    cluster_name=f"iacherie-ai-cluster",
                     machine_type="n1-standard-4",
                     node_count=3,
                     auto_scaling=True,
@@ -837,7 +837,7 @@ class GCPProvider:
             },
             'database': {
                 'cloudsql': CloudSQLConfig(
-                    instance_id=f"ainflue-db-{self.project_id}",
+                    instance_id=f"iacherie-db-{self.project_id}",
                     database_version="POSTGRES_13",
                     tier="db-custom-4-16384",
                     high_availability=True,

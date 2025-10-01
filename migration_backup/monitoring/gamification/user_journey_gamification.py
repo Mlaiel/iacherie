@@ -1,7 +1,7 @@
 """
 User Journey Gamification - Enterprise Gamification for User Experience Optimization
 
-This module implements comprehensive user journey gamification for the Ainflue platform,
+This module implements comprehensive user journey gamification for the IA Chéries platform,
 providing personalized gamification experiences, journey optimization, and behavioral analytics.
 
 Author: Fahed Mlaiel

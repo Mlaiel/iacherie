@@ -5,7 +5,7 @@
 
 #!/usr/bin/env python3
 """
-API Documentation Generator - Ainflue Platform
+API Documentation Generator - IA Chéries Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Backend Senior + DevOps Engineer + Lead Dev IA
 Purpose: Enterprise API documentation generation and validation
@@ -35,7 +35,7 @@ class APIDocumentationGenerator:
     """Enterprise API documentation generator for FastAPI and Python services"""
     
     def __init__(self, project_root: Path = None):
-        self.project_root = project_root or Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = project_root or Path("/home/runner/work/IA Chéries/IA Chéries")
         self.docs_output = self.project_root / "docs" / "api"
         self.docs_output.mkdir(parents=True, exist_ok=True)
         
@@ -308,7 +308,7 @@ class APIDocumentationGenerator:
         schema = {
             "openapi": "3.0.0",
             "info": {
-                "title": "Ainflue Platform API",
+                "title": "IA Chéries Platform API",
                 "version": "1.0.0",
                 "description": "Enterprise AI-powered content protection and monetization platform",
                 "contact": {
@@ -317,7 +317,7 @@ class APIDocumentationGenerator:
                 },
                 "license": {
                     "name": "Proprietary",
-                    "url": "https://github.com/Mlaiel/Ainfluencer"
+                    "url": "https://github.com/Mlaiel/IA Chéries"
                 }
             },
             "servers": [
@@ -442,13 +442,13 @@ class APIDocumentationGenerator:
     
     def generate_markdown_documentation(self) -> str:
         """Generate comprehensive Markdown documentation"""
-        doc_content = f"""# Ainflue Platform API Documentation
+        doc_content = f"""# IA Chéries Platform API Documentation
 
 Generated on: {datetime.now().isoformat()}
 
 ## Overview
 
-The Ainflue Platform API provides comprehensive endpoints for AI-powered content protection and monetization. This documentation covers all available REST endpoints, WebSocket connections, and data models.
+The IA Chéries Platform API provides comprehensive endpoints for AI-powered content protection and monetization. This documentation covers all available REST endpoints, WebSocket connections, and data models.
 
 ## Authentication
 
@@ -611,7 +611,7 @@ async def main():
     """Main API documentation generator execution"""
     generator = APIDocumentationGenerator()
     
-    print("📚 API Documentation Generator - Ainflue Platform")
+    print("📚 API Documentation Generator - IA Chéries Platform")
     print("=" * 50)
     
     # Generate comprehensive documentation

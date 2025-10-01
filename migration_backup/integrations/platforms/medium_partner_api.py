@@ -73,7 +73,7 @@ class MediumAPIError(Exception):
 
 class MediumPartnerAPI:
     """
-    Comprehensive Medium Partner API integration for Ainflue platform.
+    Comprehensive Medium Partner API integration for IA Chéries platform.
     
     Features:
     - Article publishing and management

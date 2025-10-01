@@ -63,7 +63,7 @@ class APIClient {
 
       // Add client information
       config.headers = config.headers || {};
-      config.headers['X-Client'] = 'Ainflue-Desktop';
+      config.headers['X-Client'] = 'IA Chéries-Desktop';
       config.headers['X-Client-Version'] = '1.0.0';
       config.headers['Content-Type'] = 'application/json';
 
@@ -303,7 +303,7 @@ class APIClient {
     });
   }
 
-  // API Endpoints for Ainflue Business Logic
+  // API Endpoints for IA Chéries Business Logic
 
   /**
    * Authentication endpoints

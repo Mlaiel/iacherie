@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "Comprehensive business metrics dashboard for Ainflue platform monitoring revenue, user engagement, and platform performance.",
+  "description": "Comprehensive business metrics dashboard for IA Chéries platform monitoring revenue, user engagement, and platform performance.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
@@ -726,7 +726,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Ainflue Business Metrics Dashboard",
+  "title": "IA Chéries Business Metrics Dashboard",
   "uid": "ainflue-business-metrics",
   "version": 1
 }

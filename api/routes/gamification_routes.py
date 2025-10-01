@@ -325,7 +325,7 @@ async def get_achievements(
             points_reward=100,
             badge_id="badge_newcomer",
             rarity=BadgeRarity.COMMON,
-            icon_url="https://cdn.ainflue.com/achievements/first_upload.png"
+            icon_url="https://cdn.iacherie.com/achievements/first_upload.png"
         ),
         Achievement(
             id="ach_100_uploads",
@@ -336,7 +336,7 @@ async def get_achievements(
             points_reward=1000,
             badge_id="badge_creator",
             rarity=BadgeRarity.UNCOMMON,
-            icon_url="https://cdn.ainflue.com/achievements/100_uploads.png"
+            icon_url="https://cdn.iacherie.com/achievements/100_uploads.png"
         ),
         Achievement(
             id="ach_revenue_10k",
@@ -347,7 +347,7 @@ async def get_achievements(
             points_reward=2500,
             badge_id="badge_earner",
             rarity=BadgeRarity.RARE,
-            icon_url="https://cdn.ainflue.com/achievements/revenue_10k.png"
+            icon_url="https://cdn.iacherie.com/achievements/revenue_10k.png"
         ),
         Achievement(
             id="ach_collaboration_master",
@@ -358,7 +358,7 @@ async def get_achievements(
             points_reward=1500,
             badge_id="badge_collaborator",
             rarity=BadgeRarity.EPIC,
-            icon_url="https://cdn.ainflue.com/achievements/collab_master.png"
+            icon_url="https://cdn.iacherie.com/achievements/collab_master.png"
         ),
         Achievement(
             id="ach_protection_hero",
@@ -369,7 +369,7 @@ async def get_achievements(
             points_reward=2000,
             badge_id="badge_protector",
             rarity=BadgeRarity.LEGENDARY,
-            icon_url="https://cdn.ainflue.com/achievements/protection_hero.png",
+            icon_url="https://cdn.iacherie.com/achievements/protection_hero.png",
             is_secret=True
         )
     ]
@@ -401,7 +401,7 @@ async def get_achievement_details(
         points_reward=5000,
         badge_id="badge_viral",
         rarity=BadgeRarity.LEGENDARY,
-        icon_url="https://cdn.ainflue.com/achievements/viral_creator.png",
+        icon_url="https://cdn.iacherie.com/achievements/viral_creator.png",
         progress_trackable=True,
         max_progress=1000000
     )
@@ -443,9 +443,9 @@ async def get_badges(
         Badge(
             id="badge_newcomer",
             name="Newcomer",
-            description="Welcome to the Ainflue platform!",
+            description="Welcome to the iacherie platform!",
             rarity=BadgeRarity.COMMON,
-            icon_url="https://cdn.ainflue.com/badges/newcomer.png",
+            icon_url="https://cdn.iacherie.com/badges/newcomer.png",
             points_value=100,
             earned_count=15420
         ),
@@ -454,7 +454,7 @@ async def get_badges(
             name="Content Creator",
             description="Dedicated content creator with 100+ uploads",
             rarity=BadgeRarity.UNCOMMON,
-            icon_url="https://cdn.ainflue.com/badges/creator.png",
+            icon_url="https://cdn.iacherie.com/badges/creator.png",
             points_value=500,
             earned_count=2850
         ),
@@ -463,22 +463,22 @@ async def get_badges(
             name="Master Collaborator",
             description="Expert at creator collaborations",
             rarity=BadgeRarity.EPIC,
-            icon_url="https://cdn.ainflue.com/badges/collaborator.png",
+            icon_url="https://cdn.iacherie.com/badges/collaborator.png",
             points_value=1500,
             earned_count=156,
-            nft_metadata={"contract": "0x...", "collection": "Ainflue Badges"}
+            nft_metadata={"contract": "0x...", "collection": "iacherie Badges"}
         ),
         Badge(
             id="badge_protector",
             name="Content Protector",
             description="Guardian of intellectual property",
             rarity=BadgeRarity.LEGENDARY,
-            icon_url="https://cdn.ainflue.com/badges/protector.png",
+            icon_url="https://cdn.iacherie.com/badges/protector.png",
             points_value=2500,
             earned_count=23,
             is_limited_edition=True,
             max_supply=100,
-            nft_metadata={"contract": "0x...", "collection": "Ainflue Elite"}
+            nft_metadata={"contract": "0x...", "collection": "iacherie Elite"}
         )
     ]
     
@@ -551,7 +551,7 @@ async def get_leaderboard(
         entries.append(LeaderboardEntry(
             user_id=f"user_{i+1:03d}",
             username=f"Creator{i+1}",
-            avatar_url=f"https://avatars.ainflue.com/user_{i+1}.jpg",
+            avatar_url=f"https://avatars.iacherie.com/user_{i+1}.jpg",
             rank=rank,
             score=score,
             tier=TierLevel.GOLD if rank <= 10 else TierLevel.SILVER if rank <= 50 else TierLevel.BRONZE,
@@ -758,7 +758,7 @@ async def get_rewards_store(
             value="10GB_30days",
             cost_points=1000,
             rarity=BadgeRarity.COMMON,
-            icon_url="https://cdn.ainflue.com/rewards/storage_boost.png",
+            icon_url="https://cdn.iacherie.com/rewards/storage_boost.png",
             stock_available=50,
             stock_total=100
         ),
@@ -770,7 +770,7 @@ async def get_rewards_store(
             value="double_7days",
             cost_points=750,
             rarity=BadgeRarity.UNCOMMON,
-            icon_url="https://cdn.ainflue.com/rewards/api_boost.png"
+            icon_url="https://cdn.iacherie.com/rewards/api_boost.png"
         ),
         Reward(
             id="reward_premium_month",
@@ -780,7 +780,7 @@ async def get_rewards_store(
             value="premium_30days",
             cost_points=5000,
             rarity=BadgeRarity.RARE,
-            icon_url="https://cdn.ainflue.com/rewards/premium.png",
+            icon_url="https://cdn.iacherie.com/rewards/premium.png",
             stock_available=10,
             stock_total=20,
             expiration_date=datetime.utcnow() + timedelta(days=30)
@@ -793,7 +793,7 @@ async def get_rewards_store(
             value="exclusive_creator_001",
             cost_points=10000,
             rarity=BadgeRarity.LEGENDARY,
-            icon_url="https://cdn.ainflue.com/nfts/exclusive_creator.png",
+            icon_url="https://cdn.iacherie.com/nfts/exclusive_creator.png",
             is_limited=True,
             stock_available=2,
             stock_total=10

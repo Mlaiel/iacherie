@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script de démarrage Ainfluencer avec chargement automatique des variables d'environnement
+Script de démarrage IA Chéries avec chargement automatique des variables d'environnement
 """
 
 # Suppress warnings FIRST
@@ -56,7 +56,7 @@ def load_env_file():
     return True
 
 if __name__ == "__main__":
-    print("🚀 Démarrage d'Ainfluencer avec APIs externes...")
+    print("🚀 Démarrage d'IA Chéries avec APIs externes...")
     
     # Charger les variables d'environnement
     if not load_env_file():
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         print("⚠️ Certaines fonctionnalités peuvent être limitées")
     
     # Lancer le serveur principal
-    print("🎯 Lancement du serveur Ainfluencer...")
+    print("🎯 Lancement du serveur IA Chéries...")
     
     try:
         import main

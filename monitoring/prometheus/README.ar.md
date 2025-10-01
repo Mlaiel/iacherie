@@ -71,10 +71,10 @@
 ### 🔧 التكوين
 
 #### اتفاقية تسمية المقاييس
-- **مقاييس الأعمال**: `ainflue_creator_{metric_name}`
-- **المقاييس التقنية**: `ainflue_system_{metric_name}`
-- **مقاييس الذكاء الاصطناعي**: `ainflue_ai_{metric_name}`
-- **مقاييس الأمان**: `ainflue_security_{metric_name}`
+- **مقاييس الأعمال**: `iacherie_creator_{metric_name}`
+- **المقاييس التقنية**: `iacherie_system_{metric_name}`
+- **مقاييس الذكاء الاصطناعي**: `iacherie_ai_{metric_name}`
+- **مقاييس الأمان**: `iacherie_security_{metric_name}`
 
 #### مستويات شدة التنبيه
 - **P1 حرج**: تأثير الإيرادات >10 آلاف يورو/ساعة، >1000 مبدع متأثر

@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION ENTERPRISE:
-Datasets spécialisés NLP pour agents IA de la plateforme Ainflue.
+Datasets spécialisés NLP pour agents IA de la plateforme IA Chéries.
 Support 15+ agents language avec datasets multilingues haute qualité.
 """
 

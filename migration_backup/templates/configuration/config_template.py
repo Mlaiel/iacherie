@@ -1,4 +1,4 @@
-"""{{config_name}} Configuration Template for Ainflue Platform
+"""{{config_name}} Configuration Template for IA Chéries Platform
 {{config_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -75,7 +75,7 @@ class {{config_name}}Config(BaseSettings):
     # ============================================================================
     
     # Basic application info
-    app_name: str = Field(default="Ainflue Platform", env="APP_NAME")
+    app_name: str = Field(default="IA Chéries Platform", env="APP_NAME")
     app_version: str = Field(default="1.0.0", env="APP_VERSION")
     environment: Environment = Field(default=Environment.DEVELOPMENT, env="ENVIRONMENT")
     debug: bool = Field(default=False, env="DEBUG")

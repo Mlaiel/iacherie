@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Performance Optimizer - Enterprise Cryptographic Performance Optimization System
-Production-grade performance optimization for Ainflue Creator Economy Platform
+Production-grade performance optimization for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -138,7 +138,7 @@ class KeyPerformanceOptimizer:
     """
     🔐 Key Performance Optimizer - Enterprise Cryptographic Performance System
     
-    Provides comprehensive performance optimization for Ainflue Creator Economy:
+    Provides comprehensive performance optimization for IA Chéries Creator Economy:
     - Intelligent caching strategies for frequently used keys
     - Batch processing optimization for bulk operations
     - Hardware acceleration detection and utilization

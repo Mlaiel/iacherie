@@ -1,5 +1,5 @@
 # Docker Configurations Module
-# Advanced configuration management for Ainflue Docker infrastructure
+# Advanced configuration management for IA Chéries Docker infrastructure
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 from .production import ProductionConfig

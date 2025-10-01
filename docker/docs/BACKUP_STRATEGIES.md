@@ -25,7 +25,7 @@ RETENTION_DAYS=30
 mkdir -p $BACKUP_DIR
 
 # Database backup
-docker exec iacherie-postgres pg_dump -U iacherie -d ainflue_prod > $BACKUP_DIR/backup_$DATE.sql
+docker exec iacherie-postgres pg_dump -U iacherie -d iacherie_prod > $BACKUP_DIR/backup_$DATE.sql
 
 # Compress backup
 gzip $BACKUP_DIR/backup_$DATE.sql

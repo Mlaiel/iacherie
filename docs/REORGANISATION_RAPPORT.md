@@ -42,7 +42,7 @@ Réorganisation complète de la structure du projet pour respecter les meilleure
 ### 🏢 Logique Métier
 - **Déplacés** :
   - `business_logic_core.py` → `business/`
-  - `ainflue_crawler_integration.py` → `core/`
+  - `iacherie_crawler_integration.py` → `core/`
 
 ### 🔄 Sauvegardes & Logs
 - **Création** : `backups/`, `logs/`

@@ -3,13 +3,13 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 """
-🔐 Enterprise Authentication Service Template - Ainflue
+🔐 Enterprise Authentication Service Template - iacherie
 =====================================================
 Template enterprise pour services authentication.
 JWT + OAuth2 + RBAC + MFA + audit logging + session management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -196,7 +196,7 @@ class AuthConfig:
     account_lockout_minutes: int = 30
     session_timeout_minutes: int = 1440  # 24 hours
     enable_mfa: bool = False
-    mfa_issuer: str = "Ainflue"
+    mfa_issuer: str = "iacherie"
     enable_audit_logging: bool = True
     password_history_count: int = 5
 
@@ -386,7 +386,7 @@ class AuthServiceTemplate(EnterpriseServiceBase):
                 raise ValueError("Auth config not initialized")
             
             self.auth_config.enable_mfa = True
-            self.auth_config.mfa_issuer = mfa_config.get('issuer', 'Ainflue')
+            self.auth_config.mfa_issuer = mfa_config.get('issuer', 'iacherie')
             
             self.logger.info("✅ MFA system configured")
             

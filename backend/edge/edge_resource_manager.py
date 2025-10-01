@@ -1,7 +1,7 @@
 """Edge Resource Manager
 ========================
 
-Gestionnaire de ressources edge ultra-efficace pour l'écosystème Ainflue.
+Gestionnaire de ressources edge ultra-efficace pour l'écosystème iacherie.
 Système avancé d'allocation dynamique, prédiction IA, optimisation coûts
 et équilibrage performance pour infrastructure edge enterprise.
 

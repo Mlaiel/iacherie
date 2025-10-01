@@ -2,7 +2,7 @@
 =============================================================================
 
 Système de fingerprinting audio enterprise avec identification de contenu,
-détection de copyright et protection intellectuelle pour Ainflue.
+détection de copyright et protection intellectuelle pour IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Algorithmes de fingerprinting + extraction de features audio

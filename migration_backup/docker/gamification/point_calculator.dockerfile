@@ -1,5 +1,5 @@
 # ===============================================
-# Point Calculator Dockerfile - Ainflue Platform
+# Point Calculator Dockerfile - IA Chéries Platform
 # ===============================================
 # Multi-stage Docker build for Point Calculation Service
 # Handles complex point calculations, bonuses, and scoring algorithms
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8089/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Point Calculator Service for Ainflue Gamification"
+LABEL description="Point Calculator Service for IA Chéries Gamification"
 
 EXPOSE 8089
 CMD ["python", "-m", "point_calculator.main"]

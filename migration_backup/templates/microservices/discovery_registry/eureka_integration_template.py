@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Eureka Integration Template for Ainflue Platform
+Eureka Integration Template for IA Chéries Platform
 ==============================================
 
 Production-ready Netflix Eureka integration with:
@@ -76,7 +76,7 @@ class EurekaInstance:
 
 class EurekaClient:
     """
-    Enhanced Eureka client for Ainflue Platform
+    Enhanced Eureka client for IA Chéries Platform
     
     Features:
     - Service registration with heartbeats
@@ -393,7 +393,7 @@ class EurekaClient:
 
 class EurekaIntegrationTemplate:
     """
-    Eureka Integration Template for Ainflue Platform
+    Eureka Integration Template for IA Chéries Platform
     
     A comprehensive Netflix Eureka integration that provides:
     - Service registration and discovery

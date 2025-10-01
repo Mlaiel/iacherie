@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Advanced Media Player
+ * IA Chéries Desktop - Advanced Media Player
  * 
  * Professional media player supporting multiple formats
  * Audio, video, live streams, playlists, and advanced controls

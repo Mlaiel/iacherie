@@ -1,4 +1,4 @@
-"""{{service_name}} Notification Service for Ainflue Platform
+"""{{service_name}} Notification Service for IA Chéries Platform
 {{service_description}}
 
 Enterprise-grade notification service with multi-channel delivery,
@@ -179,7 +179,7 @@ class NotificationResponse(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise Notification Service for Ainflue Platform
+    Enterprise Notification Service for IA Chéries Platform
     
     Handles comprehensive notification management including:
     - Multi-channel notification delivery
@@ -381,7 +381,7 @@ class {{service_class_name}}(BaseService):
                         'last_name': getattr(recipient, 'last_name', '')
                     },
                     'platform': {
-                        'name': 'Ainflue',
+                        'name': 'IA Chéries',
                         'url': settings.BASE_URL,
                         'support_email': settings.SUPPORT_EMAIL
                     },
@@ -590,7 +590,7 @@ class {{service_class_name}}(BaseService):
             # Create email message
             msg = MimeMultipart('alternative')
             msg['Subject'] = notification.subject
-            msg['From'] = f"Ainflue <{self.smtp_client['username']}>"
+            msg['From'] = f"IA Chéries <{self.smtp_client['username']}>"
             msg['To'] = recipient.email
             
             # Add content (support both text and HTML)
@@ -1283,7 +1283,7 @@ if __name__ == "__main__":
             channels=[NotificationChannel.EMAIL, NotificationChannel.IN_APP],
             notification_type=NotificationType.INFO,
             priority=NotificationPriority.NORMAL,
-            subject="Welcome to Ainflue!",
+            subject="Welcome to IA Chéries!",
             content="Thank you for joining our platform. Get started by uploading your first content.",
             data={"welcome_bonus": "$10"}
         )

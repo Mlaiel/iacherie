@@ -2,7 +2,7 @@
 ===========================================
 
 Complete Kubernetes infrastructure setup with all components
-integrated for the Ainflue platform deployment.
+integrated for the IA Chéries platform deployment.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

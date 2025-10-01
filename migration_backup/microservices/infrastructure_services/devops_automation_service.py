@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚙️ Enterprise DevOps Automation Service - Ainflue
+⚙️ Enterprise DevOps Automation Service - IA Chéries
 Comprehensive CI/CD, infrastructure automation, and deployment orchestration
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
@@ -212,7 +212,7 @@ class EnterpriseDevOpsAutomationService:
         enterprise_pipelines = {
             "microservices_ci_cd": {
                 "name": "Microservices CI/CD Pipeline",
-                "description": "Complete CI/CD for Ainflue microservices",
+                "description": "Complete CI/CD for IA Chéries microservices",
                 "triggers": ["push", "pull_request", "schedule"],
                 "stages": [
                     PipelineStage(

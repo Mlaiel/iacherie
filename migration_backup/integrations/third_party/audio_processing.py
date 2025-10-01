@@ -1,7 +1,7 @@
 """Audio Processing Services - Comprehensive Audio Processing and Analysis
 ========================================================================
 
-Advanced audio processing system for the Ainflue platform supporting audio
+Advanced audio processing system for the IA Chéries platform supporting audio
 analysis, enhancement, format conversion, and AI-powered audio generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

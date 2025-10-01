@@ -269,7 +269,7 @@ class PenetrationTestingCoordinator:
         
         # Main API Target
         self.register_target(PenetrationTestTarget(
-            target_id="ainflue_main_api",
+            target_id="iacherie_main_api",
             name="IA Chérie Main API",
             target_type="api",
             base_url="http://localhost:8000",

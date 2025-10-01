@@ -1,7 +1,7 @@
 """
 Voice Search Optimization Tracker - Enterprise Voice SEO & Conversational Search
 
-This module implements comprehensive voice search optimization tracking for the Ainflue platform,
+This module implements comprehensive voice search optimization tracking for the IA Chéries platform,
 monitoring conversational queries, voice search performance, and smart speaker optimization.
 
 Author: Fahed Mlaiel
@@ -122,7 +122,7 @@ class VoiceSearchOptimization:
 
 class VoiceSearchOptimizationTracker:
     """
-    Enterprise voice search optimization tracking system for Ainflue platform.
+    Enterprise voice search optimization tracking system for IA Chéries platform.
     
     Features:
     - Voice search query analysis and tracking

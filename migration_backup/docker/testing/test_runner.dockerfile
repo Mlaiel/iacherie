@@ -1,11 +1,11 @@
 # Test Runner Service
-# Enterprise-grade test execution engine for Ainflue Platform
+# Enterprise-grade test execution engine for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Test Runner - Enterprise test execution engine"
+LABEL description="IA Chéries Test Runner - Enterprise test execution engine"
 LABEL version="1.0.0"
 
 # Set working directory

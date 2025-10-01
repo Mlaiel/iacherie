@@ -1,7 +1,7 @@
 """Performance Tests - Performance Testing System
 ================================================
 
-Performance testing capabilities for Ainflue integrations.
+Performance testing capabilities for IA Chéries integrations.
 Provides load testing, stress testing, and performance validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

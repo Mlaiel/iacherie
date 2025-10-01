@@ -2,7 +2,7 @@
 Rate Limiter - Enterprise Rate Limiting and Throttling
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced rate limiting system for Ainflue creator platform with multi-tier
+Advanced rate limiting system for IA Chéries creator platform with multi-tier
 rate limiting, burst protection, and creator-specific quotas.
 """
 
@@ -90,7 +90,7 @@ class RateLimiter:
             'distributed_mode': False  # Would be True with Redis backend
         }
         
-        # Initialize Ainflue-specific rate limiting rules
+        # Initialize IA Chéries-specific rate limiting rules
         self.ainflue_rate_limits = self._initialize_ainflue_rate_limits()
         
         # Rate limiting metrics
@@ -106,7 +106,7 @@ class RateLimiter:
         logger.info("Rate limiter initialized for creator platform")
     
     def _initialize_ainflue_rate_limits(self) -> Dict[str, RateLimitRule]:
-        """Initialize Ainflue creator platform rate limiting rules"""
+        """Initialize IA Chéries creator platform rate limiting rules"""
         
         rules = {}
         

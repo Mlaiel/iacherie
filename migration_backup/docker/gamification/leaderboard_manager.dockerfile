@@ -1,5 +1,5 @@
 # ===============================================
-# Leaderboard Manager Dockerfile - Ainflue Platform
+# Leaderboard Manager Dockerfile - IA Chéries Platform
 # ===============================================
 # Multi-stage Docker build for Leaderboard Management Service
 # Handles ranking calculations, leaderboard updates, and competitive features
@@ -57,7 +57,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8082/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Leaderboard Manager Service for Ainflue Gamification"
+LABEL description="Leaderboard Manager Service for IA Chéries Gamification"
 
 EXPOSE 8082
 CMD ["python", "-m", "leaderboard_manager.main"]

@@ -1,8 +1,8 @@
 # 📋 CHECKLIST GAMIFICATION MODULE - ARCHITECTURE COMPLÈTE
 ================================================================
 
-**Projet:** Ainflue - Enterprise Content Creator Platform  
-**Module:** `/workspaces/Ainflue/backend/gamification`  
+**Projet:** iacherie - Enterprise Content Creator Platform  
+**Module:** `/workspaces/iacherie/backend/gamification`  
 **Niveau:** 3 (Niveau maximal atteint - PAS de sous-dossiers autorisés)  
 **Expert Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
@@ -64,7 +64,7 @@ Monétisation multi-revenus + analytics avancées
 
 ### ✅ **FICHIERS EXISTANTS (12/12 MAX)**
 ```
-/workspaces/Ainflue/backend/gamification/
+/workspaces/iacherie/backend/gamification/
 ├── __init__.py                   ✅ UNIFIÉ - Imports centralisés
 ├── achievement_engine.py         ✅ UNIFIÉ - Système succès plateforme + gaming
 ├── achievement_system.py         📋 LEGACY - À conserver pour compatibilité
@@ -277,7 +277,7 @@ This code and concept are EXCLUSIVE PROPERTY of Fahed Mlaiel...
 
 ### **Intégration Tests Existants:**
 ```python
-# Tests à ajouter dans /workspaces/Ainflue/tests/
+# Tests à ajouter dans /workspaces/iacherie/tests/
 ├── test_gamification/
 │   ├── test_competition_manager.py      ✅ NOUVEAU - Tests compétitions
 │   ├── test_virtual_economy.py          ✅ NOUVEAU - Tests économie

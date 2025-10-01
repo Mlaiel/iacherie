@@ -66,7 +66,7 @@ interface AppState {
   contentProcessingQueue: number;
 }
 
-const AinflueiOSApp: React.FC = () => {
+const iacherieiOSApp: React.FC = () => {
   const [appState, setAppState] = React.useState<AppState>({
     isAuthenticated: false,
     biometricEnabled: false,
@@ -272,4 +272,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AinflueiOSApp;
+export default iacherieiOSApp;

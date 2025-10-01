@@ -1,24 +1,24 @@
-# ArgoCD Application Configuration Template for Ainflue Platform
+# ArgoCD Application Configuration Template for iacherie Platform
 # GitOps continuous deployment using ArgoCD
 
 # Main Application Configuration
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ainflue-platform
+  name: iacherie-platform
   namespace: argocd
   labels:
-    app: ainflue
+    app: iacherie
     environment: production
   annotations:
     argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: ainflue-project
+  project: iacherie-project
   
   source:
-    repoURL: https://github.com/ainflue/platform-manifests.git
+    repoURL: https://github.com/iacherie/platform-manifests.git
     targetRevision: main
     path: environments/production
     
@@ -41,7 +41,7 @@ spec:
   
   destination:
     server: https://kubernetes.default.svc
-    namespace: ainflue-production
+    namespace: iacherie-production
   
   syncPolicy:
     automated:
@@ -77,18 +77,18 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ainflue-staging
+  name: iacherie-staging
   namespace: argocd
   labels:
-    app: ainflue
+    app: iacherie
     environment: staging
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
-  project: ainflue-project
+  project: iacherie-project
   
   source:
-    repoURL: https://github.com/ainflue/platform-manifests.git
+    repoURL: https://github.com/iacherie/platform-manifests.git
     targetRevision: develop
     path: environments/staging
     
@@ -110,7 +110,7 @@ spec:
   
   destination:
     server: https://kubernetes.default.svc
-    namespace: ainflue-staging
+    namespace: iacherie-staging
   
   syncPolicy:
     automated:
@@ -130,16 +130,16 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ainflue-development
+  name: iacherie-development
   namespace: argocd
   labels:
-    app: ainflue
+    app: iacherie
     environment: development
 spec:
-  project: ainflue-project
+  project: iacherie-project
   
   source:
-    repoURL: https://github.com/ainflue/platform-manifests.git
+    repoURL: https://github.com/iacherie/platform-manifests.git
     targetRevision: develop
     path: environments/development
     
@@ -161,7 +161,7 @@ spec:
   
   destination:
     server: https://kubernetes.default.svc
-    namespace: ainflue-development
+    namespace: iacherie-development
   
   syncPolicy:
     automated:
@@ -175,22 +175,22 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: ainflue-project
+  name: iacherie-project
   namespace: argocd
   labels:
-    app: ainflue
+    app: iacherie
 spec:
-  description: "Ainflue Creator Economy Platform Project"
+  description: "iacherie Creator Economy Platform Project"
   
   sourceRepos:
-    - 'https://github.com/ainflue/platform-manifests.git'
-    - 'https://github.com/ainflue/helm-charts.git'
+    - 'https://github.com/iacherie/platform-manifests.git'
+    - 'https://github.com/iacherie/helm-charts.git'
     - 'https://charts.bitnami.com/bitnami'
     - 'https://prometheus-community.github.io/helm-charts'
     - 'https://grafana.github.io/helm-charts'
   
   destinations:
-    - namespace: 'ainflue-*'
+    - namespace: 'iacherie-*'
       server: https://kubernetes.default.svc
     - namespace: 'monitoring'
       server: https://kubernetes.default.svc
@@ -247,41 +247,41 @@ spec:
   
   roles:
     - name: admin
-      description: "Full access to Ainflue project"
+      description: "Full access to iacherie project"
       policies:
-        - p, proj:ainflue-project:admin, applications, *, ainflue-project/*, allow
-        - p, proj:ainflue-project:admin, logs, get, ainflue-project/*, allow
-        - p, proj:ainflue-project:admin, exec, create, ainflue-project/*, allow
+        - p, proj:iacherie-project:admin, applications, *, iacherie-project/*, allow
+        - p, proj:iacherie-project:admin, logs, get, iacherie-project/*, allow
+        - p, proj:iacherie-project:admin, exec, create, iacherie-project/*, allow
       groups:
-        - ainflue:admins
+        - iacherie:admins
     
     - name: developer
-      description: "Developer access to Ainflue project"
+      description: "Developer access to iacherie project"
       policies:
-        - p, proj:ainflue-project:developer, applications, get, ainflue-project/*, allow
-        - p, proj:ainflue-project:developer, applications, sync, ainflue-project/ainflue-development, allow
-        - p, proj:ainflue-project:developer, applications, sync, ainflue-project/ainflue-staging, allow
-        - p, proj:ainflue-project:developer, logs, get, ainflue-project/*, allow
+        - p, proj:iacherie-project:developer, applications, get, iacherie-project/*, allow
+        - p, proj:iacherie-project:developer, applications, sync, iacherie-project/iacherie-development, allow
+        - p, proj:iacherie-project:developer, applications, sync, iacherie-project/iacherie-staging, allow
+        - p, proj:iacherie-project:developer, logs, get, iacherie-project/*, allow
       groups:
-        - ainflue:developers
+        - iacherie:developers
     
     - name: readonly
-      description: "Read-only access to Ainflue project"
+      description: "Read-only access to iacherie project"
       policies:
-        - p, proj:ainflue-project:readonly, applications, get, ainflue-project/*, allow
-        - p, proj:ainflue-project:readonly, logs, get, ainflue-project/*, allow
+        - p, proj:iacherie-project:readonly, applications, get, iacherie-project/*, allow
+        - p, proj:iacherie-project:readonly, logs, get, iacherie-project/*, allow
       groups:
-        - ainflue:viewers
+        - iacherie:viewers
 
 ---
 # Application Set for Multi-Environment Deployment
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ainflue-environments
+  name: iacherie-environments
   namespace: argocd
   labels:
-    app: ainflue
+    app: iacherie
 spec:
   generators:
     - clusters:
@@ -303,15 +303,15 @@ spec:
   
   template:
     metadata:
-      name: 'ainflue-{{values.environment}}'
+      name: 'iacherie-{{values.environment}}'
       labels:
-        app: ainflue
+        app: iacherie
         environment: '{{values.environment}}'
     spec:
-      project: ainflue-project
+      project: iacherie-project
       
       source:
-        repoURL: https://github.com/ainflue/platform-manifests.git
+        repoURL: https://github.com/iacherie/platform-manifests.git
         targetRevision: '{{values.revision}}'
         path: 'environments/{{values.environment}}'
         
@@ -327,7 +327,7 @@ spec:
       
       destination:
         server: '{{server}}'
-        namespace: 'ainflue-{{values.environment}}'
+        namespace: 'iacherie-{{values.environment}}'
       
       syncPolicy:
         automated:
@@ -341,14 +341,14 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ainflue-repo
+  name: iacherie-repo
   namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: repository
 type: Opaque
 stringData:
   type: git
-  url: https://github.com/ainflue/platform-manifests.git
+  url: https://github.com/iacherie/platform-manifests.git
   username: ${GIT_USERNAME}
   password: ${GIT_TOKEN}
 
@@ -512,25 +512,25 @@ data:
       prefix: docker.io
       api_url: https://registry-1.docker.io
       credentials: pullsecret:argocd/dockerhub
-    - name: Ainflue Registry
-      prefix: registry.ainflue.com
-      api_url: https://registry.ainflue.com/v2
-      credentials: secret:argocd/ainflue-registry
+    - name: iacherie Registry
+      prefix: registry.iacherie.com
+      api_url: https://registry.iacherie.com/v2
+      credentials: secret:argocd/iacherie-registry
   
   applications.yaml: |
     applications:
-    - name: ainflue-staging
+    - name: iacherie-staging
       image_list:
-      - registry.ainflue.com/ainflue-api
-      - registry.ainflue.com/ainflue-web
-      - registry.ainflue.com/ainflue-ml
+      - registry.iacherie.com/iacherie-api
+      - registry.iacherie.com/iacherie-web
+      - registry.iacherie.com/iacherie-ml
       update_strategy: semver
       
-    - name: ainflue-production
+    - name: iacherie-production
       image_list:
-      - registry.ainflue.com/ainflue-api
-      - registry.ainflue.com/ainflue-web
-      - registry.ainflue.com/ainflue-ml
+      - registry.iacherie.com/iacherie-api
+      - registry.iacherie.com/iacherie-web
+      - registry.iacherie.com/iacherie-ml
       update_strategy: semver
       ignore_tags:
       - latest

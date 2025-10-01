@@ -1,4 +1,4 @@
-"""{{service_name}} API Routes for Ainflue Platform
+"""{{service_name}} API Routes for iacherie Platform
 FastAPI router for {{service_name}} service endpoints
 
 Author: {{author_name}} ({{author_email}})

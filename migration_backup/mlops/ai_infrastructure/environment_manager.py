@@ -252,7 +252,7 @@ class EnvironmentProvisioner:
         """Configure security settings"""
         await asyncio.sleep(1)
         return {
-            "iam_roles": [f"AinflueMlops{config.name.title()}Role"],
+            "iam_roles": [f"IA ChériesMlops{config.name.title()}Role"],
             "secrets_manager": f"ainflue/{config.name}/secrets",
             "ssl_certificates": [f"*.{config.name}.ainflue.com"],
             "security_groups_created": len(config.security_groups)

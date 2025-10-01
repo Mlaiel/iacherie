@@ -1,6 +1,6 @@
 """
 📊 Content Analytics Service - Analytics de Contenu Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chéries Microservices Enterprise
 
 Service spécialisé d'analytics avancée pour performance et engagement du contenu.
 Analytics temps réel avec IA prédictive et insights automatiques.

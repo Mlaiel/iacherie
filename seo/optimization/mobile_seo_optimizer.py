@@ -777,14 +777,14 @@ class MobileSEOOptimizer:
 
 
 # Integration utilities
-def create_ainflue_mobile_seo_optimizer() -> MobileSEOOptimizer:
+def create_iacherie_mobile_seo_optimizer() -> MobileSEOOptimizer:
     """Create configured mobile SEO optimizer for IA Chérie"""
     return MobileSEOOptimizer()
 
 
 if __name__ == "__main__":
     # Example usage
-    optimizer = create_ainflue_mobile_seo_optimizer()
+    optimizer = create_iacherie_mobile_seo_optimizer()
     
     # Sample page data
     page_data = {

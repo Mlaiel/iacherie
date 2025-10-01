@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Invoice Configuration Module
+"""IA Chéries Invoice Configuration Module
 ====================================
 
-Enterprise-grade invoice configuration for the Ainflue platform.
+Enterprise-grade invoice configuration for the IA Chéries platform.
 Comprehensive invoice management with automated generation, customization,
 compliance tracking, and multi-format support.
 

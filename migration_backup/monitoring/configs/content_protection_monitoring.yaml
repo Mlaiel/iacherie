@@ -1,6 +1,6 @@
 # 🛡️ Content Protection Monitoring Configuration
 # ===============================================
-# Configuration monitoring protection contenu Creator Economy Ainflue
+# Configuration monitoring protection contenu Creator Economy IA Chéries
 # Surveillance propriété intellectuelle, détection piratage et compliance
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -272,7 +272,7 @@ advanced_threat_detection:
   blockchain_verification:
     # Configuration blockchain
     blockchain_network: "ethereum_mainnet"
-    smart_contract_address: "0x..."      # Adresse contrat Ainflue
+    smart_contract_address: "0x..."      # Adresse contrat IA Chéries
     gas_price_strategy: "dynamic"
     confirmation_blocks: 12
     

@@ -1,5 +1,5 @@
 """
-Ainflue Desktop Renderer - UI Components Index
+IA Chéries Desktop Renderer - UI Components Index
 Index and export for UI components
 
 Author: Fahed Mlaiel (mlaiel@live.de) 

@@ -6,7 +6,7 @@ Advanced SEO optimization system for creator content across 65+ platforms
 with support for 644 languages and platform-specific optimization strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - External Integrations Module
+Project: iacherie Infrastructure - External Integrations Module
 Expert Role: Lead Dev IA + SEO Specialist + Content Optimization Expert
 Version: 1.0 Production Enterprise
 
@@ -1130,7 +1130,7 @@ if __name__ == "__main__":
             target_audiences=["music producers", "beginners", "creators"],
             content_type="video",
             existing_tags=["music", "tutorial"],
-            brand_keywords=["ainflue", "creator"],
+            brand_keywords=["iacherie", "creator"],
             trending_focus=True
         )
         

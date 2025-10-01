@@ -87,7 +87,7 @@ class ServiceInstance:
     environment: str = "production"
     weight: int = 100
     service_type: str = "microservice"
-    ainflue_business_domain: str = "general"  # creator, content, monetization, collaboration, distribution
+    iacherie_business_domain: str = "general"  # creator, content, monetization, collaboration, distribution
     created_at: float = field(default_factory=time.time)
     last_heartbeat: float = field(default_factory=time.time)
     status: ServiceStatus = ServiceStatus.HEALTHY
@@ -147,7 +147,7 @@ class DistributedRegistryCore:
         placement_key = f"{service_instance.service_name}:{service_instance.region}:{service_instance.datacenter}"
         return hashlib.sha256(placement_key.encode()).hexdigest()
         
-    async def _validate_ainflue_business_constraints(self, instance: ServiceInstance) -> bool:
+    async def _validate_iacherie_business_constraints(self, instance: ServiceInstance) -> bool:
         """Validation contraintes métier IA Chérie pour enregistrement."""
 ```
 

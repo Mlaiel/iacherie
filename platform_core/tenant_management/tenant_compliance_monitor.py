@@ -1507,9 +1507,9 @@ async def get_tenant_compliance_monitor() -> TenantComplianceMonitor:
     """Factory pour l'instance TenantComplianceMonitor"""
     global tenant_compliance_monitor
     if not tenant_compliance_monitor:
-        database_url = "postgresql+asyncpg://localhost/ainflue_compliance"
+        database_url = "postgresql+asyncpg://localhost/iacherie_compliance"
         redis_url = "redis://localhost:6379/5"
-        storage_path = "/tmp/ainflue_compliance"
+        storage_path = "/tmp/iacherie_compliance"
         frameworks = [ComplianceFramework.GDPR, ComplianceFramework.CCPA]
         
         tenant_compliance_monitor = TenantComplianceMonitor(

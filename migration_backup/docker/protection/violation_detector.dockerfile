@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE VIOLATION DETECTOR - AI-POWERED DOCKERFILE
+# IA CHÉRIES VIOLATION DETECTOR - AI-POWERED DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS detector-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${DETECTOR_SERVICE_PORT}
 CMD ["python3.11", "-m", "violation_detector.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Violation Detector"
+LABEL org.opencontainers.image.title="IA Chéries Violation Detector"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="violation_detector"
 LABEL ainflue.service.port="8026"

@@ -1,4 +1,4 @@
-"""{{encryption_name}} Encryption Template for Ainflue Platform
+"""{{encryption_name}} Encryption Template for iacherie Platform
 {{encryption_description}}
 
 Author: {{author_name}} ({{author_email}})

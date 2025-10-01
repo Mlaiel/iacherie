@@ -1,4 +1,4 @@
-# GitLab CI/CD Pipeline Template for Ainflue Platform
+# GitLab CI/CD Pipeline Template for iacherie Platform
 # Comprehensive CI/CD configuration for multi-service creator economy platform
 
 # Global configuration
@@ -9,13 +9,13 @@ variables:
   DOCKER_BUILDKIT: 1
   
   # Application configuration
-  APP_NAME: "ainflue"
+  APP_NAME: "iacherie"
   REGISTRY: "${CI_REGISTRY}"
   IMAGE_TAG: "${CI_COMMIT_SHORT_SHA}"
   
   # Environment configuration
-  STAGING_CLUSTER: "ainflue-staging"
-  PRODUCTION_CLUSTER: "ainflue-production"
+  STAGING_CLUSTER: "iacherie-staging"
+  PRODUCTION_CLUSTER: "iacherie-production"
   
   # Security scanning
   SECURITY_SCAN_ENABLED: "true"
@@ -169,11 +169,11 @@ test-integration:
     - postgres:13
     - redis:7-alpine
   variables:
-    POSTGRES_DB: ainflue_test
+    POSTGRES_DB: iacherie_test
     POSTGRES_USER: test_user
     POSTGRES_PASSWORD: test_password
     REDIS_URL: redis://redis:6379
-    DATABASE_URL: postgresql://test_user:test_password@postgres:5432/ainflue_test
+    DATABASE_URL: postgresql://test_user:test_password@postgres:5432/iacherie_test
   script:
     - npm run test:integration
   artifacts:
@@ -188,10 +188,10 @@ test-e2e:
     - postgres:13
     - redis:7-alpine
   variables:
-    POSTGRES_DB: ainflue_e2e
+    POSTGRES_DB: iacherie_e2e
     POSTGRES_USER: e2e_user
     POSTGRES_PASSWORD: e2e_password
-    DATABASE_URL: postgresql://e2e_user:e2e_password@postgres:5432/ainflue_e2e
+    DATABASE_URL: postgresql://e2e_user:e2e_password@postgres:5432/iacherie_e2e
   script:
     - npm run start:test &
     - sleep 30
@@ -244,10 +244,10 @@ package-api:
     - build-api
   script:
     - cd services/api/
-    - docker build -t ${REGISTRY}/ainflue-api:${IMAGE_TAG} .
-    - docker push ${REGISTRY}/ainflue-api:${IMAGE_TAG}
-    - docker tag ${REGISTRY}/ainflue-api:${IMAGE_TAG} ${REGISTRY}/ainflue-api:latest
-    - docker push ${REGISTRY}/ainflue-api:latest
+    - docker build -t ${REGISTRY}/iacherie-api:${IMAGE_TAG} .
+    - docker push ${REGISTRY}/iacherie-api:${IMAGE_TAG}
+    - docker tag ${REGISTRY}/iacherie-api:${IMAGE_TAG} ${REGISTRY}/iacherie-api:latest
+    - docker push ${REGISTRY}/iacherie-api:latest
 
 package-web:
   stage: package
@@ -256,10 +256,10 @@ package-web:
     - build-web
   script:
     - cd services/web/
-    - docker build -t ${REGISTRY}/ainflue-web:${IMAGE_TAG} .
-    - docker push ${REGISTRY}/ainflue-web:${IMAGE_TAG}
-    - docker tag ${REGISTRY}/ainflue-web:${IMAGE_TAG} ${REGISTRY}/ainflue-web:latest
-    - docker push ${REGISTRY}/ainflue-web:latest
+    - docker build -t ${REGISTRY}/iacherie-web:${IMAGE_TAG} .
+    - docker push ${REGISTRY}/iacherie-web:${IMAGE_TAG}
+    - docker tag ${REGISTRY}/iacherie-web:${IMAGE_TAG} ${REGISTRY}/iacherie-web:latest
+    - docker push ${REGISTRY}/iacherie-web:latest
 
 package-ml-service:
   stage: package
@@ -268,10 +268,10 @@ package-ml-service:
     - build-ml-service
   script:
     - cd services/ml/
-    - docker build -t ${REGISTRY}/ainflue-ml:${IMAGE_TAG} .
-    - docker push ${REGISTRY}/ainflue-ml:${IMAGE_TAG}
-    - docker tag ${REGISTRY}/ainflue-ml:${IMAGE_TAG} ${REGISTRY}/ainflue-ml:latest
-    - docker push ${REGISTRY}/ainflue-ml:latest
+    - docker build -t ${REGISTRY}/iacherie-ml:${IMAGE_TAG} .
+    - docker push ${REGISTRY}/iacherie-ml:${IMAGE_TAG}
+    - docker tag ${REGISTRY}/iacherie-ml:${IMAGE_TAG} ${REGISTRY}/iacherie-ml:latest
+    - docker push ${REGISTRY}/iacherie-ml:latest
 
 # Staging Deployment
 deploy-staging:
@@ -279,15 +279,15 @@ deploy-staging:
   <<: *kubectl_template
   environment:
     name: staging
-    url: https://staging.ainflue.com
+    url: https://staging.iacherie.com
   script:
     - kubectl config use-context ${STAGING_CLUSTER}
     - |
       for service in api web ml; do
-        kubectl set image deployment/ainflue-${service} \
-          ainflue-${service}=${REGISTRY}/ainflue-${service}:${IMAGE_TAG} \
+        kubectl set image deployment/iacherie-${service} \
+          iacherie-${service}=${REGISTRY}/iacherie-${service}:${IMAGE_TAG} \
           --namespace=staging
-        kubectl rollout status deployment/ainflue-${service} --namespace=staging --timeout=300s
+        kubectl rollout status deployment/iacherie-${service} --namespace=staging --timeout=300s
       done
     - kubectl get pods --namespace=staging
   rules:
@@ -300,8 +300,8 @@ integration-tests-staging:
   environment:
     name: staging
   variables:
-    API_BASE_URL: "https://api.staging.ainflue.com"
-    WEB_BASE_URL: "https://staging.ainflue.com"
+    API_BASE_URL: "https://api.staging.iacherie.com"
+    WEB_BASE_URL: "https://staging.iacherie.com"
   script:
     - npm run test:staging
   artifacts:
@@ -316,7 +316,7 @@ performance-tests:
   environment:
     name: staging
   variables:
-    API_BASE_URL: "https://api.staging.ainflue.com"
+    API_BASE_URL: "https://api.staging.iacherie.com"
   script:
     - k6 run --vus 50 --duration 5m performance/load-test.js
     - k6 run --vus 100 --duration 2m performance/stress-test.js
@@ -333,15 +333,15 @@ deploy-production:
   <<: *kubectl_template
   environment:
     name: production
-    url: https://app.ainflue.com
+    url: https://app.iacherie.com
   script:
     - kubectl config use-context ${PRODUCTION_CLUSTER}
     - |
       for service in api web ml; do
-        kubectl set image deployment/ainflue-${service} \
-          ainflue-${service}=${REGISTRY}/ainflue-${service}:${IMAGE_TAG} \
+        kubectl set image deployment/iacherie-${service} \
+          iacherie-${service}=${REGISTRY}/iacherie-${service}:${IMAGE_TAG} \
           --namespace=production
-        kubectl rollout status deployment/ainflue-${service} --namespace=production --timeout=600s
+        kubectl rollout status deployment/iacherie-${service} --namespace=production --timeout=600s
       done
     - kubectl get pods --namespace=production
   rules:
@@ -388,8 +388,8 @@ smoke-tests-production:
   environment:
     name: production
   variables:
-    API_BASE_URL: "https://api.ainflue.com"
-    WEB_BASE_URL: "https://app.ainflue.com"
+    API_BASE_URL: "https://api.iacherie.com"
+    WEB_BASE_URL: "https://app.iacherie.com"
   script:
     - npm run test:smoke
   artifacts:
@@ -404,8 +404,8 @@ cleanup-staging:
   environment:
     name: staging
   script:
-    - kubectl delete deployment --selector=app=ainflue,environment=review --namespace=staging
-    - kubectl delete service --selector=app=ainflue,environment=review --namespace=staging
+    - kubectl delete deployment --selector=app=iacherie,environment=review --namespace=staging
+    - kubectl delete service --selector=app=iacherie,environment=review --namespace=staging
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - when: manual
@@ -422,7 +422,7 @@ notify-success:
       curl -X POST \
         -H "Content-Type: application/json" \
         -d "{
-          \"text\": \"✅ Ainflue deployment to production successful!\",
+          \"text\": \"✅ iacherie deployment to production successful!\",
           \"attachments\": [{
             \"color\": \"good\",
             \"fields\": [
@@ -448,7 +448,7 @@ notify-failure:
       curl -X POST \
         -H "Content-Type: application/json" \
         -d "{
-          \"text\": \"❌ Ainflue pipeline failed!\",
+          \"text\": \"❌ iacherie pipeline failed!\",
           \"attachments\": [{
             \"color\": \"danger\",
             \"fields\": [

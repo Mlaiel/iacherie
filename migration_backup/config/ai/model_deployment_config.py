@@ -1,4 +1,4 @@
-"""Ainflue Model Deployment Configuration
+"""IA Chéries Model Deployment Configuration
 ======================================
 
 Model deployment configurations for AI/ML model serving, scaling,
@@ -484,5 +484,5 @@ __all__ = [
     "model_deployment_config"
 ]
 
-logger.info("🚀 Ainflue Model Deployment Configuration loaded")
+logger.info("🚀 IA Chéries Model Deployment Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

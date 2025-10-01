@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Advanced Latency Analysis Engine for Ainflue Platform
+Advanced Latency Analysis Engine for IA Chéries Platform
 ====================================================
 
 Comprehensive latency analysis with ML-powered pattern recognition,

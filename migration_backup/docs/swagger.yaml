@@ -174,10 +174,10 @@ components:
 info:
   contact:
     email: mlaiel@live.de
-    name: Ainflue API Support
+    name: IA Chéries API Support
     url: https://ainflue.com/support
-  description: "\n# Ainflue AI Platform API\n\nComplete API documentation for the\
-    \ Ainflue AI-powered content protection and monetization platform.\n\n## Features\n\
+  description: "\n# IA Chéries AI Platform API\n\nComplete API documentation for the\
+    \ IA Chéries AI-powered content protection and monetization platform.\n\n## Features\n\
     \n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n\
     - **Creator Management**: Comprehensive creator profiles and content management\n\
     - **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**:\
@@ -189,7 +189,7 @@ info:
     name: Proprietary
     url: https://ainflue.com/license
   termsOfService: https://ainflue.com/terms
-  title: Ainflue AI Platform API
+  title: IA Chéries AI Platform API
   version: 1.0.0
 openapi: 3.0.3
 paths:

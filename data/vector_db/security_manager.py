@@ -139,7 +139,7 @@ class EncryptionManager:
                 logger.warning("Generated new master key - store securely in production")
             
             # Derive key using PBKDF2
-            salt = self.config.get('salt', b'ainflue_vector_db_salt').encode()[:16]
+            salt = self.config.get('salt', b'iacherie_vector_db_salt').encode()[:16]
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
                 length=32,

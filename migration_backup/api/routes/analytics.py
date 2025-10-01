@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Real-time Analytics Endpoints - Ainflue Platform
+Real-time Analytics Endpoints - IA Chéries Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Backend Senior + Lead Dev IA
 Purpose: Enterprise real-time analytics and metrics API endpoints

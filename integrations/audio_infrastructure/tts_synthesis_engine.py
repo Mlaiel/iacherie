@@ -15,7 +15,7 @@ import pygame
 import asyncio
 from typing import Optional, Dict, List
 
-class AinfluencerTTS:
+class iaCherieTTS:
     """
     Module TTS complet pour IA Chérie avec multiple engines
     """
@@ -209,17 +209,17 @@ class AinfluencerTTS:
 
 # Fonctions utilitaires pour l'intégration avec le backend
 
-async def tts_generate_for_ainfluencer(text: str, language: str = 'fr', 
+async def tts_generate_for_iacheriencer(text: str, language: str = 'fr', 
                                      engine: str = 'auto') -> Dict:
     """
     Interface principale pour l'intégration backend IA Chérie
     """
-    tts_engine = AinfluencerTTS()
+    tts_engine = iaCherieTTS()
     result = await tts_engine.generate_speech_multi(text, language, engine)
     
     # Ajouter des métadonnées spécifiques à IA Chérie
     if result['success']:
-        result['ainfluencer_metadata'] = {
+        result['iacheriencer_metadata'] = {
             'agent_used': 'TTS_SYNTHESIS_AGENT',
             'content_type': 'audio',
             'generation_method': 'text_to_speech',
@@ -236,7 +236,7 @@ def test_tts_installation():
     print("🚀 IACHERIE TTS - Test d'Installation")
     print("=" * 50)
     
-    tts = AinfluencerTTS()
+    tts = iaCherieTTS()
     
     # Test voix disponibles
     voices = tts.get_available_voices()

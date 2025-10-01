@@ -535,7 +535,7 @@ class AnonymizationEngine:
         """Initialize pseudonymization keys"""
         # Create default key for identifier pseudonymization
         key_id = str(uuid.uuid4())
-        key_value = hashlib.sha256(f"ainflue_pseudonymization_key_{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()
+        key_value = hashlib.sha256(f"iacherie_pseudonymization_key_{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()
         
         key = PseudonymizationKey(
             key_id=key_id,

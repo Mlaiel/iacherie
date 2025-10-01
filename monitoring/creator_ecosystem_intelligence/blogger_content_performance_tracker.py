@@ -2,7 +2,7 @@
 📝 Blogger Content Performance Tracker - Performance Contenu Blogueurs
 ====================================================================
 
-Module surveillance spécialisé pour performance contenu blogueurs Ainflue.
+Module surveillance spécialisé pour performance contenu blogueurs iacherie.
 Analytics engagement, optimisation SEO et tracking performance articles.
 
 Fonctionnalités:
@@ -142,7 +142,7 @@ class SEOAnalysis:
 
 
 class BloggerContentPerformanceTracker:
-    """Tracker performance contenu blogueurs enterprise Ainflue"""
+    """Tracker performance contenu blogueurs enterprise iacherie"""
     
     def __init__(self, config):
         self.config = config

@@ -1,4 +1,4 @@
-"""Terraform Infrastructure Template for Ainflue Platform
+"""Terraform Infrastructure Template for iacherie Platform
 Enterprise-grade Infrastructure as Code template for scalable creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -60,7 +60,7 @@ class TerraformConfig:
 
 
 class TerraformInfrastructureTemplate:
-    """Enterprise Terraform Infrastructure Template for Ainflue Platform"""
+    """Enterprise Terraform Infrastructure Template for iacherie Platform"""
     
     def __init__(self, config: TerraformConfig, provider: CloudProvider = CloudProvider.AWS):
         self.config = config
@@ -80,7 +80,7 @@ class TerraformInfrastructureTemplate:
     
     def _generate_aws_provider(self) -> str:
         """Generate AWS provider configuration"""
-        return f'''# Terraform AWS Provider Configuration - Ainflue Platform
+        return f'''# Terraform AWS Provider Configuration - iacherie Platform
 terraform {{
   required_version = ">= 1.5"
   required_providers {{
@@ -95,11 +95,11 @@ terraform {{
   }}
   
   backend "s3" {{
-    bucket = "ainflue-terraform-state-{self.config.environment.value}"
+    bucket = "iacherie-terraform-state-{self.config.environment.value}"
     key    = "infrastructure/{self.config.project_name}/terraform.tfstate"
     region = "{self.config.region}"
     encrypt = true
-    dynamodb_table = "ainflue-terraform-locks"
+    dynamodb_table = "iacherie-terraform-locks"
   }}
 }}
 
@@ -111,7 +111,7 @@ provider "aws" {{
       Project = "{self.config.project_name}"
       Environment = "{self.config.environment.value}"
       ManagedBy = "terraform"
-      Owner = "ainflue-platform"
+      Owner = "iacherie-platform"
       CostCenter = "creator-economy"
     }}
   }}
@@ -128,7 +128,7 @@ locals {{
     Project = "{self.config.project_name}"
     Environment = "{self.config.environment.value}"
     ManagedBy = "terraform"
-    Owner = "ainflue-platform"
+    Owner = "iacherie-platform"
     CostCenter = "creator-economy"
   }}
 }}'''
@@ -136,7 +136,7 @@ locals {{
     def generate_complete_template(self) -> str:
         """Generate complete Terraform template"""
         template_parts = [
-            "# Ainflue Platform - Enterprise Terraform Infrastructure Template",
+            "# iacherie Platform - Enterprise Terraform Infrastructure Template",
             "# Creator Economy Platform - Production-Ready Infrastructure",
             "# Author: Fahed Mlaiel (mlaiel@live.de)",
             "# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.",
@@ -151,7 +151,7 @@ locals {{
 def create_production_config() -> TerraformConfig:
     """Create production environment configuration"""
     return TerraformConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment=EnvironmentType.PRODUCTION,
         region="us-west-2",
         availability_zones=["us-west-2a", "us-west-2b", "us-west-2c"],
@@ -170,7 +170,7 @@ def create_production_config() -> TerraformConfig:
 def create_development_config() -> TerraformConfig:
     """Create development environment configuration"""
     return TerraformConfig(
-        project_name="ainflue-dev",
+        project_name="iacherie-dev",
         environment=EnvironmentType.DEVELOPMENT,
         region="us-west-2",
         availability_zones=["us-west-2a", "us-west-2b"],
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     prod_template = TerraformInfrastructureTemplate(prod_config, CloudProvider.AWS)
     
     # This would typically be used in a deployment script
-    print("Terraform Infrastructure Template for Ainflue Platform")
+    print("Terraform Infrastructure Template for iacherie Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment.value}")
     print(f"- Region: {prod_config.region}")

@@ -1,11 +1,11 @@
 {
   "app_info": {
-    "name": "Ainflue",
+    "name": "IA Chéries",
     "subtitle": "Professional Content Creation Platform",
     "version": "1.0.0",
     "build": "1",
     "bundle_id": "com.fahedmlaiel.ainflue",
-    "sku": "AINFLUE_IOS_2025",
+    "sku": "IA CHÉRIES_IOS_2025",
     "developer": {
       "name": "Fahed Mlaiel",
       "email": "mlaiel@live.de",
@@ -86,7 +86,7 @@
   "marketing": {
     "promotional_text": "Transform your content creation with AI-powered tools and protection",
     "description_summary": "Professional content creation platform with AI-powered protection, multi-platform distribution, and advanced analytics for creators and influencers.",
-    "whats_new": "🚀 Introducing Ainflue - The future of content creation!\n\n✨ NEW FEATURES:\n• AI-powered content protection\n• Multi-platform publishing\n• Professional editing tools\n• Real-time analytics\n• Secure biometric authentication\n\n🎯 CREATOR FOCUSED:\n• Streamlined workflow\n• Revenue optimization\n• Brand partnership tools\n• Copyright protection\n\n🔒 PRIVACY FIRST:\n• On-device AI processing\n• End-to-end encryption\n• No unauthorized data collection\n\nJoin thousands of creators already using Ainflue!"
+    "whats_new": "🚀 Introducing IA Chéries - The future of content creation!\n\n✨ NEW FEATURES:\n• AI-powered content protection\n• Multi-platform publishing\n• Professional editing tools\n• Real-time analytics\n• Secure biometric authentication\n\n🎯 CREATOR FOCUSED:\n• Streamlined workflow\n• Revenue optimization\n• Brand partnership tools\n• Copyright protection\n\n🔒 PRIVACY FIRST:\n• On-device AI processing\n• End-to-end encryption\n• No unauthorized data collection\n\nJoin thousands of creators already using IA Chéries!"
   },
   "compliance": {
     "data_collection": {

@@ -1,5 +1,5 @@
 """
-Automated Runbook Executor for Ainflue Platform
+Automated Runbook Executor for IA Chéries Platform
 Self-healing automation and remediation workflows
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -562,7 +562,7 @@ class NFTIntegration:
         
         return {
             "name": f"Avatar #{nft.token_id}",
-            "description": f"Unique 3D Avatar NFT created with Ainflue platform",
+            "description": f"Unique 3D Avatar NFT created with IA Chéries platform",
             "image": f"ipfs://avatar-images/{nft.avatar_id}.png",
             "animation_url": f"ipfs://avatar-models/{nft.avatar_id}.glb",
             "attributes": [

@@ -1,5 +1,5 @@
 """
-🚀 Ainflue DevOps Service Entry Point - Enterprise FastAPI Implementation
+🚀 IA Chéries DevOps Service Entry Point - Enterprise FastAPI Implementation
 =========================================================================
 
 Main service entry point for DevOps operations with comprehensive REST API,
@@ -106,7 +106,7 @@ service_state = DevOpsServiceState()
 async def lifespan(app: FastAPI):
     """FastAPI lifespan context manager"""
     
-    logger.info("🚀 Starting Ainflue DevOps Service...")
+    logger.info("🚀 Starting IA Chéries DevOps Service...")
     
     try:
         # Initialize DevOps modules
@@ -145,7 +145,7 @@ async def lifespan(app: FastAPI):
 
 # FastAPI application setup
 app = FastAPI(
-    title="Ainflue DevOps Engineering Service",
+    title="IA Chéries DevOps Engineering Service",
     description="Enterprise-grade DevOps automation and infrastructure management API",
     version=__version__,
     docs_url="/docs",
@@ -566,4 +566,4 @@ if __name__ == "__main__":
     else:
         run_development_server()
 
-logger.info("🚀 Ainflue DevOps Service Entry Point initialized")
+logger.info("🚀 IA Chéries DevOps Service Entry Point initialized")

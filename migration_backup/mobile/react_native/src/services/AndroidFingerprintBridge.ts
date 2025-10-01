@@ -89,7 +89,7 @@ class AndroidFingerprintBridge {
 
       // Fallback to Expo authentication
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: options.title || 'Authenticate to access Ainflue',
+        promptMessage: options.title || 'Authenticate to access IA Chéries',
         fallbackLabel: options.fallbackLabel || 'Use PIN',
         disableDeviceFallback: false,
       });

@@ -423,7 +423,7 @@ compliance_certification:
     common_criteria:
       evaluation_assurance_level: "eal4"
       protection_profile: "cryptographic_module_pp"
-      security_target: "custom_ainflue_st"
+      security_target: "custom_iacherie_st"
       
   # Regulatory Compliance
   regulatory_compliance:

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: ainflue-platform
 description: |
-  Advanced Kubernetes Helm Chart for Ainflue Platform
+  Advanced Kubernetes Helm Chart for IA Chéries Platform
   
   Complete enterprise deployment with:
   - Multi-environment support (staging, production)
@@ -22,7 +22,7 @@ kubeVersion: ">=1.25.0"
 
 home: https://ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 
 maintainers:
   - name: Fahed Mlaiel

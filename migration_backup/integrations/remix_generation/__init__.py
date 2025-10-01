@@ -1,11 +1,11 @@
 """
-Remix Generation Module - Ainflue Integrations
+Remix Generation Module - IA Chéries Integrations
 ==============================================
 Module de génération de remix IA pour création
 collaborative et mashups intelligents.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

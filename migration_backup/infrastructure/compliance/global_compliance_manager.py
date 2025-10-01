@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌍 GLOBAL COMPLIANCE MANAGER - AINFLUE ENTERPRISE
+🌍 GLOBAL COMPLIANCE MANAGER - IA CHÉRIES ENTERPRISE
 Orchestration compliance multi-juridictions et multi-réglementations mondiale
 
 🏛️ EXPERTISE MULTI-RÔLES:

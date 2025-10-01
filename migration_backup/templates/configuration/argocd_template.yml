@@ -1,4 +1,4 @@
-# ArgoCD Application Configuration Template for Ainflue Platform
+# ArgoCD Application Configuration Template for IA Chéries Platform
 # GitOps continuous deployment using ArgoCD
 
 # Main Application Configuration
@@ -180,7 +180,7 @@ metadata:
   labels:
     app: ainflue
 spec:
-  description: "Ainflue Creator Economy Platform Project"
+  description: "IA Chéries Creator Economy Platform Project"
   
   sourceRepos:
     - 'https://github.com/ainflue/platform-manifests.git'
@@ -247,7 +247,7 @@ spec:
   
   roles:
     - name: admin
-      description: "Full access to Ainflue project"
+      description: "Full access to IA Chéries project"
       policies:
         - p, proj:ainflue-project:admin, applications, *, ainflue-project/*, allow
         - p, proj:ainflue-project:admin, logs, get, ainflue-project/*, allow
@@ -256,7 +256,7 @@ spec:
         - ainflue:admins
     
     - name: developer
-      description: "Developer access to Ainflue project"
+      description: "Developer access to IA Chéries project"
       policies:
         - p, proj:ainflue-project:developer, applications, get, ainflue-project/*, allow
         - p, proj:ainflue-project:developer, applications, sync, ainflue-project/ainflue-development, allow
@@ -266,7 +266,7 @@ spec:
         - ainflue:developers
     
     - name: readonly
-      description: "Read-only access to Ainflue project"
+      description: "Read-only access to IA Chéries project"
       policies:
         - p, proj:ainflue-project:readonly, applications, get, ainflue-project/*, allow
         - p, proj:ainflue-project:readonly, logs, get, ainflue-project/*, allow
@@ -512,7 +512,7 @@ data:
       prefix: docker.io
       api_url: https://registry-1.docker.io
       credentials: pullsecret:argocd/dockerhub
-    - name: Ainflue Registry
+    - name: IA Chéries Registry
       prefix: registry.ainflue.com
       api_url: https://registry.ainflue.com/v2
       credentials: secret:argocd/ainflue-registry

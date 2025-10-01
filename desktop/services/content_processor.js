@@ -728,7 +728,7 @@ class ContentProcessor {
       fileSize: '5.2MB',
       compression: '15%',
       metadata: {
-        encoder: 'ainflue_professional_v1',
+        encoder: 'iacherie_professional_v1',
         quality: options.quality,
         timestamp: new Date().toISOString()
       }

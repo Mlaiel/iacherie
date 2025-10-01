@@ -1,4 +1,4 @@
-"""Content Fingerprinting Template for Ainflue Creator Protection
+"""Content Fingerprinting Template for IA Chéries Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

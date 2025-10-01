@@ -1,5 +1,5 @@
 """
-Health Alerting System - Ainflue Health Checks Module
+Health Alerting System - IA Chéries Health Checks Module
 Système alerting santé avec smart notifications, escalation automatique,
 multi-channel delivery et intelligent noise reduction.
 

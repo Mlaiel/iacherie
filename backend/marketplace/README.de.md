@@ -7,7 +7,7 @@
 
 ## 🌟 Überblick
 
-Das Marketplace Modul ist eine erweiterte Trading- und Commerce-Engine für die Ainflue Plattform, die umfassende Marketplace-Funktionalitäten bereitstellt, einschließlich Influencer-Trading, Auktionssysteme, Lizenzmanagement, Revenue-Sharing und Enterprise-Level Compliance-Systeme.
+Das Marketplace Modul ist eine erweiterte Trading- und Commerce-Engine für die iacherie Plattform, die umfassende Marketplace-Funktionalitäten bereitstellt, einschließlich Influencer-Trading, Auktionssysteme, Lizenzmanagement, Revenue-Sharing und Enterprise-Level Compliance-Systeme.
 
 ## 👨‍💻 Modul-Führung
 

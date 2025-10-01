@@ -1,7 +1,7 @@
 """Intelligence Monitoring Main Orchestrator
 ================================================
 
-Main entry point for the Ainflue Creator Economy Intelligence Monitoring System.
+Main entry point for the IA Chéries Creator Economy Intelligence Monitoring System.
 Provides unified orchestration of all intelligence monitoring components for
 creators across multiple formats (music, video, blog, photography, comedy).
 

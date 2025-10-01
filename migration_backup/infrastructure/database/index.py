@@ -1,5 +1,5 @@
 """
-Database Module - Ainflue Infrastructure
+Database Module - IA Chéries Infrastructure
 =======================================
 Enterprise-grade database management and optimization infrastructure
 
@@ -10,7 +10,7 @@ This module provides comprehensive database management capabilities including:
 - Vector database support for AI/ML workloads
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -98,8 +98,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise database management infrastructure"
 
-# Configuration logique métier Ainflue
-AINFLUE_DATABASE_CONFIG = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_DATABASE_CONFIG = {
     'upload': 'Multi-format content storage with vector indexing',
     'ai_processing': 'Vector database for AI model serving and caching', 
     'protection': 'Rights protection data with blockchain integration',

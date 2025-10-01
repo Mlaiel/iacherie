@@ -1,10 +1,10 @@
-# Development Dockerfile for Ainflue Frontend
+# Development Dockerfile for iacherie Frontend
 # ===========================================
 
 FROM node:20-alpine
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Frontend - Development Environment"
+LABEL description="iacherie Frontend - Development Environment"
 
 # Set working directory
 WORKDIR /app

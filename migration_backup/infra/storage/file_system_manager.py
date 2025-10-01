@@ -1,8 +1,8 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
-# Ainflue Infrastructure Module - File System Manager
+# IA Chéries Infrastructure Module - File System Manager
 # =================================================
 # 
-# Enterprise-grade file system management for Ainflue platform
+# Enterprise-grade file system management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -120,12 +120,12 @@ class FileSystemManager:
     Enterprise File System Manager
     
     Manages distributed file systems, storage providers, file metadata,
-    and access control across the Ainflue platform.
+    and access control across the IA Chéries platform.
     """
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize file system manager"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/storage"
+        self.config_path = config_path or "/home/runner/work/IA Chéries/IA Chéries/infra/storage"
         self.base_storage_path = f"{self.config_path}/storage_data"
         self.metadata_store: Dict[str, FileMetadata] = {}
         self.storage_quotas: Dict[str, StorageQuota] = {}

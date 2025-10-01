@@ -1,5 +1,5 @@
-"""Ainflue Platform Python SDK
-Official Python SDK for the Ainflue AI-powered content protection platform
+"""IA Chéries Platform Python SDK
+Official Python SDK for the IA Chéries AI-powered content protection platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -20,7 +20,7 @@ __email__ = "mlaiel@live.de"
 
 
 # Configuration
-class AinflueSdkConfig(BaseModel):
+class IA ChériesSdkConfig(BaseModel):
     """SDK configuration settings"""
     base_url: str = Field(default="https://api.ainflue.com", description="API base URL")
     api_key: str = Field(..., description="API key for authentication")
@@ -31,17 +31,17 @@ class AinflueSdkConfig(BaseModel):
 
 
 # Exceptions
-class AinflueSdkException(Exception):
-    """Base exception for Ainflue SDK"""
+class IA ChériesSdkException(Exception):
+    """Base exception for IA Chéries SDK"""
     pass
 
 
-class AuthenticationError(AinflueSdkException):
+class AuthenticationError(IA ChériesSdkException):
     """Authentication failed"""
     pass
 
 
-class APIError(AinflueSdkException):
+class APIError(IA ChériesSdkException):
     """API request failed"""
     def __init__(self, message: str, status_code: int = None, response: Dict = None):
         super().__init__(message)
@@ -49,13 +49,13 @@ class APIError(AinflueSdkException):
         self.response = response
 
 
-class ValidationError(AinflueSdkException):
+class ValidationError(IA ChériesSdkException):
     """Request validation failed"""
     pass
 
 
 # Response Models
-class AinflueSdkResponse(BaseModel):
+class IA ChériesSdkResponse(BaseModel):
     """Base response model"""
     success: bool
     message: str
@@ -84,10 +84,10 @@ class ContentProtectionResult(BaseModel):
 
 
 # Main SDK Client
-class AinflueSdk:
-    """Main Ainflue SDK client"""
+class IA ChériesSdk:
+    """Main IA Chéries SDK client"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config: IA ChériesSdkConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._client = None
@@ -321,17 +321,17 @@ class AinflueSdk:
 
 
 # Synchronous wrapper
-class AinflueSdkSync:
-    """Synchronous wrapper for Ainflue SDK"""
+class IA ChériesSdkSync:
+    """Synchronous wrapper for IA Chéries SDK"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config: IA ChériesSdkConfig):
         self.config = config
         self._async_sdk = None
     
-    def _get_async_sdk(self) -> AinflueSdk:
+    def _get_async_sdk(self) -> IA ChériesSdk:
         """Get or create async SDK instance"""
         if self._async_sdk is None:
-            self._async_sdk = AinflueSdk(self.config)
+            self._async_sdk = IA ChériesSdk(self.config)
         return self._async_sdk
     
     def _run_async(self, coro):
@@ -371,24 +371,24 @@ class AinflueSdkSync:
 
 
 # Factory functions
-def create_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> AinflueSdk:
+def create_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> IA ChériesSdk:
     """Create async SDK instance"""
-    config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
-    return AinflueSdk(config)
+    config = IA ChériesSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
+    return IA ChériesSdk(config)
 
 
-def create_sync_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> AinflueSdkSync:
+def create_sync_sdk(api_key: str, base_url: str = "https://api.ainflue.com", **kwargs) -> IA ChériesSdkSync:
     """Create sync SDK instance"""
-    config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
-    return AinflueSdkSync(config)
+    config = IA ChériesSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
+    return IA ChériesSdkSync(config)
 
 
 # Convenience exports
 __all__ = [
-    "AinflueSdk",
-    "AinflueSdkSync",
-    "AinflueSdkConfig",
-    "AinflueSdkException",
+    "IA ChériesSdk",
+    "IA ChériesSdkSync",
+    "IA ChériesSdkConfig",
+    "IA ChériesSdkException",
     "AuthenticationError",
     "APIError",
     "ValidationError",

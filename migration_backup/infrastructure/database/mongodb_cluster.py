@@ -1,6 +1,6 @@
 """
 MongoDB Cluster Management - Enterprise Grade
-High-performance MongoDB cluster management for Ainflue creator content and metadata
+High-performance MongoDB cluster management for IA Chéries creator content and metadata
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -88,7 +88,7 @@ class PerformanceMetrics:
 
 class MongoDBCluster:
     """
-    Enterprise MongoDB cluster management for Ainflue creator platform
+    Enterprise MongoDB cluster management for IA Chéries creator platform
     
     ML Engineer + DBA Role Implementation - Enhanced Features:
     - Multi-modal vector storage for AI-powered content analysis
@@ -104,7 +104,7 @@ class MongoDBCluster:
         """Initialize MongoDB cluster manager"""
         self.clusters: Dict[str, Dict[str, Any]] = {}
         self.performance_cache: Dict[str, PerformanceMetrics] = {}
-        logger.info("MongoDB cluster manager initialized for Ainflue creator content")
+        logger.info("MongoDB cluster manager initialized for IA Chéries creator content")
         
     async def create_cluster(self, config: MongoClusterConfig) -> Dict[str, Any]:
         """
@@ -159,7 +159,7 @@ class MongoDBCluster:
         if config.shards > 1:
             await self._setup_sharding(cluster_info, config)
             
-        # Configure collections for Ainflue business logic
+        # Configure collections for IA Chéries business logic
         cluster_info['collections'] = await self._setup_ainflue_collections(config)
         
         self.clusters[cluster_info['cluster_id']] = cluster_info
@@ -198,7 +198,7 @@ class MongoDBCluster:
         
     async def _setup_ainflue_collections(self, config: MongoClusterConfig) -> Dict[str, Any]:
         """
-        Setup collections optimized for Ainflue creator economy
+        Setup collections optimized for IA Chéries creator economy
         
         ML Engineer + DBA Enhancement:
         - Vector embeddings for content similarity
@@ -534,7 +534,7 @@ class MongoDBCluster:
         return cluster['replication']
         
     async def monitor_performance(self, cluster_id: str) -> PerformanceMetrics:
-        """Monitor MongoDB cluster performance for Ainflue workloads"""
+        """Monitor MongoDB cluster performance for IA Chéries workloads"""
         # Simulate performance monitoring (in real implementation, would connect to MongoDB)
         metrics = PerformanceMetrics(
             operations_per_second=5000.0,  # High throughput for creator uploads

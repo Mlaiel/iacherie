@@ -1,4 +1,4 @@
-# ☁️ Cloud-Infrastruktur - Ainflue-Plattform
+# ☁️ Cloud-Infrastruktur - iacherie-Plattform
 
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Modulzweck
 
-Enterprise-Grade Multi-Cloud-Infrastrukturverwaltung für die Ainflue Creator-Plattform. Bietet einheitliche Schnittstelle für die Verwaltung von AWS, Azure, GCP und Hybrid-Cloud-Deployments mit intelligenter Kostenoptimierung, Leistungsüberwachung und automatischer Skalierung.
+Enterprise-Grade Multi-Cloud-Infrastrukturverwaltung für die iacherie Creator-Plattform. Bietet einheitliche Schnittstelle für die Verwaltung von AWS, Azure, GCP und Hybrid-Cloud-Deployments mit intelligenter Kostenoptimierung, Leistungsüberwachung und automatischer Skalierung.
 
 ## 🏗️ Architektur
 
@@ -33,9 +33,9 @@ from infrastructure.cloud import MultiCloudManager, CostOptimizer
 
 # Multi-Cloud-Manager initialisieren
 cloud_manager = MultiCloudManager({
-    'aws': {'region': 'us-east-1', 'profile': 'ainflue-prod'},
-    'azure': {'subscription_id': 'xxx', 'resource_group': 'ainflue-rg'},
-    'gcp': {'project_id': 'ainflue-prod', 'zone': 'us-central1-a'}
+    'aws': {'region': 'us-east-1', 'profile': 'iacherie-prod'},
+    'azure': {'subscription_id': 'xxx', 'resource_group': 'iacherie-rg'},
+    'gcp': {'project_id': 'iacherie-prod', 'zone': 'us-central1-a'}
 })
 
 # Über mehrere Clouds bereitstellen

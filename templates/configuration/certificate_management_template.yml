@@ -1,4 +1,4 @@
-# ⚡ Certificate Management Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Certificate Management Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -26,7 +26,7 @@ data:
         letsencrypt:
           enabled: true
           environment: "production"  # production, staging
-          email: "certificates@ainflue.com"
+          email: "certificates@iacherie.com"
           acmeServer: "https://acme-v02.api.letsencrypt.org/directory"
           keyAlgorithm: "RSA"
           keySize: 2048
@@ -35,15 +35,15 @@ data:
           enabled: true
           provider: "vault"
           vaultPath: "pki_int"
-          rootCA: "Ainflue Internal CA"
-          intermediateCA: "Ainflue Services CA"
+          rootCA: "iacherie Internal CA"
+          intermediateCA: "iacherie Services CA"
           keyAlgorithm: "RSA"
           keySize: 2048
         
         venafi:
           enabled: false
-          tppUrl: "https://tpp.ainflue.internal"
-          zone: "Ainflue\\Kubernetes"
+          tppUrl: "https://tpp.iacherie.internal"
+          zone: "iacherie\\Kubernetes"
           
         selfSigned:
           enabled: true
@@ -145,7 +145,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: certificates@ainflue.com
+    email: certificates@iacherie.com
     privateKeySecretRef:
       name: letsencrypt-production-private-key
     solvers:
@@ -175,20 +175,20 @@ spec:
             key: secret-access-key
       selector:
         dnsNames:
-        - "*.ainflue.com"
-        - "*.api.ainflue.com"
-        - "*.app.ainflue.com"
+        - "*.iacherie.com"
+        - "*.api.iacherie.com"
+        - "*.app.iacherie.com"
     # Alternative DNS-01 with CloudFlare
     - dns01:
         cloudflare:
-          email: dns@ainflue.com
+          email: dns@iacherie.com
           apiTokenSecretRef:
             name: cloudflare-api-token
             key: api-token
       selector:
         dnsNames:
-        - "*.staging.ainflue.com"
-        - "*.dev.ainflue.com"
+        - "*.staging.iacherie.com"
+        - "*.dev.iacherie.com"
 ---
 # 🔒 cert-manager ClusterIssuer for Let's Encrypt Staging
 apiVersion: cert-manager.io/v1
@@ -201,7 +201,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: certificates@ainflue.com
+    email: certificates@iacherie.com
     privateKeySecretRef:
       name: letsencrypt-staging-private-key
     solvers:
@@ -218,8 +218,8 @@ spec:
             key: secret-access-key
       selector:
         dnsNames:
-        - "*.staging.ainflue.com"
-        - "*.dev.ainflue.com"
+        - "*.staging.iacherie.com"
+        - "*.dev.iacherie.com"
 ---
 # 🏦 cert-manager Vault Issuer
 apiVersion: cert-manager.io/v1
@@ -232,7 +232,7 @@ metadata:
 spec:
   vault:
     server: https://vault.vault.svc.cluster.local:8200
-    path: pki_int/sign/ainflue-dot-com
+    path: pki_int/sign/iacherie-dot-com
     caBundle: |
       -----BEGIN CERTIFICATE-----
       MIIDCzCCAfOgAwIBAgIQJ... (Base64 encoded Vault CA certificate)
@@ -260,39 +260,39 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: ainflue-root-ca
+  name: iacherie-root-ca
   labels:
     issuer-type: ca
     environment: internal
 spec:
   ca:
-    secretName: ainflue-root-ca-secret
+    secretName: iacherie-root-ca-secret
 ---
 # 🌐 Main Domain Certificate
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ainflue-com-tls
-  namespace: ainflue-production
+  name: iacherie-com-tls
+  namespace: iacherie-production
   labels:
     certificate-type: public
-    domain: ainflue.com
+    domain: iacherie.com
 spec:
-  secretName: ainflue-com-tls-secret
+  secretName: iacherie-com-tls-secret
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: ainflue.com
+  commonName: iacherie.com
   dnsNames:
-  - ainflue.com
-  - www.ainflue.com
+  - iacherie.com
+  - www.iacherie.com
   duration: 2160h  # 90 days
   renewBefore: 720h  # 30 days
   subject:
     organizationalUnits:
     - "IT Department"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
     countries:
     - "US"
     localities:
@@ -312,32 +312,32 @@ spec:
     jks:
       create: true
       passwordSecretRef:
-        name: ainflue-com-jks-password
+        name: iacherie-com-jks-password
         key: password
     pkcs12:
       create: true
       passwordSecretRef:
-        name: ainflue-com-p12-password
+        name: iacherie-com-p12-password
         key: password
 ---
 # 🎯 API Domain Certificate
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: api-ainflue-com-tls
-  namespace: ainflue-production
+  name: api-iacherie-com-tls
+  namespace: iacherie-production
   labels:
     certificate-type: public
-    domain: api.ainflue.com
+    domain: api.iacherie.com
 spec:
-  secretName: api-ainflue-com-tls-secret
+  secretName: api-iacherie-com-tls-secret
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: api.ainflue.com
+  commonName: api.iacherie.com
   dnsNames:
-  - api.ainflue.com
-  - "*.api.ainflue.com"
+  - api.iacherie.com
+  - "*.api.iacherie.com"
   duration: 2160h
   renewBefore: 720h
   privateKey:
@@ -353,7 +353,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: internal-services-tls
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: internal
     scope: cluster
@@ -362,14 +362,14 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: internal.ainflue.local
+  commonName: internal.iacherie.local
   dnsNames:
-  - "*.ainflue-production.svc.cluster.local"
-  - "*.ainflue-staging.svc.cluster.local"
-  - "*.ainflue-database.svc.cluster.local"
+  - "*.iacherie-production.svc.cluster.local"
+  - "*.iacherie-staging.svc.cluster.local"
+  - "*.iacherie-database.svc.cluster.local"
   - vault.vault.svc.cluster.local
-  - postgres.ainflue-database.svc.cluster.local
-  - redis.ainflue-cache.svc.cluster.local
+  - postgres.iacherie-database.svc.cluster.local
+  - redis.iacherie-cache.svc.cluster.local
   duration: 8760h  # 1 year
   renewBefore: 2160h  # 90 days
   privateKey:
@@ -385,22 +385,22 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cdn-ainflue-com-tls
-  namespace: ainflue-production
+  name: cdn-iacherie-com-tls
+  namespace: iacherie-production
   labels:
     certificate-type: public
     purpose: cdn
 spec:
-  secretName: cdn-ainflue-com-tls-secret
+  secretName: cdn-iacherie-com-tls-secret
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: cdn.ainflue.com
+  commonName: cdn.iacherie.com
   dnsNames:
-  - cdn.ainflue.com
-  - content.ainflue.com
-  - assets.ainflue.com
-  - media.ainflue.com
+  - cdn.iacherie.com
+  - content.iacherie.com
+  - assets.iacherie.com
+  - media.iacherie.com
   duration: 2160h
   renewBefore: 720h
   privateKey:
@@ -416,7 +416,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: client-auth-certificate
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: client-auth
     purpose: mutual-tls
@@ -425,12 +425,12 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: ainflue-client-auth
+  commonName: iacherie-client-auth
   subject:
     organizationalUnits:
     - "Client Authentication"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
   duration: 8760h
   renewBefore: 2160h
   privateKey:
@@ -446,7 +446,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: mobile-app-certificate
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: code-signing
     purpose: mobile-app
@@ -455,12 +455,12 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: Ainflue Mobile App
+  commonName: iacherie Mobile App
   subject:
     organizationalUnits:
     - "Mobile Development"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
     countries:
     - "US"
   duration: 26280h  # 3 years
@@ -572,7 +572,7 @@ data:
         
       compliance:
         requireOrganization: true
-        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        allowedOrganizations: ["iacherie Creator Economy Platform"]
         requireCountry: true
         allowedCountries: ["US", "CA", "GB", "DE", "FR"]
         
@@ -599,7 +599,7 @@ data:
         
       compliance:
         requireOrganization: true
-        allowedOrganizations: ["Ainflue Creator Economy Platform"]
+        allowedOrganizations: ["iacherie Creator Economy Platform"]
         requireOU: true
         allowedOUs: ["Security", "Infrastructure"]
         requireCountry: true
@@ -849,7 +849,7 @@ spec:
               rm -rf "$BACKUP_DIR"
               
               # Upload to S3
-              aws s3 cp "$BACKUP_DIR.tar.gz" "s3://ainflue-certificate-backups/"
+              aws s3 cp "$BACKUP_DIR.tar.gz" "s3://iacherie-certificate-backups/"
               
               # Cleanup old backups (keep 30 days)
               find /backup/certificates -name "*.tar.gz" -mtime +30 -delete
@@ -890,7 +890,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: creator-content-signing
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: content-signing
     purpose: creator-economy
@@ -899,13 +899,13 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: Ainflue Creator Content Signing
+  commonName: iacherie Creator Content Signing
   subject:
     organizationalUnits:
     - "Creator Economy"
     - "Content Verification"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
   duration: 8760h  # 1 year
   renewBefore: 2160h  # 90 days
   privateKey:
@@ -921,7 +921,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: payment-service-mtls
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: mutual-tls
     purpose: payment-security
@@ -930,17 +930,17 @@ spec:
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer
-  commonName: ainflue-payment-service.ainflue-production.svc.cluster.local
+  commonName: iacherie-payment-service.iacherie-production.svc.cluster.local
   subject:
     organizationalUnits:
     - "Payment Processing"
     - "Financial Services"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
   dnsNames:
-  - ainflue-payment-service.ainflue-production.svc.cluster.local
+  - iacherie-payment-service.iacherie-production.svc.cluster.local
   - payment-service
-  - payment.internal.ainflue.com
+  - payment.internal.iacherie.com
   duration: 2160h  # 90 days
   renewBefore: 720h  # 30 days
   privateKey:
@@ -957,7 +957,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: creator-api-client-template
-  namespace: ainflue-production
+  namespace: iacherie-production
   labels:
     certificate-type: client-auth
     purpose: creator-api
@@ -971,7 +971,7 @@ spec:
     organizationalUnits:
     - "Creator API Access"
     organizations:
-    - "Ainflue Creator Economy Platform"
+    - "iacherie Creator Economy Platform"
   duration: 8760h  # 1 year
   renewBefore: 2160h  # 90 days
   privateKey:
@@ -987,14 +987,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: creator-certificate-template
-  namespace: ainflue-production
+  namespace: iacherie-production
 data:
   creator-cert-request.yaml: |
     apiVersion: cert-manager.io/v1
     kind: Certificate
     metadata:
       name: "creator-{{ .creatorId }}-cert"
-      namespace: "{{ .namespace | default "ainflue-production" }}"
+      namespace: "{{ .namespace | default "iacherie-production" }}"
       labels:
         certificate-type: creator-auth
         creator-id: "{{ .creatorId }}"
@@ -1004,17 +1004,17 @@ data:
       issuerRef:
         name: vault-issuer
         kind: ClusterIssuer
-      commonName: "creator-{{ .creatorId }}.ainflue.com"
+      commonName: "creator-{{ .creatorId }}.iacherie.com"
       subject:
         organizationalUnits:
         - "Creator"
         - "{{ .tier | title }} Tier"
         organizations:
-        - "Ainflue Creator Economy Platform"
+        - "iacherie Creator Economy Platform"
         commonName: "{{ .creatorName }}"
       dnsNames:
-      - "creator-{{ .creatorId }}.ainflue.com"
-      - "{{ .creatorId }}.creators.ainflue.com"
+      - "creator-{{ .creatorId }}.iacherie.com"
+      - "{{ .creatorId }}.creators.iacherie.com"
       duration: "{{ .duration | default "8760h" }}"
       renewBefore: "{{ .renewBefore | default "2160h" }}"
       privateKey:
@@ -1100,5 +1100,5 @@ webhooks:
 # ===================================================================
 # END OF CERTIFICATE MANAGEMENT CONFIGURATION TEMPLATE
 # Creator Economy Certificate Management by Fahed Mlaiel
-# Enterprise-grade certificate management for Ainflue platform
+# Enterprise-grade certificate management for iacherie platform
 # ===================================================================

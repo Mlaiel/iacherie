@@ -1,5 +1,5 @@
 /**
- * 🎭 Framer Motion Animation Template - Ainflue Creator Economy
+ * 🎭 Framer Motion Animation Template - IA Chéries Creator Economy
  * 
  * @fileoverview Template enterprise pour animations Framer Motion
  * @version 1.0.0

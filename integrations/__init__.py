@@ -99,7 +99,7 @@ __all__ = [
 ]
 
 # Configuration entreprise IA Chérie
-AINFLUE_INTEGRATIONS_CONFIG = {
+IACHERIE_INTEGRATIONS_CONFIG = {
     "version": "2.0",
     "architecture": "enterprise",
     "ai_agents": 53,

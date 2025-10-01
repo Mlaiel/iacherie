@@ -47,7 +47,7 @@ class ReplicationStrategy(Enum):
     LAZY_REPLICATION = "lazy"
 
 
-class AinflueBusinesPulsarTopics:
+class iacherieBusinesPulsarTopics:
     """Pulsar topics for IA Chérie cross-datacenter events"""
     
     # Global content distribution
@@ -668,10 +668,10 @@ class PulsarIntegrationEngine:
             
             # Create producers for key topics
             key_topics = [
-                AinflueBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
-                AinflueBusinesPulsarTopics.CROSS_REGION_SYNC,
-                AinflueBusinesPulsarTopics.REVENUE_RECONCILIATION,
-                AinflueBusinesPulsarTopics.AUDIT_TRAIL
+                iacherieBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
+                iacherieBusinesPulsarTopics.CROSS_REGION_SYNC,
+                iacherieBusinesPulsarTopics.REVENUE_RECONCILIATION,
+                iacherieBusinesPulsarTopics.AUDIT_TRAIL
             ]
             
             for topic in key_topics:
@@ -689,8 +689,8 @@ class PulsarIntegrationEngine:
             
             # Create consumers with default handlers
             consumer_topics = [
-                AinflueBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
-                AinflueBusinesPulsarTopics.REVENUE_RECONCILIATION
+                iacherieBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
+                iacherieBusinesPulsarTopics.REVENUE_RECONCILIATION
             ]
             
             for topic in consumer_topics:
@@ -924,7 +924,7 @@ class PulsarIntegrationEngine:
 __all__ = [
     "PulsarIntegrationEngine", "PulsarProducer", "PulsarConsumer",
     "PulsarProducerConfig", "PulsarConsumerConfig", "PulsarClusterConfig",
-    "GeoReplicationManager", "GeoReplicationConfig", "AinflueBusinesPulsarTopics",
+    "GeoReplicationManager", "GeoReplicationConfig", "iacherieBusinesPulsarTopics",
     "PulsarMessage", "PulsarMetrics", "PulsarCompressionType", "PulsarSubscriptionType",
     "ReplicationStrategy"
 ]

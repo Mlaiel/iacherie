@@ -1,7 +1,7 @@
 """
 Docker Testing Infrastructure Module
 
-Enterprise-grade testing infrastructure for Ainflue Platform Docker containers.
+Enterprise-grade testing infrastructure for IA Chéries Platform Docker containers.
 Comprehensive testing suite with 95%+ coverage requirement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

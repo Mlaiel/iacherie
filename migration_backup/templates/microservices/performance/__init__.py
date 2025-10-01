@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Performance Templates - Ainflue Microservices Enterprise
+🚀 Performance Templates - IA Chéries Microservices Enterprise
 
 High-performance templates for microservices optimization including caching,
 connection pooling, async processing, memory optimization, and more.

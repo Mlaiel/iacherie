@@ -114,7 +114,7 @@ class DeploymentOrchestrationEngine:
                 phase=DeploymentPhase.BUILD,
                 handler="build_model_container",
                 prerequisites=["validate_model"],
-                config={'registry': 'ainflue-models', 'optimize': True},
+                config={'registry': 'iacherie-models', 'optimize': True},
                 timeout_seconds=600
             ),
             DeploymentStep(
@@ -455,14 +455,14 @@ class DeploymentOrchestrationEngine:
             # Simulate container build
             await asyncio.sleep(5)
             
-            container_tag = f"ainflue-models/{model_id}:latest"
+            container_tag = f"iacherie-models/{model_id}:latest"
             
             return {
                 'success': True,
                 'message': f"Container built successfully: {container_tag}",
                 'container_tag': container_tag,
                 'rollback_data': {
-                    'previous_tag': f"ainflue-models/{model_id}:previous"
+                    'previous_tag': f"iacherie-models/{model_id}:previous"
                 }
             }
         except Exception as e:
@@ -542,9 +542,9 @@ class DeploymentOrchestrationEngine:
                 'success': True,
                 'message': "Infrastructure provisioned successfully",
                 'resources': {
-                    'cluster': 'ainflue-prod-cluster',
+                    'cluster': 'iacherie-prod-cluster',
                     'namespace': 'model-deployment',
-                    'load_balancer': 'ainflue-model-lb',
+                    'load_balancer': 'iacherie-model-lb',
                     'monitoring': 'enabled'
                 },
                 'rollback_data': {
@@ -569,7 +569,7 @@ class DeploymentOrchestrationEngine:
                 'success': True,
                 'message': f"Model service {model_id} deployed successfully",
                 'service_info': {
-                    'endpoint': f"https://api.ainflue.com/models/{model_id}",
+                    'endpoint': f"https://api.iacherie.com/models/{model_id}",
                     'replicas': 3,
                     'status': 'running'
                 },

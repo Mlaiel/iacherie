@@ -2,7 +2,7 @@
 ================================
 
 Orchestration & déploiement automatisé edge ultra-avancé pour l'écosystème
-Ainflue. Consolidation intelligente de tous les composants orchestration
+IA Chéries. Consolidation intelligente de tous les composants orchestration
 en un système unifié enterprise-grade.
 
 Consolidation des 7 fichiers orchestration/:
@@ -952,7 +952,7 @@ class EdgeOrchestrationAutomation:
             return False
     
     async def deploy_ainflue_service(self, creator_type: str, service_config: Dict[str, Any]) -> str:
-        """Déploie un service optimisé pour un type de créateur Ainflue."""
+        """Déploie un service optimisé pour un type de créateur IA Chéries."""
         try:
             # Configuration spécifique par type de créateur
             optimized_config = await self._optimize_for_creator_type(creator_type, service_config)
@@ -993,7 +993,7 @@ class EdgeOrchestrationAutomation:
             return ""
             
         except Exception as e:
-            logger.error(f"Failed to deploy Ainflue service: {e}")
+            logger.error(f"Failed to deploy IA Chéries service: {e}")
             return ""
     
     async def _optimize_for_creator_type(self, creator_type: str, config: Dict[str, Any]) -> Dict[str, Any]:

@@ -1,9 +1,9 @@
-"""Ainflue Core Encryption - Enterprise Encryption & Cryptography
+"""IA Chéries Core Encryption - Enterprise Encryption & Cryptography
 ============================================================
 
 Advanced encryption management providing symmetric/asymmetric encryption,
 digital signatures, key management, secure communication, and cryptographic
-operations for the Ainflue platform security core.
+operations for the IA Chéries platform security core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

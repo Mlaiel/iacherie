@@ -1,12 +1,12 @@
 """
-Video Processing Pipeline - Ainflue Enterprise
+Video Processing Pipeline - IA Chéries Enterprise
 ==============================================
 Pipeline traitement vidéo enterprise avec computer vision avancée.
 Video enhancement + scene analysis + object detection + editing automation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

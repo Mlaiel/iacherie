@@ -1,4 +1,4 @@
-"""📊 Enterprise ML Monitoring System - Ainflue AI/ML Pipeline
+"""📊 Enterprise ML Monitoring System - IA Chéries AI/ML Pipeline
 ============================================================
 
 Production ML monitoring with drift detection, performance tracking,
@@ -523,7 +523,7 @@ class EnterpriseMLMonitoringSystem:
             raise
     
     async def get_creator_monitoring_dashboard(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific monitoring dashboard for Ainflue platform"""
+        """Get creator-specific monitoring dashboard for IA Chéries platform"""
         try:
             # Get time ranges
             now = datetime.utcnow()
@@ -1172,7 +1172,7 @@ class EnterpriseMLMonitoringSystem:
             msg = MIMEMultipart()
             msg['From'] = self.config['smtp_from']
             msg['To'] = self.config['alert_email']
-            msg['Subject'] = f"Ainflue ML Alert - {alert.severity.value.upper()}"
+            msg['Subject'] = f"IA Chéries ML Alert - {alert.severity.value.upper()}"
             
             body = f"""
             Alert Details:

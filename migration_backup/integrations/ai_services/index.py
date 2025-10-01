@@ -1,12 +1,12 @@
 """
-AI Services Module - Ainflue Integrations
+AI Services Module - IA Chéries Integrations
 ========================================
 Enterprise-grade AI services providing comprehensive artificial intelligence
 capabilities, model routing, performance optimization, and multi-provider
 orchestration across 53+ AI agents and models.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -71,8 +71,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise AI services infrastructure for multi-provider content generation and optimization"
 
-# Configuration logique métier Ainflue
-AINFLUE_INTEGRATIONS = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'ai_agents': 53,

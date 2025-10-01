@@ -169,7 +169,7 @@ class PlatformMonitor:
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=timeout,
-                headers={'User-Agent': 'Ainflue-Protection-Bot/1.0'}
+                headers={'User-Agent': 'IA Chéries-Protection-Bot/1.0'}
             )
     
     async def cleanup(self):
@@ -832,7 +832,7 @@ class ViolationMonitoringSystem:
                 'reported_url': violation.detected_url,
                 'violation_type': violation.violation_type.value,
                 'evidence': violation.evidence,
-                'reporter_info': 'Ainflue AI Protection System',
+                'reporter_info': 'IA Chéries AI Protection System',
                 'timestamp': datetime.utcnow().isoformat()
             }
             

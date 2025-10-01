@@ -3,10 +3,10 @@ Enterprise Orchestration Engine - Container Orchestration Service
 ================================================================
 
 Enterprise-grade container orchestration with intelligent deployment strategies,
-automated scaling, and comprehensive monitoring for the Ainflue platform.
+automated scaling, and comprehensive monitoring for the iacherie platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - Container Module
+Project: iacherie Infrastructure - Container Module
 Expert Role: DevOps + Backend Senior + Microservices Expert
 Version: 1.0 Production Enterprise
 
@@ -117,7 +117,7 @@ class EnterpriseOrchestrationEngine:
     """
     Enterprise Container Orchestration Engine
     
-    Provides enterprise-grade orchestration capabilities for the Ainflue platform
+    Provides enterprise-grade orchestration capabilities for the iacherie platform
     with intelligent deployment strategies, auto-scaling, and multi-cluster management.
     """
     
@@ -197,7 +197,7 @@ class EnterpriseOrchestrationEngine:
             "gitops": {
                 "enabled": True,
                 "tool": "argocd",  # or "flux"
-                "repository_url": "https://github.com/Mlaiel/Ainflue-k8s-manifests",
+                "repository_url": "https://github.com/Mlaiel/iacherie-k8s-manifests",
                 "sync_policy": "automated",
                 "self_heal": True
             }
@@ -538,7 +538,7 @@ class EnterpriseOrchestrationEngine:
                 "labels": {
                     "app": app_config.name,
                     "version": app_config.version,
-                    "managed-by": "ainflue-orchestrator"
+                    "managed-by": "iacherie-orchestrator"
                 }
             },
             "spec": {
@@ -885,9 +885,9 @@ if __name__ == "__main__":
         
         # Create test application configuration
         deployment_configuration = ApplicationConfig(
-            name="ainflue-api",
+            name="iacherie-api",
             namespace="default",
-            image="ainflue/api",
+            image="iacherie/api",
             version="v2.1.0",
             replicas=3,
             resources={

@@ -1,13 +1,13 @@
 # 🚀 Index: Point d'entrée prompt engineering avec factory pattern
 """
-Prompt Engineering - Ainflue Integrations
+Prompt Engineering - IA Chéries Integrations
 =========================================
 Enterprise prompt engineering providing intelligent prompt optimization,
 security validation, template management, and advanced AI prompt generation
 for creators across music, video, photography, and blog content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -17,7 +17,7 @@ from .prompt_optimization_engine import *
 from .prompt_security_validator import *
 from .prompt_analytics import *
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chéries
 PROMPT_ENGINEERING_CONFIG = {
     'ai_models': ['gpt-4', 'claude-3', 'gemini-pro', 'llama-2'],
     'prompt_types': ['content_generation', 'seo_optimization', 'collaboration_matching', 'protection_analysis'],

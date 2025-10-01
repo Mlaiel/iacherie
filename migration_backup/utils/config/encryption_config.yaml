@@ -148,7 +148,7 @@ key_derivation:
   hkdf:
     algorithm: "HKDF-SHA-256"
     salt_size: 256
-    info_context: "Ainflue-KDF-v1"
+    info_context: "IA Chéries-KDF-v1"
     
 # Key Management Configuration
 key_management:

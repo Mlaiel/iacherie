@@ -6,7 +6,7 @@ AI-powered content optimization with 8 specialized quality agents.
 Professional enhancement for video, audio, image, and text content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

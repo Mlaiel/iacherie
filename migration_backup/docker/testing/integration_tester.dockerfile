@@ -1,11 +1,11 @@
 # Integration Tester Service
-# Multi-service integration testing for Ainflue Platform
+# Multi-service integration testing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Integration Tester - Multi-service validation"
+LABEL description="IA Chéries Integration Tester - Multi-service validation"
 LABEL version="1.0.0"
 
 # Set working directory

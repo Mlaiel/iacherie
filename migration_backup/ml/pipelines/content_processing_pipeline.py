@@ -1,12 +1,12 @@
 """
-Content Processing Pipeline - Ainflue Enterprise
+Content Processing Pipeline - IA Chéries Enterprise
 ===============================================
 Pipeline traitement contenu multi-modal avec orchestration IA avancée.
 Support audio, video, image, text avec preprocessing, enhancement, et business intelligence.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

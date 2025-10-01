@@ -432,7 +432,7 @@ class EnterpriseMonitoringHub:
         
     def _setup_logging(self) -> logging.Logger:
         """Configuration logging enterprise"""
-        logger = logging.getLogger("ainflue_monitoring")
+        logger = logging.getLogger("iacherie_monitoring")
         logger.setLevel(logging.INFO if not self.config.debug else logging.DEBUG)
         
         # Handler avec format structuré
@@ -448,12 +448,12 @@ class EnterpriseMonitoringHub:
     def _setup_metrics(self) -> Dict[str, Any]:
         """Setup métriques Prometheus"""
         return {
-            'creators_active': prometheus_client.Gauge('ainflue_creators_active_total'),
-            'content_processed': prometheus_client.Counter('ainflue_content_processed_total'),
-            'collaborations_matched': prometheus_client.Counter('ainflue_collaborations_matched_total'),
-            'revenue_generated': prometheus_client.Gauge('ainflue_revenue_generated_euros'),
-            'ai_processing_latency': prometheus_client.Histogram('ainflue_ai_processing_seconds'),
-            'platform_distribution_success': prometheus_client.Gauge('ainflue_distribution_success_rate')
+            'creators_active': prometheus_client.Gauge('iacherie_creators_active_total'),
+            'content_processed': prometheus_client.Counter('iacherie_content_processed_total'),
+            'collaborations_matched': prometheus_client.Counter('iacherie_collaborations_matched_total'),
+            'revenue_generated': prometheus_client.Gauge('iacherie_revenue_generated_euros'),
+            'ai_processing_latency': prometheus_client.Histogram('iacherie_ai_processing_seconds'),
+            'platform_distribution_success': prometheus_client.Gauge('iacherie_distribution_success_rate')
         }
     
     async def initialize(self):

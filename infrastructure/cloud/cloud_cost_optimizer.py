@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Cost Optimizer
+🏗️ iacherie Infrastructure - Cloud Cost Optimizer
 Cross-cloud cost optimization and intelligent resource management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
@@ -78,7 +78,7 @@ class CloudCostOptimizer:
     Enterprise cloud cost optimization system.
     
     Provides intelligent cost monitoring, analysis, and optimization
-    across multiple cloud providers for the Ainflue platform.
+    across multiple cloud providers for the iacherie platform.
     """
 
     def __init__(self, optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED):
@@ -602,7 +602,7 @@ class CloudCostOptimizer:
             service_costs = {}
             total_cost = sum(cost_data.values())
             
-            # Typical service distribution for a platform like Ainflue
+            # Typical service distribution for a platform like iacherie
             service_distribution = {
                 'compute': 0.40,
                 'storage': 0.20,

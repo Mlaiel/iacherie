@@ -2,7 +2,7 @@
 ===============================================================================
 
 Convertisseur de formats audio enterprise avec support universel, préservation
-qualité et optimisation multi-plateforme pour créateurs sur Ainflue.
+qualité et optimisation multi-plateforme pour créateurs sur IA Chéries.
 
 Expert Roles Implementation:
 🏗️ Backend Senior: Architecture conversion + pipeline parallel + optimization

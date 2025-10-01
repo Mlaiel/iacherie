@@ -7,7 +7,7 @@ optimization, and creator-focused performance enhancement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: ML Engineer + IA Prompt Engineer + Backend Senior
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -109,7 +109,7 @@ class AIModel:
 
 class CDNPerformanceOptimizer:
     """
-    Enterprise CDN Performance Optimizer for Ainflue Creator Platform.
+    Enterprise CDN Performance Optimizer for IA Chéries Creator Platform.
     
     Provides AI-driven optimization with dynamic routing, network path
     optimization, and creator-focused performance enhancement.

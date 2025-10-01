@@ -3,7 +3,7 @@
 
 Consolidated voice AI intelligence providing creator voice analysis,
 content classification, enhancement, keyword extraction, and comprehensive
-AI-powered voice processing for the Ainflue platform.
+AI-powered voice processing for the IA Chéries platform.
 
 Consolidates:
 - Creator voice intelligence and analytics

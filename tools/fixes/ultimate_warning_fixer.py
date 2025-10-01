@@ -45,7 +45,7 @@ def fix_all_warnings_in_file(file_path):
 
 def main():
     """Main correction function"""
-    workspace_dir = '/workspaces/Ainfluencer'
+    workspace_dir = '/workspaces/iaCherie'
     files_fixed = 0
     
     print("🔧 ULTIMATE WARNING FIXER - PROCESSING ALL PYTHON FILES...")

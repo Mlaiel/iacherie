@@ -1,7 +1,7 @@
 """
 🔐📱 MFA SYSTEM - ENTERPRISE MULTI-FACTOR AUTHENTICATION MODULE 📱🔐
-Enterprise Multi-Factor Authentication for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Multi-Factor Authentication for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging
@@ -89,7 +89,7 @@ class MFASetupResult:
 class MFASystem:
     """🔐📱 Enterprise MFA System"""
     
-    def __init__(self, app_name: str = "Ainfluencer", issuer_name: str = "Ainfluencer Platform"):
+    def __init__(self, app_name: str = "IA Chéries", issuer_name: str = "IA Chéries Platform"):
         self.initialized = False
         self.app_name = app_name
         self.issuer_name = issuer_name

@@ -33,7 +33,7 @@ Diese erweiterte Streaming-Architektur, ihre technologischen KI-Innovationen, pr
 
 ## 📋 Streaming-Modul Überblick
 
-Das **Backend Streaming** Modul bildet das technologische Herzstück des intelligenten Live-Streaming-Systems von Ainflue und bietet erweiterte Streaming-Fähigkeiten mit künstlicher Intelligenz, sicherer Inhaltsschutz, Echtzeitmonetarisierung und Multi-Plattform-Verteilung.
+Das **Backend Streaming** Modul bildet das technologische Herzstück des intelligenten Live-Streaming-Systems von iacherie und bietet erweiterte Streaming-Fähigkeiten mit künstlicher Intelligenz, sicherer Inhaltsschutz, Echtzeitmonetarisierung und Multi-Plattform-Verteilung.
 
 ### 🚨 KRITISCHER ARCHITEKTUR-STATUS
 
@@ -45,7 +45,7 @@ Das **Backend Streaming** Modul bildet das technologische Herzstück des intelli
 
 ### 🎯 Mission und Ziele
 
-**Hauptmission**: Eine vollständige Enterprise-Streaming-Infrastruktur bereitstellen, die es Ainflue-Kreatoren ermöglicht, hochwertigen Live-Content mit integrierter künstlicher Intelligenz, optimierter Monetarisierung und maximaler Sicherheit zu streamen.
+**Hauptmission**: Eine vollständige Enterprise-Streaming-Infrastruktur bereitstellen, die es iacherie-Kreatoren ermöglicht, hochwertigen Live-Content mit integrierter künstlicher Intelligenz, optimierter Monetarisierung und maximaler Sicherheit zu streamen.
 
 **Streaming-Ziele**:
 - **Professionelles Live-Streaming**: RTMP/WebRTC, 8K-Qualität, ultra-niedrige Latenz
@@ -251,7 +251,7 @@ PAYMENT_PROCESSOR=multi_crypto  # Stripe + Crypto + NFT
 CRYPTO_PAYMENTS=btc,eth,matic,sol
 NFT_MARKETPLACE_ENABLED=true
 SMART_CONTRACTS=polygon
-TOKEN_REWARDS=ainflue_tokens
+TOKEN_REWARDS=iacherie_tokens
 SUBSCRIPTION_TIERS=unlimited
 ```
 
@@ -269,7 +269,7 @@ python setup_streaming_environment.py --download-ai-models --quantum-ready
 
 # Multi-Tier Streaming-Services starten
 docker swarm init
-docker stack deploy -c docker-compose.streaming-2025.yml ainflue-streaming
+docker stack deploy -c docker-compose.streaming-2025.yml iacherie-streaming
 
 # Comprehensive Streaming-Tests mit Load Testing
 python -m pytest tests/streaming/ -v --load-test --gpu-acceleration
@@ -283,7 +283,7 @@ python streaming_monitor.py --real-time --ai-insights --quantum-metrics
 ```bash
 # Kubernetes Deployment für Enterprise
 kubectl apply -f k8s/streaming-cluster.yaml
-helm install ainflue-streaming ./charts/streaming
+helm install iacherie-streaming ./charts/streaming
 
 # Edge Computing Deployment
 ./deploy_edge_nodes.sh --regions=all --latency-target=50ms
@@ -321,7 +321,7 @@ POST /api/streaming/live/create
 POST /api/streaming/live/{stream_id}/start
 {
     "stream_key": "sk_live_abc123",
-    "rtmp_url": "rtmp://ingest.ainflue.com/live/",
+    "rtmp_url": "rtmp://ingest.iacherie.com/live/",
     "auto_record": true,
     "ai_enhancement": true
 }
@@ -330,7 +330,7 @@ POST /api/streaming/live/{stream_id}/start
 #### Echtzeit-Metriken
 ```python
 GET /api/streaming/live/{stream_id}/metrics
-WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
+WebSocket: ws://stream.iacherie.com/metrics/{stream_id}
 ```
 
 ### Streaming-Integrationen
@@ -381,7 +381,7 @@ WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
 
 ### Support-Kontakte
 - **Technical Lead**: Fahed Mlaiel (mlaiel@live.de)
-- **Streaming Support**: streaming-support@ainflue.com
+- **Streaming Support**: streaming-support@iacherie.com
 - **Notfall**: +49-xxx-xxx-xxxx (24/7)
 
 ### Zukunftstechnologien (Roadmap 2025-2026)

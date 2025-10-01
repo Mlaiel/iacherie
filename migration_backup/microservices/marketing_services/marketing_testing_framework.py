@@ -1,12 +1,12 @@
 """
-Marketing Testing Framework - Ainflue Enterprise
+Marketing Testing Framework - IA Chéries Enterprise
 ==============================================
 Framework tests marketing avec validation automatisée et A/B testing.
 A/B testing + performance testing + integration testing + automated validation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chéries Marketing Services
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

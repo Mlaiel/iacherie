@@ -1154,7 +1154,7 @@ def create_calendar_manager(config: Dict[str, Any]) -> CalendarServicesManager:
     return CalendarServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_content_calendar_workflow(content_strategy: Dict[str, Any], user_calendar_id: str) -> Dict[str, Any]:
+async def iacherie_content_calendar_workflow(content_strategy: Dict[str, Any], user_calendar_id: str) -> Dict[str, Any]:
     """
     Complete content calendar workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -1335,7 +1335,7 @@ if __name__ == "__main__":
         
         test_calendar_id = "primary"
         
-        result = await ainflue_content_calendar_workflow(test_content_strategy, test_calendar_id)
+        result = await iacherie_content_calendar_workflow(test_content_strategy, test_calendar_id)
         
         print("Content Calendar Workflow Result:")
         print(json.dumps(result, indent=2, default=str))

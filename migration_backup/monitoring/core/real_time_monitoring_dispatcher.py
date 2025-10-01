@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Real-Time Monitoring Dispatcher
+IA Chéries Platform - Real-Time Monitoring Dispatcher
 ================================================
 
 Enterprise-grade real-time monitoring dispatcher for Creator Economy platform.

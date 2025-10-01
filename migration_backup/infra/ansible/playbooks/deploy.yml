@@ -1,14 +1,14 @@
-# Ainflue Platform Deployment Playbook
+# IA Chéries Platform Deployment Playbook
 # =====================================
 #
-# Complete Ansible playbook for deploying Ainflue platform
+# Complete Ansible playbook for deploying IA Chéries platform
 # Supports multi-environment deployment with infrastructure provisioning
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ---
-- name: Deploy Ainflue Platform
+- name: Deploy IA Chéries Platform
   hosts: localhost
   gather_facts: false
   vars:
@@ -43,7 +43,7 @@
     - name: Display deployment information
       debug:
         msg: |
-          Deploying Ainflue Platform
+          Deploying IA Chéries Platform
           ==========================
           Environment: {{ environment }}
           AWS Region: {{ aws_region }}
@@ -361,7 +361,7 @@
     - name: Save deployment information
       copy:
         content: |
-          # Ainflue Platform Deployment Information
+          # IA Chéries Platform Deployment Information
           
           **Deployment Date:** {{ ansible_date_time.iso8601 }}
           **Environment:** {{ environment }}

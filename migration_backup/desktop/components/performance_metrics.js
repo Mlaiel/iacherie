@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Performance Metrics Component
+ * IA Chéries Desktop - Performance Metrics Component
  * 
  * Advanced performance tracking and analytics for content optimization
  * Implements real-time metrics monitoring, A/B testing, and performance insights

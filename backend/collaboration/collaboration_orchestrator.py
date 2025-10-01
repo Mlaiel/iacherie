@@ -1,6 +1,6 @@
 """Collaboration Orchestrator - 12 Agents Collaboration System
 
-This module implements the complete 12-agent collaboration system for the Ainflue platform,
+This module implements the complete 12-agent collaboration system for the iacherie platform,
 providing advanced AI-driven collaboration capabilities for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

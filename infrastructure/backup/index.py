@@ -1,12 +1,12 @@
 """
-Backup Index - Ainflue Enterprise Backup Management
+Backup Index - iacherie Enterprise Backup Management
 ==================================================
 
 Main entry point for backup and recovery operations for the creator economy platform.
 Manages content protection, data recovery, and business continuity.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 """
 
@@ -29,8 +29,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise Backup Infrastructure for Creator Platform"
 
-# Configuration for Ainflue's backup infrastructure
-AINFLUE_BACKUP_ARCHITECTURE = {
+# Configuration for iacherie's backup infrastructure
+IACHERIE_BACKUP_ARCHITECTURE = {
     'database_backup': {
         'databases': ['postgresql', 'mongodb', 'redis'],
         'backup_frequency': 'real_time',
@@ -63,7 +63,7 @@ AINFLUE_BACKUP_ARCHITECTURE = {
 
 async def get_backup_status() -> Dict[str, Any]:
     """
-    Get comprehensive backup status for Ainflue platform.
+    Get comprehensive backup status for iacherie platform.
     
     Returns:
         Dict containing status of all backup systems and operations
@@ -80,7 +80,7 @@ async def get_backup_status() -> Dict[str, Any]:
     }
     
     # Check each backup category
-    for category, config in AINFLUE_BACKUP_ARCHITECTURE.items():
+    for category, config in IACHERIE_BACKUP_ARCHITECTURE.items():
         category_status = {
             'status': 'operational',
             'last_backup': '5 minutes ago',
@@ -117,7 +117,7 @@ async def get_backup_status() -> Dict[str, Any]:
 
 async def validate_backup_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Validate backup configuration for Ainflue requirements.
+    Validate backup configuration for iacherie requirements.
     
     Args:
         config: Backup configuration to validate
@@ -185,7 +185,7 @@ async def get_backup_metrics() -> Dict[str, Any]:
     }
     
     # Performance metrics for each backup category
-    for category, config in AINFLUE_BACKUP_ARCHITECTURE.items():
+    for category, config in IACHERIE_BACKUP_ARCHITECTURE.items():
         metrics['backup_performance'][category] = {
             'backup_frequency': config.get('backup_frequency', 'daily'),
             'average_backup_duration_minutes': 15.0 + len(category) * 2.0,
@@ -339,5 +339,5 @@ logging.basicConfig(
 )
 
 logger.info("Backup module initialized")
-logger.info(f"Managing {sum(len(cat.get('databases', cat.get('content_types', cat.get('data_types', cat.get('components', []))))) for cat in AINFLUE_BACKUP_ARCHITECTURE.values())} backup components")
+logger.info(f"Managing {sum(len(cat.get('databases', cat.get('content_types', cat.get('data_types', cat.get('components', []))))) for cat in IACHERIE_BACKUP_ARCHITECTURE.values())} backup components")
 logger.info("Ready for creator platform backup operations")

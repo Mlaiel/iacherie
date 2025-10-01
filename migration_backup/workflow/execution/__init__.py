@@ -1,5 +1,5 @@
 """
-🔥 EXECUTION LAYER - ENTERPRISE WORKFLOW AINFLUE
+🔥 EXECUTION LAYER - ENTERPRISE WORKFLOW IA CHÉRIES
 Ultra-advanced workflow execution with parallel processing and fault tolerance
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
@@ -60,7 +60,7 @@ __all__ = [
 # Enterprise module metadata
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
-__license__ = "Proprietary - Ainflue Platform"
+__license__ = "Proprietary - IA Chéries Platform"
 __enterprise_grade__ = True
 __async_optimized__ = True
 __fault_tolerant__ = True

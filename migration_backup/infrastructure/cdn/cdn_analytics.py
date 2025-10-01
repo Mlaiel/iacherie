@@ -7,7 +7,7 @@ and real-time metrics collection across global edge locations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: DBA + Backend Senior + ML Engineer
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -102,7 +102,7 @@ class Alert:
 
 class CDNAnalyticsEngine:
     """
-    Enterprise CDN Analytics Engine for Ainflue Creator Platform.
+    Enterprise CDN Analytics Engine for IA Chéries Creator Platform.
     
     Provides real-time performance insights, creator analytics, and
     comprehensive monitoring across global edge locations.

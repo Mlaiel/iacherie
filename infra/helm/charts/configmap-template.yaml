@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# iacherie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Helm ConfigMap template for Ainflue platform
+# Enterprise-grade Helm ConfigMap template for iacherie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,10 +13,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "ainflue.fullname" . }}-config
+  name: {{ include "iacherie.fullname" . }}-config
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: configuration
   {{- with .Values.configMap.annotations }}
   annotations:
@@ -156,7 +156,7 @@ data:
         limit_req_zone $binary_remote_addr zone=upload:10m rate={{ .Values.nginx.rateLimitUpload }};
         
         # Upstream Configuration
-        upstream {{ include "ainflue.fullname" . }}_backend {
+        upstream {{ include "iacherie.fullname" . }}_backend {
             least_conn;
             {{- range .Values.nginx.upstreams }}
             server {{ .host }}:{{ .port }} max_fails={{ .maxFails | default 3 }} fail_timeout={{ .failTimeout | default "30s" }};
@@ -171,7 +171,7 @@ data:
             return 301 https://$host$request_uri;
             {{- else }}
             location / {
-                proxy_pass http://{{ include "ainflue.fullname" . }}_backend;
+                proxy_pass http://{{ include "iacherie.fullname" . }}_backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -194,7 +194,7 @@ data:
             
             location / {
                 limit_req zone=api burst={{ .Values.nginx.rateLimitBurst }} nodelay;
-                proxy_pass http://{{ include "ainflue.fullname" . }}_backend;
+                proxy_pass http://{{ include "iacherie.fullname" . }}_backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -1,4 +1,4 @@
-"""Model Compression Toolkit for Ainflue ML Platform
+"""Model Compression Toolkit for IA Chéries ML Platform
 
 Comprehensive model compression techniques including pruning, quantization, and 
 knowledge distillation for efficient deployment and edge computing.
@@ -924,7 +924,7 @@ def create_compression_toolkit(
     return ModelCompressionToolkit(config)
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chéries creators
 async def example_model_compression():
     """Example of model compression for creator-specific models."""
     

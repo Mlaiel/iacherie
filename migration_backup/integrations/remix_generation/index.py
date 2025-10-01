@@ -4,7 +4,7 @@
 Lead Dev IA Expert: Point d'entrée principal pour le système de remix generation 
 enterprise avec factory pattern et orchestration intelligente.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Factory pattern pour tous les engines de remix (audio, video, image, content)
 - Orchestration intelligente multi-format avec coordination IA
 - Service registry pour découverte dynamique des capacités remix

@@ -840,7 +840,7 @@ async def main():
     # Create template
     template_id = await manager.create_template(
         name="Welcome SMS",
-        content="Hi {{name}}! Welcome to Ainflue. Get started: https://ainflue.com/start",
+        content="Hi {{name}}! Welcome to IA Chéries. Get started: https://ainflue.com/start",
         message_type=MessageType.TRANSACTIONAL
     )
     
@@ -849,7 +849,7 @@ async def main():
         name="Welcome Campaign",
         template_id=template_id,
         recipient_ids=[recipient_id],
-        sender_id="Ainflue",
+        sender_id="IA Chéries",
         message_type=MessageType.TRANSACTIONAL
     )
     

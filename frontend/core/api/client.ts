@@ -1,4 +1,4 @@
-// Frontend API Client - Ainflue Platform
+// Frontend API Client - iacherie Platform
 // Author: Fahed Mlaiel (mlaiel@live.de)
 // Role: Backend Senior + Lead Dev IA 
 // Purpose: Enterprise API client with authentication and WebSocket support
@@ -146,20 +146,20 @@ class ApiClient {
   setAuthToken(token: string) {
     this.authToken = token;
     if (typeof window !== 'undefined') {
-      localStorage.setItem('ainflue_auth_token', token);
+      localStorage.setItem('iacherie_auth_token', token);
     }
   }
 
   clearAuthToken() {
     this.authToken = null;
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('ainflue_auth_token');
+      localStorage.removeItem('iacherie_auth_token');
     }
   }
 
   loadAuthToken() {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('ainflue_auth_token');
+      const token = localStorage.getItem('iacherie_auth_token');
       if (token) {
         this.authToken = token;
       }

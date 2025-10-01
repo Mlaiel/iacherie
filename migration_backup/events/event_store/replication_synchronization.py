@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 REPLICATION SYNCHRONIZATION
 Multi-site replication synchronization with conflict resolution,
-data consistency, and automated failover for Ainflue event store.
+data consistency, and automated failover for IA Chéries event store.
 
 Key Features:
 - Multi-site active-passive replication
@@ -68,7 +68,7 @@ class ResolutionStrategy(Enum):
     FIRST_WRITE_WINS = "first_write_wins"   # First write takes precedence
     MERGE = "merge"                         # Attempt to merge changes
     MANUAL = "manual"                       # Require manual resolution
-    BUSINESS_LOGIC = "business_logic"       # Use Ainflue business rules
+    BUSINESS_LOGIC = "business_logic"       # Use IA Chéries business rules
 
 
 @dataclass
@@ -136,7 +136,7 @@ class SyncCheckpoint:
 
 class ReplicationSynchronization:
     """
-    Manages multi-site replication synchronization for Ainflue event store
+    Manages multi-site replication synchronization for IA Chéries event store
     
     Features:
     - Real-time replication monitoring
@@ -174,11 +174,11 @@ class ReplicationSynchronization:
             'cross_region_timeout_seconds': 30
         }
         
-        # Initialize Ainflue business conflict resolution
+        # Initialize IA Chéries business conflict resolution
         self._initialize_business_resolution()
     
     def _initialize_business_resolution(self):
-        """Initialize Ainflue-specific conflict resolution strategies"""
+        """Initialize IA Chéries-specific conflict resolution strategies"""
         
         # Content events - Creator wins for content ownership
         self._conflict_strategies = {
@@ -668,7 +668,7 @@ class ReplicationSynchronization:
         return merged_data
     
     async def _resolve_business_logic(self, conflict: ConflictEvent) -> Dict[str, Any]:
-        """Resolve conflict using Ainflue business logic"""
+        """Resolve conflict using IA Chéries business logic"""
         
         event_type = conflict.conflicting_data[0].get('event_type', '')
         

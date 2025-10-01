@@ -885,7 +885,7 @@ def create_monetization_retry() -> MonetizationRetry:
     return MonetizationRetry()
 
 # Configuration prédéfinies IA Chérie
-AINFLUE_MONETIZATION_CONFIGS = {
+IACHERIE_MONETIZATION_CONFIGS = {
     'creator_payouts': {
         'enhanced_compliance': True,
         'manual_review_threshold': 500.0,  # USD
@@ -915,5 +915,5 @@ __all__ = [
     'TransactionStatus',
     'ComplianceLevel',
     'create_monetization_retry',
-    'AINFLUE_MONETIZATION_CONFIGS'
+    'IACHERIE_MONETIZATION_CONFIGS'
 ]

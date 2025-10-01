@@ -6,7 +6,7 @@
 
 ## 🌟 Überblick
 
-Das Zahlungssicherheitsmodul bietet umfassende Sicherheit auf Unternehmensebene für Ainflues Creator Economy Plattform. Dieses Modul implementiert modernste Sicherheitstechnologien einschließlich fortgeschrittener Verschlüsselung, ML-gestützter Betrugserkennung, Multi-Standard-Compliance-Automatisierung und Echtzeit-Bedrohungsschutz.
+Das Zahlungssicherheitsmodul bietet umfassende Sicherheit auf Unternehmensebene für iacheries Creator Economy Plattform. Dieses Modul implementiert modernste Sicherheitstechnologien einschließlich fortgeschrittener Verschlüsselung, ML-gestützter Betrugserkennung, Multi-Standard-Compliance-Automatisierung und Echtzeit-Bedrohungsschutz.
 
 ### 🏆 Hauptfunktionen
 
@@ -96,7 +96,7 @@ creator_metrics = await analyze_creator_security_metrics(creator_id)
 🎨 Creator-Inhalt → 🤖 KI-Verarbeitung → 🔒 ZAHLUNGSSICHERHEIT → 💰 Monetarisierung → 🤝 Zusammenarbeit → 🔍 SEO → 📡 Verteilung
 ```
 
-Das Zahlungssicherheitsmodul integriert sich nahtlos in Ainflues Creator Economy Workflow:
+Das Zahlungssicherheitsmodul integriert sich nahtlos in iacheries Creator Economy Workflow:
 
 1. **Inhaltserstellung**: Sichere Authentifizierung und Autorisierung für Creators
 2. **KI-Verarbeitung**: Verschlüsselte Datenbehandlung während der KI-Inhaltsanalyse

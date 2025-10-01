@@ -74,7 +74,7 @@ class LogContext:
     user_id: Optional[str] = None
     trace_id: Optional[str] = None
     session_id: Optional[str] = None
-    service_name: str = "ainflue-services"
+    service_name: str = "iacherie-services"
     service_version: str = "1.0.0"
     environment: str = "production"
     component: Optional[str] = None
@@ -104,7 +104,7 @@ class LogEntry:
 class StructuredFormatter(logging.Formatter):
     """Custom formatter for structured JSON logging"""
     
-    def __init__(self, service_name: str = "ainflue-services", include_trace: bool = True):
+    def __init__(self, service_name: str = "iacherie-services", include_trace: bool = True):
         super().__init__()
         self.service_name = service_name
         self.include_trace = include_trace
@@ -458,7 +458,7 @@ class StructuredLogger:
     def __init__(
         self, 
         name: str,
-        service_name: str = "ainflue-services",
+        service_name: str = "iacherie-services",
         log_level: str = "INFO",
         log_file: Optional[str] = None,
         console_output: bool = True
@@ -576,7 +576,7 @@ class StructuredLogger:
 
 def get_logger(
     name: str,
-    service_name: str = "ainflue-services",
+    service_name: str = "iacherie-services",
     log_level: str = "INFO"
 ) -> StructuredLogger:
     """Factory function to create structured logger"""
@@ -589,7 +589,7 @@ def get_logger(
 
 
 # Global logger instances for common use
-api_logger = get_logger("ainflue.api")
-service_logger = get_logger("ainflue.services")
-security_logger = get_logger("ainflue.security")
-performance_logger = get_logger("ainflue.performance")
+api_logger = get_logger("iacherie.api")
+service_logger = get_logger("iacherie.services")
+security_logger = get_logger("iacherie.security")
+performance_logger = get_logger("iacherie.performance")

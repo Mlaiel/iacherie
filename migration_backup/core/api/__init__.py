@@ -136,7 +136,7 @@ class APIClient:
         self.session_id = str(uuid.uuid4())
         self.headers = {
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainfluencer-API-Client/1.0'
+            'User-Agent': 'IA Chéries-API-Client/1.0'
         }
         if api_key:
             self.headers['Authorization'] = f'Bearer {api_key}'

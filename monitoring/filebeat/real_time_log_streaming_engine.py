@@ -146,7 +146,7 @@ class RealTimeLogStreamingEngine:
                 "batch_size": 100
             },
             "redis": {
-                "host": "redis.ainflue-monitoring.svc.cluster.local",
+                "host": "redis.iacherie-monitoring.svc.cluster.local",
                 "port": 6379,
                 "db": 0,
                 "channel_prefix": "filebeat_stream"

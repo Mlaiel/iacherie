@@ -1,7 +1,7 @@
 """
 🔐💼 SESSION MANAGER - ENTERPRISE SESSION MANAGEMENT MODULE 💼🔐
-Enterprise Session Management for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Session Management for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

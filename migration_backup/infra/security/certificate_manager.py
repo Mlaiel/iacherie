@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -105,7 +105,7 @@ class CertificateManager:
         
         # Certificate authority settings
         self.ca_config = self.config.get("ca", {
-            "organization": "Ainflue Platform",
+            "organization": "IA Chéries Platform",
             "organizational_unit": "Infrastructure",
             "locality": "San Francisco",
             "state": "California",
@@ -151,7 +151,7 @@ class CertificateManager:
             logger.error(f"Failed to create directories: {str(e)}")
             raise
     
-    async def create_root_ca(self, ca_name: str = "Ainflue Root CA") -> bool:
+    async def create_root_ca(self, ca_name: str = "IA Chéries Root CA") -> bool:
         """Create root certificate authority."""
         try:
             # Generate private key
@@ -525,16 +525,16 @@ class CertificateManager:
                 await asyncio.sleep(self.renewal_check_interval)
     
     async def create_default_certificates(self):
-        """Create default certificates for Ainflue infrastructure."""
+        """Create default certificates for IA Chéries infrastructure."""
         try:
             # Create root CA if it doesn't exist
             if not any(cert.type == CertificateType.ROOT_CA for cert in self.certificates.values()):
                 await self.create_root_ca()
             
-            # Ainflue API certificate
+            # IA Chéries API certificate
             api_request = CertificateRequest(
                 common_name="api.ainflue.com",
-                organization="Ainflue Platform",
+                organization="IA Chéries Platform",
                 organizational_unit="API Services",
                 locality="San Francisco",
                 state="California",
@@ -544,10 +544,10 @@ class CertificateManager:
             )
             await self.generate_certificate(api_request)
             
-            # Ainflue AI Engine certificate
+            # IA Chéries AI Engine certificate
             ai_request = CertificateRequest(
                 common_name="ai.ainflue.com",
-                organization="Ainflue Platform",
+                organization="IA Chéries Platform",
                 organizational_unit="AI Services",
                 locality="San Francisco",
                 state="California",
@@ -557,10 +557,10 @@ class CertificateManager:
             )
             await self.generate_certificate(ai_request)
             
-            # Ainflue Mobile API certificate
+            # IA Chéries Mobile API certificate
             mobile_request = CertificateRequest(
                 common_name="mobile.ainflue.com",
-                organization="Ainflue Platform",
+                organization="IA Chéries Platform",
                 organizational_unit="Mobile Services",
                 locality="San Francisco",
                 state="California",
@@ -573,7 +573,7 @@ class CertificateManager:
             # Wildcard certificate for subdomains
             wildcard_request = CertificateRequest(
                 common_name="*.ainflue.com",
-                organization="Ainflue Platform",
+                organization="IA Chéries Platform",
                 organizational_unit="Infrastructure",
                 locality="San Francisco",
                 state="California",

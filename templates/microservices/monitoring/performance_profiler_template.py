@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Performance Profiler Template for Ainflue Platform
+Performance Profiler Template for iacherie Platform
 =================================================
 
 Production-ready performance profiling with:

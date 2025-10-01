@@ -1,7 +1,7 @@
 """🎬 Content Performance - Advanced Content Analytics & Performance Intelligence
 =============================================================================
 
-Comprehensive content performance tracking, analysis, and optimization system for the Ainflue platform.
+Comprehensive content performance tracking, analysis, and optimization system for the IA Chéries platform.
 Monitors content lifecycle, virality patterns, cross-platform performance, and content optimization
 across all content types and distribution channels.
 

@@ -1,6 +1,6 @@
 """
 🔄 Data Pipeline Orchestrator - Orchestrateur de Pipelines Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chéries Microservices Enterprise
 
 Orchestrateur intelligent pour pipelines de données complexes avec Kafka, Spark et Flink.
 Gestion automatisée des workflows ETL avec monitoring temps réel et récupération d'erreurs.

@@ -457,7 +457,7 @@ class AMPOptimizer:
             base_structured_data["@type"] = "Article"
             base_structured_data["publisher"] = {
                 "@type": "Organization",
-                "name": "Ainflue Platform",
+                "name": "IA Chéries Platform",
                 "logo": {
                     "@type": "ImageObject",
                     "url": "https://ainflue.com/logo.png"
@@ -553,7 +553,7 @@ class AMPOptimizer:
         <header class="amp-header">
             <h1>{title}</h1>
             <div class="meta-info">
-                <span>Published on Ainflue Platform</span>
+                <span>Published on IA Chéries Platform</span>
             </div>
         </header>
         

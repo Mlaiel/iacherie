@@ -374,7 +374,7 @@ class AccessControlEngine:
         
         # Additional business logic checks based on context
         if context:
-            # Example: Check creator type permissions for Ainflue business logic
+            # Example: Check creator type permissions for iacherie business logic
             creator_type = context.get('creator_type')
             if creator_type and not await self._check_creator_permissions(user, creator_type):
                 return False
@@ -382,7 +382,7 @@ class AccessControlEngine:
         return True
     
     async def _check_creator_permissions(self, user: User, creator_type: str) -> bool:
-        """Vérifie les permissions spécifiques aux créateurs Ainflue"""
+        """Vérifie les permissions spécifiques aux créateurs iacherie"""
         # Business logic: Different permissions for musicians, bloggers, etc.
         creator_permissions = user.attributes.get('creator_permissions', [])
         return creator_type in creator_permissions or 'all' in creator_permissions
@@ -560,16 +560,16 @@ async def demo_access_control():
     
     # Create users
     ml_engineer_id = await access_control.create_user(
-        "alice_ml", "alice@ainflue.com", ["mlops_engineer"],
+        "alice_ml", "alice@iacherie.com", ["mlops_engineer"],
         attributes={"creator_permissions": ["musician", "blogger"]}
     )
     
     data_scientist_id = await access_control.create_user(
-        "bob_ds", "bob@ainflue.com", ["data_scientist"]
+        "bob_ds", "bob@iacherie.com", ["data_scientist"]
     )
     
     admin_id = await access_control.create_user(
-        "admin", "admin@ainflue.com", ["platform_admin"]
+        "admin", "admin@iacherie.com", ["platform_admin"]
     )
     
     # Authenticate users

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📚 Documentation Service Template - Ainflue Enterprise
+📚 Documentation Service Template - IA Chéries Enterprise
 =====================================================
 Template enterprise pour services documentation.
 OpenAPI + Swagger + automated docs + API examples + versioning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

@@ -1,4 +1,4 @@
-# Istio Service Mesh Configuration - Ainflue Creator Economy Platform
+# Istio Service Mesh Configuration - iacherie Creator Economy Platform
 # =======================================================================
 #
 # 🎯 DEVOPS ENGINEER + SERVICE MESH ARCHITECT + MICROSERVICES EXPERT
@@ -34,14 +34,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-platform
+  name: iacherie-platform
   labels:
-    name: ainflue-platform
+    name: iacherie-platform
     environment: production
     istio-injection: enabled
     business-unit: creator-economy
     security-level: enterprise
-    project: ainflue
+    project: iacherie
     owner: fahed-mlaiel
     managed-by: istio
 annotations:
@@ -54,10 +54,10 @@ annotations:
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: ainflue-main-gateway
-  namespace: ainflue-platform
+  name: iacherie-main-gateway
+  namespace: iacherie-platform
   labels:
-    app: ainflue-gateway
+    app: iacherie-gateway
     version: v1
     environment: production
     business-unit: creator-economy
@@ -71,13 +71,13 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "ainflue.com"
-    - "api.ainflue.com"
-    - "creators.ainflue.com"
-    - "collaborate.ainflue.com"
-    - "monetize.ainflue.com"
-    - "ai.ainflue.com"
-    - "cdn.ainflue.com"
+    - "iacherie.com"
+    - "api.iacherie.com"
+    - "creators.iacherie.com"
+    - "collaborate.iacherie.com"
+    - "monetize.iacherie.com"
+    - "ai.iacherie.com"
+    - "cdn.iacherie.com"
     tls:
       httpsRedirect: true
   
@@ -88,29 +88,29 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: ainflue-tls-credentials
+      credentialName: iacherie-tls-credentials
       minProtocolVersion: TLSV1_2
       maxProtocolVersion: TLSV1_3
       cipherSuites:
       - "ECDHE-RSA-AES256-GCM-SHA384"
       - "ECDHE-RSA-AES128-GCM-SHA256"
     hosts:
-    - "ainflue.com"
-    - "api.ainflue.com"
-    - "creators.ainflue.com"
-    - "collaborate.ainflue.com"
-    - "monetize.ainflue.com"
-    - "ai.ainflue.com"
-    - "cdn.ainflue.com"
+    - "iacherie.com"
+    - "api.iacherie.com"
+    - "creators.iacherie.com"
+    - "collaborate.iacherie.com"
+    - "monetize.iacherie.com"
+    - "ai.iacherie.com"
+    - "cdn.iacherie.com"
 ---
 # Creator Economy API Gateway
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: ainflue-api-gateway
-  namespace: ainflue-platform
+  name: iacherie-api-gateway
+  namespace: iacherie-platform
   labels:
-    app: ainflue-api-gateway
+    app: iacherie-api-gateway
     version: v1
     environment: production
     business-unit: creator-economy
@@ -124,9 +124,9 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: ainflue-api-tls-credentials
+      credentialName: iacherie-api-tls-credentials
     hosts:
-    - "api.ainflue.com"
+    - "api.iacherie.com"
 ---
 # ==============================================================================
 # VIRTUAL SERVICE CONFIGURATION
@@ -134,25 +134,25 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-main-routes
-  namespace: ainflue-platform
+  name: iacherie-main-routes
+  namespace: iacherie-platform
   labels:
-    app: ainflue-main-routes
+    app: iacherie-main-routes
     version: v1
     environment: production
     business-unit: creator-economy
 spec:
   hosts:
-  - "ainflue.com"
-  - "api.ainflue.com"
-  - "creators.ainflue.com"
-  - "collaborate.ainflue.com"
-  - "monetize.ainflue.com"
-  - "ai.ainflue.com"
-  - "cdn.ainflue.com"
+  - "iacherie.com"
+  - "api.iacherie.com"
+  - "creators.iacherie.com"
+  - "collaborate.iacherie.com"
+  - "monetize.iacherie.com"
+  - "ai.iacherie.com"
+  - "cdn.iacherie.com"
   gateways:
-  - ainflue-main-gateway
-  - ainflue-api-gateway
+  - iacherie-main-gateway
+  - iacherie-api-gateway
   http:
   
   # Main Platform Routes
@@ -161,7 +161,7 @@ spec:
         prefix: "/"
     - headers:
         host:
-          exact: "ainflue.com"
+          exact: "iacherie.com"
     route:
     - destination:
         host: main-platform-service
@@ -182,8 +182,8 @@ spec:
       retryOn: gateway-error,connect-failure,refused-stream
     corsPolicy:
       allowOrigins:
-      - exact: "https://ainflue.com"
-      - exact: "https://creators.ainflue.com"
+      - exact: "https://iacherie.com"
+      - exact: "https://creators.iacherie.com"
       allowMethods:
       - GET
       - POST
@@ -203,7 +203,7 @@ spec:
         prefix: "/creators"
     - headers:
         host:
-          exact: "creators.ainflue.com"
+          exact: "creators.iacherie.com"
     route:
     - destination:
         host: creator-platform-service
@@ -229,7 +229,7 @@ spec:
         prefix: "/api/v1"
     - headers:
         host:
-          exact: "api.ainflue.com"
+          exact: "api.iacherie.com"
     route:
     - destination:
         host: api-gateway-service
@@ -262,7 +262,7 @@ spec:
         prefix: "/collaborate"
     - headers:
         host:
-          exact: "collaborate.ainflue.com"
+          exact: "collaborate.iacherie.com"
     route:
     - destination:
         host: collaboration-service
@@ -303,7 +303,7 @@ spec:
         prefix: "/monetize"
     - headers:
         host:
-          exact: "monetize.ainflue.com"
+          exact: "monetize.iacherie.com"
     route:
     - destination:
         host: monetization-service
@@ -328,7 +328,7 @@ spec:
         prefix: "/ai"
     - headers:
         host:
-          exact: "ai.ainflue.com"
+          exact: "ai.iacherie.com"
     route:
     - destination:
         host: ai-processing-service
@@ -353,7 +353,7 @@ spec:
         prefix: "/content"
     - headers:
         host:
-          exact: "cdn.ainflue.com"
+          exact: "cdn.iacherie.com"
     route:
     - destination:
         host: content-delivery-service
@@ -382,7 +382,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: main-platform-destination
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: main-platform-destination
     version: v1
@@ -440,7 +440,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: creator-platform-destination
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-platform-destination
     version: v1
@@ -480,7 +480,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: ai-processing-destination
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: ai-processing-destination
     version: v1
@@ -525,7 +525,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: monetization-destination
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: monetization-destination
     version: v1
@@ -568,7 +568,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: external-payment-providers
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-payment-providers
     version: v1
@@ -591,7 +591,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: external-ai-services
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-ai-services
     version: v1
@@ -614,7 +614,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
   name: external-social-media
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-social-media
     version: v1
@@ -642,7 +642,7 @@ apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
   name: default
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: default-peer-auth
     version: v1
@@ -656,7 +656,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: creator-platform-authz
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-platform-authz
     version: v1
@@ -669,7 +669,7 @@ spec:
   # Allow authenticated creator requests
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+        principals: ["cluster.local/ns/iacherie-platform/sa/creator-platform-sa"]
     to:
     - operation:
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
@@ -695,7 +695,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: ai-processing-authz
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: ai-processing-authz
     version: v1
@@ -709,8 +709,8 @@ spec:
   - from:
     - source:
         principals: 
-        - "cluster.local/ns/ainflue-platform/sa/creator-platform-sa"
-        - "cluster.local/ns/ainflue-platform/sa/api-gateway-sa"
+        - "cluster.local/ns/iacherie-platform/sa/creator-platform-sa"
+        - "cluster.local/ns/iacherie-platform/sa/api-gateway-sa"
     to:
     - operation:
         methods: ["POST"]
@@ -735,7 +735,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: monetization-authz
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: monetization-authz
     version: v1
@@ -748,7 +748,7 @@ spec:
   # Strict access control for payment processing
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+        principals: ["cluster.local/ns/iacherie-platform/sa/creator-platform-sa"]
     to:
     - operation:
         methods: ["POST", "GET"]
@@ -764,7 +764,7 @@ spec:
   # Allow subscription management
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-platform/sa/creator-platform-sa"]
+        principals: ["cluster.local/ns/iacherie-platform/sa/creator-platform-sa"]
     to:
     - operation:
         methods: ["GET", "POST", "PUT", "DELETE"]
@@ -782,7 +782,7 @@ apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
   name: creator-economy-metrics
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-economy-metrics
     version: v1
@@ -800,7 +800,7 @@ spec:
         environment:
           value: "production"
         project:
-          value: "ainflue"
+          value: "iacherie"
         owner:
           value: "fahed-mlaiel"
   
@@ -855,13 +855,13 @@ apiVersion: networking.istio.io/v1beta1
 kind: WorkloadEntry
 metadata:
   name: external-ai-service-1
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-ai-service
     version: v1
     environment: production
 spec:
-  address: "external-ai.ainflue.com"
+  address: "external-ai.iacherie.com"
   ports:
     https: 443
   labels:
@@ -875,7 +875,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
   name: creator-economy-rate-limiting
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-economy-rate-limiting
     version: v1
@@ -926,7 +926,7 @@ apiVersion: extensions.istio.io/v1alpha1
 kind: WasmPlugin
 metadata:
   name: creator-economy-auth
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-economy-auth
     version: v1
@@ -935,10 +935,10 @@ spec:
   selector:
     matchLabels:
       app: creator-platform
-  url: oci://ghcr.io/ainflue/creator-auth-wasm:latest
+  url: oci://ghcr.io/iacherie/creator-auth-wasm:latest
   phase: AUTHN
   pluginConfig:
-    jwt_issuer: "https://auth.ainflue.com"
+    jwt_issuer: "https://auth.iacherie.com"
     jwt_audience: "creator-economy-platform"
     creator_role_claim: "creator_role"
     permissions_claim: "permissions"

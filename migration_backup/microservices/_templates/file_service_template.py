@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📁 Enterprise File Service Template - Ainflue
+📁 Enterprise File Service Template - IA Chéries
 ============================================
 Template enterprise pour services fichiers.
 S3 + CDN + virus scanning + metadata extraction + compression.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

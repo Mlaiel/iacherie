@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 ENTERPRISE EVENT STORE INTERFACE
 Unified interface for multi-backend event storage with intelligent routing,
-failover, and performance optimization for Ainflue platform.
+failover, and performance optimization for IA Chéries platform.
 
 Key Features:
 - Multi-backend abstraction (PostgreSQL + MongoDB + Elasticsearch)
@@ -185,7 +185,7 @@ class EnterpriseEventStore:
     Enterprise-grade unified event store interface
     
     Provides intelligent routing, failover, and optimization across
-    multiple storage backends for the Ainflue platform.
+    multiple storage backends for the IA Chéries platform.
     """
     
     def __init__(self):
@@ -195,11 +195,11 @@ class EnterpriseEventStore:
         self._metrics_collector = None
         self._is_initialized = False
         
-        # Ainflue-specific business logic routing
+        # IA Chéries-specific business logic routing
         self._initialize_business_routing()
     
     def _initialize_business_routing(self):
-        """Initialize Ainflue business logic routing strategies"""
+        """Initialize IA Chéries business logic routing strategies"""
         
         # Content lifecycle events → PostgreSQL + MongoDB
         content_events = [

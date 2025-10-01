@@ -1,4 +1,4 @@
-# Grafana Dashboards Configuration for Ainflue Platform
+# Grafana Dashboards Configuration for IA Chéries Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Production-ready monitoring dashboards
 
@@ -17,7 +17,7 @@ data:
     {
       "dashboard": {
         "id": null,
-        "title": "Ainflue System Overview",
+        "title": "IA Chéries System Overview",
         "tags": ["ainflue", "system", "overview"],
         "timezone": "UTC",
         "refresh": "30s",

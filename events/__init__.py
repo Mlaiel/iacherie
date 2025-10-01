@@ -74,7 +74,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(funcName)s:%(lineno)d - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/tmp/ainflue_events.log', mode='a')
+        logging.FileHandler('/tmp/iacherie_events.log', mode='a')
     ]
 )
 logger = logging.getLogger(__name__)

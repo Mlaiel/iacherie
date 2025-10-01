@@ -1,7 +1,7 @@
-# Ainflue Helm Chart Default Values
+# IA Chéries Helm Chart Default Values
 # =================================
 # 
-# Default configuration values for Ainflue platform deployment
+# Default configuration values for IA Chéries platform deployment
 # This file contains configuration for all components and services
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -349,7 +349,7 @@ monitoring:
   prometheusRule:
     enabled: true
     rules:
-      - alert: AinfluePodCrashLooping
+      - alert: IA ChériesPodCrashLooping
         expr: rate(kube_pod_container_status_restarts_total{namespace="{{ .Release.Namespace }}"}[15m]) > 0
         for: 5m
         labels:
@@ -357,7 +357,7 @@ monitoring:
         annotations:
           summary: "Pod {{ $labels.pod }} is crash looping"
       
-      - alert: AinflueHighMemoryUsage
+      - alert: IA ChériesHighMemoryUsage
         expr: (container_memory_usage_bytes{namespace="{{ .Release.Namespace }}"} / container_spec_memory_limit_bytes{namespace="{{ .Release.Namespace }}"}) > 0.9
         for: 5m
         labels:
@@ -365,7 +365,7 @@ monitoring:
         annotations:
           summary: "High memory usage detected"
       
-      - alert: AinflueHighCPUUsage
+      - alert: IA ChériesHighCPUUsage
         expr: rate(container_cpu_usage_seconds_total{namespace="{{ .Release.Namespace }}"}[5m]) > 0.8
         for: 10m
         labels:

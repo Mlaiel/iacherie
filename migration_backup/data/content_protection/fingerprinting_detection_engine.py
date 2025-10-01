@@ -3,7 +3,7 @@
 ========================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/fingerprinting_detection_engine.py
+Module: /workspaces/IA Chéries/data/content_protection/fingerprinting_detection_engine.py
 Expert Team: Lead Dev IA + ML Engineer + Audio Engineer + Computer Vision Expert
 
 Author: Fahed Mlaiel (mlaiel@live.de)

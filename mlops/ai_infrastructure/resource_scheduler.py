@@ -777,7 +777,7 @@ async def demo_resource_scheduler():
         ScheduledWorkload(
             id="train-001",
             name="bert-training-job",
-            image="ainflue/bert-trainer:v1.0",
+            image="iacherie/bert-trainer:v1.0",
             resource_request=ResourceRequest(
                 cpu_cores=4.0,
                 memory_gb=16.0,
@@ -789,7 +789,7 @@ async def demo_resource_scheduler():
         ScheduledWorkload(
             id="infer-001", 
             name="sentiment-inference-service",
-            image="ainflue/sentiment-api:v1.0",
+            image="iacherie/sentiment-api:v1.0",
             resource_request=ResourceRequest(
                 cpu_cores=2.0,
                 memory_gb=4.0,
@@ -800,7 +800,7 @@ async def demo_resource_scheduler():
         ScheduledWorkload(
             id="batch-001",
             name="data-preprocessing-job",
-            image="ainflue/data-processor:v1.0", 
+            image="iacherie/data-processor:v1.0", 
             resource_request=ResourceRequest(
                 cpu_cores=8.0,
                 memory_gb=32.0,
@@ -811,7 +811,7 @@ async def demo_resource_scheduler():
         ScheduledWorkload(
             id="exp-001",
             name="hyperparameter-tuning",
-            image="ainflue/hyperparam-tuner:v1.0",
+            image="iacherie/hyperparam-tuner:v1.0",
             resource_request=ResourceRequest(
                 cpu_cores=1.0,
                 memory_gb=2.0,

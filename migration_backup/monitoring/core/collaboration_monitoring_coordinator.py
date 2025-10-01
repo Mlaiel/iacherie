@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Collaboration Monitoring Coordinator
+IA Chéries Platform - Collaboration Monitoring Coordinator
 =====================================================
 
 Enterprise-grade monitoring coordinator for Creator collaboration ecosystem.

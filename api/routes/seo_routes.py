@@ -562,7 +562,7 @@ async def generate_meta_tags(
         )
     
     # AI-optimized meta tags generation
-    optimized_title = f"{content_title[:55]} | Ainflue"
+    optimized_title = f"{content_title[:55]} | iacherie"
     optimized_description = content_description[:155] + "..." if len(content_description) > 155 else content_description
     
     return MetaTagsOptimization(
@@ -571,10 +571,10 @@ async def generate_meta_tags(
         keywords=target_keywords,
         og_title=content_title[:60],
         og_description=optimized_description,
-        og_image="https://cdn.ainflue.com/og-images/default.jpg",
+        og_image="https://cdn.iacherie.com/og-images/default.jpg",
         twitter_title=content_title[:60],
         twitter_description=optimized_description[:160],
-        canonical_url=f"https://ainflue.com/content/{uuid.uuid4().hex[:8]}",
+        canonical_url=f"https://iacherie.com/content/{uuid.uuid4().hex[:8]}",
         robots="index,follow"
     )
 
@@ -606,7 +606,7 @@ async def get_rankings(
             previous_position=15,
             position_change=3,
             trend=RankingTrend.UP,
-            url="https://ainflue.com/ai-content-creation",
+            url="https://iacherie.com/ai-content-creation",
             page_title="AI Content Creation Tools & Platform",
             search_volume=12000,
             click_through_rate=8.5,
@@ -620,7 +620,7 @@ async def get_rankings(
             previous_position=8,
             position_change=0,
             trend=RankingTrend.STABLE,
-            url="https://ainflue.com/content-protection",
+            url="https://iacherie.com/content-protection",
             page_title="Advanced Content Protection Solutions",
             search_volume=8500,
             click_through_rate=12.3,
@@ -634,7 +634,7 @@ async def get_rankings(
             previous_position=7,
             position_change=2,
             trend=RankingTrend.UP,
-            url="https://ainflue.com/collaboration",
+            url="https://iacherie.com/collaboration",
             page_title="Creator Collaboration Platform",
             search_volume=6200,
             click_through_rate=18.7,

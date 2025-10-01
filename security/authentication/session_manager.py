@@ -149,8 +149,8 @@ class SessionManager:
         
         # Security configuration
         self.config = {
-            "session_cookie_name": "AINFLUE_SESSION",
-            "csrf_cookie_name": "AINFLUE_CSRF",
+            "session_cookie_name": "IACHERIE_SESSION",
+            "csrf_cookie_name": "IACHERIE_CSRF",
             "cookie_secure": True,
             "cookie_httponly": True,
             "cookie_samesite": "strict",

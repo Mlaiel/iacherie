@@ -2,7 +2,7 @@
 
 ## Aperçu
 
-Le module Collectors fournit une infrastructure de surveillance de contenu unifiée et de niveau entreprise pour la plateforme Ainflue. Ce module consolide 16 collecteurs de plateforme individuels en 6 collecteurs logiques consolidés tout en maintenant la compatibilité ascendante.
+Le module Collectors fournit une infrastructure de surveillance de contenu unifiée et de niveau entreprise pour la plateforme iacherie. Ce module consolide 16 collecteurs de plateforme individuels en 6 collecteurs logiques consolidés tout en maintenant la compatibilité ascendante.
 
 ## Architecture
 
@@ -339,6 +339,6 @@ Contact pour autorisations: mlaiel@live.de
 Pour le support technique, demandes de fonctionnalités ou demandes de licence:
 
 **Email**: mlaiel@live.de  
-**Plateforme**: Ainflue Creator Monitoring System  
+**Plateforme**: iacherie Creator Monitoring System  
 **Version**: Enterprise v1.0  
 **Licence**: Propriétaire - Tous Droits Réservés

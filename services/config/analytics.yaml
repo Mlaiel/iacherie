@@ -67,8 +67,8 @@ data_warehouse:
     account: "${SNOWFLAKE_ACCOUNT}"
     user: "${SNOWFLAKE_USER}"
     password: "${SNOWFLAKE_PASSWORD}"
-    warehouse: "AINFLUE_WH"
-    database: "AINFLUE_ANALYTICS"
+    warehouse: "IACHERIE_WH"
+    database: "IACHERIE_ANALYTICS"
     
   schemas:
     raw_data:

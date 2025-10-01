@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📨 Enterprise Message Service Template - Ainflue
+📨 Enterprise Message Service Template - IA Chéries
 ==============================================
 Template enterprise pour services message-driven.
 RabbitMQ + Kafka + Redis Streams + event sourcing + CQRS patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

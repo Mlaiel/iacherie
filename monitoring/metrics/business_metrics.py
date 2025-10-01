@@ -121,7 +121,7 @@ class EnhancedBusinessMetric:
     
     # Metadata
     metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
-    source_system: str = "ainflue_platform"
+    source_system: str = "iacherie_platform"
     collection_method: str = "real_time"
     
     def add_prediction(self, prediction_type: str, predicted_value: float, confidence: float):

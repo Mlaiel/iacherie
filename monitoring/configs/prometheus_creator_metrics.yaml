@@ -65,7 +65,7 @@ scrape_configs:
       processing_type: ['upload', 'transcode', 'streaming', 'collaboration']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_audio_.*'
+        regex: 'iacherie_audio_.*'
         target_label: 'creator_type'
         replacement: 'musician'
 
@@ -81,7 +81,7 @@ scrape_configs:
       traffic_source: ['organic', 'social', 'direct', 'referral']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_blog_.*|ainflue_seo_.*'
+        regex: 'iacherie_blog_.*|iacherie_seo_.*'
         target_label: 'creator_type'
         replacement: 'blogger'
 
@@ -97,7 +97,7 @@ scrape_configs:
       processing_type: ['upload', 'resize', 'watermark', 'ai_enhance']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_image_.*|ainflue_photo_.*'
+        regex: 'iacherie_image_.*|iacherie_photo_.*'
         target_label: 'creator_type'
         replacement: 'photographer'
 
@@ -113,7 +113,7 @@ scrape_configs:
       content_format: ['video', 'image', 'story', 'live']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_influencer_.*|ainflue_social_.*'
+        regex: 'iacherie_influencer_.*|iacherie_social_.*'
         target_label: 'creator_type'
         replacement: 'influencer'
 
@@ -129,7 +129,7 @@ scrape_configs:
       inference_type: ['real_time', 'batch', 'streaming']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_ai_.*|ainflue_ml_.*'
+        regex: 'iacherie_ai_.*|iacherie_ml_.*'
         target_label: 'service_type'
         replacement: 'ai_ml'
 
@@ -145,7 +145,7 @@ scrape_configs:
       payment_method: ['stripe', 'paypal', 'bank_transfer', 'crypto']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_revenue_.*|ainflue_payment_.*'
+        regex: 'iacherie_revenue_.*|iacherie_payment_.*'
         target_label: 'service_type'
         replacement: 'monetization'
 
@@ -161,7 +161,7 @@ scrape_configs:
       matching_algorithm: ['ai_based', 'manual', 'recommended']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_collaboration_.*'
+        regex: 'iacherie_collaboration_.*'
         target_label: 'service_type'
         replacement: 'collaboration'
 
@@ -177,7 +177,7 @@ scrape_configs:
       content_type: ['audio', 'video', 'image', 'text']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_protection_.*'
+        regex: 'iacherie_protection_.*'
         target_label: 'service_type'
         replacement: 'content_protection'
 
@@ -193,7 +193,7 @@ scrape_configs:
       content_format: ['video', 'audio', 'image', 'article']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_distribution_.*'
+        regex: 'iacherie_distribution_.*'
         target_label: 'service_type'
         replacement: 'distribution'
 
@@ -209,7 +209,7 @@ scrape_configs:
       engagement_type: ['daily', 'weekly', 'monthly', 'seasonal']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_gamification_.*'
+        regex: 'iacherie_gamification_.*'
         target_label: 'service_type'
         replacement: 'gamification'
 
@@ -225,7 +225,7 @@ scrape_configs:
       geo_location: ['global', 'us', 'eu', 'asia']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_seo_.*'
+        regex: 'iacherie_seo_.*'
         target_label: 'service_type'
         replacement: 'seo_performance'
 
@@ -265,7 +265,7 @@ scrape_configs:
       creator_segment: ['top_performers', 'emerging', 'at_risk', 'new']
     metric_relabel_configs:
       - source_labels: [__name__]
-        regex: 'ainflue_bi_.*|ainflue_kpi_.*'
+        regex: 'iacherie_bi_.*|iacherie_kpi_.*'
         target_label: 'service_type'
         replacement: 'business_intelligence'
 
@@ -301,51 +301,51 @@ creator_tier_configurations:
 custom_metrics_definitions:
   # Métriques de succès créateur
   creator_success_metrics:
-    - metric: 'ainflue_creator_success_score'
+    - metric: 'iacherie_creator_success_score'
       type: 'gauge'
       description: 'Score de succès global du créateur (0-100)'
       labels: ['creator_id', 'creator_type', 'tier']
       
-    - metric: 'ainflue_creator_growth_rate'
+    - metric: 'iacherie_creator_growth_rate'
       type: 'gauge'
       description: 'Taux de croissance mensuel du créateur'
       labels: ['creator_id', 'metric_type', 'period']
       
-    - metric: 'ainflue_creator_engagement_score'
+    - metric: 'iacherie_creator_engagement_score'
       type: 'gauge'
       description: 'Score engagement global créateur'
       labels: ['creator_id', 'platform', 'content_type']
 
   # Métriques de plateforme
   platform_health_metrics:
-    - metric: 'ainflue_platform_active_creators'
+    - metric: 'iacherie_platform_active_creators'
       type: 'gauge'
       description: 'Nombre de créateurs actifs sur la plateforme'
       labels: ['tier', 'creator_type', 'region']
       
-    - metric: 'ainflue_platform_content_processed'
+    - metric: 'iacherie_platform_content_processed'
       type: 'counter'
       description: 'Contenu total traité par la plateforme'
       labels: ['content_type', 'processing_status']
       
-    - metric: 'ainflue_platform_revenue_total'
+    - metric: 'iacherie_platform_revenue_total'
       type: 'counter'
       description: 'Revenus totaux générés sur la plateforme'
       labels: ['revenue_stream', 'creator_tier']
 
   # Métriques prédictives IA
   ai_predictive_metrics:
-    - metric: 'ainflue_content_virality_prediction'
+    - metric: 'iacherie_content_virality_prediction'
       type: 'gauge'
       description: 'Prédiction viralité contenu (0-1)'
       labels: ['creator_id', 'content_id', 'prediction_confidence']
       
-    - metric: 'ainflue_creator_churn_risk'
+    - metric: 'iacherie_creator_churn_risk'
       type: 'gauge'
       description: 'Risque de churn créateur (0-1)'
       labels: ['creator_id', 'risk_factors', 'prediction_horizon']
       
-    - metric: 'ainflue_revenue_forecast'
+    - metric: 'iacherie_revenue_forecast'
       type: 'gauge'
       description: 'Prévision revenus créateur'
       labels: ['creator_id', 'forecast_period', 'confidence_interval']
@@ -355,24 +355,24 @@ recording_rules:
   # Agrégations par créateur
   creator_aggregations:
     - record: 'iacherie:creator_avg_processing_time'
-      expr: 'avg by (creator_id, creator_type) (ainflue_processing_duration_ms)'
+      expr: 'avg by (creator_id, creator_type) (iacherie_processing_duration_ms)'
       
     - record: 'iacherie:creator_total_revenue_hourly'
-      expr: 'sum by (creator_id) (increase(ainflue_revenue_usd[1h]))'
+      expr: 'sum by (creator_id) (increase(iacherie_revenue_usd[1h]))'
       
     - record: 'iacherie:creator_engagement_rate_daily'
-      expr: 'avg by (creator_id) (ainflue_engagement_score) * 100'
+      expr: 'avg by (creator_id) (iacherie_engagement_score) * 100'
 
   # Agrégations par tier
   tier_aggregations:
     - record: 'iacherie:tier_performance_score'
-      expr: 'avg by (creator_tier) (ainflue_creator_success_score)'
+      expr: 'avg by (creator_tier) (iacherie_creator_success_score)'
       
     - record: 'iacherie:tier_sla_compliance'
-      expr: 'sum by (creator_tier) (ainflue_sla_met) / sum by (creator_tier) (ainflue_sla_total)'
+      expr: 'sum by (creator_tier) (iacherie_sla_met) / sum by (creator_tier) (iacherie_sla_total)'
       
     - record: 'iacherie:tier_revenue_per_creator'
-      expr: 'sum by (creator_tier) (ainflue_revenue_usd) / count by (creator_tier) (ainflue_active_creators)'
+      expr: 'sum by (creator_tier) (iacherie_revenue_usd) / count by (creator_tier) (iacherie_active_creators)'
 
   # Agrégations plateforme
   platform_aggregations:
@@ -380,10 +380,10 @@ recording_rules:
       expr: 'avg(up{job=~"creator-.*"})'
       
     - record: 'iacherie:platform_total_creators'
-      expr: 'count(count by (creator_id) (ainflue_creator_active))'
+      expr: 'count(count by (creator_id) (iacherie_creator_active))'
       
     - record: 'iacherie:platform_content_velocity'
-      expr: 'sum(rate(ainflue_content_created_total[5m]))'
+      expr: 'sum(rate(iacherie_content_created_total[5m]))'
 
 # 🚨 Configuration Alerting avancée
 advanced_alerting:

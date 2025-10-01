@@ -1,4 +1,4 @@
-# Jaeger Tracing Configuration Template for Ainflue Platform
+# Jaeger Tracing Configuration Template for iacherie Platform
 # Distributed tracing configuration for microservices monitoring
 
 apiVersion: v1
@@ -9,10 +9,10 @@ metadata:
   labels:
     app: jaeger
     component: config
-    platform: ainflue
+    platform: iacherie
 data:
   jaeger.yml: |
-    # Jaeger configuration for Ainflue distributed tracing
+    # Jaeger configuration for iacherie distributed tracing
     
     # Collector configuration
     collector:
@@ -26,7 +26,7 @@ data:
               endpoint: 0.0.0.0:14318
               cors:
                 allowed_origins:
-                  - "https://*.ainflue.com"
+                  - "https://*.iacherie.com"
                   - "http://localhost:*"
         jaeger:
           protocols:
@@ -52,7 +52,7 @@ data:
         resource:
           attributes:
             - key: service.namespace
-              value: ainflue
+              value: iacherie
               action: upsert
         
       # Exporters to storage backend
@@ -279,10 +279,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - tracing.ainflue.com
+    - tracing.iacherie.com
     secretName: jaeger-tls
   rules:
-  - host: tracing.ainflue.com
+  - host: tracing.iacherie.com
     http:
       paths:
       - path: /
@@ -319,7 +319,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tracing-config-go
-  namespace: ainflue
+  namespace: iacherie
 data:
   tracing.go: |
     package tracing
@@ -362,7 +362,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tracing-config-nodejs
-  namespace: ainflue
+  namespace: iacherie
 data:
   tracing.js: |
     const { initTracer } = require('jaeger-client');
@@ -403,7 +403,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tracing-config-python
-  namespace: ainflue
+  namespace: iacherie
 data:
   tracing.py: |
     from jaeger_client import Config
@@ -447,22 +447,22 @@ data:
       },
       "per_service_strategies": [
         {
-          "service": "ainflue-api",
+          "service": "iacherie-api",
           "type": "probabilistic",
           "param": 0.5
         },
         {
-          "service": "ainflue-auth",
+          "service": "iacherie-auth",
           "type": "probabilistic",
           "param": 1.0
         },
         {
-          "service": "ainflue-payment",
+          "service": "iacherie-payment",
           "type": "probabilistic",
           "param": 1.0
         },
         {
-          "service": "ainflue-ml",
+          "service": "iacherie-ml",
           "type": "probabilistic",
           "param": 0.2
         }

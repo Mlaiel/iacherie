@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📋 DATA PROTECTION IMPACT ASSESSMENT - AINFLUE ENTERPRISE
+📋 DATA PROTECTION IMPACT ASSESSMENT - IACHERIE ENTERPRISE
 Automatisation DPIA GDPR Article 35 avec intelligence artificielle
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -56,7 +56,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/dpia_assessment.log'),
+        logging.FileHandler('/var/log/iacherie/dpia_assessment.log'),
         logging.StreamHandler()
     ]
 )
@@ -1338,7 +1338,7 @@ if __name__ == "__main__":
     async def test_dpia_engine():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue'
+            'database_url': 'postgresql://user:pass@localhost/iacherie'
         }
         
         engine = DPIAEngine(config)
@@ -1346,10 +1346,10 @@ if __name__ == "__main__":
         
         # Test DPIA pour plateforme créateurs
         assessment = await engine.conduct_dpia(
-            processing_name="Plateforme IA Créateurs Ainflue",
+            processing_name="Plateforme IA Créateurs iacherie",
             processing_description="Traitement données créateurs pour optimisation IA",
-            controller_name="Ainflue SAS",
-            controller_contact="dpo@ainflue.com",
+            controller_name="iacherie SAS",
+            controller_contact="dpo@iacherie.com",
             purposes=[
                 {
                     "name": "Optimisation contenu IA",

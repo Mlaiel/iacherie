@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - Progressive Optimization
+IA Chéries Platform - Multimedia Optimization - Progressive Optimization
 Progressive enhancement and loading for multimedia content
 
 Author: Fahed Mlaiel (mlaiel@live.de)

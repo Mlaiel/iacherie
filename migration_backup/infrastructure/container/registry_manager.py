@@ -1,6 +1,6 @@
 """
 Registry Manager
-Container registry management for Ainflue infrastructure
+Container registry management for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

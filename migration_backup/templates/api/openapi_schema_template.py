@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-📚 AINFLUE OPENAPI SCHEMA TEMPLATE - ENTERPRISE API DOCUMENTATION
+📚 IA CHÉRIES OPENAPI SCHEMA TEMPLATE - ENTERPRISE API DOCUMENTATION
 ================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IA CHÉRIES CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
 📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
@@ -85,7 +85,7 @@ class CreatorPlatform(str, Enum):
 @dataclass
 class APIDocumentationConfig:
     """API Documentation Configuration"""
-    title: str = "Ainflue Creator Economy API"
+    title: str = "IA Chéries Creator Economy API"
     description: str = "Enterprise API for creator economy platform"
     version: str = "1.0.0"
     api_version: APIVersion = APIVersion.V1
@@ -203,7 +203,7 @@ class OpenAPISchemaGenerator:
         """Load multi-language translations"""
         return {
             DocumentationLanguage.ENGLISH: {
-                "api_title": "Ainflue Creator Economy API",
+                "api_title": "IA Chéries Creator Economy API",
                 "api_description": "Enterprise API for creator economy platform with multi-platform integrations",
                 "auth_section": "Authentication",
                 "creator_section": "Creator Economy",
@@ -215,7 +215,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Creator-specific features require creator authentication"
             },
             DocumentationLanguage.FRENCH: {
-                "api_title": "API Économie des Créateurs Ainflue",
+                "api_title": "API Économie des Créateurs IA Chéries",
                 "api_description": "API entreprise pour plateforme d'économie créative avec intégrations multi-plateformes",
                 "auth_section": "Authentification",
                 "creator_section": "Économie des Créateurs",
@@ -227,7 +227,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Les fonctionnalités créateurs nécessitent une authentification créateur"
             },
             DocumentationLanguage.GERMAN: {
-                "api_title": "Ainflue Creator Economy API",
+                "api_title": "IA Chéries Creator Economy API",
                 "api_description": "Unternehmens-API für Creator Economy Plattform mit Multi-Plattform-Integrationen",
                 "auth_section": "Authentifizierung",
                 "creator_section": "Creator Economy",
@@ -239,7 +239,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Creator-spezifische Features erfordern Creator-Authentifizierung"
             },
             DocumentationLanguage.ARABIC: {
-                "api_title": "واجهة برمجة تطبيقات اقتصاد المبدعين Ainflue",
+                "api_title": "واجهة برمجة تطبيقات اقتصاد المبدعين IA Chéries",
                 "api_description": "واجهة برمجة تطبيقات مؤسسية لمنصة اقتصاد المبدعين مع تكاملات متعددة المنصات",
                 "auth_section": "المصادقة",
                 "creator_section": "اقتصاد المبدعين",
@@ -315,7 +315,7 @@ class OpenAPISchemaGenerator:
                 "termsOfService": "https://ainflue.com/terms",
                 "x-logo": {
                     "url": "https://ainflue.com/logo.png",
-                    "altText": "Ainflue Logo"
+                    "altText": "IA Chéries Logo"
                 }
             },
             "servers": self.config.servers,
@@ -1023,7 +1023,7 @@ class OpenAPISchemaGenerator:
         # Add language-specific metadata
         schema["x-language"] = language.value
         schema["x-generated-at"] = datetime.utcnow().isoformat()
-        schema["x-generator"] = "Ainflue OpenAPI Schema Generator v1.0.0"
+        schema["x-generator"] = "IA Chéries OpenAPI Schema Generator v1.0.0"
         
         return schema
     
@@ -1134,7 +1134,7 @@ async def example_openapi_generation():
     
     # Create configuration
     config = APIDocumentationConfig(
-        title="Ainflue Creator API",
+        title="IA Chéries Creator API",
         description="Enterprise API for creator economy",
         version="2.0.0"
     )

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📤 AINFLUE CONTENT UPLOAD API TEMPLATE - ENTERPRISE CONTENT MANAGEMENT
+📤 IACHERIE CONTENT UPLOAD API TEMPLATE - ENTERPRISE CONTENT MANAGEMENT
 ====================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IACHERIE CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
-📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
+📧 Contact: mlaiel@live.de | 🌐 https://iacherie.com
 
 🎯 CONTENT UPLOAD ENTERPRISE - MULTI-PLATFORM CONTENT DISTRIBUTION
 🏢 Expert Integration: Lead Dev IA + Media Processing + CDN + Creator Economy
@@ -159,7 +159,7 @@ class UploadConfig:
     ])
     
     # CDN Configuration
-    cdn_base_url: str = "https://cdn.ainflue.com"
+    cdn_base_url: str = "https://cdn.iacherie.com"
     storage_backend: str = "aws_s3"  # aws_s3, azure_blob, gcp_storage
     
     # Processing Configuration

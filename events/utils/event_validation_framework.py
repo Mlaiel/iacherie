@@ -135,10 +135,10 @@ class BusinessRulesEngine:
     """Engine for evaluating business rules for IA Chérie platform"""
     
     def __init__(self):
-        self.rules = self._load_ainflue_business_rules()
+        self.rules = self._load_iacherie_business_rules()
         logger.info("BusinessRulesEngine initialized with IA Chérie rules")
     
-    def _load_ainflue_business_rules(self) -> Dict[str, Dict[str, Any]]:
+    def _load_iacherie_business_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load business rules specific to IA Chérie platform"""
         
         return {

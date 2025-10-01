@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Preview Configuration Module
+"""IA Chéries Preview Configuration Module
 ======================================
 
-Enterprise-grade preview generation configuration for the Ainflue platform.
+Enterprise-grade preview generation configuration for the IA Chéries platform.
 Comprehensive preview creation with adaptive streaming, multi-format support,
 intelligent content analysis, and dynamic preview generation for optimal user experience.
 

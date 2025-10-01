@@ -1,6 +1,6 @@
 """
 End-to-End Testing Service - Enterprise E2E Testing
-Ainflue Platform - Microservices Architecture
+IA Chéries Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """
@@ -628,7 +628,7 @@ class E2ETestingService:
         """Get request headers including authentication"""
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-E2E-Test/1.0"
+            "User-Agent": "IA Chéries-E2E-Test/1.0"
         }
         
         session_data = self.session_data.get(session_id, {})

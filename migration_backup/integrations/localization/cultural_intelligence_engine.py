@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Cultural intelligence engine enterprise avec behavioral prediction,
 cross-cultural communication optimization et cultural insights generation.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Cultural behavioral prediction pour créateurs globaux
 - Cross-cultural communication optimization automatique
 - Cultural trend analysis avec machine learning

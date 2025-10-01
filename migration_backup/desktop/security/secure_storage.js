@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Secure Storage Manager
+ * IA Chéries Desktop - Secure Storage Manager
  * 
  * Encrypted local storage for sensitive data with key management
  * 

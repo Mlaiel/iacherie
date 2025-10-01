@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🏭 Microservices Templates - Ainflue Enterprise
+🏭 Microservices Templates - IA Chéries Enterprise
 ==============================================
 Point d'entrée principal pour templates microservices.
 Factory patterns + template discovery + code generation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -489,7 +489,7 @@ def get_template_info(template_type: str) -> Optional[Dict[str, Any]]:
 
 async def demo_templates():
     """Demo function showing template usage."""
-    print("🏭 Ainflue Microservices Templates Demo")
+    print("🏭 IA Chéries Microservices Templates Demo")
     print("=" * 50)
     
     # List available templates
@@ -528,7 +528,7 @@ async def demo_templates():
 
 if __name__ == "__main__":
     # Demo usage
-    print("🏭 Ainflue Microservices Templates - Enterprise Factory")
+    print("🏭 IA Chéries Microservices Templates - Enterprise Factory")
     print(f"Author: Fahed Mlaiel (mlaiel@live.de)")
     print(f"Templates loaded: {TEMPLATES_LOADED}")
     print(f"Available templates: {len(TEMPLATES_REGISTRY)}")

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Text Fingerprinting System - Ainflue Data Fingerprinting Module
+Text Fingerprinting System - IA Chéries Data Fingerprinting Module
 ===============================================================
 Advanced text fingerprinting system with NLP-powered analysis,
 semantic embeddings, linguistic patterns, and specialized text content 
-protection for blog/content creators on the Ainflue platform.
+protection for blog/content creators on the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Data Fingerprinting
+Project: IA Chéries Data Fingerprinting
 Version: 1.0 Enterprise Production
 """
 
@@ -43,7 +43,7 @@ except ImportError as e:
     logging.error(f"Required text dependencies not installed: {e}")
     raise
 
-# Ainflue core imports
+# IA Chéries core imports
 from .multimodal_fingerprinting_engine import FingerprintResult, FingerprintConfig
 from .vector_database_matching import VectorDatabaseManager
 from .performance_analytics_engine import PerformanceAnalytics

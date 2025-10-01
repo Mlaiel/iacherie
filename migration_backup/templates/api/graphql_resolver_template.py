@@ -1,4 +1,4 @@
-"""GraphQL Resolver Template for Ainflue Platform
+"""GraphQL Resolver Template for IA Chéries Platform
 Enterprise-grade GraphQL resolvers with advanced caching and optimization
 
 ⚠️  AVERTISSEMENT LÉGAL:

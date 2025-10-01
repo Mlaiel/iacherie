@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Security Hardening Ansible Role
+# IA Chéries Infrastructure Module - Security Hardening Ansible Role
 # ================================================================
 # 
-# Enterprise-grade security hardening for Ainflue platform
+# Enterprise-grade security hardening for IA Chéries platform
 # Comprehensive security configuration and compliance automation
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +21,7 @@
 # IA Prompt Engineer: AI provider security, prompt injection protection
 
 ---
-- name: "Security Hardening - Ainflue Platform"
+- name: "Security Hardening - IA Chéries Platform"
   hosts: all
   become: yes
   vars:
@@ -268,7 +268,7 @@
           copy:
             content: |
               #!/bin/bash
-              # Ainflue AIDE Security Check
+              # IA Chéries AIDE Security Check
               # Daily file integrity monitoring
               
               AIDE_LOG="/var/log/aide/aide.log"
@@ -301,7 +301,7 @@
         - name: "Configure audit rules"
           copy:
             content: |
-              # Ainflue Security Audit Rules
+              # IA Chéries Security Audit Rules
               # Monitor critical system activities
               
               # Delete all previous rules
@@ -443,13 +443,13 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Security Monitoring Script
+          # IA Chéries Security Monitoring Script
           # Comprehensive security status check
           
           LOG_FILE="/var/log/security-monitor.log"
           REPORT_FILE="/var/log/security-report-$(date +%Y%m%d).log"
           
-          echo "=== Ainflue Security Report - $(date) ===" > $REPORT_FILE
+          echo "=== IA Chéries Security Report - $(date) ===" > $REPORT_FILE
           
           # System status
           echo "== System Status ==" >> $REPORT_FILE

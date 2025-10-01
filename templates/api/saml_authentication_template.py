@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise SAML Authentication Template - Ainflue API Templates
+⚡ Enterprise SAML Authentication Template - iacherie API Templates
 Advanced production-ready SAML 2.0 authentication and federation system
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -1063,11 +1063,11 @@ if __name__ == "__main__":
     async def example_saml_flow():
         # Créer l'authentification SAML
         saml_auth = SAMLAuthenticationTemplate(
-            entity_id="https://ainflue.com/sp",
+            entity_id="https://iacherie.com/sp",
             sp_x509_cert="-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
             sp_private_key="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----",
-            acs_url="https://ainflue.com/saml/acs",
-            sls_url="https://ainflue.com/saml/sls"
+            acs_url="https://iacherie.com/saml/acs",
+            sls_url="https://iacherie.com/saml/sls"
         )
         
         # Configurer un IdP

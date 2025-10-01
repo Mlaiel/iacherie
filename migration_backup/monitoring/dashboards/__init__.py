@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Enterprise Dashboard Module
+IA Chéries Platform - Enterprise Dashboard Module
 ==============================================
 
 Import and expose the enterprise dashboard system for monitoring
-all aspects of the Ainflue platform with real-time visualizations
+all aspects of the IA Chéries platform with real-time visualizations
 and business intelligence capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

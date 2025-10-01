@@ -1078,7 +1078,7 @@ async def get_analytics_engine() -> SecurityAnalyticsEngine:
     return analytics_engine
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chéries
 async def analyze_creator_security_metrics(creator_id: str) -> Dict[str, Any]:
     """Analyse des métriques de sécurité créateur"""
     # Simuler événements créateur
@@ -1239,7 +1239,7 @@ if __name__ == "__main__":
         dashboard = await engine.get_real_time_dashboard()
         print(f"Dashboard overview: {dashboard['overview']}")
         
-        # Test fonctions Ainflue
+        # Test fonctions IA Chéries
         creator_analytics = await analyze_creator_security_metrics('creator_test')
         print(f"Creator analytics: {creator_analytics['creator_id']}")
         

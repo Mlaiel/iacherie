@@ -1,4 +1,4 @@
-"""{{agent_name}} Computer Vision Agent for Ainflue Platform
+"""{{agent_name}} Computer Vision Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

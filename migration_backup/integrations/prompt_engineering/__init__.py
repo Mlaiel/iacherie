@@ -1,12 +1,12 @@
 # 🤖 Init: Configuration module prompt engineering
 """
-Prompt Engineering Module - Ainflue Integrations
+Prompt Engineering Module - IA Chéries Integrations
 ================================================
 Enterprise prompt engineering avec optimisation IA, sécurité avancée,
 templates intelligents et automation prompt generation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

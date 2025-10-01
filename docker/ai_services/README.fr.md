@@ -290,7 +290,7 @@ POST /api/ai/quality/assess
 
 ### Intégration Workflow Créateur
 ```python
-from ainflue_ai import AIOrchestrator
+from iacherie_ai import AIOrchestrator
 
 # Workflow Créateur Enhanced par IA
 async def enhance_creator_content(content_data):

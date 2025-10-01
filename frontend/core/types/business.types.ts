@@ -1,5 +1,5 @@
 /**
- * @fileoverview Business domain types for Ainflue platform
+ * @fileoverview Business domain types for iacherie platform
  * @author Fahed Mlaiel <mlaiel@live.de>
  */
 

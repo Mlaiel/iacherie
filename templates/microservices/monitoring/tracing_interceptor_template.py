@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Tracing Interceptor Template for Ainflue Platform
+Tracing Interceptor Template for iacherie Platform
 ===============================================
 
 Production-ready distributed tracing with:
@@ -63,7 +63,7 @@ class TracingInterceptor:
     - Performance tracking
     """
     
-    def __init__(self, service_name: str = "ainflue-service"):
+    def __init__(self, service_name: str = "iacherie-service"):
         self.service_name = service_name
         self.active_spans: Dict[str, Span] = {}
         self.completed_spans: List[Span] = []
@@ -106,7 +106,7 @@ class TracingInterceptorTemplate:
     """Tracing Interceptor Template"""
     
     def create_interceptor(self, config: Dict[str, Any]) -> TracingInterceptor:
-        return TracingInterceptor(service_name=config.get("service_name", "ainflue"))
+        return TracingInterceptor(service_name=config.get("service_name", "iacherie"))
     
     def get_template_info(self) -> Dict[str, Any]:
         return {

@@ -128,7 +128,7 @@ class DeploymentEnvironment(Enum):
     MULTI_CLOUD = "multi_cloud"
 
 @dataclass
-class IAInfluencerInfrastructureConfig:
+class IIA ChériesInfrastructureConfig:
     """Complete infrastructure configuration for IA Influencer platform"""
     deployment_mode: DeploymentMode
     environment: DeploymentEnvironment
@@ -162,7 +162,7 @@ class IAInfluencerInfrastructureConfig:
     # Custom configuration
     custom_configs: Dict[str, Any] = field(default_factory=dict)
 
-class IAInfluencerInfrastructureManager:
+class IIA ChériesInfrastructureManager:
     """
     Comprehensive infrastructure manager for IA Influencer Agent platform
     
@@ -177,7 +177,7 @@ class IAInfluencerInfrastructureManager:
     - Security and compliance features
     """
     
-    def __init__(self, config: IAInfluencerInfrastructureConfig):
+    def __init__(self, config: IIA ChériesInfrastructureConfig):
         self.config = config
         self.cloud_manager = CloudProviderManager()
         self.container_orchestrator = ContainerOrchestrator()
@@ -856,7 +856,7 @@ async def deploy_ia_influencer_production_infrastructure(
     Returns:
         Dict containing deployment results and status
     """
-    config = IAInfluencerInfrastructureConfig(
+    config = IIA ChériesInfrastructureConfig(
         deployment_mode=DeploymentMode.PRODUCTION,
         environment=DeploymentEnvironment.CLOUD,
         cloud_provider=cloud_provider,
@@ -880,7 +880,7 @@ async def deploy_ia_influencer_production_infrastructure(
         custom_configs=custom_configs or {}
     )
     
-    manager = IAInfluencerInfrastructureManager(config)
+    manager = IIA ChériesInfrastructureManager(config)
     return await manager.deploy_complete_infrastructure()
 
 async def deploy_ia_influencer_development_infrastructure(
@@ -897,7 +897,7 @@ async def deploy_ia_influencer_development_infrastructure(
     Returns:
         Dict containing deployment results and status
     """
-    config = IAInfluencerInfrastructureConfig(
+    config = IIA ChériesInfrastructureConfig(
         deployment_mode=DeploymentMode.DEVELOPMENT,
         environment=DeploymentEnvironment.CLOUD,
         cloud_provider=cloud_provider,
@@ -920,13 +920,13 @@ async def deploy_ia_influencer_development_infrastructure(
         backup_retention_days=7
     )
     
-    manager = IAInfluencerInfrastructureManager(config)
+    manager = IIA ChériesInfrastructureManager(config)
     return await manager.deploy_complete_infrastructure()
 
 # Export main classes and functions
 __all__ = [
-    'IAInfluencerInfrastructureManager',
-    'IAInfluencerInfrastructureConfig', 
+    'IIA ChériesInfrastructureManager',
+    'IIA ChériesInfrastructureConfig', 
     'DeploymentMode',
     'DeploymentEnvironment',
     'deploy_ia_influencer_production_infrastructure',

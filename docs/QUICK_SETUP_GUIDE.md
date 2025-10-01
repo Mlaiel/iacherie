@@ -38,7 +38,7 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=iacherie
 POSTGRES_PASSWORD=your-db-password
-POSTGRES_DB=ainflue_platform
+POSTGRES_DB=iacherie_platform
 
 REDIS_HOST=localhost
 REDIS_PORT=6379

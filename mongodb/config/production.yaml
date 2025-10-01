@@ -8,7 +8,7 @@ mongodb:
   connection:
     host: "mongodb-cluster.iacherie.com"
     port: 27017
-    database: "ainflue_prod"
+    database: "iacherie_prod"
     replica_set: "rs0"
     ssl: true
     ssl_cert_reqs: "CERT_REQUIRED"

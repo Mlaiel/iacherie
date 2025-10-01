@@ -1,8 +1,8 @@
-# Cassandra Configuration Template for Ainflue Platform
+# Cassandra Configuration Template for iacherie Platform
 # NoSQL database for time-series data, analytics, and large-scale data storage
 
 # Cluster name - all nodes in a cluster must have the same value
-cluster_name: 'ainflue-cluster'
+cluster_name: 'iacherie-cluster'
 
 # Number of tokens randomly assigned to this node on the ring
 num_tokens: 256
@@ -257,10 +257,10 @@ audit_logging_options:
     excluded_users: 
 
 ---
-# Cassandra Keyspace and Table Definitions for Ainflue
+# Cassandra Keyspace and Table Definitions for iacherie
 
 # Create keyspace
-CREATE KEYSPACE IF NOT EXISTS ainflue 
+CREATE KEYSPACE IF NOT EXISTS iacherie 
 WITH REPLICATION = {
     'class': 'NetworkTopologyStrategy',
     'datacenter1': 3,
@@ -268,7 +268,7 @@ WITH REPLICATION = {
 } 
 AND DURABLE_WRITES = true;
 
-USE ainflue;
+USE iacherie;
 
 # User activities table (time-series data)
 CREATE TABLE user_activities (
@@ -523,19 +523,19 @@ BACKUP_DIR="/backups/cassandra/$(date +%Y%m%d_%H%M%S)"
 mkdir -p $BACKUP_DIR
 
 # Create snapshot
-nodetool snapshot -t snapshot_$(date +%Y%m%d_%H%M%S) ainflue
+nodetool snapshot -t snapshot_$(date +%Y%m%d_%H%M%S) iacherie
 
 # Copy snapshot files
-cp -r /var/lib/cassandra/data/ainflue/*/snapshots/snapshot_$(date +%Y%m%d_%H%M%S)/* $BACKUP_DIR/
+cp -r /var/lib/cassandra/data/iacherie/*/snapshots/snapshot_$(date +%Y%m%d_%H%M%S)/* $BACKUP_DIR/
 
 # Backup schema
-cqlsh -e "DESCRIBE KEYSPACE ainflue;" > $BACKUP_DIR/schema.cql
+cqlsh -e "DESCRIBE KEYSPACE iacherie;" > $BACKUP_DIR/schema.cql
 
 # Compress backup
 tar -czf $BACKUP_DIR.tar.gz $BACKUP_DIR
 
 # Upload to S3
-aws s3 cp $BACKUP_DIR.tar.gz s3://ainflue-db-backups/cassandra/
+aws s3 cp $BACKUP_DIR.tar.gz s3://iacherie-db-backups/cassandra/
 
 # Clean up local files
 rm -rf $BACKUP_DIR
@@ -561,7 +561,7 @@ tar -xzf $BACKUP_FILE
 cqlsh -f schema.cql
 
 # Copy data files
-cp -r snapshot_data/* /var/lib/cassandra/data/ainflue/
+cp -r snapshot_data/* /var/lib/cassandra/data/iacherie/
 
 # Set permissions
 chown -R cassandra:cassandra /var/lib/cassandra/data
@@ -570,7 +570,7 @@ chown -R cassandra:cassandra /var/lib/cassandra/data
 systemctl start cassandra
 
 # Refresh tables
-nodetool refresh ainflue
+nodetool refresh iacherie
 
 echo "Restore completed"
 
@@ -584,13 +584,13 @@ FROM system.peers;
 # Check keyspace replication
 SELECT keyspace_name, durable_writes, replication 
 FROM system_schema.keyspaces 
-WHERE keyspace_name = 'ainflue';
+WHERE keyspace_name = 'iacherie';
 
 # Check table statistics
 SELECT keyspace_name, table_name, bloom_filter_fp_chance, 
        caching, compaction, compression 
 FROM system_schema.tables 
-WHERE keyspace_name = 'ainflue';
+WHERE keyspace_name = 'iacherie';
 
 # Monitor compaction
 SELECT keyspace, columnfamily, completed_at, id, total 

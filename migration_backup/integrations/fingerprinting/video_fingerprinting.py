@@ -5,7 +5,7 @@ Système avancé de fingerprinting vidéo avec analyse frame-by-frame,
 détection de mouvement et signatures temporelles.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Implementation Validation
+ * IA Chéries Desktop - Implementation Validation
  * 
  * Validation script for desktop architecture implementation
  * 

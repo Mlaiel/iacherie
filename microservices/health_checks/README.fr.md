@@ -325,7 +325,7 @@ db_specialist = DatabaseHealthSpecialist({
         'postgresql': {
             'host': 'postgres-host',
             'port': 5432,
-            'database': 'ainflue_db',
+            'database': 'iacherie_db',
             'pool_size': 20
         },
         'redis': {
@@ -336,7 +336,7 @@ db_specialist = DatabaseHealthSpecialist({
         'mongodb': {
             'host': 'mongo-host',
             'port': 27017,
-            'database': 'ainflue_mongo'
+            'database': 'iacherie_mongo'
         }
     }
 })

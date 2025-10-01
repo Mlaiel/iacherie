@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -605,7 +605,7 @@ class HealthChecker:
             logger.error(f"Failed to send alert notification: {str(e)}")
     
     async def create_default_health_checks(self):
-        """Create default health checks for Ainflue infrastructure."""
+        """Create default health checks for IA Chéries infrastructure."""
         try:
             # API health check
             api_check = HealthCheck(

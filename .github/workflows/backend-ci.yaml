@@ -114,7 +114,7 @@ jobs:
         image: postgres:15
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_ainflue
+          POSTGRES_DB: test_iacherie
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -161,7 +161,7 @@ jobs:
 
     - name: 🧪 Run backend tests
       env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_ainflue
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_iacherie
         REDIS_URL: redis://localhost:6379/0
         TESTING: true
       run: |

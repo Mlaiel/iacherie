@@ -282,7 +282,7 @@ class GamificationImplementation:
         self.user_quests[creator_id] = []
         
         # Award welcome achievement
-        await self._award_achievement(creator_id, "welcome_to_ainflue")
+        await self._award_achievement(creator_id, "welcome_to_iacherie")
         
         # Assign initial quests
         await self._assign_beginner_quests(creator_id)
@@ -665,7 +665,7 @@ class GamificationImplementation:
         
         achievements_data = [
             # Welcome achievements
-            ("welcome_to_ainflue", "Welcome to IA Chérie!", "Join the IA Chérie creator community", 
+            ("welcome_to_iacherie", "Welcome to IA Chérie!", "Join the IA Chérie creator community", 
              AchievementType.MILESTONE, BadgeRarity.COMMON, {"action": "register"}, 
              [{"type": RewardType.EXPERIENCE_POINTS, "amount": 50}, {"type": RewardType.CREATOR_COINS, "amount": 100}]),
             

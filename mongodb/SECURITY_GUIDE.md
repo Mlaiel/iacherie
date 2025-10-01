@@ -426,7 +426,7 @@ class FieldEncryption:
         """Derive encryption key for specific field"""
         
         if salt is None:
-            salt = b"ainflue_field_salt_" + field_name.encode()
+            salt = b"iacherie_field_salt_" + field_name.encode()
             
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),

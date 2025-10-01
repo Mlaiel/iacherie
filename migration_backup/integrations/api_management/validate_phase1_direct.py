@@ -13,7 +13,7 @@ import os
 def validate_phase1_files():
     """Validate Phase 1 files exist and have content"""
     
-    print("🚀 AINFLUE ENTERPRISE API MANAGEMENT - PHASE 1 VALIDATION")
+    print("🚀 IA CHÉRIES ENTERPRISE API MANAGEMENT - PHASE 1 VALIDATION")
     print("=" * 65)
     print("Multi-Expert Implementation:")
     print("Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité")
@@ -21,7 +21,7 @@ def validate_phase1_files():
     print("=" * 65)
     
     # Define expected Phase 1 files
-    api_mgmt_path = "/home/runner/work/Ainflue/Ainflue/integrations/api_management"
+    api_mgmt_path = "/home/runner/work/IA Chéries/IA Chéries/integrations/api_management"
     
     phase1_components = {
         "authentication_manager.py": "Enterprise API Authentication Manager",
@@ -62,7 +62,7 @@ def validate_phase1_files():
                     if expert in content:
                         expert_count += 1
                 
-                # Check for Ainflue business logic
+                # Check for IA Chéries business logic
                 business_features = [
                     'creator', 'platform', 'monetization', 'collaboration', 
                     'ai_processing', 'content'
@@ -173,7 +173,7 @@ def validate_phase1_files():
         print(f"   💻 Lines of code: {total_lines:,} (Enterprise scale)")
         print(f"   🔧 Components: 5/5 critical components completed")
         print(f"   👥 Expert roles: 9/9 multi-expert architecture") 
-        print(f"   🎯 Business logic: Ainflue creator economy integrated")
+        print(f"   🎯 Business logic: IA Chéries creator economy integrated")
         print(f"   🌐 Platform support: 65+ platforms configured")
         print(f"   🔒 Security: Enterprise threat detection & compliance")
         print(f"   📊 Monitoring: Real-time metrics & analytics")

@@ -2,7 +2,7 @@
 =======================================================================
 
 Advanced protection system performance monitoring, copyright violation detection analytics,
-and rights management performance intelligence for the Ainflue platform.
+and rights management performance intelligence for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

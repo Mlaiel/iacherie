@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Logging Handler Template for Ainflue Platform
+Logging Handler Template for iacherie Platform
 ============================================
 
 Production-ready centralized logging with:
@@ -56,7 +56,7 @@ class StructuredLogger:
     - Performance metrics
     """
     
-    def __init__(self, service_name: str = "ainflue-service"):
+    def __init__(self, service_name: str = "iacherie-service"):
         self.service_name = service_name
         self.logger = logging.getLogger(service_name)
         self.log_entries: List[LogEntry] = []
@@ -94,7 +94,7 @@ class LoggingHandlerTemplate:
     """Logging Handler Template"""
     
     def create_logger(self, config: Dict[str, Any]) -> StructuredLogger:
-        return StructuredLogger(service_name=config.get("service_name", "ainflue"))
+        return StructuredLogger(service_name=config.get("service_name", "iacherie"))
     
     def get_template_info(self) -> Dict[str, Any]:
         return {

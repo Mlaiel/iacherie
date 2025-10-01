@@ -2,7 +2,7 @@
 Service Mesh Module Entry Point
 ===============================
 
-Main entry point for service mesh orchestration in the Ainflue platform.
+Main entry point for service mesh orchestration in the IA Chéries platform.
 Provides coordination for enterprise-grade service mesh functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +21,7 @@ class ServiceMeshOrchestrator:
     Enterprise Service Mesh Orchestrator
     
     Coordinates all service mesh components for optimal performance,
-    security, and observability across the Ainflue platform.
+    security, and observability across the IA Chéries platform.
     """
     
     def __init__(self):

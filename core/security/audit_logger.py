@@ -1,6 +1,6 @@
 """
 Core Security Audit Logger Module
-Module d'audit et de logging sécurisé pour Ainfluencer
+Module d'audit et de logging sécurisé pour iaCherie
 CRÉATION DU MODULE MANQUANT POUR 100% VICTOIRE!
 """
 

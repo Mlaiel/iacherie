@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PITCH CORRECTOR - PROFESSIONAL DOCKERFILE
+# IA CHÉRIES PITCH CORRECTOR - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Real-time pitch correction and auto-tune engine for professional audio
 # processing with multiple algorithms and enterprise-grade performance.

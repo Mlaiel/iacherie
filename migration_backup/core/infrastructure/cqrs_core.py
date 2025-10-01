@@ -1,9 +1,9 @@
-"""Ainflue Core Infrastructure - CQRS Core
+"""IA Chéries Core Infrastructure - CQRS Core
 =========================================
 
 Enterprise-grade Command Query Responsibility Segregation (CQRS) implementation
 providing command/query separation, event sourcing integration, read model projections,
-and scalable distributed query processing for the Ainflue platform.
+and scalable distributed query processing for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

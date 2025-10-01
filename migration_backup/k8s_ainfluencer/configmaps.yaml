@@ -1,4 +1,4 @@
-# Ainflue Platform - Complete Kubernetes Manifests
+# IA Chéries Platform - Complete Kubernetes Manifests
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready Kubernetes configurations
 
@@ -30,7 +30,7 @@ metadata:
   namespace: ainflue
 data:
   # Application Configuration
-  APP_NAME: "Ainflue"
+  APP_NAME: "IA Chéries"
   APP_VERSION: "1.0.0"
   ENVIRONMENT: "production"
   DEBUG: "false"

@@ -287,7 +287,7 @@ class EngagementOptimizationAI:
     🤖 Engagement Optimization AI Enterprise
     
     Système d'optimisation engagement avec reinforcement learning pour
-    personnalisation avancée et maximisation retention créateur Ainflue.
+    personnalisation avancée et maximisation retention créateur IA Chéries.
     
     **Expert Roles Applied:**
     - Lead Dev IA: Intelligent optimization orchestration, reward engineering

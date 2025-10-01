@@ -36,7 +36,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise monitoring and observability for IA Chérie platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_MONITORING = {
+IACHERIE_MONITORING = {
     'platforms': 65,
     'monitoring_features': ['real_time_metrics', 'performance_monitoring', 'alerting', 'audit_logging'],
     'workflow': 'connect→auth→transform→process→distribute→monitor'

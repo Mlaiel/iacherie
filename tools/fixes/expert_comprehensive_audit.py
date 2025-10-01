@@ -29,7 +29,7 @@ from datetime import datetime
 
 
 class ExpertTeamAuditor:
-    """Comprehensive expert team auditor for Ainfluencer platform"""
+    """Comprehensive expert team auditor for iaCherie platform"""
     
     def __init__(self, base_path: str = "."):
         self.base_path = Path(base_path)
@@ -463,7 +463,7 @@ class ExpertTeamAuditor:
 
 def main():
     """Execute comprehensive expert team audit"""
-    print("🛡️ AUDIT EXPERT TEAM COMPLET - AINFLUENCER")
+    print("🛡️ AUDIT EXPERT TEAM COMPLET - IACHERIE")
     print("=" * 50)
     
     auditor = ExpertTeamAuditor(".")

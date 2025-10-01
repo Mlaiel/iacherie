@@ -840,7 +840,7 @@ async def example_google_pay_flow():
         payment_request = google_pay.generate_payment_request(
             total_amount=Decimal("29.99"),
             currency="USD",
-            transaction_id="ainflue_tx_123",
+            transaction_id="iacherie_tx_123",
             description="IA Chérie Premium Subscription",
             metadata={
                 "creator_id": "creator_123",

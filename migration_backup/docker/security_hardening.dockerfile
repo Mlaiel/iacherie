@@ -4,7 +4,7 @@
 
 FROM alpine:3.19 AS development
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Security Hardening - Development Environment"
+LABEL description="IA Chéries Security Hardening - Development Environment"
 
 RUN apk add --no-cache \
     python3 \
@@ -32,7 +32,7 @@ CMD ["python3", "-m", "uvicorn", "hardening.main:app", "--host", "0.0.0.0", "--p
 
 FROM alpine:3.19 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Security Hardening - Enterprise security automation"
+LABEL description="IA Chéries Security Hardening - Enterprise security automation"
 LABEL version="1.0.0"
 LABEL security.scan.enabled=true
 

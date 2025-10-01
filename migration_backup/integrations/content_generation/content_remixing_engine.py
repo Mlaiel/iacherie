@@ -5,7 +5,7 @@ Creative content transformation with 6 specialized remix agents.
 Collaborative content generation and copyright-safe remixing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

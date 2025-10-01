@@ -911,7 +911,7 @@ class HealthMonitoringOrchestrator:
                 continue
             if scope.service_types and service.service_type not in scope.service_types:
                 continue
-            if scope.business_domains and service.ainflue_business_domain not in scope.business_domains:
+            if scope.business_domains and service.iacherie_business_domain not in scope.business_domains:
                 continue
             if scope.regions and service.region not in scope.regions:
                 continue

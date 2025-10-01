@@ -1,5 +1,5 @@
 """
-SLA Compliance Monitor - Ainflue Health Checks Module
+SLA Compliance Monitor - IA Chéries Health Checks Module
 Monitoring compliance SLA avec tracking performance, violation detection,
 reporting automatique et business impact analysis.
 

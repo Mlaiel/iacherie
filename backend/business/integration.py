@@ -424,7 +424,7 @@ class SystemIntegrator:
             credentials=IntegrationCredentials(
                 api_key= os.getenv("API_KEY", "CHANGE_ME"),
                 secret_key="secret...",
-                custom_config={"region": "us-east-1", "bucket": "ainflue-storage"}
+                custom_config={"region": "us-east-1", "bucket": "iacherie-storage"}
             )
         )
         

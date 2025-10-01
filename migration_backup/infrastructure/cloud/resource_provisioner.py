@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Resource Provisioner
+🏗️ IA Chéries Infrastructure - Cloud Resource Provisioner
 Automated cloud resource provisioning and lifecycle management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)

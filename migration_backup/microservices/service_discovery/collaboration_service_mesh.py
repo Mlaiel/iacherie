@@ -1,11 +1,11 @@
 """
-🤝 Collaboration Service Mesh Enterprise - Ainflue
+🤝 Collaboration Service Mesh Enterprise - IA Chéries
 =================================================
 Service mesh collaboration pour créateurs et équipes.
 Team coordination + permission management + real-time sync.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

@@ -194,8 +194,8 @@ class DocumentationSystem:
 {% endfor %}
 """,
             variables={
-                "service_name": "Ainflue API",
-                "service_description": "Comprehensive API for Ainflue platform",
+                "service_name": "IA Chéries API",
+                "service_description": "Comprehensive API for IA Chéries platform",
                 "api_version": "v1.0.0",
                 "base_url": "https://api.ainflue.com/v1"
             },

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Redis Cluster Scaling Controller - Ainflue Platform
+Redis Cluster Scaling Controller - IA Chéries Platform
 ===================================================
 
 AI-driven automatic scaling controller for Redis cluster with intelligent

@@ -134,8 +134,8 @@ Folgend der KI-Influencer-Agent Plattformlogik:
 
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/edge
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/edge
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt

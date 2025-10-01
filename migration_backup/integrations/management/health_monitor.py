@@ -1,5 +1,5 @@
 """
-🔗 Ainflue Enterprise Integration Management - Health Monitor with Predictive Failure Detection
+🔗 IA Chéries Enterprise Integration Management - Health Monitor with Predictive Failure Detection
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -461,7 +461,7 @@ class PredictiveAnalyzer:
 
 class EnterpriseHealthMonitor:
     """
-    Moniteur de santé enterprise pour Ainflue
+    Moniteur de santé enterprise pour IA Chéries
     
     Fonctionnalités:
     - Surveillance en temps réel de 30+ indicateurs de santé
@@ -1099,7 +1099,7 @@ class EnterpriseHealthMonitor:
         try:
             # Ici, implémenter l'envoi d'alertes (email, SMS, webhook, etc.)
             alert_message = (
-                f"🚨 ALERTE PRÉDICTIVE - Ainflue Health Monitor\n\n"
+                f"🚨 ALERTE PRÉDICTIVE - IA Chéries Health Monitor\n\n"
                 f"Composant: {prediction.component}\n"
                 f"Type de panne prédit: {prediction.failure_type.value}\n"
                 f"Probabilité: {prediction.probability:.2%}\n"
@@ -1412,7 +1412,7 @@ class EnterpriseHealthMonitor:
 # Exemple d'utilisation
 async def main():
     """Fonction principale de démonstration"""
-    print("🔗 Démarrage du Health Monitor enterprise Ainflue")
+    print("🔗 Démarrage du Health Monitor enterprise IA Chéries")
     print("Créé par Fahed Mlaiel (mlaiel@live.de)")
     print("© 2025 Fahed Mlaiel - Tous droits réservés")
     

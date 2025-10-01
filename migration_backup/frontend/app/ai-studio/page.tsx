@@ -251,7 +251,7 @@ export default function AIStudioPage() {
                               console.log('Image load error:', imageUrl);
                               e.currentTarget.outerHTML = `<div class="bg-gradient-to-br from-purple-400 to-blue-500 rounded-lg p-8 text-center text-white">
                                 <p class="text-lg">🖼️ Image générée par IA</p>
-                                <p class="text-sm opacity-75 mt-2">Ainfluencer Professional</p>
+                                <p class="text-sm opacity-75 mt-2">IA Chéries Professional</p>
                               </div>`;
                             }}
                           />

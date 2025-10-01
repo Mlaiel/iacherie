@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Platform - Advanced Real-Time Synchronization Engine
+IA Chéries Core Platform - Advanced Real-Time Synchronization Engine
 ================================================================
 
 Enterprise-grade real-time synchronization system for multi-device,

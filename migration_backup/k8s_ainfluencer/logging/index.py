@@ -45,7 +45,7 @@ from . import (
 from .config import DEFAULT_LOGGING_CONFIG
 
 
-class IAInfluencerLoggingSystem:
+class IIA ChériesLoggingSystem:
     """
     Main entry point for IA Influencer Agent Logging System
     Enterprise-grade logging infrastructure with AI-powered analytics
@@ -445,13 +445,13 @@ Create a service-specific logger"""
 _logging_system = None
 
 
-async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IAInfluencerLoggingSystem:
+async def get_logging_system(config: Optional[Dict[str, Any]] = None) -> IIA ChériesLoggingSystem:
     """
 Get or create global logging system instance"""
     global _logging_system
     
     if _logging_system is None:
-        _logging_system = IAInfluencerLoggingSystem(config)
+        _logging_system = IIA ChériesLoggingSystem(config)
         await _logging_system.initialize()
     
     return _logging_system

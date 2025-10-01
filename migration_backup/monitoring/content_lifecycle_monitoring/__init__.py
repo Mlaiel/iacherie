@@ -2,7 +2,7 @@
 Content Lifecycle Monitoring Module - Enterprise Creator Economy
 ================================================================
 
-Module de surveillance ultra-avancé du cycle de vie contenu Ainflue Creator Economy.
+Module de surveillance ultra-avancé du cycle de vie contenu IA Chéries Creator Economy.
 Architecture enterprise complète avec composants monitoring intelligents.
 
 Composants Enterprise:

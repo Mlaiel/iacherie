@@ -285,7 +285,7 @@ class ObservabilityService:
             prometheus_client.start_http_server(8000, registry=self.metrics_registry)
             
             # Métriques custom IA Chérie
-            await self._register_ainflue_metrics()
+            await self._register_iacherie_metrics()
             
             logger.info("✅ Collecte métriques configurée")
             
@@ -298,14 +298,14 @@ class ObservabilityService:
         try:
             # Métriques HTTP
             self.custom_metrics['http_requests_total'] = prometheus_client.Counter(
-                'ainflue_http_requests_total',
+                'iacherie_http_requests_total',
                 'Total HTTP requests',
                 ['method', 'endpoint', 'status'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['http_request_duration'] = prometheus_client.Histogram(
-                'ainflue_http_request_duration_seconds',
+                'iacherie_http_request_duration_seconds',
                 'HTTP request duration',
                 ['method', 'endpoint'],
                 registry=self.metrics_registry
@@ -313,14 +313,14 @@ class ObservabilityService:
             
             # Métriques de service
             self.custom_metrics['service_availability'] = prometheus_client.Gauge(
-                'ainflue_service_availability',
+                'iacherie_service_availability',
                 'Service availability percentage',
                 ['service', 'namespace'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['service_error_rate'] = prometheus_client.Gauge(
-                'ainflue_service_error_rate',
+                'iacherie_service_error_rate',
                 'Service error rate percentage',
                 ['service', 'namespace'],
                 registry=self.metrics_registry
@@ -328,14 +328,14 @@ class ObservabilityService:
             
             # Métriques infrastructure
             self.custom_metrics['cpu_usage'] = prometheus_client.Gauge(
-                'ainflue_cpu_usage_percent',
+                'iacherie_cpu_usage_percent',
                 'CPU usage percentage',
                 ['service', 'instance'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['memory_usage'] = prometheus_client.Gauge(
-                'ainflue_memory_usage_percent',
+                'iacherie_memory_usage_percent',
                 'Memory usage percentage',
                 ['service', 'instance'],
                 registry=self.metrics_registry
@@ -345,19 +345,19 @@ class ObservabilityService:
             logger.error("❌ Erreur enregistrement métriques", error=str(e))
             raise
     
-    async def _register_ainflue_metrics(self):
+    async def _register_iacherie_metrics(self):
         """Métriques spécifiques à IA Chérie"""
         try:
             # Métriques IA
             self.custom_metrics['ai_inference_requests'] = prometheus_client.Counter(
-                'ainflue_ai_inference_requests_total',
+                'iacherie_ai_inference_requests_total',
                 'Total AI inference requests',
                 ['model', 'service'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['ai_model_accuracy'] = prometheus_client.Gauge(
-                'ainflue_ai_model_accuracy',
+                'iacherie_ai_model_accuracy',
                 'AI model accuracy score',
                 ['model', 'version'],
                 registry=self.metrics_registry
@@ -365,14 +365,14 @@ class ObservabilityService:
             
             # Métriques contenu
             self.custom_metrics['content_uploads'] = prometheus_client.Counter(
-                'ainflue_content_uploads_total',
+                'iacherie_content_uploads_total',
                 'Total content uploads',
                 ['format', 'size_category'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['content_processing_time'] = prometheus_client.Histogram(
-                'ainflue_content_processing_seconds',
+                'iacherie_content_processing_seconds',
                 'Content processing time',
                 ['format', 'operation'],
                 registry=self.metrics_registry
@@ -380,14 +380,14 @@ class ObservabilityService:
             
             # Métriques business
             self.custom_metrics['creator_registrations'] = prometheus_client.Counter(
-                'ainflue_creator_registrations_total',
+                'iacherie_creator_registrations_total',
                 'Total creator registrations',
                 ['platform', 'tier'],
                 registry=self.metrics_registry
             )
             
             self.custom_metrics['revenue_generated'] = prometheus_client.Counter(
-                'ainflue_revenue_generated_total',
+                'iacherie_revenue_generated_total',
                 'Total revenue generated',
                 ['currency', 'source'],
                 registry=self.metrics_registry
@@ -473,7 +473,7 @@ class ObservabilityService:
                 name="High Latency",
                 description="Service latency is too high",
                 severity=AlertSeverity.WARNING,
-                condition='histogram_quantile(0.95, ainflue_http_request_duration_seconds) > 0.5',
+                condition='histogram_quantile(0.95, iacherie_http_request_duration_seconds) > 0.5',
                 threshold=0.5,
                 duration="5m",
                 labels={'team': 'platform', 'severity': 'warning'},
@@ -489,7 +489,7 @@ class ObservabilityService:
                 name="High Error Rate",
                 description="Service error rate is too high",
                 severity=AlertSeverity.WARNING,
-                condition='rate(ainflue_http_requests_total{status=~"5.."}[5m]) > 0.05',
+                condition='rate(iacherie_http_requests_total{status=~"5.."}[5m]) > 0.05',
                 threshold=0.05,
                 duration="3m",
                 labels={'team': 'platform', 'severity': 'warning'},
@@ -505,7 +505,7 @@ class ObservabilityService:
                 name="High CPU Usage",
                 description="CPU usage is too high",
                 severity=AlertSeverity.WARNING,
-                condition='ainflue_cpu_usage_percent > 80',
+                condition='iacherie_cpu_usage_percent > 80',
                 threshold=80,
                 duration="10m",
                 labels={'team': 'platform', 'severity': 'warning'},
@@ -930,21 +930,21 @@ class ObservabilityService:
                         'title': 'Service Availability',
                         'type': 'stat',
                         'targets': [{
-                            'expr': 'ainflue_service_availability'
+                            'expr': 'iacherie_service_availability'
                         }]
                     },
                     {
                         'title': 'Request Rate',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'rate(ainflue_http_requests_total[5m])'
+                            'expr': 'rate(iacherie_http_requests_total[5m])'
                         }]
                     },
                     {
                         'title': 'Error Rate',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'rate(ainflue_http_requests_total{status=~"5.."}[5m])'
+                            'expr': 'rate(iacherie_http_requests_total{status=~"5.."}[5m])'
                         }]
                     }
                 ]
@@ -962,14 +962,14 @@ class ObservabilityService:
                         'title': 'AI Inference Requests',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'rate(ainflue_ai_inference_requests_total[5m])'
+                            'expr': 'rate(iacherie_ai_inference_requests_total[5m])'
                         }]
                     },
                     {
                         'title': 'Model Accuracy',
                         'type': 'stat',
                         'targets': [{
-                            'expr': 'ainflue_ai_model_accuracy'
+                            'expr': 'iacherie_ai_model_accuracy'
                         }]
                     }
                 ]
@@ -987,14 +987,14 @@ class ObservabilityService:
                         'title': 'CPU Usage',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'ainflue_cpu_usage_percent'
+                            'expr': 'iacherie_cpu_usage_percent'
                         }]
                     },
                     {
                         'title': 'Memory Usage',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'ainflue_memory_usage_percent'
+                            'expr': 'iacherie_memory_usage_percent'
                         }]
                     }
                 ]
@@ -1012,14 +1012,14 @@ class ObservabilityService:
                         'title': 'Creator Registrations',
                         'type': 'graph',
                         'targets': [{
-                            'expr': 'rate(ainflue_creator_registrations_total[1h])'
+                            'expr': 'rate(iacherie_creator_registrations_total[1h])'
                         }]
                     },
                     {
                         'title': 'Revenue Generated',
                         'type': 'stat',
                         'targets': [{
-                            'expr': 'ainflue_revenue_generated_total'
+                            'expr': 'iacherie_revenue_generated_total'
                         }]
                     }
                 ]

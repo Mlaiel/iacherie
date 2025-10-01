@@ -1,7 +1,7 @@
 """Backend Edge Computing Services - Enterprise Consolidated Architecture
 =======================================================================
 
-Architecture edge computing ultra-avancée consolidée pour l'écosystème Ainflue.
+Architecture edge computing ultra-avancée consolidée pour l'écosystème iacherie.
 Système unifié enterprise-grade avec intelligence artificielle, orchestration
 automatisée et optimisations créateurs multi-format.
 
@@ -234,8 +234,8 @@ from .edge_resource_manager import (
 # UNIFIED EDGE COMPUTING ORCHESTRATOR
 # ============================================================================
 
-class AinfluEdgeComputingPlatform:
-    """Plateforme Edge Computing unifiée pour l'écosystème Ainflue."""
+class IaCheriesEdgeComputingPlatform:
+    """Plateforme Edge Computing unifiée pour l'écosystème iacherie."""
     
     def __init__(self):
         # Composants consolidés
@@ -337,9 +337,9 @@ class AinfluEdgeComputingPlatform:
             return {"status": "error", "error": str(e)}
 
 
-def create_ainflue_edge_platform() -> AinfluEdgeComputingPlatform:
-    """Factory function pour créer la plateforme edge Ainflue."""
-    return AinfluEdgeComputingPlatform()
+def create_iacherie_edge_platform() -> IaCheriesEdgeComputingPlatform:
+    """Factory function pour créer la plateforme edge iacherie."""
+    return IaCheriesEdgeComputingPlatform()
 
 
 # ============================================================================
@@ -348,8 +348,8 @@ def create_ainflue_edge_platform() -> AinfluEdgeComputingPlatform:
 
 __all__ = [
     # Plateforme unifiée
-    "AinfluEdgeComputingPlatform",
-    "create_ainflue_edge_platform",
+    "IaCheriesEdgeComputingPlatform",
+    "create_iacherie_edge_platform",
     
     # 🧠 Edge Intelligence Engine
     "EdgeIntelligenceEngine",

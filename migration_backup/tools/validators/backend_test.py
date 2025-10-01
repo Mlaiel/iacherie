@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 # Création de l'app FastAPI
 app = FastAPI(
-    title="Ainfluencer Backend - Test Mode",
+    title="IA Chéries Backend - Test Mode",
     description="Backend simplifié pour tests de connectivité",
     version="1.0.0"
 )
@@ -43,7 +43,7 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {
-        "message": "Ainfluencer Backend - Test Mode",
+        "message": "IA Chéries Backend - Test Mode",
         "status": "online",
         "version": "1.0.0"
     }
@@ -82,7 +82,7 @@ async def ai_generate(request: Request):
             ai_image_url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=512&height=512&seed={hash(prompt) % 10000}"
             
             # Alternative avec SVG professionnel
-            svg_content = f'<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" /><stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" /></linearGradient></defs><rect width="512" height="512" fill="url(#grad1)"/><text x="50%" y="40%" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle" dy=".3em">[AI] Image</text><text x="50%" y="55%" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" dy=".3em">{prompt[:30]}{"..." if len(prompt) > 30 else ""}</text><text x="50%" y="70%" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" dy=".3em">Ainfluencer AI</text></svg>'
+            svg_content = f'<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" /><stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" /></linearGradient></defs><rect width="512" height="512" fill="url(#grad1)"/><text x="50%" y="40%" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle" dy=".3em">[AI] Image</text><text x="50%" y="55%" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" dy=".3em">{prompt[:30]}{"..." if len(prompt) > 30 else ""}</text><text x="50%" y="70%" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" dy=".3em">IA Chéries AI</text></svg>'
             fallback_svg = f"data:image/svg+xml;base64,{base64.b64encode(svg_content.encode()).decode()}"
             
             # Sauvegarder les données dans le cache
@@ -169,7 +169,7 @@ async def ai_generate(request: Request):
             article_content = f"""# {prompt}
 
 ## Introduction
-Cet article professionnel a été généré par l'intelligence artificielle d'Ainfluencer, utilisant nos 12 APIs externes pour créer un contenu de qualité supérieure.
+Cet article professionnel a été généré par l'intelligence artificielle d'IA Chéries, utilisant nos 12 APIs externes pour créer un contenu de qualité supérieure.
 
 ## Développement
 L'IA a analysé votre demande "{prompt}" et a créé ce contenu personnalisé en utilisant les dernières techniques de génération de langage naturel et nos algorithmes propriétaires.
@@ -185,10 +185,10 @@ L'IA a analysé votre demande "{prompt}" et a créé ce contenu personnalisé en
 Votre sujet "{prompt}" nécessite une approche stratégique. Notre système IA a identifié les tendances actuelles et les mots-clés pertinents pour maximiser l'impact de votre contenu.
 
 ## Conclusion
-Ce contenu professionnel est maintenant prêt à être déployé sur votre plateforme Ainfluencer. Nos 12 APIs externes garantissent une qualité constante et une performance optimale.
+Ce contenu professionnel est maintenant prêt à être déployé sur votre plateforme IA Chéries. Nos 12 APIs externes garantissent une qualité constante et une performance optimale.
 
 ---
-*Généré par Ainfluencer AI Platform - {datetime.now().strftime('%d/%m/%Y à %H:%M')}*
+*Généré par IA Chéries AI Platform - {datetime.now().strftime('%d/%m/%Y à %H:%M')}*
 *Powered by 12 External APIs + Multi-Agent System*"""
             
             return {
@@ -214,9 +214,9 @@ Ce contenu professionnel est maintenant prêt à être déployé sur votre plate
             # Génération de script
             script_content = f"""FADE IN:
 
-EXT. AINFLUENCER HEADQUARTERS - DAY
+EXT. IA CHÉRIES HEADQUARTERS - DAY
 
-Une imposante tour de verre s'élève vers le ciel. Le logo AINFLUENCER brille au sommet.
+Une imposante tour de verre s'élève vers le ciel. Le logo IA CHÉRIES brille au sommet.
 
 NARRATEUR (V.O.)
 Dans un monde où l'intelligence artificielle révolutionne la créativité...
@@ -235,7 +235,7 @@ Génération en cours... Traitement multi-agent activé.
 
 FADE TO:
 
-TITLE CARD: "AINFLUENCER - L'AVENIR DE LA CRÉATION"
+TITLE CARD: "IA CHÉRIES - L'AVENIR DE LA CRÉATION"
 
 FADE OUT."""
             
@@ -265,7 +265,7 @@ FADE OUT."""
                 "message": f"Contenu professionnel généré pour: {prompt}",
                 "data": {
                     "id": content_id,
-                    "generated_content": f"🎨 Contenu IA Professionnel pour: '{prompt}'\n\n✨ Voici votre contenu premium créé par nos agents IA avancés:\n\n📝 Type: {content_type}\n🤖 Agent: GPT-4 + Claude + 12 APIs\n⚡ Statut: Génération réussie\n🚀 Qualité: Enterprise\n💎 Certification: Professional\n\n🔥 FONCTIONNALITÉS PREMIUM:\n- Multi-Agent Processing\n- Real-time Generation\n- Professional Quality\n- Download Ready\n- SEO Optimized\n\nVotre plateforme Ainfluencer est maintenant opérationnelle avec toutes les fonctionnalités professionnelles !",
+                    "generated_content": f"🎨 Contenu IA Professionnel pour: '{prompt}'\n\n✨ Voici votre contenu premium créé par nos agents IA avancés:\n\n📝 Type: {content_type}\n🤖 Agent: GPT-4 + Claude + 12 APIs\n⚡ Statut: Génération réussie\n🚀 Qualité: Enterprise\n💎 Certification: Professional\n\n🔥 FONCTIONNALITÉS PREMIUM:\n- Multi-Agent Processing\n- Real-time Generation\n- Professional Quality\n- Download Ready\n- SEO Optimized\n\nVotre plateforme IA Chéries est maintenant opérationnelle avec toutes les fonctionnalités professionnelles !",
                     "content_type": "text",
                     "download_url": f"/api/download/{content_id}",
                     "timestamp": datetime.now().isoformat(),
@@ -339,7 +339,7 @@ async def download_content(content_id: str):
                         return StreamingResponse(
                             io.BytesIO(response.content),
                             media_type=response.headers.get('content-type', 'image/png'),
-                            headers={"Content-Disposition": f"attachment; filename=ainfluencer_image_{content_id}.png"}
+                            headers={"Content-Disposition": f"attachment; filename=iacheries_image_{content_id}.png"}
                         )
                 except Exception as e:
                     logger.error(f"Erreur téléchargement image: {e}")
@@ -351,7 +351,7 @@ async def download_content(content_id: str):
                     return StreamingResponse(
                         io.BytesIO(svg_data),
                         media_type="image/svg+xml",
-                        headers={"Content-Disposition": f"attachment; filename=ainfluencer_image_{content_id}.svg"}
+                        headers={"Content-Disposition": f"attachment; filename=iacheries_image_{content_id}.svg"}
                     )
             
             # Fallback final - SVG générique
@@ -364,14 +364,14 @@ async def download_content(content_id: str):
                 </defs>
                 <rect width="512" height="512" fill="url(#grad1)"/>
                 <text x="50%" y="40%" font-family="Arial, sans-serif" font-size="28" fill="white" text-anchor="middle">[AI] Image IA</text>
-                <text x="50%" y="60%" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Générée par Ainfluencer</text>
+                <text x="50%" y="60%" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Générée par IA Chéries</text>
                 <text x="50%" y="75%" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">ID: {content_id}</text>
             </svg>'''
             
             return StreamingResponse(
                 io.BytesIO(svg_content.encode()),
                 media_type="image/svg+xml",
-                headers={"Content-Disposition": f"attachment; filename=ainfluencer_image_{content_id}.svg"}
+                headers={"Content-Disposition": f"attachment; filename=iacheries_image_{content_id}.svg"}
             )
         
         elif content_id.startswith("audio_"):
@@ -382,13 +382,13 @@ async def download_content(content_id: str):
                 "format": "mp3",
                 "duration": "30s",
                 "sample_rate": "44100Hz",
-                "generated_by": "Ainfluencer AI",
+                "generated_by": "IA Chéries AI",
                 "timestamp": datetime.now().isoformat()
             }
             return StreamingResponse(
                 io.BytesIO(json.dumps(audio_info, indent=2).encode()),
                 media_type="application/json",
-                headers={"Content-Disposition": f"attachment; filename=ainfluencer_audio_{content_id}.json"}
+                headers={"Content-Disposition": f"attachment; filename=iacheries_audio_{content_id}.json"}
             )
         
         elif content_id.startswith("video_"):
@@ -400,22 +400,22 @@ async def download_content(content_id: str):
                 "resolution": "1920x1080",
                 "fps": 30,
                 "duration": "60s",
-                "generated_by": "Ainfluencer AI",
+                "generated_by": "IA Chéries AI",
                 "timestamp": datetime.now().isoformat()
             }
             return StreamingResponse(
                 io.BytesIO(json.dumps(video_info, indent=2).encode()),
                 media_type="application/json",
-                headers={"Content-Disposition": f"attachment; filename=ainfluencer_video_{content_id}.json"}
+                headers={"Content-Disposition": f"attachment; filename=iacheries_video_{content_id}.json"}
             )
         
         else:
             # Pour le texte et autres
-            text_content = f"Contenu généré par Ainfluencer AI\nID: {content_id}\nType: Texte\nGénéré le: {datetime.now().isoformat()}\n\nContenu professionnel généré par nos 12 APIs externes."
+            text_content = f"Contenu généré par IA Chéries AI\nID: {content_id}\nType: Texte\nGénéré le: {datetime.now().isoformat()}\n\nContenu professionnel généré par nos 12 APIs externes."
             return StreamingResponse(
                 io.BytesIO(text_content.encode()),
                 media_type="text/plain",
-                headers={"Content-Disposition": f"attachment; filename=ainfluencer_content_{content_id}.txt"}
+                headers={"Content-Disposition": f"attachment; filename=iacheries_content_{content_id}.txt"}
             )
     
     except Exception as e:
@@ -431,7 +431,7 @@ async def get_content_info(content_id: str):
         "created_at": datetime.now().isoformat(),
         "download_url": f"/api/download/{content_id}",
         "metadata": {
-            "generated_by": "Ainfluencer AI Platform",
+            "generated_by": "IA Chéries AI Platform",
             "apis_used": "12 External APIs",
             "quality": "professional"
         }
@@ -458,7 +458,7 @@ async def api_status():
     }
 
 if __name__ == "__main__":
-    print("🚀 DÉMARRAGE BACKEND TEST - AINFLUENCER")
+    print("🚀 DÉMARRAGE BACKEND TEST - IA CHÉRIES")
     print("========================================")
     print("📡 Serveur: http://0.0.0.0:8001")
     print("🏥 Health: http://0.0.0.0:8001/health")

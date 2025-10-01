@@ -1,7 +1,7 @@
 """Notification Delivery Service - Intelligent Notification Engine
 =================================================================
 
-Advanced notification delivery system for the Ainflue platform, providing
+Advanced notification delivery system for the iacherie platform, providing
 multi-channel notifications, intelligent delivery optimization, personalization,
 and real-time communication management across all user touchpoints.
 
@@ -507,7 +507,7 @@ class DeliveryEngine:
                 msg.attach(html_part)
             
             # Ajouter les headers de tracking
-            msg['Message-ID'] = f"<{delivery_id}@ainflue.com>"
+            msg['Message-ID'] = f"<{delivery_id}@iacherie.com>"
             msg['X-Delivery-ID'] = delivery_id
             
             # Envoyer l'email

@@ -91,7 +91,7 @@ async def main():
         host="10.0.1.100",
         port=8080,
         service_type="content_service",
-        ainflue_business_domain="content",
+        iacherie_business_domain="content",
         metadata={
             'creator_types': ['video', 'audio'],
             'content_formats': ['mp4', 'mp3', 'png'],
@@ -234,20 +234,20 @@ if __name__ == "__main__":
 
 ```bash
 # Configuration Registre
-AINFLUE_REGISTRY_BACKEND=redis
-AINFLUE_REGISTRY_HOST=localhost
-AINFLUE_REGISTRY_PORT=6379
-AINFLUE_NODE_ID=iacherie-registry-1
+IACHERIE_REGISTRY_BACKEND=redis
+IACHERIE_REGISTRY_HOST=localhost
+IACHERIE_REGISTRY_PORT=6379
+IACHERIE_NODE_ID=iacherie-registry-1
 
 # Configuration Sécurité
-AINFLUE_JWT_SECRET=votre-clé-secrète-jwt
-AINFLUE_ENABLE_MTLS=true
-AINFLUE_COMPLIANCE_STANDARDS=gdpr,sox
+IACHERIE_JWT_SECRET=votre-clé-secrète-jwt
+IACHERIE_ENABLE_MTLS=true
+IACHERIE_COMPLIANCE_STANDARDS=gdpr,sox
 
 # Configuration Performance
-AINFLUE_CACHE_TTL=60
-AINFLUE_HEALTH_CHECK_INTERVAL=30
-AINFLUE_ANALYTICS_COLLECTION_INTERVAL=60
+IACHERIE_CACHE_TTL=60
+IACHERIE_HEALTH_CHECK_INTERVAL=30
+IACHERIE_ANALYTICS_COLLECTION_INTERVAL=60
 ```
 
 ### Fichiers de Configuration
@@ -377,7 +377,7 @@ Erreur: Échec validation contraintes métier
 ```python
 service = ServiceInstance(
     # ... autres champs ...
-    ainflue_business_domain="content",  # Requis
+    iacherie_business_domain="content",  # Requis
     metadata={
         'creator_types': ['video', 'audio'],      # Requis pour services contenu
         'content_formats': ['mp4', 'mp3'],       # Requis pour services contenu

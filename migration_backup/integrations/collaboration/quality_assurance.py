@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quality Assurance Manager - Ainflue Enterprise Collaboration
+Quality Assurance Manager - IA Chéries Enterprise Collaboration
 Automated quality control and validation for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

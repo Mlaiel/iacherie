@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Block Storage Configuration
+# IA Chéries Infrastructure Module - Block Storage Configuration
 # =========================================================
 # 
-# Enterprise-grade block storage configuration for Ainflue platform
+# Enterprise-grade block storage configuration for IA Chéries platform
 # Supports multi-cloud block storage and enterprise performance
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -118,11 +118,11 @@ class BlockStorageManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_standard_volumes(self) -> Dict[str, VolumeConfig]:
-        """Define standard volume configurations for Ainflue platform"""
+        """Define standard volume configurations for IA Chéries platform"""
         base_tags = {
             'Environment': self.config.environment,
-            'Project': 'Ainflue',
-            'ManagedBy': 'AinflueBlockStorageManager'
+            'Project': 'IA Chéries',
+            'ManagedBy': 'IA ChériesBlockStorageManager'
         }
         
         return {
@@ -452,7 +452,7 @@ class BlockStorageManager:
                         'Tags': [
                             {'Key': 'Name', 'Value': snapshot_name},
                             {'Key': 'Environment', 'Value': self.config.environment},
-                            {'Key': 'Project', 'Value': 'Ainflue'},
+                            {'Key': 'Project', 'Value': 'IA Chéries'},
                             {'Key': 'SourceVolume', 'Value': volume_id}
                         ]
                     }
@@ -481,7 +481,7 @@ class BlockStorageManager:
                 },
                 'tags': {
                     'Environment': self.config.environment,
-                    'Project': 'Ainflue',
+                    'Project': 'IA Chéries',
                     'SourceDisk': disk_id.split('/')[-1]
                 }
             }
@@ -796,8 +796,8 @@ class BlockStorageManager:
         return {}
 
 # Enterprise block storage orchestrator
-class AinflueBlockStorageOrchestrator:
-    """High-level block storage orchestration for Ainflue platform"""
+class IA ChériesBlockStorageOrchestrator:
+    """High-level block storage orchestration for IA Chéries platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize block storage orchestrator
@@ -879,7 +879,7 @@ class AinflueBlockStorageOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueBlockStorageOrchestrator(environment="production")
+        orchestrator = IA ChériesBlockStorageOrchestrator(environment="production")
         
         # Provision standard volumes
         results = await orchestrator.provision_standard_volumes(['aws', 'gcp'])

@@ -115,7 +115,7 @@ class PerformanceMetric:
     
     # Metric identification
     metric_type: MetricType = MetricType.API_RESPONSE_TIME
-    service_name: str = "ainflue-platform"
+    service_name: str = "iacherie-platform"
     service_type: Optional[ServiceType] = None
     endpoint: Optional[str] = None
     
@@ -634,7 +634,7 @@ class PerformanceMetricsLogger:
                   metric_type: MetricType,
                   value: float,
                   unit: str = "ms",
-                  service_name: str = "ainflue-platform",
+                  service_name: str = "iacherie-platform",
                   **kwargs) -> str:
         """Log une métrique de performance"""
         

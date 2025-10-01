@@ -2,7 +2,7 @@
 Rate Limiter - Enterprise Rate Limiting and Throttling
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced rate limiting system for Ainflue creator platform with multi-tier
+Advanced rate limiting system for iacherie creator platform with multi-tier
 rate limiting, burst protection, and creator-specific quotas.
 """
 
@@ -90,8 +90,8 @@ class RateLimiter:
             'distributed_mode': False  # Would be True with Redis backend
         }
         
-        # Initialize Ainflue-specific rate limiting rules
-        self.ainflue_rate_limits = self._initialize_ainflue_rate_limits()
+        # Initialize iacherie-specific rate limiting rules
+        self.iacherie_rate_limits = self._initialize_iacherie_rate_limits()
         
         # Rate limiting metrics
         self.metrics = {
@@ -105,8 +105,8 @@ class RateLimiter:
         
         logger.info("Rate limiter initialized for creator platform")
     
-    def _initialize_ainflue_rate_limits(self) -> Dict[str, RateLimitRule]:
-        """Initialize Ainflue creator platform rate limiting rules"""
+    def _initialize_iacherie_rate_limits(self) -> Dict[str, RateLimitRule]:
+        """Initialize iacherie creator platform rate limiting rules"""
         
         rules = {}
         
@@ -542,7 +542,7 @@ class RateLimiter:
         }
         
         rule_id = rule_mapping.get(action)
-        if not rule_id or rule_id not in self.ainflue_rate_limits:
+        if not rule_id or rule_id not in self.iacherie_rate_limits:
             # Use default creator limits
             return await self.check_rate_limit(
                 key=f"creator:{creator_id}:{action}",
@@ -550,7 +550,7 @@ class RateLimiter:
                 window_seconds=3600
             )
         
-        rule = self.ainflue_rate_limits[rule_id]
+        rule = self.iacherie_rate_limits[rule_id]
         key = f"creator:{creator_id}:{action}"
         
         return await self.check_rate_limit(
@@ -624,7 +624,7 @@ class RateLimiter:
                 'dynamic_adjustment_enabled': self.config['dynamic_adjustment_enabled'],
                 'distributed_mode': self.config['distributed_mode']
             },
-            'active_rules': len(self.ainflue_rate_limits),
+            'active_rules': len(self.iacherie_rate_limits),
             'active_rate_limits': len(self.rate_limit_storage),
             'recent_violations': 0,
             'top_violated_keys': []

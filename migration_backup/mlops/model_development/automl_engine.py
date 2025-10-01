@@ -96,7 +96,7 @@ class AutoMLResult:
 class AutoMLEngine:
     """
     Enterprise AutoML engine for automated machine learning
-    Specializes in creating optimal models for Ainflue's 53 AI agents
+    Specializes in creating optimal models for IA Chéries's 53 AI agents
     """
     
     def __init__(self):

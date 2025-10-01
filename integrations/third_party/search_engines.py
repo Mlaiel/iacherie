@@ -886,7 +886,7 @@ def create_search_engine_manager(config: Dict[str, Any]) -> SearchEngineManager:
     return SearchEngineManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_seo_optimization_workflow(content_topic: str, target_keywords: List[str], domain: str) -> Dict[str, Any]:
+async def iacherie_seo_optimization_workflow(content_topic: str, target_keywords: List[str], domain: str) -> Dict[str, Any]:
     """
     Complete SEO optimization workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -955,7 +955,7 @@ if __name__ == "__main__":
         test_keywords = ["ai content generator", "automated content creation", "ai writing tools"]
         test_domain = "iacherie.com"
         
-        result = await ainflue_seo_optimization_workflow(test_topic, test_keywords, test_domain)
+        result = await iacherie_seo_optimization_workflow(test_topic, test_keywords, test_domain)
         
         print("SEO Optimization Workflow Result:")
         print(json.dumps(result, indent=2, default=str))

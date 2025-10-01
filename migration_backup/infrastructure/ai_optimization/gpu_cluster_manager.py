@@ -2,11 +2,11 @@
 GPU Cluster Manager - GPU Resource Management for AI Workloads
 ==============================================================
 
-Manages GPU clusters for Ainflue's 53 AI agents with optimal resource allocation,
+Manages GPU clusters for IA Chéries's 53 AI agents with optimal resource allocation,
 scheduling, and performance monitoring for creator platform workloads.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -50,7 +50,7 @@ class GPUNode:
 
 class GPUClusterManager:
     """
-    GPU Cluster Manager for Ainflue AI Infrastructure
+    GPU Cluster Manager for IA Chéries AI Infrastructure
     
     Manages distributed GPU resources across multiple regions to serve
     53 AI agents with optimal performance and cost efficiency.

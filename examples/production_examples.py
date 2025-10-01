@@ -575,7 +575,7 @@ class EnterpriseProductionExamples:
         print("=" * 60)
         
         # Services IA Chérie
-        ainflue_services = [
+        iacherie_services = [
             {'name': 'content-upload-service', 'type': 'api', 'cpu_intensive': True},
             {'name': 'ai-processing-service', 'type': 'worker', 'cpu_intensive': True},
             {'name': 'collaboration-service', 'type': 'realtime', 'memory_intensive': True},
@@ -586,13 +586,13 @@ class EnterpriseProductionExamples:
             {'name': 'distribution-service', 'type': 'api', 'network_intensive': True}
         ]
         
-        print(f"🔧 Deploying {len(ainflue_services)} IA Chérie microservices:")
-        for service in ainflue_services:
+        print(f"🔧 Deploying {len(iacherie_services)} IA Chérie microservices:")
+        for service in iacherie_services:
             print(f"  • {service['name']} ({service['type']})")
         
         # Déploiement microservices
         deployment_config = await self.deployment_manager.deploy_scalable_microservices_architecture(
-            ainflue_services
+            iacherie_services
         )
         
         # Tests scalabilité
@@ -609,7 +609,7 @@ class EnterpriseProductionExamples:
         
         return {
             'deployment_config': deployment_config,
-            'services_deployed': len(ainflue_services),
+            'services_deployed': len(iacherie_services),
             'scalability_benchmarks': scalability_benchmarks,
             'average_scalability_score': avg_scalability,
             'business_value': {

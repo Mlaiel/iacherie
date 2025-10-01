@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Search Service Template for Ainflue Creator Economy Platform
+Search Service Template for IA Chéries Creator Economy Platform
 Enterprise search service with Elasticsearch, advanced analytics and AI-powered recommendations
 """
 
@@ -173,7 +173,7 @@ class SearchAnalytics(BaseModel):
 
 class SearchServiceTemplate:
     """
-    Template de service de recherche enterprise pour Ainflue
+    Template de service de recherche enterprise pour IA Chéries
     
     Fonctionnalités:
     - Multi-provider search (Elasticsearch, OpenSearch, etc.)
@@ -190,7 +190,7 @@ class SearchServiceTemplate:
     def __init__(self, config: SearchConfig = None):
         self.config = config or SearchConfig()
         self.app = FastAPI(
-            title="Ainflue Search Service",
+            title="IA Chéries Search Service",
             description="Enterprise search service with AI-powered capabilities",
             version="1.0.0"
         )

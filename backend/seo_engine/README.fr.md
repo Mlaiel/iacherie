@@ -34,7 +34,7 @@ Ce module SEO engine, ses algorithmes IA SEO innovants, systèmes d'intelligence
 
 ## 🎯 Résumé Exécutif
 
-Le module **SEO Engine** est le système d'intelligence et d'optimisation SEO avancé d'Ainflue fournissant une analyse SEO pilotée par l'IA, une intelligence compétitive, une optimisation de contenu multi-format, et une optimisation complète des moteurs de recherche pour les créateurs sur toutes les plateformes.
+Le module **SEO Engine** est le système d'intelligence et d'optimisation SEO avancé d'iacherie fournissant une analyse SEO pilotée par l'IA, une intelligence compétitive, une optimisation de contenu multi-format, et une optimisation complète des moteurs de recherche pour les créateurs sur toutes les plateformes.
 
 ### Valeur Business Principale
 
@@ -195,8 +195,8 @@ Amélioration SEO Continue
 ### Installation & Configuration
 ```bash
 # Cloner le repository
-git clone https://github.com/fahed-mlaiel/ainflue-seo-engine.git
-cd ainflue-seo-engine
+git clone https://github.com/fahed-mlaiel/iacherie-seo-engine.git
+cd iacherie-seo-engine
 
 # Installer dépendances
 pip install -r requirements.txt
@@ -255,16 +255,16 @@ intelligence = await intelligence_engine.analyze_seo_intelligence(
 - **Formation & Ateliers**: Formation SEO professionnelle et ateliers équipe
 
 ### Ressources Communauté
-- **[Forum Communauté SEO](https://community.ainflue.com/seo)** - Support communauté et discussions
-- **[Wiki Meilleures Pratiques](https://wiki.ainflue.com/seo)** - Meilleures pratiques SEO communautaires
-- **[Success Stories](https://success.ainflue.com/seo)** - Success stories SEO créateurs et études cas
+- **[Forum Communauté SEO](https://community.iacherie.com/seo)** - Support communauté et discussions
+- **[Wiki Meilleures Pratiques](https://wiki.iacherie.com/seo)** - Meilleures pratiques SEO communautaires
+- **[Success Stories](https://success.iacherie.com/seo)** - Success stories SEO créateurs et études cas
 
 ## 📞 Contact & Support
 
-**Support Technique**: [support@ainflue.com](mailto:support@ainflue.com)
-**Conseil SEO**: [seo@ainflue.com](mailto:seo@ainflue.com)
-**Solutions Entreprise**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**Support Créateurs**: [creators@ainflue.com](mailto:creators@ainflue.com)
+**Support Technique**: [support@iacherie.com](mailto:support@iacherie.com)
+**Conseil SEO**: [seo@iacherie.com](mailto:seo@iacherie.com)
+**Solutions Entreprise**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**Support Créateurs**: [creators@iacherie.com](mailto:creators@iacherie.com)
 
 **Direction Projet**: [Fahed Mlaiel](mailto:mlaiel@live.de)
 

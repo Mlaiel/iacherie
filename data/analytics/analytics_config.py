@@ -272,7 +272,7 @@ class DatabaseConfig:
     """Database configuration"""
     host: str = "localhost"
     port: int = 5432
-    database: str = "ainflue_analytics"
+    database: str = "iacherie_analytics"
     username: str = ""
     password: str = ""
     max_connections: int = 20

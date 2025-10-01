@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PLATFORM - OPTIMIZED PRODUCTION DOCKERFILE
+# IACHERIE PLATFORM - OPTIMIZED PRODUCTION DOCKERFILE
 # =============================================================================
 # Multi-stage production Dockerfile with security hardening, vulnerability 
 # scanning, and performance optimizations for enterprise deployment.
@@ -21,7 +21,7 @@ FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION} AS base
 
 LABEL stage=base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Platform - Base security and dependencies stage"
+LABEL description="iacherie Platform - Base security and dependencies stage"
 LABEL version="1.0.0"
 
 # Security: Set non-interactive frontend to prevent hanging
@@ -71,12 +71,12 @@ RUN apt-get update && \
         && apt-get autoremove -y
 
 # Security: Create application user early
-RUN groupadd --gid 10001 ainflue && \
-    useradd --uid 10001 --gid ainflue \
-            --home-dir /home/ainflue \
+RUN groupadd --gid 10001 iacherie && \
+    useradd --uid 10001 --gid iacherie \
+            --home-dir /home/iacherie \
             --create-home \
             --shell /bin/bash \
-            ainflue
+            iacherie
 
 # Set environment variables for Chrome/Chromium
 ENV CHROME_BIN=/usr/bin/chromium
@@ -165,7 +165,7 @@ LABEL description="Application code preparation and optimization"
 WORKDIR /app
 
 # Copy application source code
-COPY --chown=ainflue:ainflue . .
+COPY --chown=iacherie:iacherie . .
 
 # Create necessary directories
 RUN mkdir -p \
@@ -176,7 +176,7 @@ RUN mkdir -p \
     /app/uploads \
     /app/cache \
     /app/metrics \
-    && chown -R ainflue:ainflue /app
+    && chown -R iacherie:iacherie /app
 
 # Compile Python files for better startup performance
 RUN python -m compileall -b . && \
@@ -189,14 +189,14 @@ FROM python:${PYTHON_VERSION}-${DEBIAN_VERSION} AS production
 
 LABEL stage=production
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue AI-Powered Content Protection & Monetization Platform"
+LABEL description="iacherie AI-Powered Content Protection & Monetization Platform"
 LABEL version="1.0.0"
-LABEL org.opencontainers.image.title="Ainflue Platform"
+LABEL org.opencontainers.image.title="iacherie Platform"
 LABEL org.opencontainers.image.description="Enterprise AI platform for content protection and monetization"
 LABEL org.opencontainers.image.vendor="Fahed Mlaiel"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
-LABEL org.opencontainers.image.documentation="https://github.com/Mlaiel/Ainflue/docs"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/iacherie"
+LABEL org.opencontainers.image.documentation="https://github.com/Mlaiel/iacherie/docs"
 
 # Production environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -256,12 +256,12 @@ RUN apt-get update && \
         && apt-get clean
 
 # Security: Create non-root user with minimal privileges
-RUN groupadd --gid 10001 ainflue && \
-    useradd --uid 10001 --gid ainflue \
-            --home-dir /home/ainflue \
+RUN groupadd --gid 10001 iacherie && \
+    useradd --uid 10001 --gid iacherie \
+            --home-dir /home/iacherie \
             --create-home \
             --shell /bin/bash \
-            ainflue
+            iacherie
 
 # Copy virtual environment from dependencies stage
 COPY --from=dependencies /opt/venv /opt/venv
@@ -270,12 +270,12 @@ COPY --from=dependencies /opt/venv /opt/venv
 WORKDIR /app
 
 # Copy application from builder stage with proper ownership
-COPY --from=app-builder --chown=ainflue:ainflue /app /app
+COPY --from=app-builder --chown=iacherie:iacherie /app /app
 
 # Security: Set proper file permissions
 RUN chmod -R 755 /app && \
     chmod -R 777 /app/data /app/storage /app/logs /app/tmp /app/uploads /app/cache /app/metrics && \
-    chown -R ainflue:ainflue /app
+    chown -R iacherie:iacherie /app
 
 # Security: Copy security reports if they were generated
 COPY --from=security-scan /build/*-report.json /app/security-reports/ 2>/dev/null || true
@@ -283,7 +283,7 @@ COPY --from=security-scan /build/*-report.json /app/security-reports/ 2>/dev/nul
 # Create startup script with proper signal handling
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "=== Ainflue Platform Starting ==="\n\
+echo "=== iacherie Platform Starting ==="\n\
 echo "Environment: $ENVIRONMENT"\n\
 echo "Python version: $(python --version)"\n\
 echo "Working directory: $(pwd)"\n\
@@ -306,10 +306,10 @@ exec python -m uvicorn main:app \\\n\
 ' > /app/start.sh && chmod +x /app/start.sh
 
 # Switch to non-root user
-USER ainflue
+USER iacherie
 
 # Security: Set secure umask
-RUN echo "umask 022" >> /home/ainflue/.bashrc
+RUN echo "umask 022" >> /home/iacherie/.bashrc
 
 # Expose application port
 EXPOSE 8000

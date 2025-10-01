@@ -1,4 +1,4 @@
-"""{{model_name}} Pydantic Model Template for Ainflue Platform
+"""{{model_name}} Pydantic Model Template for iacherie Platform
 {{model_description}}
 
 Enterprise-grade Pydantic models with comprehensive validation, serialization,

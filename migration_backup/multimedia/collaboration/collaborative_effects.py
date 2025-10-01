@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Collaboration - Collaborative Effects System
+IA Chéries Platform - Multimedia Collaboration - Collaborative Effects System
 Real-time collaborative multimedia effects and transformations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

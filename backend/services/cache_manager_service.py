@@ -1,7 +1,7 @@
 """Cache Manager Service - High-Performance Distributed Caching Engine
 ====================================================================
 
-Advanced caching management system for the Ainflue platform, providing
+Advanced caching management system for the iacherie platform, providing
 multi-layer caching, intelligent cache strategies, distributed cache coordination,
 and performance optimization across all platform components.
 

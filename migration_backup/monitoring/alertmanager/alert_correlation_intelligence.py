@@ -14,7 +14,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chéries - AI-Powered Creator Economy Platform
 Module: Alert Correlation Intelligence Engine
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -256,7 +256,7 @@ class AlertCorrelationIntelligence:
         """Build service dependency graph for correlation"""
         graph = nx.DiGraph()
         
-        # Define service dependencies for Ainflue platform
+        # Define service dependencies for IA Chéries platform
         dependencies = {
             # Core services
             "api": ["database", "redis", "auth-service"],

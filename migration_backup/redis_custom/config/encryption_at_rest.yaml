@@ -1,4 +1,4 @@
-# ⚡ Redis Encryption at Rest Configuration - Ainflue Enterprise
+# ⚡ Redis Encryption at Rest Configuration - IA Chéries Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Data Encryption for Creator Economy Platform
 
@@ -360,7 +360,7 @@ metadata:
 data:
   setup_encryption.sh: |
     #!/bin/bash
-    # Encryption Setup Script for Ainflue Redis Enterprise
+    # Encryption Setup Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🔐 Setting up Redis Encryption at Rest..."

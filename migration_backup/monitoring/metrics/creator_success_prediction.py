@@ -1,7 +1,7 @@
 """🎯 Creator Success Prediction - ML-Powered Success Intelligence System
 ======================================================================
 
-Advanced machine learning-powered creator success prediction system for the Ainflue platform.
+Advanced machine learning-powered creator success prediction system for the IA Chéries platform.
 Provides sophisticated analytics for predicting creator success, growth potential, risk assessment,
 and optimization recommendations through AI-driven insights and predictive modeling.
 

@@ -1,7 +1,7 @@
 """MongoDB Multimedia Integration Module
 =====================================
 
-Advanced multimedia content processing and storage for the Ainflue platform.
+Advanced multimedia content processing and storage for the IA Chéries platform.
 Handles audio, video, and image content with MongoDB GridFS integration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

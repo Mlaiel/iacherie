@@ -54,7 +54,7 @@ def fix_datetime_warnings(file_path):
 
 def main():
     """Main function to fix all Python files"""
-    workspace_dir = '/workspaces/Ainfluencer'
+    workspace_dir = '/workspaces/IA Chéries'
     files_fixed = 0
     
     # Files to fix

@@ -1,9 +1,9 @@
-"""Ainflue Core Payments - Fraud Detection Core
+"""IA Chéries Core Payments - Fraud Detection Core
 ============================================
 
 Enterprise-grade fraud detection system providing real-time transaction analysis,
 risk scoring, pattern recognition, machine learning models, and automated
-fraud prevention for the Ainflue platform payment systems.
+fraud prevention for the IA Chéries platform payment systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

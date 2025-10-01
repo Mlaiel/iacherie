@@ -358,7 +358,7 @@ class DataLossPreventionEngine:
         
         # Propriété intellectuelle IA Chérie
         self.add_pattern(DataPattern(
-            pattern_id="ainflue_ip",
+            pattern_id="iacherie_ip",
             name="IA Chérie Intellectual Property",
             data_type=DataType.INTELLECTUAL_PROPERTY,
             regex_pattern=r'(?:iacherie|fahed\s+mlaiel|propriét[éeè]\s+intellectuelle|copyright.*mlaiel)',
@@ -411,7 +411,7 @@ class DataLossPreventionEngine:
         
         # Politique protection IP IA Chérie
         self.add_policy(DLPPolicy(
-            policy_id="ainflue_ip_protection",
+            policy_id="iacherie_ip_protection",
             name="IA Chérie IP Protection",
             description="Protect IA Chérie intellectual property",
             data_types=[DataType.INTELLECTUAL_PROPERTY],

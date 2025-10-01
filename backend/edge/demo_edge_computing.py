@@ -170,7 +170,7 @@ async def demo_iot_mesh_network():
     
     # Create configuration
     config = IoTMeshConfig(
-        network_name="ainflue-demo-mesh",
+        network_name="iacherie-demo-mesh",
         auto_healing_enabled=False,  # Disable for demo
         device_heartbeat_interval_seconds=60  # Disable frequent heartbeats
     )
@@ -237,7 +237,7 @@ async def demo_iot_mesh_network():
         broadcast_msg = {
             "type": "ai_model_update",
             "model_version": "v2.1.0",
-            "update_url": "https://models.ainflue.com/v2.1.0"
+            "update_url": "https://models.iacherie.com/v2.1.0"
         }
         devices_reached = await orchestrator.broadcast_message(gateway_id, broadcast_msg, target_group="ai_devices")
         print(f"📢 Broadcast reached {devices_reached} devices")
@@ -267,7 +267,7 @@ async def demo_fog_computing():
     
     # Create configuration
     config = FogComputingConfig(
-        orchestrator_name="ainflue-fog-demo",
+        orchestrator_name="iacherie-fog-demo",
         enable_auto_scaling=False,  # Disable for demo
         task_timeout_seconds=30,
         heartbeat_interval_seconds=60  # Disable frequent heartbeats
@@ -500,7 +500,7 @@ async def demo_integration():
 
 async def main():
     """Run the complete edge computing layer demonstration."""
-    print("🌟 AINFLUE EDGE COMPUTING LAYER DEMONSTRATION")
+    print("🌟 IACHERIE EDGE COMPUTING LAYER DEMONSTRATION")
     print("=" * 80)
     print("Showcasing the complete edge computing infrastructure:")
     print("• Edge AI Inference Orchestration")

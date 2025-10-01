@@ -7,7 +7,7 @@ economy platform. Provides automated privacy rights fulfillment, disclosure
 management, and opt-out mechanisms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -149,7 +149,7 @@ class CCPAComplianceManager:
         self.business_purposes_mapping = self._initialize_business_purposes()
         self.third_party_sharing = self._initialize_third_party_sharing()
         
-        logger.info("CCPA Compliance Manager initialized for Ainflue creator platform")
+        logger.info("CCPA Compliance Manager initialized for IA Chéries creator platform")
     
     def _initialize_personal_info_inventory(self) -> Dict[str, CCPAPersonalInfoDetails]:
         """Initialize personal information inventory for creator platform."""
@@ -599,8 +599,8 @@ class CCPAComplianceManager:
         # Contact information
         disclosures["contact_information"] = {
             "privacy_contact": "privacy@ainflue.com",
-            "toll_free_number": "1-800-AINFLUE",
-            "postal_address": "Ainflue Privacy Office, [Address]",
+            "toll_free_number": "1-800-IA CHÉRIES",
+            "postal_address": "IA Chéries Privacy Office, [Address]",
             "online_form": "https://ainflue.com/privacy-request"
         }
         

@@ -476,9 +476,9 @@ class MobileAPIServer:
             self.logger.info("Mobile API server shutting down...")
         
         app = FastAPI(
-            title="Ainflue Mobile API",
+            title="IA Chéries Mobile API",
             version="1.0.0",
-            description="Enterprise mobile backend for Ainflue creator platform",
+            description="Enterprise mobile backend for IA Chéries creator platform",
             lifespan=lifespan
         )
         

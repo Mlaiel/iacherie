@@ -96,7 +96,7 @@ class EncryptionService:
         """🔑 Generate Master Key"""
         try:
             # Use environment variable or generate new key
-            env_key = os.getenv('AINFLUENCER_MASTER_KEY')
+            env_key = os.getenv('IACHERIE_MASTER_KEY')
             if env_key:
                 return base64.b64decode(env_key)
             

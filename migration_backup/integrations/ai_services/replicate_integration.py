@@ -91,7 +91,7 @@ class ReplicateEnterpriseClient:
     """
     Enterprise Replicate API client with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chéries platform business logic:
     - Multi-model AI deployment and serving
     - Creator-specific model recommendations
     - Cost optimization for business workflows
@@ -141,7 +141,7 @@ class ReplicateEnterpriseClient:
         """Generate request headers with authentication."""
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-Replicate-Integration/1.0"
+            "User-Agent": "IA Chéries-Replicate-Integration/1.0"
         }
         
         if self.api_token:

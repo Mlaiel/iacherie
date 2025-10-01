@@ -54,8 +54,8 @@ try:
     import importlib
     # Temporarily remove the local redis module from the path
     original_path = sys.path[:]
-    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
-    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    local_redis_path = [p for p in sys.path if 'IA Chéries' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'IA Chéries' not in p] + local_redis_path
     
     redis_module = importlib.import_module('redis')
     if hasattr(redis_module, 'asyncio'):

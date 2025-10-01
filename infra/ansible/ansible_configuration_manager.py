@@ -144,7 +144,7 @@ class AnsibleConfigurationManager:
             "application_deployment": {
                 "description": "Deploy IA Chérie application components",
                 "path": f"{self.config.playbook_directory}/application_deployment.yml",
-                "roles": ["ainflue_api", "ainflue_ai", "ainflue_mobile", "ainflue_worker"],
+                "roles": ["iacherie_api", "iacherie_ai", "iacherie_mobile", "iacherie_worker"],
                 "tags": ["application", "deployment"]
             }
         }
@@ -585,21 +585,21 @@ class AnsibleConfigurationManager:
                         {
                             "name": "Deploy API Service",
                             "include_role": {
-                                "name": "ainflue_api"
+                                "name": "iacherie_api"
                             },
                             "tags": ["api"]
                         },
                         {
                             "name": "Deploy Mobile API",
                             "include_role": {
-                                "name": "ainflue_mobile"
+                                "name": "iacherie_mobile"
                             },
                             "tags": ["mobile"]
                         },
                         {
                             "name": "Deploy Worker Services",
                             "include_role": {
-                                "name": "ainflue_worker"
+                                "name": "iacherie_worker"
                             },
                             "tags": ["workers"]
                         }
@@ -613,7 +613,7 @@ class AnsibleConfigurationManager:
                         {
                             "name": "Deploy AI Engine",
                             "include_role": {
-                                "name": "ainflue_ai"
+                                "name": "iacherie_ai"
                             },
                             "tags": ["ai"]
                         }
@@ -987,7 +987,7 @@ class AnsibleConfigurationManager:
             return {"valid": False, "error": str(e)}
 
 # Enterprise Ansible orchestrator
-class AinflueAnsibleOrchestrator:
+class iacherieAnsibleOrchestrator:
     """High-level Ansible orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
@@ -1033,10 +1033,10 @@ class AinflueAnsibleOrchestrator:
                 ("grafana", "monitoring"),
                 ("postgresql", "database"),
                 ("redis", "database"),
-                ("ainflue_api", "application"),
-                ("ainflue_ai", "application"),
-                ("ainflue_mobile", "application"),
-                ("ainflue_worker", "application")
+                ("iacherie_api", "application"),
+                ("iacherie_ai", "application"),
+                ("iacherie_mobile", "application"),
+                ("iacherie_worker", "application")
             ]
             
             for role_name, role_type in standard_roles:
@@ -1052,7 +1052,7 @@ class AinflueAnsibleOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueAnsibleOrchestrator(environment="production")
+        orchestrator = iacherieAnsibleOrchestrator(environment="production")
         
         # Bootstrap environment
         success = await orchestrator.bootstrap_environment()

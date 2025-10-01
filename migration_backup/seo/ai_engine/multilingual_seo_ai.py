@@ -1,5 +1,5 @@
 """
-Multilingual SEO AI for Ainflue Platform
+Multilingual SEO AI for IA Chéries Platform
 ========================================
 
 Advanced multilingual SEO optimization system with cultural adaptation,

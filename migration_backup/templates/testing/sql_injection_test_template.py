@@ -3,7 +3,7 @@
 🛡️ SQL INJECTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 =================================================================
 
-Enterprise-grade SQL injection prevention testing template for Ainflue Creator Economy Platform.
+Enterprise-grade SQL injection prevention testing template for IA Chéries Creator Economy Platform.
 Comprehensive SQL injection security testing covering:
 - Classic SQL injection prevention
 - Blind SQL injection detection

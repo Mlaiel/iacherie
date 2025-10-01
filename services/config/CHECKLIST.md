@@ -202,7 +202,7 @@ database:
   postgresql:
     host: "${DB_HOST}"
     port: 5432
-    database: "ainflue_creator"
+    database: "iacherie_creator"
     username: "${DB_USER}"
     password: "${DB_PASSWORD}"
     pool_size: 20
@@ -218,7 +218,7 @@ database:
     
   mongodb:
     uri: "${MONGO_URI}"
-    database: "ainflue_content"
+    database: "iacherie_content"
     max_pool_size: 50
 ```
 
@@ -245,7 +245,7 @@ cloud:
       
   azure:
     subscription_id: "${AZURE_SUBSCRIPTION}"
-    storage_account: "ainfluestorage"
+    storage_account: "iacheriestorage"
 ```
 
 ### **🔗 Integration Configuration** ❌
@@ -517,7 +517,7 @@ analytics:
   data_warehouse:
     provider: "snowflake"
     account: "${SNOWFLAKE_ACCOUNT}"
-    database: "AINFLUE_ANALYTICS"
+    database: "IACHERIE_ANALYTICS"
 ```
 
 ---

@@ -1,5 +1,5 @@
 """
-Marketing Services Enterprise Module - Ainflue
+Marketing Services Enterprise Module - IA Chéries
 =============================================
 Module marketing services enterprise avec orchestration IA complète.
 
@@ -53,7 +53,7 @@ __author__ = "Expert Team - Fahed Mlaiel"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 MARKETING_SERVICES_ENTERPRISE_CONFIG = {
-    'platform_name': 'Ainflue Marketing Services Enterprise',
+    'platform_name': 'IA Chéries Marketing Services Enterprise',
     'version': __version__,
     'ip_owner': 'Fahed Mlaiel (mlaiel@live.de)',
     'modules_implemented': 12,

@@ -5,7 +5,7 @@ Système avancé de fingerprinting blockchain avec intégration NFT,
 certificats d'ownership et registres décentralisés.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -354,13 +354,13 @@ class BlockchainFingerprinting:
         try:
             # Métadonnées NFT standards
             nft_metadata = {
-                'name': f"Ainflue Content #{content_hash[:8]}",
+                'name': f"IA Chéries Content #{content_hash[:8]}",
                 'description': f"Digital content fingerprint created by {creator_address}",
                 'content_hash': content_hash,
                 'creator': creator_address,
                 'created_at': datetime.utcnow().isoformat(),
                 'fingerprint_type': 'content_protection',
-                'platform': 'Ainflue',
+                'platform': 'IA Chéries',
                 'attributes': []
             }
             

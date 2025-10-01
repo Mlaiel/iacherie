@@ -327,7 +327,7 @@ rewards:
         duration_days: 30
         
     physical_rewards:
-      ainflue_merchandise:
+      iacherie_merchandise:
         t_shirt:
           cost: 2500
           shipping_included: true

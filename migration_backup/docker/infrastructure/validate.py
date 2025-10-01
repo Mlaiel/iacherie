@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Infrastructure Validation Script
+IA Chéries Infrastructure Validation Script
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -61,7 +61,7 @@ def validate_compose_syntax(compose_file: Path) -> Dict:
 
 async def main():
     """Main validation function."""
-    print("🔍 Ainflue Infrastructure Validation")
+    print("🔍 IA Chéries Infrastructure Validation")
     print("=" * 50)
     
     # Check if Docker Compose is available

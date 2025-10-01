@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Encryption Service - Enterprise Grade
-Service de chiffrement enterprise pour sécurité Ainflue
+Service de chiffrement enterprise pour sécurité IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

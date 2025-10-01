@@ -1,5 +1,5 @@
 # Docker Documentation Module
-# Advanced documentation system for Ainflue Docker infrastructure
+# Advanced documentation system for IA Chéries Docker infrastructure
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 from .architecture import DockerArchitectureDocumenter

@@ -3,7 +3,7 @@
 Comprehensive monitoring and observability for enterprise infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 """
 
@@ -84,5 +84,5 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Observability infrastructure module for Ainflue creator platform"
+__description__ = "Observability infrastructure module for IA Chéries creator platform"
 

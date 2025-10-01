@@ -58,7 +58,7 @@ class PipelineConfig:
 
 
 class PipelineOrchestrator:
-    """Enterprise CI/CD pipeline orchestrator for Ainflue infrastructure"""
+    """Enterprise CI/CD pipeline orchestrator for iacherie infrastructure"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
@@ -216,10 +216,10 @@ class PipelineOrchestrator:
         
         return {
             'containers_deployed': [
-                'ainflue-creator-service',
-                'ainflue-ai-processor',
-                'ainflue-collaboration-service',
-                'ainflue-analytics-service'
+                'iacherie-creator-service',
+                'iacherie-ai-processor',
+                'iacherie-collaboration-service',
+                'iacherie-analytics-service'
             ],
             'deployment_strategy': 'blue-green',
             'health_check_passed': True
@@ -313,7 +313,7 @@ class PipelineOrchestrator:
                 'Security incidents'
             ],
             'dashboard_urls': [
-                'https://grafana.ainflue.com/infrastructure',
-                'https://grafana.ainflue.com/applications'
+                'https://grafana.iacherie.com/infrastructure',
+                'https://grafana.iacherie.com/applications'
             ]
         }

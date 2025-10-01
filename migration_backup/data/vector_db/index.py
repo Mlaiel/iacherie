@@ -2,7 +2,7 @@
 Vector Database Module - Main Entry Point
 =========================================
 
-Enterprise-grade vector database orchestrator for Ainflue platform.
+Enterprise-grade vector database orchestrator for IA Chéries platform.
 Provides unified interface for multi-backend vector operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-⚠️ AVERTISSEMENT: Ce module fait partie du système propriétaire Ainflue
+⚠️ AVERTISSEMENT: Ce module fait partie du système propriétaire IA Chéries
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-© 2024 Ainflue - Tous droits réservés
+© 2024 IA Chéries - Tous droits réservés
 
 Backup Manager - Enterprise Backup & Disaster Recovery System
 ============================================================

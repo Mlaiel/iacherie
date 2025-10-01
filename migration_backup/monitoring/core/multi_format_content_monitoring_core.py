@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Multi-Format Content Monitoring Core
+IA Chéries Platform - Multi-Format Content Monitoring Core
 =====================================================
 
 Enterprise-grade monitoring core for multi-format content processing including

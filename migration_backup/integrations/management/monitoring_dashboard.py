@@ -1,5 +1,5 @@
 """
-🔗 Ainflue Enterprise Integration Management - Real-Time Monitoring Dashboard
+🔗 IA Chéries Enterprise Integration Management - Real-Time Monitoring Dashboard
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
@@ -355,7 +355,7 @@ class SystemMetricsCollector:
 
 class EnterpriseMonitoringDashboard:
     """
-    Dashboard de monitoring enterprise pour Ainflue
+    Dashboard de monitoring enterprise pour IA Chéries
     
     Fonctionnalités:
     - Monitoring temps réel avec 50+ métriques
@@ -752,7 +752,7 @@ class EnterpriseMonitoringDashboard:
                 "<!DOCTYPE html>",
                 "<html>",
                 "<head>",
-                "<title>Ainflue Enterprise Monitoring Dashboard</title>",
+                "<title>IA Chéries Enterprise Monitoring Dashboard</title>",
                 "<meta charset='utf-8'>",
                 "<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>",
                 "<style>",
@@ -773,7 +773,7 @@ class EnterpriseMonitoringDashboard:
                 
                 # Header
                 f"<div class='header'>",
-                f"<h1>🔗 Ainflue Enterprise Monitoring Dashboard</h1>",
+                f"<h1>🔗 IA Chéries Enterprise Monitoring Dashboard</h1>",
                 f"<p>Créé par {self.creator} ({self.email}) - {self.copyright}</p>",
                 f"</div>",
                 
@@ -885,7 +885,7 @@ class EnterpriseMonitoringDashboard:
 # Exemple d'utilisation
 async def main():
     """Fonction principale de démonstration"""
-    print("🔗 Démarrage du dashboard de monitoring enterprise Ainflue")
+    print("🔗 Démarrage du dashboard de monitoring enterprise IA Chéries")
     print("Créé par Fahed Mlaiel (mlaiel@live.de)")
     print("© 2025 Fahed Mlaiel - Tous droits réservés")
     

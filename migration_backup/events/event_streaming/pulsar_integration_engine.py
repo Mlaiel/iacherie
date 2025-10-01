@@ -1,5 +1,5 @@
 """IA Influencer Agent - Pulsar Integration Engine
-Apache Pulsar Integration for Cross-Datacenter Event Streaming in Ainflue Platform
+Apache Pulsar Integration for Cross-Datacenter Event Streaming in IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -47,8 +47,8 @@ class ReplicationStrategy(Enum):
     LAZY_REPLICATION = "lazy"
 
 
-class AinflueBusinesPulsarTopics:
-    """Pulsar topics for Ainflue cross-datacenter events"""
+class IA ChériesBusinesPulsarTopics:
+    """Pulsar topics for IA Chéries cross-datacenter events"""
     
     # Global content distribution
     GLOBAL_CONTENT_DISTRIBUTION = "persistent://ainflue/global/content-distribution"
@@ -601,7 +601,7 @@ class GeoReplicationManager:
 
 
 class PulsarIntegrationEngine:
-    """Main engine for Pulsar integration in Ainflue platform"""
+    """Main engine for Pulsar integration in IA Chéries platform"""
     
     def __init__(self, cluster_configs: Dict[str, PulsarClusterConfig], metrics_collector=None):
         self.cluster_configs = cluster_configs
@@ -617,7 +617,7 @@ class PulsarIntegrationEngine:
         try:
             logger.info("Starting Pulsar Integration Engine")
             
-            # Setup default producers and consumers for Ainflue
+            # Setup default producers and consumers for IA Chéries
             await self._setup_default_topology()
             
             # Start engine monitoring task
@@ -658,7 +658,7 @@ class PulsarIntegrationEngine:
             raise
     
     async def _setup_default_topology(self):
-        """Setup default Pulsar topology for Ainflue"""
+        """Setup default Pulsar topology for IA Chéries"""
         try:
             # Get primary cluster config
             if "primary" not in self.cluster_configs:
@@ -668,10 +668,10 @@ class PulsarIntegrationEngine:
             
             # Create producers for key topics
             key_topics = [
-                AinflueBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
-                AinflueBusinesPulsarTopics.CROSS_REGION_SYNC,
-                AinflueBusinesPulsarTopics.REVENUE_RECONCILIATION,
-                AinflueBusinesPulsarTopics.AUDIT_TRAIL
+                IA ChériesBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
+                IA ChériesBusinesPulsarTopics.CROSS_REGION_SYNC,
+                IA ChériesBusinesPulsarTopics.REVENUE_RECONCILIATION,
+                IA ChériesBusinesPulsarTopics.AUDIT_TRAIL
             ]
             
             for topic in key_topics:
@@ -689,8 +689,8 @@ class PulsarIntegrationEngine:
             
             # Create consumers with default handlers
             consumer_topics = [
-                AinflueBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
-                AinflueBusinesPulsarTopics.REVENUE_RECONCILIATION
+                IA ChériesBusinesPulsarTopics.GLOBAL_CONTENT_DISTRIBUTION,
+                IA ChériesBusinesPulsarTopics.REVENUE_RECONCILIATION
             ]
             
             for topic in consumer_topics:
@@ -924,7 +924,7 @@ class PulsarIntegrationEngine:
 __all__ = [
     "PulsarIntegrationEngine", "PulsarProducer", "PulsarConsumer",
     "PulsarProducerConfig", "PulsarConsumerConfig", "PulsarClusterConfig",
-    "GeoReplicationManager", "GeoReplicationConfig", "AinflueBusinesPulsarTopics",
+    "GeoReplicationManager", "GeoReplicationConfig", "IA ChériesBusinesPulsarTopics",
     "PulsarMessage", "PulsarMetrics", "PulsarCompressionType", "PulsarSubscriptionType",
     "ReplicationStrategy"
 ]

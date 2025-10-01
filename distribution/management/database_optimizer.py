@@ -281,7 +281,7 @@ class ConnectionPoolManager:
             command_timeout=config.pool_timeout,
             server_settings={
                 'jit': 'off',  # Disable JIT for consistent performance
-                'application_name': 'ainflue_distribution'
+                'application_name': 'iacherie_distribution'
             }
         )
         

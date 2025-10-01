@@ -19,7 +19,7 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/16
-  ainflue_network:
+  iacherie_network:
     external: true
 
 volumes:
@@ -68,7 +68,7 @@ services:
     container_name: postgres_gamification
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      POSTGRES_DB: ${GAMIFICATION_DB_NAME:-iacherie_gamification}
       POSTGRES_USER: ${GAMIFICATION_DB_USER:-gamification_user}
       POSTGRES_PASSWORD: ${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
@@ -80,7 +80,7 @@ services:
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${GAMIFICATION_DB_USER:-gamification_user} -d ${GAMIFICATION_DB_NAME:-ainflue_gamification}"]
+      test: ["CMD-SHELL", "pg_isready -U ${GAMIFICATION_DB_USER:-gamification_user} -d ${GAMIFICATION_DB_NAME:-iacherie_gamification}"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -107,7 +107,7 @@ services:
       - CHALLENGE_ENGINE_PORT=8080
       - CHALLENGE_ENGINE_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
       - JWT_SECRET=${JWT_SECRET:-challenge_jwt_secret}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     depends_on:
@@ -117,7 +117,7 @@ services:
         condition: service_healthy
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8080:8080"
     deploy:
@@ -143,14 +143,14 @@ services:
       - REWARD_SYSTEM_PORT=8081
       - REWARD_SYSTEM_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
       - JWT_SECRET=${JWT_SECRET:-reward_jwt_secret}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8081:8081"
     deploy:
@@ -172,13 +172,13 @@ services:
       - LEADERBOARD_PORT=8082
       - LEADERBOARD_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8082:8082"
     deploy:
@@ -197,13 +197,13 @@ services:
       - ACHIEVEMENT_PORT=8083
       - ACHIEVEMENT_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8083:8083"
     deploy:
@@ -222,13 +222,13 @@ services:
       - SOCIAL_PORT=8084
       - SOCIAL_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8084:8084"
     deploy:
@@ -247,13 +247,13 @@ services:
       - TOURNAMENT_PORT=8085
       - TOURNAMENT_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8085:8085"
     deploy:
@@ -272,13 +272,13 @@ services:
       - BADGE_PORT=8086
       - BADGE_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8086:8086"
     deploy:
@@ -297,13 +297,13 @@ services:
       - ENGAGEMENT_PORT=8087
       - ENGAGEMENT_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8087:8087"
     deploy:
@@ -322,13 +322,13 @@ services:
       - COMMUNITY_PORT=8088
       - COMMUNITY_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8088:8088"
     deploy:
@@ -347,13 +347,13 @@ services:
       - POINT_PORT=8089
       - POINT_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8089:8089"
     deploy:
@@ -372,13 +372,13 @@ services:
       - LEVEL_PORT=8090
       - LEVEL_HOST=0.0.0.0
       - REDIS_URL=redis://redis_gamification:6379
-      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-iacherie_gamification}
     depends_on:
       - redis_gamification
       - postgres_gamification
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     ports:
       - "8090:8090"
     deploy:
@@ -413,7 +413,7 @@ services:
       - level_progression
     networks:
       - gamification_network
-      - ainflue_network
+      - iacherie_network
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s

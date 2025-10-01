@@ -2,7 +2,7 @@
 =====================================================================
 
 Engine d'analytics audio enterprise avec ML, analyse commerciale et 
-business intelligence pour créateurs sur la plateforme Ainflue.
+business intelligence pour créateurs sur la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Audio ML models + feature extraction + predictive analytics

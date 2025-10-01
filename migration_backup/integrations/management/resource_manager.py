@@ -765,7 +765,7 @@ class ResourceManager:
     """
     Enterprise Resource Manager with intelligent allocation and cost optimization
     
-    Provides comprehensive resource management for the Ainflue creator platform
+    Provides comprehensive resource management for the IA Chéries creator platform
     with ML-based optimization, cost analysis, and capacity planning.
     """
     

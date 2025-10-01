@@ -3,7 +3,7 @@
 AI-driven matching system for creator collaboration and partnerships
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 WARNING: This code and concept are protected by copyright.

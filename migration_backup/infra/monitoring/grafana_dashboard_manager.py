@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Grafana Dashboard Manager
+# IA Chéries Infrastructure Module - Grafana Dashboard Manager
 # =======================================================
 # 
-# Enterprise-grade Grafana dashboard management for Ainflue platform
+# Enterprise-grade Grafana dashboard management for IA Chéries platform
 # Supports multi-cloud monitoring and enterprise observability
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -24,7 +24,7 @@ class GrafanaConfig:
     url: str
     username: str
     password: str
-    organization: str = "Ainflue"
+    organization: str = "IA Chéries"
     timeout: int = 30
     verify_ssl: bool = True
 
@@ -99,7 +99,7 @@ class GrafanaDashboardManager:
             payload = {
                 "dashboard": dashboard,
                 "overwrite": True,
-                "message": f"Created by Ainflue Infrastructure Manager"
+                "message": f"Created by IA Chéries Infrastructure Manager"
             }
             
             response = self.session.post(
@@ -149,7 +149,7 @@ class GrafanaDashboardManager:
             payload = {
                 "dashboard": current_dashboard,
                 "overwrite": True,
-                "message": "Updated by Ainflue Infrastructure Manager"
+                "message": "Updated by IA Chéries Infrastructure Manager"
             }
             
             response = self.session.post(
@@ -253,10 +253,10 @@ class GrafanaDashboardManager:
             return False
     
     def _get_overview_dashboard(self) -> Dict:
-        """Get Ainflue overview dashboard configuration"""
+        """Get IA Chéries overview dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Platform Overview",
+            "title": "IA Chéries Platform Overview",
             "tags": ["ainflue", "overview"],
             "timezone": "browser",
             "refresh": "30s",
@@ -322,7 +322,7 @@ class GrafanaDashboardManager:
         """Get AI engine monitoring dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue AI Engine Metrics",
+            "title": "IA Chéries AI Engine Metrics",
             "tags": ["ainflue", "ai", "ml"],
             "timezone": "browser",
             "refresh": "10s",
@@ -392,7 +392,7 @@ class GrafanaDashboardManager:
         """Get API performance dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue API Performance",
+            "title": "IA Chéries API Performance",
             "tags": ["ainflue", "api", "performance"],
             "timezone": "browser",
             "refresh": "30s",
@@ -446,7 +446,7 @@ class GrafanaDashboardManager:
         """Get mobile app metrics dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Mobile App Metrics",
+            "title": "IA Chéries Mobile App Metrics",
             "tags": ["ainflue", "mobile", "app"],
             "timezone": "browser",
             "refresh": "1m",
@@ -500,7 +500,7 @@ class GrafanaDashboardManager:
         """Get infrastructure health dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Infrastructure Health",
+            "title": "IA Chéries Infrastructure Health",
             "tags": ["ainflue", "infrastructure", "kubernetes"],
             "timezone": "browser",
             "refresh": "30s",
@@ -554,7 +554,7 @@ class GrafanaDashboardManager:
         """Get security monitoring dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Security Monitoring",
+            "title": "IA Chéries Security Monitoring",
             "tags": ["ainflue", "security", "threats"],
             "timezone": "browser",
             "refresh": "1m",
@@ -608,7 +608,7 @@ class GrafanaDashboardManager:
         """Get business metrics dashboard configuration"""
         return {
             "id": None,
-            "title": "Ainflue Business Metrics",
+            "title": "IA Chéries Business Metrics",
             "tags": ["ainflue", "business", "revenue"],
             "timezone": "browser",
             "refresh": "5m",
@@ -660,7 +660,7 @@ class GrafanaDashboardManager:
 
 # Example usage
 async def setup_ainflue_dashboards():
-    """Setup all Ainflue Grafana dashboards"""
+    """Setup all IA Chéries Grafana dashboards"""
     config = GrafanaConfig(
         url="http://grafana.ainflue.local",
         username="admin",

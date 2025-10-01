@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Examples Demos Module for Ainflue Platform
+Examples Demos Module for IA Chéries Platform
 ==========================================
 
-Interactive demonstrations and comprehensive showcases of Ainflue's
+Interactive demonstrations and comprehensive showcases of IA Chéries's
 enterprise-grade content creation, protection, and monetization capabilities.
 
 This module provides complete end-to-end workflow demonstrations for:
@@ -263,7 +263,7 @@ async def run_all_demos(demo_config=None):
     Returns:
         Dict[str, Any]: Results from all demo executions
     """
-    print("🚀 Running All Ainflue Platform Demonstrations")
+    print("🚀 Running All IA Chéries Platform Demonstrations")
     print("=" * 60)
     
     # Validate environment first
@@ -346,7 +346,7 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        print("🎯 Ainflue Examples Demos Module")
+        print("🎯 IA Chéries Examples Demos Module")
         print("=" * 40)
         
         # Show demo catalog

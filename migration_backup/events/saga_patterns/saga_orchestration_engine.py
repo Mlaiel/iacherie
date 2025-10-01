@@ -3,7 +3,7 @@
 ============================================================================
 
 Central orchestration engine for managing complex business sagas across
-the Ainflue platform. Provides centralized saga execution, step coordination,
+the IA Chéries platform. Provides centralized saga execution, step coordination,
 and compensation handling for distributed transactions.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

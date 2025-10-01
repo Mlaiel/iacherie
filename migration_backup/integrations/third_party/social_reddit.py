@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-🔴 AINFLUENCER REDDIT ENGINE
+🔴 IA CHÉRIES REDDIT ENGINE
 ============================
 
 Module d'intégration avec l'API Reddit pour :
@@ -26,9 +26,9 @@ import urllib.parse
 from pathlib import Path
 import base64
 
-class AinfluencerRedditAPI:
+class IaCheriesRedditAPI:
     """
-    🔴 Moteur Reddit pour Ainfluencer
+    🔴 Moteur Reddit pour IA Chéries
     
     Fonctionnalités:
     - Récupération de posts par subreddit
@@ -55,7 +55,7 @@ class AinfluencerRedditAPI:
         # Configuration API
         self.base_url = "https://www.reddit.com/api/v1"
         self.oauth_url = "https://oauth.reddit.com"
-        self.user_agent = "Ainfluencer-Platform/2.0"
+        self.user_agent = "IA Chéries-Platform/2.0"
         
         # Token d'accès
         self.access_token = None
@@ -588,12 +588,12 @@ async def test_reddit_engine():
     """
     Test complet du moteur Reddit
     """
-    print("🔴 Test Ainfluencer Reddit Engine")
+    print("🔴 Test IA Chéries Reddit Engine")
     print("=" * 50)
     
     try:
         # Initialisation
-        reddit = AinfluencerRedditAPI()
+        reddit = IaCheriesRedditAPI()
         
         # Test 1: Récupération de posts populaires
         print("📋 Test 1: Posts populaires de r/technology...")

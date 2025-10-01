@@ -150,7 +150,7 @@ class ModerationAction(Enum):
 
 class DistributionChannel(Enum):
     """Canaux de distribution"""
-    AINFLUE_PLATFORM = "ainflue_platform"
+    IA CHÉRIES_PLATFORM = "ainflue_platform"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -1310,7 +1310,7 @@ if __name__ == "__main__":
             )
             
             # 3. Publication
-            channels = [DistributionChannel.AINFLUE_PLATFORM, DistributionChannel.YOUTUBE]
+            channels = [DistributionChannel.IA CHÉRIES_PLATFORM, DistributionChannel.YOUTUBE]
             if content_type == ContentType.PHOTO:
                 channels.append(DistributionChannel.INSTAGRAM)
             

@@ -887,8 +887,8 @@ async def main():
             database_type=DatabaseType.POSTGRESQL,
             host="localhost",
             port=5432,
-            database="ainflue",
-            username="ainflue_user",
+            database="iacherie",
+            username="iacherie_user",
             password="password123",
             pool_size=20
         )

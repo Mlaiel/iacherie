@@ -3,7 +3,7 @@
 =========================================
 
 Comprehensive production database deployment script implementing all
-production requirements for the Ainflue platform.
+production requirements for the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -816,7 +816,7 @@ class ProductionDatabaseDeployment:
 
 async def main():
     """Main deployment function"""
-    parser = argparse.ArgumentParser(description="Deploy Ainflue production database")
+    parser = argparse.ArgumentParser(description="Deploy IA Chéries production database")
     parser.add_argument("--config", help="Configuration file path", default=None)
     parser.add_argument("--dry-run", action="store_true", help="Perform dry run without making changes")
     

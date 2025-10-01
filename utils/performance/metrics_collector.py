@@ -193,11 +193,11 @@ class EnterpriseMetricsCollector:
     def _init_prometheus_metrics(self):
         """Initialize Prometheus metrics"""
         self._prometheus_metrics = {
-            'request_count': Counter('ainflue_requests_total', 'Total requests', ['method', 'endpoint']),
-            'request_duration': Histogram('ainflue_request_duration_seconds', 'Request duration'),
-            'memory_usage': Gauge('ainflue_memory_usage_bytes', 'Memory usage'),
-            'cpu_usage': Gauge('ainflue_cpu_usage_percent', 'CPU usage percentage'),
-            'active_connections': Gauge('ainflue_active_connections', 'Active connections')
+            'request_count': Counter('iacherie_requests_total', 'Total requests', ['method', 'endpoint']),
+            'request_duration': Histogram('iacherie_request_duration_seconds', 'Request duration'),
+            'memory_usage': Gauge('iacherie_memory_usage_bytes', 'Memory usage'),
+            'cpu_usage': Gauge('iacherie_cpu_usage_percent', 'CPU usage percentage'),
+            'active_connections': Gauge('iacherie_active_connections', 'Active connections')
         }
         
         # Start Prometheus HTTP server

@@ -9,7 +9,7 @@
 ## 🏗️ Architekturbaum - Infrastructure Automation
 
 ```
-/workspaces/Ainflue/infrastructure/automation/ (Level 3 - Max Depth)
+/workspaces/iacherie/infrastructure/automation/ (Level 3 - Max Depth)
 ├── 📋 checklist.md                    # Cette Enterprise Checklist Automation
 ├── 🔧 __init__.py                     # ✅ Module Export Configuration (100 lignes)
 ├── 🔗 index.py                        # ✅ Automation Entry Point (349 lignes)  
@@ -40,7 +40,7 @@ Enterprise Gap: 0 composants restants - TERMINÉ ✅
 
 ## 📋 Vue d'ensemble de l'implémentation
 
-**Repository**: `/workspaces/Ainflue/infrastructure/automation/`  
+**Repository**: `/workspaces/iacherie/infrastructure/automation/`  
 **Architecture Level**: 3 (Profondeur maximale atteinte - aucun sous-répertoire)  
 **Portée**: Automation Enterprise pour 53 agents IA et 65+ plateformes  
 **Status**: 19/19 implémentés (100%) - COMPLET ✅ TOUT TERMINÉ
@@ -187,7 +187,7 @@ Enterprise Gap: 0 composants restants - TERMINÉ ✅
 
 ---
 
-## 📊 Logique Métier Ainflue Integration
+## 📊 Logique Métier iacherie Integration
 
 ### 🎯 Creator Platform Workflow Automation
 ```python

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-API Testing Framework - Ainflue Enterprise API Management
+API Testing Framework - IA Chéries Enterprise API Management
 =========================================================
 
 Automated Testing & Quality Assurance Framework for API Management Infrastructure

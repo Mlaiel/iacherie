@@ -3,7 +3,7 @@
 =========================================================================
 
 Pipeline IA/ML enterprise avec optimisation GPU, serving haute performance,
-MLOps automation et A/B testing pour la plateforme Ainflue.
+MLOps automation et A/B testing pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Pipeline ML production + GPU optimization + model serving
@@ -172,7 +172,7 @@ class InferenceResponse:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class EnterpriseAIMLPipeline:
-    """🤖 Pipeline IA/ML Enterprise pour Ainflue
+    """🤖 Pipeline IA/ML Enterprise pour IA Chéries
     
     Implémentation multi-expert pour pipeline ML production:
     - Orchestration 53 agents IA spécialisés

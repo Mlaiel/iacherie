@@ -1,5 +1,5 @@
 """
-🧠 AI MODEL ORCHESTRATION HUB - AINFLUE ENTERPRISE
+🧠 AI MODEL ORCHESTRATION HUB - IA CHÉRIES ENTERPRISE
 =================================================
 
 AI model lifecycle orchestration for creator economy platform.

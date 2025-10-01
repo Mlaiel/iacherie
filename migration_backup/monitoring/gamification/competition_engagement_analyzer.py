@@ -1,7 +1,7 @@
 """
 Competition Engagement Analyzer - Enterprise Competitive Gamification Analytics
 
-This module implements comprehensive competition engagement analysis for the Ainflue platform,
+This module implements comprehensive competition engagement analysis for the IA Chéries platform,
 tracking competitive dynamics, tournament engagement, and competitive social mechanics.
 
 Author: Fahed Mlaiel
@@ -118,7 +118,7 @@ class CompetitionEngagement:
 
 class CompetitionEngagementAnalyzer:
     """
-    Enterprise competition engagement analysis system for Ainflue platform.
+    Enterprise competition engagement analysis system for IA Chéries platform.
     
     Features:
     - Real-time competition tracking

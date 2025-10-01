@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 ELASTICSEARCH SEARCH ENGINE
 High-performance Elasticsearch integration for full-text search,
-analytics aggregations, and real-time monitoring of Ainflue events.
+analytics aggregations, and real-time monitoring of IA Chéries events.
 
 Key Features:
 - Full-text search across event content and metadata
@@ -52,7 +52,7 @@ if not ELASTICSEARCH_AVAILABLE:
 
 class ElasticsearchSearchEngine(IEventStoreBackend):
     """
-    Elasticsearch search engine for Ainflue platform
+    Elasticsearch search engine for IA Chéries platform
     
     Optimized for:
     - Full-text search across content and metadata
@@ -140,7 +140,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             raise
     
     async def _initialize_indices(self):
-        """Initialize indices with optimized mappings for Ainflue events"""
+        """Initialize indices with optimized mappings for IA Chéries events"""
         
         # Content events index
         await self._create_index_if_not_exists(

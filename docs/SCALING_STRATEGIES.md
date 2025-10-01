@@ -232,10 +232,10 @@ class DatabaseScaler:
             "postgresql://user:pass@replica-4:5432/iacherie"
         ]
         self.shard_databases = {
-            "shard_0": "postgresql://user:pass@shard-0:5432/ainflue_shard_0",
-            "shard_1": "postgresql://user:pass@shard-1:5432/ainflue_shard_1", 
-            "shard_2": "postgresql://user:pass@shard-2:5432/ainflue_shard_2",
-            "shard_3": "postgresql://user:pass@shard-3:5432/ainflue_shard_3"
+            "shard_0": "postgresql://user:pass@shard-0:5432/iacherie_shard_0",
+            "shard_1": "postgresql://user:pass@shard-1:5432/iacherie_shard_1", 
+            "shard_2": "postgresql://user:pass@shard-2:5432/iacherie_shard_2",
+            "shard_3": "postgresql://user:pass@shard-3:5432/iacherie_shard_3"
         }
         self.connection_pools = {}
     
@@ -313,16 +313,16 @@ FOR VALUES WITH (modulus 4, remainder 3);
 ```javascript
 // MongoDB Sharding Configuration
 // Enable sharding on database
-sh.enableSharding("ainflue_analytics")
+sh.enableSharding("iacherie_analytics")
 
 // Shard collection by creator_id for even distribution
 sh.shardCollection(
-    "ainflue_analytics.audience_analytics",
+    "iacherie_analytics.audience_analytics",
     { "creator_id": 1, "created_at": 1 }
 )
 
 sh.shardCollection(
-    "ainflue_analytics.content_performance", 
+    "iacherie_analytics.content_performance", 
     { "creator_id": 1, "platform": 1 }
 )
 
@@ -333,7 +333,7 @@ sh.addShard("shard3/mongo-shard3-1:27017,mongo-shard3-2:27017,mongo-shard3-3:270
 
 // Configure balancer for optimal distribution
 sh.setBalancerState(true)
-sh.enableBalancing("ainflue_analytics.audience_analytics")
+sh.enableBalancing("iacherie_analytics.audience_analytics")
 ```
 
 ### 3. **Message Queue Scaling**

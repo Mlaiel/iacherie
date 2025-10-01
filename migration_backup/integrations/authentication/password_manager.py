@@ -1,7 +1,7 @@
 """
 🔐💻 PASSWORD MANAGER - ENTERPRISE PASSWORD SECURITY MODULE 💻🔐
-Enterprise Password Management for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Password Management for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

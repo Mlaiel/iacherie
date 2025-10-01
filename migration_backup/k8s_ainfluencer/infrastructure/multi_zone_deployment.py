@@ -2,7 +2,7 @@
 ===========================================
 
 Kubernetes multi-zone deployment configuration for high availability
-and disaster recovery for the Ainflue platform.
+and disaster recovery for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

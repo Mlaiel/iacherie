@@ -1,7 +1,7 @@
 """📊 Performance Metrics - Advanced Performance Monitoring System
 ===============================================================
 
-Enterprise-grade performance monitoring for the Ainflue platform with
+Enterprise-grade performance monitoring for the IA Chéries platform with
 real-time metrics, APM integration, and comprehensive performance analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -141,7 +141,7 @@ class SystemResources:
 
 
 class PerformanceMonitor:
-    """Advanced performance monitoring system for Ainflue platform."""
+    """Advanced performance monitoring system for IA Chéries platform."""
     
     def __init__(self, collection_interval: int = 30):
         """Initialize performance monitor.

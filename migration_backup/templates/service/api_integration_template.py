@@ -1,4 +1,4 @@
-"""{{service_name}} API Integration Service for Ainflue Platform
+"""{{service_name}} API Integration Service for IA Chéries Platform
 {{service_description}}
 
 Enterprise-grade API integration service with comprehensive external API management,
@@ -167,7 +167,7 @@ class CircuitBreakerConfig(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise API Integration Service for Ainflue Platform
+    Enterprise API Integration Service for IA Chéries Platform
     
     Handles comprehensive API integration management including:
     - Multi-platform API connections (YouTube, Instagram, TikTok, etc.)
@@ -249,7 +249,7 @@ class {{service_class_name}}(BaseService):
                 connector=connector,
                 timeout=timeout,
                 headers={
-                    'User-Agent': f'Ainflue-Platform/{self.version}',
+                    'User-Agent': f'IA Chéries-Platform/{self.version}',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }

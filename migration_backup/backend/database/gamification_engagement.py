@@ -750,7 +750,7 @@ class LoyaltyProgram(Base):
     user_id = Column(UUID(as_uuid=True), nullable=False, unique=True, index=True)
     
     # Program membership
-    program_name = Column(String(255), default='Ainflue Creators')
+    program_name = Column(String(255), default='IA Chéries Creators')
     membership_number = Column(String(100), nullable=True, unique=True)
     status = Column(String(50), default='active')  # active, inactive, suspended, terminated
     

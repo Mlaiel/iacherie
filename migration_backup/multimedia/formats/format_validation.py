@@ -2,7 +2,7 @@
 ✅ FORMAT VALIDATION ENGINE - ENTERPRISE ARCHITECTURE
 =====================================================
 
-Comprehensive format validation and integrity checking for Ainflue Platform
+Comprehensive format validation and integrity checking for IA Chéries Platform
 Enterprise-grade validation with security compliance and quality assurance
 
 **Expert Implementation:**

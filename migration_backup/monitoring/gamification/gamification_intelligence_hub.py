@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Gamification Intelligence Hub
+IA Chéries Platform - Gamification Intelligence Hub
 ==============================================
 
 AI-powered gamification insights, recommendations, and orchestration system
-for comprehensive engagement optimization across the Ainflue platform.
+for comprehensive engagement optimization across the IA Chéries platform.
 
 Features:
 - AI-powered gamification insights and pattern recognition

@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "iacherie"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/.pytest_cache": true,
+      "**/node_modules": true,
+      "**/.venv": true
+    }
+  }
+}

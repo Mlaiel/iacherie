@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Network Performance Monitor - Enterprise Performance Monitoring
 Advanced network performance monitoring for Creator Economy infrastructure

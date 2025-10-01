@@ -1,4 +1,4 @@
-# ⚡ Canary Deployment Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Canary Deployment Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -610,7 +610,7 @@ metadata:
   namespace: consul
 data:
   canary-splitter.hcl: |
-    # Ainflue API Canary Service Splitter
+    # IA Chéries API Canary Service Splitter
     Kind = "service-splitter"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -663,7 +663,7 @@ metadata:
   namespace: consul
 data:
   canary-router.hcl: |
-    # Ainflue API Canary Service Router
+    # IA Chéries API Canary Service Router
     Kind = "service-router"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -1158,7 +1158,7 @@ data:
             <li><a href="https://argocd.ainflue.com">Argo CD Console</a></li>
           </ul>
           
-          <p>This is an automated notification from the Ainflue Platform.</p>
+          <p>This is an automated notification from the IA Chéries Platform.</p>
 
 # ===================================================================
 # 🎯 ADVANCED CANARY FEATURES
@@ -1267,5 +1267,5 @@ data:
 # ===================================================================
 # END OF CANARY DEPLOYMENT CONFIGURATION TEMPLATE
 # Creator Economy Canary Solution by Fahed Mlaiel
-# Enterprise-grade canary deployment for Ainflue platform
+# Enterprise-grade canary deployment for IA Chéries platform
 # ===================================================================

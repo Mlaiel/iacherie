@@ -222,7 +222,7 @@ class HelmChartManager:
                 },
                 default_values={
                     "replicaCount": 2,
-                    "image": {"repository": "ainflue/musician-audio", "tag": "latest"},
+                    "image": {"repository": "iacherie/musician-audio", "tag": "latest"},
                     "resources": self.creator_configs[CreatorService.MUSICIAN_AUDIO_SERVICE]["resource_limits"],
                     "autoscaling": {"enabled": True, "minReplicas": 2, "maxReplicas": 10}
                 },
@@ -243,7 +243,7 @@ class HelmChartManager:
                 },
                 default_values={
                     "replicaCount": 1,
-                    "image": {"repository": "ainflue/blogger-content", "tag": "latest"},
+                    "image": {"repository": "iacherie/blogger-content", "tag": "latest"},
                     "resources": self.creator_configs[CreatorService.BLOGGER_CONTENT_SERVICE]["resource_limits"],
                     "autoscaling": {"enabled": True, "minReplicas": 1, "maxReplicas": 5}
                 },
@@ -265,7 +265,7 @@ class HelmChartManager:
                 },
                 default_values={
                     "replicaCount": 2,
-                    "image": {"repository": "ainflue/photographer-image", "tag": "latest"},
+                    "image": {"repository": "iacherie/photographer-image", "tag": "latest"},
                     "resources": self.creator_configs[CreatorService.PHOTOGRAPHER_IMAGE_SERVICE]["resource_limits"],
                     "storage": {"size": "100Gi", "class": "fast-ssd"}
                 },
@@ -286,7 +286,7 @@ class HelmChartManager:
                 },
                 default_values={
                     "replicaCount": 2,
-                    "image": {"repository": "ainflue/influencer-analytics", "tag": "latest"},
+                    "image": {"repository": "iacherie/influencer-analytics", "tag": "latest"},
                     "resources": self.creator_configs[CreatorService.INFLUENCER_ANALYTICS_SERVICE]["resource_limits"],
                     "kafka": {"enabled": True, "brokers": "kafka:9092"}
                 },
@@ -306,7 +306,7 @@ class HelmChartManager:
                 },
                 default_values={
                     "replicaCount": 1,
-                    "image": {"repository": "ainflue/comedian-performance", "tag": "latest"},
+                    "image": {"repository": "iacherie/comedian-performance", "tag": "latest"},
                     "resources": self.creator_configs[CreatorService.COMEDIAN_PERFORMANCE_SERVICE]["resource_limits"]
                 },
                 required_variables=["image.repository", "image.tag"],
@@ -335,7 +335,7 @@ metadata:
   labels:
     {{{{- include "{creator_type}.labels" . | nindent 4 }}}}
     creator.type: {creator_type}
-    ainflue.component: ml-service
+    iacherie.component: ml-service
 spec:
   {{{{- if not .Values.autoscaling.enabled }}}}
   replicas: {{{{ .Values.replicaCount }}}}
@@ -688,8 +688,8 @@ data:
                 "type": "application",
                 "version": "0.1.0",
                 "appVersion": app_version,
-                "keywords": ["ainflue", "ml", "creator", template.creator_service.value.split('_')[0]],
-                "home": "https://github.com/Mlaiel/Ainflue",
+                "keywords": ["iacherie", "ml", "creator", template.creator_service.value.split('_')[0]],
+                "home": "https://github.com/Mlaiel/iacherie",
                 "maintainers": [
                     {
                         "name": "Fahed Mlaiel",
@@ -769,7 +769,7 @@ helm.sh/chart: {{{{ include "{chart_name}.chart" . }}}}
 app.kubernetes.io/version: {{{{ .Chart.AppVersion | quote }}}}
 {{{{- end }}}}
 app.kubernetes.io/managed-by: {{{{ .Release.Service }}}}
-app.kubernetes.io/part-of: ainflue-platform
+app.kubernetes.io/part-of: iacherie-platform
 {{{{- end }}}}
 
 {{{{/*
@@ -940,12 +940,12 @@ Your {creator_type} service has been deployed to Kubernetes.
                         "cert-manager.io/cluster-issuer": "letsencrypt-prod"
                     },
                     "hosts": [{
-                        "host": f"{chart.chart_name}-{environment.value}.ainflue.com",
+                        "host": f"{chart.chart_name}-{environment.value}.iacherie.com",
                         "paths": [{"path": "/", "pathType": "Prefix"}]
                     }],
                     "tls": [{
                         "secretName": f"{chart.chart_name}-{environment.value}-tls",
-                        "hosts": [f"{chart.chart_name}-{environment.value}.ainflue.com"]
+                        "hosts": [f"{chart.chart_name}-{environment.value}.iacherie.com"]
                     }]
                 },
                 "serviceAccount": {

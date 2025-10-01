@@ -1,8 +1,8 @@
-# Elasticsearch Configuration Template for Ainflue Platform
+# Elasticsearch Configuration Template for iacherie Platform
 # Comprehensive configuration for log storage, search, and analytics
 
 # Elasticsearch cluster configuration
-cluster.name: ainflue-elasticsearch
+cluster.name: iacherie-elasticsearch
 node.name: ${NODE_NAME}
 node.roles: ["master", "data", "ingest", "ml"]
 
@@ -88,7 +88,7 @@ action.destructive_requires_name: true
 
 # CORS settings for web clients
 http.cors.enabled: true
-http.cors.allow-origin: "https://*.ainflue.com"
+http.cors.allow-origin: "https://*.iacherie.com"
 http.cors.allow-methods: "OPTIONS, HEAD, GET, POST, PUT, DELETE"
 http.cors.allow-headers: "X-Requested-With, Content-Type, Content-Length, Authorization"
 
@@ -99,15 +99,15 @@ xpack.ilm.enabled: true
 # Index templates for different log types
 
 # Application logs template
-PUT _index_template/ainflue-app-logs
+PUT _index_template/iacherie-app-logs
 {
-  "index_patterns": ["ainflue-app-*"],
+  "index_patterns": ["iacherie-app-*"],
   "template": {
     "settings": {
       "number_of_shards": 2,
       "number_of_replicas": 1,
-      "index.lifecycle.name": "ainflue-app-logs-policy",
-      "index.lifecycle.rollover_alias": "ainflue-app-logs"
+      "index.lifecycle.name": "iacherie-app-logs-policy",
+      "index.lifecycle.rollover_alias": "iacherie-app-logs"
     },
     "mappings": {
       "properties": {
@@ -187,14 +187,14 @@ PUT _index_template/ainflue-app-logs
 }
 
 # Metrics template
-PUT _index_template/ainflue-metrics
+PUT _index_template/iacherie-metrics
 {
-  "index_patterns": ["ainflue-metrics-*"],
+  "index_patterns": ["iacherie-metrics-*"],
   "template": {
     "settings": {
       "number_of_shards": 1,
       "number_of_replicas": 0,
-      "index.lifecycle.name": "ainflue-metrics-policy",
+      "index.lifecycle.name": "iacherie-metrics-policy",
       "refresh_interval": "10s"
     },
     "mappings": {
@@ -227,14 +227,14 @@ PUT _index_template/ainflue-metrics
 }
 
 # Security events template
-PUT _index_template/ainflue-security-events
+PUT _index_template/iacherie-security-events
 {
-  "index_patterns": ["ainflue-security-*"],
+  "index_patterns": ["iacherie-security-*"],
   "template": {
     "settings": {
       "number_of_shards": 2,
       "number_of_replicas": 2,
-      "index.lifecycle.name": "ainflue-security-policy"
+      "index.lifecycle.name": "iacherie-security-policy"
     },
     "mappings": {
       "properties": {
@@ -277,14 +277,14 @@ PUT _index_template/ainflue-security-events
 }
 
 # Creator economy events template
-PUT _index_template/ainflue-creator-events
+PUT _index_template/iacherie-creator-events
 {
-  "index_patterns": ["ainflue-creator-*"],
+  "index_patterns": ["iacherie-creator-*"],
   "template": {
     "settings": {
       "number_of_shards": 3,
       "number_of_replicas": 1,
-      "index.lifecycle.name": "ainflue-creator-policy"
+      "index.lifecycle.name": "iacherie-creator-policy"
     },
     "mappings": {
       "properties": {
@@ -352,7 +352,7 @@ PUT _index_template/ainflue-creator-events
 # Index Lifecycle Management Policies
 
 # Application logs ILM policy
-PUT _ilm/policy/ainflue-app-logs-policy
+PUT _ilm/policy/iacherie-app-logs-policy
 {
   "policy": {
     "phases": {
@@ -397,7 +397,7 @@ PUT _ilm/policy/ainflue-app-logs-policy
 }
 
 # Metrics ILM policy
-PUT _ilm/policy/ainflue-metrics-policy
+PUT _ilm/policy/iacherie-metrics-policy
 {
   "policy": {
     "phases": {
@@ -425,7 +425,7 @@ PUT _ilm/policy/ainflue-metrics-policy
 }
 
 # Security events ILM policy
-PUT _ilm/policy/ainflue-security-policy
+PUT _ilm/policy/iacherie-security-policy
 {
   "policy": {
     "phases": {
@@ -464,7 +464,7 @@ PUT _ilm/policy/ainflue-security-policy
 }
 
 # Creator economy ILM policy
-PUT _ilm/policy/ainflue-creator-policy
+PUT _ilm/policy/iacherie-creator-policy
 {
   "policy": {
     "phases": {
@@ -496,7 +496,7 @@ PUT _ilm/policy/ainflue-creator-policy
 
 ---
 # Snapshot repository configuration
-PUT _snapshot/ainflue-backups
+PUT _snapshot/iacherie-backups
 {
   "type": "s3",
   "settings": {
@@ -512,10 +512,10 @@ PUT _snapshot/ainflue-backups
 PUT _slm/policy/daily-snapshots
 {
   "schedule": "0 2 * * *",
-  "name": "<ainflue-snapshot-{now/d}>",
-  "repository": "ainflue-backups",
+  "name": "<iacherie-snapshot-{now/d}>",
+  "repository": "iacherie-backups",
   "config": {
-    "indices": "ainflue-*",
+    "indices": "iacherie-*",
     "ignore_unavailable": false,
     "include_global_state": false
   },
@@ -541,7 +541,7 @@ PUT _watcher/watch/high-error-rate
     "search": {
       "request": {
         "search_type": "query_then_fetch",
-        "indices": ["ainflue-app-*"],
+        "indices": ["iacherie-app-*"],
         "body": {
           "size": 0,
           "query": {
@@ -584,7 +584,7 @@ PUT _watcher/watch/high-error-rate
     "send_email": {
       "email": {
         "to": ["${ALERT_EMAIL}"],
-        "subject": "High Error Rate Alert - Ainflue Platform",
+        "subject": "High Error Rate Alert - iacherie Platform",
         "body": "High error rate detected: {{ctx.payload.aggregations.error_count.value}} unique errors in the last 5 minutes"
       }
     }

@@ -1,4 +1,4 @@
-"""SEO API Template for Ainflue Platform
+"""SEO API Template for iacherie Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================
@@ -612,17 +612,17 @@ class SEOService:
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Ainflue",
+                "name": "iacherie",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://ainflue.com/logo.png"
+                    "url": "https://iacherie.com/logo.png"
                 }
             },
             "datePublished": datetime.utcnow().isoformat(),
             "dateModified": datetime.utcnow().isoformat(),
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": f"https://ainflue.com/content/{content_id}"
+                "@id": f"https://iacherie.com/content/{content_id}"
             }
         }
         

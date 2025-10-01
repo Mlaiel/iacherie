@@ -24,7 +24,7 @@ Contact: mlaiel@live.de
 from .index import (
     quality_orchestrator,
     QualityModuleType,
-    AinfluenceEnterpriseQualityOrchestrator
+    iacherienceEnterpriseQualityOrchestrator
 )
 
 # Sub-modules (imported dynamically when available)
@@ -34,16 +34,16 @@ except ImportError:
     master_orchestrator = None
 
 try:
-    from .test_orchestration import run_ainflue_quality_tests
+    from .test_orchestration import run_iacherie_quality_tests
 except ImportError:
-    run_ainflue_quality_tests = None
+    run_iacherie_quality_tests = None
 
 __all__ = [
     "quality_orchestrator",
     "QualityModuleType", 
-    "AinfluenceEnterpriseQualityOrchestrator",
+    "iacherienceEnterpriseQualityOrchestrator",
     "master_orchestrator",
-    "run_ainflue_quality_tests"
+    "run_iacherie_quality_tests"
 ]
 
 __version__ = "1.0.0"

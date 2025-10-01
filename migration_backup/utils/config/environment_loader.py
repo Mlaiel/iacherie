@@ -74,7 +74,7 @@ class EnvironmentLoader:
     def _detect_from_env_var(self) -> Optional[Environment]:
         """Detect environment from environment variables."""
         env_vars = [
-            'AINFLUE_ENV',
+            'IA CHÉRIES_ENV',
             'ENVIRONMENT', 
             'ENV',
             'STAGE',
@@ -298,21 +298,21 @@ class EnvironmentLoader:
         """Get list of required environment variables."""
         required_vars = {
             Environment.DEVELOPMENT: [
-                'AINFLUE_DEV_DATABASE_URL',
-                'AINFLUE_DEV_REDIS_URL'
+                'IA CHÉRIES_DEV_DATABASE_URL',
+                'IA CHÉRIES_DEV_REDIS_URL'
             ],
             Environment.STAGING: [
-                'AINFLUE_STAGING_DATABASE_URL',
-                'AINFLUE_STAGING_REDIS_URL'
+                'IA CHÉRIES_STAGING_DATABASE_URL',
+                'IA CHÉRIES_STAGING_REDIS_URL'
             ],
             Environment.PRODUCTION: [
-                'AINFLUE_PROD_DATABASE_URL',
-                'AINFLUE_PROD_REDIS_URL',
-                'AINFLUE_SECRET_KEY',
-                'AINFLUE_JWT_SECRET'
+                'IA CHÉRIES_PROD_DATABASE_URL',
+                'IA CHÉRIES_PROD_REDIS_URL',
+                'IA CHÉRIES_SECRET_KEY',
+                'IA CHÉRIES_JWT_SECRET'
             ],
             Environment.TESTING: [
-                'AINFLUE_TEST_DATABASE_URL'
+                'IA CHÉRIES_TEST_DATABASE_URL'
             ]
         }
         

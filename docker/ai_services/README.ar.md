@@ -290,7 +290,7 @@ POST /api/ai/quality/assess
 
 ### تكامل سير عمل المبدع
 ```python
-from ainflue_ai import AIOrchestrator
+from iacherie_ai import AIOrchestrator
 
 # سير عمل المبدع المحسن بالذكاء الاصطناعي
 async def enhance_creator_content(content_data):

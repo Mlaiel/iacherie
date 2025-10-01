@@ -212,8 +212,8 @@ Professional container registry manager"""
             azure_acr = RegistryConfig(
                 name="azure-acr-backup",
                 type=RegistryType.AZURE_ACR,
-                url="iainfluenceracr.azurecr.io",
-                username="iainfluenceracr",
+                url="iiacheriesacr.azurecr.io",
+                username="iiacheriesacr",
                 password="${AZURE_ACR_PASSWORD}",
                 namespace="ia-influencer"
             )
@@ -223,7 +223,7 @@ Professional container registry manager"""
                 name="docker-hub",
                 type=RegistryType.DOCKER_HUB,
                 url="https://index.docker.io/v1/",
-                username="iainfluencer",
+                username="iiacheries",
                 password="${DOCKER_HUB_TOKEN}"
             )
             

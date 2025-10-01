@@ -311,7 +311,7 @@ GET /collaborations/{collaboration_id}/revenue
       }
     ],
     "platform_fees": {
-      "ainflue_commission": 5,
+      "iacherie_commission": 5,
       "amount": 787.50
     }
   }
@@ -361,10 +361,10 @@ Configure webhook endpoints to receive real-time collaboration updates:
 ```javascript
 const axios = require('axios');
 
-const ainflueAPI = axios.create({
+const iacherieAPI = axios.create({
   baseURL: 'https://api.iacherie.com/v1',
   headers: {
-    'Authorization': `Bearer ${process.env.AINFLUE_API_KEY}`,
+    'Authorization': `Bearer ${process.env.IACHERIE_API_KEY}`,
     'Content-Type': 'application/json'
   }
 });
@@ -372,7 +372,7 @@ const ainflueAPI = axios.create({
 // Create collaboration project
 async function createProject(projectData) {
   try {
-    const response = await ainflueAPI.post('/collaboration/projects', projectData);
+    const response = await iacherieAPI.post('/collaboration/projects', projectData);
     return response.data;
   } catch (error) {
     console.error('Error creating project:', error.response.data);
@@ -383,7 +383,7 @@ async function createProject(projectData) {
 // Find compatible creators
 async function findMatches(projectId, filters = {}) {
   try {
-    const response = await ainflueAPI.get(`/collaboration/projects/${projectId}/matches`, {
+    const response = await iacherieAPI.get(`/collaboration/projects/${projectId}/matches`, {
       params: filters
     });
     return response.data.matches;
@@ -403,7 +403,7 @@ class AinfluCollaborationAPI:
     def __init__(self):
         self.base_url = "https://api.iacherie.com/v1"
         self.headers = {
-            "Authorization": f"Bearer {os.getenv('AINFLUE_API_KEY')}",
+            "Authorization": f"Bearer {os.getenv('IACHERIE_API_KEY')}",
             "Content-Type": "application/json"
         }
     

@@ -139,7 +139,7 @@ export function LanguageProvider({ children, defaultLanguage = 'en' }: LanguageP
   useEffect(() => {
     const initializeLanguage = () => {
       // Check localStorage first
-      const savedLanguage = localStorage.getItem('ainflue-language') as Language;
+      const savedLanguage = localStorage.getItem('iacherie-language') as Language;
       if (savedLanguage && LANGUAGES.some(lang => lang.code === savedLanguage)) {
         setLanguageState(savedLanguage);
         return savedLanguage;
@@ -172,7 +172,7 @@ export function LanguageProvider({ children, defaultLanguage = 'en' }: LanguageP
         setIsLoading(false);
         
         // Save to localStorage
-        localStorage.setItem('ainflue-language', language);
+        localStorage.setItem('iacherie-language', language);
         
         // Update document direction for RTL languages
         document.documentElement.dir = RTL_LANGUAGES.includes(language) ? 'rtl' : 'ltr';

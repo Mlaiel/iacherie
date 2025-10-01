@@ -21,7 +21,7 @@ import certifi
 
 from .exceptions import (
     APIError, NetworkError, TimeoutError, RateLimitError,
-    AuthenticationError, ValidationError, AinflueSdkException,
+    AuthenticationError, ValidationError, iacherieSdkException,
     handle_api_response_error, is_retryable_error
 )
 
@@ -99,7 +99,7 @@ class RequestMetrics:
         }
 
 
-class AsyncAinflueClient:
+class AsynciacherieClient:
     """High-performance asynchronous HTTP client for IA Chérie API
     
     Features:
@@ -321,7 +321,7 @@ class AsyncAinflueClient:
             self.circuit_breaker.on_failure()
             
             # Raise the last exception
-            if isinstance(last_exception, AinflueSdkException):
+            if isinstance(last_exception, iacherieSdkException):
                 raise last_exception
             else:
                 raise NetworkError(f"Request failed after {self.max_retries + 1} attempts") from last_exception
@@ -355,7 +355,7 @@ class AsyncAinflueClient:
             
             return result
             
-        except AinflueSdkException:
+        except iacherieSdkException:
             # Re-raise SDK exceptions
             response_time = asyncio.get_event_loop().time() - start_time
             self.metrics.record_request(response_time, False)
@@ -378,7 +378,7 @@ class AsyncAinflueClient:
                 
                 yield stream
                 
-        except AinflueSdkException:
+        except iacherieSdkException:
             raise
         except Exception as e:
             raise NetworkError(f"Streaming error: {str(e)}") from e
@@ -502,4 +502,4 @@ class AsyncAinflueClient:
 
 
 # Export the client
-__all__ = ['AsyncAinflueClient', 'CircuitBreakerState', 'RequestMetrics']
+__all__ = ['AsynciacherieClient', 'CircuitBreakerState', 'RequestMetrics']

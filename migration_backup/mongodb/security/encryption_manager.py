@@ -60,11 +60,11 @@ class EncryptionManager:
     
     def _initialize_master_key(self):
         """Initialize or generate master encryption key."""
-        master_key = os.getenv('AINFLUE_MASTER_KEY')
+        master_key = os.getenv('IA CHÉRIES_MASTER_KEY')
         if not master_key:
             # Generate new master key
             master_key = Fernet.generate_key().decode()
-            logger.warning("Generated new master key - store in AINFLUE_MASTER_KEY environment variable")
+            logger.warning("Generated new master key - store in IA CHÉRIES_MASTER_KEY environment variable")
         
         self._master_fernet = Fernet(master_key.encode())
         

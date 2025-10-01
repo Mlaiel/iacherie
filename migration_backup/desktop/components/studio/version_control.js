@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Version Control System
+ * IA Chéries Desktop - Version Control System
  * 
  * Git-like version control for creative projects
  * 

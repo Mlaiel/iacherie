@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Data Synchronizer Service
+ * IA Chéries Desktop - Data Synchronizer Service
  * 
  * Handles real-time data synchronization between desktop app and cloud services,
  * offline support, conflict resolution, and data integrity management.

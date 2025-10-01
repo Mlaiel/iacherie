@@ -805,7 +805,7 @@ class AudioCompressor:
             'bit_depth': settings.bit_depth,
             'variable_bitrate': settings.variable_bitrate,
             'encoding_time': encoding_time,
-            'encoder': 'Ainflue Enterprise Compressor v1.0',
+            'encoder': 'IA Chéries Enterprise Compressor v1.0',
             'platform_optimization': settings.platform.value if settings.platform else None,
             'compression_timestamp': time.time()
         }

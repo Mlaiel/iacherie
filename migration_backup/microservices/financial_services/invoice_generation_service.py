@@ -89,7 +89,7 @@ class InvoiceData:
     customer_address: Dict[str, str] = field(default_factory=dict)
     
     # Company information
-    company_name: str = "Ainflue Platform"
+    company_name: str = "IA Chéries Platform"
     company_address: Dict[str, str] = field(default_factory=dict)
     company_tax_id: str = ""
     
@@ -390,7 +390,7 @@ class InvoiceGenerationService:
             'font_family': 'Helvetica, sans-serif',
             'layout': 'modern',
             'include_qr_code': True,
-            'footer_text': 'Powered by Ainflue Platform'
+            'footer_text': 'Powered by IA Chéries Platform'
         }
     
     def _get_default_terms(self) -> str:
@@ -402,7 +402,7 @@ class InvoiceGenerationService:
 3. All amounts are in USD unless otherwise specified
 4. For questions, contact: billing@ainflue.com
 
-Thank you for choosing Ainflue Platform!"""
+Thank you for choosing IA Chéries Platform!"""
     
     async def _generate_pdf_content(self, invoice: InvoiceData, template: Dict[str, Any]) -> bytes:
         """Generate PDF content (placeholder implementation)."""
@@ -452,7 +452,7 @@ async def main():
         },
         'line_items': [
             {
-                'description': 'Ainflue Platform - Pro Plan',
+                'description': 'IA Chéries Platform - Pro Plan',
                 'quantity': 1,
                 'unit_price': 99.99,
                 'tax_rate': 8.25
@@ -464,7 +464,7 @@ async def main():
                 'tax_rate': 8.25
             }
         ],
-        'notes': 'Thank you for choosing Ainflue Platform!',
+        'notes': 'Thank you for choosing IA Chéries Platform!',
         'payment_methods': ['credit_card', 'paypal']
     }
     

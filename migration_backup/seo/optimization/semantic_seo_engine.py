@@ -1,5 +1,5 @@
 """
-Semantic SEO Engine for Ainflue Platform
+Semantic SEO Engine for IA Chéries Platform
 Advanced semantic understanding and optimization for content
 
 Author: Fahed Mlaiel (mlaiel@live.de)

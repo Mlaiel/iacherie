@@ -2,7 +2,7 @@
 ============================================================================
 
 Engine de traitement vocal enterprise avec enhancement IA, biométrie vocale,
-et processing temps réel pour créateurs de contenu vocal sur Ainflue.
+et processing temps réel pour créateurs de contenu vocal sur IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Voice enhancement + denoising + spectral processing + VAD

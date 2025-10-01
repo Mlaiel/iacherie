@@ -1,5 +1,5 @@
 """
-Service Dependency Monitor - Ainflue Health Checks Module
+Service Dependency Monitor - IA Chéries Health Checks Module
 Monitoring dépendances services avec impact analysis, cascade failure detection,
 service topology mapping et dependency health correlation.
 

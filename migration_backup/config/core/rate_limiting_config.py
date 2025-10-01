@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Rate Limiting Configuration - HIGH PERFORMANCE PROTECTION
+"""IA Chéries Enterprise Rate Limiting Configuration - HIGH PERFORMANCE PROTECTION
 =================================================================================
 
 🚦 ENTERPRISE RATE LIMITING FEATURES:
@@ -330,7 +330,7 @@ __all__ = [
     "get_user_rate_limit", "is_rate_limit_enabled", "get_adaptive_settings"
 ]
 
-logger.info("🚦 Ainflue Rate Limiting Configuration initialized")
+logger.info("🚦 IA Chéries Rate Limiting Configuration initialized")
 logger.info(f"📊 User tiers configured: {len(rate_limiting_config.user_tier_limits)}")
 logger.info(f"🔧 Endpoint categories: {len(rate_limiting_config.endpoint_limits)}")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

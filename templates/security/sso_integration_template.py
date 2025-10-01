@@ -1,4 +1,4 @@
-"""SSO Integration Template for Ainflue Platform
+"""SSO Integration Template for iacherie Platform
 Enterprise Single Sign-On integration supporting SAML 2.0, OpenID Connect,
 LDAP, Active Directory for enterprise creator authentication and management.
 
@@ -121,10 +121,10 @@ class SSOResponse(BaseModel):
     success: bool = Field(..., description="Authentication success")
     provider_id: str = Field(..., description="SSO provider ID")
     protocol: SSOProtocol = Field(..., description="SSO protocol used")
-    user_id: Optional[str] = Field(default=None, description="Ainflue user ID")
+    user_id: Optional[str] = Field(default=None, description="iacherie user ID")
     sso_user_id: Optional[str] = Field(default=None, description="SSO user ID")
-    access_token: Optional[str] = Field(default=None, description="Ainflue access token")
-    refresh_token: Optional[str] = Field(default=None, description="Ainflue refresh token")
+    access_token: Optional[str] = Field(default=None, description="iacherie access token")
+    refresh_token: Optional[str] = Field(default=None, description="iacherie refresh token")
     session_id: Optional[str] = Field(default=None, description="SSO session ID")
     attributes: Optional[SSOUserAttributes] = Field(default=None)
     roles: List[str] = Field(default_factory=list)
@@ -167,7 +167,7 @@ class LDAPConfig(BaseModel):
 
 
 class SSOIntegrationService:
-    """Comprehensive SSO integration service for Ainflue platform
+    """Comprehensive SSO integration service for iacherie platform
     
     Provides enterprise-grade SSO authentication with:
     - SAML 2.0 identity provider integration
@@ -190,7 +190,7 @@ class SSOIntegrationService:
         
         # User sessions
         self.sso_sessions: Dict[str, Dict[str, Any]] = {}
-        self.user_mappings: Dict[str, str] = {}  # SSO user ID -> Ainflue user ID
+        self.user_mappings: Dict[str, str] = {}  # SSO user ID -> iacherie user ID
         
         logger.info("SSO integration service initialized")
     
@@ -334,7 +334,7 @@ class SSOIntegrationService:
             # Create SSO session
             session_id = await self._create_sso_session(user_id, provider.provider_id, assertion)
             
-            # Generate Ainflue tokens
+            # Generate iacherie tokens
             tokens = await self._generate_sso_tokens(user_id, session_id)
             
             processing_time = int((datetime.utcnow() - start_time).total_seconds() * 1000)
@@ -568,23 +568,23 @@ class SSOIntegrationService:
             value = value_list[0] if value_list else None
             
             if saml_attr in mapping:
-                ainflue_attr = mapping[saml_attr]
+                iacherie_attr = mapping[saml_attr]
                 
-                if ainflue_attr == "email":
+                if iacherie_attr == "email":
                     attributes.email = value
-                elif ainflue_attr == "first_name":
+                elif iacherie_attr == "first_name":
                     attributes.first_name = value
-                elif ainflue_attr == "last_name":
+                elif iacherie_attr == "last_name":
                     attributes.last_name = value
-                elif ainflue_attr == "display_name":
+                elif iacherie_attr == "display_name":
                     attributes.display_name = value
-                elif ainflue_attr == "department":
+                elif iacherie_attr == "department":
                     attributes.department = value
-                elif ainflue_attr == "organization":
+                elif iacherie_attr == "organization":
                     attributes.organization = value
-                elif ainflue_attr == "roles":
+                elif iacherie_attr == "roles":
                     attributes.roles = value_list
-                elif ainflue_attr == "groups":
+                elif iacherie_attr == "groups":
                     attributes.groups = value_list
         
         # Set display name if not provided
@@ -730,7 +730,7 @@ class SSOIntegrationService:
         return session_id
     
     async def _generate_sso_tokens(self, user_id: str, session_id: str) -> Dict[str, str]:
-        """Generate Ainflue platform tokens for SSO user"""
+        """Generate iacherie platform tokens for SSO user"""
         payload = {
             "user_id": user_id,
             "session_id": session_id,

@@ -328,7 +328,7 @@ class ModelAnalyticsEngine:
             metrics.r2_score = r2_score(ground_truth, predictions)
             metrics.rmse = np.sqrt(metrics.mse)
         
-        # Add business-specific metrics for Ainflue platform
+        # Add business-specific metrics for IA Chéries platform
         metrics.metadata.update(
             await self._calculate_business_metrics(model_id, predictions, ground_truth)
         )
@@ -341,7 +341,7 @@ class ModelAnalyticsEngine:
         predictions: np.ndarray,
         ground_truth: np.ndarray
     ) -> Dict[str, Any]:
-        """Calculate Ainflue-specific business metrics"""
+        """Calculate IA Chéries-specific business metrics"""
         business_metrics = {}
         
         # Mock business metrics calculation based on model type
@@ -638,7 +638,7 @@ class ModelAnalyticsEngine:
                     "Moderate bias detected. Review training data balance and consider bias correction methods."
                 )
         
-        # Business-specific recommendations for Ainflue
+        # Business-specific recommendations for IA Chéries
         if performance_metrics.metadata.get('content_engagement_lift', 0) < 10:
             recommendations.append(
                 "Content engagement lift is low. Analyze creator preferences and trending content patterns."

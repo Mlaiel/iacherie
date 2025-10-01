@@ -91,7 +91,7 @@ async def main():
         host="10.0.1.100",
         port=8080,
         service_type="content_service",
-        ainflue_business_domain="content",
+        iacherie_business_domain="content",
         metadata={
             'creator_types': ['video', 'audio'],
             'content_formats': ['mp4', 'mp3', 'png'],
@@ -155,7 +155,7 @@ service = ServiceInstance(
     service_name="creator-profile-service", 
     host="10.0.1.10",
     port=8080,
-    ainflue_business_domain="creator",
+    iacherie_business_domain="creator",
     metadata={
         'creator_types': ['influencer', 'brand'],
         'content_formats': ['video', 'image', 'text']
@@ -445,20 +445,20 @@ await security.start_threat_monitoring()
 
 ```bash
 # Registry Configuration
-AINFLUE_REGISTRY_BACKEND=redis
-AINFLUE_REGISTRY_HOST=localhost
-AINFLUE_REGISTRY_PORT=6379
-AINFLUE_NODE_ID=iacherie-registry-1
+IACHERIE_REGISTRY_BACKEND=redis
+IACHERIE_REGISTRY_HOST=localhost
+IACHERIE_REGISTRY_PORT=6379
+IACHERIE_NODE_ID=iacherie-registry-1
 
 # Security Configuration
-AINFLUE_JWT_SECRET=your-jwt-secret-key
-AINFLUE_ENABLE_MTLS=true
-AINFLUE_COMPLIANCE_STANDARDS=gdpr,sox
+IACHERIE_JWT_SECRET=your-jwt-secret-key
+IACHERIE_ENABLE_MTLS=true
+IACHERIE_COMPLIANCE_STANDARDS=gdpr,sox
 
 # Performance Configuration
-AINFLUE_CACHE_TTL=60
-AINFLUE_HEALTH_CHECK_INTERVAL=30
-AINFLUE_ANALYTICS_COLLECTION_INTERVAL=60
+IACHERIE_CACHE_TTL=60
+IACHERIE_HEALTH_CHECK_INTERVAL=30
+IACHERIE_ANALYTICS_COLLECTION_INTERVAL=60
 ```
 
 ### Configuration Files
@@ -527,13 +527,13 @@ analytics:
 from prometheus_client import Counter, Histogram, Gauge
 
 # Registry metrics
-registry_services_total = Gauge('ainflue_registry_services_total', 'Total services registered')
-discovery_requests_total = Counter('ainflue_discovery_requests_total', 'Total discovery requests')
-discovery_request_duration = Histogram('ainflue_discovery_request_duration_seconds', 'Discovery request duration')
+registry_services_total = Gauge('iacherie_registry_services_total', 'Total services registered')
+discovery_requests_total = Counter('iacherie_discovery_requests_total', 'Total discovery requests')
+discovery_request_duration = Histogram('iacherie_discovery_request_duration_seconds', 'Discovery request duration')
 
 # Security metrics
-auth_attempts_total = Counter('ainflue_auth_attempts_total', 'Total authentication attempts', ['method', 'result'])
-threats_detected_total = Counter('ainflue_threats_detected_total', 'Total threats detected', ['threat_type'])
+auth_attempts_total = Counter('iacherie_auth_attempts_total', 'Total authentication attempts', ['method', 'result'])
+threats_detected_total = Counter('iacherie_threats_detected_total', 'Total threats detected', ['threat_type'])
 
 # Export metrics endpoint
 from prometheus_client import generate_latest
@@ -554,7 +554,7 @@ Error: Business constraint validation failed
 ```python
 service = ServiceInstance(
     # ... other fields ...
-    ainflue_business_domain="content",  # Required
+    iacherie_business_domain="content",  # Required
     metadata={
         'creator_types': ['video', 'audio'],      # Required for content services
         'content_formats': ['mp4', 'mp3'],       # Required for content services

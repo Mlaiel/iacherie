@@ -20,6 +20,13 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
 
+# Redis availability check
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except (ImportError, TypeError):
+    REDIS_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -473,14 +480,14 @@ async def check_redis_health(redis_url: str) -> Dict[str, Any]:
     try:
         if REDIS_AVAILABLE:
             # Safe Redis import with Python 3.12 compatibility
-try:
-    import aioredis
-    REDIS_AVAILABLE = True
-except (ImportError, TypeError) as e:
-    # Handle Python 3.12 TimeoutError duplicate base class issue
-    from protection.utils.redis_compat import MockRedis as aioredis, REDIS_AVAILABLE
-    import logging
-    logging.warning(f"Using Redis compatibility layer: {e}")
+            try:
+                import aioredis
+            except (ImportError, TypeError) as e:
+                # Handle Python 3.12 TimeoutError duplicate base class issue
+                from protection.utils.redis_compat import MockRedis as aioredis
+                import logging
+                logging.warning(f"Using Redis compatibility layer: {e}")
+            
             redis = await aioredis.from_url(redis_url)
             await redis.ping()
             await redis.close()

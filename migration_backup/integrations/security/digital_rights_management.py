@@ -1,13 +1,13 @@
 # 🔒 Digital Rights Management: Blockchain-Based Copyright Protection
 """
-Digital Rights Management - Ainflue Integrations
+Digital Rights Management - IA Chéries Integrations
 ==============================================
 Enterprise digital rights management providing blockchain-based copyright protection,
-NFT validation, smart contracts, and automated royalty distribution for Ainflue
+NFT validation, smart contracts, and automated royalty distribution for IA Chéries
 creator platform with advanced DRM and content protection systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -504,7 +504,7 @@ class DigitalRightsManager:
             image = Image.open(io.BytesIO(image_data))
             
             # Création watermark text
-            watermark_text = f"© Ainflue - {content_id[:8]}"
+            watermark_text = f"© IA Chéries - {content_id[:8]}"
             
             # Préparation watermark
             if image.mode != 'RGBA':
@@ -586,7 +586,7 @@ class DigitalRightsManager:
             img_array = np.array(image)
             
             # Message à cacher
-            watermark_message = f"AINFLUE:{content_id}:{datetime.utcnow().isoformat()}"
+            watermark_message = f"IA CHÉRIES:{content_id}:{datetime.utcnow().isoformat()}"
             
             # Conversion message en binaire
             binary_message = ''.join(format(ord(char), '08b') for char in watermark_message)

@@ -7,7 +7,7 @@
 
 ## 🌟 Overview
 
-The Marketplace Module is an advanced trading and commerce engine for the Ainflue platform, providing comprehensive marketplace functionality including influencer trading, auction systems, licensing management, revenue sharing, and enterprise-level compliance systems.
+The Marketplace Module is an advanced trading and commerce engine for the iacherie platform, providing comprehensive marketplace functionality including influencer trading, auction systems, licensing management, revenue sharing, and enterprise-level compliance systems.
 
 ## 👨‍💻 Module Leadership
 

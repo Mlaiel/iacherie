@@ -1,7 +1,7 @@
 {
   "app_info": {
     "package_name": "com.ainflue.mobile",
-    "app_name": "Ainflue",
+    "app_name": "IA Chéries",
     "short_description": "Professional Content Creation Platform",
     "version": "1.0.0",
     "version_code": 1,
@@ -159,7 +159,7 @@
     }
   },
   "release_info": {
-    "release_notes": "🚀 Welcome to Ainflue v1.0.0!\n\n✨ NEW IN THIS RELEASE:\n• Complete content creation suite\n• AI-powered content protection\n• Multi-platform publishing\n• Professional analytics dashboard\n• Secure biometric authentication\n• Real-time collaboration tools\n• Advanced monetization features\n\n🎯 KEY FEATURES:\n• Create stunning videos with AI enhancement\n• Protect your content with fingerprinting technology\n• Publish to all major social platforms instantly\n• Track performance with detailed analytics\n• Collaborate with team members in real-time\n• Monetize content with smart recommendations\n\n🔒 PRIVACY & SECURITY:\n• On-device AI processing\n• End-to-end encryption\n• Biometric authentication\n• GDPR compliant\n\nJoin the creator revolution with Ainflue!",
+    "release_notes": "🚀 Welcome to IA Chéries v1.0.0!\n\n✨ NEW IN THIS RELEASE:\n• Complete content creation suite\n• AI-powered content protection\n• Multi-platform publishing\n• Professional analytics dashboard\n• Secure biometric authentication\n• Real-time collaboration tools\n• Advanced monetization features\n\n🎯 KEY FEATURES:\n• Create stunning videos with AI enhancement\n• Protect your content with fingerprinting technology\n• Publish to all major social platforms instantly\n• Track performance with detailed analytics\n• Collaborate with team members in real-time\n• Monetize content with smart recommendations\n\n🔒 PRIVACY & SECURITY:\n• On-device AI processing\n• End-to-end encryption\n• Biometric authentication\n• GDPR compliant\n\nJoin the creator revolution with IA Chéries!",
     "rollout_percentage": 100,
     "release_status": "Completed",
     "in_app_update_priority": 3

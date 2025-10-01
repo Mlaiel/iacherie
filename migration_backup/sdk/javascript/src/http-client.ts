@@ -1,5 +1,5 @@
 /**
- * HTTP Client Implementation for Ainflue JavaScript SDK
+ * HTTP Client Implementation for IA Chéries JavaScript SDK
  * Provides robust HTTP communication with retry logic and error handling
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -8,16 +8,16 @@
  * Expert Implementation by: Backend Senior + Security + DevOps + Lead Dev IA
  */
 
-import { AinflueConfig } from './config';
+import { IA ChériesConfig } from './config';
 import { ApiError, NetworkError, TimeoutError } from './errors';
 import { ApiResponse, HttpMethod, RequestOptions } from './interfaces';
 
 export class HttpClient {
-  private config: AinflueConfig;
+  private config: IA ChériesConfig;
   private baseURL: string;
   private defaultHeaders: Record<string, string>;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: IA ChériesConfig) {
     this.config = config;
     this.baseURL = config.baseUrl.replace(/\/$/, ''); // Remove trailing slash
     this.defaultHeaders = {

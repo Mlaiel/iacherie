@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Ainflue Platform - Automatic Installation Script
+# IA Chéries Platform - Automatic Installation Script
 # =============================================================================
 # Production-ready installation and configuration script for the 
 # AI-powered content protection and monetization platform.
@@ -324,7 +324,7 @@ generate_security_keys() {
 main() {
     print_banner
     
-    log_info "Starting Ainflue Platform installation..."
+    log_info "Starting IA Chéries Platform installation..."
     log_info "Environment: ${ENVIRONMENT:-auto-detect}"
     echo ""
     

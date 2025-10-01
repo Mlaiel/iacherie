@@ -2,7 +2,7 @@
 ============================================================================
 
 Système de sécurité IA enterprise avec défense adversariale, détection d'attaques,
-validation de conformité et protection des modèles pour la plateforme Ainflue.
+validation de conformité et protection des modèles pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🔒 Sécurité: AI security + adversarial defense + secure inference + AI safety + compliance

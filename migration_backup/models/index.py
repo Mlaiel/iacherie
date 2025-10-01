@@ -1,4 +1,4 @@
-"""🗄️ AINFLUE MODELS ENTERPRISE - Main Entry Point
+"""🗄️ IA CHÉRIES MODELS ENTERPRISE - Main Entry Point
 ==================================================
 Module: models/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -129,7 +129,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, Any]] = {
 }
 
 class EnterpriseModelsManager:
-    """Enterprise Models Manager for Ainflue Architecture"""
+    """Enterprise Models Manager for IA Chéries Architecture"""
     
     def __init__(self):
         self.registry = MODEL_REGISTRY
@@ -259,7 +259,7 @@ enterprise_models = EnterpriseModelsManager()
 # Main workflow functions
 async def ainflue_enterprise_workflow(user_data: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Execute the complete Ainflue enterprise workflow
+    Execute the complete IA Chéries enterprise workflow
     
     7 Phases:
     1. User Registration & Profiling

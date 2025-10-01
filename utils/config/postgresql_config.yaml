@@ -15,10 +15,10 @@ postgresql:
     primary:
       host: "postgres-primary.iacherie.com"
       port: 5432
-      database: "ainflue_production"
-      username: "ainflue_app"
+      database: "iacherie_production"
+      username: "iacherie_app"
       password: "${POSTGRES_PASSWORD}"
-      application_name: "ainflue_api"
+      application_name: "iacherie_api"
       
     # SSL Configuration
     ssl:
@@ -156,14 +156,14 @@ postgresql:
     # pg_hba.conf rules
     hba_rules:
       - type: "hostssl"
-        database: "ainflue_production"
-        user: "ainflue_app"
+        database: "iacherie_production"
+        user: "iacherie_app"
         address: "10.0.0.0/8"
         method: "scram-sha-256"
         
       - type: "hostssl"
-        database: "ainflue_production"
-        user: "ainflue_readonly"
+        database: "iacherie_production"
+        user: "iacherie_readonly"
         address: "10.0.0.0/8"
         method: "scram-sha-256"
         
@@ -178,8 +178,8 @@ postgresql:
   # =======================
   databases:
     # Main Application Database
-    ainflue_production:
-      owner: "ainflue_app"
+    iacherie_production:
+      owner: "iacherie_app"
       encoding: "UTF8"
       lc_collate: "en_US.UTF-8"
       lc_ctype: "en_US.UTF-8"
@@ -188,31 +188,31 @@ postgresql:
       # Schemas
       schemas:
         - name: "public"
-          owner: "ainflue_app"
+          owner: "iacherie_app"
           
         - name: "auth"
-          owner: "ainflue_app"
+          owner: "iacherie_app"
           
         - name: "content"
-          owner: "ainflue_app"
+          owner: "iacherie_app"
           
         - name: "analytics"
-          owner: "ainflue_app"
+          owner: "iacherie_app"
           
         - name: "ai_processing"
-          owner: "ainflue_app"
+          owner: "iacherie_app"
           
     # Analytics Database
-    ainflue_analytics:
-      owner: "ainflue_analytics"
+    iacherie_analytics:
+      owner: "iacherie_analytics"
       encoding: "UTF8"
       lc_collate: "en_US.UTF-8"
       lc_ctype: "en_US.UTF-8"
       template: "template0"
       
     # Audit Database
-    ainflue_audit:
-      owner: "ainflue_audit"
+    iacherie_audit:
+      owner: "iacherie_audit"
       encoding: "UTF8"
       lc_collate: "en_US.UTF-8"
       lc_ctype: "en_US.UTF-8"
@@ -223,7 +223,7 @@ postgresql:
   # =======================
   users:
     # Application User
-    ainflue_app:
+    iacherie_app:
       password: "${POSTGRES_APP_PASSWORD}"
       createdb: false
       createrole: false
@@ -233,7 +233,7 @@ postgresql:
       connection_limit: 500
       
     # Read-only User
-    ainflue_readonly:
+    iacherie_readonly:
       password: "${POSTGRES_READONLY_PASSWORD}"
       createdb: false
       createrole: false
@@ -243,7 +243,7 @@ postgresql:
       connection_limit: 100
       
     # Analytics User
-    ainflue_analytics:
+    iacherie_analytics:
       password: "${POSTGRES_ANALYTICS_PASSWORD}"
       createdb: false
       createrole: false
@@ -253,7 +253,7 @@ postgresql:
       connection_limit: 50
       
     # Backup User
-    ainflue_backup:
+    iacherie_backup:
       password: "${POSTGRES_BACKUP_PASSWORD}"
       createdb: false
       createrole: false

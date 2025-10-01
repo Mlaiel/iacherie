@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Performance Metrics Collector - Ainflue DevOps Platform
+Performance Metrics Collector - IA Chéries DevOps Platform
 =====================================================
 
 Enterprise performance monitoring and metrics collection system.

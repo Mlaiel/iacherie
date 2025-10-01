@@ -120,7 +120,7 @@ class ElevenLabsIntegration:
             headers = {
                 "xi-api-key": self.api_key,
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue/1.0"
+                "User-Agent": "iacherie/1.0"
             }
             
             self.session = aiohttp.ClientSession(

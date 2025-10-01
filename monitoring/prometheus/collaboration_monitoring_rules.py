@@ -98,21 +98,21 @@ class CollaborationMonitoringRules:
         
         # Métriques de santé des partenariats
         self.partnership_health_score = Gauge(
-            'ainflue_collaboration_partnership_health_score',
+            'iacherie_collaboration_partnership_health_score',
             'Partnership health score (0-1)',
             labelnames=['creator_tier', 'brand_tier', 'collaboration_type'],
             registry=self.registry
         )
         
         self.collaboration_success_rate = Gauge(
-            'ainflue_collaboration_success_rate',
+            'iacherie_collaboration_success_rate',
             'Collaboration success rate by category',
             labelnames=['creator_category', 'brand_category', 'collaboration_type'],
             registry=self.registry
         )
         
         self.partnership_duration = Histogram(
-            'ainflue_collaboration_partnership_duration_days',
+            'iacherie_collaboration_partnership_duration_days',
             'Partnership duration in days',
             labelnames=['collaboration_type', 'success_status'],
             registry=self.registry
@@ -120,21 +120,21 @@ class CollaborationMonitoringRules:
         
         # Métriques ROI
         self.collaboration_roi = Gauge(
-            'ainflue_collaboration_roi_ratio',
+            'iacherie_collaboration_roi_ratio',
             'Return on investment for collaborations',
             labelnames=['creator_id', 'brand_id', 'collaboration_type'],
             registry=self.registry
         )
         
         self.revenue_per_collaboration = Gauge(
-            'ainflue_collaboration_revenue_euros',
+            'iacherie_collaboration_revenue_euros',
             'Revenue generated per collaboration',
             labelnames=['creator_tier', 'brand_tier', 'collaboration_type'],
             registry=self.registry
         )
         
         self.cost_per_acquisition = Gauge(
-            'ainflue_collaboration_cost_per_acquisition_euros',
+            'iacherie_collaboration_cost_per_acquisition_euros',
             'Cost per customer acquisition through collaboration',
             labelnames=['collaboration_type', 'brand_category'],
             registry=self.registry
@@ -142,21 +142,21 @@ class CollaborationMonitoringRules:
         
         # Métriques de compliance contractuelle
         self.contract_compliance_score = Gauge(
-            'ainflue_collaboration_contract_compliance_score',
+            'iacherie_collaboration_contract_compliance_score',
             'Contract compliance score (0-1)',
             labelnames=['contract_id', 'compliance_area'],
             registry=self.registry
         )
         
         self.compliance_violations = Counter(
-            'ainflue_collaboration_compliance_violations_total',
+            'iacherie_collaboration_compliance_violations_total',
             'Total contract compliance violations',
             labelnames=['violation_type', 'collaboration_type', 'severity'],
             registry=self.registry
         )
         
         self.deliverable_completion_rate = Gauge(
-            'ainflue_collaboration_deliverable_completion_rate',
+            'iacherie_collaboration_deliverable_completion_rate',
             'Deliverable completion rate',
             labelnames=['creator_id', 'collaboration_type', 'deliverable_type'],
             registry=self.registry
@@ -164,21 +164,21 @@ class CollaborationMonitoringRules:
         
         # Métriques SLA performance
         self.sla_adherence_score = Gauge(
-            'ainflue_collaboration_sla_adherence_score',
+            'iacherie_collaboration_sla_adherence_score',
             'SLA adherence score (0-1)',
             labelnames=['sla_type', 'collaboration_type'],
             registry=self.registry
         )
         
         self.response_time_sla = Histogram(
-            'ainflue_collaboration_response_time_seconds',
+            'iacherie_collaboration_response_time_seconds',
             'Response time for collaboration requests',
             labelnames=['request_type', 'creator_tier'],
             registry=self.registry
         )
         
         self.content_delivery_time = Histogram(
-            'ainflue_collaboration_content_delivery_time_hours',
+            'iacherie_collaboration_content_delivery_time_hours',
             'Content delivery time in hours',
             labelnames=['content_type', 'collaboration_urgency'],
             registry=self.registry
@@ -186,21 +186,21 @@ class CollaborationMonitoringRules:
         
         # Métriques de partage de revenus
         self.revenue_sharing_accuracy = Gauge(
-            'ainflue_collaboration_revenue_sharing_accuracy',
+            'iacherie_collaboration_revenue_sharing_accuracy',
             'Revenue sharing calculation accuracy',
             labelnames=['sharing_model', 'verification_method'],
             registry=self.registry
         )
         
         self.payment_processing_time = Histogram(
-            'ainflue_collaboration_payment_processing_time_hours',
+            'iacherie_collaboration_payment_processing_time_hours',
             'Payment processing time in hours',
             labelnames=['payment_type', 'creator_tier'],
             registry=self.registry
         )
         
         self.revenue_discrepancy = Gauge(
-            'ainflue_collaboration_revenue_discrepancy_euros',
+            'iacherie_collaboration_revenue_discrepancy_euros',
             'Revenue calculation discrepancy in euros',
             labelnames=['collaboration_id', 'discrepancy_type'],
             registry=self.registry
@@ -208,21 +208,21 @@ class CollaborationMonitoringRules:
         
         # Métriques de performance business
         self.collaboration_engagement_rate = Gauge(
-            'ainflue_collaboration_engagement_rate',
+            'iacherie_collaboration_engagement_rate',
             'Collaboration content engagement rate',
             labelnames=['creator_id', 'platform', 'content_type'],
             registry=self.registry
         )
         
         self.brand_satisfaction_score = Gauge(
-            'ainflue_collaboration_brand_satisfaction_score',
+            'iacherie_collaboration_brand_satisfaction_score',
             'Brand satisfaction score (1-10)',
             labelnames=['brand_id', 'collaboration_type'],
             registry=self.registry
         )
         
         self.creator_satisfaction_score = Gauge(
-            'ainflue_collaboration_creator_satisfaction_score',
+            'iacherie_collaboration_creator_satisfaction_score',
             'Creator satisfaction score (1-10)',
             labelnames=['creator_id', 'collaboration_type'],
             registry=self.registry

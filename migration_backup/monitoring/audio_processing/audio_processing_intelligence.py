@@ -8,7 +8,7 @@ from typing import Dict, List, Any, Optional
 import logging
 
 """
-Audio Processing Intelligence Module - Ainflue Platform
+Audio Processing Intelligence Module - IA Chéries Platform
 ======================================================
 
 AI-driven intelligence system for optimizing audio processing workflows,

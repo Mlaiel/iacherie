@@ -1,10 +1,10 @@
 """
-Scaling Module - Ainflue Infrastructure Enterprise
+Scaling Module - IA Chéries Infrastructure Enterprise
 =================================================
 Point d'entrée principal pour tous les services de mise à l'échelle
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -29,10 +29,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise scaling infrastructure for Ainflue platform"
+__description__ = "Enterprise scaling infrastructure for IA Chéries platform"
 
-# Configuration scaling métier Ainflue
-AINFLUE_SCALING_WORKFLOW = {
+# Configuration scaling métier IA Chéries
+IA CHÉRIES_SCALING_WORKFLOW = {
     'upload': 'Scale content processing based on upload volume',
     'ai_processing': 'Scale AI workloads and GPU resources dynamically', 
     'protection': 'Scale IP protection and monitoring systems',

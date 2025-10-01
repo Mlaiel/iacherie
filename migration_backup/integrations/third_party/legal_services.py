@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Legal Services Integration Module
+IA Chéries Platform - Legal Services Integration Module
 Enterprise-grade legal service integrations for content protection and compliance
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -272,7 +272,7 @@ class LegalZoomIntegration:
                 "case_type": request.action_type.value,
                 "client_info": {
                     "content_creator": True,
-                    "platform": "Ainflue",
+                    "platform": "IA Chéries",
                     "jurisdiction": request.jurisdiction
                 },
                 "case_details": {
@@ -656,10 +656,10 @@ def create_legal_services_manager(config: Dict[str, Any]) -> LegalServicesManage
     """Create configured legal services manager"""
     return LegalServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def ainflue_legal_protection_workflow(content_url: str, content_hash: str, infringer_info: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Complete legal protection workflow for Ainflue creators
+    Complete legal protection workflow for IA Chéries creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -744,5 +744,5 @@ if __name__ == "__main__":
     # asyncio.run(test_legal_services())
     
     print("✅ Legal Services Integration Module loaded successfully")
-    print("🔒 Enterprise-grade legal protection for Ainflue creators")
+    print("🔒 Enterprise-grade legal protection for IA Chéries creators")
     print("📋 DMCA, Copyright, Compliance, and Legal Document services ready")

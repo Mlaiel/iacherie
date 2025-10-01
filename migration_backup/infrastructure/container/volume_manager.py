@@ -1,6 +1,6 @@
 """
 Volume Manager
-Kubernetes persistent volume management for Ainflue infrastructure
+Kubernetes persistent volume management for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

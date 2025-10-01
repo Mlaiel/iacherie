@@ -117,11 +117,11 @@ class TagType(Enum):
     LICENSE = "license"
     
     # Tags IA Chérie spécifiques
-    CREATOR_ID = "ainflue_creator_id"
-    CONTENT_TYPE = "ainflue_content_type"
-    PROTECTION_LEVEL = "ainflue_protection"
-    COLLABORATION_INFO = "ainflue_collaboration"
-    MONETIZATION = "ainflue_monetization"
+    CREATOR_ID = "iacherie_creator_id"
+    CONTENT_TYPE = "iacherie_content_type"
+    PROTECTION_LEVEL = "iacherie_protection"
+    COLLABORATION_INFO = "iacherie_collaboration"
+    MONETIZATION = "iacherie_monetization"
     
     # Tags techniques étendus
     LOUDNESS_LUFS = "loudness_lufs"

@@ -1,5 +1,5 @@
 """
-Instagram SEO Optimizer for Ainflue Platform
+Instagram SEO Optimizer for IA Chéries Platform
 ============================================
 
 Advanced Instagram optimization for content discovery and engagement.

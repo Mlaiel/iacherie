@@ -1336,7 +1336,7 @@ class EnterpriseSecurityManager:
 
 
 # IA Chérie Business Logic Integration Constants
-AINFLUE_SECURITY_CONFIGURATION = {
+IACHERIE_SECURITY_CONFIGURATION = {
     'creator_protection_features': {
         'content_encryption': 'protect_creator_intellectual_property',
         'platform_security': 'secure_65_plus_platform_integrations',

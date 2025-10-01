@@ -7,7 +7,7 @@ for ultra-low latency content delivery and creator platform optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Lead Dev IA + Backend Senior + DevOps
-Project: Ainflue Infrastructure CDN
+Project: iacherie Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -70,7 +70,7 @@ class ContentRequest:
     user_location: Dict[str, float]  # lat, lng
     device_type: str = "desktop"  # desktop, mobile, tablet
     quality_preference: str = "auto"  # auto, high, medium, low
-    platform_target: str = "ainflue"  # target platform
+    platform_target: str = "iacherie"  # target platform
     priority: int = 1  # 1=highest, 5=lowest
     creator_tier: str = "premium"  # premium, standard, basic
 
@@ -88,7 +88,7 @@ class DeliveryResult:
 
 class GlobalCDNManager:
     """
-    Enterprise Global CDN Manager for Ainflue Creator Platform.
+    Enterprise Global CDN Manager for iacherie Creator Platform.
     
     Orchestrates 180+ edge locations worldwide with intelligent routing,
     multi-provider failover, and creator-optimized content delivery.

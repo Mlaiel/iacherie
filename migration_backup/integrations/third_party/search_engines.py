@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Search Engines Integration Module
+IA Chéries Platform - Search Engines Integration Module
 Enterprise-grade search engine APIs for SEO optimization and content discovery
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -885,10 +885,10 @@ def create_search_engine_manager(config: Dict[str, Any]) -> SearchEngineManager:
     """Create configured search engine manager"""
     return SearchEngineManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def ainflue_seo_optimization_workflow(content_topic: str, target_keywords: List[str], domain: str) -> Dict[str, Any]:
     """
-    Complete SEO optimization workflow for Ainflue creators
+    Complete SEO optimization workflow for IA Chéries creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -964,5 +964,5 @@ if __name__ == "__main__":
     # asyncio.run(test_search_engines())
     
     print("✅ Search Engines Integration Module loaded successfully")
-    print("🔍 Enterprise-grade SEO optimization for Ainflue creators")
+    print("🔍 Enterprise-grade SEO optimization for IA Chéries creators")
     print("📈 Keyword research, ranking monitoring, and content optimization tools ready")

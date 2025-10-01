@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Takedown Automation Monitor
+IA Chéries Platform - Takedown Automation Monitor
 ==============================================
 
 Enterprise-grade automated takedown request monitoring and processing system

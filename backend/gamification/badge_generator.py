@@ -397,7 +397,7 @@ class BadgeGenerator:
             image_data = await self._generate_badge_image(badge)
             if image_data:
                 # In a real implementation, would upload to IPFS or cloud storage
-                badge.metadata.image_url = f"https://badges.ainflue.com/{badge_id}.png"
+                badge.metadata.image_url = f"https://badges.iacherie.com/{badge_id}.png"
             
             # Store badge
             self.generated_badges[badge_id] = badge

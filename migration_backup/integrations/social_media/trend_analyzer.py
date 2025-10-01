@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Social Media Trend Analyzer
+IA Chéries Platform - Advanced Social Media Trend Analyzer
 =======================================================
 
 Enterprise-grade social media trend analysis with AI-powered predictive insights,
@@ -54,7 +54,7 @@ from statsmodels.tsa.stattools import adfuller
 import aiohttp
 import redis.asyncio as redis
 
-# Ainflue imports
+# IA Chéries imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

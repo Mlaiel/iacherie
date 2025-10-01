@@ -66,7 +66,7 @@ class AlternativePageSpeedAPI:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={
-                'User-Agent': 'Mozilla/5.0 (compatible; AInfluencer Performance Analyzer)'
+                'User-Agent': 'Mozilla/5.0 (compatible; iaCherie Performance Analyzer)'
             }
         )
         return self

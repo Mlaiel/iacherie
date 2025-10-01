@@ -1,6 +1,6 @@
 # 🎭 Système d'Avatar 3D Avancé
 
-**Génération d'avatars 3D de niveau entreprise, personnalité pilotée par IA et système de distribution multi-plateforme pour la plateforme Ainflue IA Influencer Agent.**
+**Génération d'avatars 3D de niveau entreprise, personnalité pilotée par IA et système de distribution multi-plateforme pour la plateforme iacherie IA Influencer Agent.**
 
 ## 👥 Spécialisation d'Équipe
 
@@ -190,4 +190,4 @@ Ce logiciel est propriétaire et confidentiel. L'utilisation non autorisée est 
 
 ---
 
-**🎭 Ainflue Avatar System - Donner Vie aux Humains Numériques** 🚀
+**🎭 iacherie Avatar System - Donner Vie aux Humains Numériques** 🚀

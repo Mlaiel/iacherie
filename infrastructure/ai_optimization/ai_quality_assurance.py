@@ -2,11 +2,11 @@
 AI Quality Assurance - Automated AI Model Quality Control
 =========================================================
 
-Comprehensive AI quality assurance system for the Ainflue platform.
+Comprehensive AI quality assurance system for the iacherie platform.
 Ensures AI model reliability, performance, and output quality across 53 AI agents.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - AI Optimization Module
+Project: iacherie Infrastructure - AI Optimization Module
 Expert Role: Lead Dev IA + ML Engineer + Quality Assurance
 Version: 1.0 Production Enterprise
 
@@ -100,7 +100,7 @@ class AIQualityAssurance:
     """
     AI Quality Assurance Engine
     
-    Comprehensive testing and validation system for AI models used in the Ainflue platform.
+    Comprehensive testing and validation system for AI models used in the iacherie platform.
     Ensures 53 AI agents meet enterprise quality standards for creator content processing.
     """
     
@@ -161,10 +161,10 @@ class AIQualityAssurance:
                 }
             },
             "test_data_sets": {
-                "image_test_set": "s3://ainflue-qa/datasets/images/test_set_v1.0/",
-                "audio_test_set": "s3://ainflue-qa/datasets/audio/test_set_v1.0/",
-                "text_test_set": "s3://ainflue-qa/datasets/text/test_set_v1.0/",
-                "video_test_set": "s3://ainflue-qa/datasets/video/test_set_v1.0/"
+                "image_test_set": "s3://iacherie-qa/datasets/images/test_set_v1.0/",
+                "audio_test_set": "s3://iacherie-qa/datasets/audio/test_set_v1.0/",
+                "text_test_set": "s3://iacherie-qa/datasets/text/test_set_v1.0/",
+                "video_test_set": "s3://iacherie-qa/datasets/video/test_set_v1.0/"
             }
         }
     

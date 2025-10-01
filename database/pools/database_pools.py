@@ -48,7 +48,7 @@ class DatabaseConfig:
     """Database connection configuration"""
     host: str = "localhost"
     port: int = 5432
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: str = "postgres"
     password: str = ""
     min_connections: int = 5

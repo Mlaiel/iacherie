@@ -1,6 +1,6 @@
 """
 PostgreSQL Cluster Management
-Enterprise PostgreSQL cluster management for Ainflue infrastructure
+Enterprise PostgreSQL cluster management for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class PostgreSQLCluster:
-    """PostgreSQL cluster management for Ainflue creator data"""
+    """PostgreSQL cluster management for IA Chéries creator data"""
     
     def __init__(self):
         """Initialize PostgreSQL cluster manager"""

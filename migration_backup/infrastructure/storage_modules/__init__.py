@@ -1,9 +1,9 @@
-"""Infrastructure Storage Module - Ainflue Enterprise Platform
+"""Infrastructure Storage Module - IA Chéries Enterprise Platform
 ==============================================================
 Comprehensive storage services for enterprise infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 This module provides storage services:

@@ -18,7 +18,7 @@ def suppress_redis_warnings_globally():
     ]
     
     # Fichiers Python à traiter
-    python_files = glob.glob('/workspaces/Ainfluencer/**/*.py', recursive=True)
+    python_files = glob.glob('/workspaces/IA Chéries/**/*.py', recursive=True)
     
     modified_files = 0
     

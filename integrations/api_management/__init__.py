@@ -71,7 +71,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Complete Enterprise API management and gateway for IA Chérie platform with multi-expert architecture - ALL PHASES IMPLEMENTED"
 
 # Configuration logique métier IA Chérie - COMPLETE
-AINFLUE_API_MANAGEMENT = {
+IACHERIE_API_MANAGEMENT = {
     'platforms': 65,
     'completion_status': '100% - ALL 18 COMPONENTS IMPLEMENTED',
     'gateway_features': [

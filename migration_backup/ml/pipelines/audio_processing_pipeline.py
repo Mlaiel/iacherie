@@ -1,12 +1,12 @@
 """
-Audio Processing Pipeline - Ainflue Enterprise
+Audio Processing Pipeline - IA Chéries Enterprise
 ==============================================
 Pipeline spécialisé traitement audio/musique avec intelligence acoustique.
 Audio enhancement + music analysis + copyright detection + mastering automation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

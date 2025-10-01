@@ -5,7 +5,7 @@
 FROM python:3.12-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Collaboration Matcher - AI-powered creator matching service"
+LABEL description="IA Chéries Collaboration Matcher - AI-powered creator matching service"
 LABEL version="1.0.0"
 
 # Set working directory

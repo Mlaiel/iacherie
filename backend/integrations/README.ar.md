@@ -1,4 +1,4 @@
-# 🔗 وحدة التكاملات الخلفية - منصة Ainflue
+# 🔗 وحدة التكاملات الخلفية - منصة iacherie
 
 ## نظام تكاملات API طرف ثالث من المستوى المؤسسي
 
@@ -116,7 +116,7 @@ await social_hub.connect_platform("youtube", {
 # توزيع المحتوى عبر المنصات
 content_data = {
     "title": "محتوى ذكي اصطناعي مذهل",
-    "description": "تم إنشاؤه بواسطة منصة Ainflue",
+    "description": "تم إنشاؤه بواسطة منصة iacherie",
     "file_path": "/path/to/video.mp4",
     "platforms": ["youtube", "tiktok", "instagram"]
 }
@@ -412,9 +412,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ## 📞 الدعم والاتصال
 
 **الدعم الفني:** 
-- البريد الإلكتروني: support@ainflue.com
-- التوثيق: https://docs.ainflue.com/integrations
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- البريد الإلكتروني: support@iacherie.com
+- التوثيق: https://docs.iacherie.com/integrations
+- GitHub Issues: https://github.com/Mlaiel/iacherie/issues
 
 **اتصال المؤلف:**
 - فهد ملايل: mlaiel@live.de

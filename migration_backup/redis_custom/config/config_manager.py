@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Redis Configuration Manager - Ainflue Enterprise
+⚡ Redis Configuration Manager - IA Chéries Enterprise
 © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 Configuration Management System for Creator Economy Platform
 """
@@ -51,10 +51,10 @@ class ConfigurationTemplate:
 class RedisConfigManager:
     """
     Enterprise Redis Configuration Manager
-    Manages all Redis configurations for the Ainflue Creator Economy Platform
+    Manages all Redis configurations for the IA Chéries Creator Economy Platform
     """
     
-    def __init__(self, config_dir: str = "/home/runner/work/Ainflue/Ainflue/redis/config"):
+    def __init__(self, config_dir: str = "/home/runner/work/IA Chéries/IA Chéries/redis/config"):
         """Initialize the configuration manager"""
         self.config_dir = Path(config_dir)
         self.redis_client = None
@@ -74,7 +74,7 @@ class RedisConfigManager:
             'analytics': ['metrics_aggregation', 'real_time_analytics', 'user_behavior_cache']
         }
         
-        logger.info("🔧 Initializing Redis Configuration Manager for Ainflue Enterprise")
+        logger.info("🔧 Initializing Redis Configuration Manager for IA Chéries Enterprise")
         self._load_configurations()
         
     def _load_configurations(self):

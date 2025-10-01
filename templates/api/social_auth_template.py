@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🌐 AINFLUE SOCIAL AUTHENTICATION TEMPLATE - MULTI-PLATFORM CREATOR AUTH
+🌐 IACHERIE SOCIAL AUTHENTICATION TEMPLATE - MULTI-PLATFORM CREATOR AUTH
 ========================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IACHERIE CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
-📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
+📧 Contact: mlaiel@live.de | 🌐 https://iacherie.com
 
 🎯 SOCIAL AUTHENTICATION ENTERPRISE - CREATOR PLATFORM NATIVE INTEGRATION
 🏢 Expert Integration: Lead Dev IA + Backend Senior + Social API Expert + Creator Economy
@@ -1099,7 +1099,7 @@ Setup webhooks to receive real-time updates:
 # Setup webhook for Instagram
 await social_client.setup_webhook(
     platform=SocialPlatform.INSTAGRAM,
-    webhook_url="https://api.ainflue.com/webhooks/instagram",
+    webhook_url="https://api.iacherie.com/webhooks/instagram",
     events=["posts", "stories", "comments", "likes"]
 )
 ```

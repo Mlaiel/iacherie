@@ -16,4 +16,4 @@ La consolidation massive du backend voices est **COMPLÈTEMENT TERMINÉE** !
 **🏆 ÉQUIPE EXPERT MOBILISÉE**:
 Tous les rôles (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer) ont contribué à cette transformation architecturale majeure.
 
-**🚀 PRÊT POUR PRODUCTION ENTERPRISE /workspaces/Ainflue/backend/voices && find . -name *.py -type f | grep -v __pycache__ | wc -l*
+**🚀 PRÊT POUR PRODUCTION ENTERPRISE /workspaces/iacherie/backend/voices && find . -name *.py -type f | grep -v __pycache__ | wc -l*

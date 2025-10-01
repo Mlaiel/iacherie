@@ -4,7 +4,7 @@
 
 FROM python:3.11-slim AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Prompt Engineering Hub - Advanced prompt optimization"
+LABEL description="IA Chéries Prompt Engineering Hub - Advanced prompt optimization"
 LABEL version="1.0.0"
 
 # Install dependencies for prompt engineering

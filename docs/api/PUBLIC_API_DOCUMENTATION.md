@@ -201,7 +201,7 @@ Download Python SDK source code.
 **Response:**
 ```json
 {
-  "filename": "ainflue_sdk.py",
+  "filename": "iacherie_sdk.py",
   "content": "# SDK source code here...",
   "version": "1.0.0",
   "installation": "pip install iacherie-sdk",
@@ -219,7 +219,7 @@ Download Postman collection for API testing.
 ### Python SDK
 
 ```python
-from ainflue_sdk import create_sdk
+from iacherie_sdk import create_sdk
 
 async def main():
     async with create_sdk(api_key="your-api-key") as sdk:
@@ -239,9 +239,9 @@ asyncio.run(main())
 ### JavaScript SDK (Coming Soon)
 
 ```javascript
-import { AinflueSdk } from 'iacherie-sdk-js';
+import { iacherieSdk } from 'iacherie-sdk-js';
 
-const sdk = new AinflueSdk({ apiKey: 'your-api-key' });
+const sdk = new iacherieSdk({ apiKey: 'your-api-key' });
 
 // Check API health
 const health = await sdk.get('/public/health');

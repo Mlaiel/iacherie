@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🧪 AI Experiment Tracker Service - Enterprise Grade
-Suivi et gestion des expérimentations IA pour Ainflue
+Suivi et gestion des expérimentations IA pour IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

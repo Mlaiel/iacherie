@@ -130,7 +130,7 @@ class SocialMediaHubIntegration:
         twitter_api_secret: Optional[str] = None,
         linkedin_client_id: Optional[str] = None,
         linkedin_client_secret: Optional[str] = None,
-        base_callback_url: str = "https://api.ainflue.com/auth/callback",
+        base_callback_url: str = "https://api.iacherie.com/auth/callback",
         timeout: int = 30
     ):
         # API credentials
@@ -184,7 +184,7 @@ class SocialMediaHubIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Social Media Hub",
+                "User-Agent": "iacherie/1.0 Social Media Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }

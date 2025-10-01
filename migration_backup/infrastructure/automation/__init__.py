@@ -1,12 +1,12 @@
 """
-Automation Module - Enterprise DevOps Automation for Ainflue
+Automation Module - Enterprise DevOps Automation for IA Chéries
 ===========================================================
 
 Advanced automation infrastructure for CI/CD, deployment, configuration management,
 and infrastructure orchestration supporting the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -64,10 +64,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise DevOps Automation for Ainflue Creator Platform"
+__description__ = "Enterprise DevOps Automation for IA Chéries Creator Platform"
 
 # Configuration for automation workflows
-AINFLUE_AUTOMATION_CONFIG = {
+IA CHÉRIES_AUTOMATION_CONFIG = {
     'deployment_environments': ['development', 'staging', 'production'],
     'supported_cloud_providers': ['aws', 'azure', 'gcp'],
     'ci_cd_triggers': ['push', 'pull_request', 'scheduled', 'manual'],

@@ -170,8 +170,8 @@ class APIGateway:
             return request
         
         async def add_user_agent(request: APIRequest) -> APIRequest:
-            """Add Ainflue user agent."""
-            request.headers["User-Agent"] = "Ainflue-Integration-Gateway/1.0"
+            """Add IA Chéries user agent."""
+            request.headers["User-Agent"] = "IA Chéries-Integration-Gateway/1.0"
             return request
         
         # Register middleware

@@ -50,7 +50,7 @@ class PlatformType(Enum):
     LINKEDIN = "linkedin"
     PINTEREST = "pinterest"
     SNAPCHAT = "snapchat"
-    AINFLUE = "ainflue"
+    IACHERIE = "iacherie"
     CUSTOM = "custom"
 
 
@@ -107,7 +107,7 @@ class CrossPlatformLogEvent:
     """Cross-platform log event data structure"""
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
-    platform: PlatformType = PlatformType.AINFLUE
+    platform: PlatformType = PlatformType.IACHERIE
     event_type: LogEventType = LogEventType.ANALYTICS_SYNC
     timestamp: datetime = field(default_factory=datetime.utcnow)
     content_id: Optional[str] = None
@@ -427,9 +427,9 @@ class CrossPlatformLogIntegrationHub:
                     rate_limit=800,
                     timeout=30
                 ),
-                PlatformType.AINFLUE: PlatformConfig(
-                    platform=PlatformType.AINFLUE,
-                    api_endpoint=platforms_config.get("ainflue", {}).get("api_endpoint", "http://localhost:8000/api"),
+                PlatformType.IACHERIE: PlatformConfig(
+                    platform=PlatformType.IACHERIE,
+                    api_endpoint=platforms_config.get("iacherie", {}).get("api_endpoint", "http://localhost:8000/api"),
                     rate_limit=1000,
                     timeout=10
                 )
@@ -915,7 +915,7 @@ async def main():
                 "api_key": "test_key",
                 "enabled": True
             },
-            "ainflue": {
+            "iacherie": {
                 "api_endpoint": "http://localhost:8000/api",
                 "enabled": True
             }

@@ -2,7 +2,7 @@
 ====================================
 
 Enterprise-grade Google Cloud Platform integration supporting storage,
-compute, ML services, and media processing for Ainflue platform.
+compute, ML services, and media processing for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -101,7 +101,7 @@ class GCPMediaProcessingRequest:
 
 
 class GCPIntegration:
-    """Enterprise Google Cloud Platform integration for Ainflue.
+    """Enterprise Google Cloud Platform integration for IA Chéries.
     
     Features:
     - Cloud Storage for content and media files

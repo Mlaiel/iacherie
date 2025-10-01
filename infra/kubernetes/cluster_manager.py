@@ -485,7 +485,7 @@ class KubernetesClusterManager:
             return False
 
 # Enterprise cluster management utilities
-class AinflueClusterManager:
+class iacherieClusterManager:
     """High-level cluster management for IA Chérie platform"""
     
     def __init__(self, environment: str = "development"):
@@ -535,7 +535,7 @@ class AinflueClusterManager:
                 max_nodes=5
             )
     
-    async def deploy_ainflue_stack(self) -> bool:
+    async def deploy_iacherie_stack(self) -> bool:
         """Deploy the complete IA Chérie application stack
         
         Returns:
@@ -592,10 +592,10 @@ class AinflueClusterManager:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        manager = AinflueClusterManager(environment="development")
+        manager = iacherieClusterManager(environment="development")
         
         # Deploy the stack
-        success = await manager.deploy_ainflue_stack()
+        success = await manager.deploy_iacherie_stack()
         if success:
             print("IA Chérie stack deployed successfully")
         else:

@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Security Manager
+🏗️ iacherie Infrastructure - Cloud Security Manager
 Enterprise cloud security enforcement and compliance automation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
@@ -562,7 +562,7 @@ class CloudSecurityManager:
                         'type': resource_type,
                         'cloud_provider': cloud_provider,
                         'region': 'us-east-1',
-                        'tags': {'Environment': 'production', 'Project': 'ainflue'},
+                        'tags': {'Environment': 'production', 'Project': 'iacherie'},
                         'created_at': datetime.utcnow() - timedelta(days=i),
                         'properties': self._generate_resource_properties(resource_type)
                     }

@@ -32,7 +32,7 @@ class EventDispatcher {
   }
 
   /**
-   * Initialize built-in events for Ainflue Desktop
+   * Initialize built-in events for IA Chéries Desktop
    */
   initializeBuiltInEvents() {
     // Application lifecycle events

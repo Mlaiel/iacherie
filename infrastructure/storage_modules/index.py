@@ -1,10 +1,10 @@
 """
-Storage Modules - Ainflue Infrastructure Enterprise
+Storage Modules - iacherie Infrastructure Enterprise
 ==================================================
 Point d'entrée principal pour tous les services de stockage
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 Version: 2.0 Production
 """
 
@@ -27,10 +27,10 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise storage infrastructure for Ainflue platform"
+__description__ = "Enterprise storage infrastructure for iacherie platform"
 
-# Configuration stockage métier Ainflue
-AINFLUE_STORAGE_WORKFLOW = {
+# Configuration stockage métier iacherie
+IACHERIE_STORAGE_WORKFLOW = {
     'upload': 'Multi-format content storage and indexing',
     'ai_processing': 'AI model storage and versioning', 
     'protection': 'Secure storage for IP rights and watermarks',

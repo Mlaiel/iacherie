@@ -3,7 +3,7 @@
 
 Consolidated analytics intelligence system providing comprehensive voice analytics,
 creator performance metrics, audience insights, engagement analytics, and business
-intelligence for the Ainflue voice ecosystem.
+intelligence for the IA Chéries voice ecosystem.
 
 Consolidates:
 - Creator voice analytics and performance tracking

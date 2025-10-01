@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - DOCUMENT PROCESSING SERVICES
+IA CHÉRIES INTEGRATIONS - DOCUMENT PROCESSING SERVICES
 ==================================================
 
 Enterprise document processing integration for creator economy platform.
 Combines multiple expert roles for comprehensive document management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chéries - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/third_party)
 
 Expert Roles Applied:

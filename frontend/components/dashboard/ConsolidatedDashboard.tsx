@@ -214,7 +214,7 @@ export default function ConsolidatedEnterpriseDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                🏗️ Ainflue Enterprise Dashboard
+                🏗️ iacherie Enterprise Dashboard
               </h1>
               <p className="text-gray-600 mt-1">
                 Monitoring et gestion des 57 modules enterprise

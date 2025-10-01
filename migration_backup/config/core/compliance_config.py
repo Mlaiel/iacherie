@@ -1,4 +1,4 @@
-"""Ainflue Compliance Configuration - Enterprise Security & Legal Compliance
+"""IA Chéries Compliance Configuration - Enterprise Security & Legal Compliance
 =========================================================================
 
 Advanced compliance configuration management for enterprise-grade regulatory

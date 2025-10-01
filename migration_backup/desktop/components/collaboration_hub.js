@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Collaboration Hub Component
+ * IA Chéries Desktop - Collaboration Hub Component
  * 
  * Advanced collaboration management for content creators
  * Implements AI-powered creator matching, project collaboration, and revenue sharing

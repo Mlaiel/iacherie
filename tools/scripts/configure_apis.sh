@@ -3,7 +3,7 @@
 # Script de Configuration des APIs Externes
 # ========================================
 
-echo "🚀 Configuration des APIs Externes pour Ainfluencer"
+echo "🚀 Configuration des APIs Externes pour iaCherie"
 echo "=================================================="
 
 # Fonction pour demander une clé API

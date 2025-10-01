@@ -840,6 +840,6 @@ async def schedule_content_review_call(voice_engine: VoiceCommunicationEngine,
 🚀 DevOps: Comprehensive analytics and monitoring capabilities
 📝 IA Prompt Engineer: Auto-transcription for content creation workflows
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chéries Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

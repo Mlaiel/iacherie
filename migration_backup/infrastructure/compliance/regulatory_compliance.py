@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚖️ REGULATORY COMPLIANCE ENGINE - AINFLUE ENTERPRISE
+⚖️ REGULATORY COMPLIANCE ENGINE - IA CHÉRIES ENTERPRISE
 Moteur automation compliance réglementaire avec intelligence artificielle
 
 🏛️ EXPERTISE MULTI-RÔLES:

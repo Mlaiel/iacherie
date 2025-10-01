@@ -1,11 +1,11 @@
-# 🗄️ Datenbank-Infrastruktur - Ainflue Enterprise
+# 🗄️ Datenbank-Infrastruktur - iacherie Enterprise
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ GEISTIGES EIGENTUM - FAHED MLAIEL
 > **DEUTLICHE WARNUNG:** Diese Architektur ist das EXKLUSIVE geistige Eigentum von **Fahed Mlaiel** (mlaiel@live.de). Jede Reproduktion, Modifikation, Verteilung oder Ideendiebstahl ohne PERSÖNLICHE schriftliche Genehmigung ist **STRENG VERBOTEN** und wird rechtlich verfolgt.
 
 ## 🎯 Modul-Zweck
-Enterprise Multi-Engine Datenbank-Infrastruktur mit PostgreSQL, MongoDB, Redis Support mit Clustering, Multi-Region-Replikation, Performance-Optimierung und erweiterte Sicherheit für die Ainflue Creator-Plattform, die 65+ Plattformen mit 53 AI-Agenten bedient.
+Enterprise Multi-Engine Datenbank-Infrastruktur mit PostgreSQL, MongoDB, Redis Support mit Clustering, Multi-Region-Replikation, Performance-Optimierung und erweiterte Sicherheit für die iacherie Creator-Plattform, die 65+ Plattformen mit 53 AI-Agenten bedient.
 
 ## 🏗️ Architektur-Komponenten
 - **PostgreSQL Cluster**: Primäre relationale Datenbank mit hoher Verfügbarkeit

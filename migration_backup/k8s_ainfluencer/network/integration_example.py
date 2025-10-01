@@ -35,7 +35,7 @@ from backend.deployment.network import (
 logger = logging.getLogger(__name__)
 
 
-class IAInfluencerNetworkEnterpriseIntegration:
+class IIA ChériesNetworkEnterpriseIntegration:
     """
     Complete enterprise integration for IA Influencer Agent Network Platform
     Demonstrates full-stack network deployment with content protection and monetization
@@ -461,7 +461,7 @@ async def main():
     )
     
     # Create and run enterprise integration
-    enterprise_integration = IAInfluencerNetworkEnterpriseIntegration()
+    enterprise_integration = IIA ChériesNetworkEnterpriseIntegration()
     await enterprise_integration.deploy_enterprise_platform()
 
 

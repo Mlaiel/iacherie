@@ -5,7 +5,7 @@
 🔒 AUTHENTICATION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ================================================================
 
-Enterprise-grade authentication testing template for Ainflue Creator Economy Platform.
+Enterprise-grade authentication testing template for iacherie Creator Economy Platform.
 Comprehensive security testing covering:
 - JWT authentication validation
 - OAuth2 integration testing
@@ -592,7 +592,7 @@ class AuthenticationTestTemplate:
             oauth_provider = "google"
             client_id = "test_client_id"
             client_secret = "test_client_secret"
-            redirect_uri = "https://ainflue.com/auth/callback"
+            redirect_uri = "https://iacherie.com/auth/callback"
             
             # Step 1: Generate authorization URL
             auth_url = await self.auth_service.generate_oauth_auth_url(

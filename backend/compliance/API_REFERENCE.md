@@ -35,9 +35,9 @@ This API documentation, associated code, and all intellectual property are the e
 
 ### 🌐 Base URLs
 ```
-Production:  https://api.ainflue.com/compliance/v1
-Staging:     https://staging-api.ainflue.com/compliance/v1
-Development: https://dev-api.ainflue.com/compliance/v1
+Production:  https://api.iacherie.com/compliance/v1
+Staging:     https://staging-api.iacherie.com/compliance/v1
+Development: https://dev-api.iacherie.com/compliance/v1
 ```
 
 ### 📊 API Specifications
@@ -304,7 +304,7 @@ POST /gdpr/requests
     "Legal review and approval"
   ],
   "contact_reference": {
-    "dpo_email": "dpo@ainflue.com",
+    "dpo_email": "dpo@iacherie.com",
     "case_manager": "Jane Smith",
     "reference_number": "CASE-2025-001234"
   }
@@ -561,7 +561,7 @@ POST /content-safety/moderate
   "appeal_process": {
     "available": true,
     "deadline": "2025-09-15T14:25:30Z",
-    "appeal_url": "https://api.ainflue.com/compliance/appeals/mod_20250908_142530_def456"
+    "appeal_url": "https://api.iacherie.com/compliance/appeals/mod_20250908_142530_def456"
   },
   "processing_time_ms": 1250
 }
@@ -1235,7 +1235,7 @@ POST /audit/reports/generate
     }
   },
   "download_info": {
-    "secure_url": "https://secure.ainflue.com/reports/download/rpt_20250908_142530_pqr678",
+    "secure_url": "https://secure.iacherie.com/reports/download/rpt_20250908_142530_pqr678",
     "access_token": "token_abc123def456",
     "expires_at": "2025-09-15T14:25:30Z",
     "password_protected": true
@@ -1320,7 +1320,7 @@ GET /audit/trail
       "transaction_hash": "0x1234567890abcdef...",
       "network": "ethereum_mainnet"
     },
-    "verification_url": "https://api.ainflue.com/audit/verify/rpt_20250908_142530_pqr678"
+    "verification_url": "https://api.iacherie.com/audit/verify/rpt_20250908_142530_pqr678"
   }
 }
 ```
@@ -1384,7 +1384,7 @@ POST /webhooks/configure
     "filters_applied": true
   },
   "test_info": {
-    "test_url": "https://api.ainflue.com/webhooks/test/wh_20250908_142530_stu901",
+    "test_url": "https://api.iacherie.com/webhooks/test/wh_20250908_142530_stu901",
     "test_payload_available": true
   },
   "monitoring": {
@@ -1479,8 +1479,8 @@ All API errors follow a consistent format:
       "confidence": 0.94
     }
   ],
-  "help_url": "https://docs.ainflue.com/compliance/errors/COMPLIANCE_VALIDATION_FAILED",
-  "support_contact": "compliance-support@ainflue.com"
+  "help_url": "https://docs.iacherie.com/compliance/errors/COMPLIANCE_VALIDATION_FAILED",
+  "support_contact": "compliance-support@iacherie.com"
 }
 ```
 
@@ -1540,7 +1540,7 @@ X-Bypass-Reason: regulatory_deadline
 ### 🐍 Python SDK
 
 ```python
-from ainflue_compliance import ComplianceClient
+from iacherie_compliance import ComplianceClient
 
 # Initialize client
 client = ComplianceClient(
@@ -1584,7 +1584,7 @@ audit = client.accessibility.audit({
 ### 🟨 JavaScript/Node.js SDK
 
 ```javascript
-const { ComplianceClient } = require('@ainflue/compliance-sdk');
+const { ComplianceClient } = require('@iacherie/compliance-sdk');
 
 // Initialize client
 const client = new ComplianceClient({
@@ -1629,8 +1629,8 @@ const safety = await client.contentSafety.moderate({
 ### ☕ Java SDK
 
 ```java
-import com.ainflue.compliance.ComplianceClient;
-import com.ainflue.compliance.models.*;
+import com.iacherie.compliance.ComplianceClient;
+import com.iacherie.compliance.models.*;
 
 // Initialize client
 ComplianceClient client = new ComplianceClient.Builder()
@@ -1670,14 +1670,14 @@ GdprRequestResponse response = client.gdpr().submitRequest(gdprRequest);
 
 **API Documentation Maintainer:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**API Support:** compliance-api-support@ainflue.com  
-**Documentation:** [docs.ainflue.com/compliance-api](https://docs.ainflue.com/compliance-api)  
+**API Support:** compliance-api-support@iacherie.com  
+**Documentation:** [docs.iacherie.com/compliance-api](https://docs.iacherie.com/compliance-api)  
 
 ### 🆘 Support Channels
-- **Technical Issues**: [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Integration Support**: compliance-integration@ainflue.com
-- **Legal/Compliance Questions**: legal@ainflue.com
-- **Emergency Support**: +1-800-AINFLUE (24/7)
+- **Technical Issues**: [GitHub Issues](https://github.com/Mlaiel/iacherie/issues)
+- **Integration Support**: compliance-integration@iacherie.com
+- **Legal/Compliance Questions**: legal@iacherie.com
+- **Emergency Support**: +1-800-IACHERIE (24/7)
 
 ### 📅 Support Hours
 - **Standard Support**: Monday-Friday, 9 AM - 6 PM (UTC)

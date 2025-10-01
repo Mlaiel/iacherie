@@ -36,29 +36,29 @@ kubernetes >= 1.24 (for k8s deployment)
 #### 1. Build Core Container
 ```bash
 # Navigate to project root
-cd /workspaces/Ainflue
+cd /workspaces/iacherie
 
 # Build optimized production image
-docker build -f docker/Dockerfile.core -t ainflue-core:latest .
+docker build -f docker/Dockerfile.core -t iacherie-core:latest .
 
 # Verify build
-docker images | grep ainflue-core
+docker images | grep iacherie-core
 ```
 
 #### 2. Run Core Container
 ```bash
 # Run with environment configuration
 docker run -d \
-  --name ainflue-core \
+  --name iacherie-core \
   --restart=always \
   -p 8000:8000 \
-  -e DATABASE_URL="postgresql://user:pass@db:5432/ainflue" \
+  -e DATABASE_URL="postgresql://user:pass@db:5432/iacherie" \
   -e REDIS_URL="redis://redis:6379/0" \
   -e SECRET_KEY="your-production-secret-key" \
   -e ENVIRONMENT="production" \
   -v $(pwd)/logs:/app/logs \
   -v $(pwd)/data:/app/data \
-  ainflue-core:latest
+  iacherie-core:latest
 ```
 
 ### Docker Compose Deployment
@@ -69,14 +69,14 @@ docker run -d \
 version: '3.8'
 
 services:
-  ainflue-core:
+  iacherie-core:
     build:
       context: .
       dockerfile: docker/Dockerfile.core
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres:5432/ainflue
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres:5432/iacherie
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=${SECRET_KEY}
       - ENVIRONMENT=production
@@ -91,7 +91,7 @@ services:
   postgres:
     image: postgres:14
     environment:
-      - POSTGRES_DB=ainflue
+      - POSTGRES_DB=iacherie
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
@@ -113,7 +113,7 @@ services:
       - ./nginx/core.conf:/etc/nginx/conf.d/default.conf
       - ./ssl:/etc/nginx/ssl
     depends_on:
-      - ainflue-core
+      - iacherie-core
     restart: always
 
 volumes:
@@ -144,7 +144,7 @@ docker-compose -f docker-compose.core.yml ps
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-core
+  name: iacherie-core
 ```
 
 ### 2. ConfigMap and Secrets
@@ -154,11 +154,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: core-config
-  namespace: ainflue-core
+  namespace: iacherie-core
 data:
   DATABASE_HOST: "postgres-service"
   DATABASE_PORT: "5432"
-  DATABASE_NAME: "ainflue"
+  DATABASE_NAME: "iacherie"
   REDIS_HOST: "redis-service"
   REDIS_PORT: "6379"
   ENVIRONMENT: "production"
@@ -169,7 +169,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: core-secrets
-  namespace: ainflue-core
+  namespace: iacherie-core
 type: Opaque
 data:
   DATABASE_PASSWORD: <base64-encoded-password>
@@ -182,21 +182,21 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ainflue-core
-  namespace: ainflue-core
+  name: iacherie-core
+  namespace: iacherie-core
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ainflue-core
+      app: iacherie-core
   template:
     metadata:
       labels:
-        app: ainflue-core
+        app: iacherie-core
     spec:
       containers:
       - name: core
-        image: ainflue-core:latest
+        image: iacherie-core:latest
         ports:
         - containerPort: 8000
         envFrom:
@@ -230,10 +230,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: core-service
-  namespace: ainflue-core
+  namespace: iacherie-core
 spec:
   selector:
-    app: ainflue-core
+    app: iacherie-core
   ports:
   - protocol: TCP
     port: 80
@@ -248,7 +248,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
-  namespace: ainflue-core
+  namespace: iacherie-core
 spec:
   replicas: 1
   selector:
@@ -264,7 +264,7 @@ spec:
         image: postgres:14
         env:
         - name: POSTGRES_DB
-          value: "ainflue"
+          value: "iacherie"
         - name: POSTGRES_USER
           value: "postgres"
         - name: POSTGRES_PASSWORD
@@ -286,7 +286,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-service
-  namespace: ainflue-core
+  namespace: iacherie-core
 spec:
   selector:
     app: postgres
@@ -306,11 +306,11 @@ kubectl apply -f k8s/postgres-deployment.yaml
 kubectl apply -f k8s/core-deployment.yaml
 
 # Verify deployment
-kubectl get pods -n ainflue-core
-kubectl get services -n ainflue-core
+kubectl get pods -n iacherie-core
+kubectl get services -n iacherie-core
 
 # Check logs
-kubectl logs -f deployment/ainflue-core -n ainflue-core
+kubectl logs -f deployment/iacherie-core -n iacherie-core
 ```
 
 ---
@@ -320,7 +320,7 @@ kubectl logs -f deployment/ainflue-core -n ainflue-core
 ### Production Environment Variables
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql://user:pass@localhost:5432/ainflue
+DATABASE_URL=postgresql://user:pass@localhost:5432/iacherie
 DATABASE_POOL_SIZE=20
 DATABASE_MAX_OVERFLOW=30
 
@@ -397,7 +397,7 @@ server {
     ssl_prefer_server_ciphers off;
     
     location / {
-        proxy_pass http://ainflue-core:8000;
+        proxy_pass http://iacherie-core:8000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -409,12 +409,12 @@ server {
 ### Database Security
 ```sql
 -- Create dedicated database user
-CREATE USER ainflue_app WITH PASSWORD 'secure-password';
+CREATE USER iacherie_app WITH PASSWORD 'secure-password';
 
 -- Grant minimal required permissions
-GRANT CONNECT ON DATABASE ainflue TO ainflue_app;
-GRANT USAGE ON SCHEMA public TO ainflue_app;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ainflue_app;
+GRANT CONNECT ON DATABASE iacherie TO iacherie_app;
+GRANT USAGE ON SCHEMA public TO iacherie_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO iacherie_app;
 
 -- Enable row-level security
 ALTER TABLE sensitive_table ENABLE ROW LEVEL SECURITY;
@@ -476,7 +476,7 @@ LOGGING_CONFIG = {
 ### Production Migration Strategy
 ```bash
 # 1. Backup database
-pg_dump -h localhost -U postgres ainflue > backup_$(date +%Y%m%d_%H%M%S).sql
+pg_dump -h localhost -U postgres iacherie > backup_$(date +%Y%m%d_%H%M%S).sql
 
 # 2. Run migrations
 python -m backend.core.database_migrations_suite --environment=production
@@ -516,13 +516,13 @@ print(f'Schema integrity: {integrity}')
 pg_isready -h localhost -p 5432
 
 # Verify credentials
-psql -h localhost -U postgres -d ainflue -c "SELECT version();"
+psql -h localhost -U postgres -d iacherie -c "SELECT version();"
 ```
 
 #### 2. Memory Issues
 ```bash
 # Check memory usage
-docker stats ainflue-core
+docker stats iacherie-core
 
 # Adjust memory limits in deployment
 # Update resources.limits.memory in k8s deployment
@@ -534,7 +534,7 @@ docker stats ainflue-core
 curl http://localhost:9090/metrics
 
 # Analyze slow queries
-docker exec -it postgres psql -d ainflue -c "
+docker exec -it postgres psql -d iacherie -c "
 SELECT query, mean_time, calls 
 FROM pg_stat_statements 
 ORDER BY mean_time DESC 
@@ -567,12 +567,12 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: core-hpa
-  namespace: ainflue-core
+  namespace: iacherie-core
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ainflue-core
+    name: iacherie-core
   minReplicas: 3
   maxReplicas: 20
   metrics:
@@ -595,9 +595,9 @@ spec:
 # Database sharding configuration
 SHARD_CONFIG = {
     'shards': [
-        {'name': 'shard_1', 'url': 'postgresql://user:pass@db1:5432/ainflue_1'},
-        {'name': 'shard_2', 'url': 'postgresql://user:pass@db2:5432/ainflue_2'},
-        {'name': 'shard_3', 'url': 'postgresql://user:pass@db3:5432/ainflue_3'}
+        {'name': 'shard_1', 'url': 'postgresql://user:pass@db1:5432/iacherie_1'},
+        {'name': 'shard_2', 'url': 'postgresql://user:pass@db2:5432/iacherie_2'},
+        {'name': 'shard_3', 'url': 'postgresql://user:pass@db3:5432/iacherie_3'}
     ],
     'shard_key': 'user_id',
     'shard_function': 'hash'

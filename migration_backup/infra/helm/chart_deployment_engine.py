@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Helm Chart Deployment Engine
+# IA Chéries Infrastructure Module - Helm Chart Deployment Engine
 # ============================================================
 # 
-# Enterprise-grade Helm chart deployment for Ainflue platform
+# Enterprise-grade Helm chart deployment for IA Chéries platform
 # Supports multi-cloud Kubernetes and enterprise orchestration
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -113,9 +113,9 @@ class HelmChartDeploymentEngine:
             raise
     
     def _define_standard_charts(self) -> Dict[str, ChartDeployment]:
-        """Define standard Helm charts for Ainflue platform"""
+        """Define standard Helm charts for IA Chéries platform"""
         return {
-            # Ainflue Core Application Charts
+            # IA Chéries Core Application Charts
             "ainflue-api": ChartDeployment(
                 release_name="ainflue-api",
                 chart_path="./charts/ainflue-api",
@@ -823,8 +823,8 @@ class HelmChartDeploymentEngine:
             return []
 
 # Enterprise Helm orchestrator
-class AinflueHelmOrchestrator:
-    """High-level Helm orchestration for Ainflue platform"""
+class IA ChériesHelmOrchestrator:
+    """High-level Helm orchestration for IA Chéries platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize Helm orchestrator
@@ -845,7 +845,7 @@ class AinflueHelmOrchestrator:
         self.engine = HelmChartDeploymentEngine(self.config)
     
     async def deploy_ainflue_platform(self) -> Dict[str, bool]:
-        """Deploy the complete Ainflue platform using Helm charts
+        """Deploy the complete IA Chéries platform using Helm charts
         
         Returns:
             Dict mapping chart names to deployment status
@@ -896,7 +896,7 @@ class AinflueHelmOrchestrator:
             return results
             
         except Exception as e:
-            self.logger.error(f"Failed to deploy Ainflue platform: {e}")
+            self.logger.error(f"Failed to deploy IA Chéries platform: {e}")
             return {}
     
     def _customize_for_environment(self, deployment: ChartDeployment) -> ChartDeployment:
@@ -926,7 +926,7 @@ class AinflueHelmOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueHelmOrchestrator(environment="production")
+        orchestrator = IA ChériesHelmOrchestrator(environment="production")
         
         # Deploy platform
         results = await orchestrator.deploy_ainflue_platform()

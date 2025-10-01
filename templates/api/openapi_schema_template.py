@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📚 AINFLUE OPENAPI SCHEMA TEMPLATE - ENTERPRISE API DOCUMENTATION
+📚 IACHERIE OPENAPI SCHEMA TEMPLATE - ENTERPRISE API DOCUMENTATION
 ================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IACHERIE CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
-📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
+📧 Contact: mlaiel@live.de | 🌐 https://iacherie.com
 
 🏢 ENTERPRISE OPENAPI SCHEMA GENERATOR - COMPREHENSIVE API DOCUMENTATION
 🎯 Expert Integration: Lead Dev IA + API Design Expert + Documentation Specialist
@@ -85,7 +85,7 @@ class CreatorPlatform(str, Enum):
 @dataclass
 class APIDocumentationConfig:
     """API Documentation Configuration"""
-    title: str = "Ainflue Creator Economy API"
+    title: str = "iacherie Creator Economy API"
     description: str = "Enterprise API for creator economy platform"
     version: str = "1.0.0"
     api_version: APIVersion = APIVersion.V1
@@ -93,17 +93,17 @@ class APIDocumentationConfig:
     # Contact Information
     contact_name: str = "Fahed Mlaiel"
     contact_email: str = "mlaiel@live.de"
-    contact_url: str = "https://ainflue.com"
+    contact_url: str = "https://iacherie.com"
     
     # License
     license_name: str = "Proprietary"
-    license_url: str = "https://ainflue.com/license"
+    license_url: str = "https://iacherie.com/license"
     
     # Servers
     servers: List[Dict[str, str]] = field(default_factory=lambda: [
-        {"url": "https://api.ainflue.com/v1", "description": "Production API"},
-        {"url": "https://staging-api.ainflue.com/v1", "description": "Staging API"},
-        {"url": "https://dev-api.ainflue.com/v1", "description": "Development API"}
+        {"url": "https://api.iacherie.com/v1", "description": "Production API"},
+        {"url": "https://staging-api.iacherie.com/v1", "description": "Staging API"},
+        {"url": "https://dev-api.iacherie.com/v1", "description": "Development API"}
     ])
     
     # Languages
@@ -203,7 +203,7 @@ class OpenAPISchemaGenerator:
         """Load multi-language translations"""
         return {
             DocumentationLanguage.ENGLISH: {
-                "api_title": "Ainflue Creator Economy API",
+                "api_title": "iacherie Creator Economy API",
                 "api_description": "Enterprise API for creator economy platform with multi-platform integrations",
                 "auth_section": "Authentication",
                 "creator_section": "Creator Economy",
@@ -215,7 +215,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Creator-specific features require creator authentication"
             },
             DocumentationLanguage.FRENCH: {
-                "api_title": "API Économie des Créateurs Ainflue",
+                "api_title": "API Économie des Créateurs iacherie",
                 "api_description": "API entreprise pour plateforme d'économie créative avec intégrations multi-plateformes",
                 "auth_section": "Authentification",
                 "creator_section": "Économie des Créateurs",
@@ -227,7 +227,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Les fonctionnalités créateurs nécessitent une authentification créateur"
             },
             DocumentationLanguage.GERMAN: {
-                "api_title": "Ainflue Creator Economy API",
+                "api_title": "iacherie Creator Economy API",
                 "api_description": "Unternehmens-API für Creator Economy Plattform mit Multi-Plattform-Integrationen",
                 "auth_section": "Authentifizierung",
                 "creator_section": "Creator Economy",
@@ -239,7 +239,7 @@ class OpenAPISchemaGenerator:
                 "creator_note": "Creator-spezifische Features erfordern Creator-Authentifizierung"
             },
             DocumentationLanguage.ARABIC: {
-                "api_title": "واجهة برمجة تطبيقات اقتصاد المبدعين Ainflue",
+                "api_title": "واجهة برمجة تطبيقات اقتصاد المبدعين iacherie",
                 "api_description": "واجهة برمجة تطبيقات مؤسسية لمنصة اقتصاد المبدعين مع تكاملات متعددة المنصات",
                 "auth_section": "المصادقة",
                 "creator_section": "اقتصاد المبدعين",
@@ -265,8 +265,8 @@ class OpenAPISchemaGenerator:
                 "type": "oauth2",
                 "flows": {
                     "authorizationCode": {
-                        "authorizationUrl": "https://auth.ainflue.com/oauth2/authorize",
-                        "tokenUrl": "https://auth.ainflue.com/oauth2/token",
+                        "authorizationUrl": "https://auth.iacherie.com/oauth2/authorize",
+                        "tokenUrl": "https://auth.iacherie.com/oauth2/token",
                         "scopes": {
                             "read": "Read access to resources",
                             "write": "Write access to resources",
@@ -312,10 +312,10 @@ class OpenAPISchemaGenerator:
                     "name": self.config.license_name,
                     "url": self.config.license_url
                 },
-                "termsOfService": "https://ainflue.com/terms",
+                "termsOfService": "https://iacherie.com/terms",
                 "x-logo": {
-                    "url": "https://ainflue.com/logo.png",
-                    "altText": "Ainflue Logo"
+                    "url": "https://iacherie.com/logo.png",
+                    "altText": "iacherie Logo"
                 }
             },
             "servers": self.config.servers,
@@ -389,7 +389,7 @@ class OpenAPISchemaGenerator:
             "",
             "---",
             "",
-            "**Contact**: [support@ainflue.com](mailto:support@ainflue.com) | **Website**: [ainflue.com](https://ainflue.com)",
+            "**Contact**: [support@iacherie.com](mailto:support@iacherie.com) | **Website**: [iacherie.com](https://iacherie.com)",
             "",
             "© 2024 Fahed Mlaiel. All rights reserved."
         ]
@@ -616,7 +616,7 @@ class OpenAPISchemaGenerator:
                     "username": "johndoe_creator",
                     "display_name": "John Doe",
                     "bio": "Content creator focusing on tech reviews and tutorials",
-                    "avatar_url": "https://cdn.ainflue.com/avatars/creator_123.jpg",
+                    "avatar_url": "https://cdn.iacherie.com/avatars/creator_123.jpg",
                     "platforms": {
                         "youtube": {
                             "username": "JohnDoeReviews",
@@ -1023,7 +1023,7 @@ class OpenAPISchemaGenerator:
         # Add language-specific metadata
         schema["x-language"] = language.value
         schema["x-generated-at"] = datetime.utcnow().isoformat()
-        schema["x-generator"] = "Ainflue OpenAPI Schema Generator v1.0.0"
+        schema["x-generator"] = "iacherie OpenAPI Schema Generator v1.0.0"
         
         return schema
     
@@ -1134,7 +1134,7 @@ async def example_openapi_generation():
     
     # Create configuration
     config = APIDocumentationConfig(
-        title="Ainflue Creator API",
+        title="iacherie Creator API",
         description="Enterprise API for creator economy",
         version="2.0.0"
     )
@@ -1234,7 +1234,7 @@ print(f"Views: {analytics.json()['metrics']['views']}")
             """,
             "javascript": """
 // Create and publish content
-const API_BASE = 'https://api.ainflue.com/v1';
+const API_BASE = 'https://api.iacherie.com/v1';
 
 // Step 1: Create content
 const contentData = {

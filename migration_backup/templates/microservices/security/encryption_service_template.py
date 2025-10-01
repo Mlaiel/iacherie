@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Encryption Service Template for Ainflue Creator Economy Platform
+Encryption Service Template for IA Chéries Creator Economy Platform
 Enterprise-grade encryption service with multiple algorithms and key management
 """
 
@@ -136,7 +136,7 @@ class KeyInfo(BaseModel):
 
 class EncryptionServiceTemplate:
     """
-    Template de service de chiffrement enterprise pour Ainflue
+    Template de service de chiffrement enterprise pour IA Chéries
     
     Fonctionnalités:
     - Chiffrement multi-algorithmes (AES, ChaCha20, NaCl, RSA)
@@ -152,7 +152,7 @@ class EncryptionServiceTemplate:
     def __init__(self, config: EncryptionConfig = None):
         self.config = config or EncryptionConfig()
         self.app = FastAPI(
-            title="Ainflue Encryption Service",
+            title="IA Chéries Encryption Service",
             description="Enterprise encryption service with multi-algorithm support",
             version="1.0.0"
         )

@@ -1,5 +1,5 @@
 /**
- * Ainflue Android Application - Main Entry Point
+ * IA Chéries Android Application - Main Entry Point
  * 
  * Advanced mobile content creation platform for multi-format creators
  * Integrates AI-powered protection, monetization, and collaboration features
@@ -61,7 +61,7 @@ interface NativeServiceStatus {
   permissions: boolean;
 }
 
-const AinflueMobileApp: React.FC = () => {
+const IA ChériesMobileApp: React.FC = () => {
   const [appState, setAppState] = useState<AppState>({
     isInitialized: false,
     hasPermissions: false,
@@ -95,7 +95,7 @@ const AinflueMobileApp: React.FC = () => {
    */
   const initializeApplication = async (): Promise<void> => {
     try {
-      console.log('🚀 Initializing Ainflue Mobile Application...');
+      console.log('🚀 Initializing IA Chéries Mobile Application...');
 
       // Step 1: Initialize permissions
       const permissionsGranted = await initializePermissions();
@@ -154,7 +154,7 @@ const AinflueMobileApp: React.FC = () => {
       if (!allGranted) {
         Alert.alert(
           'Permissions Required',
-          'Ainflue requires certain permissions to function properly. Please grant all permissions in settings.',
+          'IA Chéries requires certain permissions to function properly. Please grant all permissions in settings.',
           [
             { text: 'Settings', onPress: () => PermissionManager.openSettings() },
             { text: 'Exit', onPress: () => BackHandler.exitApp() }
@@ -319,7 +319,7 @@ const AinflueMobileApp: React.FC = () => {
    */
   const setupBackHandler = (): void => {
     const backAction = () => {
-      Alert.alert('Hold on!', 'Are you sure you want to exit Ainflue?', [
+      Alert.alert('Hold on!', 'Are you sure you want to exit IA Chéries?', [
         { text: 'Cancel', onPress: () => null, style: 'cancel' },
         { text: 'YES', onPress: () => BackHandler.exitApp() },
       ]);
@@ -354,7 +354,7 @@ const AinflueMobileApp: React.FC = () => {
   const handleInitializationError = (error: any): void => {
     Alert.alert(
       'Initialization Error',
-      'Failed to initialize Ainflue. Please restart the application.',
+      'Failed to initialize IA Chéries. Please restart the application.',
       [
         { text: 'Retry', onPress: () => initializeApplication() },
         { text: 'Exit', onPress: () => BackHandler.exitApp() }
@@ -389,7 +389,7 @@ const AinflueMobileApp: React.FC = () => {
       <SafeAreaProvider>
         <StatusBar barStyle="light-content" backgroundColor="#1f2937" />
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingTitle}>Ainflue</Text>
+          <Text style={styles.loadingTitle}>IA Chéries</Text>
           <Text style={styles.loadingSubtitle}>Initializing...</Text>
           <View style={styles.servicesStatus}>
             {Object.entries(nativeServices).map(([service, status]) => (
@@ -446,4 +446,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AinflueMobileApp;
+export default IA ChériesMobileApp;

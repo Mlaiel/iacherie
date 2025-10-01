@@ -421,7 +421,7 @@ class CanonicalURLMiddleware:
 
 
 # Utility functions for integration
-def create_ainflue_canonical_manager(base_domain: str = "https://iacherie.com",
+def create_iacherie_canonical_manager(base_domain: str = "https://iacherie.com",
                                    creator_type: str = None,
                                    platforms: List[str] = None) -> CanonicalURLManager:
     """Create configured canonical URL manager for IA Chérie"""
@@ -451,7 +451,7 @@ def create_ainflue_canonical_manager(base_domain: str = "https://iacherie.com",
 
 if __name__ == "__main__":
     # Example usage
-    manager = create_ainflue_canonical_manager(
+    manager = create_iacherie_canonical_manager(
         creator_type="musician",
         platforms=["spotify", "youtube"]
     )

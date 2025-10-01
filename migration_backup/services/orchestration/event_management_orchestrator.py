@@ -1,5 +1,5 @@
 """
-🎪 EVENT MANAGEMENT ORCHESTRATOR - AINFLUE ENTERPRISE
+🎪 EVENT MANAGEMENT ORCHESTRATOR - IA CHÉRIES ENTERPRISE
 ===================================================
 
 Live event streaming and virtual event orchestration for creator economy platform.

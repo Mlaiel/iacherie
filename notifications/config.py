@@ -13,7 +13,7 @@ class NotificationConfig:
     """Notification system configuration"""
     
     # Database settings
-    database_url: str = "postgresql://localhost/ainflue_notifications"
+    database_url: str = "postgresql://localhost/iacherie_notifications"
     redis_url: str = "redis://localhost:6379/0"
     
     # Security settings

@@ -2,7 +2,7 @@
 Backup Manager - Enterprise Backup and Data Protection
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive backup management for Ainflue creator platform.
+Comprehensive backup management for IA Chéries creator platform.
 Provides multi-tier backup strategies, cross-region replication, and data protection.
 """
 
@@ -85,7 +85,7 @@ class BackupManager:
         self.backup_schedules = {}
         self.verification_procedures = {}
         
-        # Initialize Ainflue-specific backup configuration
+        # Initialize IA Chéries-specific backup configuration
         self.ainflue_backup_config = self._initialize_ainflue_backup_config()
         
         # Backup monitoring
@@ -100,7 +100,7 @@ class BackupManager:
         logger.info("Backup manager initialized for creator platform")
     
     def _initialize_ainflue_backup_config(self) -> Dict[str, Any]:
-        """Initialize Ainflue creator platform backup configuration"""
+        """Initialize IA Chéries creator platform backup configuration"""
         
         return {
             'creator_data_protection': {
@@ -217,7 +217,7 @@ class BackupManager:
         }
         
         try:
-            # Create backup policies for all Ainflue data categories
+            # Create backup policies for all IA Chéries data categories
             for category, data_types in self.ainflue_backup_config.items():
                 for data_type, config in data_types.items():
                     policy = await self._create_backup_policy(data_type, config)

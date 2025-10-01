@@ -1,12 +1,12 @@
 """
-Monetization Pipeline - Ainflue Enterprise
+Monetization Pipeline - IA Chéries Enterprise
 ==========================================
 Pipeline optimisation revenus avec business intelligence.
 Revenue optimization + pricing strategy + market analysis + ROI prediction.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

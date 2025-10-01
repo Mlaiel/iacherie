@@ -1,4 +1,4 @@
-# Ainflue Remix AI Module - ConfigMap
+# IA Chéries Remix AI Module - ConfigMap
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready configuration for AI remix engine
 
@@ -18,7 +18,7 @@ metadata:
     description: "AI remix engine configuration for intelligent content generation"
 data:
   # Application Configuration
-  APP_NAME: "Ainflue-Remix-AI"
+  APP_NAME: "IA Chéries-Remix-AI"
   APP_VERSION: "1.0.0"
   ENVIRONMENT: "production"
   SERVICE_NAME: "remix-ai"

@@ -473,7 +473,7 @@
             - name: iacherie.critical
               interval: 15s
               rules:
-              - alert: AinflueCriticalServiceDown
+              - alert: iacherieCriticalServiceDown
                 expr: up{job=~"iacherie-.*"} == 0
                 for: 1m
                 labels:
@@ -482,8 +482,8 @@
                   summary: "IA Chérie critical service is down"
                   description: "Service {{ $labels.job }} has been down for more than 1 minute"
               
-              - alert: AinflueDatabaseConnectionFailure
-                expr: ainflue_database_connection_errors_total > 10
+              - alert: iacherieDatabaseConnectionFailure
+                expr: iacherie_database_connection_errors_total > 10
                 for: 2m
                 labels:
                   severity: critical
@@ -491,7 +491,7 @@
                   summary: "High database connection errors"
                   description: "Database connection errors exceed threshold"
               
-              - alert: AinfluePodCrashLooping
+              - alert: iacheriePodCrashLooping
                 expr: rate(kube_pod_container_status_restarts_total[5m]) > 0.1
                 for: 5m
                 labels:
@@ -500,7 +500,7 @@
                   summary: "Pod is crash looping"
                   description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
               
-              - alert: AinflueDiskSpaceRunningOut
+              - alert: iacherieDiskSpaceRunningOut
                 expr: (node_filesystem_free_bytes / node_filesystem_size_bytes) * 100 < 10
                 for: 5m
                 labels:
@@ -635,7 +635,7 @@
     - name: "Generate monitoring deployment report"
       template:
         src: monitoring_report.j2
-        dest: "/tmp/ainflue_monitoring_deployment_report.json"
+        dest: "/tmp/iacherie_monitoring_deployment_report.json"
       vars:
         deployment_timestamp: "{{ ansible_date_time.iso8601 }}"
         health_status: "{{ health_checks.results }}"

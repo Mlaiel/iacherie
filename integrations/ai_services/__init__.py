@@ -50,7 +50,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise AI services for multi-provider content generation and optimization"
 
 # Configuration logique métier IA Chérie
-AINFLUE_AI_SERVICES = {
+IACHERIE_AI_SERVICES = {
     'platforms': 65,
     'ai_agents': 53,
     'ai_providers': 15,

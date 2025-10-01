@@ -1,5 +1,5 @@
 """
-LinkedIn Creator API Integration for Ainflue Platform
+LinkedIn Creator API Integration for IA Chéries Platform
 Enterprise-grade LinkedIn creator and professional content management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -151,7 +151,7 @@ class LinkedInMetrics:
 
 class LinkedInCreatorAPI(BaseIntegration):
     """
-    Enterprise LinkedIn Creator API integration for Ainflue platform
+    Enterprise LinkedIn Creator API integration for IA Chéries platform
     
     Features:
     - Complete LinkedIn OAuth 2.0 authentication
@@ -179,7 +179,7 @@ class LinkedInCreatorAPI(BaseIntegration):
         # Headers template
         self.headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue/1.0.0",
+            "User-Agent": "IA Chéries/1.0.0",
             "LinkedIn-Version": "202312"
         }
         
@@ -664,7 +664,7 @@ class LinkedInCreatorAPI(BaseIntegration):
                                 },
                                 "media": media_asset.asset,
                                 "title": {
-                                    "text": "Ainflue Content"
+                                    "text": "IA Chéries Content"
                                 }
                             }
                         ]
@@ -931,7 +931,7 @@ def create_linkedin_creator_integration(
     
     return LinkedInCreatorAPI(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def example_linkedin_creator_flow():
     """Example LinkedIn Creator API integration usage"""
     
@@ -969,7 +969,7 @@ async def example_linkedin_creator_flow():
         # Create text post
         # text_post = await linkedin.create_text_post(
         #     access_token=access_token,
-        #     text="Excited to share my latest content on Ainflue! 🚀 #CreatorEconomy #ContentCreation",
+        #     text="Excited to share my latest content on IA Chéries! 🚀 #CreatorEconomy #ContentCreation",
         #     visibility=ShareVisibility.PUBLIC
         # )
         # print(f"Text post created: {text_post.id}")
@@ -987,7 +987,7 @@ async def example_linkedin_creator_flow():
         # 
         # image_post = await linkedin.create_image_post(
         #     access_token=access_token,
-        #     text="Check out my latest creation! Made with Ainflue's AI tools 🎨",
+        #     text="Check out my latest creation! Made with IA Chéries's AI tools 🎨",
         #     media_asset=media_asset,
         #     visibility=ShareVisibility.PUBLIC
         # )

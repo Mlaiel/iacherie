@@ -1,12 +1,12 @@
 """
-Configuration Automation - Enterprise Dynamic Configuration Management for Ainflue
+Configuration Automation - Enterprise Dynamic Configuration Management for IA Chéries
 ================================================================================
 
 Advanced configuration automation for dynamic configuration updates, environment management,
 drift detection, and compliance configuration for the creator platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

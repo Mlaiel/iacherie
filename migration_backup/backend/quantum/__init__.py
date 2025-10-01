@@ -2,7 +2,7 @@
 ⚛️ QUANTUM COMPUTING MODULE - Enterprise Quantum Intelligence Platform ⚛️
 =========================================================================
 
-Module quantum unifié pour Ainflue - Plateforme d'intelligence quantique d'entreprise
+Module quantum unifié pour IA Chéries - Plateforme d'intelligence quantique d'entreprise
 consolidant 42 modules en 18 composants optimisés.
 
 🎯 CONSOLIDATION COMPLÈTE: 42 → 18 modules ✅
@@ -11,7 +11,7 @@ consolidant 42 modules en 18 composants optimisés.
 - Maintenabilité renforcée ✅
 
 Auteur: Fahed Mlaiel <mlaiel@live.de>
-Copyright © 2024 Ainflue - Tous droits réservés
+Copyright © 2024 IA Chéries - Tous droits réservés
 """
 
 import logging
@@ -21,7 +21,7 @@ from typing import List, Any
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__copyright__ = "Copyright © 2024 Ainflue - All rights reserved"
+__copyright__ = "Copyright © 2024 IA Chéries - All rights reserved"
 
 # Configure logging
 logger = logging.getLogger(__name__)

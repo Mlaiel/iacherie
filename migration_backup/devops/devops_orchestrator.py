@@ -2,7 +2,7 @@
 🚀 Enterprise DevOps Orchestrator - DevOps Expert Implementation
 ==============================================================
 
-Advanced DevOps orchestration system for Ainflue platform providing
+Advanced DevOps orchestration system for IA Chéries platform providing
 comprehensive CI/CD pipeline management, infrastructure automation,
 monitoring, and enterprise-grade deployment strategies.
 

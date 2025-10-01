@@ -980,7 +980,7 @@ def create_geolocation_manager(config: Dict[str, Any]) -> GeolocationServicesMan
     return GeolocationServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_location_intelligence_workflow(user_ip: str, content_preferences: Dict[str, Any]) -> Dict[str, Any]:
+async def iacherie_location_intelligence_workflow(user_ip: str, content_preferences: Dict[str, Any]) -> Dict[str, Any]:
     """
     Complete location intelligence workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -1080,7 +1080,7 @@ if __name__ == "__main__":
             "monetization_enabled": True
         }
         
-        result = await ainflue_location_intelligence_workflow(test_ip, test_preferences)
+        result = await iacherie_location_intelligence_workflow(test_ip, test_preferences)
         
         print("Location Intelligence Workflow Result:")
         print(json.dumps(result, indent=2, default=str))

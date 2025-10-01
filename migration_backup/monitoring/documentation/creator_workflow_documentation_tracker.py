@@ -145,7 +145,7 @@ class CreatorWorkflowDocumentationTracker:
     and provides analytics for workflow optimization.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chéries/IA Chéries"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.CreatorWorkflowDocumentationTracker")
         
@@ -205,7 +205,7 @@ class CreatorWorkflowDocumentationTracker:
         steps = [
             WorkflowStep(
                 step_id="welcome_intro",
-                title="Welcome to Ainflue",
+                title="Welcome to IA Chéries",
                 description="Introduction to the Creator Economy platform and your journey ahead",
                 step_type=StepType.INFORMATION,
                 order=1,
@@ -301,7 +301,7 @@ class CreatorWorkflowDocumentationTracker:
         return WorkflowDefinition(
             workflow_id="creator_onboarding_v1",
             name="Creator Onboarding",
-            description="Complete onboarding process for new creators on Ainflue platform",
+            description="Complete onboarding process for new creators on IA Chéries platform",
             workflow_type=WorkflowType.ONBOARDING,
             creator_types=["all"],
             steps=steps,

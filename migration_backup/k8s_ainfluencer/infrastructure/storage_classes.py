@@ -2,7 +2,7 @@
 =========================================
 
 Kubernetes Storage Classes optimized for different workload types
-for the Ainflue platform with performance and cost optimization.
+for the IA Chéries platform with performance and cost optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

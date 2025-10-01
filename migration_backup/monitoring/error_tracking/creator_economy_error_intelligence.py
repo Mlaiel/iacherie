@@ -1,5 +1,5 @@
 """
-Creator Economy Error Intelligence for Ainflue Platform
+Creator Economy Error Intelligence for IA Chéries Platform
 AI-powered error intelligence specialized for Creator Economy workflows
 
 Author: Fahed Mlaiel <mlaiel@live.de>

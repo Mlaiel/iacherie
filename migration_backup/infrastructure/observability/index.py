@@ -1,10 +1,10 @@
 """
-Observability Module - Ainflue Infrastructure Enterprise
+Observability Module - IA Chéries Infrastructure Enterprise
 ========================================================
 Point d'entrée principal pour tous les services d'observabilité
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -29,10 +29,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise observability infrastructure for Ainflue platform"
+__description__ = "Enterprise observability infrastructure for IA Chéries platform"
 
-# Configuration observabilité métier Ainflue
-AINFLUE_OBSERVABILITY_WORKFLOW = {
+# Configuration observabilité métier IA Chéries
+IA CHÉRIES_OBSERVABILITY_WORKFLOW = {
     'upload': 'Monitor content upload performance and errors',
     'ai_processing': 'Track AI model performance and resource usage', 
     'protection': 'Monitor IP protection and copyright enforcement',

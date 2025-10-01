@@ -48,7 +48,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE ACTUELLE VIOLANT LES RÈGLES :**
 ```
-/workspaces/Ainflue/backend/core/              ← Niveau 3 (LIMITE)
+/workspaces/iacherie/backend/core/              ← Niveau 3 (LIMITE)
 └── database/                                  ← Niveau 4 ❌ VIOLATION !
     ├── data_migrations/ (15 fichiers)        ← Niveau 5 ❌ VIOLATION GRAVE !
     ├── migrations/ (26 fichiers)             ← Niveau 5 ❌ VIOLATION GRAVE !
@@ -307,7 +307,7 @@ TOTAL CONSOLIDÉ : ~4,400 lignes de code database seeders enterprise
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── core/                                           ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)
@@ -1081,7 +1081,7 @@ find backend/core/ -type d -mindepth 1 | wc -l  # Devrait retourner 0
 
 #### **🛡️ Corrections Critiques Réalisées**
 - ✅ **Violation 5-niveaux corrigée:** Suppression du dossier `database/` et ses 4 sous-dossiers
-- ✅ **Structure 3-niveaux respectée:** `/workspaces/Ainflue/backend/core/` (niveau 3 final)
+- ✅ **Structure 3-niveaux respectée:** `/workspaces/iacherie/backend/core/` (niveau 3 final)
 - ✅ **65+ fichiers éparpillés → 26 modules unifiés**
 - ✅ **Optimisation 68%:** Réduction massive de la complexité
 

@@ -669,7 +669,7 @@ class DatabaseReplicationManager:
         logger.info("🏢 Initializing Enterprise Database Replication Manager...")
         
         # Initialize sharding manager
-        # await self.sharding_manager.initialize("ainflue_main", "user_id", initial_shards=8)
+        # await self.sharding_manager.initialize("iacherie_main", "user_id", initial_shards=8)
         
         # Start global monitoring
         self._monitoring_tasks.append(

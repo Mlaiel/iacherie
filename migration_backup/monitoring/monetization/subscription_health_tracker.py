@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Subscription Health Tracker
+IA Chéries Platform - Subscription Health Tracker
 =============================================
 
-Comprehensive subscription lifecycle monitoring system for the Ainflue platform.
+Comprehensive subscription lifecycle monitoring system for the IA Chéries platform.
 Tracks subscription health, churn prediction, engagement patterns, and revenue optimization
 for all subscription-based services.
 
@@ -121,7 +121,7 @@ class SubscriptionEvent:
 
 class SubscriptionHealthTracker:
     """
-    Advanced subscription health tracking system for the Ainflue platform.
+    Advanced subscription health tracking system for the IA Chéries platform.
     
     Monitors subscription lifecycle, predicts churn, analyzes engagement patterns,
     and provides optimization recommendations for subscription revenue.

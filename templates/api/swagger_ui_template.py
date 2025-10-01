@@ -1,4 +1,4 @@
-"""Swagger UI Template for Ainflue Platform
+"""Swagger UI Template for iacherie Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================
@@ -38,10 +38,10 @@ class SwaggerUICustomizer:
     def __init__(
         self,
         app: FastAPI,
-        title: str = "Ainflue API Documentation",
+        title: str = "iacherie API Documentation",
         description: str = "Enterprise Creator Economy Platform APIs",
         version: str = "1.0.0",
-        terms_of_service: str = "https://ainflue.com/terms",
+        terms_of_service: str = "https://iacherie.com/terms",
         contact_info: Optional[Dict[str, str]] = None,
         license_info: Optional[Dict[str, str]] = None,
         servers: Optional[List[Dict[str, str]]] = None,
@@ -64,15 +64,15 @@ class SwaggerUICustomizer:
         self.contact_info = contact_info or {
             "name": "Fahed Mlaiel",
             "email": "mlaiel@live.de",
-            "url": "https://ainflue.com"
+            "url": "https://iacherie.com"
         }
         self.license_info = license_info or {
             "name": "Proprietary License",
-            "url": "https://ainflue.com/license"
+            "url": "https://iacherie.com/license"
         }
         self.servers = servers or [
-            {"url": "https://api.ainflue.com", "description": "Production server"},
-            {"url": "https://staging-api.ainflue.com", "description": "Staging server"},
+            {"url": "https://api.iacherie.com", "description": "Production server"},
+            {"url": "https://staging-api.iacherie.com", "description": "Staging server"},
             {"url": "http://localhost:8000", "description": "Development server"}
         ]
         self.security_schemes = security_schemes or self._default_security_schemes()
@@ -111,8 +111,8 @@ class SwaggerUICustomizer:
                 "type": "oauth2",
                 "flows": {
                     "authorizationCode": {
-                        "authorizationUrl": "https://auth.ainflue.com/oauth/authorize",
-                        "tokenUrl": "https://auth.ainflue.com/oauth/token",
+                        "authorizationUrl": "https://auth.iacherie.com/oauth/authorize",
+                        "tokenUrl": "https://auth.iacherie.com/oauth/token",
                         "scopes": {
                             "read": "Read access",
                             "write": "Write access",
@@ -226,8 +226,8 @@ class SwaggerUICustomizer:
             
             # Add custom extensions
             openapi_schema["x-logo"] = {
-                "url": "https://ainflue.com/logo.png",
-                "altText": "Ainflue Logo"
+                "url": "https://iacherie.com/logo.png",
+                "altText": "iacherie Logo"
             }
             
             # Add tags with descriptions
@@ -245,7 +245,7 @@ class SwaggerUICustomizer:
 
 ## 🚀 Creator Economy Platform
 
-The Ainflue API provides comprehensive functionality for content creators, collaboration tools, and monetization systems.
+The iacherie API provides comprehensive functionality for content creators, collaboration tools, and monetization systems.
 
 ### 🔑 Key Features
 
@@ -275,8 +275,8 @@ API calls are rate limited based on your subscription plan:
 
 For technical support and questions:
 - **Email**: {self.contact_info['email']}
-- **Documentation**: [API Docs](https://docs.ainflue.com)
-- **Status Page**: [status.ainflue.com](https://status.ainflue.com)
+- **Documentation**: [API Docs](https://docs.iacherie.com)
+- **Status Page**: [status.iacherie.com](https://status.iacherie.com)
 
 ### ⚠️ Legal Notice
 
@@ -359,7 +359,7 @@ Commercial use requires explicit written authorization.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - API Documentation</title>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui.css" />
-    <link rel="icon" type="image/png" href="https://ainflue.com/favicon.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="https://iacherie.com/favicon.png" sizes="32x32" />
     <style>
         {{ custom_css }}
     </style>
@@ -595,7 +595,7 @@ Commercial use requires explicit written authorization.
             
             /* Custom branding */
             .swagger-ui .topbar .download-url-wrapper:after {
-                content: "Powered by Ainflue";
+                content: "Powered by iacherie";
                 color: #e2e8f0;
                 font-size: 12px;
                 margin-left: 20px;
@@ -658,7 +658,7 @@ Commercial use requires explicit written authorization.
 # Example usage function
 def setup_swagger_ui(
     app: FastAPI,
-    title: str = "Ainflue Creator Economy API",
+    title: str = "iacherie Creator Economy API",
     description: str = "Enterprise-grade APIs for content creators and collaboration",
     version: str = "1.0.0",
     enable_authentication: bool = True,
@@ -676,17 +676,17 @@ def setup_swagger_ui(
         contact_info={
             "name": "Fahed Mlaiel - Technical Lead",
             "email": "mlaiel@live.de",
-            "url": "https://ainflue.com"
+            "url": "https://iacherie.com"
         },
         license_info={
             "name": "Proprietary License",
-            "url": "https://ainflue.com/license"
+            "url": "https://iacherie.com/license"
         }
     )
 
 # Configuration template
 SWAGGER_UI_CONFIG = {
-    "title": "Ainflue Creator Economy API",
+    "title": "iacherie Creator Economy API",
     "description": "Enterprise-grade APIs for content creators and collaboration",
     "version": "1.0.0",
     "theme": "default",  # "default" or "dark"
@@ -697,8 +697,8 @@ SWAGGER_UI_CONFIG = {
     "redoc_url": "/redoc",
     "openapi_url": "/openapi.json",
     "servers": [
-        {"url": "https://api.ainflue.com", "description": "Production server"},
-        {"url": "https://staging-api.ainflue.com", "description": "Staging server"},
+        {"url": "https://api.iacherie.com", "description": "Production server"},
+        {"url": "https://staging-api.iacherie.com", "description": "Staging server"},
         {"url": "http://localhost:8000", "description": "Development server"}
     ],
     "security_schemes": {
@@ -724,7 +724,7 @@ if __name__ == "__main__":
     # Setup Swagger UI
     swagger_ui = setup_swagger_ui(
         app,
-        title="Ainflue API Documentation",
+        title="iacherie API Documentation",
         description="Creator Economy Platform APIs",
         version="1.0.0"
     )
@@ -733,7 +733,7 @@ if __name__ == "__main__":
     @app.get("/health")
     async def health_check():
         """Health check endpoint"""
-        return {"status": "healthy", "service": "ainflue-api"}
+        return {"status": "healthy", "service": "iacherie-api"}
     
     if __name__ == "__main__":
         import uvicorn

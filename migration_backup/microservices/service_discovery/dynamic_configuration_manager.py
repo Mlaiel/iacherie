@@ -1,11 +1,11 @@
 """
-⚙️ Dynamic Configuration Manager Enterprise - Ainflue
+⚙️ Dynamic Configuration Manager Enterprise - IA Chéries
 ====================================================
 Manager configuration dynamique pour microservices.
 Config hot-reload + feature flags + environment management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

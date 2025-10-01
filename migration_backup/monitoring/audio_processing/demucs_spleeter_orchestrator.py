@@ -2,7 +2,7 @@
 DEMUCS/Spleeter Orchestrator - Audio Processing Module
 =====================================================
 
-Enterprise AI audio source separation orchestrator for the Ainflue platform.
+Enterprise AI audio source separation orchestrator for the IA Chéries platform.
 Integrates DEMUCS v4, Spleeter, and other state-of-the-art AI models for
 professional audio source separation workflows.
 

@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Real-Time Performance Dashboard - Enterprise Performance Monitoring
 Advanced real-time performance visualization and alerting for Creator Economy
@@ -617,7 +617,7 @@ class RealTimePerformanceDashboard:
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Ainflue Performance Dashboard</title>
+            <title>IA Chéries Performance Dashboard</title>
             <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <style>
@@ -638,7 +638,7 @@ class RealTimePerformanceDashboard:
         </head>
         <body>
             <div class="header">
-                <h1>🚀 Ainflue Creator Platform - Performance Dashboard</h1>
+                <h1>🚀 IA Chéries Creator Platform - Performance Dashboard</h1>
                 <p>Real-time performance monitoring and alerting</p>
             </div>
             

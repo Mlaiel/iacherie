@@ -1,6 +1,6 @@
 """
 Microsoft Azure Infrastructure Provider
-Enterprise-grade Azure infrastructure management for Ainflue platform
+Enterprise-grade Azure infrastructure management for IA Chéries platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -151,7 +151,7 @@ class AzureProvider:
         self.clients = {}
         self._initialize_clients()
         
-        # Ainflue-specific configurations
+        # IA Chéries-specific configurations
         self.creator_services = {
             "content_processing": {
                 "vm_size": AzureVMSize.STANDARD_F8S_V2.value,
@@ -234,7 +234,7 @@ class AzureProvider:
             nic_name = f"{config.vm_name}-nic"
             nic_result = await self._create_network_interface(nic_name, config.location)
             
-            # VM configuration for Ainflue content processing
+            # VM configuration for IA Chéries content processing
             vm_parameters = {
                 'location': config.location,
                 'os_profile': {
@@ -303,7 +303,7 @@ class AzureProvider:
                 vm_parameters
             )
             
-            # Install Ainflue software via custom script extension
+            # Install IA Chéries software via custom script extension
             await self._install_ainflue_extensions(config.vm_name, config.location)
             
             return {
@@ -326,7 +326,7 @@ class AzureProvider:
             return self._simulate_aks_creation(config)
             
         try:
-            # AKS cluster optimized for Ainflue creator workloads
+            # AKS cluster optimized for IA Chéries creator workloads
             cluster_parameters = {
                 'location': config.location,
                 'dns_prefix': f"{config.cluster_name}-dns",
@@ -433,7 +433,7 @@ class AzureProvider:
                 server_parameters
             )
             
-            # Database configuration for Ainflue creator data
+            # Database configuration for IA Chéries creator data
             database_parameters = {
                 'location': config.location,
                 'sku': {
@@ -488,7 +488,7 @@ class AzureProvider:
             return self._simulate_storage_creation(config)
             
         try:
-            # Storage account configuration for Ainflue creator content
+            # Storage account configuration for IA Chéries creator content
             storage_parameters = {
                 'sku': {
                     'name': f"{config.account_tier}_{config.replication_type}"
@@ -561,7 +561,7 @@ class AzureProvider:
         try:
             location = location or self.location
             
-            # Cognitive Services configuration for Ainflue AI features
+            # Cognitive Services configuration for IA Chéries AI features
             services_config = {
                 'computer_vision': {
                     'name': f'ainflue-vision-{self.subscription_id[:8]}',
@@ -719,7 +719,7 @@ class AzureProvider:
             raise
             
     async def _install_ainflue_extensions(self, vm_name: str, location: str):
-        """Install Ainflue software via VM extensions"""
+        """Install IA Chéries software via VM extensions"""
         try:
             extension_params = {
                 'location': location,
@@ -745,13 +745,13 @@ class AzureProvider:
             return operation.result()
             
         except Exception as e:
-            logger.error(f"Failed to install Ainflue extensions on {vm_name}: {e}")
+            logger.error(f"Failed to install IA Chéries extensions on {vm_name}: {e}")
             
     def _get_ainflue_install_script(self) -> str:
-        """Get Ainflue installation script"""
+        """Get IA Chéries installation script"""
         return """#!/bin/bash
         
-        # Ainflue Creator Platform Setup
+        # IA Chéries Creator Platform Setup
         apt-get update
         apt-get install -y docker.io nginx python3-pip ffmpeg
         
@@ -772,7 +772,7 @@ class AzureProvider:
         systemctl start docker nginx
         
         # Creator platform ready
-        echo "Ainflue creator processing node ready - $(date)" > /opt/ainflue/status
+        echo "IA Chéries creator processing node ready - $(date)" > /opt/ainflue/status
         """
         
     async def _get_log_analytics_workspace(self) -> str:
@@ -934,7 +934,7 @@ class AzureProvider:
             return {'status': 'error', 'error': str(e)}
             
     def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized Azure configurations"""
+        """Get IA Chéries-optimized Azure configurations"""
         return {
             'content_processing': {
                 'vm': AzureVMConfig(

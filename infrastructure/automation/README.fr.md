@@ -1,13 +1,13 @@
 # 🔧 Infrastructure Automation - Plateforme DevOps Entreprise
 
-[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/Ainflue)
-[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/Ainflue)
-[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/Ainflue)
-[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/Ainflue)
+[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/iacherie)
+[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/iacherie)
+[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/iacherie)
+[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/iacherie)
 
 ## 🌟 Aperçu
 
-Plateforme d'automatisation d'infrastructure avancée pour l'écosystème de l'économie créative Ainflue. Ce framework d'automatisation de niveau entreprise gère les pipelines CI/CD, le provisioning d'infrastructure, les stratégies de déploiement, la surveillance, la sécurité et la conformité à travers 53 agents IA et 65+ intégrations de plateformes.
+Plateforme d'automatisation d'infrastructure avancée pour l'écosystème de l'économie créative iacherie. Ce framework d'automatisation de niveau entreprise gère les pipelines CI/CD, le provisioning d'infrastructure, les stratégies de déploiement, la surveillance, la sécurité et la conformité à travers 53 agents IA et 65+ intégrations de plateformes.
 
 **© FAHED MLAIEL 2024-2025 - PROPRIÉTÉ INTELLECTUELLE STRICTE**  
 ⚠️ **AVERTISSEMENT STRICT**: Toute utilisation, copie ou distribution de ce code sans autorisation écrite explicite de Fahed Mlaiel est strictement interdite.  
@@ -141,8 +141,8 @@ creator_workflow = {
 ### Installation
 ```bash
 # Cloner le dépôt
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/automation
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/automation
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -332,4 +332,4 @@ automation:
 *Créé: 15 septembre 2025*  
 *Version: 1.0.0 - Documentation Infrastructure Automation Entreprise*  
 *Auteur: Fahed Mlaiel (mlaiel@live.de)*  
-*Projet: Plateforme Infrastructure Automation Ainflue*
+*Projet: Plateforme Infrastructure Automation iacherie*

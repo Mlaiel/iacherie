@@ -1,5 +1,5 @@
 """
-Integrations Module - Ainflue Enterprise
+Integrations Module - IA Chéries Enterprise
 ========================================
 
 Complete enterprise integration system for 65+ platforms with 53 AI agents,
@@ -16,7 +16,7 @@ Features:
 - Enterprise security and compliance
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 2.0 Production Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -98,8 +98,8 @@ __all__ = [
     "integration_manager"
 ]
 
-# Configuration entreprise Ainflue
-AINFLUE_INTEGRATIONS_CONFIG = {
+# Configuration entreprise IA Chéries
+IA CHÉRIES_INTEGRATIONS_CONFIG = {
     "version": "2.0",
     "architecture": "enterprise",
     "ai_agents": 53,
@@ -114,4 +114,4 @@ AINFLUE_INTEGRATIONS_CONFIG = {
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel (mlaiel@live.de)"
-__description__ = "Ainflue Enterprise Integrations - 53 AI Agents, 65+ Platforms, 644 Languages"
+__description__ = "IA Chéries Enterprise Integrations - 53 AI Agents, 65+ Platforms, 644 Languages"

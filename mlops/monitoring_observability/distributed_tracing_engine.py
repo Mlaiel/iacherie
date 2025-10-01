@@ -22,7 +22,7 @@ ALL RIGHTS RESERVED
 - Maintenance and updates provided
 - Team training included
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -292,7 +292,7 @@ class DistributedTracingEngine:
                 "service.version": self.config.version,
                 "deployment.environment": self.config.environment,
                 "creator.type": self.creator_type.value if self.creator_type else "all",
-                "platform": "ainflue_creator_economy"
+                "platform": "iacherie_creator_economy"
             })
             
             # Create tracer provider
@@ -1022,7 +1022,7 @@ if __name__ == "__main__":
     
     # Create tracer for musician service
     tracer = create_distributed_tracer(
-        service_name="ainflue_music_service",
+        service_name="iacherie_music_service",
         creator_type="musician",
         environment="development",
         sampling_rate=1.0

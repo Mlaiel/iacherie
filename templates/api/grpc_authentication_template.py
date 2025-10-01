@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ gRPC Authentication Template - Enterprise Security
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -151,9 +151,9 @@ class AuthConfig:
     api_key_length: int = 32
     
     # OAuth2 settings
-    oauth2_issuer: str = "https://auth.ainflue.com"
-    oauth2_audience: str = "ainflue-api"
-    oauth2_jwks_url: str = "https://auth.ainflue.com/.well-known/jwks.json"
+    oauth2_issuer: str = "https://auth.iacherie.com"
+    oauth2_audience: str = "iacherie-api"
+    oauth2_jwks_url: str = "https://auth.iacherie.com/.well-known/jwks.json"
     
     # mTLS settings
     enable_mtls: bool = False

@@ -24,13 +24,13 @@ import subprocess
 # Import all infrastructure managers
 from infra.cloud_platform_manager import CloudPlatformManager
 from infra.enterprise_deployment_orchestrator import EnterpriseDeploymentOrchestrator
-from infra.kubernetes.cluster_manager import AinflueClusterManager
-from infra.ansible.ansible_configuration_manager import AinflueAnsibleOrchestrator
-from infra.helm.chart_deployment_engine import AinflueHelmOrchestrator
+from infra.kubernetes.cluster_manager import iacherieClusterManager
+from infra.ansible.ansible_configuration_manager import iacherieAnsibleOrchestrator
+from infra.helm.chart_deployment_engine import iacherieHelmOrchestrator
 from infra.monitoring.grafana_dashboard_manager import GrafanaDashboardManager
-from infra.security.network_security_policies import AinflueSecurityPolicyOrchestrator
+from infra.security.network_security_policies import iacherieSecurityPolicyOrchestrator
 from infra.networking.cdn_configuration import CDNConfigurationManager
-from infra.storage.block_storage_configuration import AinflueBlockStorageOrchestrator
+from infra.storage.block_storage_configuration import iacherieBlockStorageOrchestrator
 
 class DeploymentPhase(Enum):
     """Infrastructure deployment phases"""
@@ -87,7 +87,7 @@ class InfrastructureConfig:
     high_availability: bool = True
     disaster_recovery: bool = True
 
-class AinflueEnterpriseInfrastructureOrchestrator:
+class iacherieEnterpriseInfrastructureOrchestrator:
     """Master orchestrator for all IA Chérie infrastructure components"""
     
     def __init__(self, config: InfrastructureConfig):
@@ -143,15 +143,15 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             self.deployment_manager = EnterpriseDeploymentOrchestrator(self.config.environment)
             
             # Container and orchestration
-            self.k8s_manager = AinflueClusterManager(self.config.environment)
-            self.ansible_manager = AinflueAnsibleOrchestrator(self.config.environment)
-            self.helm_manager = AinflueHelmOrchestrator(self.config.environment)
+            self.k8s_manager = iacherieClusterManager(self.config.environment)
+            self.ansible_manager = iacherieAnsibleOrchestrator(self.config.environment)
+            self.helm_manager = iacherieHelmOrchestrator(self.config.environment)
             
             # Security and networking
-            self.security_manager = AinflueSecurityPolicyOrchestrator(self.config.environment)
+            self.security_manager = iacherieSecurityPolicyOrchestrator(self.config.environment)
             
             # Storage
-            self.storage_manager = AinflueBlockStorageOrchestrator(self.config.environment)
+            self.storage_manager = iacherieBlockStorageOrchestrator(self.config.environment)
             
             self.logger.info("Successfully initialized all infrastructure managers")
             
@@ -254,27 +254,27 @@ class AinflueEnterpriseInfrastructureOrchestrator:
                 
                 # Phase 6: Core Applications
                 DeploymentComponent(
-                    name="ainflue_api",
+                    name="iacherie_api",
                     category="application",
                     dependencies=["kubernetes_cluster", "database_primary", "redis_cache"],
                     metadata={"estimated_time": 15, "critical": True}
                 ),
                 DeploymentComponent(
-                    name="ainflue_ai_engine",
+                    name="iacherie_ai_engine",
                     category="application",
                     dependencies=["kubernetes_cluster", "block_storage"],
                     metadata={"estimated_time": 20, "critical": True}
                 ),
                 DeploymentComponent(
-                    name="ainflue_mobile_api",
+                    name="iacherie_mobile_api",
                     category="application",
-                    dependencies=["ainflue_api"],
+                    dependencies=["iacherie_api"],
                     metadata={"estimated_time": 10, "critical": True}
                 ),
                 DeploymentComponent(
-                    name="ainflue_workers",
+                    name="iacherie_workers",
                     category="application",
-                    dependencies=["ainflue_api", "redis_cache"],
+                    dependencies=["iacherie_api", "redis_cache"],
                     metadata={"estimated_time": 15, "critical": True}
                 ),
                 
@@ -330,7 +330,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
                 DeploymentComponent(
                     name="health_checks",
                     category="validation",
-                    dependencies=["ainflue_api", "ainflue_ai_engine", "ainflue_mobile_api"],
+                    dependencies=["iacherie_api", "iacherie_ai_engine", "iacherie_mobile_api"],
                     metadata={"estimated_time": 10, "critical": True}
                 ),
                 DeploymentComponent(
@@ -558,11 +558,11 @@ class AinflueEnterpriseInfrastructureOrchestrator:
             
             elif component.name == "kubernetes_cluster":
                 # Deploy Kubernetes cluster
-                return await self.k8s_manager.deploy_ainflue_stack()
+                return await self.k8s_manager.deploy_iacherie_stack()
             
             elif component.name == "helm_setup":
                 # Setup Helm and deploy charts
-                results = await self.helm_manager.deploy_ainflue_platform()
+                results = await self.helm_manager.deploy_iacherie_platform()
                 return all(results.values())
             
             elif component.name.startswith("iacherie_"):
@@ -781,7 +781,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
 
 # Factory function for easy instantiation
 def create_enterprise_orchestrator(environment: str = "production", 
-                                 cloud_providers: List[str] = None) -> AinflueEnterpriseInfrastructureOrchestrator:
+                                 cloud_providers: List[str] = None) -> iacherieEnterpriseInfrastructureOrchestrator:
     """Create an enterprise infrastructure orchestrator
     
     Args:
@@ -811,7 +811,7 @@ def create_enterprise_orchestrator(environment: str = "production",
         disaster_recovery=environment == "production"
     )
     
-    return AinflueEnterpriseInfrastructureOrchestrator(config)
+    return iacherieEnterpriseInfrastructureOrchestrator(config)
 
 # Example usage
 async def main():

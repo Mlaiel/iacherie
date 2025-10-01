@@ -26,7 +26,7 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerYouTubeAPI:
+class iaCherieYouTubeAPI:
     """
     📺 Moteur YouTube pour IA Chérie
     
@@ -855,7 +855,7 @@ async def test_youtube_engine():
     
     try:
         # Initialisation
-        engine = AinfluencerYouTubeAPI()
+        engine = iaCherieYouTubeAPI()
         
         # Test 1: Recherche de vidéos
         print("📝 Test 1: Recherche de vidéos...")

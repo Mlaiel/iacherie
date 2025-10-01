@@ -1,4 +1,4 @@
-"""{{service_name}} Queue Service for Ainflue Platform
+"""{{service_name}} Queue Service for iacherie Platform
 {{service_description}}
 
 Enterprise-grade message queue service with Redis, RabbitMQ, and Kafka support,
@@ -199,7 +199,7 @@ class JobResponse(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise Queue Service for Ainflue Platform
+    Enterprise Queue Service for iacherie Platform
     
     Handles comprehensive message queue management including:
     - Multi-backend support (Redis, RabbitMQ, Kafka, Celery)
@@ -324,7 +324,7 @@ class {{service_class_name}}(BaseService):
             if hasattr(settings, 'CELERY_BROKER_URL') and settings.CELERY_BROKER_URL:
                 try:
                     self.celery_app = Celery(
-                        'ainflue_queue',
+                        'iacherie_queue',
                         broker=settings.CELERY_BROKER_URL,
                         backend=settings.CELERY_RESULT_BACKEND
                     )

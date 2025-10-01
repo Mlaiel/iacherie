@@ -7,7 +7,7 @@ economy platform. Provides automated compliance, data subject rights management,
 and comprehensive privacy protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -146,7 +146,7 @@ class GDPRComplianceManager:
         self.creator_data_mapping = self._initialize_creator_data_mapping()
         self.platform_integrations = self._initialize_platform_integrations()
         
-        logger.info("GDPR Compliance Manager initialized for Ainflue creator platform")
+        logger.info("GDPR Compliance Manager initialized for iacherie creator platform")
     
     def _initialize_data_categories(self) -> Dict[str, PersonalDataCategory]:
         """Initialize data categories for creator platform."""

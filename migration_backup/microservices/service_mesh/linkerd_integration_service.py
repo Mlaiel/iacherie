@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔗 Linkerd Integration Service - Enterprise Service Mesh
-Service mesh Linkerd enterprise pour microservices Ainflue
+Service mesh Linkerd enterprise pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

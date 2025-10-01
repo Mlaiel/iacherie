@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Security Analytics Dashboard for Events Security
 
-Real-time security monitoring and analytics dashboard for Ainflue platform.
+Real-time security monitoring and analytics dashboard for IA Chéries platform.
 Provides comprehensive visibility into security events and threat landscape.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,11 +1,11 @@
 """
-Adaptive Rate Limiter Enterprise - Ainflue
+Adaptive Rate Limiter Enterprise - IA Chéries
 ==========================================
 Rate limiter adaptatif avec ML pour ajustement dynamique.
 Machine learning + predictive scaling + anomaly detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chéries Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

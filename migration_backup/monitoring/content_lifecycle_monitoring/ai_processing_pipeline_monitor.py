@@ -2,7 +2,7 @@
 🤖 AI Processing Pipeline Monitor - Enterprise Creator Economy Intelligence
 ===========================================================================
 
-Module de monitoring avancé pipeline traitement IA contenu Ainflue.
+Module de monitoring avancé pipeline traitement IA contenu IA Chéries.
 Surveillance intelligence classification → évaluation qualité → amélioration → optimisation.
 
 Fonctionnalités Enterprise:

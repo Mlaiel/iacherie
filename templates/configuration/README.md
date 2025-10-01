@@ -319,23 +319,23 @@ creator_economy_config:
 ### Creator Economy KPIs
 ```prometheus
 # Métriques Creator Platform
-ainflue_active_creators_total
-ainflue_content_uploads_total
-ainflue_processing_jobs_total
-ainflue_collaboration_sessions_total
-ainflue_revenue_generated_total
+iacherie_active_creators_total
+iacherie_content_uploads_total
+iacherie_processing_jobs_total
+iacherie_collaboration_sessions_total
+iacherie_revenue_generated_total
 
 # Métriques AI Processing
-ainflue_ai_processing_duration_seconds
-ainflue_ai_processing_queue_length
-ainflue_gpu_utilization_percent
-ainflue_model_inference_latency_seconds
+iacherie_ai_processing_duration_seconds
+iacherie_ai_processing_queue_length
+iacherie_gpu_utilization_percent
+iacherie_model_inference_latency_seconds
 
 # Métriques Business
-ainflue_creator_engagement_score
-ainflue_content_performance_rating
-ainflue_monetization_conversion_rate
-ainflue_platform_retention_rate
+iacherie_creator_engagement_score
+iacherie_content_performance_rating
+iacherie_monetization_conversion_rate
+iacherie_platform_retention_rate
 ```
 
 ### Dashboards Grafana

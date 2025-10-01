@@ -1,5 +1,5 @@
 """Backend API Module - Consolidated API Framework
-All API functionality consolidated into 12 modules for the Ainflue platform.
+All API functionality consolidated into 12 modules for the IA Chéries platform.
 
 This module consolidates 285+ API files into 12 focused modules:
 - core_api.py: Multi-format content management with AI processing

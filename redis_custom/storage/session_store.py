@@ -198,8 +198,8 @@ class SessionStoreManager:
     
     def _generate_encryption_key(self) -> bytes:
         """**Sécurité**: Génération clé chiffrement sécurisée"""
-        password = self.config.get('encryption_password', 'ainflue_sessions_key').encode()
-        salt = self.config.get('encryption_salt', b'ainflue_salt_2025')
+        password = self.config.get('encryption_password', 'iacherie_sessions_key').encode()
+        salt = self.config.get('encryption_salt', b'iacherie_salt_2025')
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),

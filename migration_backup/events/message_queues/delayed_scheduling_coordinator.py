@@ -1,7 +1,7 @@
 """Delayed Scheduling Coordinator Module
 
 Advanced delayed message scheduling with precision timing and business calendar awareness
-for the Ainflue Message Queues Enterprise system.
+for the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -54,7 +54,7 @@ class RecurrencePattern(Enum):
 
 
 class BusinessCalendarEvent(Enum):
-    """Business calendar events for Ainflue"""
+    """Business calendar events for IA Chéries"""
     CONTENT_DEADLINE = "content_deadline"
     PAYMENT_CYCLE = "payment_cycle"
     ANALYTICS_REPORT = "analytics_report"
@@ -116,8 +116,8 @@ class SchedulingMetrics:
     business_event_distribution: Dict[str, int] = field(default_factory=dict)
 
 
-class AinflueBusiness:
-    """Ainflue Business Scheduling Rules"""
+class IA ChériesBusiness:
+    """IA Chéries Business Scheduling Rules"""
     
     # Business calendar schedules
     BUSINESS_SCHEDULES = {
@@ -360,7 +360,7 @@ class DelayedSchedulingCoordinator:
         """Schedule a business calendar event"""
         try:
             # Get business schedule settings
-            settings = AinflueBusiness.BUSINESS_SCHEDULES.get(event_type, {})
+            settings = IA ChériesBusiness.BUSINESS_SCHEDULES.get(event_type, {})
             
             message = ScheduledMessage(
                 schedule_type=ScheduleType.BUSINESS_CALENDAR,
@@ -417,7 +417,7 @@ class DelayedSchedulingCoordinator:
                                                collaboration_id: Optional[str] = None) -> List[str]:
         """Schedule content deadline reminders"""
         try:
-            settings = AinflueBusiness.BUSINESS_SCHEDULES[BusinessCalendarEvent.CONTENT_DEADLINE]
+            settings = IA ChériesBusiness.BUSINESS_SCHEDULES[BusinessCalendarEvent.CONTENT_DEADLINE]
             reminder_intervals = settings["reminder_intervals"]
             
             scheduled_ids = []
@@ -773,7 +773,7 @@ class DelayedSchedulingCoordinator:
         if not message.business_event:
             return None
         
-        settings = AinflueBusiness.BUSINESS_SCHEDULES.get(message.business_event, {})
+        settings = IA ChériesBusiness.BUSINESS_SCHEDULES.get(message.business_event, {})
         
         if "recurrence" not in settings:
             return None
@@ -861,7 +861,7 @@ class DelayedSchedulingCoordinator:
         """Initialize business calendar with recurring events"""
         try:
             # Set up recurring business events
-            for event_type, settings in AinflueBusiness.BUSINESS_SCHEDULES.items():
+            for event_type, settings in IA ChériesBusiness.BUSINESS_SCHEDULES.items():
                 if "recurrence" in settings:
                     # Calculate first execution time
                     first_execution = await self._calculate_first_business_execution(event_type, settings)
@@ -986,5 +986,5 @@ __all__ = [
     "ScheduleType",
     "RecurrencePattern",
     "BusinessCalendarEvent",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

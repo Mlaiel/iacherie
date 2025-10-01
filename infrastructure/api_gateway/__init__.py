@@ -2,7 +2,7 @@
 API Gateway Module - Enterprise API Management Hub
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Central API management for Ainflue creator platform providing REST, GraphQL,
+Central API management for iacherie creator platform providing REST, GraphQL,
 WebSocket APIs with rate limiting, authentication, and comprehensive middleware.
 """
 
@@ -96,8 +96,8 @@ __all__ = [
     'APIVersionManager'
 ]
 
-# Configuration for Ainflue creator platform APIs
-AINFLUE_API_CONFIG = {
+# Configuration for iacherie creator platform APIs
+IACHERIE_API_CONFIG = {
     'creator_apis': {
         'content_upload_api': '/api/v1/creators/content',
         'profile_management_api': '/api/v1/creators/profile',

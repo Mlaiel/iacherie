@@ -8,7 +8,7 @@
 
 ## 🏗️ Enterprise-Architektur Übersicht
 
-Diese Enterprise-Backup-Infrastruktur bietet umfassenden Datenschutz für die Ainflue Creator Economy Platform und schützt Creator-Inhalte, KI-Modelle und Plattformdaten mit militärischer Sicherheit und 99,9% Verfügbarkeitsgarantie.
+Diese Enterprise-Backup-Infrastruktur bietet umfassenden Datenschutz für die iacherie Creator Economy Platform und schützt Creator-Inhalte, KI-Modelle und Plattformdaten mit militärischer Sicherheit und 99,9% Verfügbarkeitsgarantie.
 
 ### 🎯 Hauptmerkmale
 
@@ -55,8 +55,8 @@ Diese Enterprise-Backup-Infrastruktur bietet umfassenden Datenschutz für die Ai
 pip install -r requirements.txt
 
 # Umgebungsvariablen konfigurieren
-export AINFLUE_BACKUP_CONFIG="/pfad/zur/backup/config.json"
-export AINFLUE_ENCRYPTION_KEY_PATH="/sicherer/pfad/zu/schlüsseln/"
+export IACHERIE_BACKUP_CONFIG="/pfad/zur/backup/config.json"
+export IACHERIE_ENCRYPTION_KEY_PATH="/sicherer/pfad/zu/schlüsseln/"
 ```
 
 ### Grundlegende Verwendung

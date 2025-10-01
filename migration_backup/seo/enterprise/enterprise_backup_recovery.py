@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Enterprise Backup & Recovery
 ============================
 
-Enterprise-grade backup and recovery system for Ainflue SEO platform.
+Enterprise-grade backup and recovery system for IA Chéries SEO platform.
 Provides comprehensive data protection, disaster recovery, and business continuity.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

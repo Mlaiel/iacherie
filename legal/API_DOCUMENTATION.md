@@ -647,7 +647,7 @@ X-Client-Version: 2.0.0
 
 ### **Python SDK Example:**
 ```python
-from ainflue_legal import LegalClient
+from iacherie_legal import LegalClient
 
 # Initialize client
 client = LegalClient(api_key="your_api_key")

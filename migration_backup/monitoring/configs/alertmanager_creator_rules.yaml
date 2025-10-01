@@ -1,6 +1,6 @@
 # 🚨 AlertManager Creator Rules Configuration
 # ============================================
-# Règles d'alertes intelligentes pour Creator Economy Ainflue
+# Règles d'alertes intelligentes pour Creator Economy IA Chéries
 # Alerting différencié par tier avec escalade automatique et prédictions IA
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -48,7 +48,7 @@ receivers:
           {{ end }}
           
           Actions requises IMMÉDIATEMENT.
-          Support Enterprise: +1-800-AINFLUE
+          Support Enterprise: +1-800-IA CHÉRIES
         headers:
           Priority: 'high'
     slack_configs:

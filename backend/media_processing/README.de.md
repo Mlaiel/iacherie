@@ -1,8 +1,8 @@
 # 🔄 Media Processing Modul - Unternehmensarchitektur
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/iacherie)
+[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/iacherie)
+[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/iacherie)
 
 Erweiterte Multi-Format-Medienverarbeitungsfähigkeiten mit IA-Verarbeitung auf Enterprise-Niveau, Content-Schutz, SEO-Optimierung und Kollaborations-Workflows.
 

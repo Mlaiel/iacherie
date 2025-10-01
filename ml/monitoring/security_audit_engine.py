@@ -316,7 +316,7 @@ class SecurityAuditEngine:
         """Initialize encryption utilities."""
         # In production, this would come from secure key management
         password = b"secure_ml_platform_key_2025"
-        salt = b"ainflue_security_salt"
+        salt = b"iacherie_security_salt"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

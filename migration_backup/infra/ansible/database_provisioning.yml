@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise Database Infrastructure Provisioning Playbook
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Database Infrastructure Provisioning"
+- name: "IA Chéries Enterprise Database Infrastructure Provisioning"
   hosts: database_servers
   become: yes
   gather_facts: yes

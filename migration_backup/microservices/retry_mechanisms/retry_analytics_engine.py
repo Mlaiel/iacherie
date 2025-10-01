@@ -1,11 +1,11 @@
 """
-Retry Analytics Engine - Ainflue
+Retry Analytics Engine - IA Chéries
 ================================
 Moteur analytics retry avec insights business.
 Success rate analytics + cost optimization + performance insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

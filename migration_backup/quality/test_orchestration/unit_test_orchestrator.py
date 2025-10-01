@@ -1,4 +1,4 @@
-"""🧪 Unit Test Orchestrator - Ainflue Platform
+"""🧪 Unit Test Orchestrator - IA Chéries Platform
 ================================================================
 Expert: QUALITY_ENGINEER + TESTING_ARCHITECT + DEVOPS_ENGINEER
 Created: 2025-01-XX

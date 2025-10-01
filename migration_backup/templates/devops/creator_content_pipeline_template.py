@@ -1,4 +1,4 @@
-"""Creator Content Pipeline Template for Ainflue Platform
+"""Creator Content Pipeline Template for IA Chéries Platform
 Enterprise-grade content processing pipeline template specifically designed for creator economy.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -123,7 +123,7 @@ class CreatorPipelineConfig:
 
 
 class CreatorContentPipelineTemplate:
-    """Enterprise Creator Content Pipeline Template for Ainflue Platform"""
+    """Enterprise Creator Content Pipeline Template for IA Chéries Platform"""
     
     def __init__(self, config: CreatorPipelineConfig):
         self.config = config
@@ -913,7 +913,7 @@ class CreatorContentPipelineTemplate:
                     "name": "Notify creator",
                     "run": |
                         echo "🎉 Content processing complete for creator ${{ env.CREATOR_ID }}"
-                        echo "Content is now available on the Ainflue platform"
+                        echo "Content is now available on the IA Chéries platform"
                         # Here you would typically send a notification to the creator
                 }
             ]
@@ -984,7 +984,7 @@ if __name__ == "__main__":
     config = create_production_pipeline_config()
     template = CreatorContentPipelineTemplate(config)
     
-    print("Creator Content Pipeline Template for Ainflue Platform")
+    print("Creator Content Pipeline Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Supported Content Types: {[ct.value for ct in config.supported_content_types]}")
     print(f"- Processing Stages: {len(config.processing_stages)}")

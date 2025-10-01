@@ -432,7 +432,7 @@ def create_automation_pipeline(config: PipelineConfig) -> AutomationPipelineOrch
 # Default configuration
 DEFAULT_PIPELINE_CONFIG = PipelineConfig(
     pipeline_name="ainflue-ml-pipeline",
-    source_repository="https://github.com/Mlaiel/Ainflue",
+    source_repository="https://github.com/Mlaiel/IA Chéries",
     target_environments=["staging", "production"],
     testing_enabled=True,
     quality_gates_enabled=True,

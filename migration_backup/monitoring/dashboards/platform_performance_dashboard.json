@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Platform Performance Dashboard",
+    "title": "IA Chéries Platform Performance Dashboard",
     "tags": ["ainflue", "platform", "performance", "apis"],
     "style": "dark",
     "timezone": "browser",

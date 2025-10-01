@@ -82,7 +82,7 @@ class PlatformContentSurveillance:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={
-                "User-Agent": "Ainflue-ContentSurveillance/1.0"
+                "User-Agent": "IA Chéries-ContentSurveillance/1.0"
             }
         )
         return self

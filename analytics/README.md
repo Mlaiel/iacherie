@@ -264,9 +264,9 @@ dashboard_data = await orchestrator.get_global_dashboard_data()
 # Automatic metrics collection
 from prometheus_client import Counter, Histogram, Gauge
 
-ANALYTICS_REQUESTS = Counter('ainflue_analytics_requests_total')
-ANALYTICS_DURATION = Histogram('ainflue_analytics_duration_seconds')
-PREDICTION_ACCURACY = Gauge('ainflue_prediction_accuracy')
+ANALYTICS_REQUESTS = Counter('iacherie_analytics_requests_total')
+ANALYTICS_DURATION = Histogram('iacherie_analytics_duration_seconds')
+PREDICTION_ACCURACY = Gauge('iacherie_prediction_accuracy')
 ```
 
 ---
@@ -413,9 +413,9 @@ Comprehensive global business intelligence.
 ### Environment Variables
 ```bash
 # Core configuration
-AINFLUE_ANALYTICS_QUANTUM_ENABLED=true
-AINFLUE_ANALYTICS_LOG_LEVEL=INFO
-AINFLUE_ANALYTICS_CACHE_TTL=3600
+IACHERIE_ANALYTICS_QUANTUM_ENABLED=true
+IACHERIE_ANALYTICS_LOG_LEVEL=INFO
+IACHERIE_ANALYTICS_CACHE_TTL=3600
 
 # Redis configuration
 REDIS_HOST=localhost

@@ -1,5 +1,5 @@
 """Creator Services Interface
-Main entry point for Ainflue Platform creator-specific services.
+Main entry point for IA Chéries Platform creator-specific services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

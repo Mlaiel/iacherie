@@ -128,7 +128,7 @@ python setup.py install
 ### Configuration Environment
 ```env
 # Configuration Database
-DATABASE_URL=postgresql://user:pass@localhost/ainflue_billing
+DATABASE_URL=postgresql://user:pass@localhost/iacherie_billing
 REDIS_URL=redis://localhost:6379/0
 
 # Configuration Paiements

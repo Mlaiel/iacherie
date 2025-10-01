@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Contact: mlaiel@live.de
 
 🎯 BACKUP & DISASTER RECOVERY
-Enterprise-grade backup and disaster recovery system for Ainflue event store
+Enterprise-grade backup and disaster recovery system for IA Chéries event store
 with multi-region replication, point-in-time recovery, and automated failover.
 
 Key Features:
@@ -143,7 +143,7 @@ class BackupMetrics:
 
 class BackupDisasterRecovery:
     """
-    Enterprise backup and disaster recovery system for Ainflue event store
+    Enterprise backup and disaster recovery system for IA Chéries event store
     
     Features:
     - Automated backup scheduling and execution
@@ -191,11 +191,11 @@ class BackupDisasterRecovery:
             'encryption_key_rotation_days': 90
         }
         
-        # Initialize Ainflue business backup policies
+        # Initialize IA Chéries business backup policies
         self._initialize_backup_policies()
     
     def _initialize_backup_policies(self):
-        """Initialize Ainflue-specific backup policies"""
+        """Initialize IA Chéries-specific backup policies"""
         
         # Content events - High priority with long retention
         self._backup_schedule['content_events'] = {

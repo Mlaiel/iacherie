@@ -1,8 +1,8 @@
-"""Ainflue Neural Network Configuration
+"""IA Chéries Neural Network Configuration
 ====================================
 
 Neural network configurations for deep learning models, training pipelines,
-inference optimization, and AI model deployment for Ainflue platform.
+inference optimization, and AI model deployment for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -525,5 +525,5 @@ __all__ = [
     "neural_network_config"
 ]
 
-logger.info("🧠 Ainflue Neural Network Configuration loaded")
+logger.info("🧠 IA Chéries Neural Network Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

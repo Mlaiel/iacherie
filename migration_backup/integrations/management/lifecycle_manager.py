@@ -663,7 +663,7 @@ class LifecycleManager:
     """
     Enterprise Lifecycle Manager with automated state management
     
-    Provides comprehensive lifecycle management for Ainflue platform components
+    Provides comprehensive lifecycle management for IA Chéries platform components
     with automated state transitions, event-driven processing, and analytics.
     """
     

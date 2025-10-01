@@ -15,7 +15,7 @@ COLLABORATION NOTIFICATIONS ORCHESTRATOR
 - Gestion cycle de vie collaborations complète
 - Notifications multi-parties et workflows équipe
 
-🚀 FONCTIONNALITÉS CORE AINFLUE:
+🚀 FONCTIONNALITÉS CORE IA CHÉRIES:
 - Matching alerts collaborateurs IA avancé
 - Partnership requests & invitations management
 - Collaboration milestones & success tracking
@@ -95,7 +95,7 @@ class CollaborationContext:
 class CollaborationNotificationsOrchestrator:
     """
     Orchestrateur principal des notifications collaboration
-    Gère l'écosystème complet de collaboration Ainflue
+    Gère l'écosystème complet de collaboration IA Chéries
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

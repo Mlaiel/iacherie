@@ -1,10 +1,10 @@
 """
-Cloud Module - Ainflue Infrastructure Enterprise
+Cloud Module - iacherie Infrastructure Enterprise
 ===============================================
 Point d'entrée principal pour tous les services cloud
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -30,10 +30,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise multi-cloud infrastructure for Ainflue platform"
+__description__ = "Enterprise multi-cloud infrastructure for iacherie platform"
 
-# Configuration cloud métier Ainflue
-AINFLUE_CLOUD_WORKFLOW = {
+# Configuration cloud métier iacherie
+IACHERIE_CLOUD_WORKFLOW = {
     'upload': 'Multi-cloud content storage with global distribution',
     'ai_processing': 'GPU-optimized cloud instances for AI workloads', 
     'protection': 'Secure cloud storage for IP rights and blockchain integration',

@@ -77,7 +77,7 @@ class ServiceInstance:
     environment: str = "production"
     weight: int = 100
     service_type: str = "microservice"
-    ainflue_business_domain: str = "general"  # creator, content, monetization, collaboration, distribution
+    iacherie_business_domain: str = "general"  # creator, content, monetization, collaboration, distribution
     created_at: float = field(default_factory=time.time)
     last_heartbeat: float = field(default_factory=time.time)
     status: ServiceStatus = ServiceStatus.HEALTHY
@@ -348,7 +348,7 @@ class DistributedRegistryCore:
         """
         try:
             # Validate business constraints
-            if not await self._validate_ainflue_business_constraints(instance):
+            if not await self._validate_iacherie_business_constraints(instance):
                 logger.error(f"Business constraint validation failed for {instance.service_id}")
                 return False
             
@@ -545,13 +545,13 @@ class DistributedRegistryCore:
         placement_key = f"{service_instance.service_name}:{service_instance.region}:{service_instance.datacenter}"
         return hashlib.sha256(placement_key.encode()).hexdigest()
     
-    async def _validate_ainflue_business_constraints(self, instance: ServiceInstance) -> bool:
+    async def _validate_iacherie_business_constraints(self, instance: ServiceInstance) -> bool:
         """Validation contraintes métier IA Chérie pour enregistrement."""
         try:
             # Validate business domain
             valid_domains = {'creator', 'content', 'monetization', 'collaboration', 'distribution', 'general'}
-            if instance.ainflue_business_domain not in valid_domains:
-                logger.error(f"Invalid business domain: {instance.ainflue_business_domain}")
+            if instance.iacherie_business_domain not in valid_domains:
+                logger.error(f"Invalid business domain: {instance.iacherie_business_domain}")
                 return False
             
             # Validate service type
@@ -565,7 +565,7 @@ class DistributedRegistryCore:
                 return False
             
             # Validate required metadata for IA Chérie services
-            if instance.ainflue_business_domain != 'general':
+            if instance.iacherie_business_domain != 'general':
                 required_fields = {'creator_types', 'content_formats', 'processing_capabilities'}
                 if not any(field in instance.metadata for field in required_fields):
                     logger.error("Missing required IA Chérie business metadata")
@@ -605,7 +605,7 @@ class DistributedRegistryCore:
                 return False
             
             # Business domain filter
-            if criteria.business_domain and instance.ainflue_business_domain != criteria.business_domain:
+            if criteria.business_domain and instance.iacherie_business_domain != criteria.business_domain:
                 return False
             
             # Status filter

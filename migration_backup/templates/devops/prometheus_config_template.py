@@ -1,4 +1,4 @@
-"""Prometheus Configuration Template for Ainflue Platform
+"""Prometheus Configuration Template for IA Chéries Platform
 Enterprise-grade monitoring and observability configuration for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -31,7 +31,7 @@ class MetricType(Enum):
 
 
 class ServiceType(Enum):
-    """Ainflue platform services"""
+    """IA Chéries platform services"""
     API_GATEWAY = "api-gateway"
     AUTH_SERVICE = "auth-service"
     CONTENT_PROCESSOR = "content-processor"
@@ -85,7 +85,7 @@ class PrometheusConfig:
 
 
 class PrometheusConfigTemplate:
-    """Enterprise Prometheus Configuration Template for Ainflue Platform"""
+    """Enterprise Prometheus Configuration Template for IA Chéries Platform"""
     
     def __init__(self, config: PrometheusConfig):
         self.config = config
@@ -774,7 +774,7 @@ if __name__ == "__main__":
     config = create_production_prometheus_config()
     template = PrometheusConfigTemplate(config)
     
-    print("Prometheus Configuration Template for Ainflue Platform")
+    print("Prometheus Configuration Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Environment: {config.environment}")
     print(f"- Retention: {config.retention_time}")

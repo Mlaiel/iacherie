@@ -294,7 +294,7 @@ Initialize tax compliance processor"""
                 "merchant": {
                     "country": transaction.merchant_country,
                     "tax_id": transaction.merchant_tax_id,
-                    "business_name": invoice_details.get("merchant_name", "Ainflue Platform"),
+                    "business_name": invoice_details.get("merchant_name", "IA Chéries Platform"),
                     "address": invoice_details.get("merchant_address")
                 },
                 "line_items": line_items,

@@ -1,7 +1,7 @@
 """🚨 Intelligent Alert Manager - Central Alert System
 ==================================================
 
-Unified intelligent alert system for the Ainflue platform that consolidates and enhances
+Unified intelligent alert system for the IA Chéries platform that consolidates and enhances
 existing alert infrastructure with intelligent routing, escalation, and correlation.
 
 Features:

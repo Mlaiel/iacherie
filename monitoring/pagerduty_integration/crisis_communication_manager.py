@@ -261,7 +261,7 @@ class CrisisCommunicationManager:
             ],
             contact_info={
                 "status_page": ["https://status.iacherie.com"],
-                "twitter": ["@AinfluePlatform"],
+                "twitter": ["@iacheriePlatform"],
                 "linkedin": ["iacherie-platform"]
             },
             escalation_threshold_minutes=60,

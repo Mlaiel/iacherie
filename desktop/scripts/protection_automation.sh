@@ -536,7 +536,7 @@ create_blockchain_record() {
     "previous_hash": "$(echo "${timestamp}_${protection_id}" | sha256sum | cut -d' ' -f1)",
     "merkle_root": "$(echo "${hash_chain}_${timestamp}" | sha256sum | cut -d' ' -f1)",
     "verification_signature": "$(echo "$protection_id$timestamp$hash_chain" | sha256sum | cut -d' ' -f1)",
-    "blockchain_network": "AINFLUE_PROTECTION_CHAIN",
+    "blockchain_network": "IACHERIE_PROTECTION_CHAIN",
     "version": "1.0",
     "consensus_algorithm": "Proof_of_Creation",
     "smart_contract": {

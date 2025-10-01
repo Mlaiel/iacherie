@@ -3,7 +3,7 @@
 Advanced Microservices Orchestration & Service Mesh
 =================================================
 
-Enterprise-grade microservices orchestration system for Ainflue platform.
+Enterprise-grade microservices orchestration system for IA Chéries platform.
 Implements service discovery, load balancing, circuit breakers, API gateway,
 distributed tracing, and comprehensive service mesh management.
 

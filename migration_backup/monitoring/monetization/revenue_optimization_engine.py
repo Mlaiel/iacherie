@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Revenue Optimization Engine
+IA Chéries Platform - Revenue Optimization Engine
 ============================================
 
-Advanced ML-powered revenue optimization system for the Ainflue platform.
+Advanced ML-powered revenue optimization system for the IA Chéries platform.
 Implements dynamic pricing strategies, A/B testing for monetization features,
 customer lifetime value optimization, and predictive revenue modeling.
 
@@ -110,7 +110,7 @@ class ABTestConfig:
 
 class RevenueOptimizationEngine:
     """
-    Advanced revenue optimization engine for the Ainflue platform.
+    Advanced revenue optimization engine for the IA Chéries platform.
     
     Uses machine learning and statistical analysis to optimize pricing,
     identify revenue opportunities, and run A/B tests for monetization strategies.

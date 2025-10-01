@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Blockchain Payment Integration - Ainflue Enterprise Collaboration
+Blockchain Payment Integration - IA Chéries Enterprise Collaboration
 Decentralized payment and smart contract management for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

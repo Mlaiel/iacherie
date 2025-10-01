@@ -7,7 +7,7 @@ for the creator economy platform. Provides centralized rights orchestration, aut
 fulfillment, and cross-platform rights enforcement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

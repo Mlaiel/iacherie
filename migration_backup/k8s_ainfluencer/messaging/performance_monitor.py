@@ -859,11 +859,11 @@ Initialize performance monitor"""
             msg = MIMEMultipart()
             msg['From'] = smtp_user
             msg['To'] = ', '.join(recipients)
-            msg['Subject'] = f"[AINFLUE PERF] {notification_payload['severity'].upper()}: {notification_payload['rule_name']}"
+            msg['Subject'] = f"[IA CHÉRIES PERF] {notification_payload['severity'].upper()}: {notification_payload['rule_name']}"
             
             # Email body
             body = f"""
-            AINFLUE PERFORMANCE ALERT
+            IA CHÉRIES PERFORMANCE ALERT
             ========================
             
             Rule: {notification_payload['rule_name']}
@@ -923,7 +923,7 @@ Initialize performance monitor"""
             color = severity_colors.get(notification_payload['severity'], "#808080")
             
             slack_payload = {
-                "text": f"{emoji} Ainflue Performance Alert: {notification_payload['rule_name']}",
+                "text": f"{emoji} IA Chéries Performance Alert: {notification_payload['rule_name']}",
                 "attachments": [
                     {
                         "color": color,
@@ -954,7 +954,7 @@ Initialize performance monitor"""
                                 "short": False
                             }
                         ],
-                        "footer": "Ainflue Performance Monitor",
+                        "footer": "IA Chéries Performance Monitor",
                         "ts": int(datetime.utcnow().timestamp())
                     }
                 ]
@@ -1007,7 +1007,7 @@ Initialize performance monitor"""
                 return
             
             # Create short SMS message
-            sms_message = f"CRITICAL: Ainflue {notification_payload['metric_name']} alert: {notification_payload['current_value']:.1f} exceeds {notification_payload['threshold']}. Check system immediately."
+            sms_message = f"CRITICAL: IA Chéries {notification_payload['metric_name']} alert: {notification_payload['current_value']:.1f} exceeds {notification_payload['threshold']}. Check system immediately."
             
             # Log SMS (in production, use real SMS API)
             logger.info(f"SMS alert would be sent to {len(to_numbers)} recipients")

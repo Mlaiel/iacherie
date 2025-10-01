@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +13,7 @@
 Helm Package Manager
 
 This module provides enterprise-grade Helm package management capabilities
-for the Ainflue platform infrastructure.
+for the IA Chéries platform infrastructure.
 
 Features:
     - Helm chart lifecycle management

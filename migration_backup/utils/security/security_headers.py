@@ -5,7 +5,7 @@ Security Headers - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade security headers management for Ainflue creator economy platform.
+Enterprise-grade security headers management for IA Chéries creator economy platform.
 CSP, HSTS, and advanced header security with < 1ms operations.
 
 Performance: < 1ms header operations

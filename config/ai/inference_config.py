@@ -393,7 +393,7 @@ class EnterpriseAIInferenceConfiguration:
         
         # Content Recommendation Model
         content_recommender = ModelConfiguration(
-            model_id="ainflue_content_recommender_v2",
+            model_id="iacherie_content_recommender_v2",
             model_name="IA Chérie Content Recommender",
             model_version="2.1.0",
             model_type=ModelType.RECOMMENDATION,
@@ -419,7 +419,7 @@ class EnterpriseAIInferenceConfiguration:
         
         # Content Safety Moderator
         content_moderator = ModelConfiguration(
-            model_id="ainflue_content_moderator_v1",
+            model_id="iacherie_content_moderator_v1",
             model_name="IA Chérie Content Safety Moderator",
             model_version="1.3.0",
             model_type=ModelType.CLASSIFICATION,
@@ -441,7 +441,7 @@ class EnterpriseAIInferenceConfiguration:
         
         # Revenue Optimization Engine
         revenue_optimizer = ModelConfiguration(
-            model_id="ainflue_revenue_optimizer_v1",
+            model_id="iacherie_revenue_optimizer_v1",
             model_name="IA Chérie Revenue Optimization Engine",
             model_version="1.0.0",
             model_type=ModelType.REINFORCEMENT_LEARNING,
@@ -462,7 +462,7 @@ class EnterpriseAIInferenceConfiguration:
         
         # Multimodal Content Analyzer
         content_analyzer = ModelConfiguration(
-            model_id="ainflue_multimodal_analyzer_v2",
+            model_id="iacherie_multimodal_analyzer_v2",
             model_name="IA Chérie Multimodal Content Analyzer",
             model_version="2.0.0",
             model_type=ModelType.MULTIMODAL,
@@ -486,7 +486,7 @@ class EnterpriseAIInferenceConfiguration:
         
         # Creator Performance Predictor
         performance_predictor = ModelConfiguration(
-            model_id="ainflue_performance_predictor_v1",
+            model_id="iacherie_performance_predictor_v1",
             model_name="IA Chérie Creator Performance Predictor",
             model_version="1.2.0",
             model_type=ModelType.REGRESSION,
@@ -791,9 +791,9 @@ class EnterpriseAIInferenceConfiguration:
                 for model_id, stats in model_stats.items()
             },
             "business_impact": {
-                "content_recommendations_served": model_stats.get("ainflue_content_recommender_v2", {}).get("count", 0),
-                "safety_checks_performed": model_stats.get("ainflue_content_moderator_v1", {}).get("count", 0),
-                "revenue_optimizations": model_stats.get("ainflue_revenue_optimizer_v1", {}).get("count", 0)
+                "content_recommendations_served": model_stats.get("iacherie_content_recommender_v2", {}).get("count", 0),
+                "safety_checks_performed": model_stats.get("iacherie_content_moderator_v1", {}).get("count", 0),
+                "revenue_optimizations": model_stats.get("iacherie_revenue_optimizer_v1", {}).get("count", 0)
             },
             "quality_metrics": {
                 "average_confidence": round(

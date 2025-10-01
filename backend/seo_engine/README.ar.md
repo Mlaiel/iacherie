@@ -34,7 +34,7 @@
 
 ## 🎯 الملخص التنفيذي
 
-وحدة **محرك السيو** هي نظام الذكاء والتحسين المتقدم للسيو في Ainflue يوفر تحليل السيو مدعوم بالذكاء الاصطناعي والذكاء التنافسي وتحسين المحتوى متعدد الصيغ وتحسين محركات البحث الشامل للمبدعين عبر جميع المنصات.
+وحدة **محرك السيو** هي نظام الذكاء والتحسين المتقدم للسيو في iacherie يوفر تحليل السيو مدعوم بالذكاء الاصطناعي والذكاء التنافسي وتحسين المحتوى متعدد الصيغ وتحسين محركات البحث الشامل للمبدعين عبر جميع المنصات.
 
 ### القيمة التجارية الأساسية
 
@@ -195,8 +195,8 @@
 ### التثبيت والإعداد
 ```bash
 # استنساخ المستودع
-git clone https://github.com/fahed-mlaiel/ainflue-seo-engine.git
-cd ainflue-seo-engine
+git clone https://github.com/fahed-mlaiel/iacherie-seo-engine.git
+cd iacherie-seo-engine
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -255,16 +255,16 @@ intelligence = await intelligence_engine.analyze_seo_intelligence(
 - **التدريب وورش العمل**: التدريب المهني للسيو وورش عمل الفريق
 
 ### موارد المجتمع
-- **[منتدى مجتمع السيو](https://community.ainflue.com/seo)** - دعم المجتمع والمناقشات
-- **[ويكي أفضل الممارسات](https://wiki.ainflue.com/seo)** - أفضل ممارسات السيو مدفوعة بالمجتمع
-- **[قصص النجاح](https://success.ainflue.com/seo)** - قصص نجاح سيو المبدعين ودراسات الحالة
+- **[منتدى مجتمع السيو](https://community.iacherie.com/seo)** - دعم المجتمع والمناقشات
+- **[ويكي أفضل الممارسات](https://wiki.iacherie.com/seo)** - أفضل ممارسات السيو مدفوعة بالمجتمع
+- **[قصص النجاح](https://success.iacherie.com/seo)** - قصص نجاح سيو المبدعين ودراسات الحالة
 
 ## 📞 الاتصال والدعم
 
-**الدعم التقني**: [support@ainflue.com](mailto:support@ainflue.com)
-**استشارة السيو**: [seo@ainflue.com](mailto:seo@ainflue.com)
-**حلول المؤسسة**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**دعم المبدعين**: [creators@ainflue.com](mailto:creators@ainflue.com)
+**الدعم التقني**: [support@iacherie.com](mailto:support@iacherie.com)
+**استشارة السيو**: [seo@iacherie.com](mailto:seo@iacherie.com)
+**حلول المؤسسة**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**دعم المبدعين**: [creators@iacherie.com](mailto:creators@iacherie.com)
 
 **قيادة المشروع**: [فهد مليل](mailto:mlaiel@live.de)
 

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Audit Logger Template for Ainflue Platform
+Audit Logger Template for iacherie Platform
 =========================================
 
 Production-ready audit logging with:
@@ -72,7 +72,7 @@ class AuditLogger:
     - Tamper-proof logging
     """
     
-    def __init__(self, service_name: str = "ainflue-service"):
+    def __init__(self, service_name: str = "iacherie-service"):
         self.service_name = service_name
         self.audit_events: List[AuditEvent] = []
         self.logger = logging.getLogger(f"{service_name}.audit")
@@ -206,7 +206,7 @@ class AuditLoggerTemplate:
     """Audit Logger Template"""
     
     def create_logger(self, config: Dict[str, Any]) -> AuditLogger:
-        return AuditLogger(service_name=config.get("service_name", "ainflue"))
+        return AuditLogger(service_name=config.get("service_name", "iacherie"))
     
     def get_template_info(self) -> Dict[str, Any]:
         return {

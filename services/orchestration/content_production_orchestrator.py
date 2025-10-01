@@ -81,7 +81,7 @@ class PublishingPlatform(str, Enum):
     LINKEDIN = "linkedin"
     SPOTIFY = "spotify"
     APPLE_PODCASTS = "apple_podcasts"
-    AINFLUE_NATIVE = "ainflue_native"
+    IACHERIE_NATIVE = "iacherie_native"
 
 @dataclass
 class ContentItem:

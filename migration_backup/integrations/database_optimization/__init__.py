@@ -2,7 +2,7 @@
 =========================================================
 
 Module d'optimisation database enterprise avec clustering haute disponibilité,
-réplication multi-region et performance tuning pour Ainflue.
+réplication multi-region et performance tuning pour IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 14 Septembre 2025

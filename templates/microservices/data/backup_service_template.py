@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Backup Service Template for Ainflue Creator Economy Platform
+Backup Service Template for iacherie Creator Economy Platform
 Enterprise backup service with multi-destination, compression, encryption and automated recovery
 """
 
@@ -122,7 +122,7 @@ class BackupConfig:
     aws_access_key_id: Optional[str] = None
     aws_secret_access_key: Optional[str] = None
     aws_region: str = "us-east-1"
-    aws_bucket_name: str = "ainflue-backups"
+    aws_bucket_name: str = "iacherie-backups"
     
     # Database backup settings
     enable_database_backup: bool = True
@@ -230,7 +230,7 @@ class RestoreJob(BaseModel):
 
 class BackupServiceTemplate:
     """
-    Template de service de sauvegarde enterprise pour Ainflue
+    Template de service de sauvegarde enterprise pour iacherie
     
     Fonctionnalités:
     - Multiple backup types (full, incremental, differential)
@@ -247,7 +247,7 @@ class BackupServiceTemplate:
     def __init__(self, config: BackupConfig = None):
         self.config = config or BackupConfig()
         self.app = FastAPI(
-            title="Ainflue Backup Service",
+            title="iacherie Backup Service",
             description="Enterprise backup service with multi-destination support",
             version="1.0.0"
         )

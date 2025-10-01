@@ -653,7 +653,7 @@ class RendererInitializer {
   }
 
   checkWelcomeFlow() {
-    const isFirstRun = !localStorage.getItem('ainflue_setup_complete');
+    const isFirstRun = !localStorage.getItem('iacherie_setup_complete');
     if (isFirstRun) {
       this.showWelcomeWizard();
     }

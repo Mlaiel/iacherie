@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 """
 🕸️ Service Discovery Orchestrator - Enterprise Service Mesh  
-Orchestration complète de la découverte de services pour microservices Ainflue
+Orchestration complète de la découverte de services pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

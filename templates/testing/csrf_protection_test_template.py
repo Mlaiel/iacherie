@@ -2,7 +2,7 @@
 🛡️ CSRF PROTECTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ==================================================================
 
-Enterprise-grade CSRF protection testing template for Ainflue Creator Economy Platform.
+Enterprise-grade CSRF protection testing template for iacherie Creator Economy Platform.
 Comprehensive CSRF security testing covering:
 - CSRF token generation and validation
 - Double-submit cookie pattern testing
@@ -69,8 +69,8 @@ class CSRFTestContext:
     csrf_token: Optional[str] = None
     csrf_secret: Optional[str] = None
     csrf_cookie: Optional[str] = None
-    origin: str = field(default="https://ainflue.com")
-    referer: str = field(default="https://ainflue.com/dashboard")
+    origin: str = field(default="https://iacherie.com")
+    referer: str = field(default="https://iacherie.com/dashboard")
     user_agent: str = field(default_factory=fake.user_agent)
     ip_address: str = field(default_factory=fake.ipv4)
     request_headers: Dict[str, str] = field(default_factory=dict)
@@ -89,7 +89,7 @@ class CSRFTestRequest:
     """Mock HTTP request for CSRF testing"""
     
     method: str = "POST"
-    url: str = "https://ainflue.com/api/v1/content"
+    url: str = "https://iacherie.com/api/v1/content"
     headers: Dict[str, str] = field(default_factory=dict)
     cookies: Dict[str, str] = field(default_factory=dict)
     form_data: Dict[str, Any] = field(default_factory=dict)
@@ -386,7 +386,7 @@ class CSRFProtectionTestTemplate:
             # Create test request with both token and cookie
             request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
                     "Content-Type": "application/json",
                     "Origin": context.origin,
@@ -403,7 +403,7 @@ class CSRFProtectionTestTemplate:
             # Test missing cookie
             request_no_cookie = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers=request.headers.copy(),
                 cookies={},  # No CSRF cookie
                 json_data={"csrf_token": context.csrf_token}
@@ -415,7 +415,7 @@ class CSRFProtectionTestTemplate:
             # Test missing form token
             request_no_token = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers=request.headers.copy(),
                 cookies={"csrf_token": context.csrf_cookie},
                 json_data={}  # No CSRF token in form
@@ -433,7 +433,7 @@ class CSRFProtectionTestTemplate:
             
             request_mismatch = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers=request.headers.copy(),
                 cookies={"csrf_token": context.csrf_cookie},
                 json_data={"csrf_token": different_token}
@@ -482,7 +482,7 @@ class CSRFProtectionTestTemplate:
             # Test cross-origin request with SameSite=Strict
             cross_origin_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Referer": "https://malicious-site.com/attack"
@@ -501,10 +501,10 @@ class CSRFProtectionTestTemplate:
             # Test same-origin request
             same_origin_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Origin": "https://ainflue.com",
-                    "Referer": "https://ainflue.com/dashboard"
+                    "Origin": "https://iacherie.com",
+                    "Referer": "https://iacherie.com/dashboard"
                 },
                 cookies={"csrf_token": context.csrf_cookie}
             )
@@ -533,17 +533,17 @@ class CSRFProtectionTestTemplate:
         
         try:
             allowed_origins = [
-                "https://ainflue.com",
-                "https://app.ainflue.com",
-                "https://creator.ainflue.com"
+                "https://iacherie.com",
+                "https://app.iacherie.com",
+                "https://creator.iacherie.com"
             ]
             
             # Test valid origin
             valid_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Origin": "https://ainflue.com",
+                    "Origin": "https://iacherie.com",
                     "Content-Type": "application/json"
                 }
             )
@@ -558,7 +558,7 @@ class CSRFProtectionTestTemplate:
             # Test invalid origin
             invalid_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Content-Type": "application/json"
@@ -575,7 +575,7 @@ class CSRFProtectionTestTemplate:
             # Test missing origin header
             no_origin_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={"Content-Type": "application/json"}
             )
             
@@ -590,9 +590,9 @@ class CSRFProtectionTestTemplate:
             # Test subdomain validation
             subdomain_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Origin": "https://app.ainflue.com",
+                    "Origin": "https://app.iacherie.com",
                     "Content-Type": "application/json"
                 }
             )
@@ -607,9 +607,9 @@ class CSRFProtectionTestTemplate:
             # Test protocol mismatch
             http_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Origin": "http://ainflue.com",  # HTTP instead of HTTPS
+                    "Origin": "http://iacherie.com",  # HTTP instead of HTTPS
                     "Content-Type": "application/json"
                 }
             )
@@ -636,17 +636,17 @@ class CSRFProtectionTestTemplate:
         
         try:
             allowed_referers = [
-                "https://ainflue.com",
-                "https://app.ainflue.com",
-                "https://creator.ainflue.com"
+                "https://iacherie.com",
+                "https://app.iacherie.com",
+                "https://creator.iacherie.com"
             ]
             
             # Test valid referer
             valid_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Referer": "https://ainflue.com/dashboard",
+                    "Referer": "https://iacherie.com/dashboard",
                     "Content-Type": "application/json"
                 }
             )
@@ -661,7 +661,7 @@ class CSRFProtectionTestTemplate:
             # Test invalid referer
             invalid_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
                     "Referer": "https://malicious-site.com/attack.html",
                     "Content-Type": "application/json"
@@ -678,7 +678,7 @@ class CSRFProtectionTestTemplate:
             # Test missing referer header
             no_referer_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={"Content-Type": "application/json"}
             )
             
@@ -703,9 +703,9 @@ class CSRFProtectionTestTemplate:
             # Test subdomain referer
             subdomain_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/create",
+                url="https://iacherie.com/api/v1/content/create",
                 headers={
-                    "Referer": "https://app.ainflue.com/creator/dashboard",
+                    "Referer": "https://app.iacherie.com/creator/dashboard",
                     "Content-Type": "application/json"
                 }
             )
@@ -760,7 +760,7 @@ class CSRFProtectionTestTemplate:
                 # Test with valid CSRF token
                 protected_request = CSRFTestRequest(
                     method=endpoint["method"],
-                    url=f"https://ainflue.com{endpoint['path']}",
+                    url=f"https://iacherie.com{endpoint['path']}",
                     headers={
                         "Origin": context.origin,
                         "Referer": context.referer,
@@ -781,7 +781,7 @@ class CSRFProtectionTestTemplate:
                 # Test without CSRF token (should fail)
                 unprotected_request = CSRFTestRequest(
                     method=endpoint["method"],
-                    url=f"https://ainflue.com{endpoint['path']}",
+                    url=f"https://iacherie.com{endpoint['path']}",
                     headers={
                         "Origin": context.origin,
                         "Referer": context.referer,
@@ -802,7 +802,7 @@ class CSRFProtectionTestTemplate:
             for method in safe_methods:
                 safe_request = CSRFTestRequest(
                     method=method,
-                    url="https://ainflue.com/api/v1/content",
+                    url="https://iacherie.com/api/v1/content",
                     headers={
                         "Origin": context.origin,
                         "Referer": context.referer
@@ -836,7 +836,7 @@ class CSRFProtectionTestTemplate:
             # Scenario 1: Content monetization
             monetization_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/123/monetize",
+                url="https://iacherie.com/api/v1/content/123/monetize",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -861,7 +861,7 @@ class CSRFProtectionTestTemplate:
             # Scenario 2: Collaboration invitation
             collaboration_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/collaborations",
+                url="https://iacherie.com/api/v1/collaborations",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -887,7 +887,7 @@ class CSRFProtectionTestTemplate:
             # Scenario 3: Content distribution
             distribution_request = CSRFTestRequest(
                 method="PUT",
-                url="https://ainflue.com/api/v1/content/123/distribute",
+                url="https://iacherie.com/api/v1/content/123/distribute",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -912,7 +912,7 @@ class CSRFProtectionTestTemplate:
             # Scenario 4: AI Processing request
             ai_processing_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/ai/process",
+                url="https://iacherie.com/api/v1/ai/process",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -938,7 +938,7 @@ class CSRFProtectionTestTemplate:
             # Scenario 5: Payment processing
             payment_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/payments/process",
+                url="https://iacherie.com/api/v1/payments/process",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -964,7 +964,7 @@ class CSRFProtectionTestTemplate:
             # Test malicious request without CSRF protection
             malicious_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/123/monetize",
+                url="https://iacherie.com/api/v1/content/123/monetize",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Referer": "https://malicious-site.com/attack.html",
@@ -1010,7 +1010,7 @@ class CSRFProtectionTestTemplate:
             # Test 1: Request with custom header (should be protected)
             ajax_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content",
+                url="https://iacherie.com/api/v1/content",
                 headers={
                     "Origin": context.origin,
                     "Referer": context.referer,
@@ -1031,7 +1031,7 @@ class CSRFProtectionTestTemplate:
             # Test 2: Simple form request without custom headers (vulnerable to CSRF)
             form_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content",
+                url="https://iacherie.com/api/v1/content",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Referer": "https://malicious-site.com/attack.html",
@@ -1050,7 +1050,7 @@ class CSRFProtectionTestTemplate:
             # Test 3: API request with Authorization header
             api_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content",
+                url="https://iacherie.com/api/v1/content",
                 headers={
                     "Origin": context.origin,
                     "Content-Type": "application/json",
@@ -1069,7 +1069,7 @@ class CSRFProtectionTestTemplate:
             # Test 4: Request with custom content type (JSON)
             json_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content",
+                url="https://iacherie.com/api/v1/content",
                 headers={
                     "Origin": context.origin,
                     "Content-Type": "application/json"
@@ -1088,7 +1088,7 @@ class CSRFProtectionTestTemplate:
             # Test 5: Form request with standard content type
             form_standard_request = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content",
+                url="https://iacherie.com/api/v1/content",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -1122,7 +1122,7 @@ class CSRFProtectionTestTemplate:
             # Attack 1: Basic CSRF attack via form submission
             basic_csrf_attack = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/content/123/delete",
+                url="https://iacherie.com/api/v1/content/123/delete",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Referer": "https://malicious-site.com/attack.html",
@@ -1141,7 +1141,7 @@ class CSRFProtectionTestTemplate:
             # Attack 2: Image-based CSRF attack
             image_csrf_attack = CSRFTestRequest(
                 method="GET",
-                url="https://ainflue.com/api/v1/user/delete",  # Unsafe GET operation
+                url="https://iacherie.com/api/v1/user/delete",  # Unsafe GET operation
                 headers={
                     "Referer": "https://malicious-site.com/page-with-image.html",
                     "User-Agent": "Mozilla/5.0..."
@@ -1159,7 +1159,7 @@ class CSRFProtectionTestTemplate:
             # Attack 3: JSONP-based CSRF attack
             jsonp_csrf_attack = CSRFTestRequest(
                 method="GET",
-                url="https://ainflue.com/api/v1/user/data?callback=malicious_function",
+                url="https://iacherie.com/api/v1/user/data?callback=malicious_function",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Referer": "https://malicious-site.com/steal-data.html"
@@ -1177,7 +1177,7 @@ class CSRFProtectionTestTemplate:
             # Attack 4: Flash-based CSRF attack
             flash_csrf_attack = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/payments/transfer",
+                url="https://iacherie.com/api/v1/payments/transfer",
                 headers={
                     "Origin": "https://malicious-flash-app.com",
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -1199,11 +1199,11 @@ class CSRFProtectionTestTemplate:
             # Attack 5: Mobile app CSRF attack
             mobile_csrf_attack = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/profile/update",
+                url="https://iacherie.com/api/v1/profile/update",
                 headers={
                     "Origin": "file://",  # Mobile app origin
                     "Content-Type": "application/json",
-                    "User-Agent": "AinflueApp/1.0 Mobile"
+                    "User-Agent": "iacherieApp/1.0 Mobile"
                 },
                 json_data={
                     "email": "attacker@malicious.com",
@@ -1221,7 +1221,7 @@ class CSRFProtectionTestTemplate:
             # Attack 6: WebSocket CSRF attack (if applicable)
             websocket_csrf_attack = CSRFTestRequest(
                 method="POST",
-                url="https://ainflue.com/api/v1/realtime/connect",
+                url="https://iacherie.com/api/v1/realtime/connect",
                 headers={
                     "Origin": "https://malicious-site.com",
                     "Upgrade": "websocket",
@@ -1261,7 +1261,7 @@ class CSRFProtectionTestTemplate:
                 
                 request = CSRFTestRequest(
                     method="POST",
-                    url="https://ainflue.com/api/v1/content",
+                    url="https://iacherie.com/api/v1/content",
                     headers={
                         "Origin": context.origin,
                         "Referer": context.referer,

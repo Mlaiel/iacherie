@@ -2,7 +2,7 @@
 =========================================================
 
 Gestionnaire de sécurité audio enterprise avec DRM, contrôle d'accès,
-chiffrement et protection copyright pour Ainflue.
+chiffrement et protection copyright pour IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Protection techniques audio + watermarking sécurisé + DRM

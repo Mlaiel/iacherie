@@ -25,7 +25,7 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerFreesoundAPI:
+class iaCherieFreesoundAPI:
     """
     🎵 Moteur Freesound pour IA Chérie
     
@@ -633,7 +633,7 @@ async def test_freesound_engine():
     
     try:
         # Initialisation
-        engine = AinfluencerFreesoundAPI()
+        engine = iaCherieFreesoundAPI()
         
         # Test 1: Recherche de base
         print("📝 Test 1: Recherche de sons...")

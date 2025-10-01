@@ -212,7 +212,7 @@ class DefaultSettings:
                 ".exe", ".bat", ".sh", ".php", ".js", ".html"
             ],
             "scan_for_malware": True,
-            "temp_directory": "/tmp/ainflue_uploads",
+            "temp_directory": "/tmp/iacherie_uploads",
             "enable_optimization": True
         }
         

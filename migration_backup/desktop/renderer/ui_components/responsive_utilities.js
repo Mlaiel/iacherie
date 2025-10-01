@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop Renderer - Responsive Utilities
+ * IA Chéries Desktop Renderer - Responsive Utilities
  * Professional responsive design utilities
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)

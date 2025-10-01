@@ -25,11 +25,11 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 # Metrics
-takedown_requests_total = Counter('ainflue_takedown_requests_total',
+takedown_requests_total = Counter('iacherie_takedown_requests_total',
                                 'Total takedown requests processed', ['type', 'status', 'platform'])
-takedown_processing_duration = Histogram('ainflue_takedown_processing_duration_seconds',
+takedown_processing_duration = Histogram('iacherie_takedown_processing_duration_seconds',
                                        'Time spent processing takedown requests')
-active_takedown_requests = Gauge('ainflue_active_takedown_requests',
+active_takedown_requests = Gauge('iacherie_active_takedown_requests',
                                'Number of active takedown requests', ['platform'])
 
 class TakedownType(Enum):

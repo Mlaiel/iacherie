@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Monetization Monitoring Module
+IA Chéries Platform - Monetization Monitoring Module
 ================================================
 
 Enterprise-grade monitoring for revenue optimization, payment gateway performance,

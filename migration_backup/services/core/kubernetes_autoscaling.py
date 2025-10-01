@@ -159,7 +159,7 @@ class KubernetesAutoScaler:
         self._initialize_service_profiles()
 
     def _initialize_service_profiles(self):
-        """Initialize service load profiles for Ainflue services"""
+        """Initialize service load profiles for IA Chéries services"""
         # Core Services Profile
         self.service_profiles["core-service"] = ServiceLoadProfile(
             service_name="core-service",
@@ -629,7 +629,7 @@ class KubernetesAutoScaler:
                 await asyncio.sleep(30)  # Shorter retry interval
 
     def create_enterprise_hpa_configs(self) -> List[HPAConfig]:
-        """Create enterprise HPA configurations for Ainflue services"""
+        """Create enterprise HPA configurations for IA Chéries services"""
         configs = []
         
         # Core Service HPA
@@ -713,7 +713,7 @@ class KubernetesAutoScaler:
         return configs
 
     async def deploy_enterprise_autoscaling(self) -> bool:
-        """Deploy enterprise auto-scaling for all Ainflue services"""
+        """Deploy enterprise auto-scaling for all IA Chéries services"""
         try:
             configs = self.create_enterprise_hpa_configs()
             

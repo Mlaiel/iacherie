@@ -1,5 +1,5 @@
 """
-Voice Search Optimizer for Ainflue Platform
+Voice Search Optimizer for IA Chéries Platform
 ===========================================
 
 Advanced voice search optimization for content discovery and creator visibility.

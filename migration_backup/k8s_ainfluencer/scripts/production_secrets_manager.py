@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""🔧 Production Environment Secrets Manager - Ainflue Platform
+"""🔧 Production Environment Secrets Manager - IA Chéries Platform
 ==============================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Security + Backend Senior

@@ -354,8 +354,8 @@ Initialize configuration for all mobile platforms."""
         return {
             "ios_app_store": {
                 "bundle_id": "com.ainflue.app",
-                "team_id": "AINFLUE_TEAM_ID",
-                "app_name": "Ainflue - AI Content Protection",
+                "team_id": "IA CHÉRIES_TEAM_ID",
+                "app_name": "IA Chéries - AI Content Protection",
                 "description": "Complete content creator platform with AI protection, collaboration, and monetization",
                 "keywords": ["content", "ai", "protection", "monetization", "collaboration"],
                 "category": "Productivity",
@@ -369,7 +369,7 @@ Initialize configuration for all mobile platforms."""
             
             "google_play": {
                 "package_name": "com.ainflue.app",
-                "app_name": "Ainflue - AI Content Protection",
+                "app_name": "IA Chéries - AI Content Protection",
                 "short_description": "AI-powered content protection and monetization platform",
                 "full_description": "Complete content creator platform with AI protection, collaboration, and monetization",
                 "category": "Productivity",
@@ -382,8 +382,8 @@ Initialize configuration for all mobile platforms."""
             },
             
             "pwa_manifest": {
-                "name": "Ainflue - AI-Powered Content Protection & Monetization",
-                "short_name": "Ainflue",
+                "name": "IA Chéries - AI-Powered Content Protection & Monetization",
+                "short_name": "IA Chéries",
                 "start_url": "/",
                 "display": "standalone",
                 "theme_color": "#6366f1",

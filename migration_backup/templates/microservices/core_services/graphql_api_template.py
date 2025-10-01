@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-GraphQL API Template for Ainflue Microservices Platform
+GraphQL API Template for IA Chéries Microservices Platform
 ======================================================
 
 Enterprise-grade GraphQL API service template providing:
@@ -56,7 +56,7 @@ logger = logging.getLogger(__name__)
 
 class GraphQLConfig(ServiceConfig):
     """GraphQL API specific configuration"""
-    schema_title: str = "Ainflue GraphQL API"
+    schema_title: str = "IA Chéries GraphQL API"
     schema_description: str = "Enterprise GraphQL API service"
     enable_introspection: bool = True
     enable_graphiql: bool = True
@@ -663,8 +663,8 @@ class GraphqlApiTemplate(BaseMicroservice):
 
 def create_graphql_api_service(
     service_name: str = "graphql-api-service",
-    schema_title: str = "Ainflue GraphQL API",
-    schema_description: str = "Enterprise GraphQL API service for Ainflue platform"
+    schema_title: str = "IA Chéries GraphQL API",
+    schema_description: str = "Enterprise GraphQL API service for IA Chéries platform"
 ) -> GraphqlApiTemplate:
     """Factory function to create GraphQL API service"""
     

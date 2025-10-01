@@ -36,7 +36,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise data processing infrastructure for multi-platform content transformation"
 
 # Configuration logique métier IA Chérie
-AINFLUE_INTEGRATIONS = {
+IACHERIE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'workflow': 'connect→auth→transform→process→distribute→monitor',

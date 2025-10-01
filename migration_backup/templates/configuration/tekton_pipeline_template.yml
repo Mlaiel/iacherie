@@ -1,4 +1,4 @@
-# Tekton CI/CD Pipeline Template for Ainflue Platform
+# Tekton CI/CD Pipeline Template for IA Chéries Platform
 # Cloud-native CI/CD using Tekton Pipelines on Kubernetes
 
 apiVersion: tekton.dev/v1beta1
@@ -11,7 +11,7 @@ metadata:
     type: ci-cd
 spec:
   description: |
-    Complete CI/CD pipeline for Ainflue creator economy platform
+    Complete CI/CD pipeline for IA Chéries creator economy platform
     including build, test, security scan, and deployment
   
   params:
@@ -290,7 +290,7 @@ metadata:
   name: ainflue-code-quality
   namespace: tekton-pipelines
 spec:
-  description: "Run code quality checks for Ainflue platform"
+  description: "Run code quality checks for IA Chéries platform"
   params:
     - name: image
       description: Node.js image to use
@@ -342,7 +342,7 @@ metadata:
   name: ainflue-security-scan
   namespace: tekton-pipelines
 spec:
-  description: "Security scanning for Ainflue platform"
+  description: "Security scanning for IA Chéries platform"
   workspaces:
     - name: source
       description: Source code workspace
@@ -373,7 +373,7 @@ metadata:
   name: ainflue-node-test
   namespace: tekton-pipelines
 spec:
-  description: "Run Node.js tests for Ainflue services"
+  description: "Run Node.js tests for IA Chéries services"
   params:
     - name: service-path
       description: Path to the service directory
@@ -419,7 +419,7 @@ metadata:
   name: ainflue-python-test
   namespace: tekton-pipelines
 spec:
-  description: "Run Python tests for Ainflue ML service"
+  description: "Run Python tests for IA Chéries ML service"
   params:
     - name: service-path
       description: Path to the service directory
@@ -469,7 +469,7 @@ metadata:
   name: ainflue-integration-test
   namespace: tekton-pipelines
 spec:
-  description: "Run integration tests for Ainflue platform"
+  description: "Run integration tests for IA Chéries platform"
   params:
     - name: api-image
       description: API service image
@@ -551,7 +551,7 @@ metadata:
   name: ainflue-deploy
   namespace: tekton-pipelines
 spec:
-  description: "Deploy Ainflue application to Kubernetes"
+  description: "Deploy IA Chéries application to Kubernetes"
   params:
     - name: namespace
       description: Target namespace

@@ -127,9 +127,9 @@ class SystemStatus:
     last_updated: datetime
 
 
-class EnterpriseAinflueFingerprintingOrchestrator:
+class EnterpriseIA ChériesFingerprintingOrchestrator:
     """
-    Orchestrateur enterprise consolidé pour système fingerprinting Ainflue.
+    Orchestrateur enterprise consolidé pour système fingerprinting IA Chéries.
     
     Architecture unifiée 12-fichiers conforme cahier des charges enterprise
     avec fonctionnalités complètes multi-modal, blockchain et surveillance.
@@ -181,7 +181,7 @@ class EnterpriseAinflueFingerprintingOrchestrator:
             'accuracy_rates': {}
         }
         
-        self.logger.info("🔍 EnterpriseAinflueFingerprintingOrchestrator initialisé")
+        self.logger.info("🔍 EnterpriseIA ChériesFingerprintingOrchestrator initialisé")
 
     async def initialize_enterprise_system(self) -> None:
         """Initialise le système enterprise complet."""
@@ -290,7 +290,7 @@ async def create_enterprise_fingerprinting_system(
     db_session: Any = None,
     redis_client: Any = None,
     config: Optional[EnterpriseConfig] = None
-) -> EnterpriseAinflueFingerprintingOrchestrator:
+) -> EnterpriseIA ChériesFingerprintingOrchestrator:
     """
     Crée et initialise le système enterprise fingerprinting.
     
@@ -298,7 +298,7 @@ async def create_enterprise_fingerprinting_system(
         Orchestrateur initialisé et prêt à l'emploi
     """
     
-    orchestrator = EnterpriseAinflueFingerprintingOrchestrator(
+    orchestrator = EnterpriseIA ChériesFingerprintingOrchestrator(
         db_session=db_session,
         redis_client=redis_client,
         config=config
@@ -311,7 +311,7 @@ async def create_enterprise_fingerprinting_system(
 
 # Exports principaux
 __all__ = [
-    'EnterpriseAinflueFingerprintingOrchestrator',
+    'EnterpriseIA ChériesFingerprintingOrchestrator',
     'CreatorType',
     'EnterpriseConfig',
     'SystemStatus',

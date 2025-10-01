@@ -354,7 +354,7 @@ Initialize configuration for all mobile platforms."""
         return {
             "ios_app_store": {
                 "bundle_id": "com.iacherie.app",
-                "team_id": "AINFLUE_TEAM_ID",
+                "team_id": "IACHERIE_TEAM_ID",
                 "app_name": "IA Chérie - AI Content Protection",
                 "description": "Complete content creator platform with AI protection, collaboration, and monetization",
                 "keywords": ["content", "ai", "protection", "monetization", "collaboration"],

@@ -1,5 +1,5 @@
 """Documentation Module - Enterprise Creator Economy Documentation System
-Complete documentation system for Ainflue Creator Economy platform.
+Complete documentation system for IA Chéries Creator Economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -54,11 +54,11 @@ __all__ = [
 def create_api_validator(project_root: str = None):
     """Create a new API documentation validator"""
     if project_root is None:
-        project_root = "/home/runner/work/Ainflue/Ainflue"
+        project_root = "/home/runner/work/IA Chéries/IA Chéries"
     return APIDocumentationValidator(project_root)
 
 # Module initialization message
 import logging
 logger = logging.getLogger(__name__)
-logger.info("Ainflue Documentation Module initialized - Enterprise Creator Economy Documentation System v1.0.0")
+logger.info("IA Chéries Documentation Module initialized - Enterprise Creator Economy Documentation System v1.0.0")
 logger.info("© 2025 Fahed Mlaiel <mlaiel@live.de> - All rights reserved")

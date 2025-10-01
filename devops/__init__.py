@@ -83,7 +83,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('/tmp/ainflue_devops.log', mode='a')
+        logging.FileHandler('/tmp/iacherie_devops.log', mode='a')
     ]
 )
 

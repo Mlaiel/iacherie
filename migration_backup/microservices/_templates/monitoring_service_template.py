@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📊 Enterprise Monitoring Service Template - Ainflue
+📊 Enterprise Monitoring Service Template - IA Chéries
 =================================================
 Template enterprise pour services monitoring.
 Prometheus + Grafana + Jaeger + ELK + custom metrics + alerting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

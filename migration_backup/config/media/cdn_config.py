@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue CDN Configuration Module
+"""IA Chéries CDN Configuration Module
 ==================================
 
-Enterprise-grade Content Delivery Network (CDN) configuration for the Ainflue platform.
+Enterprise-grade Content Delivery Network (CDN) configuration for the IA Chéries platform.
 Comprehensive CDN management with multi-provider support, edge optimization,
 global distribution, caching strategies, and intelligent routing.
 

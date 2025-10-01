@@ -161,7 +161,7 @@ class SessionConfig:
     session_cleanup_interval: int = 300        # 5 minutes
     session_replication_factor: int = 2        # 2 copies par session
     migration_timeout: int = 30                # 30 secondes
-    affinity_cookie_name: str = "AINFLUE_SESSION"
+    affinity_cookie_name: str = "IACHERIE_SESSION"
     affinity_cookie_domain: str = ".iacherie.com"
     enable_session_encryption: bool = True
     storage_tier: SessionStorageTier = SessionStorageTier.HYBRID

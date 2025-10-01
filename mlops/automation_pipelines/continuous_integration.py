@@ -494,7 +494,7 @@ class ContinuousIntegrationEngine:
     async def _build_python_package(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Build Python package"""
         return {
-            "package_name": "ainflue-ml",
+            "package_name": "iacherie-ml",
             "version": "1.0.0",
             "built": True,
             "size_mb": 15.2
@@ -504,8 +504,8 @@ class ContinuousIntegrationEngine:
         """Build Docker images"""
         return {
             "images": [
-                {"name": "ainflue/ml-api", "tag": "v1.0.0", "size_mb": 1250},
-                {"name": "ainflue/ml-worker", "tag": "v1.0.0", "size_mb": 980}
+                {"name": "iacherie/ml-api", "tag": "v1.0.0", "size_mb": 1250},
+                {"name": "iacherie/ml-worker", "tag": "v1.0.0", "size_mb": 980}
             ],
             "built": True
         }

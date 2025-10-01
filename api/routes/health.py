@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Global Health Check Endpoint - Ainflue Platform
+Global Health Check Endpoint - iacherie Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Backend Senior + DevOps Engineer
 Purpose: Enterprise health monitoring and system status

@@ -1,11 +1,11 @@
-# 💾 Modules de Stockage Infrastructure - Ainflue Enterprise
+# 💾 Modules de Stockage Infrastructure - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure stockage de niveau enterprise fournissant stockage distribué, gestion stockage multi-cloud, stockage chiffré, et stockage médias spécialisé pour la plateforme créateurs Ainflue servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
+Infrastructure stockage de niveau enterprise fournissant stockage distribué, gestion stockage multi-cloud, stockage chiffré, et stockage médias spécialisé pour la plateforme créateurs iacherie servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
 
 ## 🏗️ Composants Architecture
 - **Stockage Distribué** : Systèmes fichiers distribués haute performance

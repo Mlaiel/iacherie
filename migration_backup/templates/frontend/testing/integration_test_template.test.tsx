@@ -1,5 +1,5 @@
 /**
- * 🧪 Integration Test Template - Ainflue Creator Economy
+ * 🧪 Integration Test Template - IA Chéries Creator Economy
  * 
  * @fileoverview Template enterprise pour tests d'intégration frontend
  * @version 1.0.0

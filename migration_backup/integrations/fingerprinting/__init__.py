@@ -1,5 +1,5 @@
 """
-Fingerprinting Module - Ainflue Integrations
+Fingerprinting Module - IA Chéries Integrations
 ===========================================
 Module de protection des droits numériques enterprise avec
 fingerprinting multi-format, watermarking et automation DMCA.
@@ -12,7 +12,7 @@ Support pour:
 - Protection droits globale multi-juridictions
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

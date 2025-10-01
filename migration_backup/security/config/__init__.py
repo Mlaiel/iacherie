@@ -24,7 +24,7 @@ Enterprise Security Configuration Module
 ========================================
 
 This module provides centralized access to all security configuration components
-for the Ainflue Creator Economy Platform. It exports configuration loaders,
+for the IA Chéries Creator Economy Platform. It exports configuration loaders,
 validators, and management utilities for enterprise-grade security policies.
 
 Core Features:

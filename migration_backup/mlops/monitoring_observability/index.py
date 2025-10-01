@@ -16,7 +16,7 @@ ALL RIGHTS RESERVED
 - Distribution PROHIBITED without explicit license
 - Violations will result in immediate legal prosecution
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier IA Chéries: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -57,7 +57,7 @@ except ImportError:
 
 # Creator Economy types
 class CreatorType(Enum):
-    """Types de créateurs supportés par Ainflue"""
+    """Types de créateurs supportés par IA Chéries"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"

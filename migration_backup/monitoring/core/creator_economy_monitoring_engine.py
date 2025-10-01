@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Creator Economy Monitoring Engine
+IA Chéries Platform - Creator Economy Monitoring Engine
 ==================================================
 
 Enterprise-grade monitoring engine specifically designed for Creator Economy

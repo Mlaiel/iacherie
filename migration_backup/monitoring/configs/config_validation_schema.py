@@ -3,7 +3,7 @@
 ✅ Configuration Validation Schema - Creator Economy Enterprise
 ===============================================================
 
-Schémas de validation pour toutes les configurations monitoring Creator Economy Ainflue.
+Schémas de validation pour toutes les configurations monitoring Creator Economy IA Chéries.
 Validation JSON Schema, règles métier et vérifications de cohérence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

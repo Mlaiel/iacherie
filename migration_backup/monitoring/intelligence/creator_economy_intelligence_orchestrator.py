@@ -1,7 +1,7 @@
 """Creator Economy Intelligence Orchestrator
 =============================================
 
-Enterprise Creator Economy Intelligence Orchestrator for the Ainflue platform.
+Enterprise Creator Economy Intelligence Orchestrator for the IA Chéries platform.
 Orchestrates comprehensive Creator Economy intelligence pipeline including:
 - Creator tier management with sophisticated intelligence
 - Creator collaboration orchestration with AI matching

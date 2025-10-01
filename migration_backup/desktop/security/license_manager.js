@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - License Manager
+ * IA Chéries Desktop - License Manager
  * 
  * Advanced license management system for content and software licensing
  * 
@@ -87,21 +87,21 @@ class LicenseManager {
         });
 
         this.licenseTemplates.set('ainflue-standard', {
-            name: 'Ainflue Standard License',
-            shortName: 'Ainflue Std',
+            name: 'IA Chéries Standard License',
+            shortName: 'IA Chéries Std',
             permissions: ['private-use', 'modification'],
             conditions: ['include-copyright', 'include-license', 'no-redistribution'],
             limitations: ['commercial-use', 'distribution', 'warranty', 'liability'],
-            description: 'Standard Ainflue platform license for content creators.'
+            description: 'Standard IA Chéries platform license for content creators.'
         });
 
         this.licenseTemplates.set('ainflue-commercial', {
-            name: 'Ainflue Commercial License',
-            shortName: 'Ainflue Com',
+            name: 'IA Chéries Commercial License',
+            shortName: 'IA Chéries Com',
             permissions: ['commercial-use', 'modification', 'distribution', 'private-use'],
             conditions: ['include-copyright', 'payment-required'],
             limitations: ['warranty', 'liability'],
-            description: 'Commercial license for business use of Ainflue content.'
+            description: 'Commercial license for business use of IA Chéries content.'
         });
     }
 
@@ -123,7 +123,7 @@ class LicenseManager {
                 licensor: options.licensor || {
                     name: 'Fahed Mlaiel',
                     email: 'mlaiel@live.de',
-                    organization: 'Ainflue'
+                    organization: 'IA Chéries'
                 },
                 licensee: options.licensee || null,
                 subject: options.subject || 'Digital Content',
@@ -494,7 +494,7 @@ class LicenseManager {
             signature,
             algorithm: 'HMAC-SHA256',
             signedAt: new Date().toISOString(),
-            signer: 'Ainflue License Manager'
+            signer: 'IA Chéries License Manager'
         };
     }
 

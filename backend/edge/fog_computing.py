@@ -145,7 +145,7 @@ class TaskExecution:
 @dataclass
 class FogComputingConfig:
     """Configuration for fog computing orchestrator."""
-    orchestrator_name: str = "ainflue-fog"
+    orchestrator_name: str = "iacherie-fog"
     load_balancing_strategy: LoadBalancingStrategy = LoadBalancingStrategy.RESOURCE_AWARE
     enable_auto_scaling: bool = True
     enable_task_migration: bool = True
@@ -873,7 +873,7 @@ async def main():
     try:
         # Create configuration
         config = FogComputingConfig(
-            orchestrator_name="ainflue-fog-demo",
+            orchestrator_name="iacherie-fog-demo",
             load_balancing_strategy=LoadBalancingStrategy.RESOURCE_AWARE,
             enable_auto_scaling=False
         )

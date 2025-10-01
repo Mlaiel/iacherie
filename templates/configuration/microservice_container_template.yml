@@ -1,5 +1,5 @@
 # =====================================================================================
-# Microservice Container Template - Ainflue Configuration Module
+# Microservice Container Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - MICROSERVICES CONTAINER ORCHESTRATION
+# IACHERIE CREATOR ECONOMY - MICROSERVICES CONTAINER ORCHESTRATION
 # =====================================================================================
 
 # Global network configuration for microservices
@@ -24,8 +24,8 @@ networks:
       config:
         - subnet: 172.30.0.0/16
     labels:
-      - "ainflue.network.tier=api"
-      - "ainflue.security.level=high"
+      - "iacherie.network.tier=api"
+      - "iacherie.security.level=high"
 
   # Service mesh network
   service_mesh:
@@ -38,8 +38,8 @@ networks:
       config:
         - subnet: 172.31.0.0/16
     labels:
-      - "ainflue.network.tier=mesh"
-      - "ainflue.security.level=maximum"
+      - "iacherie.network.tier=mesh"
+      - "iacherie.security.level=maximum"
 
   # Database tier network
   data_tier:
@@ -52,8 +52,8 @@ networks:
       config:
         - subnet: 172.32.0.0/16
     labels:
-      - "ainflue.network.tier=data"
-      - "ainflue.security.level=critical"
+      - "iacherie.network.tier=data"
+      - "iacherie.security.level=critical"
 
   # Monitoring network
   monitoring:
@@ -65,7 +65,7 @@ networks:
       config:
         - subnet: 172.33.0.0/16
     labels:
-      - "ainflue.network.tier=monitoring"
+      - "iacherie.network.tier=monitoring"
 
 # Global volumes for microservices
 volumes:
@@ -77,45 +77,45 @@ volumes:
       o: addr=${NFS_SERVER_IP},rw,nfsvers=4
       device: :/data/creator_content
     labels:
-      - "ainflue.volume.type=shared_storage"
-      - "ainflue.volume.backup=enabled"
+      - "iacherie.volume.type=shared_storage"
+      - "iacherie.volume.backup=enabled"
 
   # Service discovery data
   consul_data:
     driver: local
     labels:
-      - "ainflue.volume.type=service_discovery"
+      - "iacherie.volume.type=service_discovery"
 
   # Distributed cache
   redis_cluster:
     driver: local
     labels:
-      - "ainflue.volume.type=distributed_cache"
+      - "iacherie.volume.type=distributed_cache"
 
 # Secrets for microservices
 secrets:
   # Service mesh certificates
   mesh_ca_cert:
     external: true
-    external_name: ainflue_mesh_ca_cert_v1
+    external_name: iacherie_mesh_ca_cert_v1
 
   mesh_server_cert:
     external: true
-    external_name: ainflue_mesh_server_cert_v1
+    external_name: iacherie_mesh_server_cert_v1
 
   mesh_server_key:
     external: true
-    external_name: ainflue_mesh_server_key_v1
+    external_name: iacherie_mesh_server_key_v1
 
   # Database connection secrets
   postgres_connection_string:
     external: true
-    external_name: ainflue_postgres_connection_v1
+    external_name: iacherie_postgres_connection_v1
 
   # API keys
   ai_service_api_key:
     external: true
-    external_name: ainflue_ai_api_key_v1
+    external_name: iacherie_ai_api_key_v1
 
 # =====================================================================================
 # SERVICES DEFINITION
@@ -196,17 +196,17 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=api_gateway"
-      - "ainflue.service.tier=api"
-      - "ainflue.monitoring.prometheus=true"
-      - "ainflue.tracing.zipkin=true"
+      - "iacherie.service.type=api_gateway"
+      - "iacherie.service.tier=api"
+      - "iacherie.monitoring.prometheus=true"
+      - "iacherie.tracing.zipkin=true"
 
   # =====================================================================================
   # USER MANAGEMENT SERVICE
   # =====================================================================================
   
   user_service:
-    image: ainflue/user-service:${VERSION:-latest}
+    image: iacherie/user-service:${VERSION:-latest}
     hostname: user-service
     restart: unless-stopped
     
@@ -261,19 +261,19 @@ services:
       start_period: 60s
     
     labels:
-      - "ainflue.service.type=user_management"
-      - "ainflue.service.tier=business"
-      - "ainflue.service.database=postgres"
-      - "ainflue.service.cache=redis"
-      - "ainflue.monitoring.prometheus=true"
-      - "ainflue.tracing.jaeger=true"
+      - "iacherie.service.type=user_management"
+      - "iacherie.service.tier=business"
+      - "iacherie.service.database=postgres"
+      - "iacherie.service.cache=redis"
+      - "iacherie.monitoring.prometheus=true"
+      - "iacherie.tracing.jaeger=true"
 
   # =====================================================================================
   # CONTENT PROCESSING SERVICE
   # =====================================================================================
   
   content_service:
-    image: ainflue/content-service:${VERSION:-latest}
+    image: iacherie/content-service:${VERSION:-latest}
     hostname: content-service
     restart: unless-stopped
     
@@ -325,17 +325,17 @@ services:
       start_period: 90s
     
     labels:
-      - "ainflue.service.type=content_processing"
-      - "ainflue.service.tier=processing"
-      - "ainflue.service.storage=shared"
-      - "ainflue.service.cpu_intensive=true"
+      - "iacherie.service.type=content_processing"
+      - "iacherie.service.tier=processing"
+      - "iacherie.service.storage=shared"
+      - "iacherie.service.cpu_intensive=true"
 
   # =====================================================================================
   # AI ENHANCEMENT SERVICE
   # =====================================================================================
   
   ai_service:
-    image: ainflue/ai-service:${VERSION:-latest}
+    image: iacherie/ai-service:${VERSION:-latest}
     hostname: ai-service
     restart: unless-stopped
     
@@ -390,17 +390,17 @@ services:
       start_period: 180s
     
     labels:
-      - "ainflue.service.type=ai_enhancement"
-      - "ainflue.service.tier=ai"
-      - "ainflue.service.gpu=required"
-      - "ainflue.service.memory_intensive=true"
+      - "iacherie.service.type=ai_enhancement"
+      - "iacherie.service.tier=ai"
+      - "iacherie.service.gpu=required"
+      - "iacherie.service.memory_intensive=true"
 
   # =====================================================================================
   # PROTECTION ENGINE SERVICE
   # =====================================================================================
   
   protection_service:
-    image: ainflue/protection-service:${VERSION:-latest}
+    image: iacherie/protection-service:${VERSION:-latest}
     hostname: protection-service
     restart: unless-stopped
     
@@ -447,17 +447,17 @@ services:
       start_period: 45s
     
     labels:
-      - "ainflue.service.type=protection_engine"
-      - "ainflue.service.tier=security"
-      - "ainflue.service.encryption=required"
-      - "ainflue.compliance.gdpr=true"
+      - "iacherie.service.type=protection_engine"
+      - "iacherie.service.tier=security"
+      - "iacherie.service.encryption=required"
+      - "iacherie.compliance.gdpr=true"
 
   # =====================================================================================
   # MONETIZATION SERVICE
   # =====================================================================================
   
   monetization_service:
-    image: ainflue/monetization-service:${VERSION:-latest}
+    image: iacherie/monetization-service:${VERSION:-latest}
     hostname: monetization-service
     restart: unless-stopped
     
@@ -500,17 +500,17 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=monetization"
-      - "ainflue.service.tier=business"
-      - "ainflue.compliance.pci_dss=required"
-      - "ainflue.service.financial=true"
+      - "iacherie.service.type=monetization"
+      - "iacherie.service.tier=business"
+      - "iacherie.compliance.pci_dss=required"
+      - "iacherie.service.financial=true"
 
   # =====================================================================================
   # ANALYTICS SERVICE
   # =====================================================================================
   
   analytics_service:
-    image: ainflue/analytics-service:${VERSION:-latest}
+    image: iacherie/analytics-service:${VERSION:-latest}
     hostname: analytics-service
     restart: unless-stopped
     
@@ -553,16 +553,16 @@ services:
       start_period: 120s
     
     labels:
-      - "ainflue.service.type=analytics"
-      - "ainflue.service.tier=analytics"
-      - "ainflue.service.data_intensive=true"
+      - "iacherie.service.type=analytics"
+      - "iacherie.service.tier=analytics"
+      - "iacherie.service.data_intensive=true"
 
   # =====================================================================================
   # NOTIFICATION SERVICE
   # =====================================================================================
   
   notification_service:
-    image: ainflue/notification-service:${VERSION:-latest}
+    image: iacherie/notification-service:${VERSION:-latest}
     hostname: notification-service
     restart: unless-stopped
     
@@ -596,8 +596,8 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=notification"
-      - "ainflue.service.tier=communication"
+      - "iacherie.service.type=notification"
+      - "iacherie.service.tier=communication"
 
   # =====================================================================================
   # SERVICE DISCOVERY (Consul)
@@ -633,7 +633,7 @@ services:
     
     command: >
       consul agent -server -bootstrap-expect=3 -ui -bind=0.0.0.0 -client=0.0.0.0
-      -retry-join=consul -datacenter=ainflue-dc1
+      -retry-join=consul -datacenter=iacherie-dc1
     
     environment:
       - CONSUL_BIND_INTERFACE=eth0
@@ -647,8 +647,8 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=service_discovery"
-      - "ainflue.service.tier=infrastructure"
+      - "iacherie.service.type=service_discovery"
+      - "iacherie.service.tier=infrastructure"
 
   # =====================================================================================
   # DISTRIBUTED CACHE (Redis Cluster)
@@ -687,8 +687,8 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=cache"
-      - "ainflue.service.tier=data"
+      - "iacherie.service.type=cache"
+      - "iacherie.service.tier=data"
 
   # =====================================================================================
   # MESSAGE QUEUE (RabbitMQ)
@@ -716,9 +716,9 @@ services:
       - "15672:15672"  # Management UI
     
     environment:
-      - RABBITMQ_DEFAULT_USER=ainflue
+      - RABBITMQ_DEFAULT_USER=iacherie
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
-      - RABBITMQ_DEFAULT_VHOST=ainflue
+      - RABBITMQ_DEFAULT_VHOST=iacherie
     
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
@@ -728,8 +728,8 @@ services:
       start_period: 60s
     
     labels:
-      - "ainflue.service.type=message_queue"
-      - "ainflue.service.tier=messaging"
+      - "iacherie.service.type=message_queue"
+      - "iacherie.service.tier=messaging"
 
   # =====================================================================================
   # MONITORING (Prometheus)
@@ -772,8 +772,8 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.service.type=monitoring"
-      - "ainflue.service.tier=observability"
+      - "iacherie.service.type=monitoring"
+      - "iacherie.service.tier=observability"
 
 # =====================================================================================
 # DEPLOYMENT CONFIGURATION
@@ -853,22 +853,22 @@ x-standard-healthcheck: &standard-healthcheck
 # =====================================================================================
 
 x-common-labels: &common-labels
-  - "ainflue.version=${VERSION:-1.0.0}"
-  - "ainflue.environment=${ENVIRONMENT:-production}"
-  - "ainflue.platform=microservices"
-  - "ainflue.monitoring.enabled=true"
-  - "ainflue.logging.enabled=true"
-  - "ainflue.backup.enabled=true"
+  - "iacherie.version=${VERSION:-1.0.0}"
+  - "iacherie.environment=${ENVIRONMENT:-production}"
+  - "iacherie.platform=microservices"
+  - "iacherie.monitoring.enabled=true"
+  - "iacherie.logging.enabled=true"
+  - "iacherie.backup.enabled=true"
 
 x-security-labels: &security-labels
-  - "ainflue.security.scan=required"
-  - "ainflue.security.level=high"
-  - "ainflue.compliance.checked=true"
+  - "iacherie.security.scan=required"
+  - "iacherie.security.level=high"
+  - "iacherie.compliance.checked=true"
 
 x-business-labels: &business-labels
-  - "ainflue.business.unit=creator-economy"
-  - "ainflue.cost.center=platform"
-  - "ainflue.revenue.impact=direct"
+  - "iacherie.business.unit=creator-economy"
+  - "iacherie.cost.center=platform"
+  - "iacherie.revenue.impact=direct"
 
 # =====================================================================================
 # END OF MICROSERVICE TEMPLATE

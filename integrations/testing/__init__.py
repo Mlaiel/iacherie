@@ -34,7 +34,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise testing and validation for IA Chérie platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_TESTING = {
+IACHERIE_TESTING = {
     'platforms': 65,
     'testing_features': ['integration_testing', 'security_testing', 'performance_testing', 'validation'],
     'workflow': 'connect→auth→transform→process→distribute→monitor'

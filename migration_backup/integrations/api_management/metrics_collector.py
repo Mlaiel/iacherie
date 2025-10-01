@@ -1,9 +1,9 @@
 """
-Enterprise Metrics Collector - Ainflue Platform
+Enterprise Metrics Collector - IA Chéries Platform
 ==============================================
 Multi-expert implementation combining DevOps + Backend Senior + ML Engineer +
 DBA expertise for real-time API metrics collection, performance analytics,
-and business intelligence with Ainflue creator economy insights.
+and business intelligence with IA Chéries creator economy insights.
 
 Architecture Features:
 - Real-Time Metrics Collection (latency + throughput + error rates)
@@ -15,7 +15,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator metrics and platform analytics optimization
+Business Logic: IA Chéries creator metrics and platform analytics optimization
 """
 
 import asyncio
@@ -273,7 +273,7 @@ class EnterpriseMetricsCollector:
         self.logger.info("Enterprise Metrics Collector initialized")
     
     def _initialize_default_alerts(self):
-        """Initialize default alert rules for Ainflue platform"""
+        """Initialize default alert rules for IA Chéries platform"""
         default_alerts = [
             AlertRule(
                 rule_id="high_api_latency",
@@ -976,8 +976,8 @@ class EnterpriseMetricsCollector:
         }
 
 
-# Ainflue Business Logic Integration Constants
-AINFLUE_METRICS_CONFIGURATION = {
+# IA Chéries Business Logic Integration Constants
+IA CHÉRIES_METRICS_CONFIGURATION = {
     'creator_economy_metrics': {
         'content_metrics': ['uploads', 'views', 'engagement', 'shares'],
         'monetization_metrics': ['revenue', 'conversions', 'cpm', 'ctr'],

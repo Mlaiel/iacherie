@@ -1,11 +1,11 @@
 """
-Sentiment Analysis Model - Ainflue Enterprise
+Sentiment Analysis Model - IA Chéries Enterprise
 ==========================================
 Modèle analyse sentiment multi-lingue avec business context.
 Emotion detection + brand safety + audience targeting + engagement optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -942,7 +942,7 @@ class SentimentAnalysisModel:
 
 class SentimentAnalysisService:
     """
-    Service principal pour sentiment analysis Ainflue.
+    Service principal pour sentiment analysis IA Chéries.
     Orchestration + batch processing + analytics + caching.
     """
     

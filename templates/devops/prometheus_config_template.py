@@ -1,4 +1,4 @@
-"""Prometheus Configuration Template for Ainflue Platform
+"""Prometheus Configuration Template for iacherie Platform
 Enterprise-grade monitoring and observability configuration for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -31,7 +31,7 @@ class MetricType(Enum):
 
 
 class ServiceType(Enum):
-    """Ainflue platform services"""
+    """iacherie platform services"""
     API_GATEWAY = "api-gateway"
     AUTH_SERVICE = "auth-service"
     CONTENT_PROCESSOR = "content-processor"
@@ -85,7 +85,7 @@ class PrometheusConfig:
 
 
 class PrometheusConfigTemplate:
-    """Enterprise Prometheus Configuration Template for Ainflue Platform"""
+    """Enterprise Prometheus Configuration Template for iacherie Platform"""
     
     def __init__(self, config: PrometheusConfig):
         self.config = config
@@ -245,7 +245,7 @@ class PrometheusConfigTemplate:
         for service in self.config.services_to_monitor:
             service_name = service.value
             scrape_configs.append({
-                "job_name": f"ainflue-{service_name}",
+                "job_name": f"iacherie-{service_name}",
                 "kubernetes_sd_configs": [
                     {
                         "role": "endpoints",
@@ -530,7 +530,7 @@ class PrometheusConfigTemplate:
                 },
                 {
                     "alert": "ServiceDown",
-                    "expr": "up{job=~\"ainflue-.*\"} == 0",
+                    "expr": "up{job=~\"iacherie-.*\"} == 0",
                     "for": "1m",
                     "labels": {
                         "severity": "critical",
@@ -707,19 +707,19 @@ class PrometheusConfigTemplate:
                     "interval": "30s",
                     "rules": [
                         {
-                            "record": "ainflue:creator_active_users_5m",
+                            "record": "iacherie:creator_active_users_5m",
                             "expr": "sum(rate(creator_activity_total[5m]))"
                         },
                         {
-                            "record": "ainflue:content_processing_rate_5m",
+                            "record": "iacherie:content_processing_rate_5m",
                             "expr": "sum(rate(content_processed_total[5m]))"
                         },
                         {
-                            "record": "ainflue:revenue_per_second_5m",
+                            "record": "iacherie:revenue_per_second_5m",
                             "expr": "sum(rate(revenue_generated_total[5m]))"
                         },
                         {
-                            "record": "ainflue:ai_inference_rate_5m",
+                            "record": "iacherie:ai_inference_rate_5m",
                             "expr": "sum(rate(ai_inference_requests_total[5m]))"
                         }
                     ]
@@ -755,7 +755,7 @@ class PrometheusConfigTemplate:
 def create_production_prometheus_config() -> PrometheusConfig:
     """Create production Prometheus configuration"""
     return PrometheusConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment="production",
         retention_time="30d",
         retention_size="50GB",
@@ -774,7 +774,7 @@ if __name__ == "__main__":
     config = create_production_prometheus_config()
     template = PrometheusConfigTemplate(config)
     
-    print("Prometheus Configuration Template for Ainflue Platform")
+    print("Prometheus Configuration Template for iacherie Platform")
     print("Configuration:")
     print(f"- Environment: {config.environment}")
     print(f"- Retention: {config.retention_time}")

@@ -32,7 +32,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise social media management infrastructure for content optimization"
 
 # Configuration logique métier IA Chérie
-AINFLUE_INTEGRATIONS = {
+IACHERIE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'social_tools': 13,

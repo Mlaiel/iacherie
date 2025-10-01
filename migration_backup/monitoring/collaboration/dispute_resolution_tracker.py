@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Dispute Resolution Tracker
+IA Chéries Platform - Dispute Resolution Tracker
 =============================================
 
 Enterprise-grade dispute resolution tracking system with AI-powered mediation,

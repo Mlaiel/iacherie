@@ -2,7 +2,7 @@
 ===================================================================================
 
 Processeur de requêtes analytiques enterprise avec OLAP cubes, columnar storage,
-et business intelligence optimisé pour la plateforme Ainflue créateurs.
+et business intelligence optimisé pour la plateforme IA Chéries créateurs.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Advanced analytics + predictive modeling + feature engineering + ML pipelines

@@ -122,50 +122,50 @@
       "custom_metrics": {
         "business_metrics": [
           {
-            "name": "ainflue_content_uploads_total",
+            "name": "iacherie_content_uploads_total",
             "type": "counter",
             "description": "Total number of content uploads",
             "labels": ["content_type", "user_tier", "platform"]
           },
           {
-            "name": "ainflue_ai_processing_duration_seconds",
+            "name": "iacherie_ai_processing_duration_seconds",
             "type": "histogram",
             "description": "Time spent processing content with AI agents",
             "labels": ["agent_type", "content_format", "quality_level"],
             "buckets": [0.1, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0]
           },
           {
-            "name": "ainflue_platform_publications_total",
+            "name": "iacherie_platform_publications_total",
             "type": "counter",
             "description": "Number of publications to platforms",
             "labels": ["platform", "success", "content_type"]
           },
           {
-            "name": "ainflue_revenue_generated",
+            "name": "iacherie_revenue_generated",
             "type": "gauge",
             "description": "Revenue generated per platform",
             "labels": ["platform", "revenue_type", "creator_tier"]
           },
           {
-            "name": "ainflue_protection_violations_detected",
+            "name": "iacherie_protection_violations_detected",
             "type": "counter",
             "description": "IP protection violations detected",
             "labels": ["violation_type", "platform", "severity"]
           },
           {
-            "name": "ainflue_active_users",
+            "name": "iacherie_active_users",
             "type": "gauge",
             "description": "Currently active users",
             "labels": ["user_type", "subscription_tier"]
           },
           {
-            "name": "ainflue_api_requests_total",
+            "name": "iacherie_api_requests_total",
             "type": "counter",
             "description": "Total API requests",
             "labels": ["method", "endpoint", "status_code"]
           },
           {
-            "name": "ainflue_api_duration_seconds",
+            "name": "iacherie_api_duration_seconds",
             "type": "histogram",
             "description": "API request duration",
             "labels": ["method", "endpoint"],
@@ -174,19 +174,19 @@
         ],
         "infrastructure_metrics": [
           {
-            "name": "ainflue_database_connections",
+            "name": "iacherie_database_connections",
             "type": "gauge",
             "description": "Database connection pool size",
             "labels": ["database", "state"]
           },
           {
-            "name": "ainflue_queue_length",
+            "name": "iacherie_queue_length",
             "type": "gauge",
             "description": "Message queue length",
             "labels": ["queue_name", "priority"]
           },
           {
-            "name": "ainflue_storage_usage_bytes",
+            "name": "iacherie_storage_usage_bytes",
             "type": "gauge",
             "description": "Storage usage by type",
             "labels": ["storage_type", "content_type"]
@@ -339,7 +339,7 @@
     "critical_alerts": [
       {
         "alert": "HighErrorRate",
-        "expr": "rate(ainflue_api_requests_total{status_code=~\"5..\"}[5m]) > 0.1",
+        "expr": "rate(iacherie_api_requests_total{status_code=~\"5..\"}[5m]) > 0.1",
         "for": "5m",
         "labels": {
           "severity": "critical"
@@ -363,7 +363,7 @@
       },
       {
         "alert": "HighAPILatency",
-        "expr": "histogram_quantile(0.95, rate(ainflue_api_duration_seconds_bucket[5m])) > 0.2",
+        "expr": "histogram_quantile(0.95, rate(iacherie_api_duration_seconds_bucket[5m])) > 0.2",
         "for": "10m",
         "labels": {
           "severity": "warning"
@@ -377,7 +377,7 @@
     "business_alerts": [
       {
         "alert": "LowContentUploadRate",
-        "expr": "rate(ainflue_content_uploads_total[1h]) < 10",
+        "expr": "rate(iacherie_content_uploads_total[1h]) < 10",
         "for": "30m",
         "labels": {
           "severity": "warning"
@@ -389,7 +389,7 @@
       },
       {
         "alert": "ProtectionViolationSpike",
-        "expr": "rate(ainflue_protection_violations_detected[5m]) > 5",
+        "expr": "rate(iacherie_protection_violations_detected[5m]) > 5",
         "for": "2m",
         "labels": {
           "severity": "warning"

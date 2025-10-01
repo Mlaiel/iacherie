@@ -848,7 +848,7 @@ class EnterprisePromptEngineering:
                 port=self.config.get("db_port", 5432),
                 user=self.config.get("db_user", "postgres"),
                 password=self.config.get("db_password", "password"),
-                database=self.config.get("db_name", "ainflue_enterprise"),
+                database=self.config.get("db_name", "iacherie_enterprise"),
                 min_size=5,
                 max_size=20
             )
@@ -1094,7 +1094,7 @@ def create_default_config() -> Dict[str, Any]:
         "db_port": 5432,
         "db_user": "postgres",
         "db_password": "password",
-        "db_name": "ainflue_enterprise",
+        "db_name": "iacherie_enterprise",
         "security_level": "medium",
         "optimization_enabled": True,
         "analytics_enabled": True,

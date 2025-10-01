@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Fraud Detection Configuration Module
+"""IA Chéries Fraud Detection Configuration Module
 =============================================
 
-Enterprise-grade fraud detection configuration for the Ainflue platform.
+Enterprise-grade fraud detection configuration for the IA Chéries platform.
 Advanced fraud prevention, real-time detection, machine learning models,
 behavioral analysis, and comprehensive fraud management for creator economy.
 

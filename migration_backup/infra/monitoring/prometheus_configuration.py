@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -281,9 +281,9 @@ class PrometheusConfiguration:
             logger.error(f"Failed to save recording rules for {rule_group}: {str(e)}")
     
     async def create_default_monitoring_targets(self):
-        """Create default monitoring targets for Ainflue infrastructure."""
+        """Create default monitoring targets for IA Chéries infrastructure."""
         try:
-            # Ainflue API targets
+            # IA Chéries API targets
             api_target = PrometheusTarget(
                 job_name="ainflue-api",
                 targets=["ainflue-api:8000"],
@@ -293,7 +293,7 @@ class PrometheusConfiguration:
             )
             await self.add_scrape_target(api_target)
             
-            # Ainflue AI Engine targets
+            # IA Chéries AI Engine targets
             ai_target = PrometheusTarget(
                 job_name="ainflue-ai-engine",
                 targets=["ainflue-ai:8001"],
@@ -345,7 +345,7 @@ class PrometheusConfiguration:
             logger.error(f"Failed to create default monitoring targets: {str(e)}")
     
     async def create_default_alerting_rules(self):
-        """Create default alerting rules for Ainflue infrastructure."""
+        """Create default alerting rules for IA Chéries infrastructure."""
         try:
             # High CPU usage alert
             cpu_alert = AlertingRule(

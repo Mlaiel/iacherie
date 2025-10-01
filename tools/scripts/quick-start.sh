@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 🚀 AINFLUENCER ENTERPRISE QUICK START
+# 🚀 IACHERIE ENTERPRISE QUICK START
 # Script de démarrage rapide pour tous les services enterprise
 # Author: Fahed Mlaiel - DevOps Expert Implementation
 
@@ -22,7 +22,7 @@ MONITORING_PORT=${MONITORING_PORT:-8080}
 
 echo -e "${PURPLE}"
 echo "======================================================"
-echo "🚀 AINFLUENCER ENTERPRISE QUICK START"
+echo "🚀 IACHERIE ENTERPRISE QUICK START"
 echo "======================================================"
 echo -e "${NC}"
 
@@ -143,7 +143,7 @@ start_frontend() {
         # Créer le fichier .env.local s'il n'existe pas
         if [ ! -f ".env.local" ]; then
             cat > .env.local << EOF
-# Ainfluencer Frontend Configuration
+# iaCherie Frontend Configuration
 NEXT_PUBLIC_API_URL=http://localhost:$BACKEND_PORT
 NEXT_PUBLIC_WS_URL=ws://localhost:8765
 BACKEND_URL=http://localhost:$BACKEND_PORT
@@ -217,7 +217,7 @@ check_services() {
 show_summary() {
     echo -e "${PURPLE}"
     echo "======================================================"
-    echo "🎉 AINFLUENCER ENTERPRISE STARTED SUCCESSFULLY!"
+    echo "🎉 IACHERIE ENTERPRISE STARTED SUCCESSFULLY!"
     echo "======================================================"
     echo -e "${NC}"
     

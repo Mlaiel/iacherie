@@ -378,7 +378,7 @@ export class UploadInfrastructure {
       }
     }
 
-    return `https://cdn.ainflue.com/uploads/${progress.fileId}`;
+    return `https://cdn.iacherie.com/uploads/${progress.fileId}`;
   }
 
   /**
@@ -499,7 +499,7 @@ export class UploadInfrastructure {
 
   private async generateThumbnail(fileId: string, file: File): Promise<string> {
     // Simplified thumbnail generation
-    return `https://cdn.ainflue.com/thumbnails/${fileId}.jpg`;
+    return `https://cdn.iacherie.com/thumbnails/${fileId}.jpg`;
   }
 
   private initializeWorkers(): void {

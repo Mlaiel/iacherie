@@ -1,4 +1,4 @@
-"""DevOps Templates Module for Ainflue Platform
+"""DevOps Templates Module for IA Chéries Platform
 Enterprise-grade Infrastructure as Code and DevOps automation templates.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -213,7 +213,7 @@ def get_template_info():
 
 
 def create_complete_devops_stack(environment: str = "development"):
-    """Create a complete DevOps stack for Ainflue platform"""
+    """Create a complete DevOps stack for IA Chéries platform"""
     if environment == "production":
         terraform_config = create_terraform_prod_config()
         ansible_config = create_ansible_prod_config()

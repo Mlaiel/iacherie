@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE SPECTRUM ANALYZER - REAL-TIME DOCKERFILE
+# IA CHÉRIES SPECTRUM ANALYZER - REAL-TIME DOCKERFILE
 # =============================================================================
 
 ARG PYTHON_VERSION=3.11
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${SPECTRUM_SERVICE_PORT}
 CMD ["python3.11", "-m", "spectrum_analyzer.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Spectrum Analyzer"
+LABEL org.opencontainers.image.title="IA Chéries Spectrum Analyzer"
 LABEL ainflue.service.category="audio"
 LABEL ainflue.service.name="spectrum_analyzer"
 LABEL ainflue.service.port="8018"

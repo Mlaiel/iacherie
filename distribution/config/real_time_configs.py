@@ -708,7 +708,7 @@ def load_real_time_config(config_file: str = None) -> RealTimeConfig:
             return real_time_config
     
     # Try to load from environment-specified file
-    env_config_file = os.getenv('AINFLUE_REALTIME_CONFIG')
+    env_config_file = os.getenv('IACHERIE_REALTIME_CONFIG')
     if env_config_file and os.path.exists(env_config_file):
         loaded_config = RealTimeConfig.load_from_file(env_config_file)
         if loaded_config:

@@ -22,7 +22,7 @@ import websockets
 import certifi
 
 from .exceptions import (
-    NetworkError, AuthenticationError, AinflueSdkException,
+    NetworkError, AuthenticationError, iacherieSdkException,
     ConfigurationError
 )
 

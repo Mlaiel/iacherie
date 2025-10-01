@@ -1,6 +1,6 @@
 /**
  * API Route - Real Test Results
- * Sert les données réelles des tests Ainfluencer
+ * Sert les données réelles des tests iaCherie
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -10,8 +10,8 @@ import { join } from 'path';
 export async function GET(request: NextRequest) {
   try {
     // Lire les résultats des tests réels
-    const testWorkflowDir = '/workspaces/Ainfluencer/test_workflow';
-    const testAudioDir = '/workspaces/Ainfluencer/test_audio';
+    const testWorkflowDir = '/workspaces/iaCherie/test_workflow';
+    const testAudioDir = '/workspaces/iaCherie/test_audio';
     
     let audioFiles = [];
     let videoFiles = [];

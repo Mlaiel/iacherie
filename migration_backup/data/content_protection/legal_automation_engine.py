@@ -3,7 +3,7 @@
 ============================================================
 
 Architecture: Enterprise Production-Ready (Data Layer Level 3)
-Module: /workspaces/Ainflue/data/content_protection/legal_automation_engine.py
+Module: /workspaces/IA Chéries/data/content_protection/legal_automation_engine.py
 Expert Team: Lead Dev IA + Legal Tech Expert + Blockchain Engineer + Compliance Specialist
 
 Author: Fahed Mlaiel (mlaiel@live.de)

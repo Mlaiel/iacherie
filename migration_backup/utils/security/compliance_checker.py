@@ -5,7 +5,7 @@ Compliance Checker - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade compliance checking system for Ainflue creator economy platform.
+Enterprise-grade compliance checking system for IA Chéries creator economy platform.
 GDPR, SOX, ISO 27001 validation with < 30ms compliance checks.
 
 Performance: < 30ms compliance checks

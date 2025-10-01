@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ gRPC Streaming Template - Enterprise Real-time Communication
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -1033,7 +1033,7 @@ if __name__ == "__main__":
     
     # Run example
     print("gRPC Streaming Template Example")
-    print("This demonstrates enterprise streaming for the Ainflue creator platform")
+    print("This demonstrates enterprise streaming for the iacherie creator platform")
     
     # Show configuration example
     creator_config = StreamConfig(

@@ -1,4 +1,4 @@
-"""{{enum_name}} Enumeration Template for Ainflue Platform
+"""{{enum_name}} Enumeration Template for iacherie Platform
 {{enum_description}}
 
 Enterprise-grade enumeration definitions with validation, serialization,

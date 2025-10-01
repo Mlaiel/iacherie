@@ -9,7 +9,7 @@
  */
 
 import { HttpClient } from './http-client';
-import { AinflueConfig } from './config';
+import { iacherieConfig } from './config';
 import { ApiResponse, CreatorProfile, ContentItem, AnalyticsData, AIProcessingRequest, AIProcessingResponse } from './interfaces';
 import { AuthenticationError, ValidationError, ErrorHandler } from './errors';
 
@@ -19,9 +19,9 @@ import { AuthenticationError, ValidationError, ErrorHandler } from './errors';
  */
 export class ApiClient {
   private httpClient: HttpClient;
-  private config: AinflueConfig;
+  private config: iacherieConfig;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: iacherieConfig) {
     this.config = config;
     this.httpClient = new HttpClient(config);
   }

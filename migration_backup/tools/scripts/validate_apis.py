@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🧪 VALIDATEUR D'APIs GRATUITES - AINFLUENCER
+🧪 VALIDATEUR D'APIs GRATUITES - IA CHÉRIES
 Teste la connectivité et fonctionnement des APIs gratuites
 """
 
@@ -70,7 +70,7 @@ def test_stripe_api(secret_key):
         return f"❌ Erreur: {str(e)[:30]}"
 
 def main():
-    print("🧪 VALIDATION DES APIs GRATUITES - AINFLUENCER")
+    print("🧪 VALIDATION DES APIs GRATUITES - IA CHÉRIES")
     print("=" * 50)
     print(f"📅 Test exécuté le: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()

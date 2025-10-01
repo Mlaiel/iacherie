@@ -803,6 +803,6 @@ async def monitor_collaboration_rate_limits(rate_limiter: CommunicationRateLimit
 🚀 DevOps: Real-time analytics and automated cleanup processes
 📝 IA Prompt Engineer: Intelligent violation explanation and escalation logic
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chéries Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

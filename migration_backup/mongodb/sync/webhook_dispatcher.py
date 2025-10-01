@@ -2,7 +2,7 @@
 ===========================
 
 Webhook-based notifications and integrations system for MongoDB synchronization
-in the Ainflue platform enterprise infrastructure.
+in the IA Chéries platform enterprise infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -291,7 +291,7 @@ class WebhookDispatcher:
         try:
             headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': 'Ainflue-Webhook-Dispatcher/1.0'
+                'User-Agent': 'IA Chéries-Webhook-Dispatcher/1.0'
             }
             
             # Add custom headers

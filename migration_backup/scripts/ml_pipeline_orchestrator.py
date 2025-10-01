@@ -21,7 +21,7 @@ ML Pipeline Orchestrator - Enterprise AI/ML Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced ML pipeline orchestration for Ainflue Platform:
+Advanced ML pipeline orchestration for IA Chéries Platform:
 - Model training and deployment automation
 - Feature engineering and data preprocessing
 - Model monitoring and drift detection
@@ -182,7 +182,7 @@ class MLPipelineOrchestrator:
             }
     
     async def create_content_analysis_model(self) -> str:
-        """Create AI content analysis model for Ainflue platform"""
+        """Create AI content analysis model for IA Chéries platform"""
         try:
             if not HAS_ML_LIBS:
                 raise ImportError("ML libraries required for model creation")
@@ -194,7 +194,7 @@ class MLPipelineOrchestrator:
             config = ModelConfig(
                 model_id=model_id,
                 model_type=ModelType.CONTENT_ANALYSIS,
-                name="Ainflue Content Analyzer",
+                name="IA Chéries Content Analyzer",
                 version="1.0.0",
                 parameters={
                     'model_name': 'distilbert-base-uncased',
@@ -536,7 +536,7 @@ export ENVIRONMENT={environment}
 echo "Deploying model {model_id} to {environment}"
 
 # Start model server
-python /home/runner/work/Ainflue/Ainflue/scripts/model_server.py \\
+python /home/runner/work/IA Chéries/IA Chéries/scripts/model_server.py \\
     --model-path $MODEL_PATH \\
     --environment $ENVIRONMENT \\
     --port 8080
@@ -760,7 +760,7 @@ async def main():
     """CLI entry point for ML pipeline orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue ML Pipeline Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chéries ML Pipeline Orchestrator')
     parser.add_argument('--create-model', action='store_true', help='Create content analysis model')
     parser.add_argument('--train', metavar='MODEL_ID', help='Train model')
     parser.add_argument('--deploy', metavar='MODEL_ID', help='Deploy model')

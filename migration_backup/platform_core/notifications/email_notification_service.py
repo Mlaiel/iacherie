@@ -176,7 +176,7 @@ class SendGridProvider(EmailProviderInterface):
         """Send email via SendGrid."""
         try:
             from_email = Email(request.sender_email or "noreply@ainflue.com", 
-                             request.sender_name or "Ainflue Platform")
+                             request.sender_name or "IA Chéries Platform")
             
             # Create personalized emails for each recipient
             mail = Mail()
@@ -371,7 +371,7 @@ class MailgunProvider(EmailProviderInterface):
             to_addresses = [r.email for r in request.recipients if r.type == "to"]
             
             data = {
-                'from': f"{request.sender_name or 'Ainflue Platform'} <{request.sender_email or 'noreply@ainflue.com'}>",
+                'from': f"{request.sender_name or 'IA Chéries Platform'} <{request.sender_email or 'noreply@ainflue.com'}>",
                 'to': to_addresses,
                 'subject': request.subject,
                 'o:tracking': 'yes' if request.tracking_enabled else 'no',

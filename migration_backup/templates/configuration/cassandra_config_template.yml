@@ -1,4 +1,4 @@
-# Cassandra Configuration Template for Ainflue Platform
+# Cassandra Configuration Template for IA Chéries Platform
 # NoSQL database for time-series data, analytics, and large-scale data storage
 
 # Cluster name - all nodes in a cluster must have the same value
@@ -257,7 +257,7 @@ audit_logging_options:
     excluded_users: 
 
 ---
-# Cassandra Keyspace and Table Definitions for Ainflue
+# Cassandra Keyspace and Table Definitions for IA Chéries
 
 # Create keyspace
 CREATE KEYSPACE IF NOT EXISTS ainflue 

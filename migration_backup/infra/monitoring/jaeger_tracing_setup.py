@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Jaeger Tracing Setup
+# IA Chéries Infrastructure Module - Jaeger Tracing Setup
 # ===================================================
 # 
-# Enterprise-grade distributed tracing setup for Ainflue platform
+# Enterprise-grade distributed tracing setup for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -104,7 +104,7 @@ class JaegerTracingSetup:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize Jaeger tracing setup"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/monitoring"
+        self.config_path = config_path or "/home/runner/work/IA Chéries/IA Chéries/infra/monitoring"
         self.jaeger_config: Dict[str, Any] = {}
         self.components: Dict[str, JaegerComponent] = {}
         self.trace_configs: Dict[str, TracingConfig] = {}

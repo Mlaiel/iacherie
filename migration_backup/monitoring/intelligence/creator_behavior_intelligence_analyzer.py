@@ -2,7 +2,7 @@
 =========================================
 
 Enterprise Creator Behavior Intelligence Analyzer for comprehensive behavioral
-analysis across the Ainflue Creator Economy platform. Provides sophisticated
+analysis across the IA Chéries Creator Economy platform. Provides sophisticated
 behavior intelligence including:
 - Creator behavior intelligence analysis comprehensive
 - Creator intelligence pattern recognition sophisticated

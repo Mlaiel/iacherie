@@ -3,11 +3,11 @@
 Enterprise Monitoring Dashboard - Real-time Infrastructure Monitoring
 ====================================================================
 
-Advanced monitoring dashboard for Ainflue infrastructure with real-time metrics,
+Advanced monitoring dashboard for IA Chéries infrastructure with real-time metrics,
 creator analytics, and enterprise-grade observability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -76,7 +76,7 @@ class CreatorMetrics:
     timestamp: float
 
 class EnterpriseDashboard:
-    """Enterprise monitoring dashboard for Ainflue infrastructure."""
+    """Enterprise monitoring dashboard for IA Chéries infrastructure."""
     
     def __init__(self):
         """Initialize the enterprise dashboard."""
@@ -551,7 +551,7 @@ async def get_creator_analytics_summary() -> Dict[str, Any]:
 if __name__ == "__main__":
     async def main():
         """Main dashboard demonstration."""
-        print("🚀 Starting Ainflue Enterprise Dashboard...")
+        print("🚀 Starting IA Chéries Enterprise Dashboard...")
         
         # Generate dashboard data
         dashboard_data = await get_real_time_dashboard()

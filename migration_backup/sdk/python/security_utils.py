@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Security Utilities for Ainflue SDK
+"""Security Utilities for IA Chéries SDK
 
 Multi-expert implementation:
 - Security: Comprehensive security utilities and encryption

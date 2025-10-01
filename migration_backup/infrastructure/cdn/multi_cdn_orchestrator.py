@@ -7,7 +7,7 @@ cost optimization, and creator-focused global distribution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Microservices + DevOps + Backend Senior
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -131,7 +131,7 @@ class FailoverEvent:
 
 class MultiCDNOrchestrator:
     """
-    Enterprise Multi-CDN Orchestrator for Ainflue Creator Platform.
+    Enterprise Multi-CDN Orchestrator for IA Chéries Creator Platform.
     
     Provides intelligent multi-provider orchestration with failover,
     cost optimization, and creator-focused global distribution.

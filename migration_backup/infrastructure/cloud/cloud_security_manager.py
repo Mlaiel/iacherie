@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Security Manager
+🏗️ IA Chéries Infrastructure - Cloud Security Manager
 Enterprise cloud security enforcement and compliance automation.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)

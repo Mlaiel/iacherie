@@ -7,7 +7,7 @@
 
 ## 🌟 Aperçu
 
-Le Module Marketplace est un moteur de trading et commerce avancé pour la plateforme Ainflue, fournissant des fonctionnalités marketplace complètes incluant le trading d'influenceurs, systèmes d'enchères, gestion des licences, partage des revenus, et systèmes de conformité de niveau entreprise.
+Le Module Marketplace est un moteur de trading et commerce avancé pour la plateforme iacherie, fournissant des fonctionnalités marketplace complètes incluant le trading d'influenceurs, systèmes d'enchères, gestion des licences, partage des revenus, et systèmes de conformité de niveau entreprise.
 
 ## 👨‍💻 Direction du Module
 

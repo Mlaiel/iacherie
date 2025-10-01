@@ -99,7 +99,7 @@ class VideoRemixEngine:
         self.processing_cache = {}
         self.performance_metrics = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=2)
-        self.temp_dir = tempfile.mkdtemp(prefix="ainflue_video_remix_")
+        self.temp_dir = tempfile.mkdtemp(prefix="iacherie_video_remix_")
         
         logger.info("🎬 VideoRemixEngine initialized - Enterprise Architecture")
     

@@ -371,7 +371,7 @@ report = {
 }
 
 # Export for monitoring systems
-with open("ainflue_db_report.json", "w") as f:
+with open("iacherie_db_report.json", "w") as f:
     json.dump(report, f, indent=2, default=str)
 ```
 
@@ -458,7 +458,7 @@ pytest templates/database/tests/ -v --cov=templates.database
 from templates.database.data_seeding_template import DataSeedingTemplate
 
 seeder = DataSeedingTemplate(
-    database_url="postgresql://localhost/ainflue_test"
+    database_url="postgresql://localhost/iacherie_test"
 )
 
 # Generate test data
@@ -544,7 +544,7 @@ REDIS_URL=redis://localhost:6379/0
 MONGODB_URL=mongodb://localhost:27017/iacherie
 
 # Encryption Keys
-AINFLUE_MASTER_KEY=base64_encoded_256_bit_key_here
+IACHERIE_MASTER_KEY=base64_encoded_256_bit_key_here
 ENCRYPTION_ALGORITHM=aes_256_gcm
 KEY_ROTATION_DAYS=90
 
@@ -644,7 +644,7 @@ spec:
             secretKeyRef:
               name: db-credentials
               key: url
-        - name: AINFLUE_MASTER_KEY
+        - name: IACHERIE_MASTER_KEY
           valueFrom:
             secretKeyRef:
               name: encryption-keys

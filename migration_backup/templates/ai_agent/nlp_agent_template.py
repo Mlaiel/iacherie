@@ -1,4 +1,4 @@
-"""{{agent_name}} Natural Language Processing Agent for Ainflue Platform
+"""{{agent_name}} Natural Language Processing Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

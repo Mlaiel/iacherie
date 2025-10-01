@@ -75,7 +75,7 @@ class LoggingConfig:
     enable_file_logging: bool = True
     enable_redis_logging: bool = True
     enable_console_logging: bool = True
-    log_file_path: str = "/var/log/ainflue/gateway.log"
+    log_file_path: str = "/var/log/iacherie/gateway.log"
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     backup_count: int = 5
     redis_log_ttl: int = 604800  # 7 days

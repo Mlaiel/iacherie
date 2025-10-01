@@ -588,9 +588,9 @@ class RollbackAutomationEngine:
                     "regions": ["us-east-1", "us-west-2"]
                 },
                 "service_endpoints": [
-                    "https://api.ainflue.com",
-                    "https://dashboard.ainflue.com",
-                    "https://payments.ainflue.com"
+                    "https://api.iacherie.com",
+                    "https://dashboard.iacherie.com",
+                    "https://payments.iacherie.com"
                 ],
                 "load_balancer_config": {
                     "algorithm": "round_robin",

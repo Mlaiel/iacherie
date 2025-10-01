@@ -2,7 +2,7 @@
 Enterprise Configuration Management Module
 ==========================================
 
-Ultra-advanced configuration management system for Ainflue platform.
+Ultra-advanced configuration management system for IA Chéries platform.
 Provides enterprise-grade configuration loading, validation, hot-reload,
 and environment-aware settings management.
 

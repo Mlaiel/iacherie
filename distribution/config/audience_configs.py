@@ -611,7 +611,7 @@ def load_audience_config(config_file: str = None) -> AudienceConfig:
             return audience_config
     
     # Try to load from environment-specified file
-    env_config_file = os.getenv('AINFLUE_AUDIENCE_CONFIG')
+    env_config_file = os.getenv('IACHERIE_AUDIENCE_CONFIG')
     if env_config_file and os.path.exists(env_config_file):
         loaded_config = AudienceConfig.load_from_file(env_config_file)
         if loaded_config:

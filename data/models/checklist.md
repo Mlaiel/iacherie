@@ -512,7 +512,7 @@ config/
 ### 🎛️ Variables d'Environnement
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql://user:pass@localhost/ainflue_models
+DATABASE_URL=postgresql://user:pass@localhost/iacherie_models
 DATABASE_POOL_SIZE=20
 DATABASE_MAX_OVERFLOW=30
 DATABASE_ECHO=false

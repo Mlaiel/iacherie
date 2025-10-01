@@ -8,7 +8,7 @@ mongodb:
   connection:
     host: "localhost"
     port: 27017
-    database: "ainflue_test"
+    database: "iacherie_test"
     replica_set: null
     ssl: false
     

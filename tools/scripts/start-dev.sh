@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Ainflue Platform - Development Startup Script
+# iacherie Platform - Development Startup Script
 # =============================================================================
 # Quick development environment setup
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +18,7 @@ NC='\033[0m' # No Color
 
 print_header() {
     echo -e "${BLUE}================================${NC}"
-    echo -e "${BLUE}   Ainflue Development Server   ${NC}"
+    echo -e "${BLUE}   iacherie Development Server   ${NC}"
     echo -e "${BLUE}================================${NC}"
     echo ""
 }
@@ -47,7 +47,7 @@ if [[ ! -f "docker-compose.development.yml" ]]; then
     exit 1
 fi
 
-log_info "Starting Ainflue development environment..."
+log_info "Starting iacherie development environment..."
 
 # Method 1: Try with Docker Compose
 if command -v "docker" &> /dev/null && docker compose version &> /dev/null; then
@@ -67,7 +67,7 @@ if command -v "docker" &> /dev/null && docker compose version &> /dev/null; then
     
     # Start main services
     log_info "Starting main application services..."
-    docker compose -f docker-compose.development.yml up -d ainflue-backend ainflue-frontend
+    docker compose -f docker-compose.development.yml up -d iacherie-backend iacherie-frontend
     
     log_success "Services starting in background!"
     

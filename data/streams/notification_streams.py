@@ -1077,7 +1077,7 @@ class NotificationStreams:
                 name="Email Alert",
                 channel=NotificationChannel.EMAIL,
                 subject_template="Alert: {title}",
-                body_template="Dear recipient,\n\nAn alert has been triggered:\n\nTitle: {title}\nMessage: {message}\nType: {type}\nPriority: {priority}\nTime: {timestamp}\n\nPlease take appropriate action.\n\nBest regards,\nAinflue System",
+                body_template="Dear recipient,\n\nAn alert has been triggered:\n\nTitle: {title}\nMessage: {message}\nType: {type}\nPriority: {priority}\nTime: {timestamp}\n\nPlease take appropriate action.\n\nBest regards,\niacherie System",
                 variables=["title", "message", "type", "priority", "timestamp"]
             )
             

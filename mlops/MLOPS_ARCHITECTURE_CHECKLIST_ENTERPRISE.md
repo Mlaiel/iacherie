@@ -596,7 +596,7 @@ Observability Engine:                    ✅ monitoring_observability/observabil
 #### 🔄 **WORKFLOW MLOPS DISTRIBUÉ IACHERIE**
 ```python
 # ORCHESTRATION MLOPS IACHERIE - 53 AGENTS IA + 7 PHASES
-async def ainflue_mlops_workflow():
+async def iacherie_mlops_workflow():
     """
     Workflow MLOps complet IA Chérie avec 53 agents IA
     Architecture MLOps enterprise avec governance complète

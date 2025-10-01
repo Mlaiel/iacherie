@@ -1,9 +1,9 @@
-"""Ainflue Core API Gateway - Enterprise API Gateway Management
+"""IA Chéries Core API Gateway - Enterprise API Gateway Management
 =========================================================
 
 Advanced API gateway providing request routing, authentication, rate limiting,
 load balancing, API versioning, and microservices orchestration
-for the Ainflue platform.
+for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -178,8 +178,8 @@ class APIGatewayCore:
             
             # Create FastAPI application
             self.app = FastAPI(
-                title="Ainflue API Gateway",
-                description="Enterprise API Gateway for Ainflue Platform",
+                title="IA Chéries API Gateway",
+                description="Enterprise API Gateway for IA Chéries Platform",
                 version="1.0.0"
             )
             

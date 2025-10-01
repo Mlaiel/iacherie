@@ -1,7 +1,7 @@
 """
 📊🔥 CORE CONTENT ANALYZER - ABSOLUTE FINAL MISSING SUB-MODULE! 🔥📊
-Enterprise Content Analysis Engine for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Content Analysis Engine for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

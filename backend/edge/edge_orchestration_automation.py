@@ -2,7 +2,7 @@
 ================================
 
 Orchestration & déploiement automatisé edge ultra-avancé pour l'écosystème
-Ainflue. Consolidation intelligente de tous les composants orchestration
+iacherie. Consolidation intelligente de tous les composants orchestration
 en un système unifié enterprise-grade.
 
 Consolidation des 7 fichiers orchestration/:
@@ -951,18 +951,18 @@ class EdgeOrchestrationAutomation:
             logger.error(f"Failed to initialize orchestration: {e}")
             return False
     
-    async def deploy_ainflue_service(self, creator_type: str, service_config: Dict[str, Any]) -> str:
-        """Déploie un service optimisé pour un type de créateur Ainflue."""
+    async def deploy_iacherie_service(self, creator_type: str, service_config: Dict[str, Any]) -> str:
+        """Déploie un service optimisé pour un type de créateur iacherie."""
         try:
             # Configuration spécifique par type de créateur
             optimized_config = await self._optimize_for_creator_type(creator_type, service_config)
             
             # Création spécification service
             service_spec = ServiceSpec(
-                name=f"ainflue-{creator_type}-service",
+                name=f"iacherie-{creator_type}-service",
                 containers=[ContainerSpec(
                     name=f"{creator_type}-processor",
-                    image=optimized_config.get("image", "ainflue/edge-processor:latest"),
+                    image=optimized_config.get("image", "iacherie/edge-processor:latest"),
                     ports=optimized_config.get("ports", [8080]),
                     environment=optimized_config.get("environment", {}),
                     resources=optimized_config.get("resources", {})
@@ -977,7 +977,7 @@ class EdgeOrchestrationAutomation:
             if success:
                 # Configuration auto-scaling
                 scaling_policy = ScalingPolicy(
-                    policy_id=f"ainflue-{creator_type}-scaling",
+                    policy_id=f"iacherie-{creator_type}-scaling",
                     service_name=service_spec.name,
                     metric=ScalingMetric.CPU_UTILIZATION,
                     threshold_up=70.0,
@@ -993,7 +993,7 @@ class EdgeOrchestrationAutomation:
             return ""
             
         except Exception as e:
-            logger.error(f"Failed to deploy Ainflue service: {e}")
+            logger.error(f"Failed to deploy iacherie service: {e}")
             return ""
     
     async def _optimize_for_creator_type(self, creator_type: str, config: Dict[str, Any]) -> Dict[str, Any]:

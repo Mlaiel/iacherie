@@ -1,5 +1,5 @@
 /**
- * TypeScript Type Definitions for Ainflue SDK
+ * TypeScript Type Definitions for IA Chéries SDK
  * 
  * Comprehensive type system designed with multi-expert approach:
  * - DBA: Optimized data structures and schemas
@@ -18,7 +18,7 @@ export type AuthProvider = 'api_key' | 'jwt' | 'oauth' | 'service_account';
 export type EventType = 'upload' | 'analysis' | 'protection' | 'error' | 'auth' | 'metric';
 
 // Configuration types
-export interface AinflueClientOptions {
+export interface IA ChériesClientOptions {
   apiKey?: string;
   baseUrl?: string;
   apiVersion?: string;

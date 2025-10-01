@@ -486,7 +486,7 @@ class DistributedTracing:
         
         logger.debug(f"🔍 Span terminé: {span.operation_name} ({span.duration_ms:.2f}ms)")
     
-    async def trace_ainflue_pipeline(
+    async def trace_iacherie_pipeline(
         self,
         creator_content: Dict[str, Any],
         pipeline_context: Dict[str, Any]
@@ -495,7 +495,7 @@ class DistributedTracing:
         
         # Démarrage trace racine
         root_span = await self.start_trace(
-            operation_name="ainflue_pipeline",
+            operation_name="iacherie_pipeline",
             service_name="pipeline_orchestrator",
             context={
                 'creator_id': creator_content.get('creator_id'),

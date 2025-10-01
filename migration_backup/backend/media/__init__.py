@@ -2,7 +2,7 @@
 =========================================================
 
 Comprehensive multimedia processing, generation, protection, and distribution
-engine for the Ainflue platform. Integrates AI-powered content creation,
+engine for the IA Chéries platform. Integrates AI-powered content creation,
 intelligent protection systems, and enterprise-grade media workflows.
 
 CONSOLIDATED ARCHITECTURE (18 FILES):

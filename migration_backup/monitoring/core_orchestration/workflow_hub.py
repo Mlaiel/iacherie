@@ -2,7 +2,7 @@
 🏢 Enterprise Workflow Orchestration Hub - Enterprise Core
 ==========================================================
 
-Hub d'orchestration avancé pour les workflows enterprise Ainflue.
+Hub d'orchestration avancé pour les workflows enterprise IA Chéries.
 Automatisation intelligente des processus métier et coordination workflow.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

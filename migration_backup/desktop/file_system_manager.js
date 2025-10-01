@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - File System Manager
+ * IA Chéries Desktop - File System Manager
  * 
  * Secure file operations and content management for professional workflows
  * 

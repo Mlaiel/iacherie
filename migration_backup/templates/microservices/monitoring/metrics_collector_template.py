@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Metrics Collector Template for Ainflue Platform
+Metrics Collector Template for IA Chéries Platform
 ==============================================
 
 Production-ready metrics collection with:
@@ -76,7 +76,7 @@ class MetricEvent:
 
 class MetricsCollector:
     """
-    Production-ready metrics collection system for Ainflue Platform
+    Production-ready metrics collection system for IA Chéries Platform
     
     Features:
     - Prometheus metrics integration
@@ -495,7 +495,7 @@ class MetricsCollector:
 
 class MetricsCollectorTemplate:
     """
-    Metrics Collector Template for Ainflue Platform
+    Metrics Collector Template for IA Chéries Platform
     
     A comprehensive metrics collection system that provides:
     - Prometheus metrics integration

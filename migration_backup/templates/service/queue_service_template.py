@@ -1,4 +1,4 @@
-"""{{service_name}} Queue Service for Ainflue Platform
+"""{{service_name}} Queue Service for IA Chéries Platform
 {{service_description}}
 
 Enterprise-grade message queue service with Redis, RabbitMQ, and Kafka support,
@@ -199,7 +199,7 @@ class JobResponse(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise Queue Service for Ainflue Platform
+    Enterprise Queue Service for IA Chéries Platform
     
     Handles comprehensive message queue management including:
     - Multi-backend support (Redis, RabbitMQ, Kafka, Celery)

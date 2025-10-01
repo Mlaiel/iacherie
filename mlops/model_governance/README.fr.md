@@ -94,7 +94,7 @@ Infrastructure complète de gouvernance MLOps pour Creator Economy avec niveau e
 - **15+ règles conformité** avec validation automatisée
 - **Monitoring multi-threadé** avec traitement temps réel
 
-## 🎯 Logique Métier - Ainflue
+## 🎯 Logique Métier - iacherie
 
 **Pipeline Creator Economy :** Créateurs Multi-formats → Traitement IA → Protection IP → Monétisation → Collaboration & Gamification → SEO Professionnel → Distribution Multi-plateformes
 

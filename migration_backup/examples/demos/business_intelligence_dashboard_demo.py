@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Business Intelligence Dashboard Demo for Ainflue Platform
+Business Intelligence Dashboard Demo for IA Chéries Platform
 ========================================================
 
 Demonstrates advanced analytics and business insights with real-time monitoring,

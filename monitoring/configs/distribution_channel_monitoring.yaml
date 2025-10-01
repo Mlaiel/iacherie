@@ -273,15 +273,15 @@ distribution_monitoring:
     
     # Métriques delivery
     delivery_metrics:
-      - metric: "ainflue_content_delivery_latency_ms"
+      - metric: "iacherie_content_delivery_latency_ms"
         description: "Latence livraison contenu par région"
         labels: ["content_type", "region", "cdn_provider", "creator_tier"]
         
-      - metric: "ainflue_content_cache_hit_ratio"
+      - metric: "iacherie_content_cache_hit_ratio"
         description: "Ratio cache hit pour contenu créateur"
         labels: ["content_category", "cache_layer", "geographic_region"]
         
-      - metric: "ainflue_content_delivery_success_rate"
+      - metric: "iacherie_content_delivery_success_rate"
         description: "Taux succès livraison contenu"
         labels: ["platform_destination", "content_format", "file_size_category"]
 
@@ -337,15 +337,15 @@ distribution_monitoring:
     
     # Métriques portée
     reach_metrics:
-      - metric: "ainflue_creator_total_reach"
+      - metric: "iacherie_creator_total_reach"
         description: "Portée totale créateur toutes plateformes"
         labels: ["creator_id", "time_period", "content_category"]
         
-      - metric: "ainflue_creator_audience_overlap"
+      - metric: "iacherie_creator_audience_overlap"
         description: "Chevauchement audience entre plateformes"
         labels: ["platform_pair", "overlap_percentage_range"]
         
-      - metric: "ainflue_creator_engagement_quality_score"
+      - metric: "iacherie_creator_engagement_quality_score"
         description: "Score qualité engagement créateur"
         labels: ["creator_id", "platform", "engagement_type"]
 
@@ -412,15 +412,15 @@ platform_synchronization:
   
   # Métriques synchronisation
   sync_metrics:
-    - metric: "ainflue_platform_sync_success_rate"
+    - metric: "iacherie_platform_sync_success_rate"
       description: "Taux succès synchronisation plateformes"
       labels: ["source_platform", "target_platform", "content_type", "sync_method"]
       
-    - metric: "ainflue_platform_sync_latency_ms"
+    - metric: "iacherie_platform_sync_latency_ms"
       description: "Latence synchronisation entre plateformes"
       labels: ["platform_pair", "data_type", "sync_priority"]
       
-    - metric: "ainflue_cross_platform_consistency_score"
+    - metric: "iacherie_cross_platform_consistency_score"
       description: "Score cohérence données cross-platform"
       labels: ["data_category", "platform_group", "creator_tier"]
 
@@ -471,15 +471,15 @@ performance_analytics:
   
   # Métriques analytics
   analytics_metrics:
-    - metric: "ainflue_unified_performance_score"
+    - metric: "iacherie_unified_performance_score"
       description: "Score performance unifié toutes plateformes"
       labels: ["creator_id", "score_category", "time_period"]
       
-    - metric: "ainflue_cross_platform_roi"
+    - metric: "iacherie_cross_platform_roi"
       description: "ROI cross-platform créateur"
       labels: ["campaign_type", "platform_mix", "investment_category"]
       
-    - metric: "ainflue_audience_quality_index"
+    - metric: "iacherie_audience_quality_index"
       description: "Index qualité audience cross-platform"
       labels: ["creator_id", "audience_segment", "engagement_depth"]
 
@@ -532,15 +532,15 @@ optimization_engine:
   
   # Métriques optimisation
   optimization_metrics:
-    - metric: "ainflue_distribution_efficiency_score"
+    - metric: "iacherie_distribution_efficiency_score"
       description: "Score efficacité distribution"
       labels: ["strategy_type", "content_category", "creator_tier"]
       
-    - metric: "ainflue_platform_allocation_effectiveness"
+    - metric: "iacherie_platform_allocation_effectiveness"
       description: "Efficacité allocation plateformes"
       labels: ["allocation_algorithm", "performance_metric", "time_period"]
       
-    - metric: "ainflue_optimization_impact_score"
+    - metric: "iacherie_optimization_impact_score"
       description: "Impact optimisations sur performance"
       labels: ["optimization_type", "baseline_comparison", "improvement_category"]
 

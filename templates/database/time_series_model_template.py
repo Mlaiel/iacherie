@@ -111,7 +111,7 @@ class TimeSeriesConfig:
     # InfluxDB settings
     influxdb_url: str = "http://localhost:8086"
     influxdb_token: Optional[str] = None
-    influxdb_org: str = "ainflue"
+    influxdb_org: str = "iacherie"
     influxdb_bucket: str = "timeseries"
     
     # TimescaleDB settings
@@ -1061,7 +1061,7 @@ async def main():
         backend=TimeSeriesBackend.INFLUXDB,
         influxdb_url="http://localhost:8086",
         influxdb_token="your-influxdb-token",
-        influxdb_org="ainflue",
+        influxdb_org="iacherie",
         influxdb_bucket="metrics",
         anomaly_detection_enabled=True,
         forecasting_enabled=True

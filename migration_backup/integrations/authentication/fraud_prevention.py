@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Fraud Prevention
+IA Chéries Platform - Enterprise Fraud Prevention
 Advanced fraud detection and prevention system
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

@@ -3,7 +3,7 @@
 
 Enterprise-grade AI-powered influencer identification and analysis system
 supporting multi-platform discovery, authenticity verification, and 
-collaboration matching for the Ainflue platform.
+collaboration matching for the IA Chéries platform.
 
 This module provides intelligent influencer discovery, engagement analysis,
 audience verification, brand alignment scoring, and collaboration 

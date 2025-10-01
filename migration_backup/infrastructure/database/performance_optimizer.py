@@ -2,12 +2,12 @@
 Enterprise Database Performance Optimizer - Advanced Database Management
 ========================================================================
 
-Comprehensive database performance optimization system for Ainflue platform.
+Comprehensive database performance optimization system for IA Chéries platform.
 Provides intelligent query optimization, clustering, replication, and monitoring
 for PostgreSQL, MongoDB, Redis, and other databases.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - Database Module
+Project: IA Chéries Infrastructure - Database Module
 Expert Role: DBA + Backend Senior + ML Engineer + Performance Expert
 Version: 1.0 Production Enterprise
 
@@ -122,7 +122,7 @@ class DatabasePerformanceOptimizer:
     Enterprise Database Performance Optimizer
     
     Provides comprehensive database optimization, monitoring, and management
-    capabilities for the Ainflue creator platform with ML-powered analysis.
+    capabilities for the IA Chéries creator platform with ML-powered analysis.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

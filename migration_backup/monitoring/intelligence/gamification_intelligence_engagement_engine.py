@@ -3,7 +3,7 @@
 
 Enterprise-grade Gamification Intelligence system providing comprehensive
 engagement optimization, intelligent reward systems, and advanced gamification
-analytics for the Ainflue Creator Economy. Implements sophisticated behavioral
+analytics for the IA Chéries Creator Economy. Implements sophisticated behavioral
 psychology, achievement tracking, and intelligent engagement optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

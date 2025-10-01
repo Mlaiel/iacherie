@@ -15,7 +15,7 @@ TOUS DROITS RÉSERVÉS - All Rights Reserved
 - Violation = Poursuites judiciaires automatiques
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Creator Economy Platform
+Project: IA Chéries - AI-Powered Creator Economy Platform
 Module: Intelligent Alert Routing Engine
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """

@@ -1,5 +1,5 @@
 """IA Influencer Agent - Windowing Computation Engine
-Advanced Time-Windowed Computations for Ainflue Event Streaming Platform
+Advanced Time-Windowed Computations for IA Chéries Event Streaming Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -48,8 +48,8 @@ class TriggerType(Enum):
     CUSTOM = "custom"
 
 
-class AinflueBusinesWindowTypes:
-    """Business-specific window types for Ainflue platform"""
+class IA ChériesBusinesWindowTypes:
+    """Business-specific window types for IA Chéries platform"""
     
     # Content analytics windows
     CONTENT_ENGAGEMENT_WINDOW = {
@@ -689,7 +689,7 @@ class CollaborationSuccessWindowFunction(WindowFunction):
 
 
 class WindowingComputationEngine:
-    """Main windowing computation engine for Ainflue platform"""
+    """Main windowing computation engine for IA Chéries platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -708,7 +708,7 @@ class WindowingComputationEngine:
         try:
             logger.info("Starting Windowing Computation Engine")
             
-            # Setup default window assigners and functions for Ainflue
+            # Setup default window assigners and functions for IA Chéries
             await self._setup_default_windows()
             
             # Start computation task
@@ -739,32 +739,32 @@ class WindowingComputationEngine:
             raise
     
     async def _setup_default_windows(self):
-        """Setup default window assigners and functions for Ainflue"""
+        """Setup default window assigners and functions for IA Chéries"""
         try:
             # Content engagement windows
             self.window_assigners["content_engagement"] = WindowAssigner(
                 "tumbling", 
-                **AinflueBusinesWindowTypes.CONTENT_ENGAGEMENT_WINDOW
+                **IA ChériesBusinesWindowTypes.CONTENT_ENGAGEMENT_WINDOW
             )
             self.window_functions["content_engagement"] = ContentEngagementWindowFunction()
             
             # Creator activity windows
             self.window_assigners["creator_activity"] = WindowAssigner(
                 "sliding",
-                **AinflueBusinesWindowTypes.CREATOR_ACTIVITY_WINDOW
+                **IA ChériesBusinesWindowTypes.CREATOR_ACTIVITY_WINDOW
             )
             
             # Revenue calculation windows
             self.window_assigners["revenue_calculation"] = WindowAssigner(
                 "tumbling",
-                **AinflueBusinesWindowTypes.REVENUE_REPORTING_WINDOW
+                **IA ChériesBusinesWindowTypes.REVENUE_REPORTING_WINDOW
             )
             self.window_functions["revenue_calculation"] = RevenueCalculationWindowFunction()
             
             # Collaboration success windows
             self.window_assigners["collaboration_success"] = WindowAssigner(
                 "session",
-                **AinflueBusinesWindowTypes.COLLABORATION_SUCCESS_WINDOW
+                **IA ChériesBusinesWindowTypes.COLLABORATION_SUCCESS_WINDOW
             )
             self.window_functions["collaboration_success"] = CollaborationSuccessWindowFunction()
             
@@ -968,6 +968,6 @@ __all__ = [
     "TumblingWindow", "SlidingWindow", "SessionWindow", "GlobalWindow",
     "WatermarkGenerator", "WindowEvent", "WindowState", "WindowResult",
     "ContentEngagementWindowFunction", "RevenueCalculationWindowFunction",
-    "CollaborationSuccessWindowFunction", "AinflueBusinesWindowTypes",
+    "CollaborationSuccessWindowFunction", "IA ChériesBusinesWindowTypes",
     "WindowAlignment", "WatermarkStrategy", "TriggerType"
 ]

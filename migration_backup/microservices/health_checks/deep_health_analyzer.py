@@ -1,5 +1,5 @@
 """
-Deep Health Analyzer - Ainflue Health Checks Module
+Deep Health Analyzer - IA Chéries Health Checks Module
 Analyseur health checks profond avec pattern analysis, anomaly detection,
 trend prediction et correlation analysis.
 

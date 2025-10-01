@@ -98,7 +98,7 @@ class MobileAPIService {
 
   private async loadOfflineQueue(): Promise<void> {
     try {
-      const queueData = await AsyncStorage.getItem('ainflue_api_offline_queue');
+      const queueData = await AsyncStorage.getItem('iacherie_api_offline_queue');
       if (queueData) {
         const decryptedData = this.decrypt(queueData);
         this.offlineQueue = JSON.parse(decryptedData);
@@ -111,7 +111,7 @@ class MobileAPIService {
   private async saveOfflineQueue(): Promise<void> {
     try {
       const encryptedData = this.encrypt(JSON.stringify(this.offlineQueue));
-      await AsyncStorage.setItem('ainflue_api_offline_queue', encryptedData);
+      await AsyncStorage.setItem('iacherie_api_offline_queue', encryptedData);
     } catch (error) {
       console.error('Failed to save offline queue:', error);
     }
@@ -265,7 +265,7 @@ class MobileAPIService {
 
   private async getCachedResponse<T>(cacheKey: string): Promise<APIResponse<T> | null> {
     try {
-      const cachedData = await AsyncStorage.getItem(`ainflue_cache_${cacheKey}`);
+      const cachedData = await AsyncStorage.getItem(`iacherie_cache_${cacheKey}`);
       if (cachedData) {
         const decryptedData = this.decrypt(cachedData);
         const parsed = JSON.parse(decryptedData);
@@ -276,7 +276,7 @@ class MobileAPIService {
             cached: true
           };
         } else {
-          await AsyncStorage.removeItem(`ainflue_cache_${cacheKey}`);
+          await AsyncStorage.removeItem(`iacherie_cache_${cacheKey}`);
         }
       }
     } catch (error) {
@@ -298,7 +298,7 @@ class MobileAPIService {
       };
 
       const encryptedData = this.encrypt(JSON.stringify(cacheData));
-      await AsyncStorage.setItem(`ainflue_cache_${cacheKey}`, encryptedData);
+      await AsyncStorage.setItem(`iacherie_cache_${cacheKey}`, encryptedData);
     } catch (error) {
       console.error('Failed to cache response:', error);
     }

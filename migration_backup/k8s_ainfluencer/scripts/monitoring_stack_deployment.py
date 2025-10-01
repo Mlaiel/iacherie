@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""🔧 Monitoring Stack Deployment Manager - Ainflue Platform
+"""🔧 Monitoring Stack Deployment Manager - IA Chéries Platform
 ==========================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + SRE + Backend Senior + Observability Engineer

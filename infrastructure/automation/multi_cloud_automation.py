@@ -1,12 +1,12 @@
 """
-Multi-Cloud Automation - Enterprise Multi-Cloud Orchestration for Ainflue
+Multi-Cloud Automation - Enterprise Multi-Cloud Orchestration for iacherie
 =======================================================================
 
 Advanced multi-cloud automation for cross-cloud resource management, deployment,
 cost optimization, and global content delivery for the creator platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -577,7 +577,7 @@ class MultiCloudAutomationManager:
             content_delivery=content_delivery,
             tags={
                 "environment": "production",
-                "platform": "ainflue",
+                "platform": "iacherie",
                 "managed_by": "multi_cloud_automation"
             }
         )
@@ -986,7 +986,7 @@ class MultiCloudAutomationManager:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "iacherie Creator Platform",
             "multi_cloud_summary": {
                 "total_resources": metrics.total_resources,
                 "active_deployments": metrics.active_deployments,

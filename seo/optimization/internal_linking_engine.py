@@ -576,7 +576,7 @@ class InternalLinkingEngine:
 
 
 # Integration utilities
-def create_ainflue_internal_linking_engine(base_domain: str = "https://iacherie.com") -> InternalLinkingEngine:
+def create_iacherie_internal_linking_engine(base_domain: str = "https://iacherie.com") -> InternalLinkingEngine:
     """Create configured internal linking engine for IA Chérie"""
     
     engine = InternalLinkingEngine(base_domain)
@@ -588,7 +588,7 @@ def create_ainflue_internal_linking_engine(base_domain: str = "https://iacherie.
 
 if __name__ == "__main__":
     # Example usage
-    engine = create_ainflue_internal_linking_engine()
+    engine = create_iacherie_internal_linking_engine()
     
     # Add sample content nodes
     engine.add_content_node(

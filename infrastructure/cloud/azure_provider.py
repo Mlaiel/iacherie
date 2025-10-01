@@ -1,6 +1,6 @@
 """
 Microsoft Azure Infrastructure Provider
-Enterprise-grade Azure infrastructure management for Ainflue platform
+Enterprise-grade Azure infrastructure management for iacherie platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -65,7 +65,7 @@ class AzureCredentials:
     tenant_id: Optional[str] = None
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
-    resource_group: str = "ainflue-resources"
+    resource_group: str = "iacherie-resources"
     location: str = AzureRegion.EAST_US.value
 
 
@@ -107,7 +107,7 @@ class AzureSQLConfig:
     server_name: str
     database_name: str
     location: str = AzureRegion.EAST_US.value
-    admin_login: str = "ainflue_admin"
+    admin_login: str = "iacherie_admin"
     admin_password: str = "ComplexP@ssw0rd!"
     sku_name: str = "S2"  # Standard S2
     max_size_bytes: int = 268435456000  # 250 GB
@@ -151,7 +151,7 @@ class AzureProvider:
         self.clients = {}
         self._initialize_clients()
         
-        # Ainflue-specific configurations
+        # iacherie-specific configurations
         self.creator_services = {
             "content_processing": {
                 "vm_size": AzureVMSize.STANDARD_F8S_V2.value,
@@ -215,7 +215,7 @@ class AzureProvider:
                 {
                     'location': self.location,
                     'tags': {
-                        'platform': 'ainflue',
+                        'platform': 'iacherie',
                         'created_by': 'azure_provider',
                         'environment': 'production'
                     }
@@ -234,7 +234,7 @@ class AzureProvider:
             nic_name = f"{config.vm_name}-nic"
             nic_result = await self._create_network_interface(nic_name, config.location)
             
-            # VM configuration for Ainflue content processing
+            # VM configuration for iacherie content processing
             vm_parameters = {
                 'location': config.location,
                 'os_profile': {
@@ -277,7 +277,7 @@ class AzureProvider:
                     }]
                 },
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'content-processing': 'enabled',
                     'creator-services': 'true',
                     **config.tags
@@ -303,8 +303,8 @@ class AzureProvider:
                 vm_parameters
             )
             
-            # Install Ainflue software via custom script extension
-            await self._install_ainflue_extensions(config.vm_name, config.location)
+            # Install iacherie software via custom script extension
+            await self._install_iacherie_extensions(config.vm_name, config.location)
             
             return {
                 'vm_name': config.vm_name,
@@ -326,7 +326,7 @@ class AzureProvider:
             return self._simulate_aks_creation(config)
             
         try:
-            # AKS cluster optimized for Ainflue creator workloads
+            # AKS cluster optimized for iacherie creator workloads
             cluster_parameters = {
                 'location': config.location,
                 'dns_prefix': f"{config.cluster_name}-dns",
@@ -350,7 +350,7 @@ class AzureProvider:
                     'availability_zones': ['1', '2', '3'],
                     'enable_node_public_ip': False,
                     'tags': {
-                        'platform': 'ainflue',
+                        'platform': 'iacherie',
                         'content-processing': 'enabled',
                         'creator-services': 'true'
                     }
@@ -378,7 +378,7 @@ class AzureProvider:
                     'scale_down_utilization_threshold': '0.5'
                 } if config.enable_auto_scaling else None,
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'cluster-type': 'creator-workloads',
                     'auto-scaling': str(config.enable_auto_scaling).lower()
                 }
@@ -421,7 +421,7 @@ class AzureProvider:
                 'public_network_access': 'Enabled',
                 'minimal_tls_version': '1.2',
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'database-type': 'creator-data',
                     'environment': 'production'
                 }
@@ -433,7 +433,7 @@ class AzureProvider:
                 server_parameters
             )
             
-            # Database configuration for Ainflue creator data
+            # Database configuration for iacherie creator data
             database_parameters = {
                 'location': config.location,
                 'sku': {
@@ -446,7 +446,7 @@ class AzureProvider:
                 'geo_redundant_backup_enabled': config.geo_redundant_backup,
                 'storage_account_type': 'GRS' if config.geo_redundant_backup else 'LRS',
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'data-type': 'creator-profiles',
                     'backup-policy': 'daily'
                 }
@@ -488,7 +488,7 @@ class AzureProvider:
             return self._simulate_storage_creation(config)
             
         try:
-            # Storage account configuration for Ainflue creator content
+            # Storage account configuration for iacherie creator content
             storage_parameters = {
                 'sku': {
                     'name': f"{config.account_tier}_{config.replication_type}"
@@ -511,7 +511,7 @@ class AzureProvider:
                     'key_source': 'Microsoft.Storage'
                 },
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'content-type': 'creator-uploads',
                     'tier': config.access_tier.lower()
                 }
@@ -561,28 +561,28 @@ class AzureProvider:
         try:
             location = location or self.location
             
-            # Cognitive Services configuration for Ainflue AI features
+            # Cognitive Services configuration for iacherie AI features
             services_config = {
                 'computer_vision': {
-                    'name': f'ainflue-vision-{self.subscription_id[:8]}',
+                    'name': f'iacherie-vision-{self.subscription_id[:8]}',
                     'kind': 'ComputerVision',
                     'sku': 'S1',
                     'description': 'Content analysis and moderation'
                 },
                 'text_analytics': {
-                    'name': f'ainflue-text-{self.subscription_id[:8]}',
+                    'name': f'iacherie-text-{self.subscription_id[:8]}',
                     'kind': 'TextAnalytics',
                     'sku': 'S',
                     'description': 'Sentiment analysis and content insights'
                 },
                 'speech_services': {
-                    'name': f'ainflue-speech-{self.subscription_id[:8]}',
+                    'name': f'iacherie-speech-{self.subscription_id[:8]}',
                     'kind': 'SpeechServices',
                     'sku': 'S0',
                     'description': 'Audio content processing'
                 },
                 'content_moderator': {
-                    'name': f'ainflue-moderator-{self.subscription_id[:8]}',
+                    'name': f'iacherie-moderator-{self.subscription_id[:8]}',
                     'kind': 'ContentModerator',
                     'sku': 'S0',
                     'description': 'Content safety and compliance'
@@ -600,7 +600,7 @@ class AzureProvider:
                         'custom_sub_domain_name': config['name']
                     },
                     'tags': {
-                        'platform': 'ainflue',
+                        'platform': 'iacherie',
                         'service-type': service_type,
                         'ai-workload': 'true'
                     }
@@ -643,7 +643,7 @@ class AzureProvider:
         """Create network interface for VM"""
         try:
             # Create virtual network first
-            vnet_name = f"ainflue-vnet"
+            vnet_name = f"iacherie-vnet"
             vnet_params = {
                 'location': location,
                 'address_space': {
@@ -654,7 +654,7 @@ class AzureProvider:
                     'address_prefix': '10.0.0.0/24'
                 }],
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'network-type': 'creator-services'
                 }
             }
@@ -672,7 +672,7 @@ class AzureProvider:
                 'location': location,
                 'public_ip_allocation_method': 'Dynamic',
                 'tags': {
-                    'platform': 'ainflue'
+                    'platform': 'iacherie'
                 }
             }
             
@@ -696,7 +696,7 @@ class AzureProvider:
                     }
                 }],
                 'tags': {
-                    'platform': 'ainflue'
+                    'platform': 'iacherie'
                 }
             }
             
@@ -718,8 +718,8 @@ class AzureProvider:
             logger.error(f"Failed to create network interface {nic_name}: {e}")
             raise
             
-    async def _install_ainflue_extensions(self, vm_name: str, location: str):
-        """Install Ainflue software via VM extensions"""
+    async def _install_iacherie_extensions(self, vm_name: str, location: str):
+        """Install iacherie software via VM extensions"""
         try:
             extension_params = {
                 'location': location,
@@ -727,10 +727,10 @@ class AzureProvider:
                 'type_handler_version': '2.0',
                 'virtual_machine_extension_type': 'CustomScript',
                 'settings': {
-                    'commandToExecute': self._get_ainflue_install_script()
+                    'commandToExecute': self._get_iacherie_install_script()
                 },
                 'tags': {
-                    'platform': 'ainflue',
+                    'platform': 'iacherie',
                     'extension-type': 'creator-setup'
                 }
             }
@@ -738,20 +738,20 @@ class AzureProvider:
             operation = self.clients['compute'].virtual_machine_extensions.begin_create_or_update(
                 self.resource_group,
                 vm_name,
-                'ainflue-setup',
+                'iacherie-setup',
                 extension_params
             )
             
             return operation.result()
             
         except Exception as e:
-            logger.error(f"Failed to install Ainflue extensions on {vm_name}: {e}")
+            logger.error(f"Failed to install iacherie extensions on {vm_name}: {e}")
             
-    def _get_ainflue_install_script(self) -> str:
-        """Get Ainflue installation script"""
+    def _get_iacherie_install_script(self) -> str:
+        """Get iacherie installation script"""
         return """#!/bin/bash
         
-        # Ainflue Creator Platform Setup
+        # iacherie Creator Platform Setup
         apt-get update
         apt-get install -y docker.io nginx python3-pip ffmpeg
         
@@ -759,8 +759,8 @@ class AzureProvider:
         pip3 install tensorflow opencv-python pillow ffmpeg-python azure-storage-blob
         
         # Configure for creator uploads
-        mkdir -p /opt/ainflue/{uploads,processing,cache,logs}
-        chown -R www-data:www-data /opt/ainflue
+        mkdir -p /opt/iacherie/{uploads,processing,cache,logs}
+        chown -R www-data:www-data /opt/iacherie
         
         # Setup Azure monitoring agent
         wget https://aka.ms/downloadazcopy-v10-linux -O azcopy.tar.gz
@@ -772,14 +772,14 @@ class AzureProvider:
         systemctl start docker nginx
         
         # Creator platform ready
-        echo "Ainflue creator processing node ready - $(date)" > /opt/ainflue/status
+        echo "iacherie creator processing node ready - $(date)" > /opt/iacherie/status
         """
         
     async def _get_log_analytics_workspace(self) -> str:
         """Get or create Log Analytics workspace"""
         # This would create/get a Log Analytics workspace
         # For now, return a placeholder
-        return f"/subscriptions/{self.subscription_id}/resourceGroups/{self.resource_group}/providers/Microsoft.OperationalInsights/workspaces/ainflue-logs"
+        return f"/subscriptions/{self.subscription_id}/resourceGroups/{self.resource_group}/providers/Microsoft.OperationalInsights/workspaces/iacherie-logs"
         
     async def _configure_sql_firewall(self, server_name: str):
         """Configure SQL Server firewall rules"""
@@ -933,19 +933,19 @@ class AzureProvider:
             logger.error(f"Failed to get status for {resource_type}/{resource_name}: {e}")
             return {'status': 'error', 'error': str(e)}
             
-    def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized Azure configurations"""
+    def get_iacherie_optimized_configs(self) -> Dict[str, Any]:
+        """Get iacherie-optimized Azure configurations"""
         return {
             'content_processing': {
                 'vm': AzureVMConfig(
-                    vm_name="ainflue-content-processor",
+                    vm_name="iacherie-content-processor",
                     vm_size=AzureVMSize.STANDARD_F8S_V2.value,
                     os_disk_size=256,
                     data_disk_size=512,
-                    tags={'service': 'content-processing', 'platform': 'ainflue'}
+                    tags={'service': 'content-processing', 'platform': 'iacherie'}
                 ),
                 'storage': AzureStorageConfig(
-                    storage_account_name=f"ainfluestg{self.subscription_id[:8]}",
+                    storage_account_name=f"iacheriestg{self.subscription_id[:8]}",
                     account_tier="Premium",
                     access_tier="Hot",
                     containers=['uploads', 'processed', 'thumbnails']
@@ -953,14 +953,14 @@ class AzureProvider:
             },
             'ai_processing': {
                 'vm': AzureVMConfig(
-                    vm_name="ainflue-ai-processor",
+                    vm_name="iacherie-ai-processor",
                     vm_size=AzureVMSize.STANDARD_NC6.value,
                     os_disk_size=128,
                     data_disk_size=1024,
-                    tags={'service': 'ai-processing', 'platform': 'ainflue'}
+                    tags={'service': 'ai-processing', 'platform': 'iacherie'}
                 ),
                 'aks': AKSClusterConfig(
-                    cluster_name="ainflue-ai-cluster",
+                    cluster_name="iacherie-ai-cluster",
                     vm_size=AzureVMSize.STANDARD_NC6.value,
                     node_count=3,
                     enable_auto_scaling=True,
@@ -969,8 +969,8 @@ class AzureProvider:
             },
             'database': {
                 'sql': AzureSQLConfig(
-                    server_name=f"ainflue-sql-{self.subscription_id[:8]}",
-                    database_name="ainflue_creators",
+                    server_name=f"iacherie-sql-{self.subscription_id[:8]}",
+                    database_name="iacherie_creators",
                     sku_name="S4",
                     max_size_bytes=536870912000,  # 500 GB
                     backup_retention_days=30,

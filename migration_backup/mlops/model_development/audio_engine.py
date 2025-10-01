@@ -615,7 +615,7 @@ class EnterpriseAudioEngine:
             logger.warning(f"High-level feature extraction partial failure: {e}")
 
     async def _extract_creator_features(self, y: np.ndarray, sr: int, features: AudioFeatures) -> None:
-        """Extract creator-specific features for Ainflue platform"""
+        """Extract creator-specific features for IA Chéries platform"""
         try:
             # Emotional intensity (combination of energy and spectral features)
             if features.energy is not None and features.spectral_centroid is not None:
@@ -1047,7 +1047,7 @@ class EnterpriseAudioEngine:
             return {"sections": [], "total_duration": 0.0}
 
     async def _creator_specific_analysis(self, features: AudioFeatures) -> Dict[str, Any]:
-        """Perform creator-specific analysis for Ainflue platform"""
+        """Perform creator-specific analysis for IA Chéries platform"""
         try:
             insights = {
                 "commercial_viability": 0.0,

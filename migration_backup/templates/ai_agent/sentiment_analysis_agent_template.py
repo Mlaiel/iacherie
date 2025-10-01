@@ -1,4 +1,4 @@
-"""{{agent_name}} Sentiment Analysis Agent for Ainflue Platform
+"""{{agent_name}} Sentiment Analysis Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -152,7 +152,7 @@ class SentimentConfig(BaseModel):
 
 class {{agent_class_name}}(BaseAIAgent):
     """
-    Advanced sentiment analysis agent for Ainflue platform.
+    Advanced sentiment analysis agent for IA Chéries platform.
     
     Features:
     - Multi-level sentiment analysis (document, sentence, aspect)

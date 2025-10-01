@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Background Worker Template for Ainflue Microservices Platform
+Background Worker Template for iacherie Microservices Platform
 ============================================================
 
 Enterprise-grade background worker service template providing:

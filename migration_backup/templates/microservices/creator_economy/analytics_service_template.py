@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Analytics Service Template for Ainflue Platform
+Analytics Service Template for IA Chéries Platform
 ==============================================
 
 Production-ready advanced analytics service with:
@@ -80,7 +80,7 @@ class TimeFramePeriod(Enum):
 
 class PlatformType(Enum):
     """Supported platforms for analytics"""
-    AINFLUE = "ainflue"
+    IA CHÉRIES = "ainflue"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -109,7 +109,7 @@ class AnalyticsMetric:
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     metric_type: MetricType = MetricType.ENGAGEMENT
-    platform: PlatformType = PlatformType.AINFLUE
+    platform: PlatformType = PlatformType.IA CHÉRIES
     
     # Metric details
     name: str = ""
@@ -303,7 +303,7 @@ class DashboardResponse(BaseModel):
 
 class AnalyticsService(BaseMicroservice):
     """
-    Enterprise Analytics Service for Ainflue Platform
+    Enterprise Analytics Service for IA Chéries Platform
     
     Provides comprehensive analytics, insights, and reporting
     for content creators with AI-powered predictions and optimization.
@@ -790,7 +790,7 @@ class AnalyticsService(BaseMicroservice):
                 logger.error(f"Analytics data collection failed: {e}")
     
     async def _collect_internal_analytics(self):
-        """Collect analytics from internal Ainflue platform"""
+        """Collect analytics from internal IA Chéries platform"""
         # This would collect data from internal services
         pass
     
@@ -1388,7 +1388,7 @@ def create_analytics_app() -> FastAPI:
     """Create FastAPI application for analytics service"""
     
     app = FastAPI(
-        title="Ainflue Analytics Service",
+        title="IA Chéries Analytics Service",
         description="Advanced analytics and insights service for content creators",
         version="1.0.0"
     )

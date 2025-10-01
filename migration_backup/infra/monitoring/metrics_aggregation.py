@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade metrics aggregation system for Ainflue platform
+# Enterprise-grade metrics aggregation system for IA Chéries platform
 # Supports multi-cloud metrics collection, aggregation, and analytics
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -63,7 +63,7 @@ class AggregatedMetric:
     sample_count: int
 
 class MetricsAggregationEngine:
-    """Enterprise metrics aggregation engine for Ainflue platform"""
+    """Enterprise metrics aggregation engine for IA Chéries platform"""
     
     def __init__(self, config_path: str = "config/metrics_config.yaml"):
         self.config = self._load_config(config_path)
@@ -372,7 +372,7 @@ class MetricsAggregationEngine:
             # Create Prometheus metrics
             for metric_name, metric_value in metrics.items():
                 if isinstance(metric_value, (int, float)):
-                    gauge = Gauge(f"ainflue_{metric_name}", f"Ainflue {metric_name}", 
+                    gauge = Gauge(f"ainflue_{metric_name}", f"IA Chéries {metric_name}", 
                                  registry=self.prometheus_registry)
                     gauge.set(metric_value)
             

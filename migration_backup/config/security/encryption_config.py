@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Encryption Configuration Module
+"""IA Chéries Encryption Configuration Module
 =========================================
 
-Enterprise-grade encryption configuration for the Ainflue platform.
+Enterprise-grade encryption configuration for the IA Chéries platform.
 Handles data encryption at rest and in transit, key management, cryptographic 
 protocols, quantum-resistant encryption, and comprehensive security compliance.
 

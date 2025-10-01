@@ -1,7 +1,7 @@
 """Alerting System - Advanced Performance Alert Management
 ========================================================
 
-Advanced alerting system for Ainflue integrations providing intelligent
+Advanced alerting system for IA Chéries integrations providing intelligent
 threshold monitoring, escalation management, and notification orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

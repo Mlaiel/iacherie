@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Ainflue Video Content Processor - Enterprise SEO Module
+⚡ IA Chéries Video Content Processor - Enterprise SEO Module
 
 🎬 ADVANCED VIDEO CONTENT PROCESSING & SEO OPTIMIZATION
 🎯 SPÉCIALISÉ POUR CRÉATEURS VIDÉO MULTI-PLATEFORMES

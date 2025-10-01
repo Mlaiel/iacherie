@@ -548,7 +548,7 @@ async def main():
     print("🚀 Test Enterprise Pipeline Orchestrator")
     
     config = PipelineConfig(
-        name="Ainflue Content Pipeline",
+        name="IA Chéries Content Pipeline",
         environment="production",
         quality_threshold=85.0,
         security_threshold=90.0,

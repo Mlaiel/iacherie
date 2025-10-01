@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 """
-Security Test Orchestrator - Ainflue Quality Platform
+Security Test Orchestrator - IA Chéries Quality Platform
 ===================================================
 
 Enterprise-grade security testing orchestration system.
@@ -611,7 +611,7 @@ class SecurityTestOrchestrator:
         default_config = {
             'test_suites': {},
             'global_settings': {
-                'user_agent': 'Ainflue-Security-Scanner/1.0',
+                'user_agent': 'IA Chéries-Security-Scanner/1.0',
                 'timeout': 30,
                 'rate_limit': 1.0,
                 'follow_redirects': True,

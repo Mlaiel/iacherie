@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Real-Time Creator Analytics Dashboard
+IA Chéries Platform - Real-Time Creator Analytics Dashboard
 =======================================================
 
 Enterprise real-time analytics dashboard for Creator Economy with streaming

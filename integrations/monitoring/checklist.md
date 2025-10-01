@@ -342,7 +342,7 @@ class DistributedTracing:
         self.correlation_engine = CorrelationEngine()
         self.service_mapper = ServiceDependencyMapper()
         
-    async def trace_ainflue_pipeline(
+    async def trace_iacherie_pipeline(
         self,
         creator_content: CreatorContent,
         pipeline_context: PipelineContext
@@ -350,7 +350,7 @@ class DistributedTracing:
         """Trace complete IA Chérie pipeline with service correlation"""
         
         # Start root span for pipeline
-        with self.tracer.start_as_current_span("ainflue_pipeline") as root_span:
+        with self.tracer.start_as_current_span("iacherie_pipeline") as root_span:
             root_span.set_attribute("creator.id", creator_content.creator_id)
             root_span.set_attribute("content.type", creator_content.content_type)
             root_span.set_attribute("pipeline.version", pipeline_context.version)

@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Deployment Configuration - PRODUCTION ORCHESTRATION
+"""IA Chéries Enterprise Deployment Configuration - PRODUCTION ORCHESTRATION
 ===========================================================================
 
 🚀 ENTERPRISE DEPLOYMENT FEATURES:
@@ -584,7 +584,7 @@ __all__ = [
     "get_monitoring_stack", "get_security_policies"
 ]
 
-logger.info("🚀 Ainflue Deployment Configuration initialized")
+logger.info("🚀 IA Chéries Deployment Configuration initialized")
 logger.info(f"📊 Services configured: {len(deployment_config.services)}")
 logger.info(f"🔧 Environment: {deployment_config.environment.value}")
 logger.info(f"☁️ Cloud provider: {deployment_config.cloud_provider.value}")

@@ -1,5 +1,5 @@
 """
-Multi-Cloud Orchestrator for Ainflue Infrastructure
+Multi-Cloud Orchestrator for iacherie Infrastructure
 Enterprise-grade multi-cloud deployment coordination across AWS, GCP, and Azure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -75,7 +75,7 @@ class WorkloadDistribution:
 
 class MultiCloudOrchestrator:
     """
-    Multi-Cloud Orchestrator for Ainflue Infrastructure
+    Multi-Cloud Orchestrator for iacherie Infrastructure
     
     Provides enterprise-grade multi-cloud deployment coordination:
     - Seamless deployment across AWS, GCP, and Azure
@@ -113,16 +113,16 @@ class MultiCloudOrchestrator:
             self.providers[CloudProvider.AZURE] = AzureProvider(azure_credentials)
             self.health_status[CloudProvider.AZURE] = {'status': 'unknown', 'last_check': None}
             
-        # Ainflue-specific workload distribution
+        # iacherie-specific workload distribution
         self.workload_distribution = WorkloadDistribution()
         
         # Initialize monitoring
         self._start_monitoring()
         
-    async def deploy_ainflue_infrastructure(self, environment: str = "production") -> Dict[str, Any]:
-        """Deploy complete Ainflue infrastructure across multiple clouds"""
+    async def deploy_iacherie_infrastructure(self, environment: str = "production") -> Dict[str, Any]:
+        """Deploy complete iacherie infrastructure across multiple clouds"""
         
-        logger.info(f"Starting Ainflue multi-cloud deployment for {environment}")
+        logger.info(f"Starting iacherie multi-cloud deployment for {environment}")
         
         deployment_results = {
             'environment': environment,
@@ -158,7 +158,7 @@ class MultiCloudOrchestrator:
             if self.config.disaster_recovery:
                 await self._configure_disaster_recovery(results)
                 
-            logger.info(f"Ainflue multi-cloud deployment completed successfully")
+            logger.info(f"iacherie multi-cloud deployment completed successfully")
             
         except Exception as e:
             logger.error(f"Multi-cloud deployment failed: {e}")
@@ -318,7 +318,7 @@ class MultiCloudOrchestrator:
         
     async def _deploy_to_cloud(self, cloud: CloudProvider, provider: Any, 
                               environment: str, role: str) -> Dict[str, Any]:
-        """Deploy Ainflue infrastructure to specific cloud"""
+        """Deploy iacherie infrastructure to specific cloud"""
         
         deployment_result = {
             'cloud': cloud.value,
@@ -351,31 +351,31 @@ class MultiCloudOrchestrator:
         
     async def _deploy_aws_resources(self, provider: AWSProvider, 
                                    environment: str, role: str) -> Dict[str, Any]:
-        """Deploy AWS resources for Ainflue"""
+        """Deploy AWS resources for iacherie"""
         
         resources = {}
         
         # Deploy EC2 instances for content processing
         if role == 'active' or environment == 'production':
-            ec2_config = provider.get_ainflue_optimized_configs()['content_processing']['ec2']
+            ec2_config = provider.get_iacherie_optimized_configs()['content_processing']['ec2']
             ec2_result = await provider.create_ec2_instance(
                 ec2_config,
-                f"ainflue-content-{environment}"
+                f"iacherie-content-{environment}"
             )
             resources['ec2_content'] = ec2_result
             
         # Deploy EKS cluster for AI workloads
-        eks_config = provider.get_ainflue_optimized_configs()['ai_processing']['eks']
+        eks_config = provider.get_iacherie_optimized_configs()['ai_processing']['eks']
         eks_result = await provider.create_eks_cluster(eks_config)
         resources['eks_cluster'] = eks_result
         
         # Deploy RDS database
-        rds_config = provider.get_ainflue_optimized_configs()['database']['rds']
+        rds_config = provider.get_iacherie_optimized_configs()['database']['rds']
         rds_result = await provider.create_rds_instance(rds_config)
         resources['rds_database'] = rds_result
         
         # Deploy S3 storage
-        s3_config = provider.get_ainflue_optimized_configs()['storage']['s3']
+        s3_config = provider.get_iacherie_optimized_configs()['storage']['s3']
         s3_result = await provider.create_s3_bucket(s3_config)
         resources['s3_storage'] = s3_result
         
@@ -383,31 +383,31 @@ class MultiCloudOrchestrator:
         
     async def _deploy_gcp_resources(self, provider: GCPProvider, 
                                    environment: str, role: str) -> Dict[str, Any]:
-        """Deploy GCP resources for Ainflue"""
+        """Deploy GCP resources for iacherie"""
         
         resources = {}
         
         # Deploy Compute Engine instances
         if role == 'active' or environment == 'production':
-            compute_config = provider.get_ainflue_optimized_configs()['content_processing']['compute']
+            compute_config = provider.get_iacherie_optimized_configs()['content_processing']['compute']
             compute_result = await provider.create_compute_instance(
                 compute_config,
-                f"ainflue-content-{environment}"
+                f"iacherie-content-{environment}"
             )
             resources['compute_content'] = compute_result
             
         # Deploy GKE cluster
-        gke_config = provider.get_ainflue_optimized_configs()['ai_processing']['gke']
+        gke_config = provider.get_iacherie_optimized_configs()['ai_processing']['gke']
         gke_result = await provider.create_gke_cluster(gke_config)
         resources['gke_cluster'] = gke_result
         
         # Deploy Cloud SQL
-        sql_config = provider.get_ainflue_optimized_configs()['database']['cloudsql']
+        sql_config = provider.get_iacherie_optimized_configs()['database']['cloudsql']
         sql_result = await provider.create_cloud_sql_instance(sql_config)
         resources['cloudsql_database'] = sql_result
         
         # Deploy Cloud Storage
-        storage_config = provider.get_ainflue_optimized_configs()['content_processing']['storage']
+        storage_config = provider.get_iacherie_optimized_configs()['content_processing']['storage']
         storage_result = await provider.create_storage_bucket(storage_config)
         resources['cloud_storage'] = storage_result
         
@@ -419,28 +419,28 @@ class MultiCloudOrchestrator:
         
     async def _deploy_azure_resources(self, provider: AzureProvider, 
                                      environment: str, role: str) -> Dict[str, Any]:
-        """Deploy Azure resources for Ainflue"""
+        """Deploy Azure resources for iacherie"""
         
         resources = {}
         
         # Deploy Virtual Machines
         if role == 'active' or environment == 'production':
-            vm_config = provider.get_ainflue_optimized_configs()['content_processing']['vm']
+            vm_config = provider.get_iacherie_optimized_configs()['content_processing']['vm']
             vm_result = await provider.create_virtual_machine(vm_config)
             resources['vm_content'] = vm_result
             
         # Deploy AKS cluster
-        aks_config = provider.get_ainflue_optimized_configs()['ai_processing']['aks']
+        aks_config = provider.get_iacherie_optimized_configs()['ai_processing']['aks']
         aks_result = await provider.create_aks_cluster(aks_config)
         resources['aks_cluster'] = aks_result
         
         # Deploy Azure SQL
-        sql_config = provider.get_ainflue_optimized_configs()['database']['sql']
+        sql_config = provider.get_iacherie_optimized_configs()['database']['sql']
         sql_result = await provider.create_sql_database(sql_config)
         resources['azure_sql'] = sql_result
         
         # Deploy Storage Account
-        storage_config = provider.get_ainflue_optimized_configs()['content_processing']['storage']
+        storage_config = provider.get_iacherie_optimized_configs()['content_processing']['storage']
         storage_result = await provider.create_storage_account(storage_config)
         resources['storage_account'] = storage_result
         

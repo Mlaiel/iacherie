@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-DNS Discovery Template for Ainflue Platform
+DNS Discovery Template for iacherie Platform
 ==========================================
 
 Production-ready DNS-based service discovery with:
@@ -485,7 +485,7 @@ class DNSDiscoveryClient:
 
 class DnsDiscoveryTemplate:
     """
-    DNS Discovery Template for Ainflue Platform
+    DNS Discovery Template for iacherie Platform
     
     A comprehensive DNS-based service discovery that provides:
     - SRV record service discovery

@@ -4,7 +4,7 @@
 
 Système de gestion configuration quantique unifié pour la configuration,
 les paramètres, les environnements et les réglages optimaux pour
-tous les composants du système quantique Ainflue.
+tous les composants du système quantique IA Chéries.
 
 CONSOLIDATION: Configuration centralisée ✅
 - Gestion environnements quantum (dev, staging, prod)
@@ -227,7 +227,7 @@ class QuantumConfigManager:
     """
     
     def __init__(self, config_path: Optional[str] = None, environment: Optional[QuantumEnvironment] = None):
-        self.config_path = config_path or os.getenv("QUANTUM_CONFIG_PATH", "/workspaces/Ainflue/config/quantum")
+        self.config_path = config_path or os.getenv("QUANTUM_CONFIG_PATH", "/workspaces/IA Chéries/config/quantum")
         self.environment = environment or self._detect_environment()
         self.master_config: Optional[QuantumMasterConfig] = None
         self.config_sources: Dict[ConfigurationSource, Any] = {}

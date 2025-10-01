@@ -1,12 +1,15 @@
 import './globals.css';
+import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { Toaster } from 'react-hot-toast';
 
+const inter = Inter({ subsets: ['latin'] });
+
 export const metadata = {
-  title: 'Ainflue - AI-Powered Content Protection & Monetization',
-  description: 'Advanced content protection, fingerprinting, and monetization platform powered by AI',
-  keywords: 'content protection, AI, fingerprinting, monetization, DMCA, copyright',
-  authors: [{ name: 'Fahed Mlaiel' }],
+  title: 'IA Chérie - Enterprise AI Platform',
+  description: 'Professional AI-powered content creation and management platform',
+  keywords: 'AI, content creation, enterprise, professional, platform',
+  authors: [{ name: 'IA Chérie Team' }],
 };
 
 export const viewport = {
@@ -20,20 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="h-full bg-gray-50 font-sans">
+    <html lang="en">
+      <body className={inter.className}>
         <Providers>
-          {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
+          <div className="min-h-screen bg-gray-50">
+            <main>
+              {children}
+            </main>
+            <Toaster position="top-right" />
+          </div>
         </Providers>
       </body>
     </html>

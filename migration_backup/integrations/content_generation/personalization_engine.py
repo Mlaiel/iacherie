@@ -5,7 +5,7 @@ User-specific content adaptation with behavioral analysis.
 AI-powered personalization for enhanced engagement and conversion.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

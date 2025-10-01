@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Error Tracker Template for Ainflue Platform
+Error Tracker Template for IA Chéries Platform
 ==========================================
 
 Production-ready error tracking with:

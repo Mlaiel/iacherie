@@ -1,4 +1,4 @@
-"""OAuth2 Server Template for Ainflue Platform
+"""OAuth2 Server Template for iacherie Platform
 RFC 6749 compliant OAuth 2.0 authorization server with PKCE, OpenID Connect,
 and creator-specific authorization flows for secure API access management.
 
@@ -211,7 +211,7 @@ class DeviceAuthorizationResponse(BaseModel):
 
 
 class OAuth2ServerService:
-    """Comprehensive OAuth 2.0 authorization server for Ainflue platform
+    """Comprehensive OAuth 2.0 authorization server for iacherie platform
     
     Provides RFC 6749 compliant OAuth 2.0 server with:
     - Multiple grant type support (authorization code, client credentials, etc.)
@@ -238,7 +238,7 @@ class OAuth2ServerService:
         self.device_codes: Dict[str, Dict[str, Any]] = {}
         
         # Configuration
-        self.issuer = getattr(settings, 'OAUTH2_ISSUER', 'https://auth.ainflue.com')
+        self.issuer = getattr(settings, 'OAUTH2_ISSUER', 'https://auth.iacherie.com')
         self.jwt_secret = settings.JWT_SECRET_KEY
         self.jwt_algorithm = getattr(settings, 'JWT_ALGORITHM', 'HS256')
         

@@ -141,7 +141,7 @@ alertmanager:
     - name: "default"
       email_configs:
         - to: "devops@ainflue.com"
-          subject: "Ainflue Alert: {{ .GroupLabels.alertname }}"
+          subject: "IA Chéries Alert: {{ .GroupLabels.alertname }}"
           
     - name: "critical-alerts"
       email_configs:
@@ -274,7 +274,7 @@ apm:
   new_relic:
     enabled: false
     license_key: "${NEW_RELIC_LICENSE_KEY}"
-    app_name: "Ainflue Creator Platform"
+    app_name: "IA Chéries Creator Platform"
     
   datadog:
     enabled: false

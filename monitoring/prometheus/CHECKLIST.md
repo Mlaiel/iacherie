@@ -417,10 +417,10 @@ Creator KPIs → Aggregation → Business Rules → Executive Dashboard → Stra
 ### Standards Prometheus Enterprise
 
 **Metric Naming Convention:**
-- **Business Metrics**: `ainflue_creator_{metric_name}`
-- **Technical Metrics**: `ainflue_system_{metric_name}`
-- **AI Metrics**: `ainflue_ai_{metric_name}`
-- **Security Metrics**: `ainflue_security_{metric_name}`
+- **Business Metrics**: `iacherie_creator_{metric_name}`
+- **Technical Metrics**: `iacherie_system_{metric_name}`
+- **AI Metrics**: `iacherie_ai_{metric_name}`
+- **Security Metrics**: `iacherie_security_{metric_name}`
 
 **Alerting Severity Levels:**
 - **P1 Critical**: Revenue impact >$10K/hour, >1000 creators affected

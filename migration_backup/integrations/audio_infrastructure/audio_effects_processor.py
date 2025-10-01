@@ -2,7 +2,7 @@
 =========================================================================
 
 Processeur d'effets audio enterprise avec algorithmes studio professionnel,
-chaîne d'effets modulaire et processing temps réel pour créateurs sur Ainflue.
+chaîne d'effets modulaire et processing temps réel pour créateurs sur IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Studio-grade effects algorithms + professional mixing chains

@@ -2,7 +2,7 @@
 🛡️ DATA ENCRYPTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ===================================================================
 
-Enterprise-grade data encryption testing template for Ainflue Creator Economy Platform.
+Enterprise-grade data encryption testing template for iacherie Creator Economy Platform.
 Comprehensive encryption security testing covering:
 - Symmetric encryption (AES-256-GCM) validation
 - Asymmetric encryption (RSA, ECC) testing
@@ -198,7 +198,7 @@ class DataEncryptionTestTemplate:
                 data=json.dumps({
                     "title": "My Music Track",
                     "description": "Original composition",
-                    "file_url": "https://cdn.ainflue.com/track123.mp3",
+                    "file_url": "https://cdn.iacherie.com/track123.mp3",
                     "metadata": {"genre": "electronic", "bpm": 128}
                 }).encode(),
                 data_type=DataType.CONTENT_DATA,
@@ -948,7 +948,7 @@ class DataEncryptionTestTemplate:
                 "content_id": "content_456",
                 "creator_id": "creator_123",
                 "title": "Protected Music Track",
-                "file_url": "https://secure.ainflue.com/protected/track456.enc",
+                "file_url": "https://secure.iacherie.com/protected/track456.enc",
                 "drm_info": {
                     "protection_level": "high",
                     "allowed_downloads": 3,

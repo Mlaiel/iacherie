@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Monetization Service Template for Ainflue Platform
+Monetization Service Template for iacherie Platform
 =================================================
 
 Production-ready advanced monetization service with:
@@ -284,7 +284,7 @@ class RevenueAnalyticsResponse(BaseModel):
 
 class MonetizationService(BaseMicroservice):
     """
-    Enterprise Monetization Service for Ainflue Platform
+    Enterprise Monetization Service for iacherie Platform
     
     Provides comprehensive revenue management, payment processing,
     dynamic pricing, and financial analytics for content creators.
@@ -1301,7 +1301,7 @@ def create_monetization_app() -> FastAPI:
     """Create FastAPI application for monetization service"""
     
     app = FastAPI(
-        title="Ainflue Monetization Service",
+        title="iacherie Monetization Service",
         description="Advanced revenue management and payment processing service",
         version="1.0.0"
     )

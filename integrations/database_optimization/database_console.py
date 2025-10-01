@@ -296,7 +296,7 @@ class EnterpriseDatabaseConsole:
             provider=DatabaseProvider.POSTGRESQL,
             host="localhost",
             port=5432,
-            database="ainflue_primary",
+            database="iacherie_primary",
             username="postgres",
             password="password"
         )
@@ -308,7 +308,7 @@ class EnterpriseDatabaseConsole:
             provider=DatabaseProvider.MONGODB,
             host="localhost",
             port=27017,
-            database="ainflue_documents",
+            database="iacherie_documents",
             username="admin",
             password="password"
         )
@@ -332,7 +332,7 @@ class EnterpriseDatabaseConsole:
             provider=DatabaseProvider.CLICKHOUSE,
             host="localhost",
             port=8123,
-            database="ainflue_analytics",
+            database="iacherie_analytics",
             username="default",
             password=""
         )

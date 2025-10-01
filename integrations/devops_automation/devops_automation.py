@@ -339,7 +339,7 @@ class EnterpriseDevOpsAutomation:
         try:
             # Pipeline principal IA Chérie
             main_pipeline = PipelineConfiguration(
-                id="ainflue_main_pipeline",
+                id="iacherie_main_pipeline",
                 name="IA Chérie Main Application Pipeline",
                 repository="https://github.com/Mlaiel/IA Chérie.git",
                 branch="main",

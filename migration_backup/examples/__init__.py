@@ -1,6 +1,6 @@
-"""Ainflue Platform Examples
+"""IA Chéries Platform Examples
 
-Examples and demonstrations of the Ainflue platform capabilities.
+Examples and demonstrations of the IA Chéries platform capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

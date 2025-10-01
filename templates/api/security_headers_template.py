@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Security Headers Template - Enterprise Security
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -833,7 +833,7 @@ def setup_creator_security_headers(app: FastAPI) -> SecurityHeadersMiddleware:
         
         # Custom headers for creators
         custom_headers={
-            "X-Creator-Platform": "Ainflue",
+            "X-Creator-Platform": "iacherie",
             "X-Content-Creator-Friendly": "true"
         },
         

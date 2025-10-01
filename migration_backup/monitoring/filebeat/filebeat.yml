@@ -1,6 +1,6 @@
 # Filebeat Configuration for Centralized Log Aggregation
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Production-ready log collection for all Ainflue services
+# Production-ready log collection for all IA Chéries services
 
 filebeat.inputs:
   # Kubernetes container logs

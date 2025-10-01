@@ -1,4 +1,4 @@
-"""GraphQL Security Template for Ainflue Platform
+"""GraphQL Security Template for IA Chéries Platform
 Enterprise-grade GraphQL security with comprehensive protection mechanisms
 
 ⚠️  AVERTISSEMENT LÉGAL:

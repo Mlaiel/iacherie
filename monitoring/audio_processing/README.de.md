@@ -150,7 +150,7 @@ result = demucs_spleeter_orchestrator.get_separation_result(job_id)
 # Audio-Verarbeitungs-Konfiguration
 AUDIO_PROCESSING_ENABLED=true
 AUDIO_MAX_CONCURRENT_JOBS=4
-AUDIO_TEMP_STORAGE=/tmp/ainflue_audio
+AUDIO_TEMP_STORAGE=/tmp/iacherie_audio
 AUDIO_GPU_ENABLED=true
 
 # Qualitäts-Standards

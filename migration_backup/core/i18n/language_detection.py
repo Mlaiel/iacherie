@@ -22,7 +22,7 @@ class LanguageDetectionResult:
 class LanguageDetectionEngine:
     """
     Moteur de détection de langue
-    Language detection engine for Ainfluencer
+    Language detection engine for IA Chéries
     """
     
     def __init__(self):

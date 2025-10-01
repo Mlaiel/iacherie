@@ -468,7 +468,7 @@ Business Intelligence:
 #### 🔄 **WORKFLOW MODELS DISTRIBUÉ IACHERIE**
 ```python
 # ORCHESTRATION MODELS IACHERIE - 7 PHASES + MULTI-FORMAT
-async def ainflue_models_workflow():
+async def iacherie_models_workflow():
     """
     Workflow Models complet IA Chérie avec support multi-format créateurs
     Architecture Models enterprise avec validation complète

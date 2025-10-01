@@ -754,7 +754,7 @@ class DatabaseIntegrationTester:
                     'type': 'postgresql',
                     'host': 'localhost',
                     'port': 5432,
-                    'database': 'ainflue_test',
+                    'database': 'iacherie_test',
                     'username': 'postgres',
                     'password': 'password'
                 },

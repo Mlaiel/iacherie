@@ -47,7 +47,7 @@ TEST_CONFIG = {
     "database": {
         "host": os.getenv("TEST_DB_HOST", "localhost"),
         "port": int(os.getenv("TEST_DB_PORT", "5432")),
-        "name": os.getenv("TEST_DB_NAME", "ainflue_test"),
+        "name": os.getenv("TEST_DB_NAME", "iacherie_test"),
         "user": os.getenv("TEST_DB_USER", "test_user"),
         "password": os.getenv("TEST_DB_PASSWORD", "test_password"),
         "pool_size": int(os.getenv("TEST_DB_POOL_SIZE", "10")),
@@ -261,7 +261,7 @@ __email__ = "mlaiel@live.de"
 # Global test configuration
 TEST_CONFIG = {
     "redis_url": "redis://localhost:6379/0",
-    "database_url": "postgresql://test:test@localhost:5432/ainflue_test",
+    "database_url": "postgresql://test:test@localhost:5432/iacherie_test",
     "api_base_url": "http://localhost:8000",
     "websocket_url": "ws://localhost:8000/ws",
     "test_timeout": 30,

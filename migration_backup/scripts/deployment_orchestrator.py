@@ -5,7 +5,7 @@ Deployment Orchestration Engine - Enterprise Grade
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced deployment orchestration for Ainflue Platform with enterprise features:
+Advanced deployment orchestration for IA Chéries Platform with enterprise features:
 - Multi-environment deployment management
 - Blue-green deployment support
 - Rollback capabilities
@@ -379,7 +379,7 @@ class DeploymentOrchestrator:
                     response = requests.get(
                         config.health_check_url,
                         timeout=10,
-                        headers={'User-Agent': 'Ainflue-Deployment-Orchestrator'}
+                        headers={'User-Agent': 'IA Chéries-Deployment-Orchestrator'}
                     )
                     
                     if response.status_code == 200:
@@ -542,7 +542,7 @@ async def main():
     """CLI entry point for deployment orchestration"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Deployment Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chéries Deployment Orchestrator')
     parser.add_argument('--environment', required=True, help='Target environment')
     parser.add_argument('--version', required=True, help='Version to deploy')
     parser.add_argument('--config', default='/etc/ainflue/deployment.yaml', help='Configuration file path')

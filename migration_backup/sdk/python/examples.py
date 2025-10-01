@@ -1,5 +1,5 @@
-"""Ainflue SDK Examples
-Comprehensive examples for using the Ainflue Python SDK
+"""IA Chéries SDK Examples
+Comprehensive examples for using the IA Chéries Python SDK
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 """
@@ -8,12 +8,12 @@ import asyncio
 import os
 from pathlib import Path
 
-from ainflue_sdk import create_sdk, create_sync_sdk, AinflueSdkConfig
+from ainflue_sdk import create_sdk, create_sync_sdk, IA ChériesSdkConfig
 
 
 # Configuration
-API_KEY = os.getenv("AINFLUE_API_KEY", "your-api-key-here")
-BASE_URL = os.getenv("AINFLUE_BASE_URL", "https://api.ainflue.com")
+API_KEY = os.getenv("IA CHÉRIES_API_KEY", "your-api-key-here")
+BASE_URL = os.getenv("IA CHÉRIES_BASE_URL", "https://api.ainflue.com")
 
 
 async def public_api_health_check():
@@ -393,7 +393,7 @@ async def error_handling_example():
     print("-" * 30)
     
     # Configure SDK with custom retry settings
-    config = AinflueSdkConfig(
+    config = IA ChériesSdkConfig(
         api_key="invalid-key",  # Intentionally invalid
         base_url=BASE_URL,
         max_retries=2,
@@ -414,7 +414,7 @@ async def error_handling_example():
 
 async def main():
     """Run all examples"""
-    print("🚀 Ainflue SDK Examples")
+    print("🚀 IA Chéries SDK Examples")
     print("=" * 50)
     
     try:
@@ -426,7 +426,7 @@ async def main():
         # Check if API key is set for authenticated examples
         if API_KEY == "your-api-key-here":
             print("\n⚠️ Skipping authenticated examples - Please set your API key")
-            print("   export AINFLUE_API_KEY=your_actual_api_key")
+            print("   export IA CHÉRIES_API_KEY=your_actual_api_key")
             print("   Some examples require authentication")
         else:
             # Run authenticated public API examples

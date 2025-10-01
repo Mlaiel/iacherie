@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# iacherie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Helm Ingress template for Ainflue platform
+# Enterprise-grade Helm Ingress template for iacherie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 {{- if .Values.ingress.enabled }}
-{{- $fullName := include "ainflue.fullname" . }}
+{{- $fullName := include "iacherie.fullname" . }}
 {{- $svcPort := .Values.service.port }}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion }}
 apiVersion: networking.k8s.io/v1
@@ -24,7 +24,7 @@ metadata:
   name: {{ $fullName }}-ingress
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: ingress
   {{- with .Values.ingress.annotations }}
   annotations:
@@ -105,7 +105,7 @@ metadata:
   name: {{ $fullName }}-api-ingress
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: api-ingress
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className | default "nginx" }}
@@ -153,7 +153,7 @@ metadata:
   name: {{ $fullName }}-ai-ingress
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: ai-ingress
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className | default "nginx" }}
@@ -195,7 +195,7 @@ metadata:
   name: {{ $fullName }}-upload-ingress
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: upload-ingress
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className | default "nginx" }}
@@ -239,13 +239,13 @@ metadata:
   name: {{ $fullName }}-monitoring-ingress
   namespace: {{ .Values.namespace | default .Release.Namespace }}
   labels:
-    {{- include "ainflue.labels" . | nindent 4 }}
+    {{- include "iacherie.labels" . | nindent 4 }}
     component: monitoring-ingress
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className | default "nginx" }}
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: {{ .Values.ingress.monitoring.authSecret | default (printf "%s-monitoring-auth" $fullName) }}
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Ainflue Monitoring'
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - iacherie Monitoring'
 spec:
   ingressClassName: {{ .Values.ingress.className | default "nginx" }}
   {{- if .Values.ingress.tls }}

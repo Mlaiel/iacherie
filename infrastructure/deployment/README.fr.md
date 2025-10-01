@@ -1,11 +1,11 @@
-# 🚀 Infrastructure de Déploiement - Ainflue Enterprise
+# 🚀 Infrastructure de Déploiement - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure de déploiement enterprise avancée supportant les déploiements blue-green, les releases canary, les déploiements sans interruption, et l'orchestration multi-région pour la plateforme créateurs Ainflue servant 65+ plateformes de médias sociaux et streaming.
+Infrastructure de déploiement enterprise avancée supportant les déploiements blue-green, les releases canary, les déploiements sans interruption, et l'orchestration multi-région pour la plateforme créateurs iacherie servant 65+ plateformes de médias sociaux et streaming.
 
 ## 🏗️ Composants Architecture
 - **Moteur de Déploiement Principal** : Ansible, Terraform, et orchestration de déploiement personnalisée
@@ -37,7 +37,7 @@ Infrastructure de déploiement enterprise avancée supportant les déploiements 
 - **Scanning Sécurité** : Validation sécurité container et code
 
 ## 🌍 Support 65+ Plateformes
-Ce module assure un déploiement fiable sur toutes les plateformes supportées dans l'écosystème Ainflue, maintenant cohérence et fiabilité pour les créateurs de contenu mondialement.
+Ce module assure un déploiement fiable sur toutes les plateformes supportées dans l'écosystème iacherie, maintenant cohérence et fiabilité pour les créateurs de contenu mondialement.
 
 **Propriétaire Technique :** Fahed Mlaiel (mlaiel@live.de)  
 **Version :** 1.0 Enterprise Production  

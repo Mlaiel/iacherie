@@ -1,5 +1,5 @@
 """
-Service Mesh Module - Ainflue Infrastructure
+Service Mesh Module - IA Chéries Infrastructure
 ===========================================
 Enterprise service mesh management for microservices orchestration
 
@@ -11,7 +11,7 @@ This module provides comprehensive service mesh capabilities including:
 - mTLS security and policy management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -65,8 +65,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise service mesh infrastructure"
 
-# Configuration logique métier Ainflue
-AINFLUE_SERVICE_MESH_CONFIG = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_SERVICE_MESH_CONFIG = {
     'upload': 'Service routing for multi-format content upload services',
     'ai_processing': 'Load balancing for 53 AI agents across mesh', 
     'protection': 'Secure service communication for rights protection',

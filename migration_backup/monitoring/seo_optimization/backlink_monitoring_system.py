@@ -1,7 +1,7 @@
 """
 Backlink Monitoring System - Enterprise Link Building & Authority Tracking
 
-This module implements comprehensive backlink monitoring for the Ainflue platform,
+This module implements comprehensive backlink monitoring for the IA Chéries platform,
 tracking link authority, analyzing link quality, and optimizing link building strategies.
 
 Author: Fahed Mlaiel
@@ -118,7 +118,7 @@ class LinkBuildingOpportunity:
 
 class BacklinkMonitoringSystem:
     """
-    Enterprise backlink monitoring system for Ainflue platform.
+    Enterprise backlink monitoring system for IA Chéries platform.
     
     Features:
     - Real-time backlink discovery and tracking

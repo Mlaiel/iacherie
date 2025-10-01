@@ -239,8 +239,8 @@ class VideoSecurityManager:
         
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for video security"""
-        password = b"ainflue_video_encryption_key_2025"
-        salt = b"ainflue_video_salt"
+        password = b"iacherie_video_encryption_key_2025"
+        salt = b"iacherie_video_salt"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

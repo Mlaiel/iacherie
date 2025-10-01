@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Data Visualization Components
+ * IA Chéries Desktop - Data Visualization Components
  * 
  * Professional data visualization widgets for analytics and monitoring
  * Implements real-time charts, graphs, and interactive visualizations

@@ -122,7 +122,7 @@ if VercelIntegration:
     CLOUD_PROVIDERS['vercel'] = VercelIntegration
 
 # Configuration logique métier IA Chérie
-AINFLUE_CLOUD_CONFIG = {
+IACHERIE_CLOUD_CONFIG = {
     'total_providers': len(CLOUD_PROVIDERS),
     'ecosystems': ['AWS', 'Azure', 'GCP'],
     'specialized_platforms': ['Cloudflare', 'Vercel', 'Netlify', 'Firebase', 'Supabase'],

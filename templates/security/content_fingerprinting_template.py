@@ -1,4 +1,4 @@
-"""Content Fingerprinting Template for Ainflue Creator Protection
+"""Content Fingerprinting Template for iacherie Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

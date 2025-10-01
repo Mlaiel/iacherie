@@ -2,7 +2,7 @@
 REST API Manager - Enterprise REST API Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive REST API management for Ainflue creator platform.
+Comprehensive REST API management for IA Chéries creator platform.
 Provides creator workflow APIs, platform integrations, and enterprise features.
 """
 
@@ -103,7 +103,7 @@ class RESTAPIManager:
         self.api_requests = {}
         self.api_responses = {}
         
-        # Initialize Ainflue-specific REST API endpoints
+        # Initialize IA Chéries-specific REST API endpoints
         self.ainflue_endpoints = self._initialize_ainflue_endpoints()
         
         # API metrics
@@ -132,7 +132,7 @@ class RESTAPIManager:
         logger.info("REST API manager initialized for creator platform")
     
     def _initialize_ainflue_endpoints(self) -> Dict[str, APIEndpoint]:
-        """Initialize Ainflue creator platform REST API endpoints"""
+        """Initialize IA Chéries creator platform REST API endpoints"""
         
         endpoints = {}
         
@@ -702,7 +702,7 @@ class RESTAPIManager:
         
         documentation = {
             'api_info': {
-                'title': 'Ainflue Creator Platform API',
+                'title': 'IA Chéries Creator Platform API',
                 'version': '1.0.0',
                 'description': 'Enterprise API for creator content management and platform distribution',
                 'base_url': self.api_config['base_url'],

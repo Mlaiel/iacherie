@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Backup Service Template for Ainflue Creator Economy Platform
+Backup Service Template for IA Chéries Creator Economy Platform
 Enterprise backup service with multi-destination, compression, encryption and automated recovery
 """
 
@@ -230,7 +230,7 @@ class RestoreJob(BaseModel):
 
 class BackupServiceTemplate:
     """
-    Template de service de sauvegarde enterprise pour Ainflue
+    Template de service de sauvegarde enterprise pour IA Chéries
     
     Fonctionnalités:
     - Multiple backup types (full, incremental, differential)
@@ -247,7 +247,7 @@ class BackupServiceTemplate:
     def __init__(self, config: BackupConfig = None):
         self.config = config or BackupConfig()
         self.app = FastAPI(
-            title="Ainflue Backup Service",
+            title="IA Chéries Backup Service",
             description="Enterprise backup service with multi-destination support",
             version="1.0.0"
         )

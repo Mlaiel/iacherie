@@ -72,7 +72,7 @@ class FreepikAPI:
         self.headers = {
             'X-Freepik-API-Key': self.api_key,
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainfluencer-Platform/1.0'
+            'User-Agent': 'IA Chéries-Platform/1.0'
         }
         
         logger.info(f"🎨 FreepikAPI initialisé avec clé: {api_key[:20]}...")
@@ -223,7 +223,7 @@ class FlaticonAPI:
         self.headers = {
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainfluencer-Platform/1.0'
+            'User-Agent': 'IA Chéries-Platform/1.0'
         }
         
         logger.info(f"🔷 FlaticonAPI initialisé avec clé: {api_key[:20]}...")

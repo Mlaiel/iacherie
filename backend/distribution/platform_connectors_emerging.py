@@ -213,7 +213,7 @@ class BaseEmergingConnector:
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default headers for API requests."""
         return {
-            "User-Agent": "Ainflue-Emerging-Connector/1.0",
+            "User-Agent": "iacherie-Emerging-Connector/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }
@@ -460,7 +460,7 @@ class RedditConnector(BaseEmergingConnector):
             }
             
             auth_headers = {
-                "User-Agent": "Ainflue-Reddit-Bot/1.0"
+                "User-Agent": "iacherie-Reddit-Bot/1.0"
             }
             
             auth = aiohttp.BasicAuth(
@@ -487,7 +487,7 @@ class RedditConnector(BaseEmergingConnector):
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.get('access_token')}",
-                "User-Agent": "Ainflue-Reddit-Bot/1.0"
+                "User-Agent": "iacherie-Reddit-Bot/1.0"
             }
             
             post_data = {

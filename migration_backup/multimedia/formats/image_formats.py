@@ -2,7 +2,7 @@
 🖼️ IMAGE FORMATS PROCESSOR - ENTERPRISE ARCHITECTURE
 ====================================================
 
-Professional image format processing and optimization for Ainflue Platform
+Professional image format processing and optimization for IA Chéries Platform
 Supporting all modern image formats including next-gen formats with AI optimization
 
 **Expert Implementation:**

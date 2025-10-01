@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE CRAWLER SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
+# IA CHÉRIES CRAWLER SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
 # =============================================================================
 # Specialized container for enterprise web crawling with browser automation,
 # anti-bot detection evasion, and high-performance content monitoring.
@@ -186,7 +186,7 @@ FROM crawler-base AS production
 
 LABEL stage=production
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Crawler Service - Production Runtime"
+LABEL description="IA Chéries Crawler Service - Production Runtime"
 LABEL service="crawler-service"
 LABEL capabilities="web-scraping,browser-automation,content-monitoring"
 

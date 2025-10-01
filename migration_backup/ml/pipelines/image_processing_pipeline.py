@@ -1,12 +1,12 @@
 """
-Image Processing Pipeline - Ainflue Enterprise
+Image Processing Pipeline - IA Chéries Enterprise
 ==============================================
 Pipeline traitement image/photo avec computer vision enterprise.
 Image enhancement + aesthetic scoring + style transfer + composition analysis.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

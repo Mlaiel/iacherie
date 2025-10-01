@@ -2,7 +2,7 @@
 ========================================
 
 Enterprise AI Monitoring Hub for comprehensive artificial intelligence
-monitoring across the Ainflue Creator Economy platform. Provides
+monitoring across the IA Chéries Creator Economy platform. Provides
 sophisticated AI intelligence monitoring including:
 - AI model performance optimization and tracking
 - Creator AI intelligence usage analytics comprehensive

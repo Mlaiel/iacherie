@@ -105,53 +105,53 @@ export const SERVICE_ENDPOINTS = {
 // Local Storage Keys
 export const STORAGE_KEYS = {
   // Authentication
-  AUTH_TOKEN: 'ainflue_auth_token',
-  REFRESH_TOKEN: 'ainflue_refresh_token',
-  USER_SESSION: 'ainflue_user_session',
-  BIOMETRIC_KEY: 'ainflue_biometric_key',
-  DEVICE_ID: 'ainflue_device_id',
+  AUTH_TOKEN: 'iacherie_auth_token',
+  REFRESH_TOKEN: 'iacherie_refresh_token',
+  USER_SESSION: 'iacherie_user_session',
+  BIOMETRIC_KEY: 'iacherie_biometric_key',
+  DEVICE_ID: 'iacherie_device_id',
 
   // Content and Media
-  CONTENT_CACHE: 'ainflue_content_cache',
-  MEDIA_CACHE: 'ainflue_media_cache',
-  UPLOAD_QUEUE: 'ainflue_upload_queue',
-  FINGERPRINTS: 'ainflue_fingerprints',
-  DRAFTS: 'ainflue_drafts',
+  CONTENT_CACHE: 'iacherie_content_cache',
+  MEDIA_CACHE: 'iacherie_media_cache',
+  UPLOAD_QUEUE: 'iacherie_upload_queue',
+  FINGERPRINTS: 'iacherie_fingerprints',
+  DRAFTS: 'iacherie_drafts',
 
   // Synchronization
-  SYNC_QUEUE: 'ainflue_sync_queue',
-  SYNC_STATUS: 'ainflue_sync_status',
-  CONFLICT_QUEUE: 'ainflue_conflict_queue',
-  DELTA_SYNC: 'ainflue_delta_sync',
+  SYNC_QUEUE: 'iacherie_sync_queue',
+  SYNC_STATUS: 'iacherie_sync_status',
+  CONFLICT_QUEUE: 'iacherie_conflict_queue',
+  DELTA_SYNC: 'iacherie_delta_sync',
 
   // Offline Storage
-  OFFLINE_DATA: 'ainflue_offline_data',
-  OFFLINE_QUEUE: 'ainflue_offline_queue',
-  CACHE_INDEX: 'ainflue_cache_index',
-  STORAGE_MANIFEST: 'ainflue_storage_manifest',
+  OFFLINE_DATA: 'iacherie_offline_data',
+  OFFLINE_QUEUE: 'iacherie_offline_queue',
+  CACHE_INDEX: 'iacherie_cache_index',
+  STORAGE_MANIFEST: 'iacherie_storage_manifest',
 
   // Notifications
-  NOTIFICATION_TOKENS: 'ainflue_notification_tokens',
-  NOTIFICATION_SETTINGS: 'ainflue_notification_settings',
-  NOTIFICATION_HISTORY: 'ainflue_notification_history',
-  NOTIFICATION_ANALYTICS: 'ainflue_notification_analytics',
+  NOTIFICATION_TOKENS: 'iacherie_notification_tokens',
+  NOTIFICATION_SETTINGS: 'iacherie_notification_settings',
+  NOTIFICATION_HISTORY: 'iacherie_notification_history',
+  NOTIFICATION_ANALYTICS: 'iacherie_notification_analytics',
 
   // User Preferences
-  USER_PREFERENCES: 'ainflue_user_preferences',
-  APP_SETTINGS: 'ainflue_app_settings',
-  PRIVACY_SETTINGS: 'ainflue_privacy_settings',
-  ACCESSIBILITY_SETTINGS: 'ainflue_accessibility_settings',
+  USER_PREFERENCES: 'iacherie_user_preferences',
+  APP_SETTINGS: 'iacherie_app_settings',
+  PRIVACY_SETTINGS: 'iacherie_privacy_settings',
+  ACCESSIBILITY_SETTINGS: 'iacherie_accessibility_settings',
 
   // Location and Geography
-  LOCATION_CACHE: 'ainflue_location_cache',
-  GEOFENCES: 'ainflue_geofences',
-  LOCATION_HISTORY: 'ainflue_location_history',
+  LOCATION_CACHE: 'iacherie_location_cache',
+  GEOFENCES: 'iacherie_geofences',
+  LOCATION_HISTORY: 'iacherie_location_history',
 
   // Performance and Analytics
-  PERFORMANCE_METRICS: 'ainflue_performance_metrics',
-  USAGE_ANALYTICS: 'ainflue_usage_analytics',
-  ERROR_LOGS: 'ainflue_error_logs',
-  DEBUG_INFO: 'ainflue_debug_info'
+  PERFORMANCE_METRICS: 'iacherie_performance_metrics',
+  USAGE_ANALYTICS: 'iacherie_usage_analytics',
+  ERROR_LOGS: 'iacherie_error_logs',
+  DEBUG_INFO: 'iacherie_debug_info'
 } as const;
 
 // Notification Types

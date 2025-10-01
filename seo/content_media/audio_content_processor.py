@@ -210,7 +210,7 @@ class AudioContentProcessor:
     def _setup_audio_infrastructure(self):
         """Configuration infrastructure audio enterprise"""
         self.audio_config = {
-            'temp_dir': Path('/tmp/ainflue_audio_processing'),
+            'temp_dir': Path('/tmp/iacherie_audio_processing'),
             'output_dir': Path('/var/lib/iacherie/processed_audio'),
             'cache_dir': Path('/var/cache/iacherie/audio_cache'),
             'fingerprint_db': Path('/var/lib/iacherie/audio_fingerprints')

@@ -1,5 +1,5 @@
 """
-Gamification Services Module - Ainflue Platform
+Gamification Services Module - IA Chéries Platform
 ===============================================
 
 Enterprise-grade gamification and engagement system for content creators.

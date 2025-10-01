@@ -679,7 +679,7 @@ async def example_data_pipeline_orchestration():
         content_source = DataSource(
             name="content_database",
             source_type="database",
-            connection_string="postgresql://user:pass@localhost/ainflue_content",
+            connection_string="postgresql://user:pass@localhost/iacherie_content",
             format=DataFormat.JSON
         )
         
@@ -687,7 +687,7 @@ async def example_data_pipeline_orchestration():
         analytics_destination = DataDestination(
             name="analytics_warehouse",
             destination_type="database",
-            connection_string="postgresql://user:pass@localhost/ainflue_analytics",
+            connection_string="postgresql://user:pass@localhost/iacherie_analytics",
             format=DataFormat.PARQUET
         )
         

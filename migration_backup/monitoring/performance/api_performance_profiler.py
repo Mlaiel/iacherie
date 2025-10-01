@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 API Performance Profiler - Enterprise Performance Monitoring
 Advanced API performance profiling for Creator Economy endpoints

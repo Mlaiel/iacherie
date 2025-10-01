@@ -1,7 +1,7 @@
 """Media Streaming Service - Advanced Streaming Engine
 ===================================================
 
-High-performance media streaming system for the Ainflue platform, handling
+High-performance media streaming system for the IA Chéries platform, handling
 real-time content delivery, adaptive bitrate streaming, live streaming management,
 CDN optimization, and intelligent content caching.
 

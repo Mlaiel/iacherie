@@ -674,7 +674,7 @@ export class SEOEngine {
       'keywords': analysis.keywords.join(', '),
       'author': {
         '@type': 'Person',
-        'name': 'Ainflue Creator'
+        'name': 'iacherie Creator'
       }
     };
   }
@@ -685,7 +685,7 @@ export class SEOEngine {
       faq: [],
       howTo: [],
       organization: {
-        name: 'Ainflue',
+        name: 'iacherie',
         type: 'Organization'
       }
     };
@@ -694,7 +694,7 @@ export class SEOEngine {
   private generateMetaTags(analysis: SEOAnalysis, platform: SEOPlatform): Record<string, string> {
     return {
       'og:type': 'article',
-      'og:site_name': 'Ainflue',
+      'og:site_name': 'iacherie',
       'twitter:card': 'summary_large_image',
       'robots': 'index, follow',
       'canonical': ''

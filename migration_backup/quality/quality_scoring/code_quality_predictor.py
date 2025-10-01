@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Code Quality Predictor - Ainflue AI Platform
+Code Quality Predictor - IA Chéries AI Platform
 ==========================================
 
 AI-powered code quality prediction and intelligent analysis system.

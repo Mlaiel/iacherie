@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Advanced Tooltip System
+ * IA Chéries Desktop - Advanced Tooltip System
  * 
  * Professional tooltip management with animations, positioning, and themes
  * Supports rich content, interactive tooltips, and accessibility

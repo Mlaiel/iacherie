@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Database Service Template for Ainflue Creator Economy Platform
+Database Service Template for iacherie Creator Economy Platform
 Enterprise database service with multi-provider support, connection pooling, and advanced monitoring
 """
 
@@ -71,7 +71,7 @@ class DatabaseConfig:
     # Connection settings
     primary_provider: DatabaseProvider = DatabaseProvider.POSTGRESQL
     read_replicas: List[str] = field(default_factory=list)
-    write_primary: str = "postgresql://user:pass@localhost:5432/ainflue"
+    write_primary: str = "postgresql://user:pass@localhost:5432/iacherie"
     
     # Connection pooling
     pool_size: int = 20
@@ -136,7 +136,7 @@ class ConnectionHealth(BaseModel):
 
 class DatabaseServiceTemplate:
     """
-    Template de service de base de données enterprise pour Ainflue
+    Template de service de base de données enterprise pour iacherie
     
     Fonctionnalités:
     - Multi-provider support (PostgreSQL, MySQL, MongoDB, Redis, etc.)
@@ -152,7 +152,7 @@ class DatabaseServiceTemplate:
     def __init__(self, config: DatabaseConfig = None):
         self.config = config or DatabaseConfig()
         self.app = FastAPI(
-            title="Ainflue Database Service",
+            title="iacherie Database Service",
             description="Enterprise database service with multi-provider support",
             version="1.0.0"
         )
@@ -236,7 +236,7 @@ class DatabaseServiceTemplate:
                 max_inactive_connection_lifetime=self.config.pool_recycle,
                 server_settings={
                     'jit': 'off',
-                    'application_name': f'ainflue_db_service_{pool_id}'
+                    'application_name': f'iacherie_db_service_{pool_id}'
                 }
             )
             
@@ -628,7 +628,7 @@ class DatabaseServiceTemplate:
             # MongoDB queries should be in JSON format
             query_data = json.loads(query_request.query)
             
-            db_name = query_data.get("database", "ainflue")
+            db_name = query_data.get("database", "iacherie")
             collection_name = query_data.get("collection")
             operation = query_data.get("operation", "find")
             

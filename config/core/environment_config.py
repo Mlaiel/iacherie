@@ -104,7 +104,7 @@ class EnterpriseEnvironmentConfiguration:
     def __init__(self, level: str = "enterprise"):
         """Initialize environment configuration"""
         self.level = level
-        self.current_environment = os.getenv("AINFLUE_ENV", "development")
+        self.current_environment = os.getenv("IACHERIE_ENV", "development")
         self.environments: Dict[str, EnvironmentConfiguration] = {}
         self.secrets: Dict[str, SecretConfiguration] = {}
         self.feature_flags_global: Dict[str, Any] = {}
@@ -627,7 +627,7 @@ class EnterpriseEnvironmentConfiguration:
         """Switch to a different environment"""
         if environment_name in self.environments:
             self.current_environment = environment_name
-            os.environ["AINFLUE_ENV"] = environment_name
+            os.environ["IACHERIE_ENV"] = environment_name
             logger.info(f"🔄 Switched to environment: {environment_name}")
             return True
         else:

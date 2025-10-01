@@ -57,7 +57,7 @@ class StreamingProtocol(Enum):
     # Custom Enterprise
     ENTERPRISE_UDP = "enterprise_udp"
     ENTERPRISE_TCP = "enterprise_tcp"
-    AINFLUE_PROTOCOL = "ainflue_protocol"
+    IA CHÉRIES_PROTOCOL = "ainflue_protocol"
 
 
 class StreamingQuality(Enum):

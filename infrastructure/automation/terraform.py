@@ -1,12 +1,12 @@
 """
-Terraform IaC Manager - Enterprise Infrastructure as Code for Ainflue
+Terraform IaC Manager - Enterprise Infrastructure as Code for iacherie
 ===================================================================
 
 Advanced Terraform automation for multi-cloud provisioning, infrastructure
 lifecycle management, and creator platform infrastructure orchestration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -262,7 +262,7 @@ provider "{config.cloud_provider.value}" {{
 locals {{
   common_tags = {{
     Environment    = var.environment
-    Project       = "Ainflue"
+    Project       = "iacherie"
     Component     = "{config.infrastructure_type.value}"
     ManagedBy     = "Terraform"
     Owner         = "Fahed Mlaiel"
@@ -405,7 +405,7 @@ output "platform_integration_configs" {{
     
     def _generate_tfvars(self, variables: Dict[str, Any]) -> str:
         """Generate terraform.tfvars file."""
-        tfvars = "# Terraform variables for Ainflue Infrastructure\n\n"
+        tfvars = "# Terraform variables for iacherie Infrastructure\n\n"
         
         for key, value in variables.items():
             if isinstance(value, str):

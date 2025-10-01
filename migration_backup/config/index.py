@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🚀 Ainflue Config Module - Ultra-Advanced Enterprise Index
+"""🚀 IA Chéries Config Module - Ultra-Advanced Enterprise Index
 ==========================================================
 
 🔥 ENTERPRISE CONFIGURATION ORCHESTRATION HUB
-- Zentraler Configuration Manager für die gesamte Ainflue-Plattform
+- Zentraler Configuration Manager für die gesamte IA Chéries-Plattform
 - Ultra-moderne Multi-Environment Configuration mit Enterprise Security
 - Advanced Settings Management mit Real-time Updates und Validation
 - Production-Ready Configuration Orchestration für skalierbare Deployments
@@ -471,7 +471,7 @@ class EnterpriseConfigurationManager:
         """Load configurations from environment variables"""
         env_vars = {
             key: value for key, value in os.environ.items()
-            if key.startswith(('AINFLUE_', 'CONFIG_', 'API_', 'DATABASE_', 'REDIS_'))
+            if key.startswith(('IA CHÉRIES_', 'CONFIG_', 'API_', 'DATABASE_', 'REDIS_'))
         }
         
         for key, value in env_vars.items():
@@ -1071,7 +1071,7 @@ def main():
     """🚀 Main entry point for Configuration Manager"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="🚀 Ainflue Configuration Manager")
+    parser = argparse.ArgumentParser(description="🚀 IA Chéries Configuration Manager")
     parser.add_argument("--environment", "-e", 
                        choices=[env.value for env in ConfigurationEnvironment],
                        default="development",

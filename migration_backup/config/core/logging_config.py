@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Logging Configuration Module
+"""IA Chéries Logging Configuration Module
 =======================================
 
-Enterprise-grade logging configuration for the Ainflue platform.
+Enterprise-grade logging configuration for the IA Chéries platform.
 Handles structured logging, log aggregation, log rotation, security logging,
 audit trails, and comprehensive monitoring across all system components.
 

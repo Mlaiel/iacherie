@@ -1,7 +1,7 @@
 """Collaboration System Integration Module
 
 This module provides integration between the new 12-agent collaboration system
-and the existing Ainflue agent ecosystem.
+and the existing IA Chéries agent ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class CollaborationSystemManager:
     """
     Manages the integration of the 12-agent collaboration system
-    with the broader Ainflue platform.
+    with the broader IA Chéries platform.
     """
     
     def __init__(self):

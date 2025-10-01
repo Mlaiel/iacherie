@@ -12,10 +12,10 @@ STRICT_REQUIREMENTS='
 ## ⚠️ EXIGENCES STRICTES OBLIGATOIRES
 
 ### 📋 CONFORMITÉ CAHIER DES CHARGES
-- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/Ainflue/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
+- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/iacherie/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
 - ✅ **GÉNÈRE TOUS** les fichiers/modules demandés selon la logique métier
 - ✅ **N'\''OUBLIE RIEN** et **N'\''IGNORE RIEN** sauf si existant alors **À ENRICHIR**
-- ✅ **Respecte la logique métier Ainflue:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
+- ✅ **Respecte la logique métier iacherie:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
 
 ### 🏭 CODE INDUSTRIEL OBLIGATOIRE
 - ✅ **Code industriel ultra avancé, clé en main, production-ready**
@@ -66,7 +66,7 @@ UPDATED_FILES=0
 echo "🔍 Recherche de tous les fichiers CHECKLIST.md..."
 
 # Trouver tous les fichiers CHECKLIST.md
-find /workspaces/Ainflue -name "CHECKLIST.md" -type f | while read -r checklist_file; do
+find /workspaces/iacherie -name "CHECKLIST.md" -type f | while read -r checklist_file; do
     TOTAL_FILES=$((TOTAL_FILES + 1))
     
     echo "📝 Traitement: $checklist_file"
@@ -111,14 +111,14 @@ done
 echo ""
 echo "🎯 INJECTION TERMINÉE!"
 echo "📊 STATISTIQUES:"
-echo "   - Fichiers trouvés: $(find /workspaces/Ainflue -name "CHECKLIST.md" -type f | wc -l)"
+echo "   - Fichiers trouvés: $(find /workspaces/iacherie -name "CHECKLIST.md" -type f | wc -l)"
 echo "   - Fichiers mis à jour: Vérification en cours..."
 echo ""
 echo "🔥 VALIDATION:"
 
 # Validation finale
-VALIDATION_COUNT=$(find /workspaces/Ainflue -name "CHECKLIST.md" -type f -exec grep -l "EXIGENCES STRICTES OBLIGATOIRES" {} \; | wc -l)
-TOTAL_CHECKLISTS=$(find /workspaces/Ainflue -name "CHECKLIST.md" -type f | wc -l)
+VALIDATION_COUNT=$(find /workspaces/iacherie -name "CHECKLIST.md" -type f -exec grep -l "EXIGENCES STRICTES OBLIGATOIRES" {} \; | wc -l)
+TOTAL_CHECKLISTS=$(find /workspaces/iacherie -name "CHECKLIST.md" -type f | wc -l)
 
 echo "   - Checklists avec exigences: $VALIDATION_COUNT/$TOTAL_CHECKLISTS"
 

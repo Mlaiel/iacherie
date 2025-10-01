@@ -3,7 +3,7 @@ Cost Management - Intelligent Cloud Cost Optimization and Monitoring
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Advanced cost management system for multi-cloud infrastructure with AI-powered
-optimization, budget tracking, and cost allocation for the Ainflue creator economy.
+optimization, budget tracking, and cost allocation for the iacherie creator economy.
 """
 
 import asyncio
@@ -37,7 +37,7 @@ class CostOptimizationStrategy(Enum):
     BALANCED = "balanced"              # Balance cost and performance
     CONSERVATIVE = "conservative"      # Minimal risk to performance
     PERFORMANCE_FIRST = "performance_first"  # Performance over cost
-    BUSINESS_CRITICAL = "business_critical"  # Ainflue revenue optimization
+    BUSINESS_CRITICAL = "business_critical"  # iacherie revenue optimization
 
 
 class ResourceType(Enum):
@@ -53,7 +53,7 @@ class ResourceType(Enum):
 
 
 class CostCenter(Enum):
-    """Ainflue business cost centers"""
+    """iacherie business cost centers"""
     CREATOR_SERVICES = "creator_services"
     AI_PROCESSING = "ai_processing"
     CONTENT_STORAGE = "content_storage"
@@ -100,7 +100,7 @@ class CostManagement:
     """
     Intelligent cloud cost optimization and monitoring system.
     
-    Provides comprehensive cost management for Ainflue infrastructure:
+    Provides comprehensive cost management for iacherie infrastructure:
     - Multi-cloud cost tracking and allocation
     - AI-powered cost optimization recommendations
     - Budget management and forecasting
@@ -127,7 +127,7 @@ class CostManagement:
         self.cost_prediction_models = {}
         self._initialize_cost_models()
         
-        # Ainflue business cost centers
+        # iacherie business cost centers
         self.cost_centers = {
             CostCenter.CREATOR_SERVICES: {'budget': 10000, 'current': 0},
             CostCenter.AI_PROCESSING: {'budget': 15000, 'current': 0},
@@ -206,7 +206,7 @@ class CostManagement:
             ai_recs = await self._analyze_ai_cost_optimization(cost_data)
             recommendations.extend(ai_recs)
             
-            # Analyze Ainflue-specific cost optimizations
+            # Analyze iacherie-specific cost optimizations
             business_recs = await self._analyze_business_cost_optimization(cost_data)
             recommendations.extend(business_recs)
             
@@ -419,7 +419,7 @@ class CostManagement:
             return []
     
     async def _analyze_business_cost_optimization(self, cost_data: List[CostData]) -> List[CostOptimizationRecommendation]:
-        """Analyze Ainflue business-specific cost optimizations"""
+        """Analyze iacherie business-specific cost optimizations"""
         recommendations = []
         
         try:
@@ -535,9 +535,9 @@ class CostManagement:
             logger.error(f"Cost forecasting failed: {str(e)}")
             return {'status': 'error', 'error': str(e)}
     
-    async def optimize_ainflue_business_costs(self) -> Dict[str, Any]:
+    async def optimize_iacherie_business_costs(self) -> Dict[str, Any]:
         """
-        Optimize costs specifically for Ainflue creator economy business logic.
+        Optimize costs specifically for iacherie creator economy business logic.
         Business-focused cost optimization.
         
         Returns:
@@ -626,7 +626,7 @@ class CostManagement:
                 }
             }
             
-            logger.info(f"Generated Ainflue business cost optimizations with ${total_potential_savings:.2f} monthly savings potential")
+            logger.info(f"Generated iacherie business cost optimizations with ${total_potential_savings:.2f} monthly savings potential")
             return business_optimizations
             
         except Exception as e:

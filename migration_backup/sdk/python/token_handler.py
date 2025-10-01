@@ -1,4 +1,4 @@
-"""Token Handler for Ainflue SDK
+"""Token Handler for IA Chéries SDK
 
 Enterprise-grade token management with multi-expert design:
 - Sécurité: Secure token rotation and refresh strategies

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-etcd Integration Template for Ainflue Platform
+etcd Integration Template for iacherie Platform
 =============================================
 
 Production-ready etcd integration with:
@@ -61,7 +61,7 @@ class EtcdServiceRegistration:
 
 class EtcdClient:
     """
-    Enhanced etcd client for Ainflue Platform
+    Enhanced etcd client for iacherie Platform
     
     Features:
     - Service registration with TTL
@@ -85,9 +85,9 @@ class EtcdClient:
             cert_cert=cert_cert
         )
         
-        self.service_prefix = "/ainflue/services/"
-        self.config_prefix = "/ainflue/config/"
-        self.leader_prefix = "/ainflue/leaders/"
+        self.service_prefix = "/iacherie/services/"
+        self.config_prefix = "/iacherie/config/"
+        self.leader_prefix = "/iacherie/leaders/"
         
         # Track leases for TTL management
         self.active_leases: Dict[str, etcd3.Lease] = {}
@@ -390,7 +390,7 @@ class EtcdClient:
 
 class EtcdIntegrationTemplate:
     """
-    etcd Integration Template for Ainflue Platform
+    etcd Integration Template for iacherie Platform
     
     A comprehensive etcd integration that provides:
     - Service registration and discovery with TTL

@@ -1,11 +1,11 @@
 """
-Fallback Strategy Manager - Ainflue Enterprise
+Fallback Strategy Manager - IA Chéries Enterprise
 =============================================
 Manager stratégies fallback avec business continuity.
 Fallback orchestration + graceful degradation + service mesh integration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chéries Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -129,7 +129,7 @@ class FallbackStrategyManager:
         self.cache_providers: Dict[str, Any] = {}
         self.is_initialized = False
         
-        # Ainflue business domain fallback strategies
+        # IA Chéries business domain fallback strategies
         self.business_fallback_strategies = {
             'creator': {
                 'upload': [
@@ -551,7 +551,7 @@ class FallbackStrategyManager:
     # Implementation helper methods
     
     async def _load_default_configurations(self):
-        """Load default fallback configurations for Ainflue services"""
+        """Load default fallback configurations for IA Chéries services"""
         default_configs = []
         
         # Creator service configurations

@@ -1,4 +1,4 @@
-# ⚡ Consul Connect Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Consul Connect Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -18,7 +18,7 @@ metadata:
     component: server
 data:
   server.hcl: |
-    datacenter = "ainflue-dc1"
+    datacenter = "iacherie-dc1"
     data_dir = "/consul/data"
     log_level = "INFO"
     node_name = "consul-server"
@@ -54,7 +54,7 @@ data:
       default_policy = "deny"
       enable_token_persistence = true
       tokens = {
-        initial_management = "ainflue-consul-bootstrap-token"
+        initial_management = "iacherie-consul-bootstrap-token"
       }
     }
     
@@ -71,7 +71,7 @@ data:
     }
     
     # Encryption
-    encrypt = "ainflue-consul-encryption-key-base64"
+    encrypt = "iacherie-consul-encryption-key-base64"
     encrypt_verify_incoming = true
     encrypt_verify_outgoing = true
     
@@ -88,7 +88,7 @@ data:
     telemetry {
       prometheus_retention_time = "60s"
       disable_hostname = true
-      metrics_prefix = "consul.ainflue"
+      metrics_prefix = "consul.iacherie"
     }
 ---
 # 🚀 Consul Server StatefulSet
@@ -138,7 +138,7 @@ spec:
             -bootstrap-expect=3 \
             -client="0.0.0.0" \
             -config-dir="/consul/config" \
-            -datacenter=ainflue-dc1 \
+            -datacenter=iacherie-dc1 \
             -data-dir="/consul/data" \
             -domain=cluster.local \
             -hcl="connect { enabled = true }" \
@@ -584,17 +584,17 @@ spec:
 # 🎯 CONSUL CONNECT SERVICE DEFINITIONS
 # ===================================================================
 
-# 🚀 Ainflue API Service Definition
+# 🚀 iacherie API Service Definition
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-api-service-defaults
+  name: iacherie-api-service-defaults
   namespace: consul
 data:
   service-defaults.hcl: |
     Kind = "service-defaults"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Protocol = "http"
     
     MeshGateway {
@@ -637,7 +637,7 @@ data:
       }
       Overrides = [
         {
-          Name = "ainflue-database"
+          Name = "iacherie-database"
           ConnectTimeoutMs = 1000
           Protocol = "tcp"
           Limits {
@@ -647,7 +647,7 @@ data:
           }
         },
         {
-          Name = "ainflue-cache"
+          Name = "iacherie-cache"
           ConnectTimeoutMs = 500
           Protocol = "tcp"
           Limits {
@@ -663,13 +663,13 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-content-service-defaults
+  name: iacherie-content-service-defaults
   namespace: consul
 data:
   service-defaults.hcl: |
     Kind = "service-defaults"
-    Name = "ainflue-content-processor"
-    Namespace = "ainflue-production"
+    Name = "iacherie-content-processor"
+    Namespace = "iacherie-production"
     Protocol = "grpc"
     
     MeshGateway {
@@ -706,7 +706,7 @@ data:
       }
       Overrides = [
         {
-          Name = "ainflue-ai-engine"
+          Name = "iacherie-ai-engine"
           ConnectTimeoutMs = 30000
           Protocol = "grpc"
           Limits {
@@ -716,7 +716,7 @@ data:
           }
         },
         {
-          Name = "ainflue-storage"
+          Name = "iacherie-storage"
           ConnectTimeoutMs = 5000
           Protocol = "http"
           Limits {
@@ -732,17 +732,17 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-service-intentions
+  name: iacherie-service-intentions
   namespace: consul
 data:
   service-intentions.hcl: |
     Kind = "service-intentions"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Sources = [
       {
-        Name = "ainflue-frontend"
-        Namespace = "ainflue-production"
+        Name = "iacherie-frontend"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -755,8 +755,8 @@ data:
         ]
       },
       {
-        Name = "ainflue-mobile"
-        Namespace = "ainflue-production"
+        Name = "iacherie-mobile"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -778,13 +778,13 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-service-router
+  name: iacherie-service-router
   namespace: consul
 data:
   service-router.hcl: |
     Kind = "service-router"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Routes = [
       {
         Match {
@@ -793,8 +793,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-creator-service"
-          Namespace = "ainflue-production"
+          Service = "iacherie-creator-service"
+          Namespace = "iacherie-production"
           RequestTimeout = "30s"
           RetryPolicy {
             RetryOn = "gateway-error"
@@ -811,8 +811,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-content-processor"
-          Namespace = "ainflue-production"
+          Service = "iacherie-content-processor"
+          Namespace = "iacherie-production"
           RequestTimeout = "120s"
           RetryPolicy {
             RetryOn = "gateway-error"
@@ -829,8 +829,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-payment-service"
-          Namespace = "ainflue-production"
+          Service = "iacherie-payment-service"
+          Namespace = "iacherie-production"
           RequestTimeout = "15s"
           RetryPolicy {
             RetryOn = "gateway-error"
@@ -846,24 +846,24 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-service-splitter
+  name: iacherie-service-splitter
   namespace: consul
 data:
   service-splitter.hcl: |
     Kind = "service-splitter"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Splits = [
       {
         Weight = 90
-        Service = "ainflue-api-stable"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-stable"
+        Namespace = "iacherie-production"
         ServiceSubset = "v1"
       },
       {
         Weight = 10
-        Service = "ainflue-api-canary"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-canary"
+        Namespace = "iacherie-production"
         ServiceSubset = "v2"
         RequestHeaders {
           Set = {
@@ -891,8 +891,8 @@ metadata:
 data:
   ingress-gateway.hcl: |
     Kind = "ingress-gateway"
-    Name = "ainflue-ingress"
-    Namespace = "ainflue-production"
+    Name = "iacherie-ingress"
+    Namespace = "iacherie-production"
     
     TLS {
       Enabled = true
@@ -912,9 +912,9 @@ data:
         Protocol = "http"
         Services = [
           {
-            Name = "ainflue-api"
-            Namespace = "ainflue-production"
-            Hosts = ["api.ainflue.com"]
+            Name = "iacherie-api"
+            Namespace = "iacherie-production"
+            Hosts = ["api.iacherie.com"]
             RequestHeaders {
               Set = {
                 "x-request-start" = "%START_TIME%"
@@ -929,9 +929,9 @@ data:
             }
           },
           {
-            Name = "ainflue-frontend"
-            Namespace = "ainflue-production"
-            Hosts = ["app.ainflue.com", "ainflue.com"]
+            Name = "iacherie-frontend"
+            Namespace = "iacherie-production"
+            Hosts = ["app.iacherie.com", "iacherie.com"]
           }
         ]
       },
@@ -940,13 +940,13 @@ data:
         Protocol = "https"
         Services = [
           {
-            Name = "ainflue-api"
-            Namespace = "ainflue-production"
-            Hosts = ["api.ainflue.com"]
+            Name = "iacherie-api"
+            Namespace = "iacherie-production"
+            Hosts = ["api.iacherie.com"]
             TLS = {
               SDS = {
-                ClusterName = "ainflue-api-tls"
-                CertResource = "ainflue-api-cert"
+                ClusterName = "iacherie-api-tls"
+                CertResource = "iacherie-api-cert"
               }
             }
           }
@@ -963,13 +963,13 @@ metadata:
 data:
   terminating-gateway.hcl: |
     Kind = "terminating-gateway"
-    Name = "ainflue-terminating"
-    Namespace = "ainflue-production"
+    Name = "iacherie-terminating"
+    Namespace = "iacherie-production"
     
     Services = [
       {
         Name = "external-database"
-        Namespace = "ainflue-production"
+        Namespace = "iacherie-production"
         CAFile = "/etc/ssl/certs/external-db-ca.pem"
         CertFile = "/etc/ssl/certs/external-db-cert.pem"
         KeyFile = "/etc/ssl/private/external-db-key.pem"
@@ -977,12 +977,12 @@ data:
       },
       {
         Name = "external-analytics"
-        Namespace = "ainflue-production"
+        Namespace = "iacherie-production"
         DisableAutoHostRewrite = false
       },
       {
         Name = "external-payment-gateway"
-        Namespace = "ainflue-production"
+        Namespace = "iacherie-production"
         CAFile = "/etc/ssl/certs/payment-ca.pem"
         CertFile = "/etc/ssl/certs/payment-cert.pem"
         KeyFile = "/etc/ssl/private/payment-key.pem"
@@ -1001,25 +1001,25 @@ metadata:
   name: consul-acl-policies
   namespace: consul
 data:
-  ainflue-api-policy.hcl: |
-    # Ainflue API Service ACL Policy
-    service "ainflue-api" {
+  iacherie-api-policy.hcl: |
+    # iacherie API Service ACL Policy
+    service "iacherie-api" {
       policy = "write"
     }
     
-    service "ainflue-content-processor" {
+    service "iacherie-content-processor" {
       policy = "read"
     }
     
-    service "ainflue-payment-service" {
+    service "iacherie-payment-service" {
       policy = "read"
     }
     
-    service "ainflue-database" {
+    service "iacherie-database" {
       policy = "read"
     }
     
-    service "ainflue-cache" {
+    service "iacherie-cache" {
       policy = "read"
     }
     
@@ -1031,11 +1031,11 @@ data:
       policy = "read"
     }
     
-    key_prefix "ainflue/api/" {
+    key_prefix "iacherie/api/" {
       policy = "write"
     }
     
-    key_prefix "ainflue/config/" {
+    key_prefix "iacherie/config/" {
       policy = "read"
     }
     
@@ -1048,17 +1048,17 @@ data:
     }
     
     # Connect intentions
-    service "ainflue-api" {
+    service "iacherie-api" {
       intentions = "write"
     }
   
-  ainflue-frontend-policy.hcl: |
-    # Ainflue Frontend Service ACL Policy
-    service "ainflue-frontend" {
+  iacherie-frontend-policy.hcl: |
+    # iacherie Frontend Service ACL Policy
+    service "iacherie-frontend" {
       policy = "write"
     }
     
-    service "ainflue-api" {
+    service "iacherie-api" {
       policy = "read"
     }
     
@@ -1070,16 +1070,16 @@ data:
       policy = "read"
     }
     
-    key_prefix "ainflue/frontend/" {
+    key_prefix "iacherie/frontend/" {
       policy = "write"
     }
     
-    key_prefix "ainflue/config/" {
+    key_prefix "iacherie/config/" {
       policy = "read"
     }
     
     # Connect intentions
-    service "ainflue-frontend" {
+    service "iacherie-frontend" {
       intentions = "write"
     }
 ---
@@ -1097,7 +1097,7 @@ data:
         provider = "vault"
         
         vault {
-          address = "https://vault.ainflue.internal:8200"
+          address = "https://vault.iacherie.internal:8200"
           token = "consul-ca-token"
           root_pki_path = "connect_root"
           intermediate_pki_path = "connect_inter"
@@ -1106,7 +1106,7 @@ data:
           cert_file = "/consul/tls/vault-client.pem"
           key_file = "/consul/tls/vault-client-key.pem"
           
-          tls_server_name = "vault.ainflue.internal"
+          tls_server_name = "vault.iacherie.internal"
           tls_skip_verify = false
           
           root_cert_ttl = "10y"
@@ -1148,13 +1148,13 @@ metadata:
 data:
   federation.hcl: |
     # Primary Datacenter Configuration
-    datacenter = "ainflue-dc1"
-    primary_datacenter = "ainflue-dc1"
+    datacenter = "iacherie-dc1"
+    primary_datacenter = "iacherie-dc1"
     
     # WAN Federation
     retry_join_wan = [
-      "consul-dc2.ainflue.internal",
-      "consul-dc3.ainflue.internal"
+      "consul-dc2.iacherie.internal",
+      "consul-dc3.iacherie.internal"
     ]
     
     # Mesh Gateway Configuration
@@ -1195,7 +1195,7 @@ data:
       prometheus_retention_time = "60s"
       disable_hostname = true
       
-      metrics_prefix = "consul.ainflue"
+      metrics_prefix = "consul.iacherie"
       
       # StatsD configuration
       statsd_address = "statsd.monitoring.svc.cluster.local:8125"
@@ -1208,7 +1208,7 @@ data:
       
       # Datadog configuration
       dogstatsd_addr = "datadog-agent.monitoring.svc.cluster.local:8125"
-      dogstatsd_tags = ["datacenter:ainflue-dc1", "environment:production"]
+      dogstatsd_tags = ["datacenter:iacherie-dc1", "environment:production"]
     }
     
     # Logging configuration
@@ -1248,14 +1248,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-creator-services-config
+  name: iacherie-creator-services-config
   namespace: consul
 data:
   creator-services.hcl: |
     # Creator Content Processing Service
     service {
-      name = "ainflue-content-processor"
-      id = "ainflue-content-processor-1"
+      name = "iacherie-content-processor"
+      id = "iacherie-content-processor-1"
       port = 8080
       address = "10.0.1.100"
       
@@ -1303,7 +1303,7 @@ data:
           proxy {
             upstreams = [
               {
-                destination_name = "ainflue-ai-engine"
+                destination_name = "iacherie-ai-engine"
                 local_bind_port = 8001
                 config = {
                   connect_timeout_ms = 30000
@@ -1311,7 +1311,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-storage"
+                destination_name = "iacherie-storage"
                 local_bind_port = 8002
                 config = {
                   connect_timeout_ms = 5000
@@ -1319,7 +1319,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-database"
+                destination_name = "iacherie-database"
                 local_bind_port = 8003
                 config = {
                   connect_timeout_ms = 1000
@@ -1340,8 +1340,8 @@ data:
     
     # Creator Monetization Service
     service {
-      name = "ainflue-monetization"
-      id = "ainflue-monetization-1"
+      name = "iacherie-monetization"
+      id = "iacherie-monetization-1"
       port = 8080
       address = "10.0.1.200"
       
@@ -1384,7 +1384,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-analytics"
+                destination_name = "iacherie-analytics"
                 local_bind_port = 8002
                 config = {
                   connect_timeout_ms = 5000
@@ -1392,7 +1392,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-database"
+                destination_name = "iacherie-database"
                 local_bind_port = 8003
                 config = {
                   connect_timeout_ms = 1000
@@ -1407,8 +1407,8 @@ data:
     
     # Creator Collaboration Service
     service {
-      name = "ainflue-collaboration"
-      id = "ainflue-collaboration-1"
+      name = "iacherie-collaboration"
+      id = "iacherie-collaboration-1"
       port = 8080
       address = "10.0.1.300"
       
@@ -1441,7 +1441,7 @@ data:
           proxy {
             upstreams = [
               {
-                destination_name = "ainflue-websocket"
+                destination_name = "iacherie-websocket"
                 local_bind_port = 8001
                 config = {
                   connect_timeout_ms = 5000
@@ -1449,7 +1449,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-storage"
+                destination_name = "iacherie-storage"
                 local_bind_port = 8002
                 config = {
                   connect_timeout_ms = 5000
@@ -1457,7 +1457,7 @@ data:
                 }
               },
               {
-                destination_name = "ainflue-database"
+                destination_name = "iacherie-database"
                 local_bind_port = 8003
                 config = {
                   connect_timeout_ms = 1000
@@ -1473,5 +1473,5 @@ data:
 # ===================================================================
 # END OF CONSUL CONNECT CONFIGURATION TEMPLATE
 # Creator Economy Service Mesh Solution by Fahed Mlaiel
-# Enterprise-grade Consul Connect configuration for Ainflue platform
+# Enterprise-grade Consul Connect configuration for iacherie platform
 # ===================================================================

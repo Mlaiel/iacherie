@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Revenue Tracking Dashboard
+ * IA Chéries Desktop - Revenue Tracking Dashboard
  * 
  * Real-time revenue monitoring and analytics for desktop application
  * 

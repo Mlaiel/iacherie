@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Ansible Playbook Orchestrator
+# IA Chéries Infrastructure Module - Ansible Playbook Orchestrator
 # =============================================================
 # 
-# Enterprise-grade Ansible playbook orchestration for Ainflue platform
+# Enterprise-grade Ansible playbook orchestration for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -118,7 +118,7 @@ class PlaybookOrchestrator:
     
     def __init__(self, ansible_config_path: Optional[str] = None):
         """Initialize playbook orchestrator"""
-        self.ansible_config_path = ansible_config_path or "/home/runner/work/Ainflue/Ainflue/infra/ansible"
+        self.ansible_config_path = ansible_config_path or "/home/runner/work/IA Chéries/IA Chéries/infra/ansible"
         self.playbooks: Dict[str, PlaybookConfig] = {}
         self.execution_history: List[ExecutionResult] = []
         self.active_executions: Dict[str, subprocess.Popen] = {}

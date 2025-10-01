@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-🐦 AINFLUENCER TWITTER ENGINE
+🐦 IA CHÉRIES TWITTER ENGINE
 =============================
 
 Module d'intégration avec l'API Twitter v2 pour :
@@ -25,9 +25,9 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerTwitterAPI:
+class IaCheriesTwitterAPI:
     """
-    🐦 Moteur Twitter pour Ainfluencer
+    🐦 Moteur Twitter pour IA Chéries
     
     Fonctionnalités:
     - Récupération de tweets par utilisateur
@@ -53,7 +53,7 @@ class AinfluencerTwitterAPI:
         self.base_url = "https://api.twitter.com/2"
         self.headers = {
             'Authorization': f'Bearer {self.bearer_token}',
-            'User-Agent': 'Ainfluencer-Platform/2.0'
+            'User-Agent': 'IA Chéries-Platform/2.0'
         }
         
         # Cache et stockage
@@ -579,12 +579,12 @@ async def test_twitter_engine():
     """
     Test complet du moteur Twitter
     """
-    print("🐦 Test Ainfluencer Twitter Engine")
+    print("🐦 Test IA Chéries Twitter Engine")
     print("=" * 50)
     
     try:
         # Initialisation
-        twitter = AinfluencerTwitterAPI()
+        twitter = IaCheriesTwitterAPI()
         
         # Test 1: Recherche de tweets
         print("🔍 Test 1: Recherche 'AI artificial intelligence'...")

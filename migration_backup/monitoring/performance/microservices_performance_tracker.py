@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Microservices Performance Tracker - Enterprise Performance Monitoring
 Advanced performance tracking for microservices architecture and service mesh

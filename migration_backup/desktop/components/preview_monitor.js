@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Preview Monitor Component
+ * IA Chéries Desktop - Preview Monitor Component
  * 
  * Professional content preview system with real-time rendering and multi-format support
  * Provides high-quality preview capabilities for video, audio, and image content

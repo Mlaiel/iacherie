@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Security Gateway Template for Ainflue Creator Economy Platform
+Security Gateway Template for iacherie Creator Economy Platform
 Enterprise security gateway with WAF, DDoS protection, threat detection and zero-trust architecture
 """
 
@@ -132,7 +132,7 @@ class ThreatEvent(BaseModel):
 
 class SecurityGatewayTemplate:
     """
-    Template de gateway de sécurité enterprise pour Ainflue
+    Template de gateway de sécurité enterprise pour iacherie
     
     Fonctionnalités:
     - Web Application Firewall (WAF)
@@ -150,7 +150,7 @@ class SecurityGatewayTemplate:
     def __init__(self, config: SecurityGatewayConfig = None):
         self.config = config or SecurityGatewayConfig()
         self.app = FastAPI(
-            title="Ainflue Security Gateway",
+            title="iacherie Security Gateway",
             description="Enterprise security gateway with advanced threat protection",
             version="1.0.0"
         )
@@ -336,7 +336,7 @@ class SecurityGatewayTemplate:
         # CORS sécurisé
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=["https://ainflue.com", "https://app.ainflue.com"],
+            allow_origins=["https://iacherie.com", "https://app.iacherie.com"],
             allow_credentials=True,
             allow_methods=["GET", "POST", "PUT", "DELETE"],
             allow_headers=["*"],

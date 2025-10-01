@@ -1,4 +1,4 @@
-"""Biometric Authentication Template for Ainflue Platform
+"""Biometric Authentication Template for iacherie Platform
 Advanced biometric authentication system supporting fingerprint, face recognition, 
 voice recognition, and behavioral biometrics for creator identity verification.
 
@@ -381,7 +381,7 @@ class VoiceProcessor(BiometricProcessor):
 
 
 class BiometricAuthenticationService:
-    """Comprehensive biometric authentication service for Ainflue platform
+    """Comprehensive biometric authentication service for iacherie platform
     
     Provides enterprise-grade biometric authentication with:
     - Multi-modal biometric support (fingerprint, face, voice, iris)

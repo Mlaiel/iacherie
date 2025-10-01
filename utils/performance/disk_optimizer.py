@@ -277,7 +277,7 @@ class DiskOptimizer:
         self._initialize_optimization_rules()
         
         # Create cache directory
-        self._cache_dir = Path(tempfile.gettempdir()) / "ainflue_disk_cache"
+        self._cache_dir = Path(tempfile.gettempdir()) / "iacherie_disk_cache"
         self._cache_dir.mkdir(exist_ok=True)
         
         logger.info(f"DiskOptimizer initialized - Mode: {optimization_mode.value}, Cache: {cache_size_mb}MB")

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The GDPR Service (`backend/services/gdpr.py`) is a unified module that implements the three required GDPR compliance features for the Ainflue platform:
+The GDPR Service (`backend/services/gdpr.py`) is a unified module that implements the three required GDPR compliance features for the iacherie platform:
 
 1. **Gestion consentements** (Consent Management)
 2. **Export/suppression données** (Data Export/Deletion)

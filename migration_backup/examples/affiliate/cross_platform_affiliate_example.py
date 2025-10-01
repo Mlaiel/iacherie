@@ -3,7 +3,7 @@
 Cross Platform Affiliate Example - Example Affiliation Cross-Platform
 ====================================================================
 
-Démonstration affiliation cross-platform ultra sophistiquée pour écosystème Ainflue.
+Démonstration affiliation cross-platform ultra sophistiquée pour écosystème IA Chéries.
 Intégrations multi-plateformes avec synchronisation temps réel et optimisation globale.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -872,7 +872,7 @@ async def main(**kwargs) -> Dict[str, Any]:
 if __name__ == "__main__":
     """Exécution directe du module"""
     print("=" * 70)
-    print("🌐 CROSS-PLATFORM AFFILIATE EXAMPLE - AINFLUE SYSTEM")
+    print("🌐 CROSS-PLATFORM AFFILIATE EXAMPLE - IA CHÉRIES SYSTEM")
     print("=" * 70)
     
     try:

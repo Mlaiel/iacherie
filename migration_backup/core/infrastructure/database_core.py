@@ -1,9 +1,9 @@
-"""Ainflue Core Database - Enterprise Database Management System
+"""IA Chéries Core Database - Enterprise Database Management System
 ============================================================
 
 Advanced database management providing connection pooling, query optimization,
 transaction management, migration support, and distributed database operations
-for the Ainflue platform core engine.
+for the IA Chéries platform core engine.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

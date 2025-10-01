@@ -865,14 +865,14 @@ class YouTubeSEOOptimizer:
 
 
 # Integration utilities
-def create_ainflue_youtube_optimizer() -> YouTubeSEOOptimizer:
+def create_iacherie_youtube_optimizer() -> YouTubeSEOOptimizer:
     """Create configured YouTube SEO optimizer for IA Chérie"""
     return YouTubeSEOOptimizer()
 
 
 if __name__ == "__main__":
     # Example usage
-    optimizer = create_ainflue_youtube_optimizer()
+    optimizer = create_iacherie_youtube_optimizer()
     
     # Sample video metadata
     video_metadata = YouTubeVideoMetadata(

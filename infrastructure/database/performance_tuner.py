@@ -50,7 +50,7 @@ class PerformanceConfig:
 
 class DatabasePerformanceTuner:
     """
-    Enterprise Database Performance Tuner for Ainflue Infrastructure
+    Enterprise Database Performance Tuner for iacherie Infrastructure
     
     DBA Role Implementation:
     - Database performance monitoring and optimization
@@ -74,7 +74,7 @@ class DatabasePerformanceTuner:
         """
         Comprehensive database performance optimization for creator workloads
         
-        DBA Role: Apply performance optimizations for Ainflue creator economy
+        DBA Role: Apply performance optimizations for iacherie creator economy
         """
         try:
             database_type = optimization_config.get('database_type', 'mongodb')
@@ -192,7 +192,7 @@ class DatabasePerformanceTuner:
         """
         Optimize database performance for creator workloads
         
-        DBA Role: Apply performance optimizations for Ainflue creator economy
+        DBA Role: Apply performance optimizations for iacherie creator economy
         """
         try:
             db_type = DatabaseType(database_config.get('type', 'postgresql'))
@@ -356,7 +356,7 @@ class DatabasePerformanceTuner:
         return optimizations
     
     async def _optimize_for_creator_workloads(self, db_type: DatabaseType) -> Dict[str, Any]:
-        """Optimize database for Ainflue creator-specific workloads"""
+        """Optimize database for iacherie creator-specific workloads"""
         creator_optimizations = {
             'content_upload_optimization': {
                 'bulk_insert_batch_size': 1000,

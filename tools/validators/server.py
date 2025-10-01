@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from datetime import datetime
 import uvicorn
 
-app = FastAPI(title="Ainfluencer Enterprise", version="4.0.0")
+app = FastAPI(title="iaCherie Enterprise", version="4.0.0")
 
 @app.get("/")
 async def root():
@@ -20,7 +20,7 @@ async def health():
 async def get_complete_system():
     """Système complet - 57/57 modules"""
     return {
-        "system": "🏆 AINFLUENCER ENTERPRISE COMPLETE",
+        "system": "🏆 IACHERIE ENTERPRISE COMPLETE",
         "status": "WORLD-CLASS OPERATIONAL",
         "modules": {
             "total": 57,
@@ -103,7 +103,7 @@ async def get_ai_projects():
             }
         ],
         "timestamp": datetime.now().isoformat(),
-        "source": "ainfluencer-enterprise-backend"
+        "source": "iacheriencer-enterprise-backend"
     }
 
 @app.post("/api/ai/generate")
@@ -202,7 +202,7 @@ async def get_audio_processing():
             }
         },
         "timestamp": datetime.now().isoformat(),
-        "source": "ainfluencer-audio-engine"
+        "source": "iacheriencer-audio-engine"
     }
 
 @app.post("/api/audio/process")
@@ -218,7 +218,7 @@ async def start_audio_processing(request: dict = None):
             "queue_position": 2
         },
         "timestamp": datetime.now().isoformat(),
-        "source": "ainfluencer-audio-engine"
+        "source": "iacheriencer-audio-engine"
     }
 
 @app.get("/api/audio/status")
@@ -303,7 +303,7 @@ async def get_ai_intelligence():
             }
         },
         "timestamp": datetime.now().isoformat(),
-        "source": "ainfluencer-ai-brain"
+        "source": "iacheriencer-ai-brain"
     }
 
 @app.post("/api/ai/process")
@@ -324,9 +324,9 @@ async def process_with_ai(request: dict = None):
             ]
         },
         "timestamp": datetime.now().isoformat(),
-        "source": "ainfluencer-ai-brain"
+        "source": "iacheriencer-ai-brain"
     }
 
 if __name__ == "__main__":
-    print("🏆 AINFLUENCER ENTERPRISE SYSTEM - 57/57 MODULES")
+    print("🏆 IACHERIE ENTERPRISE SYSTEM - 57/57 MODULES")
     uvicorn.run(app, host="0.0.0.0", port=8000)

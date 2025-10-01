@@ -4,7 +4,7 @@ Security Orchestrator - Enterprise Security Automation
 Author: Fahed Mlaiel (mlaiel@live.de) 
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced security automation for Ainflue Platform:
+Advanced security automation for IA Chéries Platform:
 - Vulnerability scanning and assessment
 - Threat detection and response
 - Security policy enforcement
@@ -740,7 +740,7 @@ async def main():
     """CLI entry point for security orchestrator"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Security Orchestrator')
+    parser = argparse.ArgumentParser(description='IA Chéries Security Orchestrator')
     parser.add_argument('--scan', action='store_true', help='Run vulnerability scan')
     parser.add_argument('--monitor', type=int, metavar='DURATION', help='Monitor for security events (seconds)')
     parser.add_argument('--report', action='store_true', help='Generate security report')

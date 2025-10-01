@@ -2,7 +2,7 @@
 Cloud Providers Infrastructure Orchestration Module
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Multi-cloud provider management and orchestration for Ainflue infrastructure.
+Multi-cloud provider management and orchestration for IA Chéries infrastructure.
 Handles AWS, GCP, and Azure integration with intelligent workload distribution.
 """
 
@@ -114,8 +114,8 @@ PROVIDER_CAPABILITIES = {
     }
 }
 
-# Ainflue-specific cloud service mappings
-AINFLUE_SERVICE_MAPPINGS = {
+# IA Chéries-specific cloud service mappings
+IA CHÉRIES_SERVICE_MAPPINGS = {
     'creator_services': {
         'primary_provider': 'aws',
         'services': ['EC2', 'RDS', 'S3', 'CloudFront'],
@@ -153,7 +153,7 @@ AINFLUE_SERVICE_MAPPINGS = {
     }
 }
 
-# Default cloud configurations for Ainflue
+# Default cloud configurations for IA Chéries
 DEFAULT_CLOUD_CONFIGS = {
     'aws': {
         'default_region': 'us-west-2',
@@ -208,8 +208,8 @@ DEFAULT_CLOUD_CONFIGS = {
 }
 
 def get_optimal_provider_for_service(service_name: str) -> str:
-    """Get optimal cloud provider for an Ainflue service"""
-    mapping = AINFLUE_SERVICE_MAPPINGS.get(service_name)
+    """Get optimal cloud provider for an IA Chéries service"""
+    mapping = IA CHÉRIES_SERVICE_MAPPINGS.get(service_name)
     if mapping:
         return mapping['primary_provider']
     return 'aws'  # Default to AWS
@@ -232,5 +232,5 @@ def list_supported_regions(provider: str) -> list:
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Cloud infrastructure module for Ainflue creator platform"
+__description__ = "Cloud infrastructure module for IA Chéries creator platform"
 

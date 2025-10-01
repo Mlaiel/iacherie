@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Industrialization Dashboard
-Dashboard pour le suivi de l'industrialisation du système Ainfluencer
+Dashboard pour le suivi de l'industrialisation du système IA Chéries
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
 """

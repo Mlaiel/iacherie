@@ -1,4 +1,4 @@
-"""{{service_name}} Event-Driven Service for Ainflue Platform
+"""{{service_name}} Event-Driven Service for IA Chéries Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -400,7 +400,7 @@ class EventProcessor:
 
 class {{service_class_name}}(BaseService):
     """
-    Advanced event-driven service for Ainflue platform.
+    Advanced event-driven service for IA Chéries platform.
     
     Features:
     - Asynchronous event processing with pub/sub pattern

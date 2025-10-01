@@ -6,9 +6,9 @@
 
 set -e
 
-API_FILE="/workspaces/Ainfluencer/frontend/app/api/ai/generate/route.ts"
-BACKUP_FILE="/workspaces/Ainfluencer/frontend/app/api/ai/generate/route.ts.backup.real"
-LOG_FILE="/workspaces/Ainfluencer/api-protection.log"
+API_FILE="/workspaces/IA Chéries/frontend/app/api/ai/generate/route.ts"
+BACKUP_FILE="/workspaces/IA Chéries/frontend/app/api/ai/generate/route.ts.backup.real"
+LOG_FILE="/workspaces/IA Chéries/api-protection.log"
 
 # Colors
 RED='\033[0;31m'
@@ -89,7 +89,7 @@ find_suspicious_scripts() {
     log "🔍 Recherche de scripts suspects qui pourraient écraser l'API..."
     
     # Chercher dans les fichiers Python, Shell et JS récemment modifiés
-    find /workspaces/Ainfluencer -type f \( -name "*.py" -o -name "*.sh" -o -name "*.js" \) -newermt "1 day ago" | \
+    find /workspaces/IA Chéries -type f \( -name "*.py" -o -name "*.sh" -o -name "*.js" \) -newermt "1 day ago" | \
     while read file; do
         if grep -q "route\.ts\|api.*generate.*route\|cat.*EOF.*route" "$file" 2>/dev/null; then
             warn "🚨 Script suspect trouvé: $file"

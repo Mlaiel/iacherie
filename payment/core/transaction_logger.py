@@ -208,7 +208,7 @@ class PaymentTransactionLogger:
                     port=db_config.get('port', 5432),
                     user=db_config.get('user', 'postgres'),
                     password=db_config.get('password', ''),
-                    database=db_config.get('database', 'ainflue'),
+                    database=db_config.get('database', 'iacherie'),
                     min_size=5,
                     max_size=20
                 )

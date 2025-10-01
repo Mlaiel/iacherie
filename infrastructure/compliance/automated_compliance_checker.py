@@ -7,7 +7,7 @@ economy platform. Provides continuous compliance validation, predictive
 analytics, and automated remediation capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

@@ -791,7 +791,7 @@ class EnterpriseAuthenticationManager:
 
 
 # IA Chérie Business Logic Integration Constants
-AINFLUE_PLATFORM_INTEGRATIONS = {
+IACHERIE_PLATFORM_INTEGRATIONS = {
     'supported_platforms': 65,
     'creator_types': [e.value for e in CreatorType],
     'authentication_flow': 'connect→auth→validate→authorize→monitor',

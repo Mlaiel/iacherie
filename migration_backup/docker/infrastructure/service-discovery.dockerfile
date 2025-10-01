@@ -1,11 +1,11 @@
 # Service Discovery Service
-# Consul-based service discovery for Ainflue Platform
+# Consul-based service discovery for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM consul:1.16 AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Service Discovery - Consul-based service registry and discovery"
+LABEL description="IA Chéries Service Discovery - Consul-based service registry and discovery"
 LABEL version="1.0.0"
 
 # Create consul user for security

@@ -1,5 +1,5 @@
 """
-Intelligent Alerting System - Ainflue Platform
+Intelligent Alerting System - IA Chéries Platform
 Smart Error Alerting with Noise Reduction & Context-Aware Escalation
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -178,7 +178,7 @@ class IntelligentAlertingSystem:
             'escalations_triggered': 0
         }
         
-        # 🎵 Audio + Platform: Configuration Ainflue
+        # 🎵 Audio + Platform: Configuration IA Chéries
         self.platform_configs = self._initialize_platform_configs()
         
         # Initialize components
@@ -189,7 +189,7 @@ class IntelligentAlertingSystem:
         logger.info("IntelligentAlertingSystem initialized with ML capabilities")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """🎵 Audio + Platform: Configuration des 65+ plateformes Ainflue"""
+        """🎵 Audio + Platform: Configuration des 65+ plateformes IA Chéries"""
         return {
             # Music Streaming Platforms
             'spotify': {

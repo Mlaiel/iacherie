@@ -300,7 +300,7 @@ export class APNSService {
   private getCategoryForActions(actions: any[]): string {
     // Generate category based on action types
     const actionTypes = actions.map(action => action.type || 'button').join('_');
-    return `AINFLUE_${actionTypes.toUpperCase()}`;
+    return `IA CHÉRIES_${actionTypes.toUpperCase()}`;
   }
 
   /**

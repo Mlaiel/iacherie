@@ -1,11 +1,11 @@
 """
-Content Classification Model - Ainflue Enterprise
+Content Classification Model - IA Chéries Enterprise
 ===============================================
 Modèle classification contenu multi-modal avec deep learning.
 Support audio, video, image, text avec transfer learning et fine-tuning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -32,7 +32,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types de contenu supportés par Ainflue"""
+    """Types de contenu supportés par IA Chéries"""
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -40,7 +40,7 @@ class ContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class CreatorCategory(Enum):
-    """Catégories de créateurs Ainflue"""
+    """Catégories de créateurs IA Chéries"""
     MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -62,7 +62,7 @@ class ContentInput:
 
 @dataclass
 class ContentClassificationResult:
-    """Résultat classification contenu avec métadonnées Ainflue"""
+    """Résultat classification contenu avec métadonnées IA Chéries"""
     content_id: str
     content_type: ContentType
     creator_category: CreatorCategory
@@ -90,7 +90,7 @@ class ContentClassificationConfig:
 class MultiModalContentClassifier(nn.Module):
     """
     Classificateur contenu multi-modal enterprise avec business intelligence.
-    Deep learning + transfer learning + Ainflue business logic integration.
+    Deep learning + transfer learning + IA Chéries business logic integration.
     """
     
     def __init__(self, model_config: ContentClassificationConfig):
@@ -587,7 +587,7 @@ class MultiModalContentClassifier(nn.Module):
 
 class ContentClassificationService:
     """
-    Service principal pour classification contenu Ainflue.
+    Service principal pour classification contenu IA Chéries.
     Orchestration des modèles + cache + business logic.
     """
     

@@ -11,7 +11,7 @@ metadata:
     environment: production
     classification: confidential
   annotations:
-    description: "Ainflue Artifacts Module - Documentation and Configuration Management"
+    description: "IA Chéries Artifacts Module - Documentation and Configuration Management"
     contact: "mlaiel@live.de"
     legal-notice: "© 2025 Fahed Mlaiel. All rights reserved."
     compliance: "GDPR, SOX, PCI-DSS"
@@ -128,7 +128,7 @@ metadata:
     app.kubernetes.io/name: ainflue-artifacts
     app.kubernetes.io/component: service-account
   annotations:
-    description: "Service account for Ainflue Artifacts Module"
+    description: "Service account for IA Chéries Artifacts Module"
     owner: "fahed-mlaiel"
 automountServiceAccountToken: true
 ---

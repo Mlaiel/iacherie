@@ -324,7 +324,7 @@ done < <(docker volume ls -q)
 # Deploy to target cloud
 case $TARGET_CLOUD in
     "azure")
-        az acr login --name ainflueregistry
+        az acr login --name iacherieregistry
         # Push images to Azure Container Registry
         ;;
     "gcp")
@@ -384,7 +384,7 @@ services:
 echo "Starting Blue-Green deployment switch"
 
 # Deploy green version
-docker service update --label-add traefik.enable=true ainflue_api-green
+docker service update --label-add traefik.enable=true iacherie_api-green
 
 # Wait for health checks
 sleep 30
@@ -394,19 +394,19 @@ if curl -f http://api.iacherie.com/health -H "X-Version: green"; then
     echo "Green version is healthy, switching traffic"
     
     # Switch traffic to green
-    docker service update --label-rm traefik.http.routers.api.rule ainflue_api-blue
-    docker service update --label-add traefik.http.routers.api.rule=Host\(\`api.iacherie.com\`\) ainflue_api-green
+    docker service update --label-rm traefik.http.routers.api.rule iacherie_api-blue
+    docker service update --label-add traefik.http.routers.api.rule=Host\(\`api.iacherie.com\`\) iacherie_api-green
     
     # Wait and verify
     sleep 60
     
     # Scale down blue
-    docker service scale ainflue_api-blue=0
+    docker service scale iacherie_api-blue=0
     
     echo "Blue-Green switch completed successfully"
 else
     echo "Green version health check failed, rolling back"
-    docker service update --label-add traefik.enable=false ainflue_api-green
+    docker service update --label-add traefik.enable=false iacherie_api-green
 fi
 ```
 
@@ -419,7 +419,7 @@ fi
 
 OLD_DB="postgres-old"
 NEW_DB="postgres-new"
-APP_SERVICE="ainflue_api"
+APP_SERVICE="iacherie_api"
 
 echo "Starting PostgreSQL migration"
 

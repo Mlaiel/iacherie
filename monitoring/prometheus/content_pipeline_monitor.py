@@ -108,21 +108,21 @@ class ContentPipelineMonitor:
         
         # Métriques de traitement upload
         self.upload_processing_time = Histogram(
-            'ainflue_content_upload_processing_time_seconds',
+            'iacherie_content_upload_processing_time_seconds',
             'Content upload processing time in seconds',
             labelnames=['content_type', 'file_size_category', 'creator_tier'],
             registry=self.registry
         )
         
         self.upload_success_rate = Gauge(
-            'ainflue_content_upload_success_rate',
+            'iacherie_content_upload_success_rate',
             'Upload success rate by content type',
             labelnames=['content_type', 'upload_method'],
             registry=self.registry
         )
         
         self.upload_queue_depth = Gauge(
-            'ainflue_content_upload_queue_depth',
+            'iacherie_content_upload_queue_depth',
             'Number of items in upload queue',
             labelnames=['priority_level'],
             registry=self.registry
@@ -130,21 +130,21 @@ class ContentPipelineMonitor:
         
         # Métriques de conversion de format
         self.format_conversion_time = Histogram(
-            'ainflue_content_format_conversion_time_seconds',
+            'iacherie_content_format_conversion_time_seconds',
             'Format conversion processing time',
             labelnames=['source_format', 'target_format', 'content_type'],
             registry=self.registry
         )
         
         self.format_conversion_success_rate = Gauge(
-            'ainflue_content_format_conversion_success_rate',
+            'iacherie_content_format_conversion_success_rate',
             'Format conversion success rate',
             labelnames=['conversion_type', 'quality_level'],
             registry=self.registry
         )
         
         self.format_conversion_queue_size = Gauge(
-            'ainflue_content_format_conversion_queue_size',
+            'iacherie_content_format_conversion_queue_size',
             'Format conversion queue size',
             labelnames=['conversion_type'],
             registry=self.registry
@@ -152,21 +152,21 @@ class ContentPipelineMonitor:
         
         # Métriques d'amélioration IA
         self.ai_enhancement_processing_time = Histogram(
-            'ainflue_content_ai_enhancement_time_seconds',
+            'iacherie_content_ai_enhancement_time_seconds',
             'AI enhancement processing time',
             labelnames=['enhancement_type', 'content_type', 'model_version'],
             registry=self.registry
         )
         
         self.ai_enhancement_quality_score = Gauge(
-            'ainflue_content_ai_enhancement_quality_score',
+            'iacherie_content_ai_enhancement_quality_score',
             'AI enhancement quality score (0-1)',
             labelnames=['content_id', 'enhancement_type'],
             registry=self.registry
         )
         
         self.ai_enhancement_throughput = Gauge(
-            'ainflue_content_ai_enhancement_throughput_items_per_second',
+            'iacherie_content_ai_enhancement_throughput_items_per_second',
             'AI enhancement throughput',
             labelnames=['enhancement_type', 'gpu_type'],
             registry=self.registry
@@ -174,21 +174,21 @@ class ContentPipelineMonitor:
         
         # Métriques de santé du pipeline de distribution
         self.distribution_pipeline_health = Gauge(
-            'ainflue_content_distribution_pipeline_health_score',
+            'iacherie_content_distribution_pipeline_health_score',
             'Distribution pipeline health score (0-1)',
             labelnames=['platform', 'distribution_type'],
             registry=self.registry
         )
         
         self.distribution_success_rate = Gauge(
-            'ainflue_content_distribution_success_rate',
+            'iacherie_content_distribution_success_rate',
             'Content distribution success rate',
             labelnames=['platform', 'content_type'],
             registry=self.registry
         )
         
         self.distribution_latency = Histogram(
-            'ainflue_content_distribution_latency_seconds',
+            'iacherie_content_distribution_latency_seconds',
             'Content distribution latency',
             labelnames=['platform', 'content_size_category'],
             registry=self.registry
@@ -196,14 +196,14 @@ class ContentPipelineMonitor:
         
         # Métriques d'assurance qualité
         self.quality_check_processing_time = Histogram(
-            'ainflue_content_quality_check_time_seconds',
+            'iacherie_content_quality_check_time_seconds',
             'Quality check processing time',
             labelnames=['check_type', 'content_type'],
             registry=self.registry
         )
         
         self.quality_score_distribution = Histogram(
-            'ainflue_content_quality_score',
+            'iacherie_content_quality_score',
             'Content quality score distribution',
             labelnames=['quality_dimension', 'content_type'],
             buckets=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
@@ -211,7 +211,7 @@ class ContentPipelineMonitor:
         )
         
         self.quality_rejection_rate = Gauge(
-            'ainflue_content_quality_rejection_rate',
+            'iacherie_content_quality_rejection_rate',
             'Content rejection rate by quality checks',
             labelnames=['rejection_reason', 'content_type'],
             registry=self.registry
@@ -219,21 +219,21 @@ class ContentPipelineMonitor:
         
         # Métriques de pipeline global
         self.pipeline_throughput = Gauge(
-            'ainflue_content_pipeline_throughput_items_per_minute',
+            'iacherie_content_pipeline_throughput_items_per_minute',
             'Pipeline throughput in items per minute',
             labelnames=['pipeline_stage'],
             registry=self.registry
         )
         
         self.pipeline_error_rate = Gauge(
-            'ainflue_content_pipeline_error_rate',
+            'iacherie_content_pipeline_error_rate',
             'Pipeline error rate by stage',
             labelnames=['pipeline_stage', 'error_category'],
             registry=self.registry
         )
         
         self.end_to_end_processing_time = Histogram(
-            'ainflue_content_end_to_end_processing_time_seconds',
+            'iacherie_content_end_to_end_processing_time_seconds',
             'End-to-end content processing time',
             labelnames=['content_type', 'creator_tier', 'quality_level'],
             registry=self.registry
@@ -241,14 +241,14 @@ class ContentPipelineMonitor:
         
         # Métriques de ressources système
         self.processing_resource_usage = Gauge(
-            'ainflue_content_processing_resource_usage_percent',
+            'iacherie_content_processing_resource_usage_percent',
             'Processing resource usage percentage',
             labelnames=['resource_type', 'processing_stage'],
             registry=self.registry
         )
         
         self.queue_wait_time = Histogram(
-            'ainflue_content_queue_wait_time_seconds',
+            'iacherie_content_queue_wait_time_seconds',
             'Time content spends waiting in queues',
             labelnames=['queue_type', 'priority_level'],
             registry=self.registry

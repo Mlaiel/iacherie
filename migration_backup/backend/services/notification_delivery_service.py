@@ -1,7 +1,7 @@
 """Notification Delivery Service - Intelligent Notification Engine
 =================================================================
 
-Advanced notification delivery system for the Ainflue platform, providing
+Advanced notification delivery system for the IA Chéries platform, providing
 multi-channel notifications, intelligent delivery optimization, personalization,
 and real-time communication management across all user touchpoints.
 

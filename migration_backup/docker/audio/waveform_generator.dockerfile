@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE WAVEFORM GENERATOR - VISUALIZATION DOCKERFILE
+# IA CHÉRIES WAVEFORM GENERATOR - VISUALIZATION DOCKERFILE
 # =============================================================================
 
 ARG PYTHON_VERSION=3.11
@@ -48,7 +48,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${WAVEFORM_SERVICE_PORT}
 CMD ["python3.11", "-m", "waveform_generator.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Waveform Generator"
+LABEL org.opencontainers.image.title="IA Chéries Waveform Generator"
 LABEL ainflue.service.category="audio"
 LABEL ainflue.service.name="waveform_generator"
 LABEL ainflue.service.port="8017"

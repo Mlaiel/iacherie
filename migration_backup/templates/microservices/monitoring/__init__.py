@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Monitoring & Observability Templates for Ainflue Platform
+Monitoring & Observability Templates for IA Chéries Platform
 ========================================================
 
 Production-ready monitoring and observability templates with:

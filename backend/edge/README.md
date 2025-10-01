@@ -1,6 +1,6 @@
 # 🌐 Edge Computing Module - Enterprise Consolidated Architecture
 
-**Ultra-Advanced Edge Computing Platform for the AI-Influencer-Agent Ecosystem Ainflue**
+**Ultra-Advanced Edge Computing Platform for the AI-Influencer-Agent Ecosystem iacherie**
 
 ## ⚠️ AVIS JURIDIQUE - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE
 
@@ -177,8 +177,8 @@ Following the AI-Influencer-Agent platform logic:
 
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/edge
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/edge
 
 # Install dependencies
 pip install -r requirements.txt

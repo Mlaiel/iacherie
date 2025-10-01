@@ -26,10 +26,10 @@ services:
     environment:
       - ENVIRONMENT=development
       - DEBUG=true
-      - DATABASE_URL=postgresql://ainflue_admin:dev_password@postgres:5432/ainflue_dev
+      - DATABASE_URL=postgresql://iacherie_admin:dev_password@postgres:5432/iacherie_dev
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
-      - MONGODB_URL=mongodb://mongo:27017/ainflue_dev
+      - MONGODB_URL=mongodb://mongo:27017/iacherie_dev
       - LOG_LEVEL=DEBUG
       - HOT_RELOAD=true
       - PYTHONDONTWRITEBYTECODE=1
@@ -153,8 +153,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=ainflue_dev
-      - POSTGRES_USER=ainflue_admin
+      - POSTGRES_DB=iacherie_dev
+      - POSTGRES_USER=iacherie_admin
       - POSTGRES_PASSWORD=dev_password
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
     volumes:
@@ -165,7 +165,7 @@ services:
       - iacherie-dev
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "ainflue_admin", "-d", "ainflue_dev"]
+      test: ["CMD", "pg_isready", "-U", "iacherie_admin", "-d", "iacherie_dev"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -198,7 +198,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=dev_password
-      - MONGO_INITDB_DATABASE=ainflue_dev
+      - MONGO_INITDB_DATABASE=iacherie_dev
     volumes:
       - mongo_dev_data:/data/db
       - ./mongodb/init:/docker-entrypoint-initdb.d
@@ -244,7 +244,7 @@ services:
     command: ["celery", "worker", "-A", "core.celery", "--loglevel=debug", "--concurrency=4"]
     environment:
       - ENVIRONMENT=development
-      - DATABASE_URL=postgresql://ainflue_admin:dev_password@postgres:5432/ainflue_dev
+      - DATABASE_URL=postgresql://iacherie_admin:dev_password@postgres:5432/iacherie_dev
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/2
@@ -272,7 +272,7 @@ services:
     command: ["celery", "beat", "-A", "core.celery", "--loglevel=debug"]
     environment:
       - ENVIRONMENT=development
-      - DATABASE_URL=postgresql://ainflue_admin:dev_password@postgres:5432/ainflue_dev
+      - DATABASE_URL=postgresql://iacherie_admin:dev_password@postgres:5432/iacherie_dev
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
     volumes:
@@ -331,7 +331,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      - MINIO_ROOT_USER=ainflue_admin
+      - MINIO_ROOT_USER=iacherie_admin
       - MINIO_ROOT_PASSWORD=dev_password
     command: server /data --console-address ":9001"
     volumes:
@@ -495,7 +495,7 @@ services:
     command: ["python", "-m", "pytest", "--verbose", "--cov=.", "--cov-report=html"]
     environment:
       - ENVIRONMENT=testing
-      - DATABASE_URL=postgresql://ainflue_admin:dev_password@postgres:5432/ainflue_test
+      - DATABASE_URL=postgresql://iacherie_admin:dev_password@postgres:5432/iacherie_test
       - REDIS_URL=redis://redis:6379/3
       - PYTHONPATH=/app
     volumes:

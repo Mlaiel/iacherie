@@ -1,5 +1,5 @@
 """
-Enterprise Health Orchestrator - Ainflue Health Checks Module
+Enterprise Health Orchestrator - IA Chéries Health Checks Module
 Orchestrateur health checks enterprise multi-niveaux avec deep health validation,
 dependency mapping et auto-remediation.
 

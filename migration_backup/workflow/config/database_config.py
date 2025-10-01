@@ -1,5 +1,5 @@
 """
-🗄️ DATABASE CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🗄️ DATABASE CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced database configuration with automatic connection pooling and optimization
 Performance Target: < 5ms connection establishment
@@ -568,9 +568,9 @@ class DatabaseConfig:
                     "acl_enabled": True,
                     "protected_mode": True,
                     "rename_commands": {
-                        "CONFIG": "AINFLUE_CONFIG",
-                        "FLUSHALL": "AINFLUE_FLUSHALL",
-                        "FLUSHDB": "AINFLUE_FLUSHDB"
+                        "CONFIG": "IA CHÉRIES_CONFIG",
+                        "FLUSHALL": "IA CHÉRIES_FLUSHALL",
+                        "FLUSHDB": "IA CHÉRIES_FLUSHDB"
                     }
                 },
                 "mongodb": {

@@ -1,11 +1,11 @@
 """
-Exponential Backoff Engine Enterprise - Ainflue
+Exponential Backoff Engine Enterprise - IA Chéries
 ===============================================
 Moteur exponential backoff avec jitter, circuit breaker integration.
 Algorithmes retry sophistiqués pour microservices haute disponibilité.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -373,8 +373,8 @@ def create_exponential_backoff_engine(
     )
     return ExponentialBackoffEngine(config)
 
-# Configuration prédéfinies pour Ainflue business logic
-AINFLUE_BACKOFF_CONFIGS = {
+# Configuration prédéfinies pour IA Chéries business logic
+IA CHÉRIES_BACKOFF_CONFIGS = {
     'content_processing': BackoffConfig(
         strategy=BackoffStrategy.EXPONENTIAL,
         max_retries=5,
@@ -415,5 +415,5 @@ __all__ = [
     'BackoffStrategy',
     'BackoffMetrics',
     'create_exponential_backoff_engine',
-    'AINFLUE_BACKOFF_CONFIGS'
+    'IA CHÉRIES_BACKOFF_CONFIGS'
 ]

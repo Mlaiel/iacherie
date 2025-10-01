@@ -1,4 +1,4 @@
-"""{{agent_name}} Content Generation Agent for Ainflue Platform
+"""{{agent_name}} Content Generation Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -110,7 +110,7 @@ class GenerationConfig(BaseModel):
 
 class {{agent_class_name}}(BaseAIAgent):
     """
-    Advanced content generation agent for Ainflue platform.
+    Advanced content generation agent for iacherie platform.
     
     Features:
     - Multi-modal content generation (text, image, audio, video)

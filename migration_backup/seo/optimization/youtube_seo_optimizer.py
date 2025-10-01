@@ -1,5 +1,5 @@
 """
-YouTube SEO Optimizer for Ainflue Platform
+YouTube SEO Optimizer for IA Chéries Platform
 Advanced YouTube-specific SEO optimization for video content creators
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -866,7 +866,7 @@ class YouTubeSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_youtube_optimizer() -> YouTubeSEOOptimizer:
-    """Create configured YouTube SEO optimizer for Ainflue"""
+    """Create configured YouTube SEO optimizer for IA Chéries"""
     return YouTubeSEOOptimizer()
 
 

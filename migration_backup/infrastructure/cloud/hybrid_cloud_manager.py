@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🏗️ Ainflue Infrastructure - Hybrid Cloud Manager
-Enterprise hybrid cloud deployment coordination for Ainflue platform.
+🏗️ IA Chéries Infrastructure - Hybrid Cloud Manager
+Enterprise hybrid cloud deployment coordination for IA Chéries platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

@@ -211,7 +211,7 @@ await enterprise_sso.configure_saml_provider(
 
 ```swift
 // iOS biometric authentication
-let biometricAuth = AinflueBiometricAuth(config: BiometricConfig(
+let biometricAuth = iacherieBiometricAuth(config: BiometricConfig(
     localizedReason: "Authenticate to access your IA Chérie account"
 ))
 

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Security Manager
+ * IA Chéries Desktop - Security Manager
  * 
  * Professional security implementation with content protection and access control
  * 
@@ -245,7 +245,7 @@ class DesktopSecurityManager {
     
     // Configure user agent
     defaultSession.setUserAgent(
-      `AinflueSudio/1.0.0 (${process.platform}; ${process.arch}) Creator/Professional`
+      `IA ChériesSudio/1.0.0 (${process.platform}; ${process.arch}) Creator/Professional`
     );
     
     log.info('Session security applied');

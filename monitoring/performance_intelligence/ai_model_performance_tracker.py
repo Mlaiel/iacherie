@@ -195,33 +195,33 @@ class AIModelPerformanceTracker:
         # Prometheus metrics
         self.prometheus_metrics = {
             "ai_model_accuracy": Gauge(
-                "ainflue_ai_model_accuracy_score",
+                "iacherie_ai_model_accuracy_score",
                 "AI model accuracy score",
                 ["model_id", "model_type"]
             ),
             "ai_model_inference_time": Histogram(
-                "ainflue_ai_model_inference_time_seconds",
+                "iacherie_ai_model_inference_time_seconds",
                 "AI model inference time in seconds",
                 ["model_id", "model_type"],
                 buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0]
             ),
             "ai_model_predictions_total": Counter(
-                "ainflue_ai_model_predictions_total",
+                "iacherie_ai_model_predictions_total",
                 "Total AI model predictions",
                 ["model_id", "model_type", "result"]
             ),
             "ai_model_throughput": Gauge(
-                "ainflue_ai_model_throughput_per_second",
+                "iacherie_ai_model_throughput_per_second",
                 "AI model throughput per second",
                 ["model_id", "model_type"]
             ),
             "ai_model_memory_usage": Gauge(
-                "ainflue_ai_model_memory_usage_mb",
+                "iacherie_ai_model_memory_usage_mb",
                 "AI model memory usage in MB",
                 ["model_id", "model_type"]
             ),
             "ai_model_drift_score": Gauge(
-                "ainflue_ai_model_drift_score",
+                "iacherie_ai_model_drift_score",
                 "AI model drift score",
                 ["model_id", "model_type"]
             )

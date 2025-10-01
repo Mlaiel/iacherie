@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - AI Engine Helm Chart
+# IA Chéries Infrastructure Module - AI Engine Helm Chart
 # =====================================================
 # 
-# Enterprise-grade AI Engine chart for Ainflue platform
+# Enterprise-grade AI Engine chart for IA Chéries platform
 # Supports multiple AI providers, model serving, and inference optimization
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,13 +11,13 @@
 
 apiVersion: v2
 name: ainflue-ai-engine
-description: "Enterprise AI Engine for Ainflue platform with multi-provider support"
+description: "Enterprise AI Engine for IA Chéries platform with multi-provider support"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 home: https://ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de

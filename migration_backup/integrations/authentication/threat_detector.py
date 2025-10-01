@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Threat Detector
+IA Chéries Platform - Enterprise Threat Detector
 Advanced threat detection and security monitoring system
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

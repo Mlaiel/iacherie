@@ -4,7 +4,7 @@
 ML Engineer + Audio Engineer Expert: Engine de remix image enterprise avec
 style transfer algorithms, composition optimization et artistic filter generation.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Style transfer intelligent pour créateurs visuels sur 65+ plateformes
 - Composition optimization avec règle des tiers et harmonie visuelle
 - Artistic filter generation pour remixes créatifs et mashups artistiques

@@ -2,7 +2,7 @@
 🛡️ XSS PREVENTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ==================================================================
 
-Enterprise-grade XSS prevention testing template for Ainflue Creator Economy Platform.
+Enterprise-grade XSS prevention testing template for IA Chéries Creator Economy Platform.
 Comprehensive XSS security testing covering:
 - Reflected XSS attack prevention
 - Stored XSS attack prevention

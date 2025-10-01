@@ -10,10 +10,10 @@ Contact: mlaiel@live.de
 
 🎯 HYBRID STORAGE COORDINATOR
 Orchestrates multi-backend storage with intelligent routing, failover,
-synchronization, and optimization for Ainflue platform events.
+synchronization, and optimization for IA Chéries platform events.
 
 Key Features:
-- Intelligent routing based on Ainflue business logic
+- Intelligent routing based on IA Chéries business logic
 - Automatic failover and load balancing
 - Cross-backend synchronization and consistency
 - Performance optimization and cost management
@@ -88,7 +88,7 @@ class LoadBalancingConfig:
 
 class HybridStorageCoordinator:
     """
-    Coordinates multi-backend storage for Ainflue platform
+    Coordinates multi-backend storage for IA Chéries platform
     
     Manages:
     - Intelligent event routing based on business logic
@@ -110,11 +110,11 @@ class HybridStorageCoordinator:
         self._circuit_breakers: Dict[StorageBackendType, Dict[str, Any]] = {}
         self._is_initialized = False
         
-        # Initialize Ainflue business routing
+        # Initialize IA Chéries business routing
         self._initialize_business_routing()
     
     def _initialize_business_routing(self):
-        """Initialize Ainflue-specific routing rules"""
+        """Initialize IA Chéries-specific routing rules"""
         
         # Content lifecycle events require reliability
         content_events = [

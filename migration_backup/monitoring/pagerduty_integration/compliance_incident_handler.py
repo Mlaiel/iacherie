@@ -1,5 +1,5 @@
 """
-Compliance Incident Handler for PagerDuty - Ainflue Platform
+Compliance Incident Handler for PagerDuty - IA Chéries Platform
 Regulatory compliance and audit incident management
 
 Author: Fahed Mlaiel <mlaiel@live.de>

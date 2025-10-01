@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Streaming Configuration Module
+"""IA Chéries Streaming Configuration Module
 ========================================
 
-Enterprise-grade streaming configuration for the Ainflue platform.
+Enterprise-grade streaming configuration for the IA Chéries platform.
 Comprehensive live streaming, video streaming, adaptive bitrate streaming,
 and real-time communication features for creator content delivery.
 

@@ -1,4 +1,4 @@
-"""🔒 ML Security Module - Ainflue Enterprise
+"""🔒 ML Security Module - IA Chéries Enterprise
 =======================================================================
 Factory et registry pour composants sécurité ML avec orchestration enterprise.
 Security services initialization + component registry + configuration management.
@@ -8,7 +8,7 @@ Security services initialization + component registry + configuration management
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security
+Project: IA Chéries ML Security
 Version: 1.0 Production
 =======================================================================
 """

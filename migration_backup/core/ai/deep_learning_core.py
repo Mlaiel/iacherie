@@ -1,10 +1,10 @@
-"""Ainflue Core AI - Deep Learning Core
+"""IA Chéries Core AI - Deep Learning Core
 =====================================
 
 Enterprise-grade deep learning infrastructure providing neural network
 architectures, training pipelines, model optimization, distributed training,
 and deployment capabilities for advanced AI-powered content analysis
-and generation in the Ainflue platform.
+and generation in the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

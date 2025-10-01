@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Project Templates Manager
+ * iacherie Desktop - Project Templates Manager
  * 
  * Professional project templates for efficient content creation
  * 

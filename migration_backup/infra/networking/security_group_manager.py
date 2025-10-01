@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Security Group Management for Multi-Cloud Infrastructure
@@ -995,7 +995,7 @@ if __name__ == "__main__":
         sg = await manager.create_security_group(
             provider="aws",
             name="ainflue-web-sg",
-            description="Security group for Ainflue web servers",
+            description="Security group for IA Chéries web servers",
             vpc_id="vpc-12345678",
             rules=rules,
             tags={"Environment": "production", "Application": "ainflue"}

@@ -10,7 +10,7 @@
 **Version:** 1.0.0 - Production Ready
 
 MISSION:
-Orchestrateur principal pour tous les datasets NLP de la plateforme Ainflue.
+Orchestrateur principal pour tous les datasets NLP de la plateforme IA Chéries.
 Coordonne 15+ agents IA language avec datasets multilingues haute performance.
 """
 

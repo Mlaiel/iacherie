@@ -234,8 +234,8 @@ pytest tests/business/test_revenue_management.py
 ### Production Deployment
 ```bash
 # Deploy to production environment
-docker build -t ainflue-business:latest .
-docker run -d --name ainflue-business -p 8000:8000 ainflue-business:latest
+docker build -t iacherie-business:latest .
+docker run -d --name iacherie-business -p 8000:8000 iacherie-business:latest
 
 # Or use Kubernetes
 kubectl apply -f k8s/business-deployment.yaml

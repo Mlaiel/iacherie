@@ -1,5 +1,5 @@
 """
-Ainflue Core Orchestration - Event Driven Core
+IA Chéries Core Orchestration - Event Driven Core
 ===============================================
 
 Enterprise-grade event-driven architecture system with event sourcing, CQRS integration,

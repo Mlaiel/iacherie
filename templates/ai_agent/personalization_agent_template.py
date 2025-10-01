@@ -1,4 +1,4 @@
-"""{{agent_name}} Personalization Agent for Ainflue Platform
+"""{{agent_name}} Personalization Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -198,7 +198,7 @@ class DeepPersonalizationModel(nn.Module):
 
 class {{agent_class_name}}(BaseAIAgent):
     """
-    Advanced personalization agent for Ainflue platform.
+    Advanced personalization agent for iacherie platform.
     
     Features:
     - Multi-strategy recommendation system

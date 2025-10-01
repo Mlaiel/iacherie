@@ -399,7 +399,7 @@ class EdgeDeploymentController:
                 "success": True,
                 "node_id": node_id,
                 "deployment_time": 2.0,
-                "endpoint_url": f"https://{node_id}.edge.ainflue.com/inference",
+                "endpoint_url": f"https://{node_id}.edge.iacherie.com/inference",
                 "status": "active"
             }
             

@@ -10,10 +10,10 @@ Contact: mlaiel@live.de
 
 🎯 MONGODB ANALYTICS EVENT STORE
 High-performance MongoDB store for analytics, metrics, and business intelligence
-optimized for Ainflue platform's analytical workloads.
+optimized for IA Chéries platform's analytical workloads.
 
 Key Features:
-- Optimized for Ainflue analytics patterns
+- Optimized for IA Chéries analytics patterns
 - Sharded collections for massive scalability
 - Real-time aggregation pipelines
 - Time-series collections for metrics
@@ -61,7 +61,7 @@ if not MOTOR_AVAILABLE:
 
 class MongoDBAnalyticsStore(IEventStoreBackend):
     """
-    MongoDB analytics store for Ainflue platform
+    MongoDB analytics store for IA Chéries platform
     
     Optimized for:
     - User engagement analytics and metrics

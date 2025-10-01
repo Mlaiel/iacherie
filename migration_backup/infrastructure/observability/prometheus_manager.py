@@ -51,7 +51,7 @@ class MetricConfig:
 
 class PrometheusManager:
     """
-    Enterprise Prometheus monitoring manager for Ainflue infrastructure
+    Enterprise Prometheus monitoring manager for IA Chéries infrastructure
     
     DevOps Role: Complete monitoring infrastructure for creator platform
     """
@@ -62,14 +62,14 @@ class PrometheusManager:
         self.alert_rules = {}
         self.dashboards = {}
         
-        # Initialize Ainflue-specific monitoring
+        # Initialize IA Chéries-specific monitoring
         self._initialize_ainflue_metrics()
         
         self.logger.info("Prometheus manager initialized with creator platform monitoring")
     
     async def setup_comprehensive_monitoring(self, monitoring_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Setup comprehensive monitoring for Ainflue infrastructure
+        Setup comprehensive monitoring for IA Chéries infrastructure
         
         DevOps Role: Complete monitoring stack with creator-specific metrics
         """
@@ -121,7 +121,7 @@ class PrometheusManager:
         return await self.setup_comprehensive_monitoring(config)
     
     def _initialize_ainflue_metrics(self):
-        """Initialize Ainflue-specific metric configurations"""
+        """Initialize IA Chéries-specific metric configurations"""
         metrics = [
             MetricConfig(
                 name="ainflue_creator_uploads_total",
@@ -289,7 +289,7 @@ class PrometheusManager:
         """Setup monitoring dashboards"""
         return {
             'infrastructure_dashboard': {
-                'name': 'Ainflue Infrastructure Overview',
+                'name': 'IA Chéries Infrastructure Overview',
                 'panels': [
                     'CPU and Memory Usage',
                     'Network Traffic',

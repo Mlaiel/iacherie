@@ -1,13 +1,13 @@
-"""Ainflue Backend Index - Enterprise Platform Navigation & Service Discovery
+"""IA Chéries Backend Index - Enterprise Platform Navigation & Service Discovery
 =========================================================================
 
-Advanced service index and navigation system for the Ainflue platform backend,
+Advanced service index and navigation system for the IA Chéries platform backend,
 providing intelligent service discovery, module orchestration, and enterprise
 integration capabilities.
 
 This index serves as the central hub for all backend services, enabling
 seamless integration, service discovery, and intelligent routing across
-the entire Ainflue ecosystem.
+the entire IA Chéries ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -119,7 +119,7 @@ class EnhancedServiceInfo:
     sla_metrics: Dict[str, float] = field(default_factory=dict)
     error_rates: Dict[str, float] = field(default_factory=dict)
     
-class AinfluePlatformIndex:
+class IA ChériesPlatformIndex:
     """Ultra-advanced platform index and service discovery system"""
     
     def __init__(self):
@@ -144,7 +144,7 @@ class AinfluePlatformIndex:
             name="core_business_logic",
             type=ServiceType.CORE_SYSTEM,
             priority=ServicePriority.CRITICAL,
-            description="Core Ainflue business logic and workflow orchestration",
+            description="Core IA Chéries business logic and workflow orchestration",
             endpoints=["/api/v1/business", "/api/v1/workflows", "/api/v1/orchestration"],
             dependencies=[],
             health_check_url="/health/business",
@@ -590,7 +590,7 @@ class AinfluePlatformIndex:
         )
         
         return {
-            "platform": "Ainflue Backend",
+            "platform": "IA Chéries Backend",
             "version": BACKEND_CONFIG.get("version", "4.0.0"),
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "overall_status": "healthy" if healthy_services == total_services else "degraded",
@@ -709,7 +709,7 @@ class AinfluePlatformIndex:
         """Generate comprehensive service map"""
         service_map = {
             "platform_overview": {
-                "name": "Ainflue Platform Backend",
+                "name": "IA Chéries Platform Backend",
                 "version": BACKEND_CONFIG.get("version", "4.0.0"),
                 "total_services": len(self.services),
                 "service_types": len(ServiceType),
@@ -745,7 +745,7 @@ class AinfluePlatformIndex:
         return service_map
 
 # Global platform index instance
-platform_index = AinfluePlatformIndex()
+platform_index = IA ChériesPlatformIndex()
 
 # Convenience functions for external use
 async def get_platform_status() -> Dict[str, Any]:
@@ -770,13 +770,13 @@ async def generate_platform_map() -> Dict[str, Any]:
 
 # Export functions
 __all__ = [
-    "AinfluePlatformIndex", "ServiceInfo", "ServiceStatus", "ServiceType",
+    "IA ChériesPlatformIndex", "ServiceInfo", "ServiceStatus", "ServiceType",
     "platform_index", "get_platform_status", "get_service_info",
     "check_service_health", "get_business_flow_info", "generate_platform_map"
 ]
 
 # Initialize logging
-logger.info("🗺️ Ainflue Platform Index initialized")
+logger.info("🗺️ IA Chéries Platform Index initialized")
 logger.info(f"📊 Services registered: {len(platform_index.services)}")
 logger.info(f"🔄 Business flows available: {len(BUSINESS_LOGIC_FLOW)}")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

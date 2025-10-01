@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-🌍 Ainflue Localization Intelligence - Enterprise Module
+🌍 IA Chéries Localization Intelligence - Enterprise Module
 ======================================================
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL ⚠️
@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 
 Created: 2024
 Author: Fahed Mlaiel
-Enterprise: Ainflue Platform
+Enterprise: IA Chéries Platform
 """
 
 import logging
@@ -37,7 +37,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"
-__copyright__ = "© 2024 Fahed Mlaiel - Ainflue Platform"
+__copyright__ = "© 2024 Fahed Mlaiel - IA Chéries Platform"
 
 # Import core components with error handling
 try:
@@ -181,7 +181,7 @@ def get_module_info() -> Dict[str, Any]:
         Dict[str, Any]: Module metadata and status
     """
     return {
-        'module': 'Ainflue Localization Intelligence',
+        'module': 'IA Chéries Localization Intelligence',
         'version': __version__,
         'author': __author__,
         'email': __email__,
@@ -355,7 +355,7 @@ if REALTIME_ENGINE_AVAILABLE:
 # Module initialization
 def _initialize_module():
     """Initialize localization module with logging"""
-    logger.info("🌍 Initializing Ainflue Localization Intelligence...")
+    logger.info("🌍 Initializing IA Chéries Localization Intelligence...")
     logger.info(f"📦 Version: {__version__}")
     logger.info(f"👨‍💻 Author: {__author__}")
     logger.info(f"📧 Contact: {__email__}")
@@ -386,7 +386,7 @@ _initialize_module()
 COMPLIANCE_NOTICE = """
 ⚠️ ENTERPRISE COMPLIANCE NOTICE ⚠️
 
-This Ainflue Localization Intelligence module implements:
+This IA Chéries Localization Intelligence module implements:
 - GDPR compliance for European data protection
 - CCPA compliance for California privacy regulations  
 - LGPD compliance for Brazilian data protection

@@ -3,7 +3,7 @@
 Commission Tracking Example - Example Tracking Commissions Temps Réel
 ====================================================================
 
-Démonstration tracking commissions ultra sophistiqué temps réel pour Ainflue.
+Démonstration tracking commissions ultra sophistiqué temps réel pour IA Chéries.
 Multi-touch attribution avec fraud detection et compliance automation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1053,7 +1053,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS COMMISSION TRACKING TERMINÉES!")
-        logger.info("⚡ Commission Tracking - Ainflue Platform")
+        logger.info("⚡ Commission Tracking - IA Chéries Platform")
         logger.info("=" * 70)
         
         return True

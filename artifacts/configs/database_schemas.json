@@ -20,7 +20,7 @@
     "replication": "streaming_replication",
     "schemas": {
       "users_database": {
-        "name": "ainflue_users",
+        "name": "iacherie_users",
         "purpose": "User management and authentication",
         "tables": {
           "users": {
@@ -110,7 +110,7 @@
         }
       },
       "content_database": {
-        "name": "ainflue_content",
+        "name": "iacherie_content",
         "purpose": "Content storage and management",
         "tables": {
           "content_items": {
@@ -177,7 +177,7 @@
         }
       },
       "ai_processing_database": {
-        "name": "ainflue_ai",
+        "name": "iacherie_ai",
         "purpose": "AI processing results and models",
         "tables": {
           "ai_processing_jobs": {
@@ -231,7 +231,7 @@
         }
       },
       "platform_integrations_database": {
-        "name": "ainflue_platforms",
+        "name": "iacherie_platforms",
         "purpose": "Platform connections and publishing",
         "tables": {
           "platform_connections": {
@@ -288,7 +288,7 @@
         }
       },
       "analytics_database": {
-        "name": "ainflue_analytics",
+        "name": "iacherie_analytics",
         "purpose": "Performance metrics and analytics",
         "tables": {
           "content_metrics": {
@@ -350,7 +350,7 @@
     "purpose": "Document storage and real-time data",
     "schemas": {
       "real_time_events": {
-        "database": "ainflue_events",
+        "database": "iacherie_events",
         "collections": {
           "user_activities": {
             "schema": {
@@ -391,7 +391,7 @@
         }
       },
       "content_cache": {
-        "database": "ainflue_cache",
+        "database": "iacherie_cache",
         "collections": {
           "content_thumbnails": {
             "schema": {

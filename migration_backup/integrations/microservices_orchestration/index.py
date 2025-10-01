@@ -1,7 +1,7 @@
 """🔗 Microservices Orchestration - Entry Point Enterprise
 ================================================================
 
-Entry point principal pour l'orchestration microservices enterprise Ainflue.
+Entry point principal pour l'orchestration microservices enterprise IA Chéries.
 Factory patterns pour initialiser l'ensemble de l'architecture distribuée.
 
 Expert Roles Implementation:
@@ -305,7 +305,7 @@ def get_microservices_orchestrator() -> Dict[str, Any]:
 
 async def initialize_ainflue_microservices(config: Optional[Dict[str, Any]] = None) -> bool:
     """
-    🚀 Initialize complete Ainflue microservices orchestration
+    🚀 Initialize complete IA Chéries microservices orchestration
     
     Args:
         config: Optional configuration dict

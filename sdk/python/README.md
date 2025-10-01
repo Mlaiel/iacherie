@@ -32,7 +32,7 @@ pip install .
 
 ```python
 import asyncio
-from ainflue_sdk import create_sdk
+from iacherie_sdk import create_sdk
 
 async def main():
     async with create_sdk(api_key="your-api-key") as sdk:
@@ -63,7 +63,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from ainflue_sdk import create_sdk
+from iacherie_sdk import create_sdk
 
 async def main():
     # Create SDK instance
@@ -84,7 +84,7 @@ asyncio.run(main())
 ### Synchronous Usage
 
 ```python
-from ainflue_sdk import create_sync_sdk
+from iacherie_sdk import create_sync_sdk
 
 # Create sync SDK instance
 sdk = create_sync_sdk(api_key="your-api-key")
@@ -197,16 +197,16 @@ analytics = await sdk.get_analytics(
 ### Environment Variables
 
 ```bash
-export AINFLUE_API_KEY="your-api-key"
-export AINFLUE_BASE_URL="https://api.iacherie.com"
+export IACHERIE_API_KEY="your-api-key"
+export IACHERIE_BASE_URL="https://api.iacherie.com"
 ```
 
 ### Custom Configuration
 
 ```python
-from ainflue_sdk import AinflueSdkConfig, AinflueSdk
+from iacherie_sdk import iacherieSdkConfig, iacherieSdk
 
-config = AinflueSdkConfig(
+config = iacherieSdkConfig(
     api_key="your-api-key",
     base_url="https://api.iacherie.com",
     timeout=30,
@@ -214,14 +214,14 @@ config = AinflueSdkConfig(
     retry_delay=1.0
 )
 
-sdk = AinflueSdk(config)
+sdk = iacherieSdk(config)
 ```
 
 ## Error Handling
 
 ```python
-from ainflue_sdk import (
-    AinflueSdkException,
+from iacherie_sdk import (
+    iacherieSdkException,
     AuthenticationError,
     APIError,
     ValidationError
@@ -235,7 +235,7 @@ except ValidationError as e:
     print(f"Invalid request: {e}")
 except APIError as e:
     print(f"API error {e.status_code}: {e}")
-except AinflueSdkException as e:
+except iacherieSdkException as e:
     print(f"SDK error: {e}")
 ```
 

@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Content localization processor enterprise avec AI-powered content adaptation,
 multi-format support et cultural content optimization.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Multi-format content localization (text, video, audio, images)
 - AI-powered content adaptation pour créateurs
 - Cultural content optimization par région

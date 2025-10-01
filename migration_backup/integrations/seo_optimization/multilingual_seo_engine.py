@@ -1,5 +1,5 @@
 """
-Multilingual SEO Engine - Ainflue SEO Optimization
+Multilingual SEO Engine - IA Chéries SEO Optimization
 =================================================
 Advanced multilingual SEO engine supporting 644 languages with cultural adaptation.
 Hreflang management, RTL support, and international SEO optimization.
@@ -9,7 +9,7 @@ Cette architecture est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de)
 Toute reproduction ou utilisation non autorisée est strictement interdite.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue SEO Optimization
+Project: IA Chéries SEO Optimization
 Version: 1.0 Production
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -43,7 +43,7 @@ import asyncpg
 # from googletrans import Translator
 from langdetect import detect, LangDetectException
 
-# Ainflue core imports
+# IA Chéries core imports
 from core.i18n.language_detection import LanguageDetector
 from core.i18n.cultural_adaptation import CulturalAdapter
 from core.i18n.translation_service import TranslationService

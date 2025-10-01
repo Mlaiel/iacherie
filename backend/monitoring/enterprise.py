@@ -158,17 +158,17 @@ class GrafanaIntegration:
             return [
                 {
                     "id": 1,
-                    "uid": "ainflue-main",
-                    "title": "Ainflue Main Dashboard",
-                    "tags": ["ainflue", "production"],
-                    "url": f"{self.endpoint}/d/ainflue-main"
+                    "uid": "iacherie-main",
+                    "title": "iacherie Main Dashboard",
+                    "tags": ["iacherie", "production"],
+                    "url": f"{self.endpoint}/d/iacherie-main"
                 },
                 {
                     "id": 2,
-                    "uid": "ainflue-business",
-                    "title": "Ainflue Business Metrics",
-                    "tags": ["ainflue", "business"],
-                    "url": f"{self.endpoint}/d/ainflue-business"
+                    "uid": "iacherie-business",
+                    "title": "iacherie Business Metrics",
+                    "tags": ["iacherie", "business"],
+                    "url": f"{self.endpoint}/d/iacherie-business"
                 }
             ]
         except Exception as e:
@@ -252,7 +252,7 @@ class ElasticsearchIntegration:
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.endpoint = config.get("endpoint", "http://localhost:9200")
-        self.index_pattern = config.get("index_pattern", "ainflue-logs-*")
+        self.index_pattern = config.get("index_pattern", "iacherie-logs-*")
         self.enabled = config.get("enabled", False)
         self.retention_days = config.get("retention_days", 30)
     
@@ -287,7 +287,7 @@ class ElasticsearchIntegration:
                                 "timestamp": datetime.now().isoformat(),
                                 "level": "INFO",
                                 "message": "Sample log message",
-                                "service": "ainflue-api"
+                                "service": "iacherie-api"
                             }
                         }
                     ]
@@ -421,11 +421,11 @@ class EnterpriseOrchestrator:
     async def _collect_prometheus_metrics(self) -> Dict[str, Any]:
         """Collect metrics for Prometheus"""
         return {
-            "ainflue_cpu_usage": 45.2,
-            "ainflue_memory_usage": 67.3,
-            "ainflue_requests_total": 12456,
-            "ainflue_response_time_seconds": 0.145,
-            "ainflue_errors_total": 15
+            "iacherie_cpu_usage": 45.2,
+            "iacherie_memory_usage": 67.3,
+            "iacherie_requests_total": 12456,
+            "iacherie_response_time_seconds": 0.145,
+            "iacherie_errors_total": 15
         }
     
     async def _collect_datadog_metrics(self) -> List[Dict[str, Any]]:
@@ -433,19 +433,19 @@ class EnterpriseOrchestrator:
         now = datetime.now().timestamp()
         return [
             {
-                "metric": "ainflue.cpu.usage",
+                "metric": "iacherie.cpu.usage",
                 "points": [[now, 45.2]],
-                "tags": ["service:ainflue", "env:production"]
+                "tags": ["service:iacherie", "env:production"]
             },
             {
-                "metric": "ainflue.memory.usage",
+                "metric": "iacherie.memory.usage",
                 "points": [[now, 67.3]],
-                "tags": ["service:ainflue", "env:production"]
+                "tags": ["service:iacherie", "env:production"]
             },
             {
-                "metric": "ainflue.requests.count",
+                "metric": "iacherie.requests.count",
                 "points": [[now, 234]],
-                "tags": ["service:ainflue", "env:production"]
+                "tags": ["service:iacherie", "env:production"]
             }
         ]
     
@@ -453,11 +453,11 @@ class EnterpriseOrchestrator:
         """Collect events for Datadog"""
         return [
             {
-                "title": "Ainflue Deployment",
+                "title": "iacherie Deployment",
                 "text": "New version deployed successfully",
                 "date_happened": int(datetime.now().timestamp()),
                 "priority": "normal",
-                "tags": ["deployment", "ainflue"]
+                "tags": ["deployment", "iacherie"]
             }
         ]
     
@@ -468,14 +468,14 @@ class EnterpriseOrchestrator:
                 "timestamp": datetime.now().isoformat(),
                 "level": "INFO",
                 "message": "Application started successfully",
-                "service": "ainflue-api",
+                "service": "iacherie-api",
                 "host": "app-server-01"
             },
             {
                 "timestamp": datetime.now().isoformat(),
                 "level": "WARNING",
                 "message": "High memory usage detected",
-                "service": "ainflue-monitoring",
+                "service": "iacherie-monitoring",
                 "host": "app-server-01"
             }
         ]
@@ -503,37 +503,37 @@ class EnterpriseOrchestrator:
         return status
     
     async def create_grafana_dashboards(self):
-        """Create Grafana dashboards for Ainflue"""
+        """Create Grafana dashboards for iacherie"""
         if not self.grafana or not self.grafana.enabled:
             return False
         
         # Main dashboard
         main_dashboard = {
             "dashboard": {
-                "title": "Ainflue Production Overview",
-                "tags": ["ainflue", "production"],
+                "title": "iacherie Production Overview",
+                "tags": ["iacherie", "production"],
                 "timezone": "UTC",
                 "panels": [
                     {
                         "title": "System Metrics",
                         "type": "graph",
                         "targets": [
-                            {"expr": "ainflue_cpu_usage"},
-                            {"expr": "ainflue_memory_usage"}
+                            {"expr": "iacherie_cpu_usage"},
+                            {"expr": "iacherie_memory_usage"}
                         ]
                     },
                     {
                         "title": "Request Rate",
                         "type": "graph",
                         "targets": [
-                            {"expr": "rate(ainflue_requests_total[5m])"}
+                            {"expr": "rate(iacherie_requests_total[5m])"}
                         ]
                     },
                     {
                         "title": "Error Rate",
                         "type": "graph",
                         "targets": [
-                            {"expr": "rate(ainflue_errors_total[5m])"}
+                            {"expr": "rate(iacherie_errors_total[5m])"}
                         ]
                     }
                 ]
@@ -545,24 +545,24 @@ class EnterpriseOrchestrator:
         # Business dashboard
         business_dashboard = {
             "dashboard": {
-                "title": "Ainflue Business Metrics",
-                "tags": ["ainflue", "business"],
+                "title": "iacherie Business Metrics",
+                "tags": ["iacherie", "business"],
                 "timezone": "UTC",
                 "panels": [
                     {
                         "title": "Revenue",
                         "type": "singlestat",
-                        "targets": [{"expr": "ainflue_revenue_total"}]
+                        "targets": [{"expr": "iacherie_revenue_total"}]
                     },
                     {
                         "title": "Active Users",
                         "type": "singlestat",
-                        "targets": [{"expr": "ainflue_users_active"}]
+                        "targets": [{"expr": "iacherie_users_active"}]
                     },
                     {
                         "title": "Content Created",
                         "type": "graph",
-                        "targets": [{"expr": "ainflue_content_created_total"}]
+                        "targets": [{"expr": "iacherie_content_created_total"}]
                     }
                 ]
             }

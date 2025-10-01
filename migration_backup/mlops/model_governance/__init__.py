@@ -17,7 +17,7 @@ Enterprise Model Governance Infrastructure combining:
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer expertise
 
-Logique Métier Ainflue: Créateurs multi-format → IA Processing → 
+Logique Métier IA Chéries: Créateurs multi-format → IA Processing → 
 Protection IP → Monétisation → Collaboration & Gamification → 
 SEO Professionnel → Distribution Multi-plateformes
 """

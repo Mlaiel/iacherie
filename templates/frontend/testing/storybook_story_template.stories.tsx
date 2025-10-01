@@ -202,7 +202,7 @@ const buttonMeta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants, sizes, and states. Part of the Ainflue Enterprise Design System.',
+        component: 'A versatile button component with multiple variants, sizes, and states. Part of the iacherie Enterprise Design System.',
       },
     },
   },
@@ -480,7 +480,7 @@ export const ComponentsShowcase = () => {
   return (
     <div className="p-8 space-y-8">
       <div>
-        <h2 className="text-2xl font-bold mb-4">Ainflue Components Showcase</h2>
+        <h2 className="text-2xl font-bold mb-4">iacherie Components Showcase</h2>
         <p className="text-gray-600 mb-6">Interactive demonstration of multiple components working together.</p>
       </div>
 
@@ -517,7 +517,7 @@ export const ComponentsShowcase = () => {
         <div className="text-center">
           <div className="text-6xl mb-4">🎉</div>
           <h3 className="text-lg font-semibold mb-2">Login Successful!</h3>
-          <p className="text-gray-600 mb-4">Welcome to Ainflue Enterprise Platform</p>
+          <p className="text-gray-600 mb-4">Welcome to iacherie Enterprise Platform</p>
           <Button onClick={() => setIsModalOpen(false)}>
             Continue
           </Button>

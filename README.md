@@ -408,7 +408,7 @@ For licensing, partnerships, or investment opportunities:
 [![Email](https://img.shields.io/badge/Email-mlaiel@live.de-red?style=for-the-badge&logo=gmail)](mailto:mlaiel@live.de)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Fahed%20Mlaiel-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/fahed-mlaiel)
 [![GitHub](https://img.shields.io/badge/GitHub-Mlaiel-black?style=for-the-badge&logo=github)](https://github.com/Mlaiel)
-[![Twitter](https://img.shields.io/badge/Twitter-@AinfluencerAI-blue?style=for-the-badge&logo=twitter)](https://twitter.com/AinfluencerAI)
+[![Twitter](https://img.shields.io/badge/Twitter-@iaCherieAI-blue?style=for-the-badge&logo=twitter)](https://twitter.com/iaCherieAI)
 
 **"Empowering creators with AI technology to build the future of content."**
 

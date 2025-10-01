@@ -1,5 +1,5 @@
 """
-API Error Translator - Ainflue Platform
+API Error Translator - IA Chéries Platform
 Multi-Platform API Error Translation & Normalization
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -40,7 +40,7 @@ class ErrorStandardization(Enum):
     RFC7807 = "rfc7807"  # Problem Details for HTTP APIs
     OAS3 = "openapi3"    # OpenAPI 3.0
     JSONAPI = "jsonapi"  # JSON:API Error Objects
-    AINFLUE = "ainflue"  # Ainflue Standard
+    IA CHÉRIES = "ainflue"  # IA Chéries Standard
     PLATFORM_NATIVE = "platform_native"
 
 
@@ -523,7 +523,7 @@ class APIErrorTranslator:
         api_endpoint: Optional[str] = None,
         request_context: Optional[Dict[str, Any]] = None,
         target_language: str = 'en',
-        target_standard: ErrorStandardization = ErrorStandardization.AINFLUE
+        target_standard: ErrorStandardization = ErrorStandardization.IA CHÉRIES
     ) -> TranslatedError:
         """
         🔄 Lead Dev IA: Traduction principale d'erreur API
@@ -741,7 +741,7 @@ class APIErrorTranslator:
             translation_id=translation_id,
             source_error=error_source,
             normalized_error=normalized_error,
-            error_standard=ErrorStandardization.AINFLUE,
+            error_standard=ErrorStandardization.IA CHÉRIES,
             error_code=rule.target_error_code,
             error_title=normalized_error.get('title', rule.target_error_code),
             error_detail=normalized_error.get('detail', 'Error occurred'),
@@ -983,7 +983,7 @@ class APIErrorTranslator:
             translation_id=translation_id,
             source_error=error_source,
             normalized_error=normalized_error,
-            error_standard=ErrorStandardization.AINFLUE,
+            error_standard=ErrorStandardization.IA CHÉRIES,
             error_code=error_code,
             error_title=normalized_error['title'],
             error_detail=normalized_error['detail'],
@@ -1045,7 +1045,7 @@ class APIErrorTranslator:
             translation_id=translation_id,
             source_error=error_source,
             normalized_error=normalized_error,
-            error_standard=ErrorStandardization.AINFLUE,
+            error_standard=ErrorStandardization.IA CHÉRIES,
             error_code=error_code,
             error_title=normalized_error['title'],
             error_detail=normalized_error['detail'],
@@ -1075,7 +1075,7 @@ class APIErrorTranslator:
         )
         
         # Apply target standard formatting
-        if target_standard != ErrorStandardization.AINFLUE:
+        if target_standard != ErrorStandardization.IA CHÉRIES:
             translated_error.normalized_error = await self._apply_error_standard(
                 translated_error.normalized_error, target_standard
             )
@@ -1140,7 +1140,7 @@ class APIErrorTranslator:
                 }
             }
         
-        # Default: return as-is for AINFLUE or PLATFORM_NATIVE
+        # Default: return as-is for IA CHÉRIES or PLATFORM_NATIVE
         return normalized_error
     
     async def _generate_suggested_actions(self, error_code: str) -> List[str]:
@@ -1231,7 +1231,7 @@ class APIErrorTranslator:
             translation_id=translation_id,
             source_error=error_source,
             normalized_error=normalized_error,
-            error_standard=ErrorStandardization.AINFLUE,
+            error_standard=ErrorStandardization.IA CHÉRIES,
             error_code='TRANSLATION_FAILED',
             error_title='Error Translation Failed',
             error_detail=f'Failed to translate error from {platform}',

@@ -5,7 +5,7 @@ Threat Detector - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade threat detection system for Ainflue creator economy platform.
+Enterprise-grade threat detection system for IA Chéries creator economy platform.
 Real-time threat analysis with < 50ms detection cycles.
 
 Performance: < 50ms threat detection cycles

@@ -119,7 +119,7 @@ class SecurityScanningSuite:
         # In production, this would load from CVE databases, security feeds, etc.
         sample_vulnerabilities = [
             Vulnerability(
-                vuln_id="AINFLUE-2024-001",
+                vuln_id="IA CHÉRIES-2024-001",
                 cve_id="CVE-2024-1234",
                 title="SQL Injection in Model API",
                 description="Potential SQL injection vulnerability in model inference API",
@@ -133,7 +133,7 @@ class SecurityScanningSuite:
                 references=["https://nvd.nist.gov/vuln/detail/CVE-2024-1234"]
             ),
             Vulnerability(
-                vuln_id="AINFLUE-2024-002",
+                vuln_id="IA CHÉRIES-2024-002",
                 cve_id="CVE-2024-5678",
                 title="Insecure Model Storage",
                 description="Models stored without proper encryption",

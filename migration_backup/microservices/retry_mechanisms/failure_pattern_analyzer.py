@@ -1,11 +1,11 @@
 """
-Failure Pattern Analyzer - Ainflue
+Failure Pattern Analyzer - IA Chéries
 ==================================
 Analyseur patterns d'échec avec ML clustering.
 Failure classification + root cause analysis + prediction.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

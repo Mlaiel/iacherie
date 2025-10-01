@@ -509,10 +509,10 @@ services:
       retries: 3
       start_period: 40s
     networks:
-      - ainflue_network
+      - iacherie_network
 
 networks:
-  ainflue_network:
+  iacherie_network:
     external: true
 EOF
     

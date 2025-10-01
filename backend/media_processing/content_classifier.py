@@ -23,7 +23,7 @@ Contact: mlaiel@live.de
 - Advanced tagging and categorization systems
 - Content quality assessment and scoring
 - Semantic content understanding and indexing
-- Business-relevant classification for Ainflue workflows
+- Business-relevant classification for iacherie workflows
 """
 
 import asyncio

@@ -764,7 +764,7 @@ async def get_tenant_data_isolator() -> TenantDataIsolator:
     global tenant_data_isolator
     if not tenant_data_isolator:
         # Configuration depuis env vars
-        database_url = "postgresql+asyncpg://localhost/ainflue_tenants"
+        database_url = "postgresql+asyncpg://localhost/iacherie_tenants"
         redis_url = "redis://localhost:6379/1"
         master_key = "master-encryption-key-change-in-production"
         

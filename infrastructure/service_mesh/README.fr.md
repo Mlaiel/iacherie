@@ -1,11 +1,11 @@
-# 🕸️ Maillage de Services Infrastructure - Ainflue Enterprise
+# 🕸️ Maillage de Services Infrastructure - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure service mesh enterprise avec Istio/Linkerd, load balancing intelligent, circuit breakers, découverte services, et observabilité avancée pour la plateforme créateurs Ainflue orchestrant 65+ plateformes avec 53 agents IA via microservices.
+Infrastructure service mesh enterprise avec Istio/Linkerd, load balancing intelligent, circuit breakers, découverte services, et observabilité avancée pour la plateforme créateurs iacherie orchestrant 65+ plateformes avec 53 agents IA via microservices.
 
 ## 🏗️ Composants Architecture
 - **Intégration Istio** : Service mesh production-ready avec sécurité avancée

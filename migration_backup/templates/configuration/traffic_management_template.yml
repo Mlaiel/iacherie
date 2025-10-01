@@ -1,4 +1,4 @@
-# ⚡ Traffic Management Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Traffic Management Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -601,7 +601,7 @@ metadata:
   namespace: consul
 data:
   service-router.hcl: |
-    # Ainflue API Service Router
+    # IA Chéries API Service Router
     Kind = "service-router"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -726,7 +726,7 @@ metadata:
   namespace: consul
 data:
   service-splitter.hcl: |
-    # Ainflue API Service Splitter
+    # IA Chéries API Service Splitter
     Kind = "service-splitter"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -800,7 +800,7 @@ metadata:
   namespace: consul
 data:
   service-resolver.hcl: |
-    # Ainflue API Service Resolver
+    # IA Chéries API Service Resolver
     Kind = "service-resolver"
     Name = "ainflue-api"
     Namespace = "ainflue-production"
@@ -1340,5 +1340,5 @@ data:
 # ===================================================================
 # END OF TRAFFIC MANAGEMENT CONFIGURATION TEMPLATE
 # Creator Economy Traffic Solution by Fahed Mlaiel
-# Enterprise-grade traffic management for Ainflue platform
+# Enterprise-grade traffic management for IA Chéries platform
 # ===================================================================

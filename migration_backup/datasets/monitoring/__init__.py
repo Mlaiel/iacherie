@@ -11,7 +11,7 @@
 
 MISSION ENTERPRISE:
 Monitoring complet des datasets avec métriques performance, analytics,
-alerting, et dashboards pour la plateforme Ainflue.
+alerting, et dashboards pour la plateforme IA Chéries.
 """
 
 from .index import DatasetMonitoring, PerformanceTracker, UsageAnalytics, AlertManager

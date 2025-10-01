@@ -521,7 +521,7 @@ class BackupManager:
             # Check if source is on a filesystem that supports snapshots
             # This is a simplified implementation - production would check for LVM, ZFS, etc.
             if self._supports_snapshots(source_path):
-                snapshot_name = f"ainflue_snapshot_{job.job_id}"
+                snapshot_name = f"iacherie_snapshot_{job.job_id}"
                 if self._create_filesystem_snapshot(source_path, snapshot_name):
                     job.storage_path = f"snapshot:{snapshot_name}"
                     job.checksum = self._calculate_directory_checksum(source_path)

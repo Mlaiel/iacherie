@@ -1,4 +1,4 @@
-"""{{prompt_name}} AI Prompt Engineering Template for Ainflue Platform
+"""{{prompt_name}} AI Prompt Engineering Template for IA Chéries Platform
 {{prompt_description}}
 
 Author: {{author_name}} ({{author_email}})

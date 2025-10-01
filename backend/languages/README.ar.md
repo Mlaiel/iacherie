@@ -135,8 +135,8 @@
 
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/languages
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/languages
 
 # تثبيت التبعيات
 pip install -r requirements.txt

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔐 RBAC Template - Ainflue Creator Economy Platform
+🔐 RBAC Template - iacherie Creator Economy Platform
 ==================================================
 
 Role-Based Access Control (RBAC) Templates for Kubernetes and Creator Economy
@@ -55,7 +55,7 @@ class ActionType(Enum):
 @dataclass
 class RBACConfig:
     """Configuration for RBAC generation"""
-    namespace: str = "ainflue"
+    namespace: str = "iacherie"
     environment: str = "production"
     enable_creator_economy_roles: bool = True
     enable_ai_processing_roles: bool = True
@@ -120,7 +120,7 @@ class RBACTemplate:
                     "namespace": config.namespace,
                     "labels": {
                         "app.kubernetes.io/name": service,
-                        "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                        "app.kubernetes.io/part-of": "iacherie-creator-economy",
                         "app.kubernetes.io/component": "service-account"
                     },
                     "annotations": {
@@ -143,9 +143,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRole",
             "metadata": {
-                "name": "ainflue-creator-admin",
+                "name": "iacherie-creator-admin",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "rbac.authorization.k8s.io/aggregate-to-admin": "true"
                 }
             },
@@ -184,9 +184,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRole",
             "metadata": {
-                "name": "ainflue-ai-processor",
+                "name": "iacherie-ai-processor",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/role-type": "ai-processing"
                 }
             },
@@ -227,9 +227,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRole",
             "metadata": {
-                "name": "ainflue-monetization",
+                "name": "iacherie-monetization",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/role-type": "monetization"
                 }
             },
@@ -264,9 +264,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRole",
             "metadata": {
-                "name": "ainflue-content-viewer",
+                "name": "iacherie-content-viewer",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/role-type": "content-access"
                 }
             },
@@ -307,7 +307,7 @@ class RBACTemplate:
                 "name": "creator-content-manager",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/access-level": "content-management"
                 }
             },
@@ -348,7 +348,7 @@ class RBACTemplate:
                 "name": "collaboration-manager",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/access-level": "collaboration-management"
                 }
             },
@@ -382,7 +382,7 @@ class RBACTemplate:
                 "name": "analytics-viewer",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "creator-economy/access-level": "analytics-read"
                 }
             },
@@ -414,9 +414,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRoleBinding",
             "metadata": {
-                "name": "ainflue-ai-processor-binding",
+                "name": "iacherie-ai-processor-binding",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -428,7 +428,7 @@ class RBACTemplate:
             ],
             "roleRef": {
                 "kind": "ClusterRole",
-                "name": "ainflue-ai-processor",
+                "name": "iacherie-ai-processor",
                 "apiGroup": "rbac.authorization.k8s.io"
             }
         }
@@ -439,9 +439,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRoleBinding",
             "metadata": {
-                "name": "ainflue-monetization-binding",
+                "name": "iacherie-monetization-binding",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -453,7 +453,7 @@ class RBACTemplate:
             ],
             "roleRef": {
                 "kind": "ClusterRole",
-                "name": "ainflue-monetization",
+                "name": "iacherie-monetization",
                 "apiGroup": "rbac.authorization.k8s.io"
             }
         }
@@ -464,9 +464,9 @@ class RBACTemplate:
             "apiVersion": "rbac.authorization.k8s.io/v1",
             "kind": "ClusterRoleBinding", 
             "metadata": {
-                "name": "ainflue-creator-api-binding",
+                "name": "iacherie-creator-api-binding",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -478,7 +478,7 @@ class RBACTemplate:
             ],
             "roleRef": {
                 "kind": "ClusterRole",
-                "name": "ainflue-content-viewer",
+                "name": "iacherie-content-viewer",
                 "apiGroup": "rbac.authorization.k8s.io"
             }
         }
@@ -498,7 +498,7 @@ class RBACTemplate:
                 "name": "creator-content-manager-binding",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -524,7 +524,7 @@ class RBACTemplate:
                 "name": "collaboration-manager-binding",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -550,7 +550,7 @@ class RBACTemplate:
                 "name": "analytics-viewer-binding",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "subjects": [
@@ -579,9 +579,9 @@ class RBACTemplate:
             "apiVersion": "policy/v1beta1",
             "kind": "PodSecurityPolicy",
             "metadata": {
-                "name": "ainflue-restricted",
+                "name": "iacherie-restricted",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "security-level": "restricted"
                 }
             },
@@ -616,9 +616,9 @@ class RBACTemplate:
             "apiVersion": "policy/v1beta1",
             "kind": "PodSecurityPolicy",
             "metadata": {
-                "name": "ainflue-ai-privileged",
+                "name": "iacherie-ai-privileged",
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy",
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy",
                     "security-level": "ai-processing"
                 }
             },
@@ -662,10 +662,10 @@ class RBACTemplate:
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
             "metadata": {
-                "name": "ainflue-deny-all",
+                "name": "iacherie-deny-all",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "spec": {
@@ -683,7 +683,7 @@ class RBACTemplate:
                 "name": "creator-api-network-policy",
                 "namespace": config.namespace,
                 "labels": {
-                    "app.kubernetes.io/part-of": "ainflue-creator-economy"
+                    "app.kubernetes.io/part-of": "iacherie-creator-economy"
                 }
             },
             "spec": {
@@ -783,7 +783,7 @@ class RBACTemplate:
                     f.write("# Creator Economy RBAC Manifests\n")
                     f.write(f"# Type: {manifest_type}\n")
                     f.write(f"# Author: {self.author}\n")
-                    f.write("# Generated for Ainflue Creator Economy Platform\n\n")
+                    f.write("# Generated for iacherie Creator Economy Platform\n\n")
                     
                     for i, manifest in enumerate(manifest_list):
                         if i > 0:
@@ -800,7 +800,7 @@ def main():
     
     # Generate RBAC for production environment
     config = RBACConfig(
-        namespace="ainflue",
+        namespace="iacherie",
         environment="production",
         enable_creator_economy_roles=True,
         enable_ai_processing_roles=True,

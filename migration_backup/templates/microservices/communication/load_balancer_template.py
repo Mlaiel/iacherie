@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Load Balancer Template for Ainflue Microservices Platform
+Load Balancer Template for IA Chéries Microservices Platform
 ========================================================
 
 Enterprise-grade intelligent load balancer template providing:

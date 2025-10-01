@@ -134,7 +134,7 @@ def create_celery_app(app_name: str = "ainflue"):
 celery_settings = CelerySettings()
 
 class CeleryConfiguration:
-    """Celery configuration manager for Ainflue platform"""
+    """Celery configuration manager for IA Chéries platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

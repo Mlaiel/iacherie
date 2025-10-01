@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE SOURCE SEPARATION SERVICE - SPECIALIZED DOCKERFILE
+# IA CHÉRIES SOURCE SEPARATION SERVICE - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced audio source separation using
 # DEMUCS, Spleeter, and other state-of-the-art models.
@@ -194,11 +194,11 @@ CMD ["python3.11", "-m", "source_separation.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Source Separation Service"
+LABEL org.opencontainers.image.title="IA Chéries Source Separation Service"
 LABEL org.opencontainers.image.description="Advanced audio source separation with DEMUCS and Spleeter"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL ainflue.service.category="audio"
 LABEL ainflue.service.name="source_separation"
 LABEL ainflue.service.port="8011"

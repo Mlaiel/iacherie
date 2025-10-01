@@ -100,38 +100,38 @@ Initialize collaboration success tracker"""
         
         # Prometheus metrics
         self.collaborations_total = Counter(
-            'ainflue_collaborations_total',
+            'iacherie_collaborations_total',
             'Total number of collaborations',
             ['type', 'status', 'creator_tier']
         )
         
         self.collaboration_success_rate = Gauge(
-            'ainflue_collaboration_success_rate',
+            'iacherie_collaboration_success_rate',
             'Collaboration success rate percentage',
             ['type', 'creator_tier']
         )
         
         self.collaboration_value = Histogram(
-            'ainflue_collaboration_value_euros',
+            'iacherie_collaboration_value_euros',
             'Collaboration value distribution',
             ['type'],
             buckets=[0, 100, 500, 1000, 5000, 10000, 50000, float('inf')]
         )
         
         self.creator_performance_score = Gauge(
-            'ainflue_creator_performance_score',
+            'iacherie_creator_performance_score',
             'Creator performance score (0-100)',
             ['creator_id', 'tier']
         )
         
         self.partnership_satisfaction = Gauge(
-            'ainflue_partnership_satisfaction_score',
+            'iacherie_partnership_satisfaction_score',
             'Partnership satisfaction score (0-10)',
             ['brand_id', 'collaboration_type']
         )
         
         self.collaboration_completion_time = Histogram(
-            'ainflue_collaboration_completion_days',
+            'iacherie_collaboration_completion_days',
             'Time to complete collaboration',
             ['type'],
             buckets=[1, 3, 7, 14, 30, 60, 90, float('inf')]

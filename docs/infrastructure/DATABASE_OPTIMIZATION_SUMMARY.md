@@ -175,7 +175,7 @@ replica_configs = {
 backup_configs = {
     'daily_full': BackupConfig(
         backup_id='daily_full_backup',
-        database_name='ainflue_platform',
+        database_name='iacherie_platform',
         backup_type=BackupType.FULL,
         schedule_cron='0 2 * * *',  # Daily at 2 AM
         retention_days=30

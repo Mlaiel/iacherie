@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Data Templates for Ainflue Microservices Platform
+Data Templates for iacherie Microservices Platform
 ================================================
 
 Production-ready data management templates with:
@@ -457,7 +457,7 @@ def create_data_service_app() -> FastAPI:
     Architecture microservice enterprise
     """
     app = FastAPI(
-        title="Ainflue Data Templates Service",
+        title="iacherie Data Templates Service",
         description="Production-ready data management templates",
         version="1.0.0",
         docs_url="/docs",

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Common Setup Ansible Role
+# IA Chéries Infrastructure Module - Common Setup Ansible Role
 # =========================================================
 # 
-# Enterprise-grade common setup role for Ainflue platform
+# Enterprise-grade common setup role for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: Common Setup for Ainflue Infrastructure
+- name: Common Setup for IA Chéries Infrastructure
   hosts: all
   become: yes
   vars:

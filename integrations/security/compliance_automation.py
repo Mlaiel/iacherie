@@ -601,7 +601,7 @@ class ComplianceAutomation:
                     severity=self._determine_violation_severity(requirement),
                     description=f"Non-compliance detected for {requirement.title}",
                     detected_at=datetime.utcnow(),
-                    affected_systems=["ainflue_platform"],
+                    affected_systems=["iacherie_platform"],
                     evidence={
                         "assessment_method": requirement.verification_method,
                         "evidence_reviewed": requirement.evidence_required,

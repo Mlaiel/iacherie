@@ -5,7 +5,7 @@ Core Utilities Module - Enterprise Architecture Level 1
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Core business logic utilities for the Ainflue platform.
+Core business logic utilities for the IA Chéries platform.
 This module provides fundamental data processing, file management, 
 text processing, media handling, and workflow orchestration.
 

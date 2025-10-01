@@ -14,8 +14,8 @@
  */
 
 // Core client exports
-export { AinflueClient } from './client';
-export { AinflueProvider, useAinflue } from './provider';
+export { iacherieClient } from './client';
+export { iacherieProvider, useiacherie } from './provider';
 
 // Platform-specific clients
 export { AndroidClient } from './android-client';
@@ -37,11 +37,11 @@ export {
 
 // React components
 export {
-  AinflueUploader,
-  AinfluePlayer,
-  AinflueAnalytics,
-  AinflueProtection,
-  AinflueAuth
+  iacherieUploader,
+  iacheriePlayer,
+  iacherieAnalytics,
+  iacherieProtection,
+  iacherieAuth
 } from './components';
 
 // Storage and caching
@@ -62,12 +62,12 @@ export { DeviceInfo } from './utils/device-info';
 export * from './constants';
 
 // Configuration
-export type { AinflueConfig } from './config';
+export type { iacherieConfig } from './config';
 export { createDefaultConfig } from './config';
 
 // Error handling
 export {
-  AinflueError,
+  iacherieError,
   NetworkError,
   PermissionError,
   StorageError,

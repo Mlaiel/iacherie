@@ -104,7 +104,7 @@ class CreatorEconomyDocumentationEngine:
     based on their type, tier, and business needs.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chéries/IA Chéries"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.CreatorEconomyDocumentationEngine")
         
@@ -155,7 +155,7 @@ class CreatorEconomyDocumentationEngine:
         base_sections = [
             {
                 "section_id": "welcome",
-                "title": "Welcome to Ainflue Creator Economy",
+                "title": "Welcome to IA Chéries Creator Economy",
                 "type": "introduction",
                 "priority": 1,
                 "personalization_required": True
@@ -260,8 +260,8 @@ class CreatorEconomyDocumentationEngine:
         
         # SEO metadata
         seo_metadata = {
-            "title_template": f"{creator_type.value.replace('_', ' ').title()} Creator Guide - Ainflue",
-            "description_template": f"Complete guide for {creator_type.value.replace('_', ' ')} creators on Ainflue platform",
+            "title_template": f"{creator_type.value.replace('_', ' ').title()} Creator Guide - IA Chéries",
+            "description_template": f"Complete guide for {creator_type.value.replace('_', ' ')} creators on IA Chéries platform",
             "keywords": [
                 creator_type.value.replace('_', ' '),
                 "creator economy",
@@ -645,9 +645,9 @@ class CreatorEconomyDocumentationEngine:
     ) -> Dict[str, Any]:
         """Generate personalized welcome section"""
         return {
-            'title': f"Welcome to Ainflue, {creator_profile.name}!",
+            'title': f"Welcome to IA Chéries, {creator_profile.name}!",
             'content': f"""
-Welcome to the Ainflue Creator Economy platform! As a {creator_profile.creator_type.value.replace('_', ' ')}, 
+Welcome to the IA Chéries Creator Economy platform! As a {creator_profile.creator_type.value.replace('_', ' ')}, 
 you're joining a community of innovative creators who are transforming how content is created, protected, and monetized.
 
 Your Creator Profile:
@@ -655,7 +655,7 @@ Your Creator Profile:
 - Tier: {creator_profile.creator_tier.value.title()}
 - Specializations: {', '.join(creator_profile.specializations) if creator_profile.specializations else 'General content creation'}
 
-What makes Ainflue special for {creator_profile.creator_type.value.replace('_', ' ')} creators:
+What makes IA Chéries special for {creator_profile.creator_type.value.replace('_', ' ')} creators:
 - AI-powered content processing and enhancement
 - Advanced content protection and IP rights management
 - Multiple monetization strategies tailored to your creator type
@@ -683,7 +683,7 @@ Let's get you started on your journey to creator success!
         return {
             'title': f'Getting Started as a {creator_profile.creator_type.value.replace("_", " ").title()}',
             'content': f"""
-Complete setup guide for {creator_profile.creator_type.value.replace('_', ' ')} creators on Ainflue.
+Complete setup guide for {creator_profile.creator_type.value.replace('_', ' ')} creators on IA Chéries.
 
 Step-by-Step Setup:
 

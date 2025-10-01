@@ -422,7 +422,7 @@ Payment Details:
 Thank you for being a valued customer!
 
 Best regards,
-The Ainflue Team"""
+The IA Chéries Team"""
             },
             {
                 "name": "Payment Failed",
@@ -442,7 +442,7 @@ To avoid service interruption, please {{ cta_text }} within 48 hours.
 Need help? Contact our support team.
 
 Best regards,
-The Ainflue Team"""
+The IA Chéries Team"""
             },
             {
                 "name": "Trial Ending",
@@ -464,7 +464,7 @@ Don't lose access to:
 Questions? We're here to help!
 
 Best regards,
-The Ainflue Team"""
+The IA Chéries Team"""
             },
             {
                 "name": "Subscription Cancelled",
@@ -485,7 +485,7 @@ Your account will remain active until {{ service_end_date }}.
 We'd love to have you back! If you change your mind, you can reactivate anytime.
 
 Best regards,
-The Ainflue Team"""
+The IA Chéries Team"""
             },
             {
                 "name": "Churn Risk Alert",
@@ -494,7 +494,7 @@ The Ainflue Team"""
                 "subject": "{{ personalized_greeting }} - Special Offer Inside!",
                 "content": """{{ personalized_greeting }}
 
-We've noticed you haven't been as active lately, and we want to help you get the most out of Ainflue.
+We've noticed you haven't been as active lately, and we want to help you get the most out of IA Chéries.
 
 Here's what we can offer:
 - Personalized onboarding session
@@ -506,7 +506,7 @@ Let's schedule a quick call to see how we can better serve you.
 {{ cta_text }}
 
 Best regards,
-The Ainflue Team"""
+The IA Chéries Team"""
             }
         ]
         
@@ -969,7 +969,7 @@ Timestamp: {security_event.event_timestamp.isoformat()}
 Immediate action may be required.
 
 Security Team
-Ainflue Platform""",
+IA Chéries Platform""",
                     priority=NotificationPriority.CRITICAL,
                     scheduled_at=datetime.utcnow()
                 )

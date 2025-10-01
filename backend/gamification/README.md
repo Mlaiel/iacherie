@@ -39,7 +39,7 @@ Any violation will result in **IMMEDIATE LEGAL PROSECUTION** including:
 
 ## 🎯 Business Logic Overview
 
-This module implements the core gamification system for the Ainflue platform, following the strict business logic:
+This module implements the core gamification system for the iacherie platform, following the strict business logic:
 
 ```
 User (musician/blogger/photographer/influencer/comedian) 

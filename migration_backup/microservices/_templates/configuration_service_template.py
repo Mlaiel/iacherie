@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-⚙️ Configuration Service Template - Ainflue Enterprise
+⚙️ Configuration Service Template - IA Chéries Enterprise
 =====================================================
 Template enterprise pour services configuration.
 Consul + Vault + environment management + secrets + feature flags.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: IA Chéries Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

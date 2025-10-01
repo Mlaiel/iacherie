@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Application Lifecycle Manager
+ * IA Chéries Desktop - Application Lifecycle Manager
  * 
  * Professional lifecycle management with graceful shutdown and state persistence
  * 
@@ -103,7 +103,7 @@ class ApplicationLifecycleManager extends EventEmitter {
         backgroundThrottling: false
       },
       icon: this.getApplicationIcon(),
-      title: 'Ainflue Studio - Professional AI Content Creation',
+      title: 'IA Chéries Studio - Professional AI Content Creation',
       backgroundColor: '#1f2937',
       show: false,
       resizable: true,

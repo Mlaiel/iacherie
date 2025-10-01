@@ -42,7 +42,7 @@ class LoadBalancingStrategy(Enum):
     COOPERATIVE = "cooperative"
 
 
-class AinflueBusinesConsumerGroups:
+class iacherieBusinesConsumerGroups:
     """Consumer groups for IA Chérie business workflows"""
     
     # Content Processing Pipeline
@@ -546,7 +546,7 @@ class KafkaConsumerOrchestrator:
         try:
             # Content upload processing group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.CONTENT_UPLOAD_PROCESSOR,
+                group_id=iacherieBusinesConsumerGroups.CONTENT_UPLOAD_PROCESSOR,
                 topics=["iacherie-content-events"],
                 consumer_count=3,
                 processor=self.processors["content_upload"]
@@ -554,7 +554,7 @@ class KafkaConsumerOrchestrator:
             
             # AI analysis processing group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.AI_ANALYSIS_PROCESSOR,
+                group_id=iacherieBusinesConsumerGroups.AI_ANALYSIS_PROCESSOR,
                 topics=["iacherie-content-events"],
                 consumer_count=2,
                 processor=self.processors["ai_analysis"]
@@ -562,7 +562,7 @@ class KafkaConsumerOrchestrator:
             
             # Revenue analytics group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.REVENUE_ANALYTICS_PROCESSOR,
+                group_id=iacherieBusinesConsumerGroups.REVENUE_ANALYTICS_PROCESSOR,
                 topics=["iacherie-revenue-events"],
                 consumer_count=1,
                 processor=None  # Default processing
@@ -828,6 +828,6 @@ class KafkaConsumerOrchestrator:
 # Export public API
 __all__ = [
     "KafkaConsumerOrchestrator", "KafkaConsumer", "ConsumerConfig",
-    "AinflueBusinesConsumerGroups", "MessageProcessor", "ContentUploadProcessor",
+    "iacherieBusinesConsumerGroups", "MessageProcessor", "ContentUploadProcessor",
     "AIAnalysisProcessor", "ConsumerState", "LoadBalancingStrategy"
 ]

@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Collaboration Success Predictor
+IA Chéries Platform - Collaboration Success Predictor
 =================================================
 
-Advanced AI-powered collaboration success prediction system for the Ainflue platform.
+Advanced AI-powered collaboration success prediction system for the IA Chéries platform.
 Uses machine learning to predict collaboration outcomes, success probability,
 and provides recommendations for optimizing partnerships between creators.
 
@@ -110,7 +110,7 @@ class SuccessMetrics:
 
 class CollaborationSuccessPredictor:
     """
-    Advanced collaboration success prediction system for the Ainflue platform.
+    Advanced collaboration success prediction system for the IA Chéries platform.
     
     Uses machine learning algorithms to predict collaboration outcomes,
     analyze success factors, and provide optimization recommendations.

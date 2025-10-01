@@ -1,6 +1,6 @@
 # Security & Compliance Module
 
-Enterprise-grade security and compliance framework for ML systems in the Ainflue MLOps platform.
+Enterprise-grade security and compliance framework for ML systems in the iacherie MLOps platform.
 
 ## Overview
 
@@ -480,7 +480,7 @@ security_metrics = metrics["security_compliance"]
 
 ## Contributing
 
-This module is part of the Ainflue MLOps platform. For contributing guidelines, please refer to the main platform documentation.
+This module is part of the iacherie MLOps platform. For contributing guidelines, please refer to the main platform documentation.
 
 ## License
 

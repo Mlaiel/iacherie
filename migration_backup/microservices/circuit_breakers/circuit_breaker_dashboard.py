@@ -70,7 +70,7 @@ class DashboardTheme(Enum):
     LIGHT = "light"
     DARK = "dark"
     ENTERPRISE = "enterprise"
-    AINFLUE = "ainflue"
+    IA CHÉRIES = "ainflue"
 
 
 class ChartType(Enum):
@@ -230,7 +230,7 @@ class ChartGenerator:
                 'background': '#ecf0f1',
                 'text': '#2c3e50'
             },
-            DashboardTheme.AINFLUE: {
+            DashboardTheme.IA CHÉRIES: {
                 'primary': '#6366f1',
                 'secondary': '#8b5cf6',
                 'success': '#10b981',
@@ -1427,7 +1427,7 @@ if __name__ == "__main__":
         """Demo circuit breaker dashboard functionality"""
         # Create dashboard configuration
         config = DashboardConfig(
-            title="Ainflue Circuit Breakers Dashboard",
+            title="IA Chéries Circuit Breakers Dashboard",
             theme=DashboardTheme.ENTERPRISE,
             refresh_interval_seconds=10,
             enable_real_time=True

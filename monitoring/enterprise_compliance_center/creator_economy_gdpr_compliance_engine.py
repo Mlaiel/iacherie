@@ -474,7 +474,7 @@ class CreatorEconomyGDPRComplianceEngine:
             legal_basis=template.get('legal_basis', GDPRLegalBasis.LEGITIMATE_INTEREST),
             data_categories=template.get('data_categories', [DataCategory.PERSONAL_DATA]),
             data_sources=activity_data.get('data_sources', []),
-            data_recipients=['ainflue_platform', 'analytics_service', 'ai_engine'],
+            data_recipients=['iacherie_platform', 'analytics_service', 'ai_engine'],
             retention_period=retention_period,
             cross_border_transfer=activity_data.get('cross_border_transfer', False),
             automated_decision_making=template.get('automated_decision_making', False),

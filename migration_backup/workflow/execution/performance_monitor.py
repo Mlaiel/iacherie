@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE PERFORMANCE MONITOR - AINFLUE PLATFORM
+🔥 ENTERPRISE PERFORMANCE MONITOR - IA CHÉRIES PLATFORM
 Ultra-advanced real-time performance monitoring and analysis
 Performance Targets: < 5ms monitoring operations
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,6 +1,6 @@
 # Dashboard Temps Réel
 
-Ce module fournit une interface de dashboard temps réel pour la plateforme Ainflue.
+Ce module fournit une interface de dashboard temps réel pour la plateforme iacherie.
 
 ## Structure
 

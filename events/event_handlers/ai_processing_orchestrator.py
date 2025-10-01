@@ -136,25 +136,25 @@ class AIProcessingOrchestrator(BaseEventHandler):
         # Model configurations
         self.model_configs = {
             AIModelType.AUDIO_ANALYZER: {
-                "model_name": "ainflue_audio_v3",
+                "model_name": "iacherie_audio_v3",
                 "batch_size": 4,
                 "memory_requirement": 2048,  # MB
                 "gpu_required": True
             },
             AIModelType.VIDEO_ANALYZER: {
-                "model_name": "ainflue_video_v2",
+                "model_name": "iacherie_video_v2",
                 "batch_size": 2,
                 "memory_requirement": 4096,
                 "gpu_required": True
             },
             AIModelType.IMAGE_ANALYZER: {
-                "model_name": "ainflue_image_v4",
+                "model_name": "iacherie_image_v4",
                 "batch_size": 8,
                 "memory_requirement": 1024,
                 "gpu_required": False
             },
             AIModelType.TEXT_ANALYZER: {
-                "model_name": "ainflue_text_v3",
+                "model_name": "iacherie_text_v3",
                 "batch_size": 16,
                 "memory_requirement": 512,
                 "gpu_required": False

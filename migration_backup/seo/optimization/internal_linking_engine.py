@@ -1,5 +1,5 @@
 """
-Internal Linking Engine for Ainflue Platform
+Internal Linking Engine for IA Chéries Platform
 Advanced internal linking strategy and automation for SEO optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -577,7 +577,7 @@ class InternalLinkingEngine:
 
 # Integration utilities
 def create_ainflue_internal_linking_engine(base_domain: str = "https://ainflue.com") -> InternalLinkingEngine:
-    """Create configured internal linking engine for Ainflue"""
+    """Create configured internal linking engine for IA Chéries"""
     
     engine = InternalLinkingEngine(base_domain)
     

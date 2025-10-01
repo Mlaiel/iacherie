@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Rate Limiter Template for Ainflue Microservices Platform
+Rate Limiter Template for iacherie Microservices Platform
 =======================================================
 
 Enterprise-grade distributed rate limiting template providing:

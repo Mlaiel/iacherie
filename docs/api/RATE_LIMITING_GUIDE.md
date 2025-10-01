@@ -468,11 +468,11 @@ def update_dashboard():
 ### Python SDK Example
 
 ```python
-from ainflue_sdk import AinflueFree, AinfluePro
-from ainflue_sdk.exceptions import RateLimitExceeded
+from iacherie_sdk import iacherieFree, iacheriePro
+from iacherie_sdk.exceptions import RateLimitExceeded
 
 # SDK automatically handles rate limiting
-client = AinfluePro(api_key="your_key")
+client = iacheriePro(api_key="your_key")
 
 try:
     # SDK respects rate limits automatically
@@ -491,9 +491,9 @@ except RateLimitExceeded as e:
 ### JavaScript SDK Example
 
 ```javascript
-import { AinflueFree } from '@iacherie/api-sdk';
+import { iacherieFree } from '@iacherie/api-sdk';
 
-const client = new AinflueFree({ apiKey: 'your_key' });
+const client = new iacherieFree({ apiKey: 'your_key' });
 
 // SDK handles rate limiting with promises
 try {

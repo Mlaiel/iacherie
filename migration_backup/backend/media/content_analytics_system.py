@@ -2,7 +2,7 @@
 =========================================================================
 
 Consolidated analytics system providing comprehensive content analysis, trending detection,
-engagement prediction, and multimodal intelligence for the Ainflue platform.
+engagement prediction, and multimodal intelligence for the IA Chéries platform.
 
 Consolidates:
 - Trending content analysis and viral pattern detection (trending_content_analyzer.py)

@@ -210,7 +210,7 @@ class AuditTrailManager:
             event_metadata.update({
                 "logged_at": timestamp.isoformat(),
                 "audit_version": "1.0",
-                "system_id": "ainflue_mlops"
+                "system_id": "iacherie_mlops"
             })
             
             # Calculate checksum for integrity

@@ -138,7 +138,7 @@ class TrainingResult:
     business_impact_score: float
     deployment_readiness: bool
 
-class AinflueTRainingOrchestrator:
+class iacherieTRainingOrchestrator:
     """
     Orchestrateur principal entraînement ML IA Chérie Enterprise.
     
@@ -543,9 +543,9 @@ class BusinessIntegrationException(Exception):
     pass
 
 # Factory Functions
-def create_training_orchestrator(config: TrainingConfiguration) -> AinflueTRainingOrchestrator:
+def create_training_orchestrator(config: TrainingConfiguration) -> iacherieTRainingOrchestrator:
     """Factory création orchestrateur entraînement."""
-    return AinflueTRainingOrchestrator(config)
+    return iacherieTRainingOrchestrator(config)
 
 def create_automl_pipeline(model_type: ModelType) -> AutoMLPipeline:
     """Factory création pipeline AutoML."""
@@ -556,7 +556,7 @@ def create_distributed_training_manager(num_gpus: int) -> DistributedTrainingMan
     return DistributedTrainingManager(num_gpus)
 
 # Main Training Interface
-async def train_ainflue_model(model_type: ModelType, training_mode: TrainingMode, 
+async def train_iacherie_model(model_type: ModelType, training_mode: TrainingMode, 
                              dataset_path: str, **kwargs) -> TrainingResult:
     """
     Interface principale entraînement modèles IA Chérie.
@@ -582,12 +582,12 @@ async def train_ainflue_model(model_type: ModelType, training_mode: TrainingMode
 
 # Export API
 __all__ = [
-    'AinflueTRainingOrchestrator',
+    'iacherieTRainingOrchestrator',
     'TrainingConfiguration',
     'TrainingResult',
     'TrainingMode',
     'ModelType',
-    'train_ainflue_model',
+    'train_iacherie_model',
     'create_training_orchestrator',
     'create_automl_pipeline',
     'create_distributed_training_manager',
@@ -604,7 +604,7 @@ if __name__ == "__main__":
         """Exemple utilisation training orchestrator."""
         
         # Configuration pour Content Classifier
-        result = await train_ainflue_model(
+        result = await train_iacherie_model(
             model_type=ModelType.CONTENT_CLASSIFIER,
             training_mode=TrainingMode.DISTRIBUTED,
             dataset_path="/data/creator_content",

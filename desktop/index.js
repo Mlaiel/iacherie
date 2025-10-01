@@ -20,7 +20,7 @@ const ApplicationLifecycleManager = require('./application_lifecycle_manager');
 const DesktopSecurityManager = require('./desktop_security_manager');
 const AutoUpdaterManager = require('./auto_updater_manager');
 
-class AinflueMasterApplication {
+class iacherieMasterApplication {
   constructor() {
     this.appName = 'IA Chérie Desktop Studio';
     this.version = '1.0.0';
@@ -266,7 +266,7 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Initialize application
-const masterApp = new AinflueMasterApplication();
+const masterApp = new iacherieMasterApplication();
 
 // Export for external access
 module.exports = masterApp;

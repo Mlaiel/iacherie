@@ -1,4 +1,4 @@
-"""Monitoring Module for Ainflue Platform
+"""Monitoring Module for IA Chéries Platform
 Enterprise-grade monitoring infrastructure with comprehensive observability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

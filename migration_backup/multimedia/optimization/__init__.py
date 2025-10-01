@@ -2,7 +2,7 @@
 ⚡ MULTIMEDIA OPTIMIZATION MODULE - ENTERPRISE ARCHITECTURE
 ==========================================================
 
-Advanced performance optimization and delivery engine for Ainflue Platform
+Advanced performance optimization and delivery engine for IA Chéries Platform
 Enterprise-grade optimization with AI-powered performance tuning
 
 **Expert Team Implementation:**
@@ -19,7 +19,7 @@ Enterprise-grade optimization with AI-powered performance tuning
 - Progressive loading and bandwidth optimization
 
 **Architecture:** Level 3 Enterprise - 18 files maximum
-**Business Logic:** Complete Ainflue workflow optimization
+**Business Logic:** Complete IA Chéries workflow optimization
 """
 
 __version__ = "3.1.0"

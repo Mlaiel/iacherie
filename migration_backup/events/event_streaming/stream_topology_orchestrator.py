@@ -1,5 +1,5 @@
 """IA Influencer Agent - Stream Topology Orchestrator
-Advanced Stream Processing Topology Management for Ainflue Platform
+Advanced Stream Processing Topology Management for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -208,12 +208,12 @@ class StreamTopology:
         return False
 
 
-class AinflueBusinesTopologies:
-    """Predefined topology templates for Ainflue business workflows"""
+class IA ChériesBusinesTopologies:
+    """Predefined topology templates for IA Chéries business workflows"""
     
     @staticmethod
     def create_content_processing_topology() -> StreamTopology:
-        """Create content processing topology for Ainflue"""
+        """Create content processing topology for IA Chéries"""
         topology = StreamTopology(
             topology_id="ainflue-content-processing",
             name="Content Processing Pipeline",
@@ -753,7 +753,7 @@ class StreamTopologyOrchestrator:
         try:
             logger.info("Starting Stream Topology Orchestrator")
             
-            # Load default Ainflue topologies
+            # Load default IA Chéries topologies
             await self._load_default_topologies()
             
             # Start monitoring task
@@ -788,17 +788,17 @@ class StreamTopologyOrchestrator:
             raise
     
     async def _load_default_topologies(self):
-        """Load default Ainflue topologies"""
+        """Load default IA Chéries topologies"""
         try:
             # Load content processing topology
-            content_topology = AinflueBusinesTopologies.create_content_processing_topology()
+            content_topology = IA ChériesBusinesTopologies.create_content_processing_topology()
             self.topologies[content_topology.topology_id] = content_topology
             
             # Load revenue analytics topology
-            revenue_topology = AinflueBusinesTopologies.create_revenue_analytics_topology()
+            revenue_topology = IA ChériesBusinesTopologies.create_revenue_analytics_topology()
             self.topologies[revenue_topology.topology_id] = revenue_topology
             
-            logger.info("Loaded default Ainflue topologies")
+            logger.info("Loaded default IA Chéries topologies")
             
         except Exception as e:
             logger.error(f"Error loading default topologies: {e}")
@@ -941,6 +941,6 @@ class StreamTopologyOrchestrator:
 # Export public API
 __all__ = [
     "StreamTopologyOrchestrator", "StreamTopology", "StreamNode", "StreamEdge",
-    "TopologyExecutor", "AinflueBusinesTopologies", "TopologyState", "NodeType",
+    "TopologyExecutor", "IA ChériesBusinesTopologies", "TopologyState", "NodeType",
     "ExecutionMode"
 ]

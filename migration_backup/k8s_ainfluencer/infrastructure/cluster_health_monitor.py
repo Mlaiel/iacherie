@@ -2,7 +2,7 @@
 ==================================================
 
 Kubernetes cluster health monitoring with comprehensive metrics,
-alerting, and proactive issue detection for the Ainflue platform.
+alerting, and proactive issue detection for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

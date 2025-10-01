@@ -1,12 +1,12 @@
 """
-AINFLUE INTEGRATIONS - VERCEL DEPLOYMENT PLATFORM
+IA CHÉRIES INTEGRATIONS - VERCEL DEPLOYMENT PLATFORM
 ================================================
 
 Enterprise Vercel integration for creator economy platform deployment.
 Combines multiple expert roles for comprehensive serverless deployment management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Platform: Ainflue - IA Influencer Agent + Content Protection Platform
+Platform: IA Chéries - IA Influencer Agent + Content Protection Platform
 Architecture Level: Level 3 (integrations/cloud_providers)
 
 Expert Roles Applied:

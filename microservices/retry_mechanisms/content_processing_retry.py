@@ -731,7 +731,7 @@ def create_content_processing_retry() -> ContentProcessingRetry:
     return ContentProcessingRetry()
 
 # Configuration prédéfinies IA Chérie
-AINFLUE_CONTENT_CONFIGS = {
+IACHERIE_CONTENT_CONFIGS = {
     'creator_upload': {
         'priority_boost': True,
         'quality_preservation': True,
@@ -760,5 +760,5 @@ __all__ = [
     'ProcessingStage',
     'ContentQuality',
     'create_content_processing_retry',
-    'AINFLUE_CONTENT_CONFIGS'
+    'IACHERIE_CONTENT_CONFIGS'
 ]

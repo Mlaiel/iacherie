@@ -1,11 +1,11 @@
-# 🕸️ Service Mesh Infrastruktur - Ainflue Enterprise
+# 🕸️ Service Mesh Infrastruktur - iacherie Enterprise
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ GEISTIGES EIGENTUM - FAHED MLAIEL
 > **DEUTLICHE WARNUNG:** Diese Architektur ist das EXKLUSIVE geistige Eigentum von **Fahed Mlaiel** (mlaiel@live.de). Jede Reproduktion, Modifikation, Verteilung oder Ideendiebstahl ohne PERSÖNLICHE schriftliche Genehmigung ist **STRENG VERBOTEN** und wird rechtlich verfolgt.
 
 ## 🎯 Modul-Zweck
-Enterprise Service Mesh Infrastruktur mit Istio/Linkerd, intelligentem Load Balancing, Circuit Breakers, Service Discovery und erweiterte Observability für die Ainflue Creator-Plattform, die 65+ Plattformen mit 53 AI-Agenten über Microservices orchestriert.
+Enterprise Service Mesh Infrastruktur mit Istio/Linkerd, intelligentem Load Balancing, Circuit Breakers, Service Discovery und erweiterte Observability für die iacherie Creator-Plattform, die 65+ Plattformen mit 53 AI-Agenten über Microservices orchestriert.
 
 ## 🏗️ Architektur-Komponenten
 - **Istio Integration**: Production-ready Service Mesh mit erweiterte Sicherheit

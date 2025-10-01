@@ -133,7 +133,7 @@ class MediaProcessor:
                 self.config = {
                     'ffmpeg_path': 'ffmpeg',
                     'output_directory': '/var/lib/iacherie/media/processed',
-                    'temp_directory': '/tmp/ainflue_media',
+                    'temp_directory': '/tmp/iacherie_media',
                     'max_concurrent_jobs': 4,
                     'supported_formats': {
                         'audio': ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg'],

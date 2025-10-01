@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Enterprise Service Catalog
 ==========================
 
-Enterprise-grade service catalog and API management system for Ainflue SEO platform.
+Enterprise-grade service catalog and API management system for iacherie SEO platform.
 Provides comprehensive service discovery, documentation, and lifecycle management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -441,7 +441,7 @@ class APIDocumentationGenerator:
                 "version": service_data.get("version", "1.0.0"),
                 "contact": {
                     "name": service_data.get("technical_contact", ""),
-                    "email": f"{service_data.get('technical_contact', '')}@ainflue.com"
+                    "email": f"{service_data.get('technical_contact', '')}@iacherie.com"
                 }
             },
             "servers": [

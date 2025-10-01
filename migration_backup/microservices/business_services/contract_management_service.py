@@ -3,7 +3,7 @@
 🔐 CONTRACT MANAGEMENT SERVICE
 =============================
 
-Advanced contract management and automation service for the Ainflue platform.
+Advanced contract management and automation service for the IA Chéries platform.
 Handles collaboration contracts, licensing agreements, and legal document automation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

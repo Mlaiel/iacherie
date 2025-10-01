@@ -1,7 +1,7 @@
 """Affiliate Tracking Service - Advanced Affiliate Program Management
 ===================================================================
 
-Comprehensive affiliate tracking and management system for the Ainflue platform,
+Comprehensive affiliate tracking and management system for the IA Chéries platform,
 providing real-time tracking, commission calculation, performance analytics,
 and fraud detection for affiliate marketing programs.
 

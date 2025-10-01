@@ -1,11 +1,11 @@
 # Stress Tester Service
-# System stress and breaking point testing for Ainflue Platform
+# System stress and breaking point testing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Stress Tester - System breaking point testing"
+LABEL description="IA Chéries Stress Tester - System breaking point testing"
 LABEL version="1.0.0"
 
 # Set working directory

@@ -108,7 +108,7 @@ class SecureCommunication:
                 x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                 x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "California"),
                 x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue MLOps"),
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "iacherie MLOps"),
                 x509.NameAttribute(NameOID.COMMON_NAME, subject_name),
             ])
             

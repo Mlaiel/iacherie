@@ -81,7 +81,7 @@ mfa:
     digits: 6
     period: 30
     window: 1
-    issuer: "Ainflue"
+    issuer: "IA Chéries"
     
     # TOTP providers
     providers:
@@ -98,7 +98,7 @@ mfa:
   sms:
     enabled: true
     provider: "twilio"
-    template: "Your Ainflue verification code is: {code}"
+    template: "Your IA Chéries verification code is: {code}"
     code_length: 6
     expiry_minutes: 5
     rate_limiting:
@@ -138,7 +138,7 @@ webauthn:
   # Relying Party configuration
   relying_party:
     id: "ainflue.com"
-    name: "Ainflue"
+    name: "IA Chéries"
     origins:
       - "https://ainflue.com"
       - "https://app.ainflue.com"

@@ -73,7 +73,7 @@ class ChromaDBEmbeddingFunction:
 class ChromaDBCollectionManager:
     """Manages ChromaDB collections and their configurations."""
     
-    def __init__(self, client: Any, collection_name: str = "ainflue_vectors"):
+    def __init__(self, client: Any, collection_name: str = "iacherie_vectors"):
         """
         Initialize collection manager.
         
@@ -182,7 +182,7 @@ class ChromaDBBackend(BaseVectorBackend):
         self.host = config.get('backend.host', 'localhost')
         self.port = config.get('backend.port', 8000)
         self.persist_directory = config.get('backend.persist_directory', 'data/chromadb')
-        self.collection_name = config.get('backend.collection_name', 'ainflue_vectors')
+        self.collection_name = config.get('backend.collection_name', 'iacherie_vectors')
         self.distance_metric = config.get('backend.distance_metric', 'cosine')
         self.batch_size = config.get('backend.batch_size', 1000)
         self.enable_persistence = config.get('backend.enable_persistence', True)

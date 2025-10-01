@@ -3,7 +3,7 @@
 🧠 UNIFIED AI ORCHESTRATOR
 ==========================
 
-Central orchestration system for all AI operations in Ainfluencer platform.
+Central orchestration system for all AI operations in IA Chéries platform.
 Consolidates multiple AI orchestrators into a single, efficient system.
 
 Author: Lead Dev IA Expert

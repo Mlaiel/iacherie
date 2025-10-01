@@ -1,4 +1,4 @@
-# Jaeger Tracing Configuration Template for Ainflue Platform
+# Jaeger Tracing Configuration Template for IA Chéries Platform
 # Distributed tracing configuration for microservices monitoring
 
 apiVersion: v1
@@ -12,7 +12,7 @@ metadata:
     platform: ainflue
 data:
   jaeger.yml: |
-    # Jaeger configuration for Ainflue distributed tracing
+    # Jaeger configuration for IA Chéries distributed tracing
     
     # Collector configuration
     collector:

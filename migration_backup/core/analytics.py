@@ -1,6 +1,6 @@
 """
 Core Analytics Module
-Module d'analytics core pour Ainfluencer
+Module d'analytics core pour IA Chéries
 LA DERNIÈRE DÉPENDANCE POUR 100%!
 """
 

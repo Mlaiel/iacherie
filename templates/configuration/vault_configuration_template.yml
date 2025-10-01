@@ -1,4 +1,4 @@
-# ⚡ Vault Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Vault Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -19,7 +19,7 @@ metadata:
     component: server
 data:
   vault.hcl: |
-    # Vault Server Configuration for Ainflue
+    # Vault Server Configuration for iacherie
     ui = true
     disable_mlock = false
     
@@ -80,11 +80,11 @@ data:
       disable_hostname = true
       statsd_address = "datadog-agent.monitoring.svc.cluster.local:8125"
       dogstatsd_addr = "datadog-agent.monitoring.svc.cluster.local:8125"
-      dogstatsd_tags = ["vault", "ainflue", "production"]
+      dogstatsd_tags = ["vault", "iacherie", "production"]
       usage_gauge_period = "10m"
       maximum_gauge_cardinality = 500
       circonus_api_token = ""
-      circonus_api_app = "vault-ainflue"
+      circonus_api_app = "vault-iacherie"
       circonus_api_url = "https://api.circonus.com/v2"
       circonus_submission_interval = "10s"
       circonus_submission_url = ""
@@ -92,14 +92,14 @@ data:
       circonus_check_force_metric_activation = "true"
       circonus_check_instance_id = ""
       circonus_check_search_tag = "app:vault"
-      circonus_check_display_name = "Vault Ainflue"
+      circonus_check_display_name = "Vault iacherie"
       circonus_check_tags = "app:vault,environment:production"
       circonus_broker_id = ""
       circonus_broker_select_tag = ""
     }
     
     # API Configuration
-    api_addr = "https://vault.ainflue.internal:8200"
+    api_addr = "https://vault.iacherie.internal:8200"
     cluster_addr = "https://VAULT_CLUSTER_ADDR:8201"
     
     # Logging
@@ -110,7 +110,7 @@ data:
     # Performance Tuning
     max_lease_ttl = "8760h"  # 1 year
     default_lease_ttl = "768h"  # 32 days
-    cluster_name = "ainflue-vault-cluster"
+    cluster_name = "iacherie-vault-cluster"
     cache_size = "32000"
     disable_cache = false
     disable_clustering = false
@@ -487,20 +487,20 @@ spec:
           # Configure PKI
           vault secrets tune -max-lease-ttl=87600h pki
           vault write pki/root/generate/internal \
-            common_name="Ainflue Root CA" \
+            common_name="iacherie Root CA" \
             ttl=87600h \
             key_bits=4096
           
           vault write pki/config/urls \
-            issuing_certificates="https://vault.ainflue.internal:8200/v1/pki/ca" \
-            crl_distribution_points="https://vault.ainflue.internal:8200/v1/pki/crl"
+            issuing_certificates="https://vault.iacherie.internal:8200/v1/pki/ca" \
+            crl_distribution_points="https://vault.iacherie.internal:8200/v1/pki/crl"
           
           # Create intermediate CA
           vault secrets enable -path=pki_int pki
           vault secrets tune -max-lease-ttl=43800h pki_int
           
           vault write -format=json pki_int/intermediate/generate/internal \
-            common_name="Ainflue Intermediate Authority" \
+            common_name="iacherie Intermediate Authority" \
             | jq -r '.data.csr' > pki_intermediate.csr
           
           vault write -format=json pki/root/sign-intermediate \
@@ -511,7 +511,7 @@ spec:
           vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.pem
           
           # Configure Transit Engine
-          vault write -f transit/keys/ainflue-key
+          vault write -f transit/keys/iacherie-key
           vault write -f transit/keys/creator-content-key
           vault write -f transit/keys/payment-data-key
           
@@ -533,33 +533,33 @@ spec:
           kubectl get configmap vault-policies -o jsonpath='{.data}' | jq -r 'to_entries[] | select(.key | endswith(".hcl")) | "vault policy write " + (.key | sub(".hcl$"; "")) + " -<<EOF\n" + .value + "\nEOF"' | sh
           
           # Configure roles
-          vault write auth/kubernetes/role/ainflue-api \
-            bound_service_account_names=ainflue-api \
-            bound_service_account_namespaces=ainflue-production \
-            policies=ainflue-api-policy \
+          vault write auth/kubernetes/role/iacherie-api \
+            bound_service_account_names=iacherie-api \
+            bound_service_account_namespaces=iacherie-production \
+            policies=iacherie-api-policy \
             ttl=24h
           
-          vault write auth/kubernetes/role/ainflue-backend \
-            bound_service_account_names=ainflue-backend \
-            bound_service_account_namespaces=ainflue-production \
-            policies=ainflue-backend-policy \
+          vault write auth/kubernetes/role/iacherie-backend \
+            bound_service_account_names=iacherie-backend \
+            bound_service_account_namespaces=iacherie-production \
+            policies=iacherie-backend-policy \
             ttl=24h
           
           vault write auth/kubernetes/role/external-secrets \
             bound_service_account_names=external-secrets-sa \
-            bound_service_account_namespaces=ainflue-production \
+            bound_service_account_namespaces=iacherie-production \
             policies=external-secrets-policy \
             ttl=1h
           
           # Configure database secrets engine
           vault write database/config/postgresql \
             plugin_name=postgresql-database-plugin \
-            connection_url="postgresql://{{username}}:{{password}}@postgres.ainflue-database.svc.cluster.local:5432/ainflue?sslmode=require" \
-            allowed_roles="ainflue-role" \
+            connection_url="postgresql://{{username}}:{{password}}@postgres.iacherie-database.svc.cluster.local:5432/iacherie?sslmode=require" \
+            allowed_roles="iacherie-role" \
             username="vault" \
             password="$POSTGRES_PASSWORD"
           
-          vault write database/roles/ainflue-role \
+          vault write database/roles/iacherie-role \
             db_name=postgresql \
             creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
             default_ttl="1h" \
@@ -614,43 +614,43 @@ data:
       capabilities = ["create", "read", "update", "delete", "list", "sudo"]
     }
   
-  ainflue-api-policy.hcl: |
-    # Policy for Ainflue API service
-    path "secret/data/ainflue/api/*" {
+  iacherie-api-policy.hcl: |
+    # Policy for iacherie API service
+    path "secret/data/iacherie/api/*" {
       capabilities = ["read"]
     }
     
-    path "secret/data/ainflue/database/*" {
+    path "secret/data/iacherie/database/*" {
       capabilities = ["read"]
     }
     
-    path "secret/data/ainflue/payment/*" {
+    path "secret/data/iacherie/payment/*" {
       capabilities = ["read"]
     }
     
-    path "transit/encrypt/ainflue-key" {
+    path "transit/encrypt/iacherie-key" {
       capabilities = ["update"]
     }
     
-    path "transit/decrypt/ainflue-key" {
+    path "transit/decrypt/iacherie-key" {
       capabilities = ["update"]
     }
     
-    path "database/creds/ainflue-role" {
+    path "database/creds/iacherie-role" {
       capabilities = ["read"]
     }
     
-    path "pki_int/issue/ainflue-dot-com" {
+    path "pki_int/issue/iacherie-dot-com" {
       capabilities = ["create", "update"]
     }
   
-  ainflue-backend-policy.hcl: |
-    # Policy for Ainflue backend services
-    path "secret/data/ainflue/backend/*" {
+  iacherie-backend-policy.hcl: |
+    # Policy for iacherie backend services
+    path "secret/data/iacherie/backend/*" {
       capabilities = ["read"]
     }
     
-    path "secret/data/ainflue/shared/*" {
+    path "secret/data/iacherie/shared/*" {
       capabilities = ["read"]
     }
     
@@ -662,31 +662,31 @@ data:
       capabilities = ["update"]
     }
     
-    path "database/creds/ainflue-role" {
+    path "database/creds/iacherie-role" {
       capabilities = ["read"]
     }
   
   external-secrets-policy.hcl: |
     # Policy for External Secrets Operator
-    path "secret/data/ainflue/*" {
+    path "secret/data/iacherie/*" {
       capabilities = ["read"]
     }
     
-    path "secret/metadata/ainflue/*" {
+    path "secret/metadata/iacherie/*" {
       capabilities = ["read", "list"]
     }
   
   creator-economy-policy.hcl: |
     # Policy for Creator Economy services
-    path "secret/data/ainflue/creator/*" {
+    path "secret/data/iacherie/creator/*" {
       capabilities = ["read"]
     }
     
-    path "secret/data/ainflue/payment/*" {
+    path "secret/data/iacherie/payment/*" {
       capabilities = ["read"]
     }
     
-    path "secret/data/ainflue/ai-services/*" {
+    path "secret/data/iacherie/ai-services/*" {
       capabilities = ["read"]
     }
     
@@ -828,7 +828,7 @@ data:
       method "kubernetes" {
         mount_path = "auth/kubernetes"
         config = {
-          role = "ainflue-api"
+          role = "iacherie-api"
         }
       }
       
@@ -1043,11 +1043,11 @@ spec:
               gzip "$BACKUP_FILE"
               
               # Upload to S3
-              aws s3 cp "${BACKUP_FILE}.gz" "s3://ainflue-vault-backups/snapshots/"
+              aws s3 cp "${BACKUP_FILE}.gz" "s3://iacherie-vault-backups/snapshots/"
               
               # Upload to Azure Blob
               az storage blob upload \
-                --account-name ainfluebackups \
+                --account-name iacheriebackups \
                 --container-name vault-snapshots \
                 --name "vault_snapshot_${TIMESTAMP}.snap.gz" \
                 --file "${BACKUP_FILE}.gz"
@@ -1145,34 +1145,34 @@ metadata:
   namespace: vault
 data:
   database.ctmpl: |
-    {{- with secret "database/creds/ainflue-role" -}}
+    {{- with secret "database/creds/iacherie-role" -}}
     DB_USERNAME={{ .Data.username }}
     DB_PASSWORD={{ .Data.password }}
-    DB_HOST=postgres.ainflue-database.svc.cluster.local
+    DB_HOST=postgres.iacherie-database.svc.cluster.local
     DB_PORT=5432
-    DB_NAME=ainflue
+    DB_NAME=iacherie
     DB_SSLMODE=require
-    DATABASE_URL=postgresql://{{ .Data.username }}:{{ .Data.password }}@postgres.ainflue-database.svc.cluster.local:5432/ainflue?sslmode=require
+    DATABASE_URL=postgresql://{{ .Data.username }}:{{ .Data.password }}@postgres.iacherie-database.svc.cluster.local:5432/iacherie?sslmode=require
     {{- end }}
   
   api-keys.ctmpl: |
-    {{- with secret "secret/data/ainflue/api" -}}
+    {{- with secret "secret/data/iacherie/api" -}}
     JWT_SECRET={{ .Data.data.jwt_secret }}
     ENCRYPTION_KEY={{ .Data.data.encryption_key }}
     {{- end }}
-    {{- with secret "secret/data/ainflue/payment" -}}
+    {{- with secret "secret/data/iacherie/payment" -}}
     STRIPE_SECRET_KEY={{ .Data.data.stripe_secret_key }}
     STRIPE_WEBHOOK_SECRET={{ .Data.data.stripe_webhook_secret }}
     PAYPAL_CLIENT_ID={{ .Data.data.paypal_client_id }}
     PAYPAL_CLIENT_SECRET={{ .Data.data.paypal_client_secret }}
     {{- end }}
-    {{- with secret "secret/data/ainflue/ai-services" -}}
+    {{- with secret "secret/data/iacherie/ai-services" -}}
     OPENAI_API_KEY={{ .Data.data.openai_api_key }}
     STABILITY_API_KEY={{ .Data.data.stability_api_key }}
     {{- end }}
   
   tls-cert.ctmpl: |
-    {{- with secret "pki_int/issue/ainflue-dot-com" "common_name=api.ainflue.com" "ttl=2160h" -}}
+    {{- with secret "pki_int/issue/iacherie-dot-com" "common_name=api.iacherie.com" "ttl=2160h" -}}
     {{ .Data.certificate }}
     {{ .Data.private_key }}
     {{ .Data.ca_chain }}
@@ -1181,5 +1181,5 @@ data:
 # ===================================================================
 # END OF VAULT CONFIGURATION TEMPLATE
 # Creator Economy Secure Vault by Fahed Mlaiel
-# Enterprise-grade HashiCorp Vault for Ainflue platform
+# Enterprise-grade HashiCorp Vault for iacherie platform
 # ===================================================================

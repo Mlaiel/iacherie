@@ -4,7 +4,7 @@ Creator Onboarding System - Enterprise Creator Management
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced creator onboarding and management for Ainflue Platform:
+Advanced creator onboarding and management for IA Chéries Platform:
 - Automated creator verification and KYC
 - Portfolio analysis and scoring
 - Brand partnership matching
@@ -741,7 +741,7 @@ async def main():
     """CLI entry point for creator onboarding system"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Creator Onboarding System')
+    parser = argparse.ArgumentParser(description='IA Chéries Creator Onboarding System')
     parser.add_argument('--register', nargs=5, metavar=('EMAIL', 'USERNAME', 'NAME', 'BIO', 'CONTENT_TYPES'), 
                        help='Register new creator')
     parser.add_argument('--add-portfolio', nargs=5, metavar=('CREATOR_ID', 'TITLE', 'DESC', 'TYPE', 'URL'),

@@ -7,7 +7,7 @@ This module handles:
 - Training workflow orchestration for specialized AI agents
 - Resource allocation and scheduling
 - Training progress monitoring and checkpointing
-- Integration with Ainflue's 53 AI agent architecture
+- Integration with iacherie's 53 AI agent architecture
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -78,7 +78,7 @@ class TrainingJob:
 
 class ModelTrainingOrchestrator:
     """
-    Enterprise model training orchestrator for Ainflue's 53 AI agents
+    Enterprise model training orchestrator for iacherie's 53 AI agents
     Manages distributed training, resource allocation, and monitoring
     """
     

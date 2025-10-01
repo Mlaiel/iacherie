@@ -40,7 +40,7 @@
 1. **Check System Status:** Visit [https://status.iacherie.com](https://status.iacherie.com)
 2. **Verify Internet Connection:** Test other websites
 3. **Try Different Browser:** Use incognito/private mode
-4. **Check Social Media:** Follow @AinfluePlatform for updates
+4. **Check Social Media:** Follow @iacheriePlatform for updates
 5. **Contact Emergency Support:** critical@iacherie.com
 
 **Resolution Timeline:**
@@ -967,7 +967,7 @@ Solutions:
 ```
 How to Stay Informed:
 1. Subscribe to status updates: status.iacherie.com
-2. Follow @AinfluePlatform on social media
+2. Follow @iacheriePlatform on social media
 3. Check in-app notifications
 4. Enable email maintenance alerts
 

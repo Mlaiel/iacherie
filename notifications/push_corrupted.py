@@ -134,7 +134,7 @@ Enterprise push notification service with multi-platform support and analytics."
             PushPlatform.WEB_PUSH: {
                 "vapid_public_key": os.getenv("VAPID_PUBLIC_KEY"),
                 "vapid_private_key": os.getenv("VAPID_PRIVATE_KEY"),
-                "vapid_email": os.getenv("VAPID_EMAIL", "mailto:noreply@iainfluencer.com")
+                "vapid_email": os.getenv("VAPID_EMAIL", "mailto:noreply@iiacheriencer.com")
             },
             PushPlatform.HUAWEI_HMS: {
                 "app_id": os.getenv("HMS_APP_ID"),

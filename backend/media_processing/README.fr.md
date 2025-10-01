@@ -1,8 +1,8 @@
 # 🔄 Module de Traitement Multimédia - Architecture d'Entreprise
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/iacherie)
+[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/iacherie)
+[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/iacherie)
 
 Capacités avancées de traitement multimédia multi-format avec traitement IA de niveau entreprise, protection de contenu, optimisation SEO et workflows de collaboration.
 

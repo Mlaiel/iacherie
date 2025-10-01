@@ -5,7 +5,7 @@
 🔒 AUTHENTICATION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ================================================================
 
-Enterprise-grade authentication testing template for Ainflue Creator Economy Platform.
+Enterprise-grade authentication testing template for IA Chéries Creator Economy Platform.
 Comprehensive security testing covering:
 - JWT authentication validation
 - OAuth2 integration testing

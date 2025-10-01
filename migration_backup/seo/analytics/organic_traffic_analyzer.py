@@ -1,5 +1,5 @@
 """
-Organic Traffic Analyzer for Ainflue Platform
+Organic Traffic Analyzer for IA Chéries Platform
 =============================================
 
 Advanced organic traffic analysis and optimization for creators.

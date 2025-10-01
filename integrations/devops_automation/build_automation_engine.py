@@ -1069,7 +1069,7 @@ if __name__ == "__main__":
         # Créer jobs de test
         test_job = BuildJob(
             id="test_build_001",
-            name="ainflue_api",
+            name="iacherie_api",
             target=BuildTarget.LINUX_AMD64,
             source_path="/src/api",
             output_path="/dist/api",

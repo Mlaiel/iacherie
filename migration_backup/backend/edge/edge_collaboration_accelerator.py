@@ -2,7 +2,7 @@
 =================================
 
 Accélérateur de collaboration créateurs edge ultra-avancé pour l'écosystème
-Ainflue. Facilite et optimise la collaboration en temps réel entre créateurs
+IA Chéries. Facilite et optimise la collaboration en temps réel entre créateurs
 avec intelligence artificielle et synchronisation multi-plateforme.
 
 Fonctionnalités clés:
@@ -280,7 +280,7 @@ class PlatformType(str, Enum):
     FACEBOOK = "facebook"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
-    AINFLUE = "ainflue"
+    IA CHÉRIES = "ainflue"
 
 
 @dataclass

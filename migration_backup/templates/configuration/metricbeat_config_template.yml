@@ -1,4 +1,4 @@
-# Metricbeat Configuration Template for Ainflue Platform
+# Metricbeat Configuration Template for IA Chéries Platform
 # Comprehensive system and application metrics collection
 
 # Global configuration
@@ -135,9 +135,9 @@ metricbeat.modules:
   period: 30s
   metricsets: ["json"]
   hosts: 
-    - "${AINFLUE_API_HOST}/health"
-    - "${AINFLUE_API_HOST}/metrics"
-    - "${AINFLUE_WEB_HOST}/health"
+    - "${IA CHÉRIES_API_HOST}/health"
+    - "${IA CHÉRIES_API_HOST}/metrics"
+    - "${IA CHÉRIES_WEB_HOST}/health"
   namespace: "ainflue"
   path: "/health"
   method: "GET"
@@ -149,7 +149,7 @@ metricbeat.modules:
 - module: http
   period: 60s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/business"]
+  hosts: ["${IA CHÉRIES_API_HOST}/api/v1/metrics/business"]
   namespace: "ainflue.business"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
@@ -161,7 +161,7 @@ metricbeat.modules:
 - module: http
   period: 60s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/creators"]
+  hosts: ["${IA CHÉRIES_API_HOST}/api/v1/metrics/creators"]
   namespace: "ainflue.creators"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
@@ -172,7 +172,7 @@ metricbeat.modules:
 - module: http
   period: 300s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_API_HOST}/api/v1/metrics/campaigns"]
+  hosts: ["${IA CHÉRIES_API_HOST}/api/v1/metrics/campaigns"]
   namespace: "ainflue.campaigns"
   headers:
     Authorization: "Bearer ${API_METRICS_TOKEN}"
@@ -182,7 +182,7 @@ metricbeat.modules:
 - module: http
   period: 120s
   metricsets: ["json"]
-  hosts: ["${AINFLUE_ML_HOST}/metrics"]
+  hosts: ["${IA CHÉRIES_ML_HOST}/metrics"]
   namespace: "ainflue.ml"
   headers:
     Authorization: "Bearer ${ML_METRICS_TOKEN}"

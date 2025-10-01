@@ -562,7 +562,7 @@ async def generate_meta_tags(
         )
     
     # AI-optimized meta tags generation
-    optimized_title = f"{content_title[:55]} | Ainflue"
+    optimized_title = f"{content_title[:55]} | IA Chéries"
     optimized_description = content_description[:155] + "..." if len(content_description) > 155 else content_description
     
     return MetaTagsOptimization(

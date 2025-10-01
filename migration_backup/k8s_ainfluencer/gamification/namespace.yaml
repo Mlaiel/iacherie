@@ -1,4 +1,4 @@
-# Ainflue Gamification Module - Kubernetes Namespace
+# IA Chéries Gamification Module - Kubernetes Namespace
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready namespace for gamification microservice
 
@@ -18,7 +18,7 @@ metadata:
     managed-by: fahed-mlaiel
     business-domain: engagement-monetization
   annotations:
-    description: "Ainflue Gamification Engine - Points, Achievements, Leaderboards for Content Creators"
+    description: "IA Chéries Gamification Engine - Points, Achievements, Leaderboards for Content Creators"
     contact: "mlaiel@live.de"
     created-by: "Fahed Mlaiel"
     business-purpose: "Creator engagement through gamified experiences and reward systems"

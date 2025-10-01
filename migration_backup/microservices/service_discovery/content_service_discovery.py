@@ -1,12 +1,12 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🎨 Content Service Discovery Enterprise - Ainflue
+🎨 Content Service Discovery Enterprise - IA Chéries
 ================================================
-Service discovery spécialisé pour services contenu Ainflue.
+Service discovery spécialisé pour services contenu IA Chéries.
 Media processing + content analysis + creator services discovery.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
@@ -542,7 +542,7 @@ class ContentWorkflowOptimizer:
 
 class ContentServiceDiscovery:
     """
-    Service discovery spécialisé pour services contenu Ainflue.
+    Service discovery spécialisé pour services contenu IA Chéries.
     Media processing + content analysis + creator services discovery.
     """
     

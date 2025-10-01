@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Gamification Service Template for Ainflue Platform
+Gamification Service Template for iacherie Platform
 ================================================
 
 Production-ready gamification service with:
@@ -156,7 +156,7 @@ class LeaderboardEntry:
 
 class GamificationService:
     """
-    Production-ready gamification service for Ainflue Platform
+    Production-ready gamification service for iacherie Platform
     
     Features:
     - Achievement system with dynamic unlocking
@@ -830,7 +830,7 @@ class GamificationService:
 
 class GamificationServiceTemplate:
     """
-    Gamification Service Template for Ainflue Platform
+    Gamification Service Template for iacherie Platform
     
     A comprehensive gamification system that drives creator engagement through:
     - Achievement systems with dynamic unlocking

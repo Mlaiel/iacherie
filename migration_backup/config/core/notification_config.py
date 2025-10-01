@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Notification Configuration Module
+"""IA Chéries Notification Configuration Module
 ===========================================
 
-Enterprise-grade notification configuration for the Ainflue platform.
+Enterprise-grade notification configuration for the IA Chéries platform.
 Handles multi-channel notifications, real-time messaging, push notifications,
 email campaigns, SMS alerts, and comprehensive notification analytics.
 
@@ -56,7 +56,7 @@ class EmailNotificationConfig:
     enabled: bool = True
     smtp_provider: str = "sendgrid"  # sendgrid, ses, postmark, mailgun
     from_email: str = "noreply@ainflue.com"
-    from_name: str = "Ainflue Platform"
+    from_name: str = "IA Chéries Platform"
     
     # Email templates
     template_engine: str = "jinja2"
@@ -374,19 +374,19 @@ class NotificationConfiguration:
         templates = {
             NotificationType.CREATOR_ONBOARDING: {
                 NotificationChannel.EMAIL: {
-                    "subject": "Welcome to Ainflue - Start Your Creator Journey!",
+                    "subject": "Welcome to IA Chéries - Start Your Creator Journey!",
                     "template": "creator_welcome.html",
                     "personalization": True
                 },
                 NotificationChannel.PUSH: {
-                    "title": "Welcome to Ainflue!",
+                    "title": "Welcome to IA Chéries!",
                     "body": "Ready to monetize your creativity?",
                     "icon": "welcome_icon.png"
                 }
             },
             NotificationType.COLLABORATION_INVITE: {
                 NotificationChannel.EMAIL: {
-                    "subject": "New Collaboration Opportunity on Ainflue",
+                    "subject": "New Collaboration Opportunity on IA Chéries",
                     "template": "collaboration_invite.html",
                     "priority": "high"
                 },

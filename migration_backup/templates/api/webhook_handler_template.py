@@ -1,4 +1,4 @@
-"""Webhook Handler Template for Ainflue Platform
+"""Webhook Handler Template for IA Chéries Platform
 Enterprise-grade webhook processing with security, validation, and retry mechanisms
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -97,8 +97,8 @@ class WebhookConfig:
     max_retries: int = 3
     retry_delay_seconds: int = 5
     verify_ssl: bool = True
-    signature_header: str = "X-Ainflue-Signature"
-    timestamp_header: str = "X-Ainflue-Timestamp"
+    signature_header: str = "X-IA Chéries-Signature"
+    timestamp_header: str = "X-IA Chéries-Timestamp"
     event_types: List[WebhookEventType] = field(default_factory=list)
 
 
@@ -334,9 +334,9 @@ class WebhookHandler:
             # Prepare headers
             headers = {
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue-Webhooks/1.0",
-                endpoint.signature_header or "X-Ainflue-Signature": signature,
-                endpoint.timestamp_header or "X-Ainflue-Timestamp": str(int(datetime.utcnow().timestamp()))
+                "User-Agent": "IA Chéries-Webhooks/1.0",
+                endpoint.signature_header or "X-IA Chéries-Signature": signature,
+                endpoint.timestamp_header or "X-IA Chéries-Timestamp": str(int(datetime.utcnow().timestamp()))
             }
             headers.update(endpoint.headers or {})
 
@@ -470,8 +470,8 @@ async def receive_webhook(
         payload_str = payload_bytes.decode('utf-8')
         
         # Get headers
-        signature = request.headers.get('X-Ainflue-Signature')
-        timestamp = request.headers.get('X-Ainflue-Timestamp')
+        signature = request.headers.get('X-IA Chéries-Signature')
+        timestamp = request.headers.get('X-IA Chéries-Timestamp')
         
         if not signature:
             raise HTTPException(status_code=400, detail="Missing signature header")
@@ -518,7 +518,7 @@ async def receive_webhook(
 def create_webhook_router() -> FastAPI:
     """Create FastAPI router for webhook endpoints"""
     app = FastAPI(
-        title="Ainflue Webhook Handler",
+        title="IA Chéries Webhook Handler",
         description="Enterprise webhook processing system",
         version="1.0.0"
     )

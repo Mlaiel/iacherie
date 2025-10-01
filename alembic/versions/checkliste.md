@@ -229,7 +229,7 @@ Cette architecture, les concepts, les migrations, et toutes les spécifications 
 
 ---
 
-### ✅ **13. INITIAL SCHEMA** `d21b3c27ee2c_initial_database_schema_for_ainflue_.py`
+### ✅ **13. INITIAL SCHEMA** `d21b3c27ee2c_initial_database_schema_for_iacherie_.py`
 **Taille:** 289 lignes | **Statut:** ✅ 100% ENRICHI
 
 #### **🔧 Enrichissements Implémentés:**

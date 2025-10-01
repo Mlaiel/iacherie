@@ -1,5 +1,5 @@
 /**
- * Ainflue Mobile App - Expo React Native Entry Point
+ * IA Chéries Mobile App - Expo React Native Entry Point
  * 
  * Professional mobile content creation platform with AI-powered editing,
  * multi-format upload, and advanced protection features.
@@ -47,7 +47,7 @@ const App: React.FC = () => {
       console.log('📱 Available biometric types:', biometricTypes);
       
       // Initialize core mobile services
-      console.log('✅ Ainflue mobile app initialized');
+      console.log('✅ IA Chéries mobile app initialized');
     } catch (error) {
       console.error('❌ App initialization failed:', error);
     }

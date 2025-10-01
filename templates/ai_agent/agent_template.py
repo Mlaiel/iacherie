@@ -1,4 +1,4 @@
-"""{{agent_name}} AI Agent for Ainflue Platform
+"""{{agent_name}} AI Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

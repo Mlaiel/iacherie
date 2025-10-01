@@ -18,7 +18,7 @@ export type AuthProvider = 'api_key' | 'jwt' | 'oauth' | 'service_account';
 export type EventType = 'upload' | 'analysis' | 'protection' | 'error' | 'auth' | 'metric';
 
 // Configuration types
-export interface AinflueClientOptions {
+export interface iacherieClientOptions {
   apiKey?: string;
   baseUrl?: string;
   apiVersion?: string;

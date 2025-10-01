@@ -1,4 +1,4 @@
-"""Kubernetes Deployment Template for Ainflue Platform
+"""Kubernetes Deployment Template for iacherie Platform
 Enterprise-grade container orchestration template for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -33,7 +33,7 @@ class ResourceType(Enum):
 
 
 class ServiceType(Enum):
-    """Ainflue platform service types"""
+    """iacherie platform service types"""
     API_GATEWAY = "api-gateway"
     AUTH_SERVICE = "auth-service"
     CONTENT_PROCESSOR = "content-processor"
@@ -62,7 +62,7 @@ class KubernetesConfig:
     max_replicas: int = 10
     target_cpu_percentage: int = 70
     
-    # Ainflue specific
+    # iacherie specific
     enable_ai_processing: bool = True
     enable_gpu_support: bool = False
     enable_media_storage: bool = True
@@ -70,7 +70,7 @@ class KubernetesConfig:
 
 
 class KubernetesDeploymentTemplate:
-    """Enterprise Kubernetes Deployment Template for Ainflue Platform"""
+    """Enterprise Kubernetes Deployment Template for iacherie Platform"""
     
     def __init__(self, config: KubernetesConfig):
         self.config = config
@@ -293,7 +293,7 @@ class KubernetesDeploymentTemplate:
     
     def generate_ingress(self) -> Dict[str, Any]:
         """Generate ingress resource for API Gateway"""
-        domain = f"{self.config.project_name}-{self.config.environment}.ainflue.com"
+        domain = f"{self.config.project_name}-{self.config.environment}.iacherie.com"
         
         return {
             "apiVersion": "networking.k8s.io/v1",
@@ -351,7 +351,7 @@ class KubernetesDeploymentTemplate:
                 "LOG_LEVEL": "INFO" if self.config.environment == "production" else "DEBUG",
                 "MAX_WORKERS": "4",
                 "ENABLE_METRICS": "true",
-                "CORS_ORIGINS": "*" if self.config.environment == "development" else "https://ainflue.com",
+                "CORS_ORIGINS": "*" if self.config.environment == "development" else "https://iacherie.com",
                 "FILE_UPLOAD_MAX_SIZE": "100MB",
                 "AI_MODEL_CACHE_SIZE": "1GB",
                 "MEDIA_PROCESSING_TIMEOUT": "300",
@@ -498,7 +498,7 @@ class KubernetesDeploymentTemplate:
         ]
     
     def generate_complete_manifests(self) -> List[Dict[str, Any]]:
-        """Generate complete Kubernetes manifests for Ainflue platform"""
+        """Generate complete Kubernetes manifests for iacherie platform"""
         manifests = []
         
         # Namespace
@@ -566,9 +566,9 @@ class KubernetesDeploymentTemplate:
 def create_production_config() -> KubernetesConfig:
     """Create production configuration"""
     return KubernetesConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment="production",
-        namespace="ainflue-prod",
+        namespace="iacherie-prod",
         image_tag="v1.0.0",
         cpu_limit="2000m",
         memory_limit="4Gi",
@@ -586,9 +586,9 @@ def create_production_config() -> KubernetesConfig:
 def create_development_config() -> KubernetesConfig:
     """Create development configuration"""
     return KubernetesConfig(
-        project_name="ainflue-dev",
+        project_name="iacherie-dev",
         environment="development",
-        namespace="ainflue-dev",
+        namespace="iacherie-dev",
         image_tag="latest",
         cpu_limit="500m",
         memory_limit="1Gi",
@@ -607,7 +607,7 @@ if __name__ == "__main__":
     prod_config = create_production_config()
     template = KubernetesDeploymentTemplate(prod_config)
     
-    print("Kubernetes Deployment Template for Ainflue Platform")
+    print("Kubernetes Deployment Template for iacherie Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment}")
     print(f"- Namespace: {prod_config.namespace}")

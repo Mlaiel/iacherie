@@ -2,7 +2,7 @@
 🛡️ CSRF PROTECTION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ==================================================================
 
-Enterprise-grade CSRF protection testing template for Ainflue Creator Economy Platform.
+Enterprise-grade CSRF protection testing template for IA Chéries Creator Economy Platform.
 Comprehensive CSRF security testing covering:
 - CSRF token generation and validation
 - Double-submit cookie pattern testing
@@ -1203,7 +1203,7 @@ class CSRFProtectionTestTemplate:
                 headers={
                     "Origin": "file://",  # Mobile app origin
                     "Content-Type": "application/json",
-                    "User-Agent": "AinflueApp/1.0 Mobile"
+                    "User-Agent": "IA ChériesApp/1.0 Mobile"
                 },
                 json_data={
                     "email": "attacker@malicious.com",

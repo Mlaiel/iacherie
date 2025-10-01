@@ -1,12 +1,12 @@
 """
-Ansible Automation Engine - Enterprise Configuration Management for Ainflue
+Ansible Automation Engine - Enterprise Configuration Management for IA Chéries
 =========================================================================
 
 Advanced Ansible automation for configuration management, application deployment,
 security hardening, and creator platform operational orchestration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -353,7 +353,7 @@ content_processing_timeout = 3600
     def _generate_playbook(self, config: AnsibleConfig) -> str:
         """Generate main playbook YAML."""
         playbook_data = [{
-            "name": f"Ainflue Creator Platform - {config.playbook_name}",
+            "name": f"IA Chéries Creator Platform - {config.playbook_name}",
             "hosts": "all" if not config.limit else config.limit,
             "become": config.become,
             "gather_facts": True,
@@ -482,7 +482,7 @@ content_processing_timeout = 3600
         group_vars = {
             "# Creator Platform Global Variables": None,
             "creator_platform": {
-                "project_name": "Ainflue",
+                "project_name": "IA Chéries",
                 "version": "1.0.0",
                 "environment": config.variables.get("environment", "production"),
                 "ai_agents_count": config.variables.get("ai_agents_count", 53),
@@ -699,8 +699,8 @@ content_processing_timeout = 3600
         meta = {
             "galaxy_info": {
                 "author": "Fahed Mlaiel",
-                "description": f"Ainflue Creator Platform - {role_name} role",
-                "company": "Ainflue",
+                "description": f"IA Chéries Creator Platform - {role_name} role",
+                "company": "IA Chéries",
                 "license": "Proprietary",
                 "min_ansible_version": "2.9",
                 "platforms": [

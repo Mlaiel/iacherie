@@ -1,12 +1,12 @@
 """
-Collaboration Matching Pipeline - Ainflue Enterprise
+Collaboration Matching Pipeline - IA Chéries Enterprise
 ===================================================
 Pipeline matching collaboration avec AI social intelligence.
 Creator matching + project compatibility + success prediction + network analysis.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

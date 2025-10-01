@@ -1,5 +1,5 @@
 """
-Circuit Breaker Middleware - Ainflue Platform
+Circuit Breaker Middleware - IA Chéries Platform
 ============================================
 
 Middleware circuit breaker pour intégration frameworks.

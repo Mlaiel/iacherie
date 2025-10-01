@@ -2,7 +2,7 @@
 
 /**
  * 🔍 ENTERPRISE MONITORING PAGE - Frontend Integration Complete
- * Page dashboard principale pour monitoring enterprise Ainfluencer
+ * Page dashboard principale pour monitoring enterprise iaCherie
  * Author: Fahed Mlaiel - Frontend Lead + DevOps Implementation
  */
 
@@ -123,7 +123,7 @@ const QuickStats: React.FC = () => (
       <div>
         <h2 className="text-2xl font-bold flex items-center">
           <Activity className="h-6 w-6 mr-2" />
-          Ainfluencer Enterprise Monitoring
+          iaCherie Enterprise Monitoring
         </h2>
         <p className="text-blue-100 mt-1">
           Surveillance temps réel de l'infrastructure complète
@@ -291,7 +291,7 @@ const MonitoringPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between text-sm text-gray-500">
             <div>
-              © 2025 Ainfluencer Enterprise Monitoring - Fahed Mlaiel Implementation
+              © 2025 iaCherie Enterprise Monitoring - Fahed Mlaiel Implementation
             </div>
             <div className="flex space-x-4">
               <span>Version 1.0</span>

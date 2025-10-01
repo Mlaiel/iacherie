@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Enterprise - Kubernetes Cluster Orchestrator
+🚀 IA Chéries Enterprise - Kubernetes Cluster Orchestrator
 ======================================================
 
-Kubernetes cluster management and orchestration for Ainfluencer platform.
+Kubernetes cluster management and orchestration for IA Chéries platform.
 Provides intelligent deployment, scaling, and lifecycle management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainfluencer Platform
+Project: IA Chéries Platform
 Version: Enterprise 2.0
 """
 
@@ -33,7 +33,7 @@ class ClusterStatus:
 
 class KubernetesClusterOrchestrator:
     """
-    🎯 Kubernetes Cluster Orchestrator for Ainfluencer
+    🎯 Kubernetes Cluster Orchestrator for IA Chéries
     
     Manages:
     - Cluster deployment and scaling

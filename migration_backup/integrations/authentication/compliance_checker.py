@@ -1,7 +1,7 @@
 """Compliance Checker - Enterprise Compliance Validation System
 =============================================================
 
-Advanced compliance checking and configuration validation for Ainflue integrations.
+Advanced compliance checking and configuration validation for IA Chéries integrations.
 Provides GDPR, SOC2, PCI-DSS, OWASP compliance validation and security auditing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

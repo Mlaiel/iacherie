@@ -178,7 +178,7 @@ class DockerComposeGenerator:
         logger.info(f"Added volume: {volume.name}")
     
     def create_ainflue_platform_stack(self) -> Dict[str, Any]:
-        """Create complete Ainflue platform Docker Compose stack"""
+        """Create complete IA Chéries platform Docker Compose stack"""
         
         # Add platform networks
         self._add_platform_networks()
@@ -887,7 +887,7 @@ def main():
             # Initialize generator
             generator = DockerComposeGenerator(env)
             
-            # Create complete Ainflue platform stack
+            # Create complete IA Chéries platform stack
             compose_config = generator.create_ainflue_platform_stack()
             
             # Save compose file
@@ -916,7 +916,7 @@ def main():
         
         print(f"\n📋 Docker Compose Template Features:")
         print(f"  ✅ Multi-environment support (dev/staging/prod)")
-        print(f"  ✅ Complete Ainflue platform stack")
+        print(f"  ✅ Complete IA Chéries platform stack")
         print(f"  ✅ Health checks and monitoring integration")
         print(f"  ✅ Resource limits and scaling configuration")
         print(f"  ✅ Network segmentation and security")

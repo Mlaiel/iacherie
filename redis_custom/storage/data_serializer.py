@@ -281,7 +281,7 @@ class SerializationEngine:
         """**Sécurité**: Initialisation chiffrement sécurisé"""
         try:
             # En production, utiliser key management service
-            key_material = self.config.get('encryption_key', 'default_key_ainflue_2025')
+            key_material = self.config.get('encryption_key', 'default_key_iacherie_2025')
             key_hash = hashlib.sha256(key_material.encode()).digest()
             self.encryption_key = base64.urlsafe_b64encode(key_hash)
             self.fernet = Fernet(self.encryption_key)

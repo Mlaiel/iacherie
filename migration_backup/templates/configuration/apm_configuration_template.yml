@@ -1,4 +1,4 @@
-# APM (Application Performance Monitoring) Configuration Template for Ainflue Platform
+# APM (Application Performance Monitoring) Configuration Template for IA Chéries Platform
 # Comprehensive configuration for monitoring application performance, errors, and user experience
 
 # APM Server Configuration
@@ -54,7 +54,7 @@ nodejs_apm_config: |
     spanFramesMinDuration: '5ms',
     stackTraceLimit: 50,
     
-    // Custom configuration for Ainflue
+    // Custom configuration for IA Chéries
     serviceNodeName: '${POD_NAME}',
     globalLabels: {
       datacenter: '${DATACENTER}',
@@ -303,7 +303,7 @@ monitoring:
 # X-Pack settings
 xpack.monitoring.enabled: true
 
-# Custom processors for Ainflue business logic
+# Custom processors for IA Chéries business logic
 processors:
   - add_host_metadata: ~
   - add_docker_metadata: ~

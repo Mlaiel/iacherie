@@ -2,7 +2,7 @@
 Audit Manager - Enterprise Compliance Auditing
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive audit management for Ainflue creator platform.
+Comprehensive audit management for iacherie creator platform.
 Ensures continuous compliance monitoring and audit readiness.
 """
 

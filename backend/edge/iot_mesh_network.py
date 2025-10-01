@@ -139,7 +139,7 @@ class MeshRoute:
 @dataclass
 class IoTMeshConfig:
     """Configuration for IoT mesh network."""
-    network_name: str = "ainflue-mesh"
+    network_name: str = "iacherie-mesh"
     topology: NetworkTopology = NetworkTopology.HYBRID
     default_protocols: List[CommunicationProtocol] = None
     max_hop_count: int = 5
@@ -835,7 +835,7 @@ async def main():
     try:
         # Create configuration
         config = IoTMeshConfig(
-            network_name="ainflue-iot-mesh",
+            network_name="iacherie-iot-mesh",
             topology=NetworkTopology.MESH,
             auto_healing_enabled=True
         )

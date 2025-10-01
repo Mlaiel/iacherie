@@ -1,5 +1,5 @@
 """
-🚀 Core Orchestration - Enterprise Monitoring Ainflue
+🚀 Core Orchestration - Enterprise Monitoring IA Chéries
 =====================================================
 
 Module central d'orchestration pour le système de surveillance enterprise.

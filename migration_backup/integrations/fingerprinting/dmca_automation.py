@@ -5,7 +5,7 @@ DMCA automation avec platform integration et legal compliance.
 Automatisation complète des processus DMCA avec API plateformes.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Fingerprinting Module
+Project: IA Chéries Integrations - Fingerprinting Module
 Version: 1.0 Enterprise Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

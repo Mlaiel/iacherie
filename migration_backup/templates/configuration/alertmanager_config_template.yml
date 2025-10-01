@@ -1,6 +1,6 @@
-# Alertmanager Configuration Template for Ainflue Platform
+# Alertmanager Configuration Template for IA Chéries Platform
 # This template provides comprehensive alerting configuration for monitoring
-# the Ainflue creator economy platform
+# the IA Chéries creator economy platform
 
 global:
   # SMTP configuration for email notifications
@@ -97,7 +97,7 @@ receivers:
   - name: 'default-receiver'
     email_configs:
       - to: '${DEFAULT_EMAIL}'
-        subject: '[Ainflue] Alert: {{ .GroupLabels.alertname }}'
+        subject: '[IA Chéries] Alert: {{ .GroupLabels.alertname }}'
         body: |
           {{ range .Alerts }}
           Alert: {{ .Annotations.summary }}
@@ -115,7 +115,7 @@ receivers:
   - name: 'critical-alerts'
     pagerduty_configs:
       - routing_key: '${PAGERDUTY_ROUTING_KEY}'
-        description: 'Critical alert on Ainflue platform'
+        description: 'Critical alert on IA Chéries platform'
         details:
           alert: '{{ .GroupLabels.alertname }}'
           summary: '{{ .CommonAnnotations.summary }}'
@@ -262,7 +262,7 @@ receivers:
         
     pagerduty_configs:
       - routing_key: '${SECURITY_PAGERDUTY_KEY}'
-        description: 'Security alert on Ainflue platform'
+        description: 'Security alert on IA Chéries platform'
 
   # DevOps team alerts
   - name: 'devops-team'

@@ -2,7 +2,7 @@
 ========================================================================
 
 Engine de transcription audio enterprise avec reconnaissance vocale multi-langue,
-diarisation des locuteurs et IA pour la plateforme de créateurs Ainflue.
+diarisation des locuteurs et IA pour la plateforme de créateurs IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Audio preprocessing + noise reduction + quality optimization

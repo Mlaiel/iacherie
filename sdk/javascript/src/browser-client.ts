@@ -8,8 +8,8 @@
  * Expert Implementation by: Frontend + Security + DevOps + Audio Engineer + Lead Dev IA
  */
 
-import { AinflueClient } from './iacherie-client';
-import { AinflueConfig } from './config';
+import { iacherieClient } from './iacherie-client';
+import { iacherieConfig } from './config';
 import { FetchAdapter } from './fetch-adapter';
 import { ApiResponse } from './interfaces';
 import { SecurityError, ConfigurationError } from './errors';
@@ -17,12 +17,12 @@ import { SecurityError, ConfigurationError } from './errors';
 /**
  * Browser-optimized IA Chérie SDK Client
  */
-export class BrowserClient extends AinflueClient {
+export class BrowserClient extends iacherieClient {
   private performanceObserver?: PerformanceObserver;
   private visibilityChangeHandler?: () => void;
   private storageManager: BrowserStorageManager;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: iacherieConfig) {
     // Use FetchAdapter for browser compatibility
     super({
       ...config,

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 📊 Observability Service - Enterprise Service Mesh
-Service d'observabilité complète pour microservices Ainflue
+Service d'observabilité complète pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -284,7 +284,7 @@ class ObservabilityService:
             # Configuration exporters Prometheus
             prometheus_client.start_http_server(8000, registry=self.metrics_registry)
             
-            # Métriques custom Ainflue
+            # Métriques custom IA Chéries
             await self._register_ainflue_metrics()
             
             logger.info("✅ Collecte métriques configurée")
@@ -346,7 +346,7 @@ class ObservabilityService:
             raise
     
     async def _register_ainflue_metrics(self):
-        """Métriques spécifiques à Ainflue"""
+        """Métriques spécifiques à IA Chéries"""
         try:
             # Métriques IA
             self.custom_metrics['ai_inference_requests'] = prometheus_client.Counter(
@@ -394,7 +394,7 @@ class ObservabilityService:
             )
             
         except Exception as e:
-            logger.error("❌ Erreur métriques Ainflue", error=str(e))
+            logger.error("❌ Erreur métriques IA Chéries", error=str(e))
             raise
     
     async def _setup_centralized_logging(self, logging_config: Dict[str, Any]):
@@ -923,7 +923,7 @@ class ObservabilityService:
         """Dashboard overview des services"""
         return {
             'dashboard': {
-                'title': 'Ainflue Services Overview',
+                'title': 'IA Chéries Services Overview',
                 'tags': ['ainflue', 'overview'],
                 'panels': [
                     {
@@ -955,7 +955,7 @@ class ObservabilityService:
         """Dashboard métriques IA"""
         return {
             'dashboard': {
-                'title': 'Ainflue AI Metrics',
+                'title': 'IA Chéries AI Metrics',
                 'tags': ['ainflue', 'ai'],
                 'panels': [
                     {
@@ -980,7 +980,7 @@ class ObservabilityService:
         """Dashboard infrastructure"""
         return {
             'dashboard': {
-                'title': 'Ainflue Infrastructure',
+                'title': 'IA Chéries Infrastructure',
                 'tags': ['ainflue', 'infrastructure'],
                 'panels': [
                     {
@@ -1005,7 +1005,7 @@ class ObservabilityService:
         """Dashboard métriques business"""
         return {
             'dashboard': {
-                'title': 'Ainflue Business Metrics',
+                'title': 'IA Chéries Business Metrics',
                 'tags': ['ainflue', 'business'],
                 'panels': [
                     {

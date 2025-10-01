@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Derivation Engine - Secure Cryptographic Key Derivation Enterprise System
-Production-grade key derivation for Ainflue Creator Economy Platform
+Production-grade key derivation for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -177,7 +177,7 @@ class KeyDerivationEngine:
     """
     🔐 Key Derivation Engine - Enterprise Cryptographic Key Derivation System
     
-    Provides comprehensive key derivation for Ainflue Creator Economy:
+    Provides comprehensive key derivation for IA Chéries Creator Economy:
     - Multiple secure derivation algorithms (HKDF, PBKDF2, Scrypt, Argon2)
     - Creator-specific derivation contexts
     - Content-type specific key derivation

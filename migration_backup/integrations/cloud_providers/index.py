@@ -1,12 +1,12 @@
 """
-Cloud Providers Module - Ainflue Integrations
+Cloud Providers Module - IA Chéries Integrations
 ============================================
 Enterprise-grade cloud provider integrations providing multi-cloud
 infrastructure management, storage solutions, compute orchestration,
 and monitoring across major cloud platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -32,8 +32,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise cloud infrastructure management for multi-platform content distribution"
 
-# Configuration logique métier Ainflue
-AINFLUE_INTEGRATIONS = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'cloud_providers': 14,

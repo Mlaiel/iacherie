@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Latency Optimization Tracker
+IA Chéries Platform - Latency Optimization Tracker
 ===============================================
 
 Advanced tracking and optimization of latency across the entire audio

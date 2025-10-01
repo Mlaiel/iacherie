@@ -1,12 +1,12 @@
 """
-Compliance Automation - Enterprise GDPR/CCPA/DMCA Compliance for Ainflue
+Compliance Automation - Enterprise GDPR/CCPA/DMCA Compliance for IA Chéries
 ======================================================================
 
 Advanced compliance automation for regulatory compliance, data protection,
 content protection, and audit trail management for the creator platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -141,7 +141,7 @@ class ConsentRecord:
 class DataProcessingRecord:
     """Data processing activity record (Article 30 GDPR)."""
     record_id: str
-    controller_name: str = "Ainflue Platform"
+    controller_name: str = "IA Chéries Platform"
     purpose: str = ""
     categories_of_data_subjects: List[str] = field(default_factory=list)
     categories_of_personal_data: List[str] = field(default_factory=list)
@@ -1211,7 +1211,7 @@ class ComplianceAutomationManager:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "IA Chéries Creator Platform",
             "frameworks_assessed": [f.value for f in frameworks],
             "assessments": {},
             "summary": {

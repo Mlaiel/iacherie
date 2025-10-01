@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Quantum Safe Crypto Engine - Post-Quantum Cryptography Enterprise Implementation
-Production-grade quantum-resistant cryptography for Ainflue Creator Economy Platform
+Production-grade quantum-resistant cryptography for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -143,7 +143,7 @@ class QuantumSafeCryptoEngine:
     """
     🔐 Quantum Safe Crypto Engine - Enterprise Post-Quantum Cryptography
     
-    Provides comprehensive post-quantum cryptography for Ainflue Creator Economy:
+    Provides comprehensive post-quantum cryptography for IA Chéries Creator Economy:
     - NIST PQC standardized algorithms (Kyber, Dilithium, Falcon, SPHINCS+)
     - Hybrid classical-quantum schemes for migration
     - Creator-specific quantum-safe key profiles

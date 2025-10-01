@@ -2,7 +2,7 @@
 💰 Monetization Orchestration Engine - Enterprise Core
 =====================================================
 
-Moteur d'orchestration avancé pour la monétisation Creator Economy Ainflue.
+Moteur d'orchestration avancé pour la monétisation Creator Economy IA Chéries.
 Optimisation intelligente des revenus et gestion automatisée des paiements.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)

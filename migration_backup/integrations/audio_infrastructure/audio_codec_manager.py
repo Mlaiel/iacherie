@@ -2,7 +2,7 @@
 =============================================================
 
 Gestionnaire de codecs audio enterprise avec optimisation algorithmique,
-compression intelligente et support multi-format pour Ainflue.
+compression intelligente et support multi-format pour IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Algorithmes de compression + optimisation qualité + codecs lossless

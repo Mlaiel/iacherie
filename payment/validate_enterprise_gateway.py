@@ -42,7 +42,7 @@ class PaymentGatewayValidator:
                 'port': 5432,
                 'user': 'postgres',
                 'password': 'test',
-                'database': 'ainflue_test'
+                'database': 'iacherie_test'
             },
             'redis': {
                 'host': 'localhost',

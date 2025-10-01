@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Monitoring Stack Helm Chart
+# IA Chéries Infrastructure Module - Monitoring Stack Helm Chart
 # ============================================================
 # 
-# Enterprise-grade Monitoring stack chart for Ainflue platform
+# Enterprise-grade Monitoring stack chart for IA Chéries platform
 # Prometheus, Grafana, Jaeger, Alertmanager, and observability tools
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,13 +11,13 @@
 
 apiVersion: v2
 name: ainflue-monitoring
-description: "Enterprise Monitoring stack for Ainflue platform with comprehensive observability"
+description: "Enterprise Monitoring stack for IA Chéries platform with comprehensive observability"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 home: https://monitoring.ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de
@@ -116,19 +116,19 @@ prometheus:
         - name: 'default-receiver'
           email_configs:
             - to: 'admin@ainflue.com'
-              subject: '[Ainflue] Alert: {{ .GroupLabels.alertname }}'
+              subject: '[IA Chéries] Alert: {{ .GroupLabels.alertname }}'
         - name: 'critical-alerts'
           email_configs:
             - to: 'critical@ainflue.com'
-              subject: '[CRITICAL] Ainflue: {{ .GroupLabels.alertname }}'
+              subject: '[CRITICAL] IA Chéries: {{ .GroupLabels.alertname }}'
         - name: 'ai-team'
           email_configs:
             - to: 'ai-team@ainflue.com'
-              subject: '[AI Alert] Ainflue: {{ .GroupLabels.alertname }}'
+              subject: '[AI Alert] IA Chéries: {{ .GroupLabels.alertname }}'
         - name: 'dba-team'
           email_configs:
             - to: 'dba-team@ainflue.com'
-              subject: '[Database Alert] Ainflue: {{ .GroupLabels.alertname }}'
+              subject: '[Database Alert] IA Chéries: {{ .GroupLabels.alertname }}'
 
   server:
     ingress:
@@ -211,7 +211,7 @@ prometheus:
               replacement: $1:$2
               target_label: __address__
 
-        # Ainflue specific services
+        # IA Chéries specific services
         - job_name: 'ainflue-api'
           static_configs:
             - targets: ['ainflue-api:8000']
@@ -409,7 +409,7 @@ grafana:
       providers:
         - name: 'ainflue-dashboards'
           orgId: 1
-          folder: 'Ainflue'
+          folder: 'IA Chéries'
           type: file
           disableDeletion: false
           editable: true
@@ -428,7 +428,7 @@ grafana:
         json: |
           {
             "dashboard": {
-              "title": "Ainflue API Dashboard",
+              "title": "IA Chéries API Dashboard",
               "panels": [
                 {
                   "title": "Request Rate",

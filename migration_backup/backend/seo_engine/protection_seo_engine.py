@@ -407,7 +407,7 @@ class ProtectionSEOEngine:
         
         # Watermark de propriété
         ownership_mark = base64.b64encode(
-            f"AINFLUE_{content_id}_PROTECTED".encode()
+            f"IA CHÉRIES_{content_id}_PROTECTED".encode()
         ).decode()[:25]
         watermarks.append(f"OW_{ownership_mark}")
         

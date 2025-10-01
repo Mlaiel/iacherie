@@ -94,7 +94,7 @@ Vollständige MLOps Governance-Infrastruktur für Creator Economy mit Enterprise
 - **15+ Compliance-Regeln** mit automatisierter Validierung
 - **Multi-threaded Monitoring** mit Echtzeit-Verarbeitung
 
-## 🎯 Business Logic - Ainflue
+## 🎯 Business Logic - iacherie
 
 **Creator Economy Pipeline:** Multi-Format Creators → AI Processing → IP Protection → Monetization → Collaboration & Gamification → Professional SEO → Multi-Platform Distribution
 

@@ -216,7 +216,7 @@ POST /api/seo/viral/predict
 
 ### Intégration Workflow Créateur
 ```python
-from ainflue_seo import SEOOrchestrator
+from iacherie_seo import SEOOrchestrator
 
 # Optimisation SEO dans workflow créateur
 async def optimize_content_for_seo(content_data):

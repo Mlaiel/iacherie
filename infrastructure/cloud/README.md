@@ -1,4 +1,4 @@
-# ☁️ Cloud Infrastructure - Ainflue Platform
+# ☁️ Cloud Infrastructure - iacherie Platform
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Module Purpose
 
-Enterprise-grade multi-cloud infrastructure management for the Ainflue creator platform. Provides unified interface for managing AWS, Azure, GCP, and hybrid cloud deployments with intelligent cost optimization, performance monitoring, and automated scaling.
+Enterprise-grade multi-cloud infrastructure management for the iacherie creator platform. Provides unified interface for managing AWS, Azure, GCP, and hybrid cloud deployments with intelligent cost optimization, performance monitoring, and automated scaling.
 
 ## 🏗️ Architecture
 
@@ -33,9 +33,9 @@ from infrastructure.cloud import MultiCloudManager, CostOptimizer
 
 # Initialize multi-cloud manager
 cloud_manager = MultiCloudManager({
-    'aws': {'region': 'us-east-1', 'profile': 'ainflue-prod'},
-    'azure': {'subscription_id': 'xxx', 'resource_group': 'ainflue-rg'},
-    'gcp': {'project_id': 'ainflue-prod', 'zone': 'us-central1-a'}
+    'aws': {'region': 'us-east-1', 'profile': 'iacherie-prod'},
+    'azure': {'subscription_id': 'xxx', 'resource_group': 'iacherie-rg'},
+    'gcp': {'project_id': 'iacherie-prod', 'zone': 'us-central1-a'}
 })
 
 # Deploy across multiple clouds
@@ -92,7 +92,7 @@ savings = cost_optimizer.optimize_resources()
 - Intelligent caching strategies
 - Real-time synchronization
 
-## 📈 Ainflue Business Workflow Integration
+## 📈 iacherie Business Workflow Integration
 
 ```
 Creator Upload → Cloud Processing → AI Enhancement → 

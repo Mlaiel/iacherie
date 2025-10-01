@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🚀 Enterprise Cache Service Template - Ainflue
+🚀 Enterprise Cache Service Template - iacherie
 =============================================
 Template enterprise pour services cache.
 Redis + Memcached + CDN + cache strategies + invalidation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE EFFECT PROCESSOR - PROFESSIONAL DOCKERFILE  
+# IA CHÉRIES EFFECT PROCESSOR - PROFESSIONAL DOCKERFILE  
 # =============================================================================
 # Real-time audio effects processing engine with reverb, delay, distortion,
 # EQ, compression and modulation effects for professional audio production.

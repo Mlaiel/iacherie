@@ -56,7 +56,7 @@ class SecurityConfig:
     access_control_mode: str = "rbac"
     incident_response_enabled: bool = True
     creator_ip_protection: bool = True
-    ainflue_integration: bool = True
+    iacherie_integration: bool = True
 
 class SecurityService(Protocol):
     """Protocol pour services sécurité ML"""

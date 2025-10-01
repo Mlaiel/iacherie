@@ -1,4 +1,4 @@
-"""🏥 Health Monitoring - Main Orchestrator | Ainflue Creator Economy
+"""🏥 Health Monitoring - Main Orchestrator | IA Chéries Creator Economy
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

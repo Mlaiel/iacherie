@@ -1,5 +1,5 @@
 """
-💰 MONETIZATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+💰 MONETIZATION CONFIG - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced monetization configuration for creator economy platform
 Author: Fahed Mlaiel (mlaiel@live.de)

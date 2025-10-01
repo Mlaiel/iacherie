@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Processor Service
+ * IA Chéries Desktop - Content Processor Service
  * 
  * Advanced local content processing with AI enhancement and professional optimization
  * Implements multi-format processing pipeline with quality assurance and metadata extraction

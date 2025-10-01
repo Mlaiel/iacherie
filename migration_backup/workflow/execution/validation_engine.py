@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE VALIDATION ENGINE - AINFLUE PLATFORM
+🔥 ENTERPRISE VALIDATION ENGINE - IA CHÉRIES PLATFORM
 Ultra-advanced validation and exception handling system
 Consolidates: validators.py + exceptions.py
 """

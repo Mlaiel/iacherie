@@ -1,6 +1,6 @@
 """
 Redis Cluster Configuration for Distributed Caching
-High-performance distributed caching solution for Ainflue Platform
+High-performance distributed caching solution for IA Chéries Platform
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

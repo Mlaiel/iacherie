@@ -116,7 +116,7 @@ class SchedulingMetrics:
     business_event_distribution: Dict[str, int] = field(default_factory=dict)
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Scheduling Rules"""
     
     # Business calendar schedules
@@ -360,7 +360,7 @@ class DelayedSchedulingCoordinator:
         """Schedule a business calendar event"""
         try:
             # Get business schedule settings
-            settings = AinflueBusiness.BUSINESS_SCHEDULES.get(event_type, {})
+            settings = iacherieBusiness.BUSINESS_SCHEDULES.get(event_type, {})
             
             message = ScheduledMessage(
                 schedule_type=ScheduleType.BUSINESS_CALENDAR,
@@ -417,7 +417,7 @@ class DelayedSchedulingCoordinator:
                                                collaboration_id: Optional[str] = None) -> List[str]:
         """Schedule content deadline reminders"""
         try:
-            settings = AinflueBusiness.BUSINESS_SCHEDULES[BusinessCalendarEvent.CONTENT_DEADLINE]
+            settings = iacherieBusiness.BUSINESS_SCHEDULES[BusinessCalendarEvent.CONTENT_DEADLINE]
             reminder_intervals = settings["reminder_intervals"]
             
             scheduled_ids = []
@@ -773,7 +773,7 @@ class DelayedSchedulingCoordinator:
         if not message.business_event:
             return None
         
-        settings = AinflueBusiness.BUSINESS_SCHEDULES.get(message.business_event, {})
+        settings = iacherieBusiness.BUSINESS_SCHEDULES.get(message.business_event, {})
         
         if "recurrence" not in settings:
             return None
@@ -861,7 +861,7 @@ class DelayedSchedulingCoordinator:
         """Initialize business calendar with recurring events"""
         try:
             # Set up recurring business events
-            for event_type, settings in AinflueBusiness.BUSINESS_SCHEDULES.items():
+            for event_type, settings in iacherieBusiness.BUSINESS_SCHEDULES.items():
                 if "recurrence" in settings:
                     # Calculate first execution time
                     first_execution = await self._calculate_first_business_execution(event_type, settings)
@@ -986,5 +986,5 @@ __all__ = [
     "ScheduleType",
     "RecurrencePattern",
     "BusinessCalendarEvent",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

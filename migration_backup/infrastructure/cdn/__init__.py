@@ -1,12 +1,12 @@
 """
-CDN Module - Global Content Delivery Network for Ainflue
+CDN Module - Global Content Delivery Network for IA Chéries
 =======================================================
 
 Advanced CDN infrastructure for global content delivery, edge computing,
 and performance optimization for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -62,10 +62,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Global CDN Infrastructure for Ainflue Creator Platform"
+__description__ = "Global CDN Infrastructure for IA Chéries Creator Platform"
 
 # Configuration for CDN infrastructure
-AINFLUE_CDN_CONFIG = {
+IA CHÉRIES_CDN_CONFIG = {
     'edge_locations': 180,  # Global edge locations
     'supported_protocols': ['http/1.1', 'http/2', 'http/3', 'websocket'],
     'cache_tiers': ['edge', 'regional', 'origin'],

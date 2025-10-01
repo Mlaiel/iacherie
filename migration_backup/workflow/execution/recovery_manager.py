@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE RECOVERY MANAGER - AINFLUE PLATFORM
+🔥 ENTERPRISE RECOVERY MANAGER - IA CHÉRIES PLATFORM
 Ultra-advanced workflow recovery and checkpoint management
 Performance Targets: < 100ms recovery operations
 Author: Fahed Mlaiel <mlaiel@live.de>

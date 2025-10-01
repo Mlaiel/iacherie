@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Backup Configuration Module
+"""IA Chéries Backup Configuration Module
 =====================================
 
-Enterprise-grade backup configuration for the Ainflue platform.
+Enterprise-grade backup configuration for the IA Chéries platform.
 Handles automated backups, disaster recovery, data retention policies,
 cloud backup strategies, and comprehensive backup monitoring.
 

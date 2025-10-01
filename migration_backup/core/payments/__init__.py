@@ -1,4 +1,4 @@
-"""Ainflue Core Payments - Enterprise Payment & Financial Systems
+"""IA Chéries Core Payments - Enterprise Payment & Financial Systems
 ============================================================
 
 Core payment systems providing payment gateways, cryptocurrency processing,

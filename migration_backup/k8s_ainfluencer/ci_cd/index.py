@@ -102,7 +102,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class IAInfluencerCICDOrchestrator:
+class IIA ChériesCICDOrchestrator:
     """
     Main orchestrator for IA-Influencer-Agent CI/CD operations.
     
@@ -558,7 +558,7 @@ def main():
     args = parser.parse_args()
     
     # Initialize orchestrator
-    orchestrator = IAInfluencerCICDOrchestrator(args.config)
+    orchestrator = IIA ChériesCICDOrchestrator(args.config)
     
     async def run_command():
         try:

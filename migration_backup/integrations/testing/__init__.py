@@ -1,11 +1,11 @@
 """
-Testing Module - Ainflue Integrations
+Testing Module - IA Chéries Integrations
 ====================================
 Enterprise testing module providing comprehensive integration testing,
 validation, security testing, and quality assurance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -31,10 +31,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise testing and validation for Ainflue platform"
+__description__ = "Enterprise testing and validation for IA Chéries platform"
 
-# Configuration logique métier Ainflue
-AINFLUE_TESTING = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_TESTING = {
     'platforms': 65,
     'testing_features': ['integration_testing', 'security_testing', 'performance_testing', 'validation'],
     'workflow': 'connect→auth→transform→process→distribute→monitor'

@@ -1,12 +1,12 @@
 """
-Platforms Module - Ainflue Integrations
+Platforms Module - IA Chéries Integrations
 ======================================
 Enterprise-grade platform integrations providing comprehensive API
 management for 65+ content platforms, creator tools, and distribution
 networks with automated publishing and analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -33,8 +33,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise platform integration infrastructure for 65+ content platforms"
 
-# Configuration logique métier Ainflue
-AINFLUE_INTEGRATIONS = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'platform_apis': 15,

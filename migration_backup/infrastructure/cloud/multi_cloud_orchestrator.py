@@ -1,5 +1,5 @@
 """
-Multi-Cloud Orchestrator for Ainflue Infrastructure
+Multi-Cloud Orchestrator for IA Chéries Infrastructure
 Enterprise-grade multi-cloud deployment coordination across AWS, GCP, and Azure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -75,7 +75,7 @@ class WorkloadDistribution:
 
 class MultiCloudOrchestrator:
     """
-    Multi-Cloud Orchestrator for Ainflue Infrastructure
+    Multi-Cloud Orchestrator for IA Chéries Infrastructure
     
     Provides enterprise-grade multi-cloud deployment coordination:
     - Seamless deployment across AWS, GCP, and Azure
@@ -113,16 +113,16 @@ class MultiCloudOrchestrator:
             self.providers[CloudProvider.AZURE] = AzureProvider(azure_credentials)
             self.health_status[CloudProvider.AZURE] = {'status': 'unknown', 'last_check': None}
             
-        # Ainflue-specific workload distribution
+        # IA Chéries-specific workload distribution
         self.workload_distribution = WorkloadDistribution()
         
         # Initialize monitoring
         self._start_monitoring()
         
     async def deploy_ainflue_infrastructure(self, environment: str = "production") -> Dict[str, Any]:
-        """Deploy complete Ainflue infrastructure across multiple clouds"""
+        """Deploy complete IA Chéries infrastructure across multiple clouds"""
         
-        logger.info(f"Starting Ainflue multi-cloud deployment for {environment}")
+        logger.info(f"Starting IA Chéries multi-cloud deployment for {environment}")
         
         deployment_results = {
             'environment': environment,
@@ -158,7 +158,7 @@ class MultiCloudOrchestrator:
             if self.config.disaster_recovery:
                 await self._configure_disaster_recovery(results)
                 
-            logger.info(f"Ainflue multi-cloud deployment completed successfully")
+            logger.info(f"IA Chéries multi-cloud deployment completed successfully")
             
         except Exception as e:
             logger.error(f"Multi-cloud deployment failed: {e}")
@@ -318,7 +318,7 @@ class MultiCloudOrchestrator:
         
     async def _deploy_to_cloud(self, cloud: CloudProvider, provider: Any, 
                               environment: str, role: str) -> Dict[str, Any]:
-        """Deploy Ainflue infrastructure to specific cloud"""
+        """Deploy IA Chéries infrastructure to specific cloud"""
         
         deployment_result = {
             'cloud': cloud.value,
@@ -351,7 +351,7 @@ class MultiCloudOrchestrator:
         
     async def _deploy_aws_resources(self, provider: AWSProvider, 
                                    environment: str, role: str) -> Dict[str, Any]:
-        """Deploy AWS resources for Ainflue"""
+        """Deploy AWS resources for IA Chéries"""
         
         resources = {}
         
@@ -383,7 +383,7 @@ class MultiCloudOrchestrator:
         
     async def _deploy_gcp_resources(self, provider: GCPProvider, 
                                    environment: str, role: str) -> Dict[str, Any]:
-        """Deploy GCP resources for Ainflue"""
+        """Deploy GCP resources for IA Chéries"""
         
         resources = {}
         
@@ -419,7 +419,7 @@ class MultiCloudOrchestrator:
         
     async def _deploy_azure_resources(self, provider: AzureProvider, 
                                      environment: str, role: str) -> Dict[str, Any]:
-        """Deploy Azure resources for Ainflue"""
+        """Deploy Azure resources for IA Chéries"""
         
         resources = {}
         

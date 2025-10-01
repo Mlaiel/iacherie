@@ -1,4 +1,4 @@
-# Ainflue Mobile API Module - Kubernetes Namespace
+# IA Chéries Mobile API Module - Kubernetes Namespace
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready namespace for mobile API microservice
 
@@ -18,7 +18,7 @@ metadata:
     managed-by: fahed-mlaiel
     business-domain: mobile-optimization
   annotations:
-    description: "Ainflue Mobile API - Optimized backend services for mobile applications"
+    description: "IA Chéries Mobile API - Optimized backend services for mobile applications"
     contact: "mlaiel@live.de"
     created-by: "Fahed Mlaiel"
     business-purpose: "Mobile-optimized API layer for content creators on mobile platforms"

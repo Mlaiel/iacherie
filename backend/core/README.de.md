@@ -38,7 +38,7 @@ Dieses Modul enthält die konsolidierten Datenbankfunktionalitäten, Core-Orches
 ## 📊 Architektur-Konformität
 
 ✅ **3-Level-Maximum eingehalten**
-- Level 1: `/workspaces/Ainflue/`
+- Level 1: `/workspaces/iacherie/`
 - Level 2: `backend/`
 - Level 3: `core/` (FINAL - Keine Unterordner)
 

@@ -1,5 +1,5 @@
 """
-🏗️ ORCHESTRATION SERVICES MODULE - AINFLUE ENTERPRISE PLATFORM
+🏗️ ORCHESTRATION SERVICES MODULE - IA CHÉRIES ENTERPRISE PLATFORM
 
 Orchestration-level services for workflow management, business intelligence,
 automation, and complex system coordination.
@@ -188,7 +188,7 @@ except ImportError:
     AuthenticationType = SyncDirection = RetryStrategy = DataFormat = WebhookEvent = None
 
 __version__ = "2.0.0"
-__author__ = "Ainflue Enterprise Team"
+__author__ = "IA Chéries Enterprise Team"
 
 logger = logging.getLogger(__name__)
 

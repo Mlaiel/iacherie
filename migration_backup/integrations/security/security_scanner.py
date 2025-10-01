@@ -4,7 +4,7 @@
 =======================================================
 
 Module SecurityScannerCore - Scanner de sécurité avancé enterprise
-Conçu pour la plateforme Ainfluencer avec sécurité maximale
+Conçu pour la plateforme IA Chéries avec sécurité maximale
 
 🎯 OBJECTIF: ATTEINDRE 100% IMPORT SUCCÈS POUR SATISFACTION UTILISATEUR
 """
@@ -65,7 +65,7 @@ class SecurityScannerCore:
     """
     🛡️ SCANNER DE SÉCURITÉ CORE ENTERPRISE ULTRA-AVANCÉ
     
-    Scanner de sécurité complet pour la plateforme Ainfluencer
+    Scanner de sécurité complet pour la plateforme IA Chéries
     - Détection de menaces temps réel
     - Analyse comportementale avancée
     - Conformité OWASP, SOC2, GDPR

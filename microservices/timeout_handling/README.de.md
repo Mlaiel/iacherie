@@ -221,7 +221,7 @@ distribution_result = await distribution_coordinator.coordinate_multi_platform(
 
 ### **Geschäfts-Timeout-Richtlinien**
 ```python
-AINFLUE_TIMEOUT_RICHTLINIEN = {
+IACHERIE_TIMEOUT_RICHTLINIEN = {
     'creator_workflows': {
         'upload': {'basis': 60, 'multiplier_4k': 2.0, 'premium_bonus': 1.3},
         'processing': {'basis': 120, 'ki_faktor': 1.5, 'qualitaets_adj': 1.2},
@@ -371,11 +371,11 @@ iacherie-timeout audit --framework dsgvo --period last-30-days
 
 ### **SDK Integration**
 ```python
-from ainflue_timeout import TimeoutClient
+from iacherie_timeout import TimeoutClient
 
 # Client SDK
 timeout_client = TimeoutClient(
-    api_key=AINFLUE_API_KEY,
+    api_key=IACHERIE_API_KEY,
     environment='production',
     business_context='creator_platform'
 )

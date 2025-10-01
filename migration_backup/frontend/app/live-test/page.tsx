@@ -134,7 +134,7 @@ export default function LiveTestPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            🧪 Live Testing - Ainflue Enterprise Platform
+            🧪 Live Testing - IA Chéries Enterprise Platform
           </h1>
           <div className="mb-4">
             <span className={`px-6 py-3 rounded-lg text-lg font-medium ${

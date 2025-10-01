@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Ainflue Security Incident Responder
+IA Chéries Security Incident Responder
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Automated security incident response system for the Ainflue creator economy platform.
+Automated security incident response system for the IA Chéries creator economy platform.
 Provides real-time incident detection, classification, and automated response capabilities.
 """
 
@@ -625,7 +625,7 @@ class SecurityIncidentResponder:
         }
 
 
-# Example usage for Ainflue creator platform
+# Example usage for IA Chéries creator platform
 async def main():
     """Example usage of security incident responder"""
     

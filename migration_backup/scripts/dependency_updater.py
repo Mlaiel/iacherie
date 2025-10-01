@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dependency Update Manager - Ainflue Platform
+Dependency Update Manager - IA Chéries Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: DevOps Engineer
 Purpose: Enterprise dependency management and automated updates
@@ -29,7 +29,7 @@ class DependencyUpdater:
     """Enterprise dependency update manager with safety checks"""
     
     def __init__(self, project_root: Path = None):
-        self.project_root = project_root or Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = project_root or Path("/home/runner/work/IA Chéries/IA Chéries")
         self.requirements_files = [
             "requirements.txt",
             "requirements-dev.txt", 
@@ -319,7 +319,7 @@ async def main():
     """Main dependency updater execution"""
     updater = DependencyUpdater()
     
-    print("🔄 Dependency Update Manager - Ainflue Platform")
+    print("🔄 Dependency Update Manager - IA Chéries Platform")
     print("=" * 50)
     
     # Generate report

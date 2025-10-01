@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - Incident Response Automation
+"""IA Chéries Infrastructure Module - Incident Response Automation
 ============================================================
 
-Advanced incident response automation system for the Ainflue platform.
+Advanced incident response automation system for the IA Chéries platform.
 Provides automated security incident detection, classification, response
 coordination, and recovery orchestration for creator economy protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chéries Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -126,7 +126,7 @@ class IncidentMetrics:
 
 class EnterpriseIncidentResponse:
     """
-    Enterprise-grade incident response automation system for Ainflue platform.
+    Enterprise-grade incident response automation system for IA Chéries platform.
     
     Provides comprehensive incident response capabilities:
     - Automated incident detection and classification

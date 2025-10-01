@@ -5,7 +5,7 @@
 ============================================================
 
 Compliance monitoring enterprise avec regulatory tracking et automated reporting.
-Infrastructure robuste de surveillance de conformité pour applications Ainflue multi-juridiction.
+Infrastructure robuste de surveillance de conformité pour applications IA Chéries multi-juridiction.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer

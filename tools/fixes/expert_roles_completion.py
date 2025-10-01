@@ -602,7 +602,7 @@ class QueryOptimizer:
             execution_time=execution_time,
             rows_affected=rows_affected,
             timestamp=time.strftime('%Y-%m-%d %H:%M:%S'),
-            database_name="ainfluencer_db"
+            database_name="iacheriencer_db"
         )
         
         self.performance_stats[query_hash].append(metrics)
@@ -1116,7 +1116,7 @@ Ces rôles peuvent maintenant être implémentés sur la base solide établie:
 
 ### **🎯 MISSION ACCOMPLIE - EXCELLENCE MULTI-EXPERT**
 
-**HARMONISATION AINFLUENCER: RÉUSSIE AVEC DISTINCTION**
+**HARMONISATION IACHERIE: RÉUSSIE AVEC DISTINCTION**
 
 ✅ **6/9 Experts Actifs**: Implémentation complète des rôles critiques  
 ✅ **{total_implementations}+ Implémentations**: Sécurité, architecture, performance  

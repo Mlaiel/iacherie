@@ -1,5 +1,5 @@
 """
-Loudness Normalization Monitor Module - Ainflue Platform
+Loudness Normalization Monitor Module - IA Chéries Platform
 =======================================================
 
 Monitor EBU R128 and ITU-R BS.1770 loudness normalization compliance,

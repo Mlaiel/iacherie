@@ -3,7 +3,7 @@
 ======================================================
 
 Système AutoML enterprise avec neural architecture search, optimization automatique,
-et déploiement seamless pour la plateforme Ainflue.
+et déploiement seamless pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🧠 ML Engineer: AutoML algorithms + model selection + hyperparameter optimization
@@ -433,7 +433,7 @@ class RandomSearchOptimizer(BaseAutoMLAlgorithm):
         return interpretability_map.get(algorithm, 0.5)
     
     def _calculate_business_score(self, algorithm: str, config: AutoMLConfiguration) -> float:
-        """Calculer le score business spécifique à Ainflue"""
+        """Calculer le score business spécifique à IA Chéries"""
         base_score = 0.8
         
         # Bonus pour certains types de contenu

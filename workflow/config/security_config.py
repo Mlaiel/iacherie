@@ -191,11 +191,11 @@ class SecurityConfig:
     
     def _generate_master_key(self) -> str:
         """Generate master encryption key"""
-# SECURITY: # SECURITY: password = os.getenv('AINFLUE_MASTER_PASSWORD', 'iacherie-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
+# SECURITY: # SECURITY: password = os.getenv('IACHERIE_MASTER_PASSWORD', 'iacherie-default-master-key-2025') # MOVED TO ENV # MOVED TO ENV
 # TODO: Move to environment variables or secure vault
 # TODO: Move to environment variables or secure vault
         password_bytes = password.encode('utf-8')
-        salt = os.getenv('AINFLUE_SALT', 'iacherie-salt').encode('utf-8')
+        salt = os.getenv('IACHERIE_SALT', 'iacherie-salt').encode('utf-8')
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),

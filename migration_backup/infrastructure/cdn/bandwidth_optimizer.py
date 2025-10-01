@@ -7,7 +7,7 @@ and creator-focused bandwidth management across global edge locations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Backend Senior + DevOps + ML Engineer
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -132,7 +132,7 @@ class OptimizationResult:
 
 class BandwidthOptimizer:
     """
-    Enterprise Bandwidth Optimizer for Ainflue Creator Platform.
+    Enterprise Bandwidth Optimizer for IA Chéries Creator Platform.
     
     Provides intelligent bandwidth management with creator priority,
     adaptive QoS, and cost-optimized allocation strategies.

@@ -8,7 +8,7 @@
 
 Advanced intelligent alert system with AI-powered analysis, real-time notifications,
 multi-channel delivery, alert correlation, and enterprise-grade incident management
-for the Ainflue platform ecosystem.
+for the IA Chéries platform ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

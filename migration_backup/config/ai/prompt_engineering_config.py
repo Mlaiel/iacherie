@@ -1,4 +1,4 @@
-"""Ainflue Prompt Engineering Configuration - QUANTUM ENTERPRISE GRADE
+"""IA Chéries Prompt Engineering Configuration - QUANTUM ENTERPRISE GRADE
 ========================================================================
 
 🧠 ADVANCED PROMPT ENGINEERING CONFIGURATIONS:
@@ -68,7 +68,7 @@ class ModelProvider(str, Enum):
     HUGGING_FACE = "hugging_face"
     COHERE = "cohere"
     CUSTOM = "custom"
-    AINFLUE_OPTIMIZED = "ainflue_optimized"
+    IA CHÉRIES_OPTIMIZED = "ainflue_optimized"
 
 class PromptComplexity(str, Enum):
     """Prompt complexity levels"""
@@ -199,7 +199,7 @@ class PromptEngineeringConfiguration:
         return {
             "system_prompts": {
                 "ainflue_assistant": {
-                    "template": """You are an AI assistant for Ainflue, a cutting-edge creator collaboration platform. 
+                    "template": """You are an AI assistant for IA Chéries, a cutting-edge creator collaboration platform. 
                     Your role is to help creators, analyze content, facilitate collaborations, and optimize business outcomes.
                     
                     Key principles:
@@ -215,7 +215,7 @@ class PromptEngineeringConfiguration:
                     "variables": ["platform_context", "user_type", "task_type"]
                 },
                 "content_analyzer": {
-                    "template": """You are a specialized content analysis AI for Ainflue platform.
+                    "template": """You are a specialized content analysis AI for IA Chéries platform.
                     Analyze the provided content for quality, engagement potential, SEO optimization,
                     and collaboration opportunities.
                     
@@ -232,7 +232,7 @@ class PromptEngineeringConfiguration:
                     "variables": ["content_type", "creator_profile", "target_audience"]
                 },
                 "creator_matcher": {
-                    "template": """You are a creator matching specialist for Ainflue platform.
+                    "template": """You are a creator matching specialist for IA Chéries platform.
                     Your expertise lies in identifying optimal collaboration opportunities
                     between creators based on complementary skills, audience alignment,
                     and mutual value creation potential.
@@ -622,7 +622,7 @@ class PromptEngineeringConfiguration:
         """Get creator-specific prompts"""
         return {
             "creator_onboarding": {
-                "template": """Welcome and guide this new creator through the Ainflue platform:
+                "template": """Welcome and guide this new creator through the IA Chéries platform:
                 
                 Creator Profile:
                 - Name: {creator_name}
@@ -715,5 +715,5 @@ __all__ = [
     "prompt_engineering_config"
 ]
 
-logger.info("✍️ Ainflue Prompt Engineering Configuration loaded")
+logger.info("✍️ IA Chéries Prompt Engineering Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

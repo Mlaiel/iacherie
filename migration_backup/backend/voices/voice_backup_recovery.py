@@ -3,7 +3,7 @@
 
 Comprehensive backup and recovery system providing automated backups,
 disaster recovery, data protection, and recovery analytics for the
-Ainflue voice ecosystem.
+IA Chéries voice ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

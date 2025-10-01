@@ -1,4 +1,4 @@
-"""{{agent_name}} Machine Learning Agent for Ainflue Platform
+"""{{agent_name}} Machine Learning Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

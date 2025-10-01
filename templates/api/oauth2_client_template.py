@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🔐 AINFLUE OAUTH2 CLIENT TEMPLATE - ENTERPRISE AUTHENTICATION
+🔐 IACHERIE OAUTH2 CLIENT TEMPLATE - ENTERPRISE AUTHENTICATION
 =============================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IACHERIE CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
-📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
+📧 Contact: mlaiel@live.de | 🌐 https://iacherie.com
 
 🏢 ENTERPRISE OAUTH2 CLIENT - MULTI-PROVIDER AUTHENTICATION SYSTEM
 🎯 Expert Integration: Lead Dev IA + Backend Senior + Security Expert + Enterprise Auth
@@ -1100,7 +1100,7 @@ async def example_oauth2_flow():
         # 1. Start authorization flow
         auth_url, state, code_verifier = await oauth2_client.get_authorization_url(
             provider="google",
-            redirect_uri="https://app.ainflue.com/auth/callback",
+            redirect_uri="https://app.iacherie.com/auth/callback",
             creator_mode=True
         )
         
@@ -1115,7 +1115,7 @@ async def example_oauth2_flow():
         token_response = await oauth2_client.exchange_code_for_token(
             provider="google",
             code=authorization_code,
-            redirect_uri="https://app.ainflue.com/auth/callback",
+            redirect_uri="https://app.iacherie.com/auth/callback",
             state=state,
             code_verifier=code_verifier
         )
@@ -1245,7 +1245,7 @@ async def protected_route(token: str = Depends(get_current_user)):
 # Request creator-specific scopes
 auth_url, state, verifier = await oauth2_client.get_authorization_url(
     provider="youtube",
-    redirect_uri="https://app.ainflue.com/auth/callback",
+    redirect_uri="https://app.iacherie.com/auth/callback",
     creator_mode=True  # Enables creator scopes
 )
 

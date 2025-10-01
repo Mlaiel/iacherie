@@ -1,4 +1,4 @@
-"""gRPC Load Balancing Template for Ainflue Platform
+"""gRPC Load Balancing Template for IA Chéries Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================

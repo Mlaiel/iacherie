@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Multi-Factor Authentication Template - Enterprise Security
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -85,7 +85,7 @@ class MFAError(Exception):
 class MFAConfig:
     """Enterprise MFA configuration"""
     # TOTP settings
-    totp_issuer: str = "Ainflue"
+    totp_issuer: str = "iacherie"
     totp_algorithm: str = "SHA1"
     totp_digits: int = 6
     totp_interval: int = 30
@@ -96,15 +96,15 @@ class MFAConfig:
     sms_api_key: Optional[str] = None
     sms_api_secret: Optional[str] = None
     sms_from_number: Optional[str] = None
-    sms_template: str = "Your Ainflue verification code: {code}"
+    sms_template: str = "Your iacherie verification code: {code}"
     
     # Email settings
     email_smtp_host: str = "smtp.gmail.com"
     email_smtp_port: int = 587
     email_username: Optional[str] = None
     email_password: Optional[str] = None
-    email_from: str = "noreply@ainflue.com"
-    email_template: str = "Your Ainflue verification code: {code}"
+    email_from: str = "noreply@iacherie.com"
+    email_template: str = "Your iacherie verification code: {code}"
     
     # Push notification settings
     push_provider: str = "firebase"  # firebase, apns, custom
@@ -374,7 +374,7 @@ class EmailProvider:
         """Send email verification code"""
         try:
             message = self.config.email_template.format(code=code)
-            subject = "Ainflue Verification Code"
+            subject = "iacherie Verification Code"
             
             return await self._send_smtp_email(email_address, subject, message)
             
@@ -440,7 +440,7 @@ class PushNotificationProvider:
             payload = {
                 "to": device_token,
                 "notification": {
-                    "title": "Ainflue Verification",
+                    "title": "iacherie Verification",
                     "body": f"Your verification code: {code}"
                 },
                 "data": {
@@ -521,7 +521,7 @@ class MFAManager:
             if method == MFAMethod.TOTP:
                 secret_key = self.totp_manager.generate_secret()
                 # Generate QR code for easy setup
-                email = email_address or f"user_{user_id}@ainflue.com"
+                email = email_address or f"user_{user_id}@iacherie.com"
                 provisioning_uri = self.totp_manager.get_provisioning_uri(email, secret_key)
                 qr_code = self.totp_manager.generate_qr_code(provisioning_uri)
                 secret_key = self.crypto.encrypt(secret_key)

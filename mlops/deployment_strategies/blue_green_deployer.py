@@ -394,7 +394,7 @@ class ModelDeployer:
                 model_id=request.model_id,
                 model_version=request.model_version,
                 environment=environment,
-                url=f"https://{environment.value}.ainflue.com/models/{request.model_id}",
+                url=f"https://{environment.value}.iacherie.com/models/{request.model_id}",
                 replicas=request.replicas,
                 cpu_limit=request.resource_requirements.get("cpu", "500m"),
                 memory_limit=request.resource_requirements.get("memory", "512Mi"),

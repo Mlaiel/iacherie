@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Ainflue Monetization Rate Limiter - Enterprise Subscription Management
+IA Chéries Monetization Rate Limiter - Enterprise Subscription Management
 =====================================================================
 
 Advanced rate limiting system with subscription tier management, premium features,
 usage-based billing, revenue analytics, and dynamic tier optimization for the 
-Ainflue creator platform.
+IA Chéries creator platform.
 
 Features:
 - Multi-tier subscription management (Free/Basic/Pro/Enterprise/Custom)
@@ -22,7 +22,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized copying or distribution prohibited
 
-Project: Ainflue Rate Limiting - Monetization Module
+Project: IA Chéries Rate Limiting - Monetization Module
 Version: 1.0 Production
 """
 

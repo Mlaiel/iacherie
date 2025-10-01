@@ -1,6 +1,6 @@
 # 🎭 Advanced 3D Avatar System
 
-**Enterprise-grade 3D avatar generation, AI-driven personality, and multi-platform distribution system for the Ainflue IA Influencer Agent Platform.**
+**Enterprise-grade 3D avatar generation, AI-driven personality, and multi-platform distribution system for the iacherie IA Influencer Agent Platform.**
 
 ## 👥 Team Specialization
 
@@ -216,4 +216,4 @@ This software is proprietary and confidential. Unauthorized use is prohibited.
 
 ---
 
-**🎭 Ainflue Avatar System - Bringing Digital Humans to Life** 🚀
+**🎭 iacherie Avatar System - Bringing Digital Humans to Life** 🚀

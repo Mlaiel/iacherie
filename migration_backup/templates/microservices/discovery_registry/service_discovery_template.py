@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Service Discovery Template for Ainflue Platform
+Service Discovery Template for IA Chéries Platform
 ==============================================
 
 Production-ready service discovery with:
@@ -353,7 +353,7 @@ class ServiceDiscoveryCache:
 
 class ServiceDiscovery:
     """
-    Production-ready service discovery for Ainflue Platform
+    Production-ready service discovery for IA Chéries Platform
     
     Features:
     - Intelligent service resolution with multiple strategies
@@ -529,7 +529,7 @@ class ServiceDiscovery:
 
 class ServiceDiscoveryTemplate:
     """
-    Service Discovery Template for Ainflue Platform
+    Service Discovery Template for IA Chéries Platform
     
     A comprehensive service discovery system that provides:
     - Intelligent service resolution

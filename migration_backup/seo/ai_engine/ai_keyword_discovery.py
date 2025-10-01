@@ -1,5 +1,5 @@
 """
-AI Keyword Discovery Engine for Ainflue Platform
+AI Keyword Discovery Engine for IA Chéries Platform
 ===============================================
 
 Advanced AI-powered keyword research and discovery system using machine learning,

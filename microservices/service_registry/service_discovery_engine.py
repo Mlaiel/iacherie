@@ -754,7 +754,7 @@ class ServiceDiscoveryEngine:
             'general': 0
         }
         
-        return sorted(services, key=lambda s: priority_order.get(s.ainflue_business_domain, 0), reverse=True)
+        return sorted(services, key=lambda s: priority_order.get(s.iacherie_business_domain, 0), reverse=True)
     
     async def _random_discovery(self, services: List[ServiceInstance], request: ServiceDiscoveryRequest) -> List[ServiceInstance]:
         """Random service selection"""

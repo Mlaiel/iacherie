@@ -1,5 +1,5 @@
 /**
- * Ainflue iOS Native App - Main Application Entry Point
+ * IA Chéries iOS Native App - Main Application Entry Point
  * 
  * Professional iOS application integrating advanced content creation,
  * AI-powered protection, and multi-platform distribution capabilities.
@@ -66,7 +66,7 @@ interface AppState {
   contentProcessingQueue: number;
 }
 
-const AinflueiOSApp: React.FC = () => {
+const IA ChériesiOSApp: React.FC = () => {
   const [appState, setAppState] = React.useState<AppState>({
     isAuthenticated: false,
     biometricEnabled: false,
@@ -106,7 +106,7 @@ const AinflueiOSApp: React.FC = () => {
         backgroundSyncActive: true,
       }));
 
-      console.log('✅ Ainflue iOS App initialized successfully');
+      console.log('✅ IA Chéries iOS App initialized successfully');
     } catch (error) {
       console.error('❌ Failed to initialize iOS app:', error);
     }
@@ -146,7 +146,7 @@ const AinflueiOSApp: React.FC = () => {
             <Stack.Screen
               name="Home"
               component={HomeScreen}
-              options={{ title: 'Ainflue' }}
+              options={{ title: 'IA Chéries' }}
             />
             <Stack.Screen
               name="ContentCreation"
@@ -191,7 +191,7 @@ const AinflueiOSApp: React.FC = () => {
 // Screen Components (references to native implementations)
 const HomeScreen = () => (
   <View style={styles.screen}>
-    <Text style={styles.screenTitle}>Ainflue iOS</Text>
+    <Text style={styles.screenTitle}>IA Chéries iOS</Text>
     <Text style={styles.screenSubtitle}>
       Professional Content Creation Platform
     </Text>
@@ -272,4 +272,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AinflueiOSApp;
+export default IA ChériesiOSApp;

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Collaboration Service Template for Ainflue Platform
+Collaboration Service Template for iacherie Platform
 ==================================================
 
 Production-ready real-time collaboration service with:
@@ -267,7 +267,7 @@ class CreatorMatchResponse(BaseModel):
 
 class CollaborationService(BaseMicroservice):
     """
-    Enterprise Collaboration Service for Ainflue Platform
+    Enterprise Collaboration Service for iacherie Platform
     
     Provides real-time collaboration features, creator matching,
     project management, and workspace tools for content creators.
@@ -1277,7 +1277,7 @@ def create_collaboration_app() -> FastAPI:
     """Create FastAPI application for collaboration service"""
     
     app = FastAPI(
-        title="Ainflue Collaboration Service",
+        title="iacherie Collaboration Service",
         description="Real-time collaboration and creator matching service",
         version="1.0.0"
     )

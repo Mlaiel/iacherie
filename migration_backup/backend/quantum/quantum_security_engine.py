@@ -5,7 +5,7 @@ import os
 
 Système de sécurité quantique consolidé combinant cryptographie post-quantique,
 threat detection, compliance management, privacy protection et security monitoring
-pour assurer une sécurité maximale de la plateforme Ainflue.
+pour assurer une sécurité maximale de la plateforme IA Chéries.
 
 CONSOLIDATION: 6 fichiers → 1 fichier ✅
 - quantum_cryptography_engine.py ✅ FUSIONNÉ

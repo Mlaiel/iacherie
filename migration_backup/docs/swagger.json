@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Ainflue AI Platform API",
+    "title": "IA Chéries AI Platform API",
     "version": "1.0.0",
-    "description": "\n# Ainflue AI Platform API\n\nComplete API documentation for the Ainflue AI-powered content protection and monetization platform.\n\n## Features\n\n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n- **Creator Management**: Comprehensive creator profiles and content management\n- **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**: Real-time analytics and performance metrics\n- **Multi-platform Support**: Integration with major content platforms\n- **Security**: Enterprise-grade security and compliance features\n\n## Authentication\n\nAll API endpoints require authentication using API keys or JWT tokens.\n                ",
+    "description": "\n# IA Chéries AI Platform API\n\nComplete API documentation for the IA Chéries AI-powered content protection and monetization platform.\n\n## Features\n\n- **Content Protection**: Advanced AI-powered fingerprinting and rights management\n- **Creator Management**: Comprehensive creator profiles and content management\n- **Monetization**: Revenue tracking, licensing, and payment processing\n- **Analytics**: Real-time analytics and performance metrics\n- **Multi-platform Support**: Integration with major content platforms\n- **Security**: Enterprise-grade security and compliance features\n\n## Authentication\n\nAll API endpoints require authentication using API keys or JWT tokens.\n                ",
     "termsOfService": "https://ainflue.com/terms",
     "contact": {
-      "name": "Ainflue API Support",
+      "name": "IA Chéries API Support",
       "email": "mlaiel@live.de",
       "url": "https://ainflue.com/support"
     },

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enterprise System Validator for Ainflue Platform
+Enterprise System Validator for IA Chéries Platform
 Comprehensive validation of all expert role implementations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -48,7 +48,7 @@ class SystemValidator:
     
     def __init__(self):
         self.logger = self._setup_logging()
-        self.project_root = Path("/home/runner/work/Ainfluencer/Ainfluencer")
+        self.project_root = Path("/home/runner/work/IA Chéries/IA Chéries")
         self.validation_results = []
         
         # Expert role mappings
@@ -577,7 +577,7 @@ class SystemValidator:
         summary = report['validation_summary']
         
         print("\n" + "="*80)
-        print("🎯 AINFLUE ENTERPRISE SYSTEM VALIDATION REPORT")
+        print("🎯 IA CHÉRIES ENTERPRISE SYSTEM VALIDATION REPORT")
         print("="*80)
         
         print(f"\n📊 OVERALL METRICS:")
@@ -610,7 +610,7 @@ async def main():
     """Run system validation"""
     validator = SystemValidator()
     
-    print("🚀 Starting Ainflue Enterprise System Validation...")
+    print("🚀 Starting IA Chéries Enterprise System Validation...")
     
     # Run comprehensive validation
     report = await validator.run_comprehensive_validation()

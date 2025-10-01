@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔐 Advanced Encryption Engine - Ainflue Platform
+🔐 Advanced Encryption Engine - IA Chéries Platform
 ===============================================
 
 Enterprise-grade encryption engine with AES-256, RSA-4096, elliptic curve cryptography,

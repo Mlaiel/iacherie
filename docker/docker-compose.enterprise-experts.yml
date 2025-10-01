@@ -142,8 +142,8 @@ services:
       dockerfile: docker/database_cluster_manager.dockerfile
     container_name: iacherie-db-cluster
     environment:
-      - POSTGRES_DB=ainflue_cluster
-      - POSTGRES_USER=ainflue_admin
+      - POSTGRES_DB=iacherie_cluster
+      - POSTGRES_USER=iacherie_admin
       - POSTGRES_PASSWORD=secure_cluster_password
       - BACKUP_SCHEDULE=0 2 * * *
     volumes:
@@ -156,7 +156,7 @@ services:
       - iacherie-database
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "5432", "-U", "ainflue_admin"]
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "5432", "-U", "iacherie_admin"]
       interval: 30s
       timeout: 10s
       retries: 3

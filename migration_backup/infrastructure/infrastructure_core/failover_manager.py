@@ -2,7 +2,7 @@
 Failover Manager - Enterprise Failover and High Availability Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Automated failover management for Ainflue creator platform infrastructure.
+Automated failover management for IA Chéries creator platform infrastructure.
 Provides intelligent failover detection, automatic recovery, and business continuity.
 """
 
@@ -68,7 +68,7 @@ class FailoverTarget:
 
 class FailoverManager:
     """
-    Enterprise Failover Manager for Ainflue Infrastructure
+    Enterprise Failover Manager for IA Chéries Infrastructure
     
     Manages automated failover processes, health monitoring, and recovery orchestration
     for the creator economy platform ensuring 99.99% uptime and minimal data loss.
@@ -80,7 +80,7 @@ class FailoverManager:
         self.health_monitors: Dict[str, Any] = {}
         self.recovery_procedures: Dict[str, Any] = {}
         
-        # Ainflue business logic integration
+        # IA Chéries business logic integration
         self.creator_services = [
             'content_upload_api',
             'ai_processing_engine', 
@@ -92,7 +92,7 @@ class FailoverManager:
         ]
         
     async def initialize_failover_systems(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize failover systems for Ainflue infrastructure"""
+        """Initialize failover systems for IA Chéries infrastructure"""
         
         initialization_result = {
             'dns_failover': await self._setup_dns_failover(config),

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Library Component
+ * IA Chéries Desktop - Content Library Component
  * 
  * Advanced content management with AI-powered organization and professional workflow support
  * Implements multi-format content library with search, filtering, and metadata management

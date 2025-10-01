@@ -6,7 +6,7 @@ Advanced alerting system with intelligent correlation, multi-channel notificatio
 escalation policies, and creator platform specialized alerting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -717,7 +717,7 @@ class BackupAlertingSystem:
         channel_type: NotificationChannel
     ) -> str:
         """Generate appropriate message for notification channel."""
-        base_message = f"🚨 AINFLUE BACKUP ALERT\n"
+        base_message = f"🚨 IA CHÉRIES BACKUP ALERT\n"
         base_message += f"Alert: {alert_data.get('message', 'Backup system alert')}\n"
         base_message += f"Source: {alert_data.get('source', 'Unknown')}\n"
         base_message += f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}\n"
@@ -733,10 +733,10 @@ class BackupAlertingSystem:
         
         # Channel-specific formatting
         if channel_type == NotificationChannel.SLACK:
-            base_message = f"🚨 *AINFLUE BACKUP ALERT*\n```\n{base_message}\n```"
+            base_message = f"🚨 *IA CHÉRIES BACKUP ALERT*\n```\n{base_message}\n```"
         elif channel_type == NotificationChannel.SMS:
             # Shortened for SMS
-            base_message = f"AINFLUE ALERT: {alert_data.get('message', 'Backup issue')[:100]}"
+            base_message = f"IA CHÉRIES ALERT: {alert_data.get('message', 'Backup issue')[:100]}"
         
         return base_message
     

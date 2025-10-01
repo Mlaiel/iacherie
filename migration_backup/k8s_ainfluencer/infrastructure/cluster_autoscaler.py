@@ -2,7 +2,7 @@
 ==============================================
 
 Kubernetes cluster autoscaling configuration with intelligent policies
-for the Ainflue platform optimal resource utilization.
+for the IA Chéries platform optimal resource utilization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

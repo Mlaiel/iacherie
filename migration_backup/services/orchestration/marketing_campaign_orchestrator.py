@@ -1,5 +1,5 @@
 """
-🎯 MARKETING CAMPAIGN ORCHESTRATOR - AINFLUE ENTERPRISE
+🎯 MARKETING CAMPAIGN ORCHESTRATOR - IA CHÉRIES ENTERPRISE
 ======================================================
 
 Multi-channel campaign coordination and marketing automation for creator economy platform.

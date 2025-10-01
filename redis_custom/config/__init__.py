@@ -236,7 +236,7 @@ def print_module_banner():
 # Initialize module banner when imported
 if __name__ != "__main__":
     import os
-    if os.getenv('AINFLUE_SHOW_BANNER', '1') == '1':
+    if os.getenv('IACHERIE_SHOW_BANNER', '1') == '1':
         print_module_banner()
 
 

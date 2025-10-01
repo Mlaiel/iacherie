@@ -2,7 +2,7 @@
 =======================================================================
 
 Engine de génération musicale IA enterprise avec composition automatique,
-transfert de style et orchestration pour créateurs musicaux sur Ainflue.
+transfert de style et orchestration pour créateurs musicaux sur IA Chéries.
 
 Expert Roles Implementation:
 🤖 Lead Dev IA: Neural music generation + style transfer + composition algorithms
@@ -744,7 +744,7 @@ class MusicGenerationEngine:
         
         # Métadonnées
         metadata = {
-            "composer": "Ainflue AI Engine",
+            "composer": "IA Chéries AI Engine",
             "genre": config.genre.value,
             "mood": config.mood.value,
             "key": config.key_signature,

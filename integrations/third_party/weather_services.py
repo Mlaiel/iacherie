@@ -1152,7 +1152,7 @@ def create_weather_manager(config: Dict[str, Any]) -> WeatherServicesManager:
     return WeatherServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_weather_content_optimization_workflow(user_location: str, content_plans: List[Dict[str, Any]]) -> Dict[str, Any]:
+async def iacherie_weather_content_optimization_workflow(user_location: str, content_plans: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Complete weather-based content optimization workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -1308,7 +1308,7 @@ if __name__ == "__main__":
             {"type": "text", "theme": "motivation"}
         ]
         
-        result = await ainflue_weather_content_optimization_workflow(test_location, test_content_plans)
+        result = await iacherie_weather_content_optimization_workflow(test_location, test_content_plans)
         
         print("Weather Content Optimization Workflow Result:")
         print(json.dumps(result, indent=2, default=str))

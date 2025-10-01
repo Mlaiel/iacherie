@@ -395,7 +395,7 @@ class ServerlessDeploymentEngine:
                 'CREATOR_ID': deployment_context['creator_id'],
                 'DEPLOYMENT_ID': deployment_context['deployment_id'],
                 'CREATOR_TIER': creator_config.get('tier', 'creator'),
-                'AINFLUE_ENV': deployment_context.get('environment', 'production')
+                'IA CHÉRIES_ENV': deployment_context.get('environment', 'production')
             }
             
             # Add creator-specific environment variables
@@ -403,12 +403,12 @@ class ServerlessDeploymentEngine:
             
             # Setup tags
             tags = {
-                'Project': 'Ainflue',
+                'Project': 'IA Chéries',
                 'Model': model_id,
                 'Creator': deployment_context['creator_id'],
                 'Tier': creator_config.get('tier', 'creator'),
                 'Environment': deployment_context.get('environment', 'production'),
-                'ManagedBy': 'AinflueCopilot'
+                'ManagedBy': 'IA ChériesCopilot'
             }
             
             return ServerlessConfig(

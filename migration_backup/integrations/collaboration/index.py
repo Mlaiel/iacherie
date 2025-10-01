@@ -1,11 +1,11 @@
 """
-Collaboration - Ainflue Integrations
+Collaboration - IA Chéries Integrations
 ====================================
 Point d'entrée principal pour le module de collaboration IA.
 Orchestration de matching créateurs et workflows collaboratifs.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chéries Integrations  
 Version: 1.0 Production
 """
 
@@ -21,7 +21,7 @@ from .notification_orchestrator import NotificationOrchestrator
 from .gamification_engine import AdvancedGamificationEngine
 from .ai_conflict_resolution import AIConflictResolutionSystem
 
-# Configuration logique métier Ainflue - UPDATED with Phase 2 components
+# Configuration logique métier IA Chéries - UPDATED with Phase 2 components
 COLLABORATION_CONFIG = {
     'platforms_supported': 65,
     'ai_agents': 5,

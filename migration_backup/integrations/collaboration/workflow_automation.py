@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Workflow Automation Engine - Ainflue Enterprise Collaboration
+Workflow Automation Engine - IA Chéries Enterprise Collaboration
 Intelligent process automation for creator collaborations
 
 Author: Fahed Mlaiel (mlaiel@live.de)

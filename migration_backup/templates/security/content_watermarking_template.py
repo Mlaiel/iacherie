@@ -1,4 +1,4 @@
-"""Content Watermarking Template for Ainflue Creator Protection
+"""Content Watermarking Template for IA Chéries Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

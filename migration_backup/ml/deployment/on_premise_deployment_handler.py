@@ -1147,7 +1147,7 @@ async def example_usage():
     
     # Initialize on-premise deployment handler
     on_prem_handler = OnPremiseDeploymentHandler(
-        deployment_config_path="/home/runner/work/Ainflue/Ainflue/ml/deployment",
+        deployment_config_path="/home/runner/work/IA Chéries/IA Chéries/ml/deployment",
         security_level=SecurityLevel.HIGH
     )
     

@@ -14,4 +14,4 @@ class AnalyticsProviders:
         return {"metric": metric, "value": 12500, "trend": "+15.3%", "period": time_range}
     
     async def create_custom_dashboard(self, dashboard_config: dict):
-        return {"dashboard_id": "dash_101", "url": "https://analytics.ainflue.com/dash_101"}
+        return {"dashboard_id": "dash_101", "url": "https://analytics.iacherie.com/dash_101"}

@@ -1,4 +1,4 @@
-# ⚡ Observability Mesh Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Observability Mesh Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: observability-mesh-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: observability-mesh
     component: global-config
@@ -36,16 +36,16 @@ data:
         federation:
           enabled: true
           clusters:
-            - name: "ainflue-west"
-              url: "http://prometheus.ainflue-west.svc.cluster.local:9090"
-            - name: "ainflue-east"
-              url: "http://prometheus.ainflue-east.svc.cluster.local:9090"
+            - name: "iacherie-west"
+              url: "http://prometheus.iacherie-west.svc.cluster.local:9090"
+            - name: "iacherie-east"
+              url: "http://prometheus.iacherie-east.svc.cluster.local:9090"
         remoteWrite:
           enabled: true
           endpoints:
-            - url: "https://prometheus.ainflue.com/api/v1/write"
+            - url: "https://prometheus.iacherie.com/api/v1/write"
               basicAuth:
-                username: "ainflue-metrics"
+                username: "iacherie-metrics"
                 password: "secure-password"
               writeRelabelConfigs:
                 - sourceLabels: [__name__]
@@ -78,7 +78,7 @@ data:
         customTags:
           environment: "production"
           service_mesh: "multi"
-          platform: "ainflue"
+          platform: "iacherie"
           creator_id: "%{REQUEST_HEADERS:x-creator-id}"
           user_id: "%{REQUEST_HEADERS:x-user-id}"
           request_id: "%{REQUEST_HEADERS:x-request-id}"
@@ -94,8 +94,8 @@ data:
         elasticsearch:
           enabled: true
           hosts: ["elasticsearch.logging.svc.cluster.local:9200"]
-          index: "ainflue-logs-%{+YYYY.MM.dd}"
-          template: "ainflue-logs-template"
+          index: "iacherie-logs-%{+YYYY.MM.dd}"
+          template: "iacherie-logs-template"
         fluentd:
           enabled: true
           endpoint: "fluentd.logging.svc.cluster.local:24224"
@@ -107,10 +107,10 @@ data:
             queueLimitLength: 32
         logLevel:
           services:
-            ainflue-api: "info"
-            ainflue-content-processor: "debug"
-            ainflue-payment-service: "warn"
-            ainflue-database: "error"
+            iacherie-api: "info"
+            iacherie-content-processor: "debug"
+            iacherie-payment-service: "warn"
+            iacherie-database: "error"
         sensitiveDataRedaction:
           enabled: true
           patterns:
@@ -128,8 +128,8 @@ data:
           enabled: true
           config:
             global:
-              smtpSmarthost: 'smtp.ainflue.com:587'
-              smtpFrom: 'alerts@ainflue.com'
+              smtpSmarthost: 'smtp.iacherie.com:587'
+              smtpFrom: 'alerts@iacherie.com'
               slackApiUrl: 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
             routes:
               - match:
@@ -147,8 +147,8 @@ data:
             receivers:
               - name: 'critical-alerts'
                 emailConfigs:
-                  - to: 'oncall@ainflue.com'
-                    subject: '[CRITICAL] Ainflue Alert'
+                  - to: 'oncall@iacherie.com'
+                    subject: '[CRITICAL] iacherie Alert'
                 slackConfigs:
                   - channel: '#critical-alerts'
                     title: 'Critical Alert'
@@ -215,8 +215,8 @@ spec:
 apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
-  name: ainflue-telemetry
-  namespace: ainflue-production
+  name: iacherie-telemetry
+  namespace: iacherie-production
 spec:
   metrics:
   - providers:
@@ -262,7 +262,7 @@ apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
 metadata:
   name: creator-economy-metrics
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   metrics:
   - providers:
@@ -417,14 +417,14 @@ data:
             dashboard: |
               {
                 "dashboard": {
-                  "title": "Ainflue Creator Economy - Linkerd",
+                  "title": "iacherie Creator Economy - Linkerd",
                   "panels": [
                     {
                       "title": "Creator Requests Rate",
                       "type": "graph",
                       "targets": [
                         {
-                          "expr": "sum(rate(response_total{deployment=\"ainflue-api\"}[1m])) by (creator_id)"
+                          "expr": "sum(rate(response_total{deployment=\"iacherie-api\"}[1m])) by (creator_id)"
                         }
                       ]
                     },
@@ -433,7 +433,7 @@ data:
                       "type": "graph",
                       "targets": [
                         {
-                          "expr": "histogram_quantile(0.99, sum(rate(response_latency_ms_bucket{deployment=\"ainflue-content-processor\"}[1m])) by (le))"
+                          "expr": "histogram_quantile(0.99, sum(rate(response_latency_ms_bucket{deployment=\"iacherie-content-processor\"}[1m])) by (le))"
                         }
                       ]
                     },
@@ -442,7 +442,7 @@ data:
                       "type": "singlestat",
                       "targets": [
                         {
-                          "expr": "sum(rate(response_total{deployment=\"ainflue-payment-service\",classification=\"success\"}[5m])) / sum(rate(response_total{deployment=\"ainflue-payment-service\"}[5m]))"
+                          "expr": "sum(rate(response_total{deployment=\"iacherie-payment-service\",classification=\"success\"}[5m])) / sum(rate(response_total{deployment=\"iacherie-payment-service\"}[5m]))"
                         }
                       ]
                     }
@@ -464,13 +464,13 @@ data:
                 type: "probabilistic"
                 param: 0.1
               per_service_strategies:
-                - service: "ainflue-api"
+                - service: "iacherie-api"
                   type: "ratelimiting"
                   max_traces_per_second: 100
-                - service: "ainflue-content-processor"
+                - service: "iacherie-content-processor"
                   type: "probabilistic"
                   param: 0.5
-                - service: "ainflue-payment-service"
+                - service: "iacherie-payment-service"
                   type: "probabilistic"
                   param: 1.0
 ---
@@ -488,11 +488,11 @@ data:
     telemetry {
       prometheus_retention_time = "24h"
       disable_hostname = true
-      metrics_prefix = "consul.ainflue"
+      metrics_prefix = "consul.iacherie"
       
       # Circonus Configuration
       circonus_api_token = ""
-      circonus_api_app = "consul-ainflue"
+      circonus_api_app = "consul-iacherie"
       circonus_api_url = "https://api.circonus.com/v2"
       circonus_submission_interval = "10s"
       circonus_submission_url = "https://trap.noit.circonus.net/module/httptrap/check-uuid/secret-here"
@@ -503,7 +503,7 @@ data:
       # Datadog Configuration
       dogstatsd_addr = "datadog-agent.monitoring.svc.cluster.local:8125"
       dogstatsd_tags = [
-        "datacenter:ainflue-dc1",
+        "datacenter:iacherie-dc1",
         "environment:production",
         "service_mesh:consul_connect"
       ]
@@ -584,7 +584,7 @@ data:
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: ainflue-otel-collector
+  name: iacherie-otel-collector
   namespace: observability
 spec:
   mode: deployment
@@ -642,7 +642,7 @@ spec:
           value: multi
           action: upsert
         - key: cluster
-          value: ainflue-production
+          value: iacherie-production
           action: upsert
       attributes:
         actions:
@@ -673,10 +673,10 @@ spec:
           insecure: true
       prometheus:
         endpoint: "0.0.0.0:8889"
-        namespace: ainflue
+        namespace: iacherie
         const_labels:
           environment: production
-          cluster: ainflue-production
+          cluster: iacherie-production
       otlp/jaeger:
         endpoint: jaeger-collector.observability.svc.cluster.local:4317
         tls:
@@ -685,7 +685,7 @@ spec:
         loglevel: debug
       elasticsearch:
         endpoints: ["https://elasticsearch.logging.svc.cluster.local:9200"]
-        index: ainflue-traces-%{+yyyy.MM.dd}
+        index: iacherie-traces-%{+yyyy.MM.dd}
         tls:
           insecure_skip_verify: true
         auth:
@@ -723,7 +723,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: creator-economy-observability
-  namespace: ainflue-production
+  namespace: iacherie-production
 data:
   creator-metrics.yaml: |
     # Creator Economy Observability Configuration
@@ -804,17 +804,17 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-grafana-dashboards
+  name: iacherie-grafana-dashboards
   namespace: observability
   labels:
     grafana_dashboard: "1"
 data:
-  ainflue-overview.json: |
+  iacherie-overview.json: |
     {
       "dashboard": {
         "id": null,
-        "title": "Ainflue Platform Overview",
-        "tags": ["ainflue", "overview"],
+        "title": "iacherie Platform Overview",
+        "tags": ["iacherie", "overview"],
         "style": "dark",
         "timezone": "browser",
         "panels": [
@@ -824,7 +824,7 @@ data:
             "type": "stat",
             "targets": [
               {
-                "expr": "up{job=~\"ainflue.*\"}"
+                "expr": "up{job=~\"iacherie.*\"}"
               }
             ],
             "fieldConfig": {
@@ -1077,14 +1077,14 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: ainflue-alerting-rules
+  name: iacherie-alerting-rules
   namespace: observability
   labels:
     app: prometheus
     component: rules
 spec:
   groups:
-  - name: ainflue.platform
+  - name: iacherie.platform
     interval: 30s
     rules:
     - alert: HighErrorRate
@@ -1128,7 +1128,7 @@ spec:
         summary: "High latency detected"
         description: "99th percentile latency is {{ $value }}s for service {{ $labels.service }}"
   
-  - name: ainflue.creator-economy
+  - name: iacherie.creator-economy
     interval: 60s
     rules:
     - alert: CreatorRevenueDropped
@@ -1173,5 +1173,5 @@ spec:
 # ===================================================================
 # END OF OBSERVABILITY MESH CONFIGURATION TEMPLATE
 # Creator Economy Observability Solution by Fahed Mlaiel
-# Enterprise-grade observability for Ainflue service mesh platform
+# Enterprise-grade observability for iacherie service mesh platform
 # ===================================================================

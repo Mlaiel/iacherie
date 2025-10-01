@@ -34,18 +34,18 @@ def suppress_redis_warnings_in_file(file_path):
 
 # Liste des fichiers à modifier
 files_to_modify = [
-    "/workspaces/Ainfluencer/database/database_operations.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/mongodb_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/file_storage.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/database_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/redis_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_alerting.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/global_compliance_manager.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/regulatory_compliance.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_documentation.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/data_protection_impact_assessment.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/regional_compliance.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_analytics.py",
+    "/workspaces/iaCherie/database/database_operations.py",
+    "/workspaces/iaCherie/infrastructure/storage_modules/mongodb_adapter.py",
+    "/workspaces/iaCherie/infrastructure/storage_modules/file_storage.py",
+    "/workspaces/iaCherie/infrastructure/storage_modules/database_adapter.py",
+    "/workspaces/iaCherie/infrastructure/storage_modules/redis_adapter.py",
+    "/workspaces/iaCherie/infrastructure/compliance/compliance_alerting.py",
+    "/workspaces/iaCherie/infrastructure/compliance/global_compliance_manager.py",
+    "/workspaces/iaCherie/infrastructure/compliance/regulatory_compliance.py",
+    "/workspaces/iaCherie/infrastructure/compliance/compliance_documentation.py",
+    "/workspaces/iaCherie/infrastructure/compliance/data_protection_impact_assessment.py",
+    "/workspaces/iaCherie/infrastructure/compliance/regional_compliance.py",
+    "/workspaces/iaCherie/infrastructure/compliance/compliance_analytics.py",
 ]
 
 for file_path in files_to_modify:

@@ -2,7 +2,7 @@
 ===================================================================
 
 Deployment manager enterprise avec blue-green deployments, canary releases,
-rollback automation et feature flag management pour l'écosystème Ainflue.
+rollback automation et feature flag management pour l'écosystème IA Chéries.
 
 Expert Roles Implementation:
 ⚙️ DevOps: Deployment automation + CI/CD integration + rollback strategies

@@ -17,7 +17,7 @@ TOUS DROITS RÉSERVÉS
 - Maintenance et mises à jour assurées
 - Formation équipe technique fournie
 
-Ainflue Security Templates Module
+IA Chéries Security Templates Module
 Advanced security microservices templates for enterprise creator economy platform
 """
 

@@ -194,7 +194,7 @@ async def get_crawler_details(crawler_id: str):
             "crawl_interval": "15min",
             "depth": 3,
             "respect_robots_txt": True,
-            "user_agent": "Ainflue-Bot/1.0"
+            "user_agent": "IA Chéries-Bot/1.0"
         }
     }
 

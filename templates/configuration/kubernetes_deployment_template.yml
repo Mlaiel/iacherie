@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-platform
+  name: iacherie-platform
   labels:
-    name: ainflue-platform
+    name: iacherie-platform
     environment: production
 ---
 # 🚀 KUBERNETES DEPLOYMENT TEMPLATE - DEVOPS EXPERT IMPLEMENTATION
@@ -27,8 +27,8 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-config
-  namespace: ainflue-platform
+  name: iacherie-config
+  namespace: iacherie-platform
 data:
   # Application configuration
   APP_ENV: "production"
@@ -38,7 +38,7 @@ data:
   # Database configuration
   DB_HOST: "postgresql-service"
   DB_PORT: "5432"
-  DB_NAME: "ainflue"
+  DB_NAME: "iacherie"
   
   # Redis configuration
   REDIS_HOST: "redis-service"
@@ -57,13 +57,13 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ainflue-secrets
-  namespace: ainflue-platform
+  name: iacherie-secrets
+  namespace: iacherie-platform
 type: Opaque
 stringData:
   # Database credentials
   DB_PASSWORD: "your-db-password"
-  DB_USER: "ainflue_user"
+  DB_USER: "iacherie_user"
   
   # JWT secrets
   JWT_SECRET_KEY: "your-jwt-secret-key"
@@ -87,7 +87,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgresql
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   serviceName: postgresql-service
   replicas: 1
@@ -108,17 +108,17 @@ spec:
         - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
-              name: ainflue-config
+              name: iacherie-config
               key: DB_NAME
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: DB_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ainflue-secrets
+              name: iacherie-secrets
               key: DB_PASSWORD
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
@@ -167,7 +167,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgresql-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: postgresql
@@ -182,7 +182,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   serviceName: redis-service
   replicas: 1
@@ -246,7 +246,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: redis
@@ -261,7 +261,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: elasticsearch
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   serviceName: elasticsearch-service
   replicas: 3
@@ -287,7 +287,7 @@ spec:
         - containerPort: 9300
         env:
         - name: cluster.name
-          value: "ainflue-search"
+          value: "iacherie-search"
         - name: node.name
           valueFrom:
             fieldRef:
@@ -337,7 +337,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: elasticsearch-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: elasticsearch
@@ -356,7 +356,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-backend
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: api-backend
     version: v1
@@ -379,7 +379,7 @@ spec:
     spec:
       containers:
       - name: api-backend
-        image: ainflue/api-backend:latest
+        image: iacherie/api-backend:latest
         ports:
         - containerPort: 8000
         env:
@@ -387,9 +387,9 @@ spec:
           value: "8000"
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         volumeMounts:
         - name: app-config
           mountPath: /app/config
@@ -424,7 +424,7 @@ spec:
       volumes:
       - name: app-config
         configMap:
-          name: ainflue-config
+          name: iacherie-config
       imagePullSecrets:
       - name: registry-secret
 
@@ -433,7 +433,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: api-backend-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: api-backend
@@ -448,7 +448,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ai-processing
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: ai-processing
     version: v1
@@ -471,7 +471,7 @@ spec:
     spec:
       containers:
       - name: ai-processing
-        image: ainflue/ai-processing:latest
+        image: iacherie/ai-processing:latest
         ports:
         - containerPort: 8001
         env:
@@ -481,9 +481,9 @@ spec:
           value: "true"
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "4Gi"
@@ -520,7 +520,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ai-processing-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: ai-processing
@@ -535,7 +535,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-web
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: frontend-web
     version: v1
@@ -558,14 +558,14 @@ spec:
     spec:
       containers:
       - name: frontend-web
-        image: ainflue/frontend-web:latest
+        image: iacherie/frontend-web:latest
         ports:
         - containerPort: 3000
         env:
         - name: NODE_ENV
           value: "production"
         - name: API_BASE_URL
-          value: "https://api.ainflue.com"
+          value: "https://api.iacherie.com"
         resources:
           requests:
             memory: "256Mi"
@@ -593,7 +593,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-web-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   selector:
     app: frontend-web
@@ -608,7 +608,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: worker-service
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: worker-service
     version: v1
@@ -631,7 +631,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: ainflue/worker-service:latest
+        image: iacherie/worker-service:latest
         env:
         - name: WORKER_CONCURRENCY
           value: "4"
@@ -639,9 +639,9 @@ spec:
           value: "1"
         envFrom:
         - configMapRef:
-            name: ainflue-config
+            name: iacherie-config
         - secretRef:
-            name: ainflue-secrets
+            name: iacherie-secrets
         resources:
           requests:
             memory: "1Gi"
@@ -665,7 +665,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: api-backend-hpa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -710,7 +710,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: frontend-web-hpa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -737,8 +737,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ainflue-ingress
-  namespace: ainflue-platform
+  name: iacherie-ingress
+  namespace: iacherie-platform
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -753,12 +753,12 @@ metadata:
 spec:
   tls:
   - hosts:
-    - ainflue.com
-    - www.ainflue.com
-    - api.ainflue.com
-    secretName: ainflue-tls
+    - iacherie.com
+    - www.iacherie.com
+    - api.iacherie.com
+    secretName: iacherie-tls
   rules:
-  - host: ainflue.com
+  - host: iacherie.com
     http:
       paths:
       - path: /
@@ -768,7 +768,7 @@ spec:
             name: frontend-web-service
             port:
               number: 3000
-  - host: www.ainflue.com
+  - host: www.iacherie.com
     http:
       paths:
       - path: /
@@ -778,7 +778,7 @@ spec:
             name: frontend-web-service
             port:
               number: 3000
-  - host: api.ainflue.com
+  - host: api.iacherie.com
     http:
       paths:
       - path: /
@@ -794,8 +794,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-network-policy
-  namespace: ainflue-platform
+  name: iacherie-network-policy
+  namespace: iacherie-platform
 spec:
   podSelector: {}
   policyTypes:
@@ -808,7 +808,7 @@ spec:
           name: nginx-ingress
     - namespaceSelector:
         matchLabels:
-          name: ainflue-platform
+          name: iacherie-platform
   - from: []
     ports:
     - protocol: TCP
@@ -824,7 +824,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: api-backend-pdb
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   minAvailable: 2
   selector:
@@ -836,7 +836,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: frontend-web-pdb
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   minAvailable: 2
   selector:
@@ -848,10 +848,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ainflue-metrics
-  namespace: ainflue-platform
+  name: iacherie-metrics
+  namespace: iacherie-platform
   labels:
-    app: ainflue-platform
+    app: iacherie-platform
 spec:
   selector:
     matchLabels:
@@ -867,7 +867,7 @@ apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
   name: ai-processing-vpa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   targetRef:
     apiVersion: apps/v1
@@ -892,7 +892,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: db-backup
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   schedule: "0 2 * * *"  # Daily at 2 AM
   jobTemplate:
@@ -912,17 +912,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: ainflue-secrets
+                  name: iacherie-secrets
                   key: DB_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ainflue-secrets
+                  name: iacherie-secrets
                   key: DB_PASSWORD
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: ainflue-config
+                  name: iacherie-config
                   key: DB_NAME
             volumeMounts:
             - name: backup-storage
@@ -939,7 +939,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: backup-pvc
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 spec:
   accessModes:
     - ReadWriteOnce
@@ -953,15 +953,15 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ainflue-service-account
-  namespace: ainflue-platform
+  name: iacherie-service-account
+  namespace: iacherie-platform
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: ainflue-platform
-  name: ainflue-role
+  namespace: iacherie-platform
+  name: iacherie-role
 rules:
 - apiGroups: [""]
   resources: ["pods", "services", "configmaps", "secrets"]
@@ -974,13 +974,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-role-binding
-  namespace: ainflue-platform
+  name: iacherie-role-binding
+  namespace: iacherie-platform
 subjects:
 - kind: ServiceAccount
-  name: ainflue-service-account
-  namespace: ainflue-platform
+  name: iacherie-service-account
+  namespace: iacherie-platform
 roleRef:
   kind: Role
-  name: ainflue-role
+  name: iacherie-role
   apiGroup: rbac.authorization.k8s.io

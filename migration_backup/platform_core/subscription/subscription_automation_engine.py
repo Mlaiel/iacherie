@@ -402,7 +402,7 @@ class SubscriptionAutomationEngine:
                     'id': 'welcome_creator',
                     'name': 'Creator Welcome Email',
                     'type': NotificationType.EMAIL,
-                    'subject': 'Welcome to Ainflue, {{creator_name}}! 🚀',
+                    'subject': 'Welcome to IA Chéries, {{creator_name}}! 🚀',
                     'content': 'Welcome email with personalized onboarding steps',
                     'variables': ['creator_name', 'creator_type', 'specialization']
                 },
@@ -410,7 +410,7 @@ class SubscriptionAutomationEngine:
                     'id': 'payment_failed_friendly',
                     'name': 'Friendly Payment Failure',
                     'type': NotificationType.EMAIL,
-                    'subject': 'Quick heads up about your Ainflue subscription',
+                    'subject': 'Quick heads up about your IA Chéries subscription',
                     'content': 'Friendly notification about payment failure with easy fix options',
                     'variables': ['creator_name', 'amount', 'retry_date']
                 },

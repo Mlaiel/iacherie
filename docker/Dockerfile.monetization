@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE MONETIZATION SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
+# IACHERIE MONETIZATION SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
 # =============================================================================
 # Specialized container for payment processing, revenue tracking,
 # and monetization features with enterprise security and compliance.
@@ -136,7 +136,7 @@ FROM monetization-base AS production
 
 LABEL stage=production
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Monetization Service - Production Runtime"
+LABEL description="iacherie Monetization Service - Production Runtime"
 LABEL service="monetization-service"
 LABEL capabilities="payment-processing,revenue-tracking,subscription-management"
 LABEL compliance="PCI-DSS-ready,GDPR-compliant"

@@ -353,7 +353,7 @@ integration_testing_service = IntegrationTestingService()
 
 
 # Example test suites for IA Chérie microservices
-async def setup_ainflue_test_suites():
+async def setup_iacherie_test_suites():
     """Setup standard IA Chérie test suites"""
     
     # API Gateway Test Suite
@@ -442,7 +442,7 @@ if __name__ == "__main__":
         )
         
         # Setup test suites
-        await setup_ainflue_test_suites()
+        await setup_iacherie_test_suites()
         
         # Health check
         health = await integration_testing_service.health_check()

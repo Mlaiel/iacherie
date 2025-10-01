@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Trend Detection Engine
+IA Chéries Platform - Trend Detection Engine
 =========================================
 
 Advanced trend detection system for identifying emerging patterns, viral content,
-market opportunities, and predictive analytics across the Ainflue platform.
+market opportunities, and predictive analytics across the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -92,7 +92,7 @@ class TrendSignal:
 
 class TrendDetectionEngine:
     """
-    Advanced trend detection engine for Ainflue platform.
+    Advanced trend detection engine for IA Chéries platform.
     
     Features:
     - Real-time trend detection across multiple data sources

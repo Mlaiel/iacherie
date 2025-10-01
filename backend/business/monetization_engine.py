@@ -897,7 +897,7 @@ Monetization Business Logic Module
 ==================================
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue - AI-Powered Content Protection and Monetization Platform
+Project: iacherie - AI-Powered Content Protection and Monetization Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module contains specialized business logic for monetization operations.

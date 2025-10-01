@@ -3,7 +3,7 @@
 📊 ANALYTICS ORCHESTRATION SERVICE
 ==================================
 
-Advanced analytics pipeline management service for the Ainflue platform.
+Advanced analytics pipeline management service for the IA Chéries platform.
 Handles data processing, analytics workflows, real-time insights, and reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

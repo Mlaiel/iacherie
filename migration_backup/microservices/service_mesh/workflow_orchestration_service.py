@@ -3,7 +3,7 @@
 🔄 WORKFLOW ORCHESTRATION SERVICE
 =================================
 
-Advanced workflow orchestration and automation service for the Ainflue platform.
+Advanced workflow orchestration and automation service for the IA Chéries platform.
 Handles complex business process automation, collaboration workflows, and task management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

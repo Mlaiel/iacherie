@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Metrics Collector Template for Ainflue Platform
+Metrics Collector Template for iacherie Platform
 ==============================================
 
 Production-ready metrics collection with:
@@ -76,7 +76,7 @@ class MetricEvent:
 
 class MetricsCollector:
     """
-    Production-ready metrics collection system for Ainflue Platform
+    Production-ready metrics collection system for iacherie Platform
     
     Features:
     - Prometheus metrics integration
@@ -87,7 +87,7 @@ class MetricsCollector:
     """
     
     def __init__(self, registry: Optional[CollectorRegistry] = None, 
-                 service_name: str = "ainflue-service", service_version: str = "1.0.0"):
+                 service_name: str = "iacherie-service", service_version: str = "1.0.0"):
         self.registry = registry or REGISTRY
         self.service_name = service_name
         self.service_version = service_version
@@ -495,7 +495,7 @@ class MetricsCollector:
 
 class MetricsCollectorTemplate:
     """
-    Metrics Collector Template for Ainflue Platform
+    Metrics Collector Template for iacherie Platform
     
     A comprehensive metrics collection system that provides:
     - Prometheus metrics integration
@@ -513,7 +513,7 @@ class MetricsCollectorTemplate:
         """Create a metrics collector instance"""
         return MetricsCollector(
             registry=config.get("registry"),
-            service_name=config.get("service_name", "ainflue-service"),
+            service_name=config.get("service_name", "iacherie-service"),
             service_version=config.get("service_version", "1.0.0")
         )
     

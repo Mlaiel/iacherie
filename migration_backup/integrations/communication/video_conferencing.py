@@ -77,7 +77,7 @@ class VideoConferencingError(Exception):
 
 class VideoConferencingService:
     """
-    Comprehensive video conferencing integration for Ainflue platform.
+    Comprehensive video conferencing integration for IA Chéries platform.
     
     Features:
     - Multi-platform video conferencing (Zoom, Google Meet, Teams, WebEx)

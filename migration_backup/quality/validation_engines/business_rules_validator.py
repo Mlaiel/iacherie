@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📋 BUSINESS RULES VALIDATOR - AINFLUE QUALITY MODULE
+📋 BUSINESS RULES VALIDATOR - IA CHÉRIES QUALITY MODULE
 ===================================================
 
 Validateur règles métier enterprise pour l'écosystème IA Influencer Agent.
@@ -17,7 +17,7 @@ Contact: mlaiel@live.de
 🚀 FONCTIONNALITÉS ENTERPRISE:
 - Validation règles métier configurable
 - Moteur de règles dynamique avec DSL
-- Validation workflow business Ainflue
+- Validation workflow business IA Chéries
 - Validation contraintes créateurs/contenu
 - Audit conformité business automatisé
 """
@@ -103,7 +103,7 @@ class BusinessRulesValidator:
     """
     🎯 Validateur règles métier enterprise
     
-    Moteur de validation des règles business spécifiques à Ainflue,
+    Moteur de validation des règles business spécifiques à IA Chéries,
     incluant validation créateurs, contenu, workflow, et conformité
     avec patterns DBA et enterprise rules engine.
     
@@ -117,7 +117,7 @@ class BusinessRulesValidator:
         self.rule_cache = {}
         self.violation_history = []
         
-        # Règles par défaut Ainflue
+        # Règles par défaut IA Chéries
         self._initialize_default_rules()
         
         # Statistiques
@@ -128,7 +128,7 @@ class BusinessRulesValidator:
     
     def _initialize_default_rules(self):
         """
-        Initialiser règles métier par défaut Ainflue
+        Initialiser règles métier par défaut IA Chéries
         
         **DBA Expert**: Règles intégrité données business
         """

@@ -170,12 +170,12 @@ data:
   POSTGRES_HOST: "iacherie-postgresql"
   POSTGRES_PORT: "5432"
   POSTGRES_USER: "iacherie"
-  POSTGRES_DB: "ainflue_platform"
+  POSTGRES_DB: "iacherie_platform"
   
   MONGODB_HOST: "iacherie-mongodb"
   MONGODB_PORT: "27017"
   MONGODB_USER: "iacherie"
-  MONGODB_DB: "ainflue_documents"
+  MONGODB_DB: "iacherie_documents"
   
   REDIS_HOST: "iacherie-redis"
   REDIS_PORT: "6379"
@@ -820,10 +820,10 @@ kubectl rollout status deployment/iacherie-api -n iacherie
 ### Backup Database
 ```bash
 # PostgreSQL backup
-kubectl exec -it iacherie-postgresql-0 -n iacherie -- pg_dump -U iacherie ainflue_platform > backup.sql
+kubectl exec -it iacherie-postgresql-0 -n iacherie -- pg_dump -U iacherie iacherie_platform > backup.sql
 
 # MongoDB backup
-kubectl exec -it iacherie-mongodb-0 -n iacherie -- mongodump --db ainflue_documents
+kubectl exec -it iacherie-mongodb-0 -n iacherie -- mongodump --db iacherie_documents
 ```
 
 ### Health Checks

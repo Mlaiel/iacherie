@@ -247,7 +247,7 @@ class CDNIntegrationManager:
                 {
                     "endpoint_id": "cloudflare_global",
                     "provider": CDNProvider.CLOUDFLARE,
-                    "base_url": "https://cdn.ainflue.com",
+                    "base_url": "https://cdn.iacherie.com",
                     "region": "global",
                     "priority": 1,
                     "supported_content_types": [ContentType.IMAGE, ContentType.VIDEO, ContentType.WEB_ASSET]

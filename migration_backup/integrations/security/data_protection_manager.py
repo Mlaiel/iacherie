@@ -16,7 +16,7 @@ Expert Team Implementation:
 🎨 IA Prompt Engineer: AI model data protection + training data security + privacy-preserving AI
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 Date: Septembre 2024
 
@@ -797,7 +797,7 @@ class DataProtectionManager:
     ===================================================
     
     Protection complète avec encryption at scale, data classification
-    et data governance automation pour Ainflue.
+    et data governance automation pour IA Chéries.
     """
     
     def __init__(self):

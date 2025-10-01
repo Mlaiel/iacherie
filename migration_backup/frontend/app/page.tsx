@@ -86,7 +86,7 @@ export default function HomePage() {
             <div className="flex items-center space-x-4">
               <Activity className="h-10 w-10 text-blue-600" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Ainfluencer Enterprise</h1>
+                <h1 className="text-2xl font-bold text-gray-900">IA Chéries Enterprise</h1>
                 <p className="text-sm text-gray-600">Platform IA Multi-Services - 57 Modules Complets</p>
               </div>
             </div>
@@ -509,7 +509,7 @@ export default function HomePage() {
         {/* Footer Development Info */}
         <div className="text-center py-8 border-t border-gray-200">
           <p className="text-gray-600 text-lg">
-            🏆 <strong>Ainfluencer Enterprise Platform</strong> - Développé par <strong>Fahed Mlaiel</strong>
+            🏆 <strong>IA Chéries Enterprise Platform</strong> - Développé par <strong>Fahed Mlaiel</strong>
           </p>
           <p className="text-gray-500 text-sm mt-2">
             Platform IA complète • 57/57 Modules • 644 Langues • Matching Intelligent • Studios Professionnels

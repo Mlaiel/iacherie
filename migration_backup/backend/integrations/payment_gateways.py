@@ -228,7 +228,7 @@ class PaymentGatewaysIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Payment Gateway Hub",
+                "User-Agent": "IA Chéries/1.0 Payment Gateway Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
@@ -459,13 +459,13 @@ class PaymentGatewaysIntegration:
                         "currency_code": currency.value,
                         "value": str(amount)
                     },
-                    "description": metadata.get("description", "Payment via Ainflue")
+                    "description": metadata.get("description", "Payment via IA Chéries")
                 }],
                 "payment_source": {
                     "paypal": {
                         "experience_context": {
                             "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED",
-                            "brand_name": "Ainflue",
+                            "brand_name": "IA Chéries",
                             "locale": "en-US",
                             "user_action": "PAY_NOW"
                         }
@@ -685,7 +685,7 @@ class PaymentGatewaysIntegration:
                 "sender_batch_header": {
                     "sender_batch_id": payout_id,
                     "email_subject": "You have a payout!",
-                    "email_message": "You have received a payout from Ainflue!"
+                    "email_message": "You have received a payout from IA Chéries!"
                 },
                 "items": [{
                     "recipient_type": "EMAIL",
@@ -695,7 +695,7 @@ class PaymentGatewaysIntegration:
                     },
                     "receiver": recipient_account,
                     "sender_item_id": f"item_{payout_id}",
-                    "note": metadata.get("note", "Payout from Ainflue")
+                    "note": metadata.get("note", "Payout from IA Chéries")
                 }]
             }
             

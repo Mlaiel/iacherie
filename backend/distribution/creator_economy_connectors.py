@@ -243,7 +243,7 @@ class BaseCreatorConnector:
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default headers for API requests."""
         return {
-            "User-Agent": "Ainflue-Creator-Connector/1.0",
+            "User-Agent": "iacherie-Creator-Connector/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }

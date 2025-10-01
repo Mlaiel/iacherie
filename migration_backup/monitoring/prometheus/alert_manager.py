@@ -1,8 +1,8 @@
 """
 Intelligent Alert Manager Module
-Gestionnaire alertes intelligent ML-powered - Ainflue Platform
+Gestionnaire alertes intelligent ML-powered - IA Chéries Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

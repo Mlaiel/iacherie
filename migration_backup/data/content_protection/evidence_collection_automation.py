@@ -2,7 +2,7 @@
 🔍 Evidence Collection Automation - Preuves + Watermarking + Forensics
 ======================================================================
 
-Module: /workspaces/Ainflue/data/content_protection/evidence_collection_automation.py
+Module: /workspaces/IA Chéries/data/content_protection/evidence_collection_automation.py
 CONSOLIDATION: Collecte preuves + watermarking + forensics
 """
 

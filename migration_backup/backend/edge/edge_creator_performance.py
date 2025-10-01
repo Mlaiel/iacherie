@@ -2,7 +2,7 @@
 ===========================
 
 Optimisation Performance Créateurs Edge spécialisée pour chaque type de créateur.
-Performance optimisée selon les spécificités métier Ainflue.
+Performance optimisée selon les spécificités métier IA Chéries.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

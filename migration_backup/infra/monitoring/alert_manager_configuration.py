@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Alert Manager Configuration for Ainflue Platform
+Alert Manager Configuration for IA Chéries Platform
 ===============================================
 
 Enterprise-grade alerting system for infrastructure and application monitoring.
@@ -284,7 +284,7 @@ class AlertManagerConfiguration:
                 "email_configs": [
                     {
                         "to": "ops@ainflue.com",
-                        "subject": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                        "subject": "IA Chéries Alert: {{ .GroupLabels.alertname }}",
                         "body": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
                     }
                 ]
@@ -315,7 +315,7 @@ class AlertManagerConfiguration:
                 slack_config = {
                     "api_url": target.config["webhook_url"],
                     "channel": target.config["channel"],
-                    "title": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                    "title": "IA Chéries Alert: {{ .GroupLabels.alertname }}",
                     "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                     "color": "{{ if eq .Status \"firing\" }}danger{{ else }}good{{ end }}"
                 }
@@ -370,7 +370,7 @@ Started: {{ .StartsAt }}
         return """
 <html>
 <body>
-<h2>Ainflue Platform Alert</h2>
+<h2>IA Chéries Platform Alert</h2>
 {{ range .Alerts }}
 <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0;">
     <h3 style="color: {{ if eq .Labels.severity "critical" }}red{{ else if eq .Labels.severity "high" }}orange{{ else }}blue{{ end }};">
@@ -440,7 +440,7 @@ Started: {{ .StartsAt }}
             test_alert = Alert(
                 name="test-alert",
                 severity=AlertSeverity.INFO,
-                message="This is a test alert from Ainflue Alert Manager",
+                message="This is a test alert from IA Chéries Alert Manager",
                 labels={"service": "alertmanager", "environment": "test"},
                 annotations={
                     "summary": "Test Alert",
@@ -485,7 +485,7 @@ Started: {{ .StartsAt }}
             msg = MimeMultipart()
             msg['From'] = target.config.get("from_email", "alerts@ainflue.com")
             msg['To'] = target.config["email"]
-            msg['Subject'] = f"Ainflue Alert: {alert.name} [{alert.severity.value.upper()}]"
+            msg['Subject'] = f"IA Chéries Alert: {alert.name} [{alert.severity.value.upper()}]"
             
             body = f"""
 Alert: {alert.name}
@@ -529,7 +529,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
             
             payload = {
                 "channel": target.config.get("channel", "#alerts"),
-                "username": "Ainflue AlertManager",
+                "username": "IA Chéries AlertManager",
                 "icon_emoji": ":warning:",
                 "attachments": [
                     {
@@ -603,7 +603,7 @@ Annotations: {json.dumps(alert.annotations, indent=2)}
             return False
     
     def create_default_rules(self) -> bool:
-        """Create default alert rules for Ainflue platform"""
+        """Create default alert rules for IA Chéries platform"""
         try:
             default_rules = [
                 AlertRule(

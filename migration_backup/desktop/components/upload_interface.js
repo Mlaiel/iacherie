@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Upload Interface Component
+ * IA Chéries Desktop - Upload Interface Component
  * 
  * Advanced multi-format upload system with drag-and-drop, progress tracking, and AI preprocessing
  * Supports all media formats with intelligent quality analysis and optimization suggestions

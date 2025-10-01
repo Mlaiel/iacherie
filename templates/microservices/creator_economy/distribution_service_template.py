@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Distribution Service Template for Ainflue Platform
+Distribution Service Template for iacherie Platform
 =================================================
 
 Production-ready multi-platform distribution service with:
@@ -248,13 +248,13 @@ class DistributionConfig:
         self.performance_tracking_enabled = True
         
         # Storage
-        self.content_storage_path = "/var/lib/ainflue/distribution"
+        self.content_storage_path = "/var/lib/iacherie/distribution"
         self.cache_optimized_content = True
         self.cache_duration = 86400  # 24 hours
         
         # RSS and syndication
         self.enable_rss_feeds = True
-        self.rss_base_url = "https://feeds.ainflue.com"
+        self.rss_base_url = "https://feeds.iacherie.com"
         self.syndication_enabled = True
 
 
@@ -320,7 +320,7 @@ class PlatformPerformanceResponse(BaseModel):
 
 class DistributionService(BaseMicroservice):
     """
-    Enterprise Distribution Service for Ainflue Platform
+    Enterprise Distribution Service for iacherie Platform
     
     Provides automated multi-platform content distribution,
     optimization, scheduling, and performance tracking.
@@ -1171,9 +1171,9 @@ class DistributionService(BaseMicroservice):
             # For now, return mock data
             return {
                 "id": content_id,
-                "url": f"https://cdn.ainflue.com/content/{content_id}",
+                "url": f"https://cdn.iacherie.com/content/{content_id}",
                 "type": "video",
-                "thumbnail_url": f"https://cdn.ainflue.com/thumbnails/{content_id}",
+                "thumbnail_url": f"https://cdn.iacherie.com/thumbnails/{content_id}",
                 "title": "Sample Content",
                 "description": "Sample content description"
             }
@@ -1195,7 +1195,7 @@ class DistributionService(BaseMicroservice):
                 "id": f"content_{i}",
                 "title": f"Content Item {i}",
                 "description": f"Description for content item {i}",
-                "url": f"https://ainflue.com/content/{i}",
+                "url": f"https://iacherie.com/content/{i}",
                 "published_at": (datetime.utcnow() - timedelta(days=i)).strftime("%a, %d %b %Y %H:%M:%S GMT"),
                 "categories": ["entertainment", "technology"]
             }
@@ -1342,7 +1342,7 @@ def create_distribution_app() -> FastAPI:
     """Create FastAPI application for distribution service"""
     
     app = FastAPI(
-        title="Ainflue Distribution Service",
+        title="iacherie Distribution Service",
         description="Multi-platform content distribution and syndication service",
         version="1.0.0"
     )

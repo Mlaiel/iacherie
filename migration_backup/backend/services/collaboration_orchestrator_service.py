@@ -1,7 +1,7 @@
 """Collaboration Orchestrator Service - Enterprise Creator Collaboration Engine
 ========================================================================
 
-Advanced collaboration orchestration system for the Ainflue platform, managing
+Advanced collaboration orchestration system for the IA Chéries platform, managing
 creator partnerships, smart contracts, revenue sharing, workspace coordination,
 and intelligent collaboration workflows.
 

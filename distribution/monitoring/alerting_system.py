@@ -292,7 +292,7 @@ class AlertingSystem:
                 config={
                     "webhook_url": "https://hooks.slack.com/services/...",
                     "channel": "#alerts",
-                    "username": "AinflueBot"
+                    "username": "iacherieBot"
                 }
             ),
             AlertChannel.WEBHOOK: NotificationConfig(

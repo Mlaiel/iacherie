@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-OAuth2 Service Template for Ainflue Creator Economy Platform
+OAuth2 Service Template for IA Chéries Creator Economy Platform
 Enterprise OAuth2/OpenID Connect implementation for secure third-party integrations
 """
 
@@ -152,7 +152,7 @@ class DeviceAuthResponse(BaseModel):
 
 class OAuth2ServiceTemplate:
     """
-    Template de service OAuth2/OpenID Connect enterprise pour Ainflue
+    Template de service OAuth2/OpenID Connect enterprise pour IA Chéries
     
     Fonctionnalités:
     - OAuth2 Authorization Code Flow avec PKCE
@@ -168,7 +168,7 @@ class OAuth2ServiceTemplate:
     def __init__(self, config: OAuth2Config = None):
         self.config = config or OAuth2Config()
         self.app = FastAPI(
-            title="Ainflue OAuth2 Service",
+            title="IA Chéries OAuth2 Service",
             description="Enterprise OAuth2/OpenID Connect service",
             version="1.0.0"
         )
@@ -200,7 +200,7 @@ class OAuth2ServiceTemplate:
         demo_client = OAuth2Client(
             client_id="ainflue_web_app",
             client_secret=self._hash_secret("demo_secret_2025"),
-            client_name="Ainflue Web Application",
+            client_name="IA Chéries Web Application",
             client_type=ClientType.CONFIDENTIAL,
             redirect_uris=["https://app.ainflue.com/auth/callback"],
             allowed_scopes=["openid", "profile", "email", "creator:read", "creator:write"],

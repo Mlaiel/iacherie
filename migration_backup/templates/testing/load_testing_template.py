@@ -2,7 +2,7 @@
 ⚡ LOAD TESTING TEMPLATE - PERFORMANCE EXPERT IMPLEMENTATION
 ============================================================
 
-Enterprise-grade load testing template for Ainflue Creator Economy Platform.
+Enterprise-grade load testing template for IA Chéries Creator Economy Platform.
 Comprehensive load testing covering:
 - HTTP load testing with realistic user patterns
 - Database load testing and connection pooling

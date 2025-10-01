@@ -801,7 +801,7 @@ mongodb:
   connection:
     host: "mongodb-cluster.iacherie.com"
     port: 27017
-    database: "ainflue_prod"
+    database: "iacherie_prod"
     replica_set: "rs0"
     ssl: true
     ssl_cert_reqs: "CERT_REQUIRED"
@@ -887,7 +887,7 @@ mongodb:
   connection:
     host: "mongodb-staging.iacherie.com"
     port: 27017
-    database: "ainflue_staging"
+    database: "iacherie_staging"
     replica_set: "rs0-staging"
     ssl: true
     
@@ -924,7 +924,7 @@ mongodb:
   connection:
     host: "localhost"
     port: 27017
-    database: "ainflue_dev"
+    database: "iacherie_dev"
     ssl: false
     
   pool:

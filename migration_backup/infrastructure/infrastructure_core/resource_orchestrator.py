@@ -1,12 +1,12 @@
 """
-Resource Orchestrator - Enterprise Resource Management for Ainflue
+Resource Orchestrator - Enterprise Resource Management for IA Chéries
 ==================================================================
 
 Intelligent resource allocation and optimization for creator platform infrastructure.
 Manages compute, storage, network, and GPU resources with AI-powered optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -64,7 +64,7 @@ class ResourceAllocation:
 
 class ResourceOrchestrator:
     """
-    Enterprise Resource Orchestrator for Ainflue Creator Platform
+    Enterprise Resource Orchestrator for IA Chéries Creator Platform
     
     Manages intelligent resource allocation with creator platform optimization,
     ensuring optimal performance for creator workflows and business operations.

@@ -1,5 +1,5 @@
 """
-🚀 Kubernetes Orchestrator for Ainflue Microservices
+🚀 Kubernetes Orchestrator for IA Chéries Microservices
 🎖️ Multi-Expert Implementation: DevOps + Microservices + Security + Backend Senior
 
 Enterprise Kubernetes deployment with:
@@ -116,7 +116,7 @@ class KubernetesOrchestrator:
                     "managed-by": "enterprise-orchestrator"
                 },
                 "annotations": {
-                    "description": f"Ainflue microservices - {self.environment.value}",
+                    "description": f"IA Chéries microservices - {self.environment.value}",
                     "contact": "mlaiel@live.de"
                 }
             },
@@ -624,7 +624,7 @@ class KubernetesOrchestrator:
         return saved_files
     
     def deploy_ainflue_microservices(self) -> Dict[str, List[str]]:
-        """Deploy all Ainflue microservices"""
+        """Deploy all IA Chéries microservices"""
         deployed_files = {}
         
         # Generate namespace first

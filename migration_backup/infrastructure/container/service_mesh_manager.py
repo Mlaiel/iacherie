@@ -1,6 +1,6 @@
 """
 Service Mesh Manager
-Enterprise service mesh management for Ainflue infrastructure
+Enterprise service mesh management for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ServiceMeshManager:
     """
-    Enterprise Service Mesh Management for Ainflue Creator Platform
+    Enterprise Service Mesh Management for IA Chéries Creator Platform
     
     Microservices Role Implementation:
     - Service mesh communication patterns
@@ -28,11 +28,11 @@ class ServiceMeshManager:
         self.active_meshes = {}
         self.service_registry = {}
         self.traffic_policies = {}
-        logger.info("Service mesh manager initialized for Ainflue microservices")
+        logger.info("Service mesh manager initialized for IA Chéries microservices")
         
     async def configure_istio(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Configure Istio service mesh for Ainflue microservices
+        Configure Istio service mesh for IA Chéries microservices
         
         Microservices Role: Advanced service mesh configuration for creator platform
         """
@@ -51,7 +51,7 @@ class ServiceMeshManager:
                 'observability': await self._configure_observability(mesh_config)
             }
             
-            # Ainflue-specific service mesh features
+            # IA Chéries-specific service mesh features
             creator_service_config = await self._configure_creator_services(services)
             istio_config['creator_services'] = creator_service_config
             
@@ -148,7 +148,7 @@ class ServiceMeshManager:
         
     async def configure_mesh(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Configure service mesh for Ainflue microservices
+        Configure service mesh for IA Chéries microservices
         Microservices Role Implementation for creator platform communication
         
         Args:
@@ -179,7 +179,7 @@ class ServiceMeshManager:
                 egress_config = await self._configure_egress_gateway(mesh_config)
                 mesh_result['components']['egress_gateway'] = egress_config
                 
-            # Configure traffic management for Ainflue services
+            # Configure traffic management for IA Chéries services
             if mesh_config.get('traffic_management', True):
                 traffic_config = await self._configure_traffic_management(mesh_config)
                 mesh_result['components']['traffic_management'] = traffic_config
@@ -194,7 +194,7 @@ class ServiceMeshManager:
                 observability_config = await self._configure_mesh_observability(mesh_config)
                 mesh_result['components']['observability'] = observability_config
                 
-            # Configure Ainflue-specific service communication patterns
+            # Configure IA Chéries-specific service communication patterns
             creator_services_config = await self._configure_creator_services_mesh(mesh_config)
             mesh_result['creator_services'] = creator_services_config
             
@@ -247,7 +247,7 @@ class ServiceMeshManager:
         }
         
     async def _configure_traffic_management(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure traffic management for Ainflue services"""
+        """Configure traffic management for IA Chéries services"""
         return {
             'virtual_services': [
                 {
@@ -363,7 +363,7 @@ class ServiceMeshManager:
         }
         
     async def _configure_creator_services_mesh(self, mesh_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Configure mesh for Ainflue creator-specific services"""
+        """Configure mesh for IA Chéries creator-specific services"""
         return [
             {
                 'service_name': 'creator-upload-service',

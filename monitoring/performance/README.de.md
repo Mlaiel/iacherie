@@ -4,7 +4,7 @@
 
 > **🔒 EXKLUSIVES GEISTIGES EIGENTUM - Fahed Mlaiel (mlaiel@live.de)**
 > 
-> Dieses Dokument enthält streng vertrauliche proprietäre Informationen über Ainflues Enterprise Performance Monitoring Architektur. Jede unbefugte Offenlegung, Reproduktion oder Verbreitung ist strengstens verboten und unterliegt rechtlicher Verfolgung.
+> Dieses Dokument enthält streng vertrauliche proprietäre Informationen über iacheries Enterprise Performance Monitoring Architektur. Jede unbefugte Offenlegung, Reproduktion oder Verbreitung ist strengstens verboten und unterliegt rechtlicher Verfolgung.
 
 ---
 

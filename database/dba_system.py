@@ -220,7 +220,7 @@ class DatabaseAdministrator:
             "host": "localhost",
             "port": 5432,
             "database": "iacherie",
-            "user": "ainflue_admin",
+            "user": "iacherie_admin",
             "password": "secure_password",
             "pool_size": 20,
             "max_overflow": 30,
@@ -908,7 +908,7 @@ class DatabaseAdministrator:
                 "operation": "backup",
                 "backup_type": "full",
                 "backup_size_mb": 2048,
-                "backup_location": "/backups/ainflue_backup_20250912.sql",
+                "backup_location": "/backups/iacherie_backup_20250912.sql",
                 "duration_seconds": 10.0
             }
             

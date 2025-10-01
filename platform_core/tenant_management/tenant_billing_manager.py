@@ -1116,7 +1116,7 @@ async def get_tenant_billing_manager() -> TenantBillingManager:
     """Factory pour l'instance TenantBillingManager"""
     global tenant_billing_manager
     if not tenant_billing_manager:
-        database_url = "postgresql+asyncpg://localhost/ainflue_billing"
+        database_url = "postgresql+asyncpg://localhost/iacherie_billing"
         redis_url = "redis://localhost:6379/8"
         stripe_key = "sk_test_..."  # Clé de test Stripe
         

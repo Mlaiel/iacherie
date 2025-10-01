@@ -40,8 +40,8 @@ database:
     connection:
       host: "postgres-primary.iacherie.com"
       port: 5432
-      database: "ainflue_production"
-      username: "ainflue_app"
+      database: "iacherie_production"
+      username: "iacherie_app"
       password: "${POSTGRES_PASSWORD}"
       ssl_mode: "require"
       ssl_cert: "/etc/ssl/certs/postgres-client.crt"
@@ -151,7 +151,7 @@ database:
   mongodb:
     # Connection String
     connection:
-      uri: "mongodb://ainflue_mongo:${MONGO_PASSWORD}@mongo-cluster.iacherie.com:27017,mongo-cluster-2.iacherie.com:27017,mongo-cluster-3.iacherie.com:27017/ainflue_production?replicaSet=iacherie-rs&ssl=true"
+      uri: "mongodb://iacherie_mongo:${MONGO_PASSWORD}@mongo-cluster.iacherie.com:27017,mongo-cluster-2.iacherie.com:27017,mongo-cluster-3.iacherie.com:27017/iacherie_production?replicaSet=iacherie-rs&ssl=true"
       options:
         retryWrites: true
         w: "majority"
@@ -255,8 +255,8 @@ database:
     connection:
       host: "influxdb.iacherie.com"
       port: 8086
-      database: "ainflue_metrics"
-      username: "ainflue_metrics"
+      database: "iacherie_metrics"
+      username: "iacherie_metrics"
       password: "${INFLUXDB_PASSWORD}"
       ssl_enabled: true
       
@@ -288,7 +288,7 @@ database:
   clickhouse:
     # Cluster Configuration
     cluster:
-      name: "ainflue_analytics"
+      name: "iacherie_analytics"
       nodes:
         - host: "clickhouse-1.iacherie.com"
           port: 9000

@@ -209,7 +209,7 @@ BACKEND_CONFIG = {
 MODULE_REGISTRY = {
     # Core Systems
     "core": {
-        "business_logic": AinflueCoreBusinessLogic,
+        "business_logic": iacherieCoreBusinessLogic,
         "orchestrator": PlatformOrchestrator,
         "config": BackendConfig
     },
@@ -295,7 +295,7 @@ __all__ = [
     "BACKEND_CONFIG", "MODULE_REGISTRY", "BUSINESS_LOGIC_FLOW",
     
     # Core Systems
-    "AinflueCoreBusinessLogic", "PlatformOrchestrator", "BackendConfig",
+    "iacherieCoreBusinessLogic", "PlatformOrchestrator", "BackendConfig",
     
     # AI Intelligence
     "AIIntelligenceEngine", "ProtectionEngine", "QuantumProcessingEngine",

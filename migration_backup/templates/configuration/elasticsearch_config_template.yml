@@ -1,4 +1,4 @@
-# Elasticsearch Configuration Template for Ainflue Platform
+# Elasticsearch Configuration Template for IA Chéries Platform
 # Comprehensive configuration for log storage, search, and analytics
 
 # Elasticsearch cluster configuration
@@ -584,7 +584,7 @@ PUT _watcher/watch/high-error-rate
     "send_email": {
       "email": {
         "to": ["${ALERT_EMAIL}"],
-        "subject": "High Error Rate Alert - Ainflue Platform",
+        "subject": "High Error Rate Alert - IA Chéries Platform",
         "body": "High error rate detected: {{ctx.payload.aggregations.error_count.value}} unique errors in the last 5 minutes"
       }
     }

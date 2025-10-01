@@ -1,6 +1,6 @@
 """
 Load Testing Service - Enterprise High-Volume Testing
-Ainflue Platform - Microservices Architecture
+IA Chéries Platform - Microservices Architecture
 
 © FAHED MLAIEL 2024-2025 - CONFIDENTIAL ENTERPRISE MODULE
 """

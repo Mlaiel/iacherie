@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-SEO Service Template for Ainflue Platform
+SEO Service Template for IA Chéries Platform
 =========================================
 
 Production-ready automated SEO optimization service with:
@@ -186,7 +186,7 @@ class SchemaMarkup:
     # Publication details
     date_published: Optional[datetime] = None
     date_modified: Optional[datetime] = None
-    publisher_name: str = "Ainflue"
+    publisher_name: str = "IA Chéries"
     
     # Additional properties
     keywords: List[str] = field(default_factory=list)
@@ -295,7 +295,7 @@ class KeywordResearchResponse(BaseModel):
 
 class SEOService(BaseMicroservice):
     """
-    Enterprise SEO Service for Ainflue Platform
+    Enterprise SEO Service for IA Chéries Platform
     
     Provides comprehensive SEO optimization, analysis, and monitoring
     with AI-powered recommendations and automated improvements.
@@ -371,7 +371,7 @@ class SEOService(BaseMicroservice):
         # Initialize HTTP client
         self.http_client = httpx.AsyncClient(
             timeout=30.0,
-            headers={"User-Agent": "Ainflue SEO Bot 1.0"}
+            headers={"User-Agent": "IA Chéries SEO Bot 1.0"}
         )
         
         # Start background tasks
@@ -1440,7 +1440,7 @@ def create_seo_app() -> FastAPI:
     """Create FastAPI application for SEO service"""
     
     app = FastAPI(
-        title="Ainflue SEO Service",
+        title="IA Chéries SEO Service",
         description="Automated SEO optimization and analysis service",
         version="1.0.0"
     )

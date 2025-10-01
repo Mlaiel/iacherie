@@ -1199,7 +1199,7 @@ async def main():
     """Main function for command-line usage"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Infrastructure Validator')
+    parser = argparse.ArgumentParser(description='IA Chéries Infrastructure Validator')
     parser.add_argument('--config', help='Configuration file path', default='infrastructure_validation.yaml')
     parser.add_argument('--categories', nargs='+', help='Categories to validate', 
                        choices=['security', 'performance', 'availability', 'compliance'])

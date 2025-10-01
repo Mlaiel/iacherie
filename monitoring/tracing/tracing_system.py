@@ -111,7 +111,7 @@ class BusinessTransaction:
     status: TraceStatus
     value_metrics: Dict[str, float]
 
-class AinflueDistributedTracer:
+class iacherieDistributedTracer:
     """
     Enterprise distributed tracing system for IA Chérie platform.
     
@@ -165,7 +165,7 @@ class AinflueDistributedTracer:
         # Start background processing
         self._start_background_processors()
         
-        logger.info("AinflueDistributedTracer initialized with enterprise features")
+        logger.info("iacherieDistributedTracer initialized with enterprise features")
 
     def _start_background_processors(self):
         """Start background processing threads."""
@@ -528,11 +528,11 @@ class AinflueDistributedTracer:
 # Global tracer instance
 _tracer_instance = None
 
-def get_tracer(config: Optional[Dict[str, Any]] = None) -> AinflueDistributedTracer:
+def get_tracer(config: Optional[Dict[str, Any]] = None) -> iacherieDistributedTracer:
     """Get the global tracer instance."""
     global _tracer_instance
     if _tracer_instance is None:
-        _tracer_instance = AinflueDistributedTracer(config)
+        _tracer_instance = iacherieDistributedTracer(config)
     return _tracer_instance
 
 # Convenience functions for common tracing patterns
@@ -577,7 +577,7 @@ def trace_monetization(flow_type: str, amount: float, currency: str, payment_met
     )
 
 __all__ = [
-    'AinflueDistributedTracer',
+    'iacherieDistributedTracer',
     'SpanType',
     'TraceStatus',
     'PerformanceCategory',

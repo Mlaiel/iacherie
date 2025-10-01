@@ -71,7 +71,7 @@ security:
 # Database Settings (Staging)
 database:
   # Staging database connection
-  url: "${AINFLUE_STAGING_DATABASE_URL}"
+  url: "${IACHERIE_STAGING_DATABASE_URL}"
   pool_size: 15             # Moderate pool size
   max_overflow: 20
   pool_timeout: 20
@@ -95,7 +95,7 @@ cache:
   l2_ttl_seconds: 1800      # Shorter TTL for testing
   
   # Staging Redis connection
-  redis_url: "${AINFLUE_STAGING_REDIS_URL}"
+  redis_url: "${IACHERIE_STAGING_REDIS_URL}"
   enable_compression: true
   enable_clustering: false  # Single instance for staging
   
@@ -113,7 +113,7 @@ logging:
 # File Management (Moderate restrictions)
 file_management:
   max_file_size_mb: 75      # Between dev and prod
-  temp_directory: "/tmp/ainflue_staging"
+  temp_directory: "/tmp/iacherie_staging"
   scan_for_malware: true
   enable_optimization: true
   
@@ -164,7 +164,7 @@ creator_economy:
   collaboration:
     max_collaborators: 8
     enable_real_time_features: true
-    websocket_url: "${AINFLUE_STAGING_WS_URL}"
+    websocket_url: "${IACHERIE_STAGING_WS_URL}"
     
   # Staging monetization (test mode)
   monetization:

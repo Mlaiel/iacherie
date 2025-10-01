@@ -245,7 +245,7 @@ class DesktopSecurityManager {
     
     // Configure user agent
     defaultSession.setUserAgent(
-      `AinflueSudio/1.0.0 (${process.platform}; ${process.arch}) Creator/Professional`
+      `iacherieSudio/1.0.0 (${process.platform}; ${process.arch}) Creator/Professional`
     );
     
     log.info('Session security applied');

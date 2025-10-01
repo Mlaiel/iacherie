@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Configuration Management System
+ * IA Chéries Desktop - Configuration Management System
  * 
  * Professional configuration management with platform-specific optimizations
  * 

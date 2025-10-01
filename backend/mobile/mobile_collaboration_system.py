@@ -780,7 +780,7 @@ class MobileTeamWorkspace:
             "mobile_features_enabled": len(request.mobile_features),
             "members_invited": len(request.invited_members),
             "workspace_url": f"/mobile/workspace/{workspace_id}",
-            "mobile_app_link": f"ainflue://workspace/{workspace_id}"
+            "mobile_app_link": f"iacherie://workspace/{workspace_id}"
         }
     
     async def manage_workspace(self, workspace_id: str, action: str, action_data: Dict[str, Any]) -> Dict[str, Any]:

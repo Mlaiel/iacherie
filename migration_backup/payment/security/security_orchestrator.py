@@ -209,7 +209,7 @@ class EnterpriseSecurityOrchestrator:
                 'enabled': True,
                 'workspace_id': 'azure_workspace_id',
                 'auth_key': 'azure_auth_key',
-                'log_type': 'AinflueSecurity'
+                'log_type': 'IA ChériesSecurity'
             },
             'aws_security_hub': {
                 'enabled': True,

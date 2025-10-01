@@ -3,7 +3,7 @@
 ============================================================================
 
 Optimisation database enterprise avec clustering haute disponibilité,
-réplication multi-region et performance tuning pour la plateforme Ainflue.
+réplication multi-region et performance tuning pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Architecture database distributed + performance tuning avancé
@@ -171,7 +171,7 @@ class PerformanceAlert:
     resolved: bool = False
 
 class EnterpriseDatabaseOptimizer:
-    """🗄️ Optimiseur Database Enterprise pour Ainflue
+    """🗄️ Optimiseur Database Enterprise pour IA Chéries
     
     Implémentation multi-expert pour optimisation database production:
     - Clustering haute disponibilité avec auto-failover

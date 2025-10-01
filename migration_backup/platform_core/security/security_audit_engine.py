@@ -330,7 +330,7 @@ class SecurityAuditEngine:
             remediation_guidance="Implement strong password policies with complexity requirements"
         ))
         
-        # Règles spécifiques Ainflue
+        # Règles spécifiques IA Chéries
         self.add_audit_rule(AuditRule(
             rule_id="creator_data_protection",
             name="Creator Data Protection Check",
@@ -806,7 +806,7 @@ class SecurityAuditEngine:
             return {'violation': False}
     
     async def check_creator_data_protection(self, asset: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérification protection données créateurs (spécifique Ainflue)"""
+        """Vérification protection données créateurs (spécifique IA Chéries)"""
         try:
             result = {
                 'violation': False,

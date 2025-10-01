@@ -128,8 +128,8 @@ sudo apt-get install ffmpeg libsm6 libxext6 libfontconfig1 libxrender1
 ### Étapes d'Installation
 ```bash
 # Cloner le référentiel
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/media
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/media
 
 # Installer les dépendances
 pip install -r requirements.txt

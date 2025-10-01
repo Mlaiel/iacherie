@@ -1,4 +1,4 @@
-# Ainflue API Routes - APIs REST/GraphQL Enterprise
+# iacherie API Routes - APIs REST/GraphQL Enterprise
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
 **Équipe Spécialisée :** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🚀 Architecture des Routes API
 
-La plateforme Ainflue offre un ensemble complet de routes API de niveau entreprise conçues pour les créateurs de contenu, les influenceurs et les agences digitales. Notre API prend en charge la gestion de contenu multi-format, l'optimisation alimentée par l'IA et la distribution cross-plateforme.
+La plateforme iacherie offre un ensemble complet de routes API de niveau entreprise conçues pour les créateurs de contenu, les influenceurs et les agences digitales. Notre API prend en charge la gestion de contenu multi-format, l'optimisation alimentée par l'IA et la distribution cross-plateforme.
 
 ### 📂 Modules API Principaux
 
@@ -114,9 +114,9 @@ La plateforme Ainflue offre un ensemble complet de routes API de niveau entrepri
 
 **Contact Technique :** Fahed Mlaiel  
 **Email :** mlaiel@live.de  
-**Plateforme :** [Ainflue](https://ainflue.com)  
-**Documentation :** [API Docs](https://docs.ainflue.com)  
-**Portail Développeur :** [Dev Portal](https://developers.ainflue.com)
+**Plateforme :** [iacherie](https://iacherie.com)  
+**Documentation :** [API Docs](https://docs.iacherie.com)  
+**Portail Développeur :** [Dev Portal](https://developers.iacherie.com)
 
 ---
 

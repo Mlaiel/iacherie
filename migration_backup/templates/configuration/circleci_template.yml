@@ -1,4 +1,4 @@
-# CircleCI Configuration Template for Ainflue Platform
+# CircleCI Configuration Template for IA Chéries Platform
 # Comprehensive CI/CD pipeline using CircleCI
 
 version: 2.1
@@ -425,7 +425,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "✅ *Ainflue deployment to production successful!*\n\n*Build:* $CIRCLE_BUILD_NUM\n*Commit:* $CIRCLE_SHA1\n*Branch:* $CIRCLE_BRANCH\n*Author:* $CIRCLE_USERNAME"
+                    "text": "✅ *IA Chéries deployment to production successful!*\n\n*Build:* $CIRCLE_BUILD_NUM\n*Commit:* $CIRCLE_SHA1\n*Branch:* $CIRCLE_BRANCH\n*Author:* $CIRCLE_USERNAME"
                   }
                 }
               ]

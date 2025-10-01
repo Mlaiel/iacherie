@@ -1,7 +1,7 @@
 """
 Retention Optimization Engine - Enterprise User Retention & Engagement Optimization
 
-This module implements comprehensive retention optimization for the Ainflue platform,
+This module implements comprehensive retention optimization for the IA Chéries platform,
 using AI-powered analytics, predictive modeling, and automated intervention strategies.
 
 Author: Fahed Mlaiel
@@ -100,7 +100,7 @@ class RetentionMetrics:
 
 class RetentionOptimizationEngine:
     """
-    Enterprise retention optimization engine for Ainflue platform.
+    Enterprise retention optimization engine for IA Chéries platform.
     
     Features:
     - ML-powered churn prediction

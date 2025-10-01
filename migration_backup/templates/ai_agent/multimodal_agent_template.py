@@ -1,4 +1,4 @@
-"""{{agent_name}} Multi-Modal AI Agent for Ainflue Platform
+"""{{agent_name}} Multi-Modal AI Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -487,7 +487,7 @@ class AudioModalityProcessor(ModalityProcessor):
 
 class {{agent_class_name}}(BaseAIAgent):
     """
-    Advanced multi-modal AI agent for Ainflue platform.
+    Advanced multi-modal AI agent for IA Chéries platform.
     
     Features:
     - Vision-Language understanding (CLIP, BLIP)

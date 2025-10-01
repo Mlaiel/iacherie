@@ -4,7 +4,7 @@
 """🔒 Security & Compliance Metrics - Advanced Security Analytics System
 ======================================================================
 
-Advanced security and compliance monitoring system for the Ainflue platform.
+Advanced security and compliance monitoring system for the IA Chéries platform.
 Provides comprehensive security metrics, compliance tracking, audit analytics,
 privacy metrics, risk assessment, and automated security reporting.
 

@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# iacherie Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for iacherie platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Network Topology Manager for Ainflue Platform
+Network Topology Manager for iacherie Platform
 ============================================
 
 Enterprise-grade network topology management system for multi-cloud infrastructure.
@@ -103,7 +103,7 @@ class NetworkTopologyManager:
     security zones, and performance optimization.
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/network"):
+    def __init__(self, config_path: str = "/etc/iacherie/network"):
         self.config_path = Path(config_path)
         self.config_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -128,7 +128,7 @@ class NetworkTopologyManager:
         logger.addHandler(console_handler)
         
         # File handler
-        log_dir = Path("/var/log/ainflue/network")
+        log_dir = Path("/var/log/iacherie/network")
         log_dir.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_dir / "topology_manager.log")
         file_handler.setFormatter(console_formatter)
@@ -709,7 +709,7 @@ class NetworkTopologyManager:
     def _export_terraform_config(self) -> str:
         """Export as Terraform configuration"""
         terraform_config = """
-# Generated Ainflue Network Configuration
+# Generated iacherie Network Configuration
 # Generated at: {timestamp}
 
 terraform {{
@@ -759,10 +759,10 @@ resource "aws_route" "{safe_name}" {{
     def _export_ansible_config(self) -> str:
         """Export as Ansible playbook"""
         ansible_config = f"""---
-# Generated Ainflue Network Configuration
+# Generated iacherie Network Configuration
 # Generated at: {datetime.now().isoformat()}
 
-- name: Configure Ainflue Network Infrastructure
+- name: Configure iacherie Network Infrastructure
   hosts: localhost
   gather_facts: false
   
@@ -794,7 +794,7 @@ resource "aws_route" "{safe_name}" {{
         """Export as CloudFormation template"""
         cf_template = {
             "AWSTemplateFormatVersion": "2010-09-09",
-            "Description": f"Ainflue Network Infrastructure - Generated at {datetime.now().isoformat()}",
+            "Description": f"iacherie Network Infrastructure - Generated at {datetime.now().isoformat()}",
             "Resources": {}
         }
         

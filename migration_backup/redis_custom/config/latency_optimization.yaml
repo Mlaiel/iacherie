@@ -1,4 +1,4 @@
-# ⚡ Redis Latency Optimization Configuration - Ainflue Enterprise
+# ⚡ Redis Latency Optimization Configuration - IA Chéries Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Ultra-Low Latency Configuration for Creator Economy Platform
 
@@ -367,7 +367,7 @@ metadata:
 data:
   optimize_latency.sh: |
     #!/bin/bash
-    # Latency Optimization Script for Ainflue Redis Enterprise
+    # Latency Optimization Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "⚡ Optimizing Redis for Ultra-Low Latency..."

@@ -2,7 +2,7 @@
  * 🏗️ SIDEBAR LAYOUT TEMPLATE - ENTERPRISE NAVIGATION
  * ==================================================
  * 
- * Advanced Sidebar Layout for Ainflue Creator Economy
+ * Advanced Sidebar Layout for iacherie Creator Economy
  * Collapsible navigation, hierarchical menus, responsive design
  * 
  * © 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -598,7 +598,7 @@ export const SidebarLayoutTemplate: React.FC<SidebarProps> = ({
           <SidebarHeader $collapsed={collapsed}>
             <SidebarLogo $collapsed={collapsed}>
               <div className="logo-icon">🎨</div>
-              <span className="logo-text">Ainflue</span>
+              <span className="logo-text">iacherie</span>
             </SidebarLogo>
             
             {collapsible && (

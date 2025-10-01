@@ -17,8 +17,8 @@
  */
 
 // Core client exports
-export { AinflueClient } from './iacherie-client';
-export { AinflueConfig, createDefaultConfig } from './config';
+export { iacherieClient } from './iacherie-client';
+export { iacherieConfig, createDefaultConfig } from './config';
 
 // Type definitions
 export * from './types';
@@ -48,7 +48,7 @@ export { AIAnalyzer } from './content/ai-analyzer';
 
 // Error handling
 export { 
-  AinflueError,
+  iacherieError,
   AuthenticationError,
   ValidationError,
   NetworkError,
@@ -121,7 +121,7 @@ export const DEFAULT_CONFIG = {
 // Re-export types for convenience
 export type {
   // Core types
-  AinflueClientOptions,
+  iacherieClientOptions,
   RequestOptions,
   ApiEndpoint,
   HttpMethod,

@@ -60,7 +60,7 @@ class CreatorTier(Enum):
 class ModelDeploymentOrchestrator:
     """🎛️ Enterprise Model Deployment Orchestrator
     
-    Central orchestrator for all ML model deployments in the Ainflue Creator Economy platform.
+    Central orchestrator for all ML model deployments in the iacherie Creator Economy platform.
     Provides intelligent deployment strategy selection, creator-specific optimization,
     and enterprise-grade reliability with zero-downtime guarantees.
     """

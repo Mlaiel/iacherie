@@ -1,5 +1,5 @@
 """IA Influencer Agent - Real-time Stream Processor
-Complex Event Processing and Real-time Stream Processing for Ainflue Platform
+Complex Event Processing and Real-time Stream Processing for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -107,7 +107,7 @@ class StreamProcessor(ABC):
 
 
 class ContentUploadStreamProcessor(StreamProcessor):
-    """Processor for Ainflue content upload events"""
+    """Processor for IA Chéries content upload events"""
     
     def __init__(self):
         self.state = {}
@@ -566,7 +566,7 @@ class RealtimeStreamProcessor:
         try:
             logger.info("Starting Real-time Stream Processor")
             
-            # Initialize default processors for Ainflue
+            # Initialize default processors for IA Chéries
             await self._setup_default_processors()
             
             # Initialize processor states
@@ -606,7 +606,7 @@ class RealtimeStreamProcessor:
             raise
     
     async def _setup_default_processors(self):
-        """Setup default processors for Ainflue platform"""
+        """Setup default processors for IA Chéries platform"""
         try:
             # Content upload processor
             self.processors["content_upload"] = ContentUploadStreamProcessor()
@@ -624,7 +624,7 @@ class RealtimeStreamProcessor:
                 "revenue-events": ["revenue_analytics"]
             }
             
-            logger.info("Setup default processors for Ainflue platform")
+            logger.info("Setup default processors for IA Chéries platform")
             
         except Exception as e:
             logger.error(f"Error setting up default processors: {e}")

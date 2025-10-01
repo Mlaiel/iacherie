@@ -82,7 +82,7 @@ const TabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          headerTitle: 'Ainflue',
+          headerTitle: 'IA Chéries',
           // tabBarIcon: ({ color, size }) => <HomeIcon color={color} size={size} />
         }}
       />

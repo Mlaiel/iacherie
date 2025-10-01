@@ -679,7 +679,7 @@ class ComplianceReportingExample:
                     user_id=random.choice(users),
                     session_id=str(uuid.uuid4())[:8],
                     ip_address=f"192.168.{random.randint(1,255)}.{random.randint(1,255)}",
-                    user_agent="AinflueApp/1.0",
+                    user_agent="iacherieApp/1.0",
                     action=random.choice(template["actions"]),
                     resource=random.choice(template["resources"]),
                     result="success" if random.random() > 0.1 else "failure",

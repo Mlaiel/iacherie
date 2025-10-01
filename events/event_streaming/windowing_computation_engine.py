@@ -48,7 +48,7 @@ class TriggerType(Enum):
     CUSTOM = "custom"
 
 
-class AinflueBusinesWindowTypes:
+class iacherieBusinesWindowTypes:
     """Business-specific window types for IA Chérie platform"""
     
     # Content analytics windows
@@ -744,27 +744,27 @@ class WindowingComputationEngine:
             # Content engagement windows
             self.window_assigners["content_engagement"] = WindowAssigner(
                 "tumbling", 
-                **AinflueBusinesWindowTypes.CONTENT_ENGAGEMENT_WINDOW
+                **iacherieBusinesWindowTypes.CONTENT_ENGAGEMENT_WINDOW
             )
             self.window_functions["content_engagement"] = ContentEngagementWindowFunction()
             
             # Creator activity windows
             self.window_assigners["creator_activity"] = WindowAssigner(
                 "sliding",
-                **AinflueBusinesWindowTypes.CREATOR_ACTIVITY_WINDOW
+                **iacherieBusinesWindowTypes.CREATOR_ACTIVITY_WINDOW
             )
             
             # Revenue calculation windows
             self.window_assigners["revenue_calculation"] = WindowAssigner(
                 "tumbling",
-                **AinflueBusinesWindowTypes.REVENUE_REPORTING_WINDOW
+                **iacherieBusinesWindowTypes.REVENUE_REPORTING_WINDOW
             )
             self.window_functions["revenue_calculation"] = RevenueCalculationWindowFunction()
             
             # Collaboration success windows
             self.window_assigners["collaboration_success"] = WindowAssigner(
                 "session",
-                **AinflueBusinesWindowTypes.COLLABORATION_SUCCESS_WINDOW
+                **iacherieBusinesWindowTypes.COLLABORATION_SUCCESS_WINDOW
             )
             self.window_functions["collaboration_success"] = CollaborationSuccessWindowFunction()
             
@@ -968,6 +968,6 @@ __all__ = [
     "TumblingWindow", "SlidingWindow", "SessionWindow", "GlobalWindow",
     "WatermarkGenerator", "WindowEvent", "WindowState", "WindowResult",
     "ContentEngagementWindowFunction", "RevenueCalculationWindowFunction",
-    "CollaborationSuccessWindowFunction", "AinflueBusinesWindowTypes",
+    "CollaborationSuccessWindowFunction", "iacherieBusinesWindowTypes",
     "WindowAlignment", "WatermarkStrategy", "TriggerType"
 ]

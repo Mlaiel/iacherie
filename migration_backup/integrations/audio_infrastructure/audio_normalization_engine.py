@@ -2,7 +2,7 @@
 ========================================================================
 
 Engine de normalisation audio enterprise avec standards broadcast, contrôle loudness
-et conformité internationale pour la plateforme Ainflue.
+et conformité internationale pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Standards broadcast + loudness metering + mastering professional

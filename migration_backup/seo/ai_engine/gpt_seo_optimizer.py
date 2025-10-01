@@ -1,5 +1,5 @@
 """
-GPT SEO Optimizer for Ainflue Platform
+GPT SEO Optimizer for IA Chéries Platform
 ======================================
 
 Advanced GPT-powered SEO optimization and content generation.

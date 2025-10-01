@@ -31,7 +31,7 @@ violation du droit d'auteur et sera poursuivie dans toute la mesure permise par 
 ## 🏗️ Architecture Operations & Fiabilité Entreprise
 
 ### 📋 Aperçu
-Ce module fournit une infrastructure complète d'opérations MLOps et de fiabilité pour la plateforme Ainflue Creator Economy. Il implémente des pratiques SRE de niveau entreprise avec gestion de disponibilité consciente des Créateurs, systèmes de basculement intelligents et mécanismes de protection des revenus.
+Ce module fournit une infrastructure complète d'opérations MLOps et de fiabilité pour la plateforme iacherie Creator Economy. Il implémente des pratiques SRE de niveau entreprise avec gestion de disponibilité consciente des Créateurs, systèmes de basculement intelligents et mécanismes de protection des revenus.
 
 ### 📊 État de l'Architecture
 - ✅ **Composants Priorité Critique Terminés (5/5)**
@@ -356,6 +356,6 @@ python -m mlops.operations_reliability.load_testing_automation --scenario creato
 
 ---
 
-**© 2025 Fahed Mlaiel - Tous Droits Réservés - Architecture Propriétaire Ainflue**
+**© 2025 Fahed Mlaiel - Tous Droits Réservés - Architecture Propriétaire iacherie**
 
 *Fiabilité opérations entreprise pour succès Économie Créateur.*

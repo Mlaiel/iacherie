@@ -1,7 +1,7 @@
 """📈 Market Intelligence Metrics - Creator Economy Intelligence System
 ====================================================================
 
-Advanced market intelligence and competitive analytics for the Ainflue Creator Economy platform.
+Advanced market intelligence and competitive analytics for the IA Chéries Creator Economy platform.
 Provides deep market insights, competitive analysis, pricing intelligence, trend detection,
 and brand collaboration opportunity identification through AI-powered analytics.
 

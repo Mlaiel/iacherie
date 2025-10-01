@@ -194,7 +194,7 @@ class VideoContentProcessor:
     def _setup_storage_infrastructure(self):
         """Configuration infrastructure de stockage et CDN"""
         self.storage_config = {
-            'temp_dir': Path('/tmp/ainflue_video_processing'),
+            'temp_dir': Path('/tmp/iacherie_video_processing'),
             'output_dir': Path('/var/lib/iacherie/processed_videos'),
             'thumbnails_dir': Path('/var/lib/iacherie/thumbnails'),
             'cache_dir': Path('/var/cache/iacherie/video_cache')

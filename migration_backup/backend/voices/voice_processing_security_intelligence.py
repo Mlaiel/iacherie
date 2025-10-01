@@ -3,7 +3,7 @@
 
 Consolidated voice processing and security intelligence system providing comprehensive
 audio processing, voice security, threat detection, content protection, and advanced
-voice manipulation technologies for the Ainflue voice ecosystem.
+voice manipulation technologies for the IA Chéries voice ecosystem.
 
 Consolidates:
 - Voice processing engine and audio manipulation

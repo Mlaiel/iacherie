@@ -1,4 +1,4 @@
-"""Ainflue Audio Processing Configuration - PROFESSIONAL STUDIO GRADE
+"""IA Chéries Audio Processing Configuration - PROFESSIONAL STUDIO GRADE
 =====================================================================
 
 🎵 PROFESSIONAL AUDIO PROCESSING FEATURES:
@@ -947,5 +947,5 @@ __all__ = [
     "audio_processing_config"
 ]
 
-logger.info("🎵 Ainflue Audio Processing Configuration loaded")
+logger.info("🎵 IA Chéries Audio Processing Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

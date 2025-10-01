@@ -1,5 +1,5 @@
 """
-🔥 ANALYTICS LAYER - ENTERPRISE WORKFLOW AINFLUE
+🔥 ANALYTICS LAYER - ENTERPRISE WORKFLOW IA CHÉRIES
 Ultra-advanced analytics with real-time monitoring and ML optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
@@ -28,7 +28,7 @@ __all__ = [
 # Enterprise module metadata
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
-__license__ = "Proprietary - Ainflue Platform"
+__license__ = "Proprietary - IA Chéries Platform"
 __enterprise_grade__ = True
 __ml_powered__ = True
 __real_time__ = True

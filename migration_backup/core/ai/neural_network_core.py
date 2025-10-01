@@ -1,9 +1,9 @@
-"""Ainflue Core Neural Network - Advanced Neural Network Engine
+"""IA Chéries Core Neural Network - Advanced Neural Network Engine
 =========================================================
 
 Advanced neural network management providing deep learning architectures,
 model training, inference optimization, and distributed neural computation
-for the Ainflue platform AI core.
+for the IA Chéries platform AI core.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -104,8 +104,8 @@ class TrainingMetrics:
     memory_usage: float = 0.0
     gpu_utilization: float = 0.0
 
-class AinflueCoreNeuralNetwork(nn.Module if nn else object):
-    """Core neural network architecture for Ainflue"""
+class IA ChériesCoreNeuralNetwork(nn.Module if nn else object):
+    """Core neural network architecture for IA Chéries"""
     
     def __init__(self, config: NetworkConfig):
         if nn:
@@ -295,7 +295,7 @@ class NeuralNetworkCore:
         self.level = level
         
         # Model and training
-        self.model: Optional[AinflueCoreNeuralNetwork] = None
+        self.model: Optional[IA ChériesCoreNeuralNetwork] = None
         self.optimizer: Optional[Any] = None
         self.scheduler: Optional[Any] = None
         self.device = self._get_device()
@@ -331,7 +331,7 @@ class NeuralNetworkCore:
             logger.info("🚀 Initializing neural network core")
             
             # Create model
-            self.model = AinflueCoreNeuralNetwork(self.config)
+            self.model = IA ChériesCoreNeuralNetwork(self.config)
             
             if torch and self.model:
                 self.model.to(self.device)
@@ -544,7 +544,7 @@ class NeuralNetworkCore:
             
             # Recreate model with saved config
             saved_config = NetworkConfig(**model_data["config"])
-            self.model = AinflueCoreNeuralNetwork(saved_config)
+            self.model = IA ChériesCoreNeuralNetwork(saved_config)
             
             if torch:
                 self.model.load_state_dict(model_data["state_dict"])
@@ -600,5 +600,5 @@ class NeuralNetworkCore:
 __all__ = [
     "NeuralNetworkCore", "NetworkConfig", "TrainingMetrics", 
     "NetworkArchitecture", "ActivationFunction", "OptimizationAlgorithm",
-    "AinflueCoreNeuralNetwork"
+    "IA ChériesCoreNeuralNetwork"
 ]

@@ -12,9 +12,9 @@ from .content import ContentItem
 from .index import (
     enterprise_models, EnterpriseModelsManager,
     MODEL_REGISTRY, ENTERPRISE_MODULES_AVAILABLE,
-    ainflue_enterprise_workflow, get_enterprise_architecture_info
+    iacherie_enterprise_workflow, get_enterprise_architecture_info
 )
 
 __all__ = ['ContentItem', 'enterprise_models', 'EnterpriseModelsManager', 
            'MODEL_REGISTRY', 'ENTERPRISE_MODULES_AVAILABLE', 
-           'ainflue_enterprise_workflow', 'get_enterprise_architecture_info']
+           'iacherie_enterprise_workflow', 'get_enterprise_architecture_info']

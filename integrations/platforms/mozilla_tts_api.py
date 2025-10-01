@@ -100,7 +100,7 @@ class MozillaTTSAPI:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=60),
             headers={
-                'User-Agent': 'Mozilla/5.0 (compatible; AInfluencer TTS Client)'
+                'User-Agent': 'Mozilla/5.0 (compatible; iaCherie TTS Client)'
             }
         )
         return self

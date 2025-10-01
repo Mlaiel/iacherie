@@ -137,7 +137,7 @@ class KubernetesOrchestrator:
         self.default_namespace = self.config.get('default_namespace', 'iacherie-system')
         
         # IA Chérie-specific service configurations
-        self.ainflue_services = {
+        self.iacherie_services = {
             'content-processing': {
                 'description': 'AI content processing microservice',
                 'image': 'iacherie/content-processor:latest',
@@ -263,7 +263,7 @@ class KubernetesOrchestrator:
             ingress_setup_result = await self._setup_ingress_controller(cluster_config)
             
             # Apply IA Chérie-specific configurations
-            ainflue_config_result = await self._apply_ainflue_cluster_config(cluster_config)
+            iacherie_config_result = await self._apply_iacherie_cluster_config(cluster_config)
             
             # Store cluster configuration
             self.clusters[cluster_config.name] = cluster_config
@@ -277,7 +277,7 @@ class KubernetesOrchestrator:
                 'monitoring_setup': monitoring_setup_result,
                 'service_mesh': service_mesh_result,
                 'ingress_setup': ingress_setup_result,
-                'ainflue_config': ainflue_config_result,
+                'iacherie_config': iacherie_config_result,
                 'status': 'completed'
             }
             
@@ -318,8 +318,8 @@ class KubernetesOrchestrator:
             result['observability'] = observability_result
             
             # Apply IA Chérie-specific mesh configuration
-            ainflue_mesh_result = await self._apply_ainflue_mesh_config(mesh_config)
-            result['ainflue_config'] = ainflue_mesh_result
+            iacherie_mesh_result = await self._apply_iacherie_mesh_config(mesh_config)
+            result['iacherie_config'] = iacherie_mesh_result
             
             # Store mesh configuration
             self.service_meshes[config_id] = mesh_config
@@ -367,8 +367,8 @@ class KubernetesOrchestrator:
             ingress_manifest['load_balancing'] = load_balancing_config
             
             # Apply IA Chérie-specific routing
-            ainflue_routing_config = await self._configure_ainflue_routing(ingress_rule)
-            ingress_manifest['ainflue_routing'] = ainflue_routing_config
+            iacherie_routing_config = await self._configure_iacherie_routing(ingress_rule)
+            ingress_manifest['iacherie_routing'] = iacherie_routing_config
             
             # Deploy ingress rule
             deployment_result = await self._deploy_ingress_rule(ingress_manifest)
@@ -432,7 +432,7 @@ class KubernetesOrchestrator:
             monitoring_result = await self._monitor_scaling_operation(scaling_id, scaling_result)
             
             # Apply IA Chérie-specific optimizations
-            optimization_result = await self._apply_ainflue_scaling_optimizations(
+            optimization_result = await self._apply_iacherie_scaling_optimizations(
                 deployment_name, scaling_result
             )
             
@@ -496,7 +496,7 @@ class KubernetesOrchestrator:
                 raise ValueError(f"Unsupported secrets operation: {operation}")
             
             # Apply IA Chérie-specific security policies
-            security_result = await self._apply_ainflue_secret_policies(operation_id, result)
+            security_result = await self._apply_iacherie_secret_policies(operation_id, result)
             
             logger.info(f"Kubernetes secrets operation completed: {operation_id}")
             return {
@@ -635,19 +635,19 @@ class KubernetesOrchestrator:
             'status': 'installed'
         }
 
-    async def _apply_ainflue_cluster_config(self, cluster_config: KubernetesCluster) -> Dict[str, Any]:
+    async def _apply_iacherie_cluster_config(self, cluster_config: KubernetesCluster) -> Dict[str, Any]:
         """Apply IA Chérie-specific cluster configuration"""
         # Create IA Chérie namespace
-        namespace_result = await self._create_ainflue_namespace()
+        namespace_result = await self._create_iacherie_namespace()
         
         # Setup GPU nodes for AI processing
         gpu_config = await self._setup_gpu_nodes()
         
         # Configure storage classes for content
-        storage_config = await self._configure_ainflue_storage()
+        storage_config = await self._configure_iacherie_storage()
         
         # Setup network policies for security
-        network_policies = await self._setup_ainflue_network_policies()
+        network_policies = await self._setup_iacherie_network_policies()
         
         return {
             'namespace': namespace_result,
@@ -657,7 +657,7 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _create_ainflue_namespace(self) -> Dict[str, Any]:
+    async def _create_iacherie_namespace(self) -> Dict[str, Any]:
         """Create IA Chérie namespace with proper configuration"""
         return {
             'namespace': self.default_namespace,
@@ -696,7 +696,7 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _configure_ainflue_storage(self) -> Dict[str, Any]:
+    async def _configure_iacherie_storage(self) -> Dict[str, Any]:
         """Configure storage classes for IA Chérie content"""
         return {
             'storage_classes': {
@@ -719,7 +719,7 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _setup_ainflue_network_policies(self) -> Dict[str, Any]:
+    async def _setup_iacherie_network_policies(self) -> Dict[str, Any]:
         """Setup network policies for IA Chérie security"""
         return {
             'policies': {
@@ -806,13 +806,13 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _apply_ainflue_mesh_config(self, mesh_config: ServiceMeshConfig) -> Dict[str, Any]:
+    async def _apply_iacherie_mesh_config(self, mesh_config: ServiceMeshConfig) -> Dict[str, Any]:
         """Apply IA Chérie-specific mesh configuration"""
         # Configure service-to-service authentication
         auth_policies = await self._configure_service_auth_policies()
         
         # Setup traffic routing for IA Chérie services
-        routing_rules = await self._configure_ainflue_routing_rules()
+        routing_rules = await self._configure_iacherie_routing_rules()
         
         # Configure rate limiting for API services
         rate_limits = await self._configure_service_rate_limits()
@@ -841,7 +841,7 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _configure_ainflue_routing_rules(self) -> Dict[str, Any]:
+    async def _configure_iacherie_routing_rules(self) -> Dict[str, Any]:
         """Configure IA Chérie-specific routing rules"""
         return {
             'rules': {
@@ -941,7 +941,7 @@ class KubernetesOrchestrator:
             'status': 'configured'
         }
 
-    async def _configure_ainflue_routing(self, ingress_rule: IngressRule) -> Dict[str, Any]:
+    async def _configure_iacherie_routing(self, ingress_rule: IngressRule) -> Dict[str, Any]:
         """Configure IA Chérie-specific routing"""
         return {
             'content_routing': {
@@ -1058,7 +1058,7 @@ class KubernetesOrchestrator:
             'status': 'monitoring'
         }
 
-    async def _apply_ainflue_scaling_optimizations(self, deployment_name: str, 
+    async def _apply_iacherie_scaling_optimizations(self, deployment_name: str, 
                                                   scaling_result: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific scaling optimizations"""
         return {
@@ -1129,7 +1129,7 @@ class KubernetesOrchestrator:
             'status': 'audited'
         }
 
-    async def _apply_ainflue_secret_policies(self, operation_id: str, 
+    async def _apply_iacherie_secret_policies(self, operation_id: str, 
                                            result: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific secret policies"""
         return {
@@ -1160,7 +1160,7 @@ if __name__ == "__main__":
         # Test cluster deployment
         cluster = KubernetesCluster(
             name="iacherie-production",
-            context="gke_ainflue_us-central1_production",
+            context="gke_iacherie_us-central1_production",
             version="1.28",
             nodes=5,
             service_mesh=ServiceMeshType.ISTIO,

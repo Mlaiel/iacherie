@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise Certificate Authentication Template - Ainflue API Templates
+⚡ Enterprise Certificate Authentication Template - iacherie API Templates
 Advanced production-ready X.509 certificate authentication and PKI management
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -1238,7 +1238,7 @@ class CertificateAccessManager:
             # Mapping DN patterns vers rôles
             "CN=Admin*": ["admin", "user"],
             "CN=User*": ["user"],
-            "O=Ainflue": ["ainflue_user"],
+            "O=iacherie": ["iacherie_user"],
             "OU=Developers": ["developer", "user"]
         }
         
@@ -1246,7 +1246,7 @@ class CertificateAccessManager:
             "admin": ["read", "write", "delete", "admin"],
             "user": ["read", "write"],
             "developer": ["read", "write", "deploy"],
-            "ainflue_user": ["read", "write", "content_create"]
+            "iacherie_user": ["read", "write", "content_create"]
         }
     
     async def determine_roles(self, cert: x509.Certificate) -> List[str]:

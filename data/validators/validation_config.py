@@ -487,7 +487,7 @@ def get_config() -> ValidationConfig:
     global _default_config
     if _default_config is None:
         # Determine environment from environment variable
-        env = os.getenv('AINFLUE_ENV', 'development').lower()
+        env = os.getenv('IACHERIE_ENV', 'development').lower()
         try:
             config_level = ConfigLevel(env)
         except ValueError:

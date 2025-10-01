@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Localization quality assurance enterprise avec automated testing,
 linguistic accuracy validation et cultural compliance verification.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Automated translation quality testing pour créateurs globaux
 - Cultural appropriateness validation automatique
 - Linguistic accuracy assessment avec NLP avancé

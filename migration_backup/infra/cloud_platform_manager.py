@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +12,7 @@
 """
 Cloud Platform Manager
 
-Enterprise-grade multi-cloud platform management system for Ainflue infrastructure.
+Enterprise-grade multi-cloud platform management system for IA Chéries infrastructure.
 Provides unified interface for managing resources across AWS, Azure, and GCP.
 """
 

@@ -1,4 +1,4 @@
-"""Passwordless Authentication Template for Ainflue Platform
+"""Passwordless Authentication Template for iacherie Platform
 Modern passwordless authentication supporting WebAuthn, magic links, SMS OTP,
 email verification, and hardware security keys for enhanced creator security.
 
@@ -187,7 +187,7 @@ class OTPToken(BaseModel):
 
 
 class PasswordlessAuthenticationService:
-    """Comprehensive passwordless authentication service for Ainflue platform
+    """Comprehensive passwordless authentication service for iacherie platform
     
     Provides modern passwordless authentication with:
     - WebAuthn/FIDO2 support with hardware security keys
@@ -214,7 +214,7 @@ class PasswordlessAuthenticationService:
         
         # WebAuthn configuration
         self.rp_id = settings.WEBAUTHN_RP_ID or settings.DOMAIN
-        self.rp_name = settings.WEBAUTHN_RP_NAME or "Ainflue Platform"
+        self.rp_name = settings.WEBAUTHN_RP_NAME or "iacherie Platform"
         self.origin = settings.BASE_URL
         
         logger.info("Passwordless authentication service initialized")

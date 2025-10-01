@@ -1,5 +1,5 @@
 """
-Auto Remediation Engine - Ainflue Health Checks Module
+Auto Remediation Engine - IA Chéries Health Checks Module
 Moteur remédiation automatique avec self-healing, auto-scaling,
 restart strategies et rollback automation.
 

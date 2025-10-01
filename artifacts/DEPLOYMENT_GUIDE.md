@@ -415,7 +415,7 @@ kubectl exec -n vault-system vault-0 -- vault operator unseal <key3>
 # Database credentials
 kubectl create secret generic database-credentials \
   --namespace iacherie-production \
-  --from-literal=username=ainflue_user \
+  --from-literal=username=iacherie_user \
   --from-literal=password=<secure_password> \
   --from-literal=host=<db_host>
 

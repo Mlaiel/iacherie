@@ -28,7 +28,7 @@ setup(
     long_description=read_readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/Mlaiel/IA Chérie",
-    py_modules=["ainflue_sdk"],
+    py_modules=["iacherie_sdk"],
     python_requires=">=3.8",
     install_requires=read_requirements(),
     extras_require={

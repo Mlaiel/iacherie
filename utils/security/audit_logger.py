@@ -67,7 +67,7 @@ class AuditLogger:
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         """Initialize audit logger with enterprise configuration."""
         self.config = config or {}
-        self._log_file = Path(self.config.get('log_file', '/var/log/ainflue/audit.log'))
+        self._log_file = Path(self.config.get('log_file', '/var/log/iacherie/audit.log'))
         self._performance_threshold_ms = 5.0
         self._encrypt_logs = self.config.get('encrypt_logs', True)
         

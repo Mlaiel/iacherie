@@ -832,7 +832,7 @@ class BreachNotificationSystem:
         """Generate content for regulatory notification"""
         return {
             "breach_id": breach.breach_id,
-            "organization_name": "Ainflue Platform",
+            "organization_name": "IA Chéries Platform",
             "contact_person": "Data Protection Officer",
             "incident_date": breach.occurrence_date.isoformat() if breach.occurrence_date else breach.detection_date.isoformat(),
             "detection_date": breach.detection_date.isoformat(),
@@ -930,7 +930,7 @@ What you can do:
 
 We sincerely apologize for this incident and any inconvenience it may cause.
 
-Ainflue Security Team
+IA Chéries Security Team
 security@ainflue.com
 """
         else:

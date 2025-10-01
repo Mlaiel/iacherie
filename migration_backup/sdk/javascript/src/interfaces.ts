@@ -1,5 +1,5 @@
 /**
- * API Interface Definitions for Ainflue SDK
+ * API Interface Definitions for IA Chéries SDK
  * 
  * Multi-expert implementation:
  * - Backend Senior: Robust API interface design with type safety
@@ -10,13 +10,13 @@
  * Author: Fahed Mlaiel (mlaiel@live.de)
  */
 
-import { AinflueConfig, APIResponse, PaginationOptions, SortOptions } from './types';
+import { IA ChériesConfig, APIResponse, PaginationOptions, SortOptions } from './types';
 
 /**
  * Base API interface with common methods
  */
 export interface BaseAPI {
-  readonly config: AinflueConfig;
+  readonly config: IA ChériesConfig;
   readonly baseUrl: string;
   
   /**

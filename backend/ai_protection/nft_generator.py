@@ -172,7 +172,7 @@ class NFTGenerator:
                 name=f"Copyright Certificate - {content_metadata.get('title', content_id[:8])}",
                 description=f"Digital copyright certificate for {content_metadata.get('type', 'content')} content",
                 image=await self._generate_certificate_image(certificate_metadata, content_metadata),
-                external_url=f"https://certificates.ainflue.com/{certificate_id}",
+                external_url=f"https://certificates.iacherie.com/{certificate_id}",
                 attributes=[
                     {"trait_type": "Certificate Type", "value": certificate_type},
                     {"trait_type": "Content Type", "value": content_metadata.get('type', 'unknown')},

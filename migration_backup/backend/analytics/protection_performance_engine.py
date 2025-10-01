@@ -6,7 +6,7 @@ copyright detection effectiveness, watermarking performance, legal action succes
 risk assessment, and protection ROI across all content protection mechanisms.
 
 Monitors and optimizes content protection systems, enforcement effectiveness,
-and intellectual property security for the Ainflue platform.
+and intellectual property security for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

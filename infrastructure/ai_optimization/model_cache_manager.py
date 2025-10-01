@@ -2,11 +2,11 @@
 Model Cache Manager - Intelligent AI Model Caching System
 ========================================================
 
-Enterprise-grade caching system for AI models in the Ainflue platform.
+Enterprise-grade caching system for AI models in the iacherie platform.
 Optimizes model loading, inference speed, and resource utilization across 53 AI agents.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - AI Optimization Module
+Project: iacherie Infrastructure - AI Optimization Module
 Expert Role: Lead Dev IA + ML Engineer + Backend Senior
 Version: 1.0 Production Enterprise
 
@@ -102,7 +102,7 @@ class ModelCacheManager:
     Intelligent AI Model Cache Manager
     
     Provides enterprise-grade caching for AI models with multi-tier storage,
-    intelligent eviction policies, and performance optimization for the Ainflue platform.
+    intelligent eviction policies, and performance optimization for the iacherie platform.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -138,13 +138,13 @@ class ModelCacheManager:
                 "max_size_gb": 100.0,
                 "max_models": 200,
                 "strategy": CacheStrategy.LRU.value,
-                "path": "/var/cache/ainflue/models/ssd"
+                "path": "/var/cache/iacherie/models/ssd"
             },
             "hdd_cache": {
                 "max_size_gb": 500.0,
                 "max_models": 1000,
                 "strategy": CacheStrategy.FIFO.value,
-                "path": "/var/cache/ainflue/models/hdd"
+                "path": "/var/cache/iacherie/models/hdd"
             },
             "network_cache": {
                 "redis_url": "redis://localhost:6379/0",
@@ -732,7 +732,7 @@ class ModelCacheManager:
     
     def _generate_cache_key(self, model_id: str) -> str:
         """Generate cache key for model"""
-        return f"ainflue:model_cache:{model_id}"
+        return f"iacherie:model_cache:{model_id}"
     
     async def _update_access_stats(self, model_id: str) -> None:
         """Update access statistics for model"""

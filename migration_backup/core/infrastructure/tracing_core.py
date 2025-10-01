@@ -1,5 +1,5 @@
 """
-Ainflue Core Infrastructure - Distributed Tracing Core
+IA Chéries Core Infrastructure - Distributed Tracing Core
 =====================================================
 
 Enterprise-grade distributed tracing system for monitoring, debugging, and 

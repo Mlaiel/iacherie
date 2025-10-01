@@ -1,4 +1,4 @@
-"""{{agent_name}} Recommendation Agent for Ainflue Platform
+"""{{agent_name}} Recommendation Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

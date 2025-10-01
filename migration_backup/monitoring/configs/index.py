@@ -3,7 +3,7 @@
 🎛️ Monitoring Configuration Orchestrator - Creator Economy Enterprise
 =====================================================================
 
-Orchestrateur central des configurations monitoring pour l'écosystème Ainflue Creator Economy.
+Orchestrateur central des configurations monitoring pour l'écosystème IA Chéries Creator Economy.
 Gestion intelligente des configurations avec validation, hot-reload et optimisation Creator-specific.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -62,7 +62,7 @@ logger = logging.getLogger("ainflue.monitoring.config")
 
 
 class CreatorTier(str, Enum):
-    """Niveaux de créateurs Ainflue avec SLA différenciés"""
+    """Niveaux de créateurs IA Chéries avec SLA différenciés"""
     PREMIUM = "premium"
     STANDARD = "standard" 
     BASIC = "basic"
@@ -114,7 +114,7 @@ class ConfigurationManager:
     - Rollback automatique en cas d'erreur
     """
     
-    def __init__(self, config_dir: str = "/home/runner/work/Ainflue/Ainflue/monitoring/configs"):
+    def __init__(self, config_dir: str = "/home/runner/work/IA Chéries/IA Chéries/monitoring/configs"):
         self.config_dir = Path(config_dir)
         self.configs: Dict[str, Dict[str, Any]] = {}
         self.metadata: Dict[str, ConfigMetadata] = {}

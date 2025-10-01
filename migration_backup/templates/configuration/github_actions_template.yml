@@ -1,12 +1,12 @@
 # =====================================================================================
-# GitHub Actions Template - Ainflue Configuration Module
+# GitHub Actions Template - IA Chéries Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
 # Utilisation commerciale INTERDITE sans autorisation écrite
 # =====================================================================================
 
-name: 🎵 Ainflue Creator Economy Platform - CI/CD Pipeline
+name: 🎵 IA Chéries Creator Economy Platform - CI/CD Pipeline
 
 # Trigger configuration for comprehensive automation
 on:
@@ -192,7 +192,7 @@ jobs:
       
       - name: 📊 Workflow summary
         run: |
-          echo "## 🎵 Ainflue CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎵 IA Chéries CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
           echo "**Build:** ${{ env.BUILD_NUMBER }}" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** ${{ env.PLATFORM_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "**Frontend Changed:** ${{ steps.changes.outputs.frontend }}" >> $GITHUB_STEP_SUMMARY
@@ -573,7 +573,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ env.PLATFORM_VERSION }}
           labels: |
-            org.opencontainers.image.title=Ainflue ${{ matrix.service.name }}
+            org.opencontainers.image.title=IA Chéries ${{ matrix.service.name }}
             org.opencontainers.image.description=Creator Economy Platform - ${{ matrix.service.name }}
             org.opencontainers.image.vendor=Fahed Mlaiel
             ainflue.service.name=${{ matrix.service.name }}
@@ -764,7 +764,7 @@ jobs:
     steps:
       - name: 📊 Deployment status
         run: |
-          echo "## 🎵 Ainflue Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎵 IA Chéries Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** ${{ env.PLATFORM_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "**Build Number:** ${{ env.BUILD_NUMBER }}" >> $GITHUB_STEP_SUMMARY
@@ -782,9 +782,9 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: '#deployments'
-          username: 'Ainflue CI/CD'
+          username: 'IA Chéries CI/CD'
           icon_emoji: ':musical_note:'
-          title: 'Ainflue Creator Platform Deployment'
+          title: 'IA Chéries Creator Platform Deployment'
           text: |
             Version: ${{ env.PLATFORM_VERSION }}
             Build: ${{ env.BUILD_NUMBER }}
@@ -801,9 +801,9 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: '🚨 Ainflue Deployment Failed - Build ${{ env.BUILD_NUMBER }}'
+          subject: '🚨 IA Chéries Deployment Failed - Build ${{ env.BUILD_NUMBER }}'
           to: fahed.mlaiel@ainflue.com
-          from: 'Ainflue CI/CD <noreply@ainflue.com>'
+          from: 'IA Chéries CI/CD <noreply@ainflue.com>'
           body: |
             Deployment failed for version ${{ env.PLATFORM_VERSION }}
             Build number: ${{ env.BUILD_NUMBER }}

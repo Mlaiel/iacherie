@@ -1,6 +1,6 @@
 # Security & Compliance Modul
 
-Enterprise-Sicherheit und Compliance-Framework für ML-Systeme in der Ainflue MLOps-Plattform.
+Enterprise-Sicherheit und Compliance-Framework für ML-Systeme in der iacherie MLOps-Plattform.
 
 ## 📋 **ENTERPRISE SECURITY INFRASTRUCTURE**
 
@@ -16,7 +16,7 @@ Enterprise-Sicherheit und Compliance-Framework für ML-Systeme in der Ainflue ML
 
 ---
 
-## 🎯 **AINFLUE GESCHÄFTSLOGIK**
+## 🎯 **IACHERIE GESCHÄFTSLOGIK**
 **Creator Economy Pipeline :** Creator multi-format → IA Processing → IP-Schutz → Monetarisierung → Zusammenarbeit & Gamification → Professionelles SEO → Multi-Plattform-Distribution
 
 ---
@@ -30,7 +30,7 @@ Enterprise-Sicherheit und Compliance-Framework für ML-Systeme in der Ainflue ML
 - 🎯 **Ziel :** Umfassender Schutz Creator Economy
 
 ```
-/workspaces/Ainflue/mlops/security_compliance/
+/workspaces/iacherie/mlops/security_compliance/
 ├── __init__.py                               # [IMPLEMENTIERT] Modulinitialisierung
 ├── index.py                                  # [IMPLEMENTIERT] Hauptorchestrator
 ├── adversarial_defense.py                   # [IMPLEMENTIERT] Schutz vor adversariellen Angriffen
@@ -275,4 +275,4 @@ class PrivacyPreservingML:
 
 ---
 
-*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre Ainflue-Architektur*
+*© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre iacherie-Architektur*

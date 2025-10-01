@@ -17,7 +17,7 @@ Enterprise Model Governance Infrastructure combining:
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer expertise
 
-Logique Métier Ainflue: Créateurs multi-format → IA Processing → 
+Logique Métier iacherie: Créateurs multi-format → IA Processing → 
 Protection IP → Monétisation → Collaboration & Gamification → 
 SEO Professionnel → Distribution Multi-plateformes
 """
@@ -108,7 +108,7 @@ def init_governance_module(config: Optional[Dict[str, Any]] = None) -> Dict[str,
         
         default_config = {
             "tracking_uri": "file://./mlflow_runs",
-            "experiment_name": "ainflue_models", 
+            "experiment_name": "iacherie_models", 
             "audit_level": "ENTERPRISE",
             "security_level": "HIGH",
             "creator_economy_mode": True,

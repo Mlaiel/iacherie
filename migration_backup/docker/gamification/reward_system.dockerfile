@@ -1,5 +1,5 @@
 # ===============================================
-# Reward System Dockerfile - Ainflue Platform
+# Reward System Dockerfile - IA Chéries Platform
 # ===============================================
 # Multi-stage Docker build for Reward Calculation Service
 # Handles point calculation, bonus multipliers, and reward distribution
@@ -61,7 +61,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
 # Labels
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL version="3.0.0"
-LABEL description="Reward System Service for Ainflue Gamification"
+LABEL description="Reward System Service for IA Chéries Gamification"
 
 # Expose port
 EXPOSE 8081

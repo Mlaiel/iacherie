@@ -1,6 +1,6 @@
 # 📈 Grafana Creator Dashboards Configuration
 # ============================================
-# Configuration dashboards Grafana Creator Economy Ainflue
+# Configuration dashboards Grafana Creator Economy IA Chéries
 # Visualisations intelligentes avec drill-down par tier et type de créateur
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -65,7 +65,7 @@ dashboards:
   creator_overview:
     uid: "creator-overview-main"
     title: "🎨 Creator Economy - Vue d'Ensemble"
-    description: "Dashboard principal monitoring Creator Economy Ainflue"
+    description: "Dashboard principal monitoring Creator Economy IA Chéries"
     tags: ["creator", "overview", "kpi", "business"]
     timezone: "UTC"
     refresh: "30s"

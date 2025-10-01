@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Data Replication Engine for Multi-Cloud Infrastructure

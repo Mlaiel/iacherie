@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-File Storage Template for Ainflue Creator Economy Platform
+File Storage Template for IA Chéries Creator Economy Platform
 Enterprise file storage service with multi-cloud support, CDN integration and intelligent optimization
 """
 
@@ -199,7 +199,7 @@ class UploadResponse(BaseModel):
 
 class FileStorageTemplate:
     """
-    Template de service de stockage de fichiers enterprise pour Ainflue
+    Template de service de stockage de fichiers enterprise pour IA Chéries
     
     Fonctionnalités:
     - Multi-cloud storage (AWS S3, Azure Blob, Google Cloud)
@@ -216,7 +216,7 @@ class FileStorageTemplate:
     def __init__(self, config: StorageConfig = None):
         self.config = config or StorageConfig()
         self.app = FastAPI(
-            title="Ainflue File Storage Service",
+            title="IA Chéries File Storage Service",
             description="Enterprise file storage with multi-cloud support",
             version="1.0.0"
         )

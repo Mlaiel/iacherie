@@ -63,15 +63,15 @@ collaboration_metrics:
         
     # Métriques performance matching
     performance_metrics:
-      - metric: "ainflue_collaboration_matching_success_rate"
+      - metric: "iacherie_collaboration_matching_success_rate"
         description: "Taux succès matching collaborations"
         labels: ["matching_type", "creator_type_combination", "project_category"]
         
-      - metric: "ainflue_collaboration_matching_latency_ms"
+      - metric: "iacherie_collaboration_matching_latency_ms"
         description: "Latence algorithme matching"
         labels: ["matching_algorithm", "dataset_size_category"]
         
-      - metric: "ainflue_collaboration_matching_accuracy"
+      - metric: "iacherie_collaboration_matching_accuracy"
         description: "Précision predictions matching"
         labels: ["algorithm_version", "feature_set"]
 
@@ -153,15 +153,15 @@ collaboration_metrics:
     
     # Métriques interactions
     interaction_metrics:
-      - metric: "ainflue_collaboration_project_completion_rate"
+      - metric: "iacherie_collaboration_project_completion_rate"
         description: "Taux finalisation projets collaboration"
         labels: ["collaboration_type", "creator_tier_combination", "project_complexity"]
         
-      - metric: "ainflue_collaboration_communication_frequency"
+      - metric: "iacherie_collaboration_communication_frequency"
         description: "Fréquence communication dans collaborations"
         labels: ["communication_channel", "project_phase", "creator_types"]
         
-      - metric: "ainflue_collaboration_satisfaction_score"
+      - metric: "iacherie_collaboration_satisfaction_score"
         description: "Score satisfaction collaborations"
         labels: ["creator_id", "collaboration_type", "completion_status"]
 
@@ -228,15 +228,15 @@ collaboration_metrics:
     
     # Métriques communication
     communication_metrics:
-      - metric: "ainflue_collaboration_message_delivery_rate"
+      - metric: "iacherie_collaboration_message_delivery_rate"
         description: "Taux livraison messages collaboration"
         labels: ["channel_type", "message_type", "priority_level"]
         
-      - metric: "ainflue_collaboration_video_call_quality"
+      - metric: "iacherie_collaboration_video_call_quality"
         description: "Qualité appels vidéo collaboration"
         labels: ["call_duration_category", "participant_count", "connection_type"]
         
-      - metric: "ainflue_collaboration_file_sharing_success_rate"
+      - metric: "iacherie_collaboration_file_sharing_success_rate"
         description: "Taux succès partage fichiers"
         labels: ["file_type", "file_size_category", "sharing_method"]
 
@@ -305,15 +305,15 @@ success_tracking:
   
   # Métriques succès
   success_metrics:
-    - metric: "ainflue_collaboration_success_rate_by_type"
+    - metric: "iacherie_collaboration_success_rate_by_type"
       description: "Taux succès par type collaboration"
       labels: ["collaboration_type", "creator_tier_combo", "project_size"]
       
-    - metric: "ainflue_collaboration_time_to_completion"
+    - metric: "iacherie_collaboration_time_to_completion"
       description: "Temps jusqu'à finalisation collaboration"
       labels: ["collaboration_type", "complexity_level"]
       
-    - metric: "ainflue_collaboration_repeat_rate"
+    - metric: "iacherie_collaboration_repeat_rate"
       description: "Taux de re-collaboration entre créateurs"
       labels: ["creator_pair_types", "success_history"]
 
@@ -358,11 +358,11 @@ cross_platform_integration:
   
   # Métriques intégration
   integration_metrics:
-    - metric: "ainflue_collaboration_cross_platform_reach"
+    - metric: "iacherie_collaboration_cross_platform_reach"
       description: "Portée collaborations multi-plateformes"
       labels: ["platform_combination", "content_type", "creator_types"]
       
-    - metric: "ainflue_collaboration_platform_sync_success"
+    - metric: "iacherie_collaboration_platform_sync_success"
       description: "Succès synchronisation données plateformes"
       labels: ["platform", "sync_type", "data_volume"]
 
@@ -410,11 +410,11 @@ collaboration_analytics:
   
   # Métriques analytics
   analytics_metrics:
-    - metric: "ainflue_collaboration_prediction_accuracy"
+    - metric: "iacherie_collaboration_prediction_accuracy"
       description: "Précision prédictions collaboration"
       labels: ["prediction_type", "model_version", "time_horizon"]
       
-    - metric: "ainflue_collaboration_insight_adoption_rate"
+    - metric: "iacherie_collaboration_insight_adoption_rate"
       description: "Taux adoption recommandations collaboration"
       labels: ["insight_type", "creator_tier", "recommendation_confidence"]
 
@@ -467,11 +467,11 @@ workflow_automation:
   
   # Métriques automatisation
   automation_metrics:
-    - metric: "ainflue_collaboration_workflow_automation_success"
+    - metric: "iacherie_collaboration_workflow_automation_success"
       description: "Succès automatisation workflows collaboration"
       labels: ["workflow_type", "automation_complexity"]
       
-    - metric: "ainflue_collaboration_manual_intervention_rate"
+    - metric: "iacherie_collaboration_manual_intervention_rate"
       description: "Taux intervention manuelle workflows"
       labels: ["workflow_stage", "intervention_reason"]
 

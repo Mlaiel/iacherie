@@ -1,4 +1,4 @@
-# ⚡ Pod Security Policy Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Pod Security Policy Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: global-pod-security-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: pod-security
     component: global-config
@@ -107,8 +107,8 @@ data:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-restricted-psp
-  namespace: ainflue-production
+  name: iacherie-restricted-psp
+  namespace: iacherie-production
   labels:
     security-level: restricted
     policy-type: production
@@ -184,8 +184,8 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-application-psp
-  namespace: ainflue-production
+  name: iacherie-application-psp
+  namespace: iacherie-production
   labels:
     security-level: baseline
     policy-type: application
@@ -240,8 +240,8 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-database-psp
-  namespace: ainflue-database
+  name: iacherie-database-psp
+  namespace: iacherie-database
   labels:
     security-level: baseline
     policy-type: database
@@ -300,7 +300,7 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-monitoring-psp
+  name: iacherie-monitoring-psp
   namespace: monitoring
   labels:
     security-level: baseline
@@ -360,7 +360,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-production
+  name: iacherie-production
   labels:
     pod-security.kubernetes.io/enforce: restricted
     pod-security.kubernetes.io/audit: restricted
@@ -372,7 +372,7 @@ spec: {}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-staging
+  name: iacherie-staging
   labels:
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: restricted
@@ -384,7 +384,7 @@ spec: {}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-development
+  name: iacherie-development
   labels:
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
@@ -397,7 +397,7 @@ spec: {}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
-  name: ainflue-restricted-scc
+  name: iacherie-restricted-scc
   labels:
     security-level: restricted
 allowHostDirVolumePlugin: false
@@ -435,11 +435,11 @@ volumes:
 - projected
 - secret
 users:
-- system:serviceaccount:ainflue-production:ainflue-api
-- system:serviceaccount:ainflue-production:ainflue-frontend
-- system:serviceaccount:ainflue-production:ainflue-content-processor
+- system:serviceaccount:iacherie-production:iacherie-api
+- system:serviceaccount:iacherie-production:iacherie-frontend
+- system:serviceaccount:iacherie-production:iacherie-content-processor
 groups:
-- system:serviceaccounts:ainflue-production
+- system:serviceaccounts:iacherie-production
 
 # ===================================================================
 # 🔒 OPA GATEKEEPER CONSTRAINTS
@@ -503,13 +503,13 @@ spec:
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredSecurityContext
 metadata:
-  name: ainflue-security-context
+  name: iacherie-security-context
 spec:
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces: ["ainflue-production", "ainflue-staging"]
+    namespaces: ["iacherie-production", "iacherie-staging"]
   parameters:
     runAsNonRoot: true
     readOnlyRootFilesystem: true
@@ -554,18 +554,18 @@ spec:
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sAllowedRepos
 metadata:
-  name: ainflue-allowed-repos
+  name: iacherie-allowed-repos
 spec:
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces: ["ainflue-production", "ainflue-staging"]
+    namespaces: ["iacherie-production", "iacherie-staging"]
   parameters:
     repos:
-      - "ainflue.azurecr.io/"
-      - "gcr.io/ainflue-project/"
-      - "registry.ainflue.com/"
+      - "iacherie.azurecr.io/"
+      - "gcr.io/iacherie-project/"
+      - "registry.iacherie.com/"
       - "k8s.gcr.io/"
       - "quay.io/jetstack/"  # cert-manager
 ---
@@ -628,13 +628,13 @@ spec:
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sRequiredResources
 metadata:
-  name: ainflue-required-resources
+  name: iacherie-required-resources
 spec:
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces: ["ainflue-production", "ainflue-staging"]
+    namespaces: ["iacherie-production", "iacherie-staging"]
   parameters:
     limits:
       cpu: "2000m"
@@ -651,8 +651,8 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ainflue-restricted-sa
-  namespace: ainflue-production
+  name: iacherie-restricted-sa
+  namespace: iacherie-production
   labels:
     security-level: restricted
 ---
@@ -660,7 +660,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-restricted-psp-user
+  name: iacherie-restricted-psp-user
   labels:
     security-level: restricted
 rules:
@@ -668,65 +668,65 @@ rules:
   resources: ['podsecuritypolicies']
   verbs: ['use']
   resourceNames:
-  - ainflue-restricted-psp
+  - iacherie-restricted-psp
 ---
 # 🔗 RoleBinding for PSP
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-restricted-psp-binding
-  namespace: ainflue-production
+  name: iacherie-restricted-psp-binding
+  namespace: iacherie-production
 roleRef:
   kind: ClusterRole
-  name: ainflue-restricted-psp-user
+  name: iacherie-restricted-psp-user
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: ainflue-restricted-sa
-  namespace: ainflue-production
+  name: iacherie-restricted-sa
+  namespace: iacherie-production
 - kind: ServiceAccount
-  name: ainflue-api
-  namespace: ainflue-production
+  name: iacherie-api
+  namespace: iacherie-production
 - kind: ServiceAccount
-  name: ainflue-frontend
-  namespace: ainflue-production
+  name: iacherie-frontend
+  namespace: iacherie-production
 - kind: ServiceAccount
-  name: ainflue-content-processor
-  namespace: ainflue-production
+  name: iacherie-content-processor
+  namespace: iacherie-production
 ---
 # 🎯 Database Service Account
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ainflue-database-sa
-  namespace: ainflue-database
+  name: iacherie-database-sa
+  namespace: iacherie-database
   labels:
     security-level: baseline
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-database-psp-user
+  name: iacherie-database-psp-user
 rules:
 - apiGroups: ['policy']
   resources: ['podsecuritypolicies']
   verbs: ['use']
   resourceNames:
-  - ainflue-database-psp
+  - iacherie-database-psp
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-database-psp-binding
-  namespace: ainflue-database
+  name: iacherie-database-psp-binding
+  namespace: iacherie-database
 roleRef:
   kind: ClusterRole
-  name: ainflue-database-psp-user
+  name: iacherie-database-psp-user
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount
-  name: ainflue-database-sa
-  namespace: ainflue-database
+  name: iacherie-database-sa
+  namespace: iacherie-database
 
 # ===================================================================
 # 🔒 ADMISSION CONTROLLERS CONFIGURATION
@@ -764,13 +764,13 @@ data:
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionWebhook
 metadata:
-  name: ainflue-pod-security-webhook
+  name: iacherie-pod-security-webhook
 webhooks:
-- name: pod-security.ainflue.com
+- name: pod-security.iacherie.com
   clientConfig:
     service:
-      name: ainflue-pod-security-webhook
-      namespace: ainflue-system
+      name: iacherie-pod-security-webhook
+      namespace: iacherie-system
       path: "/validate"
   rules:
   - operations: ["CREATE", "UPDATE"]
@@ -792,10 +792,10 @@ webhooks:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-seccomp-profiles
-  namespace: ainflue-system
+  name: iacherie-seccomp-profiles
+  namespace: iacherie-system
 data:
-  ainflue-default.json: |
+  iacherie-default.json: |
     {
       "defaultAction": "SCMP_ACT_ERRNO",
       "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_X86", "SCMP_ARCH_X32"],
@@ -879,7 +879,7 @@ data:
       ]
     }
   
-  ainflue-database.json: |
+  iacherie-database.json: |
     {
       "defaultAction": "SCMP_ACT_ERRNO",
       "architectures": ["SCMP_ARCH_X86_64"],
@@ -952,13 +952,13 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ainflue-apparmor-profiles
-  namespace: ainflue-system
+  name: iacherie-apparmor-profiles
+  namespace: iacherie-system
 data:
-  ainflue-default: |
+  iacherie-default: |
     #include <tunables/global>
     
-    profile ainflue-default flags=(attach_disconnected,mediate_deleted) {
+    profile iacherie-default flags=(attach_disconnected,mediate_deleted) {
       #include <abstractions/base>
       
       # Network access
@@ -1067,7 +1067,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: pod-security-alerts
-  namespace: ainflue-system
+  namespace: iacherie-system
 spec:
   groups:
   - name: pod.security
@@ -1113,16 +1113,16 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ainflue-content-processor-example
-  namespace: ainflue-production
+  name: iacherie-content-processor-example
+  namespace: iacherie-production
   labels:
-    app: ainflue-content-processor
+    app: iacherie-content-processor
     security-level: restricted
   annotations:
-    seccomp.security.alpha.kubernetes.io/pod: "localhost/ainflue-default"
-    apparmor.security.beta.kubernetes.io/container.content-processor: "localhost/ainflue-default"
+    seccomp.security.alpha.kubernetes.io/pod: "localhost/iacherie-default"
+    apparmor.security.beta.kubernetes.io/container.content-processor: "localhost/iacherie-default"
 spec:
-  serviceAccountName: ainflue-restricted-sa
+  serviceAccountName: iacherie-restricted-sa
   securityContext:
     runAsNonRoot: true
     runAsUser: 10001
@@ -1130,10 +1130,10 @@ spec:
     fsGroup: 10001
     seccompProfile:
       type: Localhost
-      localhostProfile: ainflue-default.json
+      localhostProfile: iacherie-default.json
   containers:
   - name: content-processor
-    image: ainflue.azurecr.io/content-processor:v1.2.3
+    image: iacherie.azurecr.io/content-processor:v1.2.3
     securityContext:
       runAsNonRoot: true
       runAsUser: 10001
@@ -1176,5 +1176,5 @@ spec:
 # ===================================================================
 # END OF POD SECURITY POLICY CONFIGURATION TEMPLATE
 # Creator Economy Pod Security by Fahed Mlaiel
-# Enterprise-grade pod security policies for Ainflue platform
+# Enterprise-grade pod security policies for iacherie platform
 # ===================================================================

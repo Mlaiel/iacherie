@@ -1,6 +1,6 @@
 """
 Google Cloud Platform Infrastructure Provider
-Enterprise-grade GCP infrastructure management for Ainflue platform
+Enterprise-grade GCP infrastructure management for IA Chéries platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -131,7 +131,7 @@ class GCPProvider:
         self.clients = {}
         self._initialize_clients()
         
-        # Ainflue-specific configurations
+        # IA Chéries-specific configurations
         self.creator_services = {
             "content_processing": {
                 "machine_type": "n1-standard-4",
@@ -198,7 +198,7 @@ class GCPProvider:
             return self._simulate_compute_creation(instance_name, config)
             
         try:
-            # Instance configuration for Ainflue content processing
+            # Instance configuration for IA Chéries content processing
             instance_config = {
                 'name': instance_name,
                 'machine_type': f"zones/{config.zone}/machineTypes/{config.machine_type}",
@@ -255,7 +255,7 @@ class GCPProvider:
             return self._simulate_gke_creation(config)
             
         try:
-            # GKE cluster optimized for Ainflue creator workloads
+            # GKE cluster optimized for IA Chéries creator workloads
             cluster_config = {
                 'name': config.cluster_name,
                 'initial_node_count': config.node_count,
@@ -338,7 +338,7 @@ class GCPProvider:
             return self._simulate_cloudsql_creation(config)
             
         try:
-            # Cloud SQL configuration for Ainflue creator data
+            # Cloud SQL configuration for IA Chéries creator data
             sql_config = {
                 'name': config.instance_id,
                 'database_version': config.database_version,
@@ -409,7 +409,7 @@ class GCPProvider:
             bucket.storage_class = config.storage_class
             bucket.location = config.location
             
-            # Ainflue creator content storage configuration
+            # IA Chéries creator content storage configuration
             if config.versioning_enabled:
                 bucket.versioning_enabled = True
                 
@@ -467,7 +467,7 @@ class GCPProvider:
             raise
             
     async def setup_ai_platform_environment(self, region: str = "us-central1") -> Dict[str, Any]:
-        """Setup AI Platform environment for Ainflue ML workloads"""
+        """Setup AI Platform environment for IA Chéries ML workloads"""
         if not GCP_AVAILABLE:
             return self._simulate_ai_platform_setup(region)
             
@@ -516,7 +516,7 @@ class GCPProvider:
             return self._simulate_pubsub_creation(topic_name, subscription_name)
             
         try:
-            # Create topic for Ainflue real-time events
+            # Create topic for IA Chéries real-time events
             topic_path = self.clients['pubsub'].topic_path(self.project_id, topic_name)
             
             topic_config = {
@@ -570,10 +570,10 @@ class GCPProvider:
             raise
             
     def _get_ainflue_startup_script(self) -> str:
-        """Get startup script for Ainflue compute instances"""
+        """Get startup script for IA Chéries compute instances"""
         return """#!/bin/bash
         
-        # Ainflue Creator Platform Instance Setup
+        # IA Chéries Creator Platform Instance Setup
         apt-get update
         apt-get install -y docker.io nginx python3-pip
         
@@ -593,7 +593,7 @@ class GCPProvider:
         systemctl start docker nginx
         
         # Creator platform ready
-        echo "Ainflue creator processing node ready" > /opt/ainflue/status
+        echo "IA Chéries creator processing node ready" > /opt/ainflue/status
         """
         
     def _simulate_compute_creation(self, instance_name: str, 
@@ -755,7 +755,7 @@ class GCPProvider:
         cleaned_resources = []
         
         try:
-            # Default filter for Ainflue resources
+            # Default filter for IA Chéries resources
             if not resource_filter:
                 resource_filter = {'platform': 'ainflue'}
                 
@@ -805,7 +805,7 @@ class GCPProvider:
         return True
         
     def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized GCP configurations"""
+        """Get IA Chéries-optimized GCP configurations"""
         return {
             'content_processing': {
                 'compute': GCPComputeConfig(

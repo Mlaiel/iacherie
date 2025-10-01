@@ -15,7 +15,7 @@ from typing import Dict, Any, Optional, List, Union
 from datetime import datetime
 
 
-class AinflueSdkException(Exception):
+class iacherieSdkException(Exception):
     """Base exception class for all IA Chérie SDK errors
     
     Designed with enterprise requirements:
@@ -93,14 +93,14 @@ class AinflueSdkException(Exception):
 
 
 # Authentication & Authorization Exceptions
-class AuthenticationError(AinflueSdkException):
+class AuthenticationError(iacherieSdkException):
     """Authentication failed - invalid credentials or tokens"""
     
     def __init__(self, message: str = "Authentication failed", **kwargs):
         super().__init__(message, error_code="AUTH_FAILED", severity="ERROR", **kwargs)
 
 
-class AuthorizationError(AinflueSdkException):
+class AuthorizationError(iacherieSdkException):
     """Authorization failed - insufficient permissions"""
     
     def __init__(self, message: str = "Insufficient permissions", **kwargs):
@@ -122,7 +122,7 @@ class TokenInvalidError(AuthenticationError):
 
 
 # API & Network Exceptions
-class APIError(AinflueSdkException):
+class APIError(iacherieSdkException):
     """API request failed"""
     
     def __init__(
@@ -148,7 +148,7 @@ class APIError(AinflueSdkException):
         self.response_data = response_data
 
 
-class NetworkError(AinflueSdkException):
+class NetworkError(iacherieSdkException):
     """Network connectivity issues"""
     
     def __init__(self, message: str = "Network connection failed", **kwargs):
@@ -181,7 +181,7 @@ class RateLimitError(APIError):
 
 
 # Validation & Data Exceptions
-class ValidationError(AinflueSdkException):
+class ValidationError(iacherieSdkException):
     """Request validation failed"""
     
     def __init__(
@@ -197,7 +197,7 @@ class ValidationError(AinflueSdkException):
         self.field_errors = field_errors or {}
 
 
-class DataError(AinflueSdkException):
+class DataError(iacherieSdkException):
     """Data processing or format error"""
     
     def __init__(self, message: str = "Data processing error", **kwargs):
@@ -212,7 +212,7 @@ class SerializationError(DataError):
 
 
 # Content & AI Processing Exceptions
-class ContentProcessingError(AinflueSdkException):
+class ContentProcessingError(iacherieSdkException):
     """Content analysis or processing failed"""
     
     def __init__(
@@ -230,7 +230,7 @@ class ContentProcessingError(AinflueSdkException):
         super().__init__(message, error_code="CONTENT_PROCESSING_ERROR", context=context, **kwargs)
 
 
-class AIProcessingError(AinflueSdkException):
+class AIProcessingError(iacherieSdkException):
     """AI model or processing error"""
     
     def __init__(
@@ -256,7 +256,7 @@ class ModelNotAvailableError(AIProcessingError):
 
 
 # Configuration & Setup Exceptions
-class ConfigurationError(AinflueSdkException):
+class ConfigurationError(iacherieSdkException):
     """SDK configuration error"""
     
     def __init__(self, message: str = "Configuration error", **kwargs):
@@ -271,7 +271,7 @@ class InitializationError(ConfigurationError):
 
 
 # Business Logic Exceptions
-class BusinessLogicError(AinflueSdkException):
+class BusinessLogicError(iacherieSdkException):
     """Business rule or logic violation"""
     
     def __init__(self, message: str, rule_name: Optional[str] = None, **kwargs):
@@ -301,7 +301,7 @@ class QuotaExceededError(BusinessLogicError):
         super().__init__(message, error_code="QUOTA_EXCEEDED", context=context, **kwargs)
 
 
-class ResourceNotFoundError(AinflueSdkException):
+class ResourceNotFoundError(iacherieSdkException):
     """Requested resource not found"""
     
     def __init__(
@@ -320,7 +320,7 @@ class ResourceNotFoundError(AinflueSdkException):
 
 
 # Utility functions for exception handling
-def handle_api_response_error(response_data: Dict[str, Any], status_code: int) -> AinflueSdkException:
+def handle_api_response_error(response_data: Dict[str, Any], status_code: int) -> iacherieSdkException:
     """Convert API error response to appropriate exception"""
     
     error_code = response_data.get('error_code', 'UNKNOWN_ERROR')
@@ -381,7 +381,7 @@ def is_retryable_error(exception: Exception) -> bool:
 # Export all exception classes
 __all__ = [
     # Base exception
-    'AinflueSdkException',
+    'iacherieSdkException',
     
     # Authentication & Authorization
     'AuthenticationError',

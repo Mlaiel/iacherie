@@ -4,7 +4,7 @@
 Backend Senior + ML Engineer + IA Prompt Engineer Expert: Engine de remix collaboratif 
 enterprise avec multi-creator fusion, creative synergy optimization et team creativity enhancement.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Multi-creator content fusion pour collaborations créatives sur 65+ plateformes
 - Creative synergy optimization avec algorithmes de compatibilité créative
 - Collaboration workflow automation pour coordination automatique d'équipes

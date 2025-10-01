@@ -1,5 +1,5 @@
 """
-Ainflue Core Platform - GraphQL Federation Core
+IA Chéries Core Platform - GraphQL Federation Core
 ================================================
 
 Enterprise-grade GraphQL federation system with schema stitching, query planning,

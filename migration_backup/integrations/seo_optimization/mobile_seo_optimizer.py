@@ -5,7 +5,7 @@ Optimization mobile enterprise + AMP + Core Web Vitals avec
 mobile-first indexing compliance et PWA features.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chéries Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:

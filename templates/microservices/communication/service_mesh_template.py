@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Service Mesh Template for Ainflue Microservices Platform
+Service Mesh Template for iacherie Microservices Platform
 =======================================================
 
 Enterprise-grade service mesh integration template providing:

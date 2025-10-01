@@ -1,6 +1,6 @@
 """
 Content Delivery Network (CDN) Management - High-Quality Audio Streaming
-Enterprise CDN infrastructure optimized for Ainflue creator audio content
+Enterprise CDN infrastructure optimized for iacherie creator audio content
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -89,7 +89,7 @@ class CDNConfig:
 
 class CDNManager:
     """
-    Enterprise CDN Management for Ainflue Audio Content Delivery
+    Enterprise CDN Management for iacherie Audio Content Delivery
     
     Audio Engineer Role Implementation - Enhanced Features:
     - High-quality audio streaming infrastructure with lossless options
@@ -110,13 +110,13 @@ class CDNManager:
         self.performance_metrics = {}
         self.audio_analytics = {}
         
-        # Ainflue-specific CDN configurations optimized for audio
-        self.ainflue_cdn_configs = {
+        # iacherie-specific CDN configurations optimized for audio
+        self.iacherie_cdn_configs = {
             "audio_streaming_cdn": CDNConfig(
-                name="ainflue-audio-streaming",
+                name="iacherie-audio-streaming",
                 provider=CDNProvider.WOWZA,  # Specialized for streaming
-                domains=["audio.ainflue.com", "stream.ainflue.com", "live.ainflue.com"],
-                origins=["audio-origin.ainflue.com", "streaming-origin.ainflue.com"],
+                domains=["audio.iacherie.com", "stream.iacherie.com", "live.iacherie.com"],
+                origins=["audio-origin.iacherie.com", "streaming-origin.iacherie.com"],
                 cache_policies={
                     "audio_files": {"ttl": 86400, "edge_ttl": 604800},  # 1 week edge cache
                     "streaming_manifests": {"ttl": 30, "edge_ttl": 60},  # Short cache for manifests
@@ -145,10 +145,10 @@ class CDNManager:
                 real_time_collaboration=True
             ),
             "content_cdn": CDNConfig(
-                name="ainflue-content-cdn",
+                name="iacherie-content-cdn",
                 provider=CDNProvider.AWS_CLOUDFRONT,
-                domains=["content.ainflue.com", "media.ainflue.com"],
-                origins=["s3.amazonaws.com/ainflue-content"],
+                domains=["content.iacherie.com", "media.iacherie.com"],
+                origins=["s3.amazonaws.com/iacherie-content"],
                 cache_policies={
                     "audio_downloads": {"ttl": 43200, "edge_ttl": 2592000},  # 30 days
                     "images": {"ttl": 86400, "edge_ttl": 31536000},
@@ -164,10 +164,10 @@ class CDNManager:
                 }
             ),
             "real_time_collaboration_cdn": CDNConfig(
-                name="ainflue-realtime-cdn",
+                name="iacherie-realtime-cdn",
                 provider=CDNProvider.FASTLY,
-                domains=["realtime.ainflue.com", "collaborate.ainflue.com"],
-                origins=["realtime-backend.ainflue.com"],
+                domains=["realtime.iacherie.com", "collaborate.iacherie.com"],
+                origins=["realtime-backend.iacherie.com"],
                 cache_policies={
                     "websocket_endpoints": {"ttl": 0, "edge_ttl": 0},  # No cache for real-time
                     "collaboration_assets": {"ttl": 300, "edge_ttl": 900}
@@ -186,10 +186,10 @@ class CDNManager:
                 real_time_collaboration=True
             ),
             "static_assets_cdn": CDNConfig(
-                name="ainflue-static-cdn",
+                name="iacherie-static-cdn",
                 provider=CDNProvider.CLOUDFLARE,
-                domains=["static.ainflue.com", "assets.ainflue.com"],
-                origins=["static.ainflue.com"],
+                domains=["static.iacherie.com", "assets.iacherie.com"],
+                origins=["static.iacherie.com"],
                 cache_policies={
                     "css": {"ttl": 31536000, "edge_ttl": 31536000},
                     "js": {"ttl": 31536000, "edge_ttl": 31536000},
@@ -199,7 +199,7 @@ class CDNManager:
             )
         }
         
-        logger.info("Audio-optimized CDN manager initialized for Ainflue creator platform")
+        logger.info("Audio-optimized CDN manager initialized for iacherie creator platform")
         
     async def deploy_cdn(self, config: CDNConfig) -> Dict[str, Any]:
         """Deploy CDN with audio streaming optimization"""
@@ -261,9 +261,9 @@ class CDNManager:
                 collab_result = await self._configure_real_time_collaboration(config.name)
                 deployment_result['collaboration_features'] = collab_result
                 
-            # Configure Ainflue-specific audio optimizations
-            ainflue_result = await self._configure_ainflue_audio_optimizations(config.name)
-            deployment_result['ainflue_audio_optimizations'] = ainflue_result
+            # Configure iacherie-specific audio optimizations
+            iacherie_result = await self._configure_iacherie_audio_optimizations(config.name)
+            deployment_result['iacherie_audio_optimizations'] = iacherie_result
             
             # Store CDN configuration
             self.cdns[config.name] = {
@@ -286,7 +286,7 @@ class CDNManager:
         """Deploy Wowza Streaming CDN optimized for high-quality audio streaming"""
         return {
             'provider_details': {
-                'streaming_engine_id': 'wowza-engine-ainflue-001',
+                'streaming_engine_id': 'wowza-engine-iacherie-001',
                 'api_endpoint': 'https://api.cloud.wowza.com/v1',
                 'edge_locations': 80,
                 'streaming_protocols': ['HLS', 'DASH', 'WebRTC', 'RTMP'],
@@ -314,10 +314,10 @@ class CDNManager:
                 'uptime_sla': 0.9999
             },
             'endpoints': {
-                'hls_playback': 'https://stream.ainflue.com/hls',
-                'dash_playback': 'https://stream.ainflue.com/dash',
-                'webrtc_endpoint': 'wss://stream.ainflue.com/webrtc',
-                'rtmp_ingest': 'rtmp://ingest.ainflue.com/live'
+                'hls_playback': 'https://stream.iacherie.com/hls',
+                'dash_playback': 'https://stream.iacherie.com/dash',
+                'webrtc_endpoint': 'wss://stream.iacherie.com/webrtc',
+                'rtmp_ingest': 'rtmp://ingest.iacherie.com/live'
             }
         }
         
@@ -466,9 +466,9 @@ class CDNManager:
         logger.info(f"Real-time audio collaboration configured for {cdn_name}")
         return collaboration_config
 
-    async def _configure_ainflue_audio_optimizations(self, cdn_name: str) -> Dict[str, Any]:
-        """Configure Ainflue-specific audio optimizations for creator platform"""
-        ainflue_optimizations = {
+    async def _configure_iacherie_audio_optimizations(self, cdn_name: str) -> Dict[str, Any]:
+        """Configure iacherie-specific audio optimizations for creator platform"""
+        iacherie_optimizations = {
             'creator_workflow_optimizations': {
                 'upload_acceleration': True,
                 'multi_format_ingestion': True,
@@ -510,8 +510,8 @@ class CDNManager:
             }
         }
         
-        logger.info(f"Ainflue-specific audio optimizations configured for {cdn_name}")
-        return ainflue_optimizations
+        logger.info(f"iacherie-specific audio optimizations configured for {cdn_name}")
+        return iacherie_optimizations
 
     async def configure_high_quality_audio_streaming(self, creator_id: str, content_id: str, audio_config: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -677,7 +677,7 @@ class CDNManager:
         """Deploy Cloudflare CDN configuration"""
         return {
             'provider_details': {
-                'zone_id': 'cloudflare-zone-ainflue',
+                'zone_id': 'cloudflare-zone-iacherie',
                 'api_endpoint': 'https://api.cloudflare.com/client/v4',
                 'edge_locations': 200,
                 'performance_features': ['argo', 'polish', 'mirage']
@@ -688,7 +688,7 @@ class CDNManager:
         """Deploy AWS CloudFront CDN configuration"""
         return {
             'provider_details': {
-                'distribution_id': 'cloudfront-dist-ainflue',
+                'distribution_id': 'cloudfront-dist-iacherie',
                 'api_endpoint': 'https://cloudfront.amazonaws.com',
                 'edge_locations': 150,
                 'origin_shield_enabled': True
@@ -699,7 +699,7 @@ class CDNManager:
         """Deploy Fastly CDN configuration"""
         return {
             'provider_details': {
-                'service_id': 'fastly-service-ainflue',
+                'service_id': 'fastly-service-iacherie',
                 'api_endpoint': 'https://api.fastly.com',
                 'edge_locations': 60,
                 'real_time_analytics': True
@@ -750,9 +750,9 @@ class CDNManager:
         logger.info(f"Real-time collaboration configured for {cdn_name}")
         return collab_config
         
-    async def _configure_ainflue_audio_optimizations(self, cdn_name: str) -> Dict[str, Any]:
-        """Configure Ainflue-specific audio optimizations"""
-        ainflue_optimizations = {
+    async def _configure_iacherie_audio_optimizations(self, cdn_name: str) -> Dict[str, Any]:
+        """Configure iacherie-specific audio optimizations"""
+        iacherie_optimizations = {
             'creator_content_optimization': True,
             'audio_streaming_optimization': True,
             'collaborative_audio_support': True,
@@ -780,8 +780,8 @@ class CDNManager:
             }
         }
         
-        logger.info(f"Ainflue audio optimizations configured for {cdn_name}")
-        return ainflue_optimizations
+        logger.info(f"iacherie audio optimizations configured for {cdn_name}")
+        return iacherie_optimizations
         
     async def get_audio_streaming_analytics(self, cdn_name: str, time_range: str = "24h") -> Dict[str, Any]:
         """Get audio streaming performance analytics"""
@@ -1111,7 +1111,7 @@ class CDNManager:
             for format_type in formats:
                 for bitrate in bitrates:
                     url_key = f"{format_type.lower()}_{bitrate}kbps"
-                    streaming_urls[url_key] = f"https://cdn-audio.ainflue.com/{format_type.lower()}/{bitrate}/{url_key}.m3u8"
+                    streaming_urls[url_key] = f"https://cdn-audio.iacherie.com/{format_type.lower()}/{bitrate}/{url_key}.m3u8"
             
             # Calculate performance metrics
             performance_metrics = {

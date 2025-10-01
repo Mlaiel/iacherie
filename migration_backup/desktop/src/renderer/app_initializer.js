@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Renderer Process Initializer
+ * IA Chéries Desktop - Renderer Process Initializer
  * 
  * Advanced renderer process initialization with security and performance optimization
  * Implements professional studio interface with AI-powered content management
@@ -33,7 +33,7 @@ class RendererInitializer {
 
   async startInitialization() {
     try {
-      console.log('🚀 Ainflue Studio - Renderer Initialization Started');
+      console.log('🚀 IA Chéries Studio - Renderer Initialization Started');
       
       for (const step of this.initializationSteps) {
         await this.executeInitializationStep(step);
@@ -42,7 +42,7 @@ class RendererInitializer {
       }
       
       this.initialized = true;
-      console.log('✅ Ainflue Studio - Renderer Initialization Complete');
+      console.log('✅ IA Chéries Studio - Renderer Initialization Complete');
       
       // Start application
       this.startApplication();
@@ -551,7 +551,7 @@ class RendererInitializer {
     errorDialog.innerHTML = `
       <div class="error-content">
         <h2>Initialization Error</h2>
-        <p>Failed to initialize Ainflue Studio.</p>
+        <p>Failed to initialize IA Chéries Studio.</p>
         <details>
           <summary>Error Details</summary>
           <pre>${error.stack}</pre>
@@ -721,7 +721,7 @@ class RendererInitializer {
     });
     
     window.dispatchEvent(readyEvent);
-    console.log('🎉 Ainflue Studio is ready!');
+    console.log('🎉 IA Chéries Studio is ready!');
   }
 
   // Public API

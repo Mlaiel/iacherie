@@ -1220,7 +1220,7 @@ class InternationalizationManager:
 
 # Enterprise internationalization management
 class GlobalExpansionManager:
-    """High-level international expansion management for Ainflue platform."""
+    """High-level international expansion management for IA Chéries platform."""
     
     def __init__(self):
         self.i18n_manager = InternationalizationManager()

@@ -1,6 +1,6 @@
 """Collaboration Implementation - Enterprise Creator Matching & Workflow System
 
-Advanced collaboration system for Ainflue creator economy platform enabling
+Advanced collaboration system for IA Chéries creator economy platform enabling
 sophisticated creator-to-creator matching, workflow orchestration, and collaboration analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of collaborations available on Ainflue platform"""
+    """Types of collaborations available on IA Chéries platform"""
     
     CROSS_PROMOTION = "cross_promotion"
     CONTENT_COLLABORATION = "content_collaboration"
@@ -145,7 +145,7 @@ class CollaborationResult:
 
 class CollaborationImplementation:
     """
-    Enterprise Collaboration Implementation for Ainflue Creator Economy Platform
+    Enterprise Collaboration Implementation for IA Chéries Creator Economy Platform
     
     Comprehensive system for creator-to-creator collaboration matching, workflow management,
     and outcome optimization using advanced AI algorithms and business intelligence.

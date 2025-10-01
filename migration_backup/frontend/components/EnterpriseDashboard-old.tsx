@@ -283,7 +283,7 @@ export const EnterpriseDashboard: React.FC = () => {
                 }
             `}</style>
 
-            <h1>🔐 Ainfluencer Enterprise Dashboard - Services Critiques</h1>
+            <h1>🔐 IA Chéries Enterprise Dashboard - Services Critiques</h1>
             
             <div className="status-summary">
                 <div className="status-card">

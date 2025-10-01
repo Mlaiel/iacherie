@@ -2,7 +2,7 @@
 ===========================================
 
 Enterprise Collaboration Intelligence Matching System for sophisticated
-collaboration matching across the Ainflue Creator Economy platform. Provides
+collaboration matching across the IA Chéries Creator Economy platform. Provides
 advanced collaboration intelligence including:
 - Collaboration intelligence Creator Economy matching
 - Creator collaboration intelligence algorithms sophisticated

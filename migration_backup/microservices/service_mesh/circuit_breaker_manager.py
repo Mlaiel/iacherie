@@ -3,7 +3,7 @@
 ⚡ CIRCUIT BREAKER MANAGER
 =========================
 
-Advanced circuit breaker pattern implementation for the Ainflue platform.
+Advanced circuit breaker pattern implementation for the IA Chéries platform.
 Provides fault tolerance, failure detection, and automatic recovery mechanisms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

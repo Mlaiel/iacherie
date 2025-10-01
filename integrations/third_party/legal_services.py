@@ -657,7 +657,7 @@ def create_legal_services_manager(config: Dict[str, Any]) -> LegalServicesManage
     return LegalServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_legal_protection_workflow(content_url: str, content_hash: str, infringer_info: Dict[str, Any]) -> Dict[str, Any]:
+async def iacherie_legal_protection_workflow(content_url: str, content_hash: str, infringer_info: Dict[str, Any]) -> Dict[str, Any]:
     """
     Complete legal protection workflow for IA Chérie creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
@@ -731,7 +731,7 @@ if __name__ == "__main__":
             "contact_email": "admin@unauthorized-site.com"
         }
         
-        result = await ainflue_legal_protection_workflow(
+        result = await iacherie_legal_protection_workflow(
             test_content_url,
             test_content_hash,
             test_infringer_info

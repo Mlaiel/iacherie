@@ -1,12 +1,12 @@
 # =====================================================================================
-# GitHub Actions Template - Ainflue Configuration Module
+# GitHub Actions Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
 # Utilisation commerciale INTERDITE sans autorisation écrite
 # =====================================================================================
 
-name: 🎵 Ainflue Creator Economy Platform - CI/CD Pipeline
+name: 🎵 iacherie Creator Economy Platform - CI/CD Pipeline
 
 # Trigger configuration for comprehensive automation
 on:
@@ -77,7 +77,7 @@ on:
 # Environment variables for the entire workflow
 env:
   # Project metadata
-  PROJECT_NAME: ainflue
+  PROJECT_NAME: iacherie
   PLATFORM_VERSION: ${{ github.sha }}
   BUILD_NUMBER: ${{ github.run_number }}
   
@@ -192,7 +192,7 @@ jobs:
       
       - name: 📊 Workflow summary
         run: |
-          echo "## 🎵 Ainflue CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎵 iacherie CI/CD Pipeline Summary" >> $GITHUB_STEP_SUMMARY
           echo "**Build:** ${{ env.BUILD_NUMBER }}" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** ${{ env.PLATFORM_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "**Frontend Changed:** ${{ steps.changes.outputs.frontend }}" >> $GITHUB_STEP_SUMMARY
@@ -358,7 +358,7 @@ jobs:
         env:
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: ainflue_test
+          POSTGRES_DB: iacherie_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -407,7 +407,7 @@ jobs:
       
       - name: 🧪 Run unit tests
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/ainflue_test
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/iacherie_test
           REDIS_URL: redis://localhost:6379/0
           ENVIRONMENT: test
           JWT_SECRET: test-jwt-secret
@@ -426,7 +426,7 @@ jobs:
       
       - name: 🧪 Integration tests
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/ainflue_test
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/iacherie_test
           REDIS_URL: redis://localhost:6379/0
           ENVIRONMENT: test
         run: |
@@ -434,7 +434,7 @@ jobs:
       
       - name: 🔧 Database migration test
         env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/ainflue_test
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/iacherie_test
         run: |
           alembic upgrade head
           alembic downgrade base
@@ -573,12 +573,12 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ env.PLATFORM_VERSION }}
           labels: |
-            org.opencontainers.image.title=Ainflue ${{ matrix.service.name }}
+            org.opencontainers.image.title=iacherie ${{ matrix.service.name }}
             org.opencontainers.image.description=Creator Economy Platform - ${{ matrix.service.name }}
             org.opencontainers.image.vendor=Fahed Mlaiel
-            ainflue.service.name=${{ matrix.service.name }}
-            ainflue.build.number=${{ env.BUILD_NUMBER }}
-            ainflue.platform.version=${{ env.PLATFORM_VERSION }}
+            iacherie.service.name=${{ matrix.service.name }}
+            iacherie.build.number=${{ env.BUILD_NUMBER }}
+            iacherie.platform.version=${{ env.PLATFORM_VERSION }}
       
       - name: 🏗️ Build and push Docker image
         uses: docker/build-push-action@v5
@@ -610,7 +610,7 @@ jobs:
     
     environment:
       name: production
-      url: https://app.ainflue.com
+      url: https://app.iacherie.com
     
     steps:
       - name: 📥 Checkout repository
@@ -649,7 +649,7 @@ jobs:
       
       - name: 🔧 Configure kubectl
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name ainflue-production
+          aws eks update-kubeconfig --region us-east-1 --name iacherie-production
       
       - name: 🚀 Deploy to Kubernetes
         working-directory: ./k8s
@@ -674,7 +674,7 @@ jobs:
     
     environment:
       name: production
-      url: https://app.ainflue.com
+      url: https://app.iacherie.com
     
     strategy:
       matrix:
@@ -698,20 +698,20 @@ jobs:
       
       - name: 🔧 Configure kubectl
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name ainflue-production
+          aws eks update-kubeconfig --region us-east-1 --name iacherie-production
       
       - name: 🚀 Deploy ${{ matrix.service }}
         run: |
           kubectl set image deployment/${{ matrix.service }} \
             ${{ matrix.service }}=${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.service }}:${{ env.PLATFORM_VERSION }} \
-            -n ainflue-production
+            -n iacherie-production
           
-          kubectl rollout status deployment/${{ matrix.service }} -n ainflue-production --timeout=300s
+          kubectl rollout status deployment/${{ matrix.service }} -n iacherie-production --timeout=300s
       
       - name: 🔍 Verify deployment
         run: |
-          kubectl get pods -n ainflue-production -l app=${{ matrix.service }}
-          kubectl logs -n ainflue-production -l app=${{ matrix.service }} --tail=50
+          kubectl get pods -n iacherie-production -l app=${{ matrix.service }}
+          kubectl logs -n iacherie-production -l app=${{ matrix.service }} --tail=50
 
   # =====================================================================================
   # POST-DEPLOYMENT TESTS
@@ -730,26 +730,26 @@ jobs:
       
       - name: 🔍 Health check tests
         run: |
-          curl -f https://api.ainflue.com/health || exit 1
-          curl -f https://app.ainflue.com/health || exit 1
+          curl -f https://api.iacherie.com/health || exit 1
+          curl -f https://app.iacherie.com/health || exit 1
       
       - name: 🧪 API integration tests
         env:
-          API_BASE_URL: https://api.ainflue.com
+          API_BASE_URL: https://api.iacherie.com
           TEST_USER_TOKEN: ${{ secrets.TEST_USER_TOKEN }}
         run: |
           pytest tests/e2e/ -v --timeout=300 --api-url=$API_BASE_URL
       
       - name: 📊 Performance tests
         env:
-          API_BASE_URL: https://api.ainflue.com
+          API_BASE_URL: https://api.iacherie.com
         run: |
           artillery run tests/performance/load-test.yml
       
       - name: 🔐 Security validation
         run: |
-          nmap -sV api.ainflue.com
-          testssl.sh --fast api.ainflue.com
+          nmap -sV api.iacherie.com
+          testssl.sh --fast api.iacherie.com
 
   # =====================================================================================
   # NOTIFICATION AND CLEANUP
@@ -764,7 +764,7 @@ jobs:
     steps:
       - name: 📊 Deployment status
         run: |
-          echo "## 🎵 Ainflue Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎵 iacherie Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** ${{ env.PLATFORM_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "**Build Number:** ${{ env.BUILD_NUMBER }}" >> $GITHUB_STEP_SUMMARY
@@ -782,9 +782,9 @@ jobs:
         with:
           status: ${{ job.status }}
           channel: '#deployments'
-          username: 'Ainflue CI/CD'
+          username: 'iacherie CI/CD'
           icon_emoji: ':musical_note:'
-          title: 'Ainflue Creator Platform Deployment'
+          title: 'iacherie Creator Platform Deployment'
           text: |
             Version: ${{ env.PLATFORM_VERSION }}
             Build: ${{ env.BUILD_NUMBER }}
@@ -801,9 +801,9 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: '🚨 Ainflue Deployment Failed - Build ${{ env.BUILD_NUMBER }}'
-          to: fahed.mlaiel@ainflue.com
-          from: 'Ainflue CI/CD <noreply@ainflue.com>'
+          subject: '🚨 iacherie Deployment Failed - Build ${{ env.BUILD_NUMBER }}'
+          to: fahed.mlaiel@iacherie.com
+          from: 'iacherie CI/CD <noreply@iacherie.com>'
           body: |
             Deployment failed for version ${{ env.PLATFORM_VERSION }}
             Build number: ${{ env.BUILD_NUMBER }}

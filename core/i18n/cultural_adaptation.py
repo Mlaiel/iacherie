@@ -1,12 +1,12 @@
 """
-Cultural Adaptation Module for AInfluencer Platform
+Cultural Adaptation Module for iaCherie Platform
 =====================================
 
 This module provides cultural adaptation capabilities for content 
 and user interfaces to ensure cultural sensitivity and 
 local market optimization.
 
-Author: AInfluencer Team
+Author: iaCherie Team
 Version: 1.0.0
 """
 
@@ -65,7 +65,7 @@ class CulturalAdaptation:
     
 class CulturalAdaptationEngine:
     """
-    Advanced Cultural Adaptation Engine for AInfluencer Platform
+    Advanced Cultural Adaptation Engine for iaCherie Platform
     
     Provides cultural adaptation capabilities for content, UI, and user experience
     to ensure cultural sensitivity and local market optimization.

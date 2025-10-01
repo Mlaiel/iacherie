@@ -2,7 +2,7 @@
 Compliance Base - Shared Compliance Framework Components
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Shared components for all compliance frameworks in Ainflue infrastructure.
+Shared components for all compliance frameworks in iacherie infrastructure.
 Provides common enums, data structures, and base functionality.
 """
 
@@ -114,8 +114,8 @@ class ComplianceBaseManager:
         self.audit_trail = []
         self.risk_assessments = {}
         
-        # Ainflue-specific data classification
-        self.ainflue_data_mapping = {
+        # iacherie-specific data classification
+        self.iacherie_data_mapping = {
             'creator_profiles': [DataClassification.PII, DataClassification.CONFIDENTIAL],
             'payment_information': [DataClassification.PCI, DataClassification.RESTRICTED],
             'content_metadata': [DataClassification.INTERNAL],
@@ -174,7 +174,7 @@ class ComplianceBaseManager:
     async def _collect_data_inventory(self) -> Dict[str, Any]:
         """Collect data inventory evidence"""
         return {
-            'data_categories': list(self.ainflue_data_mapping.keys()),
+            'data_categories': list(self.iacherie_data_mapping.keys()),
             'classification_levels': [cls.value for cls in DataClassification],
             'data_flows': await self._analyze_data_flows(),
             'storage_locations': await self._get_storage_locations(),

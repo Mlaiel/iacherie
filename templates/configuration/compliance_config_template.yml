@@ -1,4 +1,4 @@
-# ⚡ Compliance Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Compliance Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: global-compliance-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: compliance-management
     component: global-config
@@ -26,8 +26,8 @@ data:
         gdpr:
           enabled: true
           region: "EU"
-          controller: "Ainflue Creator Economy Platform"
-          dpo: "dpo@ainflue.com"
+          controller: "iacherie Creator Economy Platform"
+          dpo: "dpo@iacherie.com"
           supervisoryAuthority: "CNIL"
           dataRetentionDefault: "30d"
           consentRequired: true
@@ -37,7 +37,7 @@ data:
         pci:
           enabled: true
           level: "Level 1"  # Level 1, 2, 3, or 4
-          merchantId: "AINFLUE001"
+          merchantId: "IACHERIE001"
           acquirer: "First Data"
           assessor: "QSA Company"
           validationMethod: "self-assessment"  # self-assessment, qsa-onsite
@@ -205,7 +205,7 @@ data:
       # Incident Response
       incidentResponse:
         enabled: true
-        team: "security-incident-response-team@ainflue.com"
+        team: "security-incident-response-team@iacherie.com"
         procedures: "documented"
         training: "annual"
         
@@ -237,7 +237,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: gdpr-compliance-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     compliance-framework: gdpr
 data:
@@ -245,10 +245,10 @@ data:
     # GDPR Compliance Configuration
     gdpr:
       dataController:
-        name: "Ainflue Creator Economy Platform"
+        name: "iacherie Creator Economy Platform"
         address: "123 Tech Street, San Francisco, CA 94105, USA"
-        contact: "privacy@ainflue.com"
-        dpo: "dpo@ainflue.com"
+        contact: "privacy@iacherie.com"
+        dpo: "dpo@iacherie.com"
         registration: "DPA-REG-2024-001"
         
       dataProcessors:
@@ -358,7 +358,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: pci-compliance-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     compliance-framework: pci-dss
 data:
@@ -495,7 +495,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: soc2-compliance-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     compliance-framework: soc2
 data:
@@ -503,7 +503,7 @@ data:
     # SOC 2 Compliance Configuration
     soc2:
       serviceDescription:
-        name: "Ainflue Creator Economy Platform"
+        name: "iacherie Creator Economy Platform"
         type: "Software as a Service"
         description: "Creator economy platform with content management and monetization"
         boundaries: "Cloud-based SaaS platform"
@@ -588,7 +588,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: compliance-alerts
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: compliance-monitoring
 spec:
@@ -655,7 +655,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: compliance-scan
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: compliance-scanning
 spec:
@@ -669,7 +669,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: compliance-scanner
-            image: ainflue/compliance-scanner:v1.0.0
+            image: iacherie/compliance-scanner:v1.0.0
             command:
             - /bin/sh
             - -c
@@ -730,7 +730,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: data-subject-rights-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   rights-management.yaml: |
     # Data Subject Rights Management
@@ -788,7 +788,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: consent-management-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   consent-management.yaml: |
     # Consent Management System
@@ -845,18 +845,18 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: incident-response-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   incident-response.yaml: |
     # Incident Response Configuration
     incidentResponse:
       team:
-        lead: "security@ainflue.com"
+        lead: "security@iacherie.com"
         members:
-          - "ciso@ainflue.com"
-          - "legal@ainflue.com"
-          - "privacy@ainflue.com"
-          - "communications@ainflue.com"
+          - "ciso@iacherie.com"
+          - "legal@iacherie.com"
+          - "privacy@iacherie.com"
+          - "communications@iacherie.com"
         escalation: "c-level"
         
       procedures:
@@ -927,7 +927,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: creator-data-protection-config
-  namespace: ainflue-production
+  namespace: iacherie-production
 data:
   creator-protection.yaml: |
     # Creator Data Protection Configuration
@@ -968,7 +968,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: payment-compliance-config
-  namespace: ainflue-production
+  namespace: iacherie-production
 data:
   payment-compliance.yaml: |
     # Payment Compliance Configuration
@@ -1009,7 +1009,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: privacy-engineering-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   privacy-engineering.yaml: |
     # Privacy Engineering Configuration
@@ -1067,7 +1067,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: compliance-dashboard-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   dashboard.json: |
     {
@@ -1155,7 +1155,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: compliance-reporting
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: compliance-reporting
 spec:
@@ -1168,7 +1168,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: compliance-reporter
-            image: ainflue/compliance-reporter:v1.0.0
+            image: iacherie/compliance-reporter:v1.0.0
             command:
             - /bin/sh
             - -c
@@ -1217,5 +1217,5 @@ spec:
 # ===================================================================
 # END OF COMPLIANCE CONFIGURATION TEMPLATE
 # Creator Economy Compliance Management by Fahed Mlaiel
-# Enterprise-grade compliance framework for Ainflue platform
+# Enterprise-grade compliance framework for iacherie platform
 # ===================================================================

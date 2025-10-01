@@ -1,11 +1,11 @@
 """
-Quota Management Engine Enterprise - Ainflue
+Quota Management Engine Enterprise - IA Chéries
 ============================================
 Moteur gestion quotas enterprise avec billing integration.
 Quota tracking + billing + analytics + forecasting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chéries Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

@@ -77,33 +77,33 @@ class PerformanceMonitor:
     def setup_prometheus_metrics(self):
         """Setup Prometheus metrics for monitoring"""
         self.request_duration = Histogram(
-            'ainflue_request_duration_seconds',
+            'iacherie_request_duration_seconds',
             'Request duration in seconds',
             ['method', 'endpoint', 'status'],
             registry=self.prometheus_registry
         )
         
         self.request_count = Counter(
-            'ainflue_requests_total',
+            'iacherie_requests_total',
             'Total requests',
             ['method', 'endpoint', 'status'],
             registry=self.prometheus_registry
         )
         
         self.active_connections = Gauge(
-            'ainflue_active_connections',
+            'iacherie_active_connections',
             'Active connections',
             registry=self.prometheus_registry
         )
         
         self.system_cpu_usage = Gauge(
-            'ainflue_system_cpu_percent',
+            'iacherie_system_cpu_percent',
             'System CPU usage percentage',
             registry=self.prometheus_registry
         )
         
         self.system_memory_usage = Gauge(
-            'ainflue_system_memory_percent',
+            'iacherie_system_memory_percent',
             'System memory usage percentage',
             registry=self.prometheus_registry
         )

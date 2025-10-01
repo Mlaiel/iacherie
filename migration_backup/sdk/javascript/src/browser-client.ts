@@ -1,5 +1,5 @@
 /**
- * Browser-specific Implementation for Ainflue JavaScript SDK
+ * Browser-specific Implementation for IA Chéries JavaScript SDK
  * Optimized for browser environments with DOM integration
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -8,21 +8,21 @@
  * Expert Implementation by: Frontend + Security + DevOps + Audio Engineer + Lead Dev IA
  */
 
-import { AinflueClient } from './ainflue-client';
-import { AinflueConfig } from './config';
+import { IA ChériesClient } from './ainflue-client';
+import { IA ChériesConfig } from './config';
 import { FetchAdapter } from './fetch-adapter';
 import { ApiResponse } from './interfaces';
 import { SecurityError, ConfigurationError } from './errors';
 
 /**
- * Browser-optimized Ainflue SDK Client
+ * Browser-optimized IA Chéries SDK Client
  */
-export class BrowserClient extends AinflueClient {
+export class BrowserClient extends IA ChériesClient {
   private performanceObserver?: PerformanceObserver;
   private visibilityChangeHandler?: () => void;
   private storageManager: BrowserStorageManager;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: IA ChériesConfig) {
     // Use FetchAdapter for browser compatibility
     super({
       ...config,
@@ -494,7 +494,7 @@ class BrowserStorageManager {
     }
 
     try {
-      // Clear all Ainflue data
+      // Clear all IA Chéries data
       const keys = Object.keys(localStorage).filter(k => k.startsWith('ainflue_'));
       keys.forEach(k => localStorage.removeItem(k));
     } catch (error) {

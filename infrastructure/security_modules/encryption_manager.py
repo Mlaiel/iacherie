@@ -1,6 +1,6 @@
 """
 Encryption Key Management
-Enterprise encryption and key management for Ainflue infrastructure
+Enterprise encryption and key management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -48,7 +48,7 @@ class EncryptionKey:
 
 class EncryptionManager:
     """
-    Enterprise Encryption Key Management for Ainflue
+    Enterprise Encryption Key Management for iacherie
     
     Provides comprehensive encryption management:
     - Multi-algorithm key generation and rotation
@@ -66,8 +66,8 @@ class EncryptionManager:
         self.key_policies = {}
         self.hsm_enabled = False
         
-        # Ainflue-specific encryption requirements
-        self.ainflue_encryption_policies = {
+        # iacherie-specific encryption requirements
+        self.iacherie_encryption_policies = {
             "creator_content": {
                 "encryption_required": True,
                 "key_type": KeyType.AES_256,

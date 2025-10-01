@@ -157,13 +157,13 @@ class DistributionMetrics:
     def __init__(self):
         # API Metrics
         self.api_requests_total = Counter(
-            'ainflue_api_requests_total',
+            'iacherie_api_requests_total',
             'Total API requests',
             ['method', 'endpoint', 'status_code']
         )
         
         self.api_request_duration = Histogram(
-            'ainflue_api_request_duration_seconds',
+            'iacherie_api_request_duration_seconds',
             'API request duration',
             ['method', 'endpoint'],
             buckets=(0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0)
@@ -171,13 +171,13 @@ class DistributionMetrics:
         
         # Distribution Metrics
         self.distribution_requests = Counter(
-            'ainflue_distribution_requests_total',
+            'iacherie_distribution_requests_total',
             'Total distribution requests',
             ['platform', 'status', 'creator_type']
         )
         
         self.distribution_duration = Histogram(
-            'ainflue_distribution_duration_seconds',
+            'iacherie_distribution_duration_seconds',
             'Distribution processing time',
             ['platform'],
             buckets=(1, 5, 10, 20, 30, 45, 60, 90, 120, 180, 300)
@@ -185,52 +185,52 @@ class DistributionMetrics:
         
         # Business Metrics
         self.active_creators = Gauge(
-            'ainflue_active_creators_current',
+            'iacherie_active_creators_current',
             'Current number of active creators'
         )
         
         self.content_processed = Counter(
-            'ainflue_content_processed_total',
+            'iacherie_content_processed_total',
             'Total content items processed',
             ['content_type', 'platform']
         )
         
         self.viral_predictions = Counter(
-            'ainflue_viral_predictions_total',
+            'iacherie_viral_predictions_total',
             'Viral prediction requests',
             ['prediction_score_range']
         )
         
         # ML Model Metrics
         self.ml_inference_duration = Histogram(
-            'ainflue_ml_inference_duration_seconds',
+            'iacherie_ml_inference_duration_seconds',
             'ML model inference time',
             ['model_name'],
             buckets=(0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0)
         )
         
         self.ml_model_accuracy = Gauge(
-            'ainflue_ml_model_accuracy',
+            'iacherie_ml_model_accuracy',
             'ML model accuracy score',
             ['model_name']
         )
         
         # Infrastructure Metrics
         self.database_connections = Gauge(
-            'ainflue_database_connections_active',
+            'iacherie_database_connections_active',
             'Active database connections',
             ['database_name']
         )
         
         self.queue_size = Gauge(
-            'ainflue_queue_size',
+            'iacherie_queue_size',
             'Current queue size',
             ['queue_name']
         )
         
         # Error Metrics
         self.error_rate = Counter(
-            'ainflue_errors_total',
+            'iacherie_errors_total',
             'Total errors',
             ['service', 'error_type', 'severity']
         )
@@ -399,7 +399,7 @@ groups:
 - name: distribution_api_alerts
   rules:
   - alert: HighAPILatency
-    expr: histogram_quantile(0.95, sum(rate(ainflue_api_request_duration_seconds_bucket[5m])) by (le)) > 0.05
+    expr: histogram_quantile(0.95, sum(rate(iacherie_api_request_duration_seconds_bucket[5m])) by (le)) > 0.05
     for: 2m
     labels:
       severity: warning
@@ -409,7 +409,7 @@ groups:
       description: "95th percentile latency is {{ $value }} seconds"
 
   - alert: CriticalAPILatency
-    expr: histogram_quantile(0.95, sum(rate(ainflue_api_request_duration_seconds_bucket[5m])) by (le)) > 0.1
+    expr: histogram_quantile(0.95, sum(rate(iacherie_api_request_duration_seconds_bucket[5m])) by (le)) > 0.1
     for: 1m
     labels:
       severity: critical
@@ -419,7 +419,7 @@ groups:
       description: "95th percentile latency is {{ $value }} seconds - immediate action required"
 
   - alert: HighErrorRate
-    expr: (sum(rate(ainflue_api_requests_total{status_code=~"5.."}[5m])) / sum(rate(ainflue_api_requests_total[5m]))) > 0.05
+    expr: (sum(rate(iacherie_api_requests_total{status_code=~"5.."}[5m])) / sum(rate(iacherie_api_requests_total[5m]))) > 0.05
     for: 3m
     labels:
       severity: warning
@@ -429,7 +429,7 @@ groups:
       description: "Error rate is {{ $value | humanizePercentage }}"
 
   - alert: CriticalErrorRate
-    expr: (sum(rate(ainflue_api_requests_total{status_code=~"5.."}[5m])) / sum(rate(ainflue_api_requests_total[5m]))) > 0.10
+    expr: (sum(rate(iacherie_api_requests_total{status_code=~"5.."}[5m])) / sum(rate(iacherie_api_requests_total[5m]))) > 0.10
     for: 1m
     labels:
       severity: critical
@@ -473,7 +473,7 @@ groups:
 - name: database_alerts
   rules:
   - alert: DatabaseConnectionsHigh
-    expr: ainflue_database_connections_active > 80
+    expr: iacherie_database_connections_active > 80
     for: 3m
     labels:
       severity: warning
@@ -495,7 +495,7 @@ groups:
 - name: business_alerts
   rules:
   - alert: LowDistributionSuccessRate
-    expr: (sum(rate(ainflue_distribution_requests_total{status="success"}[10m])) / sum(rate(ainflue_distribution_requests_total[10m]))) < 0.95
+    expr: (sum(rate(iacherie_distribution_requests_total{status="success"}[10m])) / sum(rate(iacherie_distribution_requests_total[10m]))) < 0.95
     for: 5m
     labels:
       severity: warning
@@ -505,7 +505,7 @@ groups:
       description: "Distribution success rate is {{ $value | humanizePercentage }}"
 
   - alert: MLModelAccuracyDrop
-    expr: ainflue_ml_model_accuracy < 0.85
+    expr: iacherie_ml_model_accuracy < 0.85
     for: 10m
     labels:
       severity: warning
@@ -533,7 +533,7 @@ groups:
         "type": "graph",
         "targets": [
           {
-            "expr": "sum(rate(ainflue_api_requests_total[5m])) by (endpoint)",
+            "expr": "sum(rate(iacherie_api_requests_total[5m])) by (endpoint)",
             "legendFormat": "{{ endpoint }}"
           }
         ],
@@ -551,15 +551,15 @@ groups:
         "type": "graph",
         "targets": [
           {
-            "expr": "histogram_quantile(0.50, sum(rate(ainflue_api_request_duration_seconds_bucket[5m])) by (le))",
+            "expr": "histogram_quantile(0.50, sum(rate(iacherie_api_request_duration_seconds_bucket[5m])) by (le))",
             "legendFormat": "50th percentile"
           },
           {
-            "expr": "histogram_quantile(0.95, sum(rate(ainflue_api_request_duration_seconds_bucket[5m])) by (le))",
+            "expr": "histogram_quantile(0.95, sum(rate(iacherie_api_request_duration_seconds_bucket[5m])) by (le))",
             "legendFormat": "95th percentile"
           },
           {
-            "expr": "histogram_quantile(0.99, sum(rate(ainflue_api_request_duration_seconds_bucket[5m])) by (le))",
+            "expr": "histogram_quantile(0.99, sum(rate(iacherie_api_request_duration_seconds_bucket[5m])) by (le))",
             "legendFormat": "99th percentile"
           }
         ],
@@ -577,7 +577,7 @@ groups:
         "type": "stat",
         "targets": [
           {
-            "expr": "sum(rate(ainflue_distribution_requests_total{status=\"success\"}[5m])) by (platform) / sum(rate(ainflue_distribution_requests_total[5m])) by (platform)",
+            "expr": "sum(rate(iacherie_distribution_requests_total{status=\"success\"}[5m])) by (platform) / sum(rate(iacherie_distribution_requests_total[5m])) by (platform)",
             "legendFormat": "{{ platform }}"
           }
         ],
@@ -603,7 +603,7 @@ groups:
         "type": "stat",
         "targets": [
           {
-            "expr": "ainflue_active_creators_current",
+            "expr": "iacherie_active_creators_current",
             "legendFormat": "Active Creators"
           }
         ],
@@ -621,7 +621,7 @@ groups:
         "type": "stat",
         "targets": [
           {
-            "expr": "increase(ainflue_content_processed_total[24h])",
+            "expr": "increase(iacherie_content_processed_total[24h])",
             "legendFormat": "Content Items"
           }
         ],
@@ -1201,25 +1201,25 @@ class BusinessMetricsCollector:
     def __init__(self):
         # Creator success metrics
         self.creator_success_score = Gauge(
-            'ainflue_creator_success_score',
+            'iacherie_creator_success_score',
             'Creator success score (0-100)',
             ['creator_id', 'creator_type']
         )
         
         self.platform_growth = Gauge(
-            'ainflue_platform_growth_rate',
+            'iacherie_platform_growth_rate',
             'Platform growth rate by metric',
             ['metric_type', 'time_period']
         )
         
         self.revenue_metrics = Counter(
-            'ainflue_revenue_total',
+            'iacherie_revenue_total',
             'Total revenue generated',
             ['revenue_type', 'platform']
         )
         
         self.content_virality = Histogram(
-            'ainflue_content_virality_score',
+            'iacherie_content_virality_score',
             'Distribution of content virality scores',
             buckets=(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
         )

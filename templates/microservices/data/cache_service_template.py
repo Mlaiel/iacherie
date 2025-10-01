@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Cache Service Template for Ainflue Creator Economy Platform
+Cache Service Template for iacherie Creator Economy Platform
 Enterprise distributed cache service with multi-provider, intelligent eviction and performance optimization
 """
 
@@ -161,7 +161,7 @@ class CacheStats(BaseModel):
 
 class CacheServiceTemplate:
     """
-    Template de service de cache enterprise pour Ainflue
+    Template de service de cache enterprise pour iacherie
     
     Fonctionnalités:
     - Multi-provider (Redis, Memcached, Memory)
@@ -178,7 +178,7 @@ class CacheServiceTemplate:
     def __init__(self, config: CacheConfig = None):
         self.config = config or CacheConfig()
         self.app = FastAPI(
-            title="Ainflue Cache Service",
+            title="iacherie Cache Service",
             description="Enterprise distributed cache service",
             version="1.0.0"
         )

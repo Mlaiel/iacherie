@@ -1,11 +1,11 @@
 """
-Monitoring Module - Ainflue Integrations
+Monitoring Module - IA Chéries Integrations
 =======================================
 Enterprise monitoring module providing comprehensive observability,
 performance monitoring, metrics collection, and alerting systems.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 
@@ -33,10 +33,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise monitoring and observability for Ainflue platform"
+__description__ = "Enterprise monitoring and observability for IA Chéries platform"
 
-# Configuration logique métier Ainflue
-AINFLUE_MONITORING = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_MONITORING = {
     'platforms': 65,
     'monitoring_features': ['real_time_metrics', 'performance_monitoring', 'alerting', 'audit_logging'],
     'workflow': 'connect→auth→transform→process→distribute→monitor'

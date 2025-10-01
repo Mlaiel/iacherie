@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Export Manager
+ * IA Chéries Desktop - Export Manager
  * 
  * Professional export system for multiple formats and platforms
  * 

@@ -1,5 +1,5 @@
 """
-Subscription Manager for Ainflue Platform
+Subscription Manager for IA Chéries Platform
 Enterprise-grade subscription billing and management system
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -228,7 +228,7 @@ class SubscriptionConfig:
 
 class SubscriptionManager(BaseIntegration):
     """
-    Enterprise Subscription Manager for Ainflue platform
+    Enterprise Subscription Manager for IA Chéries platform
     
     Features:
     - Complete subscription lifecycle management
@@ -1172,11 +1172,11 @@ class SubscriptionManager(BaseIntegration):
                 try:
                     headers = {
                         "Content-Type": "application/json",
-                        "User-Agent": "Ainflue-Subscriptions/1.0"
+                        "User-Agent": "IA Chéries-Subscriptions/1.0"
                     }
                     
                     if signature:
-                        headers["X-Ainflue-Signature"] = f"sha256={signature}"
+                        headers["X-IA Chéries-Signature"] = f"sha256={signature}"
                     
                     async with aiohttp.ClientSession() as session:
                         async with session.post(
@@ -1268,7 +1268,7 @@ def create_subscription_manager(**kwargs) -> SubscriptionManager:
     config = SubscriptionConfig(**kwargs)
     return SubscriptionManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def example_subscription_flow():
     """Example subscription management usage"""
     
@@ -1284,7 +1284,7 @@ async def example_subscription_flow():
     try:
         # Create subscription plans
         basic_plan = await sub_manager.create_plan({
-            "name": "Ainflue Basic",
+            "name": "IA Chéries Basic",
             "description": "Basic creator tools and analytics",
             "amount": "9.99",
             "currency": "USD",
@@ -1294,7 +1294,7 @@ async def example_subscription_flow():
         })
         
         premium_plan = await sub_manager.create_plan({
-            "name": "Ainflue Premium",
+            "name": "IA Chéries Premium",
             "description": "Advanced creator tools and AI features",
             "amount": "29.99",
             "currency": "USD",

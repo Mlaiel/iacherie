@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚨 COMPLIANCE ALERTING SYSTEM - AINFLUE ENTERPRISE
+🚨 COMPLIANCE ALERTING SYSTEM - IACHERIE ENTERPRISE
 Real-time compliance alerting with multi-channel notification and escalation
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -57,7 +57,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/compliance_alerting.log'),
+        logging.FileHandler('/var/log/iacherie/compliance_alerting.log'),
         logging.StreamHandler()
     ]
 )
@@ -327,7 +327,7 @@ class ComplianceAlertingSystem:
             'smtp_port': self.config.get('smtp_port', 587),
             'username': self.config.get('smtp_username'),
             'password': self.config.get('smtp_password'),
-            'from_email': self.config.get('from_email', 'compliance@ainflue.com')
+            'from_email': self.config.get('from_email', 'compliance@iacherie.com')
         }
         
         # Slack Webhook
@@ -581,12 +581,12 @@ class ComplianceAlertingSystem:
         # Créer le message
         msg = MimeMultipart()
         msg['From'] = email_config['from_email']
-        msg['To'] = self.config.get('compliance_email', 'compliance@ainflue.com')
+        msg['To'] = self.config.get('compliance_email', 'compliance@iacherie.com')
         msg['Subject'] = f"🚨 COMPLIANCE ALERT: {alert_dict['title']}"
         
         # Corps du message
         body = f"""
-        ALERTE COMPLIANCE - AINFLUE ENTERPRISE
+        ALERTE COMPLIANCE - IACHERIE ENTERPRISE
         
         ID: {alert_dict['id']}
         Sévérité: {alert_dict['severity'].upper()}
@@ -607,7 +607,7 @@ class ComplianceAlertingSystem:
         - Vérifier la conformité réglementaire
         - Implémenter les mesures correctives
         
-        Système Compliance Ainflue
+        Système Compliance iacherie
         © Fahed Mlaiel (mlaiel@live.de)
         """
         
@@ -647,7 +647,7 @@ class ComplianceAlertingSystem:
                     {'title': 'Score Risque', 'value': f"{alert_dict['risk_score']}/10", 'short': True},
                     {'title': 'Personnes affectées', 'value': str(alert_dict['affected_data_subjects']), 'short': True},
                 ],
-                'footer': 'Ainflue Compliance System',
+                'footer': 'iacherie Compliance System',
                 'ts': int(datetime.fromisoformat(alert_dict['timestamp']).timestamp())
             }]
         }
@@ -825,11 +825,11 @@ if __name__ == "__main__":
     async def test_alerting():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue',
+            'database_url': 'postgresql://user:pass@localhost/iacherie',
             'smtp_server': 'smtp.gmail.com',
-            'smtp_username': 'compliance@ainflue.com',
+            'smtp_username': 'compliance@iacherie.com',
             'smtp_password': 'password',
-            'compliance_email': 'dpo@ainflue.com'
+            'compliance_email': 'dpo@iacherie.com'
         }
         
         alerting = ComplianceAlertingSystem(config)

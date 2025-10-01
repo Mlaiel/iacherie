@@ -1399,7 +1399,7 @@ async def main():
             'headers': {
                 'host': 'api.iacherie.com',
                 'x-api-version': 'v2',
-                'user-agent': 'AinflueMobile/1.0'
+                'user-agent': 'iacherieMobile/1.0'
             },
             'source_ip': '192.168.1.100'
         }

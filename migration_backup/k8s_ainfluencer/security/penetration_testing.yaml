@@ -1,4 +1,4 @@
-# Automated Penetration Testing Pipeline for Ainflue Platform
+# Automated Penetration Testing Pipeline for IA Chéries Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Comprehensive security testing automation for enterprise compliance
 
@@ -14,7 +14,7 @@ metadata:
 data:
   owasp_zap_config.yaml: |
     contexts:
-      - name: "Ainflue API"
+      - name: "IA Chéries API"
         urls:
           - "https://api.ainflue.com"
         includePaths:

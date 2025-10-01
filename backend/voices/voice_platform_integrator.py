@@ -3,7 +3,7 @@
 
 Comprehensive platform integration system providing cross-platform voice delivery,
 API management, platform synchronization, and integration analytics for the
-Ainflue voice ecosystem.
+iacherie voice ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

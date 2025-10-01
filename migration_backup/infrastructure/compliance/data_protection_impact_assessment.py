@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📋 DATA PROTECTION IMPACT ASSESSMENT - AINFLUE ENTERPRISE
+📋 DATA PROTECTION IMPACT ASSESSMENT - IA CHÉRIES ENTERPRISE
 Automatisation DPIA GDPR Article 35 avec intelligence artificielle
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -1346,9 +1346,9 @@ if __name__ == "__main__":
         
         # Test DPIA pour plateforme créateurs
         assessment = await engine.conduct_dpia(
-            processing_name="Plateforme IA Créateurs Ainflue",
+            processing_name="Plateforme IA Créateurs IA Chéries",
             processing_description="Traitement données créateurs pour optimisation IA",
-            controller_name="Ainflue SAS",
+            controller_name="IA Chéries SAS",
             controller_contact="dpo@ainflue.com",
             purposes=[
                 {

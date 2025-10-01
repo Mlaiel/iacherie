@@ -5,7 +5,7 @@ except ImportError:
 
 #!/usr/bin/env python3
 """
-Audio Quality Testing Module - Ainflue Quality Platform
+Audio Quality Testing Module - IA Chéries Quality Platform
 =====================================================
 
 Enterprise-grade audio quality testing and analysis system.

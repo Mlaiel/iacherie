@@ -149,7 +149,7 @@ class PipelineMonitoring:
     
     def _setup_logger(self) -> logging.Logger:
         """Configuration du logging"""
-        logger = logging.getLogger(f"ainflue_monitoring_{id(self)}")
+        logger = logging.getLogger(f"iacherie_monitoring_{id(self)}")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:

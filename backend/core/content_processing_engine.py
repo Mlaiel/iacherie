@@ -958,7 +958,7 @@ class FingerprintEngine:
 class ContentProcessingEngine:
     """Main content processing engine - orchestrates the entire pipeline"""
     
-    def __init__(self, storage_path: str = "/tmp/ainflue_content"):
+    def __init__(self, storage_path: str = "/tmp/iacherie_content"):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -1317,7 +1317,7 @@ class ContentProcessingEngine:
 
 _engine_instance: Optional[ContentProcessingEngine] = None
 
-def get_processing_engine(storage_path: str = "/tmp/ainflue_content") -> ContentProcessingEngine:
+def get_processing_engine(storage_path: str = "/tmp/iacherie_content") -> ContentProcessingEngine:
     """Get global content processing engine instance"""
     global _engine_instance
     if _engine_instance is None:

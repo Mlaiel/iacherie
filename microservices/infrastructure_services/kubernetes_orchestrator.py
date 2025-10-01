@@ -623,7 +623,7 @@ class KubernetesOrchestrator:
         
         return saved_files
     
-    def deploy_ainflue_microservices(self) -> Dict[str, List[str]]:
+    def deploy_iacherie_microservices(self) -> Dict[str, List[str]]:
         """Deploy all IA Chérie microservices"""
         deployed_files = {}
         
@@ -758,7 +758,7 @@ def main():
     for env in environments:
         logger.info(f"Deploying to {env.value} environment...")
         orchestrator = KubernetesOrchestrator(env)
-        deployment_files = orchestrator.deploy_ainflue_microservices()
+        deployment_files = orchestrator.deploy_iacherie_microservices()
         all_deployments[env.value] = deployment_files
         
         # Generate deployment summary

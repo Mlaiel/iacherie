@@ -1,4 +1,4 @@
-"""GitHub Actions CI/CD Template for Ainflue Platform
+"""GitHub Actions CI/CD Template for iacherie Platform
 Enterprise-grade continuous integration and deployment pipeline template.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -44,7 +44,7 @@ class GitHubActionsConfig:
     node_version: str = "18"
     docker_registry: str = "ghcr.io"
     
-    # Ainflue specific
+    # iacherie specific
     enable_ai_tests: bool = True
     enable_security_scan: bool = True
     enable_performance_tests: bool = True
@@ -57,7 +57,7 @@ class GitHubActionsConfig:
 
 
 class GitHubActionsTemplate:
-    """Enterprise GitHub Actions Template for Ainflue Platform"""
+    """Enterprise GitHub Actions Template for iacherie Platform"""
     
     def __init__(self, config: GitHubActionsConfig):
         self.config = config
@@ -65,7 +65,7 @@ class GitHubActionsTemplate:
     def generate_ci_workflow(self) -> Dict[str, Any]:
         """Generate continuous integration workflow"""
         return {
-            "name": "🚀 Ainflue Platform CI",
+            "name": "🚀 iacherie Platform CI",
             "on": {
                 "push": {
                     "branches": ["main", "develop", "feature/*"]
@@ -85,10 +85,10 @@ class GitHubActionsTemplate:
     def generate_cd_workflow(self) -> Dict[str, Any]:
         """Generate continuous deployment workflow"""
         return {
-            "name": "🚀 Ainflue Platform CD",
+            "name": "🚀 iacherie Platform CD",
             "on": {
                 "workflow_run": {
-                    "workflows": ["🚀 Ainflue Platform CI"],
+                    "workflows": ["🚀 iacherie Platform CI"],
                     "types": ["completed"],
                     "branches": ["main", "develop"]
                 },
@@ -179,7 +179,7 @@ class GitHubActionsTemplate:
                         "image": "postgres:15",
                         "env": {
                             "POSTGRES_PASSWORD": "postgres",
-                            "POSTGRES_DB": "ainflue_test"
+                            "POSTGRES_DB": "iacherie_test"
                         },
                         "options": "--health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5",
                         "ports": ["5432:5432"]
@@ -217,7 +217,7 @@ class GitHubActionsTemplate:
                               --junitxml=test-results.xml
                         ,
                         "env": {
-                            "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/ainflue_test",
+                            "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/iacherie_test",
                             "REDIS_URL": "redis://localhost:6379",
                             "ENVIRONMENT": "testing"
                         }
@@ -476,14 +476,14 @@ class GitHubActionsTemplate:
             {
                 "name": "Deploy to EKS",
                 "run": |
-                    aws eks update-kubeconfig --region us-west-2 --name ainflue-{environment.value}
+                    aws eks update-kubeconfig --region us-west-2 --name iacherie-{environment.value}
                     kubectl apply -f k8s/{environment.value}/
-                    kubectl rollout status deployment/ainflue-api-gateway -n ainflue-{environment.value}
+                    kubectl rollout status deployment/iacherie-api-gateway -n iacherie-{environment.value}
             },
             {
                 "name": "Run database migrations",
                 "run": |
-                    kubectl exec -n ainflue-{environment.value} deployment/ainflue-api-gateway -- python manage.py migrate
+                    kubectl exec -n iacherie-{environment.value} deployment/iacherie-api-gateway -- python manage.py migrate
                 ,
                 "if": f"'{environment.value}' != 'production'"
             },
@@ -491,7 +491,7 @@ class GitHubActionsTemplate:
                 "name": "Verify deployment",
                 "run": |
                     sleep 60  # Wait for deployment to stabilize
-                    kubectl exec -n ainflue-{environment.value} deployment/ainflue-api-gateway -- python manage.py health_check
+                    kubectl exec -n iacherie-{environment.value} deployment/iacherie-api-gateway -- python manage.py health_check
             },
             {
                 "name": "Send deployment notification",
@@ -531,7 +531,7 @@ class GitHubActionsTemplate:
                         "name": "Run performance tests",
                         "run": "k6 run tests/performance/load_test.js",
                         "env": {
-                            "BASE_URL": "https://dev.ainflue.com"
+                            "BASE_URL": "https://dev.iacherie.com"
                         }
                     },
                     {
@@ -549,7 +549,7 @@ class GitHubActionsTemplate:
     def generate_release_workflow(self) -> Dict[str, Any]:
         """Generate release workflow"""
         return {
-            "name": "🎉 Release Ainflue Platform",
+            "name": "🎉 Release iacherie Platform",
             "on": {
                 "push": {
                     "tags": ["v*.*.*"]
@@ -569,7 +569,7 @@ class GitHubActionsTemplate:
                             },
                             "with": {
                                 "tag_name": "${{ github.ref }}",
-                                "release_name": "Ainflue Platform ${{ github.ref }}",
+                                "release_name": "iacherie Platform ${{ github.ref }}",
                                 "draft": False,
                                 "prerelease": False
                             }
@@ -603,7 +603,7 @@ class GitHubActionsTemplate:
 def create_production_config() -> GitHubActionsConfig:
     """Create production configuration"""
     return GitHubActionsConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         python_version="3.11",
         node_version="18",
         enable_ai_tests=True,
@@ -620,7 +620,7 @@ if __name__ == "__main__":
     config = create_production_config()
     template = GitHubActionsTemplate(config)
     
-    print("GitHub Actions Template for Ainflue Platform")
+    print("GitHub Actions Template for iacherie Platform")
     print("Configuration:")
     print(f"- Python Version: {config.python_version}")
     print(f"- AI Tests: {config.enable_ai_tests}")

@@ -142,8 +142,8 @@ def setup_cors_middleware(app):
         allow_origins=[
             "http://localhost:3000",
             "http://localhost:8000", 
-            "https://ainflue.com",
-            "https://api.ainflue.com"
+            "https://iacherie.com",
+            "https://api.iacherie.com"
         ],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],

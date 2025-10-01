@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🏗️ Enterprise Microservices Templates - Ainflue
+🏗️ Enterprise Microservices Templates - IA Chéries
 ==============================================
 Templates standardisés pour création microservices enterprise.
 Support patterns avancés + observability + resilience.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices
+Project: IA Chéries Microservices
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -358,5 +358,5 @@ class TemplateFactory:
 
 
 # Log initialization
-logger.info(f"🏗️ Ainflue Microservices Templates initialized - {len(TEMPLATES_REGISTRY)} templates available")
+logger.info(f"🏗️ IA Chéries Microservices Templates initialized - {len(TEMPLATES_REGISTRY)} templates available")
 logger.info(f"📋 Available templates: {', '.join(get_available_templates())}")

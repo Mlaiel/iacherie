@@ -8,16 +8,16 @@
  * Expert Implementation by: Backend Senior + Security + DevOps + Lead Dev IA
  */
 
-import { AinflueConfig } from './config';
+import { iacherieConfig } from './config';
 import { ApiError, NetworkError, TimeoutError } from './errors';
 import { ApiResponse, HttpMethod, RequestOptions } from './interfaces';
 
 export class HttpClient {
-  private config: AinflueConfig;
+  private config: iacherieConfig;
   private baseURL: string;
   private defaultHeaders: Record<string, string>;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: iacherieConfig) {
     this.config = config;
     this.baseURL = config.baseUrl.replace(/\/$/, ''); // Remove trailing slash
     this.defaultHeaders = {

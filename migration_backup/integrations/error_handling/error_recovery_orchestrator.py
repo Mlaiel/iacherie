@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Error Recovery Orchestrator - Ainflue Platform
+Error Recovery Orchestrator - IA Chéries Platform
 Automated Error Recovery & Self-Healing System
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -180,7 +180,7 @@ class ErrorRecoveryOrchestrator:
             'manual_interventions_required': 0
         }
         
-        # 🎵 Audio + Platform: Configuration Ainflue
+        # 🎵 Audio + Platform: Configuration IA Chéries
         self.platform_recovery_configs = self._initialize_platform_recovery_configs()
         
         # Initialize recovery strategies

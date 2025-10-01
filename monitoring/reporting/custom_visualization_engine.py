@@ -68,7 +68,7 @@ class VisualizationType(Enum):
 
 class ColorScheme(Enum):
     """Color schemes for visualizations"""
-    AINFLUE_BRAND = "ainflue_brand"
+    IACHERIE_BRAND = "iacherie_brand"
     CREATOR_ECONOMY = "creator_economy"
     CORPORATE_BLUE = "corporate_blue"
     REVENUE_GREEN = "revenue_green"
@@ -162,7 +162,7 @@ class VisualizationConfig:
     title: str
     subtitle: str = ""
     data_mapping: DataMapping = field(default_factory=DataMapping)
-    theme: VisualizationTheme = field(default_factory=lambda: VisualizationTheme("", "", ColorScheme.AINFLUE_BRAND))
+    theme: VisualizationTheme = field(default_factory=lambda: VisualizationTheme("", "", ColorScheme.IACHERIE_BRAND))
     width: int = 800
     height: int = 400
     responsive: bool = True
@@ -517,16 +517,16 @@ class CustomVisualizationEngine:
     def _initialize_default_themes(self):
         """Initialize default visualization themes"""
         # IA Chérie Brand Theme
-        ainflue_theme = VisualizationTheme(
-            theme_id="ainflue_brand",
+        iacherie_theme = VisualizationTheme(
+            theme_id="iacherie_brand",
             name="IA Chérie Brand",
-            color_scheme=ColorScheme.AINFLUE_BRAND,
+            color_scheme=ColorScheme.IACHERIE_BRAND,
             primary_colors=["#2196f3", "#4caf50", "#ff9800", "#e91e63", "#9c27b0"],
             background_color="#ffffff",
             text_color="#333333",
             accent_color="#2196f3"
         )
-        self.themes["ainflue_brand"] = ainflue_theme
+        self.themes["iacherie_brand"] = iacherie_theme
         
         # Creator Economy Theme
         creator_theme = VisualizationTheme(
@@ -556,7 +556,7 @@ class CustomVisualizationEngine:
     def _initialize_color_palettes(self):
         """Initialize color palettes for different schemes"""
         self.color_palettes = {
-            ColorScheme.AINFLUE_BRAND: [
+            ColorScheme.IACHERIE_BRAND: [
                 "#2196f3", "#4caf50", "#ff9800", "#e91e63", "#9c27b0",
                 "#00bcd4", "#cddc39", "#ff5722", "#795548", "#607d8b"
             ],

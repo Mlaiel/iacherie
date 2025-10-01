@@ -208,7 +208,7 @@ class GamificationBusinessCore:
     Advanced Gamification Business Logic Core
     
     Provides comprehensive gamification mechanics, achievement systems,
-    challenges, and engagement optimization for the Ainflue platform.
+    challenges, and engagement optimization for the IA Chéries platform.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

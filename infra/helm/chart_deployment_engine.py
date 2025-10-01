@@ -823,7 +823,7 @@ class HelmChartDeploymentEngine:
             return []
 
 # Enterprise Helm orchestrator
-class AinflueHelmOrchestrator:
+class iacherieHelmOrchestrator:
     """High-level Helm orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
@@ -844,7 +844,7 @@ class AinflueHelmOrchestrator:
         
         self.engine = HelmChartDeploymentEngine(self.config)
     
-    async def deploy_ainflue_platform(self) -> Dict[str, bool]:
+    async def deploy_iacherie_platform(self) -> Dict[str, bool]:
         """Deploy the complete IA Chérie platform using Helm charts
         
         Returns:
@@ -926,10 +926,10 @@ class AinflueHelmOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueHelmOrchestrator(environment="production")
+        orchestrator = iacherieHelmOrchestrator(environment="production")
         
         # Deploy platform
-        results = await orchestrator.deploy_ainflue_platform()
+        results = await orchestrator.deploy_iacherie_platform()
         
         print("Deployment Results:")
         for chart, success in results.items():

@@ -7,7 +7,7 @@ and creator-focused security enforcement across global edge locations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Sécurité + DevOps + Backend Senior
-Project: Ainflue Infrastructure CDN
+Project: IA Chéries Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -133,7 +133,7 @@ class WAFConfig:
 
 class CDNSecurityManager:
     """
-    Enterprise CDN Security Manager for Ainflue Creator Platform.
+    Enterprise CDN Security Manager for IA Chéries Creator Platform.
     
     Provides comprehensive security with DDoS protection, WAF integration,
     bot detection, and creator-focused security enforcement.

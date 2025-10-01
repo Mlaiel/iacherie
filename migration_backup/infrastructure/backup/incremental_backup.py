@@ -6,7 +6,7 @@ Enterprise incremental backup system with block-level detection, delta compressi
 and intelligent backup chain management for creator content protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

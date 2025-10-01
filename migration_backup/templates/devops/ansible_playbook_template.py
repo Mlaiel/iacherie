@@ -1,4 +1,4 @@
-"""Ansible Playbook Template for Ainflue Platform
+"""Ansible Playbook Template for IA Chéries Platform
 Enterprise-grade configuration management template for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -29,7 +29,7 @@ class DeploymentTarget(Enum):
 
 
 class ServiceType(Enum):
-    """Service types for Ainflue platform"""
+    """Service types for IA Chéries platform"""
     API_GATEWAY = "api_gateway"
     AUTH_SERVICE = "auth_service"
     CONTENT_PROCESSOR = "content_processor"
@@ -50,7 +50,7 @@ class AnsibleConfig:
     docker_version: str = "24.0"
     node_version: str = "18"
     
-    # Ainflue specific services
+    # IA Chéries specific services
     enable_ai_processing: bool = True
     enable_media_services: bool = True
     enable_analytics: bool = True
@@ -58,7 +58,7 @@ class AnsibleConfig:
 
 
 class AnsiblePlaybookTemplate:
-    """Enterprise Ansible Playbook Template for Ainflue Platform"""
+    """Enterprise Ansible Playbook Template for IA Chéries Platform"""
     
     def __init__(self, config: AnsibleConfig):
         self.config = config
@@ -67,7 +67,7 @@ class AnsiblePlaybookTemplate:
     def generate_main_playbook(self) -> Dict[str, Any]:
         """Generate main deployment playbook"""
         return {
-            "name": f"Deploy Ainflue Platform - {self.config.environment.value.title()}",
+            "name": f"Deploy IA Chéries Platform - {self.config.environment.value.title()}",
             "hosts": self.config.hosts_group,
             "become": True,
             "gather_facts": True,
@@ -87,7 +87,7 @@ class AnsiblePlaybookTemplate:
             "docker_version": self.config.docker_version,
             "node_version": self.config.node_version,
             
-            # Ainflue platform specific
+            # IA Chéries platform specific
             "ainflue_user": "ainflue",
             "ainflue_group": "ainflue",
             "ainflue_home": "/opt/ainflue",
@@ -373,7 +373,7 @@ class AnsiblePlaybookTemplate:
         }
     
     def generate_creator_economy_tasks(self) -> List[Dict[str, Any]]:
-        """Generate Ainflue creator economy specific tasks"""
+        """Generate IA Chéries creator economy specific tasks"""
         return [
             {
                 "name": "Install AI/ML dependencies",
@@ -576,7 +576,7 @@ if __name__ == "__main__":
     prod_config = create_production_config()
     prod_template = AnsiblePlaybookTemplate(prod_config)
     
-    print("Ansible Playbook Template for Ainflue Platform")
+    print("Ansible Playbook Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment.value}")
     print(f"- Python Version: {prod_config.python_version}")

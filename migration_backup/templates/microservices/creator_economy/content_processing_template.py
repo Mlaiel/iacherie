@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Content Processing Service Template for Ainflue Platform
+Content Processing Service Template for IA Chéries Platform
 ======================================================
 
 Production-ready AI-powered content processing service with:
@@ -261,7 +261,7 @@ class ContentAnalysisResponse(BaseModel):
 
 class ContentProcessingService(BaseMicroservice):
     """
-    Enterprise Content Processing Service for Ainflue Platform
+    Enterprise Content Processing Service for IA Chéries Platform
     
     Provides AI-powered content processing, enhancement, and protection
     with support for multiple content formats and real-time processing.
@@ -875,7 +875,7 @@ class ContentProcessingService(BaseMicroservice):
                 draw = ImageDraw.Draw(watermark)
                 
                 # Add text watermark
-                text = "© Ainflue"
+                text = "© IA Chéries"
                 font_size = max(20, min(img.size) // 20)
                 
                 try:
@@ -1225,7 +1225,7 @@ def create_content_processing_app() -> FastAPI:
     """Create FastAPI application for content processing service"""
     
     app = FastAPI(
-        title="Ainflue Content Processing Service",
+        title="IA Chéries Content Processing Service",
         description="AI-powered content processing and enhancement service",
         version="1.0.0"
     )

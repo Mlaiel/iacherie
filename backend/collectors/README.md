@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Collectors module provides a unified, enterprise-grade content monitoring infrastructure for the Ainflue platform. This module consolidates 16 individual platform collectors into 6 logical, consolidated collectors while maintaining backward compatibility.
+The Collectors module provides a unified, enterprise-grade content monitoring infrastructure for the iacherie platform. This module consolidates 16 individual platform collectors into 6 logical, consolidated collectors while maintaining backward compatibility.
 
 ## Architecture
 
@@ -338,6 +338,6 @@ Contact for permissions: mlaiel@live.de
 For technical support, feature requests, or licensing inquiries:
 
 **Email**: mlaiel@live.de  
-**Platform**: Ainflue Creator Monitoring System  
+**Platform**: iacherie Creator Monitoring System  
 **Version**: Enterprise v1.0  
 **License**: Proprietary - All Rights Reserved

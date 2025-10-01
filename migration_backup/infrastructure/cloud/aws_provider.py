@@ -2,7 +2,7 @@
 AWS Provider - Amazon Web Services Infrastructure Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-AWS cloud infrastructure management for Ainflue creator economy platform.
+AWS cloud infrastructure management for IA Chéries creator economy platform.
 Handles EC2, S3, RDS, Lambda, and other AWS services with enterprise-grade automation.
 """
 
@@ -29,7 +29,7 @@ class AWSCredentials:
 
 class AWSProvider:
     """
-    AWS infrastructure provider for Ainflue platform.
+    AWS infrastructure provider for IA Chéries platform.
     
     Manages AWS resources including:
     - EC2 instances for creator services
@@ -70,7 +70,7 @@ class AWSProvider:
             self.cloudformation = None
             self.iam = None
         
-        # Ainflue-specific AWS configurations
+        # IA Chéries-specific AWS configurations
         self.ainflue_aws_config = {
             'creator_services_stack': 'ainflue-creator-services',
             'content_storage_bucket': 'ainflue-content-storage',
@@ -82,7 +82,7 @@ class AWSProvider:
         logger.info(f"AWS provider initialized for region: {self.region}")
     
     async def deploy_ainflue_infrastructure(self) -> Dict[str, Any]:
-        """Deploy complete Ainflue infrastructure on AWS"""
+        """Deploy complete IA Chéries infrastructure on AWS"""
         
         deployment_result = {
             'deployment_id': f"aws_deploy_{int(asyncio.get_event_loop().time())}",
@@ -381,7 +381,7 @@ class AWSProvider:
         # Setup API Gateway for payment APIs
         api_gateway_config = await self._create_api_gateway({
             'api_name': 'ainflue-revenue-api',
-            'description': 'Ainflue Revenue Processing API',
+            'description': 'IA Chéries Revenue Processing API',
             'cors_enabled': True,
             'throttling': {
                 'rate_limit': 10000,
@@ -450,12 +450,12 @@ class AWSProvider:
         kms_config = await self._create_kms_keys([
             {
                 'alias': 'alias/ainflue-content-encryption',
-                'description': 'Ainflue content encryption key',
+                'description': 'IA Chéries content encryption key',
                 'usage': 'ENCRYPT_DECRYPT'
             },
             {
                 'alias': 'alias/ainflue-database-encryption',
-                'description': 'Ainflue database encryption key',
+                'description': 'IA Chéries database encryption key',
                 'usage': 'ENCRYPT_DECRYPT'
             }
         ])
@@ -464,7 +464,7 @@ class AWSProvider:
         return security_config
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
-        """Setup CloudWatch monitoring for Ainflue infrastructure"""
+        """Setup CloudWatch monitoring for IA Chéries infrastructure"""
         
         monitoring_config = {
             'cloudwatch_dashboards': {},
@@ -475,7 +475,7 @@ class AWSProvider:
         
         # Create CloudWatch dashboard
         dashboard_config = await self._create_cloudwatch_dashboard({
-            'dashboard_name': 'Ainflue-Infrastructure-Overview',
+            'dashboard_name': 'IA Chéries-Infrastructure-Overview',
             'widgets': [
                 {
                     'type': 'metric',
@@ -507,7 +507,7 @@ class AWSProvider:
                 'alarm_actions': ['arn:aws:sns:us-west-2:ACCOUNT:ainflue-alerts']
             },
             {
-                'alarm_name': 'Ainflue-DatabaseConnectionsHigh',
+                'alarm_name': 'IA Chéries-DatabaseConnectionsHigh',
                 'metric_name': 'DatabaseConnections',
                 'namespace': 'AWS/RDS',
                 'threshold': 50,
@@ -688,7 +688,7 @@ class AWSProvider:
             'environment_variables': {
                 'MODEL_NAME': model_config['model_name'],
                 'MODEL_VERSION': model_config.get('version', '1.0'),
-                'AINFLUE_ENVIRONMENT': 'production'
+                'IA CHÉRIES_ENVIRONMENT': 'production'
             }
         }
     
@@ -880,7 +880,7 @@ class AWSProvider:
         }
     
     def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized AWS configurations"""
+        """Get IA Chéries-optimized AWS configurations"""
         return {
             'content_processing': {
                 'ec2': {

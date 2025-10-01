@@ -3,7 +3,7 @@
 
 Consolidated voice engine providing voice bank management, accent generation,
 multi-format processing, quality optimization, and comprehensive voice
-infrastructure for the Ainflue platform.
+infrastructure for the IA Chéries platform.
 
 Consolidates:
 - Voice bank management with 1000+ voices

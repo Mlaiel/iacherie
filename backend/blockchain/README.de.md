@@ -2,7 +2,7 @@
 
 ## Architektur-Übersicht
 
-Die Ainflue Blockchain-Unternehmensarchitektur bietet eine umfassende, produktionsreife Blockchain-Infrastruktur mit erweiterten Funktionen für Content-Erstellung, Compliance, Analytics und Notfallreaktion.
+Die iacherie Blockchain-Unternehmensarchitektur bietet eine umfassende, produktionsreife Blockchain-Infrastruktur mit erweiterten Funktionen für Content-Erstellung, Compliance, Analytics und Notfallreaktion.
 
 ### Hauptkomponenten
 
@@ -80,7 +80,7 @@ fastapi>=0.95.0
 #### Umgebungsvariablen
 ```bash
 # Datenbank-Konfiguration
-DATABASE_URL="postgresql://user:pass@localhost/ainflue_blockchain"
+DATABASE_URL="postgresql://user:pass@localhost/iacherie_blockchain"
 REDIS_URL="redis://localhost:6379"
 
 # Blockchain-Konfiguration
@@ -210,7 +210,7 @@ incident_id = await emergency_system.handle_emergency(
 
 1. **Container erstellen**
 ```bash
-docker build -t ainflue-blockchain .
+docker build -t iacherie-blockchain .
 ```
 
 2. **Mit Docker Compose ausführen**
@@ -237,7 +237,7 @@ spec:
     spec:
       containers:
       - name: blockchain
-        image: ainflue-blockchain:latest
+        image: iacherie-blockchain:latest
         ports:
         - containerPort: 8000
         env:
@@ -289,8 +289,8 @@ redis-cli ping
 ```
 
 ### Support-Kontakte
-- **Technischer Support**: tech@ainflue.com
-- **Sicherheitsprobleme**: security@ainflue.com
+- **Technischer Support**: tech@iacherie.com
+- **Sicherheitsprobleme**: security@iacherie.com
 - **Notfall-Kontakt**: +49-30-NOTFALL
 
 ## Roadmap

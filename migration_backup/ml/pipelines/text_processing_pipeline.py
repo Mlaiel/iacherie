@@ -1,12 +1,12 @@
 """
-Text Processing Pipeline - Ainflue Enterprise
+Text Processing Pipeline - IA Chéries Enterprise
 =============================================
 Pipeline NLP/text intelligence avec language understanding avancé.
 Text analysis + sentiment detection + SEO optimization + content generation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Pipelines
+Project: IA Chéries ML Pipelines
 Version: 1.0 Production
 """
 

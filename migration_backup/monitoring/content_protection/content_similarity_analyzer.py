@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Content Similarity Analyzer
+IA Chéries Platform - Content Similarity Analyzer
 ==============================================
 
 Enterprise-grade content similarity analysis for duplicate detection,

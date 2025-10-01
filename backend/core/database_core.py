@@ -88,7 +88,7 @@ class DatabaseConfig:
     environment: DatabaseEnvironment
     host: str = "localhost"
     port: int = 5432
-    database: str = "ainflue"
+    database: str = "iacherie"
     username: str = "postgres"
     password: str = ""
     ssl_enabled: bool = True
@@ -1108,7 +1108,7 @@ class DataSeedManager:
                         "device": "mobile",
                         "source": "social_media"
                     }),
-                    "platform": "ainflue",
+                    "platform": "iacherie",
                     "metrics": json.dumps({
                         "engagement_score": 0.75,
                         "retention_rate": 0.82
@@ -1123,7 +1123,7 @@ class DataSeedManager:
                         "device": "desktop",
                         "source": "direct"
                     }),
-                    "platform": "ainflue",
+                    "platform": "iacherie",
                     "metrics": json.dumps({
                         "engagement_score": 1.0
                     })
@@ -1359,7 +1359,7 @@ class DatabaseCore:
         try:
             if not backup_path:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                backup_path = f"/tmp/backup_ainflue_{timestamp}.sql"
+                backup_path = f"/tmp/backup_iacherie_{timestamp}.sql"
             
             logger.info(f"Creating database backup: {backup_path}")
             
@@ -1448,7 +1448,7 @@ def get_default_config(environment: str = "development") -> DatabaseConfig:
         environment=env_map.get(environment, DatabaseEnvironment.DEVELOPMENT),
         host=os.getenv("DB_HOST", "localhost"),
         port=int(os.getenv("DB_PORT", "5432")),
-        database=os.getenv("DB_NAME", "ainflue"),
+        database=os.getenv("DB_NAME", "iacherie"),
         username=os.getenv("DB_USER", "postgres"),
         password=os.getenv("DB_PASSWORD", ""),
         ssl_enabled=os.getenv("DB_SSL", "true").lower() == "true"

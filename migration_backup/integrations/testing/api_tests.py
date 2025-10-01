@@ -1,7 +1,7 @@
 """API Tests - API Integration Testing System
 ============================================
 
-API testing capabilities for Ainflue integrations.
+API testing capabilities for IA Chéries integrations.
 Provides comprehensive API endpoint testing and validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

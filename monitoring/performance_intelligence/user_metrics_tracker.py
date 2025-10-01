@@ -135,25 +135,25 @@ class UserMetricsTracker:
         # Prometheus metrics
         self.prometheus_metrics = {
             "user_mau_total": Gauge(
-                "ainflue_user_mau_total",
+                "iacherie_user_mau_total",
                 "Monthly Active Users total"
             ),
             "user_dau_total": Gauge(
-                "ainflue_user_dau_total", 
+                "iacherie_user_dau_total", 
                 "Daily Active Users total"
             ),
             "user_retention_rate": Gauge(
-                "ainflue_user_retention_rate",
+                "iacherie_user_retention_rate",
                 "User retention rate",
                 ["period"]
             ),
             "user_activity_total": Counter(
-                "ainflue_user_activity_total",
+                "iacherie_user_activity_total",
                 "Total user activities",
                 ["activity_type", "platform"]
             ),
             "user_session_duration": Histogram(
-                "ainflue_user_session_duration_seconds",
+                "iacherie_user_session_duration_seconds",
                 "User session duration in seconds"
             )
         }
@@ -669,7 +669,7 @@ Calculate user distribution across platforms"""
             self.data_connections = {
                 'primary_db': {
                     'type': 'postgresql',
-                    'connection_string': 'postgresql://iacherie:password@localhost:5432/ainflue_metrics',
+                    'connection_string': 'postgresql://iacherie:password@localhost:5432/iacherie_metrics',
                     'pool_size': 20,
                     'status': 'simulated'  # In production would be 'connected'
                 },

@@ -188,7 +188,7 @@ class AICollaborationIntelligence:
 
 ```javascript
 // مثال تكامل API التعاون
-const collaboration = new AinflueCli({
+const collaboration = new iacherieCli({
   apiKey: 'your_api_key',
   module: 'collaboration'
 });

@@ -1,5 +1,5 @@
 """
-🤝 COLLABORATION CONFIG - AINFLUE ENTERPRISE PLATFORM
+🤝 COLLABORATION CONFIG - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced collaboration and gamification configuration for creator teams
 Author: Fahed Mlaiel (mlaiel@live.de)

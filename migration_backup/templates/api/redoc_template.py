@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise ReDoc Template - Ainflue API Templates
+⚡ Enterprise ReDoc Template - IA Chéries API Templates
 Advanced production-ready ReDoc documentation system with enterprise features
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -54,7 +54,7 @@ class ReDocTemplate:
     
     def __init__(
         self,
-        title: str = "Ainflue API Documentation",
+        title: str = "IA Chéries API Documentation",
         description: str = "Enterprise API Documentation",
         version: str = "1.0.0",
         logo_url: Optional[str] = None,
@@ -165,7 +165,7 @@ class ReDocTemplate:
     <style>
         {{ custom_css }}
         
-        /* Ainflue Enterprise Branding */
+        /* IA Chéries Enterprise Branding */
         .redoc-wrap {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -502,7 +502,7 @@ class ReDocTemplate:
         """Génère le JavaScript personnalisé"""
         
         js_code = """
-        // Ainflue Enterprise ReDoc Enhancements
+        // IA Chéries Enterprise ReDoc Enhancements
         
         // Advanced copy functionality
         function addCopyButtons() {
@@ -999,10 +999,10 @@ class ReDocThemeManager:
         }
     
     def _get_enterprise_theme(self) -> Dict[str, str]:
-        """Thème enterprise Ainflue"""
+        """Thème enterprise IA Chéries"""
         return {
             'css': '''
-                /* Ainflue Enterprise Theme */
+                /* IA Chéries Enterprise Theme */
                 :root {
                     --primary-color: #667eea;
                     --secondary-color: #764ba2;
@@ -1642,7 +1642,7 @@ class APIVersionManager:
 
 # Factory et helper functions
 def create_redoc_template(
-    title: str = "Ainflue API Documentation",
+    title: str = "IA Chéries API Documentation",
     description: str = "Enterprise API Documentation",
     version: str = "1.0.0",
     **kwargs
@@ -1708,7 +1708,7 @@ if __name__ == "__main__":
         openapi_spec = {
             "openapi": "3.0.0",
             "info": {
-                "title": "Ainflue Creator Economy API",
+                "title": "IA Chéries Creator Economy API",
                 "description": "Advanced API for creator economy platform",
                 "version": "2.0.0"
             },
@@ -1740,7 +1740,7 @@ if __name__ == "__main__":
         
         # Créer le template ReDoc
         redoc = create_redoc_template(
-            title="Ainflue API Documentation",
+            title="IA Chéries API Documentation",
             description="Enterprise Creator Economy API",
             version="2.0.0",
             logo_url="https://ainflue.com/logo.png"

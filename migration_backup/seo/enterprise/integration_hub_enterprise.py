@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Integration Hub Enterprise
 ==========================
 
-Enterprise-grade integration management system for Ainflue SEO platform.
+Enterprise-grade integration management system for IA Chéries SEO platform.
 Provides comprehensive API gateway, service orchestration, and enterprise connectivity.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

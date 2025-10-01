@@ -324,42 +324,42 @@ class TechnicalPerformanceMonitor:
         # Prometheus metrics
         self.prometheus_metrics = {
             "tech_system_cpu_usage": Gauge(
-                "ainflue_tech_system_cpu_usage_percent",
+                "iacherie_tech_system_cpu_usage_percent",
                 "System CPU usage percentage"
             ),
             "tech_system_memory_usage": Gauge(
-                "ainflue_tech_system_memory_usage_percent", 
+                "iacherie_tech_system_memory_usage_percent", 
                 "System memory usage percentage"
             ),
             "tech_api_response_time": Histogram(
-                "ainflue_tech_api_response_time_seconds",
+                "iacherie_tech_api_response_time_seconds",
                 "API response time in seconds",
                 ["endpoint", "method"],
                 buckets=[0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0]
             ),
             "tech_api_requests_total": Counter(
-                "ainflue_tech_api_requests_total",
+                "iacherie_tech_api_requests_total",
                 "Total API requests",
                 ["endpoint", "method", "status_code"]
             ),
             "tech_database_query_time": Histogram(
-                "ainflue_tech_database_query_time_seconds",
+                "iacherie_tech_database_query_time_seconds",
                 "Database query execution time",
                 ["query_type"],
                 buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0]
             ),
             "tech_error_events_total": Counter(
-                "ainflue_tech_error_events_total",
+                "iacherie_tech_error_events_total",
                 "Total error events",
                 ["component_type", "severity"]
             ),
             "tech_uptime_percentage": Gauge(
-                "ainflue_tech_service_uptime_percentage",
+                "iacherie_tech_service_uptime_percentage",
                 "Service uptime percentage",
                 ["component_id", "period"]
             ),
             "tech_cdn_cache_hit_rate": Gauge(
-                "ainflue_tech_cdn_cache_hit_rate_percent",
+                "iacherie_tech_cdn_cache_hit_rate_percent",
                 "CDN cache hit rate percentage"
             )
         }

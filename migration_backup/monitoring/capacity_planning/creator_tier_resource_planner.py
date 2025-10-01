@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorTier(Enum):
-    """Tiers créateurs Ainflue avec hiérarchie"""
+    """Tiers créateurs IA Chéries avec hiérarchie"""
     PREMIUM = "premium"         # Top 5% - Revenus élevés
     PROFESSIONAL = "professional"  # 15% - Créateurs établis
     EMERGING = "emerging"       # 35% - Croissance rapide
@@ -779,7 +779,7 @@ async def main():
     print(f"✅ Auto-scaling actif: {overview['auto_scaling_enabled']} créateurs")
     
     print("\n🎯 Creator Tier Resource Planner - Démonstration terminée")
-    print("© 2025 Fahed Mlaiel - Architecture propriétaire Ainflue")
+    print("© 2025 Fahed Mlaiel - Architecture propriétaire IA Chéries")
 
 
 if __name__ == "__main__":

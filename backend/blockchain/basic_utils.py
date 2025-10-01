@@ -2,7 +2,7 @@
 🔗 Blockchain Integration Utilities - Basic Implementation
 ========================================================
 
-Basic blockchain integration for Ainflue platform to support Web3 features,
+Basic blockchain integration for iacherie platform to support Web3 features,
 NFT creation, smart contracts, and cryptocurrency payments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -123,8 +123,8 @@ class BlockchainManager:
     async def generate_nft_metadata(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Generate NFT metadata according to standards"""
         return {
-            "name": content_info.get("title", "Ainflue Content"),
-            "description": content_info.get("description", "Content protected by Ainflue"),
+            "name": content_info.get("title", "iacherie Content"),
+            "description": content_info.get("description", "Content protected by iacherie"),
             "image": content_info.get("thumbnail_url", ""),
             "external_url": content_info.get("content_url", ""),
             "attributes": [
@@ -142,14 +142,14 @@ class BlockchainManager:
                 },
                 {
                     "trait_type": "Protected By",
-                    "value": "Ainflue AI Platform"
+                    "value": "iacherie AI Platform"
                 }
             ],
             "properties": {
                 "creator": content_info.get("creator_address", ""),
                 "royalty": content_info.get("royalty_percentage", 5.0),
                 "content_hash": content_info.get("content_hash", ""),
-                "platform": "Ainflue"
+                "platform": "iacherie"
             }
         }
     
@@ -190,7 +190,7 @@ class BlockchainManager:
                 network=network,
                 creator_address=creator_address,
                 content_hash=content_hash,
-                metadata_uri=f"https://api.ainflue.com/nft/metadata/{uuid.uuid4()}",
+                metadata_uri=f"https://api.iacherie.com/nft/metadata/{uuid.uuid4()}",
                 royalty_percentage=royalty_percentage,
                 created_at=datetime.now(),
                 transaction_hash=transaction_hash
@@ -341,7 +341,7 @@ class SmartContractManager:
                 network=network,
                 abi=abi,
                 bytecode="0x608060405234801561001057600080fd5b50...",  # Mock bytecode
-                name="AinflueContentProtection",
+                name="iacherieContentProtection",
                 version="1.0.0",
                 deployed_at=datetime.now()
             )

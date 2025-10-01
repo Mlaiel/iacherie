@@ -71,10 +71,10 @@ Multi-Format Creator Upload → KI-Verarbeitung → IP-Schutz → Monetarisierun
 ### 🔧 Konfiguration
 
 #### Metriken Benennungskonvention
-- **Business Metriken**: `ainflue_creator_{metrik_name}`
-- **Technische Metriken**: `ainflue_system_{metrik_name}`
-- **KI Metriken**: `ainflue_ai_{metrik_name}`
-- **Sicherheits Metriken**: `ainflue_security_{metrik_name}`
+- **Business Metriken**: `iacherie_creator_{metrik_name}`
+- **Technische Metriken**: `iacherie_system_{metrik_name}`
+- **KI Metriken**: `iacherie_ai_{metrik_name}`
+- **Sicherheits Metriken**: `iacherie_security_{metrik_name}`
 
 #### Alerting Schweregrad Stufen
 - **P1 Kritisch**: Umsatzauswirkung >10K€/Stunde, >1000 Creator betroffen

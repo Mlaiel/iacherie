@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Creator Analytics Monitoring Core
+IA Chéries Platform - Creator Analytics Monitoring Core
 ==================================================
 
 Enterprise-grade creator analytics monitoring core for Creator Economy platform.

@@ -1,12 +1,12 @@
 """
-Deployment Automation - Enterprise Deployment Strategies for Ainflue
+Deployment Automation - Enterprise Deployment Strategies for iacherie
 ==================================================================
 
 Advanced deployment automation supporting blue-green, canary, rolling updates,
 and zero-downtime deployments for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

@@ -1,5 +1,5 @@
 # =====================================================================================
-# Container Security Template - Ainflue Configuration Module
+# Container Security Template - IA Chéries Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - CONTAINER SECURITY CONFIGURATION
+# IA CHÉRIES CREATOR ECONOMY - CONTAINER SECURITY CONFIGURATION
 # =====================================================================================
 
 # Networks with security constraints

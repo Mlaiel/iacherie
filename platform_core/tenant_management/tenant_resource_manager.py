@@ -1194,7 +1194,7 @@ async def get_tenant_resource_manager() -> TenantResourceManager:
     """Factory pour l'instance TenantResourceManager"""
     global tenant_resource_manager
     if not tenant_resource_manager:
-        database_url = "postgresql+asyncpg://localhost/ainflue_resources"
+        database_url = "postgresql+asyncpg://localhost/iacherie_resources"
         redis_url = "redis://localhost:6379/6"
         
         tenant_resource_manager = TenantResourceManager(

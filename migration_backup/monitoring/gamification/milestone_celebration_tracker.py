@@ -1,7 +1,7 @@
 """
 Milestone Celebration Tracker - Enterprise Achievement & Milestone Celebration System
 
-This module implements comprehensive milestone celebration tracking for the Ainflue platform,
+This module implements comprehensive milestone celebration tracking for the IA Chéries platform,
 managing achievement celebrations, milestone recognition, and automated celebration campaigns.
 
 Author: Fahed Mlaiel
@@ -104,7 +104,7 @@ class CelebrationCampaign:
 
 class MilestoneCelebrationTracker:
     """
-    Enterprise milestone celebration tracking system for Ainflue platform.
+    Enterprise milestone celebration tracking system for IA Chéries platform.
     
     Features:
     - Automated milestone detection
@@ -161,7 +161,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.3,
                 "reward_points": 500,
                 "badge_design": "first_hundred_badge",
-                "social_share_template": "🎉 Just hit 100 followers! Thank you for joining my journey! #AinflueMilestone #CreatorLife"
+                "social_share_template": "🎉 Just hit 100 followers! Thank you for joining my journey! #IA ChériesMilestone #CreatorLife"
             },
             {
                 "milestone_type": MilestoneType.FOLLOWER_MILESTONE,
@@ -172,7 +172,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.6,
                 "reward_points": 2000,
                 "badge_design": "thousand_club_badge",
-                "social_share_template": "🚀 1K followers! This community is amazing! #ThousandClub #AinflueMilestone"
+                "social_share_template": "🚀 1K followers! This community is amazing! #ThousandClub #IA ChériesMilestone"
             },
             {
                 "milestone_type": MilestoneType.FOLLOWER_MILESTONE,
@@ -183,7 +183,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.85,
                 "reward_points": 10000,
                 "badge_design": "ten_k_badge",
-                "social_share_template": "🎊 10K FOLLOWERS! You all are incredible! This is just the beginning! #10KStrong #AinflueMilestone"
+                "social_share_template": "🎊 10K FOLLOWERS! You all are incredible! This is just the beginning! #10KStrong #IA ChériesMilestone"
             },
             # Content milestones
             {
@@ -259,13 +259,13 @@ class MilestoneCelebrationTracker:
             {
                 "milestone_type": MilestoneType.ANNIVERSARY_MILESTONE,
                 "name": "One Year Strong",
-                "description": "One year as an Ainflue creator!",
+                "description": "One year as an IA Chéries creator!",
                 "threshold_value": 365,
                 "threshold_unit": "days",
                 "rarity_score": 0.6,
                 "reward_points": 3650,
                 "badge_design": "one_year_badge",
-                "social_share_template": "🎂 One year on Ainflue! What an incredible journey it's been! #OneYear #Anniversary"
+                "social_share_template": "🎂 One year on IA Chéries! What an incredible journey it's been! #OneYear #Anniversary"
             }
         ]
         

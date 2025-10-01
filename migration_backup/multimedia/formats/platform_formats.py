@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Formats - Platform-Specific Formats
+IA Chéries Platform - Multimedia Formats - Platform-Specific Formats
 Platform-specific format optimization and delivery management
 
 Author: Fahed Mlaiel (mlaiel@live.de)

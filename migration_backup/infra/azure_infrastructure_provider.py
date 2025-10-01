@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +12,7 @@
 """
 Azure Infrastructure Provider
 
-Enterprise Azure infrastructure provider for Ainflue platform.
+Enterprise Azure infrastructure provider for IA Chéries platform.
 Provides comprehensive Azure resource management with enterprise security and optimization.
 """
 

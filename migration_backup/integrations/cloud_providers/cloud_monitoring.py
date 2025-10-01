@@ -6,7 +6,7 @@ supporting AWS CloudWatch, Azure Monitor, GCP Operations, and more.
 
 This module provides unified monitoring, alerting, log aggregation,
 metrics collection, and performance analysis across multiple cloud
-providers for the Ainflue platform.
+providers for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -592,7 +592,7 @@ class MultiCloudMonitoringSystem:
                 AlarmDescription=alert.description,
                 Unit='Percent',
                 Tags=[
-                    {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                    {'Key': 'CreatedBy', 'Value': 'IA ChériesPlatform'},
                     {'Key': 'AlertId', 'Value': alert.id}
                 ]
             )

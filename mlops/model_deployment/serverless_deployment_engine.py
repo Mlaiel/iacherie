@@ -395,7 +395,7 @@ class ServerlessDeploymentEngine:
                 'CREATOR_ID': deployment_context['creator_id'],
                 'DEPLOYMENT_ID': deployment_context['deployment_id'],
                 'CREATOR_TIER': creator_config.get('tier', 'creator'),
-                'AINFLUE_ENV': deployment_context.get('environment', 'production')
+                'IACHERIE_ENV': deployment_context.get('environment', 'production')
             }
             
             # Add creator-specific environment variables
@@ -403,16 +403,16 @@ class ServerlessDeploymentEngine:
             
             # Setup tags
             tags = {
-                'Project': 'Ainflue',
+                'Project': 'iacherie',
                 'Model': model_id,
                 'Creator': deployment_context['creator_id'],
                 'Tier': creator_config.get('tier', 'creator'),
                 'Environment': deployment_context.get('environment', 'production'),
-                'ManagedBy': 'AinflueCopilot'
+                'ManagedBy': 'iacherieCopilot'
             }
             
             return ServerlessConfig(
-                function_name=f"ainflue-{model_id}-{deployment_context['creator_id']}",
+                function_name=f"iacherie-{model_id}-{deployment_context['creator_id']}",
                 provider=provider,
                 runtime=runtime,
                 handler=self._get_handler_for_runtime(runtime),
@@ -940,7 +940,7 @@ exports.healthCheck = async (event, context) => {{
 '''
         
         package_json = {
-            "name": f"ainflue-{model_id}",
+            "name": f"iacherie-{model_id}",
             "version": "1.0.0",
             "description": f"Serverless function for model {model_id}",
             "main": "index.js",
@@ -992,7 +992,7 @@ exports.healthCheck = async (event, context) => {{
             
             return {
                 'success': True,
-                'upload_location': f"s3://ainflue-lambda-deployments/{serverless_config.function_name}.zip",
+                'upload_location': f"s3://iacherie-lambda-deployments/{serverless_config.function_name}.zip",
                 'package_size': package_result['package_size']
             }
         except Exception as e:
@@ -1009,7 +1009,7 @@ exports.healthCheck = async (event, context) => {{
             
             return {
                 'success': True,
-                'upload_location': f"azure://ainflue-functions/{serverless_config.function_name}.zip",
+                'upload_location': f"azure://iacherie-functions/{serverless_config.function_name}.zip",
                 'package_size': package_result['package_size']
             }
         except Exception as e:
@@ -1026,7 +1026,7 @@ exports.healthCheck = async (event, context) => {{
             
             return {
                 'success': True,
-                'upload_location': f"gs://ainflue-cloud-functions/{serverless_config.function_name}.zip",
+                'upload_location': f"gs://iacherie-cloud-functions/{serverless_config.function_name}.zip",
                 'package_size': package_result['package_size']
             }
         except Exception as e:
@@ -1079,13 +1079,13 @@ exports.healthCheck = async (event, context) => {{
             
             # Generate API endpoint
             if serverless_config.provider == ServerlessProvider.AWS_LAMBDA:
-                api_endpoint = f"https://api.ainflue.com/lambda/{serverless_config.function_name}"
+                api_endpoint = f"https://api.iacherie.com/lambda/{serverless_config.function_name}"
             elif serverless_config.provider == ServerlessProvider.AZURE_FUNCTIONS:
                 api_endpoint = f"https://{serverless_config.function_name}.azurewebsites.net/api/{serverless_config.function_name}"
             elif serverless_config.provider == ServerlessProvider.GCP_CLOUD_FUNCTIONS:
                 api_endpoint = f"https://us-central1-project-id.cloudfunctions.net/{serverless_config.function_name}"
             else:
-                api_endpoint = f"https://api.ainflue.com/{serverless_config.function_name}"
+                api_endpoint = f"https://api.iacherie.com/{serverless_config.function_name}"
             
             return {
                 'success': True,

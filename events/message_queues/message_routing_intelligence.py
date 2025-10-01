@@ -155,7 +155,7 @@ class RoutingMetrics:
     health_status_distribution: Dict[str, int] = field(default_factory=dict)
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Routing Configuration"""
     
     # Routing destinations by service type
@@ -751,7 +751,7 @@ class MessageRoutingIntelligence:
     async def _select_geographic(self, business_context: Dict[str, Any], destinations: List[str]) -> str:
         """Geographic proximity selection"""
         user_region = business_context.get("user_region", "us-east")
-        preferred_regions = AinflueBusiness.GEOGRAPHIC_PREFERENCES.get(user_region, ["us-east-1"])
+        preferred_regions = iacherieBusiness.GEOGRAPHIC_PREFERENCES.get(user_region, ["us-east-1"])
         
         # Find destinations in preferred regions
         for region in preferred_regions:
@@ -827,16 +827,16 @@ class MessageRoutingIntelligence:
     async def _load_business_configuration(self):
         """Load IA Chérie business routing configuration"""
         # Load destinations
-        for service_type, destinations in AinflueBusiness.ROUTING_DESTINATIONS.items():
+        for service_type, destinations in iacherieBusiness.ROUTING_DESTINATIONS.items():
             for destination in destinations:
                 await self.register_destination(destination)
         
         # Load routing rules
-        for rule_name, rule in AinflueBusiness.ROUTING_RULES.items():
+        for rule_name, rule in iacherieBusiness.ROUTING_RULES.items():
             await self.register_routing_rule(rule)
         
         # Load custom routing functions
-        self.custom_routing_functions.update(AinflueBusiness.CUSTOM_ROUTING_FUNCTIONS)
+        self.custom_routing_functions.update(iacherieBusiness.CUSTOM_ROUTING_FUNCTIONS)
         
         logger.info("Loaded business routing configuration")
     
@@ -1084,5 +1084,5 @@ __all__ = [
     "RoutingStrategy",
     "DestinationType",
     "HealthStatus",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

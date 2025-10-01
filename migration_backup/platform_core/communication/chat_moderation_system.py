@@ -836,6 +836,6 @@ async def monitor_collaboration_chat(moderation_system: ChatModerationSystem,
 🚀 DevOps: Real-time analytics and automated cleanup processes
 📝 IA Prompt Engineer: Intelligent explanation generation for moderation decisions
 
-© 2025 Fahed Mlaiel (mlaiel@live.de) - Ainflue Platform
+© 2025 Fahed Mlaiel (mlaiel@live.de) - IA Chéries Platform
 All rights reserved. Industrial-grade enterprise implementation.
 """

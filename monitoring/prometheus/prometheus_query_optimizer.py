@@ -92,21 +92,21 @@ class PrometheusQueryOptimizer:
         
         # Métriques d'analyse de performance
         self.query_execution_time = Histogram(
-            'ainflue_prometheus_query_execution_time_seconds',
+            'iacherie_prometheus_query_execution_time_seconds',
             'Prometheus query execution time',
             labelnames=['query_type', 'complexity', 'optimized'],
             registry=self.registry
         )
         
         self.query_optimization_savings = Gauge(
-            'ainflue_prometheus_query_optimization_savings_percent',
+            'iacherie_prometheus_query_optimization_savings_percent',
             'Query optimization performance savings percentage',
             labelnames=['optimization_type', 'complexity_level'],
             registry=self.registry
         )
         
         self.query_success_rate = Gauge(
-            'ainflue_prometheus_query_success_rate',
+            'iacherie_prometheus_query_success_rate',
             'Query execution success rate',
             labelnames=['query_type', 'complexity'],
             registry=self.registry
@@ -114,21 +114,21 @@ class PrometheusQueryOptimizer:
         
         # Métriques de cardinalité
         self.metric_cardinality = Gauge(
-            'ainflue_prometheus_metric_cardinality',
+            'iacherie_prometheus_metric_cardinality',
             'Cardinality of Prometheus metrics',
             labelnames=['metric_name', 'cardinality_level'],
             registry=self.registry
         )
         
         self.cardinality_growth_rate = Gauge(
-            'ainflue_prometheus_cardinality_growth_rate_percent',
+            'iacherie_prometheus_cardinality_growth_rate_percent',
             'Rate of cardinality growth over time',
             labelnames=['metric_namespace', 'time_window'],
             registry=self.registry
         )
         
         self.high_cardinality_series = Counter(
-            'ainflue_prometheus_high_cardinality_series_total',
+            'iacherie_prometheus_high_cardinality_series_total',
             'Number of high cardinality series detected',
             labelnames=['metric_name', 'severity'],
             registry=self.registry
@@ -136,21 +136,21 @@ class PrometheusQueryOptimizer:
         
         # Métriques d'optimisation de stockage
         self.storage_efficiency_score = Gauge(
-            'ainflue_prometheus_storage_efficiency_score',
+            'iacherie_prometheus_storage_efficiency_score',
             'Storage efficiency score (0-1)',
             labelnames=['storage_component', 'optimization_applied'],
             registry=self.registry
         )
         
         self.storage_space_saved = Gauge(
-            'ainflue_prometheus_storage_space_saved_bytes',
+            'iacherie_prometheus_storage_space_saved_bytes',
             'Storage space saved through optimization',
             labelnames=['optimization_method'],
             registry=self.registry
         )
         
         self.retention_policy_effectiveness = Gauge(
-            'ainflue_prometheus_retention_policy_effectiveness',
+            'iacherie_prometheus_retention_policy_effectiveness',
             'Effectiveness of retention policies (0-1)',
             labelnames=['retention_rule', 'metric_type'],
             registry=self.registry
@@ -158,21 +158,21 @@ class PrometheusQueryOptimizer:
         
         # Métriques du moteur de recommandations
         self.query_recommendation_accuracy = Gauge(
-            'ainflue_prometheus_query_recommendation_accuracy',
+            'iacherie_prometheus_query_recommendation_accuracy',
             'Query recommendation system accuracy',
             labelnames=['recommendation_type', 'user_type'],
             registry=self.registry
         )
         
         self.pattern_detection_rate = Gauge(
-            'ainflue_prometheus_pattern_detection_rate',
+            'iacherie_prometheus_pattern_detection_rate',
             'Rate of query pattern detection',
             labelnames=['pattern_type', 'detection_method'],
             registry=self.registry
         )
         
         self.optimization_adoption_rate = Gauge(
-            'ainflue_prometheus_optimization_adoption_rate',
+            'iacherie_prometheus_optimization_adoption_rate',
             'Rate of optimization suggestion adoption',
             labelnames=['optimization_type', 'user_segment'],
             registry=self.registry
@@ -180,21 +180,21 @@ class PrometheusQueryOptimizer:
         
         # Métriques de performance système
         self.prometheus_resource_usage = Gauge(
-            'ainflue_prometheus_resource_usage_percent',
+            'iacherie_prometheus_resource_usage_percent',
             'Prometheus resource usage percentage',
             labelnames=['resource_type', 'component'],
             registry=self.registry
         )
         
         self.query_queue_depth = Gauge(
-            'ainflue_prometheus_query_queue_depth',
+            'iacherie_prometheus_query_queue_depth',
             'Number of queries in execution queue',
             labelnames=['priority_level'],
             registry=self.registry
         )
         
         self.query_rate_limit_hits = Counter(
-            'ainflue_prometheus_query_rate_limit_hits_total',
+            'iacherie_prometheus_query_rate_limit_hits_total',
             'Number of query rate limit hits',
             labelnames=['limit_type', 'user_type'],
             registry=self.registry
@@ -259,11 +259,11 @@ class PrometheusQueryOptimizer:
         """Charge les limites de cardinalité"""
         return {
             'metric_limits': {
-                'ainflue_creator_': 100000,
-                'ainflue_business_': 50000,
-                'ainflue_ai_': 30000,
-                'ainflue_security_': 20000,
-                'ainflue_system_': 150000
+                'iacherie_creator_': 100000,
+                'iacherie_business_': 50000,
+                'iacherie_ai_': 30000,
+                'iacherie_security_': 20000,
+                'iacherie_system_': 150000
             },
             'label_limits': {
                 'creator_id': 10000,
@@ -483,13 +483,13 @@ class PrometheusQueryOptimizer:
         import random
         
         # Cardinalité basée sur le préfixe de métrique
-        if metric_name.startswith('ainflue_creator_'):
+        if metric_name.startswith('iacherie_creator_'):
             return random.randint(5000, 50000)
-        elif metric_name.startswith('ainflue_business_'):
+        elif metric_name.startswith('iacherie_business_'):
             return random.randint(1000, 20000)
-        elif metric_name.startswith('ainflue_ai_'):
+        elif metric_name.startswith('iacherie_ai_'):
             return random.randint(500, 10000)
-        elif metric_name.startswith('ainflue_security_'):
+        elif metric_name.startswith('iacherie_security_'):
             return random.randint(100, 5000)
         else:
             return random.randint(100, 1000)
@@ -715,11 +715,11 @@ class PrometheusQueryOptimizer:
         import random
         
         metrics = [
-            'ainflue_creator_upload_success_rate',
-            'ainflue_business_revenue_per_creator',
-            'ainflue_ai_model_accuracy',
-            'ainflue_security_incidents_total',
-            'ainflue_collaboration_health_score'
+            'iacherie_creator_upload_success_rate',
+            'iacherie_business_revenue_per_creator',
+            'iacherie_ai_model_accuracy',
+            'iacherie_security_incidents_total',
+            'iacherie_collaboration_health_score'
         ]
         
         cardinalities = {}
@@ -944,11 +944,11 @@ class PrometheusQueryOptimizer:
         
         queries = []
         sample_queries = [
-            'sum(rate(ainflue_creator_upload_success_rate[5m])) by (creator_tier)',
-            'histogram_quantile(0.95, rate(ainflue_ai_model_inference_latency_seconds_bucket[5m]))',
-            'avg(ainflue_business_revenue_per_creator) by (creator_tier)',
-            'sum(rate(ainflue_security_incidents_total[1h])) by (incident_type)',
-            'rate(ainflue_collaboration_health_score[10m])'
+            'sum(rate(iacherie_creator_upload_success_rate[5m])) by (creator_tier)',
+            'histogram_quantile(0.95, rate(iacherie_ai_model_inference_latency_seconds_bucket[5m]))',
+            'avg(iacherie_business_revenue_per_creator) by (creator_tier)',
+            'sum(rate(iacherie_security_incidents_total[1h])) by (incident_type)',
+            'rate(iacherie_collaboration_health_score[10m])'
         ]
         
         for _ in range(random.randint(5, 15)):

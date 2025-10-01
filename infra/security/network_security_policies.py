@@ -757,7 +757,7 @@ class NetworkSecurityPolicyManager:
         return True
 
 # Enterprise security policy orchestrator
-class AinflueSecurityPolicyOrchestrator:
+class iacherieSecurityPolicyOrchestrator:
     """High-level security policy orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
@@ -783,7 +783,7 @@ class AinflueSecurityPolicyOrchestrator:
                 tags={
                     'Environment': self.environment,
                     'Project': 'IA Chérie',
-                    'ManagedBy': 'AinflueSecurityOrchestrator'
+                    'ManagedBy': 'iacherieSecurityOrchestrator'
                 }
             ),
             'gcp': SecurityPolicyConfig(
@@ -805,7 +805,7 @@ class AinflueSecurityPolicyOrchestrator:
                 tags={
                     'Environment': self.environment,
                     'Project': 'IA Chérie',
-                    'ManagedBy': 'AinflueSecurityOrchestrator'
+                    'ManagedBy': 'iacherieSecurityOrchestrator'
                 }
             )
         }
@@ -858,7 +858,7 @@ class AinflueSecurityPolicyOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueSecurityPolicyOrchestrator(environment="production")
+        orchestrator = iacherieSecurityPolicyOrchestrator(environment="production")
         
         # Deploy security policies to all clouds
         results = await orchestrator.deploy_security_policies(['aws', 'gcp'])

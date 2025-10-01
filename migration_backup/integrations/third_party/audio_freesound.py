@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-🎵 AINFLUENCER FREESOUND ENGINE
+🎵 IA CHÉRIES FREESOUND ENGINE
 ================================
 
 Module d'intégration avec l'API Freesound pour :
@@ -25,9 +25,9 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerFreesoundAPI:
+class IaCheriesFreesoundAPI:
     """
-    🎵 Moteur Freesound pour Ainfluencer
+    🎵 Moteur Freesound pour IA Chéries
     
     Fonctionnalités:
     - Recherche intelligente de sons
@@ -56,7 +56,7 @@ class AinfluencerFreesoundAPI:
         self.headers = {
             'Authorization': f'Token {self.api_key}',
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainfluencer-Platform/2.0'
+            'User-Agent': 'IA Chéries-Platform/2.0'
         }
         
         # Cache et stockage
@@ -628,12 +628,12 @@ async def test_freesound_engine():
     """
     Test complet du moteur Freesound
     """
-    print("🎵 Test Ainfluencer Freesound Engine")
+    print("🎵 Test IA Chéries Freesound Engine")
     print("=" * 50)
     
     try:
         # Initialisation
-        engine = AinfluencerFreesoundAPI()
+        engine = IaCheriesFreesoundAPI()
         
         # Test 1: Recherche de base
         print("📝 Test 1: Recherche de sons...")

@@ -290,7 +290,7 @@ class BackupManager:
             job.backup_manifest = manifest
             
             # Préparation des fichiers
-            temp_dir = Path(tempfile.mkdtemp(prefix=f"ainflue_backup_{job.id}_"))
+            temp_dir = Path(tempfile.mkdtemp(prefix=f"iacherie_backup_{job.id}_"))
             
             try:
                 # Compression et chiffrement
@@ -535,7 +535,7 @@ class BackupManager:
         """Chiffre un fichier"""
         
         # Génération d'une clé de chiffrement
-        password = b"ainflue_backup_key_2025"  # En production: clé sécurisée
+        password = b"iacherie_backup_key_2025"  # En production: clé sécurisée
         salt = os.urandom(16)
         
         kdf = PBKDF2HMAC(
@@ -968,7 +968,7 @@ class BackupManager:
         encrypted_content = encrypted_data[16:]
         
         # Régénération de la clé
-        password = b"ainflue_backup_key_2025"  # En production: clé sécurisée
+        password = b"iacherie_backup_key_2025"  # En production: clé sécurisée
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

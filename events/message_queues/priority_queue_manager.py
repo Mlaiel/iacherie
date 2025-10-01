@@ -109,7 +109,7 @@ class QueueMetrics:
     last_updated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Priority Rules"""
     
     # Priority rules by event type
@@ -380,7 +380,7 @@ class PriorityQueueManager:
         
         for priority in MessagePriority:
             if self.priority_queues[priority]:
-                weight = AinflueBusiness.PRIORITY_WEIGHTS[priority]
+                weight = iacherieBusiness.PRIORITY_WEIGHTS[priority]
                 current_weight = self.weight_counters[priority] + weight
                 
                 if current_weight > best_weight:
@@ -395,7 +395,7 @@ class PriorityQueueManager:
             self.weight_counters[best_priority] = 0
             for priority in MessagePriority:
                 if priority != best_priority and self.priority_queues[priority]:
-                    self.weight_counters[priority] += AinflueBusiness.PRIORITY_WEIGHTS[priority]
+                    self.weight_counters[priority] += iacherieBusiness.PRIORITY_WEIGHTS[priority]
             
             return message
         
@@ -455,7 +455,7 @@ class PriorityQueueManager:
         business_context = message.business_context
         
         # Get base priority from business rules
-        base_priority = AinflueBusiness.PRIORITY_RULES.get(event_type, MessagePriority.NORMAL)
+        base_priority = iacherieBusiness.PRIORITY_RULES.get(event_type, MessagePriority.NORMAL)
         
         # Apply business context adjustments
         priority_value = base_priority.value
@@ -485,7 +485,7 @@ class PriorityQueueManager:
         event_type = message.payload.get("event_type", "")
         
         # Set SLA level based on priority
-        message.sla_level = AinflueBusiness.SLA_REQUIREMENTS.get(
+        message.sla_level = iacherieBusiness.SLA_REQUIREMENTS.get(
             message.priority, SLALevel.BRONZE
         )
         
@@ -506,7 +506,7 @@ class PriorityQueueManager:
         self.last_aging_check = current_time
         
         for priority in [MessagePriority.HIGH, MessagePriority.NORMAL, MessagePriority.LOW]:
-            threshold = AinflueBusiness.AGING_THRESHOLDS.get(priority, 3600)
+            threshold = iacherieBusiness.AGING_THRESHOLDS.get(priority, 3600)
             
             # Check messages in this priority queue
             aged_messages = []
@@ -673,7 +673,7 @@ class PriorityQueueManager:
                 wait_time = current_time - message.enqueue_time
                 total_wait += wait_time
                 
-                threshold = AinflueBusiness.AGING_THRESHOLDS.get(priority, 3600)
+                threshold = iacherieBusiness.AGING_THRESHOLDS.get(priority, 3600)
                 if wait_time > threshold:
                     aged_count += 1
             
@@ -785,18 +785,18 @@ class PriorityQueueManager:
         for priority_name, stats in aging_stats.items():
             if stats["eligible_for_aging"] > 50:
                 priority = MessagePriority[priority_name]
-                if priority in AinflueBusiness.AGING_THRESHOLDS:
+                if priority in iacherieBusiness.AGING_THRESHOLDS:
                     # Reduce threshold by 20%
-                    current_threshold = AinflueBusiness.AGING_THRESHOLDS[priority]
+                    current_threshold = iacherieBusiness.AGING_THRESHOLDS[priority]
                     new_threshold = int(current_threshold * 0.8)
-                    AinflueBusiness.AGING_THRESHOLDS[priority] = new_threshold
+                    iacherieBusiness.AGING_THRESHOLDS[priority] = new_threshold
                     optimizations.append(f"Reduced aging threshold for {priority_name} to {new_threshold}s")
         
         # Auto-adjust priority weights
         depths = await self._get_queue_depths()
         if depths["LOW"] > 1000 and self.algorithm == SchedulingAlgorithm.WEIGHTED_FAIR:
             # Increase low priority weight
-            AinflueBusiness.PRIORITY_WEIGHTS[MessagePriority.LOW] = 2
+            iacherieBusiness.PRIORITY_WEIGHTS[MessagePriority.LOW] = 2
             optimizations.append("Increased LOW priority weight to reduce backlog")
         
         return optimizations
@@ -810,5 +810,5 @@ __all__ = [
     "MessagePriority",
     "SchedulingAlgorithm",
     "SLALevel",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

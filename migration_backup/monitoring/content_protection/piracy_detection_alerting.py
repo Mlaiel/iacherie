@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Piracy Detection Alerting System
+IA Chéries Platform - Piracy Detection Alerting System
 ===================================================
 
 Advanced AI-powered piracy detection and automated alerting system for
@@ -704,9 +704,9 @@ class PiracyDetectionAlertingSystem:
         
         return template.format(
             content_title=incident.content_metadata.get('title', 'Protected Content'),
-            copyright_owner='Ainflue Platform / Content Owner',
+            copyright_owner='IA Chéries Platform / Content Owner',
             infringing_url=incident.pirated_content_url,
-            sender_name='Ainflue Anti-Piracy Team',
+            sender_name='IA Chéries Anti-Piracy Team',
             contact_information='legal@ainflue.com'
         )
     

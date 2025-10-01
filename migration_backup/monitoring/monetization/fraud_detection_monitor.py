@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Fraud Detection Monitor
+IA Chéries Platform - Fraud Detection Monitor
 =========================================
 
-Advanced AI-powered fraud detection and prevention system for the Ainflue platform.
+Advanced AI-powered fraud detection and prevention system for the IA Chéries platform.
 Implements real-time transaction monitoring, behavioral analysis, risk scoring,
 and automated fraud prevention with machine learning algorithms.
 
@@ -123,7 +123,7 @@ class TransactionContext:
 
 class FraudDetectionMonitor:
     """
-    Advanced fraud detection monitor for the Ainflue platform.
+    Advanced fraud detection monitor for the IA Chéries platform.
     
     Uses machine learning algorithms and behavioral analysis to detect
     and prevent fraudulent transactions in real-time.

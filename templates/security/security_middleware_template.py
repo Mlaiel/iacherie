@@ -1,4 +1,4 @@
-"""{{service_name}} Security Middleware for Ainflue Platform
+"""{{service_name}} Security Middleware for iacherie Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -240,7 +240,7 @@ class SecurityValidator:
 
 class {{service_class_name}}(BaseHTTPMiddleware):
     """
-    Advanced security middleware for Ainflue platform.
+    Advanced security middleware for iacherie platform.
     
     Features:
     - Request rate limiting and DDoS protection

@@ -1,5 +1,5 @@
 """
-⚡ PERFORMANCE CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+⚡ PERFORMANCE CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced performance optimization with automatic tuning and resource management
 Performance Target: < 1ms performance configuration
@@ -110,7 +110,7 @@ class PerformanceConfig:
         """Load performance configuration from environment variables"""
         
         # Profile selection
-        profile_name = os.getenv('AINFLUE_PERFORMANCE_PROFILE', 'production')
+        profile_name = os.getenv('IA CHÉRIES_PERFORMANCE_PROFILE', 'production')
         try:
             self.current_profile = PerformanceProfile(profile_name)
         except ValueError:

@@ -1,4 +1,4 @@
-# Ainflue Production Alert Rules
+# IA Chéries Production Alert Rules
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready alerting rules for monitoring
 
@@ -12,7 +12,7 @@ groups:
           severity: critical
           team: platform
         annotations:
-          summary: "Ainflue service {{ $labels.job }} is down"
+          summary: "IA Chéries service {{ $labels.job }} is down"
           description: "Service {{ $labels.job }} has been down for more than 1 minute."
           runbook_url: "https://docs.ainflue.com/runbooks/service-down"
 
@@ -23,7 +23,7 @@ groups:
           severity: critical
           team: platform
         annotations:
-          summary: "High error rate on Ainflue API"
+          summary: "High error rate on IA Chéries API"
           description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes."
           runbook_url: "https://docs.ainflue.com/runbooks/high-error-rate"
 

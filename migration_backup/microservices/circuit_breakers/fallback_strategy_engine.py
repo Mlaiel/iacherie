@@ -1,5 +1,5 @@
 """
-Fallback Strategy Engine - Ainflue Platform
+Fallback Strategy Engine - IA Chéries Platform
 ===========================================
 
 Moteur stratégies fallback enterprise.

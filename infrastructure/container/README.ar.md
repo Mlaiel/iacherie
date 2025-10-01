@@ -1,4 +1,4 @@
-# 🐳 البنية التحتية للحاويات - منصة Ainflue
+# 🐳 البنية التحتية للحاويات - منصة iacherie
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + أمن + Microservices + صوت + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 غرض الوحدة
 
-تنسيق وإدارة الحاويات على مستوى المؤسسات لمنصة Ainflue للمبدعين. توفر بنية تحتية شاملة لـ Docker وKubernetes مع شبكات متقدمة وتكامل service mesh وقدرات التوسع التلقائي.
+تنسيق وإدارة الحاويات على مستوى المؤسسات لمنصة iacherie للمبدعين. توفر بنية تحتية شاملة لـ Docker وKubernetes مع شبكات متقدمة وتكامل service mesh وقدرات التوسع التلقائي.
 
 ## 🏗️ البنية التحتية
 
@@ -34,23 +34,23 @@ from infrastructure.container import KubernetesManager, DockerBuilder, HelmManag
 
 # تهيئة مدير Kubernetes
 k8s_manager = KubernetesManager(
-    cluster_config='ainflue-prod-cluster',
-    namespace='ainflue-platform'
+    cluster_config='iacherie-prod-cluster',
+    namespace='iacherie-platform'
 )
 
 # بناء ونشر التطبيق المحتوى
 docker_builder = DockerBuilder()
 image = docker_builder.build_image(
     dockerfile_path='./deployments/Dockerfile',
-    image_tag='ainflue/creator-api:v1.2.0',
+    image_tag='iacherie/creator-api:v1.2.0',
     build_args={'ENV': 'production'}
 )
 
 # النشر مع Helm
 helm_manager = HelmManager()
 deployment = helm_manager.deploy_chart(
-    chart_name='ainflue-platform',
-    release_name='ainflue-prod',
+    chart_name='iacherie-platform',
+    release_name='iacherie-prod',
     values={
         'image': image,
         'replicas': 5,

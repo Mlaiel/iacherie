@@ -225,7 +225,7 @@ class EncryptionManager:
     def _get_or_generate_salt(self) -> bytes:
         """Get or generate salt for key derivation"""
         # In production, store salt securely
-        return b'ainflue_security_salt_2025'
+        return b'iacherie_security_salt_2025'
     
     def encrypt_data(self, data: Union[str, bytes]) -> str:
         """Encrypt data using Fernet"""

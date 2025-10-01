@@ -195,7 +195,7 @@ class EnterpriseSecurityOrchestrator:
                 'enabled': True,
                 'endpoint': 'https://splunk.iacherie.com:8089',
                 'auth_token': 'splunk_auth_token',
-                'index': 'ainflue_security',
+                'index': 'iacherie_security',
                 'event_types': list(SecurityEventType)
             },
             'elk_stack': {
@@ -209,7 +209,7 @@ class EnterpriseSecurityOrchestrator:
                 'enabled': True,
                 'workspace_id': 'azure_workspace_id',
                 'auth_key': 'azure_auth_key',
-                'log_type': 'AinflueSecurity'
+                'log_type': 'iacherieSecurity'
             },
             'aws_security_hub': {
                 'enabled': True,
@@ -699,7 +699,7 @@ class EnterpriseSecurityOrchestrator:
                 
             try:
                 siem_event = {
-                    'source': 'ainflue_security_orchestrator',
+                    'source': 'iacherie_security_orchestrator',
                     'event_id': event.event_id,
                     'event_type': event.event_type.value,
                     'threat_level': event.threat_level.value,

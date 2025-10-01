@@ -1,4 +1,4 @@
-"""Secret Management Template for Ainflue Platform
+"""Secret Management Template for iacherie Platform
 Enterprise-grade secret management and encryption templates using HashiCorp Vault and AWS Secrets Manager.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -51,8 +51,8 @@ class SecretManagementConfig:
     backend: SecretBackend
     
     # Vault configuration
-    vault_address: str = "https://vault.ainflue.com"
-    vault_namespace: str = "ainflue"
+    vault_address: str = "https://vault.iacherie.com"
+    vault_namespace: str = "iacherie"
     
     # AWS configuration
     aws_region: str = "us-west-2"
@@ -63,7 +63,7 @@ class SecretManagementConfig:
     rotation_enabled: bool = True
     rotation_interval_days: int = 90
     
-    # Ainflue specific secrets
+    # iacherie specific secrets
     secrets_to_manage: List[SecretType] = None
     
     def __post_init__(self):
@@ -79,7 +79,7 @@ class SecretManagementConfig:
 
 
 class SecretManagementTemplate:
-    """Enterprise Secret Management Template for Ainflue Platform"""
+    """Enterprise Secret Management Template for iacherie Platform"""
     
     def __init__(self, config: SecretManagementConfig):
         self.config = config
@@ -138,9 +138,9 @@ path "*" {
 }
 '''
         
-        # Application policy for Ainflue services
-        policies["ainflue-app"] = f'''
-# Application policy for Ainflue platform services
+        # Application policy for iacherie services
+        policies["iacherie-app"] = f'''
+# Application policy for iacherie platform services
 path "secret/data/{self.config.environment}/*" {{
   capabilities = ["read"]
 }}
@@ -185,7 +185,7 @@ path "secret/data/{self.config.environment}/monitoring/*" {{
         return policies
     
     def generate_secret_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Generate secret definitions for Ainflue platform"""
+        """Generate secret definitions for iacherie platform"""
         secrets = {}
         
         if SecretType.DATABASE_CREDENTIALS in self.config.secrets_to_manage:
@@ -194,7 +194,7 @@ path "secret/data/{self.config.environment}/monitoring/*" {{
                 "data": {
                     "postgres_host": "{{ postgres_host }}",
                     "postgres_port": "5432",
-                    "postgres_database": "ainflue",
+                    "postgres_database": "iacherie",
                     "postgres_username": "{{ postgres_username }}",
                     "postgres_password": "{{ postgres_password }}",
                     "redis_host": "{{ redis_host }}",
@@ -381,7 +381,7 @@ path "secret/data/{self.config.environment}/monitoring/*" {{
     def generate_vault_init_script(self) -> str:
         """Generate Vault initialization script"""
         return f'''#!/bin/bash
-# Vault Initialization Script for Ainflue Platform
+# Vault Initialization Script for iacherie Platform
 # Environment: {self.config.environment}
 
 set -e
@@ -389,7 +389,7 @@ set -e
 VAULT_ADDR="{self.config.vault_address}"
 VAULT_NAMESPACE="{self.config.vault_namespace}"
 
-echo "Initializing Vault for Ainflue Platform..."
+echo "Initializing Vault for iacherie Platform..."
 
 # Initialize Vault if not already initialized
 if ! vault status >/dev/null 2>&1; then
@@ -434,7 +434,7 @@ vault write pki/config/urls \\
 vault write pki/config/ca pem_bundle=@ca-bundle.pem || true
 
 vault write pki/roles/{self.config.environment} \\
-    allowed_domains="ainflue.com,{self.config.environment}.ainflue.com" \\
+    allowed_domains="iacherie.com,{self.config.environment}.iacherie.com" \\
     allow_subdomains=true \\
     max_ttl=8760h \\
     ttl=720h
@@ -450,14 +450,14 @@ vault write auth/kubernetes/config \\
 vault write auth/kubernetes/role/{self.config.environment}-app \\
     bound_service_account_names="{self.config.project_name}-vault-auth" \\
     bound_service_account_namespaces="{self.config.project_name}-{self.config.environment}" \\
-    policies="ainflue-app" \\
+    policies="iacherie-app" \\
     ttl=24h
 
 # Configure database secrets engine
 echo "Configuring database secrets..."
 vault write database/config/postgres \\
     plugin_name=postgresql-database-plugin \\
-    connection_url="postgresql://vault:{{{{password}}}}@postgres:5432/ainflue?sslmode=require" \\
+    connection_url="postgresql://vault:{{{{password}}}}@postgres:5432/iacherie?sslmode=require" \\
     allowed_roles="{self.config.environment}-readonly,{self.config.environment}-readwrite" \\
     username="vault" \\
     password="$POSTGRES_VAULT_PASSWORD"
@@ -484,7 +484,7 @@ echo "Vault initialization complete!"
     def generate_secret_rotation_script(self) -> str:
         """Generate secret rotation script"""
         return f'''#!/bin/bash
-# Secret Rotation Script for Ainflue Platform
+# Secret Rotation Script for iacherie Platform
 # Environment: {self.config.environment}
 
 set -e
@@ -540,8 +540,8 @@ rotate_certificates() {{
     
     # Generate new certificate from PKI
     vault write -format=json pki/issue/{self.config.environment} \\
-        common_name="{self.config.environment}.ainflue.com" \\
-        alt_names="api.{self.config.environment}.ainflue.com,app.{self.config.environment}.ainflue.com" \\
+        common_name="{self.config.environment}.iacherie.com" \\
+        alt_names="api.{self.config.environment}.iacherie.com,app.{self.config.environment}.iacherie.com" \\
         ttl=720h > new_cert.json
     
     # Extract certificate data
@@ -666,10 +666,10 @@ fi
 def create_production_secret_config() -> SecretManagementConfig:
     """Create production secret management configuration"""
     return SecretManagementConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment="production",
         backend=SecretBackend.VAULT,
-        vault_address="https://vault.ainflue.com",
+        vault_address="https://vault.iacherie.com",
         enable_encryption_at_rest=True,
         enable_encryption_in_transit=True,
         rotation_enabled=True,
@@ -681,7 +681,7 @@ if __name__ == "__main__":
     config = create_production_secret_config()
     template = SecretManagementTemplate(config)
     
-    print("Secret Management Template for Ainflue Platform")
+    print("Secret Management Template for iacherie Platform")
     print("Configuration:")
     print(f"- Backend: {config.backend.value}")
     print(f"- Environment: {config.environment}")

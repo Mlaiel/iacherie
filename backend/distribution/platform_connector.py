@@ -183,7 +183,7 @@ class BasePlatformConnector:
         try:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
-                headers={"User-Agent": "Ainflue-Platform-Connector/1.0"}
+                headers={"User-Agent": "iacherie-Platform-Connector/1.0"}
             )
             
             # Validate credentials

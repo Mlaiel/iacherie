@@ -101,7 +101,7 @@ class RabbitMQMessage:
         }
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business RabbitMQ Topology"""
     
     # Main exchanges by business domain
@@ -310,12 +310,12 @@ class RabbitMQConnectorOrchestrator:
                 await self.connect()
             
             # Declare exchanges
-            for domain, exchange in AinflueBusiness.EXCHANGES.items():
+            for domain, exchange in iacherieBusiness.EXCHANGES.items():
                 await self._declare_exchange(exchange)
                 logger.info(f"Declared exchange: {exchange.name}")
             
             # Declare queues
-            for queue_name, queue in AinflueBusiness.QUEUES.items():
+            for queue_name, queue in iacherieBusiness.QUEUES.items():
                 await self._declare_queue(queue)
                 logger.info(f"Declared queue: {queue.name}")
             
@@ -682,5 +682,5 @@ __all__ = [
     "RabbitMQBinding",
     "ExchangeType",
     "MessageDeliveryMode",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

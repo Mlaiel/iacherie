@@ -1,7 +1,7 @@
 """
 Collaboration Business Core - Enterprise Collaboration Business Logic Core
 
-Advanced collaboration business logic core for the Ainflue platform.
+Advanced collaboration business logic core for the IA Chéries platform.
 Provides comprehensive creator collaboration, partnership management, and revenue sharing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -128,7 +128,7 @@ class CollaborationBusinessCore:
     Enterprise Collaboration Business Logic Core
     
     Provides comprehensive collaboration management, partnership orchestration,
-    and revenue sharing capabilities for the Ainflue platform.
+    and revenue sharing capabilities for the IA Chéries platform.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

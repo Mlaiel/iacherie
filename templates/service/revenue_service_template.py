@@ -1,4 +1,4 @@
-"""{{service_name}} Revenue Service for Ainflue Platform
+"""{{service_name}} Revenue Service for iacherie Platform
 {{service_description}}
 
 Enterprise-grade revenue management and monetization service with comprehensive
@@ -163,7 +163,7 @@ class RevenueAnalyticsResponse(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Enterprise Revenue Service for Ainflue Platform
+    Enterprise Revenue Service for iacherie Platform
     
     Handles comprehensive revenue management including:
     - Payment processing and transactions
@@ -414,7 +414,7 @@ class {{service_class_name}}(BaseService):
                         "total": str(request.amount),
                         "currency": request.currency
                     },
-                    "description": request.description or "Ainflue Platform Payment"
+                    "description": request.description or "iacherie Platform Payment"
                 }],
                 "redirect_urls": {
                     "return_url": f"{settings.BASE_URL}/payment/success",
@@ -909,7 +909,7 @@ class {{service_class_name}}(BaseService):
                 amount=int(request.amount * 100),  # Convert to cents
                 currency=request.currency.lower(),
                 destination=request.bank_account_id,
-                description=request.description or "Ainflue Creator Payout"
+                description=request.description or "iacherie Creator Payout"
             )
             
             return {
@@ -934,7 +934,7 @@ class {{service_class_name}}(BaseService):
             payout = paypalrestsdk.Payout({
                 "sender_batch_header": {
                     "sender_batch_id": str(uuid.uuid4()),
-                    "email_subject": "Ainflue Creator Payout"
+                    "email_subject": "iacherie Creator Payout"
                 },
                 "items": [{
                     "recipient_type": "EMAIL",
@@ -943,7 +943,7 @@ class {{service_class_name}}(BaseService):
                         "currency": request.currency
                     },
                     "receiver": request.bank_account_id,  # Email in this case
-                    "note": request.description or "Ainflue Creator Payout",
+                    "note": request.description or "iacherie Creator Payout",
                     "sender_item_id": str(uuid.uuid4())
                 }]
             })

@@ -4,7 +4,7 @@
 
 FROM postgres:15 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Database Cluster Manager - Enterprise database administration"
+LABEL description="IA Chéries Database Cluster Manager - Enterprise database administration"
 LABEL version="1.0.0"
 
 # Install additional database tools

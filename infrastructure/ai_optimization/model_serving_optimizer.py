@@ -2,11 +2,11 @@
 Model Serving Optimizer - Enterprise ML Model Serving Infrastructure
 ===================================================================
 
-Advanced model serving optimization for Ainflue's 53 AI agents ecosystem.
+Advanced model serving optimization for iacherie's 53 AI agents ecosystem.
 Provides high-performance, scalable model serving with intelligent optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """Types of ML models in Ainflue ecosystem."""
+    """Types of ML models in iacherie ecosystem."""
     CONTENT_ANALYSIS = "content_analysis"
     CREATIVE_ENHANCEMENT = "creative_enhancement"
     PROTECTION_DETECTION = "protection_detection"
@@ -96,7 +96,7 @@ class ServingOptimizationResult:
 
 class ModelServingOptimizer:
     """
-    Enterprise-grade model serving optimizer for Ainflue's AI infrastructure.
+    Enterprise-grade model serving optimizer for iacherie's AI infrastructure.
     Manages 53 AI agents with intelligent optimization and scaling.
     """
     
@@ -111,12 +111,12 @@ class ModelServingOptimizer:
         # Thread pool for concurrent operations
         self.executor = ThreadPoolExecutor(max_workers=20)
         
-        # Initialize default model endpoints for Ainflue
-        self._initialize_ainflue_model_endpoints()
+        # Initialize default model endpoints for iacherie
+        self._initialize_iacherie_model_endpoints()
         
-        logger.info("Model Serving Optimizer initialized for Ainflue creator platform")
+        logger.info("Model Serving Optimizer initialized for iacherie creator platform")
     
-    def _initialize_ainflue_model_endpoints(self):
+    def _initialize_iacherie_model_endpoints(self):
         """Initialize default model endpoints for creator economy workflow."""
         
         # Content Analysis Models (12 agents)
@@ -126,7 +126,7 @@ class ModelServingOptimizer:
                 name=f"Content Analysis Agent {i+1}",
                 model_type=ModelType.CONTENT_ANALYSIS,
                 version="v2.1.0",
-                url=f"https://api.ainflue.com/models/content-analysis/{i:02d}",
+                url=f"https://api.iacherie.com/models/content-analysis/{i:02d}",
                 serving_strategy=ServingStrategy.REAL_TIME,
                 optimization_level=OptimizationLevel.LATENCY,
                 hardware_requirements={
@@ -156,7 +156,7 @@ class ModelServingOptimizer:
                 name=f"Creative Enhancement Agent {i+1}",
                 model_type=ModelType.CREATIVE_ENHANCEMENT,
                 version="v3.0.0",
-                url=f"https://api.ainflue.com/models/creative/{i:02d}",
+                url=f"https://api.iacherie.com/models/creative/{i:02d}",
                 serving_strategy=ServingStrategy.HYBRID,
                 optimization_level=OptimizationLevel.PERFORMANCE,
                 hardware_requirements={
@@ -186,7 +186,7 @@ class ModelServingOptimizer:
                 name=f"Protection Security Agent {i+1}",
                 model_type=ModelType.PROTECTION_DETECTION,
                 version="v1.8.0",
-                url=f"https://api.ainflue.com/models/protection/{i:02d}",
+                url=f"https://api.iacherie.com/models/protection/{i:02d}",
                 serving_strategy=ServingStrategy.REAL_TIME,
                 optimization_level=OptimizationLevel.LATENCY,
                 hardware_requirements={
@@ -211,7 +211,7 @@ class ModelServingOptimizer:
                 name=f"Monetization Optimization Agent {i+1}",
                 model_type=ModelType.MONETIZATION_PREDICTION,
                 version="v2.5.0",
-                url=f"https://api.ainflue.com/models/monetization/{i:02d}",
+                url=f"https://api.iacherie.com/models/monetization/{i:02d}",
                 serving_strategy=ServingStrategy.BATCH,
                 optimization_level=OptimizationLevel.THROUGHPUT,
                 hardware_requirements={
@@ -236,7 +236,7 @@ class ModelServingOptimizer:
                 name=f"Collaboration Matching Agent {i+1}",
                 model_type=ModelType.COLLABORATION_MATCHING,
                 version="v1.9.0",
-                url=f"https://api.ainflue.com/models/collaboration/{i:02d}",
+                url=f"https://api.iacherie.com/models/collaboration/{i:02d}",
                 serving_strategy=ServingStrategy.REAL_TIME,
                 optimization_level=OptimizationLevel.STANDARD,
                 hardware_requirements={
@@ -255,7 +255,7 @@ class ModelServingOptimizer:
                 name=f"SEO Optimization Agent {i+1}",
                 model_type=ModelType.SEO_OPTIMIZATION,
                 version="v2.2.0",
-                url=f"https://api.ainflue.com/models/seo/{i:02d}",
+                url=f"https://api.iacherie.com/models/seo/{i:02d}",
                 serving_strategy=ServingStrategy.BATCH,
                 optimization_level=OptimizationLevel.THROUGHPUT,
                 hardware_requirements={
@@ -274,7 +274,7 @@ class ModelServingOptimizer:
                 name=f"Distribution Optimization Agent {i+1}",
                 model_type=ModelType.DISTRIBUTION_OPTIMIZATION,
                 version="v1.7.0",
-                url=f"https://api.ainflue.com/models/distribution/{i:02d}",
+                url=f"https://api.iacherie.com/models/distribution/{i:02d}",
                 serving_strategy=ServingStrategy.STREAMING,
                 optimization_level=OptimizationLevel.PERFORMANCE,
                 hardware_requirements={
@@ -604,7 +604,7 @@ class LoadBalancer:
     
     async def distribute_request(self, request: Dict[str, Any], endpoints: List[ModelEndpoint]) -> str:
         """Distribute request to optimal endpoint."""
-        # Performance-based routing (default for Ainflue)
+        # Performance-based routing (default for iacherie)
         if self.current_strategy == "performance_based":
             best_endpoint = min(endpoints, 
                               key=lambda e: e.performance_metrics.get("avg_latency_ms", float('inf')))

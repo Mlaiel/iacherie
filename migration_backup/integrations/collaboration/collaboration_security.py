@@ -1,11 +1,11 @@
 """
-Collaboration Security Manager - Ainflue Integrations
+Collaboration Security Manager - IA Chéries Integrations
 ===================================================
 Enterprise-grade security for creator collaborations with end-to-end encryption,
 digital rights management, and comprehensive compliance automation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chéries Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -532,7 +532,7 @@ class CollaborationSecurityManager:
                     watermark_id=watermark_id,
                     creator_id=creator_id,
                     content_type=content_type,
-                    watermark_data=f"Ainflue_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+                    watermark_data=f"IA Chéries_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
                 )
                 self.watermark_configs[watermark_id] = watermark_config
             
@@ -769,7 +769,7 @@ class CollaborationSecurityManager:
             "watermark_id": config.watermark_id,
             "creator_id": config.creator_id,
             "timestamp": datetime.utcnow().isoformat(),
-            "platform": "Ainflue"
+            "platform": "IA Chéries"
         }
         
         # For text content, append watermark as metadata

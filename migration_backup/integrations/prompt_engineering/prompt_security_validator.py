@@ -14,7 +14,7 @@ Expert Roles Applied:
 - DevOps: Security monitoring et incident response automation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chéries Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 

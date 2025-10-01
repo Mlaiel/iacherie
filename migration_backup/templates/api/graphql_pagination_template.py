@@ -1,4 +1,4 @@
-"""GraphQL Pagination Template for Ainflue Platform
+"""GraphQL Pagination Template for IA Chéries Platform
 Enterprise-grade GraphQL pagination with Relay cursor-based pagination
 
 ⚠️  AVERTISSEMENT LÉGAL:

@@ -5,7 +5,7 @@ Platform-specific optimization with 8 specialized platform agents.
 Algorithmic content adaptation for 65+ platforms with engagement prediction.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

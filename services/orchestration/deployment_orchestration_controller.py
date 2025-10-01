@@ -528,7 +528,7 @@ class DeploymentOrchestrationController:
                     tags={
                         **resource_config.get("tags", {}),
                         "environment": environment.value,
-                        "managed_by": "ainflue_orchestrator"
+                        "managed_by": "iacherie_orchestrator"
                     }
                 )
                 

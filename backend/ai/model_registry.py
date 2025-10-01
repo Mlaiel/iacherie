@@ -758,7 +758,7 @@ async def main():
                 framework=ModelFramework.SKLEARN,
                 model_type=ModelType.CONTENT_CLASSIFICATION,
                 description="Random Forest content classifier for creator content",
-                created_by="lead_dev_ia@ainflue.com",
+                created_by="lead_dev_ia@iacherie.com",
                 tags=["production", "content", "classification"],
                 config={"n_estimators": 100, "random_state": 42}
             )
@@ -808,7 +808,7 @@ async def main():
                 framework=ModelFramework.CUSTOM,
                 model_type=ModelType.CONTENT_CLASSIFICATION,
                 description="Mock classifier for demo",
-                created_by="ml_engineer@ainflue.com"
+                created_by="ml_engineer@iacherie.com"
             )
             
             print(f"✅ Mock model registered: {version_id}")

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Event Processor Template for Ainflue Microservices Platform
+Event Processor Template for iacherie Microservices Platform
 =========================================================
 
 Enterprise-grade event-driven processor template providing:

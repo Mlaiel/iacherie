@@ -14,7 +14,7 @@ export const SECURITY_CONFIG = {
   
   // Session settings
   session: {
-    name: 'ainflue-session',
+    name: 'iacherie-session',
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'strict' as const,

@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE ENFORCEMENT ENGINE - AUTOMATION DOCKERFILE
+# IA CHÉRIES ENFORCEMENT ENGINE - AUTOMATION DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS enforcement-base
@@ -48,7 +48,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${ENFORCEMENT_SERVICE_PORT}
 CMD ["python3.11", "-m", "enforcement_engine.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Enforcement Engine"
+LABEL org.opencontainers.image.title="IA Chéries Enforcement Engine"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="enforcement_engine"
 LABEL ainflue.service.port="8028"

@@ -127,7 +127,7 @@ class AuditConfiguration:
     
     # Storage configuration
     storage_backend: str = "file"  # file, redis, database
-    storage_path: str = "/home/runner/work/Ainflue/Ainflue/logs/audit"
+    storage_path: str = "/home/runner/work/iacherie/iacherie/logs/audit"
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     max_files: int = 100
     compression_enabled: bool = True

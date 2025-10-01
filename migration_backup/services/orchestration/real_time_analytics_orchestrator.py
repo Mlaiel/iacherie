@@ -1,5 +1,5 @@
 """
-📊 REAL-TIME ANALYTICS ORCHESTRATOR - AINFLUE ENTERPRISE
+📊 REAL-TIME ANALYTICS ORCHESTRATOR - IA CHÉRIES ENTERPRISE
 =======================================================
 
 Stream processing pipeline and real-time analytics automation for creator economy platform.

@@ -8,7 +8,7 @@ Model signing + hash verification + tampering detection + provenance tracking.
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Model Integrity
+Project: IA Chéries ML Security - Model Integrity
 Version: 1.0 Production
 =======================================================================
 """
@@ -222,7 +222,7 @@ class CryptographicSigningEngine:
         return [
             {
                 "subject": "Fahed Mlaiel ML Security",
-                "issuer": "Ainflue Root CA",
+                "issuer": "IA Chéries Root CA",
                 "serial_number": secrets.token_hex(16),
                 "valid_from": time.time(),
                 "valid_to": time.time() + (365 * 24 * 3600),  # 1 year

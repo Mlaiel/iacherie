@@ -4,7 +4,7 @@ Service Monitor - Enterprise Microservice Health Monitoring
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced service monitoring for Ainflue Platform:
+Advanced service monitoring for IA Chéries Platform:
 - Real-time microservice health monitoring
 - Service discovery and registration
 - Performance metrics collection
@@ -125,7 +125,7 @@ class ServiceMonitor:
             logger.info(f"Loaded {len(self.services)} services for monitoring")
             
         except FileNotFoundError:
-            # Create default configuration for Ainflue services
+            # Create default configuration for IA Chéries services
             default_services = [
                 {
                     "name": "api-gateway",
@@ -599,7 +599,7 @@ async def main():
     """CLI entry point for service monitor"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Service Monitor')
+    parser = argparse.ArgumentParser(description='IA Chéries Service Monitor')
     parser.add_argument('--monitor', action='store_true', help='Start monitoring')
     parser.add_argument('--duration', type=int, default=3600, help='Monitoring duration (seconds)')
     parser.add_argument('--interval', type=int, default=30, help='Check interval (seconds)')

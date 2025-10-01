@@ -1,4 +1,4 @@
-"""GraphQL Schema Template for Ainflue Platform
+"""GraphQL Schema Template for IA Chéries Platform
 Enterprise-grade GraphQL schema with advanced security and performance optimization
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -484,7 +484,7 @@ schema = graphene.Schema(
 
 # Schema metadata for introspection
 schema.description = """
-{{EntityName}} GraphQL API Schema for Ainflue Platform
+{{EntityName}} GraphQL API Schema for IA Chéries Platform
 
 This schema provides comprehensive CRUD operations for {{entity_description}}
 with enterprise-grade security, caching, rate limiting, and monitoring.

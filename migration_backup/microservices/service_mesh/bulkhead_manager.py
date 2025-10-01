@@ -1,5 +1,5 @@
 """Bulkhead Manager Service - Service isolation and resource management
-Enterprise-grade bulkhead pattern implementation for the Ainflue AI platform.
+Enterprise-grade bulkhead pattern implementation for the IA Chéries AI platform.
 
 This service implements the bulkhead pattern to provide service isolation,
 resource management, and prevent cascading failures across microservices.

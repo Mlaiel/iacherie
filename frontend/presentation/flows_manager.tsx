@@ -207,7 +207,7 @@ export const UserOnboardingFlow: FlowDefinition = {
   steps: [
     {
       id: 'welcome',
-      title: 'Welcome to Ainflue',
+      title: 'Welcome to iacherie',
       description: 'Get started with the creator economy platform',
       type: 'action',
       status: 'pending',
@@ -637,7 +637,7 @@ function CompletionStep({ step, onComplete }: FlowStepProps) {
 function WelcomeStep({ step, onNext }: FlowStepProps) {
   return (
   <div className="p-6 bg-white rounded-lg shadow-lg text-center">
-    <h3 className="text-2xl font-bold mb-4">Welcome to Ainflue! 🎉</h3>
+    <h3 className="text-2xl font-bold mb-4">Welcome to iacherie! 🎉</h3>
     <p className="text-gray-600 mb-6">Let's get you set up as a creator</p>
     <button onClick={() => onNext?.()} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
       Get Started

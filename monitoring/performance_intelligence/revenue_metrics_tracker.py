@@ -174,28 +174,28 @@ class RevenueMetricsTracker:
         # Prometheus metrics
         self.prometheus_metrics = {
             "revenue_mrr_total": Gauge(
-                "ainflue_revenue_mrr_total_euros",
+                "iacherie_revenue_mrr_total_euros",
                 "Monthly Recurring Revenue total in euros"
             ),
             "revenue_arr_total": Gauge(
-                "ainflue_revenue_arr_total_euros",
+                "iacherie_revenue_arr_total_euros",
                 "Annual Recurring Revenue total in euros"
             ),
             "revenue_clv_average": Gauge(
-                "ainflue_revenue_clv_average_euros",
+                "iacherie_revenue_clv_average_euros",
                 "Average Customer Lifetime Value in euros"
             ),
             "revenue_churn_rate": Gauge(
-                "ainflue_revenue_churn_rate_percent",
+                "iacherie_revenue_churn_rate_percent",
                 "Monthly churn rate percentage"
             ),
             "revenue_transaction_total": Counter(
-                "ainflue_revenue_transaction_total",
+                "iacherie_revenue_transaction_total",
                 "Total revenue transactions",
                 ["revenue_type", "customer_segment"]
             ),
             "revenue_amount": Histogram(
-                "ainflue_revenue_transaction_amount_euros",
+                "iacherie_revenue_transaction_amount_euros",
                 "Revenue transaction amounts in euros",
                 buckets=[10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000]
             )

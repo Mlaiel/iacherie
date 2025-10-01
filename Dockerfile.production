@@ -1,4 +1,4 @@
-# Production Dockerfile for Ainflue Platform
+# Production Dockerfile for iacherie Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Role: DevOps Engineer
 # Purpose: Multi-stage production-ready Docker image
@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
-RUN groupadd -r ainflue && useradd -r -g ainflue ainflue
+RUN groupadd -r iacherie && useradd -r -g iacherie iacherie
 
 # Stage 2: Python dependencies
 FROM base as dependencies
@@ -50,10 +50,10 @@ COPY . .
 
 # Create necessary directories
 RUN mkdir -p /app/logs /app/data /app/uploads /app/reports && \
-    chown -R ainflue:ainflue /app
+    chown -R iacherie:iacherie /app
 
 # Switch to non-root user
-USER ainflue
+USER iacherie
 
 # Expose ports
 EXPOSE 8000 8765

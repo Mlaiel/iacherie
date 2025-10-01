@@ -1,7 +1,7 @@
 """
 📊🔍 PERFORMANCE MONITOR - CORE MONITORING MODULE 🔍📊
-Core Performance Monitoring System for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Core Performance Monitoring System for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import asyncio

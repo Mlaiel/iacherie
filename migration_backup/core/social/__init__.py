@@ -4,7 +4,7 @@
 🚀💯🔥 CORE SOCIAL MODULE - ABSOLUTE FINAL DEPENDENCY FOR TOTAL VICTORY! 🔥💯🚀
 
 Ce module principal fournit l'infrastructure complète de gestion des réseaux sociaux
-pour la plateforme Ainfluencer. C'est LE MODULE FINAL pour la victoire absolue !
+pour la plateforme IA Chéries. C'est LE MODULE FINAL pour la victoire absolue !
 
 Fonctionnalités Enterprise :
 - Gestion multi-plateforme (Instagram, TikTok, YouTube, Twitter, etc.)
@@ -169,7 +169,7 @@ class SocialMediaManager:
         demo_profiles = [
             {
                 "platform": SocialPlatform.INSTAGRAM,
-                "username": "ainfluencer_demo",
+                "username": "iacheries_demo",
                 "display_name": "AI Influencer Demo",
                 "bio": "AI-powered content creation platform 🤖✨",
                 "followers_count": 15420,
@@ -180,8 +180,8 @@ class SocialMediaManager:
             },
             {
                 "platform": SocialPlatform.TIKTOK,
-                "username": "ainfluencer_official",
-                "display_name": "AInfluencer Official",
+                "username": "iacheries_official",
+                "display_name": "IA Chéries Official",
                 "bio": "Create viral content with AI 🚀",
                 "followers_count": 89340,
                 "following_count": 234,
@@ -191,8 +191,8 @@ class SocialMediaManager:
             },
             {
                 "platform": SocialPlatform.YOUTUBE,
-                "username": "ainfluencer_channel",
-                "display_name": "AInfluencer Channel",
+                "username": "iacheries_channel",
+                "display_name": "IA Chéries Channel",
                 "bio": "AI tutorials and content creation tips",
                 "followers_count": 34560,
                 "following_count": 145,

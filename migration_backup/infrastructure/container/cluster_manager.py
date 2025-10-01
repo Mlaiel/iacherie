@@ -1,6 +1,6 @@
 """
 Kubernetes Cluster Manager
-Enterprise-grade Kubernetes cluster management for Ainflue infrastructure
+Enterprise-grade Kubernetes cluster management for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -91,7 +91,7 @@ class WorkloadConfig:
 
 class ClusterManager:
     """
-    Kubernetes Cluster Manager for Ainflue Infrastructure
+    Kubernetes Cluster Manager for IA Chéries Infrastructure
     
     Provides enterprise-grade Kubernetes cluster management:
     - Multi-cloud cluster provisioning (EKS, GKE, AKS)
@@ -137,7 +137,7 @@ class ClusterManager:
             self.k8s_autoscaling_v2 = None
             self.k8s_rbac_v1 = None
             
-        # Ainflue-specific configurations
+        # IA Chéries-specific configurations
         self.ainflue_namespaces = [
             "ainflue-system",
             "ainflue-creators", 
@@ -196,7 +196,7 @@ class ClusterManager:
                 monitoring_result = await self._setup_cluster_monitoring(config.name)
                 cluster_result['monitoring'] = monitoring_result
                 
-            # Create Ainflue namespaces
+            # Create IA Chéries namespaces
             namespace_result = await self._create_ainflue_namespaces(config.name)
             cluster_result['namespaces'] = namespace_result
             
@@ -467,7 +467,7 @@ class ClusterManager:
         }
         
     async def _create_ainflue_namespaces(self, cluster_name: str) -> List[Dict[str, Any]]:
-        """Create Ainflue-specific namespaces"""
+        """Create IA Chéries-specific namespaces"""
         results = []
         for namespace in self.ainflue_namespaces:
             namespace_result = {
@@ -616,7 +616,7 @@ class ClusterManager:
     async def deploy_service(self, service_config: Dict[str, Any], cluster_name: str = None) -> Dict[str, Any]:
         """
         Deploy a service to Kubernetes cluster
-        Backend Senior Role Implementation for Ainflue creator services
+        Backend Senior Role Implementation for IA Chéries creator services
         
         Args:
             service_config: Service configuration dictionary
@@ -631,7 +631,7 @@ class ClusterManager:
             return self._simulate_service_deployment(service_config)
             
         try:
-            # Ensure service has required Ainflue configuration
+            # Ensure service has required IA Chéries configuration
             service_config = self._validate_ainflue_service_config(service_config)
             
             # Create or update namespace
@@ -678,7 +678,7 @@ class ClusterManager:
                 monitoring_info = await self._setup_service_monitoring(service_config)
                 deployment_result['components']['monitoring'] = monitoring_info
                 
-            # Configure service mesh integration for Ainflue services
+            # Configure service mesh integration for IA Chéries services
             if service_config.get('service_mesh', True):
                 mesh_info = await self._configure_service_mesh_integration(service_config)
                 deployment_result['components']['service_mesh'] = mesh_info
@@ -699,11 +699,11 @@ class ClusterManager:
             }
             
     def _validate_ainflue_service_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate and enhance service config for Ainflue platform"""
+        """Validate and enhance service config for IA Chéries platform"""
         if 'name' not in config:
             raise ValueError("Service name is required")
             
-        # Ensure Ainflue-specific labels and annotations
+        # Ensure IA Chéries-specific labels and annotations
         ainflue_labels = {
             'app.kubernetes.io/part-of': 'ainflue',
             'app.kubernetes.io/managed-by': 'ainflue-infrastructure',
@@ -808,7 +808,7 @@ class ClusterManager:
         }
         
     async def _configure_service_mesh_integration(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure service mesh integration for Ainflue services"""
+        """Configure service mesh integration for IA Chéries services"""
         return {
             'istio_sidecar': True,
             'traffic_policy': 'round_robin',

@@ -63,7 +63,7 @@ sentinel_enterprise:
 # Masters Configuration Ultra-Strict
 masters_configuration:
   # Master Instance 1
-  ainflue_master_1:
+  iacherie_master_1:
     host: "redis-master-1.iacherie.internal"
     port: 6379
     quorum: 3
@@ -85,7 +85,7 @@ masters_configuration:
     announce_hostnames: true
     
   # Master Instance 2
-  ainflue_master_2:
+  iacherie_master_2:
     host: "redis-master-2.iacherie.internal"
     port: 6379
     quorum: 3
@@ -104,7 +104,7 @@ masters_configuration:
     announce_hostnames: true
     
   # Master Instance 3
-  ainflue_master_3:
+  iacherie_master_3:
     host: "redis-master-3.iacherie.internal"
     port: 6379
     quorum: 3

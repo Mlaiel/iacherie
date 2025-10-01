@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Security Metrics
+IA Chéries Platform - Enterprise Security Metrics
 Advanced security monitoring and metrics collection system
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

@@ -3,7 +3,7 @@
 
 Enterprise-grade Creator Success Intelligence system providing comprehensive
 success scoring, intelligent performance evaluation, and advanced success
-analytics for the Ainflue Creator Economy. Implements sophisticated scoring
+analytics for the IA Chéries Creator Economy. Implements sophisticated scoring
 algorithms, success prediction, and intelligent optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

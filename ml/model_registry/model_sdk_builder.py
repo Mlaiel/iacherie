@@ -520,7 +520,7 @@ except Exception as e:
             "title": "Basic Usage Example",
             "description": "Basic usage of the SDK",
             "code": """
-from ainflue_sdk import ModelClient
+from iacherie_sdk import ModelClient
 
 # Initialize client
 client = ModelClient(
@@ -552,7 +552,7 @@ print(result)
                     "title": "Audio Classification Example",
                     "description": "Classify audio genre and mood",
                     "code": """
-from ainflue_sdk import MusicianClient
+from iacherie_sdk import MusicianClient
 import base64
 
 # Initialize musician client
@@ -578,7 +578,7 @@ print(f"Confidence: {result['confidence']}")
                     "title": "Aesthetic Scoring Example",
                     "description": "Analyze image aesthetics",
                     "code": """
-from ainflue_sdk import PhotographerClient
+from iacherie_sdk import PhotographerClient
 import base64
 
 # Initialize photographer client
@@ -604,7 +604,7 @@ print(f"Composition: {result['composition_rating']}")
                     "title": "Content Optimization Example",
                     "description": "Optimize blog content for SEO",
                     "code": """
-from ainflue_sdk import BloggerClient
+from iacherie_sdk import BloggerClient
 
 # Initialize blogger client
 client = BloggerClient(api_key="your_api_key")

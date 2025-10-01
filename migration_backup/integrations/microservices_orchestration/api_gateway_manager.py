@@ -2,7 +2,7 @@
 =======================================================
 
 API gateway manager enterprise avec intelligent routing, rate limiting adaptatif,
-authentification centralisée et analytics avancés pour l'écosystème Ainflue.
+authentification centralisée et analytics avancés pour l'écosystème IA Chéries.
 
 Expert Roles Implementation:
 🏗️ Backend Senior: API gateway architecture + routing intelligent + load balancing
@@ -590,7 +590,7 @@ class APIGatewayManager:
         return await aioredis.from_url(redis_url)
     
     async def _setup_default_endpoints(self):
-        """Setup default Ainflue platform endpoints"""
+        """Setup default IA Chéries platform endpoints"""
         default_endpoints = [
             {
                 'path': '/api/v1/creators',

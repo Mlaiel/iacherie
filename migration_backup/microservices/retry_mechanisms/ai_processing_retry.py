@@ -1,11 +1,11 @@
 """
-AI Processing Retry - Ainflue
+AI Processing Retry - IA Chéries
 =============================
 Retry spécialisé pour processing IA/ML.
 GPU queue management + model loading + inference retry.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

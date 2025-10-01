@@ -1,4 +1,4 @@
-# Multi-Stage Dockerfile for Ainflue Creator Economy Platform
+# Multi-Stage Dockerfile for iacherie Creator Economy Platform
 # =============================================================
 #
 # 🎯 DEVOPS ENGINEER + CONTAINER EXPERT + SECURITY SPECIALIST
@@ -33,7 +33,7 @@
 FROM python:3.11-slim as builder
 
 # Build arguments
-ARG APP_NAME=ainflue-creator-platform
+ARG APP_NAME=iacherie-creator-platform
 ARG APP_VERSION=1.0.0
 ARG BUILD_DATE
 ARG VCS_REF
@@ -45,15 +45,15 @@ LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>" \
       org.label-schema.version="${APP_VERSION}" \
       org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.vcs-ref="${VCS_REF}" \
-      org.label-schema.vendor="Ainflue Creator Economy" \
+      org.label-schema.vendor="iacherie Creator Economy" \
       org.label-schema.description="Creator Economy Platform - Enterprise Container" \
-      org.label-schema.url="https://ainflue.com" \
+      org.label-schema.url="https://iacherie.com" \
       org.label-schema.schema-version="1.0" \
       org.opencontainers.image.title="${APP_NAME}" \
-      org.opencontainers.image.description="Ainflue Creator Economy Platform" \
+      org.opencontainers.image.description="iacherie Creator Economy Platform" \
       org.opencontainers.image.version="${APP_VERSION}" \
       org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>" \
-      org.opencontainers.image.vendor="Ainflue" \
+      org.opencontainers.image.vendor="iacherie" \
       org.opencontainers.image.licenses="Proprietary" \
       intellectual.property.owner="Fahed Mlaiel" \
       business.unit="CreatorEconomy" \
@@ -177,7 +177,7 @@ RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); 
 FROM python:3.11-slim as runtime
 
 # Build arguments for runtime
-ARG APP_NAME=ainflue-creator-platform
+ARG APP_NAME=iacherie-creator-platform
 ARG APP_VERSION=1.0.0
 ARG BUILD_ENV=production
 
@@ -252,19 +252,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user for security
-RUN groupadd -r ainflue && \
-    useradd -r -g ainflue -d /app -s /bin/bash ainflue && \
+RUN groupadd -r iacherie && \
+    useradd -r -g iacherie -d /app -s /bin/bash iacherie && \
     mkdir -p /app /app/logs /app/tmp /app/uploads /app/cache && \
-    chown -R ainflue:ainflue /app
+    chown -R iacherie:iacherie /app
 
 # Copy virtual environment from builder
-COPY --from=builder --chown=ainflue:ainflue /opt/venv /opt/venv
+COPY --from=builder --chown=iacherie:iacherie /opt/venv /opt/venv
 
 # Set working directory
 WORKDIR /app
 
 # Copy application code
-COPY --chown=ainflue:ainflue . .
+COPY --chown=iacherie:iacherie . .
 
 # Install application in development mode if setup.py exists
 RUN if [ -f setup.py ]; then \
@@ -281,16 +281,16 @@ RUN mkdir -p \
     /app/content/audio \
     /app/content/images \
     /app/content/documents \
-    && chown -R ainflue:ainflue /app \
+    && chown -R iacherie:iacherie /app \
     && chmod -R 755 /app \
     && chmod -R 775 /app/logs /app/tmp /app/uploads /app/cache /app/media /app/content
 
 # Copy and set up entrypoint script
-COPY --chown=ainflue:ainflue docker-entrypoint.sh /usr/local/bin/
+COPY --chown=iacherie:iacherie docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Switch to non-root user
-USER ainflue
+USER iacherie
 
 # Expose application port
 EXPOSE 8000
@@ -327,7 +327,7 @@ RUN pip install \
     tensorflow-gpu \
     cupy-cuda11x
 
-USER ainflue
+USER iacherie
 
 # Override environment for AI processing
 ENV AI_PROCESSING_MODE=gpu \
@@ -363,7 +363,7 @@ RUN pip install \
     mypy \
     flake8
 
-USER ainflue
+USER iacherie
 
 # Override environment for development
 ENV APP_ENV=development \
@@ -411,7 +411,7 @@ RUN pip install \
     facebook-sdk \
     google-api-python-client
 
-USER ainflue
+USER iacherie
 
 # Override environment for creator tools
 ENV CREATOR_TOOLS_ENABLED=true \

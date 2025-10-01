@@ -7,7 +7,7 @@
 
 **Author**: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Project**: Ainflue Service Registry Enterprise
+**Project**: IA Chéries Service Registry Enterprise
 **Version**: 1.0 Production
 **Created**: 2025-01-07 | Updated: 2025-12-14
 
@@ -744,7 +744,7 @@ class ServiceDiscoveryEngine:
         return [service for service, _ in services_with_scores]
     
     async def _business_priority_discovery(self, services: List[ServiceInstance], request: ServiceDiscoveryRequest) -> List[ServiceInstance]:
-        """Business priority service selection for Ainflue"""
+        """Business priority service selection for IA Chéries"""
         priority_order = {
             'creator': 5,
             'content': 4,

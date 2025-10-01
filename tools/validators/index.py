@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🚀 Ainflue Enterprise Platform - Ultra-Advanced Main Index
+"""🚀 iacherie Enterprise Platform - Ultra-Advanced Main Index
 ============================================================
 
 🎯 MASTER ORCHESTRATION HUB
-- Zentraler Einstiegspunkt für die gesamte Ainflue-Plattform
+- Zentraler Einstiegspunkt für die gesamte iacherie-Plattform
 - Enterprise-Grade Architektur mit 53+ AI-Agenten & 117+ Crawlers
 - Ultra-moderne FastAPI ASGI-Anwendung mit vollständiger Middleware-Integration
 - Produktionsreife Konfiguration für Skalierung und Hochverfügbarkeit
@@ -58,7 +58,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger("ainflue.platform.index")
+logger = logging.getLogger("iacherie.platform.index")
 
 # Enhanced imports with error handling
 try:
@@ -109,7 +109,7 @@ except ImportError:
     PROMETHEUS_AVAILABLE = False
 
 # Enterprise Configuration Manager
-class AinfluePlatformConfig:
+class iacheriePlatformConfig:
     """🏗️ Ultra-Advanced Enterprise Configuration Manager"""
     
     def __init__(self):
@@ -124,13 +124,13 @@ class AinfluePlatformConfig:
         self.workers = int(os.getenv("WORKERS", mp.cpu_count()))
         
         # Security configuration
-        self.secret_key = os.getenv("SECRET_KEY", "ultra-secure-ainflue-platform-key-2025")
+        self.secret_key = os.getenv("SECRET_KEY", "ultra-secure-iacherie-platform-key-2025")
         self.allowed_hosts = os.getenv("ALLOWED_HOSTS", "*").split(",")
         self.cors_origins = self._get_cors_origins()
         
         # Database configuration
-        self.postgres_url = os.getenv("DATABASE_URL", "postgresql+asyncpg://localhost/ainflue")
-        self.mongodb_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017/ainflue")
+        self.postgres_url = os.getenv("DATABASE_URL", "postgresql+asyncpg://localhost/iacherie")
+        self.mongodb_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017/iacherie")
         self.redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
         
         # Feature flags
@@ -151,9 +151,9 @@ class AinfluePlatformConfig:
         default_origins = [
             "http://localhost:3000",
             "http://localhost:3001", 
-            "https://app.ainflue.com",
-            "https://admin.ainflue.com",
-            "https://api.ainflue.com"
+            "https://app.iacherie.com",
+            "https://admin.iacherie.com",
+            "https://api.iacherie.com"
         ]
         
         custom_origins = os.getenv("CORS_ORIGINS", "").split(",")
@@ -162,13 +162,13 @@ class AinfluePlatformConfig:
         return default_origins + custom_origins
 
 # Global configuration instance
-config = AinfluePlatformConfig()
+config = iacheriePlatformConfig()
 
 # Prometheus metrics (if available)
 if PROMETHEUS_AVAILABLE:
-    REQUEST_COUNT = Counter('ainflue_requests_total', 'Total requests', ['method', 'endpoint', 'status'])
-    REQUEST_DURATION = Histogram('ainflue_request_duration_seconds', 'Request duration')
-    ACTIVE_CONNECTIONS = Counter('ainflue_active_connections', 'Active connections')
+    REQUEST_COUNT = Counter('iacherie_requests_total', 'Total requests', ['method', 'endpoint', 'status'])
+    REQUEST_DURATION = Histogram('iacherie_request_duration_seconds', 'Request duration')
+    ACTIVE_CONNECTIONS = Counter('iacherie_active_connections', 'Active connections')
 
 # Ultra-Advanced Middleware Stack
 class EnterpriseMiddlewareStack:
@@ -257,7 +257,7 @@ class EnterpriseMiddlewareStack:
         logger.info("🌐 CORS middleware configured")
 
 # Ultra-Advanced Platform Manager
-class AinfluePlatformManager:
+class iacheriePlatformManager:
     """🚀 Master Platform Orchestrator - Ultra-Advanced Enterprise Management"""
     
     def __init__(self):
@@ -275,16 +275,16 @@ class AinfluePlatformManager:
         async def lifespan(app: FastAPI):
             """Advanced lifespan management"""
             # Startup sequence
-            logger.info("🚀 Starting Ainflue Enterprise Platform...")
+            logger.info("🚀 Starting iacherie Enterprise Platform...")
             await self._startup_sequence()
             yield
             # Shutdown sequence
-            logger.info("🛑 Shutting down Ainflue Platform...")
+            logger.info("🛑 Shutting down iacherie Platform...")
             await self._shutdown_sequence()
         
         # Create FastAPI application with enterprise configuration
         self.app = FastAPI(
-            title="🚀 Ainflue Enterprise Platform",
+            title="🚀 iacherie Enterprise Platform",
             description=self._get_api_description(),
             version=config.version,
             docs_url="/docs" if config.debug_mode else None,
@@ -292,8 +292,8 @@ class AinfluePlatformManager:
             openapi_url="/openapi.json" if config.debug_mode else None,
             lifespan=lifespan,
             servers=[
-                {"url": "https://api.ainflue.com", "description": "Production"},
-                {"url": "https://staging-api.ainflue.com", "description": "Staging"},
+                {"url": "https://api.iacherie.com", "description": "Production"},
+                {"url": "https://staging-api.iacherie.com", "description": "Staging"},
                 {"url": "http://localhost:8000", "description": "Development"}
             ]
         )
@@ -313,7 +313,7 @@ class AinfluePlatformManager:
     def _get_api_description(self) -> str:
         """Generate comprehensive API description"""
         return f"""
-# 🎯 Ainflue Enterprise Platform - AI-Powered Content Protection
+# 🎯 iacherie Enterprise Platform - AI-Powered Content Protection
 
 ## 🚀 Platform Overview
 Ultra-moderne AI-Plattform für Content-Schutz und Monetarisierung mit Enterprise-Grade Architektur.
@@ -395,7 +395,7 @@ Orchestration Layer → Business Logic → Data Persistence
         async def platform_info():
             """ℹ️ Platform information"""
             return {
-                "platform": "Ainflue Enterprise",
+                "platform": "iacherie Enterprise",
                 "version": config.version,
                 "environment": config.environment,
                 "startup_time": config.startup_time.isoformat(),
@@ -490,7 +490,7 @@ Orchestration Layer → Business Logic → Data Persistence
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Ainflue Enterprise Platform</title>
+    <title>🚀 iacherie Enterprise Platform</title>
     <style>
         body {{ 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -516,7 +516,7 @@ Orchestration Layer → Business Logic → Data Persistence
 <body>
     <div class="container">
         <div class="logo">🚀</div>
-        <h1 class="title">Ainflue Enterprise Platform</h1>
+        <h1 class="title">iacherie Enterprise Platform</h1>
         <p class="subtitle">Ultra-Advanced AI-Powered Content Protection & Monetization</p>
         
         <div class="features">
@@ -605,7 +605,7 @@ Orchestration Layer → Business Logic → Data Persistence
         
         return {
             "platform": {
-                "name": "Ainflue Enterprise Platform",
+                "name": "iacherie Enterprise Platform",
                 "version": config.version,
                 "environment": config.environment,
                 "startup_time": config.startup_time.isoformat(),
@@ -725,13 +725,13 @@ Orchestration Layer → Business Logic → Data Persistence
         self.active_services["crawlers"] = False
 
 # Global platform manager instance
-platform_manager = AinfluePlatformManager()
+platform_manager = iacheriePlatformManager()
 
 # Ultra-Advanced Application Factory
-async def create_ainflue_platform() -> FastAPI:
+async def create_iacherie_platform() -> FastAPI:
     """🏭 Ultra-Advanced Application Factory
     
-    Creates and configures the complete Ainflue Enterprise Platform
+    Creates and configures the complete iacherie Enterprise Platform
     with all enterprise features, middleware, and services.
     
     Returns:
@@ -740,11 +740,11 @@ async def create_ainflue_platform() -> FastAPI:
     if not FASTAPI_AVAILABLE:
         raise RuntimeError("FastAPI is required but not available")
     
-    logger.info("🏭 Creating Ainflue Enterprise Platform...")
+    logger.info("🏭 Creating iacherie Enterprise Platform...")
     
     app = await platform_manager.create_application()
     
-    logger.info("✅ Ainflue Enterprise Platform created successfully")
+    logger.info("✅ iacherie Enterprise Platform created successfully")
     return app
 
 # Application instance for ASGI servers
@@ -765,7 +765,7 @@ def get_application() -> FastAPI:
             asyncio.set_event_loop(loop)
         
         # Create application
-        app = loop.run_until_complete(create_ainflue_platform())
+        app = loop.run_until_complete(create_iacherie_platform())
     
     return app
 
@@ -781,7 +781,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 # Ultra-Advanced CLI Interface
 def main():
-    """🚀 Main entry point for the Ainflue Enterprise Platform
+    """🚀 Main entry point for the iacherie Enterprise Platform
     
     Supports multiple deployment modes:
     - Development server (uvicorn)
@@ -792,7 +792,7 @@ def main():
     
     import argparse
     
-    parser = argparse.ArgumentParser(description="🚀 Ainflue Enterprise Platform")
+    parser = argparse.ArgumentParser(description="🚀 iacherie Enterprise Platform")
     parser.add_argument("--host", default=config.host, help="Host to bind to")
     parser.add_argument("--port", type=int, default=config.port, help="Port to bind to")
     parser.add_argument("--workers", type=int, default=config.workers, help="Number of worker processes")
@@ -808,7 +808,7 @@ def main():
     config.workers = args.workers
     config.debug_mode = args.debug or config.debug_mode
     
-    logger.info(f"🚀 Starting Ainflue Enterprise Platform v{config.version}")
+    logger.info(f"🚀 Starting iacherie Enterprise Platform v{config.version}")
     logger.info(f"🌐 Server: {config.host}:{config.port}")
     logger.info(f"👥 Workers: {config.workers}")
     logger.info(f"🔧 Environment: {config.environment}")
@@ -855,11 +855,11 @@ def main():
 
 # ASGI application for production servers
 try:
-    app = asyncio.run(create_ainflue_platform())
+    app = asyncio.run(create_iacherie_platform())
 except Exception as e:
     logger.error(f"❌ Failed to create ASGI application: {e}")
     # Create a minimal fallback application
-    app = FastAPI(title="Ainflue Platform - Error", description="Application failed to initialize")
+    app = FastAPI(title="iacherie Platform - Error", description="Application failed to initialize")
     
     @app.get("/")
     async def error_root():
@@ -868,7 +868,7 @@ except Exception as e:
 # Export for other modules
 __all__ = [
     "app",
-    "create_ainflue_platform", 
+    "create_iacherie_platform", 
     "get_application",
     "platform_manager",
     "config",

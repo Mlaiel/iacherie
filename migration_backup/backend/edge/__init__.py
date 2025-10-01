@@ -1,7 +1,7 @@
 """Backend Edge Computing Services - Enterprise Consolidated Architecture
 =======================================================================
 
-Architecture edge computing ultra-avancée consolidée pour l'écosystème Ainflue.
+Architecture edge computing ultra-avancée consolidée pour l'écosystème IA Chéries.
 Système unifié enterprise-grade avec intelligence artificielle, orchestration
 automatisée et optimisations créateurs multi-format.
 
@@ -235,7 +235,7 @@ from .edge_resource_manager import (
 # ============================================================================
 
 class AinfluEdgeComputingPlatform:
-    """Plateforme Edge Computing unifiée pour l'écosystème Ainflue."""
+    """Plateforme Edge Computing unifiée pour l'écosystème IA Chéries."""
     
     def __init__(self):
         # Composants consolidés
@@ -338,7 +338,7 @@ class AinfluEdgeComputingPlatform:
 
 
 def create_ainflue_edge_platform() -> AinfluEdgeComputingPlatform:
-    """Factory function pour créer la plateforme edge Ainflue."""
+    """Factory function pour créer la plateforme edge IA Chéries."""
     return AinfluEdgeComputingPlatform()
 
 

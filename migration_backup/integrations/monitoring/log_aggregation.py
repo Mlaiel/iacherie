@@ -5,7 +5,7 @@
 =====================================================
 
 Log aggregation enterprise avec structured logging et intelligent analysis.
-Infrastructure robuste d'agrégation de logs pour monitoring des applications Ainflue.
+Infrastructure robuste d'agrégation de logs pour monitoring des applications IA Chéries.
 
 © 2025 Fahed Mlaiel - Propriété intellectuelle exclusive
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer

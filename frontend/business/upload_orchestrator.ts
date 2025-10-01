@@ -554,7 +554,7 @@ export class UploadOrchestrator {
   }
 
   private generateFileUrl(uploadFile: UploadFile): string {
-    return `https://cdn.ainflue.com/uploads/${uploadFile.id}/${uploadFile.file.name}`;
+    return `https://cdn.iacherie.com/uploads/${uploadFile.id}/${uploadFile.file.name}`;
   }
 
   private generateSessionMetadata(): SessionMetadata {

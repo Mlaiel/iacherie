@@ -1,7 +1,7 @@
-# Ainflue Kubernetes Deployment Configuration
+# IA Chéries Kubernetes Deployment Configuration
 # ==========================================
 #
-# Complete Kubernetes deployment manifests for Ainflue platform
+# Complete Kubernetes deployment manifests for IA Chéries platform
 # Includes all core services, configurations, and monitoring
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -803,7 +803,7 @@ spec:
   groups:
   - name: ainflue.rules
     rules:
-    - alert: AinfluePodCrashLooping
+    - alert: IA ChériesPodCrashLooping
       expr: rate(kube_pod_container_status_restarts_total{namespace="ainflue"}[15m]) > 0
       for: 5m
       labels:
@@ -812,7 +812,7 @@ spec:
         summary: "Pod {{ $labels.pod }} is crash looping"
         description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is restarting frequently"
     
-    - alert: AinflueHighMemoryUsage
+    - alert: IA ChériesHighMemoryUsage
       expr: (container_memory_usage_bytes{namespace="ainflue"} / container_spec_memory_limit_bytes{namespace="ainflue"}) > 0.9
       for: 5m
       labels:
@@ -821,7 +821,7 @@ spec:
         summary: "High memory usage detected"
         description: "Container {{ $labels.container }} is using {{ $value | humanizePercentage }} of available memory"
     
-    - alert: AinflueHighCPUUsage
+    - alert: IA ChériesHighCPUUsage
       expr: rate(container_cpu_usage_seconds_total{namespace="ainflue"}[5m]) > 0.8
       for: 10m
       labels:

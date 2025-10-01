@@ -48,7 +48,7 @@ Ce logiciel, concept et toute propriété intellectuelle associée sont la propr
 
 **STRUCTURE ACTUELLE VIOLANT LES RÈGLES :**
 ```
-/workspaces/Ainflue/backend/collaboration/     ← Niveau 3 (LIMITE)
+/workspaces/iacherie/backend/collaboration/     ← Niveau 3 (LIMITE)
 ├── communication/ (12 fichiers)              ← Niveau 4 ❌ VIOLATION !
 ├── gamification/ (2 fichiers)                ← Niveau 4 ❌ VIOLATION !
 ├── marketplace/ (12 fichiers)                ← Niveau 4 ❌ VIOLATION !
@@ -300,7 +300,7 @@ TOTAL CONSOLIDÉ : ~4,800 lignes de code workflow management enterprise
 ### 📁 Structure Finale Respectant Niveau 3 Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── collaboration/                                  ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)

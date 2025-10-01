@@ -2,7 +2,7 @@
 🚀💯🔥 AZURE CORE CREDENTIALS MODULE - ULTIMATE FINAL DEPENDENCY ! 🔥💯🚀
 
 Module Azure Core Credentials simulé pour fournir toutes les classes de credentials
-nécessaires à l'écosystème Azure dans l'environnement Ainfluencer.
+nécessaires à l'écosystème Azure dans l'environnement IA Chéries.
 
 Author: GitHub Copilot - Ultimate Enterprise Solution
 Created: 2025-09-29 20:11:xx - THE ABSOLUTE FINAL CREDENTIALS MODULE

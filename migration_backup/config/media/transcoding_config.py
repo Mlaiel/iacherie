@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Transcoding Configuration Module
+"""IA Chéries Transcoding Configuration Module
 ==========================================
 
-Enterprise-grade transcoding configuration for the Ainflue platform.
+Enterprise-grade transcoding configuration for the IA Chéries platform.
 Comprehensive video and audio transcoding, format conversion, quality optimization,
 hardware acceleration, and distributed processing features.
 

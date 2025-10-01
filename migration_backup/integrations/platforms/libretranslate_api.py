@@ -50,7 +50,7 @@ class LibreTranslateAPI:
         # Headers par défaut
         self.headers = {
             'Content-Type': 'application/json',
-            'User-Agent': 'Ainfluencer-Platform/1.0'
+            'User-Agent': 'IA Chéries-Platform/1.0'
         }
         
         logger.info(f"🌍 LibreTranslateAPI initialisé - URL: {self.base_url}")

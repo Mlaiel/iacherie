@@ -186,7 +186,7 @@ class GoogleAIIntegration:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout_seconds),
                 headers={
-                    'User-Agent': 'Ainflue-GoogleAI/1.0',
+                    'User-Agent': 'IA Chéries-GoogleAI/1.0',
                     'Content-Type': 'application/json'
                 }
             )

@@ -174,7 +174,7 @@ class PipelineOrchestrator:
         self.retry_attempts = self.config.get('retry_attempts', 3)
         
         # IA Chérie-specific pipeline configurations
-        self.ainflue_pipelines = {
+        self.iacherie_pipelines = {
             'content-processing-ai': {
                 'description': 'AI content processing pipeline',
                 'stages': [
@@ -301,7 +301,7 @@ class PipelineOrchestrator:
             )
             
             # Apply IA Chérie-specific coordination logic
-            ainflue_coordination = await self._apply_ainflue_coordination_logic(
+            iacherie_coordination = await self._apply_iacherie_coordination_logic(
                 pipeline_ids, coordination_result
             )
             
@@ -316,7 +316,7 @@ class PipelineOrchestrator:
                 'coordination_result': coordination_result,
                 'monitoring': monitoring_result,
                 'failure_handling': failure_handling,
-                'ainflue_coordination': ainflue_coordination,
+                'iacherie_coordination': iacherie_coordination,
                 'status': 'completed'
             }
             
@@ -369,7 +369,7 @@ class PipelineOrchestrator:
             )
             
             # Apply IA Chérie-specific dependency logic
-            ainflue_dependencies = await self._apply_ainflue_dependency_logic(
+            iacherie_dependencies = await self._apply_iacherie_dependency_logic(
                 pipeline_id, pipeline_dependencies
             )
             
@@ -384,7 +384,7 @@ class PipelineOrchestrator:
                 'bottleneck_analysis': bottleneck_analysis,
                 'optimization_recommendations': optimization_recommendations,
                 'integrity_validation': integrity_validation,
-                'ainflue_dependencies': ainflue_dependencies,
+                'iacherie_dependencies': iacherie_dependencies,
                 'status': 'completed'
             }
             
@@ -429,7 +429,7 @@ class PipelineOrchestrator:
             escalation_result = await self._apply_approval_escalation_policies(approval_gate)
             
             # Apply IA Chérie-specific approval logic
-            ainflue_approval = await self._apply_ainflue_approval_logic(
+            iacherie_approval = await self._apply_iacherie_approval_logic(
                 approval_gate, approval_result
             )
             
@@ -446,7 +446,7 @@ class PipelineOrchestrator:
                 'timeout_handling': timeout_handling,
                 'audit_trail': audit_trail,
                 'escalation_result': escalation_result,
-                'ainflue_approval': ainflue_approval,
+                'iacherie_approval': iacherie_approval,
                 'status': 'completed'
             }
             
@@ -501,7 +501,7 @@ class PipelineOrchestrator:
             )
             
             # Apply IA Chérie-specific promotion logic
-            ainflue_promotion = await self._apply_ainflue_promotion_logic(
+            iacherie_promotion = await self._apply_iacherie_promotion_logic(
                 pipeline_id, source_env, target_env, promotion_result
             )
             
@@ -518,7 +518,7 @@ class PipelineOrchestrator:
                 'post_promotion_checks': post_promotion_checks,
                 'monitoring_setup': monitoring_setup,
                 'rollback_configuration': rollback_configuration,
-                'ainflue_promotion': ainflue_promotion,
+                'iacherie_promotion': iacherie_promotion,
                 'status': 'completed'
             }
             
@@ -564,7 +564,7 @@ class PipelineOrchestrator:
             )
             
             # Apply IA Chérie-specific performance optimizations
-            ainflue_optimizations = await self._apply_ainflue_performance_optimizations()
+            iacherie_optimizations = await self._apply_iacherie_performance_optimizations()
             
             logger.info(f"Pipeline performance optimization completed: {optimization_id}")
             return {
@@ -578,7 +578,7 @@ class PipelineOrchestrator:
                 'scheduling_optimization': scheduling_optimization,
                 'build_acceleration': build_acceleration,
                 'performance_improvements': performance_improvements,
-                'ainflue_optimizations': ainflue_optimizations,
+                'iacherie_optimizations': iacherie_optimizations,
                 'status': 'completed'
             }
             
@@ -600,8 +600,8 @@ class PipelineOrchestrator:
         
         # Add dependencies from IA Chérie configurations
         for pipeline_id in pipeline_ids:
-            if pipeline_id in self.ainflue_pipelines:
-                dependencies = self.ainflue_pipelines[pipeline_id].get('dependencies', [])
+            if pipeline_id in self.iacherie_pipelines:
+                dependencies = self.iacherie_pipelines[pipeline_id].get('dependencies', [])
                 for dep in dependencies:
                     graph_data['edges'].append({
                         'source': dep,
@@ -743,8 +743,8 @@ class PipelineOrchestrator:
         start_time = datetime.now()
         
         # Simulate build time based on IA Chérie configuration
-        if pipeline_id in self.ainflue_pipelines:
-            build_time = self.ainflue_pipelines[pipeline_id]['sla']['build_time']
+        if pipeline_id in self.iacherie_pipelines:
+            build_time = self.iacherie_pipelines[pipeline_id]['sla']['build_time']
             await asyncio.sleep(build_time / 100)  # Simulate reduced time for testing
         else:
             await asyncio.sleep(1)  # Default simulation time
@@ -793,18 +793,18 @@ class PipelineOrchestrator:
             'escalation_triggered': len(failed_pipelines) > 2
         }
 
-    async def _apply_ainflue_coordination_logic(self, pipeline_ids: List[str], 
+    async def _apply_iacherie_coordination_logic(self, pipeline_ids: List[str], 
                                               coordination_result: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific coordination logic"""
-        ainflue_pipelines_involved = [pid for pid in pipeline_ids if pid in self.ainflue_pipelines]
+        iacherie_pipelines_involved = [pid for pid in pipeline_ids if pid in self.iacherie_pipelines]
         
         return {
-            'ainflue_pipelines': len(ainflue_pipelines_involved),
+            'iacherie_pipelines': len(iacherie_pipelines_involved),
             'creator_impact_assessment': True,
             'platform_deployment_coordination': True,
             'revenue_impact_analysis': True,
             'sla_compliance_check': True,
-            'auto_scaling_triggered': len(ainflue_pipelines_involved) > 2,
+            'auto_scaling_triggered': len(iacherie_pipelines_involved) > 2,
             'performance_optimization': True
         }
 
@@ -818,7 +818,7 @@ class PipelineOrchestrator:
             graph.add_node(pipeline_id)
         
         # Add IA Chérie pipeline dependencies
-        for pipeline_id, config in self.ainflue_pipelines.items():
+        for pipeline_id, config in self.iacherie_pipelines.items():
             dependencies = config.get('dependencies', [])
             for dep in dependencies:
                 graph.add_edge(dep, pipeline_id)
@@ -874,8 +874,8 @@ class PipelineOrchestrator:
         # Estimate duration based on IA Chérie SLAs
         total_duration = 0
         for pipeline in critical_path:
-            if pipeline in self.ainflue_pipelines:
-                total_duration += self.ainflue_pipelines[pipeline]['sla']['build_time']
+            if pipeline in self.iacherie_pipelines:
+                total_duration += self.iacherie_pipelines[pipeline]['sla']['build_time']
             else:
                 total_duration += 300  # Default 5 minutes
         
@@ -883,8 +883,8 @@ class PipelineOrchestrator:
             'critical_path': critical_path,
             'path_length': len(critical_path),
             'estimated_duration': total_duration,
-            'bottlenecks': [p for p in critical_path if p in self.ainflue_pipelines and 
-                           self.ainflue_pipelines[p]['sla']['build_time'] > 300]
+            'bottlenecks': [p for p in critical_path if p in self.iacherie_pipelines and 
+                           self.iacherie_pipelines[p]['sla']['build_time'] > 300]
         }
 
     async def _analyze_dependency_bottlenecks(self, pipeline_id: str, 
@@ -938,16 +938,16 @@ class PipelineOrchestrator:
             'validation_score': 95.5
         }
 
-    async def _apply_ainflue_dependency_logic(self, pipeline_id: str, 
+    async def _apply_iacherie_dependency_logic(self, pipeline_id: str, 
                                             dependencies: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific dependency logic"""
-        if pipeline_id not in self.ainflue_pipelines:
-            return {'ainflue_logic_applied': False}
+        if pipeline_id not in self.iacherie_pipelines:
+            return {'iacherie_logic_applied': False}
         
-        config = self.ainflue_pipelines[pipeline_id]
+        config = self.iacherie_pipelines[pipeline_id]
         
         return {
-            'ainflue_logic_applied': True,
+            'iacherie_logic_applied': True,
             'sla_requirements': config.get('sla', {}),
             'approval_required': config.get('approval_required', False),
             'auto_rollback': config.get('auto_rollback', False),
@@ -1062,7 +1062,7 @@ class PipelineOrchestrator:
             'escalation_approvers': ['manager', 'director', 'vp']
         }
 
-    async def _apply_ainflue_approval_logic(self, approval_gate: ApprovalGate, 
+    async def _apply_iacherie_approval_logic(self, approval_gate: ApprovalGate, 
                                           approval_result: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific approval logic"""
         return {
@@ -1188,7 +1188,7 @@ class PipelineOrchestrator:
             'backup_reference': backup_result['backup_id']
         }
 
-    async def _apply_ainflue_promotion_logic(self, pipeline_id: str, 
+    async def _apply_iacherie_promotion_logic(self, pipeline_id: str, 
                                            source_env: EnvironmentType,
                                            target_env: EnvironmentType,
                                            promotion_result: Dict[str, Any]) -> Dict[str, Any]:
@@ -1323,7 +1323,7 @@ class PipelineOrchestrator:
             'roi_timeframe': '3 months'
         }
 
-    async def _apply_ainflue_performance_optimizations(self) -> Dict[str, Any]:
+    async def _apply_iacherie_performance_optimizations(self) -> Dict[str, Any]:
         """Apply IA Chérie-specific performance optimizations"""
         return {
             'ai_model_optimization': True,

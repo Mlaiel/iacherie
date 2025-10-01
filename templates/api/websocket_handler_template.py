@@ -1,4 +1,4 @@
-"""{{handler_name}} WebSocket Handler Template for Ainflue Platform
+"""{{handler_name}} WebSocket Handler Template for iacherie Platform
 {{handler_description}}
 
 Author: {{author_name}} ({{author_email}})

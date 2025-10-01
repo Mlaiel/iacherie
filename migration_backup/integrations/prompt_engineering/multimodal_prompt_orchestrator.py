@@ -19,7 +19,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Advanced multimodal prompt techniques et format optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chéries Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 

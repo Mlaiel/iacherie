@@ -1,11 +1,11 @@
-# 🔐 Sicherheitsmodule Infrastruktur - Ainflue Enterprise
+# 🔐 Sicherheitsmodule Infrastruktur - iacherie Enterprise
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ GEISTIGES EIGENTUM - FAHED MLAIEL
 > **DEUTLICHE WARNUNG:** Diese Architektur ist das EXKLUSIVE geistige Eigentum von **Fahed Mlaiel** (mlaiel@live.de). Jede Reproduktion, Modifikation, Verteilung oder Ideendiebstahl ohne PERSÖNLICHE schriftliche Genehmigung ist **STRENG VERBOTEN** und wird rechtlich verfolgt.
 
 ## 🎯 Modul-Zweck
-Enterprise-grade Sicherheitsinfrastruktur mit Zero-Trust-Sicherheit, Bedrohungserkennung, Compliance-Management und umfassendem Schutz für die Ainflue Creator-Plattform, die 65+ Social Media und Streaming-Plattformen mit 53 AI-Agenten bedient.
+Enterprise-grade Sicherheitsinfrastruktur mit Zero-Trust-Sicherheit, Bedrohungserkennung, Compliance-Management und umfassendem Schutz für die iacherie Creator-Plattform, die 65+ Social Media und Streaming-Plattformen mit 53 AI-Agenten bedient.
 
 ## 🏗️ Architektur-Komponenten
 - **Zero Trust Sicherheit**: Vollständige Netzwerksegmentierung und Zugriffskontrolle

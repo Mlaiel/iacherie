@@ -1,5 +1,5 @@
 """
-Ainflue Core Payments - Invoice Generator Core
+IA Chéries Core Payments - Invoice Generator Core
 ==============================================
 
 Enterprise-grade invoice generation system with automated billing,

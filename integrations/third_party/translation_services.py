@@ -935,7 +935,7 @@ def create_translation_manager(config: Dict[str, Any]) -> TranslationServicesMan
     return TranslationServicesManager(config)
 
 # Example usage for IA Chérie platform
-async def ainflue_content_localization_workflow(content: str, target_languages: List[str], 
+async def iacherie_content_localization_workflow(content: str, target_languages: List[str], 
                                               content_type: ContentType = ContentType.TEXT) -> Dict[str, Any]:
     """
     Complete content localization workflow for IA Chérie creators
@@ -1014,7 +1014,7 @@ if __name__ == "__main__":
         test_content = "Welcome to IA Chérie - the AI-powered content creation and monetization platform for creators worldwide!"
         test_languages = ["es", "fr", "de", "ja", "zh"]
         
-        result = await ainflue_content_localization_workflow(
+        result = await iacherie_content_localization_workflow(
             test_content, test_languages, ContentType.TEXT
         )
         

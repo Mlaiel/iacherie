@@ -1,5 +1,5 @@
 """
-Ainflue Core Business - Revenue Optimization Core
+IA Chéries Core Business - Revenue Optimization Core
 =================================================
 
 Enterprise revenue optimization with pricing strategies, conversion optimization,

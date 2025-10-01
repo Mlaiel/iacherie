@@ -1,12 +1,12 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🤖 Intelligent Load Balancer Enterprise - Ainflue
+🤖 Intelligent Load Balancer Enterprise - IA Chéries
 =================================================
 Load balancer intelligent avec ML predictions.
 Traffic prediction + health scoring + adaptive routing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

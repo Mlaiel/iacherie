@@ -44,7 +44,7 @@ redis-cli --latency-history
 
 # 3. Scaling automatique d'urgence
 kubectl scale deployment iacherie-api --replicas=10
-docker service update --replicas 5 ainflue_worker
+docker service update --replicas 5 iacherie_worker
 ```
 
 ### 🔍 **DIAGNOSTICS PAR COMPOSANT**

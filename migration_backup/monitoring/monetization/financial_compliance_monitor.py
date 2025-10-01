@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Financial Compliance Monitor
+IA Chéries Platform - Financial Compliance Monitor
 =============================================
 
-Enterprise-grade financial compliance monitoring system for the Ainflue platform.
+Enterprise-grade financial compliance monitoring system for the IA Chéries platform.
 Ensures adherence to financial regulations, anti-money laundering (AML) requirements,
 and international compliance standards for global payment processing.
 
@@ -127,7 +127,7 @@ class ComplianceMetrics:
 
 class FinancialComplianceMonitor:
     """
-    Enterprise financial compliance monitoring system for the Ainflue platform.
+    Enterprise financial compliance monitoring system for the IA Chéries platform.
     
     Monitors compliance with financial regulations, performs AML screening,
     and ensures adherence to international compliance standards.

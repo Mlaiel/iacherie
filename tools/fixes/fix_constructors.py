@@ -59,7 +59,7 @@ def main():
     
     fixed_count = 0
     for file in problem_files:
-        filepath = f'/workspaces/Ainfluencer/{file}'
+        filepath = f'/workspaces/iaCherie/{file}'
         if os.path.exists(filepath):
             if fix_constructor_in_file(filepath):
                 fixed_count += 1

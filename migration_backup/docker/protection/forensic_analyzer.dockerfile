@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE FORENSIC ANALYZER - SPECIALIZED DOCKERFILE
+# IA CHÉRIES FORENSIC ANALYZER - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for digital forensic analysis supporting
 # metadata extraction, file analysis, and evidence collection for legal purposes.

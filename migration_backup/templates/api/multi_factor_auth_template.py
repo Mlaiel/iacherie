@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Multi-Factor Authentication Template - Enterprise Security
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: IA Chéries Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -85,7 +85,7 @@ class MFAError(Exception):
 class MFAConfig:
     """Enterprise MFA configuration"""
     # TOTP settings
-    totp_issuer: str = "Ainflue"
+    totp_issuer: str = "IA Chéries"
     totp_algorithm: str = "SHA1"
     totp_digits: int = 6
     totp_interval: int = 30
@@ -96,7 +96,7 @@ class MFAConfig:
     sms_api_key: Optional[str] = None
     sms_api_secret: Optional[str] = None
     sms_from_number: Optional[str] = None
-    sms_template: str = "Your Ainflue verification code: {code}"
+    sms_template: str = "Your IA Chéries verification code: {code}"
     
     # Email settings
     email_smtp_host: str = "smtp.gmail.com"
@@ -104,7 +104,7 @@ class MFAConfig:
     email_username: Optional[str] = None
     email_password: Optional[str] = None
     email_from: str = "noreply@ainflue.com"
-    email_template: str = "Your Ainflue verification code: {code}"
+    email_template: str = "Your IA Chéries verification code: {code}"
     
     # Push notification settings
     push_provider: str = "firebase"  # firebase, apns, custom
@@ -374,7 +374,7 @@ class EmailProvider:
         """Send email verification code"""
         try:
             message = self.config.email_template.format(code=code)
-            subject = "Ainflue Verification Code"
+            subject = "IA Chéries Verification Code"
             
             return await self._send_smtp_email(email_address, subject, message)
             
@@ -440,7 +440,7 @@ class PushNotificationProvider:
             payload = {
                 "to": device_token,
                 "notification": {
-                    "title": "Ainflue Verification",
+                    "title": "IA Chéries Verification",
                     "body": f"Your verification code: {code}"
                 },
                 "data": {

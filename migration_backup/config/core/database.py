@@ -1,4 +1,4 @@
-"""Ainflue Enterprise Database Configuration - QUANTUM GRADE DBA ARCHITECTURE
+"""IA Chéries Enterprise Database Configuration - QUANTUM GRADE DBA ARCHITECTURE
 ===========================================================================
 
 🗄️ ENTERPRISE DATABASE FEATURES:
@@ -421,7 +421,7 @@ def get_database_config() -> dict:
 db_settings = DatabaseSettings()
 
 class DatabaseConfiguration:
-    """Database configuration manager for Ainflue platform"""
+    """Database configuration manager for IA Chéries platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

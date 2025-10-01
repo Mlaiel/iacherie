@@ -201,9 +201,9 @@ await service_mesh_orchestrator.enable_observability()
 
 # تكوين مقاييس مخصصة
 await service_mesh_orchestrator.configure_custom_metrics([
-    "ainflue_creator_requests_total",
-    "ainflue_content_processing_duration",
-    "ainflue_monetization_transactions"
+    "iacherie_creator_requests_total",
+    "iacherie_content_processing_duration",
+    "iacherie_monetization_transactions"
 ])
 ```
 

@@ -109,44 +109,44 @@ Initialize content protection tracker"""
         
         # Prometheus metrics
         self.protection_scans_total = Counter(
-            'ainflue_protection_scans_total',
+            'iacherie_protection_scans_total',
             'Total protection scans performed',
             ['type', 'method', 'result']
         )
         
         self.protection_accuracy = Gauge(
-            'ainflue_protection_accuracy_percentage',
+            'iacherie_protection_accuracy_percentage',
             'Protection system accuracy percentage',
             ['type', 'method']
         )
         
         self.threat_detection_rate = Gauge(
-            'ainflue_threat_detection_rate',
+            'iacherie_threat_detection_rate',
             'Threat detection rate percentage',
             ['threat_level', 'type']
         )
         
         self.processing_time = Histogram(
-            'ainflue_protection_processing_seconds',
+            'iacherie_protection_processing_seconds',
             'Protection processing time',
             ['type', 'method'],
             buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 30.0, float('inf')]
         )
         
         self.false_positive_rate = Gauge(
-            'ainflue_false_positive_rate_percentage',
+            'iacherie_false_positive_rate_percentage',
             'False positive rate percentage',
             ['type', 'method']
         )
         
         self.content_matches_found = Counter(
-            'ainflue_content_matches_total',
+            'iacherie_content_matches_total',
             'Total content matches found',
             ['match_type', 'confidence_level']
         )
         
         self.dmca_takedowns = Counter(
-            'ainflue_dmca_takedowns_total',
+            'iacherie_dmca_takedowns_total',
             'DMCA takedown requests',
             ['status', 'reason']
         )

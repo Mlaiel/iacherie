@@ -1,4 +1,4 @@
-"""Ainflue Core Orchestration - Enterprise System Orchestration
+"""IA Chéries Core Orchestration - Enterprise System Orchestration
 ============================================================
 
 Core orchestration management providing enterprise orchestration, microservices

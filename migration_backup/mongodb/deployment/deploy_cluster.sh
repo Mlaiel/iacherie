@@ -2,7 +2,7 @@
 # =============================================================================
 # MONGODB CLUSTER DEPLOYMENT SCRIPT
 # =============================================================================
-# Production MongoDB cluster deployment automation for Ainflue platform.
+# Production MongoDB cluster deployment automation for IA Chéries platform.
 # Supports replica sets, sharding, monitoring, and backup configuration.
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -108,7 +108,7 @@ EOF
 
 # Main deployment function (simplified for demo)
 deploy_mongodb() {
-    info "Starting MongoDB deployment for Ainflue platform"
+    info "Starting MongoDB deployment for IA Chéries platform"
     info "Environment: $ENVIRONMENT"
     info "Deployment Type: $DEPLOYMENT_TYPE"
     info "MongoDB Version: $MONGODB_VERSION"

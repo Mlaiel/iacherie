@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Permission Handler
+IA Chéries Platform - Enterprise Permission Handler
 Advanced permission management system with role-based access control
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

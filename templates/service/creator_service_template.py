@@ -1,4 +1,4 @@
-"""{{service_name}} Creator Service for Ainflue Platform
+"""{{service_name}} Creator Service for iacherie Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -171,7 +171,7 @@ class CreatorConfig(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Advanced creator service for Ainflue platform.
+    Advanced creator service for iacherie platform.
     
     Features:
     - Creator registration and profile management

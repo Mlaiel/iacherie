@@ -100,10 +100,10 @@ integrations/microservices_orchestration/
 ### 1. Initialize Orchestration Suite
 
 ```python
-from integrations.microservices_orchestration import initialize_ainflue_microservices
+from integrations.microservices_orchestration import initialize_iacherie_microservices
 
 # Initialize complete orchestration
-success = await initialize_ainflue_microservices({
+success = await initialize_iacherie_microservices({
     'cluster_name': 'iacherie-production',
     'environment': 'production',
     'security_level': 'enterprise'

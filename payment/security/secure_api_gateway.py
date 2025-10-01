@@ -531,12 +531,12 @@ class AuthenticationValidator:
         
         # Clés API valides (simulation)
         self.valid_api_keys = {
-            "ainflue_key_123": {"user_id": "user_123", "creator_id": "creator_abc"},
-            "ainflue_key_456": {"user_id": "user_456", "creator_id": "creator_def"}
+            "iacherie_key_123": {"user_id": "user_123", "creator_id": "creator_abc"},
+            "iacherie_key_456": {"user_id": "user_456", "creator_id": "creator_def"}
         }
         
         # Configuration JWT
-        self.jwt_secret = "ainflue_jwt_secret_key_2025"
+        self.jwt_secret = "iacherie_jwt_secret_key_2025"
         
     async def authenticate_request(self, 
                                  context: RequestContext,
@@ -1282,7 +1282,7 @@ if __name__ == "__main__":
                 self.method = "POST"
                 self.headers = {
                     "user-agent": "curl/7.68.0",
-                    "x-api-key": "ainflue_key_123"
+                    "x-api-key": "iacherie_key_123"
                 }
                 self.query_params = {"union": "select"}
                 

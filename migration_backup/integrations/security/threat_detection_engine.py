@@ -16,7 +16,7 @@ Expert Team Implementation:
 🎨 IA Prompt Engineer: Prompt injection detection + AI safety validation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 Date: Septembre 2024
 

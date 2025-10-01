@@ -422,7 +422,7 @@ interface MobileNavigationProps {
 // ===========================
 
 export const MobileNavigationTemplate: React.FC<MobileNavigationProps> = ({
-  title = 'Ainflue',
+  title = 'IA Chéries',
   user,
   navigationItems,
   menuItems,

@@ -1,7 +1,7 @@
-"""📊 Ainflue Metrics Monitoring Enterprise - Module Principal
+"""📊 IA Chéries Metrics Monitoring Enterprise - Module Principal
 ===========================================================
 
-Module principal du système de métriques et monitoring enterprise pour la plateforme Ainflue.
+Module principal du système de métriques et monitoring enterprise pour la plateforme IA Chéries.
 Fournit une architecture complète de 18 composants pour l'analytics, la business intelligence,
 le monitoring temps réel, l'optimisation des coûts, et l'orchestration de l'écosystème.
 
@@ -220,6 +220,6 @@ __all__ = [
 ]
 
 # Logging de l'initialisation réussie
-logger.info("🚀 Ainflue Metrics Monitoring Enterprise - 18/18 composants chargés avec succès")
+logger.info("🚀 IA Chéries Metrics Monitoring Enterprise - 18/18 composants chargés avec succès")
 logger.info("📊 Architecture complète: Analytics + Opérationnels + Orchestration + Business Intelligence")
 logger.info("🔒 Propriété intellectuelle protégée - Fahed Mlaiel (mlaiel@live.de)")

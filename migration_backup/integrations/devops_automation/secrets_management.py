@@ -2,7 +2,7 @@
 ========================================================
 
 Security Expert: Secrets management enterprise avec Vault/KeyVault integration,
-rotation automation et access control management pour Ainflue.
+rotation automation et access control management pour IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025

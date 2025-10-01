@@ -179,7 +179,7 @@ create_creator_profile() {
       "community_score": 0
     },
     "contact": {
-      "platform": "ainflue_desktop",
+      "platform": "iacherie_desktop",
       "communication_preferences": ["in_app", "email"],
       "public_profile": true
     }
@@ -331,7 +331,7 @@ find_compatible_creators() {
   "collaboration_potential": "$(get_collaboration_potential "$compatibility")",
   "recommended_roles": $(get_recommended_roles "$profile_type" "$project_requirements"),
   "contact_info": {
-    "platform": "ainflue_desktop",
+    "platform": "iacherie_desktop",
     "profile_url": "/profiles/$profile_id"
   }
 }
@@ -463,9 +463,9 @@ create_collaboration_project() {
       }
     },
     "collaboration_terms": {
-      "communication_channels": ["ainflue_chat", "video_calls", "shared_workspace"],
+      "communication_channels": ["iacherie_chat", "video_calls", "shared_workspace"],
       "meeting_schedule": "weekly_checkins",
-      "file_sharing": "ainflue_cloud",
+      "file_sharing": "iacherie_cloud",
       "version_control": "integrated",
       "intellectual_property": "shared_ownership",
       "credit_sharing": "equal_attribution"

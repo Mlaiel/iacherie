@@ -4,7 +4,7 @@
 🏗️ MLOps Feature Engineering Engine - Automated ML Feature Pipeline
 
 Engine d'engineering de features automatisé avec ML AutoFE pour créateurs.
-Transformation intelligente de données multi-format avec optimisation business logic Ainflue.
+Transformation intelligente de données multi-format avec optimisation business logic IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -58,7 +58,7 @@ class TransformationType(Enum):
 
 
 class CreatorType(Enum):
-    """Types de créateurs Ainflue"""
+    """Types de créateurs IA Chéries"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -438,7 +438,7 @@ class FeatureEngineeringEngine:
     - Data quality validation
     - Feature importance scoring
     - Transformation versioning et lineage
-    - Business logic integration Ainflue
+    - Business logic integration IA Chéries
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

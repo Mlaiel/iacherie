@@ -196,11 +196,11 @@ try:
     from prometheus_client import Counter, Histogram, Gauge, Summary
     
     # Global analytics metrics
-    ANALYTICS_REQUESTS = Counter('ainflue_analytics_requests_total', 'Total analytics requests')
-    ANALYTICS_DURATION = Histogram('ainflue_analytics_duration_seconds', 'Analytics processing duration')
-    ACTIVE_ANALYTICS = Gauge('ainflue_active_analytics_sessions', 'Active analytics sessions')
-    PREDICTION_ACCURACY = Gauge('ainflue_prediction_accuracy', 'Prediction accuracy score')
-    QUANTUM_ACCELERATION = Gauge('ainflue_quantum_acceleration_factor', 'Quantum acceleration factor')
+    ANALYTICS_REQUESTS = Counter('iacherie_analytics_requests_total', 'Total analytics requests')
+    ANALYTICS_DURATION = Histogram('iacherie_analytics_duration_seconds', 'Analytics processing duration')
+    ACTIVE_ANALYTICS = Gauge('iacherie_active_analytics_sessions', 'Active analytics sessions')
+    PREDICTION_ACCURACY = Gauge('iacherie_prediction_accuracy', 'Prediction accuracy score')
+    QUANTUM_ACCELERATION = Gauge('iacherie_quantum_acceleration_factor', 'Quantum acceleration factor')
 except ImportError:
     logging.warning("Prometheus client not available - metrics disabled")
 

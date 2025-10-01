@@ -1,6 +1,6 @@
 # 🎭 Erweiterte 3D-Avatar-System
 
-**Professionelle 3D-Avatar-Generierung, KI-gesteuerte Persönlichkeit und Multi-Plattform-Verteilungssystem für die Ainflue IA Influencer Agent Plattform.**
+**Professionelle 3D-Avatar-Generierung, KI-gesteuerte Persönlichkeit und Multi-Plattform-Verteilungssystem für die iacherie IA Influencer Agent Plattform.**
 
 ## 👥 Team-Spezialisierung
 
@@ -190,4 +190,4 @@ Diese Software ist proprietär und vertraulich. Unbefugte Nutzung ist untersagt.
 
 ---
 
-**🎭 Ainflue Avatar System - Digitale Menschen zum Leben erwecken** 🚀
+**🎭 iacherie Avatar System - Digitale Menschen zum Leben erwecken** 🚀

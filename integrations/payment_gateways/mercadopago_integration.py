@@ -912,7 +912,7 @@ async def example_mercadopago_flow():
                     "number": "12345678901"
                 }
             ),
-            external_reference="ainflue_sub_123",
+            external_reference="iacherie_sub_123",
             metadata={
                 "creator_id": "creator_123",
                 "subscription_type": "premium",
@@ -935,7 +935,7 @@ async def example_mercadopago_flow():
         
         preference = await mp.create_preference(
             items=items,
-            external_reference="ainflue_pref_123"
+            external_reference="iacherie_pref_123"
         )
         
         print(f"Preference created: {preference['id']}")

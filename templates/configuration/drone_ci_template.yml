@@ -1,9 +1,9 @@
-# Drone CI Configuration Template for Ainflue Platform
+# Drone CI Configuration Template for iacherie Platform
 # Cloud-native CI/CD pipeline using Drone
 
 kind: pipeline
 type: kubernetes
-name: ainflue-ci-cd
+name: iacherie-ci-cd
 
 metadata:
   namespace: drone
@@ -15,10 +15,10 @@ clone:
 
 # Environment variables
 environment:
-  APP_NAME: ainflue
-  DOCKER_REGISTRY: registry.ainflue.com
-  STAGING_NAMESPACE: ainflue-staging
-  PRODUCTION_NAMESPACE: ainflue-production
+  APP_NAME: iacherie
+  DOCKER_REGISTRY: registry.iacherie.com
+  STAGING_NAMESPACE: iacherie-staging
+  PRODUCTION_NAMESPACE: iacherie-production
 
 # Pipeline steps
 steps:
@@ -126,7 +126,7 @@ steps:
       - npm ci
       - npm run test:integration
     environment:
-      DATABASE_URL: postgresql://test_user:test_password@postgres:5432/ainflue_test
+      DATABASE_URL: postgresql://test_user:test_password@postgres:5432/iacherie_test
       REDIS_URL: redis://redis:6379
     volumes:
       - name: node-cache
@@ -145,8 +145,8 @@ steps:
     image: sonarqube/sonar-scanner-cli:latest
     commands:
       - sonar-scanner
-        -Dsonar.projectKey=ainflue
-        -Dsonar.projectName=Ainflue
+        -Dsonar.projectKey=iacherie
+        -Dsonar.projectName=iacherie
         -Dsonar.sources=.
         -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**
         -Dsonar.javascript.lcov.reportPaths=*/coverage/lcov.info
@@ -172,7 +172,7 @@ steps:
     image: plugins/docker
     settings:
       registry: ${DOCKER_REGISTRY}
-      repo: ${DOCKER_REGISTRY}/ainflue-api
+      repo: ${DOCKER_REGISTRY}/iacherie-api
       context: services/api
       dockerfile: services/api/Dockerfile
       tags:
@@ -195,7 +195,7 @@ steps:
     image: plugins/docker
     settings:
       registry: ${DOCKER_REGISTRY}
-      repo: ${DOCKER_REGISTRY}/ainflue-web
+      repo: ${DOCKER_REGISTRY}/iacherie-web
       context: services/web
       dockerfile: services/web/Dockerfile
       tags:
@@ -218,7 +218,7 @@ steps:
     image: plugins/docker
     settings:
       registry: ${DOCKER_REGISTRY}
-      repo: ${DOCKER_REGISTRY}/ainflue-ml
+      repo: ${DOCKER_REGISTRY}/iacherie-ml
       context: services/ml
       dockerfile: services/ml/Dockerfile
       tags:
@@ -241,9 +241,9 @@ steps:
   - name: container-security-scan
     image: aquasec/trivy:latest
     commands:
-      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output api-security-report.sarif ${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8}
-      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output web-security-report.sarif ${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8}
-      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output ml-security-report.sarif ${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8}
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output api-security-report.sarif ${DOCKER_REGISTRY}/iacherie-api:${DRONE_COMMIT_SHA:0:8}
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output web-security-report.sarif ${DOCKER_REGISTRY}/iacherie-web:${DRONE_COMMIT_SHA:0:8}
+      - trivy image --security-checks vuln --severity HIGH,CRITICAL --format sarif --output ml-security-report.sarif ${DOCKER_REGISTRY}/iacherie-ml:${DRONE_COMMIT_SHA:0:8}
     depends_on:
       - build-docker-api
       - build-docker-web
@@ -260,12 +260,12 @@ steps:
     image: bitnami/kubectl:latest
     commands:
       - echo "$KUBE_CONFIG" | base64 -d > ~/.kube/config
-      - kubectl set image deployment/ainflue-api ainflue-api=${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
-      - kubectl set image deployment/ainflue-web ainflue-web=${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
-      - kubectl set image deployment/ainflue-ml ainflue-ml=${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
-      - kubectl rollout status deployment/ainflue-api --namespace=${STAGING_NAMESPACE} --timeout=300s
-      - kubectl rollout status deployment/ainflue-web --namespace=${STAGING_NAMESPACE} --timeout=300s
-      - kubectl rollout status deployment/ainflue-ml --namespace=${STAGING_NAMESPACE} --timeout=300s
+      - kubectl set image deployment/iacherie-api iacherie-api=${DOCKER_REGISTRY}/iacherie-api:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl set image deployment/iacherie-web iacherie-web=${DOCKER_REGISTRY}/iacherie-web:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl set image deployment/iacherie-ml iacherie-ml=${DOCKER_REGISTRY}/iacherie-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${STAGING_NAMESPACE}
+      - kubectl rollout status deployment/iacherie-api --namespace=${STAGING_NAMESPACE} --timeout=300s
+      - kubectl rollout status deployment/iacherie-web --namespace=${STAGING_NAMESPACE} --timeout=300s
+      - kubectl rollout status deployment/iacherie-ml --namespace=${STAGING_NAMESPACE} --timeout=300s
     environment:
       KUBE_CONFIG:
         from_secret: kube_config_staging
@@ -283,8 +283,8 @@ steps:
     commands:
       - npm ci
       - npx playwright install
-      - export API_BASE_URL="https://api.staging.ainflue.com"
-      - export WEB_BASE_URL="https://staging.ainflue.com"
+      - export API_BASE_URL="https://api.staging.iacherie.com"
+      - export WEB_BASE_URL="https://staging.iacherie.com"
       - npm run test:e2e:staging
     volumes:
       - name: node-cache
@@ -304,7 +304,7 @@ steps:
       - k6 run --vus 50 --duration 5m performance/load-test.js
       - k6 run --vus 100 --duration 2m performance/stress-test.js
     environment:
-      API_BASE_URL: https://api.staging.ainflue.com
+      API_BASE_URL: https://api.staging.iacherie.com
     depends_on:
       - deploy-staging
     when:
@@ -318,12 +318,12 @@ steps:
     image: bitnami/kubectl:latest
     commands:
       - echo "$KUBE_CONFIG" | base64 -d > ~/.kube/config
-      - kubectl set image deployment/ainflue-api ainflue-api=${DOCKER_REGISTRY}/ainflue-api:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
-      - kubectl set image deployment/ainflue-web ainflue-web=${DOCKER_REGISTRY}/ainflue-web:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
-      - kubectl set image deployment/ainflue-ml ainflue-ml=${DOCKER_REGISTRY}/ainflue-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
-      - kubectl rollout status deployment/ainflue-api --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
-      - kubectl rollout status deployment/ainflue-web --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
-      - kubectl rollout status deployment/ainflue-ml --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+      - kubectl set image deployment/iacherie-api iacherie-api=${DOCKER_REGISTRY}/iacherie-api:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl set image deployment/iacherie-web iacherie-web=${DOCKER_REGISTRY}/iacherie-web:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl set image deployment/iacherie-ml iacherie-ml=${DOCKER_REGISTRY}/iacherie-ml:${DRONE_COMMIT_SHA:0:8} --namespace=${PRODUCTION_NAMESPACE}
+      - kubectl rollout status deployment/iacherie-api --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+      - kubectl rollout status deployment/iacherie-web --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
+      - kubectl rollout status deployment/iacherie-ml --namespace=${PRODUCTION_NAMESPACE} --timeout=600s
     environment:
       KUBE_CONFIG:
         from_secret: kube_config_production
@@ -340,8 +340,8 @@ steps:
     image: node:18-alpine
     commands:
       - npm ci
-      - export API_BASE_URL="https://api.ainflue.com"
-      - export WEB_BASE_URL="https://app.ainflue.com"
+      - export API_BASE_URL="https://api.iacherie.com"
+      - export WEB_BASE_URL="https://app.iacherie.com"
       - npm run test:smoke:production
     volumes:
       - name: node-cache
@@ -392,7 +392,7 @@ services:
   - name: postgres
     image: postgres:13
     environment:
-      POSTGRES_DB: ainflue_test
+      POSTGRES_DB: iacherie_test
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: test_password
     when:
@@ -453,12 +453,12 @@ steps:
   - name: dependency-check
     image: owasp/dependency-check:latest
     commands:
-      - /usr/share/dependency-check/bin/dependency-check.sh --project "Ainflue" --scan . --format JSON --out dependency-check-report.json
+      - /usr/share/dependency-check/bin/dependency-check.sh --project "iacherie" --scan . --format JSON --out dependency-check-report.json
       
   - name: upload-security-reports
     image: plugins/s3
     settings:
-      bucket: ainflue-security-reports
+      bucket: iacherie-security-reports
       access_key:
         from_secret: aws_access_key_id
       secret_key:
@@ -488,7 +488,7 @@ steps:
     commands:
       - npm update
       - npm audit fix
-      - git config --global user.email "drone@ainflue.com"
+      - git config --global user.email "drone@iacherie.com"
       - git config --global user.name "Drone CI"
       - |
         if [[ $(git status --porcelain) ]]; then

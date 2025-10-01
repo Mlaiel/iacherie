@@ -237,4 +237,4 @@ python backend/core/example_usage.py
 
 For questions or issues with the consolidated models, contact:
 - Author: Fahed Mlaiel <mlaiel@live.de>
-- Repository: Mlaiel/Ainflue
+- Repository: Mlaiel/iacherie

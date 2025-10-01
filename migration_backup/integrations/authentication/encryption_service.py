@@ -1,7 +1,7 @@
 """
 🔐🛡️ ENCRYPTION SERVICE - ENTERPRISE SECURITY MODULE 🛡️🔐
-Enterprise Encryption Service for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Encryption Service for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging
@@ -96,7 +96,7 @@ class EncryptionService:
         """🔑 Generate Master Key"""
         try:
             # Use environment variable or generate new key
-            env_key = os.getenv('AINFLUENCER_MASTER_KEY')
+            env_key = os.getenv('IA CHÉRIES_MASTER_KEY')
             if env_key:
                 return base64.b64decode(env_key)
             

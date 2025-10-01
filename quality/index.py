@@ -61,7 +61,7 @@ class QualityModule:
     is_loaded: bool = False
     experts_responsible: List[str] = None
 
-class AinfluenceEnterpriseQualityOrchestrator:
+class iacherienceEnterpriseQualityOrchestrator:
     """
     🏆 ORCHESTRATEUR PRINCIPAL QUALITÉ ENTERPRISE IACHERIE
     
@@ -310,7 +310,7 @@ class AinfluenceEnterpriseQualityOrchestrator:
         return {"status": "certified", "certification_id": "IACHERIE-CERT-2025"}
 
 # Instance singleton orchestrateur enterprise
-quality_orchestrator = AinfluenceEnterpriseQualityOrchestrator()
+quality_orchestrator = iacherienceEnterpriseQualityOrchestrator()
 
 async def main():
     """Point d'entrée principal pour démonstration"""
@@ -341,4 +341,4 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 # Alias pour compatibilité import expert roles
-EnterpriseQualityOrchestrator = AinfluenceEnterpriseQualityOrchestrator
+EnterpriseQualityOrchestrator = iacherienceEnterpriseQualityOrchestrator

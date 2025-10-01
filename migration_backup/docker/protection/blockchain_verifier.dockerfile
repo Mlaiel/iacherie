@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE BLOCKCHAIN VERIFIER - DISTRIBUTED DOCKERFILE  
+# IA CHÉRIES BLOCKCHAIN VERIFIER - DISTRIBUTED DOCKERFILE  
 # =============================================================================
 
 ARG PYTHON_VERSION=3.11
@@ -54,7 +54,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${BLOCKCHAIN_SERVICE_PORT}
 CMD ["python3.11", "-m", "blockchain_verifier.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Blockchain Verifier"
+LABEL org.opencontainers.image.title="IA Chéries Blockchain Verifier"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="blockchain_verifier" 
 LABEL ainflue.service.port="8025"

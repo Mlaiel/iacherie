@@ -1,5 +1,5 @@
 # ===============================================
-# Challenge Engine Dockerfile - Ainflue Platform
+# Challenge Engine Dockerfile - IA Chéries Platform
 # ===============================================
 # Multi-stage Docker build for Challenge Management Service
 # Handles challenge creation, tracking, and completion logic
@@ -76,7 +76,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
 # Resource limits (will be overridden by docker-compose)
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL version="3.0.0"
-LABEL description="Challenge Engine Service for Ainflue Gamification"
+LABEL description="Challenge Engine Service for IA Chéries Gamification"
 LABEL security.scan="trivy,clair"
 
 # Expose port

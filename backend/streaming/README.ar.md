@@ -33,11 +33,11 @@
 
 ## 📋 نظرة عامة على وحدة البث
 
-تشكل وحدة **Backend Streaming** القلب التقني لنظام البث المباشر الذكي في Ainflue، وتقدم قدرات بث متقدمة مع الذكاء الاصطناعي المدمج، حماية آمنة للمحتوى، تحقيق الدخل الفوري والتوزيع متعدد المنصات.
+تشكل وحدة **Backend Streaming** القلب التقني لنظام البث المباشر الذكي في iacherie، وتقدم قدرات بث متقدمة مع الذكاء الاصطناعي المدمج، حماية آمنة للمحتوى، تحقيق الدخل الفوري والتوزيع متعدد المنصات.
 
 ### 🎯 المهمة والأهداف
 
-**المهمة الأساسية**: توفير بنية تحتية شاملة للبث على مستوى المؤسسات تمكن منشئي المحتوى في Ainflue من بث محتوى مباشر عالي الجودة مع الذكاء الاصطناعي المدمج، تحقيق الدخل المحسن والأمان الأقصى.
+**المهمة الأساسية**: توفير بنية تحتية شاملة للبث على مستوى المؤسسات تمكن منشئي المحتوى في iacherie من بث محتوى مباشر عالي الجودة مع الذكاء الاصطناعي المدمج، تحقيق الدخل المحسن والأمان الأقصى.
 
 **أهداف البث**:
 - **البث المباشر المهني**: RTMP/WebRTC، جودة 4K، زمن استجابة منخفض جداً
@@ -236,7 +236,7 @@ POST /api/streaming/live/create
 POST /api/streaming/live/{stream_id}/start
 {
     "stream_key": "sk_live_abc123",
-    "rtmp_url": "rtmp://ingest.ainflue.com/live/",
+    "rtmp_url": "rtmp://ingest.iacherie.com/live/",
     "auto_record": true,
     "ai_enhancement": true
 }
@@ -245,7 +245,7 @@ POST /api/streaming/live/{stream_id}/start
 #### المقاييس الفورية
 ```python
 GET /api/streaming/live/{stream_id}/metrics
-WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
+WebSocket: ws://stream.iacherie.com/metrics/{stream_id}
 ```
 
 ### تكاملات البث
@@ -259,7 +259,7 @@ WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
 - **LinkedIn Live**: بث مهني
 
 #### خدمات الطرف الثالث
-- **OBS Studio**: إضافة Ainflue الرسمية
+- **OBS Studio**: إضافة iacherie الرسمية
 - **Streamlabs**: أدوات وتراكبات
 - **خدمات التبرع**: PayPal، Stripe، العملات المشفرة
 - **خدمات الدردشة**: إشراف ذكي اصطناعي مدمج
@@ -288,13 +288,13 @@ WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
 
 ### جهات اتصال الدعم
 - **القائد التقني**: فاهد ملائيل (mlaiel@live.de)
-- **دعم البث**: streaming-support@ainflue.com
+- **دعم البث**: streaming-support@iacherie.com
 - **الطوارئ**: +49-xxx-xxx-xxxx (24/7)
 
 ### موارد التطوير
-- **وثائق API**: [docs.ainflue.com/streaming](https://docs.ainflue.com/streaming)
-- **SDK البث**: [github.com/ainflue/streaming-sdk](https://github.com/ainflue/streaming-sdk)
-- **المجتمع**: [community.ainflue.com/streaming](https://community.ainflue.com/streaming)
+- **وثائق API**: [docs.iacherie.com/streaming](https://docs.iacherie.com/streaming)
+- **SDK البث**: [github.com/iacherie/streaming-sdk](https://github.com/iacherie/streaming-sdk)
+- **المجتمع**: [community.iacherie.com/streaming](https://community.iacherie.com/streaming)
 
 ---
 

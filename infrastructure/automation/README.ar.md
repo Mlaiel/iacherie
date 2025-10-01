@@ -1,13 +1,13 @@
 # 🔧 أتمتة البنية التحتية - منصة DevOps للمؤسسات
 
-[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/Ainflue)
-[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/Ainflue)
-[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/Ainflue)
-[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/Ainflue)
+[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/iacherie)
+[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/iacherie)
+[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/iacherie)
+[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/iacherie)
 
 ## 🌟 نظرة عامة
 
-منصة أتمتة البنية التحتية المتقدمة لنظام اقتصاد المبدعين Ainflue. إطار الأتمتة على مستوى المؤسسات هذا يدير خطوط CI/CD، وتوفير البنية التحتية، واستراتيجيات النشر، والمراقبة، والأمان، والامتثال عبر 53 وكيل ذكي و65+ تكامل منصة.
+منصة أتمتة البنية التحتية المتقدمة لنظام اقتصاد المبدعين iacherie. إطار الأتمتة على مستوى المؤسسات هذا يدير خطوط CI/CD، وتوفير البنية التحتية، واستراتيجيات النشر، والمراقبة، والأمان، والامتثال عبر 53 وكيل ذكي و65+ تكامل منصة.
 
 **© فاهد ملايل 2024-2025 - الملكية الفكرية الصارمة**  
 ⚠️ **تحذير صارم**: أي استخدام غير مصرح به أو نسخ أو توزيع لهذا الكود بدون إذن كتابي صريح من فاهد ملايل محظور بشدة.  
@@ -141,8 +141,8 @@ creator_workflow = {
 ### التثبيت
 ```bash
 # استنساخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/automation
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/automation
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -332,4 +332,4 @@ automation:
 *تم الإنشاء: 15 سبتمبر 2025*  
 *الإصدار: 1.0.0 - توثيق أتمتة البنية التحتية للمؤسسة*  
 *المؤلف: فاهد ملايل (mlaiel@live.de)*  
-*المشروع: منصة أتمتة البنية التحتية Ainflue*
+*المشروع: منصة أتمتة البنية التحتية iacherie*

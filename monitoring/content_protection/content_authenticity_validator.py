@@ -25,11 +25,11 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 # Metrics
-authenticity_validations_total = Counter('ainflue_content_authenticity_validations_total', 
+authenticity_validations_total = Counter('iacherie_content_authenticity_validations_total', 
                                        'Total content authenticity validations', ['content_type', 'result'])
-authenticity_validation_duration = Histogram('ainflue_content_authenticity_validation_duration_seconds',
+authenticity_validation_duration = Histogram('iacherie_content_authenticity_validation_duration_seconds',
                                            'Time spent validating content authenticity')
-authenticity_confidence_score = Gauge('ainflue_content_authenticity_confidence_score',
+authenticity_confidence_score = Gauge('iacherie_content_authenticity_confidence_score',
                                      'Content authenticity confidence score', ['content_id'])
 
 class AuthenticityLevel(Enum):

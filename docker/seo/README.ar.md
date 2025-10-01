@@ -216,7 +216,7 @@ POST /api/seo/viral/predict
 
 ### تكامل سير عمل المبدع
 ```python
-from ainflue_seo import SEOOrchestrator
+from iacherie_seo import SEOOrchestrator
 
 # تحسين محركات البحث في سير عمل المبدع
 async def optimize_content_for_seo(content_data):

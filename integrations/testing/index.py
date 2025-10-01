@@ -42,7 +42,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise testing infrastructure for multi-platform content distribution validation"
 
 # Configuration logique métier IA Chérie
-AINFLUE_INTEGRATIONS = {
+IACHERIE_INTEGRATIONS = {
     'platforms': 65,
     'ecosystems': 3,
     'workflow': 'connect→auth→transform→process→distribute→monitor',

@@ -1,12 +1,12 @@
 """
-Backup Automation - Enterprise Backup and Disaster Recovery for Ainflue
+Backup Automation - Enterprise Backup and Disaster Recovery for iacherie
 =====================================================================
 
 Advanced backup automation for comprehensive data protection, disaster recovery,
 and business continuity for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -662,7 +662,7 @@ class BackupAutomationManager:
             raise ValueError("AWS S3 not configured")
         
         s3_client = self.storage_providers[StorageProvider.AWS_S3]
-        bucket_name = self.config.get("s3_bucket", "ainflue-backups")
+        bucket_name = self.config.get("s3_bucket", "iacherie-backups")
         key = f"{target.data_category.value}/{filename}"
         
         try:
@@ -1172,7 +1172,7 @@ class BackupAutomationManager:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "iacherie Creator Platform",
             "backup_summary": {
                 "total_targets": len(self.backup_targets),
                 "total_backups": metrics.total_backups,
@@ -1282,7 +1282,7 @@ if __name__ == "__main__":
         "aws_access_key": "your_access_key",
         "aws_secret_key": "your_secret_key",
         "aws_region": "us-east-1",
-        "s3_bucket": "ainflue-backups",
+        "s3_bucket": "iacherie-backups",
         "encryption_enabled": True,
         "compression_enabled": True,
         "verification_enabled": True
@@ -1314,8 +1314,8 @@ if __name__ == "__main__":
                 {"name": "Notify Teams", "type": "notification", "priority": 3}
             ],
             contact_list=[
-                {"name": "DevOps Team", "email": "devops@ainflue.com", "phone": "+1-555-0100"},
-                {"name": "Platform Team", "email": "platform@ainflue.com", "phone": "+1-555-0101"}
+                {"name": "DevOps Team", "email": "devops@iacherie.com", "phone": "+1-555-0100"},
+                {"name": "Platform Team", "email": "platform@iacherie.com", "phone": "+1-555-0101"}
             ]
         )
         print(f"DR plan created: {dr_plan.name}")

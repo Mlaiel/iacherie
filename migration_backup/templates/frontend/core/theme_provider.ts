@@ -2,7 +2,7 @@
  * 🎨 THEME PROVIDER - ENTERPRISE THEMING SYSTEM
  * ===============================================
  * 
- * Advanced Theme Management for Ainflue Creator Economy
+ * Advanced Theme Management for IA Chéries Creator Economy
  * Multi-brand theming, dark/light modes, accessibility
  * 
  * © 2025 Fahed Mlaiel <mlaiel@live.de>

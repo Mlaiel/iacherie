@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE AI SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
+# IA CHÉRIES AI SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build optimized for AI/ML workloads with GPU support,
 # model caching, and enterprise security features.
@@ -171,7 +171,7 @@ FROM gpu-base AS production
 
 LABEL stage=production
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue AI Service - Production Runtime"
+LABEL description="IA Chéries AI Service - Production Runtime"
 LABEL service="ai-service"
 LABEL gpu.enabled=true
 

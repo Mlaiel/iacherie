@@ -277,7 +277,7 @@ services:
               "Sid": "AllowApplicationAccess",
               "Effect": "Allow",
               "Principal": {
-                "AWS": "arn:aws:iam::ACCOUNT:role/IAInfluencerAppRole"
+                "AWS": "arn:aws:iam::ACCOUNT:role/IIA ChériesAppRole"
               },
               "Action": [
                 "s3:GetObject",
@@ -308,15 +308,15 @@ monitoring:
     # Custom Metrics
     custom_metrics:
       - name: "content_processing_latency"
-        namespace: "IAInfluencer/ContentProcessing"
+        namespace: "IIA Chéries/ContentProcessing"
         unit: "Milliseconds"
       
       - name: "fingerprint_matches_per_second"
-        namespace: "IAInfluencer/Protection"
+        namespace: "IIA Chéries/Protection"
         unit: "Count/Second"
       
       - name: "monetization_revenue_per_hour"
-        namespace: "IAInfluencer/Monetization"
+        namespace: "IIA Chéries/Monetization"
         unit: "Count"
   
   # Alerting

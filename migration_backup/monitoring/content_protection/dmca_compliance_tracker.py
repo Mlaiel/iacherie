@@ -1,5 +1,5 @@
 """
-Ainflue Platform - DMCA Compliance Tracker
+IA Chéries Platform - DMCA Compliance Tracker
 ==========================================
 
 Comprehensive DMCA compliance monitoring system for tracking takedown
@@ -141,8 +141,8 @@ class DMCAComplianceTracker:
     def _initialize_dmca_agent_info(self) -> Dict[str, Any]:
         """Initialize DMCA agent information."""
         return {
-            'agent_name': 'Ainflue DMCA Agent',
-            'organization': 'Ainflue Platform',
+            'agent_name': 'IA Chéries DMCA Agent',
+            'organization': 'IA Chéries Platform',
             'address': '1234 Tech Street, San Francisco, CA 94105',
             'phone': '+1 (555) 123-4567',
             'email': 'dmca@ainflue.com',
@@ -190,7 +190,7 @@ class DMCAComplianceTracker:
             We are reviewing your request and will respond within the timeframe required by law.
             
             Sincerely,
-            Ainflue DMCA Agent
+            IA Chéries DMCA Agent
             """,
             'content_removed': """
             Dear {requestor_name},
@@ -204,7 +204,7 @@ class DMCAComplianceTracker:
             The content has been disabled and the uploader has been notified.
             
             Sincerely,
-            Ainflue DMCA Agent
+            IA Chéries DMCA Agent
             """,
             'invalid_notice': """
             Dear {requestor_name},
@@ -217,7 +217,7 @@ class DMCAComplianceTracker:
             Please resubmit with the required information.
             
             Sincerely,
-            Ainflue DMCA Agent
+            IA Chéries DMCA Agent
             """
         }
     

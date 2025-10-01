@@ -761,7 +761,7 @@ Send notification through multiple channels based on user preferences"""
                 # Generic notification
                 payload = {
                     **base_payload,
-                    'title': data.get('title', 'Ainflue Notification'),
+                    'title': data.get('title', 'IA Chéries Notification'),
                     'body': data.get('message', 'You have a new notification'),
                     'icon': 'default_icon',
                     'sound': 'default',

@@ -2,7 +2,7 @@
 Monitoring Configuration - Main Configuration Module
 ====================================================
 
-Configuration centrale pour le système de monitoring Ainflue.
+Configuration centrale pour le système de monitoring IA Chéries.
 Réorganisation experte par l'équipe Lead Dev IA + Backend Senior + DevOps.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

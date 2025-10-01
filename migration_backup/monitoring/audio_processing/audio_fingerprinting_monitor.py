@@ -8,7 +8,7 @@ from typing import Dict, List, Any, Optional
 import logging
 
 """
-Ainflue Platform - Audio Fingerprinting Monitor
+IA Chéries Platform - Audio Fingerprinting Monitor
 ===============================================
 
 Advanced monitoring for AI-powered audio fingerprinting including

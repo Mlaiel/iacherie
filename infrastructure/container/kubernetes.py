@@ -448,12 +448,12 @@ class ServiceMeshManager:
                 'metadata': {'name': f'{mesh_type}-system'}
             }
             
-            # Service mesh configuration for Ainflue creator platform
+            # Service mesh configuration for iacherie creator platform
             mesh_config = {
                 'apiVersion': f'install.{mesh_type}.io/v1alpha1',
                 'kind': 'IstioOperator' if mesh_type == 'istio' else 'ServiceMeshControlPlane',
                 'metadata': {
-                    'name': 'ainflue-service-mesh',
+                    'name': 'iacherie-service-mesh',
                     'namespace': f'{mesh_type}-system'
                 },
                 'spec': {
@@ -462,8 +462,8 @@ class ServiceMeshManager:
                             'traceSampling': 100.0  # Full tracing for creator interactions
                         },
                         'global': {
-                            'meshID': 'ainflue-mesh',
-                            'network': 'ainflue-network'
+                            'meshID': 'iacherie-mesh',
+                            'network': 'iacherie-network'
                         }
                     }
                 }
@@ -491,10 +491,10 @@ class ServiceMeshManager:
                 'kind': 'VirtualService',
                 'metadata': {
                     'name': 'creator-upload-service',
-                    'namespace': 'ainflue-creators'
+                    'namespace': 'iacherie-creators'
                 },
                 'spec': {
-                    'hosts': ['creator-upload.ainflue.com'],
+                    'hosts': ['creator-upload.iacherie.com'],
                     'http': [{
                         'match': [{'uri': {'prefix': '/upload'}}],
                         'route': [{
@@ -526,7 +526,7 @@ class ServiceMeshManager:
                 'kind': 'DestinationRule',
                 'metadata': {
                     'name': 'creator-upload-destination',
-                    'namespace': 'ainflue-creators'
+                    'namespace': 'iacherie-creators'
                 },
                 'spec': {
                     'host': 'creator-upload-service',
@@ -576,7 +576,7 @@ class ServiceMeshManager:
                 'kind': 'Gateway',
                 'metadata': {
                     'name': 'collaboration-gateway',
-                    'namespace': 'ainflue-collaboration'
+                    'namespace': 'iacherie-collaboration'
                 },
                 'spec': {
                     'selector': {
@@ -588,7 +588,7 @@ class ServiceMeshManager:
                             'name': 'https',
                             'protocol': 'HTTPS'
                         },
-                        'hosts': ['collaborate.ainflue.com'],
+                        'hosts': ['collaborate.iacherie.com'],
                         'tls': {
                             'mode': 'SIMPLE',
                             'credentialName': 'collaboration-tls-secret'
@@ -603,7 +603,7 @@ class ServiceMeshManager:
                 'kind': 'AuthorizationPolicy',
                 'metadata': {
                     'name': 'collaboration-access-control',
-                    'namespace': 'ainflue-collaboration'
+                    'namespace': 'iacherie-collaboration'
                 },
                 'spec': {
                     'selector': {
@@ -614,7 +614,7 @@ class ServiceMeshManager:
                     'rules': [{
                         'from': [{
                             'source': {
-                                'principals': ['cluster.local/ns/ainflue-creators/sa/creator-service']
+                                'principals': ['cluster.local/ns/iacherie-creators/sa/creator-service']
                             }
                         }],
                         'to': [{
@@ -658,7 +658,7 @@ class GPUClusterManager:
     
     async def deploy_gpu_cluster(self, cluster_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Deploy comprehensive GPU cluster for Ainflue AI processing
+        Deploy comprehensive GPU cluster for iacherie AI processing
         
         ML Engineer Role: Advanced GPU cluster deployment and optimization
         """
@@ -789,7 +789,7 @@ class GPUClusterManager:
                 'kind': 'Deployment',
                 'metadata': {
                     'name': 'ai-content-processor',
-                    'namespace': 'ainflue-ai'
+                    'namespace': 'iacherie-ai'
                 },
                 'spec': {
                     'replicas': 3,
@@ -810,7 +810,7 @@ class GPUClusterManager:
                             },
                             'containers': [{
                                 'name': 'ai-processor',
-                                'image': 'ainflue/ai-content-processor:latest',
+                                'image': 'iacherie/ai-content-processor:latest',
                                 'resources': {
                                     'requests': {
                                         'nvidia.com/gpu': '1',
@@ -855,7 +855,7 @@ class GPUClusterManager:
                 'kind': 'HorizontalPodAutoscaler',
                 'metadata': {
                     'name': 'ai-processor-hpa',
-                    'namespace': 'ainflue-ai'
+                    'namespace': 'iacherie-ai'
                 },
                 'spec': {
                     'scaleTargetRef': {
@@ -912,9 +912,9 @@ class GPUClusterManager:
         return {
             'model_server_type': 'tensorflow_serving',
             'model_endpoints': {
-                'content_analysis': 'ai.ainflue.com/v1/analyze',
-                'recommendation_engine': 'ai.ainflue.com/v1/recommend',
-                'content_enhancement': 'ai.ainflue.com/v1/enhance'
+                'content_analysis': 'ai.iacherie.com/v1/analyze',
+                'recommendation_engine': 'ai.iacherie.com/v1/recommend',
+                'content_enhancement': 'ai.iacherie.com/v1/enhance'
             },
             'auto_scaling_enabled': True,
             'status': 'configured'

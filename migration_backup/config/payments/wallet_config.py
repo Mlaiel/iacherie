@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Wallet Configuration Module
+"""IA Chéries Wallet Configuration Module
 ====================================
 
-Enterprise-grade digital wallet configuration for the Ainflue platform.
+Enterprise-grade digital wallet configuration for the IA Chéries platform.
 Comprehensive wallet management with multi-currency support, transaction
 processing, security features, and advanced analytics.
 

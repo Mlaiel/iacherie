@@ -209,15 +209,15 @@ docker-compose -f monetization/docker-compose.monetization.yml up -d
 ### Environment Variables
 ```env
 # Core Configuration
-AINFLUE_ENV=production
-AINFLUE_VERSION=3.0.0
-AINFLUE_DEBUG=false
+IACHERIE_ENV=production
+IACHERIE_VERSION=3.0.0
+IACHERIE_DEBUG=false
 
 # Database Configuration
 DB_HOST=postgres-master
 DB_PORT=5432
-DB_NAME=ainflue_prod
-DB_USER=ainflue_user
+DB_NAME=iacherie_prod
+DB_USER=iacherie_user
 DB_PASSWORD=secure_password
 
 # Redis Configuration

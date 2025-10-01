@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Enterprise Metrics System
-Système de métriques de niveau entreprise pour Ainfluencer
+Système de métriques de niveau entreprise pour IA Chéries
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>
 """

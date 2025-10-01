@@ -1,8 +1,8 @@
 """
-Ainflue Platform - Transaction Flow Analyzer
+IA Chéries Platform - Transaction Flow Analyzer
 ===========================================
 
-Advanced transaction flow analysis system for the Ainflue platform.
+Advanced transaction flow analysis system for the IA Chéries platform.
 Provides real-time monitoring, pattern analysis, and optimization insights
 for payment transactions and revenue flows across all monetization channels.
 
@@ -127,7 +127,7 @@ class FlowMetrics:
 
 class TransactionFlowAnalyzer:
     """
-    Advanced transaction flow analyzer for the Ainflue platform.
+    Advanced transaction flow analyzer for the IA Chéries platform.
     
     Monitors transaction flows in real-time, identifies bottlenecks,
     analyzes conversion funnels, and provides optimization recommendations.

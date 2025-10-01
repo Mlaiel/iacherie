@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise gRPC Monitoring Template - Ainflue API Templates
+⚡ Enterprise gRPC Monitoring Template - iacherie API Templates
 Advanced production-ready gRPC monitoring and observability system
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -50,7 +50,7 @@ class GRPCMonitoringTemplate:
     - ✅ Resource monitoring système
     """
     
-    def __init__(self, service_name: str = "ainflue_grpc_service"):
+    def __init__(self, service_name: str = "iacherie_grpc_service"):
         self.service_name = service_name
         self.logger = structlog.get_logger(__name__)
         
@@ -585,7 +585,7 @@ class GRPCDashboard:
 
 
 # Factory functions pour création simplifiée
-def create_grpc_monitoring(service_name: str = "ainflue_grpc_service") -> GRPCMonitoringTemplate:
+def create_grpc_monitoring(service_name: str = "iacherie_grpc_service") -> GRPCMonitoringTemplate:
     """Factory pour créer un système de monitoring gRPC"""
     monitor = GRPCMonitoringTemplate(service_name)
     monitor.start_monitoring()
@@ -594,7 +594,7 @@ def create_grpc_monitoring(service_name: str = "ainflue_grpc_service") -> GRPCMo
 
 def setup_grpc_server_with_monitoring(
     server_class,
-    service_name: str = "ainflue_grpc_service",
+    service_name: str = "iacherie_grpc_service",
     port: int = 50051
 ):
     """Setup complet d'un serveur gRPC avec monitoring"""

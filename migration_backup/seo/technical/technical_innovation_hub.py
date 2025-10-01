@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Ainflue Technical Innovation Hub - Enterprise SEO Innovation Engine
+⚡ IA Chéries Technical Innovation Hub - Enterprise SEO Innovation Engine
 ==================================================================
 
 🚨 PROTECTION INTELLECTUELLE:
@@ -18,7 +18,7 @@ Reverse engineering STRICTEMENT INTERDIT
 - Adaptation aux tendances techniques futures
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Technical SEO Innovation Engine
+Project: IA Chéries Technical SEO Innovation Engine
 Version: 1.0.0
 Last Updated: 2025-01-18
 """
@@ -513,7 +513,7 @@ class EmergingTechnologyIntegrator:
         ]
     
     async def _assess_technology_relevance(self, technologies: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Évalue la pertinence des technologies pour Ainflue"""
+        """Évalue la pertinence des technologies pour IA Chéries"""
         
         relevance_scores = {}
         

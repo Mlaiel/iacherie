@@ -303,7 +303,7 @@ def get_microservices_orchestrator() -> Dict[str, Any]:
         'suite': orchestration_suite
     }
 
-async def initialize_ainflue_microservices(config: Optional[Dict[str, Any]] = None) -> bool:
+async def initialize_iacherie_microservices(config: Optional[Dict[str, Any]] = None) -> bool:
     """
     🚀 Initialize complete IA Chérie microservices orchestration
     
@@ -323,7 +323,7 @@ def get_orchestration_status() -> Dict[str, Any]:
 __all__ = [
     'MicroservicesOrchestrationSuite',
     'get_microservices_orchestrator',
-    'initialize_ainflue_microservices',
+    'initialize_iacherie_microservices',
     'get_orchestration_status',
     'orchestration_suite'
 ]

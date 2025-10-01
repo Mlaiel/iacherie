@@ -136,7 +136,7 @@ class ApiGatewayTemplate(BaseMicroservice):
     def __init__(self, config: ApiGatewayConfig):
         super().__init__()
         self.config = config
-        self.app = FastAPI(title="Ainflue API Gateway", version="1.0.0")
+        self.app = FastAPI(title="iacherie API Gateway", version="1.0.0")
         self.redis_client: Optional[redis.Redis] = None
         self.http_client: Optional[httpx.AsyncClient] = None
         

@@ -1,4 +1,4 @@
-# Ainflue API Routes - Unternehmens-REST/GraphQL-APIs
+# iacherie API Routes - Unternehmens-REST/GraphQL-APIs
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Spezialisiertes Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## 🚀 API Routes Architektur
 
-Die Ainflue-Plattform bietet eine umfassende Sammlung von Unternehmens-API-Routen, die für Content-Ersteller, Influencer und digitale Agenturen entwickelt wurden. Unsere API unterstützt Multi-Format-Content-Management, KI-gestützte Optimierung und plattformübergreifende Verteilung.
+Die iacherie-Plattform bietet eine umfassende Sammlung von Unternehmens-API-Routen, die für Content-Ersteller, Influencer und digitale Agenturen entwickelt wurden. Unsere API unterstützt Multi-Format-Content-Management, KI-gestützte Optimierung und plattformübergreifende Verteilung.
 
 ### 📂 Kern-API-Module
 
@@ -114,9 +114,9 @@ Die Ainflue-Plattform bietet eine umfassende Sammlung von Unternehmens-API-Route
 
 **Technischer Kontakt:** Fahed Mlaiel  
 **E-Mail:** mlaiel@live.de  
-**Plattform:** [Ainflue](https://ainflue.com)  
-**Dokumentation:** [API Docs](https://docs.ainflue.com)  
-**Entwicklerportal:** [Dev Portal](https://developers.ainflue.com)
+**Plattform:** [iacherie](https://iacherie.com)  
+**Dokumentation:** [API Docs](https://docs.iacherie.com)  
+**Entwicklerportal:** [Dev Portal](https://developers.iacherie.com)
 
 ---
 

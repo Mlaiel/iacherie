@@ -2,10 +2,10 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Enterprise API Authentication Manager - Ainflue Platform
+Enterprise API Authentication Manager - IA Chéries Platform
 ======================================================
 Multi-expert implementation combining Lead Dev IA + Backend Senior + Security + 
-ML Engineer expertise for OAuth2, JWT, Multi-tenant authentication with Ainflue 
+ML Engineer expertise for OAuth2, JWT, Multi-tenant authentication with IA Chéries 
 business logic integration.
 
 Architecture Features:
@@ -18,7 +18,7 @@ Architecture Features:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 IP Protection: Exclusive intellectual property - All rights reserved
-Business Logic: Ainflue creator economy authentication patterns
+Business Logic: IA Chéries creator economy authentication patterns
 """
 
 import asyncio
@@ -41,7 +41,7 @@ import httpx
 
 
 class CreatorType(str, Enum):
-    """Ainflue creator types for specialized authentication"""
+    """IA Chéries creator types for specialized authentication"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -99,7 +99,7 @@ class AuthenticationResult:
 
 
 class JWTPayload(BaseModel):
-    """JWT payload structure for Ainflue platform"""
+    """JWT payload structure for IA Chéries platform"""
     sub: str = Field(..., description="Subject (User ID)")
     iss: str = Field(default="ainflue-platform", description="Issuer")
     aud: str = Field(default="ainflue-api", description="Audience")
@@ -107,7 +107,7 @@ class JWTPayload(BaseModel):
     iat: int = Field(..., description="Issued at timestamp")
     jti: str = Field(..., description="JWT ID")
     
-    # Ainflue-specific claims
+    # IA Chéries-specific claims
     creator_type: Optional[CreatorType] = None
     tenant_id: Optional[str] = None
     permissions: List[str] = Field(default_factory=list)
@@ -790,8 +790,8 @@ class EnterpriseAuthenticationManager:
         return None
 
 
-# Ainflue Business Logic Integration Constants
-AINFLUE_PLATFORM_INTEGRATIONS = {
+# IA Chéries Business Logic Integration Constants
+IA CHÉRIES_PLATFORM_INTEGRATIONS = {
     'supported_platforms': 65,
     'creator_types': [e.value for e in CreatorType],
     'authentication_flow': 'connect→auth→validate→authorize→monitor',

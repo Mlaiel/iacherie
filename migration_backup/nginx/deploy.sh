@@ -2,7 +2,7 @@
 # =============================================================================
 # NGINX ENTERPRISE DEPLOYMENT SCRIPT
 # =============================================================================
-# Automated deployment script for Ainflue AI Creator Platform
+# Automated deployment script for IA Chéries AI Creator Platform
 # Supports multi-environment deployment with zero-downtime updates
 #
 # Author: DevOps Engineer + Infrastructure Expert
@@ -644,7 +644,7 @@ EOF
 # =============================================================================
 
 main() {
-    log_info "Starting Nginx Enterprise deployment for Ainflue platform"
+    log_info "Starting Nginx Enterprise deployment for IA Chéries platform"
     log_info "Environment: $ENVIRONMENT"
     log_info "Deployment type: $DEPLOYMENT_TYPE"
     log_info "Nginx version: $(get_nginx_version)"

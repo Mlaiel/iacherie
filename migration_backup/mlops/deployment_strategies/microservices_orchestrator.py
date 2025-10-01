@@ -729,7 +729,7 @@ class MicroservicesOrchestrator:
             logger.error(f"Failed to get circuit breaker status: {e}")
             return {}
 
-    # Creator-Specific Services for Ainflue Platform
+    # Creator-Specific Services for IA Chéries Platform
     async def setup_creator_services(self, creator_type: str) -> None:
         """Setup creator-specific microservices"""
         try:

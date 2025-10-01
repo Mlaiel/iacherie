@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Kubernetes Discovery Template for Ainflue Platform
+Kubernetes Discovery Template for iacherie Platform
 =================================================
 
 Production-ready Kubernetes native service discovery with:
@@ -514,7 +514,7 @@ class KubernetesDiscoveryClient:
 
 class KubernetesDiscoveryTemplate:
     """
-    Kubernetes Discovery Template for Ainflue Platform
+    Kubernetes Discovery Template for iacherie Platform
     
     A comprehensive Kubernetes native service discovery that provides:
     - Service and endpoint discovery

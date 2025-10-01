@@ -1,12 +1,12 @@
 """
 🔒 SECURITY NOTIFICATIONS MODULE
-Ainflue Platform - Enterprise Security Notification System
+IA Chéries Platform - Enterprise Security Notification System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.1.0 Enterprise
 
-This module orchestrates all security-related notifications for the Ainflue Platform,
+This module orchestrates all security-related notifications for the IA Chéries Platform,
 ensuring comprehensive protection against copyright infringement, fraud, and security threats.
 """
 

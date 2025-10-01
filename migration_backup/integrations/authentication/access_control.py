@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Access Control System
+IA Chéries Platform - Enterprise Access Control System
 Advanced access control with policy-based authorization
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

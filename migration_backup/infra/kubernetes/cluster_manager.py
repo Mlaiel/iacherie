@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Kubernetes Cluster Manager
+# IA Chéries Infrastructure Module - Kubernetes Cluster Manager
 # ========================================================
 # 
-# Enterprise-grade Kubernetes cluster management for Ainflue platform
+# Enterprise-grade Kubernetes cluster management for IA Chéries platform
 # Supports multi-cloud Kubernetes and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -485,11 +485,11 @@ class KubernetesClusterManager:
             return False
 
 # Enterprise cluster management utilities
-class AinflueClusterManager:
-    """High-level cluster management for Ainflue platform"""
+class IA ChériesClusterManager:
+    """High-level cluster management for IA Chéries platform"""
     
     def __init__(self, environment: str = "development"):
-        """Initialize Ainflue cluster manager
+        """Initialize IA Chéries cluster manager
         
         Args:
             environment: Deployment environment (development, staging, production)
@@ -536,7 +536,7 @@ class AinflueClusterManager:
             )
     
     async def deploy_ainflue_stack(self) -> bool:
-        """Deploy the complete Ainflue application stack
+        """Deploy the complete IA Chéries application stack
         
         Returns:
             bool: True if successful, False otherwise
@@ -568,11 +568,11 @@ class AinflueClusterManager:
                     self.logger.error(f"Failed to deploy component: {component}")
                     return False
             
-            self.logger.info("Successfully deployed Ainflue stack")
+            self.logger.info("Successfully deployed IA Chéries stack")
             return True
             
         except Exception as e:
-            self.logger.error(f"Failed to deploy Ainflue stack: {e}")
+            self.logger.error(f"Failed to deploy IA Chéries stack: {e}")
             return False
     
     async def _deploy_component(self, component_name: str) -> bool:
@@ -592,14 +592,14 @@ class AinflueClusterManager:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        manager = AinflueClusterManager(environment="development")
+        manager = IA ChériesClusterManager(environment="development")
         
         # Deploy the stack
         success = await manager.deploy_ainflue_stack()
         if success:
-            print("Ainflue stack deployed successfully")
+            print("IA Chéries stack deployed successfully")
         else:
-            print("Failed to deploy Ainflue stack")
+            print("Failed to deploy IA Chéries stack")
         
         # Get cluster status
         status = await manager.k8s_manager.get_cluster_status()

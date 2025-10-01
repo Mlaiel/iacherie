@@ -1,11 +1,11 @@
 # Multitrack Mixer Service
-# Professional multitrack mixing for Ainflue Platform
+# Professional multitrack mixing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Multitrack Mixer - Professional multitrack audio mixing"
+LABEL description="IA Chéries Multitrack Mixer - Professional multitrack audio mixing"
 LABEL version="1.0.0"
 
 # Set working directory

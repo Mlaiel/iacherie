@@ -156,7 +156,7 @@ class ImageRemixEngine:
         self.processing_cache = {}
         self.performance_metrics = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=4)
-        self.temp_dir = tempfile.mkdtemp(prefix="ainflue_image_remix_")
+        self.temp_dir = tempfile.mkdtemp(prefix="iacherie_image_remix_")
         
         logger.info("🖼️ ImageRemixEngine initialized - Enterprise Architecture")
     

@@ -39,7 +39,7 @@ connection = MongoDBConnection(
 # Advanced connection with options
 connection = MongoDBConnection(
     connection_string="mongodb+srv://user:pass@cluster.mongodb.net",
-    database_name="ainflue_prod",
+    database_name="iacherie_prod",
     connection_options={
         "maxPoolSize": 100,
         "minPoolSize": 10,
@@ -763,7 +763,7 @@ Restores from a backup.
 ```python
 restore_result = await backup_manager.restore_backup(
     backup_name="daily_backup_2025_01_12",
-    target_database="ainflue_restored"
+    target_database="iacherie_restored"
 )
 ```
 

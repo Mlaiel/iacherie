@@ -2,7 +2,7 @@
 # =============================================================================
 # NGINX ENTERPRISE CONFIGURATION VALIDATION SCRIPT
 # =============================================================================
-# Quick validation script for Ainflue AI Creator Platform nginx configuration
+# Quick validation script for IA Chéries AI Creator Platform nginx configuration
 #
 # Author: Expert Team (All Roles)
 # Copyright: (c) 2024 IA Influencer Agent Platform. All rights reserved.
@@ -28,7 +28,7 @@ log_warning() {
     echo -e "${YELLOW}⚠️  $*${NC}"
 }
 
-echo "🔍 Validating Nginx Enterprise Configuration for Ainflue Platform"
+echo "🔍 Validating Nginx Enterprise Configuration for IA Chéries Platform"
 echo "=================================================================="
 
 # Check if configuration files exist

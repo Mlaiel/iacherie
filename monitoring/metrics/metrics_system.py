@@ -138,7 +138,7 @@ class MetricCollector(ABC):
         """Collect metrics from specific source."""
         pass
 
-class AinflueMetricsEngine:
+class iacherieMetricsEngine:
     """
     Enterprise metrics engine for comprehensive monitoring and analytics.
     
@@ -171,7 +171,7 @@ class AinflueMetricsEngine:
         self.collection_interval = self.config.get('collection_interval', 30)  # seconds
         self.is_running = False
         
-        logger.info("AinflueMetricsEngine initialized with enterprise features")
+        logger.info("iacherieMetricsEngine initialized with enterprise features")
 
     async def record_metric(self, metric: MetricValue):
         """Record a metric value."""
@@ -236,11 +236,11 @@ class AinflueMetricsEngine:
 # Global metrics engine instance
 _metrics_engine = None
 
-def get_metrics_engine(config: Optional[Dict[str, Any]] = None) -> AinflueMetricsEngine:
+def get_metrics_engine(config: Optional[Dict[str, Any]] = None) -> iacherieMetricsEngine:
     """Get the global metrics engine instance."""
     global _metrics_engine
     if _metrics_engine is None:
-        _metrics_engine = AinflueMetricsEngine(config)
+        _metrics_engine = iacherieMetricsEngine(config)
     return _metrics_engine
 
 # Convenience functions for metric recording
@@ -310,7 +310,7 @@ async def record_api_response_time(endpoint: str, response_time_ms: float):
     await engine.record_metric(metric)
 
 __all__ = [
-    'AinflueMetricsEngine',
+    'iacherieMetricsEngine',
     'MetricType',
     'MetricDimension',
     'AggregationMethod',

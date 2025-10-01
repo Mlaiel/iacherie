@@ -233,7 +233,7 @@ class RevenueSharingDemonstration:
                 )
             },
             platform_fees={
-                "ainflue_platform_fee": 0.08,  # 8%
+                "iacherie_platform_fee": 0.08,  # 8%
                 "payment_processing": 0.03,     # 3%
                 "compliance_overhead": 0.02     # 2%
             },

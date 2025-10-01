@@ -374,7 +374,7 @@ def create_exponential_backoff_engine(
     return ExponentialBackoffEngine(config)
 
 # Configuration prédéfinies pour IA Chérie business logic
-AINFLUE_BACKOFF_CONFIGS = {
+IACHERIE_BACKOFF_CONFIGS = {
     'content_processing': BackoffConfig(
         strategy=BackoffStrategy.EXPONENTIAL,
         max_retries=5,
@@ -415,5 +415,5 @@ __all__ = [
     'BackoffStrategy',
     'BackoffMetrics',
     'create_exponential_backoff_engine',
-    'AINFLUE_BACKOFF_CONFIGS'
+    'IACHERIE_BACKOFF_CONFIGS'
 ]

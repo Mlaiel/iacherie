@@ -112,7 +112,7 @@ class OpenAIIntegration:
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue/1.0"
+                "User-Agent": "IA Chéries/1.0"
             }
             
             if self.organization_id:

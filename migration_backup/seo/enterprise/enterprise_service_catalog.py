@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Enterprise Service Catalog
 ==========================
 
-Enterprise-grade service catalog and API management system for Ainflue SEO platform.
+Enterprise-grade service catalog and API management system for IA Chéries SEO platform.
 Provides comprehensive service discovery, documentation, and lifecycle management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Content Authenticity Validator
+IA Chéries Platform - Content Authenticity Validator
 ================================================
 
 Enterprise-grade content authenticity validation using AI and blockchain

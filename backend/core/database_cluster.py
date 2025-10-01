@@ -195,7 +195,7 @@ class PineconeIndexConfig:
     
     # Environment configuration
     environment: str = "us-west1-gcp"
-    project_name: str = "ainflue-production"
+    project_name: str = "iacherie-production"
     
     def get_capacity_metrics(self) -> Dict[str, Any]:
         """Get capacity and performance metrics"""
@@ -212,7 +212,7 @@ class PineconeIndexConfig:
         }
 
 
-class AinflueDataArchitecture:
+class iacherieDataArchitecture:
     """
     Enterprise-grade database cluster architecture for massive scale AI platform
     
@@ -241,7 +241,7 @@ class AinflueDataArchitecture:
         self.logger = logging.getLogger(__name__)
         self._health_check_executor = ThreadPoolExecutor(max_workers=4)
         
-        self.logger.info("AinflueDataArchitecture initialized with enterprise-grade clusters")
+        self.logger.info("iacherieDataArchitecture initialized with enterprise-grade clusters")
     
     def _initialize_postgres_xl(self) -> PostgresXLConfig:
         """Initialize PostgresXL cluster configuration"""
@@ -304,7 +304,7 @@ class AinflueDataArchitecture:
             batch_size=100,
             upsert_batch_size=1000,
             environment="us-west1-gcp",
-            project_name="ainflue-production"
+            project_name="iacherie-production"
         )
     
     def get_cluster_overview(self) -> Dict[str, Any]:
@@ -467,18 +467,18 @@ class AinflueDataArchitecture:
 
 
 # Factory function for easy instantiation
-def create_ainflue_data_architecture() -> AinflueDataArchitecture:
-    """Create and return a configured AinflueDataArchitecture instance"""
-    return AinflueDataArchitecture()
+def create_iacherie_data_architecture() -> iacherieDataArchitecture:
+    """Create and return a configured iacherieDataArchitecture instance"""
+    return iacherieDataArchitecture()
 
 
 # Module exports
 __all__ = [
-    "AinflueDataArchitecture",
+    "iacherieDataArchitecture",
     "PostgresXLConfig",
     "TimescaleDBConfig", 
     "Neo4jEnterpriseConfig",
     "PineconeIndexConfig",
     "DatabaseClusterType",
-    "create_ainflue_data_architecture"
+    "create_iacherie_data_architecture"
 ]

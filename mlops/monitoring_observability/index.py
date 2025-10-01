@@ -16,7 +16,7 @@ ALL RIGHTS RESERVED
 - Distribution PROHIBITED without explicit license
 - Violations will result in immediate legal prosecution
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -57,7 +57,7 @@ except ImportError:
 
 # Creator Economy types
 class CreatorType(Enum):
-    """Types de créateurs supportés par Ainflue"""
+    """Types de créateurs supportés par iacherie"""
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -1077,7 +1077,7 @@ if __name__ == "__main__":
         
         # Create orchestrator for a musician creator
         orchestrator = create_monitoring_orchestrator(
-            model_id="ainflue_musician_recommendation_v2",
+            model_id="iacherie_musician_recommendation_v2",
             creator_type="musician",
             monitoring_mode="production",
             real_time_enabled=True,

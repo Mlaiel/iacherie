@@ -1,12 +1,12 @@
 """
-Monitoring Automation - Enterprise Observability and Monitoring for Ainflue
+Monitoring Automation - Enterprise Observability and Monitoring for iacherie
 =========================================================================
 
 Advanced monitoring automation for comprehensive observability, metrics collection,
 alerting, and performance monitoring for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -387,7 +387,7 @@ class MonitoringAutomationManager:
             return {
                 "success": True,
                 "tool": tool.value,
-                "endpoint": f"https://{tool.value}-{environment}.ainflue.com",
+                "endpoint": f"https://{tool.value}-{environment}.iacherie.com",
                 "configuration": config,
                 "deployment_time": deployment_times.get(tool, 10)
             }
@@ -472,7 +472,7 @@ class MonitoringAutomationManager:
             return {
                 "global": {
                     "smtp_smarthost": "localhost:587",
-                    "smtp_from": "alerts@ainflue.com"
+                    "smtp_from": "alerts@iacherie.com"
                 },
                 "route": {
                     "group_by": ["alertname"],
@@ -699,7 +699,7 @@ class MonitoringAutomationManager:
                 deployed_dashboard = {
                     "name": dashboard.name,
                     "tool": dashboard.tool.value,
-                    "url": f"https://grafana-{environment}.ainflue.com/d/{dashboard.name.lower().replace(' ', '-')}",
+                    "url": f"https://grafana-{environment}.iacherie.com/d/{dashboard.name.lower().replace(' ', '-')}",
                     "creator_focused": dashboard.creator_focused,
                     "ai_agents_monitoring": dashboard.ai_agents_monitoring,
                     "platform_integrations_monitoring": dashboard.platform_integrations_monitoring,
@@ -795,11 +795,11 @@ class MonitoringAutomationManager:
     async def _get_monitoring_endpoints(self, environment: str) -> Dict[str, str]:
         """Get monitoring service endpoints."""
         return {
-            "prometheus": f"https://prometheus-{environment}.ainflue.com",
-            "grafana": f"https://grafana-{environment}.ainflue.com",
-            "alertmanager": f"https://alertmanager-{environment}.ainflue.com",
-            "jaeger": f"https://jaeger-{environment}.ainflue.com",
-            "elasticsearch": f"https://elasticsearch-{environment}.ainflue.com"
+            "prometheus": f"https://prometheus-{environment}.iacherie.com",
+            "grafana": f"https://grafana-{environment}.iacherie.com",
+            "alertmanager": f"https://alertmanager-{environment}.iacherie.com",
+            "jaeger": f"https://jaeger-{environment}.iacherie.com",
+            "elasticsearch": f"https://elasticsearch-{environment}.iacherie.com"
         }
     
     async def collect_metric(

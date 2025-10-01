@@ -1,7 +1,7 @@
 """
 Docker Testing Infrastructure - Main Interface
 
-Enterprise-grade testing orchestration for Ainflue Platform.
+Enterprise-grade testing orchestration for IA Chéries Platform.
 Coordinates all testing services for 80+ containerized services.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

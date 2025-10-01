@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE CONTENT PIPELINE - AINFLUE PLATFORM
+🔥 ENTERPRISE CONTENT PIPELINE - IA CHÉRIES PLATFORM
 Ultra-advanced content processing and analysis pipeline
 Consolidates: processing.py + content_analysis.py + SEO functionality
 """

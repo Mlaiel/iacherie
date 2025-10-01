@@ -182,7 +182,7 @@ class ConfigurationManagerCore:
                 "host": "localhost",
                 "port": 5432,
                 "database": "iacherie",
-                "username": "ainflue_user",
+                "username": "iacherie_user",
                 "password": "",  # To be encrypted
                 "pool_size": 10,
                 "max_overflow": 20,

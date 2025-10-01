@@ -25,7 +25,7 @@ from datetime import datetime, timedelta
 import urllib.parse
 from pathlib import Path
 
-class AinfluencerTwitterAPI:
+class iaCherieTwitterAPI:
     """
     🐦 Moteur Twitter pour IA Chérie
     
@@ -584,7 +584,7 @@ async def test_twitter_engine():
     
     try:
         # Initialisation
-        twitter = AinfluencerTwitterAPI()
+        twitter = iaCherieTwitterAPI()
         
         # Test 1: Recherche de tweets
         print("🔍 Test 1: Recherche 'AI artificial intelligence'...")

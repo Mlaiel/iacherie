@@ -1,4 +1,4 @@
-# 🔗 Module d'Intégrations Backend - Plateforme Ainflue
+# 🔗 Module d'Intégrations Backend - Plateforme iacherie
 
 ## Système d'Intégrations API Tiers de Niveau Entreprise
 
@@ -116,7 +116,7 @@ await social_hub.connect_platform("youtube", {
 # Distribution contenu inter-plateformes
 content_data = {
     "title": "Contenu IA Incroyable",
-    "description": "Créé avec Plateforme Ainflue",
+    "description": "Créé avec Plateforme iacherie",
     "file_path": "/path/to/video.mp4",
     "platforms": ["youtube", "tiktok", "instagram"]
 }
@@ -412,9 +412,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ## 📞 Support & Contact
 
 **Support Technique:** 
-- Email: support@ainflue.com
-- Documentation: https://docs.ainflue.com/integrations
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- Email: support@iacherie.com
+- Documentation: https://docs.iacherie.com/integrations
+- GitHub Issues: https://github.com/Mlaiel/iacherie/issues
 
 **Contact Auteur:**
 - Fahed Mlaiel: mlaiel@live.de

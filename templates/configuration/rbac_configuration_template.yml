@@ -1,24 +1,24 @@
 # =====================================================================================
-# RBAC Configuration Template - Ainflue Configuration Module
+# RBAC Configuration Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
 # Utilisation commerciale INTERDITE sans autorisation écrite
 # =====================================================================================
 
-# Role-Based Access Control (RBAC) Configuration for Ainflue Creator Economy Platform
+# Role-Based Access Control (RBAC) Configuration for iacherie Creator Economy Platform
 # Comprehensive security model with fine-grained permissions
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-rbac-system
+  name: iacherie-rbac-system
   labels:
-    app.kubernetes.io/name: ainflue-rbac
+    app.kubernetes.io/name: iacherie-rbac
     app.kubernetes.io/version: "1.0.0"
     app.kubernetes.io/component: security
-    ainflue.com/environment: production
-    ainflue.com/security-level: critical
+    iacherie.com/environment: production
+    iacherie.com/security-level: critical
 
 ---
 
@@ -30,11 +30,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: creator-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: creator-service-account
-    ainflue.com/role-type: creator
-    ainflue.com/security-level: high
+    iacherie.com/role-type: creator
+    iacherie.com/security-level: high
 automountServiceAccountToken: true
 
 ---
@@ -43,11 +43,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: content-processor-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: content-processor-service-account
-    ainflue.com/role-type: processing
-    ainflue.com/security-level: high
+    iacherie.com/role-type: processing
+    iacherie.com/security-level: high
 automountServiceAccountToken: true
 
 ---
@@ -56,12 +56,12 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: ai-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: ai-service-account
-    ainflue.com/role-type: ai-processing
-    ainflue.com/security-level: critical
-    ainflue.com/gpu-access: required
+    iacherie.com/role-type: ai-processing
+    iacherie.com/security-level: critical
+    iacherie.com/gpu-access: required
 automountServiceAccountToken: true
 
 ---
@@ -70,11 +70,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: protection-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: protection-service-account
-    ainflue.com/role-type: protection
-    ainflue.com/security-level: maximum
+    iacherie.com/role-type: protection
+    iacherie.com/security-level: maximum
 automountServiceAccountToken: true
 
 ---
@@ -83,12 +83,12 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: monetization-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: monetization-service-account
-    ainflue.com/role-type: financial
-    ainflue.com/security-level: critical
-    ainflue.com/compliance: pci-dss
+    iacherie.com/role-type: financial
+    iacherie.com/security-level: critical
+    iacherie.com/compliance: pci-dss
 automountServiceAccountToken: true
 
 ---
@@ -97,11 +97,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: analytics-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: analytics-service-account
-    ainflue.com/role-type: analytics
-    ainflue.com/security-level: high
+    iacherie.com/role-type: analytics
+    iacherie.com/security-level: high
 automountServiceAccountToken: true
 
 ---
@@ -110,11 +110,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: admin-service-account
-    ainflue.com/role-type: admin
-    ainflue.com/security-level: maximum
+    iacherie.com/role-type: admin
+    iacherie.com/security-level: maximum
 automountServiceAccountToken: true
 
 ---
@@ -126,12 +126,12 @@ automountServiceAccountToken: true
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-creator-platform-admin
+  name: iacherie-creator-platform-admin
   labels:
     app.kubernetes.io/name: creator-platform-admin
-    ainflue.com/permission-level: admin
+    iacherie.com/permission-level: admin
 rules:
-# Full control over Ainflue resources
+# Full control over iacherie resources
 - apiGroups: [""]
   resources: ["*"]
   verbs: ["*"]
@@ -156,7 +156,7 @@ rules:
   resources: ["*"]
   verbs: ["get", "list"]
 # Custom resources for Creator Economy
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["*"]
   verbs: ["*"]
 
@@ -165,10 +165,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-creator-role
+  name: iacherie-creator-role
   labels:
     app.kubernetes.io/name: creator-role
-    ainflue.com/permission-level: creator
+    iacherie.com/permission-level: creator
 rules:
 # Pod management for creator workloads
 - apiGroups: [""]
@@ -206,7 +206,7 @@ rules:
   resources: ["networkpolicies"]
   verbs: ["get", "list", "watch", "create", "update", "patch"]
 # Creator-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["creators", "content", "monetization"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
@@ -215,10 +215,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-content-processor-role
+  name: iacherie-content-processor-role
   labels:
     app.kubernetes.io/name: content-processor-role
-    ainflue.com/permission-level: processing
+    iacherie.com/permission-level: processing
 rules:
 # Pod management for processing workloads
 - apiGroups: [""]
@@ -241,7 +241,7 @@ rules:
   resources: ["deployments", "statefulsets"]
   verbs: ["get", "list", "watch", "create", "update", "patch"]
 # Content-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["content", "processing-jobs", "ai-models"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
@@ -250,11 +250,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-ai-service-role
+  name: iacherie-ai-service-role
   labels:
     app.kubernetes.io/name: ai-service-role
-    ainflue.com/permission-level: ai-processing
-    ainflue.com/gpu-access: required
+    iacherie.com/permission-level: ai-processing
+    iacherie.com/gpu-access: required
 rules:
 # Pod management with GPU access
 - apiGroups: [""]
@@ -273,7 +273,7 @@ rules:
   resources: ["customresourcedefinitions"]
   verbs: ["get", "list", "watch"]
 # AI-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["ai-models", "ai-jobs", "ai-pipelines"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 # Resource quotas for GPU management
@@ -286,11 +286,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-protection-service-role
+  name: iacherie-protection-service-role
   labels:
     app.kubernetes.io/name: protection-service-role
-    ainflue.com/permission-level: protection
-    ainflue.com/security-level: maximum
+    iacherie.com/permission-level: protection
+    iacherie.com/security-level: maximum
 rules:
 # Pod management for protection services
 - apiGroups: [""]
@@ -317,7 +317,7 @@ rules:
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 # Protection-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["protection-policies", "drm-licenses", "watermarks"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
@@ -326,11 +326,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-monetization-role
+  name: iacherie-monetization-role
   labels:
     app.kubernetes.io/name: monetization-role
-    ainflue.com/permission-level: financial
-    ainflue.com/compliance: pci-dss
+    iacherie.com/permission-level: financial
+    iacherie.com/compliance: pci-dss
 rules:
 # Pod management for financial services
 - apiGroups: [""]
@@ -353,7 +353,7 @@ rules:
   resources: ["services", "endpoints"]
   verbs: ["get", "list", "watch", "create", "update", "patch"]
 # Monetization-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["payments", "subscriptions", "revenue-shares", "billing"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
@@ -362,10 +362,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-analytics-role
+  name: iacherie-analytics-role
   labels:
     app.kubernetes.io/name: analytics-role
-    ainflue.com/permission-level: analytics
+    iacherie.com/permission-level: analytics
 rules:
 # Pod management for analytics services
 - apiGroups: [""]
@@ -388,7 +388,7 @@ rules:
   resources: ["events"]
   verbs: ["get", "list", "watch"]
 # Analytics-specific resources
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["analytics", "metrics", "reports", "dashboards"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
@@ -397,10 +397,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-viewer-role
+  name: iacherie-viewer-role
   labels:
     app.kubernetes.io/name: viewer-role
-    ainflue.com/permission-level: read-only
+    iacherie.com/permission-level: read-only
 rules:
 # Read-only access to most resources
 - apiGroups: [""]
@@ -419,7 +419,7 @@ rules:
   resources: ["*"]
   verbs: ["get", "list"]
 # Creator Economy resources (read-only)
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["*"]
   verbs: ["get", "list", "watch"]
 
@@ -432,23 +432,23 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-admin-binding
+  name: iacherie-admin-binding
   labels:
     app.kubernetes.io/name: admin-binding
-    ainflue.com/permission-level: admin
+    iacherie.com/permission-level: admin
 subjects:
 - kind: ServiceAccount
   name: admin-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 - kind: User
-  name: fahed.mlaiel@ainflue.com
+  name: fahed.mlaiel@iacherie.com
   apiGroup: rbac.authorization.k8s.io
 - kind: Group
-  name: ainflue-platform-admins
+  name: iacherie-platform-admins
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
-  name: ainflue-creator-platform-admin
+  name: iacherie-creator-platform-admin
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -456,20 +456,20 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-creator-binding
+  name: iacherie-creator-binding
   labels:
     app.kubernetes.io/name: creator-binding
-    ainflue.com/permission-level: creator
+    iacherie.com/permission-level: creator
 subjects:
 - kind: ServiceAccount
   name: creator-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 - kind: Group
-  name: ainflue-creators
+  name: iacherie-creators
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
-  name: ainflue-creator-role
+  name: iacherie-creator-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -477,17 +477,17 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-content-processor-binding
+  name: iacherie-content-processor-binding
   labels:
     app.kubernetes.io/name: content-processor-binding
-    ainflue.com/permission-level: processing
+    iacherie.com/permission-level: processing
 subjects:
 - kind: ServiceAccount
   name: content-processor-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 roleRef:
   kind: ClusterRole
-  name: ainflue-content-processor-role
+  name: iacherie-content-processor-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -495,17 +495,17 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-ai-service-binding
+  name: iacherie-ai-service-binding
   labels:
     app.kubernetes.io/name: ai-service-binding
-    ainflue.com/permission-level: ai-processing
+    iacherie.com/permission-level: ai-processing
 subjects:
 - kind: ServiceAccount
   name: ai-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 roleRef:
   kind: ClusterRole
-  name: ainflue-ai-service-role
+  name: iacherie-ai-service-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -513,17 +513,17 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-protection-service-binding
+  name: iacherie-protection-service-binding
   labels:
     app.kubernetes.io/name: protection-service-binding
-    ainflue.com/permission-level: protection
+    iacherie.com/permission-level: protection
 subjects:
 - kind: ServiceAccount
   name: protection-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 roleRef:
   kind: ClusterRole
-  name: ainflue-protection-service-role
+  name: iacherie-protection-service-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -531,17 +531,17 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-monetization-binding
+  name: iacherie-monetization-binding
   labels:
     app.kubernetes.io/name: monetization-binding
-    ainflue.com/permission-level: financial
+    iacherie.com/permission-level: financial
 subjects:
 - kind: ServiceAccount
   name: monetization-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 roleRef:
   kind: ClusterRole
-  name: ainflue-monetization-role
+  name: iacherie-monetization-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -549,17 +549,17 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-analytics-binding
+  name: iacherie-analytics-binding
   labels:
     app.kubernetes.io/name: analytics-binding
-    ainflue.com/permission-level: analytics
+    iacherie.com/permission-level: analytics
 subjects:
 - kind: ServiceAccount
   name: analytics-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 roleRef:
   kind: ClusterRole
-  name: ainflue-analytics-role
+  name: iacherie-analytics-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -571,11 +571,11 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: ainflue-production
-  name: ainflue-production-operator
+  namespace: iacherie-production
+  name: iacherie-production-operator
   labels:
     app.kubernetes.io/name: production-operator
-    ainflue.com/environment: production
+    iacherie.com/environment: production
 rules:
 # Full control within production namespace
 - apiGroups: [""]
@@ -599,11 +599,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: ainflue-staging
-  name: ainflue-staging-operator
+  namespace: iacherie-staging
+  name: iacherie-staging-operator
   labels:
     app.kubernetes.io/name: staging-operator
-    ainflue.com/environment: staging
+    iacherie.com/environment: staging
 rules:
 # Full control within staging namespace
 - apiGroups: [""]
@@ -624,11 +624,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: ainflue-development
-  name: ainflue-development-operator
+  namespace: iacherie-development
+  name: iacherie-development-operator
   labels:
     app.kubernetes.io/name: development-operator
-    ainflue.com/environment: development
+    iacherie.com/environment: development
 rules:
 # Full control within development namespace
 - apiGroups: [""]
@@ -650,24 +650,24 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-production-operators
-  namespace: ainflue-production
+  name: iacherie-production-operators
+  namespace: iacherie-production
   labels:
     app.kubernetes.io/name: production-operators
-    ainflue.com/environment: production
+    iacherie.com/environment: production
 subjects:
 - kind: ServiceAccount
   name: admin-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 - kind: User
-  name: fahed.mlaiel@ainflue.com
+  name: fahed.mlaiel@iacherie.com
   apiGroup: rbac.authorization.k8s.io
 - kind: Group
-  name: ainflue-production-operators
+  name: iacherie-production-operators
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: ainflue-production-operator
+  name: iacherie-production-operator
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -675,24 +675,24 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-staging-operators
-  namespace: ainflue-staging
+  name: iacherie-staging-operators
+  namespace: iacherie-staging
   labels:
     app.kubernetes.io/name: staging-operators
-    ainflue.com/environment: staging
+    iacherie.com/environment: staging
 subjects:
 - kind: ServiceAccount
   name: admin-service-account
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
 - kind: Group
-  name: ainflue-staging-operators
+  name: iacherie-staging-operators
   apiGroup: rbac.authorization.k8s.io
 - kind: Group
-  name: ainflue-developers
+  name: iacherie-developers
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: ainflue-staging-operator
+  name: iacherie-staging-operator
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -700,21 +700,21 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: ainflue-development-operators
-  namespace: ainflue-development
+  name: iacherie-development-operators
+  namespace: iacherie-development
   labels:
     app.kubernetes.io/name: development-operators
-    ainflue.com/environment: development
+    iacherie.com/environment: development
 subjects:
 - kind: Group
-  name: ainflue-developers
+  name: iacherie-developers
   apiGroup: rbac.authorization.k8s.io
 - kind: Group
-  name: ainflue-qa-team
+  name: iacherie-qa-team
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: ainflue-development-operator
+  name: iacherie-development-operator
   apiGroup: rbac.authorization.k8s.io
 
 ---
@@ -726,10 +726,10 @@ roleRef:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-restricted-psp
+  name: iacherie-restricted-psp
   labels:
     app.kubernetes.io/name: restricted-psp
-    ainflue.com/security-level: high
+    iacherie.com/security-level: high
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -764,11 +764,11 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-ai-gpu-psp
+  name: iacherie-ai-gpu-psp
   labels:
     app.kubernetes.io/name: ai-gpu-psp
-    ainflue.com/security-level: high
-    ainflue.com/gpu-access: required
+    iacherie.com/security-level: high
+    iacherie.com/gpu-access: required
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -814,15 +814,15 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-creator-isolation
-  namespace: ainflue-production
+  name: iacherie-creator-isolation
+  namespace: iacherie-production
   labels:
     app.kubernetes.io/name: creator-isolation
-    ainflue.com/policy-type: isolation
+    iacherie.com/policy-type: isolation
 spec:
   podSelector:
     matchLabels:
-      ainflue.com/component: creator-service
+      iacherie.com/component: creator-service
   policyTypes:
   - Ingress
   - Egress
@@ -830,10 +830,10 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          ainflue.com/component: api-gateway
+          iacherie.com/component: api-gateway
     - podSelector:
         matchLabels:
-          ainflue.com/component: load-balancer
+          iacherie.com/component: load-balancer
     ports:
     - protocol: TCP
       port: 3000
@@ -843,14 +843,14 @@ spec:
   - to:
     - podSelector:
         matchLabels:
-          ainflue.com/component: database
+          iacherie.com/component: database
     ports:
     - protocol: TCP
       port: 5432
   - to:
     - podSelector:
         matchLabels:
-          ainflue.com/component: cache
+          iacherie.com/component: cache
     ports:
     - protocol: TCP
       port: 6379
@@ -864,16 +864,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-ai-service-isolation
-  namespace: ainflue-production
+  name: iacherie-ai-service-isolation
+  namespace: iacherie-production
   labels:
     app.kubernetes.io/name: ai-service-isolation
-    ainflue.com/policy-type: isolation
-    ainflue.com/security-level: high
+    iacherie.com/policy-type: isolation
+    iacherie.com/security-level: high
 spec:
   podSelector:
     matchLabels:
-      ainflue.com/component: ai-service
+      iacherie.com/component: ai-service
   policyTypes:
   - Ingress
   - Egress
@@ -881,10 +881,10 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          ainflue.com/component: content-processor
+          iacherie.com/component: content-processor
     - podSelector:
         matchLabels:
-          ainflue.com/component: api-gateway
+          iacherie.com/component: api-gateway
     ports:
     - protocol: TCP
       port: 8000
@@ -894,7 +894,7 @@ spec:
   - to:
     - podSelector:
         matchLabels:
-          ainflue.com/component: storage-service
+          iacherie.com/component: storage-service
     ports:
     - protocol: TCP
       port: 9000
@@ -908,16 +908,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-financial-isolation
-  namespace: ainflue-production
+  name: iacherie-financial-isolation
+  namespace: iacherie-production
   labels:
     app.kubernetes.io/name: financial-isolation
-    ainflue.com/policy-type: isolation
-    ainflue.com/compliance: pci-dss
+    iacherie.com/policy-type: isolation
+    iacherie.com/compliance: pci-dss
 spec:
   podSelector:
     matchLabels:
-      ainflue.com/component: monetization-service
+      iacherie.com/component: monetization-service
   policyTypes:
   - Ingress
   - Egress
@@ -925,7 +925,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          ainflue.com/component: api-gateway
+          iacherie.com/component: api-gateway
     ports:
     - protocol: TCP
       port: 3004
@@ -933,7 +933,7 @@ spec:
   - to:
     - podSelector:
         matchLabels:
-          ainflue.com/component: database
+          iacherie.com/component: database
     ports:
     - protocol: TCP
       port: 5432
@@ -951,12 +951,12 @@ spec:
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: creators.ainflue.com
+  name: creators.iacherie.com
   labels:
     app.kubernetes.io/name: creators-crd
-    ainflue.com/resource-type: creator
+    iacherie.com/resource-type: creator
 spec:
-  group: ainflue.com
+  group: iacherie.com
   versions:
   - name: v1
     served: true
@@ -1008,12 +1008,12 @@ spec:
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: contentprocessingjobs.ainflue.com
+  name: contentprocessingjobs.iacherie.com
   labels:
     app.kubernetes.io/name: content-processing-jobs-crd
-    ainflue.com/resource-type: processing
+    iacherie.com/resource-type: processing
 spec:
-  group: ainflue.com
+  group: iacherie.com
   versions:
   - name: v1
     served: true
@@ -1075,10 +1075,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rbac-audit-policy
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: rbac-audit-policy
-    ainflue.com/component: auditing
+    iacherie.com/component: auditing
 data:
   audit-policy.yaml: |
     apiVersion: audit.k8s.io/v1
@@ -1086,25 +1086,25 @@ data:
     rules:
     # Log all RBAC changes at RequestResponse level
     - level: RequestResponse
-      namespaces: ["ainflue-rbac-system"]
+      namespaces: ["iacherie-rbac-system"]
       resources:
       - group: "rbac.authorization.k8s.io"
         resources: ["roles", "rolebindings", "clusterroles", "clusterrolebindings"]
     # Log Creator Economy resource access
     - level: Request
       resources:
-      - group: "ainflue.com"
+      - group: "iacherie.com"
         resources: ["*"]
     # Log access to financial services
     - level: RequestResponse
-      namespaces: ["ainflue-production"]
+      namespaces: ["iacherie-production"]
       resources:
       - group: ""
         resources: ["pods", "services"]
         resourceNames: ["monetization-service"]
     # Log admin actions
     - level: RequestResponse
-      users: ["fahed.mlaiel@ainflue.com"]
+      users: ["fahed.mlaiel@iacherie.com"]
       verbs: ["create", "update", "patch", "delete"]
 
 ---
@@ -1117,10 +1117,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rbac-compliance-rules
-  namespace: ainflue-rbac-system
+  namespace: iacherie-rbac-system
   labels:
     app.kubernetes.io/name: rbac-compliance-rules
-    ainflue.com/component: compliance
+    iacherie.com/component: compliance
 data:
   compliance-rules.yaml: |
     # PCI-DSS Compliance Rules

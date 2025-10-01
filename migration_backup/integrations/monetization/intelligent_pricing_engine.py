@@ -1,6 +1,6 @@
 """
 Intelligent Pricing Engine
-Moteur de tarification intelligent pour Ainfluencer Platform
+Moteur de tarification intelligent pour IA Chéries Platform
 
 Ce module fournit des fonctionnalités avancées de tarification dynamique et intelligente.
 """

@@ -110,7 +110,7 @@ cd IA Chérie/integrations/localization
 pip install -r requirements.txt
 
 # Configurer l'environnement
-export AINFLUE_LOCALIZATION_API_KEY="your-api-key"
+export IACHERIE_LOCALIZATION_API_KEY="your-api-key"
 export REDIS_URL="redis://localhost:6379/0"
 ```
 
@@ -161,9 +161,9 @@ response = await real_time.process_realtime_request(
 
 ```bash
 # Configuration Centrale
-AINFLUE_LOCALIZATION_API_KEY="your-api-key"
-AINFLUE_LOCALIZATION_DEBUG="false"
-AINFLUE_LOCALIZATION_LOG_LEVEL="INFO"
+IACHERIE_LOCALIZATION_API_KEY="your-api-key"
+IACHERIE_LOCALIZATION_DEBUG="false"
+IACHERIE_LOCALIZATION_LOG_LEVEL="INFO"
 
 # Services de Traduction
 GOOGLE_TRANSLATE_API_KEY="your-google-key"

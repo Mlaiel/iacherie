@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Platform Monitoring Dashboard",
+    "title": "IA Chéries Platform Monitoring Dashboard",
     "tags": ["ainflue", "monitoring", "platform", "performance"],
     "timezone": "browser",
     "panels": [
@@ -322,7 +322,7 @@
     "version": 1,
     "links": [
       {
-        "title": "Ainflue Documentation",
+        "title": "IA Chéries Documentation",
         "url": "https://docs.ainflue.com",
         "type": "link"
       },

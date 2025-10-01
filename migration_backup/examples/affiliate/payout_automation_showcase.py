@@ -3,7 +3,7 @@
 Payout Automation Showcase - Showcase Automatisation Paiements
 =============================================================
 
-Showcase automatisation paiements ultra sophistiqué pour affiliés Ainflue.
+Showcase automatisation paiements ultra sophistiqué pour affiliés IA Chéries.
 Multi-currency avec optimization fiscale et compliance automation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -156,7 +156,7 @@ class PayoutAutomationShowcase:
 
 class PayoutAutomationShowcase_Class:
     """
-    Showcase automatisation paiements ultra sophistiqué pour affiliés Ainflue
+    Showcase automatisation paiements ultra sophistiqué pour affiliés IA Chéries
     Multi-currency avec optimization fiscale et compliance automation
     """
     
@@ -786,7 +786,7 @@ async def demonstrate():
         
         logger.info("\n" + "=" * 70)
         logger.info("✅ TOUTES LES DÉMONSTRATIONS PAYOUT AUTOMATION TERMINÉES!")
-        logger.info("💰 Payout Automation - Ainflue Platform")
+        logger.info("💰 Payout Automation - IA Chéries Platform")
         logger.info("=" * 70)
         
         return True

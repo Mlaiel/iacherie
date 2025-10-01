@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Weather Services Integration Module
+IA Chéries Platform - Weather Services Integration Module
 Enterprise-grade weather APIs for contextual content creation and targeting
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -1151,10 +1151,10 @@ def create_weather_manager(config: Dict[str, Any]) -> WeatherServicesManager:
     """Create configured weather manager"""
     return WeatherServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def ainflue_weather_content_optimization_workflow(user_location: str, content_plans: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
-    Complete weather-based content optimization workflow for Ainflue creators
+    Complete weather-based content optimization workflow for IA Chéries creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -1317,5 +1317,5 @@ if __name__ == "__main__":
     # asyncio.run(test_weather_services())
     
     print("✅ Weather Services Integration Module loaded successfully")
-    print("🌤️ Enterprise-grade weather intelligence for Ainflue creators")
+    print("🌤️ Enterprise-grade weather intelligence for IA Chéries creators")
     print("📅 Weather-based content optimization, forecasting, and engagement prediction ready")

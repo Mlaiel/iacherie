@@ -110,7 +110,7 @@ class PerformanceConfig:
         """Load performance configuration from environment variables"""
         
         # Profile selection
-        profile_name = os.getenv('AINFLUE_PERFORMANCE_PROFILE', 'production')
+        profile_name = os.getenv('IACHERIE_PERFORMANCE_PROFILE', 'production')
         try:
             self.current_profile = PerformanceProfile(profile_name)
         except ValueError:

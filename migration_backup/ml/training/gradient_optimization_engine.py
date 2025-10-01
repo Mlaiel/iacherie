@@ -1,4 +1,4 @@
-"""Gradient Optimization Engine for Ainflue ML Platform
+"""Gradient Optimization Engine for IA Chéries ML Platform
 
 Advanced gradient optimization algorithms including Adam, RMSprop, custom optimizers,
 and creator-specific optimization strategies for optimal learning.
@@ -823,7 +823,7 @@ def create_creator_profile(
     )
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chéries creators
 async def example_gradient_optimization():
     """Example of gradient optimization for creator models."""
     

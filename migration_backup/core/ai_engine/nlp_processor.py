@@ -1,7 +1,7 @@
 """
 🧠💬 NLP PROCESSOR CORE - ABSOLUTE FINAL MISSING DEPENDENCY! 💬🧠
-Enterprise Natural Language Processing Engine for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise Natural Language Processing Engine for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

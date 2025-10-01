@@ -1,5 +1,5 @@
 """
-Ainflue Core Security - JWT Manager Core
+IA Chéries Core Security - JWT Manager Core
 ========================================
 
 Enterprise-grade JWT (JSON Web Token) management system with advanced security

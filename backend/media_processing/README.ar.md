@@ -1,8 +1,8 @@
 # 🔄 وحدة معالجة الوسائط - هندسة المؤسسة
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/Ainflue)
-[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/Ainflue)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Mlaiel/iacherie)
+[![Status](https://img.shields.io/badge/status-enterprise--ready-green.svg)](https://github.com/Mlaiel/iacherie)
+[![License](https://img.shields.io/badge/license-proprietary-red.svg)](https://github.com/Mlaiel/iacherie)
 
 إمكانيات معالجة الوسائط المتقدمة متعددة التنسيقات مع معالجة الذكاء الاصطناعي على مستوى المؤسسة، وحماية المحتوى، وتحسين محركات البحث، وسير عمل التعاون.
 

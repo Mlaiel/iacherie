@@ -1,7 +1,7 @@
 """Batch Processing Optimizer Module
 
 Intelligent batch processing optimization for efficiency and throughput
-in the Ainflue Message Queues Enterprise system.
+in the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -138,8 +138,8 @@ class BatchMetrics:
     strategy_performance: Dict[str, float] = field(default_factory=dict)
 
 
-class AinflueBusiness:
-    """Ainflue Business Batch Processing Rules"""
+class IA ChériesBusiness:
+    """IA Chéries Business Batch Processing Rules"""
     
     # Batch configurations by message type
     BATCH_CONFIGS = {
@@ -280,7 +280,7 @@ class BatchProcessingOptimizer:
         
         # Set default configuration if not exists
         if message_type not in self.batch_configurations:
-            self.batch_configurations[message_type] = AinflueBusiness.BATCH_CONFIGS.get(
+            self.batch_configurations[message_type] = IA ChériesBusiness.BATCH_CONFIGS.get(
                 message_type, BatchConfiguration()
             )
         
@@ -721,8 +721,8 @@ class BatchProcessingOptimizer:
             return self.batch_configurations[message_type]
         
         # Get from business defaults
-        if message_type in AinflueBusiness.BATCH_CONFIGS:
-            config = AinflueBusiness.BATCH_CONFIGS[message_type]
+        if message_type in IA ChériesBusiness.BATCH_CONFIGS:
+            config = IA ChériesBusiness.BATCH_CONFIGS[message_type]
             self.batch_configurations[message_type] = config
             return config
         
@@ -736,7 +736,7 @@ class BatchProcessingOptimizer:
         if not config.business_grouping_key:
             return [items]
         
-        grouping_func = AinflueBusiness.BUSINESS_GROUPING_FUNCTIONS.get(config.business_grouping_key)
+        grouping_func = IA ChériesBusiness.BUSINESS_GROUPING_FUNCTIONS.get(config.business_grouping_key)
         if not grouping_func:
             return [items]
         
@@ -924,7 +924,7 @@ class BatchProcessingOptimizer:
         recent_efficiency = [h["efficiency_score"] for h in history[-10:]]
         avg_recent_efficiency = statistics.mean(recent_efficiency)
         
-        if avg_recent_efficiency < AinflueBusiness.PERFORMANCE_THRESHOLDS["min_efficiency_score"]:
+        if avg_recent_efficiency < IA ChériesBusiness.PERFORMANCE_THRESHOLDS["min_efficiency_score"]:
             optimization_suggestions.append("Consider adjusting batch size or processing mode")
         
         # Analyze batch size optimization
@@ -1010,5 +1010,5 @@ __all__ = [
     "BatchStrategy",
     "ProcessingMode",
     "BatchStatus",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

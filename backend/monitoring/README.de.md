@@ -34,7 +34,7 @@ Dieses Monitoring-Modul, seine innovativen Performance-Intelligence-Konzepte, KI
 
 ## 🎯 Modul-Übersicht
 
-Das **Monitoring-Modul** bietet umfassende Performance-Analytics, intelligentes Monitoring und Echtzeit-Observability für das gesamte Ainflue-Plattform-Ökosystem. Diese Enterprise-Grade-Monitoring-Lösung liefert KI-gestützte Insights, prädiktive Analytics und automatisierte Performance-Optimierung.
+Das **Monitoring-Modul** bietet umfassende Performance-Analytics, intelligentes Monitoring und Echtzeit-Observability für das gesamte iacherie-Plattform-Ökosystem. Diese Enterprise-Grade-Monitoring-Lösung liefert KI-gestützte Insights, prädiktive Analytics und automatisierte Performance-Optimierung.
 
 ### 🏗️ Kern-Architektur
 

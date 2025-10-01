@@ -6,7 +6,7 @@ from typing import Any, Callable, Dict, List, Optional, Union
 from pathlib import Path
 import importlib.util
 
-logger = logging.getLogger('ainfluencer.authentication')
+logger = logging.getLogger('iacheries.authentication')
 
 class ModuleLoadingError(Exception):
     def __init__(self, message: str, module_name: str, original_error: Exception = None):
@@ -58,7 +58,7 @@ __all__ = [
     'BiometricAuthenticator',
     'FraudPreventionSystem',
     'SecurityMetrics',
-    'AinfluencerAuthenticationOrchestrator'
+    'IaCheriesAuthenticationOrchestrator'
 ]
 
 def load_enterprise_module(module_name: str, module_path: str) -> Any:
@@ -147,7 +147,7 @@ for class_name, module_path in components:
             return FallbackClass
         globals()[class_name] = create_fallback_class(class_name)
 
-class AinfluencerAuthenticationOrchestrator:
+class IaCheriesAuthenticationOrchestrator:
     def __init__(self):
         self.auth_handler = AuthenticationHandler()
         self.oauth_manager = OAuthManager() 
@@ -166,7 +166,7 @@ class AinfluencerAuthenticationOrchestrator:
         self.biometric_auth = BiometricAuthenticator()
         self.fraud_prevention = FraudPreventionSystem()
         self.security_metrics = SecurityMetrics()
-        logger.info("🎯 AinfluencerAuthenticationOrchestrator initialized successfully")
+        logger.info("🎯 IaCheriesAuthenticationOrchestrator initialized successfully")
     
     async def authenticate_user(self, credentials: dict) -> dict:
         try:
@@ -200,7 +200,7 @@ logging.basicConfig(
 )
 
 try:
-    authentication_orchestrator = AinfluencerAuthenticationOrchestrator()
+    authentication_orchestrator = IaCheriesAuthenticationOrchestrator()
     logger.info("✅ Main authentication orchestrator ready")
 except Exception as e:
     logger.error(f"❌ Failed to initialize authentication orchestrator: {e}")

@@ -2,7 +2,7 @@
 ========================================================================
 
 Advanced monetization performance monitoring, revenue optimization analytics,
-and payment processing intelligence for the Ainflue platform.
+and payment processing intelligence for the iacherie platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

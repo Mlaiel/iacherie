@@ -352,7 +352,7 @@ class BusinessServicesOrchestrator:
             ]
         }
     
-    async def orchestrate_ainflue_workflow(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def orchestrate_iacherie_workflow(self, creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Orchestrate complete IA Chérie workflow across all 7 phases
         This is the core business logic for IA Chérie platform
@@ -549,7 +549,7 @@ async def process_business_request(request: BusinessRequest) -> BusinessResponse
 
 async def orchestrate_workflow(creator_id: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
     """Orchestrate complete IA Chérie workflow"""
-    return await business_orchestrator.orchestrate_ainflue_workflow(creator_id, content_data)
+    return await business_orchestrator.orchestrate_iacherie_workflow(creator_id, content_data)
 
 async def get_creator_dashboard(creator_id: str) -> Dict[str, Any]:
     """Get creator dashboard"""

@@ -3,7 +3,7 @@ Infrastructure Core - Enterprise Infrastructure Management Hub
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Central infrastructure management providing backup, failover, orchestration,
-and performance optimization for Ainflue creator platform.
+and performance optimization for IA Chéries creator platform.
 """
 
 from typing import Dict, List, Optional, Any
@@ -90,8 +90,8 @@ __all__ = [
     'StorageOptimizer'
 ]
 
-# Configuration for Ainflue creator platform
-AINFLUE_INFRASTRUCTURE_CONFIG = {
+# Configuration for IA Chéries creator platform
+IA CHÉRIES_INFRASTRUCTURE_CONFIG = {
     'creator_workflow_support': True,
     'multi_platform_distribution': 65,
     'ai_agents_supported': 53,

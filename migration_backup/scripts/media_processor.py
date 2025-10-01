@@ -4,7 +4,7 @@ Media Processor - Enterprise Audio/Video Processing
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced media processing for Ainflue Platform:
+Advanced media processing for IA Chéries Platform:
 - Multi-format audio/video transcoding
 - Quality optimization and compression
 - Watermarking and digital protection
@@ -148,7 +148,7 @@ class MediaProcessor:
                     },
                     'watermark': {
                         'enabled': True,
-                        'text': 'Ainflue',
+                        'text': 'IA Chéries',
                         'position': 'bottom-right',
                         'opacity': 0.7
                     }
@@ -897,7 +897,7 @@ async def main():
     """CLI entry point for media processor"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Media Processor')
+    parser = argparse.ArgumentParser(description='IA Chéries Media Processor')
     parser.add_argument('--register', metavar='FILE', help='Register media file')
     parser.add_argument('--process', metavar='FILE_ID', help='Process media file')
     parser.add_argument('--format', default='mp4', help='Target format')

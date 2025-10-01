@@ -4,7 +4,7 @@
 ===================================================
 
 Module TTSEngine - Moteur de synthèse vocale enterprise
-Conçu pour la plateforme Ainfluencer avec qualité maximale
+Conçu pour la plateforme IA Chéries avec qualité maximale
 
 🎯 OBJECTIF: ATTEINDRE 100% IMPORT SUCCÈS POUR SATISFACTION UTILISATEUR
 """
@@ -88,7 +88,7 @@ class TTSEngine:
     """
     🎙️ MOTEUR TTS ENTERPRISE ULTRA-AVANCÉ
     
-    Moteur de synthèse vocale complet pour la plateforme Ainfluencer
+    Moteur de synthèse vocale complet pour la plateforme IA Chéries
     - Voix neurales haute qualité
     - Support multi-langues
     - Personnalisation avancée

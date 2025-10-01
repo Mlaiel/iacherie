@@ -3,10 +3,10 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 """
-Ainflue Security Policies Manager
+IA Chéries Security Policies Manager
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Security policy enforcement and management for the Ainflue creator economy platform.
+Security policy enforcement and management for the IA Chéries creator economy platform.
 Implements enterprise-grade security policies with automated enforcement.
 """
 
@@ -515,7 +515,7 @@ class SecurityPoliciesManager:
         }
 
 
-# Example usage for Ainflue creator platform
+# Example usage for IA Chéries creator platform
 def main():
     """Example usage of security policies manager"""
     

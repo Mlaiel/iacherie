@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""🔧 Production Environment Configuration Manager - Ainflue Platform
+"""🔧 Production Environment Configuration Manager - IA Chéries Platform
 ===================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + DBA + Security Engineer
@@ -32,7 +32,7 @@ class ProductionEnvironmentConfig:
     """
 Production environment configuration"""
     # Application Configuration
-    app_name: str = "Ainflue"
+    app_name: str = "IA Chéries"
     app_version: str = "1.0.0"
     environment: str = "production"
     debug: bool = False

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Audit Logging Template - Enterprise Security & Compliance
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:
@@ -147,7 +147,7 @@ class AuditEvent:
     # Technical context
     trace_id: Optional[str] = None
     span_id: Optional[str] = None
-    service_name: str = "ainflue-api"
+    service_name: str = "iacherie-api"
     environment: str = "production"
     
     # Error information
@@ -515,7 +515,7 @@ class AuditLoggingMiddleware(BaseHTTPMiddleware):
             
             trace_id=trace_id,
             span_id=str(uuid.uuid4()),
-            service_name="ainflue-api",
+            service_name="iacherie-api",
             environment=self._get_environment(),
             
             tags=await self._generate_tags(request, response),
@@ -890,7 +890,7 @@ class AuditLoggingMiddleware(BaseHTTPMiddleware):
             siem_payload = {
                 "timestamp": event.timestamp.isoformat(),
                 "event_type": event.event_type.value,
-                "source": "ainflue-api",
+                "source": "iacherie-api",
                 "severity": self._calculate_siem_severity(event),
                 "message": f"{event.actor_type} {event.method} {event.path}",
                 "metadata": event.to_dict()
@@ -1155,7 +1155,7 @@ def setup_creator_audit_logging(app: FastAPI) -> AuditLoggingMiddleware:
         # External integrations
         siem_integration=True,
         elasticsearch_enabled=True,
-        elasticsearch_index="ainflue-audit-logs",
+        elasticsearch_index="iacherie-audit-logs",
         
         # Performance optimization
         async_logging=True,

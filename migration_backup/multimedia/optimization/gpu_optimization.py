@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - GPU Optimization
+IA Chéries Platform - Multimedia Optimization - GPU Optimization
 Hardware-accelerated GPU optimization for multimedia processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)

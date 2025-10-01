@@ -1,10 +1,10 @@
 """
-GDPR Compliance Module - Ainflue Infrastructure Enterprise
+GDPR Compliance Module - IA Chéries Infrastructure Enterprise
 =========================================================
 General Data Protection Regulation compliance management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 """
 
@@ -59,7 +59,7 @@ class ConsentRecord:
 
 
 class GDPRComplianceManager:
-    """GDPR compliance management for Ainflue platform"""
+    """GDPR compliance management for IA Chéries platform"""
     
     def __init__(self):
         self.gdpr_requirements = self._initialize_gdpr_requirements()
@@ -70,7 +70,7 @@ class GDPRComplianceManager:
         logger.info("GDPR compliance manager initialized")
     
     def _initialize_gdpr_requirements(self) -> Dict[str, GDPRRequirement]:
-        """Initialize GDPR-specific compliance requirements for Ainflue"""
+        """Initialize GDPR-specific compliance requirements for IA Chéries"""
         
         requirements = {}
         
@@ -153,7 +153,7 @@ class GDPRComplianceManager:
         return requirements
     
     async def check_gdpr_compliance(self, infrastructure_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive GDPR compliance check for Ainflue infrastructure"""
+        """Comprehensive GDPR compliance check for IA Chéries infrastructure"""
         
         logger.info("Starting GDPR compliance assessment")
         
@@ -388,7 +388,7 @@ class GDPRComplianceManager:
         return result
     
     async def _perform_creator_specific_gdpr_checks(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform Ainflue creator-specific GDPR compliance checks"""
+        """Perform IA Chéries creator-specific GDPR compliance checks"""
         
         creator_checks = {
             'creator_consent_management': {

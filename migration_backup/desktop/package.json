@@ -1,7 +1,7 @@
 {
   "name": "ainflue-desktop",
   "version": "1.0.0",
-  "description": "Ainflue Desktop - Advanced AI Content Studio",
+  "description": "IA Chéries Desktop - Advanced AI Content Studio",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -26,7 +26,7 @@
   },
   "build": {
     "appId": "com.ainflue.desktop",
-    "productName": "Ainflue Studio",
+    "productName": "IA Chéries Studio",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -125,7 +125,7 @@
       "icon": "assets/icon.png",
       "category": "AudioVideo",
       "desktop": {
-        "StartupWMClass": "Ainflue Studio"
+        "StartupWMClass": "IA Chéries Studio"
       }
     },
     "nsis": {
@@ -134,7 +134,7 @@
       "allowElevation": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Ainflue Studio",
+      "shortcutName": "IA Chéries Studio",
       "runAfterFinish": true,
       "artifactName": "${productName}-${version}-Setup.${ext}",
       "deleteAppDataOnUninstall": false
@@ -168,7 +168,7 @@
     "publish": {
       "provider": "github",
       "owner": "Mlaiel",
-      "repo": "Ainflue"
+      "repo": "IA Chéries"
     }
   },
   "dependencies": {
@@ -194,7 +194,7 @@
   "homepage": "https://ainflue.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mlaiel/Ainflue.git"
+    "url": "https://github.com/Mlaiel/IA Chéries.git"
   },
   "keywords": [
     "ai",

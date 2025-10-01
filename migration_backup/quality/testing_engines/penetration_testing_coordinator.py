@@ -1,4 +1,4 @@
-"""🛡️ Penetration Testing Coordinator - Ainflue Platform
+"""🛡️ Penetration Testing Coordinator - IA Chéries Platform
 ================================================================
 Expert: SECURITY_ENGINEER + PENETRATION_TESTER + DEVOPS_ENGINEER + QUALITY_LEAD
 Created: 2025-01-XX
@@ -265,12 +265,12 @@ class PenetrationTestingCoordinator:
         }
 
     def _initialize_platform_targets(self):
-        """Initialize default targets for Ainflue platform"""
+        """Initialize default targets for IA Chéries platform"""
         
         # Main API Target
         self.register_target(PenetrationTestTarget(
             target_id="ainflue_main_api",
-            name="Ainflue Main API",
+            name="IA Chéries Main API",
             target_type="api",
             base_url="http://localhost:8000",
             authentication={
@@ -1064,7 +1064,7 @@ class PenetrationTestingCoordinator:
         return f"""
 **Executive Summary**
 
-This security assessment evaluated {len(targets)} targets across the Ainflue platform infrastructure. 
+This security assessment evaluated {len(targets)} targets across the IA Chéries platform infrastructure. 
 A total of {len(test_results)} security tests were conducted, identifying {len(vulnerabilities)} 
 security findings.
 

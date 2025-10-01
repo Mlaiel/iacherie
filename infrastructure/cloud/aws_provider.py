@@ -2,7 +2,7 @@
 AWS Provider - Amazon Web Services Infrastructure Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-AWS cloud infrastructure management for Ainflue creator economy platform.
+AWS cloud infrastructure management for iacherie creator economy platform.
 Handles EC2, S3, RDS, Lambda, and other AWS services with enterprise-grade automation.
 """
 
@@ -29,7 +29,7 @@ class AWSCredentials:
 
 class AWSProvider:
     """
-    AWS infrastructure provider for Ainflue platform.
+    AWS infrastructure provider for iacherie platform.
     
     Manages AWS resources including:
     - EC2 instances for creator services
@@ -70,19 +70,19 @@ class AWSProvider:
             self.cloudformation = None
             self.iam = None
         
-        # Ainflue-specific AWS configurations
-        self.ainflue_aws_config = {
-            'creator_services_stack': 'ainflue-creator-services',
-            'content_storage_bucket': 'ainflue-content-storage',
-            'ai_processing_stack': 'ainflue-ai-processing',
-            'revenue_processing_stack': 'ainflue-revenue-processing',
-            'security_stack': 'ainflue-security-services'
+        # iacherie-specific AWS configurations
+        self.iacherie_aws_config = {
+            'creator_services_stack': 'iacherie-creator-services',
+            'content_storage_bucket': 'iacherie-content-storage',
+            'ai_processing_stack': 'iacherie-ai-processing',
+            'revenue_processing_stack': 'iacherie-revenue-processing',
+            'security_stack': 'iacherie-security-services'
         }
         
         logger.info(f"AWS provider initialized for region: {self.region}")
     
-    async def deploy_ainflue_infrastructure(self) -> Dict[str, Any]:
-        """Deploy complete Ainflue infrastructure on AWS"""
+    async def deploy_iacherie_infrastructure(self) -> Dict[str, Any]:
+        """Deploy complete iacherie infrastructure on AWS"""
         
         deployment_result = {
             'deployment_id': f"aws_deploy_{int(asyncio.get_event_loop().time())}",
@@ -129,7 +129,7 @@ class AWSProvider:
         """Deploy creator services infrastructure on AWS"""
         
         creator_services = {
-            'stack_name': self.ainflue_aws_config['creator_services_stack'],
+            'stack_name': self.iacherie_aws_config['creator_services_stack'],
             'resources': {},
             'endpoints': {},
             'scaling_config': {}
@@ -147,7 +147,7 @@ class AWSProvider:
         
         # Deploy Application Load Balancer
         alb_config = await self._create_application_load_balancer({
-            'name': 'ainflue-creator-alb',
+            'name': 'iacherie-creator-alb',
             'scheme': 'internet-facing',
             'subnets': ['public-subnet-1a', 'public-subnet-1b'],
             'security_groups': ['alb-sg'],
@@ -164,7 +164,7 @@ class AWSProvider:
         
         # Deploy RDS instance for creator data
         rds_config = await self._create_rds_instance({
-            'db_identifier': 'ainflue-creator-db',
+            'db_identifier': 'iacherie-creator-db',
             'db_class': 'db.r5.large',
             'engine': 'postgres',
             'engine_version': '15.4',
@@ -192,7 +192,7 @@ class AWSProvider:
         """Deploy content storage infrastructure on AWS"""
         
         storage_config = {
-            'primary_bucket': self.ainflue_aws_config['content_storage_bucket'],
+            'primary_bucket': self.iacherie_aws_config['content_storage_bucket'],
             'cdn_distribution': {},
             'lifecycle_policies': {},
             'replication_config': {}
@@ -200,7 +200,7 @@ class AWSProvider:
         
         # Create S3 bucket for content storage
         bucket_config = await self._create_s3_bucket({
-            'bucket_name': self.ainflue_aws_config['content_storage_bucket'],
+            'bucket_name': self.iacherie_aws_config['content_storage_bucket'],
             'versioning': True,
             'encryption': 'AES256',
             'lifecycle_policies': [
@@ -215,7 +215,7 @@ class AWSProvider:
                 }
             ],
             'cors_configuration': {
-                'allowed_origins': ['https://ainflue.com', 'https://app.ainflue.com'],
+                'allowed_origins': ['https://iacherie.com', 'https://app.iacherie.com'],
                 'allowed_methods': ['GET', 'POST', 'PUT', 'DELETE'],
                 'allowed_headers': ['*'],
                 'max_age_seconds': 3000
@@ -225,7 +225,7 @@ class AWSProvider:
         
         # Setup CloudFront distribution
         cloudfront_config = await self._create_cloudfront_distribution({
-            'origin_domain': f"{self.ainflue_aws_config['content_storage_bucket']}.s3.amazonaws.com",
+            'origin_domain': f"{self.iacherie_aws_config['content_storage_bucket']}.s3.amazonaws.com",
             'price_class': 'PriceClass_All',
             'cache_behaviors': [
                 {
@@ -239,16 +239,16 @@ class AWSProvider:
                     'compress': False
                 }
             ],
-            'custom_domain': 'cdn.ainflue.com'
+            'custom_domain': 'cdn.iacherie.com'
         })
         storage_config['cdn_distribution'] = cloudfront_config
         
         # Setup cross-region replication
         replication_config = await self._setup_s3_replication({
-            'source_bucket': self.ainflue_aws_config['content_storage_bucket'],
+            'source_bucket': self.iacherie_aws_config['content_storage_bucket'],
             'destination_buckets': [
-                {'bucket': 'ainflue-content-storage-backup-us-east-1', 'region': 'us-east-1'},
-                {'bucket': 'ainflue-content-storage-backup-eu-west-1', 'region': 'eu-west-1'}
+                {'bucket': 'iacherie-content-storage-backup-us-east-1', 'region': 'us-east-1'},
+                {'bucket': 'iacherie-content-storage-backup-eu-west-1', 'region': 'eu-west-1'}
             ],
             'replication_role': 'arn:aws:iam::ACCOUNT:role/replication-role'
         })
@@ -268,8 +268,8 @@ class AWSProvider:
         
         # Deploy SageMaker endpoints for AI models
         sagemaker_config = await self._create_sagemaker_endpoint({
-            'endpoint_name': 'ainflue-content-analysis',
-            'model_name': 'ainflue-multimodal-model',
+            'endpoint_name': 'iacherie-content-analysis',
+            'model_name': 'iacherie-multimodal-model',
             'instance_type': 'ml.g4dn.xlarge',
             'initial_instance_count': 2,
             'auto_scaling': {
@@ -285,18 +285,18 @@ class AWSProvider:
         # Deploy Lambda functions for AI orchestration
         lambda_functions = await self._create_lambda_functions([
             {
-                'function_name': 'ainflue-ai-orchestrator',
+                'function_name': 'iacherie-ai-orchestrator',
                 'runtime': 'python3.9',
                 'handler': 'lambda_function.lambda_handler',
                 'memory_size': 1024,
                 'timeout': 900,  # 15 minutes
                 'environment_variables': {
                     'SAGEMAKER_ENDPOINT': sagemaker_config['endpoint_name'],
-                    'S3_BUCKET': self.ainflue_aws_config['content_storage_bucket']
+                    'S3_BUCKET': self.iacherie_aws_config['content_storage_bucket']
                 }
             },
             {
-                'function_name': 'ainflue-content-classifier',
+                'function_name': 'iacherie-content-classifier',
                 'runtime': 'python3.9',
                 'handler': 'classifier.lambda_handler',
                 'memory_size': 512,
@@ -309,16 +309,16 @@ class AWSProvider:
         # Setup SQS queues for AI processing
         processing_queues = await self._create_sqs_queues([
             {
-                'queue_name': 'ainflue-ai-processing-queue',
+                'queue_name': 'iacherie-ai-processing-queue',
                 'visibility_timeout': 900,
                 'message_retention_period': 1209600,  # 14 days
                 'dead_letter_queue': {
-                    'name': 'ainflue-ai-processing-dlq',
+                    'name': 'iacherie-ai-processing-dlq',
                     'max_receive_count': 3
                 }
             },
             {
-                'queue_name': 'ainflue-content-analysis-queue',
+                'queue_name': 'iacherie-content-analysis-queue',
                 'visibility_timeout': 300,
                 'message_retention_period': 345600  # 4 days
             }
@@ -339,11 +339,11 @@ class AWSProvider:
         
         # Deploy Aurora cluster for revenue data
         aurora_config = await self._create_aurora_cluster({
-            'cluster_identifier': 'ainflue-revenue-cluster',
+            'cluster_identifier': 'iacherie-revenue-cluster',
             'engine': 'aurora-postgresql',
             'engine_version': '15.4',
             'master_username': 'revenue_admin',
-            'database_name': 'ainflue_revenue',
+            'database_name': 'iacherie_revenue',
             'backup_retention_period': 30,
             'preferred_backup_window': '03:00-04:00',
             'preferred_maintenance_window': 'sun:04:00-sun:05:00',
@@ -358,7 +358,7 @@ class AWSProvider:
         # Deploy Lambda functions for payment processing
         payment_functions = await self._create_lambda_functions([
             {
-                'function_name': 'ainflue-payment-processor',
+                'function_name': 'iacherie-payment-processor',
                 'runtime': 'python3.9',
                 'handler': 'payment.process_payment',
                 'memory_size': 512,
@@ -369,7 +369,7 @@ class AWSProvider:
                 }
             },
             {
-                'function_name': 'ainflue-revenue-calculator',
+                'function_name': 'iacherie-revenue-calculator',
                 'runtime': 'python3.9',
                 'handler': 'revenue.calculate_revenue',
                 'memory_size': 256,
@@ -380,8 +380,8 @@ class AWSProvider:
         
         # Setup API Gateway for payment APIs
         api_gateway_config = await self._create_api_gateway({
-            'api_name': 'ainflue-revenue-api',
-            'description': 'Ainflue Revenue Processing API',
+            'api_name': 'iacherie-revenue-api',
+            'description': 'iacherie Revenue Processing API',
             'cors_enabled': True,
             'throttling': {
                 'rate_limit': 10000,
@@ -411,7 +411,7 @@ class AWSProvider:
         
         # Setup WAF for application protection
         waf_config = await self._create_waf_configuration({
-            'web_acl_name': 'ainflue-web-acl',
+            'web_acl_name': 'iacherie-web-acl',
             'rules': [
                 {
                     'name': 'AWSManagedRulesCommonRuleSet',
@@ -436,7 +436,7 @@ class AWSProvider:
         
         # Enable GuardDuty
         guardduty_config = await self._enable_guardduty({
-            'detector_id': 'ainflue-guardduty-detector',
+            'detector_id': 'iacherie-guardduty-detector',
             'finding_publishing_frequency': 'FIFTEEN_MINUTES',
             'data_sources': {
                 'S3Logs': {'Enable': True},
@@ -449,13 +449,13 @@ class AWSProvider:
         # Setup KMS keys for encryption
         kms_config = await self._create_kms_keys([
             {
-                'alias': 'alias/ainflue-content-encryption',
-                'description': 'Ainflue content encryption key',
+                'alias': 'alias/iacherie-content-encryption',
+                'description': 'iacherie content encryption key',
                 'usage': 'ENCRYPT_DECRYPT'
             },
             {
-                'alias': 'alias/ainflue-database-encryption',
-                'description': 'Ainflue database encryption key',
+                'alias': 'alias/iacherie-database-encryption',
+                'description': 'iacherie database encryption key',
                 'usage': 'ENCRYPT_DECRYPT'
             }
         ])
@@ -464,7 +464,7 @@ class AWSProvider:
         return security_config
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
-        """Setup CloudWatch monitoring for Ainflue infrastructure"""
+        """Setup CloudWatch monitoring for iacherie infrastructure"""
         
         monitoring_config = {
             'cloudwatch_dashboards': {},
@@ -475,7 +475,7 @@ class AWSProvider:
         
         # Create CloudWatch dashboard
         dashboard_config = await self._create_cloudwatch_dashboard({
-            'dashboard_name': 'Ainflue-Infrastructure-Overview',
+            'dashboard_name': 'iacherie-Infrastructure-Overview',
             'widgets': [
                 {
                     'type': 'metric',
@@ -490,7 +490,7 @@ class AWSProvider:
                 {
                     'type': 'log',
                     'title': 'Application Logs',
-                    'log_group': '/aws/lambda/ainflue-ai-orchestrator'
+                    'log_group': '/aws/lambda/iacherie-ai-orchestrator'
                 }
             ]
         })
@@ -499,15 +499,15 @@ class AWSProvider:
         # Setup CloudWatch alarms
         alarms_config = await self._create_cloudwatch_alarms([
             {
-                'alarm_name': 'AinfluE-HighCPUUtilization',
+                'alarm_name': 'IA-Cheries-HighCPUUtilization',
                 'metric_name': 'CPUUtilization',
                 'namespace': 'AWS/EC2',
                 'threshold': 80.0,
                 'comparison_operator': 'GreaterThanThreshold',
-                'alarm_actions': ['arn:aws:sns:us-west-2:ACCOUNT:ainflue-alerts']
+                'alarm_actions': ['arn:aws:sns:us-west-2:ACCOUNT:iacherie-alerts']
             },
             {
-                'alarm_name': 'Ainflue-DatabaseConnectionsHigh',
+                'alarm_name': 'iacherie-DatabaseConnectionsHigh',
                 'metric_name': 'DatabaseConnections',
                 'namespace': 'AWS/RDS',
                 'threshold': 50,
@@ -593,7 +593,7 @@ class AWSProvider:
         ML Engineer Role: Deploy AI/ML models using SageMaker and EKS
         """
         try:
-            model_name = model_config.get('model_name', 'ainflue-ai-model')
+            model_name = model_config.get('model_name', 'iacherie-ai-model')
             deployment_type = model_config.get('deployment_type', 'sagemaker')  # sagemaker, eks, lambda
             
             deployment_result = {
@@ -660,8 +660,8 @@ class AWSProvider:
     async def _deploy_model_on_eks(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
         """Deploy model on EKS cluster"""
         return {
-            'cluster_name': 'ainflue-ai-cluster',
-            'namespace': 'ainflue-ml',
+            'cluster_name': 'iacherie-ai-cluster',
+            'namespace': 'iacherie-ml',
             'deployment_name': f"{model_config['model_name']}-deployment",
             'service_name': f"{model_config['model_name']}-service",
             'replica_count': model_config.get('replica_count', 3),
@@ -688,7 +688,7 @@ class AWSProvider:
             'environment_variables': {
                 'MODEL_NAME': model_config['model_name'],
                 'MODEL_VERSION': model_config.get('version', '1.0'),
-                'AINFLUE_ENVIRONMENT': 'production'
+                'IACHERIE_ENVIRONMENT': 'production'
             }
         }
     
@@ -851,8 +851,8 @@ class AWSProvider:
     async def create_eks_cluster(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create EKS cluster"""
         return {
-            'cluster_name': config.get('cluster_name', 'ainflue-eks'),
-            'cluster_arn': f"arn:aws:eks:{self.region}:ACCOUNT:cluster/{config.get('cluster_name', 'ainflue-eks')}",
+            'cluster_name': config.get('cluster_name', 'iacherie-eks'),
+            'cluster_arn': f"arn:aws:eks:{self.region}:ACCOUNT:cluster/{config.get('cluster_name', 'iacherie-eks')}",
             'endpoint': f"https://12345678901234567890123456789012.gr7.{self.region}.eks.amazonaws.com",
             'status': 'CREATING',
             'kubernetes_version': config.get('kubernetes_version', '1.24')
@@ -861,9 +861,9 @@ class AWSProvider:
     async def create_rds_instance(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create RDS instance"""
         return {
-            'db_instance_identifier': config.get('db_instance_identifier', 'ainflue-db'),
-            'db_instance_arn': f"arn:aws:rds:{self.region}:ACCOUNT:db:{config.get('db_instance_identifier', 'ainflue-db')}",
-            'endpoint': f"{config.get('db_instance_identifier', 'ainflue-db')}.123456789012.{self.region}.rds.amazonaws.com",
+            'db_instance_identifier': config.get('db_instance_identifier', 'iacherie-db'),
+            'db_instance_arn': f"arn:aws:rds:{self.region}:ACCOUNT:db:{config.get('db_instance_identifier', 'iacherie-db')}",
+            'endpoint': f"{config.get('db_instance_identifier', 'iacherie-db')}.123456789012.{self.region}.rds.amazonaws.com",
             'port': config.get('port', 5432),
             'status': 'creating'
         }
@@ -871,29 +871,29 @@ class AWSProvider:
     async def create_s3_bucket(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create S3 bucket"""
         return {
-            'bucket_name': config.get('bucket_name', 'ainflue-content'),
-            'bucket_arn': f"arn:aws:s3:::{config.get('bucket_name', 'ainflue-content')}",
+            'bucket_name': config.get('bucket_name', 'iacherie-content'),
+            'bucket_arn': f"arn:aws:s3:::{config.get('bucket_name', 'iacherie-content')}",
             'region': self.region,
             'status': 'created',
             'versioning': config.get('versioning', True),
             'encryption': 'AES256'
         }
     
-    def get_ainflue_optimized_configs(self) -> Dict[str, Any]:
-        """Get Ainflue-optimized AWS configurations"""
+    def get_iacherie_optimized_configs(self) -> Dict[str, Any]:
+        """Get iacherie-optimized AWS configurations"""
         return {
             'content_processing': {
                 'ec2': {
                     'instance_type': 'c5.2xlarge',
                     'ami_id': 'ami-0abcdef1234567890',
-                    'key_name': 'ainflue-keypair',
+                    'key_name': 'iacherie-keypair',
                     'security_groups': ['sg-12345678'],
                     'subnet_id': 'subnet-12345678'
                 }
             },
             'ai_processing': {
                 'eks': {
-                    'cluster_name': 'ainflue-ai-cluster',
+                    'cluster_name': 'iacherie-ai-cluster',
                     'kubernetes_version': '1.24',
                     'node_group_config': {
                         'instance_types': ['m5.large'],
@@ -905,7 +905,7 @@ class AWSProvider:
             },
             'database': {
                 'rds': {
-                    'db_instance_identifier': 'ainflue-production-db',
+                    'db_instance_identifier': 'iacherie-production-db',
                     'db_instance_class': 'db.r5.xlarge',
                     'engine': 'postgres',
                     'engine_version': '13.7',
@@ -915,7 +915,7 @@ class AWSProvider:
             },
             'storage': {
                 's3': {
-                    'bucket_name': 'ainflue-content-storage',
+                    'bucket_name': 'iacherie-content-storage',
                     'versioning': True,
                     'encryption': 'AES256',
                     'lifecycle_rules': [

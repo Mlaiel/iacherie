@@ -1,4 +1,4 @@
-"""🎯 ENTERPRISE QUALITY ASSURANCE MODULE - AINFLUE PLATFORM
+"""🎯 ENTERPRISE QUALITY ASSURANCE MODULE - IA CHÉRIES PLATFORM
 ================================================================
 
 Point d'entrée principal pour l'écosystème de contrôle qualité enterprise
@@ -24,7 +24,7 @@ Contact: mlaiel@live.de
 from .index import (
     quality_orchestrator,
     QualityModuleType,
-    AinfluenceEnterpriseQualityOrchestrator
+    IA ChériesnceEnterpriseQualityOrchestrator
 )
 
 # Sub-modules (imported dynamically when available)
@@ -41,7 +41,7 @@ except ImportError:
 __all__ = [
     "quality_orchestrator",
     "QualityModuleType", 
-    "AinfluenceEnterpriseQualityOrchestrator",
+    "IA ChériesnceEnterpriseQualityOrchestrator",
     "master_orchestrator",
     "run_ainflue_quality_tests"
 ]
@@ -61,7 +61,7 @@ async def run_enterprise_quality_analysis(project_path=None, environment="develo
 def get_package_info():
     """Get package information"""
     return {
-        "name": "Ainflue Enterprise Quality Assurance",
+        "name": "IA Chéries Enterprise Quality Assurance",
         "version": __version__,
         "description": "Enterprise quality assurance orchestration system",
         "author": __author__,
@@ -74,6 +74,6 @@ def get_package_info():
             "Scoring qualité IA prédictif",
             "Validation compliance enterprise",
             "Reporting executive multi-niveaux",
-            "Intégration workflow créateurs Ainflue"
+            "Intégration workflow créateurs IA Chéries"
         ]
     }

@@ -2,7 +2,7 @@
 
 ## نظرة عامة على الهندسة المعمارية
 
-تقدم هندسة البلوك تشين للمؤسسات في Ainflue بنية تحتية شاملة وجاهزة للإنتاج مع ميزات متقدمة لإنشاء المحتوى والامتثال والتحليلات واستجابة الطوارئ.
+تقدم هندسة البلوك تشين للمؤسسات في iacherie بنية تحتية شاملة وجاهزة للإنتاج مع ميزات متقدمة لإنشاء المحتوى والامتثال والتحليلات واستجابة الطوارئ.
 
 ### المكونات الأساسية
 
@@ -80,7 +80,7 @@ fastapi>=0.95.0
 #### متغيرات البيئة
 ```bash
 # تكوين قاعدة البيانات
-DATABASE_URL="postgresql://user:pass@localhost/ainflue_blockchain"
+DATABASE_URL="postgresql://user:pass@localhost/iacherie_blockchain"
 REDIS_URL="redis://localhost:6379"
 
 # تكوين البلوك تشين
@@ -210,7 +210,7 @@ incident_id = await emergency_system.handle_emergency(
 
 1. **بناء الحاوية**
 ```bash
-docker build -t ainflue-blockchain .
+docker build -t iacherie-blockchain .
 ```
 
 2. **التشغيل مع Docker Compose**
@@ -237,7 +237,7 @@ spec:
     spec:
       containers:
       - name: blockchain
-        image: ainflue-blockchain:latest
+        image: iacherie-blockchain:latest
         ports:
         - containerPort: 8000
         env:
@@ -289,8 +289,8 @@ redis-cli ping
 ```
 
 ### جهات اتصال الدعم
-- **الدعم التقني**: tech@ainflue.com
-- **مسائل الأمان**: security@ainflue.com
+- **الدعم التقني**: tech@iacherie.com
+- **مسائل الأمان**: security@iacherie.com
 - **اتصال الطوارئ**: +971-4-EMERGENCY
 
 ## خريطة الطريق

@@ -1,4 +1,4 @@
-"""Token Introspection Template for Ainflue Platform
+"""Token Introspection Template for iacherie Platform
 RFC 7662 compliant token introspection service with advanced token validation,
 security analysis, and creator-specific token management features.
 
@@ -127,7 +127,7 @@ class TokenIntrospectionResponse(BaseModel):
     usage_count: Optional[int] = Field(default=None, description="Usage count")
     last_used: Optional[int] = Field(default=None, description="Last used timestamp")
     security_level: Optional[str] = Field(default=None, description="Security level")
-    # Custom Ainflue claims
+    # Custom iacherie claims
     creator_tier: Optional[str] = Field(default=None, description="Creator tier level")
     content_permissions: Optional[List[str]] = Field(default=None, description="Content permissions")
     monetization_enabled: Optional[bool] = Field(default=None, description="Monetization status")
@@ -168,7 +168,7 @@ class TokenRevocationRequest(BaseModel):
 
 
 class TokenIntrospectionService:
-    """Comprehensive token introspection service for Ainflue platform
+    """Comprehensive token introspection service for iacherie platform
     
     Provides RFC 7662 compliant token introspection with:
     - Multi-format token support (JWT, opaque, reference)
@@ -194,7 +194,7 @@ class TokenIntrospectionService:
         # JWT configuration
         self.jwt_secret = settings.JWT_SECRET_KEY
         self.jwt_algorithm = getattr(settings, 'JWT_ALGORITHM', 'HS256')
-        self.jwt_issuer = getattr(settings, 'JWT_ISSUER', 'ainflue.com')
+        self.jwt_issuer = getattr(settings, 'JWT_ISSUER', 'iacherie.com')
         
         # RSA keys for JWT signing (if using RS256)
         self.private_key = None
@@ -467,7 +467,7 @@ class TokenIntrospectionService:
                 auth_methods=payload.get('auth_methods'),
                 grant_type=payload.get('grant_type'),
                 security_level=payload.get('security_level'),
-                # Ainflue-specific claims
+                # iacherie-specific claims
                 creator_tier=payload.get('creator_tier'),
                 content_permissions=payload.get('content_permissions'),
                 monetization_enabled=payload.get('monetization_enabled'),

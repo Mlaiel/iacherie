@@ -13,7 +13,7 @@ Expert Roles Applied:
 - IA Prompt Engineer: Format-specific prompt patterns et content optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations - Prompt Engineering
+Project: IA Chéries Integrations - Prompt Engineering
 Version: 1.0 Enterprise Production
 """
 

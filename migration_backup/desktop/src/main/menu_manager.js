@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Menu Manager
+ * IA Chéries Desktop - Menu Manager
  * 
  * Native menu system for cross-platform desktop application
  * 
@@ -386,7 +386,7 @@ class MenuManager {
           },
           { type: 'separator' },
           {
-            label: 'About Ainflue Studio',
+            label: 'About IA Chéries Studio',
             click: () => this.handleAbout()
           }
         ]
@@ -435,7 +435,7 @@ class MenuManager {
         title: 'Open Project',
         properties: ['openFile'],
         filters: [
-          { name: 'Ainflue Projects', extensions: ['ainflue', 'json'] },
+          { name: 'IA Chéries Projects', extensions: ['ainflue', 'json'] },
           { name: 'All Files', extensions: ['*'] }
         ]
       });
@@ -469,7 +469,7 @@ class MenuManager {
         title: 'Save Project As',
         defaultPath: 'Untitled Project.ainflue',
         filters: [
-          { name: 'Ainflue Projects', extensions: ['ainflue'] },
+          { name: 'IA Chéries Projects', extensions: ['ainflue'] },
           { name: 'JSON Files', extensions: ['json'] }
         ]
       });
@@ -639,11 +639,11 @@ class MenuManager {
   }
 
   handleReportIssue() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/issues/new');
+    shell.openExternal('https://github.com/Mlaiel/IA Chéries/issues/new');
   }
 
   handleFeatureRequest() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/discussions/new');
+    shell.openExternal('https://github.com/Mlaiel/IA Chéries/discussions/new');
   }
 
   handleCheckUpdates() {
@@ -654,14 +654,14 @@ class MenuManager {
   }
 
   handleReleaseNotes() {
-    shell.openExternal('https://github.com/Mlaiel/Ainflue/releases');
+    shell.openExternal('https://github.com/Mlaiel/IA Chéries/releases');
   }
 
   async handleAbout() {
     await dialog.showMessageBox({
       type: 'info',
-      title: 'About Ainflue Studio',
-      message: 'Ainflue Studio',
+      title: 'About IA Chéries Studio',
+      message: 'IA Chéries Studio',
       detail: `Version: ${app.getVersion()}\n\nAI-powered content creation and collaboration platform.\n\n© 2025 Fahed Mlaiel. All rights reserved.\nContact: mlaiel@live.de`,
       buttons: ['OK']
     });

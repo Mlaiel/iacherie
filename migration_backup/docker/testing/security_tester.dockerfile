@@ -1,11 +1,11 @@
 # Security Tester Service
-# Vulnerability and penetration testing for Ainflue Platform
+# Vulnerability and penetration testing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Security Tester - Vulnerability scanning and pen testing"
+LABEL description="IA Chéries Security Tester - Vulnerability scanning and pen testing"
 LABEL version="1.0.0"
 
 # Set working directory

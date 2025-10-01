@@ -1,5 +1,5 @@
 """Chaos Engineering Service - Resilience testing and validation
-Enterprise-grade chaos engineering implementation for the Ainflue AI platform.
+Enterprise-grade chaos engineering implementation for the IA Chéries AI platform.
 
 This service implements chaos engineering practices to test system resilience,
 identify weaknesses, and validate failure recovery mechanisms.

@@ -1,5 +1,5 @@
 """
-Error Prediction ML Engine - Ainflue Platform
+Error Prediction ML Engine - IA Chéries Platform
 Machine Learning-Powered Error Prediction & Proactive Prevention
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -190,7 +190,7 @@ class ErrorPredictionMLEngine:
         self.model_path = Path(self.config.get('model_path', '/tmp/ml_models/prediction'))
         self.model_path.mkdir(parents=True, exist_ok=True)
         
-        # 🎵 Audio + Platform: Configuration Ainflue
+        # 🎵 Audio + Platform: Configuration IA Chéries
         self.platform_configs = self._initialize_platform_configs()
         
         # Initialize models
@@ -199,7 +199,7 @@ class ErrorPredictionMLEngine:
         logger.info("ErrorPredictionMLEngine initialized with advanced ML capabilities")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """🎵 Audio + Platform: Configuration des 65+ plateformes Ainflue"""
+        """🎵 Audio + Platform: Configuration des 65+ plateformes IA Chéries"""
         return {
             # Music Streaming Platforms
             'spotify': {

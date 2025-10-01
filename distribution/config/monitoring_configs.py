@@ -605,13 +605,13 @@ class MonitoringConfigs:
         # Create scrape configs
         for interval, metrics in scrape_configs_by_interval.items():
             scrape_config = {
-                "job_name": f"ainflue_metrics_{interval}s",
+                "job_name": f"iacherie_metrics_{interval}s",
                 "scrape_interval": f"{interval}s",
                 "static_configs": [
                     {
                         "targets": ["localhost:8080"],
                         "labels": {
-                            "service": "ainflue_distribution"
+                            "service": "iacherie_distribution"
                         }
                     }
                 ],

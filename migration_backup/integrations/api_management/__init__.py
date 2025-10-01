@@ -1,5 +1,5 @@
 """
-API Management Module - Ainflue Integrations
+API Management Module - IA Chéries Integrations
 ===========================================
 Enterprise API management module providing comprehensive API gateway,
 authentication, load balancing, versioning, metrics, security, rate limiting,
@@ -7,7 +7,7 @@ circuit breaker, retry logic, webhook management, analytics, service discovery,
 and automated testing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 3.0 Enterprise Production - COMPLETE
 """
 
@@ -68,10 +68,10 @@ __all__ = [
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Complete Enterprise API management and gateway for Ainflue platform with multi-expert architecture - ALL PHASES IMPLEMENTED"
+__description__ = "Complete Enterprise API management and gateway for IA Chéries platform with multi-expert architecture - ALL PHASES IMPLEMENTED"
 
-# Configuration logique métier Ainflue - COMPLETE
-AINFLUE_API_MANAGEMENT = {
+# Configuration logique métier IA Chéries - COMPLETE
+IA CHÉRIES_API_MANAGEMENT = {
     'platforms': 65,
     'completion_status': '100% - ALL 18 COMPONENTS IMPLEMENTED',
     'gateway_features': [

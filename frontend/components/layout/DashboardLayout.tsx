@@ -737,7 +737,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                   Enterprise Dashboard
                 </h1>
                 <p className="text-sm text-gray-600">
-                  Plateforme AInfluencer - 57 Modules Intégrés
+                  Plateforme iaCherie - 57 Modules Intégrés
                 </p>
               </div>
             </div>

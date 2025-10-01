@@ -562,7 +562,7 @@ class NFTIntegration:
         
         return {
             "name": f"Avatar #{nft.token_id}",
-            "description": f"Unique 3D Avatar NFT created with Ainflue platform",
+            "description": f"Unique 3D Avatar NFT created with iacherie platform",
             "image": f"ipfs://avatar-images/{nft.avatar_id}.png",
             "animation_url": f"ipfs://avatar-models/{nft.avatar_id}.glb",
             "attributes": [
@@ -570,7 +570,7 @@ class NFTIntegration:
                 {"trait_type": "Blockchain", "value": nft.blockchain.value},
                 {"trait_type": "Creation Date", "value": nft.mint_date.isoformat()}
             ],
-            "external_url": f"https://ainflue.com/avatar/{nft.avatar_id}",
+            "external_url": f"https://iacherie.com/avatar/{nft.avatar_id}",
             "creator": nft.creator_address,
             "royalty_percentage": 5.0
         }

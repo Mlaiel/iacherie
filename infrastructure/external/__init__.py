@@ -1,9 +1,9 @@
-"""Infrastructure External Integrations - Ainflue Enterprise Platform
+"""Infrastructure External Integrations - iacherie Enterprise Platform
 =====================================================================
 External service integrations for the infrastructure module
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 This module provides integrations with external services:

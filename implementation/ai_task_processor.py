@@ -362,7 +362,7 @@ Execute individual task"""
         analysis_start = datetime.utcnow()
         
         # Creator economy specific analysis
-        ainflue_analysis = {
+        iacherie_analysis = {
             "content_type": content_type,
             "creator_profile": {
                 "creator_id": creator_id,
@@ -396,13 +396,13 @@ Execute individual task"""
         }
         
         processing_time = (datetime.utcnow() - analysis_start).total_seconds()
-        ainflue_analysis["processing_metrics"] = {
+        iacherie_analysis["processing_metrics"] = {
             "processing_time_seconds": processing_time,
-            "analysis_engine": "ainflue_creator_economy_analyzer_v2",
+            "analysis_engine": "iacherie_creator_economy_analyzer_v2",
             "analysis_timestamp": datetime.utcnow().isoformat()
         }
         
-        return ainflue_analysis
+        return iacherie_analysis
     
     def _determine_creator_category(self, content_type: str) -> str:
         """Determine creator category for IA Chérie platform"""
@@ -455,10 +455,10 @@ Execute individual task"""
         perceptual_hash = hashlib.blake2b(content_signature.encode(), digest_size=32).hexdigest()
         creator_signature = hashlib.sha256(f"{creator_id}:{content_id}".encode()).hexdigest()
         
-        ainflue_fingerprint = {
+        iacherie_fingerprint = {
             "content_id": content_id,
             "creator_id": creator_id,
-            "ainflue_fingerprint_suite": {
+            "iacherie_fingerprint_suite": {
                 "primary_fingerprint": primary_fingerprint,
                 "perceptual_fingerprint": perceptual_hash,
                 "creator_signature": creator_signature,
@@ -476,7 +476,7 @@ Execute individual task"""
                 "monetization_tag": "commercial_ready"
             },
             "verification_data": {
-                "fingerprint_version": "ainflue_v2.1",
+                "fingerprint_version": "iacherie_v2.1",
                 "algorithm": "sha256_blake2b_hybrid",
                 "confidence_score": 0.99,
                 "generated_at": datetime.utcnow().isoformat(),
@@ -485,12 +485,12 @@ Execute individual task"""
         }
         
         processing_time = (datetime.utcnow() - fingerprint_start).total_seconds()
-        ainflue_fingerprint["processing_metrics"] = {
+        iacherie_fingerprint["processing_metrics"] = {
             "generation_time_ms": processing_time * 1000,
-            "processing_engine": "ainflue_protection_system_v2"
+            "processing_engine": "iacherie_protection_system_v2"
         }
         
-        return ainflue_fingerprint
+        return iacherie_fingerprint
     
     async def _handle_similarity_detection(self, task: AITask) -> Dict[str, Any]:
         """Handle IA Chérie similarity detection for copyright protection"""
@@ -504,7 +504,7 @@ Execute individual task"""
         detection_start = datetime.utcnow()
         
         # Platform-specific similarity analysis
-        ainflue_similarity_result = {
+        iacherie_similarity_result = {
             "source_content_id": source_id,
             "target_content_id": target_id,
             "creator_id": creator_id,
@@ -515,7 +515,7 @@ Execute individual task"""
                 "semantic_similarity": 0.18,
                 "structural_similarity": 0.12
             },
-            "ainflue_protection_verdict": {
+            "iacherie_protection_verdict": {
                 "is_original": True,
                 "copyright_violation_risk": "low",
                 "platform_approval": "approved",
@@ -535,7 +535,7 @@ Execute individual task"""
                 "brand_risk_assessment": "minimal"
             },
             "technical_analysis": {
-                "detection_method": "ainflue_neural_similarity_engine",
+                "detection_method": "iacherie_neural_similarity_engine",
                 "analysis_depth": "deep_semantic_structural",
                 "confidence_level": 0.97,
                 "processing_time_ms": 0  # Will be calculated
@@ -543,10 +543,10 @@ Execute individual task"""
         }
         
         processing_time = (datetime.utcnow() - detection_start).total_seconds()
-        ainflue_similarity_result["technical_analysis"]["processing_time_ms"] = processing_time * 1000
-        ainflue_similarity_result["analyzed_at"] = datetime.utcnow().isoformat()
+        iacherie_similarity_result["technical_analysis"]["processing_time_ms"] = processing_time * 1000
+        iacherie_similarity_result["analyzed_at"] = datetime.utcnow().isoformat()
         
-        return ainflue_similarity_result
+        return iacherie_similarity_result
     
     def _calculate_content_similarity(self, content_type: str) -> float:
         """Calculate content-type specific similarity for IA Chérie platform"""
@@ -754,7 +754,7 @@ Execute individual task"""
             "checked_at": datetime.utcnow().isoformat()
         }
     
-    async def _handle_ainflue_specialized_task(self, task: AITask, processing_type: str) -> Dict[str, Any]:
+    async def _handle_iacherie_specialized_task(self, task: AITask, processing_type: str) -> Dict[str, Any]:
         """Handle specialized IA Chérie business logic tasks"""
         self.logger.info(f"Processing IA Chérie {processing_type} task {task.task_id}")
         
@@ -776,7 +776,7 @@ Execute individual task"""
             "processing_method": f"iacherie_{processing_type}_specialized",
             "status": "completed_successfully",
             "content_metadata": content_metadata,
-            "ainflue_business_data": {
+            "iacherie_business_data": {
                 "protection_applied": True,
                 "monetization_ready": True,
                 "distribution_channels": [],

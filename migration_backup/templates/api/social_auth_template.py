@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-🌐 AINFLUE SOCIAL AUTHENTICATION TEMPLATE - MULTI-PLATFORM CREATOR AUTH
+🌐 IA CHÉRIES SOCIAL AUTHENTICATION TEMPLATE - MULTI-PLATFORM CREATOR AUTH
 ========================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IA CHÉRIES CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
 📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com

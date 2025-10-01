@@ -34,7 +34,7 @@ This services architecture, its innovative AI algorithms, advanced microservices
 
 ## 🎯 Executive Summary
 
-The **Services Backend** module is Ainflue's enterprise microservices architecture providing scalable business services, AI-powered intelligence, secure data processing, and enterprise-grade infrastructure for the complete creator economy platform.
+The **Services Backend** module is iacherie's enterprise microservices architecture providing scalable business services, AI-powered intelligence, secure data processing, and enterprise-grade infrastructure for the complete creator economy platform.
 
 ### Core Business Value
 
@@ -294,16 +294,16 @@ payment_result = await payment_service.process_payment(
 - **Training & Onboarding**: Professional team training and workshops
 
 ### Developer Resources
-- **[Developer Portal](https://developers.ainflue.com)** - APIs, SDKs, and tools
-- **[Community Forum](https://community.ainflue.com)** - Developer discussions and support
-- **[Open Source](https://github.com/ainflue)** - Open source tools and libraries
+- **[Developer Portal](https://developers.iacherie.com)** - APIs, SDKs, and tools
+- **[Community Forum](https://community.iacherie.com)** - Developer discussions and support
+- **[Open Source](https://github.com/iacherie)** - Open source tools and libraries
 
 ## 📞 Contact & Support
 
-**Technical Support**: [support@ainflue.com](mailto:support@ainflue.com)
-**Enterprise Sales**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**Developer Relations**: [developers@ainflue.com](mailto:developers@ainflue.com)
-**Security Issues**: [security@ainflue.com](mailto:security@ainflue.com)
+**Technical Support**: [support@iacherie.com](mailto:support@iacherie.com)
+**Enterprise Sales**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**Developer Relations**: [developers@iacherie.com](mailto:developers@iacherie.com)
+**Security Issues**: [security@iacherie.com](mailto:security@iacherie.com)
 
 **Project Leadership**: [Fahed Mlaiel](mailto:mlaiel@live.de)
 

@@ -1,12 +1,12 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🌍 Multi-Region Discovery Enterprise - Ainflue
+🌍 Multi-Region Discovery Enterprise - IA Chéries
 ==============================================
 Discovery multi-région pour deployment global.
 Cross-region service discovery + latency optimization + failover.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Service Discovery
+Project: IA Chéries Service Discovery
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️

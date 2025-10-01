@@ -176,7 +176,7 @@ class ShopifyIntegration:
             headers = {
                 "X-Shopify-Access-Token": self.access_token,
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue/1.0"
+                "User-Agent": "iacherie/1.0"
             }
             
             self.session = aiohttp.ClientSession(

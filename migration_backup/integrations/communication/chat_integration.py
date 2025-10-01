@@ -1,5 +1,5 @@
 """
-Chat Integration Service for Ainflue Platform
+Chat Integration Service for IA Chéries Platform
 Enterprise-grade multi-platform chat integration for creator collaboration
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -184,7 +184,7 @@ class ChatConfig:
 
 class ChatIntegration(BaseIntegration):
     """
-    Enterprise Chat Integration for Ainflue platform
+    Enterprise Chat Integration for IA Chéries platform
     
     Features:
     - Multi-platform chat support (Slack, Discord, Teams, etc.)
@@ -627,7 +627,7 @@ class ChatIntegration(BaseIntegration):
             content_lower = message.content.lower()
             
             if "help" in content_lower:
-                return "I'm here to help! You can ask me about Ainflue features, creator tools, or general questions."
+                return "I'm here to help! You can ask me about IA Chéries features, creator tools, or general questions."
             elif "pricing" in content_lower:
                 return "Check out our pricing plans at https://ainflue.com/pricing"
             elif "support" in content_lower:
@@ -975,7 +975,7 @@ def create_chat_integration(**kwargs) -> ChatIntegration:
     config = ChatConfig(**kwargs)
     return ChatIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def example_chat_integration_flow():
     """Example chat integration usage"""
     

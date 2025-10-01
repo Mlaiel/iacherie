@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # =================================================================
-# Ainflue Platform Deployment Script
+# IA Chéries Platform Deployment Script
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Description: Complete automated deployment for Ainflue Platform
+# Description: Complete automated deployment for IA Chéries Platform
 # Usage: ./scripts/deploy.sh [environment] [options]
 # =================================================================
 
@@ -68,7 +68,7 @@ show_usage() {
     cat << EOF
 Usage: $0 [OPTIONS]
 
-Ainflue Platform Deployment Script
+IA Chéries Platform Deployment Script
 
 OPTIONS:
     -e, --environment ENV    Target environment (production|staging|development) [default: production]
@@ -425,7 +425,7 @@ send_notification() {
     "attachments": [
         {
             "color": "$color",
-            "title": "Ainflue Deployment Notification",
+            "title": "IA Chéries Deployment Notification",
             "fields": [
                 {
                     "title": "Environment",
@@ -498,7 +498,7 @@ cleanup() {
 
 # Main deployment function
 main() {
-    print_status "Starting Ainflue Platform Deployment"
+    print_status "Starting IA Chéries Platform Deployment"
     print_status "Environment: $ENVIRONMENT"
     print_status "Namespace: $NAMESPACE"
     print_status "Image Tag: $IMAGE_TAG"

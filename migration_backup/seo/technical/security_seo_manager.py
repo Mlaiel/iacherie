@@ -2,7 +2,7 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """Security SEO Manager
-Advanced security optimization for SEO impact in Ainflue creator economy platform.
+Advanced security optimization for SEO impact in IA Chéries creator economy platform.
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -577,7 +577,7 @@ class SecurityHeadersAnalyzer:
 
 
 class SecuritySEOManager:
-    """Comprehensive security SEO management for Ainflue creator economy."""
+    """Comprehensive security SEO management for IA Chéries creator economy."""
     
     def __init__(self):
         self.logger = self._setup_logging()

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""🚀 Ainflue Enterprise Platform - Ultra-Advanced Main Index
+"""🚀 IA Chéries Enterprise Platform - Ultra-Advanced Main Index
 ============================================================
 
 🎯 MASTER ORCHESTRATION HUB
-- Zentraler Einstiegspunkt für die gesamte Ainflue-Plattform
+- Zentraler Einstiegspunkt für die gesamte IA Chéries-Plattform
 - Enterprise-Grade Architektur mit 53+ AI-Agenten & 117+ Crawlers
 - Ultra-moderne FastAPI ASGI-Anwendung mit vollständiger Middleware-Integration
 - Produktionsreife Konfiguration für Skalierung und Hochverfügbarkeit
@@ -109,7 +109,7 @@ except ImportError:
     PROMETHEUS_AVAILABLE = False
 
 # Enterprise Configuration Manager
-class AinfluePlatformConfig:
+class IA ChériesPlatformConfig:
     """🏗️ Ultra-Advanced Enterprise Configuration Manager"""
     
     def __init__(self):
@@ -162,7 +162,7 @@ class AinfluePlatformConfig:
         return default_origins + custom_origins
 
 # Global configuration instance
-config = AinfluePlatformConfig()
+config = IA ChériesPlatformConfig()
 
 # Prometheus metrics (if available)
 if PROMETHEUS_AVAILABLE:
@@ -257,7 +257,7 @@ class EnterpriseMiddlewareStack:
         logger.info("🌐 CORS middleware configured")
 
 # Ultra-Advanced Platform Manager
-class AinfluePlatformManager:
+class IA ChériesPlatformManager:
     """🚀 Master Platform Orchestrator - Ultra-Advanced Enterprise Management"""
     
     def __init__(self):
@@ -275,16 +275,16 @@ class AinfluePlatformManager:
         async def lifespan(app: FastAPI):
             """Advanced lifespan management"""
             # Startup sequence
-            logger.info("🚀 Starting Ainflue Enterprise Platform...")
+            logger.info("🚀 Starting IA Chéries Enterprise Platform...")
             await self._startup_sequence()
             yield
             # Shutdown sequence
-            logger.info("🛑 Shutting down Ainflue Platform...")
+            logger.info("🛑 Shutting down IA Chéries Platform...")
             await self._shutdown_sequence()
         
         # Create FastAPI application with enterprise configuration
         self.app = FastAPI(
-            title="🚀 Ainflue Enterprise Platform",
+            title="🚀 IA Chéries Enterprise Platform",
             description=self._get_api_description(),
             version=config.version,
             docs_url="/docs" if config.debug_mode else None,
@@ -313,7 +313,7 @@ class AinfluePlatformManager:
     def _get_api_description(self) -> str:
         """Generate comprehensive API description"""
         return f"""
-# 🎯 Ainflue Enterprise Platform - AI-Powered Content Protection
+# 🎯 IA Chéries Enterprise Platform - AI-Powered Content Protection
 
 ## 🚀 Platform Overview
 Ultra-moderne AI-Plattform für Content-Schutz und Monetarisierung mit Enterprise-Grade Architektur.
@@ -395,7 +395,7 @@ Orchestration Layer → Business Logic → Data Persistence
         async def platform_info():
             """ℹ️ Platform information"""
             return {
-                "platform": "Ainflue Enterprise",
+                "platform": "IA Chéries Enterprise",
                 "version": config.version,
                 "environment": config.environment,
                 "startup_time": config.startup_time.isoformat(),
@@ -490,7 +490,7 @@ Orchestration Layer → Business Logic → Data Persistence
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Ainflue Enterprise Platform</title>
+    <title>🚀 IA Chéries Enterprise Platform</title>
     <style>
         body {{ 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -516,7 +516,7 @@ Orchestration Layer → Business Logic → Data Persistence
 <body>
     <div class="container">
         <div class="logo">🚀</div>
-        <h1 class="title">Ainflue Enterprise Platform</h1>
+        <h1 class="title">IA Chéries Enterprise Platform</h1>
         <p class="subtitle">Ultra-Advanced AI-Powered Content Protection & Monetization</p>
         
         <div class="features">
@@ -605,7 +605,7 @@ Orchestration Layer → Business Logic → Data Persistence
         
         return {
             "platform": {
-                "name": "Ainflue Enterprise Platform",
+                "name": "IA Chéries Enterprise Platform",
                 "version": config.version,
                 "environment": config.environment,
                 "startup_time": config.startup_time.isoformat(),
@@ -725,13 +725,13 @@ Orchestration Layer → Business Logic → Data Persistence
         self.active_services["crawlers"] = False
 
 # Global platform manager instance
-platform_manager = AinfluePlatformManager()
+platform_manager = IA ChériesPlatformManager()
 
 # Ultra-Advanced Application Factory
 async def create_ainflue_platform() -> FastAPI:
     """🏭 Ultra-Advanced Application Factory
     
-    Creates and configures the complete Ainflue Enterprise Platform
+    Creates and configures the complete IA Chéries Enterprise Platform
     with all enterprise features, middleware, and services.
     
     Returns:
@@ -740,11 +740,11 @@ async def create_ainflue_platform() -> FastAPI:
     if not FASTAPI_AVAILABLE:
         raise RuntimeError("FastAPI is required but not available")
     
-    logger.info("🏭 Creating Ainflue Enterprise Platform...")
+    logger.info("🏭 Creating IA Chéries Enterprise Platform...")
     
     app = await platform_manager.create_application()
     
-    logger.info("✅ Ainflue Enterprise Platform created successfully")
+    logger.info("✅ IA Chéries Enterprise Platform created successfully")
     return app
 
 # Application instance for ASGI servers
@@ -781,7 +781,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 # Ultra-Advanced CLI Interface
 def main():
-    """🚀 Main entry point for the Ainflue Enterprise Platform
+    """🚀 Main entry point for the IA Chéries Enterprise Platform
     
     Supports multiple deployment modes:
     - Development server (uvicorn)
@@ -792,7 +792,7 @@ def main():
     
     import argparse
     
-    parser = argparse.ArgumentParser(description="🚀 Ainflue Enterprise Platform")
+    parser = argparse.ArgumentParser(description="🚀 IA Chéries Enterprise Platform")
     parser.add_argument("--host", default=config.host, help="Host to bind to")
     parser.add_argument("--port", type=int, default=config.port, help="Port to bind to")
     parser.add_argument("--workers", type=int, default=config.workers, help="Number of worker processes")
@@ -808,7 +808,7 @@ def main():
     config.workers = args.workers
     config.debug_mode = args.debug or config.debug_mode
     
-    logger.info(f"🚀 Starting Ainflue Enterprise Platform v{config.version}")
+    logger.info(f"🚀 Starting IA Chéries Enterprise Platform v{config.version}")
     logger.info(f"🌐 Server: {config.host}:{config.port}")
     logger.info(f"👥 Workers: {config.workers}")
     logger.info(f"🔧 Environment: {config.environment}")
@@ -859,7 +859,7 @@ try:
 except Exception as e:
     logger.error(f"❌ Failed to create ASGI application: {e}")
     # Create a minimal fallback application
-    app = FastAPI(title="Ainflue Platform - Error", description="Application failed to initialize")
+    app = FastAPI(title="IA Chéries Platform - Error", description="Application failed to initialize")
     
     @app.get("/")
     async def error_root():

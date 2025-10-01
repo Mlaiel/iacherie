@@ -160,7 +160,7 @@ class CircuitBreakerMetrics:
     avg_response_time: float = 0.0
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Circuit Breaker Configuration"""
     
     # Circuit breaker configurations by service
@@ -795,37 +795,37 @@ class CircuitBreakerProtection:
     
     async def _load_business_configurations(self):
         """Load IA Chérie business circuit breaker configurations"""
-        for service_name, config in AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.items():
+        for service_name, config in iacherieBusiness.CIRCUIT_BREAKER_CONFIGS.items():
             await self.register_circuit_breaker(config)
         
-        logger.info(f"Loaded {len(AinflueBusiness.CIRCUIT_BREAKER_CONFIGS)} business circuit breaker configurations")
+        logger.info(f"Loaded {len(iacherieBusiness.CIRCUIT_BREAKER_CONFIGS)} business circuit breaker configurations")
     
     async def _classify_failure(self, error_message: str) -> FailureType:
         """Classify failure type based on error message"""
         error_lower = error_message.lower()
         
         # Check timeout errors
-        for timeout_error in AinflueBusiness.FAILURE_CLASSIFICATION["timeout_errors"]:
+        for timeout_error in iacherieBusiness.FAILURE_CLASSIFICATION["timeout_errors"]:
             if timeout_error.lower() in error_lower:
                 return FailureType.TIMEOUT
         
         # Check connection errors
-        for conn_error in AinflueBusiness.FAILURE_CLASSIFICATION["connection_errors"]:
+        for conn_error in iacherieBusiness.FAILURE_CLASSIFICATION["connection_errors"]:
             if conn_error.lower() in error_lower:
                 return FailureType.DEPENDENCY_FAILURE
         
         # Check server errors
-        for server_error in AinflueBusiness.FAILURE_CLASSIFICATION["server_errors"]:
+        for server_error in iacherieBusiness.FAILURE_CLASSIFICATION["server_errors"]:
             if server_error.lower() in error_lower:
                 return FailureType.HIGH_ERROR_RATE
         
         # Check resource errors
-        for resource_error in AinflueBusiness.FAILURE_CLASSIFICATION["resource_errors"]:
+        for resource_error in iacherieBusiness.FAILURE_CLASSIFICATION["resource_errors"]:
             if resource_error.lower() in error_lower:
                 return FailureType.RESOURCE_EXHAUSTION
         
         # Check dependency errors
-        for dep_error in AinflueBusiness.FAILURE_CLASSIFICATION["dependency_errors"]:
+        for dep_error in iacherieBusiness.FAILURE_CLASSIFICATION["dependency_errors"]:
             if dep_error.lower() in error_lower:
                 return FailureType.DEPENDENCY_FAILURE
         
@@ -910,7 +910,7 @@ class CircuitBreakerProtection:
         config = self.circuit_breakers[breaker_id]
         state = self.breaker_states[breaker_id]
         
-        recovery_config = AinflueBusiness.RECOVERY_CONFIGS.get(config.recovery_strategy, {})
+        recovery_config = iacherieBusiness.RECOVERY_CONFIGS.get(config.recovery_strategy, {})
         
         while state.current_state == CircuitState.OPEN:
             try:
@@ -1001,9 +1001,9 @@ class CircuitBreakerProtection:
         
         # Determine notification settings
         if config.critical_service:
-            notification_config = AinflueBusiness.NOTIFICATION_SETTINGS["critical_services"]
+            notification_config = iacherieBusiness.NOTIFICATION_SETTINGS["critical_services"]
         else:
-            notification_config = AinflueBusiness.NOTIFICATION_SETTINGS["standard_services"]
+            notification_config = iacherieBusiness.NOTIFICATION_SETTINGS["standard_services"]
         
         if not notification_config.get("state_change", False):
             return
@@ -1077,5 +1077,5 @@ __all__ = [
     "CircuitState",
     "FailureType",
     "RecoveryStrategy",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

@@ -214,7 +214,7 @@ class SEOPerformanceAnalyzer:
             db_config = {
                 'host': self.config.get('db_host', 'localhost'),
                 'port': self.config.get('db_port', 5432),
-                'database': self.config.get('db_name', 'ainflue_seo'),
+                'database': self.config.get('db_name', 'iacherie_seo'),
                 'user': self.config.get('db_user', 'postgres'),
                 'password': self.config.get('db_password', '')
             }

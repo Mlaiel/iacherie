@@ -1,4 +1,4 @@
-"""Event Streaming Template for Ainflue Platform
+"""Event Streaming Template for iacherie Platform
 Enterprise-grade event streaming and real-time data processing
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -102,7 +102,7 @@ class StreamingConfig:
     redis_url: str = "redis://localhost:6379"
     default_partition_count: int = 3
     default_replication_factor: int = 1
-    consumer_group_id: str = "ainflue-consumers"
+    consumer_group_id: str = "iacherie-consumers"
     batch_size: int = 100
     max_poll_interval_ms: int = 300000
     session_timeout_ms: int = 30000
@@ -284,7 +284,7 @@ class KafkaEventStreamer(BaseEventStreamer):
     async def publish_event(self, event: StreamEvent, topic: Optional[str] = None):
         """Publish event to Kafka topic"""
         try:
-            topic_name = topic or f"ainflue-{event.event_type.value.replace('.', '-')}"
+            topic_name = topic or f"iacherie-{event.event_type.value.replace('.', '-')}"
             
             # Ensure topic exists
             await self.create_topic(topic_name)
@@ -331,7 +331,7 @@ class KafkaEventStreamer(BaseEventStreamer):
             )
 
             # Subscribe to relevant topics
-            topics = [f"ainflue-{et.value.replace('.', '-')}" for et in subscription.event_types]
+            topics = [f"iacherie-{et.value.replace('.', '-')}" for et in subscription.event_types]
             consumer.subscribe(topics)
             
             await consumer.start()
@@ -431,7 +431,7 @@ class RedisEventStreamer(BaseEventStreamer):
     async def publish_event(self, event: StreamEvent, topic: Optional[str] = None):
         """Publish event to Redis stream"""
         try:
-            stream_name = topic or f"ainflue:{event.event_type.value}"
+            stream_name = topic or f"iacherie:{event.event_type.value}"
             
             # Prepare event data
             event_data = event.dict()
@@ -475,7 +475,7 @@ class RedisEventStreamer(BaseEventStreamer):
             group_name = f"group-{subscription.subscription_id}"
             consumer_name = f"consumer-{subscription.subscription_id}"
             
-            streams = {f"ainflue:{et.value}": ">" for et in subscription.event_types}
+            streams = {f"iacherie:{et.value}": ">" for et in subscription.event_types}
             
             while True:
                 try:

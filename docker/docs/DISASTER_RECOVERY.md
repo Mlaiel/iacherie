@@ -150,7 +150,7 @@ if ! docker exec $PRIMARY_DB pg_isready -U postgres; then
     docker exec $STANDBY_DB pg_ctl promote -D /var/lib/postgresql/data
     
     # Update application connection strings
-    docker service update --env-add DATABASE_HOST=$STANDBY_DB ainflue_api
+    docker service update --env-add DATABASE_HOST=$STANDBY_DB iacherie_api
     
     # Send notification
     curl -X POST -H 'Content-type: application/json' \
@@ -228,7 +228,7 @@ BACKUP_DIR="/backup/postgresql"
 echo "Starting point-in-time recovery to: $RECOVERY_TIME"
 
 # Stop current database
-docker service scale ainflue_postgres=0
+docker service scale iacherie_postgres=0
 
 # Find appropriate base backup
 BASE_BACKUP=$(find $BACKUP_DIR -name "backup_*.sql.gz" -newermt "$RECOVERY_TIME" | head -1)
@@ -249,7 +249,7 @@ zcat $BASE_BACKUP | docker exec -i temp-postgres psql -U postgres
 apply_wal_to_time "$RECOVERY_TIME"
 
 # Start database service
-docker service scale ainflue_postgres=1
+docker service scale iacherie_postgres=1
 ```
 
 #### 2. Volume Recovery
@@ -385,7 +385,7 @@ class DisasterRecoveryTest:
         
         try:
             # Simulate database failure
-            subprocess.run(['docker', 'service', 'scale', 'ainflue_postgres=0'])
+            subprocess.run(['docker', 'service', 'scale', 'iacherie_postgres=0'])
             
             # Wait for failover
             await asyncio.sleep(30)
@@ -485,13 +485,13 @@ class IncidentCommunication:
 ## Scenario: API Service Down
 
 ### Immediate Actions (0-5 minutes)
-1. Check service status: `docker service ps ainflue_api`
-2. Check logs: `docker service logs ainflue_api`
+1. Check service status: `docker service ps iacherie_api`
+2. Check logs: `docker service logs iacherie_api`
 3. Verify load balancer: `curl -I https://api.iacherie.com/health`
 
 ### Recovery Steps (5-15 minutes)
-1. Scale service: `docker service scale ainflue_api=3`
-2. Force update if needed: `docker service update --force ainflue_api`
+1. Scale service: `docker service scale iacherie_api=3`
+2. Force update if needed: `docker service update --force iacherie_api`
 3. Check database connectivity
 4. Verify external dependencies
 

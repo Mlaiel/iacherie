@@ -465,9 +465,9 @@ class ConfigSchemaValidator:
     
     def __init__(self):
         self.schemas: Dict[str, Dict[str, Any]] = {}
-        self.ainflue_schemas = self._load_ainflue_schemas()
+        self.iacherie_schemas = self._load_iacherie_schemas()
         
-    def _load_ainflue_schemas(self) -> Dict[str, Any]:
+    def _load_iacherie_schemas(self) -> Dict[str, Any]:
         """Load IA Chérie-specific configuration schemas"""
         return {
             "base_service": {
@@ -481,7 +481,7 @@ class ConfigSchemaValidator:
                     "log_level": {"type": "string", "enum": ["DEBUG", "INFO", "WARNING", "ERROR"]}
                 }
             },
-            "ainflue_content_service": {
+            "iacherie_content_service": {
                 "type": "object",
                 "required": ["content_types", "processing_capabilities"],
                 "properties": {
@@ -497,7 +497,7 @@ class ConfigSchemaValidator:
                     "supported_formats": {"type": "array", "items": {"type": "string"}}
                 }
             },
-            "ainflue_ai_service": {
+            "iacherie_ai_service": {
                 "type": "object",
                 "required": ["model_type", "inference_endpoint"],
                 "properties": {
@@ -523,7 +523,7 @@ class ConfigSchemaValidator:
                 service_type = configuration.get('service_type', 'base_service')
                 schema_name = f"iacherie_{service_type}" if service_type != 'base_service' else 'base_service'
             
-            schema = self.ainflue_schemas.get(schema_name, self.ainflue_schemas['base_service'])
+            schema = self.iacherie_schemas.get(schema_name, self.iacherie_schemas['base_service'])
             
             # Basic validation
             validation_result = await self._validate_against_schema(configuration, schema)
@@ -531,7 +531,7 @@ class ConfigSchemaValidator:
             warnings.extend(validation_result['warnings'])
             
             # IA Chérie-specific business rules
-            business_validation = await self._validate_ainflue_business_rules(configuration)
+            business_validation = await self._validate_iacherie_business_rules(configuration)
             validation_errors.extend(business_validation['errors'])
             suggestions.extend(business_validation['suggestions'])
             
@@ -618,7 +618,7 @@ class ConfigSchemaValidator:
         
         return {"errors": errors, "warnings": warnings}
     
-    async def _validate_ainflue_business_rules(self, config: Dict[str, Any]) -> Dict[str, List]:
+    async def _validate_iacherie_business_rules(self, config: Dict[str, Any]) -> Dict[str, List]:
         """Validate IA Chérie-specific business rules"""
         errors = []
         suggestions = []

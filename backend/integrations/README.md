@@ -1,4 +1,4 @@
-# 🔗 Backend Integrations Module - Ainflue Platform
+# 🔗 Backend Integrations Module - iacherie Platform
 
 ## Enterprise-Grade Third-Party API Integrations System
 
@@ -116,7 +116,7 @@ await social_hub.connect_platform("youtube", {
 # Cross-platform content distribution
 content_data = {
     "title": "Amazing AI-Generated Content",
-    "description": "Created with Ainflue Platform",
+    "description": "Created with iacherie Platform",
     "file_path": "/path/to/video.mp4",
     "platforms": ["youtube", "tiktok", "instagram"]
 }
@@ -278,7 +278,7 @@ webhook_manager = WebhookManagerIntegration()
 webhook_config = {
     "source": "stripe",
     "events": ["payment.completed", "payment.failed"],
-    "endpoint": "https://api.ainflue.com/webhooks/stripe",
+    "endpoint": "https://api.iacherie.com/webhooks/stripe",
     "secret": "whsec_webhook_secret"
 }
 
@@ -387,7 +387,7 @@ DATABASE_CONFIG = {
         "driver": "postgresql+asyncpg",
         "host": "localhost",
         "port": 5432,
-        "database": "ainflue_integrations",
+        "database": "iacherie_integrations",
         "username": "integration_user",
         "password": "secure_password"
     }
@@ -711,9 +711,9 @@ HEALTH_CHECKS = {
 ## 📞 Support & Contact
 
 **Technical Support:** 
-- Email: support@ainflue.com
-- Documentation: https://docs.ainflue.com/integrations
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- Email: support@iacherie.com
+- Documentation: https://docs.iacherie.com/integrations
+- GitHub Issues: https://github.com/Mlaiel/iacherie/issues
 
 **Author Contact:**
 - Fahed Mlaiel: mlaiel@live.de

@@ -114,7 +114,7 @@ class CryptographicSecurityEngine:
         """Generate master encryption key."""
         # In production, this should be from a secure key management system
         password = b"legal_evidence_master_key_2025"
-        salt = b"ainflue_legal_salt_12345678"
+        salt = b"iacherie_legal_salt_12345678"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

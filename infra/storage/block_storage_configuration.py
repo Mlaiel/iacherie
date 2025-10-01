@@ -122,7 +122,7 @@ class BlockStorageManager:
         base_tags = {
             'Environment': self.config.environment,
             'Project': 'IA Chérie',
-            'ManagedBy': 'AinflueBlockStorageManager'
+            'ManagedBy': 'iacherieBlockStorageManager'
         }
         
         return {
@@ -796,7 +796,7 @@ class BlockStorageManager:
         return {}
 
 # Enterprise block storage orchestrator
-class AinflueBlockStorageOrchestrator:
+class iacherieBlockStorageOrchestrator:
     """High-level block storage orchestration for IA Chérie platform"""
     
     def __init__(self, environment: str = "production"):
@@ -879,7 +879,7 @@ class AinflueBlockStorageOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueBlockStorageOrchestrator(environment="production")
+        orchestrator = iacherieBlockStorageOrchestrator(environment="production")
         
         # Provision standard volumes
         results = await orchestrator.provision_standard_volumes(['aws', 'gcp'])

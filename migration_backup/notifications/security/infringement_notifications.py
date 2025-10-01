@@ -1,11 +1,11 @@
 """
 🚨 INFRINGEMENT NOTIFICATIONS
-Ainflue Platform - Copyright Infringement Notification System
+IA Chéries Platform - Copyright Infringement Notification System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This module handles copyright infringement notifications for the Ainflue Platform,
+This module handles copyright infringement notifications for the IA Chéries Platform,
 providing automated detection and notification when content infringement is detected.
 """
 

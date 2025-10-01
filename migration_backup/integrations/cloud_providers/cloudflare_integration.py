@@ -2,7 +2,7 @@
 ========================
 
 Enterprise-grade Cloudflare integration supporting CDN, security,
-DNS management, and edge computing for Ainflue platform.
+DNS management, and edge computing for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -90,7 +90,7 @@ class CloudflareWorkerScript:
 
 
 class CloudflareIntegration:
-    """Enterprise Cloudflare integration for Ainflue.
+    """Enterprise Cloudflare integration for IA Chéries.
     
     Features:
     - Global CDN for content delivery acceleration

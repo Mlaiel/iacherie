@@ -1,6 +1,6 @@
-"""Ainflue Python SDK - Package Initialization
+"""IA Chéries Python SDK - Package Initialization
 
-Official Python SDK for the Ainflue AI-powered content protection platform.
+Official Python SDK for the IA Chéries AI-powered content protection platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -19,18 +19,18 @@ Multi-Expert Implementation:
 
 from ainflue_sdk import (
     # Main SDK classes
-    AinflueSdk,
-    AinflueSdkSync,
-    AinflueSdkConfig,
+    IA ChériesSdk,
+    IA ChériesSdkSync,
+    IA ChériesSdkConfig,
     
     # Exception classes
-    AinflueSdkException,
+    IA ChériesSdkException,
     AuthenticationError,
     APIError,
     ValidationError,
     
     # Response models
-    AinflueSdkResponse,
+    IA ChériesSdkResponse,
     ContentAnalysisResult,
     ContentProtectionResult,
     
@@ -46,8 +46,8 @@ from ainflue_sdk import (
 
 # Import additional modules when available
 try:
-    from async_client import AsyncAinflueClient
-    from sync_client import SyncAinflueClient
+    from async_client import AsyncIA ChériesClient
+    from sync_client import SyncIA ChériesClient
     
     from auth_manager import AuthenticationManager
     
@@ -57,8 +57,8 @@ except ImportError:
 
 # Package metadata
 __title__ = "ainflue-sdk"
-__description__ = "Official Python SDK for Ainflue Platform"
-__url__ = "https://github.com/Mlaiel/Ainflue"
+__description__ = "Official Python SDK for IA Chéries Platform"
+__url__ = "https://github.com/Mlaiel/IA Chéries"
 __version_info__ = tuple(map(int, __version__.split('.')))
 __license__ = "MIT"
 __copyright__ = "Copyright 2025 Fahed Mlaiel"
@@ -102,24 +102,24 @@ ENTERPRISE_FEATURES = {
 }
 
 # Backwards compatibility
-AinflueSDK = AinflueSdk  # Legacy class name support
+IA ChériesSDK = IA ChériesSdk  # Legacy class name support
 
 # Public API
 __all__ = [
     # Core classes
-    'AinflueSdk',
-    'AinflueSdkSync', 
-    'AinflueSdkConfig',
-    'AinflueSDK',  # Legacy support
+    'IA ChériesSdk',
+    'IA ChériesSdkSync', 
+    'IA ChériesSdkConfig',
+    'IA ChériesSDK',  # Legacy support
     
     # Exceptions
-    'AinflueSdkException',
+    'IA ChériesSdkException',
     'AuthenticationError',
     'APIError', 
     'ValidationError',
     
     # Models
-    'AinflueSdkResponse',
+    'IA ChériesSdkResponse',
     'ContentAnalysisResult',
     'ContentProtectionResult',
     
@@ -146,13 +146,13 @@ __all__ = [
 # Add additional exports if available
 if _additional_imports_available:
     __all__.extend([
-        'AsyncAinflueClient',
-        'SyncAinflueClient', 
+        'AsyncIA ChériesClient',
+        'SyncIA ChériesClient', 
         'AuthenticationManager'
     ])
 
 # SDK initialization logging
 import logging
 logger = logging.getLogger(__name__)
-logger.info(f"Ainflue SDK v{__version__} initialized with {len(EXPERT_ROLES_IMPLEMENTED)} expert roles")
+logger.info(f"IA Chéries SDK v{__version__} initialized with {len(EXPERT_ROLES_IMPLEMENTED)} expert roles")
 logger.debug(f"Enterprise features enabled: {sum(ENTERPRISE_FEATURES.values())}/{len(ENTERPRISE_FEATURES)}")

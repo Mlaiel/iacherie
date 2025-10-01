@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 """
-Network Topology Manager for Ainflue Platform
+Network Topology Manager for IA Chéries Platform
 ============================================
 
 Enterprise-grade network topology management system for multi-cloud infrastructure.
@@ -709,7 +709,7 @@ class NetworkTopologyManager:
     def _export_terraform_config(self) -> str:
         """Export as Terraform configuration"""
         terraform_config = """
-# Generated Ainflue Network Configuration
+# Generated IA Chéries Network Configuration
 # Generated at: {timestamp}
 
 terraform {{
@@ -759,10 +759,10 @@ resource "aws_route" "{safe_name}" {{
     def _export_ansible_config(self) -> str:
         """Export as Ansible playbook"""
         ansible_config = f"""---
-# Generated Ainflue Network Configuration
+# Generated IA Chéries Network Configuration
 # Generated at: {datetime.now().isoformat()}
 
-- name: Configure Ainflue Network Infrastructure
+- name: Configure IA Chéries Network Infrastructure
   hosts: localhost
   gather_facts: false
   
@@ -794,7 +794,7 @@ resource "aws_route" "{safe_name}" {{
         """Export as CloudFormation template"""
         cf_template = {
             "AWSTemplateFormatVersion": "2010-09-09",
-            "Description": f"Ainflue Network Infrastructure - Generated at {datetime.now().isoformat()}",
+            "Description": f"IA Chéries Network Infrastructure - Generated at {datetime.now().isoformat()}",
             "Resources": {}
         }
         

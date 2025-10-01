@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -989,7 +989,7 @@ class IntrusionDetectionSystem:
     
     async def initialize(self):
         """Initialize the IDS"""
-        logger.info("Initializing Ainflue Intrusion Detection System")
+        logger.info("Initializing IA Chéries Intrusion Detection System")
         
         # Establish baselines
         await self.host_monitor.establish_baseline()

@@ -1,5 +1,5 @@
 """
-Enterprise Circuit Breaker Core - Ainflue Platform
+Enterprise Circuit Breaker Core - IA Chéries Platform
 =================================================
 
 Enterprise circuit breaker with advanced patterns, ML prediction, and adaptive thresholds.

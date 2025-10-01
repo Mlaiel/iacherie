@@ -877,7 +877,7 @@ Limites et quotas
 
 ### Python SDK
 ```python
-from ainflue_distribution import DistributionClient
+from iacherie_distribution import DistributionClient
 
 client = DistributionClient(api_key="your_api_key")
 

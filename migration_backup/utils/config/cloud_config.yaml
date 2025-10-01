@@ -240,7 +240,7 @@ monitoring:
     
     # AWS CloudWatch
     aws_cloudwatch:
-      namespace: "Ainflue/Production"
+      namespace: "IA Chéries/Production"
       detailed_monitoring: true
       
     # Azure Monitor
@@ -353,7 +353,7 @@ api_gateway:
   # Azure API Management
   azure_apim:
     sku_name: "Standard"
-    publisher_name: "Ainflue"
+    publisher_name: "IA Chéries"
     
   # GCP Cloud Endpoints
   gcp_endpoints:

@@ -155,11 +155,11 @@ class ArchivalLifecycleController:
             'compliance_check_interval_hours': 24
         }
         
-        # Initialize Ainflue business retention policies
+        # Initialize IA Chéries business retention policies
         self._initialize_business_policies()
     
     def _initialize_business_policies(self):
-        """Initialize Ainflue-specific retention policies"""
+        """Initialize IA Chéries-specific retention policies"""
         
         # Content events - Long retention for creator rights
         content_policy = RetentionPolicy(

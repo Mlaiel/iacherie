@@ -141,15 +141,15 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 # Custom exceptions
-class AinfluePlatformError(Exception):
+class iacheriePlatformError(Exception):
     """Base exception for IA Chérie platform."""
     pass
 
-class ContentAnalysisError(AinfluePlatformError):
+class ContentAnalysisError(iacheriePlatformError):
     """Raised when content analysis fails."""
     pass
 
-class AuthenticationError(AinfluePlatformError):
+class AuthenticationError(iacheriePlatformError):
     """Raised when authentication fails."""
     pass
 

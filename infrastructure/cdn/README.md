@@ -1,4 +1,4 @@
-# 🌍 Ainflue CDN Infrastructure - Enterprise Content Delivery Network
+# 🌍 iacherie CDN Infrastructure - Enterprise Content Delivery Network
 
 ## 📋 Overview
 
@@ -10,7 +10,7 @@
 
 ## 🏗️ Enterprise CDN Architecture
 
-The Ainflue CDN infrastructure provides global content delivery optimization specifically designed for creators, featuring 180+ edge locations worldwide, AI-powered optimization, and multi-platform content delivery.
+The iacherie CDN infrastructure provides global content delivery optimization specifically designed for creators, featuring 180+ edge locations worldwide, AI-powered optimization, and multi-platform content delivery.
 
 ### 🎯 Core Features
 
@@ -53,8 +53,8 @@ The Ainflue CDN infrastructure provides global content delivery optimization spe
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/cdn
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/cdn
 
 # Install dependencies
 pip install -r requirements.txt
@@ -139,30 +139,30 @@ audio_result = await audio_specialist.deliver_audio(audio_request)
 
 ```bash
 # CDN Configuration
-AINFLUE_CDN_EDGE_LOCATIONS=180
-AINFLUE_CDN_CACHE_TTL=86400
-AINFLUE_CDN_COMPRESSION_LEVEL=6
+IACHERIE_CDN_EDGE_LOCATIONS=180
+IACHERIE_CDN_CACHE_TTL=86400
+IACHERIE_CDN_COMPRESSION_LEVEL=6
 
 # Video Configuration
-AINFLUE_VIDEO_MAX_QUALITY=8k
-AINFLUE_VIDEO_ABR_ENABLED=true
-AINFLUE_VIDEO_TRANSCODING_GPU=true
+IACHERIE_VIDEO_MAX_QUALITY=8k
+IACHERIE_VIDEO_ABR_ENABLED=true
+IACHERIE_VIDEO_TRANSCODING_GPU=true
 
 # Audio Configuration
-AINFLUE_AUDIO_LOSSLESS_ENABLED=true
-AINFLUE_AUDIO_SPATIAL_ENABLED=true
-AINFLUE_AUDIO_MAX_BITRATE=1411
+IACHERIE_AUDIO_LOSSLESS_ENABLED=true
+IACHERIE_AUDIO_SPATIAL_ENABLED=true
+IACHERIE_AUDIO_MAX_BITRATE=1411
 
 # Security Configuration
-AINFLUE_CDN_DDOS_PROTECTION=true
-AINFLUE_CDN_WAF_ENABLED=true
-AINFLUE_CDN_SSL_AUTO=true
+IACHERIE_CDN_DDOS_PROTECTION=true
+IACHERIE_CDN_WAF_ENABLED=true
+IACHERIE_CDN_SSL_AUTO=true
 ```
 
 ### Advanced Configuration
 
 ```python
-AINFLUE_CDN_CONFIG = {
+IACHERIE_CDN_CONFIG = {
     'edge_locations': 180,
     'supported_protocols': ['http/1.1', 'http/2', 'http/3', 'websocket'],
     'cache_tiers': ['edge', 'regional', 'origin'],
@@ -302,7 +302,7 @@ metrics = await audio_specialist.get_metrics()
 
 **Lead Architect**: Fahed Mlaiel  
 **Email**: mlaiel@live.de  
-**Repository**: Ainflue Infrastructure CDN  
+**Repository**: iacherie Infrastructure CDN  
 
 ### Expert Team Roles
 - **Lead AI Dev**: AI-powered CDN intelligence

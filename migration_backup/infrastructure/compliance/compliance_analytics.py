@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📊 COMPLIANCE ANALYTICS ENGINE - AINFLUE ENTERPRISE
+📊 COMPLIANCE ANALYTICS ENGINE - IA CHÉRIES ENTERPRISE
 Intelligence artificielle pour analytics compliance et insights prédictifs
 
 🏛️ EXPERTISE MULTI-RÔLES:

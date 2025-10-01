@@ -32,7 +32,7 @@ Architecture créée par l'équipe d'experts:
 - DevOps: Déploiement et infrastructure
 - IA Prompt Engineer: Optimisation IA conversationnelle
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier IA Chéries: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 

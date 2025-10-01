@@ -5,7 +5,7 @@
 ==========================================================
 
 Security Expert: Security automation enterprise avec DevSecOps integration,
-vulnerability scanning et compliance management pour plateforme Ainflue.
+vulnerability scanning et compliance management pour plateforme IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Date: 16 Septembre 2025

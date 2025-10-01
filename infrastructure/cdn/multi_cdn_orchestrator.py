@@ -7,7 +7,7 @@ cost optimization, and creator-focused global distribution.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-Expert Implementation: Microservices + DevOps + Backend Senior
-Project: Ainflue Infrastructure CDN
+Project: iacherie Infrastructure CDN
 Version: 1.0 Production Enterprise
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -131,7 +131,7 @@ class FailoverEvent:
 
 class MultiCDNOrchestrator:
     """
-    Enterprise Multi-CDN Orchestrator for Ainflue Creator Platform.
+    Enterprise Multi-CDN Orchestrator for iacherie Creator Platform.
     
     Provides intelligent multi-provider orchestration with failover,
     cost optimization, and creator-focused global distribution.
@@ -509,13 +509,13 @@ class MultiCDNOrchestrator:
         elif provider == CDNProvider.AWS_CLOUDFRONT:
             base_url = "https://d1234567890.cloudfront.net"
         elif provider == CDNProvider.AZURE_CDN:
-            base_url = "https://ainflue.azureedge.net"
+            base_url = "https://iacherie.azureedge.net"
         elif provider == CDNProvider.GOOGLE_CDN:
             base_url = "https://cdn.googleapis.com"
         elif provider == CDNProvider.FASTLY:
             base_url = "https://global.fastly.com"
         elif provider == CDNProvider.BUNNYCDN:
-            base_url = "https://ainflue.b-cdn.net"
+            base_url = "https://iacherie.b-cdn.net"
         else:
             base_url = "https://cdn.example.com"
         

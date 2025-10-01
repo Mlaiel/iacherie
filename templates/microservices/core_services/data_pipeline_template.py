@@ -12,7 +12,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Data Pipeline Template for Ainflue Microservices Platform
+Data Pipeline Template for iacherie Microservices Platform
 ========================================================
 
 Enterprise-grade ETL data pipeline template providing:

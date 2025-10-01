@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-🎨 AINFLUE CREATOR API TEMPLATE - COMPREHENSIVE CREATOR MANAGEMENT
+🎨 IA CHÉRIES CREATOR API TEMPLATE - COMPREHENSIVE CREATOR MANAGEMENT
 ================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IA CHÉRIES CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
 📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com

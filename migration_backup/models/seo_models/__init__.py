@@ -170,11 +170,11 @@ class SearchOptimizationModel:
     @staticmethod
     def generate_meta_tags(content_data: Dict[str, Any]) -> Dict[str, Any]:
         return {
-            "title": f"{content_data.get('title', 'Content')} | Ainflue Platform",
-            "description": f"Discover {content_data.get('title', 'amazing content')} on Ainflue - The premier platform for content creators and monetization.",
+            "title": f"{content_data.get('title', 'Content')} | IA Chéries Platform",
+            "description": f"Discover {content_data.get('title', 'amazing content')} on IA Chéries - The premier platform for content creators and monetization.",
             "keywords": content_data.get("keywords", ["content", "creation", "monetization"]),
             "og_title": content_data.get('title', 'Content'),
-            "og_description": f"Experience {content_data.get('title', 'content')} on Ainflue platform",
+            "og_description": f"Experience {content_data.get('title', 'content')} on IA Chéries platform",
             "og_image": content_data.get('thumbnail', '/default-og-image.jpg'),
             "twitter_card": "summary_large_image",
             "canonical_url": f"https://ainflue.com/content/{content_data.get('id', '')}",

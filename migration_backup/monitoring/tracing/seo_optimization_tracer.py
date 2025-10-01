@@ -1,5 +1,5 @@
 """
-Ainflue Platform - SEO Optimization Tracer Enterprise
+IA Chéries Platform - SEO Optimization Tracer Enterprise
 ===================================================
 
 Advanced SEO optimization tracing system for monitoring SEO analysis workflow,

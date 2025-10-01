@@ -1,10 +1,10 @@
-# 🔌 Ainflue Backend API - Enterprise API Gateway System
+# 🔌 iacherie Backend API - Enterprise API Gateway System
 
 **Advanced Multi-Platform API Infrastructure for AI-Powered Content Creation**
 
 ## 🎯 Overview
 
-The Ainflue Backend API module provides a comprehensive, enterprise-grade API gateway system for the AI-powered content protection and monetization platform. This system manages complex API orchestration with advanced features including multi-platform authentication, GraphQL optimization, real-time WebSocket communication, and intelligent middleware processing.
+The iacherie Backend API module provides a comprehensive, enterprise-grade API gateway system for the AI-powered content protection and monetization platform. This system manages complex API orchestration with advanced features including multi-platform authentication, GraphQL optimization, real-time WebSocket communication, and intelligent middleware processing.
 
 ## 👨‍💻 Development Team
 
@@ -195,7 +195,7 @@ await realtime.subscribe_to_collaboration_events("creator_123")
 ### Environment Variables
 ```bash
 # Database Configuration
-export DATABASE_URL="postgresql://user:password@localhost/ainflue"
+export DATABASE_URL="postgresql://user:password@localhost/iacherie"
 export REDIS_URL="redis://localhost:6379"
 
 # OAuth Configuration
@@ -366,4 +366,4 @@ All API components are production-ready with:
 
 ---
 
-**🔌 Ainflue Backend API - The Most Advanced Content Creation API Platform in the World**
+**🔌 iacherie Backend API - The Most Advanced Content Creation API Platform in the World**

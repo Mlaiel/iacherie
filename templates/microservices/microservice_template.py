@@ -1,4 +1,4 @@
-"""Base Microservice Template for Ainflue Platform
+"""Base Microservice Template for iacherie Platform
 
 Production-ready microservice template with comprehensive enterprise features.
 

@@ -1,4 +1,4 @@
-"""{{agent_name}} Content Analysis Agent for Ainflue Platform
+"""{{agent_name}} Content Analysis Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

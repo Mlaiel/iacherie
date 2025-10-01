@@ -1,7 +1,7 @@
 """Predictive Analytics Reports - Enterprise Creator Economy Forecasting
 ========================================================================
 
-Advanced predictive analytics and forecasting system for Ainflue Creator Economy platform.
+Advanced predictive analytics and forecasting system for IA Chéries Creator Economy platform.
 Provides business forecasting, creator success prediction, market trend analysis,
 risk prediction models, and opportunity identification.
 

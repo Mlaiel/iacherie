@@ -1,4 +1,4 @@
-"""Setup script for Ainflue Python SDK"""
+"""Setup script for IA Chéries Python SDK"""
 
 from setuptools import setup, find_packages
 import os
@@ -9,7 +9,7 @@ def read_readme():
     if os.path.exists(readme_path):
         with open(readme_path, "r", encoding="utf-8") as f:
             return f.read()
-    return "Ainflue Platform Python SDK"
+    return "IA Chéries Platform Python SDK"
 
 # Read requirements
 def read_requirements():
@@ -24,10 +24,10 @@ setup(
     version="1.0.0",
     author="Fahed Mlaiel",
     author_email="mlaiel@live.de",
-    description="Official Python SDK for the Ainflue AI-powered content protection platform",
+    description="Official Python SDK for the IA Chéries AI-powered content protection platform",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/Mlaiel/Ainflue",
+    url="https://github.com/Mlaiel/IA Chéries",
     py_modules=["ainflue_sdk"],
     python_requires=">=3.8",
     install_requires=read_requirements(),
@@ -61,7 +61,7 @@ setup(
     keywords="ainflue api sdk content protection ai monetization",
     project_urls={
         "Documentation": "https://docs.ainflue.com",
-        "Source": "https://github.com/Mlaiel/Ainflue",
-        "Tracker": "https://github.com/Mlaiel/Ainflue/issues",
+        "Source": "https://github.com/Mlaiel/IA Chéries",
+        "Tracker": "https://github.com/Mlaiel/IA Chéries/issues",
     }
 )

@@ -112,7 +112,7 @@ class SecurityValidationPipeline:
         
     def _setup_logger(self) -> logging.Logger:
         """Configuration du logging sécurisé"""
-        logger = logging.getLogger(f"ainflue_security_{id(self)}")
+        logger = logging.getLogger(f"iacherie_security_{id(self)}")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:

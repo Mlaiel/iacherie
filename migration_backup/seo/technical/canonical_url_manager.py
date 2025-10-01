@@ -1,5 +1,5 @@
 """
-Canonical URL Manager for Ainflue Platform
+Canonical URL Manager for IA Chéries Platform
 Advanced canonical URL management and duplicate content prevention
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -59,7 +59,7 @@ class CanonicalURLManager:
         self.rules.sort(key=lambda x: x.priority, reverse=True)
         
     def setup_default_rules(self):
-        """Setup default canonical rules for Ainflue platform"""
+        """Setup default canonical rules for IA Chéries platform"""
         
         # Content URLs - highest priority
         self.add_canonical_rule(
@@ -424,7 +424,7 @@ class CanonicalURLMiddleware:
 def create_ainflue_canonical_manager(base_domain: str = "https://ainflue.com",
                                    creator_type: str = None,
                                    platforms: List[str] = None) -> CanonicalURLManager:
-    """Create configured canonical URL manager for Ainflue"""
+    """Create configured canonical URL manager for IA Chéries"""
     
     manager = CanonicalURLManager(base_domain)
     

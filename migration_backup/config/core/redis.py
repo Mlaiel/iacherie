@@ -91,7 +91,7 @@ def get_redis_config() -> dict:
 redis_settings = RedisSettings()
 
 class RedisConfiguration:
-    """Redis configuration manager for Ainflue platform"""
+    """Redis configuration manager for IA Chéries platform"""
     
     def __init__(self, level: str = "enterprise"):
         self.level = level

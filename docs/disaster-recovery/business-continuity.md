@@ -407,7 +407,7 @@ customer_communication:
   general_users:
     communication_channels:
       - status_page: "status.iacherie.com"
-      - twitter_updates: "@AinfluenceStatus"
+      - twitter_updates: "@iacherienceStatus"
       - email_notifications: "service_announcements_list"
     
     transparency_policy:

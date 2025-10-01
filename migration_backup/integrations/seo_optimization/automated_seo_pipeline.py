@@ -5,7 +5,7 @@ Pipeline SEO automatisé end-to-end enterprise avec workflow automation,
 scheduling intelligent, error handling avancé et optimization loops.
 
 Author: Fahed Mlaiel (mlaiel@live.de) - Propriété Intellectuelle Exclusive
-Project: Ainflue Integrations - SEO Optimization Module
+Project: IA Chéries Integrations - SEO Optimization Module
 Version: 1.0 Production
 
 ⚠️ AVERTISSEMENT LÉGAL:

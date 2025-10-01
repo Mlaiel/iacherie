@@ -1,5 +1,5 @@
 """
-🎨 CREATOR CONFIG - AINFLUE ENTERPRISE PLATFORM
+🎨 CREATOR CONFIG - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced creator workflow configuration for multi-format content creators
 Author: Fahed Mlaiel (mlaiel@live.de)

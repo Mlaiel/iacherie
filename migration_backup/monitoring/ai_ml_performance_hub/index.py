@@ -2,7 +2,7 @@
 🤖 AI/ML Performance Hub - Intelligence Artificielle
 ====================================================
 
-Hub de surveillance ultra-avancé pour les modèles IA/ML Ainflue.
+Hub de surveillance ultra-avancé pour les modèles IA/ML IA Chéries.
 Monitoring performance, détection anomalies et optimisation automatique.
 
 Fonctionnalités:
@@ -97,7 +97,7 @@ class InferenceLatencyOptimizer:
 
 
 class AIMLPerformanceHub:
-    """Hub performance IA/ML enterprise Ainflue"""
+    """Hub performance IA/ML enterprise IA Chéries"""
     
     def __init__(self, config):
         self.config = config

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Audit Logging Template - Enterprise Security & Compliance
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: IA Chéries Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:

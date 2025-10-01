@@ -2,7 +2,7 @@
 =====================================
 
 Kubernetes Pod Security Standards with strict enforcement
-for the Ainflue platform security hardening.
+for the IA Chéries platform security hardening.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

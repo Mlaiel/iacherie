@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔐 RBAC Template - Ainflue Creator Economy Platform
+🔐 RBAC Template - IA Chéries Creator Economy Platform
 ==================================================
 
 Role-Based Access Control (RBAC) Templates for Kubernetes and Creator Economy
@@ -783,7 +783,7 @@ class RBACTemplate:
                     f.write("# Creator Economy RBAC Manifests\n")
                     f.write(f"# Type: {manifest_type}\n")
                     f.write(f"# Author: {self.author}\n")
-                    f.write("# Generated for Ainflue Creator Economy Platform\n\n")
+                    f.write("# Generated for IA Chéries Creator Economy Platform\n\n")
                     
                     for i, manifest in enumerate(manifest_list):
                         if i > 0:

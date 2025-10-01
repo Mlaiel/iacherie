@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-E2E Test Orchestrator - Ainflue Quality Platform
+E2E Test Orchestrator - IA Chéries Quality Platform
 ==============================================
 
 Enterprise-grade End-to-End testing orchestration system.

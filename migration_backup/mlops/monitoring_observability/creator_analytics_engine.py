@@ -9,7 +9,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Au
 © 2025 Fahed Mlaiel <mlaiel@live.de>
 ALL RIGHTS RESERVED
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier IA Chéries: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 

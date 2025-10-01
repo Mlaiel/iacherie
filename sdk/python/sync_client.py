@@ -23,7 +23,7 @@ import certifi
 
 from .exceptions import (
     APIError, NetworkError, TimeoutError, RateLimitError,
-    AuthenticationError, ValidationError, AinflueSdkException,
+    AuthenticationError, ValidationError, iacherieSdkException,
     handle_api_response_error, is_retryable_error
 )
 
@@ -134,7 +134,7 @@ class RateLimiter:
             self._requests.append(now)
 
 
-class SyncAinflueClient:
+class SynciacherieClient:
     """High-performance synchronous HTTP client for IA Chérie API
     
     Features:
@@ -216,10 +216,10 @@ class SyncAinflueClient:
         session = self.session_manager.get_session(thread_id)
         
         # Configure session if not already done
-        if not hasattr(session, '_ainflue_configured'):
+        if not hasattr(session, '_iacherie_configured'):
             session.headers.update(self._get_default_headers())
             session.verify = self.ssl_context or self.verify_ssl
-            session._ainflue_configured = True
+            session._iacherie_configured = True
         
         return session
     
@@ -311,7 +311,7 @@ class SyncAinflueClient:
         self.metrics.record_request(response_time, False)
         
         # Raise the last exception
-        if isinstance(last_exception, AinflueSdkException):
+        if isinstance(last_exception, iacherieSdkException):
             raise last_exception
         else:
             raise NetworkError(f"Request failed after {self.max_retries + 1} attempts") from last_exception
@@ -344,7 +344,7 @@ class SyncAinflueClient:
             
             return result
             
-        except AinflueSdkException:
+        except iacherieSdkException:
             # Re-raise SDK exceptions
             response_time = time.time() - start_time
             self.metrics.record_request(response_time, False)
@@ -367,7 +367,7 @@ class SyncAinflueClient:
             
             return response
             
-        except AinflueSdkException:
+        except iacherieSdkException:
             raise
         except Exception as e:
             raise NetworkError(f"Streaming error: {str(e)}") from e
@@ -538,4 +538,4 @@ class SyncAinflueClient:
 
 
 # Export the client
-__all__ = ['SyncAinflueClient', 'SessionManager', 'SyncMetrics', 'RateLimiter']
+__all__ = ['SynciacherieClient', 'SessionManager', 'SyncMetrics', 'RateLimiter']

@@ -9,7 +9,7 @@
 ## 🏗️ Architekturbaum - Infrastructure CDN & Global Delivery
 
 ```
-/workspaces/Ainflue/infrastructure/cdn/ (Level 3 - Max Depth)
+/workspaces/iacherie/infrastructure/cdn/ (Level 3 - Max Depth)
 ├── 📋 checklist.md                    # Cette Enterprise Checklist CDN
 ├── 🔧 __init__.py                     # ✅ Module Export Configuration (109 lignes)
 ├── 🔗 index.py                        # ✅ CDN Entry Point (356 lignes)  
@@ -39,7 +39,7 @@ Enterprise Gap: 0 composants manquants (0%) ✅ PARFAIT!
 
 ## 📋 Vue d'ensemble de l'implémentation
 
-**Repository**: `/workspaces/Ainflue/infrastructure/cdn/`  
+**Repository**: `/workspaces/iacherie/infrastructure/cdn/`  
 **Architecture Level**: 3 (Profondeur maximale atteinte - aucun sous-répertoire)  
 **Portée**: CDN Enterprise pour Créateurs multi-format + Distribution globale + 180 Edge locations  
 **Status**: 18/18 implémentés (100%) ✅ IMPLÉMENTATION PARFAITE!
@@ -321,7 +321,7 @@ Enterprise Gap: 0 composants manquants (0%) ✅ PARFAIT!
 
 ---
 
-## 📊 Logique Métier Ainflue Integration
+## 📊 Logique Métier iacherie Integration
 
 ### 🎯 Creator Platform CDN Workflow
 ```python
@@ -397,7 +397,7 @@ creator_cdn_workflow = {
 
 ### Global Edge Network Architecture
 ```python
-AINFLUE_GLOBAL_EDGE_NETWORK = {
+IACHERIE_GLOBAL_EDGE_NETWORK = {
     'edge_locations': {
         'north_america': {
             'locations': 45,

@@ -183,17 +183,17 @@
               storageClass: database-ssd-high-iops
             numberOfInstances: "{{ database_cluster_config.postgresql.primary_nodes + database_cluster_config.postgresql.replica_nodes }}"
             users:
-              ainflue_admin:
+              iacherie_admin:
                 - superuser
                 - createdb
-              ainflue_app:
+              iacherie_app:
                 - login
-              ainflue_readonly:
+              iacherie_readonly:
                 - login
             databases:
-              ainflue_main: ainflue_app
-              ainflue_analytics: ainflue_app
-              ainflue_ai_models: ainflue_app
+              iacherie_main: iacherie_app
+              iacherie_analytics: iacherie_app
+              iacherie_ai_models: iacherie_app
             postgresql:
               version: "{{ postgresql_version }}"
               parameters:
@@ -326,16 +326,16 @@
               - name: readWriteAnyDatabase
                 db: admin
             - name: iacherie-app
-              db: ainflue_main
+              db: iacherie_main
               passwordSecretRef:
                 name: mongodb-app-password
               roles:
               - name: readWrite
-                db: ainflue_main
+                db: iacherie_main
               - name: readWrite
-                db: ainflue_analytics
+                db: iacherie_analytics
               - name: readWrite
-                db: ainflue_content
+                db: iacherie_content
             additionalMongodConfig:
               storage.wiredTiger.engineConfig.journalCompressor: zlib
               storage.wiredTiger.collectionConfig.blockCompressor: snappy
@@ -802,7 +802,7 @@
     - name: "Generate database infrastructure report"
       template:
         src: database_report.j2
-        dest: "/tmp/ainflue_database_infrastructure_report.json"
+        dest: "/tmp/iacherie_database_infrastructure_report.json"
       vars:
         deployment_timestamp: "{{ ansible_date_time.iso8601 }}"
         connectivity_status: "{{ connectivity_tests.results }}"

@@ -7,7 +7,7 @@
 ios:
   app_info:
     bundle_id: "com.ainflue.creator"
-    app_name: "Ainflue Creator"
+    app_name: "IA Chéries Creator"
     version: "1.0.0"
     build_number: "1"
     
@@ -50,7 +50,7 @@ ios:
 android:
   app_info:
     package_name: "com.ainflue.creator"
-    app_name: "Ainflue Creator"
+    app_name: "IA Chéries Creator"
     version_name: "1.0.0"
     version_code: 1
     
@@ -221,7 +221,7 @@ security:
   biometric_authentication:
     enabled: true
     fallback_to_passcode: true
-    prompt_message: "Authenticate to access Ainflue Creator"
+    prompt_message: "Authenticate to access IA Chéries Creator"
     
   data_protection:
     keychain_storage: true

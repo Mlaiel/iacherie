@@ -1,5 +1,5 @@
 """
-🏗️ Ainflue Infrastructure - Cloud Migration Tool
+🏗️ iacherie Infrastructure - Cloud Migration Tool
 Automated cloud migration and workload portability system.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
@@ -1070,7 +1070,7 @@ if __name__ == "__main__":
             'source_cloud': 'aws',
             'target_cloud': 'gcp',
             'migration_type': 'lift_and_shift',
-            'name': 'Ainflue Platform Migration'
+            'name': 'iacherie Platform Migration'
         }
         
         plan = await migration_tool.create_migration_plan(migration_request)

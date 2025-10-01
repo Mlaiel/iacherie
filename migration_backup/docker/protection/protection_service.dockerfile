@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE PROTECTION SERVICE - MAIN DOCKERFILE
+# IA CHÉRIES PROTECTION SERVICE - MAIN DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for comprehensive content protection and rights
 # management including fingerprinting, watermarking, and monitoring.
@@ -230,11 +230,11 @@ CMD ["python3.11", "-m", "protection.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Protection Service"
+LABEL org.opencontainers.image.title="IA Chéries Protection Service"
 LABEL org.opencontainers.image.description="Content protection and rights management service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="protection_service"
 LABEL ainflue.service.port="8020"

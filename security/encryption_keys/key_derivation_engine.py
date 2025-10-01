@@ -226,7 +226,7 @@ class KeyDerivationEngine:
     def _initialize_master_key(self) -> bytes:
         """Initialize master derivation key."""
         # In production, this would come from HSM or secure key store
-        master_seed = b"ainflue_key_derivation_master_seed_v1_2025"
+        master_seed = b"iacherie_key_derivation_master_seed_v1_2025"
         return hashlib.pbkdf2_hmac('sha256', master_seed, b'derivation_master_salt', 100000)
 
     def _initialize_context_parameters(self) -> Dict[Tuple[KeyPurpose, SecurityLevel], DerivationParameters]:
@@ -238,21 +238,21 @@ class KeyDerivationEngine:
                 security_level=SecurityLevel.STANDARD,
                 key_length=32,  # 256-bit
                 salt_length=32,
-                info=b"ainflue_encryption_key_v1"
+                info=b"iacherie_encryption_key_v1"
             ),
             (KeyPurpose.ENCRYPTION, SecurityLevel.HIGH): DerivationParameters(
                 method=DerivationMethod.HKDF_SHA384,
                 security_level=SecurityLevel.HIGH,
                 key_length=32,  # 256-bit
                 salt_length=48,
-                info=b"ainflue_encryption_key_high_v1"
+                info=b"iacherie_encryption_key_high_v1"
             ),
             (KeyPurpose.ENCRYPTION, SecurityLevel.ULTRA): DerivationParameters(
                 method=DerivationMethod.HKDF_SHA512,
                 security_level=SecurityLevel.ULTRA,
                 key_length=64,  # 512-bit
                 salt_length=64,
-                info=b"ainflue_encryption_key_ultra_v1"
+                info=b"iacherie_encryption_key_ultra_v1"
             ),
             
             # Authentication keys
@@ -279,14 +279,14 @@ class KeyDerivationEngine:
                 security_level=SecurityLevel.HIGH,
                 key_length=32,
                 salt_length=32,
-                info=b"ainflue_content_protection_v1"
+                info=b"iacherie_content_protection_v1"
             ),
             (KeyPurpose.CONTENT_PROTECTION, SecurityLevel.ULTRA): DerivationParameters(
                 method=DerivationMethod.HKDF_SHA512,
                 security_level=SecurityLevel.ULTRA,
                 key_length=64,
                 salt_length=64,
-                info=b"ainflue_content_protection_ultra_v1"
+                info=b"iacherie_content_protection_ultra_v1"
             ),
             
             # Session keys
@@ -295,7 +295,7 @@ class KeyDerivationEngine:
                 security_level=SecurityLevel.STANDARD,
                 key_length=32,
                 salt_length=16,  # Shorter salt for performance
-                info=b"ainflue_session_key_v1"
+                info=b"iacherie_session_key_v1"
             ),
             
             # Quantum-safe keys
@@ -304,14 +304,14 @@ class KeyDerivationEngine:
                 security_level=SecurityLevel.QUANTUM_SAFE,
                 key_length=64,  # 512-bit for quantum safety
                 salt_length=64,
-                info=b"ainflue_quantum_safe_encryption_v1"
+                info=b"iacherie_quantum_safe_encryption_v1"
             ),
             (KeyPurpose.SIGNING, SecurityLevel.QUANTUM_SAFE): DerivationParameters(
                 method=DerivationMethod.HKDF_SHA512,
                 security_level=SecurityLevel.QUANTUM_SAFE,
                 key_length=64,
                 salt_length=64,
-                info=b"ainflue_quantum_safe_signing_v1"
+                info=b"iacherie_quantum_safe_signing_v1"
             )
         }
 
@@ -582,7 +582,7 @@ class KeyDerivationEngine:
             algorithm=hash_algorithm,
             length=parameters.key_length,
             salt=salt,
-            info=parameters.info or b"ainflue_hkdf_default"
+            info=parameters.info or b"iacherie_hkdf_default"
         )
         return hkdf.derive(parent_key)
 
@@ -613,7 +613,7 @@ class KeyDerivationEngine:
         kdf = ConcatKDFHash(
             algorithm=hashes.SHA256(),
             length=parameters.key_length,
-            otherinfo=parameters.info or b"ainflue_concat_kdf"
+            otherinfo=parameters.info or b"iacherie_concat_kdf"
         )
         return kdf.derive(parent_key)
 
@@ -622,7 +622,7 @@ class KeyDerivationEngine:
         kdf = X963KDF(
             algorithm=hashes.SHA256(),
             length=parameters.key_length,
-            sharedinfo=parameters.info or b"ainflue_x963_kdf"
+            sharedinfo=parameters.info or b"iacherie_x963_kdf"
         )
         return kdf.derive(parent_key)
 

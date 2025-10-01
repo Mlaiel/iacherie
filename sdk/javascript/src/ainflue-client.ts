@@ -19,7 +19,7 @@ import { CacheManager } from './utils/cache-manager';
 import { RetryHandler } from './utils/retry-handler';
 
 import {
-  AinflueClientOptions,
+  iacherieClientOptions,
   RequestOptions,
   ContentMetadata,
   AnalysisOptions,
@@ -36,7 +36,7 @@ import {
 } from './types';
 
 import {
-  AinflueError,
+  iacherieError,
   AuthenticationError,
   ValidationError,
   NetworkError,
@@ -52,8 +52,8 @@ import {
  * - User management and analytics
  * - Real-time event handling
  */
-export class AinflueClient extends EventEmitter {
-  private readonly config: Required<AinflueClientOptions>;
+export class iacherieClient extends EventEmitter {
+  private readonly config: Required<iacherieClientOptions>;
   private readonly logger: Logger;
   private readonly httpClient: HttpClient;
   private readonly apiClient: ApiClient;
@@ -70,7 +70,7 @@ export class AinflueClient extends EventEmitter {
     averageResponseTime: 0
   };
 
-  constructor(options: AinflueClientOptions) {
+  constructor(options: iacherieClientOptions) {
     super();
     
     // Merge with defaults
@@ -92,7 +92,7 @@ export class AinflueClient extends EventEmitter {
     // Initialize core components
     this.logger = new Logger({
       level: this.config.enableLogging ? 'info' : 'error',
-      prefix: 'AinflueClient'
+      prefix: 'iacherieClient'
     });
 
     this.retryHandler = new RetryHandler({
@@ -158,7 +158,7 @@ export class AinflueClient extends EventEmitter {
       this.logger.info('IA Chérie Client initialized successfully');
     } catch (error) {
       this.logger.error('Failed to initialize client:', error);
-      throw new AinflueError('Client initialization failed', { originalError: error });
+      throw new iacherieError('Client initialization failed', { originalError: error });
     }
   }
 
@@ -563,7 +563,7 @@ export class AinflueClient extends EventEmitter {
 
   private ensureInitialized(): void {
     if (!this.isInitialized) {
-      throw new AinflueError('Client not initialized. Call initialize() first.');
+      throw new iacherieError('Client not initialized. Call initialize() first.');
     }
   }
 
@@ -607,10 +607,10 @@ export class AinflueClient extends EventEmitter {
       this.metrics.averageResponseTime * (1 - alpha) + responseTime * alpha;
   }
 
-  private handleError(error: any): AinflueError {
+  private handleError(error: any): iacherieError {
     this.logger.error('API Error:', error);
     
-    if (error instanceof AinflueError) {
+    if (error instanceof iacherieError) {
       return error;
     }
     
@@ -631,12 +631,12 @@ export class AinflueClient extends EventEmitter {
         case 504:
           return new NetworkError('Server error', { status, data });
         default:
-          return new AinflueError(`HTTP error ${status}`, { status, data });
+          return new iacherieError(`HTTP error ${status}`, { status, data });
       }
     } else if (error.code === 'NETWORK_ERROR') {
       return new NetworkError('Network connection failed', { originalError: error });
     } else {
-      return new AinflueError(error.message || 'Unknown error', { originalError: error });
+      return new iacherieError(error.message || 'Unknown error', { originalError: error });
     }
   }
 }

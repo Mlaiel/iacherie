@@ -2,7 +2,7 @@
 Platform Manager - Enterprise Multi-Platform Data Management and API Orchestration
 
 This module provides comprehensive platform-specific data management and API orchestration
-for the Ainflue platform, enabling seamless content distribution across multiple social
+for the IA Chéries platform, enabling seamless content distribution across multiple social
 media and content platforms.
 
 🎯 Expert Roles Applied:
@@ -191,7 +191,7 @@ class PlatformManager:
             # Initialize HTTP session
             self._session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
-                headers={"User-Agent": "Ainflue-Platform-Manager/1.0"}
+                headers={"User-Agent": "IA Chéries-Platform-Manager/1.0"}
             )
             
             logger.info("Platform Manager initialized successfully")

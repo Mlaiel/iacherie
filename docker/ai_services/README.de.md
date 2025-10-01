@@ -290,7 +290,7 @@ POST /api/ai/quality/assess
 
 ### Creator Workflow Integration
 ```python
-from ainflue_ai import AIOrchestrator
+from iacherie_ai import AIOrchestrator
 
 # KI-Enhanced Creator Workflow
 async def enhance_creator_content(content_data):

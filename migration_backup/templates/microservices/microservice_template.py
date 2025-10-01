@@ -1,4 +1,4 @@
-"""Base Microservice Template for Ainflue Platform
+"""Base Microservice Template for IA Chéries Platform
 
 Production-ready microservice template with comprehensive enterprise features.
 

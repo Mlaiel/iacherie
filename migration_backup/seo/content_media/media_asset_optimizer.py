@@ -783,7 +783,7 @@ class MediaAssetOptimizer:
         """Apply watermark to image."""
         try:
             # Simple text watermark implementation
-            watermark_text = watermark_settings.get('text', '© Ainflue')
+            watermark_text = watermark_settings.get('text', '© IA Chéries')
             opacity = watermark_settings.get('opacity', 0.5)
             position = watermark_settings.get('position', 'bottom-right')
             

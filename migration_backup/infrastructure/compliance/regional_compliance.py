@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌍 REGIONAL COMPLIANCE MANAGER - AINFLUE ENTERPRISE
+🌍 REGIONAL COMPLIANCE MANAGER - IA CHÉRIES ENTERPRISE
 Gestion compliance spécialisée par régions avec adaptations locales
 
 🏛️ EXPERTISE MULTI-RÔLES:

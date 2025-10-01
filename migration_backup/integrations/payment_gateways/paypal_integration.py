@@ -132,7 +132,7 @@ class PayPalEnterpriseClient:
     """
     Enterprise PayPal API client with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chéries platform business logic:
     - Creator monetization and payouts
     - Marketplace payment processing
     - Subscription billing for creators
@@ -532,7 +532,7 @@ class PayPalEnterpriseClient:
             payout_data = {
                 "sender_batch_header": {
                     "sender_batch_id": self._generate_request_id(),
-                    "email_subject": "You have a payment from Ainflue",
+                    "email_subject": "You have a payment from IA Chéries",
                     "email_message": f"Congratulations! You've received a payment for your creative work."
                 },
                 "items": [{

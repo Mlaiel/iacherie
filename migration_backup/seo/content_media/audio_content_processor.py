@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎵 Ainflue Audio Content Processor - Enterprise SEO Module
+🎵 IA Chéries Audio Content Processor - Enterprise SEO Module
 
 🎧 ADVANCED AUDIO CONTENT PROCESSING & SEO OPTIMIZATION
 🎯 SPÉCIALISÉ POUR CRÉATEURS AUDIO MULTI-PLATEFORMES

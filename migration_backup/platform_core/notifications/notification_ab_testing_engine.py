@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🧪 Enterprise Notification A/B Testing Engine - Ainflue Platform Core
+🧪 Enterprise Notification A/B Testing Engine - IA Chéries Platform Core
 Advanced template and timing optimization with statistical analysis
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform

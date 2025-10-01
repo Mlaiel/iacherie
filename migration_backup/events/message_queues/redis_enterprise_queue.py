@@ -1,7 +1,7 @@
 """Redis Enterprise Queue Module
 
 High-performance Redis queue implementation with clustering and persistence
-for the Ainflue Message Queues Enterprise system.
+for the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -91,8 +91,8 @@ class QueueMessage:
         )
 
 
-class AinflueBusiness:
-    """Ainflue Business Logic Constants for Redis Queues"""
+class IA ChériesBusiness:
+    """IA Chéries Business Logic Constants for Redis Queues"""
     
     # Content processing queues
     CONTENT_UPLOAD_QUEUE = "ainflue:queue:content:upload"
@@ -128,7 +128,7 @@ class AinflueBusiness:
 class RedisEnterpriseQueue:
     """
     Redis Enterprise Queue with clustering and persistence
-    Optimized for Ainflue business logic with high performance requirements
+    Optimized for IA Chéries business logic with high performance requirements
     """
     
     def __init__(self, 
@@ -610,5 +610,5 @@ __all__ = [
     "QueueMessage", 
     "MessagePriority",
     "RedisQueueConfig",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

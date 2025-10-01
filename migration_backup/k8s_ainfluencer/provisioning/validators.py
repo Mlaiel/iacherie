@@ -545,7 +545,7 @@ class DatabaseConnectivityValidator(BaseValidator):
             host = db_config.get('host', 'localhost')
             port = db_config.get('port', 5432)
             database = db_config.get('database', 'ia_influencer_platform')
-            username = db_config.get('username', 'iainfluencer')
+            username = db_config.get('username', 'iiacheries')
             password = db_config.get('password', '')
             
             validation_details = {
@@ -1311,7 +1311,7 @@ Create validation context from environment and additional parameters"""
             'host': kwargs.get('db_host', 'localhost'),
             'port': kwargs.get('db_port', 5432),
             'database': kwargs.get('db_name', 'ia_influencer_platform'),
-            'username': kwargs.get('db_user', 'iainfluencer'),
+            'username': kwargs.get('db_user', 'iiacheries'),
             'password': kwargs.get('db_password', '')
         },
         'redis': {

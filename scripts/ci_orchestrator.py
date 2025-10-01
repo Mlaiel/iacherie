@@ -276,7 +276,7 @@ class CICDOrchestrator:
         """Execute source code checkout"""
         try:
             # Clone or update repository
-            repo_path = f"/tmp/ainflue_build_{pipeline_run.run_id}"
+            repo_path = f"/tmp/iacherie_build_{pipeline_run.run_id}"
             
             if os.path.exists(repo_path):
                 # Update existing clone

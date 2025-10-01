@@ -1,12 +1,12 @@
 """
-Automation Index - Ainflue DevOps Automation Management
+Automation Index - iacherie DevOps Automation Management
 =======================================================
 
 Main entry point for automation and orchestration of infrastructure, 
 deployments, and operational workflows for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 """
 
@@ -29,8 +29,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "DevOps Automation Infrastructure for Creator Platform"
 
-# Configuration for Ainflue's automation infrastructure
-AINFLUE_AUTOMATION_ARCHITECTURE = {
+# Configuration for iacherie's automation infrastructure
+IACHERIE_AUTOMATION_ARCHITECTURE = {
     'ci_cd_pipelines': {
         'count': 15,
         'functions': ['build', 'test', 'security_scan', 'deploy', 'monitor'],
@@ -68,7 +68,7 @@ AINFLUE_AUTOMATION_ARCHITECTURE = {
 
 async def get_automation_status() -> Dict[str, Any]:
     """
-    Get comprehensive automation status for Ainflue platform.
+    Get comprehensive automation status for iacherie platform.
     
     Returns:
         Dict containing status of all automation systems and workflows
@@ -85,7 +85,7 @@ async def get_automation_status() -> Dict[str, Any]:
     }
     
     # Check each automation category
-    for category, config in AINFLUE_AUTOMATION_ARCHITECTURE.items():
+    for category, config in IACHERIE_AUTOMATION_ARCHITECTURE.items():
         category_status = {
             'status': 'operational',
             'functions': config.get('functions', []),
@@ -122,7 +122,7 @@ async def get_automation_status() -> Dict[str, Any]:
 
 async def validate_automation_configuration(config: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Validate automation configuration for Ainflue requirements.
+    Validate automation configuration for iacherie requirements.
     
     Args:
         config: Automation configuration to validate
@@ -190,7 +190,7 @@ async def get_automation_metrics() -> Dict[str, Any]:
     }
     
     # Performance metrics for each automation category
-    for category, config in AINFLUE_AUTOMATION_ARCHITECTURE.items():
+    for category, config in IACHERIE_AUTOMATION_ARCHITECTURE.items():
         metrics['workflow_performance'][category] = {
             'workflow_count': config.get('count', 10),
             'average_execution_time_minutes': 5.0 + len(category) * 0.5,  # Variable by complexity
@@ -345,5 +345,5 @@ logging.basicConfig(
 )
 
 logger.info("Automation module initialized")
-logger.info(f"Managing {sum(cat.get('count', 10) for cat in AINFLUE_AUTOMATION_ARCHITECTURE.values())} automation workflows")
+logger.info(f"Managing {sum(cat.get('count', 10) for cat in IACHERIE_AUTOMATION_ARCHITECTURE.values())} automation workflows")
 logger.info("Ready for creator platform automation management")

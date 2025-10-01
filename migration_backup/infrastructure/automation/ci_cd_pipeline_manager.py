@@ -1,12 +1,12 @@
 """
-CI/CD Pipeline Manager - Enterprise CI/CD Automation for Ainflue
+CI/CD Pipeline Manager - Enterprise CI/CD Automation for IA Chéries
 ===============================================================
 
 Advanced CI/CD pipeline management and automation for the creator economy platform.
 Supports multiple deployment strategies, automated testing, and creator-focused workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -97,7 +97,7 @@ class PipelineExecution:
 
 class CICDPipelineManager:
     """
-    Enterprise CI/CD pipeline manager for Ainflue creator platform.
+    Enterprise CI/CD pipeline manager for IA Chéries creator platform.
     Manages automated builds, tests, deployments, and creator workflow integration.
     """
     
@@ -106,10 +106,10 @@ class CICDPipelineManager:
         self.executions: Dict[str, PipelineExecution] = {}
         self.execution_history: List[PipelineExecution] = []
         
-        # Initialize default pipelines for Ainflue creator platform
+        # Initialize default pipelines for IA Chéries creator platform
         self._initialize_creator_platform_pipelines()
         
-        logger.info("CI/CD Pipeline Manager initialized for Ainflue creator platform")
+        logger.info("CI/CD Pipeline Manager initialized for IA Chéries creator platform")
     
     def _initialize_creator_platform_pipelines(self):
         """Initialize default CI/CD pipelines for creator platform components."""
@@ -117,7 +117,7 @@ class CICDPipelineManager:
         # Main Creator Platform Pipeline
         self.pipelines["creator_platform_main"] = PipelineConfig(
             id="creator_platform_main",
-            name="Ainflue Creator Platform Main Pipeline",
+            name="IA Chéries Creator Platform Main Pipeline",
             description="Main CI/CD pipeline for creator platform core services",
             trigger_events=["push_main", "pull_request", "scheduled_daily"],
             stages=[

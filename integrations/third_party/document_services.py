@@ -168,8 +168,8 @@ class DocumentSecurityManager:
         
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for document security"""
-        password = b"ainflue_document_encryption_key_2025"
-        salt = b"ainflue_salt"
+        password = b"iacherie_document_encryption_key_2025"
+        salt = b"iacherie_salt"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

@@ -114,7 +114,7 @@ class PushNotificationEnterpriseService:
     """
     Enterprise push notification service with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chéries platform business logic:
     - Multi-platform notification delivery
     - Creator engagement optimization
     - Real-time analytics and A/B testing

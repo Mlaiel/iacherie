@@ -1,5 +1,5 @@
 """
-PagerDuty Client Integration for Ainflue Platform
+PagerDuty Client Integration for IA Chéries Platform
 Production-ready incident management and alerting
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -47,7 +47,7 @@ class PagerDutyEvent:
     event_action: str  # trigger, acknowledge, resolve
     dedup_key: Optional[str] = None
     payload: Optional[Dict[str, Any]] = None
-    client: str = "Ainflue Platform"
+    client: str = "IA Chéries Platform"
     client_url: Optional[str] = None
 
 
@@ -153,7 +153,7 @@ class PagerDutyClient:
                     "class": "monitoring",
                     "custom_details": self._prepare_custom_details(incident_details)
                 },
-                client="Ainflue Platform",
+                client="IA Chéries Platform",
                 client_url="https://monitoring.ainflue.com"
             )
             
@@ -181,7 +181,7 @@ class PagerDutyClient:
             return None
     
     def acknowledge_incident(self, incident_key: str, 
-                           acknowledger: str = "Ainflue System") -> bool:
+                           acknowledger: str = "IA Chéries System") -> bool:
         """
         Acknowledge incident in PagerDuty
         
@@ -203,7 +203,7 @@ class PagerDutyClient:
                 dedup_key=incident_key,
                 payload={
                     "summary": f"Incident acknowledged by {acknowledger}",
-                    "source": "Ainflue Platform"
+                    "source": "IA Chéries Platform"
                 }
             )
             
@@ -221,7 +221,7 @@ class PagerDutyClient:
             return False
     
     def resolve_incident(self, incident_key: str, 
-                        resolver: str = "Ainflue System",
+                        resolver: str = "IA Chéries System",
                         resolution_details: Optional[str] = None) -> bool:
         """
         Resolve incident in PagerDuty
@@ -241,7 +241,7 @@ class PagerDutyClient:
         try:
             payload = {
                 "summary": f"Incident resolved by {resolver}",
-                "source": "Ainflue Platform"
+                "source": "IA Chéries Platform"
             }
             
             if resolution_details:
@@ -316,7 +316,7 @@ class PagerDutyClient:
             "severity": incident_details.severity.value,
             "source": incident_details.source,
             "timestamp": datetime.utcnow().isoformat(),
-            "platform": "Ainflue"
+            "platform": "IA Chéries"
         }
         
         # Add incident-specific custom details

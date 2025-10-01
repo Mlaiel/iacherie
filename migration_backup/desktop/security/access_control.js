@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Access Control System
+ * IA Chéries Desktop - Access Control System
  * 
  * Role-based access control and permission management for desktop application
  * 
@@ -151,7 +151,7 @@ class AccessControlManager {
                 lastActivity: Date.now(),
                 expiresAt: Date.now() + this.sessionTimeout,
                 ipAddress: credentials.ipAddress || 'desktop',
-                userAgent: credentials.userAgent || 'Ainflue Desktop'
+                userAgent: credentials.userAgent || 'IA Chéries Desktop'
             };
 
             this.sessions.set(sessionId, session);

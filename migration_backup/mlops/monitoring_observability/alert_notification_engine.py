@@ -22,7 +22,7 @@ ALL RIGHTS RESERVED
 - Maintenance and updates provided
 - Team training included
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier IA Chéries: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 

@@ -48,9 +48,9 @@ def validate_imports():
         print("✅ Phase 3 Analytics: AnalyticsEngine, ServiceDiscovery, TestingFramework")
         
         # Module metadata
-        from integrations.api_management import __version__, AINFLUE_API_MANAGEMENT
+        from integrations.api_management import __version__, IA CHÉRIES_API_MANAGEMENT
         print(f"✅ Module Version: {__version__}")
-        print(f"✅ Module Status: {AINFLUE_API_MANAGEMENT['completion_status']}")
+        print(f"✅ Module Status: {IA CHÉRIES_API_MANAGEMENT['completion_status']}")
         
         return True
         
@@ -67,25 +67,25 @@ def validate_architecture():
     print("=" * 60)
     
     try:
-        from integrations.api_management import AINFLUE_API_MANAGEMENT
+        from integrations.api_management import IA CHÉRIES_API_MANAGEMENT
         
         # Check completion status
-        phases = AINFLUE_API_MANAGEMENT['phases_completed']
+        phases = IA CHÉRIES_API_MANAGEMENT['phases_completed']
         print(f"✅ Phase 1 Critical: {phases['phase_1_critical']}")
         print(f"✅ Phase 2 Automation: {phases['phase_2_automation']}")
         print(f"✅ Phase 3 Analytics: {phases['phase_3_analytics']}")
         print(f"✅ Total Implementation: {phases['total']}")
         
         # Check feature completeness
-        features = AINFLUE_API_MANAGEMENT['gateway_features']
+        features = IA CHÉRIES_API_MANAGEMENT['gateway_features']
         print(f"✅ Gateway Features: {len(features)} features implemented")
         
         # Check expert implementation
-        experts = AINFLUE_API_MANAGEMENT['expert_implementation']
+        experts = IA CHÉRIES_API_MANAGEMENT['expert_implementation']
         print(f"✅ Expert Roles: {len(experts)} expert roles applied")
         
         # Check creator economy features
-        creator_features = AINFLUE_API_MANAGEMENT['creator_economy_features']
+        creator_features = IA CHÉRIES_API_MANAGEMENT['creator_economy_features']
         print(f"✅ Creator Economy: {len(creator_features)} features implemented")
         
         return True

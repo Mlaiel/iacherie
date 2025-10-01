@@ -42,6 +42,31 @@ import structlog
 from concurrent.futures import ThreadPoolExecutor
 import threading
 
+# Import des composants de sécurité existants (architecture cohérente)
+from .security_components import (
+    LoadBalancer,
+    CircuitBreaker,
+    MessageQueue,
+    EventBus,
+    EncryptionManager,
+    RoleBasedAccessControl,
+    JWTManager,
+    AuditLogger,
+    CommercialThreatIntel,
+    OpenSourceThreatIntel,
+    InternalThreatIntel,
+    AIPatternRecognizer,
+    AIContextAnalyzer,
+    AICorrelationEngine,
+    AIPredictionEngine,
+    NLPThreatProcessor,
+    AIThreatHunter,
+    RealTimeEventProcessor,
+    BatchEventProcessor,
+    StreamEventProcessor,
+    RateLimiter
+)
+
 logger = structlog.get_logger(__name__)
 
 # 🔐 SECURITY: Enhanced Threat Classification
@@ -143,15 +168,6 @@ class EnhancedThreatEvent:
     description: str = ""
     raw_data: Dict[str, Any] = field(default_factory=dict)
     related_events: List[str] = field(default_factory=list)
-
-# Alias pour compatibilité
-ThreatEvent = EnhancedThreatEvent
-    description: str
-    indicators: Dict[str, Any]
-    raw_data: Dict[str, Any]
-    confidence: float  # 0.0 to 1.0
-    automated_response: bool = False
-    response_actions: List[str] = field(default_factory=list)
 
 # Alias pour compatibilité
 ThreatEvent = EnhancedThreatEvent

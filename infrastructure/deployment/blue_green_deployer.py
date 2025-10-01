@@ -1,6 +1,6 @@
 """
 Blue-Green Deployer - Enterprise Deployment Strategy
-Zero-downtime deployment automation for Ainflue creator platform
+Zero-downtime deployment automation for iacherie creator platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -91,7 +91,7 @@ class DeploymentMetrics:
 
 class BlueGreenDeployer:
     """
-    Enterprise blue-green deployment system for Ainflue creator platform
+    Enterprise blue-green deployment system for iacherie creator platform
     
     DevOps Role Enhancement - Advanced Features:
     - Guaranteed zero-downtime deployments for creator services
@@ -128,7 +128,7 @@ class BlueGreenDeployer:
             "payment_processing_test"
         ]
         
-        logger.info("Blue-green deployer initialized for Ainflue creator platform")
+        logger.info("Blue-green deployer initialized for iacherie creator platform")
         
     async def deploy_blue_green(self, config: DeploymentConfig) -> Dict[str, Any]:
         """
@@ -561,7 +561,7 @@ class BlueGreenDeployer:
         }
         
     async def _validate_creator_functionality(self, config: DeploymentConfig) -> Dict[str, Any]:
-        """Validate Ainflue creator-specific functionality"""
+        """Validate iacherie creator-specific functionality"""
         creator_tests = [
             'creator_registration',
             'content_upload_flow',

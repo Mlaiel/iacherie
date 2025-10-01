@@ -1,4 +1,4 @@
-"""JWT Token Handler for Ainflue SDK
+"""JWT Token Handler for IA Chéries SDK
 
 Multi-expert implementation:
 - Security: Secure JWT handling with validation and encryption

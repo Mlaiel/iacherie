@@ -2,11 +2,11 @@
 Creator Economy Connectors - 16 Platform Creator Monetization
 ============================================================
 
-Comprehensive creator economy platform integrations for Ainflue monetization.
+Comprehensive creator economy platform integrations for iacherie monetization.
 Supports subscription, donation, NFT, and marketplace platforms for creator revenue.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 Platforms Supported (16):
@@ -114,7 +114,7 @@ class CreatorPlatformCredentials:
 
 class CreatorEconomyConnectors:
     """
-    Creator Economy Platform Connectors for Ainflue Monetization
+    Creator Economy Platform Connectors for iacherie Monetization
     
     Manages creator monetization across 16 platforms, enabling multiple revenue 
     streams including subscriptions, digital sales, NFTs, and freelance services.

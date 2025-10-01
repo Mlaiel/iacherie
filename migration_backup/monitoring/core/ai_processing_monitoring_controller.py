@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - AI Processing Monitoring Controller
+IA Chéries Platform - AI Processing Monitoring Controller
 ====================================================
 
 Enterprise-grade monitoring controller for AI processing pipelines including

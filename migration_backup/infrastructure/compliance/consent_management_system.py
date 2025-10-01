@@ -7,7 +7,7 @@ economy platform. Provides consent lifecycle management, cross-platform sync, an
 consent preference center with AI-powered optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -175,7 +175,7 @@ class ConsentManagementSystem:
         # AI-powered consent optimization
         self.consent_optimizer = ConsentOptimizer(config.get("optimization", {}))
         
-        logger.info("Consent Management System initialized for Ainflue creator platform")
+        logger.info("Consent Management System initialized for IA Chéries creator platform")
     
     def _initialize_consent_templates(self) -> Dict[str, Dict[str, Any]]:
         """Initialize consent templates for different purposes and regulations."""
@@ -190,7 +190,7 @@ class ConsentManagementSystem:
                 "withdrawal_method": "preference_center",
                 "legal_basis": "Article 6(1)(a) GDPR - Consent",
                 "template_text": """
-                I consent to Ainflue processing my personal data including profile information, 
+                I consent to IA Chéries processing my personal data including profile information, 
                 content metadata, and creation patterns for the purpose of providing content 
                 creation services and improving platform functionality. I understand I can 
                 withdraw this consent at any time through the preference center.
@@ -206,7 +206,7 @@ class ConsentManagementSystem:
                 "withdrawal_method": "immediate_opt_out",
                 "legal_basis": "CCPA Section 1798.140 - Consumer Consent",
                 "template_text": """
-                I opt-in to Ainflue's monetization services which involve processing my 
+                I opt-in to IA Chéries's monetization services which involve processing my 
                 financial data, revenue metrics, and payment information to facilitate 
                 content monetization and revenue generation.
                 """
@@ -222,7 +222,7 @@ class ConsentManagementSystem:
                 "legal_basis": "Legitimate interest with opt-out",
                 "template_text": """
                 I consent to receive personalized marketing communications, platform updates, 
-                and promotional content from Ainflue based on my preferences and engagement patterns.
+                and promotional content from IA Chéries based on my preferences and engagement patterns.
                 """
             },
             "third_party_integrations": {
@@ -235,7 +235,7 @@ class ConsentManagementSystem:
                 "withdrawal_method": "platform_specific",
                 "legal_basis": "Consent for data sharing",
                 "template_text": """
-                I consent to Ainflue sharing my profile data, content information, and 
+                I consent to IA Chéries sharing my profile data, content information, and 
                 engagement metrics with selected third-party platforms to enable enhanced 
                 content distribution and collaboration features.
                 """

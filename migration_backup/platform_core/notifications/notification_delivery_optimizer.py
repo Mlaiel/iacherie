@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📈 Enterprise Notification Delivery Optimizer - Ainflue Platform Core
+📈 Enterprise Notification Delivery Optimizer - IA Chéries Platform Core
 ML-powered timing optimization and adaptive delivery windows
 
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform

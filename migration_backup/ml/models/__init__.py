@@ -1,11 +1,11 @@
 """
-ML Models Module - Ainflue Enterprise
+ML Models Module - IA Chéries Enterprise
 ===================================
 Registry central des modèles ML avec factory patterns.
 Content analysis + quality assessment + sentiment analysis + recommendations + copyright + engagement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -71,7 +71,7 @@ from .engagement_prediction_model import (
 
 class MLModelsRegistry:
     """
-    Registry central pour tous les modèles ML Ainflue.
+    Registry central pour tous les modèles ML IA Chéries.
     Factory patterns + service orchestration + model lifecycle management.
     """
     

@@ -1,4 +1,4 @@
-"""Creator Content Pipeline Template for Ainflue Platform
+"""Creator Content Pipeline Template for iacherie Platform
 Enterprise-grade content processing pipeline template specifically designed for creator economy.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -123,7 +123,7 @@ class CreatorPipelineConfig:
 
 
 class CreatorContentPipelineTemplate:
-    """Enterprise Creator Content Pipeline Template for Ainflue Platform"""
+    """Enterprise Creator Content Pipeline Template for iacherie Platform"""
     
     def __init__(self, config: CreatorPipelineConfig):
         self.config = config
@@ -820,7 +820,7 @@ class CreatorContentPipelineTemplate:
                             'creator_id': creator_id
                         }
                         
-                        bucket_name = f'ainflue-content-{os.environ.get(\"ENVIRONMENT\", \"prod\")}'
+                        bucket_name = f'iacherie-content-{os.environ.get(\"ENVIRONMENT\", \"prod\")}'
                         
                         # Upload different quality versions
                         processed_dir = Path('processed_content')
@@ -838,7 +838,7 @@ class CreatorContentPipelineTemplate:
                                     distribution_result['distribution_points'].append({
                                         'quality': quality,
                                         's3_url': f's3://{bucket_name}/{s3_key}',
-                                        'cdn_url': f'https://cdn.ainflue.com/{s3_key}',
+                                        'cdn_url': f'https://cdn.iacherie.com/{s3_key}',
                                         'file_size': content_file.stat().st_size if content_file.exists() else 1024000
                                     })
                         
@@ -848,7 +848,7 @@ class CreatorContentPipelineTemplate:
                         for region in regions:
                             distribution_result['cdn_urls'].append({
                                 'region': region,
-                                'url': f'https://{region}.cdn.ainflue.com/creators/{creator_id}/{content_type}/'
+                                'url': f'https://{region}.cdn.iacherie.com/creators/{creator_id}/{content_type}/'
                             })
                         
                         # Create manifest for adaptive streaming
@@ -856,7 +856,7 @@ class CreatorContentPipelineTemplate:
                             manifest = {
                                 'type': 'adaptive_streaming',
                                 'qualities': ['mobile', 'standard', 'high'],
-                                'base_url': f'https://cdn.ainflue.com/creators/{creator_id}/{content_type}/'
+                                'base_url': f'https://cdn.iacherie.com/creators/{creator_id}/{content_type}/'
                             }
                             distribution_result['adaptive_streaming_manifest'] = manifest
                         
@@ -913,7 +913,7 @@ class CreatorContentPipelineTemplate:
                     "name": "Notify creator",
                     "run": |
                         echo "🎉 Content processing complete for creator ${{ env.CREATOR_ID }}"
-                        echo "Content is now available on the Ainflue platform"
+                        echo "Content is now available on the iacherie platform"
                         # Here you would typically send a notification to the creator
                 }
             ]
@@ -936,7 +936,7 @@ class CreatorContentPipelineTemplate:
 def create_production_pipeline_config() -> CreatorPipelineConfig:
     """Create production pipeline configuration"""
     return CreatorPipelineConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment="production",
         supported_content_types=[
             ContentType.AUDIO,
@@ -984,7 +984,7 @@ if __name__ == "__main__":
     config = create_production_pipeline_config()
     template = CreatorContentPipelineTemplate(config)
     
-    print("Creator Content Pipeline Template for Ainflue Platform")
+    print("Creator Content Pipeline Template for iacherie Platform")
     print("Configuration:")
     print(f"- Supported Content Types: {[ct.value for ct in config.supported_content_types]}")
     print(f"- Processing Stages: {len(config.processing_stages)}")

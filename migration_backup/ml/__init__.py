@@ -1,5 +1,5 @@
 """
-Ainflue ML Module - Enterprise Machine Learning Infrastructure
+IA Chéries ML Module - Enterprise Machine Learning Infrastructure
 ============================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>

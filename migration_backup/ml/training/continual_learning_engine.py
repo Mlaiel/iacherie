@@ -1,4 +1,4 @@
-"""Continual Learning Engine for Ainflue ML Platform
+"""Continual Learning Engine for IA Chéries ML Platform
 
 Implements continual learning without catastrophic forgetting for evolving creator preferences
 and dynamic adaptation to new content types and trends.
@@ -925,7 +925,7 @@ def create_continual_learning_engine(
     return ContinualLearningEngine(config)
 
 
-# Example usage for Ainflue creators
+# Example usage for IA Chéries creators
 async def example_creator_continual_learning():
     """Example of continual learning for creator content adaptation."""
     

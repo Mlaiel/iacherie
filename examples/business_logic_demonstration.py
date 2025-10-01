@@ -3,7 +3,7 @@
 Business Logic Demonstration - Examples Enterprise Ultra Avancée  
 ==============================================================
 
-Démonstrations logique métier intégrée Ainflue avec examples pratiques end-to-end
+Démonstrations logique métier intégrée iacherie avec examples pratiques end-to-end
 Revenue models, compliance GDPR/CCPA, performance benchmarks, scalability demonstrations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -109,7 +109,7 @@ class RevenueCalculatorService:
         self.quality_bonus_multiplier = Decimal('0.02')  # 2% per 0.1 quality score above 0.8
     
     async def calculate_revenue_distribution(self, scenario: Dict[str, Any]) -> RevenueCalculation:
-        """Calcul distribution revenus avec business logic Ainflue"""
+        """Calcul distribution revenus avec business logic iacherie"""
         
         # Calcul revenus totaux
         total_revenue = Decimal('0')
@@ -498,7 +498,7 @@ class BusinessLogicEngine:
 
 class BusinessLogicDemonstration:
     """
-    Démonstrations logique métier ultra complètes avec examples business Ainflue
+    Démonstrations logique métier ultra complètes avec examples business iacherie
     Integration testing et validation business rules avec métriques temps réel
     """
     
@@ -939,7 +939,7 @@ async def run_business_logic_demonstrations():
     
     print("🚀 BUSINESS LOGIC DEMONSTRATION - EXAMPLES ENTERPRISE")
     print("=" * 90)
-    print("Démonstrations Ultra Avancées Business Logic Ainflue")
+    print("Démonstrations Ultra Avancées Business Logic iacherie")
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("=" * 90)
     
@@ -994,7 +994,7 @@ async def run_business_logic_demonstrations():
         
         print(f"\n🎉 ALL BUSINESS LOGIC DEMONSTRATIONS COMPLETED SUCCESSFULLY")
         print(f"🏆 Enterprise-Level Business Logic Validation: PASSED")
-        print(f"🚀 Ainflue Platform Business Logic Ready for Production")
+        print(f"🚀 iacherie Platform Business Logic Ready for Production")
         
         return True
         

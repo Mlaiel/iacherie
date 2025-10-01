@@ -308,7 +308,7 @@ def get_collection_manager(connection: Optional[MongoDBConnection] = None) -> Mo
     return _default_manager
 
 # Predefined schemas for IA Chérie platform collections
-AINFLUE_SCHEMAS = {
+IACHERIE_SCHEMAS = {
     "users": CollectionSchema(
         name="users",
         validator={
@@ -357,5 +357,5 @@ __all__ = [
     'CollectionSchema',
     'MongoDBCollectionManager',
     'get_collection_manager',
-    'AINFLUE_SCHEMAS'
+    'IACHERIE_SCHEMAS'
 ]

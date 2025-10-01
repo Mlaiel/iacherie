@@ -1,11 +1,11 @@
-# 📊 Observability-Infrastruktur - Ainflue Enterprise
+# 📊 Observability-Infrastruktur - iacherie Enterprise
 **Expertenteam: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sicherheit + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ GEISTIGES EIGENTUM - FAHED MLAIEL
 > **DEUTLICHE WARNUNG:** Diese Architektur ist das EXKLUSIVE geistige Eigentum von **Fahed Mlaiel** (mlaiel@live.de). Jede Reproduktion, Modifikation, Verteilung oder Ideendiebstahl ohne PERSÖNLICHE schriftliche Genehmigung ist **STRENG VERBOTEN** und wird rechtlich verfolgt.
 
 ## 🎯 Modul-Zweck
-Enterprise-grade Observability- und Monitoring-Infrastruktur, die Echtzeit-Sichtbarkeit, Alerting und Analytics für die Ainflue Creator-Plattform bereitstellt, die 65+ Social Media und Streaming-Plattformen mit 53 AI-Agenten bedient.
+Enterprise-grade Observability- und Monitoring-Infrastruktur, die Echtzeit-Sichtbarkeit, Alerting und Analytics für die iacherie Creator-Plattform bereitstellt, die 65+ Social Media und Streaming-Plattformen mit 53 AI-Agenten bedient.
 
 ## 🏗️ Architektur-Komponenten
 - **Core Monitoring**: Prometheus-basierte Metriken-Sammlung und -Speicherung

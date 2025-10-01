@@ -282,7 +282,7 @@ class MasterTestOrchestrator:
 # Instance singleton orchestrateur
 master_orchestrator = MasterTestOrchestrator()
 
-async def run_ainflue_quality_tests(environment: str = "development") -> Dict[str, Any]:
+async def run_iacherie_quality_tests(environment: str = "development") -> Dict[str, Any]:
     """
     🎯 POINT D'ENTRÉE PRINCIPAL TESTS QUALITÉ IACHERIE
     
@@ -297,7 +297,7 @@ async def main():
     logger.info("🎯 TEST ORCHESTRATION ENTERPRISE - DÉMONSTRATION")
     
     # Test suite complète
-    results = await run_ainflue_quality_tests("development")
+    results = await run_iacherie_quality_tests("development")
     print(f"📊 Résultats tests: {results}")
 
 if __name__ == "__main__":

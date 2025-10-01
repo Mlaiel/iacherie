@@ -39,7 +39,7 @@ import uuid
 
 
 class CreatorTier(Enum):
-    """Niveaux créateurs Ainflue"""
+    """Niveaux créateurs IA Chéries"""
     FREE = "free"
     PREMIUM = "premium"
     PROFESSIONAL = "professional"

@@ -288,7 +288,7 @@ class DigitalRightsManager:
                             match,
                             {
                                 'name': registration['owner_id'],
-                                'email': 'rights@ainflue.com',
+                                'email': 'rights@iacherie.com',
                                 'content_id': content_id
                             }
                         )

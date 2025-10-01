@@ -986,7 +986,7 @@ class EnterpriseSocialOptimizer:
             strategy['cross_promotion'][platform.value] = {
                 'mention_platforms': other_platforms[:2],  # Mention top 2 other platforms
                 'cross_link': True,
-                'unified_hashtags': ['#ainflue', '#contentcreator']
+                'unified_hashtags': ['#iacherie', '#contentcreator']
             }
         
         return strategy

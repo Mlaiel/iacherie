@@ -1,4 +1,4 @@
-"""Ainflue Environment Configuration - Enterprise Multi-Environment Management
+"""IA Chéries Environment Configuration - Enterprise Multi-Environment Management
 ===========================================================================
 
 Advanced environment configuration management for enterprise-grade deployment
@@ -104,7 +104,7 @@ class EnterpriseEnvironmentConfiguration:
     def __init__(self, level: str = "enterprise"):
         """Initialize environment configuration"""
         self.level = level
-        self.current_environment = os.getenv("AINFLUE_ENV", "development")
+        self.current_environment = os.getenv("IA CHÉRIES_ENV", "development")
         self.environments: Dict[str, EnvironmentConfiguration] = {}
         self.secrets: Dict[str, SecretConfiguration] = {}
         self.feature_flags_global: Dict[str, Any] = {}
@@ -121,7 +121,7 @@ class EnterpriseEnvironmentConfiguration:
         """Load base configuration settings"""
         return {
             "global_settings": {
-                "platform_name": "Ainflue",
+                "platform_name": "IA Chéries",
                 "api_version": "v1",
                 "default_timeout": 30,
                 "max_request_size": "100MB",
@@ -254,7 +254,7 @@ class EnterpriseEnvironmentConfiguration:
             monitoring_config={
                 "cloudwatch_enabled": True,
                 "log_groups": ["ainflue-dev-api", "ainflue-dev-worker"],
-                "metrics_namespace": "Ainflue/Dev",
+                "metrics_namespace": "IA Chéries/Dev",
                 "alert_threshold": "relaxed"
             },
             feature_flags={
@@ -336,7 +336,7 @@ class EnterpriseEnvironmentConfiguration:
             monitoring_config={
                 "cloudwatch_enabled": True,
                 "log_groups": ["ainflue-staging-api", "ainflue-staging-worker", "ainflue-staging-scheduler"],
-                "metrics_namespace": "Ainflue/Staging",
+                "metrics_namespace": "IA Chéries/Staging",
                 "alert_threshold": "standard",
                 "custom_dashboards": True
             },
@@ -437,7 +437,7 @@ class EnterpriseEnvironmentConfiguration:
                     "ainflue-prod-api", "ainflue-prod-worker", "ainflue-prod-scheduler",
                     "ainflue-prod-auth", "ainflue-prod-payment", "ainflue-prod-analytics"
                 ],
-                "metrics_namespace": "Ainflue/Production",
+                "metrics_namespace": "IA Chéries/Production",
                 "alert_threshold": "strict",
                 "custom_dashboards": True,
                 "real_time_monitoring": True,
@@ -627,7 +627,7 @@ class EnterpriseEnvironmentConfiguration:
         """Switch to a different environment"""
         if environment_name in self.environments:
             self.current_environment = environment_name
-            os.environ["AINFLUE_ENV"] = environment_name
+            os.environ["IA CHÉRIES_ENV"] = environment_name
             logger.info(f"🔄 Switched to environment: {environment_name}")
             return True
         else:

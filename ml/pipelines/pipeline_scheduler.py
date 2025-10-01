@@ -161,7 +161,7 @@ class PipelineScheduler:
         
         # Gestion des workers
         self.workers: Dict[str, WorkerStatus] = {}
-        self.executor = ThreadPoolExecutor(max_workers=max_workers, thread_name_prefix="ainflue_worker")
+        self.executor = ThreadPoolExecutor(max_workers=max_workers, thread_name_prefix="iacherie_worker")
         
         # Gestion des dépendances
         self.dependency_graph: Dict[str, List[str]] = defaultdict(list)
@@ -194,7 +194,7 @@ class PipelineScheduler:
     
     def _setup_logger(self) -> logging.Logger:
         """Configuration du logging"""
-        logger = logging.getLogger(f"ainflue_scheduler_{id(self)}")
+        logger = logging.getLogger(f"iacherie_scheduler_{id(self)}")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:

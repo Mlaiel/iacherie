@@ -1,6 +1,6 @@
 """
 Service Mesh Manager
-Enterprise service mesh management for Ainflue infrastructure
+Enterprise service mesh management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ServiceMeshManager:
     """
-    Enterprise Service Mesh Management for Ainflue Creator Platform
+    Enterprise Service Mesh Management for iacherie Creator Platform
     
     Microservices Role Implementation:
     - Service mesh communication patterns
@@ -28,16 +28,16 @@ class ServiceMeshManager:
         self.active_meshes = {}
         self.service_registry = {}
         self.traffic_policies = {}
-        logger.info("Service mesh manager initialized for Ainflue microservices")
+        logger.info("Service mesh manager initialized for iacherie microservices")
         
     async def configure_istio(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Configure Istio service mesh for Ainflue microservices
+        Configure Istio service mesh for iacherie microservices
         
         Microservices Role: Advanced service mesh configuration for creator platform
         """
         try:
-            mesh_name = mesh_config.get('name', 'ainflue-service-mesh')
+            mesh_name = mesh_config.get('name', 'iacherie-service-mesh')
             services = mesh_config.get('services', [])
             
             # Core Istio configuration
@@ -51,7 +51,7 @@ class ServiceMeshManager:
                 'observability': await self._configure_observability(mesh_config)
             }
             
-            # Ainflue-specific service mesh features
+            # iacherie-specific service mesh features
             creator_service_config = await self._configure_creator_services(services)
             istio_config['creator_services'] = creator_service_config
             
@@ -148,7 +148,7 @@ class ServiceMeshManager:
         
     async def configure_mesh(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Configure service mesh for Ainflue microservices
+        Configure service mesh for iacherie microservices
         Microservices Role Implementation for creator platform communication
         
         Args:
@@ -160,7 +160,7 @@ class ServiceMeshManager:
         logger.info(f"Configuring service mesh: {mesh_config.get('name', 'unnamed')}")
         
         mesh_result = {
-            'mesh_name': mesh_config.get('name', 'ainflue-mesh'),
+            'mesh_name': mesh_config.get('name', 'iacherie-mesh'),
             'mesh_type': mesh_config.get('type', 'istio'),
             'namespace': mesh_config.get('namespace', 'istio-system'),
             'configuration_timestamp': '2025-01-01T00:00:00Z',
@@ -179,7 +179,7 @@ class ServiceMeshManager:
                 egress_config = await self._configure_egress_gateway(mesh_config)
                 mesh_result['components']['egress_gateway'] = egress_config
                 
-            # Configure traffic management for Ainflue services
+            # Configure traffic management for iacherie services
             if mesh_config.get('traffic_management', True):
                 traffic_config = await self._configure_traffic_management(mesh_config)
                 mesh_result['components']['traffic_management'] = traffic_config
@@ -194,7 +194,7 @@ class ServiceMeshManager:
                 observability_config = await self._configure_mesh_observability(mesh_config)
                 mesh_result['components']['observability'] = observability_config
                 
-            # Configure Ainflue-specific service communication patterns
+            # Configure iacherie-specific service communication patterns
             creator_services_config = await self._configure_creator_services_mesh(mesh_config)
             mesh_result['creator_services'] = creator_services_config
             
@@ -217,17 +217,17 @@ class ServiceMeshManager:
     async def _configure_ingress_gateway(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """Configure ingress gateway for external traffic"""
         return {
-            'gateway_name': 'ainflue-ingress-gateway',
+            'gateway_name': 'iacherie-ingress-gateway',
             'ports': [
                 {'port': 80, 'protocol': 'HTTP'},
                 {'port': 443, 'protocol': 'HTTPS'}
             ],
             'tls_mode': 'SIMPLE',
             'hosts': [
-                'api.ainflue.com',
-                'creators.ainflue.com',
-                'upload.ainflue.com',
-                'ai.ainflue.com'
+                'api.iacherie.com',
+                'creators.iacherie.com',
+                'upload.iacherie.com',
+                'ai.iacherie.com'
             ],
             'status': 'configured'
         }
@@ -235,7 +235,7 @@ class ServiceMeshManager:
     async def _configure_egress_gateway(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """Configure egress gateway for external service calls"""
         return {
-            'gateway_name': 'ainflue-egress-gateway',
+            'gateway_name': 'iacherie-egress-gateway',
             'allowed_external_services': [
                 'payment.stripe.com',
                 'api.openai.com',
@@ -247,7 +247,7 @@ class ServiceMeshManager:
         }
         
     async def _configure_traffic_management(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure traffic management for Ainflue services"""
+        """Configure traffic management for iacherie services"""
         return {
             'virtual_services': [
                 {
@@ -312,7 +312,7 @@ class ServiceMeshManager:
                     'name': 'creator-service-authz',
                     'rules': [
                         {
-                            'from': [{'source': {'principals': ['cluster.local/ns/ainflue-creators/sa/creator-sa']}}],
+                            'from': [{'source': {'principals': ['cluster.local/ns/iacherie-creators/sa/creator-sa']}}],
                             'to': [{'operation': {'methods': ['GET', 'POST']}}]
                         }
                     ]
@@ -321,7 +321,7 @@ class ServiceMeshManager:
                     'name': 'ai-service-authz',
                     'rules': [
                         {
-                            'from': [{'source': {'principals': ['cluster.local/ns/ainflue-ai/sa/ai-sa']}}],
+                            'from': [{'source': {'principals': ['cluster.local/ns/iacherie-ai/sa/ai-sa']}}],
                             'to': [{'operation': {'methods': ['POST']}}]
                         }
                     ]
@@ -363,11 +363,11 @@ class ServiceMeshManager:
         }
         
     async def _configure_creator_services_mesh(self, mesh_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Configure mesh for Ainflue creator-specific services"""
+        """Configure mesh for iacherie creator-specific services"""
         return [
             {
                 'service_name': 'creator-upload-service',
-                'namespace': 'ainflue-creators',
+                'namespace': 'iacherie-creators',
                 'service_type': 'upload',
                 'mesh_config': {
                     'sidecar_injection': 'enabled',
@@ -383,7 +383,7 @@ class ServiceMeshManager:
             },
             {
                 'service_name': 'ai-processing-service',
-                'namespace': 'ainflue-ai',
+                'namespace': 'iacherie-ai',
                 'service_type': 'ai_processing',
                 'mesh_config': {
                     'sidecar_injection': 'enabled',
@@ -399,7 +399,7 @@ class ServiceMeshManager:
             },
             {
                 'service_name': 'collaboration-service',
-                'namespace': 'ainflue-collaboration',
+                'namespace': 'iacherie-collaboration',
                 'service_type': 'collaboration',
                 'mesh_config': {
                     'sidecar_injection': 'enabled',
@@ -415,7 +415,7 @@ class ServiceMeshManager:
             },
             {
                 'service_name': 'monetization-service',
-                'namespace': 'ainflue-monetization',
+                'namespace': 'iacherie-monetization',
                 'service_type': 'monetization',
                 'mesh_config': {
                     'sidecar_injection': 'enabled',
@@ -468,9 +468,9 @@ class ServiceMeshManager:
     async def _get_mesh_endpoints(self, mesh_config: Dict[str, Any]) -> Dict[str, Any]:
         """Get service mesh endpoints"""
         return {
-            'mesh_dashboard': 'https://kiali.ainflue.com',
-            'metrics_endpoint': 'https://prometheus.ainflue.com',
-            'tracing_endpoint': 'https://jaeger.ainflue.com',
-            'ingress_gateway': 'https://api.ainflue.com',
-            'mesh_config_api': 'https://istio-api.ainflue.com'
+            'mesh_dashboard': 'https://kiali.iacherie.com',
+            'metrics_endpoint': 'https://prometheus.iacherie.com',
+            'tracing_endpoint': 'https://jaeger.iacherie.com',
+            'ingress_gateway': 'https://api.iacherie.com',
+            'mesh_config_api': 'https://istio-api.iacherie.com'
         }

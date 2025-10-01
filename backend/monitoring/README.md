@@ -34,7 +34,7 @@ This monitoring module, its innovative performance intelligence concepts, AI mon
 
 ## 🎯 Module Overview
 
-The **Monitoring Module** provides comprehensive performance analytics, intelligent monitoring, and real-time observability for the entire Ainflue platform ecosystem. This enterprise-grade monitoring solution delivers AI-powered insights, predictive analytics, and automated performance optimization.
+The **Monitoring Module** provides comprehensive performance analytics, intelligent monitoring, and real-time observability for the entire iacherie platform ecosystem. This enterprise-grade monitoring solution delivers AI-powered insights, predictive analytics, and automated performance optimization.
 
 ### 🏗️ Core Architecture
 

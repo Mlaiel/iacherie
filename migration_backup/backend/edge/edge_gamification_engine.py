@@ -1,7 +1,7 @@
 """Edge Gamification Engine
 ===========================
 
-Moteur de gamification edge ultra-avancé pour l'écosystème Ainflue.
+Moteur de gamification edge ultra-avancé pour l'écosystème IA Chéries.
 Boost l'engagement créateurs avec achievements temps réel, scoring IA,
 défis compétitifs et systèmes de récompenses optimisés.
 
@@ -120,7 +120,7 @@ class RealTimeAchievementEngine:
         first_post = Achievement(
             achievement_id="first_post",
             name="Premier Pas",
-            description="Publier votre premier contenu sur Ainflue",
+            description="Publier votre premier contenu sur IA Chéries",
             type=AchievementType.CONTENT_CREATION,
             rarity=AchievementRarity.COMMON,
             criteria={"posts_count": 1},
@@ -1013,7 +1013,7 @@ class RewardOptimizer:
         creator_badge = Reward(
             reward_id="creator_badge",
             name="Badge Créateur",
-            description="Badge prestigieux de créateur Ainflue",
+            description="Badge prestigieux de créateur IA Chéries",
             type=RewardType.BADGE,
             value={"badge_name": "creator", "display_color": "gold"},
             cost=0  # Obtenu par achievement

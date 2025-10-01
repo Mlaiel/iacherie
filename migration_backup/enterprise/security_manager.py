@@ -400,7 +400,7 @@ class MultiFactorAuthentication:
         self._backup_codes: Dict[str, List[str]] = {}
         self._hardware_tokens: Dict[str, Dict[str, Any]] = {}
     
-    async def setup_totp(self, user_id: str, issuer: str = "Ainflue Enterprise") -> Dict[str, Any]:
+    async def setup_totp(self, user_id: str, issuer: str = "IA Chéries Enterprise") -> Dict[str, Any]:
         """Setup TOTP (Time-based One-Time Password) for user"""
         secret = pyotp.random_base32()
         self._totp_secrets[user_id] = secret

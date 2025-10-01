@@ -2,12 +2,12 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Pipeline de Validation de Sécurité - Ainflue Enterprise ML Pipeline
+Pipeline de Validation de Sécurité - IA Chéries Enterprise ML Pipeline
 Système de validation sécurisée avec conformité réglementaire et protection IP
 
 Auteur: Mlaiel (Expert Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité)  
-Copyright: © 2024 Ainflue. Tous droits réservés.
-Licence: Propriétaire - Usage strictement réservé à Ainflue
+Copyright: © 2024 IA Chéries. Tous droits réservés.
+Licence: Propriétaire - Usage strictement réservé à IA Chéries
 Version: 1.0.0 - Architecture Niveau 3 Backend
 
 CONFIDENTIAL - NE PAS DISTRIBUER
@@ -91,7 +91,7 @@ class SecurityValidationResult:
 
 class SecurityValidationPipeline:
     """
-    Pipeline de validation de sécurité pour Ainflue
+    Pipeline de validation de sécurité pour IA Chéries
     
     Fonctionnalités:
     - Validation multi-niveaux de sécurité

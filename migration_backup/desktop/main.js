@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Main Electron Process
+ * IA Chéries Desktop - Main Electron Process
  * 
  * Advanced AI-powered content creation studio with professional editing capabilities,
  * multi-monitor support, and system integration features.
@@ -28,7 +28,7 @@ const store = new Store({
   name: 'ainflue-preferences'
 });
 
-class AinflueMasterStudio {
+class IA ChériesMasterStudio {
   constructor() {
     this.mainWindow = null;
     this.studioWindow = null;
@@ -172,7 +172,7 @@ class AinflueMasterStudio {
         backgroundThrottling: false
       },
       icon: path.join(__dirname, 'assets', this.platform.isWindows ? 'icon.ico' : this.platform.isMac ? 'icon.icns' : 'icon.png'),
-      title: 'Ainflue Studio - Professional AI Content Creation',
+      title: 'IA Chéries Studio - Professional AI Content Creation',
       backgroundColor: '#1f2937',
       show: false,
       resizable: true,
@@ -494,7 +494,7 @@ class AinflueMasterStudio {
           },
           { type: 'separator' },
           {
-            label: 'About Ainflue',
+            label: 'About IA Chéries',
             click: () => this.showAbout()
           }
         ]
@@ -544,7 +544,7 @@ class AinflueMasterStudio {
       const result = await dialog.showSaveDialog(this.mainWindow, {
         defaultPath: `${projectData.name || 'Untitled'}.ainproj`,
         filters: [
-          { name: 'Ainflue Project', extensions: ['ainproj'] },
+          { name: 'IA Chéries Project', extensions: ['ainproj'] },
           { name: 'JSON', extensions: ['json'] }
         ]
       });
@@ -701,7 +701,7 @@ class AinflueMasterStudio {
     const result = await dialog.showOpenDialog(this.mainWindow, {
       properties: ['openFile'],
       filters: [
-        { name: 'Ainflue Project', extensions: ['json'] },
+        { name: 'IA Chéries Project', extensions: ['json'] },
         { name: 'All Files', extensions: ['*'] }
       ]
     });
@@ -744,8 +744,8 @@ class AinflueMasterStudio {
   showAbout() {
     dialog.showMessageBox(this.mainWindow, {
       type: 'info',
-      title: 'About Ainflue Studio',
-      message: 'Ainflue Desktop Studio v1.0.0',
+      title: 'About IA Chéries Studio',
+      message: 'IA Chéries Desktop Studio v1.0.0',
       detail: `Professional AI-powered content creation platform\n\nDeveloped by: Fahed Mlaiel\nEmail: mlaiel@live.de\n\n© 2025 Fahed Mlaiel. All rights reserved.`,
       buttons: ['OK']
     });
@@ -753,4 +753,4 @@ class AinflueMasterStudio {
 }
 
 // Initialize application
-new AinflueMasterStudio();
+new IA ChériesMasterStudio();

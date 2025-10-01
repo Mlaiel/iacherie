@@ -131,8 +131,8 @@ Docker & Docker Compose
 ### Installation
 ```bash
 # Clone du repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/compliance
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/compliance
 
 # Installation des dépendances
 pip install -r requirements.txt
@@ -311,7 +311,7 @@ pytest --cov=backend.compliance --cov-report=html
 ### 🐳 Déploiement Docker
 ```bash
 # Build de l'image
-docker build -t ainflue-compliance .
+docker build -t iacherie-compliance .
 
 # Déploiement production
 docker-compose -f docker-compose.prod.yml up -d
@@ -339,7 +339,7 @@ spec:
     spec:
       containers:
       - name: compliance
-        image: ainflue-compliance:latest
+        image: iacherie-compliance:latest
         ports:
         - containerPort: 8000
         env:
@@ -448,8 +448,8 @@ async def integrated_compliance_pipeline(content):
 
 ### 🔧 Support Technique
 - **Email Support** : mlaiel@live.de
-- **Documentation** : [docs.ainflue.com](https://docs.ainflue.com)
-- **Issues GitHub** : [github.com/Mlaiel/Ainflue/issues](https://github.com/Mlaiel/Ainflue/issues)
+- **Documentation** : [docs.iacherie.com](https://docs.iacherie.com)
+- **Issues GitHub** : [github.com/Mlaiel/iacherie/issues](https://github.com/Mlaiel/iacherie/issues)
 
 ### 🔄 Maintenance et Mises à Jour
 - **Mises à jour régulières** : Mensuelles pour les réglementations

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Quality Control System
+ * IA Chéries Desktop - Quality Control System
  * 
  * Comprehensive quality assurance for content creation
  * 

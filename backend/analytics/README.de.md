@@ -1,4 +1,4 @@
-# Ainflue Backend Analytics - Enterprise ML Intelligence Plattform
+# iacherie Backend Analytics - Enterprise ML Intelligence Plattform
 
 **Autor:** Fahed Mlaiel (mlaiel@live.de)  
 **Spezialisiertes Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## Backend Analytics Architektur
 
-Die Ainflue Backend Analytics Plattform repräsentiert das weltweit fortschrittlichste Enterprise ML Intelligence System für Multi-Format Content Creator Plattformen. Diese umfassende Suite bietet Echtzeit-Analytics, prädiktive Intelligenz und Business-Optimierung für alle Creator-Typen und Content-Formate.
+Die iacherie Backend Analytics Plattform repräsentiert das weltweit fortschrittlichste Enterprise ML Intelligence System für Multi-Format Content Creator Plattformen. Diese umfassende Suite bietet Echtzeit-Analytics, prädiktive Intelligenz und Business-Optimierung für alle Creator-Typen und Content-Formate.
 
 ### Kern Analytics Engines (12 Module)
 
@@ -234,4 +234,4 @@ Diese Software ist proprietär und vertraulich. Unbefugter Zugriff, Nutzung oder
 
 ---
 
-**Ainflue Backend Analytics - Die Zukunft der Creator Intelligence**
+**iacherie Backend Analytics - Die Zukunft der Creator Intelligence**

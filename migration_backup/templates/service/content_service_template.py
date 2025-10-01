@@ -1,4 +1,4 @@
-"""{{service_name}} Content Service for Ainflue Platform
+"""{{service_name}} Content Service for IA Chéries Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -201,7 +201,7 @@ class ContentConfig(BaseModel):
 
 class {{service_class_name}}(BaseService):
     """
-    Advanced content service for Ainflue platform.
+    Advanced content service for IA Chéries platform.
     
     Features:
     - Multi-format content upload and processing

@@ -258,7 +258,7 @@ class AudioPlatformsIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Audio Platform Hub",
+                "User-Agent": "iacherie/1.0 Audio Platform Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }

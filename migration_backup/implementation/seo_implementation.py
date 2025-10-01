@@ -1,6 +1,6 @@
 """SEO Implementation - Professional SEO Optimization System
 
-Advanced SEO implementation for the Ainflue platform providing comprehensive
+Advanced SEO implementation for the IA Chéries platform providing comprehensive
 search engine optimization, content discoverability, and organic growth strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -111,7 +111,7 @@ class SEOResult:
 
 class SEOImplementation:
     """
-    Advanced SEO Implementation for Ainflue Platform
+    Advanced SEO Implementation for IA Chéries Platform
     
     Provides comprehensive SEO optimization including keyword research,
     content optimization, technical SEO, and performance tracking.

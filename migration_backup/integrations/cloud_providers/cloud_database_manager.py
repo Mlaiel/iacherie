@@ -6,7 +6,7 @@ AWS RDS, Azure SQL, GCP Cloud SQL, MongoDB Atlas, and more.
 
 This module provides unified database lifecycle management, intelligent
 backup and recovery, performance optimization, and cost management
-across multiple cloud database providers for the Ainflue platform.
+across multiple cloud database providers for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -600,7 +600,7 @@ class MultiCloudDatabaseManager:
                 EnablePerformanceInsights=kwargs.get('performance_insights', True),
                 Tags=[
                     {'Key': 'Name', 'Value': name},
-                    {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                    {'Key': 'CreatedBy', 'Value': 'IA ChériesPlatform'},
                     {'Key': 'Environment', 'Value': kwargs.get('environment', 'production')}
                 ]
             )
@@ -625,7 +625,7 @@ class MultiCloudDatabaseManager:
                 performance_insights=kwargs.get('performance_insights', True),
                 tags={
                     'Name': name,
-                    'CreatedBy': 'AinfluePlatform',
+                    'CreatedBy': 'IA ChériesPlatform',
                     'Environment': kwargs.get('environment', 'production')
                 }
             )
@@ -791,7 +791,7 @@ class MultiCloudDatabaseManager:
                     DBInstanceIdentifier=database.id,
                     Tags=[
                         {'Key': 'BackupType', 'Value': backup_type.value},
-                        {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'}
+                        {'Key': 'CreatedBy', 'Value': 'IA ChériesPlatform'}
                     ]
                 )
                 

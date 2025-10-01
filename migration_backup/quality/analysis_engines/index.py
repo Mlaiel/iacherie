@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 ANALYSIS ENGINES ENTERPRISE - AINFLUE QUALITY MODULE
+🔍 ANALYSIS ENGINES ENTERPRISE - IA CHÉRIES QUALITY MODULE
 ========================================================
 
 Hub moteurs analyse intelligence qualité pour l'écosystème IA Influencer Agent.
@@ -84,7 +84,7 @@ class UniversalAnalysisEngine:
     🏆 MOTEUR ANALYSE UNIVERSEL ENTERPRISE
     
     Coordonne l'ensemble des analyses qualité avec intelligence artificielle
-    et algorithmes prédictifs pour l'écosystème Ainflue.
+    et algorithmes prédictifs pour l'écosystème IA Chéries.
     """
     
     def __init__(self):
@@ -144,7 +144,7 @@ class UniversalAnalysisEngine:
         """
         🚀 ANALYSE COMPLÈTE ENTERPRISE
         
-        Exécute l'ensemble des analyses avec IA pour l'écosystème Ainflue:
+        Exécute l'ensemble des analyses avec IA pour l'écosystème IA Chéries:
         Code Quality → Security → Performance → Predictive AI → Recommendations
         """
         report_id = f"analysis_{int(time.time())}"
@@ -509,7 +509,7 @@ async def run_comprehensive_quality_analysis(
     🎯 POINT D'ENTRÉE PRINCIPAL ANALYSE QUALITÉ ENTERPRISE
     
     Exécute l'analyse complète avec IA selon les standards enterprise
-    et intégration logique métier Ainflue.
+    et intégration logique métier IA Chéries.
     """
     if analysis_types:
         types = [AnalysisType(t) for t in analysis_types]

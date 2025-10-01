@@ -2,7 +2,7 @@
 Failover Manager - Enterprise Failover and High Availability Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Automated failover management for Ainflue creator platform infrastructure.
+Automated failover management for iacherie creator platform infrastructure.
 Provides intelligent failover detection, automatic recovery, and business continuity.
 """
 
@@ -68,7 +68,7 @@ class FailoverTarget:
 
 class FailoverManager:
     """
-    Enterprise Failover Manager for Ainflue Infrastructure
+    Enterprise Failover Manager for iacherie Infrastructure
     
     Manages automated failover processes, health monitoring, and recovery orchestration
     for the creator economy platform ensuring 99.99% uptime and minimal data loss.
@@ -80,7 +80,7 @@ class FailoverManager:
         self.health_monitors: Dict[str, Any] = {}
         self.recovery_procedures: Dict[str, Any] = {}
         
-        # Ainflue business logic integration
+        # iacherie business logic integration
         self.creator_services = [
             'content_upload_api',
             'ai_processing_engine', 
@@ -92,7 +92,7 @@ class FailoverManager:
         ]
         
     async def initialize_failover_systems(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize failover systems for Ainflue infrastructure"""
+        """Initialize failover systems for iacherie infrastructure"""
         
         initialization_result = {
             'dns_failover': await self._setup_dns_failover(config),
@@ -113,28 +113,28 @@ class FailoverManager:
             'route53_health_checks': {
                 'api_endpoints': [
                     {
-                        'endpoint': 'api.ainflue.com',
+                        'endpoint': 'api.iacherie.com',
                         'interval': '30_seconds',
                         'failure_threshold': 3,
                         'path': '/health',
                         'creator_services_check': True
                     },
                     {
-                        'endpoint': 'upload.ainflue.com',
+                        'endpoint': 'upload.iacherie.com',
                         'interval': '10_seconds',
                         'failure_threshold': 2,
                         'path': '/upload/health',
                         'content_upload_check': True
                     },
                     {
-                        'endpoint': 'auth.ainflue.com',
+                        'endpoint': 'auth.iacherie.com',
                         'interval': '10_seconds',
                         'failure_threshold': 2,
                         'path': '/auth/health',
                         'creator_auth_check': True
                     },
                     {
-                        'endpoint': 'ai.ainflue.com',
+                        'endpoint': 'ai.iacherie.com',
                         'interval': '15_seconds',
                         'failure_threshold': 3,
                         'path': '/ai/health',

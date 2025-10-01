@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Quality Control Configuration Module
+"""IA Chéries Quality Control Configuration Module
 ==============================================
 
-Enterprise-grade quality control configuration for the Ainflue platform.
+Enterprise-grade quality control configuration for the IA Chéries platform.
 Comprehensive media quality assessment, validation, automated testing,
 and quality assurance for video, audio, and image content.
 

@@ -1,4 +1,4 @@
-# ⚡ Redis Authentication Methods Configuration - Ainflue Enterprise
+# ⚡ Redis Authentication Methods Configuration - IA Chéries Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Multi-factor Authentication for Creator Economy Platform
 
@@ -94,8 +94,8 @@ data:
     
     # Certificate Policies
     acceptable_ca_issuers:
-      - "CN=Ainflue Enterprise CA,O=Ainflue,C=DE"
-      - "CN=Ainflue Internal CA,O=Ainflue,C=DE"
+      - "CN=IA Chéries Enterprise CA,O=IA Chéries,C=DE"
+      - "CN=IA Chéries Internal CA,O=IA Chéries,C=DE"
     
     # Certificate Extensions Required
     required_extensions:
@@ -116,7 +116,7 @@ data:
         pattern: "^(.+)@ainflue\\.com$"
         user_format: "${1}"
       - attribute: "CN"
-        pattern: "^Ainflue-(.+)$"
+        pattern: "^IA Chéries-(.+)$"
         user_format: "${1}"
 
   # ===================================================================================
@@ -371,7 +371,7 @@ metadata:
 data:
   setup_mfa.sh: |
     #!/bin/bash
-    # MFA Setup Script for Ainflue Redis Enterprise
+    # MFA Setup Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🔐 Setting up Multi-Factor Authentication..."
@@ -385,7 +385,7 @@ data:
     
     # Generate QR codes for setup
     echo "Generating QR codes for setup..."
-    qrencode -o /tmp/admin-mfa-qr.png "otpauth://totp/Ainflue-Redis-Admin?secret=JBSWY3DPEHPK3PXP&issuer=Ainflue"
+    qrencode -o /tmp/admin-mfa-qr.png "otpauth://totp/IA Chéries-Redis-Admin?secret=JBSWY3DPEHPK3PXP&issuer=IA Chéries"
     
     echo "✅ MFA setup completed"
 

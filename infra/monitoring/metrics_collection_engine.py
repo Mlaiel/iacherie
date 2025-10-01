@@ -491,14 +491,14 @@ class ApplicationMetricsCollector:
         """Initialize custom application metrics"""
         # API metrics
         self.api_request_counter = prometheus_client.Counter(
-            'ainflue_api_requests_total',
+            'iacherie_api_requests_total',
             'Total API requests',
             ['method', 'endpoint', 'status'],
             registry=self.registry
         )
         
         self.api_request_duration = prometheus_client.Histogram(
-            'ainflue_api_request_duration_seconds',
+            'iacherie_api_request_duration_seconds',
             'API request duration',
             ['method', 'endpoint'],
             registry=self.registry
@@ -506,14 +506,14 @@ class ApplicationMetricsCollector:
         
         # Content processing metrics
         self.content_uploads = prometheus_client.Counter(
-            'ainflue_content_uploads_total',
+            'iacherie_content_uploads_total',
             'Total content uploads',
             ['content_type', 'user_type'],
             registry=self.registry
         )
         
         self.ai_processing_duration = prometheus_client.Histogram(
-            'ainflue_ai_processing_duration_seconds',
+            'iacherie_ai_processing_duration_seconds',
             'AI processing duration',
             ['model_type', 'content_type'],
             registry=self.registry
@@ -521,14 +521,14 @@ class ApplicationMetricsCollector:
         
         # User metrics
         self.active_users = prometheus_client.Gauge(
-            'ainflue_active_users',
+            'iacherie_active_users',
             'Currently active users',
             registry=self.registry
         )
         
         # Database metrics
         self.db_connections = prometheus_client.Gauge(
-            'ainflue_database_connections',
+            'iacherie_database_connections',
             'Database connections',
             ['database'],
             registry=self.registry
@@ -536,14 +536,14 @@ class ApplicationMetricsCollector:
         
         # Cache metrics
         self.cache_hits = prometheus_client.Counter(
-            'ainflue_cache_hits_total',
+            'iacherie_cache_hits_total',
             'Cache hits',
             ['cache_type'],
             registry=self.registry
         )
         
         self.cache_misses = prometheus_client.Counter(
-            'ainflue_cache_misses_total',
+            'iacherie_cache_misses_total',
             'Cache misses',
             ['cache_type'],
             registry=self.registry

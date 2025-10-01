@@ -5,7 +5,7 @@ High-resolution image synthesis with 15 specialized image agents.
 Advanced AI image generation for enterprise content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

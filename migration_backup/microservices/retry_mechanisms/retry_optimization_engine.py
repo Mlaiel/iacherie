@@ -1,11 +1,11 @@
 """
-Retry Optimization Engine - Ainflue
+Retry Optimization Engine - IA Chéries
 ===================================
 Moteur optimization retry avec ML recommendations.
 Strategy optimization + cost reduction + performance tuning.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

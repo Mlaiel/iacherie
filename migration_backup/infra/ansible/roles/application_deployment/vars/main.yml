@@ -1,8 +1,8 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Application deployment role variables
-# Environment-specific variables for Ainflue deployment
+# Environment-specific variables for IA Chéries deployment
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -11,7 +11,7 @@
 
 ---
 # Git repository configuration
-git_repo: "https://github.com/Mlaiel/Ainflue.git"
+git_repo: "https://github.com/Mlaiel/IA Chéries.git"
 git_branch: "{{ deployment_branch | default('main') }}"
 git_commit: "{{ deployment_commit | default('HEAD') }}"
 

@@ -1,7 +1,7 @@
 """Content Orchestrator Service - Intelligent Content Management Engine
 =====================================================================
 
-Advanced content orchestration system for the Ainflue platform, managing
+Advanced content orchestration system for the iacherie platform, managing
 content lifecycle, workflow automation, processing pipelines, metadata management,
 and intelligent content optimization across all content types.
 

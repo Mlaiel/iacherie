@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔄 AI Pipeline Orchestrator Service - Enterprise Grade
-Orchestration complète des pipelines IA pour Ainflue
+Orchestration complète des pipelines IA pour IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

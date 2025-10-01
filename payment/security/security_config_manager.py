@@ -323,7 +323,7 @@ class SecretManager:
     async def _generate_secret_value(self, secret_type: SecretType) -> str:
         """Générer une nouvelle valeur de secret"""
         if secret_type == SecretType.API_KEY:
-            return f"ainflue_api_{secrets.token_hex(32)}"
+            return f"iacherie_api_{secrets.token_hex(32)}"
         elif secret_type == SecretType.JWT_SECRET:
             return secrets.token_hex(64)
         elif secret_type == SecretType.ENCRYPTION_KEY:
@@ -934,13 +934,13 @@ class SecurityConfigManager:
         
         # Mapper variables d'environnement
         env_mapping = {
-            'AINFLUE_DATABASE_URL': ['database', 'url'],
-            'AINFLUE_SECRET_KEY': ['secret_key'],
-            'AINFLUE_DEBUG': ['debug'],
-            'AINFLUE_FORCE_HTTPS': ['security', 'force_https'],
-            'AINFLUE_MFA_REQUIRED': ['authentication', 'mfa_required'],
-            'AINFLUE_SESSION_TIMEOUT': ['session', 'timeout_minutes'],
-            'AINFLUE_RATE_LIMIT': ['rate_limiting', 'requests_per_minute']
+            'IACHERIE_DATABASE_URL': ['database', 'url'],
+            'IACHERIE_SECRET_KEY': ['secret_key'],
+            'IACHERIE_DEBUG': ['debug'],
+            'IACHERIE_FORCE_HTTPS': ['security', 'force_https'],
+            'IACHERIE_MFA_REQUIRED': ['authentication', 'mfa_required'],
+            'IACHERIE_SESSION_TIMEOUT': ['session', 'timeout_minutes'],
+            'IACHERIE_RATE_LIMIT': ['rate_limiting', 'requests_per_minute']
         }
         
         for env_var, config_path in env_mapping.items():
@@ -1313,7 +1313,7 @@ if __name__ == "__main__":
         # Test stockage secret
         await manager.store_secret(
             "test_api_key",
-            "ainflue_api_12345",
+            "iacherie_api_12345",
             SecretType.API_KEY,
             ConfigEnvironment.PRODUCTION
         )

@@ -363,7 +363,7 @@ class CoreSystemLevel(str, Enum):
     QUANTUM = "quantum"
     ULTRA_ADVANCED = "ultra_advanced"
 
-class AinflueCoreFlow(str, Enum):
+class iacherieCoreFlow(str, Enum):
     """IA Chérie core business logic flow stages"""
     SYSTEM_INITIALIZATION = "system_initialization"
     CREATOR_ONBOARDING_CORE = "creator_onboarding_core"
@@ -419,7 +419,7 @@ class CoreSystemProtocol(Protocol):
         """Check health of the core system component"""
         ...
 
-class AinflueCoreEngine:
+class iacherieCoreEngine:
     """Master core engine orchestrator for IA Chérie platform"""
     
     def __init__(self, level: CoreSystemLevel = CoreSystemLevel.ENTERPRISE):
@@ -662,61 +662,61 @@ class AinflueCoreEngine:
     def _setup_core_flows(self):
         """Setup core business logic flows"""
         self.core_flows = {
-            AinflueCoreFlow.SYSTEM_INITIALIZATION: {
+            iacherieCoreFlow.SYSTEM_INITIALIZATION: {
                 "required_systems": ["logging", "database", "cache", "configuration_manager"],
                 "optional_systems": ["metrics_collector", "health_check"],
-                "next_flow": AinflueCoreFlow.CREATOR_ONBOARDING_CORE
+                "next_flow": iacherieCoreFlow.CREATOR_ONBOARDING_CORE
             },
             
-            AinflueCoreFlow.CREATOR_ONBOARDING_CORE: {
+            iacherieCoreFlow.CREATOR_ONBOARDING_CORE: {
                 "required_systems": ["auth", "creator_types", "creator_multi_format"],
                 "optional_systems": ["notification_system", "email_service"],
-                "next_flow": AinflueCoreFlow.CONTENT_PROCESSING_CORE
+                "next_flow": iacherieCoreFlow.CONTENT_PROCESSING_CORE
             },
             
-            AinflueCoreFlow.CONTENT_PROCESSING_CORE: {
+            iacherieCoreFlow.CONTENT_PROCESSING_CORE: {
                 "required_systems": ["content_ingestion", "content_format", "file_storage"],
                 "optional_systems": ["media_transcoding", "cdn_manager"],
-                "next_flow": AinflueCoreFlow.AI_INTELLIGENCE_CORE
+                "next_flow": iacherieCoreFlow.AI_INTELLIGENCE_CORE
             },
             
-            AinflueCoreFlow.AI_INTELLIGENCE_CORE: {
+            iacherieCoreFlow.AI_INTELLIGENCE_CORE: {
                 "required_systems": ["ai_model", "ia_processing", "ml_pipeline"],
                 "optional_systems": ["neural_network", "deep_learning", "recommendation_engine"],
-                "next_flow": AinflueCoreFlow.SECURITY_PROTECTION_CORE
+                "next_flow": iacherieCoreFlow.SECURITY_PROTECTION_CORE
             },
             
-            AinflueCoreFlow.SECURITY_PROTECTION_CORE: {
+            iacherieCoreFlow.SECURITY_PROTECTION_CORE: {
                 "required_systems": ["protection_business", "copyright_fingerprinting", "rights_management"],
                 "optional_systems": ["violation_detection", "threat_detection"],
-                "next_flow": AinflueCoreFlow.MONETIZATION_CORE
+                "next_flow": iacherieCoreFlow.MONETIZATION_CORE
             },
             
-            AinflueCoreFlow.MONETIZATION_CORE: {
+            iacherieCoreFlow.MONETIZATION_CORE: {
                 "required_systems": ["monetization_business", "payment_gateway", "billing_engine"],
                 "optional_systems": ["crypto_payment", "revenue_tracking"],
-                "next_flow": AinflueCoreFlow.COLLABORATION_CORE
+                "next_flow": iacherieCoreFlow.COLLABORATION_CORE
             },
             
-            AinflueCoreFlow.COLLABORATION_CORE: {
+            iacherieCoreFlow.COLLABORATION_CORE: {
                 "required_systems": ["collaboration_business", "creator_matching", "gamification_business"],
                 "optional_systems": ["achievement_engagement", "real_time_sync"],
-                "next_flow": AinflueCoreFlow.DISTRIBUTION_CORE
+                "next_flow": iacherieCoreFlow.DISTRIBUTION_CORE
             },
             
-            AinflueCoreFlow.DISTRIBUTION_CORE: {
+            iacherieCoreFlow.DISTRIBUTION_CORE: {
                 "required_systems": ["distribution_business", "multi_platform_distribution", "api_gateway"],
                 "optional_systems": ["cdn_manager", "search_optimization"],
-                "next_flow": AinflueCoreFlow.ANALYTICS_CORE
+                "next_flow": iacherieCoreFlow.ANALYTICS_CORE
             },
             
-            AinflueCoreFlow.ANALYTICS_CORE: {
+            iacherieCoreFlow.ANALYTICS_CORE: {
                 "required_systems": ["creator_analytics", "metrics_collector", "trend_analysis"],
                 "optional_systems": ["audience_insights", "predictive_analytics"],
-                "next_flow": AinflueCoreFlow.OPTIMIZATION_CORE
+                "next_flow": iacherieCoreFlow.OPTIMIZATION_CORE
             },
             
-            AinflueCoreFlow.OPTIMIZATION_CORE: {
+            iacherieCoreFlow.OPTIMIZATION_CORE: {
                 "required_systems": ["performance_monitoring", "revenue_optimization", "model_optimization"],
                 "optional_systems": ["ab_testing", "competitive_analysis"],
                 "next_flow": None  # End of flow
@@ -935,7 +935,7 @@ class AinflueCoreEngine:
         """Get specific core system by name"""
         return self.core_systems.get(system_name)
     
-    def get_core_flow_config(self, flow: AinflueCoreFlow) -> Dict[str, Any]:
+    def get_core_flow_config(self, flow: iacherieCoreFlow) -> Dict[str, Any]:
         """Get configuration for specific core flow"""
         return self.core_flows.get(flow, {})
     
@@ -969,14 +969,14 @@ class AinflueCoreEngine:
         }
 
 # Global core engine instance
-core_engine = AinflueCoreEngine(CoreSystemLevel.ENTERPRISE)
+core_engine = iacherieCoreEngine(CoreSystemLevel.ENTERPRISE)
 
 # Convenience functions
 def get_core_system(system_name: str) -> Optional[Any]:
     """Get core system by name"""
     return core_engine.get_system(system_name)
 
-def get_core_flow_config(flow: AinflueCoreFlow) -> Dict[str, Any]:
+def get_core_flow_config(flow: iacherieCoreFlow) -> Dict[str, Any]:
     """Get core flow configuration"""
     return core_engine.get_core_flow_config(flow)
 
@@ -1007,7 +1007,7 @@ async def core_engine_context():
 
 # Module exports
 __all__ = [
-    "AinflueCoreEngine", "CoreSystemLevel", "AinflueCoreFlow", "CoreSystemStatus",
+    "iacherieCoreEngine", "CoreSystemLevel", "iacherieCoreFlow", "CoreSystemStatus",
     "CoreSystemHealth", "CoreSystemProtocol", "core_engine", "get_core_system",
     "get_core_flow_config", "get_system_health", "initialize_core_engine",
     "start_core_engine", "stop_core_engine", "core_engine_context"
@@ -1072,7 +1072,7 @@ logger.info("⚠️ Protected by copyright - All Rights Reserved")
 - ✅ **Orchestration workflow complète** (Automation, State Machines, Saga Patterns, Cloud Native)
 
 ### 🚀 **CORE ENGINE ORCHESTRATOR COMPLET** ✅ **PRODUCTION-READY**
-- ✅ **AinflueCoreEngine** - Master orchestrator enterprise avec 140 modules intégrés (objectif dépassé)
+- ✅ **iacherieCoreEngine** - Master orchestrator enterprise avec 140 modules intégrés (objectif dépassé)
 - ✅ **Gestion automatique des dépendances** - Initialisation optimisée des sous-systèmes
 - ✅ **Health monitoring complet** - Surveillance en temps réel de tous les composants
 - ✅ **Business logic flows** - 10 flows métier IA Chérie orchestrés

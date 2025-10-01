@@ -494,7 +494,7 @@ class SecureKeyTransport:
         # For simulation, derive deterministic session key
         
         key_material = f"{source_endpoint.endpoint_id}:{destination_endpoint.endpoint_id}:{security_level.value}".encode()
-        salt = b"ainflue_transport_session_salt_v1"
+        salt = b"iacherie_transport_session_salt_v1"
         info = b"secure_key_transport_session"
         
         if security_level == SecurityLevel.QUANTUM_SAFE:

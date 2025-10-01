@@ -1,4 +1,4 @@
-# 🕸️ Service Mesh Module - Ainflue Infrastructure
+# 🕸️ Service Mesh Module - iacherie Infrastructure
 
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 Module Purpose
 
-Enterprise-grade service mesh infrastructure providing secure, observable, and reliable communication between microservices in the Ainflue creator economy platform. This module enables:
+Enterprise-grade service mesh infrastructure providing secure, observable, and reliable communication between microservices in the iacherie creator economy platform. This module enables:
 
 - **Service-to-service communication** with automatic mTLS encryption
 - **Traffic management** with intelligent load balancing and circuit breakers
@@ -43,7 +43,7 @@ from infrastructure.service_mesh import (
 
 # Initialize Istio service mesh
 istio = IstioIntegration(
-    cluster_name="ainflue-production",
+    cluster_name="iacherie-production",
     mtls_mode="STRICT",
     observability_enabled=True
 )

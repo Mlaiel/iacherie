@@ -252,10 +252,10 @@ Create complete storage infrastructure"""
                 'Version': '2012-10-17',
                 'Statement': [
                     {
-                        'Sid': 'IAInfluencerAccess',
+                        'Sid': 'IIA ChériesAccess',
                         'Effect': 'Allow',
                         'Principal': {
-                            'AWS': 'arn:aws:iam::*:role/IAInfluencerServiceRole'
+                            'AWS': 'arn:aws:iam::*:role/IIA ChériesServiceRole'
                         },
                         'Action': [
                             's3:GetObject',

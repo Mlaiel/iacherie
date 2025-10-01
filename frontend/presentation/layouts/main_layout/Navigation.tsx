@@ -52,7 +52,7 @@ export function Navigation({ children }: NavigationProps) {
             </div>
             <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
-                <span className="text-2xl font-bold text-primary-600">Ainflue</span>
+                <span className="text-2xl font-bold text-primary-600">iacherie</span>
               </div>
               <nav className="mt-5 space-y-1 px-2">
                 {navigation.map((item) => (
@@ -85,7 +85,7 @@ export function Navigation({ children }: NavigationProps) {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
           <div className="flex h-16 flex-shrink-0 items-center px-4 border-b border-gray-200">
-            <span className="text-2xl font-bold text-primary-600">Ainflue</span>
+            <span className="text-2xl font-bold text-primary-600">iacherie</span>
           </div>
           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
             <nav className="mt-5 flex-1 space-y-1 px-2">

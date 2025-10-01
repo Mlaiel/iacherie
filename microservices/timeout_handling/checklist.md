@@ -138,7 +138,7 @@ class DistributedTimeoutManager:
         load_factor = self._get_system_load_factor()
         return (business_weight * priority_weight) / load_factor
         
-    async def _validate_ainflue_timeout_constraints(self, timeout_config: TimeoutConfiguration) -> bool:
+    async def _validate_iacherie_timeout_constraints(self, timeout_config: TimeoutConfiguration) -> bool:
         """Validation contraintes timeout spécifiques IA Chérie business logic."""
 ```
 

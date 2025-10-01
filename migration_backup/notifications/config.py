@@ -1,6 +1,6 @@
 """
 Notifications Configuration Module
-Standalone configuration for the Ainflue notifications system
+Standalone configuration for the IA Chéries notifications system
 """
 
 import os

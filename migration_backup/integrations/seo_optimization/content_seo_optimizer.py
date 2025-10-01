@@ -1,5 +1,5 @@
 """
-Content SEO Optimizer - Ainflue SEO Optimization
+Content SEO Optimizer - IA Chéries SEO Optimization
 ==============================================
 Advanced AI-powered content optimization engine with NLP for enterprise SEO.
 Automated content structure analysis, meta generation, and schema markup.
@@ -9,7 +9,7 @@ Cette architecture est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de)
 Toute reproduction ou utilisation non autorisée est strictement interdite.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue SEO Optimization
+Project: IA Chéries SEO Optimization
 Version: 1.0 Production
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -50,7 +50,7 @@ except ImportError:
 import redis
 import asyncpg
 
-# Ainflue core imports
+# IA Chéries core imports
 from core.ai_engine.nlp_processor import NLPProcessor
 from core.content.content_analyzer import ContentAnalyzer
 from core.i18n.language_detection import LanguageDetector

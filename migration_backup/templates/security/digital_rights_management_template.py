@@ -1,4 +1,4 @@
-"""Digital Rights Management Template for Ainflue Creator Protection
+"""Digital Rights Management Template for IA Chéries Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

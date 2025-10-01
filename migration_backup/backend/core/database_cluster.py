@@ -212,7 +212,7 @@ class PineconeIndexConfig:
         }
 
 
-class AinflueDataArchitecture:
+class IA ChériesDataArchitecture:
     """
     Enterprise-grade database cluster architecture for massive scale AI platform
     
@@ -241,7 +241,7 @@ class AinflueDataArchitecture:
         self.logger = logging.getLogger(__name__)
         self._health_check_executor = ThreadPoolExecutor(max_workers=4)
         
-        self.logger.info("AinflueDataArchitecture initialized with enterprise-grade clusters")
+        self.logger.info("IA ChériesDataArchitecture initialized with enterprise-grade clusters")
     
     def _initialize_postgres_xl(self) -> PostgresXLConfig:
         """Initialize PostgresXL cluster configuration"""
@@ -467,14 +467,14 @@ class AinflueDataArchitecture:
 
 
 # Factory function for easy instantiation
-def create_ainflue_data_architecture() -> AinflueDataArchitecture:
-    """Create and return a configured AinflueDataArchitecture instance"""
-    return AinflueDataArchitecture()
+def create_ainflue_data_architecture() -> IA ChériesDataArchitecture:
+    """Create and return a configured IA ChériesDataArchitecture instance"""
+    return IA ChériesDataArchitecture()
 
 
 # Module exports
 __all__ = [
-    "AinflueDataArchitecture",
+    "IA ChériesDataArchitecture",
     "PostgresXLConfig",
     "TimescaleDBConfig", 
     "Neo4jEnterpriseConfig",

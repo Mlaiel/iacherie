@@ -1,5 +1,5 @@
 """
-📊 MONITORING CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+📊 MONITORING CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced monitoring configuration with Prometheus, Grafana, and real-time analytics
 Performance Target: < 10ms monitoring setup
@@ -217,7 +217,7 @@ class MonitoringConfig:
         # Application Performance Dashboard
         self._dashboards['application_performance'] = {
             "dashboard": {
-                "title": "Ainflue Application Performance",
+                "title": "IA Chéries Application Performance",
                 "tags": ["ainflue", "application", "performance"],
                 "timezone": "UTC",
                 "panels": [
@@ -267,7 +267,7 @@ class MonitoringConfig:
         # Creator Economy Dashboard
         self._dashboards['creator_economy'] = {
             "dashboard": {
-                "title": "Ainflue Creator Economy",
+                "title": "IA Chéries Creator Economy",
                 "tags": ["ainflue", "creators", "economy"],
                 "timezone": "UTC",
                 "panels": [
@@ -323,7 +323,7 @@ class MonitoringConfig:
         # System Health Dashboard
         self._dashboards['system_health'] = {
             "dashboard": {
-                "title": "Ainflue System Health",
+                "title": "IA Chéries System Health",
                 "tags": ["ainflue", "system", "health"],
                 "timezone": "UTC",
                 "panels": [
@@ -635,7 +635,7 @@ class MonitoringConfig:
                         "to": recipient,
                         "from": "alerts@ainflue.com",
                         "smarthost": f"{self.grafana_config.smtp_host}:{self.grafana_config.smtp_port}",
-                        "subject": "Ainflue Alert: {{ .GroupLabels.alertname }}",
+                        "subject": "IA Chéries Alert: {{ .GroupLabels.alertname }}",
                         "body": "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ .Annotations.description }}{{ end }}"
                     }
                     for recipient in self.alerting_config.email_recipients
@@ -654,7 +654,7 @@ class MonitoringConfig:
                     {
                         "api_url": self.alerting_config.slack_webhook_url,
                         "channel": "#alerts",
-                        "title": "Ainflue Alert",
+                        "title": "IA Chéries Alert",
                         "text": "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ .Annotations.description }}{{ end }}"
                     }
                 ]

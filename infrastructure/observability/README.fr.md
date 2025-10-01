@@ -1,11 +1,11 @@
-# 📊 Infrastructure d'Observabilité - Ainflue Enterprise
+# 📊 Infrastructure d'Observabilité - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure d'observabilité et monitoring de niveau enterprise fournissant visibilité temps réel, alertes, et analytics pour la plateforme créateurs Ainflue servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
+Infrastructure d'observabilité et monitoring de niveau enterprise fournissant visibilité temps réel, alertes, et analytics pour la plateforme créateurs iacherie servant 65+ plateformes médias sociaux et streaming avec 53 agents IA.
 
 ## 🏗️ Composants Architecture
 - **Monitoring Principal** : Collection et stockage métriques basé Prometheus

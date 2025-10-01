@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Tax Calculation Configuration Module
+"""IA Chéries Tax Calculation Configuration Module
 ============================================
 
-Enterprise-grade tax calculation configuration for the Ainflue platform.
+Enterprise-grade tax calculation configuration for the IA Chéries platform.
 Comprehensive tax management with multi-jurisdiction support, automated
 calculations, compliance tracking, and reporting capabilities.
 
@@ -173,7 +173,7 @@ class TaxEngineConfig:
             "enabled": True,
             "api_key": os.getenv("AVALARA_API_KEY", ""),
             "environment": "sandbox",
-            "company_code": "AINFLUE",
+            "company_code": "IA CHÉRIES",
             "timeout_seconds": 30,
             "retry_attempts": 3
         },

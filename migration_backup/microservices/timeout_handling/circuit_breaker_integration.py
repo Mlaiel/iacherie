@@ -1,11 +1,11 @@
 """
-Circuit Breaker Integration - Ainflue Enterprise
+Circuit Breaker Integration - IA Chéries Enterprise
 ==============================================
 Intégration circuit breaker avec timeout management.
 Circuit patterns + failure isolation + auto-recovery + health monitoring.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chéries Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -126,7 +126,7 @@ class CircuitBreakerIntegration:
         self.recovery_handlers: Dict[str, Callable] = {}
         self.is_initialized = False
         
-        # Ainflue business priority weights
+        # IA Chéries business priority weights
         self.priority_weights = {
             'critical': 1.0,
             'high': 0.8,
@@ -780,7 +780,7 @@ class CircuitBreakerIntegration:
         """Execute default fallback strategy"""
         service_name = integration_request.service_name
         
-        # Business-specific fallback strategies for Ainflue
+        # Business-specific fallback strategies for IA Chéries
         if 'creator' in service_name:
             return {
                 'fallback': True,

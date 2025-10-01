@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Compliance Validator - Enterprise Cryptographic Compliance Validation System
-Production-grade compliance validation for Ainflue Creator Economy Platform
+Production-grade compliance validation for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -152,7 +152,7 @@ class KeyComplianceValidator:
     """
     🔐 Key Compliance Validator - Enterprise Cryptographic Compliance System
     
-    Provides comprehensive compliance validation for Ainflue Creator Economy:
+    Provides comprehensive compliance validation for IA Chéries Creator Economy:
     - Multi-standard compliance validation (FIPS 140-2, Common Criteria, SOX, etc.)
     - Real-time compliance monitoring and alerting
     - Automated remediation recommendations

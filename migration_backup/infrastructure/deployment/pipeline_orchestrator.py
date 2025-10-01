@@ -58,7 +58,7 @@ class PipelineConfig:
 
 
 class PipelineOrchestrator:
-    """Enterprise CI/CD pipeline orchestrator for Ainflue infrastructure"""
+    """Enterprise CI/CD pipeline orchestrator for IA Chéries infrastructure"""
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)

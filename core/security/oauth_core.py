@@ -477,7 +477,7 @@ class OAuthCore:
     async def _register_default_client(self):
         """Register default OAuth client"""
         client = OAuthClient(
-            client_id="ainflue_web_app",
+            client_id="iacherie_web_app",
             client_secret=secrets.token_urlsafe(32),
             client_type=ClientType.CONFIDENTIAL,
             redirect_uris=["https://app.iacherie.com/auth/callback"],

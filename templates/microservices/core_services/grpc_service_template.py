@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-gRPC Service Template for Ainflue Microservices Platform
+gRPC Service Template for iacherie Microservices Platform
 =======================================================
 
 Enterprise-grade gRPC service template providing:

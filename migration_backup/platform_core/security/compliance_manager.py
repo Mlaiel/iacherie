@@ -959,7 +959,7 @@ async def main():
         dpia_id="",
         project_name="AI Content Analysis",
         project_description="Implementing AI-based content analysis for creators",
-        data_controller="Ainflue Platform",
+        data_controller="IA Chéries Platform",
         personal_data_types=["user_content", "behavioral_data"],
         processing_purposes=["content_analysis", "recommendation_engine"],
         legal_basis=["legitimate_interest"],

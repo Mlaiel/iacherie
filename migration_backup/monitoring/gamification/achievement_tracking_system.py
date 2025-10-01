@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Achievement Tracking System
+IA Chéries Platform - Achievement Tracking System
 =============================================
 
 Enterprise-grade achievement tracking with multi-tier progression monitoring,
@@ -111,7 +111,7 @@ class AchievementTrackingSystem:
     Enterprise achievement tracking system with dynamic generation and social amplification.
     
     This system provides comprehensive achievement tracking, real-time progression monitoring,
-    dynamic achievement generation, and cross-platform synchronization for the Ainflue platform.
+    dynamic achievement generation, and cross-platform synchronization for the IA Chéries platform.
     """
     
     def __init__(self, config: Optional[Dict] = None):
@@ -592,15 +592,15 @@ class AchievementTrackingSystem:
     async def _create_social_content(self, user_id: str, achievement: Achievement, platform: str) -> Dict[str, str]:
         """Create social media content for achievement sharing."""
         content_templates = {
-            'twitter': f"🏆 Just unlocked '{achievement.name}' on @AinfluePlatform! {achievement.badge_icon} #{achievement.category.value} #Achievement",
-            'instagram': f"New achievement unlocked! {achievement.badge_icon}\n\n{achievement.name}\n{achievement.description}\n\n#Ainflue #Achievement #{achievement.category.value}",
-            'linkedin': f"Proud to share that I've achieved '{achievement.name}' on the Ainflue platform! This milestone represents {achievement.description.lower()}. Continuing to grow and learn! 🚀",
-            'facebook': f"Achievement unlocked! {achievement.badge_icon} Just earned '{achievement.name}' - {achievement.description}. Loving the journey on Ainflue!"
+            'twitter': f"🏆 Just unlocked '{achievement.name}' on @IA ChériesPlatform! {achievement.badge_icon} #{achievement.category.value} #Achievement",
+            'instagram': f"New achievement unlocked! {achievement.badge_icon}\n\n{achievement.name}\n{achievement.description}\n\n#IA Chéries #Achievement #{achievement.category.value}",
+            'linkedin': f"Proud to share that I've achieved '{achievement.name}' on the IA Chéries platform! This milestone represents {achievement.description.lower()}. Continuing to grow and learn! 🚀",
+            'facebook': f"Achievement unlocked! {achievement.badge_icon} Just earned '{achievement.name}' - {achievement.description}. Loving the journey on IA Chéries!"
         }
         
         return {
             'text': content_templates.get(platform, content_templates['twitter']),
-            'hashtags': [f"#{achievement.category.value}", "#Achievement", "#Ainflue"],
+            'hashtags': [f"#{achievement.category.value}", "#Achievement", "#IA Chéries"],
             'media_suggestion': f"achievement_badge_{achievement.id}"
         }
     

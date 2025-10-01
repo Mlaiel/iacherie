@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Database Performance Analyzer - Enterprise Performance Monitoring
 Advanced database performance analysis for Creator Economy data layer

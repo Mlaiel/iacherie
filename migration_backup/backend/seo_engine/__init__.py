@@ -2,7 +2,7 @@
 🔍 SEO ENGINE MODULE - Architecture Consolidée Complète v4.0.0
 ========================================================
 
-Module SEO unifié pour Ainflue avec intelligence artificielle avancée,
+Module SEO unifié pour IA Chéries avec intelligence artificielle avancée,
 optimisation de contenu multi-format, analyse compétitive et business logic intégrée.
 
 ✅ CONSOLIDATION MASSIVE TERMINÉE - 6 composants principaux

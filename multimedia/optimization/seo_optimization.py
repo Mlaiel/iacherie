@@ -574,7 +574,7 @@ class SEOOptimizer:
                 'twitter:title': title[:70],  # Twitter title limit
                 'twitter:description': description[:200],  # Twitter description limit
                 'twitter:image': f"https://cdn.iacherie.com/media/{file_path.name}",
-                'twitter:site': '@AinfluePlatform'
+                'twitter:site': '@iacheriePlatform'
             })
             
             # LinkedIn

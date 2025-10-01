@@ -2,7 +2,7 @@
 Recovery Orchestrator - Enterprise Recovery Coordination and Automation
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Comprehensive recovery orchestration for Ainflue creator platform.
+Comprehensive recovery orchestration for IA Chéries creator platform.
 Coordinates automated recovery procedures, data restoration, and service resumption.
 """
 
@@ -79,7 +79,7 @@ class RecoveryCheckpoint:
 
 class RecoveryOrchestrator:
     """
-    Enterprise Recovery Orchestrator for Ainflue Infrastructure
+    Enterprise Recovery Orchestrator for IA Chéries Infrastructure
     
     Coordinates comprehensive recovery operations for the creator economy platform,
     ensuring minimal downtime and data loss while prioritizing creator experience.
@@ -91,7 +91,7 @@ class RecoveryOrchestrator:
         self.recovery_procedures: Dict[str, Any] = {}
         self.validation_checks: Dict[str, Any] = {}
         
-        # Ainflue creator platform service mapping
+        # IA Chéries creator platform service mapping
         self.service_priorities = {
             # Critical - Creator revenue impact
             'payment_processing': RecoveryPriority.CRITICAL,

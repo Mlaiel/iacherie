@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-etcd Integration Template for Ainflue Platform
+etcd Integration Template for IA Chéries Platform
 =============================================
 
 Production-ready etcd integration with:
@@ -61,7 +61,7 @@ class EtcdServiceRegistration:
 
 class EtcdClient:
     """
-    Enhanced etcd client for Ainflue Platform
+    Enhanced etcd client for IA Chéries Platform
     
     Features:
     - Service registration with TTL
@@ -390,7 +390,7 @@ class EtcdClient:
 
 class EtcdIntegrationTemplate:
     """
-    etcd Integration Template for Ainflue Platform
+    etcd Integration Template for IA Chéries Platform
     
     A comprehensive etcd integration that provides:
     - Service registration and discovery with TTL

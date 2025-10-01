@@ -1,8 +1,8 @@
 #!/bin/bash
-# Ainflue Infrastructure Module - EKS Node Userdata Script
+# IA Chéries Infrastructure Module - EKS Node Userdata Script
 # ========================================================
 # 
-# Enterprise-grade EKS node bootstrap script for Ainflue platform
+# Enterprise-grade EKS node bootstrap script for IA Chéries platform
 # Supports custom configurations and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -128,7 +128,7 @@ systemctl start node_exporter
 
 # Configure kernel parameters for high-performance workloads
 cat >> /etc/sysctl.conf << 'EOF'
-# Ainflue performance optimizations
+# IA Chéries performance optimizations
 net.core.rmem_max = 268435456
 net.core.wmem_max = 268435456
 net.ipv4.tcp_rmem = 4096 16384 268435456

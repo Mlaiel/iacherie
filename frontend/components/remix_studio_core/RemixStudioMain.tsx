@@ -262,7 +262,7 @@ const RemixStudioMain: React.FC<RemixStudioMainProps> = ({
       {/* Header Toolbar */}
       <div className="h-16 bg-gray-900 border-b border-gray-800 flex items-center justify-between px-4">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold">🎵 Ainflue Studio</h1>
+          <h1 className="text-xl font-bold">🎵 iacherie Studio</h1>
           <div className="flex space-x-2">
             <button
               onClick={handlePlayPause}

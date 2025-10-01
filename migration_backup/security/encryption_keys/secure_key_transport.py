@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Secure Key Transport - Enterprise Cryptographic Key Transport Security System
-Production-grade key transport for Ainflue Creator Economy Platform
+Production-grade key transport for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -168,7 +168,7 @@ class SecureKeyTransport:
     """
     🔐 Secure Key Transport - Enterprise Cryptographic Key Transport System
     
-    Provides comprehensive secure key transport for Ainflue Creator Economy:
+    Provides comprehensive secure key transport for IA Chéries Creator Economy:
     - Multiple secure transport protocols (TLS 1.3, mTLS, HTTPS, etc.)
     - End-to-end encryption with perfect forward secrecy
     - Certificate-based authentication and authorization
@@ -295,7 +295,7 @@ class SecureKeyTransport:
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=aiohttp.ClientTimeout(total=self.config.get("default_timeout_seconds", 30)),
-                headers={"User-Agent": "Ainflue-SecureKeyTransport/1.0"}
+                headers={"User-Agent": "IA Chéries-SecureKeyTransport/1.0"}
             )
             
             self.logger.info("Secure transport session initialized")

@@ -2,7 +2,7 @@
 =================================================
 
 Comprehensive Wise API integration for international money transfers,
-multi-currency support, and creator payouts for the Ainflue platform.
+multi-currency support, and creator payouts for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -167,7 +167,7 @@ class WiseAPIClient:
             headers={
                 "Authorization": f"Bearer {self.api_token}",
                 "Content-Type": "application/json",
-                "User-Agent": "Ainflue-Integration/1.0"
+                "User-Agent": "IA Chéries-Integration/1.0"
             },
             timeout=aiohttp.ClientTimeout(total=30)
         )
@@ -530,7 +530,7 @@ class WiseAPIClient:
 
 
 class WiseIntegration:
-    """Main Wise integration for Ainflue platform."""
+    """Main Wise integration for IA Chéries platform."""
     
     def __init__(self, api_token: str, sandbox: bool = False, webhook_secret: Optional[str] = None):
         self.api_token = api_token
@@ -593,13 +593,13 @@ class WiseIntegration:
                 # Create quote
                 quote = await client.create_quote(
                     profile_id=business_profile.id,
-                    source_currency="USD",  # Ainflue primary currency
+                    source_currency="USD",  # IA Chéries primary currency
                     target_currency=currency,
                     source_amount=amount
                 )
                 
                 # Create transfer
-                transfer_reference = reference or f"Ainflue Creator Payout - {creator_id}"
+                transfer_reference = reference or f"IA Chéries Creator Payout - {creator_id}"
                 transfer = await client.create_transfer(
                     target_account_id=recipient.id,
                     quote_id=quote.id,

@@ -24,7 +24,7 @@ class ApplicationSettings(BaseSettings):
     """Application-specific settings"""
     
     # Application Settings
-    app_name: str = "Ainflue"
+    app_name: str = "IA Chéries"
     app_version: str = "1.0.0"
     debug: bool = True
     environment: str = "development"
@@ -66,7 +66,7 @@ class ApplicationSettings(BaseSettings):
     allowed_file_types: List[str] = [".mp3", ".mp4", ".wav", ".avi", ".mov", ".jpg", ".png", ".pdf"]
     
     # Crawler Settings
-    crawler_user_agent: str = "Ainflue-Bot/1.0"
+    crawler_user_agent: str = "IA Chéries-Bot/1.0"
     crawler_delay: float = 1.0
     crawler_timeout: int = 30
     

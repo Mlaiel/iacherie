@@ -1,7 +1,7 @@
 """Rate Limiting Governor Module
 
 Advanced rate limiting and throttling with intelligent quota management
-for the Ainflue Message Queues Enterprise system.
+for the IA Chéries Message Queues Enterprise system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -144,8 +144,8 @@ class RateLimitMetrics:
     active_entities: int = 0
 
 
-class AinflueBusiness:
-    """Ainflue Business Rate Limiting Rules"""
+class IA ChériesBusiness:
+    """IA Chéries Business Rate Limiting Rules"""
     
     # Rate limiting rules by context
     RATE_LIMIT_RULES = {
@@ -708,8 +708,8 @@ class RateLimitingGovernor:
     # Helper methods
     
     async def _load_business_rules(self):
-        """Load Ainflue business rate limiting rules"""
-        for rule_name, rule_config in AinflueBusiness.RATE_LIMIT_RULES.items():
+        """Load IA Chéries business rate limiting rules"""
+        for rule_name, rule_config in IA ChériesBusiness.RATE_LIMIT_RULES.items():
             rule_config.rule_id = rule_name
             self.rate_limit_rules[rule_name] = rule_config
             
@@ -721,7 +721,7 @@ class RateLimitingGovernor:
     async def _identify_entity(self, context: Dict[str, Any]) -> str:
         """Identify the entity for rate limiting"""
         # Try different identification methods
-        for method, extractor in AinflueBusiness.ENTITY_IDENTIFICATION.items():
+        for method, extractor in IA ChériesBusiness.ENTITY_IDENTIFICATION.items():
             entity_id = extractor(context)
             if entity_id and entity_id not in ["anonymous", "unknown", "default"]:
                 return f"{method}:{entity_id}"
@@ -737,7 +737,7 @@ class RateLimitingGovernor:
                 return True
         
         # Check business exemptions
-        for exemption_type, exemption_list in AinflueBusiness.EXEMPTIONS.items():
+        for exemption_type, exemption_list in IA ChériesBusiness.EXEMPTIONS.items():
             for exempt_id in exemption_list:
                 if exempt_id in entity_id:
                     return True
@@ -749,7 +749,7 @@ class RateLimitingGovernor:
         event_type = context.get("event_type", "")
         
         # Check business priority rules
-        for event_pattern, priority in AinflueBusiness.PRIORITY_DETECTION.items():
+        for event_pattern, priority in IA ChériesBusiness.PRIORITY_DETECTION.items():
             if event_pattern in event_type:
                 return priority
         
@@ -995,5 +995,5 @@ __all__ = [
     "RateLimitAlgorithm",
     "QuotaTimeframe",
     "RateLimitAction",
-    "AinflueBusiness"
+    "IA ChériesBusiness"
 ]

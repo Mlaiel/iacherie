@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Content Analysis AI Service
+ * IA Chéries Desktop - Content Analysis AI Service
  * 
  * Advanced AI-powered content analysis for desktop application
  * 

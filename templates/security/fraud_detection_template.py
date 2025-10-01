@@ -1,4 +1,4 @@
-"""Fraud Detection Template for Ainflue Creator Protection
+"""Fraud Detection Template for iacherie Creator Protection
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================

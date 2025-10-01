@@ -147,7 +147,7 @@ class WebhookManager:
     
     def _initialize_default_handlers(self) -> None:
         """Initialize default webhook event handlers."""
-        # Business logic event handlers for Ainflue workflow
+        # Business logic event handlers for IA Chéries workflow
         
         async def handle_user_authenticated(payload: WebhookPayload):
             """Handle user authentication event."""
@@ -613,8 +613,8 @@ class WebhookManager:
         asyncio.create_task(retry_task())
     
     async def _trigger_internal_event(self, event_name: str, data: Dict[str, Any]) -> None:
-        """Trigger internal Ainflue workflow events."""
-        # This would integrate with the main Ainflue event system
+        """Trigger internal IA Chéries workflow events."""
+        # This would integrate with the main IA Chéries event system
         self.logger.info(f"Internal event triggered: {event_name}")
         # Implementation would depend on the main event system
     

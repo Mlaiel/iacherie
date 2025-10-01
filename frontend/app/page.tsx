@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Activity, Server, Cpu, Database, Shield, TrendingUp, Brain, Users, Globe, Mic, Video, Music, Palette, MessageSquare } from 'lucide-react';
+import { Activity, Server, Cpu, Database, Shield, TrendingUp, Brain, Users, Globe, Mic, Video, Music, Palette, MessageSquare, BarChart3 } from 'lucide-react';
 import { toConsistentLocaleString } from '../utils/formatters';
 
-// Hook pour vérifier le statut du backend
+// Hook to check backend status
 function useBackendStatus() {
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
 
@@ -21,7 +21,7 @@ function useBackendStatus() {
           setBackendStatus('offline');
         }
       } catch (error) {
-        console.error('Erreur connexion backend:', error);
+        console.error('Backend connection error:', error);
         setBackendStatus('offline');
       }
     };
@@ -47,7 +47,7 @@ export default function HomePage() {
     liveStreams: 156
   });
 
-  // Mettre à jour les stats en temps réel
+  // Update real-time statistics
   useEffect(() => {
     const interval = setInterval(() => {
       setRealTimeStats(prev => ({
@@ -71,9 +71,9 @@ export default function HomePage() {
 
   const getStatusText = () => {
     switch (backendStatus) {
-      case 'online': return '✅ Backend Opérationnel';
-      case 'offline': return '❌ Backend Hors Ligne';
-      default: return '🔄 Connexion...';
+      case 'online': return '✅ Backend Online';
+      case 'offline': return '❌ Backend Offline';
+      default: return '🔄 Connecting...';
     }
   };
 
@@ -86,8 +86,8 @@ export default function HomePage() {
             <div className="flex items-center space-x-4">
               <Activity className="h-10 w-10 text-blue-600" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Ainfluencer Enterprise</h1>
-                <p className="text-sm text-gray-600">Platform IA Multi-Services - 57 Modules Complets</p>
+                <h1 className="text-2xl font-bold text-gray-900">Enterprise Platform</h1>
+                <p className="text-sm text-gray-600">Multi-Service AI Platform - 57 Complete Modules</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -113,10 +113,38 @@ export default function HomePage() {
               Platform Complète
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-8">
             Platform complète avec IA avancée, collaboration intelligente, remix studio professionnel, 
             traduction 644 langues, video chat rooms et bien plus. Développé par Fahed Mlaiel.
           </p>
+          
+          {/* Boutons d'Action Principaux */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <Link href="/ai-studio" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <Brain className="h-6 w-6" />
+              Studio IA
+            </Link>
+            <Link href="/enterprise-dashboard" className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <BarChart3 className="h-6 w-6" />
+              Dashboard Enterprise
+            </Link>
+            <Link href="/collaboration" className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <Users className="h-6 w-6" />
+              Collaboration
+            </Link>
+            <Link href="/remix-studio" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <Music className="h-6 w-6" />
+              Remix Studio
+            </Link>
+            <Link href="/video-chat" className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <Video className="h-6 w-6" />
+              Video Chat
+            </Link>
+            <Link href="/test" className="bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+              <Activity className="h-6 w-6" />
+              Tests Live
+            </Link>
+          </div>
         </div>
 
         {/* Stats en temps réel */}
@@ -185,6 +213,56 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-xs text-green-600 font-medium">⚡ Performance</div>
+          </div>
+        </div>
+
+        {/* Section Actions Rapides */}
+        <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-3xl p-8 mb-12 border border-gray-200">
+          <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">🚀 Actions Rapides</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <button 
+              onClick={() => window.open('http://localhost:8000/docs', '_blank')}
+              className="bg-blue-600 text-white p-6 rounded-2xl hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-3">📚</div>
+                <div className="font-bold text-lg">API Docs</div>
+                <div className="text-sm opacity-90">Documentation</div>
+              </div>
+            </button>
+            
+            <button 
+              onClick={() => window.open('http://localhost:8000/content-creator', '_blank')}
+              className="bg-purple-600 text-white p-6 rounded-2xl hover:bg-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-3">🎨</div>
+                <div className="font-bold text-lg">Créateur</div>
+                <div className="text-sm opacity-90">Contenu IA</div>
+              </div>
+            </button>
+            
+            <button 
+              onClick={() => window.open('http://localhost:8000/health', '_blank')}
+              className="bg-green-600 text-white p-6 rounded-2xl hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-3">💚</div>
+                <div className="font-bold text-lg">Status</div>
+                <div className="text-sm opacity-90">Santé Système</div>
+              </div>
+            </button>
+            
+            <button 
+              onClick={() => alert('Chat temps réel bientôt disponible!')}
+              className="bg-orange-600 text-white p-6 rounded-2xl hover:bg-orange-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-3">💬</div>
+                <div className="font-bold text-lg">Chat Live</div>
+                <div className="text-sm opacity-90">Temps Réel</div>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -509,7 +587,7 @@ export default function HomePage() {
         {/* Footer Development Info */}
         <div className="text-center py-8 border-t border-gray-200">
           <p className="text-gray-600 text-lg">
-            🏆 <strong>Ainfluencer Enterprise Platform</strong> - Développé par <strong>Fahed Mlaiel</strong>
+            🏆 <strong>iaCherie Enterprise Platform</strong> - Développé par <strong>Fahed Mlaiel</strong>
           </p>
           <p className="text-gray-500 text-sm mt-2">
             Platform IA complète • 57/57 Modules • 644 Langues • Matching Intelligent • Studios Professionnels
@@ -522,6 +600,59 @@ export default function HomePage() {
             <span>🌍 Multi-Langue Support</span>
             <span>•</span>
             <span>⚡ Performance Optimale</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Bouton d'Action Flottant */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="relative group">
+          <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300">
+            <Activity className="h-8 w-8" />
+          </button>
+          
+          {/* Menu Flottant */}
+          <div className="absolute bottom-16 right-0 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
+            <div className="space-y-2 w-48">
+              <button 
+                onClick={() => window.open('http://localhost:8000/docs', '_blank')}
+                className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors text-left"
+              >
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  📚
+                </div>
+                <div>
+                  <div className="font-bold text-sm">API Docs</div>
+                  <div className="text-xs text-gray-600">Documentation</div>
+                </div>
+              </button>
+              
+              <button 
+                onClick={() => window.open('http://localhost:8000/content-creator', '_blank')}
+                className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-purple-50 transition-colors text-left"
+              >
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                  🎨
+                </div>
+                <div>
+                  <div className="font-bold text-sm">Créateur</div>
+                  <div className="text-xs text-gray-600">Contenu IA</div>
+                </div>
+              </button>
+              
+              <Link 
+                href="/test"
+                className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors text-left"
+              >
+                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                  🧪
+                </div>
+                <div>
+                  <div className="font-bold text-sm">Tests Live</div>
+                  <div className="text-xs text-gray-600">Interface Test</div>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

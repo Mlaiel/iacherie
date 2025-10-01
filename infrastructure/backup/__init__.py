@@ -1,12 +1,12 @@
 """
-Backup Module - Enterprise Backup and Recovery System for Ainflue
+Backup Module - Enterprise Backup and Recovery System for iacherie
 ================================================================
 
 Advanced backup infrastructure for creator content, data protection, and 
 business continuity for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -70,10 +70,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise Backup System for Ainflue Creator Platform"
+__description__ = "Enterprise Backup System for iacherie Creator Platform"
 
 # Configuration for backup infrastructure
-AINFLUE_BACKUP_CONFIG = {
+IACHERIE_BACKUP_CONFIG = {
     'backup_types': ['database', 'files', 'media', 'configuration', 'user_data'],
     'backup_frequencies': ['real_time', 'hourly', 'daily', 'weekly', 'monthly'],
     'storage_tiers': ['hot', 'warm', 'cold', 'archive'],

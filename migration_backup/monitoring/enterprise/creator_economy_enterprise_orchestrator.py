@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorTier(Enum):
-    """Creator tier levels in Ainflue ecosystem"""
+    """Creator tier levels in IA Chéries ecosystem"""
     STARTER = "starter"
     RISING = "rising"
     ESTABLISHED = "established"

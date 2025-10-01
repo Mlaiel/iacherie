@@ -26,7 +26,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise management and orchestration for IA Chérie platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_MANAGEMENT = {
+IACHERIE_MANAGEMENT = {
     'platforms': 65,
     'management_features': ['integration_orchestration', 'configuration_management', 'lifecycle_management'],
     'workflow': 'connect→auth→transform→process→distribute→monitor'

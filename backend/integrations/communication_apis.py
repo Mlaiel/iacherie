@@ -242,7 +242,7 @@ class CommunicationAPIsIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Communication Hub",
+                "User-Agent": "iacherie/1.0 Communication Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
@@ -505,7 +505,7 @@ class CommunicationAPIsIntegration:
                 }],
                 "from": {
                     "email": self.sendgrid_from_email,
-                    "name": "Ainflue Platform"
+                    "name": "iacherie Platform"
                 },
                 "content": [{
                     "type": "text/plain",
@@ -704,7 +704,7 @@ class CommunicationAPIsIntegration:
                 slack_data = {
                     "text": content,
                     "channel": recipient.address,
-                    "username": "Ainflue Bot"
+                    "username": "iacherie Bot"
                 }
                 
                 async with self.session.post(
@@ -870,24 +870,24 @@ class CommunicationAPIsIntegration:
         # Define default templates for common transactional emails
         default_templates = {
             TemplateCategory.WELCOME: {
-                "subject": "Welcome to Ainflue, {name}!",
-                "content": "Hi {name},\n\nWelcome to Ainflue! We're excited to have you on board.\n\nBest regards,\nThe Ainflue Team"
+                "subject": "Welcome to iacherie, {name}!",
+                "content": "Hi {name},\n\nWelcome to iacherie! We're excited to have you on board.\n\nBest regards,\nThe iacherie Team"
             },
             TemplateCategory.VERIFICATION: {
                 "subject": "Verify your email address",
-                "content": "Hi {name},\n\nPlease verify your email address by clicking the link below:\n{verification_link}\n\nBest regards,\nThe Ainflue Team"
+                "content": "Hi {name},\n\nPlease verify your email address by clicking the link below:\n{verification_link}\n\nBest regards,\nThe iacherie Team"
             },
             TemplateCategory.PASSWORD_RESET: {
                 "subject": "Reset your password",
-                "content": "Hi {name},\n\nYou requested a password reset. Click the link below to reset your password:\n{reset_link}\n\nBest regards,\nThe Ainflue Team"
+                "content": "Hi {name},\n\nYou requested a password reset. Click the link below to reset your password:\n{reset_link}\n\nBest regards,\nThe iacherie Team"
             },
             TemplateCategory.PAYMENT_CONFIRMATION: {
                 "subject": "Payment confirmation - {amount}",
-                "content": "Hi {name},\n\nYour payment of {amount} has been processed successfully.\n\nTransaction ID: {transaction_id}\n\nBest regards,\nThe Ainflue Team"
+                "content": "Hi {name},\n\nYour payment of {amount} has been processed successfully.\n\nTransaction ID: {transaction_id}\n\nBest regards,\nThe iacherie Team"
             },
             TemplateCategory.PAYOUT_NOTIFICATION: {
                 "subject": "Your payout is ready - {amount}",
-                "content": "Hi {name},\n\nYour payout of {amount} has been processed and should arrive within 1-3 business days.\n\nBest regards,\nThe Ainflue Team"
+                "content": "Hi {name},\n\nYour payout of {amount} has been processed and should arrive within 1-3 business days.\n\nBest regards,\nThe iacherie Team"
             }
         }
         
@@ -1059,23 +1059,23 @@ async def send_welcome_email_sequence(
     welcome_templates = [
         {
             "day": 0,
-            "subject": "Welcome to Ainflue, {name}!",
-            "content": "Hi {name},\n\nWelcome to Ainflue! We're excited to have you join our creator community.\n\nGet started by uploading your first content and connecting your social media accounts.\n\nBest regards,\nThe Ainflue Team"
+            "subject": "Welcome to iacherie, {name}!",
+            "content": "Hi {name},\n\nWelcome to iacherie! We're excited to have you join our creator community.\n\nGet started by uploading your first content and connecting your social media accounts.\n\nBest regards,\nThe iacherie Team"
         },
         {
             "day": 3,
-            "subject": "Getting started with Ainflue",
-            "content": "Hi {name},\n\nHow are you finding Ainflue so far? Here are some tips to help you get the most out of our platform:\n\n1. Connect all your social media accounts\n2. Upload high-quality content\n3. Engage with your audience\n\nNeed help? Reply to this email and we'll assist you!\n\nBest regards,\nThe Ainflue Team"
+            "subject": "Getting started with iacherie",
+            "content": "Hi {name},\n\nHow are you finding iacherie so far? Here are some tips to help you get the most out of our platform:\n\n1. Connect all your social media accounts\n2. Upload high-quality content\n3. Engage with your audience\n\nNeed help? Reply to this email and we'll assist you!\n\nBest regards,\nThe iacherie Team"
         },
         {
             "day": 7,
-            "subject": "Your first week on Ainflue",
-            "content": "Hi {name},\n\nIt's been a week since you joined Ainflue! We hope you're enjoying the platform.\n\nHere's what you can do next:\n- Explore monetization options\n- Check your analytics\n- Join our creator community\n\nKeep creating amazing content!\n\nBest regards,\nThe Ainflue Team"
+            "subject": "Your first week on iacherie",
+            "content": "Hi {name},\n\nIt's been a week since you joined iacherie! We hope you're enjoying the platform.\n\nHere's what you can do next:\n- Explore monetization options\n- Check your analytics\n- Join our creator community\n\nKeep creating amazing content!\n\nBest regards,\nThe iacherie Team"
         },
         {
             "day": 14,
-            "subject": "Maximize your earnings on Ainflue",
-            "content": "Hi {name},\n\nTwo weeks in! You're becoming a pro at this. Let's talk about maximizing your earnings:\n\n- Optimize your content for engagement\n- Use our AI tools for content creation\n- Set up automated payouts\n\nYour success is our success!\n\nBest regards,\nThe Ainflue Team"
+            "subject": "Maximize your earnings on iacherie",
+            "content": "Hi {name},\n\nTwo weeks in! You're becoming a pro at this. Let's talk about maximizing your earnings:\n\n- Optimize your content for engagement\n- Use our AI tools for content creation\n- Set up automated payouts\n\nYour success is our success!\n\nBest regards,\nThe iacherie Team"
         }
     ]
     
@@ -1129,7 +1129,7 @@ if __name__ == "__main__":
                 name="Welcome Email",
                 category=TemplateCategory.WELCOME,
                 channel=CommunicationChannel.EMAIL,
-                subject="Welcome to Ainflue, {name}!",
+                subject="Welcome to iacherie, {name}!",
                 content="Hi {name}, welcome to our platform!"
             )
             print(f"Template created: {template.name}")

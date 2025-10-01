@@ -17,20 +17,20 @@ Multi-Expert Implementation:
 - IA Prompt Engineer: AI prompt optimization and processing
 """
 
-from ainflue_sdk import (
+from iacherie_sdk import (
     # Main SDK classes
-    AinflueSdk,
-    AinflueSdkSync,
-    AinflueSdkConfig,
+    iacherieSdk,
+    iacherieSdkSync,
+    iacherieSdkConfig,
     
     # Exception classes
-    AinflueSdkException,
+    iacherieSdkException,
     AuthenticationError,
     APIError,
     ValidationError,
     
     # Response models
-    AinflueSdkResponse,
+    iacherieSdkResponse,
     ContentAnalysisResult,
     ContentProtectionResult,
     
@@ -46,8 +46,8 @@ from ainflue_sdk import (
 
 # Import additional modules when available
 try:
-    from async_client import AsyncAinflueClient
-    from sync_client import SyncAinflueClient
+    from async_client import AsynciacherieClient
+    from sync_client import SynciacherieClient
     
     from auth_manager import AuthenticationManager
     
@@ -102,24 +102,24 @@ ENTERPRISE_FEATURES = {
 }
 
 # Backwards compatibility
-AinflueSDK = AinflueSdk  # Legacy class name support
+iacherieSDK = iacherieSdk  # Legacy class name support
 
 # Public API
 __all__ = [
     # Core classes
-    'AinflueSdk',
-    'AinflueSdkSync', 
-    'AinflueSdkConfig',
-    'AinflueSDK',  # Legacy support
+    'iacherieSdk',
+    'iacherieSdkSync', 
+    'iacherieSdkConfig',
+    'iacherieSDK',  # Legacy support
     
     # Exceptions
-    'AinflueSdkException',
+    'iacherieSdkException',
     'AuthenticationError',
     'APIError', 
     'ValidationError',
     
     # Models
-    'AinflueSdkResponse',
+    'iacherieSdkResponse',
     'ContentAnalysisResult',
     'ContentProtectionResult',
     
@@ -146,8 +146,8 @@ __all__ = [
 # Add additional exports if available
 if _additional_imports_available:
     __all__.extend([
-        'AsyncAinflueClient',
-        'SyncAinflueClient', 
+        'AsynciacherieClient',
+        'SynciacherieClient', 
         'AuthenticationManager'
     ])
 

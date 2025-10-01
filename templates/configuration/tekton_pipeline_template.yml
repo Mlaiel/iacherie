@@ -1,24 +1,24 @@
-# Tekton CI/CD Pipeline Template for Ainflue Platform
+# Tekton CI/CD Pipeline Template for iacherie Platform
 # Cloud-native CI/CD using Tekton Pipelines on Kubernetes
 
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: ainflue-pipeline
+  name: iacherie-pipeline
   namespace: tekton-pipelines
   labels:
-    app: ainflue
+    app: iacherie
     type: ci-cd
 spec:
   description: |
-    Complete CI/CD pipeline for Ainflue creator economy platform
+    Complete CI/CD pipeline for iacherie creator economy platform
     including build, test, security scan, and deployment
   
   params:
     - name: git-url
       type: string
       description: Git repository URL
-      default: "https://github.com/ainflue/platform.git"
+      default: "https://github.com/iacherie/platform.git"
     
     - name: git-revision
       type: string
@@ -28,7 +28,7 @@ spec:
     - name: image-registry
       type: string
       description: Container registry URL
-      default: "registry.ainflue.com"
+      default: "registry.iacherie.com"
     
     - name: image-tag
       type: string
@@ -38,7 +38,7 @@ spec:
     - name: target-namespace
       type: string
       description: Target Kubernetes namespace
-      default: "ainflue-staging"
+      default: "iacherie-staging"
     
     - name: deploy-environment
       type: string
@@ -77,7 +77,7 @@ spec:
     # 2. Code Quality and Linting
     - name: code-quality
       taskRef:
-        name: ainflue-code-quality
+        name: iacherie-code-quality
       runAfter: ["fetch-source"]
       workspaces:
         - name: source
@@ -89,7 +89,7 @@ spec:
     # 3. Security Scanning
     - name: security-scan
       taskRef:
-        name: ainflue-security-scan
+        name: iacherie-security-scan
       runAfter: ["fetch-source"]
       workspaces:
         - name: source
@@ -98,7 +98,7 @@ spec:
     # 4. Unit Tests - API Service
     - name: test-api
       taskRef:
-        name: ainflue-node-test
+        name: iacherie-node-test
       runAfter: ["code-quality"]
       workspaces:
         - name: source
@@ -112,7 +112,7 @@ spec:
     # 5. Unit Tests - Web Service
     - name: test-web
       taskRef:
-        name: ainflue-node-test
+        name: iacherie-node-test
       runAfter: ["code-quality"]
       workspaces:
         - name: source
@@ -126,7 +126,7 @@ spec:
     # 6. Unit Tests - ML Service
     - name: test-ml
       taskRef:
-        name: ainflue-python-test
+        name: iacherie-python-test
       runAfter: ["code-quality"]
       workspaces:
         - name: source
@@ -150,7 +150,7 @@ spec:
           workspace: registry-credentials
       params:
         - name: IMAGE
-          value: "$(params.image-registry)/ainflue-api:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-api:$(params.image-tag)"
         - name: DOCKERFILE
           value: "./services/api/Dockerfile"
         - name: CONTEXT
@@ -169,7 +169,7 @@ spec:
           workspace: registry-credentials
       params:
         - name: IMAGE
-          value: "$(params.image-registry)/ainflue-web:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-web:$(params.image-tag)"
         - name: DOCKERFILE
           value: "./services/web/Dockerfile"
         - name: CONTEXT
@@ -188,7 +188,7 @@ spec:
           workspace: registry-credentials
       params:
         - name: IMAGE
-          value: "$(params.image-registry)/ainflue-ml:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-ml:$(params.image-tag)"
         - name: DOCKERFILE
           value: "./services/ml/Dockerfile"
         - name: CONTEXT
@@ -197,23 +197,23 @@ spec:
     # 10. Integration Tests
     - name: integration-tests
       taskRef:
-        name: ainflue-integration-test
+        name: iacherie-integration-test
       runAfter: ["build-api-image", "build-web-image", "build-ml-image"]
       workspaces:
         - name: source
           workspace: shared-data
       params:
         - name: api-image
-          value: "$(params.image-registry)/ainflue-api:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-api:$(params.image-tag)"
         - name: web-image
-          value: "$(params.image-registry)/ainflue-web:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-web:$(params.image-tag)"
         - name: ml-image
-          value: "$(params.image-registry)/ainflue-ml:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-ml:$(params.image-tag)"
 
     # 11. Container Security Scan
     - name: container-security-scan
       taskRef:
-        name: ainflue-container-scan
+        name: iacherie-container-scan
       runAfter: ["build-api-image", "build-web-image", "build-ml-image"]
       workspaces:
         - name: source
@@ -221,14 +221,14 @@ spec:
       params:
         - name: images
           value: |
-            $(params.image-registry)/ainflue-api:$(params.image-tag)
-            $(params.image-registry)/ainflue-web:$(params.image-tag)
-            $(params.image-registry)/ainflue-ml:$(params.image-tag)
+            $(params.image-registry)/iacherie-api:$(params.image-tag)
+            $(params.image-registry)/iacherie-web:$(params.image-tag)
+            $(params.image-registry)/iacherie-ml:$(params.image-tag)
 
     # 12. Deploy to Environment
     - name: deploy-application
       taskRef:
-        name: ainflue-deploy
+        name: iacherie-deploy
       runAfter: ["integration-tests", "container-security-scan"]
       workspaces:
         - name: source
@@ -239,16 +239,16 @@ spec:
         - name: environment
           value: $(params.deploy-environment)
         - name: api-image
-          value: "$(params.image-registry)/ainflue-api:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-api:$(params.image-tag)"
         - name: web-image
-          value: "$(params.image-registry)/ainflue-web:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-web:$(params.image-tag)"
         - name: ml-image
-          value: "$(params.image-registry)/ainflue-ml:$(params.image-tag)"
+          value: "$(params.image-registry)/iacherie-ml:$(params.image-tag)"
 
     # 13. Post-deployment Tests
     - name: smoke-tests
       taskRef:
-        name: ainflue-smoke-test
+        name: iacherie-smoke-test
       runAfter: ["deploy-application"]
       workspaces:
         - name: source
@@ -263,7 +263,7 @@ spec:
     # Cleanup and notifications
     - name: cleanup
       taskRef:
-        name: ainflue-cleanup
+        name: iacherie-cleanup
       workspaces:
         - name: source
           workspace: shared-data
@@ -287,10 +287,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-code-quality
+  name: iacherie-code-quality
   namespace: tekton-pipelines
 spec:
-  description: "Run code quality checks for Ainflue platform"
+  description: "Run code quality checks for iacherie platform"
   params:
     - name: image
       description: Node.js image to use
@@ -339,10 +339,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-security-scan
+  name: iacherie-security-scan
   namespace: tekton-pipelines
 spec:
-  description: "Security scanning for Ainflue platform"
+  description: "Security scanning for iacherie platform"
   workspaces:
     - name: source
       description: Source code workspace
@@ -370,10 +370,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-node-test
+  name: iacherie-node-test
   namespace: tekton-pipelines
 spec:
-  description: "Run Node.js tests for Ainflue services"
+  description: "Run Node.js tests for iacherie services"
   params:
     - name: service-path
       description: Path to the service directory
@@ -416,10 +416,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-python-test
+  name: iacherie-python-test
   namespace: tekton-pipelines
 spec:
-  description: "Run Python tests for Ainflue ML service"
+  description: "Run Python tests for iacherie ML service"
   params:
     - name: service-path
       description: Path to the service directory
@@ -466,10 +466,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-integration-test
+  name: iacherie-integration-test
   namespace: tekton-pipelines
 spec:
-  description: "Run integration tests for Ainflue platform"
+  description: "Run integration tests for iacherie platform"
   params:
     - name: api-image
       description: API service image
@@ -485,7 +485,7 @@ spec:
       image: postgres:13
       env:
         - name: POSTGRES_DB
-          value: "ainflue_test"
+          value: "iacherie_test"
         - name: POSTGRES_USER
           value: "test_user"
         - name: POSTGRES_PASSWORD
@@ -505,7 +505,7 @@ spec:
       workingDir: $(workspaces.source.path)
       env:
         - name: DATABASE_URL
-          value: "postgresql://test_user:test_password@localhost:5432/ainflue_test"
+          value: "postgresql://test_user:test_password@localhost:5432/iacherie_test"
         - name: REDIS_URL
           value: "redis://localhost:6379"
       script: |
@@ -520,7 +520,7 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-container-scan
+  name: iacherie-container-scan
   namespace: tekton-pipelines
 spec:
   description: "Scan container images for vulnerabilities"
@@ -548,10 +548,10 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-deploy
+  name: iacherie-deploy
   namespace: tekton-pipelines
 spec:
-  description: "Deploy Ainflue application to Kubernetes"
+  description: "Deploy iacherie application to Kubernetes"
   params:
     - name: namespace
       description: Target namespace
@@ -574,17 +574,17 @@ spec:
         set -e
         
         # Update image tags in deployment manifests
-        sed -i "s|image: .*ainflue-api.*|image: $(params.api-image)|g" kubernetes/api-deployment.yaml
-        sed -i "s|image: .*ainflue-web.*|image: $(params.web-image)|g" kubernetes/web-deployment.yaml
-        sed -i "s|image: .*ainflue-ml.*|image: $(params.ml-image)|g" kubernetes/ml-deployment.yaml
+        sed -i "s|image: .*iacherie-api.*|image: $(params.api-image)|g" kubernetes/api-deployment.yaml
+        sed -i "s|image: .*iacherie-web.*|image: $(params.web-image)|g" kubernetes/web-deployment.yaml
+        sed -i "s|image: .*iacherie-ml.*|image: $(params.ml-image)|g" kubernetes/ml-deployment.yaml
         
         # Apply deployments
         kubectl apply -f kubernetes/ -n $(params.namespace)
         
         # Wait for rollout to complete
-        kubectl rollout status deployment/ainflue-api -n $(params.namespace) --timeout=300s
-        kubectl rollout status deployment/ainflue-web -n $(params.namespace) --timeout=300s
-        kubectl rollout status deployment/ainflue-ml -n $(params.namespace) --timeout=300s
+        kubectl rollout status deployment/iacherie-api -n $(params.namespace) --timeout=300s
+        kubectl rollout status deployment/iacherie-web -n $(params.namespace) --timeout=300s
+        kubectl rollout status deployment/iacherie-ml -n $(params.namespace) --timeout=300s
         
         echo "✅ Deployment completed to $(params.environment)"
 
@@ -593,7 +593,7 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-smoke-test
+  name: iacherie-smoke-test
   namespace: tekton-pipelines
 spec:
   description: "Run smoke tests after deployment"
@@ -622,11 +622,11 @@ spec:
         
         # Set environment-specific URLs
         if [ "$(params.environment)" = "staging" ]; then
-          export API_BASE_URL="https://api.staging.ainflue.com"
-          export WEB_BASE_URL="https://staging.ainflue.com"
+          export API_BASE_URL="https://api.staging.iacherie.com"
+          export WEB_BASE_URL="https://staging.iacherie.com"
         elif [ "$(params.environment)" = "production" ]; then
-          export API_BASE_URL="https://api.ainflue.com"
-          export WEB_BASE_URL="https://app.ainflue.com"
+          export API_BASE_URL="https://api.iacherie.com"
+          export WEB_BASE_URL="https://app.iacherie.com"
         fi
         
         npm ci
@@ -638,7 +638,7 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: ainflue-cleanup
+  name: iacherie-cleanup
   namespace: tekton-pipelines
 spec:
   description: "Cleanup resources after pipeline execution"
@@ -662,22 +662,22 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: ainflue-pipeline-run-$(uid)
+  name: iacherie-pipeline-run-$(uid)
   namespace: tekton-pipelines
 spec:
   pipelineRef:
-    name: ainflue-pipeline
+    name: iacherie-pipeline
   params:
     - name: git-url
-      value: "https://github.com/ainflue/platform.git"
+      value: "https://github.com/iacherie/platform.git"
     - name: git-revision
       value: "main"
     - name: image-registry
-      value: "registry.ainflue.com"
+      value: "registry.iacherie.com"
     - name: image-tag
       value: "$(context.pipelineRun.uid)"
     - name: target-namespace
-      value: "ainflue-staging"
+      value: "iacherie-staging"
     - name: deploy-environment
       value: "staging"
   workspaces:

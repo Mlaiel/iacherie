@@ -1,11 +1,11 @@
 """
-SEO Optimization - Ainflue Integrations
+SEO Optimization - IA Chéries Integrations
 =======================================
 Point d'entrée principal pour optimisation SEO enterprise.
 Support 644 langues et optimization multi-plateformes.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chéries Integrations  
 Version: 1.0 Production
 """
 
@@ -19,7 +19,7 @@ from .platform_seo_specialist import PlatformSEOSpecialist
 # from .ai_seo_assistant import AISEOAssistant
 # from .automated_seo_pipeline import AutomatedSEOPipeline
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chéries
 SEO_OPTIMIZATION_CONFIG = {
     'languages_supported': 644,
     'platforms_optimized': 65,

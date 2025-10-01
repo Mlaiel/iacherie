@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 
 🎯 INDEX PERFORMANCE OPTIMIZER
 Intelligent database index optimization for maximum query performance
-with automated analysis, tuning, and maintenance for Ainflue event store.
+with automated analysis, tuning, and maintenance for IA Chéries event store.
 
 Key Features:
 - Automated index analysis and optimization
@@ -131,7 +131,7 @@ class OptimizationResult:
 
 class IndexPerformanceOptimizer:
     """
-    Intelligent index performance optimizer for Ainflue event store
+    Intelligent index performance optimizer for IA Chéries event store
     
     Features:
     - Automated index analysis and recommendations
@@ -162,11 +162,11 @@ class IndexPerformanceOptimizer:
             'optimization_timeout_minutes': 60
         }
         
-        # Initialize Ainflue business index patterns
+        # Initialize IA Chéries business index patterns
         self._initialize_business_patterns()
     
     def _initialize_business_patterns(self):
-        """Initialize Ainflue-specific index optimization patterns"""
+        """Initialize IA Chéries-specific index optimization patterns"""
         
         # Content events optimization patterns
         self._business_patterns = {
@@ -686,7 +686,7 @@ class IndexPerformanceOptimizer:
                     )
                     recommendations.append(rec)
         
-        # Analyze business patterns for Ainflue-specific optimizations
+        # Analyze business patterns for IA Chéries-specific optimizations
         business_recommendations = await self._generate_business_pattern_recommendations()
         recommendations.extend(business_recommendations)
         
@@ -747,7 +747,7 @@ class IndexPerformanceOptimizer:
         return None
     
     async def _generate_business_pattern_recommendations(self) -> List[OptimizationRecommendation]:
-        """Generate recommendations based on Ainflue business patterns"""
+        """Generate recommendations based on IA Chéries business patterns"""
         
         recommendations = []
         

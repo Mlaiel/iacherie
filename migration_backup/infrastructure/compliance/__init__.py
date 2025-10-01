@@ -1,12 +1,12 @@
 """
-Compliance Module - Enterprise Regulatory Compliance for Ainflue
+Compliance Module - Enterprise Regulatory Compliance for IA Chéries
 ===============================================================
 
 Advanced compliance infrastructure for GDPR, CCPA, DMCA, and other regulatory
 requirements for the creator economy platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -71,10 +71,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise Compliance Infrastructure for Ainflue Creator Platform"
+__description__ = "Enterprise Compliance Infrastructure for IA Chéries Creator Platform"
 
 # Configuration for compliance regulations
-AINFLUE_COMPLIANCE_CONFIG = {
+IA CHÉRIES_COMPLIANCE_CONFIG = {
     'supported_regulations': [
         'gdpr',      # General Data Protection Regulation (EU)
         'ccpa',      # California Consumer Privacy Act (US)

@@ -28,7 +28,7 @@ class TestResult:
 class EnterpriseAPITester:
     """
     🧪 Enterprise API Testing Suite
-    Tests automatisés pour l'architecture Ainfluencer
+    Tests automatisés pour l'architecture IA Chéries
     """
     
     def __init__(self, base_url: str = "http://localhost:3000"):

@@ -267,7 +267,7 @@ class WorkflowOrchestrator:
             self._handle_workflow_pause
         )
     
-    async def ainflue_pipeline_automation(
+    async def iacherie_pipeline_automation(
         self,
         creator_content: CreatorContent,
         workflow_config: WorkflowConfiguration
@@ -552,7 +552,7 @@ class WorkflowOrchestrator:
                     stages_enabled=list(WorkflowStage),
                     parallel_processing=True
                 )
-                task = self.ainflue_pipeline_automation(content, config)
+                task = self.iacherie_pipeline_automation(content, config)
                 tasks.append(task)
             
             results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -569,7 +569,7 @@ class WorkflowOrchestrator:
                     stages_enabled=list(WorkflowStage),
                     parallel_processing=False
                 )
-                result = await self.ainflue_pipeline_automation(content, config)
+                result = await self.iacherie_pipeline_automation(content, config)
                 results.append(result)
             
             return results
@@ -590,7 +590,7 @@ class WorkflowOrchestrator:
             security_level=protection_level
         )
         
-        execution = await self.ainflue_pipeline_automation(content, protection_config)
+        execution = await self.iacherie_pipeline_automation(content, protection_config)
         
         return {
             "execution_id": execution.execution_id,
@@ -616,7 +616,7 @@ class WorkflowOrchestrator:
             parallel_processing=True
         )
         
-        execution = await self.ainflue_pipeline_automation(primary_content, collaboration_config)
+        execution = await self.iacherie_pipeline_automation(primary_content, collaboration_config)
         
         return {
             "execution_id": execution.execution_id,
@@ -647,7 +647,7 @@ class WorkflowOrchestrator:
             ]
         )
         
-        execution = await self.ainflue_pipeline_automation(content, distribution_config)
+        execution = await self.iacherie_pipeline_automation(content, distribution_config)
         
         return {
             "execution_id": execution.execution_id,

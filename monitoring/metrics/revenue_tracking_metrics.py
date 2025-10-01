@@ -68,7 +68,7 @@ class RevenueTracker:
 Initialize revenue tracker"""
         
         # Use unique metric names to avoid registry conflicts
-        metric_prefix = f"ainflue_revenue_{int(time.time())}"
+        metric_prefix = f"iacherie_revenue_{int(time.time())}"
         
         # Prometheus metrics with unique names
         self.revenue_total = Counter(
@@ -78,26 +78,26 @@ Initialize revenue tracker"""
         )
         
         self.revenue_per_user = Gauge(
-            'ainflue_revenue_per_user_euros',
+            'iacherie_revenue_per_user_euros',
             'Revenue per user in euros',
             ['user_id', 'source']
         )
         
         self.revenue_hourly = Histogram(
-            'ainflue_revenue_hourly_euros',
+            'iacherie_revenue_hourly_euros',
             'Hourly revenue distribution',
             ['source'],
             buckets=[0, 10, 50, 100, 500, 1000, 5000, 10000, float('inf')]
         )
         
         self.revenue_trends = Gauge(
-            'ainflue_revenue_trend_percentage',
+            'iacherie_revenue_trend_percentage',
             'Revenue trend percentage change',
             ['source', 'period']
         )
         
         self.customer_lifetime_value = Gauge(
-            'ainflue_customer_lifetime_value_euros',
+            'iacherie_customer_lifetime_value_euros',
             'Customer lifetime value in euros',
             ['user_id', 'cohort']
         )

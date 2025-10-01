@@ -1,12 +1,12 @@
 # =====================================================================================
-# Envoy Proxy Template - Ainflue Configuration Module
+# Envoy Proxy Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
 # Utilisation commerciale INTERDITE sans autorisation écrite
 # =====================================================================================
 
-# Envoy Proxy Configuration for Ainflue Creator Economy Platform
+# Envoy Proxy Configuration for iacherie Creator Economy Platform
 # Service Mesh Implementation with Advanced Features
 
 admin:
@@ -38,7 +38,7 @@ static_resources:
           "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
           
           # Service identification
-          server_name: ainflue-creator-platform
+          server_name: iacherie-creator-platform
           scheme_header_transformation:
             scheme_to_overwrite: https
           
@@ -141,12 +141,12 @@ static_resources:
                   envoy.filters.http.jwt_authn:
                     "@type": type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication
                     providers:
-                      ainflue_jwt:
-                        issuer: "https://auth.ainflue.com"
-                        audiences: ["ainflue-api"]
+                      iacherie_jwt:
+                        issuer: "https://auth.iacherie.com"
+                        audiences: ["iacherie-api"]
                         remote_jwks:
                           http_uri:
-                            uri: "https://auth.ainflue.com/.well-known/jwks.json"
+                            uri: "https://auth.iacherie.com/.well-known/jwks.json"
                             cluster: auth_service_cluster
                             timeout: 5s
                           cache_duration: 300s
@@ -154,7 +154,7 @@ static_resources:
                     - match:
                         prefix: "/api/"
                       requires:
-                        provider_name: "ainflue_jwt"
+                        provider_name: "iacherie_jwt"
               
               # Content upload routes (with size limits)
               - match:
@@ -246,12 +246,12 @@ static_resources:
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication
               providers:
-                ainflue_jwt:
-                  issuer: "https://auth.ainflue.com"
-                  audiences: ["ainflue-api"]
+                iacherie_jwt:
+                  issuer: "https://auth.iacherie.com"
+                  audiences: ["iacherie-api"]
                   remote_jwks:
                     http_uri:
-                      uri: "https://auth.ainflue.com/.well-known/jwks.json"
+                      uri: "https://auth.iacherie.com/.well-known/jwks.json"
                       cluster: auth_service_cluster
                       timeout: 5s
                     cache_duration: 300s
@@ -261,7 +261,7 @@ static_resources:
               - match:
                   prefix: "/api/"
                 requires:
-                  provider_name: "ainflue_jwt"
+                  provider_name: "iacherie_jwt"
           
           # Rate limiting filter
           - name: envoy.filters.http.rate_limit
@@ -698,7 +698,7 @@ layered_runtime:
         global_downstream_max_connections: 50000
       
       # Creator economy specific runtime flags
-      ainflue:
+      iacherie:
         content_upload:
           max_file_size: 104857600  # 100MB
           allowed_types: "video/*,audio/*,image/*,application/pdf"

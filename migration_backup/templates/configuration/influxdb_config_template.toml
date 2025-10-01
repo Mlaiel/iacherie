@@ -1,4 +1,4 @@
-# InfluxDB Configuration Template for Ainflue Platform
+# InfluxDB Configuration Template for IA Chéries Platform
 # Time-series database for metrics, analytics, and real-time monitoring
 
 [meta]
@@ -226,7 +226,7 @@
   run-interval = "1s"
 
 ---
-# InfluxDB Database Schema for Ainflue Platform
+# InfluxDB Database Schema for IA Chéries Platform
 
 # Create database and retention policies
 CREATE DATABASE ainflue
@@ -379,7 +379,7 @@ BEGIN
 END
 
 ---
-# InfluxDB Queries for Ainflue Analytics
+# InfluxDB Queries for IA Chéries Analytics
 
 # Top performing creators by engagement rate (last 24 hours)
 SELECT creator_id, platform, mean(engagement_rate) as avg_engagement

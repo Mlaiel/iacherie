@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE WORKFLOW ORCHESTRATOR - AINFLUE PLATFORM
+🔥 ENTERPRISE WORKFLOW ORCHESTRATOR - IA CHÉRIES PLATFORM
 Ultra-advanced workflow orchestration with event-driven architecture
 Consolidates: orchestration.py + engine.py + pipeline.py
 """

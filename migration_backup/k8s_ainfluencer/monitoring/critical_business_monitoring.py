@@ -1,7 +1,7 @@
 """Critical Business Operations Monitoring Configuration
 ===================================================
 
-Enhanced monitoring and alerting configuration for Ainflue platform's critical business operations.
+Enhanced monitoring and alerting configuration for IA Chéries platform's critical business operations.
 Includes performance SLAs, business metrics monitoring, and comprehensive alerting strategies.
 
 Author: Performance Optimization Team
@@ -405,7 +405,7 @@ Define SLA targets for critical business operations"""
                 "type": "slack",
                 "webhook_url": "${SLACK_CRITICAL_WEBHOOK}",
                 "channel": "#critical-alerts",
-                "username": "Ainflue Critical Alert Bot",
+                "username": "IA Chéries Critical Alert Bot",
                 "severity_filter": [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY],
                 "template": {
                     "title": "🚨 CRITICAL: {{ .GroupLabels.alertname }}",
@@ -417,7 +417,7 @@ Define SLA targets for critical business operations"""
                 "type": "slack",
                 "webhook_url": "${SLACK_WARNINGS_WEBHOOK}",
                 "channel": "#warnings",
-                "username": "Ainflue Warning Bot",
+                "username": "IA Chéries Warning Bot",
                 "severity_filter": [AlertSeverity.WARNING],
                 "template": {
                     "title": "⚠️ WARNING: {{ .GroupLabels.alertname }}",
@@ -435,7 +435,7 @@ Define SLA targets for critical business operations"""
                 "to": ["ops@ainflue.com", "cto@ainflue.com"],
                 "severity_filter": [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY],
                 "template": {
-                    "subject": "[AINFLUE CRITICAL] {{ .GroupLabels.alertname }}",
+                    "subject": "[IA CHÉRIES CRITICAL] {{ .GroupLabels.alertname }}",
                     "body": "Critical alert detected:\\n\\n{{ range .Alerts }}{{ .Annotations.description }}\\n{{ end }}"
                 }
             },
@@ -461,7 +461,7 @@ Define SLA targets for critical business operations"""
         """Define Grafana dashboard configurations"""
         return {
             "critical_business_operations": {
-                "title": "Critical Business Operations - Ainflue Platform",
+                "title": "Critical Business Operations - IA Chéries Platform",
                 "tags": ["business", "critical", "sla"],
                 "refresh": "30s",
                 "time_range": "1h",
@@ -752,7 +752,7 @@ Define SLA targets for critical business operations"""
                         {
                             "api_url": "${SLACK_DEFAULT_WEBHOOK}",
                             "channel": "#general-alerts",
-                            "title": "Ainflue Alert",
+                            "title": "IA Chéries Alert",
                             "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
                         }
                     ]

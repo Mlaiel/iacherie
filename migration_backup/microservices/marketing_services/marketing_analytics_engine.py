@@ -1,12 +1,12 @@
 """
-Marketing Analytics Engine - Ainflue Enterprise
+Marketing Analytics Engine - IA Chéries Enterprise
 ==============================================
 Moteur analytics marketing enterprise temps réel.
 Attribution modeling + cohort analysis + LTV prediction + churn analysis.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services - Analytics Engine
+Project: IA Chéries Marketing Services - Analytics Engine
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

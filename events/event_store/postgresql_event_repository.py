@@ -95,7 +95,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                 command_timeout=self.config.get('command_timeout', 30),
                 server_settings={
                     'jit': 'off',  # Disable JIT for consistent performance
-                    'application_name': 'ainflue_event_store'
+                    'application_name': 'iacherie_event_store'
                 }
             )
             
@@ -123,7 +123,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             
             # Main events table with partitioning
             await conn.execute("""
-                CREATE TABLE IF NOT EXISTS ainflue_events (
+                CREATE TABLE IF NOT EXISTS iacherie_events (
                     event_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                     aggregate_id UUID,
                     aggregate_type VARCHAR(100),
@@ -179,7 +179,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             await conn.execute("""
                 CREATE TABLE IF NOT EXISTS event_metadata_tracking (
                     tracking_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                    event_id UUID NOT NULL REFERENCES ainflue_events(event_id),
+                    event_id UUID NOT NULL REFERENCES iacherie_events(event_id),
                     metadata_type VARCHAR(50) NOT NULL,
                     metadata_value JSONB NOT NULL,
                     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -203,67 +203,67 @@ class PostgreSQLEventRepository(IEventStoreBackend):
         # Content lifecycle events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_content_lifecycle_events 
-            ON ainflue_events (creator_id, content_id, content_type, occurred_at DESC)
+            ON iacherie_events (creator_id, content_id, content_type, occurred_at DESC)
             WHERE event_type IN ('content.uploaded', 'content.processed', 'content.published', 'content.distributed')
         """)
         
         # User interaction events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_user_interaction_events
-            ON ainflue_events (user_id, content_id, event_type, occurred_at DESC)
+            ON iacherie_events (user_id, content_id, event_type, occurred_at DESC)
             WHERE event_type IN ('content.viewed', 'content.liked', 'content.shared', 'content.commented')
         """)
         
         # Collaboration events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_collaboration_events
-            ON ainflue_events (collaboration_id, creator_id, event_type, occurred_at DESC)
+            ON iacherie_events (collaboration_id, creator_id, event_type, occurred_at DESC)
             WHERE event_type LIKE '%collaboration%'
         """)
         
         # Revenue and monetization events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_revenue_events
-            ON ainflue_events (creator_id, revenue_amount, currency, occurred_at DESC)
+            ON iacherie_events (creator_id, revenue_amount, currency, occurred_at DESC)
             WHERE event_type IN ('revenue.generated', 'payment.processed', 'payout.completed')
         """)
         
         # AI processing events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_ai_processing_events
-            ON ainflue_events (content_id, event_type, processing_started_at, processing_completed_at)
+            ON iacherie_events (content_id, event_type, processing_started_at, processing_completed_at)
             WHERE event_type LIKE '%ai.%' OR event_type LIKE '%processing%'
         """)
         
         # High-priority events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_high_priority_events
-            ON ainflue_events (priority, occurred_at DESC, event_type)
+            ON iacherie_events (priority, occurred_at DESC, event_type)
             WHERE priority IN ('CRITICAL', 'HIGH')
         """)
         
         # Full-text search on event data
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_event_data_fulltext
-            ON ainflue_events USING GIN (event_data jsonb_path_ops)
+            ON iacherie_events USING GIN (event_data jsonb_path_ops)
         """)
         
         # Business context search
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_business_context_search
-            ON ainflue_events USING GIN (business_context jsonb_path_ops)
+            ON iacherie_events USING GIN (business_context jsonb_path_ops)
         """)
         
         # Aggregate events index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_aggregate_events
-            ON ainflue_events (aggregate_id, aggregate_type, event_version, occurred_at)
+            ON iacherie_events (aggregate_id, aggregate_type, event_version, occurred_at)
         """)
         
         # Event correlation index
         await conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_event_correlation
-            ON ainflue_events (correlation_id, causation_id)
+            ON iacherie_events (correlation_id, causation_id)
             WHERE correlation_id IS NOT NULL OR causation_id IS NOT NULL
         """)
     
@@ -275,11 +275,11 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             current_month = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
             next_month = (current_month + timedelta(days=32)).replace(day=1)
             
-            partition_name = f"ainflue_events_{current_month.strftime('%Y_%m')}"
+            partition_name = f"iacherie_events_{current_month.strftime('%Y_%m')}"
             
             try:
                 await conn.execute(f"""
-                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF ainflue_events
+                    CREATE TABLE IF NOT EXISTS {partition_name} PARTITION OF iacherie_events
                     FOR VALUES FROM ('{current_month.isoformat()}') TO ('{next_month.isoformat()}')
                 """)
                 logger.info(f"Created partition {partition_name}")
@@ -289,11 +289,11 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             
             # Create next month partition
             next_next_month = (next_month + timedelta(days=32)).replace(day=1)
-            next_partition_name = f"ainflue_events_{next_month.strftime('%Y_%m')}"
+            next_partition_name = f"iacherie_events_{next_month.strftime('%Y_%m')}"
             
             try:
                 await conn.execute(f"""
-                    CREATE TABLE IF NOT EXISTS {next_partition_name} PARTITION OF ainflue_events
+                    CREATE TABLE IF NOT EXISTS {next_partition_name} PARTITION OF iacherie_events
                     FOR VALUES FROM ('{next_month.isoformat()}') TO ('{next_next_month.isoformat()}')
                 """)
                 logger.info(f"Created partition {next_partition_name}")
@@ -330,7 +330,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                 
                 # Insert event
                 await conn.execute("""
-                    INSERT INTO ainflue_events (
+                    INSERT INTO iacherie_events (
                         event_id, aggregate_id, aggregate_type, event_type, event_data,
                         event_version, occurred_at, source, correlation_id, causation_id,
                         priority, status, metadata, creator_id, content_id, content_type,
@@ -456,7 +456,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
     
     def _get_partition_name(self, timestamp: datetime) -> str:
         """Get partition name for timestamp"""
-        return f"ainflue_events_{timestamp.strftime('%Y_%m')}"
+        return f"iacherie_events_{timestamp.strftime('%Y_%m')}"
     
     async def store_events_batch(self, events: List[BaseEvent]) -> List[StoreResult]:
         """Store multiple events in an optimized batch operation"""
@@ -500,7 +500,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                 
                 # Execute batch insert
                 await conn.executemany("""
-                    INSERT INTO ainflue_events (
+                    INSERT INTO iacherie_events (
                         event_id, aggregate_id, aggregate_type, event_type, event_data,
                         event_version, occurred_at, source, correlation_id, causation_id,
                         priority, status, metadata, creator_id, content_id, content_type,
@@ -576,7 +576,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                    causation_id, priority, status, metadata, creator_id, content_id,
                    content_type, user_id, collaboration_id, revenue_amount, currency,
                    business_context, processing_started_at, processing_completed_at
-            FROM ainflue_events
+            FROM iacherie_events
         """
         
         conditions = []
@@ -740,32 +740,32 @@ class PostgreSQLEventRepository(IEventStoreBackend):
         try:
             async with self.pool.acquire() as conn:
                 # Analyze table statistics
-                await conn.execute("ANALYZE ainflue_events")
+                await conn.execute("ANALYZE iacherie_events")
                 optimizations.append("table_analysis_completed")
                 
                 # Reindex if needed (check index bloat)
                 bloat_query = """
                     SELECT schemaname, tablename, attname, n_distinct, correlation 
                     FROM pg_stats 
-                    WHERE tablename = 'ainflue_events' 
+                    WHERE tablename = 'iacherie_events' 
                     AND n_distinct < 100
                 """
                 bloat_results = await conn.fetch(bloat_query)
                 
                 if bloat_results:
-                    await conn.execute("REINDEX TABLE ainflue_events")
+                    await conn.execute("REINDEX TABLE iacherie_events")
                     optimizations.append("reindex_completed")
                 
                 # Vacuum if needed
                 vacuum_query = """
                     SELECT schemaname, tablename, n_dead_tup, n_live_tup
                     FROM pg_stat_user_tables 
-                    WHERE tablename = 'ainflue_events'
+                    WHERE tablename = 'iacherie_events'
                 """
                 vacuum_stats = await conn.fetchrow(vacuum_query)
                 
                 if vacuum_stats and vacuum_stats['n_dead_tup'] > vacuum_stats['n_live_tup'] * 0.1:
-                    await conn.execute("VACUUM ANALYZE ainflue_events")
+                    await conn.execute("VACUUM ANALYZE iacherie_events")
                     optimizations.append("vacuum_completed")
         
         except Exception as e:

@@ -242,9 +242,9 @@ pytest services/tests/performance/ --benchmark-only
 ### Umgebungsvariablen
 
 ```bash
-AINFLUE_REDIS_URL=redis://localhost:6379
-AINFLUE_LOG_LEVEL=INFO
-AINFLUE_ENVIRONMENT=production
+IACHERIE_REDIS_URL=redis://localhost:6379
+IACHERIE_LOG_LEVEL=INFO
+IACHERIE_ENVIRONMENT=production
 JWT_SECRET=ihr-jwt-secret
 ```
 

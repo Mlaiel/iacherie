@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Coverage Trend Analysis Engine for Ainflue Platform
+Coverage Trend Analysis Engine for IA Chéries Platform
 ==================================================
 
 Advanced test coverage trend analysis with ML-powered prediction,
@@ -1405,13 +1405,13 @@ if __name__ == "__main__":
         
         # Perform analysis
         analysis_result = await analyzer.analyze_coverage_trends(
-            project_name="Ainflue Platform",
+            project_name="IA Chéries Platform",
             analysis_period=timedelta(days=7)
         )
         
         # Generate comprehensive report
         report = await analyzer.generate_coverage_trend_report(
-            "Ainflue Platform", 
+            "IA Chéries Platform", 
             timedelta(days=7)
         )
         

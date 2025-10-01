@@ -30,9 +30,9 @@ services:
     image: postgres:15
     container_name: iacherie-postgres
     environment:
-      POSTGRES_DB: ainflue_platform
+      POSTGRES_DB: iacherie_platform
       POSTGRES_USER: iacherie
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ainflue123}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-iacherie123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -60,8 +60,8 @@ services:
     container_name: iacherie-mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: iacherie
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-ainflue123}
-      MONGO_INITDB_DATABASE: ainflue_documents
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-iacherie123}
+      MONGO_INITDB_DATABASE: iacherie_documents
     volumes:
       - mongodb_data:/data/db
     ports:

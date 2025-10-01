@@ -134,7 +134,7 @@ services:
       - iacherie-monitoring
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=ainflue_secure_2025
+      - GF_SECURITY_ADMIN_PASSWORD=iacherie_secure_2025
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-clock-panel
       - GF_SERVER_ROOT_URL=http://grafana.iacherie.local
@@ -259,7 +259,7 @@ services:
       - iacherie-artifacts
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
-      - REDIS_PASSWORD=ainflue_redis_2025
+      - REDIS_PASSWORD=iacherie_redis_2025
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 30s

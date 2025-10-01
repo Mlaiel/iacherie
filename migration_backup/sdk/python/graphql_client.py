@@ -1,4 +1,4 @@
-"""GraphQL API Client for Ainflue SDK
+"""GraphQL API Client for IA Chéries SDK
 
 Multi-expert implementation:
 - Backend Senior: Robust GraphQL client architecture with query optimization
@@ -470,7 +470,7 @@ class GraphQLClient:
         headers = {
             "Authorization": f"Bearer {auth_token}",
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-Python-SDK/1.0.0"
+            "User-Agent": "IA Chéries-Python-SDK/1.0.0"
         }
         
         # Execute with retry logic

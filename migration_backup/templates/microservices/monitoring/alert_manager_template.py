@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Alert Manager Template for Ainflue Platform
+Alert Manager Template for IA Chéries Platform
 ==========================================
 
 Production-ready alert management with:
@@ -333,7 +333,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
             
             payload = {
                 "channel": channel,
-                "username": "Ainflue Alerts",
+                "username": "IA Chéries Alerts",
                 "icon_emoji": ":warning:",
                 "attachments": [{
                     "color": color,
@@ -345,7 +345,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
                         {"title": "Current Value", "value": alert.annotations.get("current_value", "N/A"), "short": True},
                         {"title": "Threshold", "value": str(alert.threshold), "short": True}
                     ],
-                    "footer": "Ainflue Alert Manager",
+                    "footer": "IA Chéries Alert Manager",
                     "ts": int(alert.created_at.timestamp())
                 }]
             }
@@ -455,7 +455,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
 
 class AlertManagerTemplate:
     """
-    Alert Manager Template for Ainflue Platform
+    Alert Manager Template for IA Chéries Platform
     
     A comprehensive alert management system that provides:
     - Multi-channel alerting

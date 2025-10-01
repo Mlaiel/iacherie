@@ -41,11 +41,11 @@ class PrometheusConfig:
     PRODUCTION_ALERTS = CONFIG_DIR / "production_alert_rules.yml"
     
     # Métrics namespaces
-    CREATOR_METRICS_PREFIX = "ainflue_creator"
-    SYSTEM_METRICS_PREFIX = "ainflue_system"
-    AI_METRICS_PREFIX = "ainflue_ai"
-    SECURITY_METRICS_PREFIX = "ainflue_security"
-    BUSINESS_METRICS_PREFIX = "ainflue_business"
+    CREATOR_METRICS_PREFIX = "iacherie_creator"
+    SYSTEM_METRICS_PREFIX = "iacherie_system"
+    AI_METRICS_PREFIX = "iacherie_ai"
+    SECURITY_METRICS_PREFIX = "iacherie_security"
+    BUSINESS_METRICS_PREFIX = "iacherie_business"
     
     # Performance thresholds
     QUERY_TIMEOUT = 30

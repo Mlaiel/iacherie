@@ -1,4 +1,4 @@
-"""Security Module for Ainflue Platform
+"""Security Module for IA Chéries Platform
 Enterprise-grade security infrastructure with comprehensive protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

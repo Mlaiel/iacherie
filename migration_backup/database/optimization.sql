@@ -1,4 +1,4 @@
--- Database Optimization for Ainflue Platform
+-- Database Optimization for IA Chéries Platform
 -- PostgreSQL performance tuning and indexing strategy
 --
 -- Author: Fahed Mlaiel (mlaiel@live.de)

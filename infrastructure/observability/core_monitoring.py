@@ -317,7 +317,7 @@ class AlertManager:
             self.config = {
                 'global': {
                     'smtp_smarthost': 'localhost:587',
-                    'smtp_from': 'alerts@ainflue.com'
+                    'smtp_from': 'alerts@iacherie.com'
                 },
                 'route': {
                     'group_by': ['alertname'],
@@ -344,7 +344,7 @@ class AlertManager:
         default_receiver = {
             'name': 'default',
             'email_configs': [{
-                'to': 'admin@ainflue.com',
+                'to': 'admin@iacherie.com',
                 'subject': 'Alert: {{ .GroupLabels.alertname }}',
                 'body': 'Alert details: {{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
             }]
@@ -487,7 +487,7 @@ class LogAggregator:
         self.log_sources = [
             {'type': 'kubernetes', 'path': '/var/log/pods/*/*/*'},
             {'type': 'docker', 'path': '/var/lib/docker/containers/*/*'},
-            {'type': 'application', 'path': '/var/log/ainflue/*'},
+            {'type': 'application', 'path': '/var/log/iacherie/*'},
             {'type': 'system', 'path': '/var/log/syslog'}
         ]
     
@@ -580,7 +580,7 @@ class ObservabilityStack:
         self.logger = logging.getLogger(__name__)
         
     async def setup_complete_observability(self) -> bool:
-        """Setup complete observability stack for Ainflue infrastructure
+        """Setup complete observability stack for iacherie infrastructure
         
         Infrastructure Requirements Implementation:
         - Monitoring and observability stack
@@ -617,7 +617,7 @@ class ObservabilityStack:
                 },
                 'scrape_configs': [
                     {
-                        'job_name': 'ainflue-creators',
+                        'job_name': 'iacherie-creators',
                         'static_configs': [{
                             'targets': ['creator-service:8080']
                         }],
@@ -625,7 +625,7 @@ class ObservabilityStack:
                         'scrape_interval': '10s'
                     },
                     {
-                        'job_name': 'ainflue-ai-processing',
+                        'job_name': 'iacherie-ai-processing',
                         'static_configs': [{
                             'targets': ['ai-processor:8080']
                         }],
@@ -633,7 +633,7 @@ class ObservabilityStack:
                         'scrape_interval': '5s'
                     },
                     {
-                        'job_name': 'ainflue-infrastructure',
+                        'job_name': 'iacherie-infrastructure',
                         'static_configs': [{
                             'targets': ['kubernetes-api:443', 'docker-daemon:2376']
                         }],
@@ -664,7 +664,7 @@ class ObservabilityStack:
             # Creator platform dashboard
             creator_dashboard = {
                 'dashboard': {
-                    'title': 'Ainflue Creator Platform Overview',
+                    'title': 'iacherie Creator Platform Overview',
                     'panels': [
                         {
                             'title': 'Active Creators',
@@ -705,7 +705,7 @@ class ObservabilityStack:
             # Infrastructure dashboard
             infrastructure_dashboard = {
                 'dashboard': {
-                    'title': 'Ainflue Infrastructure Health',
+                    'title': 'iacherie Infrastructure Health',
                     'panels': [
                         {
                             'title': 'Kubernetes Cluster Health',
@@ -781,7 +781,7 @@ class ObservabilityStack:
                         },
                         {
                             'alert': 'CreatorServiceDown',
-                            'expr': 'up{job="ainflue-creators"} == 0',
+                            'expr': 'up{job="iacherie-creators"} == 0',
                             'for': '1m',
                             'labels': {
                                 'severity': 'critical',
@@ -1008,7 +1008,7 @@ class AnalyticsInfrastructureManager:
                 },
                 'data_warehouse': {
                     'type': 'Snowflake',
-                    'schema': 'ainflue_analytics',
+                    'schema': 'iacherie_analytics',
                     'tables': [
                         'creator_metrics',
                         'content_analytics',

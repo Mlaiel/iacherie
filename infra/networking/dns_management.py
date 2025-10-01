@@ -178,7 +178,7 @@ class DNSManager:
             self._initialize_provider_clients()
             
             # Setup IA Chérie DNS infrastructure
-            self._setup_ainflue_dns()
+            self._setup_iacherie_dns()
             
             logger.info("DNS manager initialized")
             
@@ -299,7 +299,7 @@ class DNSManager:
         
         return endpoints.get(provider, {})
     
-    def _setup_ainflue_dns(self) -> None:
+    def _setup_iacherie_dns(self) -> None:
         """Setup IA Chérie DNS infrastructure"""
         try:
             # Create primary zone if not exists

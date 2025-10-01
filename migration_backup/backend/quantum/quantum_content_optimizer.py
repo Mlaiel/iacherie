@@ -4,7 +4,7 @@
 
 Système d'optimisation contenu quantique consolidé combinant SEO intelligent,
 ranking prediction, recommendation engine, keyword optimization et metadata processing
-pour maximiser la visibilité et performance du contenu sur la plateforme Ainflue.
+pour maximiser la visibilité et performance du contenu sur la plateforme IA Chéries.
 
 CONSOLIDATION: 5 fichiers → 1 fichier ✅
 - quantum_seo_optimization_engine.py ✅ FUSIONNÉ

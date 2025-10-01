@@ -81,7 +81,7 @@ __package_info__ = {
     "author": __author__,
     "license": "Proprietary",
     "confidentiality": "RESTRICTED",
-    "platform": "Ainflue Creator Economy Platform",
+    "platform": "IA Chéries Creator Economy Platform",
     "total_components": 18,
     "implementation_status": "COMPLETE",
     "coverage": "100% SLA monitoring ecosystem"

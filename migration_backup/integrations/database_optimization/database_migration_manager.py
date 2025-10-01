@@ -2,7 +2,7 @@
 =========================================================================
 
 Manager de migration database enterprise avec zero-downtime deployment,
-blue-green strategies et rollback automatique pour la plateforme Ainflue.
+blue-green strategies et rollback automatique pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Schema versioning + migration strategies + data consistency + performance optimization

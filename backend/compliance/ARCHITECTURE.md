@@ -836,7 +836,7 @@ spec:
         fsGroup: 10001
       containers:
       - name: compliance-orchestrator
-        image: ainflue/compliance-orchestrator:v1.0.0
+        image: iacherie/compliance-orchestrator:v1.0.0
         ports:
         - containerPort: 8000
           name: http
@@ -912,7 +912,7 @@ spec:
       mode: SIMPLE
       credentialName: compliance-tls-secret
     hosts:
-    - compliance.ainflue.com
+    - compliance.iacherie.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -921,7 +921,7 @@ metadata:
   namespace: compliance-prod
 spec:
   hosts:
-  - compliance.ainflue.com
+  - compliance.iacherie.com
   gateways:
   - compliance-gateway
   http:

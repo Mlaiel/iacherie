@@ -180,7 +180,7 @@ postgresql:
   enabled: true
   auth:
     postgresPassword: "changeme"
-    username: "ainflue_admin"
+    username: "iacherie_admin"
     password: "changeme"
     database: "iacherie"
   
@@ -272,7 +272,7 @@ config:
     host: ""  # Will be set automatically if postgresql.enabled is true
     port: 5432
     name: "iacherie"
-    username: "ainflue_admin"
+    username: "iacherie_admin"
   
   # Redis settings
   redis:
@@ -349,7 +349,7 @@ monitoring:
   prometheusRule:
     enabled: true
     rules:
-      - alert: AinfluePodCrashLooping
+      - alert: iacheriePodCrashLooping
         expr: rate(kube_pod_container_status_restarts_total{namespace="{{ .Release.Namespace }}"}[15m]) > 0
         for: 5m
         labels:
@@ -357,7 +357,7 @@ monitoring:
         annotations:
           summary: "Pod {{ $labels.pod }} is crash looping"
       
-      - alert: AinflueHighMemoryUsage
+      - alert: iacherieHighMemoryUsage
         expr: (container_memory_usage_bytes{namespace="{{ .Release.Namespace }}"} / container_spec_memory_limit_bytes{namespace="{{ .Release.Namespace }}"}) > 0.9
         for: 5m
         labels:
@@ -365,7 +365,7 @@ monitoring:
         annotations:
           summary: "High memory usage detected"
       
-      - alert: AinflueHighCPUUsage
+      - alert: iacherieHighCPUUsage
         expr: rate(container_cpu_usage_seconds_total{namespace="{{ .Release.Namespace }}"}[5m]) > 0.8
         for: 10m
         labels:

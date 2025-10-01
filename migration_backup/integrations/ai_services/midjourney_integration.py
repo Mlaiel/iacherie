@@ -89,7 +89,7 @@ class MidjourneyEnterpriseClient:
     """
     Enterprise Midjourney API client with creator workflow integration.
     
-    Specialized for Ainflue platform business logic:
+    Specialized for IA Chéries platform business logic:
     - Creator content generation workflows
     - Brand-safe image generation
     - Monetization-ready outputs
@@ -139,7 +139,7 @@ class MidjourneyEnterpriseClient:
         """Generate request headers with authentication."""
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Ainflue-Midjourney-Integration/1.0"
+            "User-Agent": "IA Chéries-Midjourney-Integration/1.0"
         }
         
         if self.api_key:

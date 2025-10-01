@@ -2,11 +2,11 @@
 API Gateway Index - Enterprise API Gateway Entry Point
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Central entry point for Ainflue API Gateway providing unified access to
+Central entry point for IA Chéries API Gateway providing unified access to
 REST, GraphQL, WebSocket APIs with enterprise-grade features.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -17,8 +17,8 @@ from .api_gateway import APIGateway, APIGatewayMode, LoadBalancingStrategy
 from .rest_api import RESTAPIManager, APIEndpoint, HTTPMethod, APIEndpointType
 from .rate_limiter import RateLimiter, RateLimitAlgorithm, RateLimitScope
 
-# Configuration for Ainflue creator platform
-AINFLUE_API_GATEWAY_CONFIG = {
+# Configuration for IA Chéries creator platform
+IA CHÉRIES_API_GATEWAY_CONFIG = {
     # Core gateway settings
     'gateway_mode': APIGatewayMode.PRODUCTION,
     'enable_cors': True,
@@ -93,16 +93,16 @@ __all__ = [
     'APIEndpointType',
     'RateLimitAlgorithm',
     'RateLimitScope',
-    'AINFLUE_API_GATEWAY_CONFIG'
+    'IA CHÉRIES_API_GATEWAY_CONFIG'
 ]
 
 # Metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise API Gateway for Ainflue Creator Platform"
+__description__ = "Enterprise API Gateway for IA Chéries Creator Platform"
 
-# Ainflue business logic integration
+# IA Chéries business logic integration
 CREATOR_WORKFLOW_MAPPING = {
     'upload_content': {
         'endpoint': '/api/v1/creators/content/upload',
@@ -142,18 +142,18 @@ CREATOR_WORKFLOW_MAPPING = {
 }
 
 def get_default_api_gateway() -> APIGateway:
-    """Get default configured API gateway for Ainflue platform"""
+    """Get default configured API gateway for IA Chéries platform"""
     gateway = APIGateway()
     
-    # Apply Ainflue-specific configuration
+    # Apply IA Chéries-specific configuration
     gateway.gateway_config.update({
-        'mode': AINFLUE_API_GATEWAY_CONFIG['gateway_mode'],
-        'enable_cors': AINFLUE_API_GATEWAY_CONFIG['enable_cors'],
-        'enable_compression': AINFLUE_API_GATEWAY_CONFIG['enable_compression'],
-        'enable_caching': AINFLUE_API_GATEWAY_CONFIG['enable_caching'],
-        'max_request_size': AINFLUE_API_GATEWAY_CONFIG['max_request_size_mb'] * 1024 * 1024,
-        'request_timeout': AINFLUE_API_GATEWAY_CONFIG['request_timeout_seconds'],
-        'load_balancing_strategy': AINFLUE_API_GATEWAY_CONFIG['load_balancing_strategy']
+        'mode': IA CHÉRIES_API_GATEWAY_CONFIG['gateway_mode'],
+        'enable_cors': IA CHÉRIES_API_GATEWAY_CONFIG['enable_cors'],
+        'enable_compression': IA CHÉRIES_API_GATEWAY_CONFIG['enable_compression'],
+        'enable_caching': IA CHÉRIES_API_GATEWAY_CONFIG['enable_caching'],
+        'max_request_size': IA CHÉRIES_API_GATEWAY_CONFIG['max_request_size_mb'] * 1024 * 1024,
+        'request_timeout': IA CHÉRIES_API_GATEWAY_CONFIG['request_timeout_seconds'],
+        'load_balancing_strategy': IA CHÉRIES_API_GATEWAY_CONFIG['load_balancing_strategy']
     })
     
     return gateway

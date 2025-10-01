@@ -316,7 +316,7 @@ class UniversalAnalysisEngine:
         return results
     
     def _analyze_business_logic(self, request: AnalysisRequest) -> List[AnalysisResult]:
-        """Analyse logique métier Ainflue"""
+        """Analyse logique métier IA Chéries"""
         results = []
         
         results.append(AnalysisResult(
@@ -324,11 +324,11 @@ class UniversalAnalysisEngine:
             analysis_type=AnalysisType.BUSINESS_LOGIC,
             severity=AnalysisSeverity.LOW,
             status=AnalysisStatus.COMPLETED,
-            title="Ainflue Business Logic Validation",
+            title="IA Chéries Business Logic Validation",
             description="Business logic compliance check completed",
             confidence_score=0.88,
             technical_debt_minutes=30,
-            fix_suggestion="Align with Ainflue workflow patterns",
+            fix_suggestion="Align with IA Chéries workflow patterns",
             business_impact="Business process optimization"
         ))
         

@@ -122,7 +122,7 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "pg_stat_database_numbackends{datname=\"ainflue_platform_prod\"}",
+            "expr": "pg_stat_database_numbackends{datname=\"iacherie_platform_prod\"}",
             "refId": "A",
             "legendFormat": "Active Connections"
           }
@@ -238,7 +238,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "ainflue_ai_queue_size",
+            "expr": "iacherie_ai_queue_size",
             "refId": "A"
           }
         ],
@@ -255,7 +255,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "rate(ainflue_protection_events_total[5m])",
+            "expr": "rate(iacherie_protection_events_total[5m])",
             "refId": "A"
           }
         ],
@@ -272,7 +272,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "ainflue_revenue_total",
+            "expr": "iacherie_revenue_total",
             "refId": "A"
           }
         ],
@@ -294,7 +294,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "ainflue_active_users",
+            "expr": "iacherie_active_users",
             "refId": "A"
           }
         ],

@@ -611,7 +611,7 @@ Initialize the collaboration monitoring manager."""
             AlertChannel.EMAIL: {
                 "type": "email",
                 "enabled": True,
-                "recipients": ["admin@iainfluencer.com", "alerts@iainfluencer.com"]
+                "recipients": ["admin@iiacheries.com", "alerts@iiacheries.com"]
             },
             AlertChannel.SLACK: {
                 "type": "slack",

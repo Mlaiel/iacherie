@@ -1,4 +1,4 @@
-"""GraphQL Federation Template for Ainflue Platform
+"""GraphQL Federation Template for IA Chéries Platform
 Enterprise-grade Apollo Federation implementation for microservices architecture
 
 ⚠️  AVERTISSEMENT LÉGAL:

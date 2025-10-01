@@ -36,14 +36,14 @@ Suite surveillance production-ready avec observabilité complète, monitoring pe
 ### Intelligence Traçage Distribué
 ```python
 # Exemple: Traçage Pipeline IA Chérie
-trace_analysis = await distributed_tracing.trace_ainflue_pipeline(
+trace_analysis = await distributed_tracing.trace_iacherie_pipeline(
     creator_content={
         'creator_id': 'creator_123',
         'content_type': 'podcast_audio',
         'platforms': ['spotify', 'apple_podcasts', 'deezer']
     },
     pipeline_context={
-        'pipeline_id': 'ainflue_audio_pipeline_v3.2',
+        'pipeline_id': 'iacherie_audio_pipeline_v3.2',
         'version': '3.2.1'
     }
 )
@@ -194,7 +194,7 @@ from integrations.monitoring import (
 )
 
 # Initialisation avec paramètres français
-monitoring_suite = await initialize_ainflue_monitoring_fr()
+monitoring_suite = await initialize_iacherie_monitoring_fr()
 ```
 
 ### Configuration Dashboard

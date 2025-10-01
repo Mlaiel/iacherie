@@ -466,9 +466,9 @@ class RequestTransformer:
         }
         
         # Initialize IA Chérie-specific schema mappings
-        self._initialize_ainflue_schemas()
+        self._initialize_iacherie_schemas()
     
-    def _initialize_ainflue_schemas(self) -> None:
+    def _initialize_iacherie_schemas(self) -> None:
         """Initialize IA Chérie business logic schema mappings"""
         
         # Creator content schemas

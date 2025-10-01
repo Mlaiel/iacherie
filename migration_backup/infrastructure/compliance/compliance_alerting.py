@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚨 COMPLIANCE ALERTING SYSTEM - AINFLUE ENTERPRISE
+🚨 COMPLIANCE ALERTING SYSTEM - IA CHÉRIES ENTERPRISE
 Real-time compliance alerting with multi-channel notification and escalation
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -586,7 +586,7 @@ class ComplianceAlertingSystem:
         
         # Corps du message
         body = f"""
-        ALERTE COMPLIANCE - AINFLUE ENTERPRISE
+        ALERTE COMPLIANCE - IA CHÉRIES ENTERPRISE
         
         ID: {alert_dict['id']}
         Sévérité: {alert_dict['severity'].upper()}
@@ -607,7 +607,7 @@ class ComplianceAlertingSystem:
         - Vérifier la conformité réglementaire
         - Implémenter les mesures correctives
         
-        Système Compliance Ainflue
+        Système Compliance IA Chéries
         © Fahed Mlaiel (mlaiel@live.de)
         """
         
@@ -647,7 +647,7 @@ class ComplianceAlertingSystem:
                     {'title': 'Score Risque', 'value': f"{alert_dict['risk_score']}/10", 'short': True},
                     {'title': 'Personnes affectées', 'value': str(alert_dict['affected_data_subjects']), 'short': True},
                 ],
-                'footer': 'Ainflue Compliance System',
+                'footer': 'IA Chéries Compliance System',
                 'ts': int(datetime.fromisoformat(alert_dict['timestamp']).timestamp())
             }]
         }

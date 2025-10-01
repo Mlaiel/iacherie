@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Consul Integration Template for Ainflue Platform
+Consul Integration Template for IA Chéries Platform
 ===============================================
 
 Production-ready Consul service mesh integration with:
@@ -85,7 +85,7 @@ class ConsulHealthCheck:
 
 class ConsulClient:
     """
-    Enhanced Consul client for Ainflue Platform
+    Enhanced Consul client for IA Chéries Platform
     
     Features:
     - Service registration and discovery
@@ -497,7 +497,7 @@ class ConsulServiceMesh:
 
 class ConsulIntegrationTemplate:
     """
-    Consul Integration Template for Ainflue Platform
+    Consul Integration Template for IA Chéries Platform
     
     A comprehensive Consul integration that provides:
     - Service registration and discovery

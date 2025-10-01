@@ -2,8 +2,8 @@
 
 **Advanced Collaboration Infrastructure for AI-Influencer-Agent Platform**
 
-[![Enterprise](https://img.shields.io/badge/Enterprise-Ready-green.svg)](https://github.com/Mlaiel/Ainflue)
-[![AI-Powered](https://img.shields.io/badge/AI-Powered-blue.svg)](https://github.com/Mlaiel/Ainflue)
+[![Enterprise](https://img.shields.io/badge/Enterprise-Ready-green.svg)](https://github.com/Mlaiel/iacherie)
+[![AI-Powered](https://img.shields.io/badge/AI-Powered-blue.svg)](https://github.com/Mlaiel/iacherie)
 [![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)](https://python.org)
 [![Async](https://img.shields.io/badge/Async-Ready-orange.svg)](https://docs.python.org/3/library/asyncio.html)
 
@@ -59,8 +59,8 @@ The **Collaboration Module** is the core engine of our AI-powered influencer-age
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/collaboration
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/collaboration
 
 # Install dependencies
 pip install -r requirements.txt
@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql+asyncpg://user:pass@localhost/ainflue
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/iacherie
 REDIS_URL=redis://localhost:6379
 
 # AI/ML Configuration
@@ -244,13 +244,13 @@ pytest --cov=backend/collaboration --cov-report=html
 
 ```bash
 # Build image
-docker build -t ainflue-collaboration .
+docker build -t iacherie-collaboration .
 
 # Run container
 docker run -p 8000:8000 \
   -e DATABASE_URL=$DATABASE_URL \
   -e REDIS_URL=$REDIS_URL \
-  ainflue-collaboration
+  iacherie-collaboration
 ```
 
 ### **Kubernetes Deployment**
@@ -273,7 +273,7 @@ spec:
     spec:
       containers:
       - name: collaboration
-        image: ainflue-collaboration:latest
+        image: iacherie-collaboration:latest
         ports:
         - containerPort: 8000
 ```
@@ -327,16 +327,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💬 **Support**
 
-- **Documentation**: [docs.ainflue.com](https://docs.ainflue.com)
-- **Issues**: [GitHub Issues](https://github.com/Mlaiel/Ainflue/issues)
-- **Discord**: [Join our community](https://discord.gg/ainflue)
-- **Email**: support@ainflue.com
+- **Documentation**: [docs.iacherie.com](https://docs.iacherie.com)
+- **Issues**: [GitHub Issues](https://github.com/Mlaiel/iacherie/issues)
+- **Discord**: [Join our community](https://discord.gg/iacherie)
+- **Email**: support@iacherie.com
 
 ---
 
 ## 🏆 **Acknowledgments**
 
-- Built with ❤️ by the Ainflue team
+- Built with ❤️ by the iacherie team
 - Powered by cutting-edge AI/ML technologies
 - Enterprise-ready architecture and security
 

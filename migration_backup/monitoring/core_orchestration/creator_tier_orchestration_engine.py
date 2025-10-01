@@ -2,7 +2,7 @@
 🏆 Creator Tier Orchestration Engine - Enterprise Core
 ======================================================
 
-Moteur d'orchestration avancé pour la gestion des tiers créateurs Ainflue.
+Moteur d'orchestration avancé pour la gestion des tiers créateurs IA Chéries.
 Progression intelligente et personnalisation des services par niveau.
 
 Architecture: monitoring/core_orchestration/ (NIVEAU 3)
@@ -188,7 +188,7 @@ class CreatorTierOrchestrationEngine:
             CreatorTierLevel.STARTER: TierConfiguration(
                 tier_level=CreatorTierLevel.STARTER,
                 display_name="Starter Creator",
-                description="Welcome to Ainflue! Perfect for new creators starting their journey.",
+                description="Welcome to IA Chéries! Perfect for new creators starting their journey.",
                 requirements={},  # No requirements for starter tier
                 benefits={
                     TierBenefitType.REVENUE_SHARE: Decimal("0.70"),  # 70% to creator

@@ -1,12 +1,12 @@
-"""Ainflue Infrastructure Module - Subnet Configuration
+"""IA Chéries Infrastructure Module - Subnet Configuration
 ===================================================
 
-Advanced subnet configuration system for the Ainflue platform infrastructure.
+Advanced subnet configuration system for the IA Chéries platform infrastructure.
 Provides comprehensive subnet management, IP allocation, network segmentation,
 and automated subnet provisioning for creator economy networking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Platform - IA Influencer Agent + Content Protection Platform
+Project: IA Chéries Platform - IA Influencer Agent + Content Protection Platform
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
@@ -129,7 +129,7 @@ class SubnetMetrics:
 
 class EnterpriseSubnetConfiguration:
     """
-    Enterprise-grade subnet configuration system for Ainflue platform.
+    Enterprise-grade subnet configuration system for IA Chéries platform.
     
     Provides comprehensive subnet management capabilities:
     - Multi-cloud subnet orchestration
@@ -428,7 +428,7 @@ class EnterpriseSubnetConfiguration:
                 'Type': kwargs['subnet_type'].value,
                 'AZ': kwargs['availability_zone'],
                 'VPC': kwargs['vpc_id'],
-                'Project': 'Ainflue'
+                'Project': 'IA Chéries'
             }
         )
         

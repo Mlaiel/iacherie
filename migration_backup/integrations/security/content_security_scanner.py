@@ -1,13 +1,13 @@
 # 🔒 Content Security Scanner: AI-Powered Content Analysis & Protection
 """
-Content Security Scanner - Ainflue Integrations
+Content Security Scanner - IA Chéries Integrations
 ===============================================
 Enterprise content security providing AI-powered content analysis, deepfake detection,
-content validation, and threat assessment for Ainflue creator platform with advanced
+content validation, and threat assessment for IA Chéries creator platform with advanced
 computer vision and NLP-based security intelligence.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

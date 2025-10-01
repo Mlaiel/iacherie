@@ -89,15 +89,15 @@ security_monitoring:
     
     # Métriques GDPR
     gdpr_metrics:
-      - metric: "ainflue_gdpr_consent_rate"
+      - metric: "iacherie_gdpr_consent_rate"
         description: "Taux consentement RGPD par catégorie"
         labels: ["consent_category", "creator_tier", "opt_in_method"]
         
-      - metric: "ainflue_gdpr_request_processing_time"
+      - metric: "iacherie_gdpr_request_processing_time"
         description: "Temps traitement demandes RGPD"
         labels: ["request_type", "complexity_level", "verification_required"]
         
-      - metric: "ainflue_gdpr_compliance_score"
+      - metric: "iacherie_gdpr_compliance_score"
         description: "Score conformité RGPD global"
         labels: ["compliance_area", "assessment_date", "risk_level"]
 
@@ -131,15 +131,15 @@ security_monitoring:
       
     # Métriques PCI-DSS
     pci_dss_metrics:
-      - metric: "ainflue_pci_tokenization_rate"
+      - metric: "iacherie_pci_tokenization_rate"
         description: "Taux tokenisation données cartes"
         labels: ["payment_processor", "card_type", "transaction_volume"]
         
-      - metric: "ainflue_pci_security_scan_results"
+      - metric: "iacherie_pci_security_scan_results"
         description: "Résultats scans sécurité PCI"
         labels: ["scan_type", "vulnerability_severity", "remediation_status"]
         
-      - metric: "ainflue_pci_compliance_score"
+      - metric: "iacherie_pci_compliance_score"
         description: "Score conformité PCI-DSS"
         labels: ["requirement_category", "assessment_quarter"]
 
@@ -173,15 +173,15 @@ security_monitoring:
       
     # Métriques SOX
     sox_metrics:
-      - metric: "ainflue_sox_control_effectiveness"
+      - metric: "iacherie_sox_control_effectiveness"
         description: "Efficacité contrôles internes SOX"
         labels: ["control_category", "effectiveness_rating", "testing_frequency"]
         
-      - metric: "ainflue_sox_deficiency_count"
+      - metric: "iacherie_sox_deficiency_count"
         description: "Nombre déficiences contrôles SOX"
         labels: ["deficiency_severity", "remediation_status", "control_area"]
         
-      - metric: "ainflue_sox_audit_readiness_score"
+      - metric: "iacherie_sox_audit_readiness_score"
         description: "Score préparation audit SOX"
         labels: ["audit_area", "documentation_completeness", "control_testing_status"]
 
@@ -209,11 +209,11 @@ security_monitoring:
       
     # Métriques conformité internationale
     international_metrics:
-      - metric: "ainflue_multi_jurisdiction_compliance_score"
+      - metric: "iacherie_multi_jurisdiction_compliance_score"
         description: "Score conformité multi-juridictions"
         labels: ["jurisdiction", "regulation_type", "compliance_status"]
         
-      - metric: "ainflue_cross_border_data_transfer_compliance"
+      - metric: "iacherie_cross_border_data_transfer_compliance"
         description: "Conformité transferts données internationaux"
         labels: ["source_country", "destination_country", "transfer_mechanism"]
 
@@ -269,15 +269,15 @@ incident_monitoring:
   
   # Métriques incidents
   incident_metrics:
-    - metric: "ainflue_security_incidents_detected"
+    - metric: "iacherie_security_incidents_detected"
       description: "Incidents sécurité détectés"
       labels: ["incident_type", "severity", "detection_method", "affected_system"]
       
-    - metric: "ainflue_incident_response_time"
+    - metric: "iacherie_incident_response_time"
       description: "Temps réponse incidents sécurité"
       labels: ["severity_level", "response_action", "escalation_required"]
       
-    - metric: "ainflue_incident_resolution_effectiveness"
+    - metric: "iacherie_incident_resolution_effectiveness"
       description: "Efficacité résolution incidents"
       labels: ["incident_category", "resolution_method", "recurrence_prevented"]
 
@@ -343,15 +343,15 @@ audit_trail:
   
   # Métriques audit
   audit_metrics:
-    - metric: "ainflue_audit_trail_completeness"
+    - metric: "iacherie_audit_trail_completeness"
       description: "Complétude pistes audit"
       labels: ["event_category", "system_component", "retention_compliance"]
       
-    - metric: "ainflue_compliance_report_accuracy"
+    - metric: "iacherie_compliance_report_accuracy"
       description: "Précision rapports conformité"
       labels: ["report_type", "regulation", "accuracy_verification"]
       
-    - metric: "ainflue_audit_log_integrity_score"
+    - metric: "iacherie_audit_log_integrity_score"
       description: "Score intégrité logs audit"
       labels: ["log_source", "tamper_detection", "encryption_status"]
 
@@ -404,15 +404,15 @@ creator_privacy:
   
   # Métriques protection vie privée
   privacy_metrics:
-    - metric: "ainflue_creator_privacy_control_usage"
+    - metric: "iacherie_creator_privacy_control_usage"
       description: "Utilisation contrôles vie privée créateurs"
       labels: ["control_type", "creator_tier", "usage_frequency"]
       
-    - metric: "ainflue_privacy_impact_assessment_score"
+    - metric: "iacherie_privacy_impact_assessment_score"
       description: "Score évaluations impact vie privée"
       labels: ["assessment_category", "risk_level", "mitigation_effectiveness"]
       
-    - metric: "ainflue_data_minimization_compliance_rate"
+    - metric: "iacherie_data_minimization_compliance_rate"
       description: "Taux conformité minimisation données"
       labels: ["data_category", "collection_purpose", "retention_compliance"]
 
@@ -471,15 +471,15 @@ security_governance:
   
   # Métriques gouvernance
   governance_metrics:
-    - metric: "ainflue_security_policy_compliance_rate"
+    - metric: "iacherie_security_policy_compliance_rate"
       description: "Taux conformité politiques sécurité"
       labels: ["policy_type", "department", "compliance_score"]
       
-    - metric: "ainflue_risk_mitigation_effectiveness"
+    - metric: "iacherie_risk_mitigation_effectiveness"
       description: "Efficacité atténuation risques"
       labels: ["risk_category", "mitigation_strategy", "residual_risk_level"]
       
-    - metric: "ainflue_security_governance_maturity_score"
+    - metric: "iacherie_security_governance_maturity_score"
       description: "Score maturité gouvernance sécurité"
       labels: ["governance_area", "maturity_level", "improvement_trend"]
 

@@ -1,11 +1,11 @@
 """
-Protection Retry Engine - Ainflue
+Protection Retry Engine - IA Chéries
 =================================
 Retry spécialisé pour système protection.
 Copyright verification + DMCA + legal compliance retry patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Retry Mechanisms
+Project: IA Chéries Retry Mechanisms
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -306,7 +306,7 @@ class DMCAProcessor:
         """Génération safe harbor notice"""
         return {
             'notice_type': 'safe_harbor',
-            'service_provider': context.legal_metadata.get('service_provider', 'Ainflue'),
+            'service_provider': context.legal_metadata.get('service_provider', 'IA Chéries'),
             'safe_harbor_compliance': {
                 'dmca_policy_posted': True,
                 'repeat_infringer_policy': True,

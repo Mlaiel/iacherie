@@ -25,11 +25,11 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 # Metrics
-blockchain_transactions_total = Counter('ainflue_blockchain_transactions_total',
+blockchain_transactions_total = Counter('iacherie_blockchain_transactions_total',
                                        'Total blockchain transactions', ['chain', 'type', 'status'])
-blockchain_verification_duration = Histogram('ainflue_blockchain_verification_duration_seconds',
+blockchain_verification_duration = Histogram('iacherie_blockchain_verification_duration_seconds',
                                             'Time spent verifying blockchain records')
-blockchain_rights_validated = Gauge('ainflue_blockchain_rights_validated',
+blockchain_rights_validated = Gauge('iacherie_blockchain_rights_validated',
                                    'Number of blockchain-validated rights', ['content_type'])
 
 class BlockchainNetwork(Enum):

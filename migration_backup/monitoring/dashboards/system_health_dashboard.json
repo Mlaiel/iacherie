@@ -12,7 +12,7 @@
       }
     ]
   },
-  "description": "System health and infrastructure monitoring dashboard for Ainflue platform including CPU, memory, network, and database metrics.",
+  "description": "System health and infrastructure monitoring dashboard for IA Chéries platform including CPU, memory, network, and database metrics.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
@@ -908,7 +908,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Ainflue System Health Dashboard",
+  "title": "IA Chéries System Health Dashboard",
   "uid": "ainflue-system-health",
   "version": 1
 }

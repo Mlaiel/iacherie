@@ -1,5 +1,5 @@
 """
-🏛️ Ainflue MLOps Platform - Enterprise Architecture
+🏛️ IA Chéries MLOps Platform - Enterprise Architecture
 © 2025 Fahed Mlaiel <mlaiel@live.de> - Tous droits réservés
 
 ⚠️ AVERTISSEMENT LÉGAL:

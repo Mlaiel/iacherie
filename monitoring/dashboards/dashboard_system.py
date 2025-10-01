@@ -223,7 +223,7 @@ class EnterpriseDashboardSystem:
     def _initialize_theme_templates(self) -> Dict[str, Dict[str, Any]]:
         """Initialize dashboard theme templates."""
         return {
-            'ainflue_dark': {
+            'iacherie_dark': {
                 'primary_color': '#1a1a2e',
                 'secondary_color': '#16213e',
                 'accent_color': '#0f3460',
@@ -233,7 +233,7 @@ class EnterpriseDashboardSystem:
                 'error_color': '#ff0040',
                 'font_family': 'Inter, sans-serif'
             },
-            'ainflue_light': {
+            'iacherie_light': {
                 'primary_color': '#ffffff',
                 'secondary_color': '#f8f9fa',
                 'accent_color': '#007bff',
@@ -463,7 +463,7 @@ class EnterpriseDashboardSystem:
             role_permissions=['executive', 'admin', 'manager'],
             widgets=widgets,
             layout_config={'columns': 12, 'row_height': 60},
-            theme_config=self.theme_templates['ainflue_dark'],
+            theme_config=self.theme_templates['iacherie_dark'],
             auto_refresh=True,
             refresh_interval_seconds=300
         )
@@ -546,7 +546,7 @@ class EnterpriseDashboardSystem:
             role_permissions=['creator', 'admin', 'manager', 'analyst'],
             widgets=widgets,
             layout_config={'columns': 12, 'row_height': 60},
-            theme_config=self.theme_templates['ainflue_dark'],
+            theme_config=self.theme_templates['iacherie_dark'],
             auto_refresh=True,
             refresh_interval_seconds=120
         )
@@ -613,7 +613,7 @@ class EnterpriseDashboardSystem:
             role_permissions=['creator', 'content_manager', 'admin', 'quality_analyst'],
             widgets=widgets,
             layout_config={'columns': 12, 'row_height': 60},
-            theme_config=self.theme_templates['ainflue_light'],
+            theme_config=self.theme_templates['iacherie_light'],
             auto_refresh=True,
             refresh_interval_seconds=180
         )

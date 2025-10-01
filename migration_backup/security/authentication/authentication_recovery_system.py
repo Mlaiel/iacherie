@@ -1013,7 +1013,7 @@ class AuthenticationRecoverySystem:
             return {"success": False, "error": "SMS service not configured"}
         
         try:
-            message = f"Your Ainflue recovery code is: {code}. Expires in 15 minutes."
+            message = f"Your IA Chéries recovery code is: {code}. Expires in 15 minutes."
             
             # In production, use proper SMS service
             self.logger.info(f"SMS code sent to {phone}: {code}")

@@ -448,7 +448,7 @@ class ServiceMeshManager:
                 'metadata': {'name': f'{mesh_type}-system'}
             }
             
-            # Service mesh configuration for Ainflue creator platform
+            # Service mesh configuration for IA Chéries creator platform
             mesh_config = {
                 'apiVersion': f'install.{mesh_type}.io/v1alpha1',
                 'kind': 'IstioOperator' if mesh_type == 'istio' else 'ServiceMeshControlPlane',
@@ -658,7 +658,7 @@ class GPUClusterManager:
     
     async def deploy_gpu_cluster(self, cluster_config: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Deploy comprehensive GPU cluster for Ainflue AI processing
+        Deploy comprehensive GPU cluster for IA Chéries AI processing
         
         ML Engineer Role: Advanced GPU cluster deployment and optimization
         """

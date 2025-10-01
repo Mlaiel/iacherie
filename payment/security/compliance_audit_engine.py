@@ -1325,7 +1325,7 @@ if __name__ == "__main__":
         
         # Test audit complet
         audit_context = {
-            'system_id': 'ainflue_platform',
+            'system_id': 'iacherie_platform',
             'payment_data': {
                 'encryption_enabled': True,
                 'encryption_method': 'AES-256'

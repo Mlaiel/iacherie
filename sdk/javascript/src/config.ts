@@ -9,12 +9,12 @@
  * @author Fahed Mlaiel (mlaiel@live.de)
  */
 
-import { AinflueClientOptions } from './types';
+import { iacherieClientOptions } from './types';
 
 /**
  * SDK Configuration interface
  */
-export interface AinflueConfig extends AinflueClientOptions {
+export interface iacherieConfig extends iacherieClientOptions {
   // Additional config properties
   debug?: boolean;
   retryConfig?: {
@@ -38,7 +38,7 @@ export interface AinflueConfig extends AinflueClientOptions {
 /**
  * Environment-specific configurations
  */
-const ENVIRONMENT_CONFIGS: Record<string, Partial<AinflueConfig>> = {
+const ENVIRONMENT_CONFIGS: Record<string, Partial<iacherieConfig>> = {
   production: {
     baseUrl: 'https://api.iacherie.com',
     timeout: 30000,
@@ -112,7 +112,7 @@ const ENVIRONMENT_CONFIGS: Record<string, Partial<AinflueConfig>> = {
 /**
  * Default configuration
  */
-const DEFAULT_CONFIG: AinflueConfig = {
+const DEFAULT_CONFIG: iacherieConfig = {
   baseUrl: 'https://api.iacherie.com',
   apiVersion: 'v1',
   timeout: 30000,
@@ -232,7 +232,7 @@ class ConfigValidator {
   /**
    * Validate complete configuration
    */
-  static validate(config: AinflueConfig): { valid: boolean; errors: string[] } {
+  static validate(config: iacherieConfig): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
     
     // Required fields
@@ -268,16 +268,16 @@ class ConfigValidator {
  * Configuration manager
  */
 export class ConfigManager {
-  private config: AinflueConfig;
+  private config: iacherieConfig;
   
-  constructor(userConfig: Partial<AinflueConfig> = {}) {
+  constructor(userConfig: Partial<iacherieConfig> = {}) {
     this.config = this.createConfig(userConfig);
   }
   
   /**
    * Create configuration from user input
    */
-  private createConfig(userConfig: Partial<AinflueConfig>): AinflueConfig {
+  private createConfig(userConfig: Partial<iacherieConfig>): iacherieConfig {
     // Start with default config
     let config = { ...DEFAULT_CONFIG };
     
@@ -329,14 +329,14 @@ export class ConfigManager {
   /**
    * Get configuration value
    */
-  get<K extends keyof AinflueConfig>(key: K): AinflueConfig[K] {
+  get<K extends keyof iacherieConfig>(key: K): iacherieConfig[K] {
     return this.config[key];
   }
   
   /**
    * Set configuration value
    */
-  set<K extends keyof AinflueConfig>(key: K, value: AinflueConfig[K]): void {
+  set<K extends keyof iacherieConfig>(key: K, value: iacherieConfig[K]): void {
     this.config[key] = value;
     
     // Re-validate after change
@@ -349,14 +349,14 @@ export class ConfigManager {
   /**
    * Get all configuration
    */
-  getAll(): AinflueConfig {
+  getAll(): iacherieConfig {
     return { ...this.config };
   }
   
   /**
    * Update multiple configuration values
    */
-  update(updates: Partial<AinflueConfig>): void {
+  update(updates: Partial<iacherieConfig>): void {
     const newConfig = {
       ...this.config,
       ...updates
@@ -403,7 +403,7 @@ export class ConfigManager {
 /**
  * Create default configuration
  */
-export function createDefaultConfig(environment?: string): AinflueConfig {
+export function createDefaultConfig(environment?: string): iacherieConfig {
   const envConfig = environment ? ENVIRONMENT_CONFIGS[environment] : {};
   
   return {
@@ -416,29 +416,29 @@ export function createDefaultConfig(environment?: string): AinflueConfig {
 /**
  * Create configuration from environment variables
  */
-export function createConfigFromEnv(): Partial<AinflueConfig> {
-  const config: Partial<AinflueConfig> = {};
+export function createConfigFromEnv(): Partial<iacherieConfig> {
+  const config: Partial<iacherieConfig> = {};
   
   // Check for environment variables (Node.js)
   if (typeof process !== 'undefined' && process.env) {
-    if (process.env.AINFLUE_API_KEY) {
-      config.apiKey = process.env.AINFLUE_API_KEY;
+    if (process.env.IACHERIE_API_KEY) {
+      config.apiKey = process.env.IACHERIE_API_KEY;
     }
     
-    if (process.env.AINFLUE_BASE_URL) {
-      config.baseUrl = process.env.AINFLUE_BASE_URL;
+    if (process.env.IACHERIE_BASE_URL) {
+      config.baseUrl = process.env.IACHERIE_BASE_URL;
     }
     
-    if (process.env.AINFLUE_ENVIRONMENT) {
-      config.environment = process.env.AINFLUE_ENVIRONMENT as any;
+    if (process.env.IACHERIE_ENVIRONMENT) {
+      config.environment = process.env.IACHERIE_ENVIRONMENT as any;
     }
     
-    if (process.env.AINFLUE_TIMEOUT) {
-      config.timeout = parseInt(process.env.AINFLUE_TIMEOUT, 10);
+    if (process.env.IACHERIE_TIMEOUT) {
+      config.timeout = parseInt(process.env.IACHERIE_TIMEOUT, 10);
     }
     
-    if (process.env.AINFLUE_DEBUG) {
-      config.debug = process.env.AINFLUE_DEBUG === 'true';
+    if (process.env.IACHERIE_DEBUG) {
+      config.debug = process.env.IACHERIE_DEBUG === 'true';
     }
   }
   
@@ -448,7 +448,7 @@ export function createConfigFromEnv(): Partial<AinflueConfig> {
 /**
  * Merge configurations with precedence
  */
-export function mergeConfigs(...configs: Partial<AinflueConfig>[]): AinflueConfig {
+export function mergeConfigs(...configs: Partial<iacherieConfig>[]): iacherieConfig {
   let mergedConfig = { ...DEFAULT_CONFIG };
   
   for (const config of configs) {

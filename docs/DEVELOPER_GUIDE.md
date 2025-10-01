@@ -209,9 +209,9 @@ SECRET_KEY=your-super-secret-key-min-32-chars
 # Database Configuration
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_USER=ainflue_dev
+POSTGRES_USER=iacherie_dev
 POSTGRES_PASSWORD=your-secure-password
-POSTGRES_DB=ainflue_development
+POSTGRES_DB=iacherie_development
 
 # Redis Configuration
 REDIS_HOST=localhost
@@ -221,9 +221,9 @@ REDIS_PASSWORD=your-redis-password
 # MongoDB Configuration
 MONGODB_HOST=localhost
 MONGODB_PORT=27017
-MONGODB_USER=ainflue_dev
+MONGODB_USER=iacherie_dev
 MONGODB_PASSWORD=your-mongo-password
-MONGODB_DB=ainflue_development
+MONGODB_DB=iacherie_development
 
 # AI/ML Configuration
 OPENAI_API_KEY=your-openai-api-key
@@ -250,9 +250,9 @@ docker ps
 ```bash
 # PostgreSQL setup
 sudo systemctl start postgresql
-sudo -u postgres createuser ainflue_dev
-sudo -u postgres createdb ainflue_development
-sudo -u postgres psql -c "ALTER USER ainflue_dev PASSWORD 'your-secure-password';"
+sudo -u postgres createuser iacherie_dev
+sudo -u postgres createdb iacherie_development
+sudo -u postgres psql -c "ALTER USER iacherie_dev PASSWORD 'your-secure-password';"
 
 # Redis setup
 sudo systemctl start redis-server
@@ -1295,7 +1295,7 @@ docker exec -it iacherie-postgres psql -U postgres  # Connect to database
 
 # Debug network connectivity
 docker network ls
-docker network inspect ainflue_default
+docker network inspect iacherie_default
 
 # Resource usage debugging
 docker stats  # Monitor container resource usage

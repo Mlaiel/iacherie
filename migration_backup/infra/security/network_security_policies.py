@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Network Security Policies
+# IA Chéries Infrastructure Module - Network Security Policies
 # =======================================================
 # 
-# Enterprise-grade network security policies for Ainflue platform
+# Enterprise-grade network security policies for IA Chéries platform
 # Supports multi-cloud security and enterprise compliance
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -119,7 +119,7 @@ class NetworkSecurityPolicyManager:
         return os.getenv('AZURE_SUBSCRIPTION_ID', 'default-subscription-id')
     
     def _define_standard_policies(self) -> Dict[str, List[SecurityRule]]:
-        """Define standard security policies for Ainflue platform"""
+        """Define standard security policies for IA Chéries platform"""
         return {
             "web_tier": [
                 SecurityRule(
@@ -316,7 +316,7 @@ class NetworkSecurityPolicyManager:
             sg_name = f"ainflue-{self.config.environment}-{tier_name}-sg"
             response = self.ec2_client.create_security_group(
                 GroupName=sg_name,
-                Description=f"Ainflue {tier_name} tier security group",
+                Description=f"IA Chéries {tier_name} tier security group",
                 VpcId=self.config.vpc_id,
                 TagSpecifications=[
                     {
@@ -632,7 +632,7 @@ class NetworkSecurityPolicyManager:
             
             security_policy = {
                 'name': policy_name,
-                'description': f'Ainflue {tier_name} tier Cloud Armor policy',
+                'description': f'IA Chéries {tier_name} tier Cloud Armor policy',
                 'rules': [
                     {
                         'priority': 1000,
@@ -757,8 +757,8 @@ class NetworkSecurityPolicyManager:
         return True
 
 # Enterprise security policy orchestrator
-class AinflueSecurityPolicyOrchestrator:
-    """High-level security policy orchestration for Ainflue platform"""
+class IA ChériesSecurityPolicyOrchestrator:
+    """High-level security policy orchestration for IA Chéries platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize security policy orchestrator
@@ -782,8 +782,8 @@ class AinflueSecurityPolicyOrchestrator:
                 region='us-west-2',
                 tags={
                     'Environment': self.environment,
-                    'Project': 'Ainflue',
-                    'ManagedBy': 'AinflueSecurityOrchestrator'
+                    'Project': 'IA Chéries',
+                    'ManagedBy': 'IA ChériesSecurityOrchestrator'
                 }
             ),
             'gcp': SecurityPolicyConfig(
@@ -804,8 +804,8 @@ class AinflueSecurityPolicyOrchestrator:
                 region='East US',
                 tags={
                     'Environment': self.environment,
-                    'Project': 'Ainflue',
-                    'ManagedBy': 'AinflueSecurityOrchestrator'
+                    'Project': 'IA Chéries',
+                    'ManagedBy': 'IA ChériesSecurityOrchestrator'
                 }
             )
         }
@@ -858,7 +858,7 @@ class AinflueSecurityPolicyOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueSecurityPolicyOrchestrator(environment="production")
+        orchestrator = IA ChériesSecurityPolicyOrchestrator(environment="production")
         
         # Deploy security policies to all clouds
         results = await orchestrator.deploy_security_policies(['aws', 'gcp'])

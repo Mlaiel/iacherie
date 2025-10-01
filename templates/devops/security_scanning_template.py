@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Security Scanning Template for Ainflue Platform
+"""Security Scanning Template for iacherie Platform
 Enterprise-grade security vulnerability scanning and assessment templates.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -88,7 +88,7 @@ class SecurityScanConfig:
 
 
 class SecurityScanningTemplate:
-    """Enterprise Security Scanning Template for Ainflue Platform"""
+    """Enterprise Security Scanning Template for iacherie Platform"""
     
     def __init__(self, config: SecurityScanConfig):
         self.config = config
@@ -153,7 +153,7 @@ class SecurityScanningTemplate:
                     "with": {
                         "projectBaseDir": ".",
                         "args": |
-                            -Dsonar.projectKey=ainflue-platform
+                            -Dsonar.projectKey=iacherie-platform
                             -Dsonar.sources=.
                             -Dsonar.exclusions=**/*test*/**,**/node_modules/**,**/venv/**
                             -Dsonar.python.coverage.reportPaths=coverage.xml
@@ -421,13 +421,13 @@ class SecurityScanningTemplate:
                 {"uses": "actions/checkout@v4"},
                 {
                     "name": "Build Docker image",
-                    "run": "docker build -t ainflue-scan:${{ github.sha }} ."
+                    "run": "docker build -t iacherie-scan:${{ github.sha }} ."
                 },
                 {
                     "name": "Run Trivy vulnerability scanner",
                     "uses": "aquasecurity/trivy-action@master",
                     "with": {
-                        "image-ref": "ainflue-scan:${{ github.sha }}",
+                        "image-ref": "iacherie-scan:${{ github.sha }}",
                         "format": "sarif",
                         "output": "trivy-results.sarif"
                     }
@@ -456,14 +456,14 @@ class SecurityScanningTemplate:
                 {
                     "name": "Build and scan with Clair",
                     "run": |
-                        docker build -t ainflue-scan:latest .
+                        docker build -t iacherie-scan:latest .
                         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
                           -v $(pwd):/output \
                           arminc/clair-scanner:latest \
                           --clair="http://clair:6060" \
                           --ip="$(hostname -i)" \
                           --report=/output/clair-report.json \
-                          ainflue-scan:latest
+                          iacherie-scan:latest
                 },
                 {
                     "name": "Upload Clair results",
@@ -653,7 +653,7 @@ class SecurityScanningTemplate:
 def create_production_security_config() -> SecurityScanConfig:
     """Create production security scanning configuration"""
     return SecurityScanConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment="production",
         scan_types=[
             ScanType.SAST,
@@ -680,7 +680,7 @@ if __name__ == "__main__":
     config = create_production_security_config()
     template = SecurityScanningTemplate(config)
     
-    print("Security Scanning Template for Ainflue Platform")
+    print("Security Scanning Template for iacherie Platform")
     print("Configuration:")
     print(f"- Scan Types: {[scan.value for scan in config.scan_types]}")
     print(f"- SAST Tools: SonarQube, Semgrep, Bandit")

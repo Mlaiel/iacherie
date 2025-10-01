@@ -407,7 +407,7 @@ class ProtectionSEOEngine:
         
         # Watermark de propriété
         ownership_mark = base64.b64encode(
-            f"AINFLUE_{content_id}_PROTECTED".encode()
+            f"IACHERIE_{content_id}_PROTECTED".encode()
         ).decode()[:25]
         watermarks.append(f"OW_{ownership_mark}")
         
@@ -608,7 +608,7 @@ class ProtectionSEOEngine:
         threats = []
         
         # Simulation de détection d'abus de marque
-        brand_terms = ["ainflue", "fahed mlaiel", "seo engine"]
+        brand_terms = ["iacherie", "fahed mlaiel", "seo engine"]
         
         for term in brand_terms:
             if np.random.random() < 0.08:  # 8% de chance de détecter un abus
@@ -1061,7 +1061,7 @@ class AILocalSEOOptimizer:
         self.local_competitors: Dict[str, Dict[str, Any]] = {}
         self.citation_sources: Dict[str, Any] = {}
         self.review_monitoring: Dict[str, Any] = {}
-        self.geocoder = Nominatim(user_agent="AInflue-LocalSEO-2.1")
+        self.geocoder = Nominatim(user_agent="IA-Cheries-LocalSEO-2.1")
         self.session: Optional[aiohttp.ClientSession] = None
         
         # Métriques SEO local

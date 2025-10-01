@@ -1,4 +1,4 @@
-# ⚡ Canary Deployment Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Canary Deployment Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: canary-deployment-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: canary-deployment
     component: global-config
@@ -94,13 +94,13 @@ data:
           email:
             enabled: true
             smtp:
-              host: "smtp.ainflue.com"
+              host: "smtp.iacherie.com"
               port: 587
-              username: "deploy-bot@ainflue.com"
+              username: "deploy-bot@iacherie.com"
               password: "smtp-password"
             recipients:
-              - "platform-team@ainflue.com"
-              - "oncall@ainflue.com"
+              - "platform-team@iacherie.com"
+              - "oncall@iacherie.com"
           webhook:
             enabled: true
             endpoints:
@@ -127,10 +127,10 @@ data:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: ainflue-api-rollout
-  namespace: ainflue-production
+  name: iacherie-api-rollout
+  namespace: iacherie-production
   labels:
-    app: ainflue-api
+    app: iacherie-api
     component: rollout
 spec:
   replicas: 10
@@ -140,11 +140,11 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: ainflue-api-vs
+            name: iacherie-api-vs
             routes:
             - primary
           destinationRule:
-            name: ainflue-api-dr
+            name: iacherie-api-dr
             canarySubsetName: canary
             stableSubsetName: stable
       # Canary Steps
@@ -159,9 +159,9 @@ spec:
           - templateName: latency-p99
           args:
           - name: service-name
-            value: ainflue-api
+            value: iacherie-api
           - name: namespace
-            value: ainflue-production
+            value: iacherie-production
       - setWeight: 10
       - pause:
           duration: 5m
@@ -172,7 +172,7 @@ spec:
           - templateName: latency-p99
           args:
           - name: service-name
-            value: ainflue-api
+            value: iacherie-api
       - setWeight: 25
       - pause:
           duration: 10m
@@ -183,7 +183,7 @@ spec:
           - templateName: latency-p99
           args:
           - name: service-name
-            value: ainflue-api
+            value: iacherie-api
       - setWeight: 50
       - pause:
           duration: 15m
@@ -194,7 +194,7 @@ spec:
           - templateName: latency-p99
           args:
           - name: service-name
-            value: ainflue-api
+            value: iacherie-api
       # Auto Promotion
       autoPromotionEnabled: false
       scaleDownDelaySeconds: 30
@@ -205,21 +205,21 @@ spec:
         - templateName: final-analysis
         args:
         - name: service-name
-          value: ainflue-api
+          value: iacherie-api
         - name: duration
           value: 30m
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   template:
     metadata:
       labels:
-        app: ainflue-api
+        app: iacherie-api
         version: stable
     spec:
       containers:
-      - name: ainflue-api
-        image: ainflue/api:v1.0.0
+      - name: iacherie-api
+        image: iacherie/api:v1.0.0
         ports:
         - containerPort: 8080
           name: http
@@ -253,12 +253,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: success-rate
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
   - name: namespace
-    value: ainflue-production
+    value: iacherie-production
   metrics:
   - name: success-rate
     provider:
@@ -280,12 +280,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: error-rate
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
   - name: namespace
-    value: ainflue-production
+    value: iacherie-production
   metrics:
   - name: error-rate
     provider:
@@ -307,12 +307,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: latency-p99
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
   - name: namespace
-    value: ainflue-production
+    value: iacherie-production
   metrics:
   - name: latency-p99
     provider:
@@ -333,7 +333,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: final-analysis
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -390,14 +390,14 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: ainflue-api-canary-vs
-  namespace: ainflue-production
+  name: iacherie-api-canary-vs
+  namespace: iacherie-production
 spec:
   hosts:
-  - api.ainflue.com
-  - ainflue-api.ainflue-production.svc.cluster.local
+  - api.iacherie.com
+  - iacherie-api.iacherie-production.svc.cluster.local
   gateways:
-  - ainflue-gateway
+  - iacherie-gateway
   - mesh
   http:
   - match:
@@ -406,7 +406,7 @@ spec:
           exact: "true"
     route:
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         subset: canary
       weight: 100
     fault:
@@ -427,7 +427,7 @@ spec:
           exact: "beta"
     route:
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         subset: canary
       weight: 100
     headers:
@@ -442,11 +442,11 @@ spec:
         prefix: "/api/v1/"
     route:
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         subset: stable
       weight: 95
     - destination:
-        host: ainflue-api.ainflue-production.svc.cluster.local
+        host: iacherie-api.iacherie-production.svc.cluster.local
         subset: canary
       weight: 5
     headers:
@@ -467,10 +467,10 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: ainflue-api-canary-dr
-  namespace: ainflue-production
+  name: iacherie-api-canary-dr
+  namespace: iacherie-production
 spec:
-  host: ainflue-api.ainflue-production.svc.cluster.local
+  host: iacherie-api.iacherie-production.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: LEAST_REQUEST
@@ -529,24 +529,24 @@ spec:
 apiVersion: split.smi-spec.io/v1alpha1
 kind: TrafficSplit
 metadata:
-  name: ainflue-api-canary-split
-  namespace: ainflue-production
+  name: iacherie-api-canary-split
+  namespace: iacherie-production
   annotations:
     split.smi-spec.io/canary: "true"
 spec:
-  service: ainflue-api
+  service: iacherie-api
   backends:
-  - service: ainflue-api-stable
+  - service: iacherie-api-stable
     weight: 95
-  - service: ainflue-api-canary
+  - service: iacherie-api-canary
     weight: 5
 ---
 # 🎯 Linkerd Service Profile for Canary
 apiVersion: linkerd.io/v1alpha2
 kind: ServiceProfile
 metadata:
-  name: ainflue-api-canary
-  namespace: ainflue-production
+  name: iacherie-api-canary
+  namespace: iacherie-production
 spec:
   routes:
   - name: api-routes
@@ -610,15 +610,15 @@ metadata:
   namespace: consul
 data:
   canary-splitter.hcl: |
-    # Ainflue API Canary Service Splitter
+    # iacherie API Canary Service Splitter
     Kind = "service-splitter"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Splits = [
       {
         Weight = 95
-        Service = "ainflue-api-stable"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-stable"
+        Namespace = "iacherie-production"
         ServiceSubset = "stable"
         RequestHeaders {
           Set = {
@@ -635,8 +635,8 @@ data:
       },
       {
         Weight = 5
-        Service = "ainflue-api-canary"
-        Namespace = "ainflue-production"
+        Service = "iacherie-api-canary"
+        Namespace = "iacherie-production"
         ServiceSubset = "canary"
         RequestHeaders {
           Set = {
@@ -663,10 +663,10 @@ metadata:
   namespace: consul
 data:
   canary-router.hcl: |
-    # Ainflue API Canary Service Router
+    # iacherie API Canary Service Router
     Kind = "service-router"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Routes = [
       {
         Match {
@@ -680,8 +680,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-api-canary"
-          Namespace = "ainflue-production"
+          Service = "iacherie-api-canary"
+          Namespace = "iacherie-production"
           ServiceSubset = "canary"
           RequestHeaders {
             Set = {
@@ -707,8 +707,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-api-canary"
-          Namespace = "ainflue-production"
+          Service = "iacherie-api-canary"
+          Namespace = "iacherie-production"
           ServiceSubset = "canary"
           RequestHeaders {
             Set = {
@@ -729,8 +729,8 @@ data:
           }
         }
         Destination {
-          Service = "ainflue-api-canary"
-          Namespace = "ainflue-production"
+          Service = "iacherie-api-canary"
+          Namespace = "iacherie-production"
           ServiceSubset = "canary"
           RequestHeaders {
             Set = {
@@ -749,10 +749,10 @@ data:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: ainflue-content-processor-rollout
-  namespace: ainflue-production
+  name: iacherie-content-processor-rollout
+  namespace: iacherie-production
   labels:
-    app: ainflue-content-processor
+    app: iacherie-content-processor
     component: rollout
 spec:
   replicas: 6
@@ -761,11 +761,11 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: ainflue-content-processor-vs
+            name: iacherie-content-processor-vs
             routes:
             - primary
           destinationRule:
-            name: ainflue-content-processor-dr
+            name: iacherie-content-processor-dr
             canarySubsetName: canary
             stableSubsetName: stable
       steps:
@@ -778,7 +778,7 @@ spec:
           - templateName: content-processing-latency
           args:
           - name: service-name
-            value: ainflue-content-processor
+            value: iacherie-content-processor
       - setWeight: 25
       - pause:
           duration: 10m
@@ -789,7 +789,7 @@ spec:
           - templateName: ai-processing-accuracy
           args:
           - name: service-name
-            value: ainflue-content-processor
+            value: iacherie-content-processor
       - setWeight: 50
       - pause:
           duration: 20m
@@ -797,16 +797,16 @@ spec:
       scaleDownDelaySeconds: 30
   selector:
     matchLabels:
-      app: ainflue-content-processor
+      app: iacherie-content-processor
   template:
     metadata:
       labels:
-        app: ainflue-content-processor
+        app: iacherie-content-processor
         version: stable
     spec:
       containers:
       - name: content-processor
-        image: ainflue/content-processor:v1.0.0
+        image: iacherie/content-processor:v1.0.0
         ports:
         - containerPort: 8080
           name: http
@@ -827,10 +827,10 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: ainflue-payment-service-rollout
-  namespace: ainflue-production
+  name: iacherie-payment-service-rollout
+  namespace: iacherie-production
   labels:
-    app: ainflue-payment-service
+    app: iacherie-payment-service
     component: rollout
 spec:
   replicas: 8
@@ -839,11 +839,11 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: ainflue-payment-service-vs
+            name: iacherie-payment-service-vs
             routes:
             - primary
           destinationRule:
-            name: ainflue-payment-service-dr
+            name: iacherie-payment-service-dr
             canarySubsetName: canary
             stableSubsetName: stable
       steps:
@@ -857,7 +857,7 @@ spec:
           - templateName: payment-fraud-rate
           args:
           - name: service-name
-            value: ainflue-payment-service
+            value: iacherie-payment-service
       - setWeight: 5
       - pause:
           duration: 15m
@@ -869,7 +869,7 @@ spec:
           - templateName: payment-revenue-impact
           args:
           - name: service-name
-            value: ainflue-payment-service
+            value: iacherie-payment-service
       - setWeight: 10
       - pause:
           duration: 30m
@@ -881,21 +881,21 @@ spec:
           - templateName: payment-revenue-impact
           args:
           - name: service-name
-            value: ainflue-payment-service
+            value: iacherie-payment-service
       autoPromotionEnabled: false
       scaleDownDelaySeconds: 60  # Longer for payment service
   selector:
     matchLabels:
-      app: ainflue-payment-service
+      app: iacherie-payment-service
   template:
     metadata:
       labels:
-        app: ainflue-payment-service
+        app: iacherie-payment-service
         version: stable
     spec:
       containers:
       - name: payment-service
-        image: ainflue/payment-service:v1.0.0
+        image: iacherie/payment-service:v1.0.0
         ports:
         - containerPort: 8080
           name: http
@@ -921,7 +921,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: content-processing-success
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -942,7 +942,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: content-processing-latency
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -964,7 +964,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: ai-processing-accuracy
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -986,7 +986,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: payment-success-rate
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -1007,7 +1007,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: payment-latency
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -1029,7 +1029,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: payment-fraud-rate
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -1050,7 +1050,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
   name: payment-revenue-impact
-  namespace: ainflue-production
+  namespace: iacherie-production
 spec:
   args:
   - name: service-name
@@ -1078,7 +1078,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: canary-notification-templates
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   slack-templates.yaml: |
     # Slack Notification Templates
@@ -1094,8 +1094,8 @@ data:
           • Initial Weight: `{{ .Spec.Strategy.Canary.Steps[0].SetWeight }}%`
           
           🔍 **Monitoring:**
-          • Dashboard: [View Metrics](https://grafana.ainflue.com/d/canary-dashboard)
-          • Logs: [View Logs](https://kibana.ainflue.com)
+          • Dashboard: [View Metrics](https://grafana.iacherie.com/d/canary-dashboard)
+          • Logs: [View Logs](https://kibana.iacherie.com)
           
           ⏰ Next step in {{ .Spec.Strategy.Canary.Steps[0].Pause.Duration }}
         color: "good"
@@ -1129,8 +1129,8 @@ data:
           • Stable Version: `{{ .Status.StableRevision }}`
           
           🔍 **Investigation:**
-          • Dashboard: [View Metrics](https://grafana.ainflue.com/d/canary-dashboard)
-          • Alerts: [View Alerts](https://alertmanager.ainflue.com)
+          • Dashboard: [View Metrics](https://grafana.iacherie.com/d/canary-dashboard)
+          • Alerts: [View Alerts](https://alertmanager.iacherie.com)
         color: "danger"
   
   email-templates.yaml: |
@@ -1153,12 +1153,12 @@ data:
           
           <h3>Monitoring Links:</h3>
           <ul>
-            <li><a href="https://grafana.ainflue.com/d/canary-dashboard">Grafana Dashboard</a></li>
-            <li><a href="https://kibana.ainflue.com">Application Logs</a></li>
-            <li><a href="https://argocd.ainflue.com">Argo CD Console</a></li>
+            <li><a href="https://grafana.iacherie.com/d/canary-dashboard">Grafana Dashboard</a></li>
+            <li><a href="https://kibana.iacherie.com">Application Logs</a></li>
+            <li><a href="https://argocd.iacherie.com">Argo CD Console</a></li>
           </ul>
           
-          <p>This is an automated notification from the Ainflue Platform.</p>
+          <p>This is an automated notification from the iacherie Platform.</p>
 
 # ===================================================================
 # 🎯 ADVANCED CANARY FEATURES
@@ -1169,7 +1169,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: canary-experiment-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   experiments.yaml: |
     # Canary Experiment Configuration
@@ -1180,17 +1180,17 @@ data:
         framework: "optimizely"  # optimizely, launchdarkly, split
         config:
           sdkKey: "optimizely-sdk-key"
-          projectId: "ainflue-experiments"
+          projectId: "iacherie-experiments"
         experiments:
           - name: "new-payment-flow"
             trafficAllocation: 10
             variations:
               - name: "control"
                 weight: 50
-                service: "ainflue-payment-service-stable"
+                service: "iacherie-payment-service-stable"
               - name: "treatment"
                 weight: 50
-                service: "ainflue-payment-service-canary"
+                service: "iacherie-payment-service-canary"
             metrics:
               - "conversion_rate"
               - "payment_success_rate"
@@ -1200,10 +1200,10 @@ data:
             variations:
               - name: "control"
                 weight: 70
-                service: "ainflue-content-processor-stable"
+                service: "iacherie-content-processor-stable"
               - name: "treatment"
                 weight: 30
-                service: "ainflue-content-processor-canary"
+                service: "iacherie-content-processor-canary"
             metrics:
               - "processing_speed"
               - "quality_score"
@@ -1267,5 +1267,5 @@ data:
 # ===================================================================
 # END OF CANARY DEPLOYMENT CONFIGURATION TEMPLATE
 # Creator Economy Canary Solution by Fahed Mlaiel
-# Enterprise-grade canary deployment for Ainflue platform
+# Enterprise-grade canary deployment for iacherie platform
 # ===================================================================

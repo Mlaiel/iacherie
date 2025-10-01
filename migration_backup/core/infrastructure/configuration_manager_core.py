@@ -1,10 +1,10 @@
 """
-Ainflue Core Infrastructure - Configuration Manager Core
+IA Chéries Core Infrastructure - Configuration Manager Core
 ========================================================
 
 Enterprise-grade configuration management system with multi-environment support,
 encrypted secrets management, hot-reload capabilities, and validation schemas.
-Provides centralized configuration for all Ainflue core components.
+Provides centralized configuration for all IA Chéries core components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -326,7 +326,7 @@ class ConfigurationManagerCore:
 
     def _load_from_environment(self):
         """Load configuration from environment variables"""
-        env_prefix = "AINFLUE_"
+        env_prefix = "IA CHÉRIES_"
         
         for key, value in os.environ.items():
             if key.startswith(env_prefix):

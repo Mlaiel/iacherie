@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Template Orchestrator - Ainflue DevOps Enterprise Platform
+🚀 Template Orchestrator - IA Chéries DevOps Enterprise Platform
 ================================================================
 
 DevOps Template Orchestration System for Creator Economy Platform
@@ -80,7 +80,7 @@ class CreatorEconomyConfig:
 
 class TemplateOrchestrator:
     """
-    Enterprise DevOps Template Orchestrator for Ainflue Creator Economy Platform
+    Enterprise DevOps Template Orchestrator for IA Chéries Creator Economy Platform
     
     Capabilities:
     - Multi-platform template generation (AWS, GCP, Azure, K8s)
@@ -91,7 +91,7 @@ class TemplateOrchestrator:
     - Real-time monitoring setup
     """
     
-    def __init__(self, base_path: str = "/home/runner/work/Ainfluencer/Ainfluencer/templates/devops"):
+    def __init__(self, base_path: str = "/home/runner/work/IA Chéries/IA Chéries/templates/devops"):
         self.base_path = Path(base_path)
         self.templates_dir = self.base_path
         self.output_dir = self.base_path / "generated"
@@ -160,7 +160,7 @@ class TemplateOrchestrator:
         """Generate AWS CloudFormation templates"""
         template = {
             "AWSTemplateFormatVersion": "2010-09-09",
-            "Description": f"Ainflue Creator Economy Platform - {data['environment']} Environment",
+            "Description": f"IA Chéries Creator Economy Platform - {data['environment']} Environment",
             "Parameters": {
                 "Environment": {
                     "Type": "String",
@@ -316,7 +316,7 @@ class TemplateOrchestrator:
     async def _generate_github_actions_pipeline(self, config: TemplateConfig) -> Dict[str, Any]:
         """Generate GitHub Actions workflow for Creator Economy Platform"""
         workflow = {
-            "name": "Ainflue Creator Economy CI/CD",
+            "name": "IA Chéries Creator Economy CI/CD",
             "on": {
                 "push": {"branches": ["main", "develop"]},
                 "pull_request": {"branches": ["main"]},
@@ -562,7 +562,7 @@ class TemplateOrchestrator:
         """Generate Grafana dashboards for Creator Economy"""
         creator_dashboard = {
             "dashboard": {
-                "title": "Ainflue Creator Economy Dashboard",
+                "title": "IA Chéries Creator Economy Dashboard",
                 "tags": ["creator", "economy", "ainflue"],
                 "timezone": "UTC",
                 "panels": [

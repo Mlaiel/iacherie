@@ -1,11 +1,11 @@
 """
-Copyright Detection Model - Ainflue Enterprise
+Copyright Detection Model - IA Chéries Enterprise
 ============================================
 Modèle détection copyright avec fingerprinting et neural networks.
 Audio fingerprinting + visual similarity + text plagiarism + legal compliance.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -348,7 +348,7 @@ class CopyrightDetectionModel:
 
 class CopyrightDetectionService:
     """
-    Service principal pour copyright detection Ainflue.
+    Service principal pour copyright detection IA Chéries.
     Orchestration + batch processing + database management + reporting.
     """
     

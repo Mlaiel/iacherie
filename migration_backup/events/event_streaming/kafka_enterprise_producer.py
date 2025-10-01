@@ -1,5 +1,5 @@
 """IA Influencer Agent - Kafka Enterprise Producer
-High-Performance Enterprise Kafka Producer for Ainflue Platform
+High-Performance Enterprise Kafka Producer for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -32,8 +32,8 @@ class CompressionType(Enum):
     ZSTD = "zstd"
 
 
-class AinflueBusinesEventTypes:
-    """Business event types for Ainflue platform"""
+class IA ChériesBusinesEventTypes:
+    """Business event types for IA Chéries platform"""
     
     # Content Lifecycle Events
     CONTENT_UPLOAD_STARTED = "ainflue.content.upload.started"
@@ -66,7 +66,7 @@ class AinflueBusinesEventTypes:
 
 @dataclass
 class KafkaProducerConfig:
-    """Kafka producer configuration optimized for Ainflue"""
+    """Kafka producer configuration optimized for IA Chéries"""
     
     # Bootstrap servers
     bootstrap_servers: List[str] = field(default_factory=lambda: ["localhost:9092"])
@@ -111,14 +111,14 @@ class ProducerMetrics:
     last_updated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class AinflueBusinesPartitioner:
-    """Custom partitioner for Ainflue business logic"""
+class IA ChériesBusinesPartitioner:
+    """Custom partitioner for IA Chéries business logic"""
     
     def __init__(self, partition_count: int):
         self.partition_count = partition_count
     
     def partition(self, topic: str, key: Optional[str], value: Dict[str, Any]) -> int:
-        """Partition based on Ainflue business logic"""
+        """Partition based on IA Chéries business logic"""
         try:
             # Extract business identifiers
             creator_id = value.get("creator_id")
@@ -155,7 +155,7 @@ class KafkaEnterpriseProducer:
         self.metrics_collector = metrics_collector
         self.metrics = ProducerMetrics()
         self._producer = None
-        self._partitioner_cache: Dict[str, AinflueBusinesPartitioner] = {}
+        self._partitioner_cache: Dict[str, IA ChériesBusinesPartitioner] = {}
         self._retry_queue: asyncio.Queue = asyncio.Queue()
         self._shutdown_event = asyncio.Event()
         self._retry_task: Optional[asyncio.Task] = None
@@ -274,7 +274,7 @@ class KafkaEnterpriseProducer:
                                  creator_id: Optional[str] = None,
                                  content_id: Optional[str] = None,
                                  payload: Optional[Dict[str, Any]] = None) -> str:
-        """Send Ainflue business event with proper routing"""
+        """Send IA Chéries business event with proper routing"""
         try:
             # Determine topic based on event type
             topic = self._get_business_topic(business_event_type)
@@ -360,7 +360,7 @@ class KafkaEnterpriseProducer:
             if topic not in self._partitioner_cache:
                 # In real implementation, we'd get partition count from Kafka metadata
                 partition_count = 3  # Default partition count
-                self._partitioner_cache[topic] = AinflueBusinesPartitioner(partition_count)
+                self._partitioner_cache[topic] = IA ChériesBusinesPartitioner(partition_count)
             
             partitioner = self._partitioner_cache[topic]
             return partitioner.partition(topic, key, message)
@@ -482,6 +482,6 @@ class KafkaEnterpriseProducer:
 
 # Export public API
 __all__ = [
-    "KafkaEnterpriseProducer", "KafkaProducerConfig", "AinflueBusinesEventTypes",
-    "CompressionType", "ProducerMetrics", "AinflueBusinesPartitioner"
+    "KafkaEnterpriseProducer", "KafkaProducerConfig", "IA ChériesBusinesEventTypes",
+    "CompressionType", "ProducerMetrics", "IA ChériesBusinesPartitioner"
 ]

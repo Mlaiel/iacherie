@@ -2,7 +2,7 @@
 ===============================================
 
 Kubernetes Ingress Controller configuration with cert-manager
-for automatic TLS certificate management for the Ainflue platform.
+for automatic TLS certificate management for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

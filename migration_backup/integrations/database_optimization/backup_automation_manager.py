@@ -2,7 +2,7 @@
 =========================================================
 
 Enterprise-grade backup and recovery system with intelligent scheduling,
-point-in-time recovery, and cross-region replication for Ainflue platform.
+point-in-time recovery, and cross-region replication for IA Chéries platform.
 
 Expert Roles Implementation:
 🗄️ DBA Senior: Advanced backup strategies + recovery procedures + PITR

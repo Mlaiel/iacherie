@@ -26,7 +26,7 @@ import urllib.parse
 from pathlib import Path
 import base64
 
-class AinfluencerRedditAPI:
+class iaCherieRedditAPI:
     """
     🔴 Moteur Reddit pour IA Chérie
     
@@ -593,7 +593,7 @@ async def test_reddit_engine():
     
     try:
         # Initialisation
-        reddit = AinfluencerRedditAPI()
+        reddit = iaCherieRedditAPI()
         
         # Test 1: Récupération de posts populaires
         print("📋 Test 1: Posts populaires de r/technology...")

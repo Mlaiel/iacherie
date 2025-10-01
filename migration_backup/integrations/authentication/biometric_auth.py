@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Biometric Authentication
+IA Chéries Platform - Enterprise Biometric Authentication
 Advanced biometric authentication system with multiple modalities
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

@@ -17,7 +17,7 @@ services:
     environment:
       - ENVIRONMENT=production
       - DEBUG=false
-      - DATABASE_URL=postgresql://ainflue_user:${DB_PASSWORD}@postgres:5432/ainflue_prod
+      - DATABASE_URL=postgresql://iacherie_user:${DB_PASSWORD}@postgres:5432/iacherie_prod
       - REDIS_URL=redis://redis:6379/0
       - SECRET_KEY=${SECRET_KEY}
     ports:
@@ -54,8 +54,8 @@ services:
     container_name: iacherie-postgres-prod
     restart: unless-stopped
     environment:
-      - POSTGRES_DB=ainflue_prod
-      - POSTGRES_USER=ainflue_user
+      - POSTGRES_DB=iacherie_prod
+      - POSTGRES_USER=iacherie_user
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
     volumes:
@@ -72,7 +72,7 @@ services:
           memory: 1G
           cpus: '0.5'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ainflue_user -d ainflue_prod"]
+      test: ["CMD-SHELL", "pg_isready -U iacherie_user -d iacherie_prod"]
       interval: 10s
       timeout: 5s
       retries: 5

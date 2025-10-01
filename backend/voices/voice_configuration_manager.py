@@ -3,7 +3,7 @@
 
 Comprehensive configuration management system providing centralized settings,
 environment configuration, dynamic updates, and configuration analytics
-for the Ainflue voice ecosystem.
+for the iacherie voice ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

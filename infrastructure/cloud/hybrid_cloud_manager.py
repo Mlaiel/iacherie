@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-🏗️ Ainflue Infrastructure - Hybrid Cloud Manager
-Enterprise hybrid cloud deployment coordination for Ainflue platform.
+🏗️ iacherie Infrastructure - Hybrid Cloud Manager
+Enterprise hybrid cloud deployment coordination for iacherie platform.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -668,7 +668,7 @@ if __name__ == "__main__":
         
         # Define a workload
         workload = WorkloadDefinition(
-            name="ainflue-api",
+            name="iacherie-api",
             type="api",
             requirements={"cpu": "4 cores", "memory": "8GB"},
             preferred_clouds=["aws", "gcp"],
@@ -679,7 +679,7 @@ if __name__ == "__main__":
         
         # Register and deploy workload
         await manager.register_workload(workload)
-        deployment_result = await manager.deploy_workload("ainflue-api")
+        deployment_result = await manager.deploy_workload("iacherie-api")
         
         print("Deployment Result:", deployment_result)
         

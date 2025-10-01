@@ -154,7 +154,7 @@ class SLAComplianceReporter:
             regulatory_status=regulatory_status,
             metadata={
                 "report_generator": "SLA Compliance Reporter v1.0",
-                "platform": "Ainflue Creator Economy",
+                "platform": "IA Chéries Creator Economy",
                 "author": "Fahed Mlaiel",
                 "confidentiality": "RESTRICTED"
             }
@@ -542,7 +542,7 @@ class SLAComplianceReporter:
             </style>
         </head>
         <body>
-            <div class="confidential">⚠️ CONFIDENTIAL - AINFLUE CREATOR PLATFORM ⚠️</div>
+            <div class="confidential">⚠️ CONFIDENTIAL - IA CHÉRIES CREATOR PLATFORM ⚠️</div>
             
             <div class="header">
                 <h1>SLA Compliance Report</h1>

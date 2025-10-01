@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🎯 Traffic Routing Service - Enterprise Service Mesh
-Service de routage intelligent du trafic pour microservices Ainflue
+Service de routage intelligent du trafic pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production
@@ -1399,7 +1399,7 @@ async def main():
             'headers': {
                 'host': 'api.ainflue.com',
                 'x-api-version': 'v2',
-                'user-agent': 'AinflueMobile/1.0'
+                'user-agent': 'IA ChériesMobile/1.0'
             },
             'source_ip': '192.168.1.100'
         }

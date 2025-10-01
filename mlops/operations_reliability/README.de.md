@@ -277,7 +277,7 @@ SLA_ERROR_BUDGET_WINDOW_DAYS=30
 
 ---
 
-**© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre Ainflue-Architektur**
+**© 2025 Fahed Mlaiel - Alle Rechte vorbehalten - Proprietäre iacherie-Architektur**
 
 **📧 Für Lizenzanfragen:** mlaiel@live.de  
-**🌐 Weitere Informationen:** [Ainflue MLOps Documentation](https://github.com/Mlaiel/Ainflue)
+**🌐 Weitere Informationen:** [iacherie MLOps Documentation](https://github.com/Mlaiel/iacherie)

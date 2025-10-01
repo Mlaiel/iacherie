@@ -1,4 +1,4 @@
-"""Third Party API Template for Ainflue Platform
+"""Third Party API Template for iacherie Platform
 Enterprise-grade integration framework for external API services
 
 ⚠️  AVERTISSEMENT LÉGAL:

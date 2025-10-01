@@ -90,7 +90,7 @@ class ComplianceValidationResult:
 
 class ComplianceValidator:
     """
-    Advanced compliance validator for Ainflue business events.
+    Advanced compliance validator for IA Chéries business events.
     Real-time validation against multiple regulatory frameworks.
     """
     

@@ -32,7 +32,7 @@ from dataclasses import dataclass, asdict
 from enum import Enum
 
 # Configure enterprise logging
-log_dir = '/tmp/ainflue_logs'
+log_dir = '/tmp/iacherie_logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logging.basicConfig(

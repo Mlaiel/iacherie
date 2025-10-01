@@ -135,7 +135,7 @@ text_processing:
 # Enterprise Media Processing
 media_processing:
   max_file_size_mb: 100
-  temp_directory: "/tmp/ainflue_media"
+  temp_directory: "/tmp/iacherie_media"
   enable_optimization: true
   quality_settings:
     image_quality: 85

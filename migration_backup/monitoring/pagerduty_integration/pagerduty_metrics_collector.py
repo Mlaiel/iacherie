@@ -1,5 +1,5 @@
 """
-PagerDuty Metrics Collector for Ainflue Platform
+PagerDuty Metrics Collector for IA Chéries Platform
 Advanced metrics harvesting and analytics for incident management
 
 Author: Fahed Mlaiel <mlaiel@live.de>

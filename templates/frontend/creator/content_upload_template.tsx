@@ -2,7 +2,7 @@
  * 🎨 CONTENT UPLOAD TEMPLATE - FRONTEND EXPERT IMPLEMENTATION
  * ===========================================================
  * 
- * Enterprise-grade content upload component for Ainflue Creator Economy with:
+ * Enterprise-grade content upload component for iacherie Creator Economy with:
  * - TypeScript support with strict typing
  * - Multi-format content upload (video, audio, images, documents)
  * - Drag & drop interface with preview
@@ -999,9 +999,9 @@ export const ContentUpload: React.FC<ContentUploadProps> = ({
   return (
     <UploadContainer className={className} style={style} {...props}>
       <UploadHeader>
-        <UploadTitle>🚀 Ainflue Content Upload</UploadTitle>
+        <UploadTitle>🚀 iacherie Content Upload</UploadTitle>
         <UploadSubtitle>
-          Upload your content to the Ainflue Creator Economy platform. 
+          Upload your content to the iacherie Creator Economy platform. 
           Our AI will analyze and optimize your content for maximum reach and protection.
         </UploadSubtitle>
       </UploadHeader>

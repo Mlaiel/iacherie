@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Payment Fraud Configuration Module
+"""IA Chéries Payment Fraud Configuration Module
 ==========================================
 
 Enterprise-grade payment fraud detection and prevention configuration 
-for the Ainflue platform. Comprehensive fraud management with ML-based 
+for the IA Chéries platform. Comprehensive fraud management with ML-based 
 detection, real-time monitoring, and automated response systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

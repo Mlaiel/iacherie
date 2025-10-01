@@ -1,4 +1,4 @@
-# Security Policy Template - Ainflue Creator Economy Platform
+# Security Policy Template - iacherie Creator Economy Platform
 # ============================================================
 #
 # 🎯 SECURITY EXPERT + DEVOPS ENGINEER + COMPLIANCE SPECIALIST
@@ -33,8 +33,8 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-creator-economy-psp
-  namespace: ainflue-platform
+  name: iacherie-creator-economy-psp
+  namespace: iacherie-platform
   labels:
     app: security-policy
     component: pod-security
@@ -109,7 +109,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ainflue-platform
+  name: iacherie-platform
   labels:
     # Pod Security Standards enforcement
     pod-security.kubernetes.io/enforce: restricted
@@ -134,7 +134,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ainflue-creator-economy-role
+  name: iacherie-creator-economy-role
   labels:
     app: rbac
     component: cluster-role
@@ -175,7 +175,7 @@ rules:
   verbs: ["get", "list"]
 
 # Custom Resource Definitions for Creator Economy
-- apiGroups: ["ainflue.com"]
+- apiGroups: ["iacherie.com"]
   resources: ["creators", "contents", "collaborations", "monetizations"]
   verbs: ["get", "list", "watch", "create", "update", "patch"]
 ---
@@ -184,20 +184,20 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: creator-platform-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: creator-platform
     component: service-account
     business-unit: creator-economy
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformRole
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/iacheriePlatformRole
 automountServiceAccountToken: true
 ---
 # Cluster Role Binding
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ainflue-creator-economy-binding
+  name: iacherie-creator-economy-binding
   labels:
     app: rbac
     component: cluster-role-binding
@@ -205,19 +205,19 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: creator-platform-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 - kind: ServiceAccount
   name: ai-processor-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 - kind: ServiceAccount
   name: collaboration-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 - kind: ServiceAccount
   name: monetization-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 roleRef:
   kind: ClusterRole
-  name: ainflue-creator-economy-role
+  name: iacherie-creator-economy-role
   apiGroup: rbac.authorization.k8s.io
 ---
 # Role for Monetization Service (Higher Privileges)
@@ -225,7 +225,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: monetization-service-role
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: rbac
     component: role
@@ -253,14 +253,14 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: monetization-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: monetization-service
     component: service-account
     security-level: high
     compliance: pci-dss
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformMonetizationRole
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/iacheriePlatformMonetizationRole
 automountServiceAccountToken: true
 ---
 # Role Binding for Monetization Service
@@ -268,7 +268,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: monetization-service-binding
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: rbac
     component: role-binding
@@ -276,7 +276,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: monetization-sa
-  namespace: ainflue-platform
+  namespace: iacherie-platform
 roleRef:
   kind: Role
   name: monetization-service-role
@@ -291,7 +291,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-deny-all
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: network-policy
     component: default-deny
@@ -307,7 +307,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: creator-platform-netpol
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: network-policy
     component: creator-platform
@@ -393,7 +393,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: ai-processor-netpol
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: network-policy
     component: ai-processor
@@ -452,7 +452,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: monetization-service-netpol
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: network-policy
     component: monetization
@@ -511,7 +511,7 @@ spec:
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
-  name: ainflue-creator-economy-scc
+  name: iacherie-creator-economy-scc
   labels:
     app: security-context
     component: constraints
@@ -549,9 +549,9 @@ volumes:
 - projected
 - secret
 users:
-- system:serviceaccount:ainflue-platform:creator-platform-sa
-- system:serviceaccount:ainflue-platform:ai-processor-sa
-- system:serviceaccount:ainflue-platform:collaboration-sa
+- system:serviceaccount:iacherie-platform:creator-platform-sa
+- system:serviceaccount:iacherie-platform:ai-processor-sa
+- system:serviceaccount:iacherie-platform:collaboration-sa
 groups: []
 ---
 # ==============================================================================
@@ -562,7 +562,7 @@ groups: []
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
-  name: ainfluecreatoreconomysecurity
+  name: iacheriecreatoreconomysecurity
   labels:
     app: opa-gatekeeper
     component: constraint-template
@@ -571,7 +571,7 @@ spec:
   crd:
     spec:
       names:
-        kind: AinfluecreatoreconomySecurity
+        kind: iacheriecreatoreconomySecurity
       validation:
         type: object
         properties:
@@ -588,7 +588,7 @@ spec:
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
-        package ainfluecreatoreconomysecurity
+        package iacheriecreatoreconomysecurity
         
         violation[{"msg": msg}] {
           # Ensure Creator Economy workloads have required labels
@@ -617,7 +617,7 @@ spec:
 ---
 # Creator Economy Security Constraint
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: AinfluecreatoreconomySecurity
+kind: iacheriecreatoreconomySecurity
 metadata:
   name: creator-economy-security
   labels:
@@ -631,7 +631,7 @@ spec:
         kinds: ["Deployment"]
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces: ["ainflue-platform"]
+    namespaces: ["iacherie-platform"]
   parameters:
     requiredLabels:
       - "app"
@@ -653,7 +653,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: falco-creator-economy-rules
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: falco
     component: rules
@@ -667,7 +667,7 @@ data:
       desc: Detect attempts to escalate privileges in Creator Economy workloads
       condition: >
         spawned_process and container and
-        k8s_ns = "ainflue-platform" and
+        k8s_ns = "iacherie-platform" and
         (proc.name in (sudo, su, doas) or
          proc.args contains "privilege" or
          proc.args contains "escalate")
@@ -683,7 +683,7 @@ data:
       desc: Detect unauthorized outbound network connections
       condition: >
         outbound and container and
-        k8s_ns = "ainflue-platform" and
+        k8s_ns = "iacherie-platform" and
         not fd.sip in (creator_economy_allowed_ips) and
         not fd.sport in (80, 443, 53, 5432, 6379)
       output: >
@@ -698,7 +698,7 @@ data:
       desc: Detect unauthorized file system modifications
       condition: >
         open_write and container and
-        k8s_ns = "ainflue-platform" and
+        k8s_ns = "iacherie-platform" and
         fd.typechar = 'f' and
         (fd.name startswith "/etc" or
          fd.name startswith "/usr/bin" or
@@ -715,7 +715,7 @@ data:
       desc: Detect potential cryptocurrency mining activities
       condition: >
         spawned_process and container and
-        k8s_ns = "ainflue-platform" and
+        k8s_ns = "iacherie-platform" and
         (proc.name in (xmrig, minerd, cpuminer, ethminer) or
          proc.args contains "mining" or
          proc.args contains "stratum" or
@@ -774,7 +774,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: image-security-policy
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: image-security
     component: policy
@@ -789,7 +789,7 @@ data:
     spec:
       # Allowed registries
       allowedRegistries:
-        - "ghcr.io/ainflue"
+        - "ghcr.io/iacherie"
         - "docker.io/library"  # Official images only
         - "quay.io/prometheus"
         - "gcr.io/istio-release"
@@ -802,7 +802,7 @@ data:
       
       # Image signing requirements
       signingRequirements:
-        - registry: "ghcr.io/ainflue"
+        - registry: "ghcr.io/iacherie"
           keyPath: "/etc/cosign/cosign.pub"
           required: true
       
@@ -825,7 +825,7 @@ data:
       # Content trust
       contentTrust:
         enabled: true
-        notaryURL: "https://notary.ainflue.com"
+        notaryURL: "https://notary.iacherie.com"
 ---
 # ==============================================================================
 # RUNTIME SECURITY
@@ -836,7 +836,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: creator-economy-apparmor-profile
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: apparmor
     component: profile
@@ -894,7 +894,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: SecretStore
 metadata:
   name: creator-economy-secret-store
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-secrets
     component: secret-store
@@ -914,7 +914,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: database-credentials
-  namespace: ainflue-platform
+  namespace: iacherie-platform
   labels:
     app: external-secrets
     component: database-credentials
@@ -938,17 +938,17 @@ spec:
   data:
   - secretKey: username
     remoteRef:
-      key: ainflue/database/postgresql
+      key: iacherie/database/postgresql
       property: username
   - secretKey: password
     remoteRef:
-      key: ainflue/database/postgresql
+      key: iacherie/database/postgresql
       property: password
   - secretKey: host
     remoteRef:
-      key: ainflue/database/postgresql
+      key: iacherie/database/postgresql
       property: host
   - secretKey: database
     remoteRef:
-      key: ainflue/database/postgresql
+      key: iacherie/database/postgresql
       property: database

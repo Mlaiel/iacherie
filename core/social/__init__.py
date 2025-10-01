@@ -169,7 +169,7 @@ class SocialMediaManager:
         demo_profiles = [
             {
                 "platform": SocialPlatform.INSTAGRAM,
-                "username": "ainfluencer_demo",
+                "username": "iacheriencer_demo",
                 "display_name": "AI Influencer Demo",
                 "bio": "AI-powered content creation platform 🤖✨",
                 "followers_count": 15420,
@@ -180,8 +180,8 @@ class SocialMediaManager:
             },
             {
                 "platform": SocialPlatform.TIKTOK,
-                "username": "ainfluencer_official",
-                "display_name": "AInfluencer Official",
+                "username": "iacheriencer_official",
+                "display_name": "iaCherie Official",
                 "bio": "Create viral content with AI 🚀",
                 "followers_count": 89340,
                 "following_count": 234,
@@ -191,8 +191,8 @@ class SocialMediaManager:
             },
             {
                 "platform": SocialPlatform.YOUTUBE,
-                "username": "ainfluencer_channel",
-                "display_name": "AInfluencer Channel",
+                "username": "iacheriencer_channel",
+                "display_name": "iaCherie Channel",
                 "bio": "AI tutorials and content creation tips",
                 "followers_count": 34560,
                 "following_count": 145,

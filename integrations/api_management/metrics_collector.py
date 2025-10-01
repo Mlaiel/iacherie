@@ -977,7 +977,7 @@ class EnterpriseMetricsCollector:
 
 
 # IA Chérie Business Logic Integration Constants
-AINFLUE_METRICS_CONFIGURATION = {
+IACHERIE_METRICS_CONFIGURATION = {
     'creator_economy_metrics': {
         'content_metrics': ['uploads', 'views', 'engagement', 'shares'],
         'monetization_metrics': ['revenue', 'conversions', 'cpm', 'ctr'],

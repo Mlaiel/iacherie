@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Ainflue Creator Economy Platform - production Environment
+Description: IA Chéries Creator Economy Platform - production Environment
 Outputs:
   CDNDomain:
     Description: CloudFront Distribution Domain

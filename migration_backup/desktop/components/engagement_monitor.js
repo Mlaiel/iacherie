@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Engagement Monitor Component
+ * IA Chéries Desktop - Engagement Monitor Component
  * 
  * Real-time engagement tracking and social listening for content creators
  * Implements comprehensive engagement analytics, sentiment analysis, and community insights

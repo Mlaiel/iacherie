@@ -1,4 +1,4 @@
-"""{{test_name}} Unit Test Template for Ainflue Platform
+"""{{test_name}} Unit Test Template for iacherie Platform
 {{test_description}}
 
 Author: {{author_name}} ({{author_email}})

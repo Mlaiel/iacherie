@@ -25,11 +25,11 @@ import base64
 logger = logging.getLogger(__name__)
 
 # Metrics
-watermark_checks_total = Counter('ainflue_watermark_checks_total',
+watermark_checks_total = Counter('iacherie_watermark_checks_total',
                                 'Total watermark integrity checks', ['content_type', 'result'])
-watermark_check_duration = Histogram('ainflue_watermark_check_duration_seconds',
+watermark_check_duration = Histogram('iacherie_watermark_check_duration_seconds',
                                     'Time spent checking watermark integrity')
-watermark_integrity_score = Gauge('ainflue_watermark_integrity_score',
+watermark_integrity_score = Gauge('iacherie_watermark_integrity_score',
                                  'Watermark integrity score', ['content_id'])
 
 class WatermarkType(Enum):

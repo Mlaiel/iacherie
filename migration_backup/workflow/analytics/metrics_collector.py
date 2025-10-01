@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE METRICS COLLECTOR - AINFLUE PLATFORM
+🔥 ENTERPRISE METRICS COLLECTOR - IA CHÉRIES PLATFORM
 Ultra-advanced metrics collection and monitoring system
 Specialized metrics collection for workflow analytics
 """

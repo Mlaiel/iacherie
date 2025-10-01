@@ -7,7 +7,7 @@
 
 ## 🚀 Aperçu
 
-Le Module Backend Mobile fournit des services backend de niveau entreprise optimisés pour mobile pour la plateforme Ainflue. Ce module a été consolidé de 48 fichiers à exactement 18 fichiers pour des performances optimales, une maintenabilité et une conformité avec les standards architecturaux.
+Le Module Backend Mobile fournit des services backend de niveau entreprise optimisés pour mobile pour la plateforme iacherie. Ce module a été consolidé de 48 fichiers à exactement 18 fichiers pour des performances optimales, une maintenabilité et une conformité avec les standards architecturaux.
 
 ## 🏗️ Architecture Consolidée
 

@@ -1,9 +1,9 @@
-"""Ainflue Core Security - OAuth Core
+"""IA Chéries Core Security - OAuth Core
 ===================================
 
 Enterprise-grade OAuth 2.0/OIDC implementation providing secure authentication,
 authorization server, token management, scope-based access control, 
-and federated identity support for the Ainflue platform.
+and federated identity support for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -484,8 +484,8 @@ class OAuthCore:
             scopes=list(self.scopes.keys()),
             grant_types=[GrantType.AUTHORIZATION_CODE, GrantType.REFRESH_TOKEN],
             response_types=[ResponseType.CODE],
-            name="Ainflue Web Application",
-            description="Main web application for Ainflue platform",
+            name="IA Chéries Web Application",
+            description="Main web application for IA Chéries platform",
             trusted=True
         )
         await self.client_store.register_client(client)

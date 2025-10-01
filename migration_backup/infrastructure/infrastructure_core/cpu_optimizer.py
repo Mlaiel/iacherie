@@ -1,12 +1,12 @@
 """
-CPU Optimizer - Intelligent CPU Performance Optimization for Ainflue
+CPU Optimizer - Intelligent CPU Performance Optimization for IA Chéries
 ===================================================================
 
 Advanced CPU optimization with AI-powered analysis for creator platform workloads.
 Optimizes CPU allocation, scheduling, and performance for creator experience.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -69,7 +69,7 @@ class CPUOptimization:
 
 class CPUOptimizer:
     """
-    Intelligent CPU Optimizer for Ainflue Creator Platform
+    Intelligent CPU Optimizer for IA Chéries Creator Platform
     
     Provides AI-powered CPU optimization for creator workloads with focus on
     creator experience, API performance, and content processing efficiency.

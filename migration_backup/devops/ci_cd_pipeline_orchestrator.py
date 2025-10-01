@@ -3,7 +3,7 @@
 CI/CD Pipeline Orchestrator - DevOps Engineer Implementation
 ==========================================================
 
-Advanced CI/CD pipeline orchestration for Ainflue platform.
+Advanced CI/CD pipeline orchestration for IA Chéries platform.
 Implements enterprise-grade deployment strategies, automation,
 and monitoring for multi-environment deployments.
 
@@ -741,8 +741,8 @@ async def main():
     # Create pipeline configuration
     pipeline_config = PipelineConfiguration(
         id="ainflue-backend-pipeline",
-        name="Ainflue Backend Deployment",
-        repository_url="https://github.com/Mlaiel/Ainflue.git",
+        name="IA Chéries Backend Deployment",
+        repository_url="https://github.com/Mlaiel/IA Chéries.git",
         branch="main",
         dockerfile_path="docker/Dockerfile.backend",
         kubernetes_manifests=["kubernetes/backend/"],

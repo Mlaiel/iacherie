@@ -1,5 +1,5 @@
 """
-🤖 AI CONFIGURATION - AINFLUE ENTERPRISE PLATFORM
+🤖 AI CONFIGURATION - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced AI model configuration with intelligent processing and optimization
 Performance Target: < 20ms AI model loading

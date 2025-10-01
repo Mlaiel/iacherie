@@ -2,13 +2,13 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional
 #!/usr/bin/env python3
 """
-🤖 Enterprise ML Service Template - Ainflue
+🤖 Enterprise ML Service Template - iacherie
 =========================================
 Template enterprise pour services ML/IA.
 TensorFlow + PyTorch + model serving + monitoring + A/B testing.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

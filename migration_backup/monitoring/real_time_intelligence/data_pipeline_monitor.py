@@ -3,7 +3,7 @@
 Real-Time Intelligence - Data Pipeline Monitor
 Comprehensive Real-Time Data Pipeline Health Monitoring
 
-This module provides enterprise-grade monitoring for data pipelines in the Ainflue platform,
+This module provides enterprise-grade monitoring for data pipelines in the IA Chéries platform,
 ensuring data quality, performance tracking, and automated recovery with comprehensive
 SLA monitoring and intelligent alerting.
 
@@ -21,8 +21,8 @@ Business Integration:
 - System data flows (logs, metrics, events) with real-time validation
 - ML pipeline monitoring (model training, inference, feature engineering)
 
-© 2024 Ainflue - Proprietary and Confidential
-All rights reserved. This code is the intellectual property of Ainflue.
+© 2024 IA Chéries - Proprietary and Confidential
+All rights reserved. This code is the intellectual property of IA Chéries.
 Unauthorized copying, distribution, or modification is strictly prohibited.
 """
 
@@ -287,7 +287,7 @@ class DataPipelineMonitor:
         logger.info(f"Registered pipeline {pipeline_id} with {len(stages)} stages")
     
     def register_default_pipelines(self) -> None:
-        """Register default Ainflue platform pipelines."""
+        """Register default IA Chéries platform pipelines."""
         
         # Creator Analytics Pipeline
         self.register_pipeline(

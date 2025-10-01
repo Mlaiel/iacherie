@@ -242,7 +242,7 @@ class AIGamificationPersonalization:
 
 ```javascript
 // Gamification API Integration Example
-const gamification = new AinflueCli({
+const gamification = new iacherieCli({
   apiKey: 'your_api_key',
   module: 'gamification'
 });

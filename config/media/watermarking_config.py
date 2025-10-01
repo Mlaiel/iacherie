@@ -588,11 +588,11 @@ class WatermarkingConfiguration:
         
         # Logo watermark
         logo_content = WatermarkContent(
-            content_id="ainflue_logo",
+            content_id="iacherie_logo",
             name="IA Chérie Logo",
             description="Official IA Chérie logo watermark",
             content_type=WatermarkFormat.LOGO,
-            logo_path="/assets/logos/ainflue_logo.png",
+            logo_path="/assets/logos/iacherie_logo.png",
             image_width=150,
             image_height=50,
             preserve_aspect_ratio=True,
@@ -648,7 +648,7 @@ class WatermarkingConfiguration:
             x_offset_percentage=3.0,
             y_offset_percentage=3.0,
             opacity=0.6,
-            content_id="ainflue_logo",
+            content_id="iacherie_logo",
             protection_level="standard",
             tamper_detection=True,
             adaptive_opacity=True,
@@ -699,7 +699,7 @@ class WatermarkingConfiguration:
             animation_duration_seconds=3.0,
             animation_type="pulse",
             loop_animation=True,
-            content_id="ainflue_logo",
+            content_id="iacherie_logo",
             protection_level="standard",
             adaptive_opacity=True
         )

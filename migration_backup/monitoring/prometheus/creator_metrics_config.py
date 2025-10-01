@@ -1,8 +1,8 @@
 """
 Creator Metrics Configuration Module
-Configuration métriques spécialisées Creator Economy - Ainflue Platform
+Configuration métriques spécialisées Creator Economy - IA Chéries Platform
 
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 © 2025 Fahed Mlaiel <mlaiel@live.de>

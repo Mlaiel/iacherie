@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise-grade Compliance Monitoring for Multi-Cloud Infrastructure

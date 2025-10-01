@@ -1,4 +1,4 @@
-"""API Key Manager for Ainflue SDK
+"""API Key Manager for IA Chéries SDK
 
 Multi-expert implementation:
 - Security: Secure API key storage, rotation, and validation

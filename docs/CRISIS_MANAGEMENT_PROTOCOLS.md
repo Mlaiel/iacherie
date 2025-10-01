@@ -109,7 +109,7 @@ await detector.configure_triggers(technical_crisis_triggers)
    await comm_manager.post_social_update(
        platforms=['twitter', 'linkedin'],
        message='We are aware of current service issues and are working on a fix. Updates to follow.',
-       hashtags=['#AinflueMaintenance', '#ServiceUpdate']
+       hashtags=['#iacherieMaintenance', '#ServiceUpdate']
    )
    ```
 
@@ -331,7 +331,7 @@ Our team is working on a fix.
 📍 Status updates: status.iacherie.com
 ⏰ Next update: {time}
 
-Thank you for your patience. #AinflueTech
+Thank you for your patience. #iacherieTech
 ```
 
 ### Creator Crisis Communication

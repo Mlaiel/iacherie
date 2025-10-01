@@ -1314,7 +1314,7 @@ DEFAULT_MONITORING_CONFIG = {
     'collection_interval': 30,
     'dashboard_port': 8050,
     'databases': {
-        'ainflue_main': {
+        'iacherie_main': {
             'type': 'postgresql',
             'host': 'localhost',
             'port': 5432,

@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Economy Dashboard Orchestrator
+IA Chéries Platform - Creator Economy Dashboard Orchestrator
 =========================================================
 
 Enterprise orchestrator for Creator Economy specialized dashboards with 

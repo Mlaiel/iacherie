@@ -1,5 +1,5 @@
 """
-Multi-Channel Notification System for Ainflue Platform
+Multi-Channel Notification System for IA Chéries Platform
 Intelligent notification delivery across multiple channels
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -513,7 +513,7 @@ Estimated Resolution: {estimated_resolution}
 For real-time updates, visit: {status_page_url}
 
 Best regards,
-Ainflue Platform Team
+IA Chéries Platform Team
             """,
             rich_content_template=None,
             variables=["user_name", "incident_type", "service_name", "incident_severity", 
@@ -582,7 +582,7 @@ Ainflue Platform Team
             notification_type=NotificationType.INCIDENT_ALERT,
             channel=NotificationChannel.SMS,
             subject_template="",
-            body_template="🚨 Ainflue Alert: {incident_severity} {incident_type} affecting {service_name}. Started {incident_start_time}. Check email for details.",
+            body_template="🚨 IA Chéries Alert: {incident_severity} {incident_type} affecting {service_name}. Started {incident_start_time}. Check email for details.",
             rich_content_template=None,
             variables=["incident_severity", "incident_type", "service_name", "incident_start_time"],
             localization={},

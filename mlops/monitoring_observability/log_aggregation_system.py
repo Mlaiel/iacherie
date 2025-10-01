@@ -22,7 +22,7 @@ ALL RIGHTS RESERVED
 - Maintenance and updates provided
 - Team training included
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -161,12 +161,12 @@ class AggregationConfig:
     
     # Elasticsearch configuration
     elasticsearch_hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
-    elasticsearch_index_prefix: str = "ainflue-logs"
+    elasticsearch_index_prefix: str = "iacherie-logs"
     elasticsearch_enabled: bool = True
     
     # File output configuration
     file_output_enabled: bool = True
-    log_directory: str = "/var/log/ainflue"
+    log_directory: str = "/var/log/iacherie"
     max_file_size_mb: int = 100
     max_files_per_service: int = 10
     compress_old_files: bool = True
@@ -1169,7 +1169,7 @@ def create_log_aggregator(
     creator_type: str,
     environment: str = "production",
     elasticsearch_hosts: Optional[List[str]] = None,
-    log_directory: str = "/tmp/ainflue_logs"
+    log_directory: str = "/tmp/iacherie_logs"
 ) -> LogAggregationSystem:
     """
     Factory function pour créer un système d'agrégation de logs
@@ -1219,10 +1219,10 @@ if __name__ == "__main__":
     
     # Create log aggregator for musician service
     aggregator = create_log_aggregator(
-        service_name="ainflue_music_service",
+        service_name="iacherie_music_service",
         creator_type="musician",
         environment="development",
-        log_directory="/tmp/ainflue_logs"
+        log_directory="/tmp/iacherie_logs"
     )
     
     try:

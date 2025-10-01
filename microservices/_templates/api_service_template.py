@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🔌 Enterprise API Service Template - Ainflue
+🔌 Enterprise API Service Template - iacherie
 ==========================================
 Template enterprise pour services API REST/GraphQL.
 FastAPI + Pydantic + OpenAPI + authentication + rate limiting + observability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

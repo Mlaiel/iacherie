@@ -580,7 +580,7 @@ jobs:
               <!DOCTYPE html>
               <html>
               <head>
-                  <title>Ainflue Security Scan Report</title>
+                  <title>IA Chéries Security Scan Report</title>
                   <style>
                       body { font-family: Arial, sans-serif; margin: 40px; }
                       .header { background: #1f2937; color: white; padding: 20px; border-radius: 8px; }
@@ -593,7 +593,7 @@ jobs:
               </head>
               <body>
                   <div class="header">
-                      <h1>🔒 Ainflue Security Scan Report</h1>
+                      <h1>🔒 IA Chéries Security Scan Report</h1>
                       <p><strong>Repository:</strong> {{ results.repository }}</p>
                       <p><strong>Branch:</strong> {{ results.branch }}</p>
                       <p><strong>Commit:</strong> {{ results.commit[:8] }}</p>
@@ -614,7 +614,7 @@ jobs:
                   </div>
                   
                   <div class="footer">
-                      <p>© 2025 Fahed Mlaiel - Ainflue Security Pipeline</p>
+                      <p>© 2025 Fahed Mlaiel - IA Chéries Security Pipeline</p>
                       <p>⚠️ Propriété intellectuelle protégée - Utilisation commerciale interdite</p>
                   </div>
               </body>

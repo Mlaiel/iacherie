@@ -1,4 +1,4 @@
-"""{{agent_name}} Trend Prediction Agent for Ainflue Platform
+"""{{agent_name}} Trend Prediction Agent for IA Chéries Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -183,7 +183,7 @@ class LSTMTrendModel(nn.Module):
 
 class {{agent_class_name}}(BaseAIAgent):
     """
-    Advanced trend prediction agent for Ainflue platform.
+    Advanced trend prediction agent for IA Chéries platform.
     
     Features:
     - Multi-modal trend prediction (content, hashtags, creators)

@@ -1,4 +1,4 @@
-# Ainflue Mobile API Module - ConfigMap
+# IA Chéries Mobile API Module - ConfigMap
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready configuration for mobile API service
 
@@ -18,7 +18,7 @@ metadata:
     description: "Mobile API configuration optimized for mobile app performance"
 data:
   # Application Configuration
-  APP_NAME: "Ainflue-Mobile-API"
+  APP_NAME: "IA Chéries-Mobile-API"
   APP_VERSION: "1.0.0"
   ENVIRONMENT: "production"
   SERVICE_NAME: "mobile-api"
@@ -184,7 +184,7 @@ metadata:
 data:
   mobile_app_config.json: |
     {
-      "app_name": "Ainflue",
+      "app_name": "IA Chéries",
       "app_version": "1.0.0",
       "api_version": "v1",
       "base_url": "https://api.ainflue.com/v1/mobile",
@@ -219,7 +219,7 @@ data:
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
     <dict>
-        <key>AinflueAPIBaseURL</key>
+        <key>IA ChériesAPIBaseURL</key>
         <string>https://api.ainflue.com/v1/mobile</string>
         <key>BackgroundModes</key>
         <array>

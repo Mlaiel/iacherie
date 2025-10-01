@@ -431,7 +431,7 @@ class WebhookManager:
                 # Prepare headers
                 headers = webhook.headers.copy()
                 headers['Content-Type'] = 'application/json'
-                headers['User-Agent'] = 'Ainflue-Webhook/1.0'
+                headers['User-Agent'] = 'IA Chéries-Webhook/1.0'
                 headers['X-Event-ID'] = event.id
                 headers['X-Event-Type'] = event.type.value
                 

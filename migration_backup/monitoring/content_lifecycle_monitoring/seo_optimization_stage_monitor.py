@@ -2,7 +2,7 @@
 🔍 SEO Optimization Stage Monitor - Enterprise Creator Economy Search Intelligence
 ================================================================================
 
-Module de monitoring avancé optimisation SEO contenu Ainflue Creator Economy.
+Module de monitoring avancé optimisation SEO contenu IA Chéries Creator Economy.
 Surveillance intelligence analyse SEO → génération mots-clés → optimisation meta → visibilité search.
 
 Fonctionnalités Enterprise Ultra-Avancées:
@@ -551,8 +551,8 @@ class SEOOptimizationStageMonitor:
             'title': f"Amazing {category.value.replace('_', ' ').title()} Content | Creator Platform",
             'description': f"Discover incredible {category.value.replace('_', ' ')} content from talented creators. Join our community of artists and creators.",
             'keywords': ', '.join(template['keywords_base'][:5]),
-            'og:title': f"Creative {category.value.replace('_', ' ').title()} | Ainflue",
-            'og:description': f"Experience the best {category.value.replace('_', ' ')} content on Ainflue platform.",
+            'og:title': f"Creative {category.value.replace('_', ' ').title()} | IA Chéries",
+            'og:description': f"Experience the best {category.value.replace('_', ' ')} content on IA Chéries platform.",
             'twitter:card': 'summary_large_image',
             'twitter:title': f"Creative {category.value.replace('_', ' ').title()}",
             'robots': 'index, follow'
@@ -570,7 +570,7 @@ class SEOOptimizationStageMonitor:
             "datePublished": datetime.now().isoformat(),
             "publisher": {
                 "@type": "Organization",
-                "name": "Ainflue",
+                "name": "IA Chéries",
                 "url": "https://ainflue.com"
             }
         }

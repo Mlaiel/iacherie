@@ -913,7 +913,7 @@ class CDNConnectorBase:
         if not self.session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30),
-                headers={"User-Agent": "Ainflue-CDN-Integration/1.0"}
+                headers={"User-Agent": "IA Chéries-CDN-Integration/1.0"}
             )
         return self.session
 

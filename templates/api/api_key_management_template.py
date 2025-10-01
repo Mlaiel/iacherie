@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🔐 AINFLUE API KEY MANAGEMENT TEMPLATE - ENTERPRISE KEY LIFECYCLE
+🔐 IACHERIE API KEY MANAGEMENT TEMPLATE - ENTERPRISE KEY LIFECYCLE
 ================================================================
 
-⚠️  PROPRIETARY & CONFIDENTIAL - AINFLUE CREATOR ECONOMY PLATFORM
+⚠️  PROPRIETARY & CONFIDENTIAL - IACHERIE CREATOR ECONOMY PLATFORM
 🔒 Copyright (c) 2024 Fahed Mlaiel <mlaiel@live.de>. All rights reserved.
 🚫 Unauthorized copying, distribution, or modification is strictly prohibited.
-📧 Contact: mlaiel@live.de | 🌐 https://ainflue.com
+📧 Contact: mlaiel@live.de | 🌐 https://iacherie.com
 
 🏢 ENTERPRISE API KEY MANAGEMENT - COMPLETE LIFECYCLE & SECURITY
 🎯 Expert Integration: Lead Dev IA + Security Expert + DBA + Enterprise Architect

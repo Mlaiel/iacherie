@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Collaboration - Real-time Dashboard
+IA Chéries Platform - Multimedia Collaboration - Real-time Dashboard
 Professional real-time collaboration dashboard for multimedia teams
 
 Author: Fahed Mlaiel (mlaiel@live.de)

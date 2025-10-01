@@ -83,7 +83,7 @@ class LoadTestConfig:
     
     # Target endpoints
     target_endpoints: List[str] = field(default_factory=list)
-    base_url: str = "https://api.ainflue.com"
+    base_url: str = "https://api.iacherie.com"
     
     # Performance thresholds
     max_response_time_ms: int = 1000

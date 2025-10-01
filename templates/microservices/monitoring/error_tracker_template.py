@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Error Tracker Template for Ainflue Platform
+Error Tracker Template for iacherie Platform
 ==========================================
 
 Production-ready error tracking with:
@@ -57,7 +57,7 @@ class ErrorTracker:
     - Error trend monitoring
     """
     
-    def __init__(self, service_name: str = "ainflue-service"):
+    def __init__(self, service_name: str = "iacherie-service"):
         self.service_name = service_name
         self.errors: Dict[str, ErrorEvent] = {}
         self.logger = logging.getLogger(f"{service_name}.errors")
@@ -146,7 +146,7 @@ class ErrorTrackerTemplate:
     """Error Tracker Template"""
     
     def create_tracker(self, config: Dict[str, Any]) -> ErrorTracker:
-        return ErrorTracker(service_name=config.get("service_name", "ainflue"))
+        return ErrorTracker(service_name=config.get("service_name", "iacherie"))
     
     def get_template_info(self) -> Dict[str, Any]:
         return {

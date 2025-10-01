@@ -1,4 +1,4 @@
-"""📊 Code Complexity Analyzer - Ainflue Platform
+"""📊 Code Complexity Analyzer - IA Chéries Platform
 ================================================================
 Expert: SOFTWARE_ARCHITECT + QUALITY_ENGINEER + TECHNICAL_LEAD
 Created: 2025-01-XX

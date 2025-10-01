@@ -55,7 +55,7 @@ class SystemMetrics:
 class EnterpriseMonitor:
     """
     🔍 Enterprise Monitoring System
-    Monitoring pour l'architecture complète Ainfluencer
+    Monitoring pour l'architecture complète iaCherie
     """
     
     def __init__(self, config_file: str = "monitoring-config.json"):
@@ -405,7 +405,7 @@ class EnterpriseMonitor:
     def print_status_report(self, metrics: SystemMetrics):
         """Affiche un rapport de statut détaillé"""
         print("\n" + "="*60)
-        print("🔍 AINFLUENCER ENTERPRISE MONITORING REPORT")
+        print("🔍 IACHERIE ENTERPRISE MONITORING REPORT")
         print("="*60)
         print(f"📅 Timestamp: {metrics.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"📊 Total Modules: {metrics.total_modules}")

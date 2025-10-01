@@ -1,4 +1,4 @@
-"""SEO API Template for Ainflue Platform
+"""SEO API Template for IA Chéries Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================
@@ -612,7 +612,7 @@ class SEOService:
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Ainflue",
+                "name": "IA Chéries",
                 "logo": {
                     "@type": "ImageObject",
                     "url": "https://ainflue.com/logo.png"

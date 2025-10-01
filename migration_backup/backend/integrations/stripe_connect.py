@@ -154,7 +154,7 @@ class StripeConnectIntegration:
             headers = {
                 "Authorization": f"Bearer {self.secret_key}",
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "Ainflue/1.0",
+                "User-Agent": "IA Chéries/1.0",
                 "Stripe-Version": "2023-10-16"
             }
             

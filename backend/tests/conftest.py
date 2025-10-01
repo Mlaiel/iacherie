@@ -87,7 +87,7 @@ async def test_data_dir() -> Path:
 @pytest.fixture(scope="function")
 async def temp_dir() -> AsyncGenerator[Path, None]:
     """Temporary directory fixture for each test"""
-    temp_path = Path(tempfile.mkdtemp(prefix="ainflue_test_"))
+    temp_path = Path(tempfile.mkdtemp(prefix="iacherie_test_"))
     try:
         yield temp_path
     finally:

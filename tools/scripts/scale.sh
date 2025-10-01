@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
-# AINFLUE PLATFORM - SCALING AUTOMATION SCRIPT
+# IACHERIE PLATFORM - SCALING AUTOMATION SCRIPT
 # =============================================================================
-# Intelligent scaling for Ainflue services based on load, metrics, and usage patterns.
+# Intelligent scaling for iacherie services based on load, metrics, and usage patterns.
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -78,7 +78,7 @@ scale_service() {
         docker service scale "${service}=${target_replicas}"
         
         # Record scaling event
-        echo "$(date '+%Y-%m-%d %H:%M:%S'),${service},${current_replicas},${target_replicas}" >> /var/log/ainflue/scaling.log
+        echo "$(date '+%Y-%m-%d %H:%M:%S'),${service},${current_replicas},${target_replicas}" >> /var/log/iacherie/scaling.log
     fi
 }
 
@@ -116,7 +116,7 @@ make_scaling_decision() {
 # Function to check cooldown
 check_cooldown() {
     local service="$1"
-    local last_scale_file="/tmp/ainflue-last-scale-${service}"
+    local last_scale_file="/tmp/iacherie-last-scale-${service}"
     
     if [[ -f "$last_scale_file" ]]; then
         local last_scale=$(cat "$last_scale_file")
@@ -134,15 +134,15 @@ check_cooldown() {
 
 # Main scaling loop
 main() {
-    info "Starting Ainflue auto-scaling service..."
+    info "Starting iacherie auto-scaling service..."
     
     # Define services to monitor
     local services=(
-        "ainflue-audio-processing"
-        "ainflue-protection-service"
-        "ainflue-revenue-tracker"
-        "ainflue-payment-processor"
-        "ainflue-fingerprinting-engine"
+        "iacherie-audio-processing"
+        "iacherie-protection-service"
+        "iacherie-revenue-tracker"
+        "iacherie-payment-processor"
+        "iacherie-fingerprinting-engine"
     )
     
     while true; do

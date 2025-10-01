@@ -1,5 +1,5 @@
 """Content Technical Optimizer
-Advanced content structure and semantic optimization for Ainflue creator economy platform.
+Advanced content structure and semantic optimization for IA Chéries creator economy platform.
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -765,7 +765,7 @@ class SemanticContentAnalyzer:
 
 
 class ContentTechnicalOptimizer:
-    """Main content technical optimizer for Ainflue creator economy."""
+    """Main content technical optimizer for IA Chéries creator economy."""
     
     def __init__(self):
         self.logger = self._setup_logging()
@@ -1053,11 +1053,11 @@ class ContentTechnicalOptimizer:
             "description": content_data.get('description', ''),
             "author": {
                 "@type": "Person",
-                "name": content_data.get('author', 'Ainflue Creator')
+                "name": content_data.get('author', 'IA Chéries Creator')
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Ainflue",
+                "name": "IA Chéries",
                 "url": "https://ainflue.com"
             },
             "datePublished": content_data.get('published_date', datetime.now(timezone.utc).isoformat()),

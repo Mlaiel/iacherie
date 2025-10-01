@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Security Audit Logger
+iaCherie Platform - Enterprise Security Audit Logger
 Comprehensive security event logging and audit trail system
-Author: Ainfluencer Team
+Author: iaCherie Team
 Version: 2.0.0
 Date: 2024
 """
@@ -109,7 +109,7 @@ class AuditFilter:
 class AuditLogger:
     """Enterprise Security Audit Logger"""
     
-    def __init__(self, storage_path: str = "/tmp/ainfluencer_audit_logs"):
+    def __init__(self, storage_path: str = "/tmp/iacherie_audit_logs"):
         """Initialize audit logger"""
         self.events: List[AuditEvent] = []
         self.storage_path = storage_path

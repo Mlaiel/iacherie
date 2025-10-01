@@ -1,4 +1,4 @@
-"""{{service_name}} Asynchronous Service for Ainflue Platform
+"""{{service_name}} Asynchronous Service for IA Chéries Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -326,7 +326,7 @@ class AsyncTaskManager:
 
 class {{service_class_name}}(BaseService):
     """
-    Advanced asynchronous service for Ainflue platform.
+    Advanced asynchronous service for IA Chéries platform.
     
     Features:
     - Non-blocking async operations with coroutines

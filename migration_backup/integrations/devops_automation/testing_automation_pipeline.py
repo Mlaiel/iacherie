@@ -2,7 +2,7 @@
 =====================================================================
 
 Testing Expert: Testing automation enterprise avec AI-powered quality gates,
-automated test generation et intelligent quality assurance pour Ainflue.
+automated test generation et intelligent quality assurance pour IA Chéries.
 
 Author: Fahed Mlaiel (mlaiel@live.de) 
 Date: 16 Septembre 2025

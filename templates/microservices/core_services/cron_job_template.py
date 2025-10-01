@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Cron Job Template for Ainflue Microservices Platform
+Cron Job Template for iacherie Microservices Platform
 ==================================================
 
 Enterprise-grade scheduled task service template providing:

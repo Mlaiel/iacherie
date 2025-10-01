@@ -1,11 +1,11 @@
-# 🌐 Passerelle API Infrastructure - Ainflue Enterprise
+# 🌐 Passerelle API Infrastructure - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure passerelle API de niveau enterprise fournissant APIs REST/GraphQL/WebSocket hautes performances, rate limiting intelligent, middleware sécurisé, et gestion versioning pour la plateforme créateurs Ainflue connectant 65+ plateformes médias sociaux et streaming.
+Infrastructure passerelle API de niveau enterprise fournissant APIs REST/GraphQL/WebSocket hautes performances, rate limiting intelligent, middleware sécurisé, et gestion versioning pour la plateforme créateurs iacherie connectant 65+ plateformes médias sociaux et streaming.
 
 ## 🏗️ Composants Architecture
 - **API REST Principale** : APIs RESTful hautes performances avec documentation automatique

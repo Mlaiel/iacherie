@@ -257,7 +257,7 @@ class SecurityScanner:
                 timeout=timeout,
                 connector=connector,
                 headers={
-                    'User-Agent': 'AinflueSecurity/1.0 SecurityScanner'
+                    'User-Agent': 'iacherieSecurity/1.0 SecurityScanner'
                 }
             )
             

@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: Ainflue AI Platform API
+  title: IA Chéries AI Platform API
   version: 2.0.0
   description: |
-    # Ainflue AI Platform API
+    # IA Chéries AI Platform API
     
-    Complete API documentation for the Ainflue AI-powered content protection and monetization platform.
+    Complete API documentation for the IA Chéries AI-powered content protection and monetization platform.
     
     ## Features
     
@@ -38,7 +38,7 @@ info:
     - `X-RateLimit-Reset`: Time when the rate limit resets
     
   contact:
-    name: Ainflue API Support
+    name: IA Chéries API Support
     email: mlaiel@live.de
     url: https://ainflue.com/support
   license:

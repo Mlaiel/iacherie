@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🛡️ Enterprise Zero Trust Security Manager - Ainflue
+🛡️ Enterprise Zero Trust Security Manager - IA Chéries
 Comprehensive security management for enterprise microservices architecture
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
@@ -99,7 +99,7 @@ class EnterpriseZeroTrustSecurityManager:
     🛡️ Enterprise Zero Trust Security Manager
     
     Comprehensive security management system implementing zero trust architecture
-    for Ainflue's enterprise microservices ecosystem.
+    for IA Chéries's enterprise microservices ecosystem.
     """
     
     def __init__(

@@ -165,7 +165,7 @@ class HSMIntegrationManager:
             hsm_type=HSMType.NETWORK_ATTACHED,
             vendor=HSMVendor.THALES_LUNA,
             connection_url="tcp://hsm-cluster.iacherie.local:1792",
-            partition_name="ainflue_creators",
+            partition_name="iacherie_creators",
             cluster_nodes=["hsm1.iacherie.local", "hsm2.iacherie.local", "hsm3.iacherie.local"],
             failover_enabled=True,
             load_balancing=True,

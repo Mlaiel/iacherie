@@ -2,14 +2,14 @@
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 """
-Security Automation - Enterprise DevSecOps and Security Automation for Ainflue
+Security Automation - Enterprise DevSecOps and Security Automation for IA Chéries
 ============================================================================
 
 Advanced security automation for vulnerability scanning, threat detection, 
 compliance monitoring, and incident response for the creator platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -940,7 +940,7 @@ class SecurityAutomationManager:
         report = {
             "report_type": report_type,
             "generated_at": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "IA Chéries Creator Platform",
             "security_summary": {
                 "total_vulnerabilities": len(self.vulnerabilities),
                 "active_incidents": len([i for i in self.incidents.values() if not i.resolved]),

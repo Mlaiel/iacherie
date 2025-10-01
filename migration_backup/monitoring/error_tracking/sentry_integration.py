@@ -1,5 +1,5 @@
 """
-Sentry Error Tracking Integration for Ainflue Platform
+Sentry Error Tracking Integration for IA Chéries Platform
 Production-ready error tracking with intelligent filtering and context
 
 Author: Fahed Mlaiel <mlaiel@live.de>

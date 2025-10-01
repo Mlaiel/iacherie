@@ -1,6 +1,6 @@
 """
 🔍 MONITORING SEO OPTIMIZATION - Ranking Optimization Tracker
-Advanced SEO ranking optimization and monitoring for Ainflue platform
+Advanced SEO ranking optimization and monitoring for IA Chéries platform
 SEO + AI Engineer + Content Strategy Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -142,7 +142,7 @@ class RankingAlert:
 
 class RankingOptimizationTracker:
     """
-    🔍 Advanced Ranking Optimization Tracker for Ainflue Platform
+    🔍 Advanced Ranking Optimization Tracker for IA Chéries Platform
     
     AI-powered SEO optimization with:
     - Multi-platform ranking monitoring and optimization

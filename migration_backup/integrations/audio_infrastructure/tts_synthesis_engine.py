@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 AINFLUENCER - MODULE TEXT-TO-SPEECH COMPLET
+🚀 IA CHÉRIES - MODULE TEXT-TO-SPEECH COMPLET
 Synthèse vocale multi-moteur avec Mozilla TTS alternative
 Développé par: Fahed Mlaiel - mlaiel@live.de
 """
@@ -15,9 +15,9 @@ import pygame
 import asyncio
 from typing import Optional, Dict, List
 
-class AinfluencerTTS:
+class IaCheriesTTS:
     """
-    Module TTS complet pour Ainfluencer avec multiple engines
+    Module TTS complet pour IA Chéries avec multiple engines
     """
     
     def __init__(self):
@@ -75,7 +75,7 @@ class AinfluencerTTS:
             
             # Créer fichier temporaire
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            output_file = f"/workspaces/Ainfluencer/audio_generated_local_{timestamp}.wav"
+            output_file = f"/workspaces/IA Chéries/audio_generated_local_{timestamp}.wav"
             
             # Sauvegarder vers fichier
             self.engines['pyttsx3'].save_to_file(text, output_file)
@@ -101,7 +101,7 @@ class AinfluencerTTS:
             
             # Créer fichier temporaire
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            output_file = f"/workspaces/Ainfluencer/audio_generated_google_{timestamp}.mp3"
+            output_file = f"/workspaces/IA Chéries/audio_generated_google_{timestamp}.mp3"
             
             # Sauvegarder
             tts.save(output_file)
@@ -209,21 +209,21 @@ class AinfluencerTTS:
 
 # Fonctions utilitaires pour l'intégration avec le backend
 
-async def tts_generate_for_ainfluencer(text: str, language: str = 'fr', 
+async def tts_generate_for_iacheries(text: str, language: str = 'fr', 
                                      engine: str = 'auto') -> Dict:
     """
-    Interface principale pour l'intégration backend Ainfluencer
+    Interface principale pour l'intégration backend IA Chéries
     """
-    tts_engine = AinfluencerTTS()
+    tts_engine = IaCheriesTTS()
     result = await tts_engine.generate_speech_multi(text, language, engine)
     
-    # Ajouter des métadonnées spécifiques à Ainfluencer
+    # Ajouter des métadonnées spécifiques à IA Chéries
     if result['success']:
-        result['ainfluencer_metadata'] = {
+        result['iacheries_metadata'] = {
             'agent_used': 'TTS_SYNTHESIS_AGENT',
             'content_type': 'audio',
             'generation_method': 'text_to_speech',
-            'platform': 'Ainfluencer',
+            'platform': 'IA Chéries',
             'creator': 'Fahed Mlaiel'
         }
     
@@ -233,10 +233,10 @@ def test_tts_installation():
     """
     Tester l'installation et les capacités TTS
     """
-    print("🚀 AINFLUENCER TTS - Test d'Installation")
+    print("🚀 IA CHÉRIES TTS - Test d'Installation")
     print("=" * 50)
     
-    tts = AinfluencerTTS()
+    tts = IaCheriesTTS()
     
     # Test voix disponibles
     voices = tts.get_available_voices()
@@ -244,7 +244,7 @@ def test_tts_installation():
     print(f"🌍 Langues Google TTS: {len(voices['google_languages'])}")
     
     # Test de génération
-    test_text = "Bonjour ! Je suis Ainfluencer, votre assistant IA pour la création de contenu."
+    test_text = "Bonjour ! Je suis IA Chéries, votre assistant IA pour la création de contenu."
     
     print(f"\n📝 Texte de test: {test_text}")
     print("🔄 Génération en cours...")
@@ -253,7 +253,7 @@ def test_tts_installation():
     try:
         # Test Google TTS
         tts_google = gTTS(text=test_text, lang='fr')
-        test_file = "/workspaces/Ainfluencer/test_tts_google.mp3"
+        test_file = "/workspaces/IA Chéries/test_tts_google.mp3"
         tts_google.save(test_file)
         
         if os.path.exists(test_file):

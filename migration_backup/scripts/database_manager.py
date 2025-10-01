@@ -24,7 +24,7 @@ Database Operations Manager - Enterprise Database Automation
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Advanced database operations for Ainflue Platform:
+Advanced database operations for IA Chéries Platform:
 - Automated database migrations and schema management
 - Backup and restore operations
 - Data integrity validation
@@ -162,7 +162,7 @@ class DatabaseManager:
             logger.info(f"Loaded {len(self.databases)} database configurations")
             
         except FileNotFoundError:
-            # Create default Ainflue database configuration
+            # Create default IA Chéries database configuration
             default_databases = [
                 {
                     "name": "ainflue_main",
@@ -829,7 +829,7 @@ async def main():
     """CLI entry point for database manager"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Ainflue Database Manager')
+    parser = argparse.ArgumentParser(description='IA Chéries Database Manager')
     parser.add_argument('--backup', metavar='DB_NAME', help='Create database backup')
     parser.add_argument('--restore', nargs=2, metavar=('DB_NAME', 'BACKUP_FILE'), help='Restore from backup')
     parser.add_argument('--migrate', nargs=4, metavar=('DB_NAME', 'SCRIPT', 'FROM_VER', 'TO_VER'), help='Run migration')

@@ -374,11 +374,11 @@ class LiveStreamManager:
                     platform_streams[platform] = platform_url
             
             # Generate endpoints
-            ingest_endpoint = f"rtmp://stream.ainflue.com/live/{stream_key}"
+            ingest_endpoint = f"rtmp://stream.iacherie.com/live/{stream_key}"
             playback_urls = {
-                "hls": f"https://stream.ainflue.com/hls/{session_id}/index.m3u8",
-                "dash": f"https://stream.ainflue.com/dash/{session_id}/manifest.mpd",
-                "rtmp": f"rtmp://stream.ainflue.com/play/{session_id}"
+                "hls": f"https://stream.iacherie.com/hls/{session_id}/index.m3u8",
+                "dash": f"https://stream.iacherie.com/dash/{session_id}/manifest.mpd",
+                "rtmp": f"rtmp://stream.iacherie.com/play/{session_id}"
             }
             
             session = LiveStreamSession(

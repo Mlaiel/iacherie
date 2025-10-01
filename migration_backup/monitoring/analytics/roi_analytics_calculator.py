@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - ROI Analytics Calculator
-Advanced ROI calculation and analysis for Ainflue creator ecosystem
+Advanced ROI calculation and analysis for IA Chéries creator ecosystem
 Business Analytics + ML Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -116,7 +116,7 @@ class ROIForecast:
 
 class ROIAnalyticsCalculator:
     """
-    💰 Advanced ROI Analytics Calculator for Ainflue Platform
+    💰 Advanced ROI Analytics Calculator for IA Chéries Platform
     
     Comprehensive ROI analysis with:
     - Multi-category ROI tracking and calculation

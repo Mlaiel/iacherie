@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Trust Score Monitor
+IA Chéries Platform - Trust Score Monitor
 =====================================
 
 Enterprise-grade trust scoring system for collaboration partners with behavioral analysis,

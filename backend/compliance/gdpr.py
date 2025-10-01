@@ -107,7 +107,7 @@ class GDPRComplianceReport:
 class GDPRCompliance:
     """
     Enterprise GDPR compliance manager with automation.
-    Provides comprehensive GDPR compliance services for the Ainflue platform.
+    Provides comprehensive GDPR compliance services for the iacherie platform.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

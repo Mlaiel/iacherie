@@ -411,7 +411,7 @@ class CryptoPaymentSettings(BaseSettings):
     smart_contracts: Dict[str, SmartContractConfig] = Field(
         default_factory=lambda: {
             "payment_processor": SmartContractConfig(
-                contract_name="AinflueCryptoPaymentProcessor",
+                contract_name="iacherieCryptoPaymentProcessor",
                 contract_address="",  # To be deployed
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
                 abi=[],  # Contract ABI
@@ -422,7 +422,7 @@ class CryptoPaymentSettings(BaseSettings):
                 upgrade_mechanism="proxy_pattern"
             ),
             "token_swap": SmartContractConfig(
-                contract_name="AinflueTokenSwap",
+                contract_name="iacherieTokenSwap",
                 contract_address="",  # To be deployed
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
                 abi=[],  # Contract ABI
@@ -433,7 +433,7 @@ class CryptoPaymentSettings(BaseSettings):
                 upgrade_mechanism="proxy_pattern"
             ),
             "nft_marketplace": SmartContractConfig(
-                contract_name="AinflueNFTMarketplace",
+                contract_name="iacherieNFTMarketplace",
                 contract_address="",  # To be deployed
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
                 abi=[],  # Contract ABI

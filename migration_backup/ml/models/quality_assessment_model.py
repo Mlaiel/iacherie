@@ -1,11 +1,11 @@
 """
-Quality Assessment Model - Ainflue Enterprise
+Quality Assessment Model - IA Chéries Enterprise
 ===========================================
 Modèle évaluation qualité contenu avec scoring business.
 Quality metrics + aesthetic scoring + technical assessment + business value.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Models
+Project: IA Chéries ML Models
 Version: 1.0 Production
 """
 
@@ -760,7 +760,7 @@ class ContentQualityAssessmentModel:
 
 class QualityAssessmentService:
     """
-    Service principal pour quality assessment Ainflue.
+    Service principal pour quality assessment IA Chéries.
     Orchestration + batch processing + analytics.
     """
     

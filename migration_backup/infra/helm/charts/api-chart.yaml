@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - API Service Helm Chart
+# IA Chéries Infrastructure Module - API Service Helm Chart
 # ======================================================
 # 
-# Enterprise-grade API service Helm chart for Ainflue platform
+# Enterprise-grade API service Helm chart for IA Chéries platform
 # Supports high availability and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,13 +11,13 @@
 
 apiVersion: v2
 name: ainflue-api
-description: A Helm chart for Ainflue API Service - Enterprise Creator Economy Platform
+description: A Helm chart for IA Chéries API Service - Enterprise Creator Economy Platform
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 home: https://ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de

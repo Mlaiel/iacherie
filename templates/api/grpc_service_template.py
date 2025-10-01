@@ -1,4 +1,4 @@
-"""gRPC Service Template for Ainflue Platform
+"""gRPC Service Template for iacherie Platform
 Enterprise-grade gRPC service with comprehensive features and security
 
 ⚠️  AVERTISSEMENT LÉGAL:

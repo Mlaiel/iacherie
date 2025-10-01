@@ -5,7 +5,7 @@ Professional audio synthesis with 8 specialized audio agents.
 Multi-agent audio generation for enterprise content creation.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

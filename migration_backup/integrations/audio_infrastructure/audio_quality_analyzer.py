@@ -2,7 +2,7 @@
 =========================================================================
 
 Analyseur de qualité audio enterprise avec métriques objectives, standards
-broadcast et évaluation perceptuelle pour la plateforme Ainflue.
+broadcast et évaluation perceptuelle pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Métriques objectives + standards broadcast + analyse spectrale

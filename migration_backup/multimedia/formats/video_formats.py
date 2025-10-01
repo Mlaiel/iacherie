@@ -2,7 +2,7 @@
 🎬 VIDEO FORMATS PROCESSOR - ENTERPRISE ARCHITECTURE  
 ====================================================
 
-Professional video format processing and optimization for Ainflue Platform
+Professional video format processing and optimization for IA Chéries Platform
 Supporting all modern video formats with AI-powered enhancement and conversion
 
 **Expert Implementation:**

@@ -1,5 +1,5 @@
 """
-Error Analysis System for Ainflue Platform
+Error Analysis System for IA Chéries Platform
 Advanced error pattern analysis and machine learning insights
 
 Author: Fahed Mlaiel <mlaiel@live.de>

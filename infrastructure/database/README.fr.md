@@ -1,11 +1,11 @@
-# 🗄️ Infrastructure Base de Données - Ainflue Enterprise
+# 🗄️ Infrastructure Base de Données - iacherie Enterprise
 **Équipe d'Experts : Lead Dev IA + Backend Senior + Ingénieur ML + DBA + Sécurité + Microservices + Audio + DevOps + Ingénieur IA Prompt**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR :** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Objectif du Module
-Infrastructure base de données enterprise multi-engine supportant PostgreSQL, MongoDB, Redis avec clustering, réplication multi-région, optimisation performance, et sécurité avancée pour la plateforme créateurs Ainflue servant 65+ plateformes avec 53 agents IA.
+Infrastructure base de données enterprise multi-engine supportant PostgreSQL, MongoDB, Redis avec clustering, réplication multi-région, optimisation performance, et sécurité avancée pour la plateforme créateurs iacherie servant 65+ plateformes avec 53 agents IA.
 
 ## 🏗️ Composants Architecture
 - **PostgreSQL Cluster** : Base données relationnelle principale haute disponibilité

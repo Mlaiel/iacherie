@@ -1,4 +1,4 @@
-"""🏆 Creator Tier Health Orchestrator | Ainflue Enterprise
+"""🏆 Creator Tier Health Orchestrator | IA Chéries Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

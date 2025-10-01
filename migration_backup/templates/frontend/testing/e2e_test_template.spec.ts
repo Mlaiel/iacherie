@@ -1,5 +1,5 @@
 /**
- * 🎭 E2E Test Template - Ainflue Creator Economy
+ * 🎭 E2E Test Template - IA Chéries Creator Economy
  * 
  * @fileoverview Template enterprise pour tests end-to-end frontend
  * @version 1.0.0

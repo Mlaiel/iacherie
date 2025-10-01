@@ -1,7 +1,7 @@
 """🚀 CUDA Configuration & GPU Detection
 ========================================
 
-Configuration automatique CUDA/GPU pour la plateforme Ainfluencer.
+Configuration automatique CUDA/GPU pour la plateforme IA Chéries.
 Détection intelligente du hardware disponible et optimisation des performances.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -391,7 +391,7 @@ class ExternalServiceHealthValidator:
             connector=connector,
             timeout=timeout,
             headers={
-                'User-Agent': 'Ainflue-HealthValidator/1.0 (Enterprise)',
+                'User-Agent': 'IA Chéries-HealthValidator/1.0 (Enterprise)',
                 'Accept': 'application/json,text/plain,*/*'
             }
         )

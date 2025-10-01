@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 AI Governance Framework Enterprise
 ==================================
 
-Enterprise-grade AI governance and compliance system for Ainflue SEO platform.
+Enterprise-grade AI governance and compliance system for IA Chéries SEO platform.
 Provides comprehensive AI model management, ethics compliance, and responsible AI practices.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

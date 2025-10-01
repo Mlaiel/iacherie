@@ -900,7 +900,7 @@ class EnterpriseSecurityManager:
 
 
 # Example usage for IA Chérie microservices
-async def secure_ainflue_microservices():
+async def secure_iacherie_microservices():
     """Secure all IA Chérie microservices"""
     security_manager = EnterpriseSecurityManager()
     await security_manager.initialize()
@@ -938,7 +938,7 @@ async def secure_ainflue_microservices():
 
 if __name__ == "__main__":
     async def main():
-        security_manager, secured_services = await secure_ainflue_microservices()
+        security_manager, secured_services = await secure_iacherie_microservices()
         
         print(f"🛡️ Secured {len(secured_services)} microservices")
         print("🔐 Enterprise security stack active")

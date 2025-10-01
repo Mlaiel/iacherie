@@ -8,7 +8,7 @@ AES-256-GCM + RSA + ECC + key management + secure protocols.
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Encryption Service
+Project: IA Chéries ML Security - Encryption Service
 Version: 1.0 Production
 =======================================================================
 """
@@ -76,7 +76,7 @@ class EncryptionConfig:
         EncryptionContext.AT_REST,
         EncryptionContext.IN_TRANSIT
     ])
-    creator_data_protection: bool = True  # Ainflue-specific
+    creator_data_protection: bool = True  # IA Chéries-specific
     fahed_mlaiel_ip_encryption: bool = True  # IP protection
 
 @dataclass

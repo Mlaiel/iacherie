@@ -1,12 +1,12 @@
 """
-SEO Optimization Timeouts Module - Ainflue Enterprise
+SEO Optimization Timeouts Module - IA Chéries Enterprise
 =====================================================
 Timeout management pour optimisation SEO avec intelligence content marketing.
 SEO analysis + keyword research + content optimization + search engine coordination.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chéries Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

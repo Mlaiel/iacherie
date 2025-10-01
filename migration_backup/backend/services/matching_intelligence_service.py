@@ -1,7 +1,7 @@
 """Matching Intelligence Service - AI-Powered Creator Matching Engine
 ====================================================================
 
-Advanced AI-driven creator matching system for the Ainflue platform, utilizing
+Advanced AI-driven creator matching system for the IA Chéries platform, utilizing
 machine learning algorithms, behavioral analysis, and compatibility scoring to
 create optimal creator partnerships and collaborations.
 

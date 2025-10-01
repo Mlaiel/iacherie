@@ -123,10 +123,10 @@ from prometheus_client import Counter, Histogram, Gauge, start_http_server
 import time
 
 # Define metrics
-deployment_total = Counter('ainflue_deployments_total', 'Total deployments', ['status', 'cloud'])
-deployment_duration = Histogram('ainflue_deployment_duration_seconds', 'Deployment duration')
-active_resources = Gauge('ainflue_active_resources', 'Active resources', ['cloud', 'type'])
-cost_current = Gauge('ainflue_cost_current_usd', 'Current cost in USD', ['cloud', 'service'])
+deployment_total = Counter('iacherie_deployments_total', 'Total deployments', ['status', 'cloud'])
+deployment_duration = Histogram('iacherie_deployment_duration_seconds', 'Deployment duration')
+active_resources = Gauge('iacherie_active_resources', 'Active resources', ['cloud', 'type'])
+cost_current = Gauge('iacherie_cost_current_usd', 'Current cost in USD', ['cloud', 'service'])
 
 # Custom metrics collection
 class InfrastructureMetrics:
@@ -273,7 +273,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
         "type": "stat",
         "targets": [
           {
-            "expr": "sum(ainflue_active_resources) by (cloud)",
+            "expr": "sum(iacherie_active_resources) by (cloud)",
             "legendFormat": "{{cloud}}"
           }
         ]
@@ -283,7 +283,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
         "type": "singlestat",
         "targets": [
           {
-            "expr": "rate(ainflue_deployments_total{status=\"success\"}[5m]) / rate(ainflue_deployments_total[5m]) * 100"
+            "expr": "rate(iacherie_deployments_total{status=\"success\"}[5m]) / rate(iacherie_deployments_total[5m]) * 100"
           }
         ]
       },
@@ -292,7 +292,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
         "type": "piechart",
         "targets": [
           {
-            "expr": "sum(ainflue_cost_current_usd) by (cloud)",
+            "expr": "sum(iacherie_cost_current_usd) by (cloud)",
             "legendFormat": "{{cloud}}"
           }
         ]
@@ -348,7 +348,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
         "type": "graph",
         "targets": [
           {
-            "expr": "increase(ainflue_cost_current_usd[1d])",
+            "expr": "increase(iacherie_cost_current_usd[1d])",
             "legendFormat": "Daily Cost"
           }
         ]
@@ -358,7 +358,7 @@ kubectl get secret prometheus-grafana -n monitoring -o jsonpath="{.data.admin-pa
         "type": "table",
         "targets": [
           {
-            "expr": "sum(ainflue_cost_current_usd) by (service)",
+            "expr": "sum(iacherie_cost_current_usd) by (service)",
             "format": "table"
           }
         ]
@@ -508,7 +508,7 @@ groups:
       description: "95th percentile response time is above 1 second"
 
   - alert: DeploymentFailed
-    expr: increase(ainflue_deployments_total{status="failed"}[5m]) > 0
+    expr: increase(iacherie_deployments_total{status="failed"}[5m]) > 0
     for: 0m
     labels:
       severity: critical
@@ -524,7 +524,7 @@ groups:
 - name: cost.rules
   rules:
   - alert: BudgetExceeded
-    expr: ainflue_cost_current_usd > ainflue_budget_limit_usd
+    expr: iacherie_cost_current_usd > iacherie_budget_limit_usd
     for: 0m
     labels:
       severity: critical
@@ -533,7 +533,7 @@ groups:
       description: "Current costs have exceeded the budget limit"
 
   - alert: CostAnomalyDetected
-    expr: increase(ainflue_cost_current_usd[1h]) > 1.5 * avg_over_time(increase(ainflue_cost_current_usd[1h])[7d:1h])
+    expr: increase(iacherie_cost_current_usd[1h]) > 1.5 * avg_over_time(increase(iacherie_cost_current_usd[1h])[7d:1h])
     for: 0m
     labels:
       severity: warning
@@ -762,7 +762,7 @@ def deploy_resource(resource_id):
         "type": "stat",
         "targets": [
           {
-            "expr": "ainflue_active_creators_total"
+            "expr": "iacherie_active_creators_total"
           }
         ]
       },
@@ -771,7 +771,7 @@ def deploy_resource(resource_id):
         "type": "graph",
         "targets": [
           {
-            "expr": "rate(ainflue_content_uploads_total[5m])",
+            "expr": "rate(iacherie_content_uploads_total[5m])",
             "legendFormat": "Uploads per second"
           }
         ]
@@ -781,7 +781,7 @@ def deploy_resource(resource_id):
         "type": "graph",
         "targets": [
           {
-            "expr": "increase(ainflue_revenue_usd[1h])",
+            "expr": "increase(iacherie_revenue_usd[1h])",
             "legendFormat": "Hourly Revenue"
           }
         ]

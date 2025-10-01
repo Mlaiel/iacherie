@@ -913,7 +913,7 @@ async def main():
     # Configure file service
     config = FileServiceConfig(
         storage_backend=StorageBackend.LOCAL,
-        local_storage_path="/tmp/ainflue_files",
+        local_storage_path="/tmp/iacherie_files",
         max_file_size=50 * 1024 * 1024,  # 50MB
         enable_image_processing=True,
         enable_video_processing=True,

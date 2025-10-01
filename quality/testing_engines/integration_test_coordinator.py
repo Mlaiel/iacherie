@@ -145,7 +145,7 @@ class IntegrationTestCoordinator:
             health_check_url="mongodb://localhost:27017",
             docker_image="mongo:7",
             docker_ports={27017: 27017},
-            environment_variables={"MONGO_INITDB_DATABASE": "ainflue_test"}
+            environment_variables={"MONGO_INITDB_DATABASE": "iacherie_test"}
         )
         
         self.dependencies["redis"] = ServiceDependency(

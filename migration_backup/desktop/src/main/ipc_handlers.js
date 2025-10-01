@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - IPC Communication Handlers
+ * IA Chéries Desktop - IPC Communication Handlers
  * 
  * Advanced Inter-Process Communication handlers for secure desktop-backend communication
  * Implements professional studio features with security and performance optimization

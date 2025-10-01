@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE ESCROW SERVICE - ADVANCED DOCKERFILE
+# IA CHÉRIES ESCROW SERVICE - ADVANCED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for secure escrow service supporting
 # multi-party transactions, smart contracts, and automated dispute resolution.

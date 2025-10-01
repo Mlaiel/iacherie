@@ -1,4 +1,4 @@
-# 🧪 اختبارات Backend Ainflue - مجموعة اختبارات المؤسسات
+# 🧪 اختبارات Backend iacherie - مجموعة اختبارات المؤسسات
 
 [![حالة الوحدة](https://img.shields.io/badge/الحالة-موحد-green)](#)
 [![تغطية الاختبارات](https://img.shields.io/badge/التغطية-جاهز%20للمؤسسات-green)](#)
@@ -6,7 +6,7 @@
 
 ## 🎯 نظرة عامة
 
-مجموعة اختبارات مؤسسية شاملة لواجهة منصة Ainflue الخلفية، توفر التحقق من منطق الأعمال، واختبارات الأمان، واختبارات الأداء، واختبارات التكامل، وضمان الجودة المؤسسي.
+مجموعة اختبارات مؤسسية شاملة لواجهة منصة iacherie الخلفية، توفر التحقق من منطق الأعمال، واختبارات الأمان، واختبارات الأداء، واختبارات التكامل، وضمان الجودة المؤسسي.
 
 ## 🏗️ البنية المعمارية
 
@@ -105,7 +105,7 @@ pytest backend/tests/test_monetization_business_engine.py::test_revenue_stream_m
 ```python
 TEST_CONFIG = {
     "redis_url": "redis://localhost:6379/0",
-    "database_url": "postgresql://test:test@localhost:5432/ainflue_test",
+    "database_url": "postgresql://test:test@localhost:5432/iacherie_test",
     "api_base_url": "http://localhost:8000",
     "websocket_url": "ws://localhost:8000/ws",
     "test_timeout": 30,
@@ -121,7 +121,7 @@ TEST_CONFIG = {
 pip install -r requirements-dev.txt
 
 # إعداد قاعدة بيانات الاختبار
-createdb ainflue_test
+createdb iacherie_test
 
 # تشغيل ترحيل قاعدة البيانات
 alembic upgrade head

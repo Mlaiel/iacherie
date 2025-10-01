@@ -1,10 +1,10 @@
 """
-Container Module - Ainflue Infrastructure Enterprise
+Container Module - iacherie Infrastructure Enterprise
 ===================================================
 Point d'entrée principal pour tous les services de conteneurisation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -29,10 +29,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise container infrastructure for Ainflue platform"
+__description__ = "Enterprise container infrastructure for iacherie platform"
 
-# Configuration containers métier Ainflue
-AINFLUE_CONTAINER_WORKFLOW = {
+# Configuration containers métier iacherie
+IACHERIE_CONTAINER_WORKFLOW = {
     'upload': 'Containerized content ingestion and processing',
     'ai_processing': 'GPU-optimized containers for AI workloads', 
     'protection': 'Secure containers for IP rights and watermarking',

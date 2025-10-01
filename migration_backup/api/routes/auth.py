@@ -3,7 +3,7 @@
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
 #!/usr/bin/env python3
 """
-Authentication Endpoints - Ainflue Platform
+Authentication Endpoints - IA Chéries Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: Backend Senior + Security Expert
 Purpose: Enterprise authentication and authorization endpoints

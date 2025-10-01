@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🚀 Ainflue Enterprise - Health Check Monitor
+🚀 IA Chéries Enterprise - Health Check Monitor
 Enterprise health monitoring with proactive alerting and auto-recovery
 
 🎯 BUSINESS LOGIC INTEGRATION:
@@ -13,7 +13,7 @@ Enterprise health monitoring with proactive alerting and auto-recovery
 
 👨‍💻 AUTHOR: Fahed Mlaiel (mlaiel@live.de)
 📧 CONTACT: mlaiel@live.de  
-🏢 ENTERPRISE: Ainflue Platform
+🏢 ENTERPRISE: IA Chéries Platform
 📅 CREATED: 2025
 🔒 LICENSE: PROPRIETARY - All Rights Reserved
 
@@ -350,7 +350,7 @@ class DatabaseHealthCheck(BaseHealthCheck):
 
 
 class AIModelHealthCheck(BaseHealthCheck):
-    """AI model health check for Ainflue ML services"""
+    """AI model health check for IA Chéries ML services"""
     
     async def execute_check(self) -> HealthCheckResult:
         """Execute AI model health check"""
@@ -478,7 +478,7 @@ class PlatformIntegrationHealthCheck(BaseHealthCheck):
 
 
 class CreatorServiceHealthCheck(BaseHealthCheck):
-    """Creator service health check for Ainflue creator economy"""
+    """Creator service health check for IA Chéries creator economy"""
     
     async def execute_check(self) -> HealthCheckResult:
         """Execute creator service health check"""
@@ -916,11 +916,11 @@ class HealthCheckMonitor:
             "uptime_start": datetime.now(timezone.utc)
         }
         
-        # Initialize Ainflue-specific health checks
+        # Initialize IA Chéries-specific health checks
         self._initialize_ainflue_health_checks()
     
     def _initialize_ainflue_health_checks(self) -> None:
-        """Initialize Ainflue business logic health checks"""
+        """Initialize IA Chéries business logic health checks"""
         
         # Creator service health checks
         creator_checks = [

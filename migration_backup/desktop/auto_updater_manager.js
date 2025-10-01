@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Auto Updater Manager
+ * IA Chéries Desktop - Auto Updater Manager
  * 
  * Professional auto-update system with secure distribution and rollback capabilities
  * 
@@ -84,7 +84,7 @@ class AutoUpdaterManager extends EventEmitter {
     
     // Configure request headers for authentication
     autoUpdater.requestHeaders = {
-      'User-Agent': `AinflueSudio/${app.getVersion()} (${process.platform}; ${process.arch})`,
+      'User-Agent': `IA ChériesSudio/${app.getVersion()} (${process.platform}; ${process.arch})`,
       'X-Client-ID': 'ainflue-desktop',
       'X-Client-Version': app.getVersion()
     };
@@ -98,7 +98,7 @@ class AutoUpdaterManager extends EventEmitter {
       production: {
         provider: 'github',
         owner: 'Mlaiel',
-        repo: 'Ainflue',
+        repo: 'IA Chéries',
         private: false
       },
       staging: {
@@ -317,7 +317,7 @@ class AutoUpdaterManager extends EventEmitter {
     const response = await dialog.showMessageBox(mainWindow, {
       type: 'info',
       title: 'Update Available',
-      message: `Ainflue Studio v${info.version} is available`,
+      message: `IA Chéries Studio v${info.version} is available`,
       detail: `Current version: ${app.getVersion()}\nNew version: ${info.version}\n\nRelease notes:\n${info.releaseNotes || 'No release notes available'}`,
       buttons: ['Download Now', 'Download Later', 'Skip This Version'],
       defaultId: 0,
@@ -349,7 +349,7 @@ class AutoUpdaterManager extends EventEmitter {
     const response = await dialog.showMessageBox(mainWindow, {
       type: 'info',
       title: 'Update Ready',
-      message: `Ainflue Studio v${info.version} has been downloaded`,
+      message: `IA Chéries Studio v${info.version} has been downloaded`,
       detail: 'The update will be installed when you restart the application.\n\nWould you like to restart now?',
       buttons: ['Restart Now', 'Restart Later'],
       defaultId: 0,

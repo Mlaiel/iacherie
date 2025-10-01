@@ -3,7 +3,7 @@
 
 Consolidated content management and distribution intelligence system providing
 comprehensive voice content optimization, SEO intelligence, gamification mechanics,
-collaboration tools, and multi-platform distribution for the Ainflue voice ecosystem.
+collaboration tools, and multi-platform distribution for the iacherie voice ecosystem.
 
 Consolidates:
 - Voice SEO optimization and search intelligence
@@ -79,7 +79,7 @@ class DistributionPlatform(Enum):
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
-    AINFLUE_NATIVE = "ainflue_native"
+    IACHERIE_NATIVE = "iacherie_native"
 
 class AchievementType(Enum):
     """Achievement categories"""

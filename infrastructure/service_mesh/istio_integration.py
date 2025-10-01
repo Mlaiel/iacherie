@@ -1,9 +1,9 @@
 """Istio Service Mesh Integration - Enterprise Microservices Management
 ====================================================================
-Production-ready Istio integration for Ainflue microservices
+Production-ready Istio integration for iacherie microservices
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 WARNING: This code and concept are protected by copyright.
@@ -46,7 +46,7 @@ class TrafficPolicyType(Enum):
 class IstioConfiguration:
     """Istio service mesh configuration"""
     cluster_name: str
-    namespace: str = "ainflue-system"
+    namespace: str = "iacherie-system"
     ingress_enabled: bool = True
     egress_enabled: bool = True
     mtls_mode: str = "STRICT"
@@ -101,7 +101,7 @@ class IstioServiceMesh:
         self.services_registry: Dict[str, Dict[str, Any]] = {}
         
     async def initialize_mesh(self) -> Dict[str, Any]:
-        """Initialize Istio service mesh for Ainflue"""
+        """Initialize Istio service mesh for iacherie"""
         try:
             # Create namespace
             await self._create_namespace()
@@ -118,8 +118,8 @@ class IstioServiceMesh:
             # Enable observability
             await self._enable_observability()
             
-            # Register Ainflue services
-            await self._register_ainflue_services()
+            # Register iacherie services
+            await self._register_iacherie_services()
             
             initialization_result = {
                 'status': 'success',
@@ -322,7 +322,7 @@ class IstioServiceMesh:
     async def _configure_ingress_gateway(self) -> IstioGateway:
         """Configure Istio ingress gateway"""
         gateway = IstioGateway(
-            name="ainflue-gateway",
+            name="iacherie-gateway",
             namespace=self.config.namespace,
             selector={"istio": "ingressgateway"},
             servers=[
@@ -333,10 +333,10 @@ class IstioServiceMesh:
                 {
                     'port': {'number': 443, 'name': 'https', 'protocol': 'HTTPS'},
                     'hosts': ['*'],
-                    'tls': {'mode': 'SIMPLE', 'credentialName': 'ainflue-tls'}
+                    'tls': {'mode': 'SIMPLE', 'credentialName': 'iacherie-tls'}
                 }
             ],
-            hosts=["ainflue.com", "*.ainflue.com"]
+            hosts=["iacherie.com", "*.iacherie.com"]
         )
         
         self.gateways[gateway.name] = gateway
@@ -382,11 +382,11 @@ class IstioServiceMesh:
         logger.info(f"Observability enabled: {observability_features}")
         return True
         
-    async def _register_ainflue_services(self) -> bool:
-        """Register all Ainflue services in the mesh"""
-        from . import AINFLUE_SERVICES
+    async def _register_iacherie_services(self) -> bool:
+        """Register all iacherie services in the mesh"""
+        from . import IACHERIE_SERVICES
         
-        for service_name, service_config in AINFLUE_SERVICES.items():
+        for service_name, service_config in IACHERIE_SERVICES.items():
             self.services_registry[service_name] = {
                 'name': service_name,
                 'port': service_config['port'],
@@ -396,7 +396,7 @@ class IstioServiceMesh:
                 'registration_time': datetime.utcnow().isoformat()
             }
             
-        logger.info(f"Registered {len(AINFLUE_SERVICES)} Ainflue services")
+        logger.info(f"Registered {len(IACHERIE_SERVICES)} iacherie services")
         return True
         
     async def _register_service_in_mesh(self, service_name: str, service_config: Dict[str, Any]) -> bool:
@@ -446,7 +446,7 @@ class IstioServiceMesh:
             name=f"{service_name}-virtual-service",
             namespace=self.config.namespace,
             hosts=[service_name],
-            gateways=["ainflue-gateway"],
+            gateways=["iacherie-gateway"],
             http_routes=[
                 {
                     'match': [{'uri': {'prefix': f'/{service_name}/'}}],

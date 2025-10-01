@@ -120,7 +120,7 @@ class CircuitBreakerMetrics:
     state_changed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class AinflueBusiness:
+class iacherieBusiness:
     """IA Chérie Business Retry Strategies"""
     
     # Retry policies by event type
@@ -341,7 +341,7 @@ class RetryResilienceEngine:
                                      timeout: float = 60.0,
                                      recovery_callback: Optional[Callable] = None):
         """Register a circuit breaker for a service"""
-        config = AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
+        config = iacherieBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
         
         self.circuit_breakers[service_name] = CircuitBreakerMetrics(
             service_name=service_name,
@@ -359,7 +359,7 @@ class RetryResilienceEngine:
             return True  # No circuit breaker = allow
         
         breaker = self.circuit_breakers[service_name]
-        config = AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
+        config = iacherieBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
         
         current_time = datetime.now(timezone.utc)
         
@@ -390,7 +390,7 @@ class RetryResilienceEngine:
             return
         
         breaker = self.circuit_breakers[service_name]
-        config = AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
+        config = iacherieBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
         current_time = datetime.now(timezone.utc)
         
         breaker.total_requests += 1
@@ -744,8 +744,8 @@ class RetryResilienceEngine:
             return self.custom_retry_policies[event_type]
         
         # Check business policies
-        if event_type in AinflueBusiness.RETRY_POLICIES:
-            return AinflueBusiness.RETRY_POLICIES[event_type]
+        if event_type in iacherieBusiness.RETRY_POLICIES:
+            return iacherieBusiness.RETRY_POLICIES[event_type]
         
         # Default policy
         return RetryPolicy()
@@ -791,7 +791,7 @@ class RetryResilienceEngine:
     
     def _classify_error(self, error_str: str) -> ErrorCategory:
         """Classify error into category"""
-        error_rules = AinflueBusiness.ERROR_HANDLING_RULES
+        error_rules = iacherieBusiness.ERROR_HANDLING_RULES
         
         # Check business errors first
         for business_error in error_rules["business_errors"]:
@@ -937,5 +937,5 @@ __all__ = [
     "BackoffStrategy",
     "ErrorCategory",
     "CircuitBreakerState",
-    "AinflueBusiness"
+    "iacherieBusiness"
 ]

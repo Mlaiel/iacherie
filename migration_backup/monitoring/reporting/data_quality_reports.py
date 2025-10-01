@@ -1,7 +1,7 @@
 """Data Quality Reports - Enterprise Creator Economy Data Governance
 =====================================================================
 
-Advanced data quality monitoring and governance system for Ainflue Creator Economy platform.
+Advanced data quality monitoring and governance system for IA Chéries Creator Economy platform.
 Provides data quality monitoring, data lineage reporting, governance compliance,
 data freshness tracking, and quality metrics dashboard.
 

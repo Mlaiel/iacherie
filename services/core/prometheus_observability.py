@@ -132,14 +132,14 @@ class PrometheusObservability:
         
         # HTTP request metrics
         metrics['http_requests_total'] = Counter(
-            'ainflue_http_requests_total',
+            'iacherie_http_requests_total',
             'Total HTTP requests',
             ['method', 'endpoint', 'status_code', 'service'],
             registry=self.registry
         )
         
         metrics['http_request_duration'] = Histogram(
-            'ainflue_http_request_duration_seconds',
+            'iacherie_http_request_duration_seconds',
             'HTTP request duration',
             ['method', 'endpoint', 'service'],
             buckets=[0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0],
@@ -148,7 +148,7 @@ class PrometheusObservability:
         
         # Service health metrics
         metrics['service_health'] = Gauge(
-            'ainflue_service_health',
+            'iacherie_service_health',
             'Service health status (1=healthy, 0=unhealthy)',
             ['service', 'instance'],
             registry=self.registry
@@ -156,7 +156,7 @@ class PrometheusObservability:
         
         # Circuit breaker metrics
         metrics['circuit_breaker_state'] = Gauge(
-            'ainflue_circuit_breaker_state',
+            'iacherie_circuit_breaker_state',
             'Circuit breaker state (0=closed, 1=open, 2=half-open)',
             ['service', 'dependency'],
             registry=self.registry
@@ -164,14 +164,14 @@ class PrometheusObservability:
         
         # Database metrics
         metrics['db_connections_active'] = Gauge(
-            'ainflue_db_connections_active',
+            'iacherie_db_connections_active',
             'Active database connections',
             ['database', 'service'],
             registry=self.registry
         )
         
         metrics['db_query_duration'] = Histogram(
-            'ainflue_db_query_duration_seconds',
+            'iacherie_db_query_duration_seconds',
             'Database query duration',
             ['database', 'operation', 'service'],
             buckets=[0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0],
@@ -186,14 +186,14 @@ class PrometheusObservability:
         
         # Creator platform metrics
         metrics['creators_active'] = Gauge(
-            'ainflue_creators_active_total',
+            'iacherie_creators_active_total',
             'Number of active creators',
             ['tier', 'region'],
             registry=self.registry
         )
         
         metrics['content_processed'] = Counter(
-            'ainflue_content_processed_total',
+            'iacherie_content_processed_total',
             'Total content processed',
             ['type', 'format', 'status'],
             registry=self.registry
@@ -201,7 +201,7 @@ class PrometheusObservability:
         
         # AI processing metrics
         metrics['ai_inference_duration'] = Histogram(
-            'ainflue_ai_inference_duration_seconds',
+            'iacherie_ai_inference_duration_seconds',
             'AI inference duration',
             ['model', 'provider', 'service'],
             buckets=[0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0],
@@ -209,7 +209,7 @@ class PrometheusObservability:
         )
         
         metrics['ai_requests_total'] = Counter(
-            'ainflue_ai_requests_total',
+            'iacherie_ai_requests_total',
             'Total AI requests',
             ['model', 'provider', 'status'],
             registry=self.registry
@@ -217,7 +217,7 @@ class PrometheusObservability:
         
         # Revenue metrics
         metrics['revenue_generated'] = Counter(
-            'ainflue_revenue_generated_euros',
+            'iacherie_revenue_generated_euros',
             'Revenue generated in euros',
             ['creator_tier', 'content_type', 'region'],
             registry=self.registry
@@ -225,7 +225,7 @@ class PrometheusObservability:
         
         # Media processing metrics
         metrics['media_processing_duration'] = Histogram(
-            'ainflue_media_processing_duration_seconds',
+            'iacherie_media_processing_duration_seconds',
             'Media processing duration',
             ['format', 'quality', 'service'],
             buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0, 300.0],
@@ -240,7 +240,7 @@ class PrometheusObservability:
         
         # Availability SLI
         metrics['sli_availability'] = Gauge(
-            'ainflue_sli_availability_ratio',
+            'iacherie_sli_availability_ratio',
             'Service availability ratio',
             ['service'],
             registry=self.registry
@@ -248,14 +248,14 @@ class PrometheusObservability:
         
         # Latency SLI (P95, P99)
         metrics['sli_latency_p95'] = Gauge(
-            'ainflue_sli_latency_p95_seconds',
+            'iacherie_sli_latency_p95_seconds',
             'Service latency P95',
             ['service'],
             registry=self.registry
         )
         
         metrics['sli_latency_p99'] = Gauge(
-            'ainflue_sli_latency_p99_seconds',
+            'iacherie_sli_latency_p99_seconds',
             'Service latency P99',
             ['service'],
             registry=self.registry
@@ -263,7 +263,7 @@ class PrometheusObservability:
         
         # Error rate SLI
         metrics['sli_error_rate'] = Gauge(
-            'ainflue_sli_error_rate_ratio',
+            'iacherie_sli_error_rate_ratio',
             'Service error rate ratio',
             ['service'],
             registry=self.registry
@@ -271,7 +271,7 @@ class PrometheusObservability:
         
         # Throughput SLI
         metrics['sli_throughput'] = Gauge(
-            'ainflue_sli_throughput_rps',
+            'iacherie_sli_throughput_rps',
             'Service throughput in requests per second',
             ['service'],
             registry=self.registry
@@ -398,7 +398,7 @@ class PrometheusObservability:
             # High error rate alert
             AlertRule(
                 name="HighErrorRate",
-                expression='rate(ainflue_http_requests_total{status_code=~"5.."}[5m]) > 0.05',
+                expression='rate(iacherie_http_requests_total{status_code=~"5.."}[5m]) > 0.05',
                 duration="5m",
                 severity=AlertSeverity.WARNING,
                 summary="High error rate detected",
@@ -409,7 +409,7 @@ class PrometheusObservability:
             # Service down alert
             AlertRule(
                 name="ServiceDown",
-                expression='ainflue_service_health == 0',
+                expression='iacherie_service_health == 0',
                 duration="1m",
                 severity=AlertSeverity.CRITICAL,
                 summary="Service is down",
@@ -420,7 +420,7 @@ class PrometheusObservability:
             # High latency alert
             AlertRule(
                 name="HighLatency",
-                expression='histogram_quantile(0.95, rate(ainflue_http_request_duration_seconds_bucket[5m])) > 1.0',
+                expression='histogram_quantile(0.95, rate(iacherie_http_request_duration_seconds_bucket[5m])) > 1.0',
                 duration="5m",
                 severity=AlertSeverity.WARNING,
                 summary="High latency detected",
@@ -431,7 +431,7 @@ class PrometheusObservability:
             # AI inference timeout alert
             AlertRule(
                 name="AIInferenceTimeout",
-                expression='rate(ainflue_ai_requests_total{status="timeout"}[5m]) > 0.01',
+                expression='rate(iacherie_ai_requests_total{status="timeout"}[5m]) > 0.01',
                 duration="3m",
                 severity=AlertSeverity.ERROR,
                 summary="AI inference timeouts",
@@ -442,7 +442,7 @@ class PrometheusObservability:
             # Circuit breaker open alert
             AlertRule(
                 name="CircuitBreakerOpen",
-                expression='ainflue_circuit_breaker_state == 1',
+                expression='iacherie_circuit_breaker_state == 1',
                 duration="1m",
                 severity=AlertSeverity.WARNING,
                 summary="Circuit breaker is open",
@@ -552,7 +552,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_http_requests_total[5m])',
+                            "expr": 'rate(iacherie_http_requests_total[5m])',
                             "legendFormat": "{{service}} - {{method}}"
                         }
                     ]
@@ -562,11 +562,11 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'histogram_quantile(0.95, rate(ainflue_http_request_duration_seconds_bucket[5m]))',
+                            "expr": 'histogram_quantile(0.95, rate(iacherie_http_request_duration_seconds_bucket[5m]))',
                             "legendFormat": "P95 - {{service}}"
                         },
                         {
-                            "expr": 'histogram_quantile(0.99, rate(ainflue_http_request_duration_seconds_bucket[5m]))',
+                            "expr": 'histogram_quantile(0.99, rate(iacherie_http_request_duration_seconds_bucket[5m]))',
                             "legendFormat": "P99 - {{service}}"
                         }
                     ]
@@ -576,7 +576,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_http_requests_total{status_code=~"5.."}[5m])',
+                            "expr": 'rate(iacherie_http_requests_total{status_code=~"5.."}[5m])',
                             "legendFormat": "5xx - {{service}}"
                         }
                     ]
@@ -586,7 +586,7 @@ class PrometheusObservability:
                     "type": "stat",
                     "targets": [
                         {
-                            "expr": 'ainflue_service_health',
+                            "expr": 'iacherie_service_health',
                             "legendFormat": "{{service}}@{{instance}}"
                         }
                     ]
@@ -605,7 +605,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'histogram_quantile(0.95, rate(ainflue_ai_inference_duration_seconds_bucket[5m]))',
+                            "expr": 'histogram_quantile(0.95, rate(iacherie_ai_inference_duration_seconds_bucket[5m]))',
                             "legendFormat": "P95 - {{model}} ({{provider}})"
                         }
                     ]
@@ -615,7 +615,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_ai_requests_total[5m])',
+                            "expr": 'rate(iacherie_ai_requests_total[5m])',
                             "legendFormat": "{{model}} - {{status}}"
                         }
                     ]
@@ -625,7 +625,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_content_processed_total[5m])',
+                            "expr": 'rate(iacherie_content_processed_total[5m])',
                             "legendFormat": "{{type}} - {{status}}"
                         }
                     ]
@@ -644,7 +644,7 @@ class PrometheusObservability:
                     "type": "stat",
                     "targets": [
                         {
-                            "expr": 'ainflue_creators_active_total',
+                            "expr": 'iacherie_creators_active_total',
                             "legendFormat": "{{tier}} - {{region}}"
                         }
                     ]
@@ -654,7 +654,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_revenue_generated_euros[1h])',
+                            "expr": 'rate(iacherie_revenue_generated_euros[1h])',
                             "legendFormat": "{{creator_tier}} - {{content_type}}"
                         }
                     ]
@@ -664,7 +664,7 @@ class PrometheusObservability:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": 'rate(ainflue_content_processed_total[5m])',
+                            "expr": 'rate(iacherie_content_processed_total[5m])',
                             "legendFormat": "{{type}} - {{format}}"
                         }
                     ]

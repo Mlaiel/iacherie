@@ -405,7 +405,7 @@ class OperatorLifecycleManager:
                 },
                 'links': [{
                     'name': 'Documentation',
-                    'url': 'https://github.com/Mlaiel/Ainflue'
+                    'url': 'https://github.com/Mlaiel/IA Chéries'
                 }],
                 'icon': [{
                     'base64data': '',

@@ -1,5 +1,5 @@
 """
-🎯 Ainflue Prompt Engineering Templates Module
+🎯 IA Chéries Prompt Engineering Templates Module
 ==============================================
 
 Enterprise-grade prompt engineering templates for AI-powered creator economy platform.

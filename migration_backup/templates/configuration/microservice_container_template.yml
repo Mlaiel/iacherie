@@ -1,5 +1,5 @@
 # =====================================================================================
-# Microservice Container Template - Ainflue Configuration Module
+# Microservice Container Template - IA Chéries Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - MICROSERVICES CONTAINER ORCHESTRATION
+# IA CHÉRIES CREATOR ECONOMY - MICROSERVICES CONTAINER ORCHESTRATION
 # =====================================================================================
 
 # Global network configuration for microservices

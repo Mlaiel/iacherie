@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ainflue Platform Health Check Script
+# IA Chéries Platform Health Check Script
 # Comprehensive health monitoring for all platform components
 # 
 # Author: Fahed Mlaiel (mlaiel@live.de)
@@ -306,7 +306,7 @@ check_events() {
 generate_summary() {
     echo ""
     echo "========================================="
-    echo "     AINFLUE HEALTH CHECK SUMMARY"
+    echo "     IA CHÉRIES HEALTH CHECK SUMMARY"
     echo "========================================="
     echo "Overall Status: $OVERALL_STATUS"
     echo "Check Time: $(date)"
@@ -347,7 +347,7 @@ generate_summary() {
 # Send notifications
 send_notifications() {
     if [[ $OVERALL_STATUS != "healthy" ]]; then
-        local message="Ainflue Health Check Alert - Status: $OVERALL_STATUS"
+        local message="IA Chéries Health Check Alert - Status: $OVERALL_STATUS"
         
         # Slack notification
         if [[ -n "$SLACK_WEBHOOK_URL" ]]; then
@@ -362,7 +362,7 @@ send_notifications() {
     "attachments": [
         {
             "color": "$color",
-            "title": "Ainflue Health Check Alert",
+            "title": "IA Chéries Health Check Alert",
             "fields": [
                 {
                     "title": "Status",
@@ -400,7 +400,7 @@ EOF
         # Email notification (if mail is available)
         if command -v mail &> /dev/null && [[ -n "$EMAIL_RECIPIENTS" ]]; then
             {
-                echo "Subject: Ainflue Health Check Alert - $OVERALL_STATUS"
+                echo "Subject: IA Chéries Health Check Alert - $OVERALL_STATUS"
                 echo ""
                 generate_summary
             } | mail "$EMAIL_RECIPIENTS" || true
@@ -410,7 +410,7 @@ EOF
 
 # Main execution
 main() {
-    echo "🏥 Starting Ainflue Platform Health Check..."
+    echo "🏥 Starting IA Chéries Platform Health Check..."
     echo "Namespace: $NAMESPACE"
     echo "Timestamp: $(date)"
     echo ""
@@ -461,7 +461,7 @@ while [[ $# -gt 0 ]]; do
             cat << EOF
 Usage: $0 [OPTIONS]
 
-Ainflue Platform Health Check Script
+IA Chéries Platform Health Check Script
 
 OPTIONS:
     -n, --namespace NAME    Kubernetes namespace [default: ainflue]

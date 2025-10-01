@@ -204,10 +204,10 @@ Collaboration & Gamification → SEO → Distribution Multi-plateformes
 
 ### **🎯 Entraînement Classificateur de Contenu**
 ```python
-from ml.training import train_ainflue_model, ModelType, TrainingMode
+from ml.training import train_iacherie_model, ModelType, TrainingMode
 
 # Entraîner modèle de classification de contenu
-result = await train_ainflue_model(
+result = await train_iacherie_model(
     model_type=ModelType.CONTENT_CLASSIFIER,
     training_mode=TrainingMode.DISTRIBUTED,
     dataset_path="/data/creator_content",

@@ -1,5 +1,5 @@
 """
-Rate Limiting Module for Ainflue Microservices
+Rate Limiting Module for IA Chéries Microservices
 Implements rate limiting and throttling for API protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

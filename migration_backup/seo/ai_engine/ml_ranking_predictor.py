@@ -1,5 +1,5 @@
 """
-ML Ranking Predictor for Ainflue Platform
+ML Ranking Predictor for IA Chéries Platform
 Machine Learning-based ranking prediction and optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)

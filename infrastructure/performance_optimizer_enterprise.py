@@ -391,7 +391,7 @@ async def quick_performance_check() -> Dict[str, Any]:
     """Quick performance check for infrastructure."""
     return await performance_optimizer.generate_performance_report()
 
-async def optimize_ainflue_infrastructure() -> Dict[str, Any]:
+async def optimize_iacherie_infrastructure() -> Dict[str, Any]:
     """Optimize IA Chérie infrastructure for creator platform performance."""
     results = {
         "api_optimization": await performance_optimizer.optimize_api_performance("creator_upload_api"),
@@ -409,7 +409,7 @@ if __name__ == "__main__":
         print("🚀 Starting IA Chérie Infrastructure Performance Optimization...")
         
         # Run comprehensive optimization
-        results = await optimize_ainflue_infrastructure()
+        results = await optimize_iacherie_infrastructure()
         
         print("📊 Optimization Results:")
         print(f"Performance Score: {results['overall_report']['performance_score']:.1f}/100")

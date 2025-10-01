@@ -1,7 +1,7 @@
 """👥 User Engagement Metrics - Advanced User Analytics & Behavioral Intelligence
 =============================================================================
 
-Comprehensive user engagement tracking, analysis, and optimization system for the Ainflue platform.
+Comprehensive user engagement tracking, analysis, and optimization system for the IA Chéries platform.
 Monitors user behavior, interaction patterns, session analytics, and engagement optimization
 across all content types and platforms.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🏆 QUALITY SCORING ENTERPRISE - AINFLUE QUALITY MODULE
+🏆 QUALITY SCORING ENTERPRISE - IA CHÉRIES QUALITY MODULE
 ======================================================
 
 Hub moteurs scoring qualité enterprise pour l'écosystème IA Influencer Agent.

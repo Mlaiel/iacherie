@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Performance Anomaly Detector Enterprise
 Advanced ML-powered performance anomaly detection for Creator Economy platform

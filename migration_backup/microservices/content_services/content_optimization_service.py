@@ -47,7 +47,7 @@ class PlatformType(str, Enum):
     REDDIT = "reddit"
     MEDIUM = "medium"
     WORDPRESS = "wordpress"
-    AINFLUE = "ainflue"
+    IA CHÉRIES = "ainflue"
 
 
 class ContentType(str, Enum):

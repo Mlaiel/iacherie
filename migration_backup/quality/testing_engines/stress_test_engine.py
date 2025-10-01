@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Stress Test Engine - Ainflue Quality Platform
+Stress Test Engine - IA Chéries Quality Platform
 ===========================================
 
 Enterprise-grade stress testing engine for performance validation under extreme load.

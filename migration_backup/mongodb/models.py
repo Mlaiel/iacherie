@@ -1,7 +1,7 @@
 """MongoDB Data Models
 ===================
 
-Data models and schemas for MongoDB collections in the Ainflue platform.
+Data models and schemas for MongoDB collections in the IA Chéries platform.
 Provides ODM-like functionality with validation, serialization, and relationships.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -194,7 +194,7 @@ class BaseModel(ABC):
 
 @dataclass
 class User(BaseModel):
-    """User model for Ainflue platform."""
+    """User model for IA Chéries platform."""
     user_id: str
     email: str
     username: str
@@ -293,7 +293,7 @@ class AnalyticsEvent(BaseModel):
     processed: bool = False
 
 class MongoDBModels:
-    """Collection of MongoDB models for Ainflue platform."""
+    """Collection of MongoDB models for IA Chéries platform."""
     
     User = User
     MediaContent = MediaContent

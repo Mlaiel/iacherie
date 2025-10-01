@@ -1,11 +1,11 @@
 """
-Hierarchical Rate Limiter Enterprise - Ainflue
+Hierarchical Rate Limiter Enterprise - IA Chéries
 ==============================================
 Rate Limiter hiérarchique pour rate limiting multi-niveau.
 User → Team → Organization → Global limits avec priorities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Rate Limiting
+Project: IA Chéries Rate Limiting
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

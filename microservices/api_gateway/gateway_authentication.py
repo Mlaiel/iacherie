@@ -231,20 +231,20 @@ class GatewayAuthenticationService:
         # Create default API keys for different tiers
         default_keys = [
             {
-                'client_id': 'ainflue_mobile_app',
-                'tenant_id': 'ainflue_default',
+                'client_id': 'iacherie_mobile_app',
+                'tenant_id': 'iacherie_default',
                 'permissions': ['content:read', 'content:write', 'analytics:read'],
                 'rate_limit_tier': 'premium'
             },
             {
-                'client_id': 'ainflue_web_platform',
-                'tenant_id': 'ainflue_default', 
+                'client_id': 'iacherie_web_platform',
+                'tenant_id': 'iacherie_default', 
                 'permissions': ['content:read', 'content:write', 'analytics:read', 'admin:read'],
                 'rate_limit_tier': 'enterprise'
             },
             {
-                'client_id': 'ainflue_api_client',
-                'tenant_id': 'ainflue_default',
+                'client_id': 'iacherie_api_client',
+                'tenant_id': 'iacherie_default',
                 'permissions': ['content:read', 'analytics:read'],
                 'rate_limit_tier': 'basic'
             }
@@ -501,7 +501,7 @@ class GatewayAuthenticationService:
         # Simulate successful validation
         return {
             'user_id': 'user_12345',
-            'tenant_id': 'ainflue_default',
+            'tenant_id': 'iacherie_default',
             'permissions': ['content:read', 'content:write', 'analytics:read']
         }
     
@@ -515,13 +515,13 @@ class GatewayAuthenticationService:
             'admin': {
                 'password_hash': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',  # 'admin123'
                 'user_id': 'admin_user',
-                'tenant_id': 'ainflue_default',
+                'tenant_id': 'iacherie_default',
                 'permissions': ['*']
             },
             'creator1': {
                 'password_hash': 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f',  # 'creator123'
                 'user_id': 'creator_001',
-                'tenant_id': 'ainflue_default',
+                'tenant_id': 'iacherie_default',
                 'permissions': ['content:read', 'content:write', 'analytics:read']
             }
         }

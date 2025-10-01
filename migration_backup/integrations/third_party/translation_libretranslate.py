@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌍 LIBRETRANSLATE ENGINE - Traduction gratuite pour Ainfluencer
+🌍 LIBRETRANSLATE ENGINE - Traduction gratuite pour IA Chéries
 ════════════════════════════════════════════════════════════════
 
 Fonctionnalités:
@@ -40,9 +40,9 @@ class TranslationResult:
     error: Optional[str] = None
     chunks_count: int = 1
 
-class AinfluencerLibreTranslate:
+class IaCheriesLibreTranslate:
     """
-    🌍 Moteur de traduction LibreTranslate pour Ainfluencer
+    🌍 Moteur de traduction LibreTranslate pour IA Chéries
     """
     
     def __init__(self):
@@ -302,7 +302,7 @@ async def test_libretranslate_engine():
     print("=" * 60)
     
     try:
-        engine = AinfluencerLibreTranslate()
+        engine = IaCheriesLibreTranslate()
         
         # Test langues supportées
         languages = await engine.get_supported_languages()
@@ -312,7 +312,7 @@ async def test_libretranslate_engine():
         # Tests de traduction
         test_cases = [
             ("Hello world, this is a test!", "fr"),
-            ("Ainfluencer est une plateforme révolutionnaire", "en"),
+            ("IA Chéries est une plateforme révolutionnaire", "en"),
             ("Hola mundo, ¿cómo estás?", "de"),
             ("これは日本語のテストです", "en")
         ]
@@ -338,7 +338,7 @@ async def test_libretranslate_engine():
         # Test texte long
         print(f"\n📝 Test texte long:")
         long_text = """
-        Ainfluencer est une plateforme d'intelligence artificielle révolutionnaire qui transforme 
+        IA Chéries est une plateforme d'intelligence artificielle révolutionnaire qui transforme 
         complètement la façon dont les entreprises créent et gèrent leur contenu numérique. 
         Avec ses 53 agents spécialisés et ses 680 microservices interconnectés, la plateforme 
         offre une solution complète pour l'automatisation de la création de contenu. 

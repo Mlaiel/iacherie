@@ -3,7 +3,7 @@
 
 Consolidated payment processing service providing secure payment processing,
 transaction management, fraud detection, and financial operations
-for the Ainflue platform.
+for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

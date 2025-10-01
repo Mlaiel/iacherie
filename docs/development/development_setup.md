@@ -731,7 +731,7 @@ chore: maintenance tasks
    docker ps | grep postgres
    
    # Check connection
-   psql -h localhost -U iacherie -d ainflue_platform
+   psql -h localhost -U iacherie -d iacherie_platform
    ```
 
 2. **Redis Connection Error**

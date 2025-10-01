@@ -387,7 +387,7 @@ class ThreatDetectionEngine:
         
         # Domaines de phishing
         self.threat_intel.phishing_domains.update([
-            "ainflue-fake.com",
+            "iacherie-fake.com",
             "creator-scam.net",
             "fake-platform.org"
         ])

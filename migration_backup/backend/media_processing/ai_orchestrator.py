@@ -21,7 +21,7 @@ Contact: mlaiel@live.de
 - Unified AI processing coordination across all modalities
 - Intelligent content understanding and semantic analysis
 - Advanced decision-making for processing pipeline optimization
-- Business logic compliance for Ainflue creator workflows
+- Business logic compliance for IA Chéries creator workflows
 - Performance optimization and resource management
 - Integration with existing multimedia and protection systems
 """

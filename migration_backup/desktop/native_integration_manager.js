@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Native Integration Manager
+ * IA Chéries Desktop - Native Integration Manager
  * 
  * Platform-specific native OS integration and system features
  * 
@@ -231,7 +231,7 @@ class NativeIntegrationManager {
         items: [
           {
             type: 'file',
-            path: path.join(os.homedir(), 'Documents', 'Ainflue', 'example.ainproj'),
+            path: path.join(os.homedir(), 'Documents', 'IA Chéries', 'example.ainproj'),
             args: '--open-recent'
           }
         ]
@@ -243,7 +243,7 @@ class NativeIntegrationManager {
           {
             type: 'task',
             title: 'New Project',
-            description: 'Create a new Ainflue project',
+            description: 'Create a new IA Chéries project',
             program: process.execPath,
             args: '--new-project',
             iconPath: process.execPath,

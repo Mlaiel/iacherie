@@ -2,7 +2,7 @@
 ========================================================================
 
 Engine de watermarking audio enterprise avec protection inaudible et intégration DRM
-pour la protection du contenu créateur sur la plateforme Ainflue.
+pour la protection du contenu créateur sur la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Spectral domain embedding + psychoacoustic masking + DSP professional
@@ -556,7 +556,7 @@ class AudioWatermarkingEngine:
             content_id=content_id,
             timestamp=datetime.now(),
             copyright_info={
-                "platform": "Ainflue",
+                "platform": "IA Chéries",
                 "creator": creator_id,
                 "created_at": datetime.now().isoformat(),
                 "protection_method": "audio_watermarking"

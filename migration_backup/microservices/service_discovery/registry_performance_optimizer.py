@@ -1,16 +1,16 @@
 """
-⚡ REGISTRY PERFORMANCE OPTIMIZER - Module Optimization Performance Registry Ainflue
+⚡ REGISTRY PERFORMANCE OPTIMIZER - Module Optimization Performance Registry IA Chéries
 ==================================================================================
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Copyright**: ©2025 Ainflue Platform - Tous droits réservés
+**Copyright**: ©2025 IA Chéries Platform - Tous droits réservés
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ====================================================
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 - Email: mlaiel@live.de  
-- Projet: Ainflue Platform
+- Projet: IA Chéries Platform
 - Licence: Propriétaire - Usage commercial interdit sans autorisation
 - Protection: Code source confidentiel
 

@@ -6,7 +6,7 @@ Advanced database backup system supporting PostgreSQL, MongoDB, and Redis
 with Point-in-Time Recovery (PITR), WAL archiving, and enterprise features.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure  
+Project: IA Chéries Infrastructure  
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

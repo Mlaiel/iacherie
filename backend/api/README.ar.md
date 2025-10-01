@@ -1,10 +1,10 @@
-# 🔌 Ainflue Backend API - نظام بوابة API المؤسسية
+# 🔌 iacherie Backend API - نظام بوابة API المؤسسية
 
 **بنية API متقدمة متعددة المنصات لإنشاء المحتوى المدعوم بالذكاء الاصطناعي**
 
 ## 🎯 نظرة عامة
 
-يوفر وحدة Ainflue Backend API نظام بوابة API شامل ومتقدم على مستوى المؤسسة لمنصة حماية المحتوى والربح المدعومة بالذكاء الاصطناعي. يدير هذا النظام تنسيق API المعقد مع ميزات متقدمة تشمل المصادقة متعددة المنصات، وتحسين GraphQL، والاتصال WebSocket في الوقت الفعلي، ومعالجة الوسطاء الذكية.
+يوفر وحدة iacherie Backend API نظام بوابة API شامل ومتقدم على مستوى المؤسسة لمنصة حماية المحتوى والربح المدعومة بالذكاء الاصطناعي. يدير هذا النظام تنسيق API المعقد مع ميزات متقدمة تشمل المصادقة متعددة المنصات، وتحسين GraphQL، والاتصال WebSocket في الوقت الفعلي، ومعالجة الوسطاء الذكية.
 
 ## 👨‍💻 فريق التطوير
 
@@ -195,7 +195,7 @@ await realtime.subscribe_to_collaboration_events("creator_123")
 ### متغيرات البيئة
 ```bash
 # تكوين قاعدة البيانات
-export DATABASE_URL="postgresql://user:password@localhost/ainflue"
+export DATABASE_URL="postgresql://user:password@localhost/iacherie"
 export REDIS_URL="redis://localhost:6379"
 
 # تكوين OAuth
@@ -366,4 +366,4 @@ WS     /api/ws/analytics                       # تدفق التحليلات ا�
 
 ---
 
-**🔌 Ainflue Backend API - منصة API إنشاء المحتوى الأكثر تقدماً في العالم**
+**🔌 iacherie Backend API - منصة API إنشاء المحتوى الأكثر تقدماً في العالم**

@@ -275,7 +275,7 @@ class EncryptionAtRestTemplate:
         """Load encryption keys from environment variables"""
         try:
             # Load master key from environment
-            master_key_b64 = os.getenv("AINFLUE_MASTER_KEY")
+            master_key_b64 = os.getenv("IACHERIE_MASTER_KEY")
             if not master_key_b64:
                 logger.warning("No master key found in environment, generating new one")
                 self._generate_default_keys()
@@ -322,7 +322,7 @@ class EncryptionAtRestTemplate:
             
             # Save master key to environment for future use
             master_key_b64 = base64.b64encode(master_key).decode('utf-8')
-            logger.warning(f"Generated new master key. Save to environment: AINFLUE_MASTER_KEY={master_key_b64}")
+            logger.warning(f"Generated new master key. Save to environment: IACHERIE_MASTER_KEY={master_key_b64}")
             
         except Exception as e:
             logger.error(f"Failed to generate default keys: {e}")

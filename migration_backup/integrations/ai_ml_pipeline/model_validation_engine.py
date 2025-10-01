@@ -643,10 +643,10 @@ class SecurityValidator(BaseValidator):
         )
 
 class BusinessLogicValidator(BaseValidator):
-    """💼 Business Logic - Validateur de logique métier Ainflue"""
+    """💼 Business Logic - Validateur de logique métier IA Chéries"""
     
     async def validate(self, model: Any, data: Dict[str, Any], config: Dict[str, Any]) -> ValidationResult:
-        """Valider la conformité à la logique métier Ainflue"""
+        """Valider la conformité à la logique métier IA Chéries"""
         start_time = time.time()
         
         try:
@@ -724,10 +724,10 @@ class BusinessLogicValidator(BaseValidator):
                     else:
                         issues.append(f"Misclassified content: {content[:50]}...")
             
-            # Vérifications spécifiques Ainflue
+            # Vérifications spécifiques IA Chéries
             if business_compliance_score >= 0.8:
                 status = ValidationStatus.PASSED
-                message = "Content classifier aligns with Ainflue business logic"
+                message = "Content classifier aligns with IA Chéries business logic"
             elif business_compliance_score >= 0.6:
                 status = ValidationStatus.WARNING
                 message = "Content classifier partially aligns with business logic"
@@ -749,7 +749,7 @@ class BusinessLogicValidator(BaseValidator):
                 },
                 recommendations=[
                     "Review content quality criteria",
-                    "Enhance training data with Ainflue-specific examples",
+                    "Enhance training data with IA Chéries-specific examples",
                     "Implement creator-specific quality standards"
                 ] if business_compliance_score < 0.8 else []
             )
@@ -885,7 +885,7 @@ class ModelValidationEngine:
                 test_name="Business Logic Compliance",
                 category=ValidationCategory.BUSINESS_LOGIC,
                 severity=ValidationSeverity.HIGH,
-                description="Validate compliance with Ainflue business logic",
+                description="Validate compliance with IA Chéries business logic",
                 test_function=self.validators[ValidationCategory.BUSINESS_LOGIC].validate,
                 expected_threshold=0.8,
                 required_data=['creator_data', 'content_data']

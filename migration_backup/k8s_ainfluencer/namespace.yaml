@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/managed-by: kubectl
     managed-by: fahed-mlaiel
   annotations:
-    description: "Ainflue AI-powered Content Protection & Monetization Platform"
+    description: "IA Chéries AI-powered Content Protection & Monetization Platform"
     contact: "mlaiel@live.de"
     created-by: "Fahed Mlaiel"
 ---

@@ -221,7 +221,7 @@ class FileSystemManager:
             # Azure Blob Storage provider
             self.provider_configs[StorageProvider.AZURE_BLOB] = {
                 "container_name": "iacherie-blob-storage",
-                "account_name": "ainfluestorage",
+                "account_name": "iacheriestorage",
                 "tier": "Hot",
                 "encryption": "AES256"
             }

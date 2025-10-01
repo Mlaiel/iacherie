@@ -5,7 +5,7 @@
  */
 
 export const APP_CONFIG = {
-  name: 'Ainflue Platform',
+  name: 'IA Chéries Platform',
   version: '2.0.0',
   description: 'Professional Multi-Format Content Creation & AI-Powered Distribution Platform',
   author: 'Fahed Mlaiel',

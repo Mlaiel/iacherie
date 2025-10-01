@@ -135,7 +135,7 @@ class CRDManager:
         """Create AI Engine CRD for the platform"""
         config = CRDConfig(
             name="aiengine",
-            group="ainflue.io",
+            group="iacherie.io",
             version="v1",
             kind="AIEngine",
             plural="aiengines",
@@ -317,7 +317,7 @@ class CustomControllerManager:
                 'verbs': ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
             },
             {
-                'apiGroups': ['ainflue.io'],
+                'apiGroups': ['iacherie.io'],
                 'resources': ['*'],
                 'verbs': ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
             }
@@ -395,17 +395,17 @@ class OperatorLifecycleManager:
                     'email': 'mlaiel@live.de'
                 }],
                 'labels': {
-                    'alm-owner-ainflue': name,
+                    'alm-owner-iacherie': name,
                     'alm-status-descriptors': name
                 },
                 'selector': {
                     'matchLabels': {
-                        'alm-owner-ainflue': name
+                        'alm-owner-iacherie': name
                     }
                 },
                 'links': [{
                     'name': 'Documentation',
-                    'url': 'https://github.com/Mlaiel/Ainflue'
+                    'url': 'https://github.com/Mlaiel/iacherie'
                 }],
                 'icon': [{
                     'base64data': '',

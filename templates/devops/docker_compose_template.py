@@ -1,4 +1,4 @@
-"""Docker Compose Template for Ainflue Platform
+"""Docker Compose Template for iacherie Platform
 Enterprise-grade container orchestration template for development and testing.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -32,7 +32,7 @@ class DockerComposeConfig:
     """Docker Compose configuration"""
     project_name: str
     environment: EnvironmentType
-    network_name: str = "ainflue_network"
+    network_name: str = "iacherie_network"
     
     # Database settings
     postgres_version: str = "15"
@@ -50,7 +50,7 @@ class DockerComposeConfig:
 
 
 class DockerComposeTemplate:
-    """Enterprise Docker Compose Template for Ainflue Platform"""
+    """Enterprise Docker Compose Template for iacherie Platform"""
     
     def __init__(self, config: DockerComposeConfig):
         self.config = config
@@ -93,9 +93,9 @@ class DockerComposeTemplate:
                 "image": f"postgres:{self.config.postgres_version}",
                 "container_name": f"{self.config.project_name}_postgres",
                 "environment": {
-                    "POSTGRES_DB": "ainflue",
-                    "POSTGRES_USER": "ainflue",
-                    "POSTGRES_PASSWORD": "ainflue_password",
+                    "POSTGRES_DB": "iacherie",
+                    "POSTGRES_USER": "iacherie",
+                    "POSTGRES_PASSWORD": "iacherie_password",
                     "POSTGRES_MULTIPLE_EXTENSIONS": "uuid-ossp,vector"
                 },
                 "ports": ["5432:5432"] if self.config.expose_all_ports else [],
@@ -105,7 +105,7 @@ class DockerComposeTemplate:
                 ],
                 "networks": [self.config.network_name],
                 "healthcheck": {
-                    "test": ["CMD-SHELL", "pg_isready -U ainflue -d ainflue"],
+                    "test": ["CMD-SHELL", "pg_isready -U iacherie -d iacherie"],
                     "interval": "10s",
                     "timeout": "5s",
                     "retries": 5
@@ -149,10 +149,10 @@ class DockerComposeTemplate:
         base_environment = {
             "ENVIRONMENT": self.config.environment.value,
             "DEBUG": str(self.config.enable_debug_mode).lower(),
-            "DATABASE_URL": "postgresql://ainflue:ainflue_password@postgres:5432/ainflue",
+            "DATABASE_URL": "postgresql://iacherie:iacherie_password@postgres:5432/iacherie",
             "REDIS_URL": "redis://redis:6379/0",
             "JWT_SECRET": "your-jwt-secret-key-change-in-production",
-            "CORS_ORIGINS": "*" if self.config.environment == EnvironmentType.DEVELOPMENT else "https://ainflue.com"
+            "CORS_ORIGINS": "*" if self.config.environment == EnvironmentType.DEVELOPMENT else "https://iacherie.com"
         }
         
         services = {
@@ -287,7 +287,7 @@ class DockerComposeTemplate:
         """Generate AI and ML services"""
         base_environment = {
             "ENVIRONMENT": self.config.environment.value,
-            "DATABASE_URL": "postgresql://ainflue:ainflue_password@postgres:5432/ainflue",
+            "DATABASE_URL": "postgresql://iacherie:iacherie_password@postgres:5432/iacherie",
             "REDIS_URL": "redis://redis:6379/0",
             "CUDA_VISIBLE_DEVICES": "",  # CPU only for development
             "HF_DATASETS_OFFLINE": "1",
@@ -469,7 +469,7 @@ class DockerComposeTemplate:
         test_compose = self.generate_compose_file()
         
         # Override for testing
-        test_compose["services"]["postgres"]["environment"]["POSTGRES_DB"] = "ainflue_test"
+        test_compose["services"]["postgres"]["environment"]["POSTGRES_DB"] = "iacherie_test"
         test_compose["services"]["postgres"]["ports"] = []
         
         # Add test runner service
@@ -481,7 +481,7 @@ class DockerComposeTemplate:
             "container_name": f"{self.config.project_name}_test_runner",
             "environment": {
                 "ENVIRONMENT": "testing",
-                "DATABASE_URL": "postgresql://ainflue:ainflue_password@postgres:5432/ainflue_test",
+                "DATABASE_URL": "postgresql://iacherie:iacherie_password@postgres:5432/iacherie_test",
                 "REDIS_URL": "redis://redis:6379/1"  # Different Redis DB for tests
             },
             "volumes": [
@@ -527,7 +527,7 @@ class DockerComposeTemplate:
 def create_development_config() -> DockerComposeConfig:
     """Create development configuration"""
     return DockerComposeConfig(
-        project_name="ainflue-dev",
+        project_name="iacherie-dev",
         environment=EnvironmentType.DEVELOPMENT,
         enable_ai_services=True,
         enable_monitoring=True,
@@ -541,7 +541,7 @@ def create_development_config() -> DockerComposeConfig:
 def create_testing_config() -> DockerComposeConfig:
     """Create testing configuration"""
     return DockerComposeConfig(
-        project_name="ainflue-test",
+        project_name="iacherie-test",
         environment=EnvironmentType.TESTING,
         enable_ai_services=False,
         enable_monitoring=False,
@@ -556,7 +556,7 @@ if __name__ == "__main__":
     dev_config = create_development_config()
     template = DockerComposeTemplate(dev_config)
     
-    print("Docker Compose Template for Ainflue Platform")
+    print("Docker Compose Template for iacherie Platform")
     print("Configuration:")
     print(f"- Environment: {dev_config.environment.value}")
     print(f"- AI Services: {dev_config.enable_ai_services}")

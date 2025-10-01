@@ -1,12 +1,12 @@
 """
-CI/CD Pipeline Manager - Enterprise CI/CD Automation for Ainflue
+CI/CD Pipeline Manager - Enterprise CI/CD Automation for iacherie
 ===============================================================
 
 Advanced CI/CD pipeline management and automation for the creator economy platform.
 Supports multiple deployment strategies, automated testing, and creator-focused workflows.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -97,7 +97,7 @@ class PipelineExecution:
 
 class CICDPipelineManager:
     """
-    Enterprise CI/CD pipeline manager for Ainflue creator platform.
+    Enterprise CI/CD pipeline manager for iacherie creator platform.
     Manages automated builds, tests, deployments, and creator workflow integration.
     """
     
@@ -106,10 +106,10 @@ class CICDPipelineManager:
         self.executions: Dict[str, PipelineExecution] = {}
         self.execution_history: List[PipelineExecution] = []
         
-        # Initialize default pipelines for Ainflue creator platform
+        # Initialize default pipelines for iacherie creator platform
         self._initialize_creator_platform_pipelines()
         
-        logger.info("CI/CD Pipeline Manager initialized for Ainflue creator platform")
+        logger.info("CI/CD Pipeline Manager initialized for iacherie creator platform")
     
     def _initialize_creator_platform_pipelines(self):
         """Initialize default CI/CD pipelines for creator platform components."""
@@ -117,7 +117,7 @@ class CICDPipelineManager:
         # Main Creator Platform Pipeline
         self.pipelines["creator_platform_main"] = PipelineConfig(
             id="creator_platform_main",
-            name="Ainflue Creator Platform Main Pipeline",
+            name="iacherie Creator Platform Main Pipeline",
             description="Main CI/CD pipeline for creator platform core services",
             trigger_events=["push_main", "pull_request", "scheduled_daily"],
             stages=[
@@ -439,7 +439,7 @@ class CICDPipelineManager:
                 "tests_passed": tests_passed,
                 "tests_total": tests_total,
                 "test_success_rate": (tests_passed / tests_total) * 100,
-                "test_report_url": f"https://reports.ainflue.com/{pipeline.id}/tests"
+                "test_report_url": f"https://reports.iacherie.com/{pipeline.id}/tests"
             }
         }
     
@@ -454,7 +454,7 @@ class CICDPipelineManager:
                 "vulnerabilities_found": 0,
                 "compliance_score": 98.5,
                 "scan_duration_seconds": 45.2,
-                "security_report_url": f"https://security.ainflue.com/{pipeline.id}/scan"
+                "security_report_url": f"https://security.iacherie.com/{pipeline.id}/scan"
             }
         }
     
@@ -466,11 +466,11 @@ class CICDPipelineManager:
             "success": True,
             "artifacts": {
                 "container_images": [
-                    f"ainflue/{pipeline.id}:latest",
-                    f"ainflue/{pipeline.id}:v1.2.3"
+                    f"iacherie/{pipeline.id}:latest",
+                    f"iacherie/{pipeline.id}:v1.2.3"
                 ],
                 "image_size_mb": 180.5,
-                "registry_url": "https://registry.ainflue.com"
+                "registry_url": "https://registry.iacherie.com"
             }
         }
     
@@ -488,7 +488,7 @@ class CICDPipelineManager:
             "artifacts": {
                 "deployment_strategy": pipeline.deployment_strategy.value,
                 "environment": environment,
-                "deployment_url": f"https://{environment}.ainflue.com",
+                "deployment_url": f"https://{environment}.iacherie.com",
                 "deployment_time_seconds": deploy_time,
                 "instances_deployed": 5 if environment == "production" else 2,
                 "health_check_passed": True
@@ -535,7 +535,7 @@ class CICDPipelineManager:
                 "monitoring_enabled": True,
                 "dashboards_configured": 5,
                 "alerts_configured": 15,
-                "monitoring_url": f"https://monitoring.ainflue.com/{pipeline.id}"
+                "monitoring_url": f"https://monitoring.iacherie.com/{pipeline.id}"
             }
         }
     

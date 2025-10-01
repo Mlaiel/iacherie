@@ -1,4 +1,4 @@
-# Docker Swarm Configuration - Ainflue Creator Economy Platform
+# Docker Swarm Configuration - iacherie Creator Economy Platform
 # ===============================================================
 #
 # 🎯 DEVOPS ENGINEER + CONTAINER ORCHESTRATION EXPERT + SWARM ARCHITECT
@@ -35,45 +35,45 @@ version: '3.8'
 # ==============================================================================
 networks:
   # Frontend network for public-facing services
-  ainflue_frontend:
+  iacherie_frontend:
     driver: overlay
     attachable: true
     labels:
-      - "com.ainflue.network.type=frontend"
-      - "com.ainflue.network.security=public"
+      - "com.iacherie.network.type=frontend"
+      - "com.iacherie.network.security=public"
     driver_opts:
       encrypted: "true"
   
   # Backend network for internal services
-  ainflue_backend:
+  iacherie_backend:
     driver: overlay
     attachable: false
     internal: true
     labels:
-      - "com.ainflue.network.type=backend"
-      - "com.ainflue.network.security=internal"
+      - "com.iacherie.network.type=backend"
+      - "com.iacherie.network.security=internal"
     driver_opts:
       encrypted: "true"
   
   # Database network for data services
-  ainflue_database:
+  iacherie_database:
     driver: overlay
     attachable: false
     internal: true
     labels:
-      - "com.ainflue.network.type=database"
-      - "com.ainflue.network.security=restricted"
+      - "com.iacherie.network.type=database"
+      - "com.iacherie.network.security=restricted"
     driver_opts:
       encrypted: "true"
   
   # AI processing network for ML workloads
-  ainflue_ai_processing:
+  iacherie_ai_processing:
     driver: overlay
     attachable: false
     internal: true
     labels:
-      - "com.ainflue.network.type=ai-processing"
-      - "com.ainflue.network.security=compute"
+      - "com.iacherie.network.type=ai-processing"
+      - "com.iacherie.network.security=compute"
     driver_opts:
       encrypted: "true"
 
@@ -85,62 +85,62 @@ volumes:
   postgresql_data:
     driver: local
     labels:
-      - "com.ainflue.volume.type=database"
-      - "com.ainflue.volume.service=postgresql"
+      - "com.iacherie.volume.type=database"
+      - "com.iacherie.volume.service=postgresql"
   
   mysql_data:
     driver: local
     labels:
-      - "com.ainflue.volume.type=database"
-      - "com.ainflue.volume.service=mysql"
+      - "com.iacherie.volume.type=database"
+      - "com.iacherie.volume.service=mysql"
   
   redis_data:
     driver: local
     labels:
-      - "com.ainflue.volume.type=cache"
-      - "com.ainflue.volume.service=redis"
+      - "com.iacherie.volume.type=cache"
+      - "com.iacherie.volume.service=redis"
   
   # Content storage volumes
   video_content:
     driver: local
     labels:
-      - "com.ainflue.volume.type=content"
-      - "com.ainflue.volume.media=video"
+      - "com.iacherie.volume.type=content"
+      - "com.iacherie.volume.media=video"
   
   audio_content:
     driver: local
     labels:
-      - "com.ainflue.volume.type=content"
-      - "com.ainflue.volume.media=audio"
+      - "com.iacherie.volume.type=content"
+      - "com.iacherie.volume.media=audio"
   
   image_content:
     driver: local
     labels:
-      - "com.ainflue.volume.type=content"
-      - "com.ainflue.volume.media=image"
+      - "com.iacherie.volume.type=content"
+      - "com.iacherie.volume.media=image"
   
   document_content:
     driver: local
     labels:
-      - "com.ainflue.volume.type=content"
-      - "com.ainflue.volume.media=document"
+      - "com.iacherie.volume.type=content"
+      - "com.iacherie.volume.media=document"
   
   # Application volumes
   app_logs:
     driver: local
     labels:
-      - "com.ainflue.volume.type=logs"
+      - "com.iacherie.volume.type=logs"
   
   app_backups:
     driver: local
     labels:
-      - "com.ainflue.volume.type=backups"
+      - "com.iacherie.volume.type=backups"
   
   # AI model storage
   ai_models:
     driver: local
     labels:
-      - "com.ainflue.volume.type=ai-models"
+      - "com.iacherie.volume.type=ai-models"
 
 # ==============================================================================
 # SECRETS CONFIGURATION
@@ -148,23 +148,23 @@ volumes:
 secrets:
   db_password:
     external: true
-    name: ainflue_db_password
+    name: iacherie_db_password
   
   redis_password:
     external: true
-    name: ainflue_redis_password
+    name: iacherie_redis_password
   
   jwt_secret:
     external: true
-    name: ainflue_jwt_secret
+    name: iacherie_jwt_secret
   
   ssl_certificate:
     external: true
-    name: ainflue_ssl_cert
+    name: iacherie_ssl_cert
   
   ssl_private_key:
     external: true
-    name: ainflue_ssl_key
+    name: iacherie_ssl_key
 
 # ==============================================================================
 # CONFIGS CONFIGURATION
@@ -172,15 +172,15 @@ secrets:
 configs:
   nginx_config:
     external: true
-    name: ainflue_nginx_config
+    name: iacherie_nginx_config
   
   prometheus_config:
     external: true
-    name: ainflue_prometheus_config
+    name: iacherie_prometheus_config
   
   grafana_config:
     external: true
-    name: ainflue_grafana_config
+    name: iacherie_grafana_config
 
 # ==============================================================================
 # SERVICES CONFIGURATION
@@ -207,14 +207,14 @@ services:
         mode: 0644
     secrets:
       - source: ssl_certificate
-        target: /etc/ssl/certs/ainflue.crt
+        target: /etc/ssl/certs/iacherie.crt
         mode: 0644
       - source: ssl_private_key
-        target: /etc/ssl/private/ainflue.key
+        target: /etc/ssl/private/iacherie.key
         mode: 0600
     networks:
-      - ainflue_frontend
-      - ainflue_backend
+      - iacherie_frontend
+      - iacherie_backend
     deploy:
       replicas: 3
       placement:
@@ -241,10 +241,10 @@ services:
           cpus: '0.1'
           memory: 128M
       labels:
-        - "com.ainflue.service.type=loadbalancer"
-        - "com.ainflue.service.tier=frontend"
+        - "com.iacherie.service.type=loadbalancer"
+        - "com.iacherie.service.tier=frontend"
         - "traefik.enable=true"
-        - "traefik.http.routers.nginx.rule=Host(`ainflue.com`)"
+        - "traefik.http.routers.nginx.rule=Host(`iacherie.com`)"
         - "traefik.http.services.nginx.loadbalancer.server.port=80"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]
@@ -263,12 +263,12 @@ services:
   # CREATOR ECONOMY API GATEWAY
   # ==============================================================================
   api_gateway:
-    image: ainflue/api-gateway:${API_GATEWAY_VERSION:-latest}
+    image: iacherie/api-gateway:${API_GATEWAY_VERSION:-latest}
     environment:
       - APP_ENV=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - REDIS_URL=redis://redis:6379
-      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - DATABASE_URL=postgresql://postgres:5432/iacherie
       - JWT_SECRET_FILE=/run/secrets/jwt_secret
       - CREATOR_ECONOMY_ENABLED=true
       - AI_PROCESSING_ENABLED=true
@@ -285,9 +285,9 @@ services:
       - jwt_secret
       - db_password
     networks:
-      - ainflue_frontend
-      - ainflue_backend
-      - ainflue_database
+      - iacherie_frontend
+      - iacherie_backend
+      - iacherie_database
     deploy:
       replicas: 5
       placement:
@@ -315,9 +315,9 @@ services:
           cpus: '0.5'
           memory: 512M
       labels:
-        - "com.ainflue.service.type=api-gateway"
-        - "com.ainflue.service.tier=backend"
-        - "com.ainflue.service.business-unit=creator-economy"
+        - "com.iacherie.service.type=api-gateway"
+        - "com.iacherie.service.tier=backend"
+        - "com.iacherie.service.business-unit=creator-economy"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -337,10 +337,10 @@ services:
   # CREATOR PLATFORM SERVICE
   # ==============================================================================
   creator_platform:
-    image: ainflue/creator-platform:${CREATOR_PLATFORM_VERSION:-latest}
+    image: iacherie/creator-platform:${CREATOR_PLATFORM_VERSION:-latest}
     environment:
       - APP_ENV=${ENVIRONMENT:-production}
-      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - DATABASE_URL=postgresql://postgres:5432/iacherie
       - REDIS_URL=redis://redis:6379
       - CONTENT_STORAGE_PATH=/app/content
       - VIDEO_PROCESSING_ENABLED=true
@@ -369,8 +369,8 @@ services:
       - db_password
       - redis_password
     networks:
-      - ainflue_backend
-      - ainflue_database
+      - iacherie_backend
+      - iacherie_database
     deploy:
       replicas: 8
       placement:
@@ -399,9 +399,9 @@ services:
           cpus: '1.0'
           memory: 1G
       labels:
-        - "com.ainflue.service.type=creator-platform"
-        - "com.ainflue.service.tier=application"
-        - "com.ainflue.service.business-unit=creator-economy"
+        - "com.iacherie.service.type=creator-platform"
+        - "com.iacherie.service.tier=application"
+        - "com.iacherie.service.business-unit=creator-economy"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -421,7 +421,7 @@ services:
   # AI PROCESSING SERVICE
   # ==============================================================================
   ai_processor:
-    image: ainflue/ai-processor:${AI_PROCESSOR_VERSION:-latest}
+    image: iacherie/ai-processor:${AI_PROCESSOR_VERSION:-latest}
     environment:
       - APP_ENV=${ENVIRONMENT:-production}
       - GPU_ENABLED=${GPU_ENABLED:-false}
@@ -453,8 +453,8 @@ services:
         source: app_logs
         target: /app/logs
     networks:
-      - ainflue_ai_processing
-      - ainflue_backend
+      - iacherie_ai_processing
+      - iacherie_backend
     deploy:
       replicas: 4
       placement:
@@ -488,9 +488,9 @@ services:
               kind: 'NVIDIA-GPU'
               value: 1
       labels:
-        - "com.ainflue.service.type=ai-processor"
-        - "com.ainflue.service.tier=compute"
-        - "com.ainflue.service.business-unit=ai-processing"
+        - "com.iacherie.service.type=ai-processor"
+        - "com.iacherie.service.tier=compute"
+        - "com.iacherie.service.business-unit=ai-processing"
     healthcheck:
       test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
       interval: 60s
@@ -507,11 +507,11 @@ services:
   # COLLABORATION SERVICE
   # ==============================================================================
   collaboration_service:
-    image: ainflue/collaboration-service:${COLLABORATION_VERSION:-latest}
+    image: iacherie/collaboration-service:${COLLABORATION_VERSION:-latest}
     environment:
       - APP_ENV=${ENVIRONMENT:-production}
       - REDIS_URL=redis://redis:6379
-      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - DATABASE_URL=postgresql://postgres:5432/iacherie
       - WEBSOCKET_ENABLED=true
       - REAL_TIME_EDITING=true
       - VERSION_CONTROL=true
@@ -522,8 +522,8 @@ services:
       - db_password
       - redis_password
     networks:
-      - ainflue_backend
-      - ainflue_database
+      - iacherie_backend
+      - iacherie_database
     deploy:
       replicas: 6
       placement:
@@ -550,9 +550,9 @@ services:
           cpus: '0.5'
           memory: 512M
       labels:
-        - "com.ainflue.service.type=collaboration"
-        - "com.ainflue.service.tier=application"
-        - "com.ainflue.service.business-unit=creator-economy"
+        - "com.iacherie.service.type=collaboration"
+        - "com.iacherie.service.tier=application"
+        - "com.iacherie.service.business-unit=creator-economy"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -572,10 +572,10 @@ services:
   # MONETIZATION SERVICE
   # ==============================================================================
   monetization_service:
-    image: ainflue/monetization-service:${MONETIZATION_VERSION:-latest}
+    image: iacherie/monetization-service:${MONETIZATION_VERSION:-latest}
     environment:
       - APP_ENV=${ENVIRONMENT:-production}
-      - DATABASE_URL=postgresql://postgres:5432/ainflue
+      - DATABASE_URL=postgresql://postgres:5432/iacherie
       - PAYMENT_PROVIDERS=stripe,paypal,square
       - REVENUE_SHARING_ENABLED=true
       - SUBSCRIPTION_MANAGEMENT=true
@@ -586,8 +586,8 @@ services:
     secrets:
       - db_password
     networks:
-      - ainflue_backend
-      - ainflue_database
+      - iacherie_backend
+      - iacherie_database
     deploy:
       replicas: 4
       placement:
@@ -616,10 +616,10 @@ services:
           cpus: '0.5'
           memory: 512M
       labels:
-        - "com.ainflue.service.type=monetization"
-        - "com.ainflue.service.tier=application"
-        - "com.ainflue.service.business-unit=creator-economy"
-        - "com.ainflue.service.security=high"
+        - "com.iacherie.service.type=monetization"
+        - "com.iacherie.service.tier=application"
+        - "com.iacherie.service.business-unit=creator-economy"
+        - "com.iacherie.service.security=high"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
@@ -642,7 +642,7 @@ services:
   postgresql:
     image: postgres:15.4-alpine
     environment:
-      - POSTGRES_DB=ainflue
+      - POSTGRES_DB=iacherie
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
@@ -655,7 +655,7 @@ services:
     secrets:
       - db_password
     networks:
-      - ainflue_database
+      - iacherie_database
     deploy:
       replicas: 1
       placement:
@@ -674,9 +674,9 @@ services:
           cpus: '1.0'
           memory: 2G
       labels:
-        - "com.ainflue.service.type=database"
-        - "com.ainflue.service.tier=data"
-        - "com.ainflue.service.engine=postgresql"
+        - "com.iacherie.service.type=database"
+        - "com.iacherie.service.tier=data"
+        - "com.iacherie.service.engine=postgresql"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
@@ -694,7 +694,7 @@ services:
     image: mysql:8.0.35
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
-      - MYSQL_DATABASE=ainflue_analytics
+      - MYSQL_DATABASE=iacherie_analytics
       - MYSQL_USER=analytics_user
       - MYSQL_PASSWORD_FILE=/run/secrets/db_password
     volumes:
@@ -706,7 +706,7 @@ services:
     secrets:
       - db_password
     networks:
-      - ainflue_database
+      - iacherie_database
     deploy:
       replicas: 1
       placement:
@@ -725,10 +725,10 @@ services:
           cpus: '0.5'
           memory: 1G
       labels:
-        - "com.ainflue.service.type=database"
-        - "com.ainflue.service.tier=data"
-        - "com.ainflue.service.engine=mysql"
-        - "com.ainflue.service.purpose=analytics"
+        - "com.iacherie.service.type=database"
+        - "com.iacherie.service.tier=data"
+        - "com.iacherie.service.engine=mysql"
+        - "com.iacherie.service.purpose=analytics"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
@@ -754,8 +754,8 @@ services:
     secrets:
       - redis_password
     networks:
-      - ainflue_database
-      - ainflue_backend
+      - iacherie_database
+      - iacherie_backend
     deploy:
       replicas: 1
       placement:
@@ -774,9 +774,9 @@ services:
           cpus: '0.2'
           memory: 512M
       labels:
-        - "com.ainflue.service.type=cache"
-        - "com.ainflue.service.tier=data"
-        - "com.ainflue.service.engine=redis"
+        - "com.iacherie.service.type=cache"
+        - "com.iacherie.service.tier=data"
+        - "com.iacherie.service.engine=redis"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 30s
@@ -812,7 +812,7 @@ services:
         target: /etc/prometheus/prometheus.yml
         mode: 0644
     networks:
-      - ainflue_backend
+      - iacherie_backend
     deploy:
       replicas: 1
       placement:
@@ -830,9 +830,9 @@ services:
           cpus: '0.5'
           memory: 1G
       labels:
-        - "com.ainflue.service.type=monitoring"
-        - "com.ainflue.service.tier=infrastructure"
-        - "com.ainflue.service.component=prometheus"
+        - "com.iacherie.service.type=monitoring"
+        - "com.iacherie.service.tier=infrastructure"
+        - "com.iacherie.service.component=prometheus"
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/"]
       interval: 30s
@@ -863,8 +863,8 @@ services:
     secrets:
       - jwt_secret
     networks:
-      - ainflue_backend
-      - ainflue_frontend
+      - iacherie_backend
+      - iacherie_frontend
     deploy:
       replicas: 1
       placement:
@@ -882,9 +882,9 @@ services:
           cpus: '0.2'
           memory: 512M
       labels:
-        - "com.ainflue.service.type=monitoring"
-        - "com.ainflue.service.tier=infrastructure"
-        - "com.ainflue.service.component=grafana"
+        - "com.iacherie.service.type=monitoring"
+        - "com.iacherie.service.tier=infrastructure"
+        - "com.iacherie.service.component=grafana"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
       interval: 30s

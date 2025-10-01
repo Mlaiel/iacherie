@@ -1,7 +1,7 @@
 """📊 MÉTRIQUES DE SUCCÈS INDUSTRIALISATION - Industrialization Success Metrics
 ===========================================================================
 
-Complete implementation of industrialization success metrics for the Ainflue platform
+Complete implementation of industrialization success metrics for the IA Chéries platform
 matching the exact specifications from the problem statement.
 
 🎯 KPIs TECHNIQUES & 💼 KPIs BUSINESS

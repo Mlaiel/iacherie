@@ -7,7 +7,7 @@
 
 ## 🚀 Überblick
 
-Das Mobile Backend Modul bietet unternehmenstaugliche mobile-first Backend-Services für die Ainflue-Plattform. Dieses Modul wurde von 48 Dateien auf genau 18 Dateien konsolidiert für optimale Performance, Wartbarkeit und Compliance mit Architekturstandards.
+Das Mobile Backend Modul bietet unternehmenstaugliche mobile-first Backend-Services für die iacherie-Plattform. Dieses Modul wurde von 48 Dateien auf genau 18 Dateien konsolidiert für optimale Performance, Wartbarkeit und Compliance mit Architekturstandards.
 
 ## 🏗️ Konsolidierte Architektur
 

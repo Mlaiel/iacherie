@@ -1,9 +1,9 @@
 """
-Ainflue Platform - Cross-Platform Analytics Aggregator
+IA Chéries Platform - Cross-Platform Analytics Aggregator
 =====================================================
 
 Advanced analytics aggregation system for collecting, processing, and unifying
-analytics data across all platforms in the Ainflue ecosystem. Provides unified
+analytics data across all platforms in the IA Chéries ecosystem. Provides unified
 insights, cross-platform performance analysis, and comprehensive reporting.
 
 Features:
@@ -134,7 +134,7 @@ class PlatformPerformance:
 
 class CrossPlatformAnalyticsAggregator:
     """
-    Advanced cross-platform analytics aggregation system for the Ainflue platform.
+    Advanced cross-platform analytics aggregation system for the IA Chéries platform.
     
     Collects, processes, and unifies analytics data from multiple platforms
     to provide comprehensive insights and cross-platform performance analysis.

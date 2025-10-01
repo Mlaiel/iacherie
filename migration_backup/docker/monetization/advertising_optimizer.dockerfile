@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE ADVERTISING OPTIMIZER - REVENUE DOCKERFILE
+# IA CHÉRIES ADVERTISING OPTIMIZER - REVENUE DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS ad-base
@@ -49,7 +49,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${AD_SERVICE_PORT}
 CMD ["python3.11", "-m", "advertising_optimizer.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Advertising Optimizer"
+LABEL org.opencontainers.image.title="IA Chéries Advertising Optimizer"
 LABEL ainflue.service.category="monetization"
 LABEL ainflue.service.name="advertising_optimizer"
 LABEL ainflue.service.port="8044"

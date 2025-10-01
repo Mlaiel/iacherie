@@ -311,8 +311,8 @@ kubectl logs -f deployment/ai-engine --tail=100
 kubectl logs --previous deployment/content-processor
 
 # Container logs
-docker logs -f ainflue_api_1
-docker logs --tail=100 ainflue_database_1
+docker logs -f iacherie_api_1
+docker logs --tail=100 iacherie_database_1
 
 # System logs
 journalctl -u iacherie.service -f

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-SEO Service Template for Ainflue Platform
+SEO Service Template for iacherie Platform
 =========================================
 
 Production-ready automated SEO optimization service with:
@@ -186,7 +186,7 @@ class SchemaMarkup:
     # Publication details
     date_published: Optional[datetime] = None
     date_modified: Optional[datetime] = None
-    publisher_name: str = "Ainflue"
+    publisher_name: str = "iacherie"
     
     # Additional properties
     keywords: List[str] = field(default_factory=list)
@@ -295,7 +295,7 @@ class KeywordResearchResponse(BaseModel):
 
 class SEOService(BaseMicroservice):
     """
-    Enterprise SEO Service for Ainflue Platform
+    Enterprise SEO Service for iacherie Platform
     
     Provides comprehensive SEO optimization, analysis, and monitoring
     with AI-powered recommendations and automated improvements.
@@ -371,7 +371,7 @@ class SEOService(BaseMicroservice):
         # Initialize HTTP client
         self.http_client = httpx.AsyncClient(
             timeout=30.0,
-            headers={"User-Agent": "Ainflue SEO Bot 1.0"}
+            headers={"User-Agent": "iacherie SEO Bot 1.0"}
         )
         
         # Start background tasks
@@ -1299,7 +1299,7 @@ class SEOService(BaseMicroservice):
                 "title": "Sample Content Title",
                 "description": "Sample content description for SEO optimization.",
                 "content": "<h1>Sample Content</h1><p>This is sample content for SEO analysis.</p>",
-                "url": f"https://ainflue.com/content/{content_id}",
+                "url": f"https://iacherie.com/content/{content_id}",
                 "author_name": "Creator Name",
                 "created_at": datetime.utcnow(),
                 "tags": ["seo", "content", "optimization"]
@@ -1440,7 +1440,7 @@ def create_seo_app() -> FastAPI:
     """Create FastAPI application for SEO service"""
     
     app = FastAPI(
-        title="Ainflue SEO Service",
+        title="iacherie SEO Service",
         description="Automated SEO optimization and analysis service",
         version="1.0.0"
     )

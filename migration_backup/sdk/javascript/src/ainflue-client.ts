@@ -1,5 +1,5 @@
 /**
- * Core Ainflue Client Implementation
+ * Core IA Chéries Client Implementation
  * 
  * Enterprise-grade TypeScript client with multi-expert design:
  * - Lead Dev IA: AI-powered content analysis and processing
@@ -19,7 +19,7 @@ import { CacheManager } from './utils/cache-manager';
 import { RetryHandler } from './utils/retry-handler';
 
 import {
-  AinflueClientOptions,
+  IA ChériesClientOptions,
   RequestOptions,
   ContentMetadata,
   AnalysisOptions,
@@ -36,7 +36,7 @@ import {
 } from './types';
 
 import {
-  AinflueError,
+  IA ChériesError,
   AuthenticationError,
   ValidationError,
   NetworkError,
@@ -44,16 +44,16 @@ import {
 } from './errors';
 
 /**
- * Main Ainflue SDK Client
+ * Main IA Chéries SDK Client
  * 
- * Provides comprehensive access to the Ainflue platform:
+ * Provides comprehensive access to the IA Chéries platform:
  * - Content upload and analysis
  * - AI-powered content protection
  * - User management and analytics
  * - Real-time event handling
  */
-export class AinflueClient extends EventEmitter {
-  private readonly config: Required<AinflueClientOptions>;
+export class IA ChériesClient extends EventEmitter {
+  private readonly config: Required<IA ChériesClientOptions>;
   private readonly logger: Logger;
   private readonly httpClient: HttpClient;
   private readonly apiClient: ApiClient;
@@ -70,7 +70,7 @@ export class AinflueClient extends EventEmitter {
     averageResponseTime: 0
   };
 
-  constructor(options: AinflueClientOptions) {
+  constructor(options: IA ChériesClientOptions) {
     super();
     
     // Merge with defaults
@@ -92,7 +92,7 @@ export class AinflueClient extends EventEmitter {
     // Initialize core components
     this.logger = new Logger({
       level: this.config.enableLogging ? 'info' : 'error',
-      prefix: 'AinflueClient'
+      prefix: 'IA ChériesClient'
     });
 
     this.retryHandler = new RetryHandler({
@@ -110,7 +110,7 @@ export class AinflueClient extends EventEmitter {
       baseURL: `${this.config.baseUrl}/${this.config.apiVersion}`,
       timeout: this.config.timeout,
       headers: {
-        'User-Agent': 'Ainflue-JS-SDK/1.0.0',
+        'User-Agent': 'IA Chéries-JS-SDK/1.0.0',
         'X-SDK-Version': '1.0.0',
         ...this.config.customHeaders
       }
@@ -128,7 +128,7 @@ export class AinflueClient extends EventEmitter {
       logger: this.logger
     });
 
-    this.logger.info(`Ainflue Client initialized for ${this.config.environment} environment`);
+    this.logger.info(`IA Chéries Client initialized for ${this.config.environment} environment`);
   }
 
   /**
@@ -140,7 +140,7 @@ export class AinflueClient extends EventEmitter {
     }
 
     try {
-      this.logger.info('Initializing Ainflue Client...');
+      this.logger.info('Initializing IA Chéries Client...');
 
       // Initialize authentication
       await this.authManager.initialize();
@@ -155,10 +155,10 @@ export class AinflueClient extends EventEmitter {
       this.isInitialized = true;
       this.emit('initialized', { timestamp: new Date() });
       
-      this.logger.info('Ainflue Client initialized successfully');
+      this.logger.info('IA Chéries Client initialized successfully');
     } catch (error) {
       this.logger.error('Failed to initialize client:', error);
-      throw new AinflueError('Client initialization failed', { originalError: error });
+      throw new IA ChériesError('Client initialization failed', { originalError: error });
     }
   }
 
@@ -544,7 +544,7 @@ export class AinflueClient extends EventEmitter {
    * Dispose client resources
    */
   async dispose(): Promise<void> {
-    this.logger.info('Disposing Ainflue Client...');
+    this.logger.info('Disposing IA Chéries Client...');
     
     // Clear cache
     this.clearCache();
@@ -556,14 +556,14 @@ export class AinflueClient extends EventEmitter {
     this.removeAllListeners();
     
     this.isInitialized = false;
-    this.logger.info('Ainflue Client disposed');
+    this.logger.info('IA Chéries Client disposed');
   }
 
   // Private helper methods
 
   private ensureInitialized(): void {
     if (!this.isInitialized) {
-      throw new AinflueError('Client not initialized. Call initialize() first.');
+      throw new IA ChériesError('Client not initialized. Call initialize() first.');
     }
   }
 
@@ -607,10 +607,10 @@ export class AinflueClient extends EventEmitter {
       this.metrics.averageResponseTime * (1 - alpha) + responseTime * alpha;
   }
 
-  private handleError(error: any): AinflueError {
+  private handleError(error: any): IA ChériesError {
     this.logger.error('API Error:', error);
     
-    if (error instanceof AinflueError) {
+    if (error instanceof IA ChériesError) {
       return error;
     }
     
@@ -631,12 +631,12 @@ export class AinflueClient extends EventEmitter {
         case 504:
           return new NetworkError('Server error', { status, data });
         default:
-          return new AinflueError(`HTTP error ${status}`, { status, data });
+          return new IA ChériesError(`HTTP error ${status}`, { status, data });
       }
     } else if (error.code === 'NETWORK_ERROR') {
       return new NetworkError('Network connection failed', { originalError: error });
     } else {
-      return new AinflueError(error.message || 'Unknown error', { originalError: error });
+      return new IA ChériesError(error.message || 'Unknown error', { originalError: error });
     }
   }
 }

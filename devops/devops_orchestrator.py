@@ -222,7 +222,7 @@ class EnterpriseDevOpsOrchestrator:
     def configure_ci_cd_pipelines(self):
         """Configure CI/CD pipelines"""
         self.ci_cd_pipelines = {
-            "ainflue_backend_pipeline": {
+            "iacherie_backend_pipeline": {
                 "trigger": {
                     "branches": ["main", "develop"],
                     "paths": ["backend/**", "requirements.txt"]
@@ -275,7 +275,7 @@ class EnterpriseDevOpsOrchestrator:
                     }
                 ]
             },
-            "ainflue_frontend_pipeline": {
+            "iacherie_frontend_pipeline": {
                 "trigger": {
                     "branches": ["main", "develop"],
                     "paths": ["frontend/**", "package.json"]
@@ -316,7 +316,7 @@ class EnterpriseDevOpsOrchestrator:
                     }
                 ]
             },
-            "ainflue_ml_pipeline": {
+            "iacherie_ml_pipeline": {
                 "trigger": {
                     "branches": ["main", "ml-develop"],
                     "paths": ["ml/**", "requirements-ml.txt"]

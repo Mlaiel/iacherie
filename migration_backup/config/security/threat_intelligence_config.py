@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Threat Intelligence Configuration Module
+"""IA Chéries Threat Intelligence Configuration Module
 ===============================================
 
-Enterprise-grade threat intelligence configuration for the Ainflue platform.
+Enterprise-grade threat intelligence configuration for the IA Chéries platform.
 Comprehensive threat intelligence collection, analysis, correlation,
 and automated threat hunting capabilities.
 

@@ -1,9 +1,9 @@
 """
-Ainflue Security Services Module
+IA Chéries Security Services Module
 Enterprise Security & Compliance Management
 
 This module provides comprehensive enterprise-grade security services for
-the Ainflue ecosystem, implementing zero-trust architecture, compliance
+the IA Chéries ecosystem, implementing zero-trust architecture, compliance
 management, and advanced threat protection.
 
 Architecture: Security Services (18 services)

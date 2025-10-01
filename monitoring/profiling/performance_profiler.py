@@ -94,32 +94,32 @@ Initialize performance profiler"""
         
         # Prometheus metrics
         self.cpu_usage = Gauge(
-            'ainflue_cpu_usage_percentage',
+            'iacherie_cpu_usage_percentage',
             'CPU usage percentage',
             ['process', 'core']
         )
         
         self.memory_usage = Gauge(
-            'ainflue_memory_usage_bytes',
+            'iacherie_memory_usage_bytes',
             'Memory usage in bytes',
             ['type']  # rss, vms, shared, etc.
         )
         
         self.function_execution_time = Histogram(
-            'ainflue_function_execution_seconds',
+            'iacherie_function_execution_seconds',
             'Function execution time',
             ['function_name', 'module'],
             buckets=[0.001, 0.01, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0, float('inf')]
         )
         
         self.gc_collections = Counter(
-            'ainflue_gc_collections_total',
+            'iacherie_gc_collections_total',
             'Total garbage collections',
             ['generation']
         )
         
         self.database_query_time = Histogram(
-            'ainflue_database_query_seconds',
+            'iacherie_database_query_seconds',
             'Database query execution time',
             ['query_type', 'table'],
             buckets=[0.001, 0.01, 0.1, 0.5, 1.0, 5.0, float('inf')]

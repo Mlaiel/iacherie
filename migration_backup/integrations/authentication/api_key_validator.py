@@ -1,7 +1,7 @@
 """
 🔑🛡️ API KEY VALIDATOR - ENTERPRISE AUTHENTICATION MODULE 🛡️🔑
-Enterprise API Key Validation System for Ainfluencer Platform
-Copyright (C) 2024 Ainfluencer Platform. All Rights Reserved.
+Enterprise API Key Validation System for IA Chéries Platform
+Copyright (C) 2024 IA Chéries Platform. All Rights Reserved.
 """
 
 import logging

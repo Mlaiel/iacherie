@@ -98,7 +98,7 @@ class AuditLogger:
     """
     Enterprise Audit Logger with compliance tracking and forensic analysis
     
-    Provides comprehensive audit logging for the Ainflue creator platform
+    Provides comprehensive audit logging for the iacherie creator platform
     with support for compliance frameworks, forensic analysis, and tamper-proof logging.
     """
     

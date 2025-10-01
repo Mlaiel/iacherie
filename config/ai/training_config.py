@@ -376,7 +376,7 @@ class EnterpriseAITrainingConfiguration:
         content_rec_job = TrainingJob(
             job_id="content_rec_v2_001",
             job_name="Content Recommendation Model v2.0",
-            model_name="ainflue_content_recommender",
+            model_name="iacherie_content_recommender",
             model_type=ModelType.TRANSFORMER,
             training_mode=TrainingMode.FRESH_TRAINING,
             architecture_config=ModelArchitectureConfig(
@@ -402,7 +402,7 @@ class EnterpriseAITrainingConfiguration:
                 scheduler={"type": "cosine_with_warmup", "warmup_steps": 1000, "T_max": 50}
             ),
             data_config=DataConfig(
-                dataset_name="ainflue_user_content_interactions",
+                dataset_name="iacherie_user_content_interactions",
                 dataset_type=DatasetType.MULTIMODAL_CONTENT,
                 data_sources=["user_interactions", "content_metadata", "creator_profiles"],
                 preprocessing_steps=["tokenization", "embedding_generation", "sequence_padding"],
@@ -428,7 +428,7 @@ class EnterpriseAITrainingConfiguration:
         analytics_job = TrainingJob(
             job_id="creator_analytics_v1_003",
             job_name="Creator Performance Analytics Predictor",
-            model_name="ainflue_creator_analytics",
+            model_name="iacherie_creator_analytics",
             model_type=ModelType.LSTM,
             training_mode=TrainingMode.INCREMENTAL_LEARNING,
             architecture_config=ModelArchitectureConfig(
@@ -467,7 +467,7 @@ class EnterpriseAITrainingConfiguration:
         revenue_job = TrainingJob(
             job_id="revenue_opt_rl_v1_001",
             job_name="Revenue Optimization Reinforcement Learning Model",
-            model_name="ainflue_revenue_optimizer",
+            model_name="iacherie_revenue_optimizer",
             model_type=ModelType.REINFORCEMENT_LEARNING,
             training_mode=TrainingMode.FRESH_TRAINING,
             architecture_config=ModelArchitectureConfig(
@@ -520,7 +520,7 @@ class EnterpriseAITrainingConfiguration:
             },
             "mlflow_config": {
                 "tracking_uri": "https://mlflow.iacherie.com",
-                "experiment_name": "ainflue_production_training",
+                "experiment_name": "iacherie_production_training",
                 "artifact_location": "s3://iacherie-ml-artifacts/experiments",
                 "auto_log": True
             },

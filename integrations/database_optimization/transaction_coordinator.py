@@ -1208,7 +1208,7 @@ DEFAULT_TRANSACTION_CONFIG = {
     'deadlock_detection_interval': 60,
     'max_workers': 16,
     'databases': {
-        'ainflue_main': {
+        'iacherie_main': {
             'type': 'postgresql',
             'host': 'localhost',
             'port': 5432,
@@ -1229,7 +1229,7 @@ if __name__ == "__main__":
         
         # Test transaction locale
         tx_id = await coordinator.begin_transaction(
-            databases=['ainflue_main'],
+            databases=['iacherie_main'],
             transaction_type=TransactionType.LOCAL
         )
         
@@ -1241,7 +1241,7 @@ if __name__ == "__main__":
             return {"status": "success"}
         
         result = await coordinator.execute_in_transaction(
-            tx_id, test_operation, 'ainflue_main'
+            tx_id, test_operation, 'iacherie_main'
         )
         print(f"✅ Opération exécutée: {result}")
         

@@ -95,15 +95,15 @@ systemd_services:
 
 # Nginx upstream configuration
 nginx_upstreams:
-  - name: "ainflue_api"
+  - name: "iacherie_api"
     servers: "{{ groups['api_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
     port: 8000
     
-  - name: "ainflue_ai_engine"
+  - name: "iacherie_ai_engine"
     servers: "{{ groups['ai_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
     port: 8001
     
-  - name: "ainflue_mobile_api"
+  - name: "iacherie_mobile_api"
     servers: "{{ groups['mobile_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
     port: 8002
 

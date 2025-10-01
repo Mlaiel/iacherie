@@ -5,7 +5,7 @@
 🛡️ AUTHORIZATION TEST TEMPLATE - SECURITY EXPERT IMPLEMENTATION
 ================================================================
 
-Enterprise-grade authorization testing template for Ainflue Creator Economy Platform.
+Enterprise-grade authorization testing template for iacherie Creator Economy Platform.
 Comprehensive authorization testing covering:
 - Role-Based Access Control (RBAC) validation
 - Attribute-Based Access Control (ABAC) testing
@@ -58,7 +58,7 @@ settings = get_settings()
 
 
 class UserRole(Enum):
-    """User role definitions for Ainflue Creator Economy"""
+    """User role definitions for iacherie Creator Economy"""
     SUPER_ADMIN = "super_admin"
     ADMIN = "admin"
     MODERATOR = "moderator"
@@ -70,7 +70,7 @@ class UserRole(Enum):
 
 
 class Permission(Enum):
-    """Permission definitions for Ainflue platform"""
+    """Permission definitions for iacherie platform"""
     # Content Management
     CREATE_CONTENT = "content:create"
     READ_CONTENT = "content:read"
@@ -239,14 +239,14 @@ class AuthorizationTestTemplate:
         users = {
             "super_admin": TestUser(
                 username="super_admin",
-                email="super@ainflue.com",
+                email="super@iacherie.com",
                 roles={UserRole.SUPER_ADMIN},
                 permissions=set(Permission)  # All permissions
             ),
             
             "admin": TestUser(
                 username="admin_user",
-                email="admin@ainflue.com", 
+                email="admin@iacherie.com", 
                 roles={UserRole.ADMIN},
                 permissions={
                     Permission.MANAGE_USERS, Permission.MANAGE_ROLES,
@@ -258,7 +258,7 @@ class AuthorizationTestTemplate:
             
             "creator_pro": TestUser(
                 username="creator_pro",
-                email="creator_pro@ainflue.com",
+                email="creator_pro@iacherie.com",
                 roles={UserRole.CREATOR_PRO},
                 permissions={
                     Permission.CREATE_CONTENT, Permission.READ_CONTENT,
@@ -271,7 +271,7 @@ class AuthorizationTestTemplate:
             
             "creator": TestUser(
                 username="creator_basic",
-                email="creator@ainflue.com",
+                email="creator@iacherie.com",
                 roles={UserRole.CREATOR},
                 permissions={
                     Permission.CREATE_CONTENT, Permission.READ_CONTENT,
@@ -282,7 +282,7 @@ class AuthorizationTestTemplate:
             
             "collaborator": TestUser(
                 username="collaborator",
-                email="collab@ainflue.com",
+                email="collab@iacherie.com",
                 roles={UserRole.COLLABORATOR},
                 permissions={
                     Permission.READ_CONTENT, Permission.UPDATE_CONTENT
@@ -291,14 +291,14 @@ class AuthorizationTestTemplate:
             
             "viewer": TestUser(
                 username="viewer",
-                email="viewer@ainflue.com",
+                email="viewer@iacherie.com",
                 roles={UserRole.VIEWER},
                 permissions={Permission.READ_CONTENT}
             ),
             
             "guest": TestUser(
                 username="guest",
-                email="guest@ainflue.com",
+                email="guest@iacherie.com",
                 roles={UserRole.GUEST},
                 permissions=set()  # No permissions
             )
@@ -844,7 +844,7 @@ class AuthorizationTestTemplate:
             
             tenant_b_user = TestUser(
                 username="tenant_b_creator",
-                email="creator_b@ainflue.com",
+                email="creator_b@iacherie.com",
                 roles={UserRole.CREATOR},
                 tenant_id="tenant_b"
             )

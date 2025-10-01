@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Enterprise Metrics System
+IA Chéries Platform - Enterprise Metrics System
 ============================================
 
 Advanced enterprise metrics collection, aggregation, and analysis system
 for comprehensive monitoring of business KPIs, performance metrics, and
-operational insights across the Ainflue platform.
+operational insights across the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -138,7 +138,7 @@ class MetricCollector(ABC):
         """Collect metrics from specific source."""
         pass
 
-class AinflueMetricsEngine:
+class IA ChériesMetricsEngine:
     """
     Enterprise metrics engine for comprehensive monitoring and analytics.
     
@@ -171,7 +171,7 @@ class AinflueMetricsEngine:
         self.collection_interval = self.config.get('collection_interval', 30)  # seconds
         self.is_running = False
         
-        logger.info("AinflueMetricsEngine initialized with enterprise features")
+        logger.info("IA ChériesMetricsEngine initialized with enterprise features")
 
     async def record_metric(self, metric: MetricValue):
         """Record a metric value."""
@@ -236,11 +236,11 @@ class AinflueMetricsEngine:
 # Global metrics engine instance
 _metrics_engine = None
 
-def get_metrics_engine(config: Optional[Dict[str, Any]] = None) -> AinflueMetricsEngine:
+def get_metrics_engine(config: Optional[Dict[str, Any]] = None) -> IA ChériesMetricsEngine:
     """Get the global metrics engine instance."""
     global _metrics_engine
     if _metrics_engine is None:
-        _metrics_engine = AinflueMetricsEngine(config)
+        _metrics_engine = IA ChériesMetricsEngine(config)
     return _metrics_engine
 
 # Convenience functions for metric recording
@@ -310,7 +310,7 @@ async def record_api_response_time(endpoint: str, response_time_ms: float):
     await engine.record_metric(metric)
 
 __all__ = [
-    'AinflueMetricsEngine',
+    'IA ChériesMetricsEngine',
     'MetricType',
     'MetricDimension',
     'AggregationMethod',

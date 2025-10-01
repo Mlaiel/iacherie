@@ -265,8 +265,8 @@ python scripts/health_check.py
 
 **الدعم الفني:** mlaiel@live.de  
 **استفسارات الترخيص:** mlaiel@live.de  
-**مشاكل الأمان:** security@ainflue.com  
-**مشاكل الأداء:** performance@ainflue.com
+**مشاكل الأمان:** security@iacherie.com  
+**مشاكل الأداء:** performance@iacherie.com
 
 ---
 

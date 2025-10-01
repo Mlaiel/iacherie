@@ -66,7 +66,7 @@ export default function EnterpriseDashboard() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Enterprise Dashboard</h1>
               <p className="text-gray-600 mt-2">
-                Ainfluencer Platform - 30/57 modules opérationnels (52.6% completion)
+                IA Chéries Platform - 30/57 modules opérationnels (52.6% completion)
               </p>
             </div>
             <div className="flex space-x-4">

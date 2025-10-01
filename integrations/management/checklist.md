@@ -70,7 +70,7 @@
 # 🔄 Workflow: Orchestrateur workflow IA Chérie avec pipeline automation COMPLET
 class EnterpriseWorkflowOrchestrator:
     """Workflow orchestrator enterprise avec pipeline automation et stage management"""
-    ✅ ainflue_pipeline_automation() - 7 stages complets
+    ✅ iacherie_pipeline_automation() - 7 stages complets
     ✅ creator_workflow_management() - Gestion créateurs avancée
     ✅ multi_stage_processing() - Processing parallèle intelligent
     ✅ ai_protection_workflow() - IA + protection IP intégrée
@@ -432,7 +432,7 @@ class WorkflowOrchestrator:
         self.event_processor = EventProcessor()
         self.dependency_resolver = DependencyResolver()
         
-    async def execute_ainflue_pipeline(
+    async def execute_iacherie_pipeline(
         self,
         creator_content: CreatorContent,
         workflow_config: WorkflowConfiguration

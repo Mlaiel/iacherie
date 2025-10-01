@@ -330,7 +330,7 @@ class SecurityAPI {
     return [
       {
         userId: 'user-001',
-        username: 'admin@ainfluencer.com',
+        username: 'admin@iacheriencer.com',
         role: 'Super Admin',
         permissions: ['*'],
         lastLogin: new Date(Date.now() - 3600000).toISOString(),

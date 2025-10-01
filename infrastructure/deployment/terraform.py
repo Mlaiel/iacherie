@@ -304,7 +304,7 @@ terraform_config = TerraformConfig(
     provider=CloudProvider.AWS,
     region="us-west-2",
     environment="production",
-    project_name="ainflue"
+    project_name="iacherie"
 )
 
 terraform_manager = TerraformManager(terraform_config)

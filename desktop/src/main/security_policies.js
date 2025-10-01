@@ -299,7 +299,7 @@ class SecurityPolicies {
     const watermarkData = {
       id: crypto.randomUUID(),
       timestamp: Date.now(),
-      creator: 'ainflue_desktop',
+      creator: 'iacherie_desktop',
       strength: strength,
       algorithm: 'spectral_spread'
     };

@@ -2,7 +2,7 @@
 =====================================================================
 
 Système de tracking d'expérimentations ML avec versioning, comparaison,
-collaboration et reproductibilité pour la plateforme Ainflue.
+collaboration et reproductibilité pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🧠 ML Engineer: Experiment design + metrics tracking + model comparison

@@ -1,9 +1,9 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
-Ce module contient l'architecture Prometheus Monitoring Enterprise d'Ainflue.
+Ce module contient l'architecture Prometheus Monitoring Enterprise d'IA Chéries.
 Toute divulgation, reproduction ou distribution non autorisée est strictement 
 interdite et passible de poursuites judiciaires.
 

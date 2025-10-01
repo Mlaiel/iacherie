@@ -1550,7 +1550,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "[Description industrielle]"
 
 # Configuration logique métier IA Chérie
-AINFLUE_WORKFLOW = {
+IACHERIE_WORKFLOW = {
     'upload': '[Upload multi-format]',
     'ai_processing': '[IA enhancement]', 
     'protection': '[Rights protection]',

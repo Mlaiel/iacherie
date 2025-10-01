@@ -55,7 +55,7 @@ from .environment_manager import EnvironmentManager
 from .rollback_manager import RollbackManager
 
 # Main infrastructure manager
-from .index import IAInfluencerInfrastructureManager
+from .index import IIA ChériesInfrastructureManager
 
 # Export all public interfaces
 __all__ = [
@@ -88,7 +88,7 @@ __all__ = [
     'RollbackManager',
     
     # Main infrastructure manager
-    'IAInfluencerInfrastructureManager'
+    'IIA ChériesInfrastructureManager'
 ]
 
 # Version information

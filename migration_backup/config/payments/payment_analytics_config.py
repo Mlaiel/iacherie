@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Payment Analytics Configuration Module
+"""IA Chéries Payment Analytics Configuration Module
 ===============================================
 
-Enterprise-grade payment analytics configuration for the Ainflue platform.
+Enterprise-grade payment analytics configuration for the IA Chéries platform.
 Comprehensive payment data analysis, metrics calculation, fraud detection,
 revenue optimization, and advanced business intelligence features.
 

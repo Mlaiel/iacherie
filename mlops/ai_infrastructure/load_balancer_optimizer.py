@@ -949,7 +949,7 @@ async def main():
     servers = [
         ServerInstance(
             instance_id="server-us-west-1",
-            endpoint_url="https://server-us-west-1.ainflue.com",
+            endpoint_url="https://server-us-west-1.iacherie.com",
             region="us-west",
             model_types=["audio_processing", "nlp"],
             current_load=0.3,
@@ -963,7 +963,7 @@ async def main():
         ),
         ServerInstance(
             instance_id="server-europe-1",
-            endpoint_url="https://server-europe-1.ainflue.com",
+            endpoint_url="https://server-europe-1.iacherie.com",
             region="europe",
             model_types=["computer_vision", "nlp"],
             current_load=0.5,

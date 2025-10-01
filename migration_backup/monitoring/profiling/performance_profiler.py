@@ -1,7 +1,7 @@
 """⚡ Performance Profiling System
 ==============================
 
-Advanced performance monitoring and optimization system for the Ainflue platform.
+Advanced performance monitoring and optimization system for the IA Chéries platform.
 Provides real-time profiling, bottleneck detection, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -1,4 +1,4 @@
-"""{{model_name}} Database Model Template for Ainflue Platform
+"""{{model_name}} Database Model Template for iacherie Platform
 {{model_description}}
 
 Author: {{author_name}} ({{author_email}})

@@ -122,7 +122,7 @@ class EnterpriseMonitoringHub:
         
     def _setup_logging(self) -> logging.Logger:
         """Configuration logging enterprise"""
-        logger = logging.getLogger("ainflue_monitoring")
+        logger = logging.getLogger("iacherie_monitoring")
         logger.setLevel(logging.INFO if not self.config.debug else logging.DEBUG)
         
         # Handler avec format structuré

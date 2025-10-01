@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - AI Analysis Client
+ * IA Chéries Desktop - AI Analysis Client
  * 
  * Advanced AI processing client with local and cloud capabilities
  * Implements multi-modal content analysis with professional insights

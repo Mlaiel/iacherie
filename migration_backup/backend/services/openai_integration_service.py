@@ -1,5 +1,5 @@
 """
-OpenAI Integration Service for Ainfluencer Platform
+OpenAI Integration Service for IA Chéries Platform
 Provides secure and optimized access to OpenAI APIs
 """
 import os

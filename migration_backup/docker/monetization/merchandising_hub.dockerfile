@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE MERCHANDISING HUB - COMMERCE DOCKERFILE
+# IA CHÉRIES MERCHANDISING HUB - COMMERCE DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS merch-base
@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${MERCH_SERVICE_PORT}
 CMD ["python3.11", "-m", "merchandising_hub.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Merchandising Hub"
+LABEL org.opencontainers.image.title="IA Chéries Merchandising Hub"
 LABEL ainflue.service.category="monetization"
 LABEL ainflue.service.name="merchandising_hub"
 LABEL ainflue.service.port="8050"

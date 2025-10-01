@@ -1,5 +1,5 @@
 """
-Real-Time SEO Monitor for Ainflue Platform
+Real-Time SEO Monitor for IA Chéries Platform
 ==========================================
 
 Advanced real-time SEO monitoring system with AI-powered predictive alerts,

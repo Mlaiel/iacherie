@@ -790,7 +790,7 @@ async def request_data_deletion(
         return {
             "deletion_id": deletion_id,
             "message": "Data deletion request received. Processing will begin within 30 days as required by GDPR.",
-            "contact_email": "privacy@ainflue.com"
+            "contact_email": "privacy@iacherie.com"
         }
         
     except HTTPException:

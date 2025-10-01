@@ -3,7 +3,7 @@
 AI Processing Pipeline Examples - Examples Enterprise Ultra Avancée
 ================================================================
 
-Examples pipelines IA processing avec intégrations business Ainflue avancées
+Examples pipelines IA processing avec intégrations business IA Chéries avancées
 Multi-format AI processing, content analysis, quality enhancement, protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -639,7 +639,7 @@ async def run_ai_processing_pipeline_examples():
     
     print("🚀 AI PROCESSING PIPELINE EXAMPLES - EXAMPLES ENTERPRISE")
     print("=" * 90)
-    print("Démonstrations Ultra Avancées AI Processing Ainflue")
+    print("Démonstrations Ultra Avancées AI Processing IA Chéries")
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("=" * 90)
     
@@ -696,7 +696,7 @@ async def run_ai_processing_pipeline_examples():
         
         print(f"\n🎉 ALL AI PROCESSING PIPELINES COMPLETED SUCCESSFULLY")
         print(f"🤖 Enterprise-Level AI Processing: VALIDATED")
-        print(f"🚀 Ainflue AI Processing Ready for Production")
+        print(f"🚀 IA Chéries AI Processing Ready for Production")
         
         return True
         

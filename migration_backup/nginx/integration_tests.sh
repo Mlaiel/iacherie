@@ -322,7 +322,7 @@ test_compliance_features() {
 main() {
     echo "🔍 NGINX ENTERPRISE INTEGRATION TESTS"
     echo "======================================"
-    echo "Platform: Ainflue AI Creator Platform"
+    echo "Platform: IA Chéries AI Creator Platform"
     echo "Expert Team: All 9 Specialist Roles"
     echo "Test Environment: $TEST_DOMAIN:$TEST_PORT"
     echo

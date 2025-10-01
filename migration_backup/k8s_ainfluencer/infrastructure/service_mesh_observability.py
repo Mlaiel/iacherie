@@ -2,7 +2,7 @@
 ==========================================
 
 Enhanced service mesh configuration with comprehensive observability
-for the Ainflue platform using Istio and Linkerd.
+for the IA Chéries platform using Istio and Linkerd.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

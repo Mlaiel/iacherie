@@ -5,7 +5,7 @@ Artistic style adaptation with 7 specialized style agents.
 Creative transformation and brand style enforcement for content.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

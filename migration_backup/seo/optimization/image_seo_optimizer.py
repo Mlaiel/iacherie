@@ -1,5 +1,5 @@
 """
-Image SEO Optimizer for Ainflue Platform
+Image SEO Optimizer for IA Chéries Platform
 Advanced image optimization for search engines and visual platforms
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -770,7 +770,7 @@ class ImageSEOOptimizer:
 
 # Integration utilities
 def create_ainflue_image_seo_optimizer() -> ImageSEOOptimizer:
-    """Create configured image SEO optimizer for Ainflue"""
+    """Create configured image SEO optimizer for IA Chéries"""
     return ImageSEOOptimizer()
 
 

@@ -2,7 +2,7 @@
 Disaster Recovery Core - Central Disaster Recovery Management
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Core disaster recovery orchestration for Ainflue creator platform.
+Core disaster recovery orchestration for IA Chéries creator platform.
 Integrates backup, failover, and recovery components for enterprise-grade disaster recovery.
 """
 
@@ -86,7 +86,7 @@ class DrPlan:
 
 class DisasterRecoveryCore:
     """
-    Core Disaster Recovery Management for Ainflue Infrastructure
+    Core Disaster Recovery Management for IA Chéries Infrastructure
     
     Orchestrates comprehensive disaster recovery operations for the creator economy platform,
     integrating backup, failover, and recovery procedures to ensure business continuity.

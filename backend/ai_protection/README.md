@@ -1,4 +1,4 @@
-# Ainflue AI Protection - Enterprise Copyright Protection System
+# iacherie AI Protection - Enterprise Copyright Protection System
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Specialized Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -7,7 +7,7 @@
 
 ## AI Protection Architecture
 
-The Ainflue AI Protection system represents the world's most advanced solution for automatic copyright protection of multi-format creator content, combining invisible watermarking, immutable blockchain registry, real-time AI detection, and automated legal enforcement.
+The iacherie AI Protection system represents the world's most advanced solution for automatic copyright protection of multi-format creator content, combining invisible watermarking, immutable blockchain registry, real-time AI detection, and automated legal enforcement.
 
 ### Core Components
 
@@ -205,7 +205,7 @@ Full GraphQL schema available for enterprise integration with real-time subscrip
 This enterprise AI protection system is proprietary software. Unauthorized use, distribution, or modification is prohibited by law.
 
 **Contact:** mlaiel@live.de  
-**Project:** Ainflue Platform Enterprise AI Protection
+**Project:** iacherie Platform Enterprise AI Protection
 
 ---
 

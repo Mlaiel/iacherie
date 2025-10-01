@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Database Setup Ansible Role
+# IA Chéries Infrastructure Module - Database Setup Ansible Role
 # ============================================================
 # 
-# Enterprise-grade database setup for Ainflue platform
+# Enterprise-grade database setup for IA Chéries platform
 # PostgreSQL, Redis, and analytics database configuration
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +21,7 @@
 # IA Prompt Engineer: Prompt storage, AI provider configurations
 
 ---
-- name: "Database Setup - Ainflue Platform"
+- name: "Database Setup - IA Chéries Platform"
   hosts: database
   become: yes
   vars:
@@ -306,7 +306,7 @@
         - key: "rename-command DEBUG"
           value: "DEBUG_DISABLED"
         - key: "rename-command CONFIG"
-          value: "CONFIG_AINFLUE"
+          value: "CONFIG_IA CHÉRIES"
       notify: restart redis
 
     - name: "Create PostgreSQL databases"
@@ -431,7 +431,7 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Database Backup Script
+          # IA Chéries Database Backup Script
           # Automated PostgreSQL and Redis backups
           
           BACKUP_DIR="/var/backups/ainflue"
@@ -471,7 +471,7 @@
           
           # Create backup report
           BACKUP_REPORT="$BACKUP_DIR/backup_report_${TIMESTAMP}.txt"
-          echo "=== Ainflue Database Backup Report - $(date) ===" > $BACKUP_REPORT
+          echo "=== IA Chéries Database Backup Report - $(date) ===" > $BACKUP_REPORT
           echo "PostgreSQL Backups:" >> $BACKUP_REPORT
           ls -lh $BACKUP_DIR/postgresql/*${TIMESTAMP}* >> $BACKUP_REPORT
           echo "Redis Backups:" >> $BACKUP_REPORT
@@ -486,7 +486,7 @@
       copy:
         content: |
           #!/bin/bash
-          # Ainflue Database Monitoring Script
+          # IA Chéries Database Monitoring Script
           # Monitor PostgreSQL and Redis performance
           
           MONITOR_LOG="/var/log/ainflue-db-monitor.log"
@@ -555,7 +555,7 @@
 
     - name: "Add database backup cron job"
       cron:
-        name: "Ainflue database backup"
+        name: "IA Chéries database backup"
         minute: "0"
         hour: "2"
         job: "/usr/local/bin/ainflue-db-backup.sh"
@@ -563,7 +563,7 @@
 
     - name: "Add database monitoring cron job"
       cron:
-        name: "Ainflue database monitoring"
+        name: "IA Chéries database monitoring"
         minute: "*/15"
         job: "/usr/local/bin/ainflue-db-monitor.sh"
         user: postgres

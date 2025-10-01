@@ -1,10 +1,10 @@
 """
-Ainflue Core Platform - Email Service Core
+IA Chéries Core Platform - Email Service Core
 ==========================================
 
 Enterprise-grade email service with template management, delivery tracking,
 bounce handling, and multi-provider support. Provides reliable email
-communication for all Ainflue platform needs.
+communication for all IA Chéries platform needs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -159,25 +159,25 @@ class EmailServiceCore:
         welcome_template = EmailTemplate(
             template_id="welcome",
             name="Welcome Email",
-            subject="Welcome to Ainflue, {{name}}!",
+            subject="Welcome to IA Chéries, {{name}}!",
             html_content="""
-            <h1>Welcome to Ainflue!</h1>
+            <h1>Welcome to IA Chéries!</h1>
             <p>Hi {{name}},</p>
-            <p>Welcome to the Ainflue platform! We're excited to have you on board.</p>
+            <p>Welcome to the IA Chéries platform! We're excited to have you on board.</p>
             <p>Get started by exploring our features:</p>
             <ul>
                 <li>Create amazing content</li>
                 <li>Connect with other creators</li>
                 <li>Monetize your creativity</li>
             </ul>
-            <p>Best regards,<br>The Ainflue Team</p>
+            <p>Best regards,<br>The IA Chéries Team</p>
             """,
             text_content="""
-            Welcome to Ainflue!
+            Welcome to IA Chéries!
             
             Hi {{name}},
             
-            Welcome to the Ainflue platform! We're excited to have you on board.
+            Welcome to the IA Chéries platform! We're excited to have you on board.
             
             Get started by exploring our features:
             - Create amazing content
@@ -185,7 +185,7 @@ class EmailServiceCore:
             - Monetize your creativity
             
             Best regards,
-            The Ainflue Team
+            The IA Chéries Team
             """,
             variables=["name"]
         )
@@ -196,23 +196,23 @@ class EmailServiceCore:
         reset_template = EmailTemplate(
             template_id="password_reset",
             name="Password Reset",
-            subject="Reset Your Ainflue Password",
+            subject="Reset Your IA Chéries Password",
             html_content="""
             <h1>Password Reset Request</h1>
             <p>Hi {{name}},</p>
-            <p>You requested a password reset for your Ainflue account.</p>
+            <p>You requested a password reset for your IA Chéries account.</p>
             <p>Click the button below to reset your password:</p>
             <p><a href="{{reset_link}}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a></p>
             <p>This link will expire in 1 hour.</p>
             <p>If you didn't request this reset, please ignore this email.</p>
-            <p>Best regards,<br>The Ainflue Team</p>
+            <p>Best regards,<br>The IA Chéries Team</p>
             """,
             text_content="""
             Password Reset Request
             
             Hi {{name}},
             
-            You requested a password reset for your Ainflue account.
+            You requested a password reset for your IA Chéries account.
             
             Click the link below to reset your password:
             {{reset_link}}
@@ -222,7 +222,7 @@ class EmailServiceCore:
             If you didn't request this reset, please ignore this email.
             
             Best regards,
-            The Ainflue Team
+            The IA Chéries Team
             """,
             variables=["name", "reset_link"]
         )

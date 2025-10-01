@@ -6,7 +6,7 @@ Advanced backup monitoring system with real-time health tracking, performance me
 failure detection, and comprehensive reporting for creator platform backups.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

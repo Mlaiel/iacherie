@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Watermarking Configuration Module
+"""IA Chéries Watermarking Configuration Module
 ===========================================
 
-Enterprise-grade watermarking configuration for the Ainflue platform.
+Enterprise-grade watermarking configuration for the IA Chéries platform.
 Comprehensive digital watermarking for video, audio, and image content
 with advanced protection, detection, and analytics capabilities.
 
@@ -574,7 +574,7 @@ class WatermarkingConfiguration:
             name="Copyright Text",
             description="Standard copyright text watermark",
             content_type=WatermarkFormat.TEXT,
-            text_content="© Ainflue 2025",
+            text_content="© IA Chéries 2025",
             font_family="Arial",
             font_size=20,
             font_weight="bold",
@@ -589,8 +589,8 @@ class WatermarkingConfiguration:
         # Logo watermark
         logo_content = WatermarkContent(
             content_id="ainflue_logo",
-            name="Ainflue Logo",
-            description="Official Ainflue logo watermark",
+            name="IA Chéries Logo",
+            description="Official IA Chéries logo watermark",
             content_type=WatermarkFormat.LOGO,
             logo_path="/assets/logos/ainflue_logo.png",
             image_width=150,
@@ -1016,7 +1016,7 @@ class WatermarkingConfiguration:
             "detected": detected,
             "confidence": confidence,
             "positions": [(100, 100)] if detected else [],
-            "content": "© Ainflue 2025" if detected else "",
+            "content": "© IA Chéries 2025" if detected else "",
             "integrity": random.uniform(0.8, 1.0) if detected else 0.0,
             "tamper_evidence": random.choice([True, False]) if detected else False,
             "modification": random.choice([True, False]) if detected else False,

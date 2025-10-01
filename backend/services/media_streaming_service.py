@@ -1,7 +1,7 @@
 """Media Streaming Service - Advanced Streaming Engine
 ===================================================
 
-High-performance media streaming system for the Ainflue platform, handling
+High-performance media streaming system for the iacherie platform, handling
 real-time content delivery, adaptive bitrate streaming, live streaming management,
 CDN optimization, and intelligent content caching.
 
@@ -327,7 +327,7 @@ class StreamingEngine:
             stream_config = StreamConfiguration(
                 stream_id=live_stream_id,
                 stream_type=StreamType.LIVE,
-                source_url=f"rtmp://streaming.ainflue.com/live/{live_stream_id}",
+                source_url=f"rtmp://streaming.iacherie.com/live/{live_stream_id}",
                 output_formats=["hls", "dash", "progressive"],
                 quality_levels=[StreamQuality.HIGH, StreamQuality.MEDIUM, StreamQuality.LOW],
                 adaptive_bitrate=True,

@@ -1,4 +1,4 @@
-"""OAuth2 Provider Template for Ainflue Platform
+"""OAuth2 Provider Template for IA Chéries Platform
 Enterprise-grade OAuth2 server implementation with PKCE and security
 
 ⚠️  AVERTISSEMENT LÉGAL:

@@ -152,25 +152,25 @@ data:
     chmod 700 /etc/redis/ssl/private
     
     # Generate CA private key
-    openssl genpkey -algorithm RSA -out /etc/redis/ssl/ca/ca-key.pem -pkcs8 -aes256 -pass pass:ainflue_ca_2025_secure
+    openssl genpkey -algorithm RSA -out /etc/redis/ssl/ca/ca-key.pem -pkcs8 -aes256 -pass pass:iacherie_ca_2025_secure
     
     # Generate CA certificate
     openssl req -new -x509 -days 3650 -key /etc/redis/ssl/ca/ca-key.pem -out /etc/redis/ssl/ca/iacherie-ca.crt \
-      -passin pass:ainflue_ca_2025_secure \
+      -passin pass:iacherie_ca_2025_secure \
       -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Security/CN=IA Chérie Redis CA/emailAddress=mlaiel@live.de"
     
     # Generate server private key
-    openssl genpkey -algorithm RSA -out /etc/redis/ssl/private/redis-server.key -pkcs8 -aes256 -pass pass:ainflue_server_2025_secure
+    openssl genpkey -algorithm RSA -out /etc/redis/ssl/private/redis-server.key -pkcs8 -aes256 -pass pass:iacherie_server_2025_secure
     
     # Generate server certificate signing request
     openssl req -new -key /etc/redis/ssl/private/redis-server.key -out /etc/redis/ssl/certs/redis-server.csr \
-      -passin pass:ainflue_server_2025_secure \
+      -passin pass:iacherie_server_2025_secure \
       -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chérie Enterprise/OU=Redis/CN=redis.iacherie.com/emailAddress=mlaiel@live.de"
     
     # Generate server certificate
     openssl x509 -req -in /etc/redis/ssl/certs/redis-server.csr -CA /etc/redis/ssl/ca/iacherie-ca.crt \
       -CAkey /etc/redis/ssl/ca/ca-key.pem -CAcreateserial -out /etc/redis/ssl/certs/redis-server.crt \
-      -days 365 -passin pass:ainflue_ca_2025_secure \
+      -days 365 -passin pass:iacherie_ca_2025_secure \
       -extensions v3_req -extfile <(echo "[v3_req]"; echo "subjectAltName=DNS:redis.iacherie.com,DNS:redis-cluster.iacherie.com,IP:10.0.0.10")
     
     # Generate DH parameters

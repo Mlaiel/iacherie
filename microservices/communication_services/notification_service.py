@@ -57,7 +57,7 @@ class NotificationService:
         """Initialize notification templates"""
         self.templates = {
             "welcome": {
-                "title": "Bienvenue sur AInfluencer !",
+                "title": "Bienvenue sur iaCherie !",
                 "body": "Merci de rejoindre notre plateforme. Commencez à créer du contenu incroyable !",
                 "type": NotificationType.SUCCESS,
                 "channels": [NotificationChannel.EMAIL, NotificationChannel.IN_APP]

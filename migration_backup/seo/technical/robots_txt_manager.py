@@ -1,5 +1,5 @@
 """
-Robots.txt Manager for Ainflue Platform
+Robots.txt Manager for IA Chéries Platform
 Advanced robots.txt generation and management for SEO optimization
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -217,7 +217,7 @@ class RobotsTxtManager:
         content = []
         content.append(f"# Robots.txt for {self.base_url}")
         content.append(f"# Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        content.append(f"# Ainflue Platform - Creator-Optimized SEO")
+        content.append(f"# IA Chéries Platform - Creator-Optimized SEO")
         content.append("")
         
         # User-agent specific rules
@@ -388,7 +388,7 @@ class RobotsTxtAnalyzer:
 def create_ainflue_robots_txt(creator_type: str = "general", 
                              platforms: List[str] = None,
                              base_url: str = "https://ainflue.com") -> str:
-    """Create optimized robots.txt for Ainflue creators"""
+    """Create optimized robots.txt for IA Chéries creators"""
     
     manager = RobotsTxtManager(base_url)
     

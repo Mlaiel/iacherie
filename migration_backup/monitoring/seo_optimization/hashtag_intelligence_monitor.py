@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Hashtag Intelligence Monitor
+IA Chéries Platform - Hashtag Intelligence Monitor
 ==============================================
 
 AI-powered hashtag intelligence system for trending hashtag discovery,

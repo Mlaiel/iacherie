@@ -71,7 +71,7 @@ class ContainerConfig:
     name: str
     image: str
     tag: str = "latest"
-    registry: str = "ainflue-registry"
+    registry: str = "iacherie-registry"
     cpu_request: str = "100m"
     cpu_limit: str = "500m"
     memory_request: str = "256Mi"
@@ -190,7 +190,7 @@ class ContainerOrchestrationManager:
                         'spec': {
                             'containers': [],
                             'restartPolicy': 'Always',
-                            'imagePullSecrets': [{'name': 'ainflue-registry-secret'}]
+                            'imagePullSecrets': [{'name': 'iacherie-registry-secret'}]
                         }
                     },
                     'strategy': {
@@ -463,7 +463,7 @@ ENV MODEL_VERSION={container_config.tag}
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
 LABEL model.name="{container_config.name}"
 LABEL model.version="{container_config.tag}"
-LABEL platform="ainflue-creator-economy"
+LABEL platform="iacherie-creator-economy"
 
 # Expose port
 EXPOSE {container_config.ports[0]['port'] if container_config.ports else 8080}
@@ -604,7 +604,7 @@ CMD ["python", "src/model_server.py"]
             'app': container_config.name,
             'version': container_config.tag,
             'component': 'model-server',
-            'managed-by': 'ainflue-orchestrator',
+            'managed-by': 'iacherie-orchestrator',
             **container_config.labels
         }
         
@@ -697,7 +697,7 @@ CMD ["python", "src/model_server.py"]
             ingress['metadata']['name'] = container_config.name
             ingress['metadata']['labels'] = labels
             
-            host = f"{container_config.name}.ainflue.com"
+            host = f"{container_config.name}.iacherie.com"
             ingress['spec']['tls'] = [{'hosts': [host], 'secretName': f"{container_config.name}-tls"}]
             ingress['spec']['rules'] = [{
                 'host': host,
@@ -742,7 +742,7 @@ CMD ["python", "src/model_server.py"]
                     'metadata': {
                         'name': namespace,
                         'labels': {
-                            'managed-by': 'ainflue-orchestrator',
+                            'managed-by': 'iacherie-orchestrator',
                             'purpose': 'model-deployment'
                         }
                     }

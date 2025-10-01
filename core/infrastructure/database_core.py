@@ -59,7 +59,7 @@ class DatabaseConfig:
     host: str = "localhost"
     port: int = 5432
     database: str = "iacherie"
-    username: str = "ainflue_user"
+    username: str = "iacherie_user"
     password: str = ""
     pool_size: int = 20
     max_overflow: int = 30

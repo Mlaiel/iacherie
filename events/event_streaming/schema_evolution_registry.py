@@ -227,7 +227,7 @@ class CompatibilityCheck:
     required_migrations: List[MigrationRule] = field(default_factory=list)
 
 
-class AinflueBusinesSchemas:
+class iacherieBusinesSchemas:
     """Predefined schema templates for IA Chérie business events"""
     
     CONTENT_UPLOAD_SCHEMA = {
@@ -528,7 +528,7 @@ class SchemaEvolutionRegistry:
             content_schema = SchemaVersion(
                 schema_id="iacherie.content.upload",
                 version=1,
-                schema_content=AinflueBusinesSchemas.CONTENT_UPLOAD_SCHEMA,
+                schema_content=iacherieBusinesSchemas.CONTENT_UPLOAD_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -542,7 +542,7 @@ class SchemaEvolutionRegistry:
             revenue_schema = SchemaVersion(
                 schema_id="iacherie.revenue.event",
                 version=1,
-                schema_content=AinflueBusinesSchemas.REVENUE_EVENT_SCHEMA,
+                schema_content=iacherieBusinesSchemas.REVENUE_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -556,7 +556,7 @@ class SchemaEvolutionRegistry:
             collaboration_schema = SchemaVersion(
                 schema_id="iacherie.collaboration.event",
                 version=1,
-                schema_content=AinflueBusinesSchemas.COLLABORATION_EVENT_SCHEMA,
+                schema_content=iacherieBusinesSchemas.COLLABORATION_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -750,6 +750,6 @@ class SchemaEvolutionRegistry:
 # Export public API
 __all__ = [
     "SchemaEvolutionRegistry", "SchemaVersion", "MigrationRule", "CompatibilityCheck",
-    "SchemaValidator", "CompatibilityChecker", "AinflueBusinesSchemas",
+    "SchemaValidator", "CompatibilityChecker", "iacherieBusinesSchemas",
     "CompatibilityType", "SchemaType", "EvolutionType"
 ]

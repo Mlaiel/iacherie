@@ -68,7 +68,7 @@ security:
 # Database Settings (Testing)
 database:
   # In-memory database for testing
-  url: "${AINFLUE_TEST_DATABASE_URL:-sqlite:///:memory:}"
+  url: "${IA CHÉRIES_TEST_DATABASE_URL:-sqlite:///:memory:}"
   pool_size: 1              # Single connection for tests
   max_overflow: 0
   pool_timeout: 1

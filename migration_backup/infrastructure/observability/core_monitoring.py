@@ -580,7 +580,7 @@ class ObservabilityStack:
         self.logger = logging.getLogger(__name__)
         
     async def setup_complete_observability(self) -> bool:
-        """Setup complete observability stack for Ainflue infrastructure
+        """Setup complete observability stack for IA Chéries infrastructure
         
         Infrastructure Requirements Implementation:
         - Monitoring and observability stack
@@ -664,7 +664,7 @@ class ObservabilityStack:
             # Creator platform dashboard
             creator_dashboard = {
                 'dashboard': {
-                    'title': 'Ainflue Creator Platform Overview',
+                    'title': 'IA Chéries Creator Platform Overview',
                     'panels': [
                         {
                             'title': 'Active Creators',
@@ -705,7 +705,7 @@ class ObservabilityStack:
             # Infrastructure dashboard
             infrastructure_dashboard = {
                 'dashboard': {
-                    'title': 'Ainflue Infrastructure Health',
+                    'title': 'IA Chéries Infrastructure Health',
                     'panels': [
                         {
                             'title': 'Kubernetes Cluster Health',

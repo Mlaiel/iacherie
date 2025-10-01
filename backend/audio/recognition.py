@@ -71,9 +71,9 @@ class RecognitionModel(Enum):
     OPENL3 = "openl3"
     
     # Custom Models
-    AINFLUE_SPEECH = "ainflue_speech"
-    AINFLUE_MUSIC = "ainflue_music"
-    AINFLUE_VOICE = "ainflue_voice"
+    IACHERIE_SPEECH = "iacherie_speech"
+    IACHERIE_MUSIC = "iacherie_music"
+    IACHERIE_VOICE = "iacherie_voice"
 
 
 class RecognitionType(Enum):

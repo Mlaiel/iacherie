@@ -614,9 +614,9 @@ class ResponseCacheManager:
         self.content_type_strategies: Dict[str, CacheStrategy] = {}
         
         # Initialize IA Chérie-specific caching rules
-        self._initialize_ainflue_caching()
+        self._initialize_iacherie_caching()
     
-    def _initialize_ainflue_caching(self) -> None:
+    def _initialize_iacherie_caching(self) -> None:
         """Initialize IA Chérie business logic caching rules"""
         
         # Creator-specific cache warming rules

@@ -1,4 +1,4 @@
-# ⚡ Redis TLS Configuration - Ainflue Enterprise
+# ⚡ Redis TLS Configuration - IA Chéries Enterprise
 # © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
 # Enterprise TLS 1.3 Configuration for Redis Cluster
 
@@ -144,7 +144,7 @@ data:
   # ===================================================================================
   cert_generation: |
     #!/bin/bash
-    # Certificate Generation Script for Ainflue Redis Enterprise
+    # Certificate Generation Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     # Create directories
@@ -157,7 +157,7 @@ data:
     # Generate CA certificate
     openssl req -new -x509 -days 3650 -key /etc/redis/ssl/ca/ca-key.pem -out /etc/redis/ssl/ca/ainflue-ca.crt \
       -passin pass:ainflue_ca_2025_secure \
-      -subj "/C=DE/ST=Berlin/L=Berlin/O=Ainflue Enterprise/OU=Security/CN=Ainflue Redis CA/emailAddress=mlaiel@live.de"
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chéries Enterprise/OU=Security/CN=IA Chéries Redis CA/emailAddress=mlaiel@live.de"
     
     # Generate server private key
     openssl genpkey -algorithm RSA -out /etc/redis/ssl/private/redis-server.key -pkcs8 -aes256 -pass pass:ainflue_server_2025_secure
@@ -165,7 +165,7 @@ data:
     # Generate server certificate signing request
     openssl req -new -key /etc/redis/ssl/private/redis-server.key -out /etc/redis/ssl/certs/redis-server.csr \
       -passin pass:ainflue_server_2025_secure \
-      -subj "/C=DE/ST=Berlin/L=Berlin/O=Ainflue Enterprise/OU=Redis/CN=redis.ainflue.com/emailAddress=mlaiel@live.de"
+      -subj "/C=DE/ST=Berlin/L=Berlin/O=IA Chéries Enterprise/OU=Redis/CN=redis.ainflue.com/emailAddress=mlaiel@live.de"
     
     # Generate server certificate
     openssl x509 -req -in /etc/redis/ssl/certs/redis-server.csr -CA /etc/redis/ssl/ca/ainflue-ca.crt \
@@ -286,7 +286,7 @@ metadata:
 data:
   validate_tls.sh: |
     #!/bin/bash
-    # TLS Validation Script for Ainflue Redis Enterprise
+    # TLS Validation Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "🔐 Validating Redis TLS Configuration..."
@@ -316,7 +316,7 @@ data:
 
   monitor_tls.sh: |
     #!/bin/bash
-    # TLS Monitoring Script for Ainflue Redis Enterprise
+    # TLS Monitoring Script for IA Chéries Redis Enterprise
     # © 2025 Fahed Mlaiel <mlaiel@live.de>
     
     echo "📊 Monitoring Redis TLS Status..."

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - SEO Optimizer Component
+ * IA Chéries Desktop - SEO Optimizer Component
  * 
  * Advanced SEO optimization tools for content creators
  * Implements real-time SEO analysis, keyword optimization, and viral content strategy

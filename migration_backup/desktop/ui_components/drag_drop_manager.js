@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Drag and Drop Manager
+ * IA Chéries Desktop - Drag and Drop Manager
  * 
  * Advanced drag and drop system for file uploads and content organization
  * 

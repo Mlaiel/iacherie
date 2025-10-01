@@ -1,4 +1,4 @@
-"""🗄️ Enterprise Model Registry Manager - Ainflue AI/ML Pipeline
+"""🗄️ Enterprise Model Registry Manager - IA Chéries AI/ML Pipeline
 ================================================================
 
 Advanced model versioning, lineage tracking, and governance system
@@ -526,7 +526,7 @@ class EnterpriseModelRegistryManager:
             raise
     
     async def get_creator_models_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator-specific model analytics for Ainflue platform"""
+        """Get creator-specific model analytics for IA Chéries platform"""
         try:
             async with self.db_pool.acquire() as connection:
                 # Get model count by type

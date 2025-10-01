@@ -592,7 +592,7 @@ class MultiCloudMonitoringSystem:
                 AlarmDescription=alert.description,
                 Unit='Percent',
                 Tags=[
-                    {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                    {'Key': 'CreatedBy', 'Value': 'iacheriePlatform'},
                     {'Key': 'AlertId', 'Value': alert.id}
                 ]
             )

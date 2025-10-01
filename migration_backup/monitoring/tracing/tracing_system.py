@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Distributed Tracing Enterprise System
+IA Chéries Platform - Distributed Tracing Enterprise System
 ========================================================
 
 Advanced distributed tracing system for comprehensive monitoring of
 audio processing pipelines, business transactions, microservices dependencies,
-and performance optimization across the Ainflue platform.
+and performance optimization across the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -111,9 +111,9 @@ class BusinessTransaction:
     status: TraceStatus
     value_metrics: Dict[str, float]
 
-class AinflueDistributedTracer:
+class IA ChériesDistributedTracer:
     """
-    Enterprise distributed tracing system for Ainflue platform.
+    Enterprise distributed tracing system for IA Chéries platform.
     
     Features:
     - Audio processing pipeline tracing
@@ -165,7 +165,7 @@ class AinflueDistributedTracer:
         # Start background processing
         self._start_background_processors()
         
-        logger.info("AinflueDistributedTracer initialized with enterprise features")
+        logger.info("IA ChériesDistributedTracer initialized with enterprise features")
 
     def _start_background_processors(self):
         """Start background processing threads."""
@@ -528,11 +528,11 @@ class AinflueDistributedTracer:
 # Global tracer instance
 _tracer_instance = None
 
-def get_tracer(config: Optional[Dict[str, Any]] = None) -> AinflueDistributedTracer:
+def get_tracer(config: Optional[Dict[str, Any]] = None) -> IA ChériesDistributedTracer:
     """Get the global tracer instance."""
     global _tracer_instance
     if _tracer_instance is None:
-        _tracer_instance = AinflueDistributedTracer(config)
+        _tracer_instance = IA ChériesDistributedTracer(config)
     return _tracer_instance
 
 # Convenience functions for common tracing patterns
@@ -577,7 +577,7 @@ def trace_monetization(flow_type: str, amount: float, currency: str, payment_met
     )
 
 __all__ = [
-    'AinflueDistributedTracer',
+    'IA ChériesDistributedTracer',
     'SpanType',
     'TraceStatus',
     'PerformanceCategory',

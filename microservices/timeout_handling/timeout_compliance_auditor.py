@@ -130,7 +130,7 @@ class TimeoutComplianceAuditor:
         self.is_initialized = False
         
         # IA Chérie-specific compliance requirements
-        self.ainflue_compliance_config = {
+        self.iacherie_compliance_config = {
             'financial_services': {
                 'frameworks': [ComplianceFramework.SOX, ComplianceFramework.PCI_DSS],
                 'timeout_sla': 30.0,  # seconds
@@ -368,7 +368,7 @@ class TimeoutComplianceAuditor:
         
         # GDPR requires reasonable response times for data subject requests
         if service_name in ['creator_service', 'user_service']:
-            data_processing_timeout = self.ainflue_compliance_config['creator_data']['data_processing_timeout']
+            data_processing_timeout = self.iacherie_compliance_config['creator_data']['data_processing_timeout']
             
             if timeout_data.get('p95_timeout', 0) > data_processing_timeout:
                 violation = ComplianceViolation(
@@ -405,7 +405,7 @@ class TimeoutComplianceAuditor:
         
         # SOX requires financial reporting system availability and performance
         if service_name == 'payment_service':
-            sox_sla = self.ainflue_compliance_config['financial_services']['timeout_sla']
+            sox_sla = self.iacherie_compliance_config['financial_services']['timeout_sla']
             
             if timeout_data.get('sla_breaches', 0) > 0:
                 violation = ComplianceViolation(

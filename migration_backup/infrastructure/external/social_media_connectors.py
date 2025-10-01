@@ -2,11 +2,11 @@
 Social Media Connectors - 29 Platform Social Media Integration
 ==============================================================
 
-Comprehensive social media platform integrations for Ainflue creator distribution.
+Comprehensive social media platform integrations for IA Chéries creator distribution.
 Supports major social media platforms for creator content distribution and engagement.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 Platforms Supported (29):
@@ -100,7 +100,7 @@ class ContentPost:
 
 class SocialMediaConnectors:
     """
-    Social Media Platform Connectors for Ainflue Creator Distribution
+    Social Media Platform Connectors for IA Chéries Creator Distribution
     
     Manages connections and content distribution across 29 major social platforms,
     enabling creators to reach maximum audience with optimized content delivery.

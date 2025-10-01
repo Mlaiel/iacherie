@@ -1142,7 +1142,7 @@ async def get_tenant_analytics_collector() -> TenantAnalyticsCollector:
     """Factory pour l'instance TenantAnalyticsCollector"""
     global tenant_analytics_collector
     if not tenant_analytics_collector:
-        database_url = "postgresql+asyncpg://localhost/ainflue_analytics"
+        database_url = "postgresql+asyncpg://localhost/iacherie_analytics"
         redis_url = "redis://localhost:6379/7"
         
         tenant_analytics_collector = TenantAnalyticsCollector(

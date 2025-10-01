@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE DMCA AUTOMATION - AUTOMATED DOCKERFILE
+# IA CHÉRIES DMCA AUTOMATION - AUTOMATED DOCKERFILE
 # =============================================================================
 
 ARG PYTHON_VERSION=3.11
@@ -53,7 +53,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${DMCA_SERVICE_PORT}
 CMD ["python3.11", "-m", "dmca_automation.main"]
 
-LABEL org.opencontainers.image.title="Ainflue DMCA Automation"
+LABEL org.opencontainers.image.title="IA Chéries DMCA Automation"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="dmca_automation"
 LABEL ainflue.service.port="8024"

@@ -1,4 +1,4 @@
-"""Synchronous HTTP Client for Ainflue SDK
+"""Synchronous HTTP Client for IA Chéries SDK
 
 Enterprise-grade synchronous client with multi-expert design:
 - Backend Senior: Thread-safe synchronous architecture
@@ -23,7 +23,7 @@ import certifi
 
 from .exceptions import (
     APIError, NetworkError, TimeoutError, RateLimitError,
-    AuthenticationError, ValidationError, AinflueSdkException,
+    AuthenticationError, ValidationError, IA ChériesSdkException,
     handle_api_response_error, is_retryable_error
 )
 
@@ -134,8 +134,8 @@ class RateLimiter:
             self._requests.append(now)
 
 
-class SyncAinflueClient:
-    """High-performance synchronous HTTP client for Ainflue API
+class SyncIA ChériesClient:
+    """High-performance synchronous HTTP client for IA Chéries API
     
     Features:
     - Thread-safe operation
@@ -195,7 +195,7 @@ class SyncAinflueClient:
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default request headers"""
         headers = {
-            'User-Agent': 'Ainflue-Python-SDK/1.0.0',
+            'User-Agent': 'IA Chéries-Python-SDK/1.0.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-SDK-Version': '1.0.0',
@@ -311,7 +311,7 @@ class SyncAinflueClient:
         self.metrics.record_request(response_time, False)
         
         # Raise the last exception
-        if isinstance(last_exception, AinflueSdkException):
+        if isinstance(last_exception, IA ChériesSdkException):
             raise last_exception
         else:
             raise NetworkError(f"Request failed after {self.max_retries + 1} attempts") from last_exception
@@ -344,7 +344,7 @@ class SyncAinflueClient:
             
             return result
             
-        except AinflueSdkException:
+        except IA ChériesSdkException:
             # Re-raise SDK exceptions
             response_time = time.time() - start_time
             self.metrics.record_request(response_time, False)
@@ -367,7 +367,7 @@ class SyncAinflueClient:
             
             return response
             
-        except AinflueSdkException:
+        except IA ChériesSdkException:
             raise
         except Exception as e:
             raise NetworkError(f"Streaming error: {str(e)}") from e
@@ -538,4 +538,4 @@ class SyncAinflueClient:
 
 
 # Export the client
-__all__ = ['SyncAinflueClient', 'SessionManager', 'SyncMetrics', 'RateLimiter']
+__all__ = ['SyncIA ChériesClient', 'SessionManager', 'SyncMetrics', 'RateLimiter']

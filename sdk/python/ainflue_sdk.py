@@ -20,7 +20,7 @@ __email__ = "mlaiel@live.de"
 
 
 # Configuration
-class AinflueSdkConfig(BaseModel):
+class iacherieSdkConfig(BaseModel):
     """SDK configuration settings"""
     base_url: str = Field(default="https://api.iacherie.com", description="API base URL")
     api_key: str = Field(..., description="API key for authentication")
@@ -31,17 +31,17 @@ class AinflueSdkConfig(BaseModel):
 
 
 # Exceptions
-class AinflueSdkException(Exception):
+class iacherieSdkException(Exception):
     """Base exception for IA Chérie SDK"""
     pass
 
 
-class AuthenticationError(AinflueSdkException):
+class AuthenticationError(iacherieSdkException):
     """Authentication failed"""
     pass
 
 
-class APIError(AinflueSdkException):
+class APIError(iacherieSdkException):
     """API request failed"""
     def __init__(self, message: str, status_code: int = None, response: Dict = None):
         super().__init__(message)
@@ -49,13 +49,13 @@ class APIError(AinflueSdkException):
         self.response = response
 
 
-class ValidationError(AinflueSdkException):
+class ValidationError(iacherieSdkException):
     """Request validation failed"""
     pass
 
 
 # Response Models
-class AinflueSdkResponse(BaseModel):
+class iacherieSdkResponse(BaseModel):
     """Base response model"""
     success: bool
     message: str
@@ -84,10 +84,10 @@ class ContentProtectionResult(BaseModel):
 
 
 # Main SDK Client
-class AinflueSdk:
+class iacherieSdk:
     """Main IA Chérie SDK client"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config: iacherieSdkConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._client = None
@@ -321,17 +321,17 @@ class AinflueSdk:
 
 
 # Synchronous wrapper
-class AinflueSdkSync:
+class iacherieSdkSync:
     """Synchronous wrapper for IA Chérie SDK"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config: iacherieSdkConfig):
         self.config = config
         self._async_sdk = None
     
-    def _get_async_sdk(self) -> AinflueSdk:
+    def _get_async_sdk(self) -> iacherieSdk:
         """Get or create async SDK instance"""
         if self._async_sdk is None:
-            self._async_sdk = AinflueSdk(self.config)
+            self._async_sdk = iacherieSdk(self.config)
         return self._async_sdk
     
     def _run_async(self, coro):
@@ -371,24 +371,24 @@ class AinflueSdkSync:
 
 
 # Factory functions
-def create_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> AinflueSdk:
+def create_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> iacherieSdk:
     """Create async SDK instance"""
-    config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
-    return AinflueSdk(config)
+    config = iacherieSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
+    return iacherieSdk(config)
 
 
-def create_sync_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> AinflueSdkSync:
+def create_sync_sdk(api_key: str, base_url: str = "https://api.iacherie.com", **kwargs) -> iacherieSdkSync:
     """Create sync SDK instance"""
-    config = AinflueSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
-    return AinflueSdkSync(config)
+    config = iacherieSdkConfig(api_key=api_key, base_url=base_url, **kwargs)
+    return iacherieSdkSync(config)
 
 
 # Convenience exports
 __all__ = [
-    "AinflueSdk",
-    "AinflueSdkSync",
-    "AinflueSdkConfig",
-    "AinflueSdkException",
+    "iacherieSdk",
+    "iacherieSdkSync",
+    "iacherieSdkConfig",
+    "iacherieSdkException",
     "AuthenticationError",
     "APIError",
     "ValidationError",

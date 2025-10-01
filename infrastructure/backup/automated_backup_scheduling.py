@@ -6,7 +6,7 @@ Advanced scheduling system with AI-powered optimization, creator activity awaren
 resource management, and intelligent backup orchestration.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

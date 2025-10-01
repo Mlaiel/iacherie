@@ -1,4 +1,4 @@
-# 🧪 Ainflue Backend Tests - Enterprise Testing Suite
+# 🧪 iacherie Backend Tests - Enterprise Testing Suite
 
 [![Modulstatus](https://img.shields.io/badge/status-konsolidiert-green)](#)
 [![Testabdeckung](https://img.shields.io/badge/abdeckung-enterprise%20ready-green)](#)
@@ -6,7 +6,7 @@
 
 ## 🎯 Überblick
 
-Umfassende Enterprise-Testsuite für das Ainflue-Plattform-Backend, die Geschäftslogik-Validierung, Sicherheitstests, Performance-Tests, Integrationstests und Enterprise-Qualitätssicherung bietet.
+Umfassende Enterprise-Testsuite für das iacherie-Plattform-Backend, die Geschäftslogik-Validierung, Sicherheitstests, Performance-Tests, Integrationstests und Enterprise-Qualitätssicherung bietet.
 
 ## 🏗️ Architektur
 
@@ -105,7 +105,7 @@ pytest backend/tests/test_monetization_business_engine.py::test_revenue_stream_m
 ```python
 TEST_CONFIG = {
     "redis_url": "redis://localhost:6379/0",
-    "database_url": "postgresql://test:test@localhost:5432/ainflue_test",
+    "database_url": "postgresql://test:test@localhost:5432/iacherie_test",
     "api_base_url": "http://localhost:8000",
     "websocket_url": "ws://localhost:8000/ws",
     "test_timeout": 30,
@@ -121,7 +121,7 @@ TEST_CONFIG = {
 pip install -r requirements-dev.txt
 
 # Testdatenbank einrichten
-createdb ainflue_test
+createdb iacherie_test
 
 # Datenbank-Migrationen ausführen
 alembic upgrade head

@@ -1,4 +1,4 @@
-# Ainflue Remix AI Module - Kubernetes Namespace
+# IA Chéries Remix AI Module - Kubernetes Namespace
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready namespace for AI remix microservice with GPU support
 
@@ -19,7 +19,7 @@ metadata:
     business-domain: ai-content-generation
     gpu-enabled: "true"
   annotations:
-    description: "Ainflue AI Remix Engine - Advanced AI-powered content remixing and generation"
+    description: "IA Chéries AI Remix Engine - Advanced AI-powered content remixing and generation"
     contact: "mlaiel@live.de"
     created-by: "Fahed Mlaiel"
     business-purpose: "AI-driven content remixing for multi-format creator collaborations"

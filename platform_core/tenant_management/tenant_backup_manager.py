@@ -945,9 +945,9 @@ async def get_tenant_backup_manager() -> TenantBackupManager:
     """Factory pour l'instance TenantBackupManager"""
     global tenant_backup_manager
     if not tenant_backup_manager:
-        database_url = "postgresql+asyncpg://localhost/ainflue_backups"
+        database_url = "postgresql+asyncpg://localhost/iacherie_backups"
         redis_url = "redis://localhost:6379/9"
-        backup_path = "/tmp/ainflue_backups"
+        backup_path = "/tmp/iacherie_backups"
         encryption_key = "backup-encryption-key-change-in-production"
         
         tenant_backup_manager = TenantBackupManager(

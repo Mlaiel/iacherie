@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Compliance Checker Template for Ainflue Creator Economy Platform
+Compliance Checker Template for iacherie Creator Economy Platform
 Automated compliance verification and monitoring for GDPR, SOC2, HIPAA, PCI-DSS and other frameworks
 """
 
@@ -160,7 +160,7 @@ class ComplianceAssessment(BaseModel):
 
 class ComplianceCheckerTemplate:
     """
-    Template de vérificateur de conformité enterprise pour Ainflue
+    Template de vérificateur de conformité enterprise pour iacherie
     
     Fonctionnalités:
     - Vérification automatisée multi-framework
@@ -176,7 +176,7 @@ class ComplianceCheckerTemplate:
     def __init__(self, config: ComplianceConfig = None):
         self.config = config or ComplianceConfig()
         self.app = FastAPI(
-            title="Ainflue Compliance Checker",
+            title="iacherie Compliance Checker",
             description="Automated compliance verification and monitoring",
             version="1.0.0"
         )

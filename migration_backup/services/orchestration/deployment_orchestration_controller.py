@@ -1,5 +1,5 @@
 """
-🚀 DEPLOYMENT ORCHESTRATION CONTROLLER - AINFLUE ENTERPRISE
+🚀 DEPLOYMENT ORCHESTRATION CONTROLLER - IA CHÉRIES ENTERPRISE
 ===========================================================
 
 Multi-environment deployment coordination and infrastructure automation for creator economy platform.
@@ -700,7 +700,7 @@ class DeploymentOrchestrationController:
         """Load default deployment plans"""
         default_plans_data = [
             {
-                "name": "Ainflue Web Application",
+                "name": "IA Chéries Web Application",
                 "environment": "production",
                 "strategy": "blue_green",
                 "services": [

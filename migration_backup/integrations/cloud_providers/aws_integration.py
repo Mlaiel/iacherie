@@ -2,7 +2,7 @@
 ========================================================
 
 Comprehensive AWS integration for cloud services including S3, CloudFront,
-Lambda, SES, SNS, and other AWS services for the Ainflue platform.
+Lambda, SES, SNS, and other AWS services for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -133,7 +133,7 @@ class SESTemplate:
 
 
 class AWSIntegration:
-    """Main AWS integration for Ainflue platform."""
+    """Main AWS integration for IA Chéries platform."""
     
     def __init__(self, credentials: AWSCredentials):
         self.credentials = credentials
@@ -373,7 +373,7 @@ class AWSIntegration:
     
     async def create_cloudfront_distribution(self, origin_domain: str,
                                            aliases: Optional[List[str]] = None,
-                                           comment: str = "Ainflue CDN",
+                                           comment: str = "IA Chéries CDN",
                                            price_class: str = "PriceClass_100") -> CloudFrontDistribution:
         """Create CloudFront distribution."""
         try:
@@ -772,7 +772,7 @@ async def main():
         print("✅ AWS integration initialized")
         
         # Upload content
-        content = b"Hello, Ainflue AWS Integration!"
+        content = b"Hello, IA Chéries AWS Integration!"
         s3_object = await aws.upload_content_bytes(
             content=content,
             key="test/hello.txt",
@@ -788,7 +788,7 @@ async def main():
         # Send email
         message_id = await aws.send_email(
             to_addresses=["recipient@example.com"],
-            subject="Test Email from Ainflue",
+            subject="Test Email from IA Chéries",
             body_text="This is a test email sent via AWS SES integration.",
             from_address="noreply@ainflue.com"
         )
@@ -797,7 +797,7 @@ async def main():
         
         # Put CloudWatch metric
         await aws.put_cloudwatch_metric(
-            namespace="Ainflue/Integration",
+            namespace="IA Chéries/Integration",
             metric_name="TestMetric",
             value=1.0,
             dimensions={"Service": "AWS"}

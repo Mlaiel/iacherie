@@ -3,7 +3,7 @@
 
 Comprehensive workflow orchestration system providing automated voice processing
 pipelines, task coordination, process automation, and workflow analytics for
-the Ainflue voice ecosystem.
+the IA Chéries voice ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

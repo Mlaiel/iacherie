@@ -89,7 +89,7 @@ class VoiceServicesError(Exception):
 
 class VoiceServices:
     """
-    Comprehensive voice services integration for Ainflue platform.
+    Comprehensive voice services integration for IA Chéries platform.
     
     Features:
     - Podcast creation and distribution

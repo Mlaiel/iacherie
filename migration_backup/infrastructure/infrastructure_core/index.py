@@ -2,11 +2,11 @@
 Infrastructure Core - Entry Point for Core Infrastructure Components
 ===================================================================
 
-Central entry point for Ainflue's core infrastructure management components.
+Central entry point for IA Chéries's core infrastructure management components.
 Provides enterprise-grade disaster recovery, orchestration, and performance optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -84,10 +84,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Core infrastructure components for enterprise-grade Ainflue creator platform"
+__description__ = "Core infrastructure components for enterprise-grade IA Chéries creator platform"
 
-# Ainflue Creator Platform Integration
-AINFLUE_INFRASTRUCTURE_WORKFLOW = {
+# IA Chéries Creator Platform Integration
+IA CHÉRIES_INFRASTRUCTURE_WORKFLOW = {
     'upload': 'Multi-format content upload with backup and failover',
     'ai_processing': 'AI enhancement with performance optimization and recovery',
     'protection': 'Rights protection with disaster recovery capabilities',

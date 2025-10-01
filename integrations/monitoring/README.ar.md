@@ -36,14 +36,14 @@
 ### ذكاء التتبع الموزع
 ```python
 # مثال: تتبع خط إنتاج IA Chérie
-trace_analysis = await distributed_tracing.trace_ainflue_pipeline(
+trace_analysis = await distributed_tracing.trace_iacherie_pipeline(
     creator_content={
         'creator_id': 'creator_123',
         'content_type': 'arabic_podcast',
         'platforms': ['youtube', 'soundcloud', 'anghami', 'spotify']
     },
     pipeline_context={
-        'pipeline_id': 'ainflue_arabic_pipeline_v2.5',
+        'pipeline_id': 'iacherie_arabic_pipeline_v2.5',
         'version': '2.5.3'
     }
 )
@@ -194,7 +194,7 @@ from integrations.monitoring import (
 )
 
 # التهيئة مع المعايير العربية
-monitoring_suite = await initialize_ainflue_monitoring_arabic()
+monitoring_suite = await initialize_iacherie_monitoring_arabic()
 ```
 
 ### تكوين لوحة المعلومات

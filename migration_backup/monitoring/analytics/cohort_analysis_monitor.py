@@ -1,6 +1,6 @@
 """
 🔍 MONITORING ANALYTICS - Cohort Analysis Monitor
-Enterprise-grade cohort analysis for Ainflue creator ecosystem
+Enterprise-grade cohort analysis for IA Chéries creator ecosystem
 Lead Dev IA + ML Engineer Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -56,7 +56,7 @@ class CohortMetrics:
 
 class CohortAnalysisMonitor:
     """
-    🧠 Advanced Cohort Analysis Monitor for Ainflue Platform
+    🧠 Advanced Cohort Analysis Monitor for IA Chéries Platform
     
     ML-powered cohort tracking with predictive analytics:
     - Creator acquisition cohorts with retention analysis

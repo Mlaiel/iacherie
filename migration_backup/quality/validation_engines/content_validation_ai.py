@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎯 CONTENT VALIDATION AI ENTERPRISE - AINFLUE IA INFLUENCER AGENT
+🎯 CONTENT VALIDATION AI ENTERPRISE - IA CHÉRIES IA INFLUENCER AGENT
 ================================================================
 
 Moteur de validation de contenu IA ultra-avancé pour l'écosystème qualité enterprise,

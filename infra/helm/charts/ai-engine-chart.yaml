@@ -346,7 +346,7 @@ configMaps:
 # Secrets (references only - actual values should be provided externally)
 secrets:
   aiEngineSecrets:
-    database-url: "postgresql://user:pass@db:5432/ainflue_ai"
+    database-url: "postgresql://user:pass@db:5432/iacherie_ai"
     jwt-secret: "change-me-in-production"
     encryption-key: "change-me-in-production"
     
@@ -359,10 +359,10 @@ secrets:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "ainflue123!"
-    username: "ainflue_ai"
-    password: "ainflue123!"
-    database: "ainflue_ai"
+    postgresPassword: "iacherie123!"
+    username: "iacherie_ai"
+    password: "iacherie123!"
+    database: "iacherie_ai"
   primary:
     persistence:
       enabled: true
@@ -373,7 +373,7 @@ redis:
   enabled: true
   auth:
     enabled: true
-    password: "ainflue123!"
+    password: "iacherie123!"
   master:
     persistence:
       enabled: true

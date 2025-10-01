@@ -1,6 +1,6 @@
 """
 Registry Manager
-Container registry management for Ainflue infrastructure
+Container registry management for iacherie infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -22,7 +22,7 @@ class RegistryManager:
     async def setup_private_registry(self, registry_config: Dict[str, Any]) -> Dict[str, Any]:
         """Setup private container registry"""
         return {
-            'registry_url': registry_config.get('url', 'registry.ainflue.com'),
+            'registry_url': registry_config.get('url', 'registry.iacherie.com'),
             'registry_type': registry_config.get('type', 'harbor'),
             'ssl_enabled': True,
             'status': 'configured'

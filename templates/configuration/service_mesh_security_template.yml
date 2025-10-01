@@ -1,4 +1,4 @@
-# ⚡ Service Mesh Security Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Service Mesh Security Configuration Template - iacherie Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: service-mesh-security-config
-  namespace: ainflue-system
+  namespace: iacherie-system
   labels:
     app: service-mesh-security
     component: global-config
@@ -42,22 +42,22 @@ data:
       authentication:
         jwt:
           enabled: true
-          audiences: ["ainflue.com", "api.ainflue.com"]
-          jwksUri: "https://auth.ainflue.com/.well-known/jwks.json"
-          issuer: "https://auth.ainflue.com"
-          cookieName: "ainflue-auth-token"
+          audiences: ["iacherie.com", "api.iacherie.com"]
+          jwksUri: "https://auth.iacherie.com/.well-known/jwks.json"
+          issuer: "https://auth.iacherie.com"
+          cookieName: "iacherie-auth-token"
           headerName: "Authorization"
           tokenLifetime: "1h"
         oauth2:
           enabled: true
           providers:
             - name: "google"
-              clientId: "ainflue-google-client-id"
+              clientId: "iacherie-google-client-id"
               authorizationUrl: "https://accounts.google.com/o/oauth2/auth"
               tokenUrl: "https://oauth2.googleapis.com/token"
               scopes: ["openid", "profile", "email"]
             - name: "github"
-              clientId: "ainflue-github-client-id"
+              clientId: "iacherie-github-client-id"
               authorizationUrl: "https://github.com/login/oauth/authorize"
               tokenUrl: "https://github.com/login/oauth/access_token"
               scopes: ["user:email", "read:user"]
@@ -82,8 +82,8 @@ data:
             - "time.hour"
         opa:
           enabled: true
-          endpoint: "http://opa.ainflue-system.svc.cluster.local:8181"
-          policy: "ainflue.security"
+          endpoint: "http://opa.iacherie-system.svc.cluster.local:8181"
+          policy: "iacherie.security"
           timeout: "5s"
       
       # Network Security
@@ -99,7 +99,7 @@ data:
           enabled: true
           defaultPolicy: "DENY"
           allowedDomains:
-            - "*.ainflue.com"
+            - "*.iacherie.com"
             - "api.stripe.com"
             - "api.paypal.com"
             - "*.amazonaws.com"
@@ -153,8 +153,8 @@ data:
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
-  name: ainflue-global-mtls
-  namespace: ainflue-system
+  name: iacherie-global-mtls
+  namespace: iacherie-system
 spec:
   mtls:
     mode: STRICT
@@ -162,8 +162,8 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
-  name: ainflue-production-mtls
-  namespace: ainflue-production
+  name: iacherie-production-mtls
+  namespace: iacherie-production
 spec:
   mtls:
     mode: STRICT
@@ -177,18 +177,18 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-api-authz
-  namespace: ainflue-production
+  name: iacherie-api-authz
+  namespace: iacherie-production
 spec:
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-frontend"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-frontend"]
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-mobile"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-mobile"]
     to:
     - operation:
         methods: ["GET", "POST", "PUT", "DELETE"]
@@ -200,7 +200,7 @@ spec:
       notValues: ["*bot*", "*crawler*", "*scanner*"]
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-admin"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-admin"]
     to:
     - operation:
         methods: ["*"]
@@ -212,18 +212,18 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-content-processor-authz
-  namespace: ainflue-production
+  name: iacherie-content-processor-authz
+  namespace: iacherie-production
 spec:
   selector:
     matchLabels:
-      app: ainflue-content-processor
+      app: iacherie-content-processor
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-api"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-api"]
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-upload-service"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-upload-service"]
     to:
     - operation:
         methods: ["POST", "PUT"]
@@ -233,7 +233,7 @@ spec:
       values: ["application/json", "multipart/form-data", "application/octet-stream"]
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-api"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-api"]
     to:
     - operation:
         methods: ["GET"]
@@ -242,18 +242,18 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ainflue-payment-service-authz
-  namespace: ainflue-production
+  name: iacherie-payment-service-authz
+  namespace: iacherie-production
 spec:
   selector:
     matchLabels:
-      app: ainflue-payment-service
+      app: iacherie-payment-service
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-api"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-api"]
     - source:
-        principals: ["cluster.local/ns/ainflue-production/sa/ainflue-monetization"]
+        principals: ["cluster.local/ns/iacherie-production/sa/iacherie-monetization"]
     to:
     - operation:
         methods: ["POST", "PUT", "GET"]
@@ -265,7 +265,7 @@ spec:
       values: ["*"]  # Require API key
   - from:
     - source:
-        namespaces: ["ainflue-monitoring"]
+        namespaces: ["iacherie-monitoring"]
     to:
     - operation:
         methods: ["GET"]
@@ -275,25 +275,25 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication
 metadata:
-  name: ainflue-jwt-auth
-  namespace: ainflue-production
+  name: iacherie-jwt-auth
+  namespace: iacherie-production
 spec:
   selector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   jwtRules:
-  - issuer: "https://auth.ainflue.com"
-    jwksUri: "https://auth.ainflue.com/.well-known/jwks.json"
-    audiences: ["ainflue.com", "api.ainflue.com"]
+  - issuer: "https://auth.iacherie.com"
+    jwksUri: "https://auth.iacherie.com/.well-known/jwks.json"
+    audiences: ["iacherie.com", "api.iacherie.com"]
     fromHeaders:
     - name: "Authorization"
       prefix: "Bearer "
     fromCookies:
-    - "ainflue-auth-token"
+    - "iacherie-auth-token"
     outputPayloadToHeader: "x-jwt-payload"
   - issuer: "https://accounts.google.com"
     jwksUri: "https://www.googleapis.com/oauth2/v3/certs"
-    audiences: ["ainflue-google-client-id"]
+    audiences: ["iacherie-google-client-id"]
     fromHeaders:
     - name: "Authorization"
       prefix: "Bearer "
@@ -302,12 +302,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-api-network-policy
-  namespace: ainflue-production
+  name: iacherie-api-network-policy
+  namespace: iacherie-production
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   policyTypes:
   - Ingress
   - Egress
@@ -315,16 +315,16 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-frontend
+          app: iacherie-frontend
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-mobile
+          app: iacherie-mobile
     - namespaceSelector:
         matchLabels:
           name: istio-system
@@ -339,30 +339,30 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-database
+          app: iacherie-database
     ports:
     - protocol: TCP
       port: 5432
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-cache
+          app: iacherie-cache
     ports:
     - protocol: TCP
       port: 6379
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-content-processor
+          app: iacherie-content-processor
     ports:
     - protocol: TCP
       port: 8080
@@ -374,12 +374,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ainflue-content-processor-network-policy
-  namespace: ainflue-production
+  name: iacherie-content-processor-network-policy
+  namespace: iacherie-production
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-content-processor
+      app: iacherie-content-processor
   policyTypes:
   - Ingress
   - Egress
@@ -387,10 +387,10 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-api
+          app: iacherie-api
     - namespaceSelector:
         matchLabels:
           name: istio-system
@@ -405,20 +405,20 @@ spec:
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-ai-engine
+          app: iacherie-ai-engine
     ports:
     - protocol: TCP
       port: 8080
   - to:
     - namespaceSelector:
         matchLabels:
-          name: ainflue-production
+          name: iacherie-production
       podSelector:
         matchLabels:
-          app: ainflue-storage
+          app: iacherie-storage
     ports:
     - protocol: TCP
       port: 8080
@@ -431,8 +431,8 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: ainflue-service-mesh-psp
-  namespace: ainflue-production
+  name: iacherie-service-mesh-psp
+  namespace: iacherie-production
 spec:
   privileged: false
   allowPrivilegeEscalation: false
@@ -474,7 +474,7 @@ spec:
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
-  name: ainflue-service-mesh-scc
+  name: iacherie-service-mesh-scc
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -511,43 +511,43 @@ volumes:
 - projected
 - secret
 users:
-- system:serviceaccount:ainflue-production:ainflue-api
-- system:serviceaccount:ainflue-production:ainflue-frontend
-- system:serviceaccount:ainflue-production:ainflue-content-processor
-- system:serviceaccount:ainflue-production:ainflue-payment-service
-- system:serviceaccount:ainflue-production:ainflue-monetization
+- system:serviceaccount:iacherie-production:iacherie-api
+- system:serviceaccount:iacherie-production:iacherie-frontend
+- system:serviceaccount:iacherie-production:iacherie-content-processor
+- system:serviceaccount:iacherie-production:iacherie-payment-service
+- system:serviceaccount:iacherie-production:iacherie-monetization
 ---
 # 🔒 Certificate Management for Service Mesh
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: ainflue-ca-issuer
+  name: iacherie-ca-issuer
 spec:
   ca:
-    secretName: ainflue-ca-secret
+    secretName: iacherie-ca-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ainflue-api-tls
-  namespace: ainflue-production
+  name: iacherie-api-tls
+  namespace: iacherie-production
 spec:
-  secretName: ainflue-api-tls-secret
+  secretName: iacherie-api-tls-secret
   issuerRef:
-    name: ainflue-ca-issuer
+    name: iacherie-ca-issuer
     kind: ClusterIssuer
-  commonName: ainflue-api.ainflue-production.svc.cluster.local
+  commonName: iacherie-api.iacherie-production.svc.cluster.local
   dnsNames:
-  - ainflue-api.ainflue-production.svc.cluster.local
-  - ainflue-api
-  - api.ainflue.com
+  - iacherie-api.iacherie-production.svc.cluster.local
+  - iacherie-api
+  - api.iacherie.com
   duration: 2160h  # 90 days
   renewBefore: 360h  # 15 days
   subject:
     organizationalUnits:
-    - "Ainflue Creator Economy"
+    - "iacherie Creator Economy"
     organizations:
-    - "Ainflue Platform"
+    - "iacherie Platform"
     countries:
     - "US"
   privateKey:
@@ -563,17 +563,17 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ainflue-content-processor-tls
-  namespace: ainflue-production
+  name: iacherie-content-processor-tls
+  namespace: iacherie-production
 spec:
-  secretName: ainflue-content-processor-tls-secret
+  secretName: iacherie-content-processor-tls-secret
   issuerRef:
-    name: ainflue-ca-issuer
+    name: iacherie-ca-issuer
     kind: ClusterIssuer
-  commonName: ainflue-content-processor.ainflue-production.svc.cluster.local
+  commonName: iacherie-content-processor.iacherie-production.svc.cluster.local
   dnsNames:
-  - ainflue-content-processor.ainflue-production.svc.cluster.local
-  - ainflue-content-processor
+  - iacherie-content-processor.iacherie-production.svc.cluster.local
+  - iacherie-content-processor
   duration: 2160h
   renewBefore: 360h
   privateKey:
@@ -593,31 +593,31 @@ spec:
 apiVersion: policy.linkerd.io/v1beta1
 kind: Server
 metadata:
-  name: ainflue-api-server
-  namespace: ainflue-production
+  name: iacherie-api-server
+  namespace: iacherie-production
 spec:
   podSelector:
     matchLabels:
-      app: ainflue-api
+      app: iacherie-api
   port: 8080
   proxyProtocol: "HTTP/2"
 ---
 apiVersion: policy.linkerd.io/v1beta1
 kind: ServerAuthorization
 metadata:
-  name: ainflue-api-server-authz
-  namespace: ainflue-production
+  name: iacherie-api-server-authz
+  namespace: iacherie-production
 spec:
   server:
-    name: ainflue-api-server
+    name: iacherie-api-server
   requiredRoutes:
   - pathRegex: "/api/v1/.*"
     methods: ["GET", "POST", "PUT", "DELETE"]
   client:
     meshTLS:
       identities:
-      - "ainflue-frontend.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-      - "ainflue-mobile.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
+      - "iacherie-frontend.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+      - "iacherie-mobile.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
       unauthenticated: false
     networks:
     - cidr: "10.0.0.0/8"
@@ -627,21 +627,21 @@ spec:
 apiVersion: policy.linkerd.io/v1alpha1
 kind: MeshTLSAuthentication
 metadata:
-  name: ainflue-mesh-tls-auth
-  namespace: ainflue-production
+  name: iacherie-mesh-tls-auth
+  namespace: iacherie-production
 spec:
   identities:
-  - "ainflue-api.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-  - "ainflue-frontend.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-  - "ainflue-content-processor.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-  - "ainflue-payment-service.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-  - "ainflue-monetization.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
+  - "iacherie-api.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+  - "iacherie-frontend.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+  - "iacherie-content-processor.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+  - "iacherie-payment-service.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+  - "iacherie-monetization.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
 ---
 apiVersion: policy.linkerd.io/v1alpha1
 kind: NetworkAuthentication
 metadata:
-  name: ainflue-network-auth
-  namespace: ainflue-production
+  name: iacherie-network-auth
+  namespace: iacherie-production
 spec:
   networks:
   - cidr: "10.0.0.0/8"
@@ -662,14 +662,14 @@ metadata:
   namespace: consul
 data:
   service-intentions.hcl: |
-    # Ainflue API Service Intentions
+    # iacherie API Service Intentions
     Kind = "service-intentions"
-    Name = "ainflue-api"
-    Namespace = "ainflue-production"
+    Name = "iacherie-api"
+    Namespace = "iacherie-production"
     Sources = [
       {
-        Name = "ainflue-frontend"
-        Namespace = "ainflue-production"
+        Name = "iacherie-frontend"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -692,8 +692,8 @@ data:
         ]
       },
       {
-        Name = "ainflue-mobile"
-        Namespace = "ainflue-production"
+        Name = "iacherie-mobile"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -723,12 +723,12 @@ data:
     
     # Content Processor Service Intentions
     Kind = "service-intentions"
-    Name = "ainflue-content-processor"
-    Namespace = "ainflue-production"
+    Name = "iacherie-content-processor"
+    Namespace = "iacherie-production"
     Sources = [
       {
-        Name = "ainflue-api"
-        Namespace = "ainflue-production"
+        Name = "iacherie-api"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -761,12 +761,12 @@ data:
     
     # Payment Service Intentions
     Kind = "service-intentions"
-    Name = "ainflue-payment-service"
-    Namespace = "ainflue-production"
+    Name = "iacherie-payment-service"
+    Namespace = "iacherie-production"
     Sources = [
       {
-        Name = "ainflue-api"
-        Namespace = "ainflue-production"
+        Name = "iacherie-api"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -789,8 +789,8 @@ data:
         ]
       },
       {
-        Name = "ainflue-monetization"
-        Namespace = "ainflue-production"
+        Name = "iacherie-monetization"
+        Namespace = "iacherie-production"
         Action = "allow"
         Permissions = [
           {
@@ -815,21 +815,21 @@ metadata:
   name: consul-acl-security-policies
   namespace: consul
 data:
-  ainflue-api-security-policy.hcl: |
-    # Ainflue API Service Security ACL Policy
-    service "ainflue-api" {
+  iacherie-api-security-policy.hcl: |
+    # iacherie API Service Security ACL Policy
+    service "iacherie-api" {
       policy = "write"
     }
     
-    service "ainflue-content-processor" {
+    service "iacherie-content-processor" {
       policy = "read"
     }
     
-    service "ainflue-payment-service" {
+    service "iacherie-payment-service" {
       policy = "read"
     }
     
-    service "ainflue-database" {
+    service "iacherie-database" {
       policy = "read"
     }
     
@@ -841,15 +841,15 @@ data:
       policy = "read"
     }
     
-    key_prefix "ainflue/api/" {
+    key_prefix "iacherie/api/" {
       policy = "write"
     }
     
-    key_prefix "ainflue/config/" {
+    key_prefix "iacherie/config/" {
       policy = "read"
     }
     
-    key_prefix "ainflue/secrets/" {
+    key_prefix "iacherie/secrets/" {
       policy = "deny"
     }
     
@@ -862,7 +862,7 @@ data:
     }
     
     # Connect intentions
-    service "ainflue-api" {
+    service "iacherie-api" {
       intentions = "write"
     }
     
@@ -872,21 +872,21 @@ data:
     # Operator privileges (limited)
     operator = "read"
   
-  ainflue-content-security-policy.hcl: |
+  iacherie-content-security-policy.hcl: |
     # Content Processor Security ACL Policy
-    service "ainflue-content-processor" {
+    service "iacherie-content-processor" {
       policy = "write"
     }
     
-    service "ainflue-ai-engine" {
+    service "iacherie-ai-engine" {
       policy = "read"
     }
     
-    service "ainflue-storage" {
+    service "iacherie-storage" {
       policy = "read"
     }
     
-    service "ainflue-database" {
+    service "iacherie-database" {
       policy = "read"
     }
     
@@ -894,19 +894,19 @@ data:
       policy = "read"
     }
     
-    key_prefix "ainflue/content/" {
+    key_prefix "iacherie/content/" {
       policy = "write"
     }
     
-    key_prefix "ainflue/ai/" {
+    key_prefix "iacherie/ai/" {
       policy = "read"
     }
     
-    key_prefix "ainflue/storage/" {
+    key_prefix "iacherie/storage/" {
       policy = "read"
     }
     
-    key_prefix "ainflue/secrets/" {
+    key_prefix "iacherie/secrets/" {
       policy = "deny"
     }
     
@@ -915,7 +915,7 @@ data:
     }
     
     # Connect intentions
-    service "ainflue-content-processor" {
+    service "iacherie-content-processor" {
       intentions = "write"
     }
 
@@ -928,7 +928,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: multi-mesh-security-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   cross-mesh-security.yaml: |
     # Multi-Mesh Security Configuration
@@ -945,7 +945,7 @@ data:
             - "consul-connect-ca"
         authentication:
           method: "jwt"
-          issuer: "https://auth.ainflue.com"
+          issuer: "https://auth.iacherie.com"
           audience: "cross-mesh"
         authorization:
           defaultPolicy: "deny"
@@ -954,25 +954,25 @@ data:
               destination: "linkerd/*"
               action: "allow"
               conditions:
-                - "source.namespace == 'ainflue-production'"
-                - "destination.namespace == 'ainflue-production'"
+                - "source.namespace == 'iacherie-production'"
+                - "destination.namespace == 'iacherie-production'"
             - source: "consul-connect/*"
               destination: "istio/*"
               action: "allow"
               conditions:
-                - "source.service == 'ainflue-api'"
-                - "destination.service == 'ainflue-database'"
+                - "source.service == 'iacherie-api'"
+                - "destination.service == 'iacherie-database'"
       
       # Service Identity Mapping
       identityMapping:
         enabled: true
         mappings:
-          - istioIdentity: "cluster.local/ns/ainflue-production/sa/ainflue-api"
-            linkerdIdentity: "ainflue-api.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-            consulIdentity: "ainflue-api"
-          - istioIdentity: "cluster.local/ns/ainflue-production/sa/ainflue-frontend"
-            linkerdIdentity: "ainflue-frontend.ainflue-production.serviceaccount.identity.linkerd.cluster.local"
-            consulIdentity: "ainflue-frontend"
+          - istioIdentity: "cluster.local/ns/iacherie-production/sa/iacherie-api"
+            linkerdIdentity: "iacherie-api.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+            consulIdentity: "iacherie-api"
+          - istioIdentity: "cluster.local/ns/iacherie-production/sa/iacherie-frontend"
+            linkerdIdentity: "iacherie-frontend.iacherie-production.serviceaccount.identity.linkerd.cluster.local"
+            consulIdentity: "iacherie-frontend"
       
       # Security Policy Synchronization
       policySynchronization:
@@ -995,7 +995,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: zero-trust-security-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   zero-trust.yaml: |
     # Zero Trust Security Configuration
@@ -1052,7 +1052,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: security-monitoring-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   security-monitoring.yaml: |
     # Security Monitoring Configuration
@@ -1135,7 +1135,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: compliance-security-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   compliance.yaml: |
     # Compliance Security Configuration
@@ -1221,7 +1221,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: audit-logging-config
-  namespace: ainflue-system
+  namespace: iacherie-system
 data:
   audit-logging.yaml: |
     # Audit Logging Configuration
@@ -1234,7 +1234,7 @@ data:
           kind: Policy
           rules:
           - level: Metadata
-            namespaces: ["ainflue-production", "ainflue-staging"]
+            namespaces: ["iacherie-production", "iacherie-staging"]
             verbs: ["get", "list", "create", "update", "patch", "delete"]
             resources:
             - group: ""
@@ -1244,7 +1244,7 @@ data:
             - group: "networking.k8s.io"
               resources: ["networkpolicies"]
           - level: RequestResponse
-            namespaces: ["ainflue-production"]
+            namespaces: ["iacherie-production"]
             verbs: ["create", "update", "patch", "delete"]
             resources:
             - group: ""
@@ -1295,5 +1295,5 @@ data:
 # ===================================================================
 # END OF SERVICE MESH SECURITY CONFIGURATION TEMPLATE
 # Creator Economy Security Solution by Fahed Mlaiel
-# Enterprise-grade security configuration for Ainflue service mesh
+# Enterprise-grade security configuration for iacherie service mesh
 # ===================================================================

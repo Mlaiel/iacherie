@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { contentI
     
     // Récupération des headers du backend
     const contentType = backendResponse.headers.get('content-type') || 'application/octet-stream';
-    const contentDisposition = backendResponse.headers.get('content-disposition') || `attachment; filename=ainfluencer_${contentId}`;
+    const contentDisposition = backendResponse.headers.get('content-disposition') || `attachment; filename=iacheries_${contentId}`;
     
     console.log('📋 Headers backend:', { contentType, contentDisposition });
     

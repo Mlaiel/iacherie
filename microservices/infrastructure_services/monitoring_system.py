@@ -1148,28 +1148,28 @@ class EnterpriseMonitoringSystem:
 
 
 # Example usage for IA Chérie microservices
-async def setup_ainflue_monitoring():
+async def setup_iacherie_monitoring():
     """Setup IA Chérie monitoring system"""
     monitoring = EnterpriseMonitoringSystem()
     await monitoring.initialize("iacherie-platform")
     
     # Create custom business metrics
     monitoring.metrics_collector.create_custom_metric(
-        "ainflue_content_uploads",
+        "iacherie_content_uploads",
         "Total content uploads to IA Chérie platform",
         MetricType.COUNTER,
         ["content_type", "user_type"]
     )
     
     monitoring.metrics_collector.create_custom_metric(
-        "ainflue_ai_processing_time",
+        "iacherie_ai_processing_time",
         "AI processing time for content",
         MetricType.HISTOGRAM,
         ["model_type", "content_type"]
     )
     
     monitoring.metrics_collector.create_custom_metric(
-        "ainflue_active_creators",
+        "iacherie_active_creators",
         "Number of active creators",
         MetricType.GAUGE,
         ["platform"]
@@ -1180,7 +1180,7 @@ async def setup_ainflue_monitoring():
 
 if __name__ == "__main__":
     async def main():
-        monitoring = await setup_ainflue_monitoring()
+        monitoring = await setup_iacherie_monitoring()
         
         # Simulate some monitoring data
         for i in range(10):
@@ -1195,7 +1195,7 @@ if __name__ == "__main__":
             
             # Simulate business metrics
             await monitoring.record_business_metric(
-                "ainflue_content_uploads", 1.0, "content-service",
+                "iacherie_content_uploads", 1.0, "content-service",
                 {"content_type": "video", "user_type": "creator"}
             )
             

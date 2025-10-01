@@ -1,7 +1,7 @@
 """
 Page Speed Optimization Tracker - Enterprise Web Performance Monitoring
 
-This module implements comprehensive page speed optimization tracking for the Ainflue platform,
+This module implements comprehensive page speed optimization tracking for the IA Chéries platform,
 monitoring Core Web Vitals, performance metrics, and automated optimization recommendations.
 
 Author: Fahed Mlaiel
@@ -103,7 +103,7 @@ class OptimizationRecommendation:
 
 class PageSpeedOptimizationTracker:
     """
-    Enterprise page speed optimization tracking system for Ainflue platform.
+    Enterprise page speed optimization tracking system for IA Chéries platform.
     
     Features:
     - Core Web Vitals monitoring

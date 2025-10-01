@@ -474,7 +474,7 @@ class ComplianceAuditSystem:
         try:
             # PostgreSQL pour audit storage
             self.db_engine = create_async_engine(
-                "postgresql+asyncpg://user:pass@localhost/ainflue_compliance",
+                "postgresql+asyncpg://user:pass@localhost/iacherie_compliance",
                 pool_size=10
             )
             

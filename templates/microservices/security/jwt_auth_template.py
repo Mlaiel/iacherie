@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-JWT Authentication Template for Ainflue Creator Economy Platform
+JWT Authentication Template for iacherie Creator Economy Platform
 Enterprise-grade JWT authentication microservice with advanced security features
 """
 
@@ -136,7 +136,7 @@ class UserRegistration(BaseModel):
 
 class JWTAuthTemplate:
     """
-    Template d'authentification JWT enterprise pour Ainflue Creator Economy
+    Template d'authentification JWT enterprise pour iacherie Creator Economy
     
     Fonctionnalités:
     - JWT avec rotation automatique
@@ -152,7 +152,7 @@ class JWTAuthTemplate:
     def __init__(self, config: SecurityConfig = None):
         self.config = config or SecurityConfig()
         self.app = FastAPI(
-            title="Ainflue JWT Auth Service",
+            title="iacherie JWT Auth Service",
             description="Enterprise JWT authentication microservice",
             version="1.0.0"
         )
@@ -183,7 +183,7 @@ class JWTAuthTemplate:
         """Configuration middleware sécurité"""
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=["https://ainflue.com", "https://app.ainflue.com"],
+            allow_origins=["https://iacherie.com", "https://app.iacherie.com"],
             allow_credentials=True,
             allow_methods=["GET", "POST", "PUT", "DELETE"],
             allow_headers=["*"],

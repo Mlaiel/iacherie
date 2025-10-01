@@ -3,7 +3,7 @@
 Istio/Linkerd service mesh for microservices orchestration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 WARNING: This code and concept are protected by copyright.
@@ -108,8 +108,8 @@ SERVICE_MESH_CONFIG = {
     'traffic_management_enabled': True
 }
 
-# Ainflue Microservices Registry
-AINFLUE_SERVICES = {
+# IA Chéries Microservices Registry
+IA CHÉRIES_SERVICES = {
     'ai_optimization': {
         'port': 8001,
         'health_endpoint': '/health',
@@ -213,11 +213,11 @@ __all__ = [
     
     # Configuration
     'SERVICE_MESH_CONFIG',
-    'AINFLUE_SERVICES'
+    'IA CHÉRIES_SERVICES'
 ]
 
 # Module metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Service Mesh Infrastructure for Ainflue Microservices"
+__description__ = "Service Mesh Infrastructure for IA Chéries Microservices"

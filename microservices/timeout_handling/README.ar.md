@@ -221,7 +221,7 @@ distribution_result = await distribution_coordinator.coordinate_multi_platform(
 
 ### **سياسات المهلة الزمنية التجارية**
 ```python
-سياسات_المهلة_الزمنية_AINFLUE = {
+سياسات_المهلة_الزمنية_IACHERIE = {
     'سير_عمل_المنشئين': {
         'رفع': {'أساسي': 60, 'مضاعف_4k': 2.0, 'مكافأة_مميزة': 1.3},
         'معالجة': {'أساسي': 120, 'عامل_ذكاء_اصطناعي': 1.5, 'تعديل_جودة': 1.2},
@@ -371,11 +371,11 @@ iacherie-timeout audit --framework gdpr --period last-30-days
 
 ### **تكامل SDK**
 ```python
-from ainflue_timeout import TimeoutClient
+from iacherie_timeout import TimeoutClient
 
 # عميل SDK
 timeout_client = TimeoutClient(
-    api_key=AINFLUE_API_KEY,
+    api_key=IACHERIE_API_KEY,
     environment='production',
     business_context='creator_platform'
 )

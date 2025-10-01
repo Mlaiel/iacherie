@@ -1,4 +1,4 @@
-"""{{deployment_name}} Deployment Automation Template for Ainflue Platform
+"""{{deployment_name}} Deployment Automation Template for iacherie Platform
 {{deployment_description}}
 
 Author: {{author_name}} ({{author_email}})

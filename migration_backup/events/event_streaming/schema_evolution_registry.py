@@ -1,5 +1,5 @@
 """IA Influencer Agent - Schema Evolution Registry
-Schema Evolution and Compatibility Management for Ainflue Event Streaming
+Schema Evolution and Compatibility Management for IA Chéries Event Streaming
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -227,8 +227,8 @@ class CompatibilityCheck:
     required_migrations: List[MigrationRule] = field(default_factory=list)
 
 
-class AinflueBusinesSchemas:
-    """Predefined schema templates for Ainflue business events"""
+class IA ChériesBusinesSchemas:
+    """Predefined schema templates for IA Chéries business events"""
     
     CONTENT_UPLOAD_SCHEMA = {
         "type": "object",
@@ -509,7 +509,7 @@ class CompatibilityChecker:
 
 
 class SchemaEvolutionRegistry:
-    """Main registry for managing schema evolution in Ainflue platform"""
+    """Main registry for managing schema evolution in IA Chéries platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -518,17 +518,17 @@ class SchemaEvolutionRegistry:
         self.validator = SchemaValidator()
         self.compatibility_checker = CompatibilityChecker()
         
-        # Initialize with Ainflue business schemas
+        # Initialize with IA Chéries business schemas
         self._initialize_business_schemas()
     
     def _initialize_business_schemas(self):
-        """Initialize with predefined Ainflue business schemas"""
+        """Initialize with predefined IA Chéries business schemas"""
         try:
             # Content upload schema
             content_schema = SchemaVersion(
                 schema_id="ainflue.content.upload",
                 version=1,
-                schema_content=AinflueBusinesSchemas.CONTENT_UPLOAD_SCHEMA,
+                schema_content=IA ChériesBusinesSchemas.CONTENT_UPLOAD_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -542,7 +542,7 @@ class SchemaEvolutionRegistry:
             revenue_schema = SchemaVersion(
                 schema_id="ainflue.revenue.event",
                 version=1,
-                schema_content=AinflueBusinesSchemas.REVENUE_EVENT_SCHEMA,
+                schema_content=IA ChériesBusinesSchemas.REVENUE_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -556,7 +556,7 @@ class SchemaEvolutionRegistry:
             collaboration_schema = SchemaVersion(
                 schema_id="ainflue.collaboration.event",
                 version=1,
-                schema_content=AinflueBusinesSchemas.COLLABORATION_EVENT_SCHEMA,
+                schema_content=IA ChériesBusinesSchemas.COLLABORATION_EVENT_SCHEMA,
                 schema_type=SchemaType.JSON_SCHEMA,
                 compatibility_type=CompatibilityType.BACKWARD,
                 created_at=datetime.now(timezone.utc),
@@ -566,7 +566,7 @@ class SchemaEvolutionRegistry:
             )
             self.schemas["ainflue.collaboration.event"].append(collaboration_schema)
             
-            logger.info("Initialized Ainflue business schemas")
+            logger.info("Initialized IA Chéries business schemas")
             
         except Exception as e:
             logger.error(f"Error initializing business schemas: {e}")
@@ -750,6 +750,6 @@ class SchemaEvolutionRegistry:
 # Export public API
 __all__ = [
     "SchemaEvolutionRegistry", "SchemaVersion", "MigrationRule", "CompatibilityCheck",
-    "SchemaValidator", "CompatibilityChecker", "AinflueBusinesSchemas",
+    "SchemaValidator", "CompatibilityChecker", "IA ChériesBusinesSchemas",
     "CompatibilityType", "SchemaType", "EvolutionType"
 ]

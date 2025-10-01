@@ -109,7 +109,7 @@ class MonetizationAPIGateway:
     
     def __init__(self):
         self.app = FastAPI(
-            title="Ainflue Monetization API Gateway",
+            title="IA Chéries Monetization API Gateway",
             description="Unified gateway for all monetization services",
             version="2.0.0"
         )

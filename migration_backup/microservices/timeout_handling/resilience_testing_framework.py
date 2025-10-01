@@ -1,12 +1,12 @@
 """
-Resilience Testing Framework Module - Ainflue Enterprise
+Resilience Testing Framework Module - IA Chéries Enterprise
 ========================================================
 Framework tests résilience timeout avec chaos engineering et fault injection.
 Chaos testing + fault injection + resilience validation + failure scenarios.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chéries Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

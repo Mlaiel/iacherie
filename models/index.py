@@ -257,7 +257,7 @@ class EnterpriseModelsManager:
 enterprise_models = EnterpriseModelsManager()
 
 # Main workflow functions
-async def ainflue_enterprise_workflow(user_data: Dict[str, Any]) -> Dict[str, Any]:
+async def iacherie_enterprise_workflow(user_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Execute the complete IA Chérie enterprise workflow
     
@@ -462,6 +462,6 @@ __all__ = [
     'MODEL_REGISTRY', 'ENTERPRISE_MODULES_AVAILABLE',
     
     # Workflow functions
-    'ainflue_enterprise_workflow',
+    'iacherie_enterprise_workflow',
     'get_enterprise_architecture_info'
 ]

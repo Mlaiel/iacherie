@@ -596,7 +596,7 @@ def create_data_engineering_orchestrator(config: DataPipelineConfig) -> DataEngi
 
 # Default configuration
 DEFAULT_DATA_CONFIG = DataPipelineConfig(
-    pipeline_name="ainflue-data-pipeline",
+    pipeline_name="iacherie-data-pipeline",
     data_sources=[
         {"type": "database", "connection": "postgresql://..."},
         {"type": "api", "endpoint": "https://api.example.com"},

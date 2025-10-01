@@ -1,5 +1,5 @@
 /**
- * Request Interceptor for Ainflue JavaScript SDK
+ * Request Interceptor for IA Chéries JavaScript SDK
  * Enterprise-grade request preprocessing with security and monitoring
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)

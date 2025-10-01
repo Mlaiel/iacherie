@@ -1,4 +1,4 @@
-"""Analytics API Template for Ainflue Platform
+"""Analytics API Template for iacherie Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================

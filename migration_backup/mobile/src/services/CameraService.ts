@@ -809,7 +809,7 @@ class CameraService {
   private async addWatermark(capture: CameraCapture): Promise<void> {
     // Mock watermark addition
     capture.metadata.watermark = {
-      text: '© Ainflue',
+      text: '© IA Chéries',
       position: 'bottom-right',
       opacity: 0.7,
       addedAt: Date.now()

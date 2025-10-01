@@ -34,7 +34,7 @@ Ce module de monitoring, ses concepts innovants d'intelligence performance, algo
 
 ## 🎯 Aperçu du Module
 
-Le **Module de Monitoring** fournit des analytics de performance complets, monitoring intelligent et observabilité temps réel pour l'ensemble de l'écosystème plateforme Ainflue. Cette solution de monitoring enterprise offre des insights IA, analytics prédictifs et optimisation performance automatisée.
+Le **Module de Monitoring** fournit des analytics de performance complets, monitoring intelligent et observabilité temps réel pour l'ensemble de l'écosystème plateforme iacherie. Cette solution de monitoring enterprise offre des insights IA, analytics prédictifs et optimisation performance automatisée.
 
 ### 🏗️ Architecture Core
 

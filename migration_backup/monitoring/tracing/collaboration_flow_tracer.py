@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Collaboration Flow Tracer Enterprise
+IA Chéries Platform - Collaboration Flow Tracer Enterprise
 ====================================================
 
 Advanced collaboration flow tracing system for monitoring creator-brand collaboration workflows,

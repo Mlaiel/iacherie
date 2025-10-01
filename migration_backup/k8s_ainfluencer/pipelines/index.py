@@ -43,7 +43,7 @@ sys.path.insert(0, str(current_dir))
 # Import complete system components
 try:
     from orchestrator import main
-    from . import IAInfluencerPipelineSystem, initialize_pipeline_system
+    from . import IIA ChériesPipelineSystem, initialize_pipeline_system
     from .content_protection_pipeline import ContentType, ProtectionLevel
     from .revenue_pipeline import RevenueSource
     from .ai_content_pipeline import ContentFormat, ProcessingTask

@@ -61,7 +61,7 @@ interface NativeServiceStatus {
   permissions: boolean;
 }
 
-const AinflueMobileApp: React.FC = () => {
+const iacherieMobileApp: React.FC = () => {
   const [appState, setAppState] = useState<AppState>({
     isInitialized: false,
     hasPermissions: false,
@@ -446,4 +446,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AinflueMobileApp;
+export default iacherieMobileApp;

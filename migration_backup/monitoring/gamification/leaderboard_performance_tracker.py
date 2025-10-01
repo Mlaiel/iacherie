@@ -1,6 +1,6 @@
 """
 🎮 MONITORING GAMIFICATION - Leaderboard Performance Tracker
-Advanced leaderboard system monitoring and optimization for Ainflue platform
+Advanced leaderboard system monitoring and optimization for IA Chéries platform
 Gaming + Analytics Engineer + Behavioral Psychology Implementation
 
 © 2025 Fahed Mlaiel - All Rights Reserved
@@ -137,7 +137,7 @@ class CompetitionEvent:
 
 class LeaderboardPerformanceTracker:
     """
-    🎮 Advanced Leaderboard Performance Tracker for Ainflue Platform
+    🎮 Advanced Leaderboard Performance Tracker for IA Chéries Platform
     
     Gaming psychology-driven leaderboard optimization with:
     - Multi-algorithm ranking systems with real-time updates

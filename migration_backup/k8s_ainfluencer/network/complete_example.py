@@ -34,7 +34,7 @@ from backend.deployment.network import (
 logger = logging.getLogger(__name__)
 
 
-class IAInfluencerNetworkDemo:
+class IIA ChériesNetworkDemo:
     """
     Complete demonstration of IA Influencer Agent Network Module
     Showcases all features for content protection and monetization platform
@@ -678,7 +678,7 @@ async def main():
     )
     
     # Create and run demo
-    demo = IAInfluencerNetworkDemo()
+    demo = IIA ChériesNetworkDemo()
     await demo.run_complete_demo()
 
 

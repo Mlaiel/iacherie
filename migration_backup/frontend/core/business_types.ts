@@ -1,7 +1,7 @@
 /**
  * 🏢 Business Logic Types - Enterprise Business Domain Types
  * 
- * @fileoverview Core business logic types for Ainflue creator economy platform
+ * @fileoverview Core business logic types for IA Chéries creator economy platform
  * @author Fahed Mlaiel <mlaiel@live.de>
  * @copyright 2025 Fahed Mlaiel - Propriété Intellectuelle Exclusive
  */

@@ -2,7 +2,7 @@
 Monitoring System - Core Module
 ===============================
 
-Central monitoring system for the Ainflue platform providing
+Central monitoring system for the IA Chéries platform providing
 comprehensive observability, alerting, and performance tracking.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

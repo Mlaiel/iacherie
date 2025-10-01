@@ -1,7 +1,7 @@
 """🤖 AI/ML Pipeline Module - Enterprise Implementation
 ==================================================
 
-Module principal pour l'orchestration des 53 agents IA d'Ainflue
+Module principal pour l'orchestration des 53 agents IA d'IA Chéries
 avec optimisation GPU, serving production et MLOps automation.
 
 Expert Implementation:

@@ -757,7 +757,7 @@ class DataDriftDetector:
 # Enterprise Creator-Specific Drift Detection Extensions
 class CreatorSpecificDriftDetector(DataDriftDetector):
     """
-    Creator-specific drift detection for Ainflue platform
+    Creator-specific drift detection for iacherie platform
     Specialized for musician, blogger, photographer, influencer, comedian use cases
     """
     

@@ -344,4 +344,4 @@ Alle KI-Agenten sind produktionsbereit mit:
 
 ---
 
-**🤖 Ainflue AI Agents - Das Fortschrittlichste KI-Agenten-System für Content-Erstellung**
+**🤖 iacherie AI Agents - Das Fortschrittlichste KI-Agenten-System für Content-Erstellung**

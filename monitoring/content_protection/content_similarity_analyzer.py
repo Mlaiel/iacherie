@@ -25,11 +25,11 @@ import json
 logger = logging.getLogger(__name__)
 
 # Metrics
-similarity_analyses_total = Counter('ainflue_similarity_analyses_total',
+similarity_analyses_total = Counter('iacherie_similarity_analyses_total',
                                   'Total content similarity analyses', ['content_type', 'result'])
-similarity_analysis_duration = Histogram('ainflue_similarity_analysis_duration_seconds',
+similarity_analysis_duration = Histogram('iacherie_similarity_analysis_duration_seconds',
                                         'Time spent analyzing content similarity')
-similarity_score_gauge = Gauge('ainflue_content_similarity_score',
+similarity_score_gauge = Gauge('iacherie_content_similarity_score',
                               'Content similarity score', ['content_id', 'reference_id'])
 
 class SimilarityMethod(Enum):

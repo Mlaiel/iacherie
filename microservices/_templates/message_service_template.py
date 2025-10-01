@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-📨 Enterprise Message Service Template - Ainflue
+📨 Enterprise Message Service Template - iacherie
 ==============================================
 Template enterprise pour services message-driven.
 RabbitMQ + Kafka + Redis Streams + event sourcing + CQRS patterns.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -90,7 +90,7 @@ class BrokerConfig:
     """Configuration broker."""
     broker_type: MessageBrokerType
     connection_url: str
-    exchange_name: str = "ainflue_exchange"
+    exchange_name: str = "iacherie_exchange"
     dead_letter_queue: str = "dlq"
     retry_policy: Dict = field(default_factory=lambda: {
         'max_retries': 3,

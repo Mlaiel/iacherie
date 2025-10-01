@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Audit Configuration Module
+"""IA Chéries Audit Configuration Module
 ===================================
 
-Enterprise-grade audit configuration for the Ainflue platform.
+Enterprise-grade audit configuration for the IA Chéries platform.
 Comprehensive audit logging, compliance tracking, forensic capabilities,
 real-time monitoring, and tamper-proof audit trails.
 

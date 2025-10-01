@@ -1,9 +1,9 @@
-"""Ainflue AI Training Configuration - Enterprise Machine Learning Training Pipeline
+"""IA Chéries AI Training Configuration - Enterprise Machine Learning Training Pipeline
 ================================================================================
 
 Advanced AI training configuration for enterprise-grade machine learning model
 training, hyperparameter optimization, distributed training, and MLOps pipeline
-management for Ainflue's content creation and optimization platform.
+management for IA Chéries's content creation and optimization platform.
 
 Business Logic Integration:
 - Creator behavior prediction models
@@ -370,7 +370,7 @@ class EnterpriseAITrainingConfiguration:
         }
     
     def _initialize_training_pipelines(self):
-        """Initialize default training pipelines for Ainflue business logic"""
+        """Initialize default training pipelines for IA Chéries business logic"""
         
         # Content Recommendation Model
         content_rec_job = TrainingJob(

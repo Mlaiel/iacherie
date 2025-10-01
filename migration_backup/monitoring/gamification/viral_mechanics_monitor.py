@@ -1,7 +1,7 @@
 """
 Viral Mechanics Monitor - Enterprise Viral Content & Social Amplification Analytics
 
-This module implements comprehensive viral mechanics monitoring for the Ainflue platform,
+This module implements comprehensive viral mechanics monitoring for the IA Chéries platform,
 tracking viral patterns, social amplification, and content virality optimization.
 
 Author: Fahed Mlaiel
@@ -105,7 +105,7 @@ class ViralNetwork:
 
 class ViralMechanicsMonitor:
     """
-    Enterprise viral mechanics monitoring system for Ainflue platform.
+    Enterprise viral mechanics monitoring system for IA Chéries platform.
     
     Features:
     - Real-time virality detection

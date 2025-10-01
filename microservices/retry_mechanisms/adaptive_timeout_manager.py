@@ -892,7 +892,7 @@ def create_adaptive_timeout_manager(
     return AdaptiveTimeoutManager(config)
 
 # Configurations prédéfinies pour IA Chérie
-AINFLUE_TIMEOUT_CONFIGS = {
+IACHERIE_TIMEOUT_CONFIGS = {
     'content_processing': TimeoutConfig(
         base_timeout=120.0,
         max_timeout=600.0,
@@ -931,5 +931,5 @@ __all__ = [
     'ServiceLatencyProfiler',
     'TimeoutOptimizer',
     'create_adaptive_timeout_manager',
-    'AINFLUE_TIMEOUT_CONFIGS'
+    'IACHERIE_TIMEOUT_CONFIGS'
 ]

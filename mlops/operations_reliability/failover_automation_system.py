@@ -305,7 +305,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="creator_dashboard_primary",
                 name="Creator Dashboard Primary",
-                url="https://dashboard-primary.ainflue.com",
+                url="https://dashboard-primary.iacherie.com",
                 is_primary=True,
                 priority=1,
                 region="us-east-1",
@@ -315,7 +315,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="creator_dashboard_secondary",
                 name="Creator Dashboard Secondary",
-                url="https://dashboard-secondary.ainflue.com",
+                url="https://dashboard-secondary.iacherie.com",
                 is_primary=False,
                 priority=2,
                 region="us-west-2",
@@ -365,7 +365,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="payment_primary",
                 name="Payment Gateway Primary",
-                url="https://payments-primary.ainflue.com",
+                url="https://payments-primary.iacherie.com",
                 is_primary=True,
                 priority=1,
                 region="us-east-1",
@@ -375,7 +375,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="payment_secondary",
                 name="Payment Gateway Secondary", 
-                url="https://payments-secondary.ainflue.com",
+                url="https://payments-secondary.iacherie.com",
                 is_primary=False,
                 priority=2,
                 region="us-west-2",
@@ -414,7 +414,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="content_proc_cluster_1",
                 name="Content Processing Cluster 1",
-                url="https://content-proc-1.ainflue.com",
+                url="https://content-proc-1.iacherie.com",
                 is_primary=True,
                 priority=1,
                 capacity_percentage=100.0,
@@ -423,7 +423,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="content_proc_cluster_2",
                 name="Content Processing Cluster 2",
-                url="https://content-proc-2.ainflue.com",
+                url="https://content-proc-2.iacherie.com",
                 is_primary=False,
                 priority=2,
                 capacity_percentage=80.0,
@@ -432,7 +432,7 @@ class FailoverAutomationSystem:
             ServiceEndpoint(
                 endpoint_id="content_proc_cluster_3",
                 name="Content Processing Cluster 3",
-                url="https://content-proc-3.ainflue.com",
+                url="https://content-proc-3.iacherie.com",
                 is_primary=False,
                 priority=3,
                 capacity_percentage=60.0,

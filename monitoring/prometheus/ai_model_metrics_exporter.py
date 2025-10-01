@@ -57,28 +57,28 @@ class AIModelMetricsExporter:
         
         # Métriques de performance des modèles
         self.model_inference_latency = Histogram(
-            'ainflue_ai_model_inference_latency_seconds',
+            'iacherie_ai_model_inference_latency_seconds',
             'Model inference latency in seconds',
             labelnames=['model_name', 'model_version', 'input_type'],
             registry=self.registry
         )
         
         self.model_inference_total = Counter(
-            'ainflue_ai_model_inference_total',
+            'iacherie_ai_model_inference_total',
             'Total number of model inferences',
             labelnames=['model_name', 'model_version', 'status'],
             registry=self.registry
         )
         
         self.model_accuracy = Gauge(
-            'ainflue_ai_model_accuracy',
+            'iacherie_ai_model_accuracy',
             'Model prediction accuracy',
             labelnames=['model_name', 'model_version', 'dataset'],
             registry=self.registry
         )
         
         self.model_memory_usage = Gauge(
-            'ainflue_ai_model_memory_usage_bytes',
+            'iacherie_ai_model_memory_usage_bytes',
             'Model memory usage in bytes',
             labelnames=['model_name', 'model_version', 'memory_type'],
             registry=self.registry
@@ -86,21 +86,21 @@ class AIModelMetricsExporter:
         
         # Métriques GPU
         self.gpu_utilization = Gauge(
-            'ainflue_ai_gpu_utilization_percent',
+            'iacherie_ai_gpu_utilization_percent',
             'GPU utilization percentage',
             labelnames=['gpu_id', 'gpu_name'],
             registry=self.registry
         )
         
         self.gpu_memory_usage = Gauge(
-            'ainflue_ai_gpu_memory_usage_bytes',
+            'iacherie_ai_gpu_memory_usage_bytes',
             'GPU memory usage in bytes',
             labelnames=['gpu_id', 'gpu_name', 'memory_type'],
             registry=self.registry
         )
         
         self.gpu_temperature = Gauge(
-            'ainflue_ai_gpu_temperature_celsius',
+            'iacherie_ai_gpu_temperature_celsius',
             'GPU temperature in Celsius',
             labelnames=['gpu_id', 'gpu_name'],
             registry=self.registry
@@ -108,21 +108,21 @@ class AIModelMetricsExporter:
         
         # Métriques de pipeline d'entraînement
         self.training_loss = Gauge(
-            'ainflue_ai_training_loss',
+            'iacherie_ai_training_loss',
             'Model training loss',
             labelnames=['model_name', 'epoch', 'loss_type'],
             registry=self.registry
         )
         
         self.training_time = Histogram(
-            'ainflue_ai_training_time_seconds',
+            'iacherie_ai_training_time_seconds',
             'Model training time per epoch in seconds',
             labelnames=['model_name', 'model_version'],
             registry=self.registry
         )
         
         self.data_processing_time = Histogram(
-            'ainflue_ai_data_processing_time_seconds',
+            'iacherie_ai_data_processing_time_seconds',
             'Data preprocessing time in seconds',
             labelnames=['preprocessing_stage', 'data_type'],
             registry=self.registry
@@ -130,21 +130,21 @@ class AIModelMetricsExporter:
         
         # Métriques business spécifiques Creator Economy
         self.content_enhancement_success_rate = Gauge(
-            'ainflue_ai_content_enhancement_success_rate',
+            'iacherie_ai_content_enhancement_success_rate',
             'Content enhancement success rate',
             labelnames=['enhancement_type', 'content_format'],
             registry=self.registry
         )
         
         self.ai_protection_detection_rate = Gauge(
-            'ainflue_ai_protection_detection_rate',
+            'iacherie_ai_protection_detection_rate',
             'AI-powered protection detection rate',
             labelnames=['protection_type', 'threat_category'],
             registry=self.registry
         )
         
         self.recommendation_accuracy = Gauge(
-            'ainflue_ai_recommendation_accuracy',
+            'iacherie_ai_recommendation_accuracy',
             'AI recommendation system accuracy',
             labelnames=['recommendation_type', 'creator_segment'],
             registry=self.registry

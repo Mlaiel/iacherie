@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Collaboration - Shared Assets Management
+IA Chéries Platform - Multimedia Collaboration - Shared Assets Management
 Professional shared multimedia assets and resource management for teams
 
 Author: Fahed Mlaiel (mlaiel@live.de)

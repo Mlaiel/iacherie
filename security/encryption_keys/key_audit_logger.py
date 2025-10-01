@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Key Audit Logger - Enterprise Cryptographic Audit and Compliance Logging System
-Production-grade audit logging for Ainflue Creator Economy Platform
+Production-grade audit logging for iacherie Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -165,7 +165,7 @@ class KeyAuditLogger:
     """
     🔐 Key Audit Logger - Enterprise Cryptographic Audit System
     
-    Provides comprehensive audit logging for Ainflue Creator Economy:
+    Provides comprehensive audit logging for iacherie Creator Economy:
     - Comprehensive cryptographic operation logging
     - Compliance framework support (SOX, PCI-DSS, GDPR, etc.)
     - Real-time security event monitoring and alerting

@@ -3,7 +3,7 @@
 Advanced ML/AI Orchestration & AutoML Pipeline System
 ===================================================
 
-Enterprise-grade ML/AI orchestration system for Ainflue platform.
+Enterprise-grade ML/AI orchestration system for IA Chéries platform.
 Implements advanced AutoML pipelines, model serving, drift detection,
 A/B testing, and MLOps automation with multi-provider AI integration.
 

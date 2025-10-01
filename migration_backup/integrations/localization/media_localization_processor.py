@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Media localization processor enterprise avec automated subtitle generation,
 AI-powered dubbing system et multi-format media support.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Automated subtitle generation pour créateurs vidéo
 - AI-powered dubbing system avec voice matching
 - Video content localization avec timing preservation

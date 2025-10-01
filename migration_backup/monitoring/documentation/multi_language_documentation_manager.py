@@ -111,7 +111,7 @@ class MultiLanguageDocumentationManager:
     
     def __init__(
         self, 
-        project_root: str = "/home/runner/work/Ainflue/Ainflue",
+        project_root: str = "/home/runner/work/IA Chéries/IA Chéries",
         supported_languages: Optional[List[str]] = None
     ):
         self.project_root = Path(project_root)
@@ -277,25 +277,25 @@ class MultiLanguageDocumentationManager:
         self.localization_templates = {
             'creator_onboarding': {
                 'en': {
-                    'welcome_message': "Welcome to Ainflue, {creator_name}!",
+                    'welcome_message': "Welcome to IA Chéries, {creator_name}!",
                     'getting_started': "Let's get you started on your creator journey",
                     'profile_setup': "Complete your creator profile",
                     'first_content': "Upload your first content"
                 },
                 'fr': {
-                    'welcome_message': "Bienvenue sur Ainflue, {creator_name} !",
+                    'welcome_message': "Bienvenue sur IA Chéries, {creator_name} !",
                     'getting_started': "Commençons votre parcours de créateur",
                     'profile_setup': "Complétez votre profil de créateur",
                     'first_content': "Téléchargez votre premier contenu"
                 },
                 'de': {
-                    'welcome_message': "Willkommen bei Ainflue, {creator_name}!",
+                    'welcome_message': "Willkommen bei IA Chéries, {creator_name}!",
                     'getting_started': "Beginnen wir Ihre Creator-Reise",
                     'profile_setup': "Vervollständigen Sie Ihr Creator-Profil",
                     'first_content': "Laden Sie Ihren ersten Inhalt hoch"
                 },
                 'ar': {
-                    'welcome_message': "مرحباً بك في Ainflue، {creator_name}!",
+                    'welcome_message': "مرحباً بك في IA Chéries، {creator_name}!",
                     'getting_started': "لنبدأ رحلتك كمبدع",
                     'profile_setup': "أكمل ملفك الشخصي كمبدع",
                     'first_content': "ارفع المحتوى الأول الخاص بك"

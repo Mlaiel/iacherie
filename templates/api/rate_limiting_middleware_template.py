@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ⚡ Rate Limiting Middleware Template - Enterprise Performance & Security
-🏗️ Architecture: Ainflue Creator Economy Platform
+🏗️ Architecture: iacherie Creator Economy Platform
 🔒 Protection IP: © 2025 Fahed Mlaiel <mlaiel@live.de>
 
 🚨 AVERTISSEMENT LÉGAL:

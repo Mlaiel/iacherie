@@ -20,7 +20,7 @@ TOUS DROITS RÉSERVÉS
 Global Deployment Manager Enterprise
 ====================================
 
-Enterprise-grade global deployment management system for Ainflue SEO platform.
+Enterprise-grade global deployment management system for IA Chéries SEO platform.
 Provides comprehensive multi-region deployment, CDN optimization, and global scalability.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

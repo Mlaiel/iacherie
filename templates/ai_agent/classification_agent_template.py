@@ -1,4 +1,4 @@
-"""{{agent_name}} Classification Agent for Ainflue Platform
+"""{{agent_name}} Classification Agent for iacherie Platform
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})

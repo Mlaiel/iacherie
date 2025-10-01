@@ -175,12 +175,12 @@ CONFIG = {
         'snowflake': {
             'account': 'حسابك',
             'warehouse': 'COMPUTE_WH',
-            'database': 'AINFLUE_DB',
+            'database': 'IACHERIE_DB',
             'schema': 'PUBLIC'
         },
         'bigquery': {
             'project_id': 'مشروعك',
-            'dataset_id': 'ainflue_dataset'
+            'dataset_id': 'iacherie_dataset'
         }
     },
     'ml': {

@@ -2,7 +2,7 @@
 Compliance Base - Shared Compliance Framework Components
 © 2025 Fahed Mlaiel. All rights reserved.
 
-Shared components for all compliance frameworks in Ainflue infrastructure.
+Shared components for all compliance frameworks in IA Chéries infrastructure.
 Provides common enums, data structures, and base functionality.
 """
 
@@ -114,7 +114,7 @@ class ComplianceBaseManager:
         self.audit_trail = []
         self.risk_assessments = {}
         
-        # Ainflue-specific data classification
+        # IA Chéries-specific data classification
         self.ainflue_data_mapping = {
             'creator_profiles': [DataClassification.PII, DataClassification.CONFIDENTIAL],
             'payment_information': [DataClassification.PCI, DataClassification.RESTRICTED],

@@ -56,7 +56,7 @@ except ImportError:
     HAS_DB_LIBS = False
 
 # Configure enterprise logging
-log_dir = '/tmp/ainflue_logs'
+log_dir = '/tmp/iacherie_logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logging.basicConfig(
@@ -165,25 +165,25 @@ class DatabaseManager:
             # Create default IA Chérie database configuration
             default_databases = [
                 {
-                    "name": "ainflue_main",
+                    "name": "iacherie_main",
                     "db_type": "postgresql",
                     "host": "localhost",
                     "port": 5432,
                     "database": "iacherie",
-                    "username": "ainflue_user",
+                    "username": "iacherie_user",
                     "password": "secure_password"
                 },
                 {
-                    "name": "ainflue_analytics",
+                    "name": "iacherie_analytics",
                     "db_type": "postgresql", 
                     "host": "localhost",
                     "port": 5432,
-                    "database": "ainflue_analytics",
+                    "database": "iacherie_analytics",
                     "username": "analytics_user",
                     "password": "analytics_password"
                 },
                 {
-                    "name": "ainflue_cache",
+                    "name": "iacherie_cache",
                     "db_type": "redis",
                     "host": "localhost",
                     "port": 6379,
@@ -312,7 +312,7 @@ class DatabaseManager:
         """Create database backup"""
         try:
             backup_id = f"backup_{database_name}_{int(time.time())}"
-            backup_dir = f"/tmp/ainflue_backups/{database_name}"
+            backup_dir = f"/tmp/iacherie_backups/{database_name}"
             os.makedirs(backup_dir, exist_ok=True)
             
             backup_file = f"{backup_dir}/{backup_id}.sql"

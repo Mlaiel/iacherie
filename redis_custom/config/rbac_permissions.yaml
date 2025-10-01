@@ -32,7 +32,7 @@ data:
   # ===================================================================================
   admin_role: |
     # Enterprise Administrator - Full Access
-    user admin_enterprise on >ainflue_admin_enterprise_2025_ultra_secure_key 
+    user admin_enterprise on >iacherie_admin_enterprise_2025_ultra_secure_key 
     ~* &* +@all -flushdb -flushall -debug -shutdown -config
     
     # Admin permissions breakdown:
@@ -46,26 +46,26 @@ data:
   # ===================================================================================
   creator_roles: |
     # Lead Creator - Enhanced privileges
-    user creator_lead on >ainflue_creator_lead_2025_secure_key
+    user creator_lead on >iacherie_creator_lead_2025_secure_key
     ~creator:lead:* ~content:* ~collaboration:lead:* ~analytics:creator:*
     +@read +@write +@list +@string +@hash +@set +@sortedset +@stream +@bitmap +@hyperloglog
     +ping +info +client +memory +latency
     
     # Standard Creator - Content management
-    user creator_standard on >ainflue_creator_standard_2025_secure_key
+    user creator_standard on >iacherie_creator_standard_2025_secure_key
     ~creator:${username}:* ~content:${username}:* ~collaboration:${username}:*
     ~session:${username}:* ~cache:creator:${username}:*
     +@read +@write +@string +@hash +@set +@list +@sortedset +@stream
     +ping +info +client
     
     # Creator Collaborator - Limited collaboration access
-    user creator_collaborator on >ainflue_creator_collab_2025_secure_key
+    user creator_collaborator on >iacherie_creator_collab_2025_secure_key
     ~collaboration:* ~content:shared:* ~project:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info
     
     # Creator Analytics - Read-only analytics access
-    user creator_analytics on >ainflue_creator_analytics_2025_secure_key
+    user creator_analytics on >iacherie_creator_analytics_2025_secure_key
     ~analytics:* ~metrics:* ~reports:*
     +@read +@string +@hash +@set +@list +@sortedset
     +ping +info
@@ -75,32 +75,32 @@ data:
   # ===================================================================================
   service_roles: |
     # Main Application Service
-    user app_service on >ainflue_app_service_2025_ultra_secure_key
+    user app_service on >iacherie_app_service_2025_ultra_secure_key
     ~cache:* ~session:* ~temp:* ~queue:* ~lock:*
     +@read +@write +@list +@string +@hash +@set +@sortedset +@stream +@bitmap
     +ping +info +client +memory
     
     # Content Processing Service
-    user content_processor on >ainflue_content_proc_2025_secure_key
+    user content_processor on >iacherie_content_proc_2025_secure_key
     ~content:processing:* ~temp:processing:* ~queue:content:*
     ~thumbnail:* ~preview:* ~metadata:*
     +@read +@write +@string +@hash +@set +@list +@sortedset +@stream
     +ping +info +client
     
     # AI Processing Service
-    user ai_processor on >ainflue_ai_proc_2025_secure_key
+    user ai_processor on >iacherie_ai_proc_2025_secure_key
     ~ai:* ~ml:* ~prediction:* ~recommendation:* ~analysis:*
     +@read +@write +@string +@hash +@set +@list +@sortedset +@stream +@bitmap
     +ping +info +client +memory
     
     # Authentication Service
-    user auth_service on >ainflue_auth_service_2025_secure_key
+    user auth_service on >iacherie_auth_service_2025_secure_key
     ~auth:* ~session:* ~token:* ~oauth:* ~jwt:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info +client
     
     # Notification Service
-    user notification_service on >ainflue_notification_2025_secure_key
+    user notification_service on >iacherie_notification_2025_secure_key
     ~notification:* ~email:* ~push:* ~sms:* &notification:*
     +@read +@write +@string +@hash +@set +@list +@stream +publish +subscribe
     +ping +info +client
@@ -110,25 +110,25 @@ data:
   # ===================================================================================
   financial_roles: |
     # Payment Processing Service - PCI Compliant
-    user payment_processor on >ainflue_payment_proc_2025_pci_secure_key
+    user payment_processor on >iacherie_payment_proc_2025_pci_secure_key
     ~payment:* ~transaction:* ~billing:* ~invoice:*
     +@read +@write +@string +@hash +@set +@list +@sortedset
     +ping +info +client +memory
     
     # Revenue Analytics Service
-    user revenue_analytics on >ainflue_revenue_analytics_2025_secure_key
+    user revenue_analytics on >iacherie_revenue_analytics_2025_secure_key
     ~revenue:* ~analytics:financial:* ~reports:revenue:*
     +@read +@string +@hash +@set +@list +@sortedset
     +ping +info
     
     # Commission Calculator
-    user commission_calc on >ainflue_commission_calc_2025_secure_key
+    user commission_calc on >iacherie_commission_calc_2025_secure_key
     ~commission:* ~calculation:* ~payout:*
     +@read +@write +@string +@hash +@set +@sortedset
     +ping +info +client
     
     # Affiliate Tracking
-    user affiliate_tracker on >ainflue_affiliate_track_2025_secure_key
+    user affiliate_tracker on >iacherie_affiliate_track_2025_secure_key
     ~affiliate:* ~referral:* ~tracking:*
     +@read +@write +@string +@hash +@set +@list +@sortedset
     +ping +info +client
@@ -138,24 +138,24 @@ data:
   # ===================================================================================
   operational_roles: |
     # Monitoring Service - Read-only system access
-    user monitoring_service on >ainflue_monitoring_2025_secure_key
+    user monitoring_service on >iacherie_monitoring_2025_secure_key
     ~* +@read +info +ping +client +memory +latency +slowlog +config|get
     
     # Backup Service - Backup operations only
-    user backup_service on >ainflue_backup_2025_secure_key
+    user backup_service on >iacherie_backup_2025_secure_key
     ~* +@read +bgsave +lastsave +info +ping +client
     
     # Health Check Service - Minimal access
-    user healthcheck_service on >ainflue_healthcheck_2025_secure_key
+    user healthcheck_service on >iacherie_healthcheck_2025_secure_key
     ~health:* +@read +ping +info +client
     
     # Log Aggregator - Log data access
-    user log_aggregator on >ainflue_log_aggregator_2025_secure_key
+    user log_aggregator on >iacherie_log_aggregator_2025_secure_key
     ~log:* ~audit:* +@read +@string +@list +@stream
     +ping +info +client
     
     # Metrics Collector - Metrics access
-    user metrics_collector on >ainflue_metrics_collector_2025_secure_key
+    user metrics_collector on >iacherie_metrics_collector_2025_secure_key
     ~metrics:* ~stats:* +@read +@string +@hash +@sortedset
     +ping +info +client +memory +latency
 
@@ -164,17 +164,17 @@ data:
   # ===================================================================================
   security_roles: |
     # Security Auditor - Audit access only
-    user security_auditor on >ainflue_security_auditor_2025_secure_key
+    user security_auditor on >iacherie_security_auditor_2025_secure_key
     ~audit:* ~security:* ~access:* +@read +@string +@hash +@list +@set
     +ping +info +client +acl|list +acl|getuser
     
     # Compliance Officer - Compliance data access
-    user compliance_officer on >ainflue_compliance_2025_secure_key
+    user compliance_officer on >iacherie_compliance_2025_secure_key
     ~compliance:* ~gdpr:* ~sox:* ~pci:* +@read +@string +@hash +@list
     +ping +info +client
     
     # Incident Response - Emergency access
-    user incident_response on >ainflue_incident_response_2025_secure_key
+    user incident_response on >iacherie_incident_response_2025_secure_key
     ~incident:* ~alert:* ~emergency:* +@read +@write +@string +@hash +@set +@list
     +ping +info +client +memory +slowlog
 
@@ -183,19 +183,19 @@ data:
   # ===================================================================================
   development_roles: |
     # Developer - Development environment access
-    user developer on >ainflue_developer_2025_secure_key
+    user developer on >iacherie_developer_2025_secure_key
     ~dev:* ~test:* ~staging:* ~debug:*
     +@read +@write +@string +@hash +@set +@list +@sortedset +@stream
     +ping +info +client +memory +config|get
     
     # QA Tester - Testing environment access
-    user qa_tester on >ainflue_qa_tester_2025_secure_key
+    user qa_tester on >iacherie_qa_tester_2025_secure_key
     ~test:* ~qa:* ~staging:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info +client
     
     # Performance Tester - Performance testing access
-    user perf_tester on >ainflue_perf_tester_2025_secure_key
+    user perf_tester on >iacherie_perf_tester_2025_secure_key
     ~perf:* ~load:* ~stress:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info +client +memory +latency +slowlog
@@ -205,20 +205,20 @@ data:
   # ===================================================================================
   gamification_roles: |
     # Gamification Engine - Game mechanics access
-    user gamification_engine on >ainflue_gamification_2025_secure_key
+    user gamification_engine on >iacherie_gamification_2025_secure_key
     ~game:* ~achievement:* ~leaderboard:* ~point:* ~badge:*
     ~challenge:* ~reward:* ~level:*
     +@read +@write +@string +@hash +@set +@list +@sortedset +@stream
     +ping +info +client
     
     # Achievement Processor - Achievement system access
-    user achievement_processor on >ainflue_achievement_2025_secure_key
+    user achievement_processor on >iacherie_achievement_2025_secure_key
     ~achievement:* ~badge:* ~milestone:* ~progress:*
     +@read +@write +@string +@hash +@set +@list +@sortedset
     +ping +info +client
     
     # Leaderboard Manager - Leaderboard operations
-    user leaderboard_manager on >ainflue_leaderboard_2025_secure_key
+    user leaderboard_manager on >iacherie_leaderboard_2025_secure_key
     ~leaderboard:* ~ranking:* ~score:* ~competition:*
     +@read +@write +@string +@hash +@sortedset +@list
     +ping +info +client
@@ -228,19 +228,19 @@ data:
   # ===================================================================================
   integration_roles: |
     # API Gateway - API access management
-    user api_gateway on >ainflue_api_gateway_2025_secure_key
+    user api_gateway on >iacherie_api_gateway_2025_secure_key
     ~api:* ~rate:* ~quota:* ~throttle:*
     +@read +@write +@string +@hash +@set +@list +@sortedset
     +ping +info +client
     
     # External Integrations - Third-party access
-    user external_integrations on >ainflue_external_int_2025_secure_key
+    user external_integrations on >iacherie_external_int_2025_secure_key
     ~integration:* ~webhook:* ~sync:* ~import:* ~export:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info +client
     
     # CDN Manager - CDN cache management
-    user cdn_manager on >ainflue_cdn_manager_2025_secure_key
+    user cdn_manager on >iacherie_cdn_manager_2025_secure_key
     ~cdn:* ~cache:content:* ~media:cache:*
     +@read +@write +@string +@hash +@set +@list
     +ping +info +client
@@ -332,10 +332,10 @@ data:
     REDIS_CLI="redis-cli -h localhost -p 16379 --tls --cert /etc/redis/ssl/certs/admin.crt --key /etc/redis/ssl/private/admin.key --cacert /etc/redis/ssl/ca/iacherie-ca.crt"
     
     # Create enterprise admin
-    $REDIS_CLI ACL SETUSER admin_enterprise on '>ainflue_admin_enterprise_2025_ultra_secure_key' '~*' '&*' '+@all' '-flushdb' '-flushall' '-debug' '-shutdown' '-config'
+    $REDIS_CLI ACL SETUSER admin_enterprise on '>iacherie_admin_enterprise_2025_ultra_secure_key' '~*' '&*' '+@all' '-flushdb' '-flushall' '-debug' '-shutdown' '-config'
     
     # Create creator roles
-    $REDIS_CLI ACL SETUSER creator_lead on '>ainflue_creator_lead_2025_secure_key' '~creator:lead:*' '~content:*' '~collaboration:lead:*' '+@read' '+@write' '+@list' '+@string' '+@hash'
+    $REDIS_CLI ACL SETUSER creator_lead on '>iacherie_creator_lead_2025_secure_key' '~creator:lead:*' '~content:*' '~collaboration:lead:*' '+@read' '+@write' '+@list' '+@string' '+@hash'
     
     echo "✅ RBAC users created successfully"
 

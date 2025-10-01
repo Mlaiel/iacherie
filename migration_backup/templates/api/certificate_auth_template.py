@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise Certificate Authentication Template - Ainflue API Templates
+⚡ Enterprise Certificate Authentication Template - IA Chéries API Templates
 Advanced production-ready X.509 certificate authentication and PKI management
 
 ⚠️ PROTECTION INTELLECTUELLE:
@@ -1238,7 +1238,7 @@ class CertificateAccessManager:
             # Mapping DN patterns vers rôles
             "CN=Admin*": ["admin", "user"],
             "CN=User*": ["user"],
-            "O=Ainflue": ["ainflue_user"],
+            "O=IA Chéries": ["ainflue_user"],
             "OU=Developers": ["developer", "user"]
         }
         

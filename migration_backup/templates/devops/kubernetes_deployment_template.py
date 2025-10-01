@@ -1,4 +1,4 @@
-"""Kubernetes Deployment Template for Ainflue Platform
+"""Kubernetes Deployment Template for IA Chéries Platform
 Enterprise-grade container orchestration template for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -33,7 +33,7 @@ class ResourceType(Enum):
 
 
 class ServiceType(Enum):
-    """Ainflue platform service types"""
+    """IA Chéries platform service types"""
     API_GATEWAY = "api-gateway"
     AUTH_SERVICE = "auth-service"
     CONTENT_PROCESSOR = "content-processor"
@@ -62,7 +62,7 @@ class KubernetesConfig:
     max_replicas: int = 10
     target_cpu_percentage: int = 70
     
-    # Ainflue specific
+    # IA Chéries specific
     enable_ai_processing: bool = True
     enable_gpu_support: bool = False
     enable_media_storage: bool = True
@@ -70,7 +70,7 @@ class KubernetesConfig:
 
 
 class KubernetesDeploymentTemplate:
-    """Enterprise Kubernetes Deployment Template for Ainflue Platform"""
+    """Enterprise Kubernetes Deployment Template for IA Chéries Platform"""
     
     def __init__(self, config: KubernetesConfig):
         self.config = config
@@ -498,7 +498,7 @@ class KubernetesDeploymentTemplate:
         ]
     
     def generate_complete_manifests(self) -> List[Dict[str, Any]]:
-        """Generate complete Kubernetes manifests for Ainflue platform"""
+        """Generate complete Kubernetes manifests for IA Chéries platform"""
         manifests = []
         
         # Namespace
@@ -607,7 +607,7 @@ if __name__ == "__main__":
     prod_config = create_production_config()
     template = KubernetesDeploymentTemplate(prod_config)
     
-    print("Kubernetes Deployment Template for Ainflue Platform")
+    print("Kubernetes Deployment Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment}")
     print(f"- Namespace: {prod_config.namespace}")

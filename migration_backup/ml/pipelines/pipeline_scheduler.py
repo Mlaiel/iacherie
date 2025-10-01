@@ -1,10 +1,10 @@
 """
-Pipeline Scheduler - Ainflue Enterprise ML Pipeline
+Pipeline Scheduler - IA Chéries Enterprise ML Pipeline
 Système d'ordonnancement avancé avec gestion des priorités et optimisation des ressources
 
 Auteur: Mlaiel (Expert Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + DevOps)  
-Copyright: © 2024 Ainflue. Tous droits réservés.
-Licence: Propriétaire - Usage strictement réservé à Ainflue
+Copyright: © 2024 IA Chéries. Tous droits réservés.
+Licence: Propriétaire - Usage strictement réservé à IA Chéries
 Version: 1.0.0 - Architecture Niveau 3 Backend
 
 CONFIDENTIAL - NE PAS DISTRIBUER
@@ -129,7 +129,7 @@ class WorkerStatus:
 
 class PipelineScheduler:
     """
-    Système d'ordonnancement avancé pour Ainflue
+    Système d'ordonnancement avancé pour IA Chéries
     
     Fonctionnalités:
     - Ordonnancement basé sur les priorités

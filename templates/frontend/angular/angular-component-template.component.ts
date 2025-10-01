@@ -1,5 +1,5 @@
 /**
- * 🅰️ Angular Component Template - Ainflue Creator Economy
+ * 🅰️ Angular Component Template - iacherie Creator Economy
  * 
  * @fileoverview Template enterprise pour composants Angular
  * @version 1.0.0

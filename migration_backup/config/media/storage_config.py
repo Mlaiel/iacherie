@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Storage Configuration Module
+"""IA Chéries Storage Configuration Module
 ======================================
 
-Enterprise-grade storage configuration for the Ainflue platform.
+Enterprise-grade storage configuration for the IA Chéries platform.
 Comprehensive storage management with multi-cloud support, hierarchical storage,
 automated lifecycle management, backup strategies, and intelligent tiering.
 

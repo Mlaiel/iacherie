@@ -4,7 +4,7 @@
 ML Engineer + Backend Senior Expert: Engine de remix vidéo enterprise avec
 scene composition IA, visual effects automation et motion tracking algorithms.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Scene composition intelligente pour créateurs vidéo sur 65+ plateformes
 - Visual effects automation pour remixes créatifs et mashups vidéo
 - Motion tracking algorithms pour synchronisation et stabilisation

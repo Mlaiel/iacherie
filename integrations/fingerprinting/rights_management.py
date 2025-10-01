@@ -275,7 +275,7 @@ class OwnershipCertificateManager:
     async def _generate_digital_signature(self, certificate_data: Dict[str, Any]) -> str:
         """Génère une signature numérique."""
         # Simulation de signature (en production: utiliser cryptographie réelle)
-        signature_data = f"ainflue_signature_{certificate_data['certificate_hash']}"
+        signature_data = f"iacherie_signature_{certificate_data['certificate_hash']}"
         return hashlib.sha256(signature_data.encode()).hexdigest()
     
     async def _anchor_to_blockchain(self, certificate_data: Dict[str, Any]) -> Dict[str, Any]:

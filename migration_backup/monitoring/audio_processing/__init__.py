@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Audio Processing Monitoring Module
+IA Chéries Platform - Audio Processing Monitoring Module
 ====================================================
 
 Enterprise-grade monitoring for AI-powered audio processing workflows including

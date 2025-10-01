@@ -13,10 +13,10 @@
 ## ⚠️ EXIGENCES STRICTES OBLIGATOIRES
 
 ### 📋 CONFORMITÉ CAHIER DES CHARGES
-- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/Ainflue/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
+- ✅ **Conforme au cahier des charges:** https://github.com/Mlaiel/iacherie/blob/main/NOUVEAU_CAHIER_DES_CHARGES_COMPLET.md
 - ✅ **GÉNÈRE TOUS** les fichiers/modules demandés selon la logique métier
 - ✅ **N'OUBLIE RIEN** et **N'IGNORE RIEN** sauf si existant alors **À ENRICHIR**
-- ✅ **Respecte la logique métier Ainflue:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
+- ✅ **Respecte la logique métier iacherie:** créateurs multi-format → IA processing → protection → monétisation → collaboration & Gamification → SEO → Distribution
 
 ### 🏭 CODE INDUSTRIEL OBLIGATOIRE
 - ✅ **Code industriel ultra avancé, clé en main, production-ready**
@@ -66,7 +66,7 @@ TOUS DROITS RÉSERVÉS
 
 ---
 
-## 🎯 **LOGIQUE MÉTIER AINFLUE**
+## 🎯 **LOGIQUE MÉTIER IACHERIE**
 **Creator Economy Pipeline :** Créateurs multi-format → IA Processing → Protection IP → Monétisation → Collaboration & Gamification → SEO Professionnel → Distribution Multi-plateformes
 
 ---
@@ -79,7 +79,7 @@ TOUS DROITS RÉSERVÉS
 - 🎯 **Objectif :** Déploiement automatisé et sécurisé des modèles IA pour Creator Economy
 
 ```
-/workspaces/Ainflue/mlops/model_deployment/
+/workspaces/iacherie/mlops/model_deployment/
 ├── __init__.py                                    # [EXISTANT] Module initialization
 ├── index.py                                       # [MANQUANT] Orchestrateur principal déploiement
 ├── deployment_orchestration_engine.py            # [MANQUANT] Gestionnaire pipeline déploiement
@@ -430,4 +430,4 @@ class MultiCloudDeploymentOrchestrator:
 
 ---
 
-*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire Ainflue*
+*© 2025 Fahed Mlaiel - Tous droits réservés - Architecture propriétaire iacherie*

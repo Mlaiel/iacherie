@@ -3,7 +3,7 @@
 ===========================================================================
 
 Infrastructure audio professionnelle avec traitement temps réel, streaming optimization,
-codecs avancés et processing IA pour la plateforme Ainflue.
+codecs avancés et processing IA pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: DSP professionnelle + codecs lossless + mastering automation
@@ -182,7 +182,7 @@ class AudioMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class EnterpriseAudioInfrastructure:
-    """🎵 Infrastructure Audio Enterprise pour Ainflue
+    """🎵 Infrastructure Audio Enterprise pour IA Chéries
     
     Implémentation multi-expert pour audio professionnel:
     - Traitement temps réel avec DSP avancée
@@ -368,7 +368,7 @@ class EnterpriseAudioInfrastructure:
         🧠 ML Engineer: Model management pour audio processing
         """
         try:
-            # Modèles IA audio pour Ainflue
+            # Modèles IA audio pour IA Chéries
             audio_models = {
                 "voice_synthesis": {
                     "model_name": "ElevenLabs Voice Synthesis",
@@ -432,7 +432,7 @@ class EnterpriseAudioInfrastructure:
         🎵 Audio Engineer: Configurations professionnelles selon standards
         """
         try:
-            # Configurations selon use cases Ainflue
+            # Configurations selon use cases IA Chéries
             configs = {
                 "podcast_standard": AudioConfiguration(
                     id="podcast_standard",

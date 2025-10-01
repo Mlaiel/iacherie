@@ -49,7 +49,7 @@ try:
     from pydantic import BaseModel, Field, validator
     import aiohttp
     import geoip2.database
-from forex_python.converter import CurrencyRates
+    from forex_python.converter import CurrencyRates
     # import googletrans  # Temporarily disabled due to httpcore compatibility
 except ImportError:
     # Fallback for basic functionality

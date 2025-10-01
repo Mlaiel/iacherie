@@ -1,5 +1,5 @@
 # ===============================================
-# Level Progression Dockerfile - Ainflue Platform
+# Level Progression Dockerfile - IA Chéries Platform
 # ===============================================
 # Multi-stage Docker build for Level Progression Service
 # Handles experience tracking, level advancement, and progression rewards
@@ -47,7 +47,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
     CMD curl -f http://localhost:8090/health || exit 1
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Level Progression Service for Ainflue Gamification"
+LABEL description="Level Progression Service for IA Chéries Gamification"
 
 EXPOSE 8090
 CMD ["python", "-m", "level_progression.main"]

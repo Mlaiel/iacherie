@@ -1,5 +1,5 @@
 """
-Enterprise SEO Dashboard for Ainflue Platform
+Enterprise SEO Dashboard for IA Chéries Platform
 ==============================================
 
 Advanced enterprise-grade SEO analytics dashboard with AI-powered insights,

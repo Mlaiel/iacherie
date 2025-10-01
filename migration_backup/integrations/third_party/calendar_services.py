@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Platform - Calendar Services Integration Module
+IA Chéries Platform - Calendar Services Integration Module
 Enterprise-grade calendar APIs for content scheduling and event management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -1153,10 +1153,10 @@ def create_calendar_manager(config: Dict[str, Any]) -> CalendarServicesManager:
     """Create configured calendar manager"""
     return CalendarServicesManager(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def ainflue_content_calendar_workflow(content_strategy: Dict[str, Any], user_calendar_id: str) -> Dict[str, Any]:
     """
-    Complete content calendar workflow for Ainflue creators
+    Complete content calendar workflow for IA Chéries creators
     Business Logic: Creator→Upload→IA processing→Protection→Monetization→Collaboration→SEO→Distribution
     """
     
@@ -1344,5 +1344,5 @@ if __name__ == "__main__":
     # asyncio.run(test_calendar_services())
     
     print("✅ Calendar Services Integration Module loaded successfully")
-    print("📅 Enterprise-grade calendar integration for Ainflue creators")
+    print("📅 Enterprise-grade calendar integration for IA Chéries creators")
     print("⏰ Content scheduling, productivity tracking, and collaboration timing ready")

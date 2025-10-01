@@ -1,6 +1,6 @@
 """
 🗂️ Data Catalog Service - Catalogue de Données Intelligent Enterprise
-© Fahed Mlaiel 2024-2025 - Ainflue Microservices Enterprise
+© Fahed Mlaiel 2024-2025 - IA Chéries Microservices Enterprise
 
 Service de catalogue intelligent pour découverte et gouvernance des données.
 Classification automatique avec IA et métadonnées enrichies pour data discovery.

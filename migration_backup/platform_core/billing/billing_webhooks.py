@@ -635,7 +635,7 @@ class BillingWebhookManager:
                     "X-Webhook-Signature": signature,
                     "X-Webhook-Event-Type": event.event_type.value,
                     "X-Webhook-Event-Id": event.event_id,
-                    "User-Agent": "Ainflue-Webhooks/1.0"
+                    "User-Agent": "IA Chéries-Webhooks/1.0"
                 }
                 
                 # Envoi HTTP

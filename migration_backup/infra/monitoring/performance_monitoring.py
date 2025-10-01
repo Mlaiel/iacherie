@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade infrastructure management for Ainflue platform
+# Enterprise-grade infrastructure management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -683,7 +683,7 @@ class PerformanceMonitoringEngine:
     async def start_monitoring(self):
         """Start performance monitoring"""
         self.monitoring = True
-        logger.info("Starting Ainflue Performance Monitoring Engine")
+        logger.info("Starting IA Chéries Performance Monitoring Engine")
         
         monitoring_tasks = [
             self._monitoring_loop(),

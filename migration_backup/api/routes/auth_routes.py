@@ -491,7 +491,7 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
         last_name="User",
         display_name="Demo Creator",
         avatar_url="https://example.com/avatar.jpg",
-        company="Ainflue Demo Corp",
+        company="IA Chéries Demo Corp",
         country="US",
         preferred_language="en",
         role=UserRole(current_user["role"]),
@@ -613,7 +613,7 @@ async def setup_two_factor(
     if setup_data.method == TwoFactorMethod.TOTP:
         # Generate TOTP secret
         secret = secrets.token_hex(20)
-        qr_code_url = f"otpauth://totp/Ainflue:{current_user['email']}?secret={secret}&issuer=Ainflue"
+        qr_code_url = f"otpauth://totp/IA Chéries:{current_user['email']}?secret={secret}&issuer=IA Chéries"
         
         background_tasks.add_task(log_2fa_setup, current_user["id"], setup_data.method)
         

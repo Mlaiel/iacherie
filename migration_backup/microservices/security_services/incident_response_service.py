@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🚨 Incident Response Service - Enterprise Security
-Service de réponse aux incidents de sécurité pour microservices Ainflue
+Service de réponse aux incidents de sécurité pour microservices IA Chéries
 
 © Fahed Mlaiel 2024-2025 - Propriété intellectuelle stricte
 Architecture microservices enterprise - Niveau production

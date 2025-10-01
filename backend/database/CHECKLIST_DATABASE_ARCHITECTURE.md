@@ -187,7 +187,7 @@ TOTAL CONSOLIDÉ : ~4,200 lignes de code cluster enterprise
 ### 📁 Structure Finale Respectant 18 Fichiers Maximum
 
 ```
-/workspaces/Ainflue/                                    ← Niveau 1 (Root)
+/workspaces/iacherie/                                    ← Niveau 1 (Root)
 └── backend/                                            ← Niveau 2
     └── database/                                       ← Niveau 3 (FINAL - Pas de sous-dossiers)
         ├── 📄 __init__.py                             ✅ ENRICHIR (Exports consolidés)

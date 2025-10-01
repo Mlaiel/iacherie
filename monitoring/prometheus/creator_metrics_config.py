@@ -79,7 +79,7 @@ class CreatorMetricsConfig:
         
         for workflow_name, workflow_config in workflows.items():
             for metric_name, metric_config in workflow_config.get('metrics', {}).items():
-                full_name = f"ainflue_creator_{workflow_name}_{metric_name}"
+                full_name = f"iacherie_creator_{workflow_name}_{metric_name}"
                 
                 metrics[full_name] = CreatorMetricDefinition(
                     name=full_name,
@@ -98,7 +98,7 @@ class CreatorMetricsConfig:
         
         for kpi_category, kpi_config in business_kpis.items():
             for metric_name, metric_config in kpi_config.get('metrics', {}).items():
-                full_name = f"ainflue_business_{kpi_category}_{metric_name}"
+                full_name = f"iacherie_business_{kpi_category}_{metric_name}"
                 
                 metrics[full_name] = CreatorMetricDefinition(
                     name=full_name,

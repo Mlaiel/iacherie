@@ -104,7 +104,7 @@ class MetricsAggregationEngine:
             "database": {
                 "host": "localhost",
                 "port": 5432,
-                "database": "ainflue_metrics",
+                "database": "iacherie_metrics",
                 "username": "metrics_user",
                 "password": "secure_password"
             },
@@ -152,7 +152,7 @@ class MetricsAggregationEngine:
         return psycopg2.connect(
             host=db_config.get("host", "localhost"),
             port=db_config.get("port", 5432),
-            database=db_config.get("database", "ainflue_metrics"),
+            database=db_config.get("database", "iacherie_metrics"),
             user=db_config.get("username", "metrics_user"),
             password=db_config.get("password", "secure_password")
         )

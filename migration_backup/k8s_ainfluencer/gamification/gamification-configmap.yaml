@@ -1,4 +1,4 @@
-# Ainflue Gamification Module - ConfigMap
+# IA Chéries Gamification Module - ConfigMap
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Production-ready configuration for gamification engine
 
@@ -18,7 +18,7 @@ metadata:
     description: "Gamification engine configuration for creator engagement and monetization"
 data:
   # Application Configuration
-  APP_NAME: "Ainflue-Gamification"
+  APP_NAME: "IA Chéries-Gamification"
   APP_VERSION: "1.0.0"
   ENVIRONMENT: "production"
   SERVICE_NAME: "gamification"

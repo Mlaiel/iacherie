@@ -1,4 +1,4 @@
-# Azure DevOps Pipeline Template for Ainflue Platform
+# Azure DevOps Pipeline Template for IA Chéries Platform
 # Comprehensive CI/CD pipeline using Azure DevOps YAML
 
 trigger:
@@ -41,11 +41,11 @@ variables:
   - name: containerRegistry
     value: 'ainflueacr.azurecr.io'
   - name: dockerRegistryServiceConnection
-    value: 'AinflueContainerRegistry'
+    value: 'IA ChériesContainerRegistry'
   
   # Kubernetes configuration
   - name: kubernetesServiceConnection
-    value: 'AinflueKubernetes'
+    value: 'IA ChériesKubernetes'
   - name: stagingNamespace
     value: 'ainflue-staging'
   - name: productionNamespace
@@ -58,9 +58,9 @@ variables:
     value: '2000'
 
 # Variable groups (defined in Azure DevOps)
-- group: 'Ainflue-Development'
-- group: 'Ainflue-Staging'
-- group: 'Ainflue-Production'
+- group: 'IA Chéries-Development'
+- group: 'IA Chéries-Staging'
+- group: 'IA Chéries-Production'
 
 resources:
   repositories:
@@ -105,12 +105,12 @@ stages:
           - task: SonarCloudPrepare@1
             displayName: 'Prepare SonarCloud analysis'
             inputs:
-              SonarCloud: 'SonarCloud-Ainflue'
+              SonarCloud: 'SonarCloud-IA Chéries'
               organization: 'ainflue'
               scannerMode: 'CLI'
               configMode: 'manual'
               cliProjectKey: 'ainflue'
-              cliProjectName: 'Ainflue'
+              cliProjectName: 'IA Chéries'
               cliSources: '.'
               extraProperties: |
                 sonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**
@@ -307,7 +307,7 @@ stages:
             displayName: 'WhiteSource Security Scan'
             inputs:
               cwd: '$(System.DefaultWorkingDirectory)'
-              projectName: 'Ainflue'
+              projectName: 'IA Chéries'
           
           - script: |
               # Install and run GitLeaks for secret detection
@@ -389,7 +389,7 @@ stages:
         displayName: 'Deploy to Staging Environment'
         pool:
           vmImage: 'ubuntu-latest'
-        environment: 'Ainflue-Staging'
+        environment: 'IA Chéries-Staging'
         strategy:
           runOnce:
             deploy:
@@ -519,7 +519,7 @@ stages:
         displayName: 'Deploy to Production Environment'
         pool:
           vmImage: 'ubuntu-latest'
-        environment: 'Ainflue-Production'
+        environment: 'IA Chéries-Production'
         strategy:
           runOnce:
             deploy:
@@ -603,7 +603,7 @@ stages:
               method: 'POST'
               body: |
                 {
-                  "text": "✅ Ainflue successfully deployed to production!",
+                  "text": "✅ IA Chéries successfully deployed to production!",
                   "sections": [
                     {
                       "activityTitle": "Production Deployment Complete",

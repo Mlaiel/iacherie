@@ -1,12 +1,12 @@
 """
-Testing Automation - Enterprise Testing Framework for Ainflue
+Testing Automation - Enterprise Testing Framework for iacherie
 ==========================================================
 
 Advanced testing automation for comprehensive quality assurance, performance testing,
 and continuous testing integration for the creator platform infrastructure.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -1142,7 +1142,7 @@ class TestingAutomationFramework:
         
         report = {
             "report_generated": datetime.now().isoformat(),
-            "platform": "Ainflue Creator Platform",
+            "platform": "iacherie Creator Platform",
             "testing_summary": {
                 "total_test_cases": len(self.test_cases),
                 "total_test_suites": len(self.test_suites),

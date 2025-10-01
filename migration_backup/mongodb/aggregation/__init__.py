@@ -1,4 +1,4 @@
-"""MongoDB Aggregation Engine for Ainflue Platform
+"""MongoDB Aggregation Engine for IA Chéries Platform
 ===============================================
 
 Advanced aggregation pipelines for analytics, reporting, and business intelligence

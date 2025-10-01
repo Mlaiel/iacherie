@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Audio Processing Pipeline Health Monitor
+IA Chéries Platform - Audio Processing Pipeline Health Monitor
 ==========================================================
 
 Real-time health monitoring for the complete audio processing pipeline

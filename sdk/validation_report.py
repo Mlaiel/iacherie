@@ -76,7 +76,7 @@ class SDKImplementationValidator:
             file_size = file.stat().st_size
             line_count = self.count_lines(file)
             
-            if file.name in ['__init__.py', 'ainflue_sdk.py', 'exceptions.py']:
+            if file.name in ['__init__.py', 'iacherie_sdk.py', 'exceptions.py']:
                 modules['core_foundation'].append({
                     'file': file.name,
                     'size': file_size,

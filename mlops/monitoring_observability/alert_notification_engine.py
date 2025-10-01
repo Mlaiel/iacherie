@@ -22,7 +22,7 @@ ALL RIGHTS RESERVED
 - Maintenance and updates provided
 - Team training included
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -371,7 +371,7 @@ def create_alert_engine(service_name: str, creator_type: str) -> AlertNotificati
 
 # Example usage
 if __name__ == "__main__":
-    engine = create_alert_engine("ainflue_music_service", "musician")
+    engine = create_alert_engine("iacherie_music_service", "musician")
     
     # Send test alerts
     engine.send_alert(

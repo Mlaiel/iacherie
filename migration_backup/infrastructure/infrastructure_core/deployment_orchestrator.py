@@ -1,12 +1,12 @@
 """
-Deployment Orchestrator - Enterprise Deployment Automation for Ainflue
+Deployment Orchestrator - Enterprise Deployment Automation for IA Chéries
 ======================================================================
 
 Advanced deployment orchestration for creator platform with CI/CD automation,
 blue-green deployments, and creator-focused deployment strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -77,7 +77,7 @@ class DeploymentResult:
 
 class DeploymentOrchestrator:
     """
-    Enterprise Deployment Orchestrator for Ainflue Creator Platform
+    Enterprise Deployment Orchestrator for IA Chéries Creator Platform
     
     Manages sophisticated deployment strategies with creator experience optimization,
     ensuring minimal disruption to creator workflows during updates.

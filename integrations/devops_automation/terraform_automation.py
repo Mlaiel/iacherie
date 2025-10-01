@@ -142,7 +142,7 @@ class TerraformAutomation:
         self.base_directory.mkdir(parents=True, exist_ok=True)
         
         # IA Chérie-specific modules
-        self.ainflue_modules = {
+        self.iacherie_modules = {
             'content_processing': {
                 'description': 'AI content processing infrastructure',
                 'gpu_required': True,
@@ -682,7 +682,7 @@ variable "region" {{
 '''
         
         # Add IA Chérie modules
-        for module_name, module_config in self.ainflue_modules.items():
+        for module_name, module_config in self.iacherie_modules.items():
             if module_name in workspace.variables:
                 config += f'''
 module "{module_name}" {{

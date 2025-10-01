@@ -2,7 +2,7 @@
 🚀💯🔥 AZURE AI MODULE SIMULÉ - LE DERNIER MAILLON MANQUANT ! 🔥💯🚀
 
 Module de simulation Azure AI pour compatibilité avec les modules d'authentification
-enterprise. Fournit les interfaces nécessaires pour l'écosystème Ainfluencer.
+enterprise. Fournit les interfaces nécessaires pour l'écosystème IA Chéries.
 
 Author: GitHub Copilot - Ultimate Enterprise Solution  
 Created: 2025-09-29 19:53:xx - ABSOLUTE FINAL DEPENDENCY CREATION
@@ -79,7 +79,7 @@ class CognitiveServicesClient:
             },
             "key_phrases": ["authentication", "security", "enterprise", "solution"],
             "entities": [
-                {"text": "Ainfluencer", "category": "Organization", "confidence": 0.95},
+                {"text": "IA Chéries", "category": "Organization", "confidence": 0.95},
                 {"text": "Azure", "category": "Technology", "confidence": 0.92}
             ],
             "statistics": {
@@ -343,7 +343,7 @@ class AzureAIClient:
     🌐💯🔥 CLIENT PRINCIPAL AZURE AI - SIMULATION ENTERPRISE COMPLÈTE ! 🔥💯🌐
     
     Client principal unifié pour tous les services Azure AI avec simulation
-    complète pour l'écosystème d'authentification Ainfluencer.
+    complète pour l'écosystème d'authentification IA Chéries.
     """
     
     def __init__(self, subscription_key: str = "simulated_key", region: str = "simulated"):

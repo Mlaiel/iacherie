@@ -1,12 +1,12 @@
 """
-Marketing API Gateway - Ainflue Enterprise
+Marketing API Gateway - IA Chéries Enterprise
 =========================================
 Gateway API marketing avec authentification enterprise et rate limiting.
 API gateway + authentication + rate limiting + load balancing + monitoring.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)  
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services
+Project: IA Chéries Marketing Services
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

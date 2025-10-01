@@ -1,5 +1,5 @@
 """
-Apple Pay Integration for Ainflue Platform
+Apple Pay Integration for IA Chéries Platform
 Enterprise-grade Apple Pay payment processing with advanced security
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -79,7 +79,7 @@ class ApplePayConfig:
     processing_certificate_path: str
     processing_private_key_path: str
     processing_certificate_password: Optional[str] = None
-    merchant_name: str = "Ainflue"
+    merchant_name: str = "IA Chéries"
     country_code: str = "US"
     currency_code: str = "USD"
     supported_networks: List[ApplePayNetwork] = None
@@ -146,7 +146,7 @@ class ProcessedPayment:
 
 class ApplePayIntegration(BaseIntegration):
     """
-    Enterprise Apple Pay integration for Ainflue platform
+    Enterprise Apple Pay integration for IA Chéries platform
     
     Features:
     - Secure merchant session validation
@@ -685,7 +685,7 @@ def create_apple_pay_integration(
     
     return ApplePayIntegration(config)
 
-# Example usage for Ainflue platform
+# Example usage for IA Chéries platform
 async def example_apple_pay_flow():
     """Example Apple Pay integration usage"""
     
@@ -697,7 +697,7 @@ async def example_apple_pay_flow():
         merchant_private_key_path="/path/to/merchant-key.pem",
         processing_certificate_path="/path/to/processing.pem",
         processing_private_key_path="/path/to/processing-key.pem",
-        merchant_name="Ainflue Creator Platform",
+        merchant_name="IA Chéries Creator Platform",
         currency_code="USD",
         apple_pay_sandbox=True
     )

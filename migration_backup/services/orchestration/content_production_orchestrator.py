@@ -1,5 +1,5 @@
 """
-🎬 CONTENT PRODUCTION ORCHESTRATOR - AINFLUE ENTERPRISE
+🎬 CONTENT PRODUCTION ORCHESTRATOR - IA CHÉRIES ENTERPRISE
 =======================================================
 
 Multi-format content workflow orchestration for creator economy platform.
@@ -81,7 +81,7 @@ class PublishingPlatform(str, Enum):
     LINKEDIN = "linkedin"
     SPOTIFY = "spotify"
     APPLE_PODCASTS = "apple_podcasts"
-    AINFLUE_NATIVE = "ainflue_native"
+    IA CHÉRIES_NATIVE = "ainflue_native"
 
 @dataclass
 class ContentItem:

@@ -15,7 +15,7 @@ ANALYTICS NOTIFICATIONS ORCHESTRATOR
 - Distribution multi-canal optimisée
 - Monitoring temps réel performance business
 
-🚀 FONCTIONNALITÉS CORE AINFLUE:
+🚀 FONCTIONNALITÉS CORE IA CHÉRIES:
 - Performance alerts temps réel  
 - Engagement notifications avancées
 - Viral content detection & alerts
@@ -86,7 +86,7 @@ class AnalyticsNotificationContext:
 class AnalyticsNotificationsOrchestrator:
     """
     Orchestrateur principal des notifications analytics
-    Gère l'ensemble du système de notifications analytics pour Ainflue
+    Gère l'ensemble du système de notifications analytics pour IA Chéries
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):

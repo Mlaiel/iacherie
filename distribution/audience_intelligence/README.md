@@ -250,9 +250,9 @@ print(f"Expected Reach: {optimization.expected_reach}")
 pip install -r requirements.txt
 
 # Set environment variables
-export AINFLUE_AI_MODEL_PATH="/path/to/models"
-export AINFLUE_CACHE_BACKEND="redis"
-export AINFLUE_DB_CONNECTION="postgresql://..."
+export IACHERIE_AI_MODEL_PATH="/path/to/models"
+export IACHERIE_CACHE_BACKEND="redis"
+export IACHERIE_DB_CONNECTION="postgresql://..."
 ```
 
 ### Configuration Options

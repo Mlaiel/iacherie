@@ -1,6 +1,6 @@
 """
 Analytics Tracking Module
-Module de suivi analytique pour Ainfluencer
+Module de suivi analytique pour IA Chéries
 LA DERNIÈRE PIÈCE POUR 100%!
 """
 
@@ -203,9 +203,9 @@ def get_events(event_type: Optional[str] = None,
     return analytics_tracker.get_events(event_type, user_id)
 
 # Fonctions spécialisées pour les modules principaux
-def track_ainfluencer_auth_success(user_id: str) -> str:
-    """Track le succès de l'authentification Ainfluencer"""
-    return track_authentication('ainfluencer_auth', True, user_id)
+def track_iacheries_auth_success(user_id: str) -> str:
+    """Track le succès de l'authentification IA Chéries"""
+    return track_authentication('iacheries_auth', True, user_id)
 
 def track_security_scanner_run(scan_results: Dict[str, Any], user_id: Optional[str] = None) -> str:
     """Track l'exécution du scanner de sécurité"""

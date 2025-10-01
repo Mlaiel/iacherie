@@ -1,5 +1,5 @@
 # =====================================================================================
-# Init Container Template - Ainflue Configuration Module  
+# Init Container Template - IA Chéries Configuration Module  
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - INIT CONTAINERS PATTERNS
+# IA CHÉRIES CREATOR ECONOMY - INIT CONTAINERS PATTERNS
 # =====================================================================================
 
 # Networks for initialization
@@ -238,7 +238,7 @@ services:
       - CERT_COUNTRY=US
       - CERT_STATE=California
       - CERT_CITY=San Francisco
-      - CERT_ORG=Ainflue
+      - CERT_ORG=IA Chéries
       - CERT_OU=Infrastructure
       - CERT_VALIDITY=8760h  # 1 year
     

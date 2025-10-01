@@ -1,4 +1,4 @@
-# 🔗 Module Intégrations Externes - Ainflue Infrastructure Enterprise
+# 🔗 Module Intégrations Externes - iacherie Infrastructure Enterprise
 
 **Équipe d'Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 

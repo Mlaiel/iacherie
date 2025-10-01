@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Collaboration - Approval Pipeline System
+IA Chéries Platform - Multimedia Collaboration - Approval Pipeline System
 Professional multi-stage approval pipeline for content publication workflow
 
 Author: Fahed Mlaiel (mlaiel@live.de)

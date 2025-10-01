@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Multimedia Optimization - Memory Optimization
+IA Chéries Platform - Multimedia Optimization - Memory Optimization
 Professional memory management and optimization for multimedia processing
 
 Author: Fahed Mlaiel (mlaiel@live.de)

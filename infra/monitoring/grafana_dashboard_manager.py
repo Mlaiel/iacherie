@@ -64,7 +64,7 @@ class GrafanaDashboardManager:
     def _load_dashboard_templates(self) -> Dict[str, Dict]:
         """Load dashboard templates from configuration"""
         return {
-            "ainflue_overview": self._get_overview_dashboard(),
+            "iacherie_overview": self._get_overview_dashboard(),
             "ai_engine_metrics": self._get_ai_engine_dashboard(),
             "api_performance": self._get_api_performance_dashboard(),
             "mobile_app_metrics": self._get_mobile_app_dashboard(),
@@ -273,7 +273,7 @@ class GrafanaDashboardManager:
                     "type": "singlestat",
                     "targets": [
                         {
-                            "expr": "sum(ainflue_total_users)",
+                            "expr": "sum(iacherie_total_users)",
                             "legendFormat": "Total Users"
                         }
                     ],
@@ -285,7 +285,7 @@ class GrafanaDashboardManager:
                     "type": "singlestat",
                     "targets": [
                         {
-                            "expr": "sum(ainflue_active_creators)",
+                            "expr": "sum(iacherie_active_creators)",
                             "legendFormat": "Active Creators"
                         }
                     ],
@@ -297,7 +297,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "rate(ainflue_ai_requests_total[5m])",
+                            "expr": "rate(iacherie_ai_requests_total[5m])",
                             "legendFormat": "AI Requests/sec"
                         }
                     ],
@@ -309,7 +309,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(ainflue_revenue_total)",
+                            "expr": "sum(iacherie_revenue_total)",
                             "legendFormat": "Total Revenue"
                         }
                     ],
@@ -363,11 +363,11 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "histogram_quantile(0.95, ainflue_ai_inference_duration_seconds_bucket)",
+                            "expr": "histogram_quantile(0.95, iacherie_ai_inference_duration_seconds_bucket)",
                             "legendFormat": "95th percentile"
                         },
                         {
-                            "expr": "histogram_quantile(0.50, ainflue_ai_inference_duration_seconds_bucket)",
+                            "expr": "histogram_quantile(0.50, iacherie_ai_inference_duration_seconds_bucket)",
                             "legendFormat": "50th percentile"
                         }
                     ],
@@ -379,7 +379,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "ainflue_ai_queue_size",
+                            "expr": "iacherie_ai_queue_size",
                             "legendFormat": "Queue Size"
                         }
                     ],
@@ -463,7 +463,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(ainflue_mobile_active_users) by (platform)",
+                            "expr": "sum(iacherie_mobile_active_users) by (platform)",
                             "legendFormat": "{{ platform }}"
                         }
                     ],
@@ -475,7 +475,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_mobile_crashes_total[1h])) by (platform)",
+                            "expr": "sum(rate(iacherie_mobile_crashes_total[1h])) by (platform)",
                             "legendFormat": "{{ platform }} crashes/hour"
                         }
                     ],
@@ -487,7 +487,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_content_uploads_total[5m])) by (content_type)",
+                            "expr": "sum(rate(iacherie_content_uploads_total[5m])) by (content_type)",
                             "legendFormat": "{{ content_type }}"
                         }
                     ],
@@ -571,7 +571,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_failed_logins_total[5m]))",
+                            "expr": "sum(rate(iacherie_failed_logins_total[5m]))",
                             "legendFormat": "Failed Logins/5min"
                         }
                     ],
@@ -583,7 +583,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_suspicious_activity_total[1h])) by (type)",
+                            "expr": "sum(rate(iacherie_suspicious_activity_total[1h])) by (type)",
                             "legendFormat": "{{ type }}"
                         }
                     ],
@@ -595,7 +595,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_waf_blocked_total[5m])) by (rule)",
+                            "expr": "sum(rate(iacherie_waf_blocked_total[5m])) by (rule)",
                             "legendFormat": "{{ rule }}"
                         }
                     ],
@@ -625,7 +625,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(increase(ainflue_revenue_total[1d]))",
+                            "expr": "sum(increase(iacherie_revenue_total[1d]))",
                             "legendFormat": "Daily Revenue"
                         }
                     ],
@@ -637,7 +637,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(increase(ainflue_user_registrations_total[1d]))",
+                            "expr": "sum(increase(iacherie_user_registrations_total[1d]))",
                             "legendFormat": "Daily Registrations"
                         }
                     ],
@@ -649,7 +649,7 @@ class GrafanaDashboardManager:
                     "type": "graph",
                     "targets": [
                         {
-                            "expr": "sum(rate(ainflue_content_created_total[1h])) by (type)",
+                            "expr": "sum(rate(iacherie_content_created_total[1h])) by (type)",
                             "legendFormat": "{{ type }} content/hour"
                         }
                     ],
@@ -659,7 +659,7 @@ class GrafanaDashboardManager:
         }
 
 # Example usage
-async def setup_ainflue_dashboards():
+async def setup_iacherie_dashboards():
     """Setup all IA Chérie Grafana dashboards"""
     config = GrafanaConfig(
         url="http://grafana.iacherie.local",
@@ -678,7 +678,7 @@ async def setup_ainflue_dashboards():
     
     # Create dashboards
     dashboards = [
-        "ainflue_overview",
+        "iacherie_overview",
         "ai_engine_metrics", 
         "api_performance",
         "mobile_app_metrics",
@@ -695,4 +695,4 @@ async def setup_ainflue_dashboards():
             print(f"❌ Failed to create dashboard: {dashboard}")
 
 if __name__ == "__main__":
-    asyncio.run(setup_ainflue_dashboards())
+    asyncio.run(setup_iacherie_dashboards())

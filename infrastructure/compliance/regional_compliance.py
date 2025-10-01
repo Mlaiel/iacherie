@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌍 REGIONAL COMPLIANCE MANAGER - AINFLUE ENTERPRISE
+🌍 REGIONAL COMPLIANCE MANAGER - IACHERIE ENTERPRISE
 Gestion compliance spécialisée par régions avec adaptations locales
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -55,7 +55,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/regional_compliance.log'),
+        logging.FileHandler('/var/log/iacherie/regional_compliance.log'),
         logging.StreamHandler()
     ]
 )
@@ -646,7 +646,7 @@ class RegionalComplianceManager:
     async def _initialize_geo_services(self):
         """Initialiser les services de géolocalisation"""
         try:
-            self.geolocator = Nominatim(user_agent="ainflue_compliance")
+            self.geolocator = Nominatim(user_agent="iacherie_compliance")
             logger.info("✅ Services géolocalisation initialisés")
             
         except Exception as e:
@@ -1290,7 +1290,7 @@ if __name__ == "__main__":
     async def test_regional_manager():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue'
+            'database_url': 'postgresql://user:pass@localhost/iacherie'
         }
         
         manager = RegionalComplianceManager(config)

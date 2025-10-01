@@ -504,8 +504,8 @@ class CanaryDeploymentEngine:
             
             return {
                 'success': True,
-                'canary_endpoints': [f'https://canary.api.ainflue.com/models/{model_id}'],
-                'stable_endpoints': [f'https://api.ainflue.com/models/{model_id}'],
+                'canary_endpoints': [f'https://canary.api.iacherie.com/models/{model_id}'],
+                'stable_endpoints': [f'https://api.iacherie.com/models/{model_id}'],
                 'deployment_info': {
                     'canary_replicas': 2,
                     'stable_replicas': 3,

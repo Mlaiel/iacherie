@@ -611,7 +611,7 @@ await challenge_creator.launch_viral_challenge(
     challenge=viral_challenge,
     launch_strategy='influencer_seeded',
     initial_participants=['top_fitness_influencers'],
-    hashtag_strategy='#AinflueFitnessChallenge'
+    hashtag_strategy='#iacherieFitnessChallenge'
 )
 ```
 

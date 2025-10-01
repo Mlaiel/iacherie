@@ -151,10 +151,10 @@ Multi-Format Creator Upload → AI Processing → IP Protection → Monetization
 ### 🔧 Configuration
 
 #### Metric Naming Convention
-- **Business Metrics**: `ainflue_creator_{metric_name}`
-- **Technical Metrics**: `ainflue_system_{metric_name}`
-- **AI Metrics**: `ainflue_ai_{metric_name}`
-- **Security Metrics**: `ainflue_security_{metric_name}`
+- **Business Metrics**: `iacherie_creator_{metric_name}`
+- **Technical Metrics**: `iacherie_system_{metric_name}`
+- **AI Metrics**: `iacherie_ai_{metric_name}`
+- **Security Metrics**: `iacherie_security_{metric_name}`
 
 #### Alerting Severity Levels
 - **P1 Critical**: Revenue impact >$10K/hour, >1000 creators affected
@@ -205,16 +205,16 @@ Pre-configured Grafana dashboards for:
 
 ```promql
 # Creator revenue trend
-sum(rate(ainflue_business_revenue_per_creator[5m])) by (creator_tier)
+sum(rate(iacherie_business_revenue_per_creator[5m])) by (creator_tier)
 
 # AI model accuracy by type
-avg(ainflue_ai_model_accuracy) by (model_name, model_version)
+avg(iacherie_ai_model_accuracy) by (model_name, model_version)
 
 # Collaboration success rate
-avg(ainflue_collaboration_success_rate) by (creator_category, brand_category)
+avg(iacherie_collaboration_success_rate) by (creator_category, brand_category)
 
 # Content pipeline throughput
-rate(ainflue_content_pipeline_throughput_items_per_minute[5m])
+rate(iacherie_content_pipeline_throughput_items_per_minute[5m])
 ```
 
 ### 🛡️ Security & Compliance

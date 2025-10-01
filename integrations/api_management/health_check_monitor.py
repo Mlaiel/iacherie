@@ -917,9 +917,9 @@ class HealthCheckMonitor:
         }
         
         # Initialize IA Chérie-specific health checks
-        self._initialize_ainflue_health_checks()
+        self._initialize_iacherie_health_checks()
     
-    def _initialize_ainflue_health_checks(self) -> None:
+    def _initialize_iacherie_health_checks(self) -> None:
         """Initialize IA Chérie business logic health checks"""
         
         # Creator service health checks

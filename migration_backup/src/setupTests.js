@@ -1,4 +1,4 @@
-// Setup for Jest tests in Ainflue Enterprise Platform
+// Setup for Jest tests in IA Chéries Enterprise Platform
 // Author: Fahed Mlaiel <mlaiel@live.de>
 // Testing configuration for React components and TypeScript
 

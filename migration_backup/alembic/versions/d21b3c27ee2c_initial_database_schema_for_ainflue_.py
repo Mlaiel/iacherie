@@ -1,4 +1,4 @@
-"""Initial database schema for Ainflue platform
+"""Initial database schema for IA Chéries platform
 
 Revision ID: d21b3c27ee2c
 Revises: 
@@ -7,7 +7,7 @@ Create Date: 2025-09-03 03:06:32.756749
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This migration creates the complete database schema for the Ainflue platform including:
+This migration creates the complete database schema for the IA Chéries platform including:
 - Core user and content management tables
 - Content fingerprinting and protection systems
 - Revenue tracking and monetization

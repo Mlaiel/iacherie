@@ -1,4 +1,4 @@
-# Ainflue Backend Audio - Enterprise Audio Processing Platform
+# iacherie Backend Audio - Enterprise Audio Processing Platform
 
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
 **Specialized Team:** Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -145,6 +145,6 @@ batch_result = batch_processor.process_batch(file_paths, config, output_dir)
 
 **Developer:** Fahed Mlaiel  
 **Email:** mlaiel@live.de  
-**Project:** Ainflue Platform Enterprise Backend Audio
+**Project:** iacherie Platform Enterprise Backend Audio
 
 **© 2025 Fahed Mlaiel - All rights reserved**

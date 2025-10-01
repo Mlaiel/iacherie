@@ -1,9 +1,9 @@
-"""Ainflue Core Orchestration - State Machine Core
+"""IA Chéries Core Orchestration - State Machine Core
 ===============================================
 
 Enterprise-grade state machine implementation providing workflow orchestration,
 state transitions, event-driven processing, and complex business process
-management for the Ainflue platform.
+management for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

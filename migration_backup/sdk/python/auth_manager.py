@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Authentication Manager for Ainflue SDK
+"""Authentication Manager for IA Chéries SDK
 
 Enterprise-grade authentication with multi-expert design:
 - Sécurité: Secure token storage and rotation

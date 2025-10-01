@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Ansible Configuration Manager
+# IA Chéries Infrastructure Module - Ansible Configuration Manager
 # ===========================================================
 # 
-# Enterprise-grade Ansible configuration management for Ainflue platform
+# Enterprise-grade Ansible configuration management for IA Chéries platform
 # Supports multi-cloud automation and enterprise deployment
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -104,7 +104,7 @@ class AnsibleConfigurationManager:
             Path(directory).mkdir(parents=True, exist_ok=True)
     
     def _define_standard_playbooks(self) -> Dict[str, Dict[str, Any]]:
-        """Define standard playbooks for Ainflue platform"""
+        """Define standard playbooks for IA Chéries platform"""
         return {
             "site": {
                 "description": "Main site playbook that coordinates all deployments",
@@ -142,7 +142,7 @@ class AnsibleConfigurationManager:
             },
             
             "application_deployment": {
-                "description": "Deploy Ainflue application components",
+                "description": "Deploy IA Chéries application components",
                 "path": f"{self.config.playbook_directory}/application_deployment.yml",
                 "roles": ["ainflue_api", "ainflue_ai", "ainflue_mobile", "ainflue_worker"],
                 "tags": ["application", "deployment"]
@@ -350,7 +350,7 @@ class AnsibleConfigurationManager:
             # Main site playbook
             return [
                 {
-                    "name": "Ainflue Infrastructure Deployment",
+                    "name": "IA Chéries Infrastructure Deployment",
                     "hosts": "all",
                     "become": True,
                     "gather_facts": True,
@@ -573,7 +573,7 @@ class AnsibleConfigurationManager:
             # Application deployment playbook
             return [
                 {
-                    "name": "Deploy Ainflue Applications",
+                    "name": "Deploy IA Chéries Applications",
                     "hosts": "app_servers",
                     "become": True,
                     "gather_facts": True,
@@ -760,8 +760,8 @@ class AnsibleConfigurationManager:
         meta_content = {
             "galaxy_info": {
                 "author": "Fahed Mlaiel",
-                "description": f"Ainflue {role_name} role",
-                "company": "Ainflue",
+                "description": f"IA Chéries {role_name} role",
+                "company": "IA Chéries",
                 "license": "Proprietary",
                 "min_ansible_version": "2.10",
                 "platforms": [
@@ -987,8 +987,8 @@ class AnsibleConfigurationManager:
             return {"valid": False, "error": str(e)}
 
 # Enterprise Ansible orchestrator
-class AinflueAnsibleOrchestrator:
-    """High-level Ansible orchestration for Ainflue platform"""
+class IA ChériesAnsibleOrchestrator:
+    """High-level Ansible orchestration for IA Chéries platform"""
     
     def __init__(self, environment: str = "production"):
         """Initialize Ansible orchestrator
@@ -1002,15 +1002,15 @@ class AinflueAnsibleOrchestrator:
         # Configuration
         self.config = AnsibleConfig(
             environment=environment,
-            inventory_path=f"/home/runner/work/Ainflue/Ainflue/infra/ansible/inventory",
-            playbook_directory=f"/home/runner/work/Ainflue/Ainflue/infra/ansible",
+            inventory_path=f"/home/runner/work/IA Chéries/IA Chéries/infra/ansible/inventory",
+            playbook_directory=f"/home/runner/work/IA Chéries/IA Chéries/infra/ansible",
             remote_user="ubuntu" if environment == "production" else "vagrant"
         )
         
         self.manager = AnsibleConfigurationManager(self.config)
     
     async def bootstrap_environment(self) -> bool:
-        """Bootstrap the complete Ainflue environment
+        """Bootstrap the complete IA Chéries environment
         
         Returns:
             bool: True if successful, False otherwise
@@ -1052,7 +1052,7 @@ class AinflueAnsibleOrchestrator:
 if __name__ == "__main__":
     # Example usage
     async def main():
-        orchestrator = AinflueAnsibleOrchestrator(environment="production")
+        orchestrator = IA ChériesAnsibleOrchestrator(environment="production")
         
         # Bootstrap environment
         success = await orchestrator.bootstrap_environment()

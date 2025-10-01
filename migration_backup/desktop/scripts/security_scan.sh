@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ainflue Desktop - Security Scan Script
+# IA Chéries Desktop - Security Scan Script
 # 
 # Comprehensive security scanning for desktop application
 # Includes vulnerability assessment, dependency analysis, and security best practices
@@ -24,7 +24,7 @@ PROJECT_ROOT="$(cd "$DESKTOP_DIR/.." && pwd)"
 SECURITY_REPORT_FILE="$PROJECT_ROOT/test_reports/desktop/security_scan_report.json"
 EXIT_CODE=0
 
-echo -e "${BLUE}🔒 AINFLUE DESKTOP - SECURITY SCAN${NC}"
+echo -e "${BLUE}🔒 IA CHÉRIES DESKTOP - SECURITY SCAN${NC}"
 echo "===================================="
 echo "Desktop Directory: $DESKTOP_DIR"
 echo "Project Root: $PROJECT_ROOT"
@@ -38,7 +38,7 @@ mkdir -p "$(dirname "$SECURITY_REPORT_FILE")"
 cat > "$SECURITY_REPORT_FILE" << EOF
 {
   "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-  "project": "Ainflue Desktop",
+  "project": "IA Chéries Desktop",
   "author": "Fahed Mlaiel",
   "contact": "mlaiel@live.de",
   "scan_version": "1.0.0",

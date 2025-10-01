@@ -1,10 +1,10 @@
 """
-Deployment Module - Ainflue Infrastructure Enterprise
+Deployment Module - IA Chéries Infrastructure Enterprise
 ====================================================
 Point d'entrée principal pour tous les services de déploiement
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 Version: 1.0 Production
 """
 
@@ -26,10 +26,10 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de" 
-__description__ = "Enterprise deployment infrastructure for Ainflue platform"
+__description__ = "Enterprise deployment infrastructure for IA Chéries platform"
 
-# Configuration logique métier Ainflue
-AINFLUE_DEPLOYMENT_WORKFLOW = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_DEPLOYMENT_WORKFLOW = {
     'upload': 'Multi-format content upload processing',
     'ai_processing': 'AI enhancement and analysis pipeline', 
     'protection': 'Rights protection and watermarking',
@@ -39,7 +39,7 @@ AINFLUE_DEPLOYMENT_WORKFLOW = {
     'distribution': 'Massive distribution to 65+ platforms'
 }
 
-# Deployment strategies pour créateurs Ainflue
+# Deployment strategies pour créateurs IA Chéries
 CREATOR_DEPLOYMENT_STRATEGIES = {
     'musician': 'Blue-green deployment for audio platforms',
     'blogger': 'Canary deployment for content platforms', 

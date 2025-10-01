@@ -201,7 +201,7 @@ class CloudStorageSecurityManager:
     def _create_cipher_suite(self) -> Fernet:
         """Create encryption cipher suite"""
         password = self.config.encryption_key.encode()
-        salt = b"ainflue_storage_salt"
+        salt = b"iacherie_storage_salt"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

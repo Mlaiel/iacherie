@@ -689,7 +689,7 @@ data:
                 "version": "0.1.0",
                 "appVersion": app_version,
                 "keywords": ["ainflue", "ml", "creator", template.creator_service.value.split('_')[0]],
-                "home": "https://github.com/Mlaiel/Ainflue",
+                "home": "https://github.com/Mlaiel/IA Chéries",
                 "maintainers": [
                     {
                         "name": "Fahed Mlaiel",

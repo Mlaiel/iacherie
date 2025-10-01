@@ -656,7 +656,7 @@ class DatabaseBackupManager:
         self._backup_providers: Dict[str, IBackupProvider] = {}
         self._restore_requests: Dict[str, RestoreRequest] = {}
         
-    async def initialize(self, backup_directory: str = "/var/backups/ainflue"):
+    async def initialize(self, backup_directory: str = "/var/backups/iacherie"):
         """Initialize backup manager."""
         logger.info("🏢 Initializing Enterprise Database Backup Manager...")
         

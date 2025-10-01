@@ -195,7 +195,7 @@ class ProductionDatabaseDeployment:
             total_steps = len(self.deployment_results)
             
             deployment_summary = {
-                "deployment_id": f"ainflue_prod_{self.start_time.strftime('%Y%m%d_%H%M%S')}",
+                "deployment_id": f"iacherie_prod_{self.start_time.strftime('%Y%m%d_%H%M%S')}",
                 "start_time": self.start_time.isoformat(),
                 "end_time": datetime.utcnow().isoformat(),
                 "total_duration_seconds": total_duration,

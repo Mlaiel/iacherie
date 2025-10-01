@@ -1,4 +1,4 @@
-"""Ainflue Data Crawlers Module - Consolidated Enterprise System
+"""IA Chéries Data Crawlers Module - Consolidated Enterprise System
 ==============================================================
 
 Advanced multi-platform web crawling system for content protection and discovery.
@@ -502,7 +502,7 @@ __platform_support__ = {
 import logging
 
 logger = logging.getLogger(__name__)
-logger.info(f"Ainflue Data Crawlers Module v{__version__} initialized")
+logger.info(f"IA Chéries Data Crawlers Module v{__version__} initialized")
 logger.info(f"Enterprise architecture with {__platform_support__['total_platforms_supported']} platforms supported")
 logger.info(f"Created by {__author__} ({__email__})")
 

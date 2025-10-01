@@ -483,7 +483,7 @@ class ServiceRegistry:
     Enterprise Service Registry with discovery and health monitoring
     
     Provides comprehensive service discovery, health monitoring, and load balancing
-    for the Ainflue creator platform with support for microservices architecture.
+    for the IA Chéries creator platform with support for microservices architecture.
     """
     
     def __init__(self):

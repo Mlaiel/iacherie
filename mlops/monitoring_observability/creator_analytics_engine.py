@@ -9,7 +9,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Au
 © 2025 Fahed Mlaiel <mlaiel@live.de>
 ALL RIGHTS RESERVED
 
-Logique métier Ainflue: Créateurs multi-format → IA processing → Protection → 
+Logique métier iacherie: Créateurs multi-format → IA processing → Protection → 
 Monétisation → Collaboration & Gamification → SEO → Distribution
 """
 
@@ -435,7 +435,7 @@ def create_creator_analytics(service_name: str) -> CreatorAnalyticsEngine:
 
 # Example usage
 if __name__ == "__main__":
-    engine = create_creator_analytics("ainflue_analytics")
+    engine = create_creator_analytics("iacherie_analytics")
     
     # Register creators
     engine.register_creator("musician_123", CreatorType.MUSICIAN, "John Doe", "premium")

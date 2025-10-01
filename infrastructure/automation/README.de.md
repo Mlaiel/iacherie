@@ -1,13 +1,13 @@
 # 🔧 Infrastructure Automation - Enterprise DevOps Plattform
 
-[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/Ainflue)
-[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/Ainflue)
-[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/Ainflue)
-[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/Ainflue)
+[![Automation Status](https://img.shields.io/badge/automation-100%25-brightgreen)](https://github.com/Mlaiel/iacherie)
+[![Infrastructure](https://img.shields.io/badge/infrastructure-enterprise-blue)](https://github.com/Mlaiel/iacherie)
+[![DevOps](https://img.shields.io/badge/devops-advanced-orange)](https://github.com/Mlaiel/iacherie)
+[![AI Agents](https://img.shields.io/badge/ai_agents-53-purple)](https://github.com/Mlaiel/iacherie)
 
 ## 🌟 Überblick
 
-Fortschrittliche Infrastruktur-Automatisierungsplattform für das Ainflue Creator-Economy-Ökosystem. Dieses Enterprise-Grade-Automatisierungs-Framework verwaltet CI/CD-Pipelines, Infrastruktur-Bereitstellung, Deployment-Strategien, Monitoring, Sicherheit und Compliance über 53 KI-Agenten und 65+ Plattform-Integrationen.
+Fortschrittliche Infrastruktur-Automatisierungsplattform für das iacherie Creator-Economy-Ökosystem. Dieses Enterprise-Grade-Automatisierungs-Framework verwaltet CI/CD-Pipelines, Infrastruktur-Bereitstellung, Deployment-Strategien, Monitoring, Sicherheit und Compliance über 53 KI-Agenten und 65+ Plattform-Integrationen.
 
 **© FAHED MLAIEL 2024-2025 - STRENGER GEISTIGES EIGENTUM**  
 ⚠️ **STRENGE WARNUNG**: Jede unbefugte Nutzung, Kopierung oder Verbreitung dieses Codes ohne ausdrückliche schriftliche Genehmigung von Fahed Mlaiel ist streng untersagt.  
@@ -141,8 +141,8 @@ creator_workflow = {
 ### Installation
 ```bash
 # Repository klonen
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/automation
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/automation
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
@@ -332,4 +332,4 @@ automation:
 *Erstellt: 15. September 2025*  
 *Version: 1.0.0 - Enterprise Infrastructure Automation Dokumentation*  
 *Autor: Fahed Mlaiel (mlaiel@live.de)*  
-*Projekt: Ainflue Infrastructure Automation Platform*
+*Projekt: iacherie Infrastructure Automation Platform*

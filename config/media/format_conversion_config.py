@@ -674,7 +674,7 @@ class FormatConversionConfiguration:
             quality_level=quality_level,
             created_at=datetime.now(),
             metadata={
-                "user_agent": "ainflue_converter",
+                "user_agent": "iacherie_converter",
                 "api_version": "v1",
                 "processing_node": "auto_assign"
             }

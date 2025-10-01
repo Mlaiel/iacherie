@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Data Pipeline Templates for Ainflue Platform
+Data Pipeline Templates for IA Chéries Platform
 ==========================================
 
 Production-ready data pipeline templates with:
@@ -672,7 +672,7 @@ def create_data_pipeline_app() -> FastAPI:
     Création de l'application FastAPI pour les pipelines de données
     """
     app = FastAPI(
-        title="Ainflue Data Pipeline Service",
+        title="IA Chéries Data Pipeline Service",
         description="Production-ready data pipeline templates",
         version="1.0.0"
     )

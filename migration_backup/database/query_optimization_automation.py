@@ -887,7 +887,7 @@ if __name__ == "__main__":
         db_config = {
             "host": "localhost",
             "port": 5432,
-            "database": "ainfluencer",
+            "database": "iacheries",
             "username": "admin"
         }
         result = await register_database_for_optimization("main_db", DatabaseType.POSTGRESQL, db_config)

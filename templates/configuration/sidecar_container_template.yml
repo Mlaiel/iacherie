@@ -1,5 +1,5 @@
 # =====================================================================================
-# Sidecar Container Template - Ainflue Configuration Module
+# Sidecar Container Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -9,7 +9,7 @@
 version: '3.8'
 
 # =====================================================================================
-# AINFLUE CREATOR ECONOMY - SIDECAR PATTERNS IMPLEMENTATION
+# IACHERIE CREATOR ECONOMY - SIDECAR PATTERNS IMPLEMENTATION
 # =====================================================================================
 
 # Networks for sidecar communication
@@ -24,7 +24,7 @@ networks:
       config:
         - subnet: 172.40.0.0/16
     labels:
-      - "ainflue.network.type=application"
+      - "iacherie.network.type=application"
 
   # Monitoring network for sidecars
   sidecar_monitoring:
@@ -35,7 +35,7 @@ networks:
       config:
         - subnet: 172.41.0.0/16
     labels:
-      - "ainflue.network.type=sidecar_monitoring"
+      - "iacherie.network.type=sidecar_monitoring"
 
   # Service mesh network
   mesh_network:
@@ -48,7 +48,7 @@ networks:
       config:
         - subnet: 172.42.0.0/16
     labels:
-      - "ainflue.network.type=service_mesh"
+      - "iacherie.network.type=service_mesh"
 
 # Shared volumes for sidecar patterns
 volumes:
@@ -60,19 +60,19 @@ volumes:
       device: tmpfs
       o: "size=500M,uid=1000,gid=1000"
     labels:
-      - "ainflue.volume.type=shared_logs"
+      - "iacherie.volume.type=shared_logs"
 
   # Shared configuration
   shared_config:
     driver: local
     labels:
-      - "ainflue.volume.type=shared_config"
+      - "iacherie.volume.type=shared_config"
 
   # SSL certificates
   ssl_certs:
     driver: local
     labels:
-      - "ainflue.volume.type=ssl_certificates"
+      - "iacherie.volume.type=ssl_certificates"
 
   # Metrics data
   metrics_data:
@@ -82,28 +82,28 @@ volumes:
       device: tmpfs
       o: "size=200M,uid=1000,gid=1000"
     labels:
-      - "ainflue.volume.type=metrics"
+      - "iacherie.volume.type=metrics"
 
 # Secrets for sidecar authentication
 secrets:
   # Service mesh certificates
   envoy_cert:
     external: true
-    external_name: ainflue_envoy_cert_v1
+    external_name: iacherie_envoy_cert_v1
 
   envoy_key:
     external: true
-    external_name: ainflue_envoy_key_v1
+    external_name: iacherie_envoy_key_v1
 
   # Monitoring credentials
   prometheus_creds:
     external: true
-    external_name: ainflue_prometheus_creds_v1
+    external_name: iacherie_prometheus_creds_v1
 
   # Logging credentials
   logging_creds:
     external: true
-    external_name: ainflue_logging_creds_v1
+    external_name: iacherie_logging_creds_v1
 
 # =====================================================================================
 # CREATOR CONTENT SERVICE WITH SIDECARS
@@ -116,7 +116,7 @@ services:
   # =====================================================================================
   
   creator_content_app:
-    image: ainflue/creator-content:${VERSION:-latest}
+    image: iacherie/creator-content:${VERSION:-latest}
     hostname: creator-content-app
     restart: unless-stopped
     
@@ -169,10 +169,10 @@ services:
       - "8080"
     
     labels:
-      - "ainflue.service.type=application"
-      - "ainflue.service.name=creator-content"
-      - "ainflue.sidecar.enabled=true"
-      - "ainflue.monitoring.enabled=true"
+      - "iacherie.service.type=application"
+      - "iacherie.service.name=creator-content"
+      - "iacherie.sidecar.enabled=true"
+      - "iacherie.monitoring.enabled=true"
 
   # =====================================================================================
   # ENVOY PROXY SIDECAR (Service Mesh)
@@ -231,10 +231,10 @@ services:
       - creator_content_app
     
     labels:
-      - "ainflue.sidecar.type=proxy"
-      - "ainflue.sidecar.service=envoy"
-      - "ainflue.service.mesh=true"
-      - "ainflue.security.tls=enabled"
+      - "iacherie.sidecar.type=proxy"
+      - "iacherie.sidecar.service=envoy"
+      - "iacherie.service.mesh=true"
+      - "iacherie.security.tls=enabled"
 
   # =====================================================================================
   # PROMETHEUS METRICS SIDECAR
@@ -292,9 +292,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.sidecar.type=metrics"
-      - "ainflue.sidecar.service=node-exporter"
-      - "ainflue.monitoring.target=true"
+      - "iacherie.sidecar.type=metrics"
+      - "iacherie.sidecar.service=node-exporter"
+      - "iacherie.monitoring.target=true"
 
   # =====================================================================================
   # FLUENTD LOGGING SIDECAR
@@ -342,9 +342,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.sidecar.type=logging"
-      - "ainflue.sidecar.service=fluentd"
-      - "ainflue.logging.aggregator=true"
+      - "iacherie.sidecar.type=logging"
+      - "iacherie.sidecar.service=fluentd"
+      - "iacherie.logging.aggregator=true"
 
   # =====================================================================================
   # JAEGER TRACING SIDECAR
@@ -392,9 +392,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.sidecar.type=tracing"
-      - "ainflue.sidecar.service=jaeger-agent"
-      - "ainflue.tracing.enabled=true"
+      - "iacherie.sidecar.type=tracing"
+      - "iacherie.sidecar.service=jaeger-agent"
+      - "iacherie.tracing.enabled=true"
 
   # =====================================================================================
   # SECURITY SCANNING SIDECAR
@@ -430,15 +430,15 @@ services:
     command: >
       sh -c "
       while true; do
-        trivy image --format json --output /tmp/scan-results/security-scan.json ainflue/creator-content:${VERSION:-latest}
+        trivy image --format json --output /tmp/scan-results/security-scan.json iacherie/creator-content:${VERSION:-latest}
         sleep $${SCAN_INTERVAL}
       done
       "
     
     labels:
-      - "ainflue.sidecar.type=security"
-      - "ainflue.sidecar.service=trivy"
-      - "ainflue.security.scanning=enabled"
+      - "iacherie.sidecar.type=security"
+      - "iacherie.sidecar.service=trivy"
+      - "iacherie.security.scanning=enabled"
 
   # =====================================================================================
   # BACKUP SIDECAR
@@ -489,9 +489,9 @@ services:
       "
     
     labels:
-      - "ainflue.sidecar.type=backup"
-      - "ainflue.sidecar.service=restic"
-      - "ainflue.backup.enabled=true"
+      - "iacherie.sidecar.type=backup"
+      - "iacherie.sidecar.service=restic"
+      - "iacherie.backup.enabled=true"
 
   # =====================================================================================
   # CONFIGURATION RELOADER SIDECAR
@@ -528,9 +528,9 @@ services:
       - '--webhook-method=POST'
     
     labels:
-      - "ainflue.sidecar.type=config_reloader"
-      - "ainflue.sidecar.service=configmap-reload"
-      - "ainflue.config.hot_reload=true"
+      - "iacherie.sidecar.type=config_reloader"
+      - "iacherie.sidecar.service=configmap-reload"
+      - "iacherie.config.hot_reload=true"
 
   # =====================================================================================
   # CIRCUIT BREAKER SIDECAR
@@ -575,9 +575,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.sidecar.type=circuit_breaker"
-      - "ainflue.sidecar.service=nginx"
-      - "ainflue.resilience.pattern=circuit_breaker"
+      - "iacherie.sidecar.type=circuit_breaker"
+      - "iacherie.sidecar.service=nginx"
+      - "iacherie.resilience.pattern=circuit_breaker"
 
   # =====================================================================================
   # RATE LIMITER SIDECAR
@@ -625,9 +625,9 @@ services:
       start_period: 30s
     
     labels:
-      - "ainflue.sidecar.type=rate_limiter"
-      - "ainflue.sidecar.service=envoy"
-      - "ainflue.security.rate_limiting=enabled"
+      - "iacherie.sidecar.type=rate_limiter"
+      - "iacherie.sidecar.service=envoy"
+      - "iacherie.security.rate_limiting=enabled"
 
 # =====================================================================================
 # ADDITIONAL SECRETS
@@ -636,7 +636,7 @@ services:
 secrets:
   backup_password:
     external: true
-    external_name: ainflue_backup_password_v1
+    external_name: iacherie_backup_password_v1
 
 # =====================================================================================
 # SIDECAR PATTERN CONFIGURATIONS
@@ -706,31 +706,31 @@ x-decorator-pattern: &decorator-pattern
 # =====================================================================================
 
 x-sidecar-labels: &sidecar-labels
-  - "ainflue.pattern=sidecar"
-  - "ainflue.version=${VERSION:-1.0.0}"
-  - "ainflue.environment=${ENVIRONMENT:-production}"
-  - "ainflue.monitoring.enabled=true"
-  - "ainflue.security.scan=required"
+  - "iacherie.pattern=sidecar"
+  - "iacherie.version=${VERSION:-1.0.0}"
+  - "iacherie.environment=${ENVIRONMENT:-production}"
+  - "iacherie.monitoring.enabled=true"
+  - "iacherie.security.scan=required"
 
 x-proxy-labels: &proxy-labels
-  - "ainflue.sidecar.category=proxy"
-  - "ainflue.network.ingress=true"
-  - "ainflue.security.tls=required"
+  - "iacherie.sidecar.category=proxy"
+  - "iacherie.network.ingress=true"
+  - "iacherie.security.tls=required"
 
 x-monitoring-labels: &monitoring-labels
-  - "ainflue.sidecar.category=monitoring"
-  - "ainflue.metrics.scrape=true"
-  - "ainflue.logging.aggregate=true"
+  - "iacherie.sidecar.category=monitoring"
+  - "iacherie.metrics.scrape=true"
+  - "iacherie.logging.aggregate=true"
 
 x-security-labels: &security-labels
-  - "ainflue.sidecar.category=security"
-  - "ainflue.security.scan=continuous"
-  - "ainflue.compliance.monitor=true"
+  - "iacherie.sidecar.category=security"
+  - "iacherie.security.scan=continuous"
+  - "iacherie.compliance.monitor=true"
 
 x-reliability-labels: &reliability-labels
-  - "ainflue.sidecar.category=reliability"
-  - "ainflue.resilience.enabled=true"
-  - "ainflue.backup.automated=true"
+  - "iacherie.sidecar.category=reliability"
+  - "iacherie.resilience.enabled=true"
+  - "iacherie.backup.automated=true"
 
 # =====================================================================================
 # HEALTHCHECK CONFIGURATIONS

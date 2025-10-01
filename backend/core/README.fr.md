@@ -38,7 +38,7 @@ Ce module contient les fonctionnalités de base de données consolidées, l'orch
 ## 📊 Conformité Architecturale
 
 ✅ **Respect du maximum 3 niveaux**
-- Niveau 1: `/workspaces/Ainflue/`
+- Niveau 1: `/workspaces/iacherie/`
 - Niveau 2: `backend/`
 - Niveau 3: `core/` (FINAL - Pas de sous-dossiers)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚖️ REGULATORY COMPLIANCE ENGINE - AINFLUE ENTERPRISE
+⚖️ REGULATORY COMPLIANCE ENGINE - IACHERIE ENTERPRISE
 Moteur automation compliance réglementaire avec intelligence artificielle
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -57,7 +57,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/regulatory_compliance.log'),
+        logging.FileHandler('/var/log/iacherie/regulatory_compliance.log'),
         logging.StreamHandler()
     ]
 )
@@ -1320,7 +1320,7 @@ if __name__ == "__main__":
     async def test_regulatory_engine():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue'
+            'database_url': 'postgresql://user:pass@localhost/iacherie'
         }
         
         engine = RegulatoryComplianceEngine(config)

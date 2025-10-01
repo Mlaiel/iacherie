@@ -1,5 +1,5 @@
 """
-⚡ Ainflue Configuration Templates Module
+⚡ IA Chéries Configuration Templates Module
 ==============================================
 
 🎯 TECHNICAL ARCHITECTURE TEAM
@@ -29,7 +29,7 @@ TOUS DROITS RÉSERVÉS
 - Maintenance et mises à jour assurées
 - Formation équipe technique fournie
 
-Module: Enterprise Configuration Templates for Ainflue Creator Economy Platform
+Module: Enterprise Configuration Templates for IA Chéries Creator Economy Platform
 Version: 1.0.0
 Created: 2025-01-18
 """
@@ -143,6 +143,6 @@ def setup_logging(level: str = "INFO") -> None:
 # Auto-setup logging when module is imported
 setup_logging()
 
-logger.info("Ainflue Configuration Templates Module loaded successfully")
+logger.info("IA Chéries Configuration Templates Module loaded successfully")
 logger.info(f"Version: {__version__}")
 logger.info(f"Author: {__author__}")

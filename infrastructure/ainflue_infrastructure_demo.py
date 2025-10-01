@@ -151,7 +151,7 @@ async def demonstrate_infrastructure():
     print_section("4. PERFORMANCE OPTIMIZATION ENTERPRISE")
     
     try:
-        from performance_optimizer_enterprise import optimize_ainflue_infrastructure, quick_performance_check
+        from performance_optimizer_enterprise import optimize_iacherie_infrastructure, quick_performance_check
         
         print("⚡ Running performance optimization...")
         

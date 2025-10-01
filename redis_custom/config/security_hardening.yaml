@@ -34,16 +34,16 @@ data:
     user default off nopass ~* &* -@all
     
     # Create enterprise admin user
-    user admin on >ainflue_enterprise_2025_secure_admin_key ~* &* +@all
+    user admin on >iacherie_enterprise_2025_secure_admin_key ~* &* +@all
     
     # Create application user with limited permissions
-    user ainflue_app on >ainflue_app_secure_2025_key ~cache:* ~session:* ~creator:* +@read +@write +@list +@string +@hash +@set +@sortedset +@stream
+    user iacherie_app on >iacherie_app_secure_2025_key ~cache:* ~session:* ~creator:* +@read +@write +@list +@string +@hash +@set +@sortedset +@stream
     
     # Create read-only monitoring user
-    user monitoring on >ainflue_monitor_secure_2025_key ~* +@read +info +ping +client
+    user monitoring on >iacherie_monitor_secure_2025_key ~* +@read +info +ping +client
     
     # Create backup user with minimal permissions
-    user backup on >ainflue_backup_secure_2025_key ~* +@read +bgsave +lastsave +info
+    user backup on >iacherie_backup_secure_2025_key ~* +@read +bgsave +lastsave +info
 
   # ===================================================================================
   # NETWORK SECURITY CONFIGURATION
@@ -172,8 +172,8 @@ data:
     tls-replication yes
     
     # Inter-node authentication
-    masterauth ainflue_cluster_secure_2025_key
-    requirepass ainflue_cluster_secure_2025_key
+    masterauth iacherie_cluster_secure_2025_key
+    requirepass iacherie_cluster_secure_2025_key
 
   # ===================================================================================
   # CREATOR ECONOMY SECURITY FEATURES
@@ -309,7 +309,7 @@ data:
     openssl s_client -connect localhost:16379 -tls1_3 -quiet
     
     # Validate authentication
-    redis-cli -h localhost -p 16379 --tls auth ainflue_app_secure_2025_key
+    redis-cli -h localhost -p 16379 --tls auth iacherie_app_secure_2025_key
     
     # Check ACL configuration
     redis-cli -h localhost -p 16379 --tls ACL LIST

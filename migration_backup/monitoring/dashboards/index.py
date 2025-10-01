@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Dashboard Enterprise Main Entry Point
+IA Chéries Platform - Dashboard Enterprise Main Entry Point
 ========================================================
 
 Factory pattern orchestrator for Creator Economy enterprise dashboards

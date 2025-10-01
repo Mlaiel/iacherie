@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Database Service Template for Ainflue Creator Economy Platform
+Database Service Template for IA Chéries Creator Economy Platform
 Enterprise database service with multi-provider support, connection pooling, and advanced monitoring
 """
 
@@ -136,7 +136,7 @@ class ConnectionHealth(BaseModel):
 
 class DatabaseServiceTemplate:
     """
-    Template de service de base de données enterprise pour Ainflue
+    Template de service de base de données enterprise pour IA Chéries
     
     Fonctionnalités:
     - Multi-provider support (PostgreSQL, MySQL, MongoDB, Redis, etc.)
@@ -152,7 +152,7 @@ class DatabaseServiceTemplate:
     def __init__(self, config: DatabaseConfig = None):
         self.config = config or DatabaseConfig()
         self.app = FastAPI(
-            title="Ainflue Database Service",
+            title="IA Chéries Database Service",
             description="Enterprise database service with multi-provider support",
             version="1.0.0"
         )

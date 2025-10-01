@@ -201,7 +201,7 @@ class EnterpriseDataValidator:
         self.audit_log = deque(maxlen=10000)
         
         # Initialisation schemas IA Chérie
-        self._initialize_ainflue_schemas()
+        self._initialize_iacherie_schemas()
         
         # Démarrage monitoring
         self.monitoring_thread = None
@@ -247,7 +247,7 @@ class EnterpriseDataValidator:
             }
         }
 
-    def _initialize_ainflue_schemas(self):
+    def _initialize_iacherie_schemas(self):
         """Initialisation schemas IA Chérie enterprise - DBA expertise"""
         logger.info("🎯 Initialisation schemas IA Chérie enterprise")
         
@@ -1060,7 +1060,7 @@ class EnterpriseDataValidator:
         """Collecte métriques base de données"""
         
         # Simulation métriques multi-DB
-        databases = ["ainflue_main", "ainflue_analytics", "ainflue_cache"]
+        databases = ["iacherie_main", "iacherie_analytics", "iacherie_cache"]
         metrics = {}
         
         for db_name in databases:

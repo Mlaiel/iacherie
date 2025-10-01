@@ -242,7 +242,7 @@ class DataServicesOrchestrator:
             source_id='creators',
             name='Creator Profiles Database',
             source_type=DataSourceType.DATABASE,
-            connection_config={'table': 'creators', 'db': 'ainflue_main'},
+            connection_config={'table': 'creators', 'db': 'iacherie_main'},
             schema={
                 'creator_id': 'string',
                 'username': 'string',
@@ -257,7 +257,7 @@ class DataServicesOrchestrator:
             source_id='content',
             name='Content Metadata Database',
             source_type=DataSourceType.DATABASE,
-            connection_config={'table': 'content', 'db': 'ainflue_main'},
+            connection_config={'table': 'content', 'db': 'iacherie_main'},
             schema={
                 'content_id': 'string',
                 'creator_id': 'string',

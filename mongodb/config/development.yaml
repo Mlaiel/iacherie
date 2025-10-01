@@ -8,7 +8,7 @@ mongodb:
   connection:
     host: "localhost"
     port: 27017
-    database: "ainflue_dev"
+    database: "iacherie_dev"
     replica_set: null  # Single instance for development
     ssl: false
     
@@ -169,7 +169,7 @@ development:
     
   # Testing
   testing:
-    test_database: "ainflue_test"
+    test_database: "iacherie_test"
     parallel_tests: true
     coverage_threshold: 80
     

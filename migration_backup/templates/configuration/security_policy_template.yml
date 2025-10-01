@@ -1,4 +1,4 @@
-# Security Policy Template - Ainflue Creator Economy Platform
+# Security Policy Template - IA Chéries Creator Economy Platform
 # ============================================================
 #
 # 🎯 SECURITY EXPERT + DEVOPS ENGINEER + COMPLIANCE SPECIALIST
@@ -190,7 +190,7 @@ metadata:
     component: service-account
     business-unit: creator-economy
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformRole
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/IA ChériesPlatformRole
 automountServiceAccountToken: true
 ---
 # Cluster Role Binding
@@ -260,7 +260,7 @@ metadata:
     security-level: high
     compliance: pci-dss
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/AinfluePlatformMonetizationRole
+    eks.amazonaws.com/role-arn: arn:aws:iam::${AWS_ACCOUNT_ID}:role/IA ChériesPlatformMonetizationRole
 automountServiceAccountToken: true
 ---
 # Role Binding for Monetization Service
@@ -571,7 +571,7 @@ spec:
   crd:
     spec:
       names:
-        kind: AinfluecreatoreconomySecurity
+        kind: IA ChériescreatoreconomySecurity
       validation:
         type: object
         properties:
@@ -617,7 +617,7 @@ spec:
 ---
 # Creator Economy Security Constraint
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: AinfluecreatoreconomySecurity
+kind: IA ChériescreatoreconomySecurity
 metadata:
   name: creator-economy-security
   labels:

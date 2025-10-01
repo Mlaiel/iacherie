@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ML & AI Model Serving Endpoints - Ainflue Platform
+ML & AI Model Serving Endpoints - IA Chéries Platform
 Author: Fahed Mlaiel (mlaiel@live.de)
 Role: ML Engineer + IA Prompt Engineer + Lead Dev IA
 Purpose: Enterprise ML model serving, AI orchestration and prompt optimization

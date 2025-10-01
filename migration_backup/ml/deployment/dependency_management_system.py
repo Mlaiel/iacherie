@@ -888,7 +888,7 @@ async def example_usage():
     
     # Initialize dependency management system
     deps_manager = DependencyManagementSystem(
-        project_path="/home/runner/work/Ainflue/Ainflue",
+        project_path="/home/runner/work/IA Chéries/IA Chéries",
         enable_ai_resolution=True,
         security_scanning=True
     )

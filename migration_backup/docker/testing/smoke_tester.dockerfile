@@ -1,11 +1,11 @@
 # Smoke Tester Service
-# Basic functionality smoke testing for Ainflue Platform
+# Basic functionality smoke testing for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Smoke Tester - Basic functionality validation"
+LABEL description="IA Chéries Smoke Tester - Basic functionality validation"
 LABEL version="1.0.0"
 
 # Set working directory

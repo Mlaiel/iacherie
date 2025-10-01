@@ -34,7 +34,7 @@ Cette architecture de services, ses algorithmes IA innovants, microservices avan
 
 ## 🎯 Résumé Exécutif
 
-Le module **Services Backend** est l'architecture microservices entreprise d'Ainflue fournissant des services métier scalables, intelligence pilotée par IA, traitement de données sécurisé, et infrastructure de niveau entreprise pour la plateforme complète d'économie des créateurs.
+Le module **Services Backend** est l'architecture microservices entreprise d'iacherie fournissant des services métier scalables, intelligence pilotée par IA, traitement de données sécurisé, et infrastructure de niveau entreprise pour la plateforme complète d'économie des créateurs.
 
 ### Valeur Business Principale
 
@@ -294,16 +294,16 @@ payment_result = await payment_service.process_payment(
 - **Formation & Onboarding**: Formation équipe professionnelle et ateliers
 
 ### Ressources Développeur
-- **[Portail Développeur](https://developers.ainflue.com)** - APIs, SDKs et outils
-- **[Forum Communauté](https://community.ainflue.com)** - Discussions développeur et support
-- **[Open Source](https://github.com/ainflue)** - Outils et librairies open source
+- **[Portail Développeur](https://developers.iacherie.com)** - APIs, SDKs et outils
+- **[Forum Communauté](https://community.iacherie.com)** - Discussions développeur et support
+- **[Open Source](https://github.com/iacherie)** - Outils et librairies open source
 
 ## 📞 Contact & Support
 
-**Support Technique**: [support@ainflue.com](mailto:support@ainflue.com)
-**Ventes Entreprise**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**Relations Développeur**: [developers@ainflue.com](mailto:developers@ainflue.com)
-**Questions Sécurité**: [security@ainflue.com](mailto:security@ainflue.com)
+**Support Technique**: [support@iacherie.com](mailto:support@iacherie.com)
+**Ventes Entreprise**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**Relations Développeur**: [developers@iacherie.com](mailto:developers@iacherie.com)
+**Questions Sécurité**: [security@iacherie.com](mailto:security@iacherie.com)
 
 **Direction Projet**: [Fahed Mlaiel](mailto:mlaiel@live.de)
 

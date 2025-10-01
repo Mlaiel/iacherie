@@ -3,7 +3,7 @@
 ===========================================
 
 Master orchestrator that integrates all payment gateway components into
-a unified enterprise-grade payment processing system for the Ainflue
+a unified enterprise-grade payment processing system for the IA Chéries
 AI creator platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

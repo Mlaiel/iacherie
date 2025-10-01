@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Application Entry Point
+ * IA Chéries Desktop - Application Entry Point
  * 
  * Professional AI content creation studio with advanced architecture
  * 
@@ -20,9 +20,9 @@ const ApplicationLifecycleManager = require('./application_lifecycle_manager');
 const DesktopSecurityManager = require('./desktop_security_manager');
 const AutoUpdaterManager = require('./auto_updater_manager');
 
-class AinflueMasterApplication {
+class IA ChériesMasterApplication {
   constructor() {
-    this.appName = 'Ainflue Desktop Studio';
+    this.appName = 'IA Chéries Desktop Studio';
     this.version = '1.0.0';
     this.author = 'Fahed Mlaiel';
     this.isProduction = !process.argv.includes('--dev');
@@ -266,7 +266,7 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Initialize application
-const masterApp = new AinflueMasterApplication();
+const masterApp = new IA ChériesMasterApplication();
 
 // Export for external access
 module.exports = masterApp;

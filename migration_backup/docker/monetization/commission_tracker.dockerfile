@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE COMMISSION TRACKER - CALCULATION DOCKERFILE
+# IA CHÉRIES COMMISSION TRACKER - CALCULATION DOCKERFILE
 # =============================================================================
 
 FROM ubuntu:22.04 AS commission-base
@@ -48,7 +48,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE ${COMMISSION_SERVICE_PORT}
 CMD ["python3.11", "-m", "commission_tracker.main"]
 
-LABEL org.opencontainers.image.title="Ainflue Commission Tracker"
+LABEL org.opencontainers.image.title="IA Chéries Commission Tracker"
 LABEL ainflue.service.category="monetization"
 LABEL ainflue.service.name="commission_tracker"
 LABEL ainflue.service.port="8049"

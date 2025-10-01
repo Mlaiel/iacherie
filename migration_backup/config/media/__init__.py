@@ -1,10 +1,10 @@
-"""Ainflue Media Processing Configuration
+"""IA Chéries Media Processing Configuration
 ======================================
 
 Media processing configurations for audio, video, image processing,
 streaming, transcoding, compression, and content delivery networks.
 
-Enterprise media configuration management for Ainflue platform.
+Enterprise media configuration management for IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -112,5 +112,5 @@ __all__ = [
     "media_config_manager"
 ]
 
-logger.info("🎬 Ainflue Media Processing Configuration Module loaded")
+logger.info("🎬 IA Chéries Media Processing Configuration Module loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

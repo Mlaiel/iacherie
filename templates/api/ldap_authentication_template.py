@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise LDAP Authentication Template - Ainflue API Templates
+⚡ Enterprise LDAP Authentication Template - iacherie API Templates
 Advanced production-ready LDAP/Active Directory authentication system
 
 ⚠️ PROTECTION INTELLECTUELLE:

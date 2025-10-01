@@ -1,5 +1,5 @@
 """
-Keyword Research Engine - Ainflue SEO Optimization
+Keyword Research Engine - IA Chéries SEO Optimization
 ===============================================
 Advanced AI-powered keyword research engine with ML models for enterprise SEO.
 Support for 644 languages + cultural dialects with intelligent keyword analysis.
@@ -9,7 +9,7 @@ Cette architecture est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de)
 Toute reproduction ou utilisation non autorisée est strictement interdite.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue SEO Optimization
+Project: IA Chéries SEO Optimization
 Version: 1.0 Production
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
@@ -35,7 +35,7 @@ import redis
 from urllib.parse import quote_plus
 import re
 
-# Ainflue core imports
+# IA Chéries core imports
 from core.ai_engine.ml_models import MLModelManager
 from core.i18n.language_detection import LanguageDetector
 from core.security.encryption import DataEncryption

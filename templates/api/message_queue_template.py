@@ -1,4 +1,4 @@
-"""Message Queue Template for Ainflue Platform
+"""Message Queue Template for iacherie Platform
 Enterprise-grade asynchronous message processing and task management
 
 ⚠️  AVERTISSEMENT LÉGAL:
@@ -114,7 +114,7 @@ class QueueConfig:
     celery_result_backend: str = "redis://localhost:6379/2"
     kafka_bootstrap_servers: List[str] = field(default_factory=lambda: ["localhost:9092"])
     rabbitmq_url: str = "amqp://guest@localhost:5672//"
-    default_queue_name: str = "ainflue_tasks"
+    default_queue_name: str = "iacherie_tasks"
     max_retries: int = 3
     retry_delay_seconds: int = 60
     task_timeout_seconds: int = 300
@@ -503,7 +503,7 @@ class CeleryMessageQueue(BaseMessageQueue):
     def _initialize_celery(self):
         """Initialize Celery application"""
         self.celery_app = Celery(
-            'ainflue_tasks',
+            'iacherie_tasks',
             broker=self.config.celery_broker_url,
             backend=self.config.celery_result_backend
         )

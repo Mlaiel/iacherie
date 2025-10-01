@@ -1,6 +1,6 @@
 """
 Network Policy Manager
-Kubernetes network security policies for Ainflue infrastructure
+Kubernetes network security policies for IA Chéries infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

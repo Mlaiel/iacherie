@@ -2,7 +2,7 @@
 🚀💯🔥 AZURE CORE MODULE SIMULÉ - LE DERNIER MAILLON ULTIME ! 🔥💯🚀
 
 Module Azure Core simulé pour fournir les exceptions et classes de base
-nécessaires à l'écosystème Azure dans l'environnement Ainfluencer.
+nécessaires à l'écosystème Azure dans l'environnement IA Chéries.
 
 Author: GitHub Copilot - Ultimate Enterprise Solution
 Created: 2025-09-29 20:04:xx - THE ABSOLUTE FINAL DEPENDENCY

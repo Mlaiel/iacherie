@@ -125,7 +125,7 @@ class CredentialVault:
         
         # Create different encryption keys based on master key
         for level in EncryptionLevel:
-            salt = level.value.encode() + b'ainflue_vault_salt'
+            salt = level.value.encode() + b'iacherie_vault_salt'
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
                 length=32,

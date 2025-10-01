@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - Worker Service Helm Chart
+# IA Chéries Infrastructure Module - Worker Service Helm Chart
 # ==========================================================
 # 
-# Enterprise-grade Worker service chart for Ainflue platform
+# Enterprise-grade Worker service chart for IA Chéries platform
 # Background job processing, media encoding, AI tasks, and analytics
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,13 +11,13 @@
 
 apiVersion: v2
 name: ainflue-worker
-description: "Enterprise Worker service for Ainflue platform with multi-queue processing"
+description: "Enterprise Worker service for IA Chéries platform with multi-queue processing"
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
 home: https://workers.ainflue.com
 sources:
-  - https://github.com/Mlaiel/Ainflue
+  - https://github.com/Mlaiel/IA Chéries
 maintainers:
   - name: Fahed Mlaiel
     email: mlaiel@live.de

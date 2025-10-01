@@ -94,7 +94,7 @@
             "email_configs": [
               {
                 "to": "alerts@ainflue.com",
-                "subject": "[AINFLUE ALERT] {{ .GroupLabels.alertname }}",
+                "subject": "[IA CHÉRIES ALERT] {{ .GroupLabels.alertname }}",
                 "body": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}"
               }
             ],
@@ -102,7 +102,7 @@
               {
                 "api_url": "${SLACK_WEBHOOK_URL}",
                 "channel": "#alerts",
-                "title": "Ainflue Alert: {{ .GroupLabels.alertname }}"
+                "title": "IA Chéries Alert: {{ .GroupLabels.alertname }}"
               }
             ]
           },

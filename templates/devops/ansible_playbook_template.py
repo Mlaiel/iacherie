@@ -1,4 +1,4 @@
-"""Ansible Playbook Template for Ainflue Platform
+"""Ansible Playbook Template for iacherie Platform
 Enterprise-grade configuration management template for creator economy platform.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -29,7 +29,7 @@ class DeploymentTarget(Enum):
 
 
 class ServiceType(Enum):
-    """Service types for Ainflue platform"""
+    """Service types for iacherie platform"""
     API_GATEWAY = "api_gateway"
     AUTH_SERVICE = "auth_service"
     CONTENT_PROCESSOR = "content_processor"
@@ -50,7 +50,7 @@ class AnsibleConfig:
     docker_version: str = "24.0"
     node_version: str = "18"
     
-    # Ainflue specific services
+    # iacherie specific services
     enable_ai_processing: bool = True
     enable_media_services: bool = True
     enable_analytics: bool = True
@@ -58,7 +58,7 @@ class AnsibleConfig:
 
 
 class AnsiblePlaybookTemplate:
-    """Enterprise Ansible Playbook Template for Ainflue Platform"""
+    """Enterprise Ansible Playbook Template for iacherie Platform"""
     
     def __init__(self, config: AnsibleConfig):
         self.config = config
@@ -67,7 +67,7 @@ class AnsiblePlaybookTemplate:
     def generate_main_playbook(self) -> Dict[str, Any]:
         """Generate main deployment playbook"""
         return {
-            "name": f"Deploy Ainflue Platform - {self.config.environment.value.title()}",
+            "name": f"Deploy iacherie Platform - {self.config.environment.value.title()}",
             "hosts": self.config.hosts_group,
             "become": True,
             "gather_facts": True,
@@ -87,12 +87,12 @@ class AnsiblePlaybookTemplate:
             "docker_version": self.config.docker_version,
             "node_version": self.config.node_version,
             
-            # Ainflue platform specific
-            "ainflue_user": "ainflue",
-            "ainflue_group": "ainflue",
-            "ainflue_home": "/opt/ainflue",
-            "ainflue_logs": "/var/log/ainflue",
-            "ainflue_data": "/var/lib/ainflue",
+            # iacherie platform specific
+            "iacherie_user": "iacherie",
+            "iacherie_group": "iacherie",
+            "iacherie_home": "/opt/iacherie",
+            "iacherie_logs": "/var/log/iacherie",
+            "iacherie_data": "/var/lib/iacherie",
             
             # Service configurations
             "services": {
@@ -172,31 +172,31 @@ class AnsiblePlaybookTemplate:
                 }
             },
             {
-                "name": "Create ainflue system user",
+                "name": "Create iacherie system user",
                 "user": {
-                    "name": "{{ ainflue_user }}",
-                    "group": "{{ ainflue_group }}",
-                    "home": "{{ ainflue_home }}",
+                    "name": "{{ iacherie_user }}",
+                    "group": "{{ iacherie_group }}",
+                    "home": "{{ iacherie_home }}",
                     "shell": "/bin/bash",
                     "system": True
                 }
             },
             {
-                "name": "Create ainflue directories",
+                "name": "Create iacherie directories",
                 "file": {
                     "path": "{{ item }}",
                     "state": "directory",
-                    "owner": "{{ ainflue_user }}",
-                    "group": "{{ ainflue_group }}",
+                    "owner": "{{ iacherie_user }}",
+                    "group": "{{ iacherie_group }}",
                     "mode": "0755"
                 },
                 "loop": [
-                    "{{ ainflue_home }}",
-                    "{{ ainflue_logs }}",
-                    "{{ ainflue_data }}",
-                    "{{ ainflue_home }}/config",
-                    "{{ ainflue_home }}/scripts",
-                    "{{ ainflue_home }}/backups"
+                    "{{ iacherie_home }}",
+                    "{{ iacherie_logs }}",
+                    "{{ iacherie_data }}",
+                    "{{ iacherie_home }}/config",
+                    "{{ iacherie_home }}/scripts",
+                    "{{ iacherie_home }}/backups"
                 ]
             }
         ]
@@ -223,7 +223,7 @@ class AnsiblePlaybookTemplate:
         base_roles.extend([
             "postgresql",
             "redis",
-            "ainflue_platform"
+            "iacherie_platform"
         ])
         
         return base_roles
@@ -232,16 +232,16 @@ class AnsiblePlaybookTemplate:
         """Generate post-deployment tasks"""
         return [
             {
-                "name": "Start and enable ainflue services",
+                "name": "Start and enable iacherie services",
                 "systemd": {
                     "name": "{{ item }}",
                     "state": "started",
                     "enabled": True
                 },
                 "loop": [
-                    "ainflue-api-gateway",
-                    "ainflue-auth-service",
-                    "ainflue-content-processor"
+                    "iacherie-api-gateway",
+                    "iacherie-auth-service",
+                    "iacherie-content-processor"
                 ]
             },
             {
@@ -256,14 +256,14 @@ class AnsiblePlaybookTemplate:
             },
             {
                 "name": "Run database migrations",
-                "command": "{{ ainflue_home }}/scripts/migrate.sh",
-                "become_user": "{{ ainflue_user }}",
+                "command": "{{ iacherie_home }}/scripts/migrate.sh",
+                "become_user": "{{ iacherie_user }}",
                 "when": "environment != 'production' or database_migration_approved | default(false)"
             },
             {
                 "name": "Create initial admin user",
-                "command": "{{ ainflue_home }}/scripts/create_admin.sh",
-                "become_user": "{{ ainflue_user }}",
+                "command": "{{ iacherie_home }}/scripts/create_admin.sh",
+                "become_user": "{{ iacherie_user }}",
                 "when": "environment == 'development'"
             }
         ]
@@ -293,15 +293,15 @@ class AnsiblePlaybookTemplate:
                 }
             },
             {
-                "name": "restart ainflue services",
+                "name": "restart iacherie services",
                 "systemd": {
                     "name": "{{ item }}",
                     "state": "restarted"
                 },
                 "loop": [
-                    "ainflue-api-gateway",
-                    "ainflue-auth-service",
-                    "ainflue-content-processor"
+                    "iacherie-api-gateway",
+                    "iacherie-auth-service",
+                    "iacherie-content-processor"
                 ]
             }
         ]
@@ -318,7 +318,7 @@ class AnsiblePlaybookTemplate:
                                     f"web-{i+1}": {
                                         "ansible_host": f"10.0.{i+1}.10",
                                         "ansible_user": "ubuntu",
-                                        "ansible_ssh_private_key_file": "~/.ssh/ainflue-key.pem"
+                                        "ansible_ssh_private_key_file": "~/.ssh/iacherie-key.pem"
                                     }
                                     for i in range(2)
                                 }
@@ -328,7 +328,7 @@ class AnsiblePlaybookTemplate:
                                     f"app-{i+1}": {
                                         "ansible_host": f"10.0.{i+10}.10",
                                         "ansible_user": "ubuntu",
-                                        "ansible_ssh_private_key_file": "~/.ssh/ainflue-key.pem"
+                                        "ansible_ssh_private_key_file": "~/.ssh/iacherie-key.pem"
                                     }
                                     for i in range(3)
                                 }
@@ -338,13 +338,13 @@ class AnsiblePlaybookTemplate:
                                     "db-1": {
                                         "ansible_host": "10.0.100.10",
                                         "ansible_user": "ubuntu",
-                                        "ansible_ssh_private_key_file": "~/.ssh/ainflue-key.pem",
+                                        "ansible_ssh_private_key_file": "~/.ssh/iacherie-key.pem",
                                         "postgresql_role": "primary"
                                     },
                                     "db-2": {
                                         "ansible_host": "10.0.200.10",
                                         "ansible_user": "ubuntu",
-                                        "ansible_ssh_private_key_file": "~/.ssh/ainflue-key.pem",
+                                        "ansible_ssh_private_key_file": "~/.ssh/iacherie-key.pem",
                                         "postgresql_role": "replica"
                                     }
                                 }
@@ -366,14 +366,14 @@ class AnsiblePlaybookTemplate:
             },
             f"{self.config.environment.value}": {
                 "domain_name": f"{self.config.project_name}-{self.config.environment.value}.com",
-                "ssl_certificate_email": "admin@ainflue.com",
+                "ssl_certificate_email": "admin@iacherie.com",
                 "backup_retention_days": 30 if self.config.environment == DeploymentTarget.PRODUCTION else 7,
                 "log_level": "INFO" if self.config.environment == DeploymentTarget.PRODUCTION else "DEBUG"
             }
         }
     
     def generate_creator_economy_tasks(self) -> List[Dict[str, Any]]:
-        """Generate Ainflue creator economy specific tasks"""
+        """Generate iacherie creator economy specific tasks"""
         return [
             {
                 "name": "Install AI/ML dependencies",
@@ -388,7 +388,7 @@ class AnsiblePlaybookTemplate:
                         "numpy",
                         "scikit-learn"
                     ],
-                    "virtualenv": "{{ ainflue_home }}/venv"
+                    "virtualenv": "{{ iacherie_home }}/venv"
                 },
                 "when": "{{ enable_ai_processing }}"
             },
@@ -412,23 +412,23 @@ class AnsiblePlaybookTemplate:
                 "file": {
                     "path": "{{ item }}",
                     "state": "directory",
-                    "owner": "{{ ainflue_user }}",
-                    "group": "{{ ainflue_group }}",
+                    "owner": "{{ iacherie_user }}",
+                    "group": "{{ iacherie_group }}",
                     "mode": "0755"
                 },
                 "loop": [
-                    "{{ ainflue_data }}/uploads",
-                    "{{ ainflue_data }}/processed",
-                    "{{ ainflue_data }}/thumbnails",
-                    "{{ ainflue_data }}/temp",
-                    "{{ ainflue_data }}/analytics"
+                    "{{ iacherie_data }}/uploads",
+                    "{{ iacherie_data }}/processed",
+                    "{{ iacherie_data }}/thumbnails",
+                    "{{ iacherie_data }}/temp",
+                    "{{ iacherie_data }}/analytics"
                 ]
             },
             {
                 "name": "Configure content processing workers",
                 "template": {
                     "src": "celery-worker.service.j2",
-                    "dest": "/etc/systemd/system/ainflue-content-worker@.service",
+                    "dest": "/etc/systemd/system/iacherie-content-worker@.service",
                     "owner": "root",
                     "group": "root",
                     "mode": "0644"
@@ -438,7 +438,7 @@ class AnsiblePlaybookTemplate:
             {
                 "name": "Start content processing workers",
                 "systemd": {
-                    "name": f"ainflue-content-worker@{i+1}",
+                    "name": f"iacherie-content-worker@{i+1}",
                     "state": "started",
                     "enabled": True
                 },
@@ -544,7 +544,7 @@ class AnsiblePlaybookTemplate:
 def create_production_config() -> AnsibleConfig:
     """Create production environment configuration"""
     return AnsibleConfig(
-        project_name="ainflue-platform",
+        project_name="iacherie-platform",
         environment=DeploymentTarget.PRODUCTION,
         hosts_group="production",
         python_version="3.11",
@@ -559,7 +559,7 @@ def create_production_config() -> AnsibleConfig:
 def create_development_config() -> AnsibleConfig:
     """Create development environment configuration"""
     return AnsibleConfig(
-        project_name="ainflue-dev",
+        project_name="iacherie-dev",
         environment=DeploymentTarget.DEVELOPMENT,
         hosts_group="development",
         python_version="3.11",
@@ -576,7 +576,7 @@ if __name__ == "__main__":
     prod_config = create_production_config()
     prod_template = AnsiblePlaybookTemplate(prod_config)
     
-    print("Ansible Playbook Template for Ainflue Platform")
+    print("Ansible Playbook Template for iacherie Platform")
     print("Configuration:")
     print(f"- Environment: {prod_config.environment.value}")
     print(f"- Python Version: {prod_config.python_version}")

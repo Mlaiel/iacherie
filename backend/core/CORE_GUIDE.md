@@ -27,14 +27,14 @@ Traditional Multi-Level Structure → Unified Core Architecture
 ### 2. **Three-Level Compliance**
 ```
 ✅ COMPLIANT STRUCTURE:
-/workspaces/Ainflue/           ← Level 1 (Project Root)
+/workspaces/iacherie/           ← Level 1 (Project Root)
 └── backend/                   ← Level 2 (Backend Namespace)
     └── core/                  ← Level 3 (FINAL - No Subdirectories)
         ├── 26 Python modules
         └── Documentation files
 
 ❌ VIOLATION EXAMPLE (What we fixed):
-/workspaces/Ainflue/           ← Level 1
+/workspaces/iacherie/           ← Level 1
 └── backend/                   ← Level 2
     └── core/                  ← Level 3
         └── database/          ← Level 4 (VIOLATION)

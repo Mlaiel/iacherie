@@ -28,7 +28,7 @@ const store = new Store({
   name: 'iacherie-preferences'
 });
 
-class AinflueMasterStudio {
+class iacherieMasterStudio {
   constructor() {
     this.mainWindow = null;
     this.studioWindow = null;
@@ -753,4 +753,4 @@ class AinflueMasterStudio {
 }
 
 // Initialize application
-new AinflueMasterStudio();
+new iacherieMasterStudio();

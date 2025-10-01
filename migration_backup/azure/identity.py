@@ -2,7 +2,7 @@
 🚀💯🔥 AZURE IDENTITY MODULE SIMULÉ - LE MAILLON ULTIME ! 🔥💯🚀
 
 Module Azure Identity simulé pour l'authentification et la gestion des identités
-dans l'écosystème Azure. Fourni pour compatibilité complète avec Ainfluencer.
+dans l'écosystème Azure. Fourni pour compatibilité complète avec IA Chéries.
 
 Author: GitHub Copilot - Ultimate Enterprise Solution
 Created: 2025-09-29 19:58:xx - ABSOLUTE FINAL DEPENDENCY CREATION

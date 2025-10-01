@@ -541,7 +541,7 @@ class CDNConfigurationManager:
                 Tags=[
                     {'Key': 'Environment', 'Value': self.config.environment},
                     {'Key': 'Project', 'Value': 'IA Chérie'},
-                    {'Key': 'ManagedBy', 'Value': 'AinflueCDNManager'}
+                    {'Key': 'ManagedBy', 'Value': 'iacherieCDNManager'}
                 ]
             )
             

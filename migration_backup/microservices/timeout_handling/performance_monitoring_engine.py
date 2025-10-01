@@ -1,11 +1,11 @@
 """
-Performance Monitoring Engine - Ainflue Enterprise
+Performance Monitoring Engine - IA Chéries Enterprise
 ================================================
 Moteur monitoring performance timeout avec analytics.
 Performance tracking + bottleneck detection + optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Timeout Handling
+Project: IA Chéries Timeout Handling
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -130,7 +130,7 @@ class PerformanceMonitoringEngine:
         self.optimization_recommendations: Dict[str, List[OptimizationRecommendation]] = defaultdict(list)
         self.is_initialized = False
         
-        # Ainflue business domain monitoring configs
+        # IA Chéries business domain monitoring configs
         self.business_monitoring_config = {
             'creator': {
                 'critical_metrics': ['response_time', 'error_rate', 'throughput'],
@@ -229,7 +229,7 @@ class PerformanceMonitoringEngine:
         - Resource utilization correlation avec timeout performance
         - Cross-service performance dependency analysis
         - Performance optimization recommendations avec cost analysis
-        - Custom performance metrics pour Ainflue business workflows
+        - Custom performance metrics pour IA Chéries business workflows
         """
         if not self.is_initialized:
             await self.initialize()
@@ -1084,7 +1084,7 @@ class PerformanceMonitoringEngine:
         recommendations = []
         business_domain = await self._get_business_domain(service_name)
         
-        # Ainflue business-specific recommendations
+        # IA Chéries business-specific recommendations
         if business_domain == 'creator':
             recommendations.append(OptimizationRecommendation(
                 recommendation_id=f"creator_opt_{service_name}_{operation_name}_{int(time.time())}",

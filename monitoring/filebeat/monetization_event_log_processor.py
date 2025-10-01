@@ -134,7 +134,7 @@ class MonetizationEventLogProcessor:
             "max_amount_threshold": Decimal('1000000.00'),
             "required_fields": ["creator_id", "event_type", "amount"],
             "currency_whitelist": ["USD", "EUR", "GBP", "CAD", "AUD"],
-            "platform_whitelist": ["youtube", "twitch", "tiktok", "instagram", "ainflue"]
+            "platform_whitelist": ["youtube", "twitch", "tiktok", "instagram", "iacherie"]
         }
         
         # Initialize components

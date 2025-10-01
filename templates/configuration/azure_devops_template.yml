@@ -1,4 +1,4 @@
-# Azure DevOps Pipeline Template for Ainflue Platform
+# Azure DevOps Pipeline Template for iacherie Platform
 # Comprehensive CI/CD pipeline using Azure DevOps YAML
 
 trigger:
@@ -25,7 +25,7 @@ pr:
 variables:
   # Application configuration
   - name: appName
-    value: 'ainflue'
+    value: 'iacherie'
   - name: buildConfiguration
     value: 'Release'
   
@@ -39,17 +39,17 @@ variables:
   
   # Container registry
   - name: containerRegistry
-    value: 'ainflueacr.azurecr.io'
+    value: 'iacherieacr.azurecr.io'
   - name: dockerRegistryServiceConnection
-    value: 'AinflueContainerRegistry'
+    value: 'iacherieContainerRegistry'
   
   # Kubernetes configuration
   - name: kubernetesServiceConnection
-    value: 'AinflueKubernetes'
+    value: 'iacherieKubernetes'
   - name: stagingNamespace
-    value: 'ainflue-staging'
+    value: 'iacherie-staging'
   - name: productionNamespace
-    value: 'ainflue-production'
+    value: 'iacherie-production'
   
   # Testing configuration
   - name: coverageThreshold
@@ -58,15 +58,15 @@ variables:
     value: '2000'
 
 # Variable groups (defined in Azure DevOps)
-- group: 'Ainflue-Development'
-- group: 'Ainflue-Staging'
-- group: 'Ainflue-Production'
+- group: 'iacherie-Development'
+- group: 'iacherie-Staging'
+- group: 'iacherie-Production'
 
 resources:
   repositories:
     - repository: templates
       type: git
-      name: ainflue/azure-pipelines-templates
+      name: iacherie/azure-pipelines-templates
       ref: main
 
 stages:
@@ -105,12 +105,12 @@ stages:
           - task: SonarCloudPrepare@1
             displayName: 'Prepare SonarCloud analysis'
             inputs:
-              SonarCloud: 'SonarCloud-Ainflue'
-              organization: 'ainflue'
+              SonarCloud: 'SonarCloud-iacherie'
+              organization: 'iacherie'
               scannerMode: 'CLI'
               configMode: 'manual'
-              cliProjectKey: 'ainflue'
-              cliProjectName: 'Ainflue'
+              cliProjectKey: 'iacherie'
+              cliProjectName: 'iacherie'
               cliSources: '.'
               extraProperties: |
                 sonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**
@@ -251,7 +251,7 @@ stages:
           postgres:
             image: postgres:13
             env:
-              POSTGRES_DB: ainflue_test
+              POSTGRES_DB: iacherie_test
               POSTGRES_USER: test_user
               POSTGRES_PASSWORD: test_password
             ports:
@@ -273,7 +273,7 @@ stages:
               npm run test:integration
             displayName: 'Run Integration Tests'
             env:
-              DATABASE_URL: 'postgresql://test_user:test_password@localhost:5432/ainflue_test'
+              DATABASE_URL: 'postgresql://test_user:test_password@localhost:5432/iacherie_test'
               REDIS_URL: 'redis://localhost:6379'
           
           - task: PublishTestResults@2
@@ -307,7 +307,7 @@ stages:
             displayName: 'WhiteSource Security Scan'
             inputs:
               cwd: '$(System.DefaultWorkingDirectory)'
-              projectName: 'Ainflue'
+              projectName: 'iacherie'
           
           - script: |
               # Install and run GitLeaks for secret detection
@@ -340,7 +340,7 @@ stages:
             displayName: 'Build API Image'
             inputs:
               containerRegistry: '$(dockerRegistryServiceConnection)'
-              repository: 'ainflue-api'
+              repository: 'iacherie-api'
               command: 'buildAndPush'
               Dockerfile: 'services/api/Dockerfile'
               buildContext: 'services/api'
@@ -352,7 +352,7 @@ stages:
             displayName: 'Build Web Image'
             inputs:
               containerRegistry: '$(dockerRegistryServiceConnection)'
-              repository: 'ainflue-web'
+              repository: 'iacherie-web'
               command: 'buildAndPush'
               Dockerfile: 'services/web/Dockerfile'
               buildContext: 'services/web'
@@ -364,7 +364,7 @@ stages:
             displayName: 'Build ML Image'
             inputs:
               containerRegistry: '$(dockerRegistryServiceConnection)'
-              repository: 'ainflue-ml'
+              repository: 'iacherie-ml'
               command: 'buildAndPush'
               Dockerfile: 'services/ml/Dockerfile'
               buildContext: 'services/ml'
@@ -375,7 +375,7 @@ stages:
           - task: AquaScanner@4
             displayName: 'Container Security Scan'
             inputs:
-              image: '$(containerRegistry)/ainflue-api:$(imageTag)'
+              image: '$(containerRegistry)/iacherie-api:$(imageTag)'
               scanner: 'Trivy'
               connection: 'AquaSecurity'
 
@@ -389,7 +389,7 @@ stages:
         displayName: 'Deploy to Staging Environment'
         pool:
           vmImage: 'ubuntu-latest'
-        environment: 'Ainflue-Staging'
+        environment: 'iacherie-Staging'
         strategy:
           runOnce:
             deploy:
@@ -401,7 +401,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(stagingNamespace)'
                     manifests: 'kubernetes/api-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-api:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-api:$(imageTag)'
                 
                 - task: KubernetesManifest@0
                   displayName: 'Deploy Web to Staging'
@@ -410,7 +410,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(stagingNamespace)'
                     manifests: 'kubernetes/web-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-web:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-web:$(imageTag)'
                 
                 - task: KubernetesManifest@0
                   displayName: 'Deploy ML to Staging'
@@ -419,7 +419,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(stagingNamespace)'
                     manifests: 'kubernetes/ml-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-ml:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-ml:$(imageTag)'
 
   # Staging Tests
   - stage: StagingTests
@@ -438,8 +438,8 @@ stages:
           
           - script: |
               npm ci
-              export API_BASE_URL="https://api.staging.ainflue.com"
-              export WEB_BASE_URL="https://staging.ainflue.com"
+              export API_BASE_URL="https://api.staging.iacherie.com"
+              export WEB_BASE_URL="https://staging.iacherie.com"
               npm run test:smoke
             displayName: 'Run Smoke Tests'
           
@@ -463,8 +463,8 @@ stages:
           - script: |
               npm ci
               npx playwright install
-              export API_BASE_URL="https://api.staging.ainflue.com"
-              export WEB_BASE_URL="https://staging.ainflue.com"
+              export API_BASE_URL="https://api.staging.iacherie.com"
+              export WEB_BASE_URL="https://staging.iacherie.com"
               npm run test:e2e:staging
             displayName: 'Run E2E Tests'
           
@@ -501,7 +501,7 @@ stages:
               k6 run --vus 100 --duration 2m performance/stress-test.js
             displayName: 'Run Performance Tests'
             env:
-              API_BASE_URL: 'https://api.staging.ainflue.com'
+              API_BASE_URL: 'https://api.staging.iacherie.com'
           
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Performance Reports'
@@ -519,7 +519,7 @@ stages:
         displayName: 'Deploy to Production Environment'
         pool:
           vmImage: 'ubuntu-latest'
-        environment: 'Ainflue-Production'
+        environment: 'iacherie-Production'
         strategy:
           runOnce:
             deploy:
@@ -546,7 +546,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(productionNamespace)'
                     manifests: 'kubernetes/api-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-api:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-api:$(imageTag)'
                 
                 - task: KubernetesManifest@0
                   displayName: 'Deploy Web to Production'
@@ -555,7 +555,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(productionNamespace)'
                     manifests: 'kubernetes/web-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-web:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-web:$(imageTag)'
                 
                 - task: KubernetesManifest@0
                   displayName: 'Deploy ML to Production'
@@ -564,7 +564,7 @@ stages:
                     kubernetesServiceConnection: '$(kubernetesServiceConnection)'
                     namespace: '$(productionNamespace)'
                     manifests: 'kubernetes/ml-deployment.yaml'
-                    containers: '$(containerRegistry)/ainflue-ml:$(imageTag)'
+                    containers: '$(containerRegistry)/iacherie-ml:$(imageTag)'
 
   # Production Validation
   - stage: ProductionValidation
@@ -583,8 +583,8 @@ stages:
           
           - script: |
               npm ci
-              export API_BASE_URL="https://api.ainflue.com"
-              export WEB_BASE_URL="https://app.ainflue.com"
+              export API_BASE_URL="https://api.iacherie.com"
+              export WEB_BASE_URL="https://app.iacherie.com"
               npm run test:smoke:production
             displayName: 'Run Production Smoke Tests'
           
@@ -603,7 +603,7 @@ stages:
               method: 'POST'
               body: |
                 {
-                  "text": "✅ Ainflue successfully deployed to production!",
+                  "text": "✅ iacherie successfully deployed to production!",
                   "sections": [
                     {
                       "activityTitle": "Production Deployment Complete",

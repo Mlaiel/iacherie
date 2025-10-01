@@ -1,5 +1,5 @@
 """IA Influencer Agent - Kafka Consumer Orchestrator
-Enterprise Kafka Consumer Group Management for Ainflue Platform
+Enterprise Kafka Consumer Group Management for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -42,8 +42,8 @@ class LoadBalancingStrategy(Enum):
     COOPERATIVE = "cooperative"
 
 
-class AinflueBusinesConsumerGroups:
-    """Consumer groups for Ainflue business workflows"""
+class IA ChériesBusinesConsumerGroups:
+    """Consumer groups for IA Chéries business workflows"""
     
     # Content Processing Pipeline
     CONTENT_UPLOAD_PROCESSOR = "ainflue-content-upload-processor"
@@ -483,7 +483,7 @@ class KafkaConsumer:
 
 
 class KafkaConsumerOrchestrator:
-    """Orchestrates multiple Kafka consumer groups for Ainflue platform"""
+    """Orchestrates multiple Kafka consumer groups for IA Chéries platform"""
     
     def __init__(self, metrics_collector=None):
         self.metrics_collector = metrics_collector
@@ -497,7 +497,7 @@ class KafkaConsumerOrchestrator:
         self._register_default_processors()
     
     def _register_default_processors(self):
-        """Register default message processors for Ainflue business logic"""
+        """Register default message processors for IA Chéries business logic"""
         self.processors["content_upload"] = ContentUploadProcessor()
         self.processors["ai_analysis"] = AIAnalysisProcessor()
     
@@ -509,7 +509,7 @@ class KafkaConsumerOrchestrator:
             # Start orchestrator monitoring task
             self._orchestrator_task = asyncio.create_task(self._orchestrator_loop())
             
-            # Setup default consumer groups for Ainflue
+            # Setup default consumer groups for IA Chéries
             await self._setup_default_consumer_groups()
             
             logger.info("Kafka Consumer Orchestrator started successfully")
@@ -542,11 +542,11 @@ class KafkaConsumerOrchestrator:
             raise
     
     async def _setup_default_consumer_groups(self):
-        """Setup default consumer groups for Ainflue platform"""
+        """Setup default consumer groups for IA Chéries platform"""
         try:
             # Content upload processing group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.CONTENT_UPLOAD_PROCESSOR,
+                group_id=IA ChériesBusinesConsumerGroups.CONTENT_UPLOAD_PROCESSOR,
                 topics=["ainflue-content-events"],
                 consumer_count=3,
                 processor=self.processors["content_upload"]
@@ -554,7 +554,7 @@ class KafkaConsumerOrchestrator:
             
             # AI analysis processing group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.AI_ANALYSIS_PROCESSOR,
+                group_id=IA ChériesBusinesConsumerGroups.AI_ANALYSIS_PROCESSOR,
                 topics=["ainflue-content-events"],
                 consumer_count=2,
                 processor=self.processors["ai_analysis"]
@@ -562,7 +562,7 @@ class KafkaConsumerOrchestrator:
             
             # Revenue analytics group
             await self.create_consumer_group(
-                group_id=AinflueBusinesConsumerGroups.REVENUE_ANALYTICS_PROCESSOR,
+                group_id=IA ChériesBusinesConsumerGroups.REVENUE_ANALYTICS_PROCESSOR,
                 topics=["ainflue-revenue-events"],
                 consumer_count=1,
                 processor=None  # Default processing
@@ -828,6 +828,6 @@ class KafkaConsumerOrchestrator:
 # Export public API
 __all__ = [
     "KafkaConsumerOrchestrator", "KafkaConsumer", "ConsumerConfig",
-    "AinflueBusinesConsumerGroups", "MessageProcessor", "ContentUploadProcessor",
+    "IA ChériesBusinesConsumerGroups", "MessageProcessor", "ContentUploadProcessor",
     "AIAnalysisProcessor", "ConsumerState", "LoadBalancingStrategy"
 ]

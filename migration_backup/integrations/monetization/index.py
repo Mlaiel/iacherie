@@ -1,11 +1,11 @@
 """
-Monetization - Ainflue Integrations
+Monetization - IA Chéries Integrations
 ===================================
 Point d'entrée principal pour monétisation enterprise.
 Orchestration pricing, revenue optimization et analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations  
+Project: IA Chéries Integrations  
 Version: 1.0 Production
 """
 
@@ -18,7 +18,7 @@ from .revenue_analytics import RevenueAnalytics
 from .ai_monetization_advisor import AIMonetizationAdvisor
 from .global_monetization import GlobalMonetization
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chéries
 MONETIZATION_CONFIG = {
     'pricing_models': ['freemium', 'subscription', 'pay_per_use', 'tiered', 'dynamic'],
     'revenue_streams': ['subscriptions', 'commissions', 'ads', 'premium_features', 'partnerships'],

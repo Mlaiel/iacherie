@@ -12,7 +12,7 @@ import json
 
 # Configuration FastAPI
 app = FastAPI(
-    title="Ainfluencer Enterprise API - Phase 1",
+    title="IA Chéries Enterprise API - Phase 1",
     description="API pour les 15 modules microservices (Phase 1 complétée)",
     version="1.0.0"
 )
@@ -317,7 +317,7 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
-        "platform": "Ainfluencer Enterprise",
+        "platform": "IA Chéries Enterprise",
         "version": "1.0.0",
         "phase_1_modules": "15/15 completed",
         "services": {
@@ -333,7 +333,7 @@ async def health_check():
 async def root():
     """Page d'accueil de l'API"""
     return {
-        "message": "Ainfluencer Enterprise API - Phase 1 Microservices",
+        "message": "IA Chéries Enterprise API - Phase 1 Microservices",
         "status": "🚀 15 modules implémentés",
         "documentation": "http://localhost:8000/docs",
         "modules": {
@@ -350,7 +350,7 @@ app.include_router(router)
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 Démarrage Ainfluencer Enterprise API")
+    print("🚀 Démarrage IA Chéries Enterprise API")
     print("📊 15 modules microservices - Phase 1 complétée")
     print("🔗 Documentation: http://localhost:8000/docs")
     uvicorn.run(app, host="0.0.0.0", port=8000)

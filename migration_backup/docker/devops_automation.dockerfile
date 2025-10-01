@@ -4,7 +4,7 @@
 
 FROM ubuntu:22.04 AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue DevOps Automation - Advanced deployment orchestration"
+LABEL description="IA Chéries DevOps Automation - Advanced deployment orchestration"
 LABEL version="1.0.0"
 
 # Prevent interactive prompts during package installation

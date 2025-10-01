@@ -1,12 +1,12 @@
 """
-AI Marketing Optimizer - Ainflue Enterprise
+AI Marketing Optimizer - IA Chéries Enterprise
 ==========================================
 Optimiseur marketing IA enterprise avec ML avancé.
 Campaign optimization + audience targeting + ROI prediction + content generation.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Marketing Services - AI Optimization Engine
+Project: IA Chéries Marketing Services - AI Optimization Engine
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

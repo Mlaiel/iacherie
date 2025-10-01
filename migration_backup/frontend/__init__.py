@@ -1,5 +1,5 @@
 """
-🎯 Frontend Module - Ainflue Platform Enterprise
+🎯 Frontend Module - IA Chéries Platform Enterprise
 Frontend infrastructure and client-side components for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>

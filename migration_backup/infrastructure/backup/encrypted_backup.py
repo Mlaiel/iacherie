@@ -6,7 +6,7 @@ Advanced encrypted backup system with end-to-end encryption, key management,
 zero-knowledge architecture, and creator content protection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -159,7 +159,7 @@ class EncryptedBackupManager:
     def _derive_master_key(self, password: Optional[str]) -> bytes:
         """Derive master key from password using PBKDF2."""
         if not password:
-            password = os.environ.get('AINFLUE_MASTER_KEY', 'default_master_key_change_in_production')
+            password = os.environ.get('IA CHÉRIES_MASTER_KEY', 'default_master_key_change_in_production')
         
         salt = b'ainflue_backup_salt_2024'  # In production, use random salt per deployment
         kdf = PBKDF2HMAC(

@@ -1,5 +1,5 @@
 """
-🔥 ENTERPRISE ERROR HANDLER - AINFLUE PLATFORM
+🔥 ENTERPRISE ERROR HANDLER - IA CHÉRIES PLATFORM
 Ultra-advanced error handling and fault tolerance system
 Enterprise-grade error management for workflow systems
 """

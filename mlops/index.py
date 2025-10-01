@@ -272,17 +272,17 @@ class MLOpsPlatformOrchestrator:
             self.logger.error(f"Model deployment failed: {str(e)}")
             raise
     
-    async def execute_ainflue_workflow(
+    async def execute_iacherie_workflow(
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute the complete IA Chérie MLOps workflow with 53 AI agents"""
         try:
-            workflow_id = f"ainflue_workflow_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            workflow_id = f"iacherie_workflow_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             workflow_result = {
                 "workflow_id": workflow_id,
-                "workflow_type": "ainflue_53_agents",
+                "workflow_type": "iacherie_53_agents",
                 "status": "executing",
                 "phases": {},
                 "ai_agents_status": {},

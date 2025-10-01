@@ -1,4 +1,4 @@
-# ⚡ Vault Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Vault Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -19,7 +19,7 @@ metadata:
     component: server
 data:
   vault.hcl: |
-    # Vault Server Configuration for Ainflue
+    # Vault Server Configuration for IA Chéries
     ui = true
     disable_mlock = false
     
@@ -92,7 +92,7 @@ data:
       circonus_check_force_metric_activation = "true"
       circonus_check_instance_id = ""
       circonus_check_search_tag = "app:vault"
-      circonus_check_display_name = "Vault Ainflue"
+      circonus_check_display_name = "Vault IA Chéries"
       circonus_check_tags = "app:vault,environment:production"
       circonus_broker_id = ""
       circonus_broker_select_tag = ""
@@ -487,7 +487,7 @@ spec:
           # Configure PKI
           vault secrets tune -max-lease-ttl=87600h pki
           vault write pki/root/generate/internal \
-            common_name="Ainflue Root CA" \
+            common_name="IA Chéries Root CA" \
             ttl=87600h \
             key_bits=4096
           
@@ -500,7 +500,7 @@ spec:
           vault secrets tune -max-lease-ttl=43800h pki_int
           
           vault write -format=json pki_int/intermediate/generate/internal \
-            common_name="Ainflue Intermediate Authority" \
+            common_name="IA Chéries Intermediate Authority" \
             | jq -r '.data.csr' > pki_intermediate.csr
           
           vault write -format=json pki/root/sign-intermediate \
@@ -615,7 +615,7 @@ data:
     }
   
   ainflue-api-policy.hcl: |
-    # Policy for Ainflue API service
+    # Policy for IA Chéries API service
     path "secret/data/ainflue/api/*" {
       capabilities = ["read"]
     }
@@ -645,7 +645,7 @@ data:
     }
   
   ainflue-backend-policy.hcl: |
-    # Policy for Ainflue backend services
+    # Policy for IA Chéries backend services
     path "secret/data/ainflue/backend/*" {
       capabilities = ["read"]
     }
@@ -1181,5 +1181,5 @@ data:
 # ===================================================================
 # END OF VAULT CONFIGURATION TEMPLATE
 # Creator Economy Secure Vault by Fahed Mlaiel
-# Enterprise-grade HashiCorp Vault for Ainflue platform
+# Enterprise-grade HashiCorp Vault for IA Chéries platform
 # ===================================================================

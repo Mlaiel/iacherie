@@ -1,5 +1,5 @@
 """
-Error Tracking Orchestrator - Main Entry Point for Ainflue Creator Economy
+Error Tracking Orchestrator - Main Entry Point for IA Chéries Creator Economy
 Production-ready error tracking orchestration with AI-powered intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>

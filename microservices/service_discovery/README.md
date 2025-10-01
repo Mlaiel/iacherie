@@ -88,13 +88,13 @@ The module consists of 18 highly sophisticated Python files organized in three p
 
 ```python
 import aioredis
-from microservices.service_discovery import create_ainflue_service_discovery_orchestrator
+from microservices.service_discovery import create_iacherie_service_discovery_orchestrator
 
 # Initialize Redis connection
 redis_client = aioredis.from_url("redis://localhost:6379")
 
 # Create and start the orchestrator
-orchestrator = await create_ainflue_service_discovery_orchestrator(
+orchestrator = await create_iacherie_service_discovery_orchestrator(
     redis_client, 
     config={
         'enable_ml_optimization': True,
@@ -169,7 +169,7 @@ REDIS_PASSWORD=your_secure_password
 
 # Service Discovery Configuration
 SERVICE_DISCOVERY_REGION=us-east-1
-SERVICE_DISCOVERY_NAMESPACE=ainflue_production
+SERVICE_DISCOVERY_NAMESPACE=iacherie_production
 ENABLE_ML_OPTIMIZATION=true
 ENABLE_MULTI_REGION=true
 

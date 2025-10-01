@@ -46,7 +46,7 @@ class ConsumerGroupState(Enum):
     ERROR = "error"
 
 
-class AinflueBusinesRedisStreams:
+class iacherieBusinesRedisStreams:
     """Redis streams for IA Chérie high-frequency events"""
     
     # High-frequency events
@@ -502,15 +502,15 @@ class RedisStreamsCoordinator:
         try:
             # Create default streams
             default_streams = [
-                AinflueBusinesRedisStreams.USER_INTERACTIONS,
-                AinflueBusinesRedisStreams.REAL_TIME_ANALYTICS,
-                AinflueBusinesRedisStreams.ENGAGEMENT_TRACKING,
-                AinflueBusinesRedisStreams.CONTENT_UPLOAD_QUEUE,
-                AinflueBusinesRedisStreams.AI_PROCESSING_QUEUE,
-                AinflueBusinesRedisStreams.COLLABORATION_NOTIFICATIONS,
-                AinflueBusinesRedisStreams.MATCHING_UPDATES,
-                AinflueBusinesRedisStreams.REVENUE_EVENTS,
-                AinflueBusinesRedisStreams.PAYMENT_NOTIFICATIONS
+                iacherieBusinesRedisStreams.USER_INTERACTIONS,
+                iacherieBusinesRedisStreams.REAL_TIME_ANALYTICS,
+                iacherieBusinesRedisStreams.ENGAGEMENT_TRACKING,
+                iacherieBusinesRedisStreams.CONTENT_UPLOAD_QUEUE,
+                iacherieBusinesRedisStreams.AI_PROCESSING_QUEUE,
+                iacherieBusinesRedisStreams.COLLABORATION_NOTIFICATIONS,
+                iacherieBusinesRedisStreams.MATCHING_UPDATES,
+                iacherieBusinesRedisStreams.REVENUE_EVENTS,
+                iacherieBusinesRedisStreams.PAYMENT_NOTIFICATIONS
             ]
             
             for stream_name in default_streams:
@@ -768,6 +768,6 @@ class RedisStreamsCoordinator:
 # Export public API
 __all__ = [
     "RedisStreamsCoordinator", "RedisStreamConsumer", "ConsumerGroupConfig",
-    "RedisStreamMessage", "AinflueBusinesRedisStreams", "StreamMetrics",
+    "RedisStreamMessage", "iacherieBusinesRedisStreams", "StreamMetrics",
     "ConsumerGroupMetrics", "StreamReadMode", "ConsumerGroupState"
 ]

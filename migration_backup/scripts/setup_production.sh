@@ -1,8 +1,8 @@
 #!/bin/bash
-# Ainflue Production Setup Script
+# IA Chéries Production Setup Script
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # 
-# This script sets up the production environment for Ainflue platform
+# This script sets up the production environment for IA Chéries platform
 
 set -euo pipefail
 
@@ -19,7 +19,7 @@ MONITORING_NAMESPACE="ainflue-monitoring"
 
 print_header() {
     echo -e "${BLUE}================================================${NC}"
-    echo -e "${BLUE} AINFLUE PRODUCTION DEPLOYMENT SETUP${NC}"
+    echo -e "${BLUE} IA CHÉRIES PRODUCTION DEPLOYMENT SETUP${NC}"
     echo -e "${BLUE}================================================${NC}"
     echo ""
 }

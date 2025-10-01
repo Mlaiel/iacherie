@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-💾 Enterprise Data Service Template - Ainflue
+💾 Enterprise Data Service Template - iacherie
 ============================================
 Template enterprise pour services données.
 PostgreSQL + Redis + MongoDB + migrations + backup + replication.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Microservices Templates
+Project: iacherie Microservices Templates
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

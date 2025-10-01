@@ -9,7 +9,7 @@
 ## 🏗️ Architekturbaum - API Gateway Infrastructure
 
 ```
-/workspaces/Ainflue/infrastructure/api_gateway/ (Level 3 - Max Depth)
+/workspaces/iacherie/infrastructure/api_gateway/ (Level 3 - Max Depth)
 ├── 📋 checklist.md                    # Diese Enterprise Checkliste
 ├── 🔧 __init__.py                     # ✅ Modul Export Konfiguration
 ├── 🚪 api_gateway.py                  # ✅ Haupt-Gateway Orchestrator (669 Zeilen)
@@ -37,7 +37,7 @@ Status: 16/19 Dateien implementiert (84.2%) ⬆️ PHASE 1 & 2 COMPLETE! 🎉
 
 ## �📋 Implementierungs-Übersicht
 
-**Repository**: `/workspaces/Ainflue/infrastructure/api_gateway/`  
+**Repository**: `/workspaces/iacherie/infrastructure/api_gateway/`  
 **Architektur-Level**: 3 (Maximale Tiefe erreicht - keine Unterverzeichnisse)  
 **Scope**: Enterprise API Gateway für 53 AI Agenten und 65+ Plattformen  
 **Status**: 10/19 implementiert (52.6%) - GraphQL/WebSocket/Monitoring fehlen
@@ -69,7 +69,7 @@ Status: 16/19 Dateien implementiert (84.2%) ⬆️ PHASE 1 & 2 COMPLETE! 🎉
   - Rate Limit Analytics
 
 - [x] **`index.py`** - Gateway Konfiguration (296 Zeilen)
-  - Ainflue Creator Platform Configuration
+  - iacherie Creator Platform Configuration
   - Service Discovery Integration
   - Gateway Bootstrap und Entry Point
   - Environment-spezifische Konfiguration

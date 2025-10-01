@@ -2,12 +2,12 @@
 Enterprise Database Performance Optimizer - Advanced Database Management
 ========================================================================
 
-Comprehensive database performance optimization system for Ainflue platform.
+Comprehensive database performance optimization system for iacherie platform.
 Provides intelligent query optimization, clustering, replication, and monitoring
 for PostgreSQL, MongoDB, Redis, and other databases.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - Database Module
+Project: iacherie Infrastructure - Database Module
 Expert Role: DBA + Backend Senior + ML Engineer + Performance Expert
 Version: 1.0 Production Enterprise
 
@@ -122,7 +122,7 @@ class DatabasePerformanceOptimizer:
     Enterprise Database Performance Optimizer
     
     Provides comprehensive database optimization, monitoring, and management
-    capabilities for the Ainflue creator platform with ML-powered analysis.
+    capabilities for the iacherie creator platform with ML-powered analysis.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -148,24 +148,24 @@ class DatabasePerformanceOptimizer:
         """Get default database optimization configuration"""
         return {
             "databases": {
-                "ainflue_main": {
+                "iacherie_main": {
                     "type": DatabaseType.POSTGRESQL.value,
                     "host": "localhost",
                     "port": 5432,
-                    "name": "ainflue_production",
+                    "name": "iacherie_production",
                     "ssl_required": True
                 },
-                "ainflue_analytics": {
+                "iacherie_analytics": {
                     "type": DatabaseType.MONGODB.value,
                     "host": "localhost",
                     "port": 27017,
-                    "name": "ainflue_analytics"
+                    "name": "iacherie_analytics"
                 },
-                "ainflue_cache": {
+                "iacherie_cache": {
                     "type": DatabaseType.REDIS.value,
                     "host": "localhost",
                     "port": 6379,
-                    "name": "ainflue_cache"
+                    "name": "iacherie_cache"
                 }
             },
             "optimization": {
@@ -778,7 +778,7 @@ class DatabasePerformanceOptimizer:
             "recent_backup": True,
             "last_backup": datetime.now() - timedelta(hours=4),
             "backup_size": "2.5GB",
-            "backup_location": f"s3://ainflue-backups/{db_name}/"
+            "backup_location": f"s3://iacherie-backups/{db_name}/"
         }
     
     def get_performance_analytics(self, db_name: Optional[str] = None) -> Dict[str, Any]:
@@ -831,7 +831,7 @@ if __name__ == "__main__":
         # Create test database configuration
         db_config = DatabaseConfig(
             db_type=DatabaseType.POSTGRESQL,
-            name="ainflue_test",
+            name="iacherie_test",
             host="localhost",
             port=5432,
             username="postgres",
@@ -842,11 +842,11 @@ if __name__ == "__main__":
         print("🗄️ Testing Database Performance Optimizer...")
         
         # Mock connection for testing
-        optimizer.connections["ainflue_test"] = "mock_connection"
+        optimizer.connections["iacherie_test"] = "mock_connection"
         
         # Test query analysis
         test_query = "SELECT * FROM users WHERE created_at > %s ORDER BY id LIMIT 100"
-        analysis = await optimizer.analyze_query_performance("ainflue_test", test_query)
+        analysis = await optimizer.analyze_query_performance("iacherie_test", test_query)
         
         print(f"✅ Query Analysis Results:")
         print(f"   Execution Time: {analysis.execution_time_ms:.2f}ms")
@@ -854,7 +854,7 @@ if __name__ == "__main__":
         print(f"   Suggestions: {len(analysis.optimization_suggestions)}")
         
         # Test database optimization
-        optimization_result = await optimizer.optimize_database_configuration("ainflue_test")
+        optimization_result = await optimizer.optimize_database_configuration("iacherie_test")
         
         print(f"📊 Database Optimization:")
         print(f"   Optimization Score: {optimization_result.get('optimization_score', 0):.1f}/10")

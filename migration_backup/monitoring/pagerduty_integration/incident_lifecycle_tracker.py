@@ -1,6 +1,6 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 """
-Incident Lifecycle Tracker for PagerDuty - Ainflue Platform
+Incident Lifecycle Tracker for PagerDuty - IA Chéries Platform
 Complete incident timeline and state transition monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>

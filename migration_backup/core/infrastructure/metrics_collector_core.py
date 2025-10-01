@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Infrastructure - Advanced Metrics Collection Engine
+IA Chéries Core Infrastructure - Advanced Metrics Collection Engine
 ===============================================================
 
 Enterprise-grade metrics collection system with multi-dimensional

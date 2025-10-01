@@ -7,7 +7,7 @@ AWS EC2, Azure VMs, GCP Compute Engine, DigitalOcean Droplets, and more.
 
 This module provides unified compute resource management, intelligent
 workload placement, auto-scaling, and cost optimization across multiple
-cloud providers for the Ainflue platform.
+cloud providers for the IA Chéries platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -519,7 +519,7 @@ class MultiCloudComputeManager:
                     'Tags': [
                         {'Key': 'Name', 'Value': name},
                         {'Key': 'WorkloadType', 'Value': workload_type.value},
-                        {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                        {'Key': 'CreatedBy', 'Value': 'IA ChériesPlatform'},
                         {'Key': 'Environment', 'Value': kwargs.get('environment', 'production')}
                     ]
                 }],
@@ -540,7 +540,7 @@ class MultiCloudComputeManager:
                 tags={
                     'Name': name,
                     'WorkloadType': workload_type.value,
-                    'CreatedBy': 'AinfluePlatform'
+                    'CreatedBy': 'IA ChériesPlatform'
                 }
             )
             

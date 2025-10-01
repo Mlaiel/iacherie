@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Internationalization manager enterprise avec multi-script support,
 RTL handling et gestion 644 langues pour distribution globale.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Support 644 langues avec detection automatique
 - Gestion RTL (Right-to-Left) pour langues arabes/hébraïques
 - Formatage dates/heures/devises par locale

@@ -1,4 +1,4 @@
-"""{{service_name}} CRUD Service Template for Ainflue Platform
+"""{{service_name}} CRUD Service Template for iacherie Platform
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})

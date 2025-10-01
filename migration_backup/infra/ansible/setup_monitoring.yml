@@ -1,4 +1,4 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
 # Enterprise Monitoring Infrastructure Setup Playbook
@@ -10,7 +10,7 @@
 # ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 
 ---
-- name: "Ainflue Enterprise Monitoring Stack Deployment"
+- name: "IA Chéries Enterprise Monitoring Stack Deployment"
   hosts: monitoring_servers
   become: yes
   gather_facts: yes
@@ -407,7 +407,7 @@
     # PHASE 7: MONITORING CONFIGURATION
     # ==========================================
     
-    - name: "Configure ServiceMonitors for Ainflue services"
+    - name: "Configure ServiceMonitors for IA Chéries services"
       kubernetes.core.k8s:
         definition:
           apiVersion: monitoring.coreos.com/v1
@@ -473,16 +473,16 @@
             - name: ainflue.critical
               interval: 15s
               rules:
-              - alert: AinflueCriticalServiceDown
+              - alert: IA ChériesCriticalServiceDown
                 expr: up{job=~"ainflue-.*"} == 0
                 for: 1m
                 labels:
                   severity: critical
                 annotations:
-                  summary: "Ainflue critical service is down"
+                  summary: "IA Chéries critical service is down"
                   description: "Service {{ $labels.job }} has been down for more than 1 minute"
               
-              - alert: AinflueDatabaseConnectionFailure
+              - alert: IA ChériesDatabaseConnectionFailure
                 expr: ainflue_database_connection_errors_total > 10
                 for: 2m
                 labels:
@@ -491,7 +491,7 @@
                   summary: "High database connection errors"
                   description: "Database connection errors exceed threshold"
               
-              - alert: AinfluePodCrashLooping
+              - alert: IA ChériesPodCrashLooping
                 expr: rate(kube_pod_container_status_restarts_total[5m]) > 0.1
                 for: 5m
                 labels:
@@ -500,7 +500,7 @@
                   summary: "Pod is crash looping"
                   description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
               
-              - alert: AinflueDiskSpaceRunningOut
+              - alert: IA ChériesDiskSpaceRunningOut
                 expr: (node_filesystem_free_bytes / node_filesystem_size_bytes) * 100 < 10
                 for: 5m
                 labels:

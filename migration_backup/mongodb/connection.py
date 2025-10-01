@@ -2,7 +2,7 @@
 ============================
 
 Advanced MongoDB connection handling with async support, connection pooling,
-authentication, SSL, and health monitoring for the Ainflue platform.
+authentication, SSL, and health monitoring for the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

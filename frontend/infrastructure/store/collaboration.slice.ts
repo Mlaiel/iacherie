@@ -499,7 +499,7 @@ export const startVideoCall = createAsyncThunk(
       status: 'active',
       scheduledAt: new Date(),
       startedAt: new Date(),
-      meetingUrl: `https://meet.ainflue.com/call/${Date.now()}`
+      meetingUrl: `https://meet.iacherie.com/call/${Date.now()}`
     };
     
     return videoCall;

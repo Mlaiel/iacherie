@@ -34,18 +34,18 @@ def suppress_redis_warnings_in_file(file_path):
 
 # Liste des fichiers à modifier
 files_to_modify = [
-    "/workspaces/Ainfluencer/database/database_operations.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/mongodb_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/file_storage.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/database_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/storage_modules/redis_adapter.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_alerting.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/global_compliance_manager.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/regulatory_compliance.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_documentation.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/data_protection_impact_assessment.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/regional_compliance.py",
-    "/workspaces/Ainfluencer/infrastructure/compliance/compliance_analytics.py",
+    "/workspaces/IA Chéries/database/database_operations.py",
+    "/workspaces/IA Chéries/infrastructure/storage_modules/mongodb_adapter.py",
+    "/workspaces/IA Chéries/infrastructure/storage_modules/file_storage.py",
+    "/workspaces/IA Chéries/infrastructure/storage_modules/database_adapter.py",
+    "/workspaces/IA Chéries/infrastructure/storage_modules/redis_adapter.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/compliance_alerting.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/global_compliance_manager.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/regulatory_compliance.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/compliance_documentation.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/data_protection_impact_assessment.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/regional_compliance.py",
+    "/workspaces/IA Chéries/infrastructure/compliance/compliance_analytics.py",
 ]
 
 for file_path in files_to_modify:

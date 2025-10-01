@@ -271,7 +271,7 @@ class AnalyticsServicesHub:
             self.session = aiohttp.ClientSession(
                 connector=connector,
                 timeout=timeout,
-                headers={'User-Agent': 'Ainflue-Analytics-Hub/1.0'}
+                headers={'User-Agent': 'IA Chéries-Analytics-Hub/1.0'}
             )
     
     async def close_session(self):

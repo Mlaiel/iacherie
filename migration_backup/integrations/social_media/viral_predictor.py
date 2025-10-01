@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Viral Content Predictor
+IA Chéries Platform - Advanced Viral Content Predictor
 ===================================================
 
 Enterprise-grade viral content prediction with AI-powered virality scoring,
@@ -70,7 +70,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 import aiohttp
 import redis.asyncio as redis
 
-# Ainflue imports
+# IA Chéries imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

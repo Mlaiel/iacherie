@@ -1,4 +1,4 @@
-# Infrastructure de Conformité - Ainflue Enterprise
+# Infrastructure de Conformité - iacherie Enterprise
 
 Système de conformité réglementaire enterprise pour opérations globales de plateforme créateurs.
 

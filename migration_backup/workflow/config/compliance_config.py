@@ -1,5 +1,5 @@
 """
-⚖️ COMPLIANCE CONFIG - AINFLUE ENTERPRISE PLATFORM
+⚖️ COMPLIANCE CONFIG - IA CHÉRIES ENTERPRISE PLATFORM
 
 Ultra-advanced compliance and regulatory configuration for global operations
 Author: Fahed Mlaiel (mlaiel@live.de)

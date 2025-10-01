@@ -34,7 +34,7 @@
 
 ## 🎯 الملخص التنفيذي
 
-وحدة **خدمات الباك إند** هي معمارية الخدمات الدقيقة للمؤسسات في Ainflue التي توفر خدمات الأعمال القابلة للتوسع والذكاء المدعوم بالذكاء الاصطناعي ومعالجة البيانات الآمنة والبنية التحتية على مستوى المؤسسات لمنصة اقتصاد المبدعين الكاملة.
+وحدة **خدمات الباك إند** هي معمارية الخدمات الدقيقة للمؤسسات في iacherie التي توفر خدمات الأعمال القابلة للتوسع والذكاء المدعوم بالذكاء الاصطناعي ومعالجة البيانات الآمنة والبنية التحتية على مستوى المؤسسات لمنصة اقتصاد المبدعين الكاملة.
 
 ### القيمة التجارية الأساسية
 
@@ -294,16 +294,16 @@ payment_result = await payment_service.process_payment(
 - **التدريب والإعداد**: تدريب الفريق المهني وورش العمل
 
 ### موارد المطورين
-- **[بوابة المطورين](https://developers.ainflue.com)** - واجهات برمجة التطبيقات ومجموعات التطوير والأدوات
-- **[منتدى المجتمع](https://community.ainflue.com)** - مناقشات المطورين والدعم
-- **[المصدر المفتوح](https://github.com/ainflue)** - أدوات ومكتبات المصدر المفتوح
+- **[بوابة المطورين](https://developers.iacherie.com)** - واجهات برمجة التطبيقات ومجموعات التطوير والأدوات
+- **[منتدى المجتمع](https://community.iacherie.com)** - مناقشات المطورين والدعم
+- **[المصدر المفتوح](https://github.com/iacherie)** - أدوات ومكتبات المصدر المفتوح
 
 ## 📞 الاتصال والدعم
 
-**الدعم التقني**: [support@ainflue.com](mailto:support@ainflue.com)
-**مبيعات المؤسسات**: [enterprise@ainflue.com](mailto:enterprise@ainflue.com)
-**علاقات المطورين**: [developers@ainflue.com](mailto:developers@ainflue.com)
-**قضايا الأمان**: [security@ainflue.com](mailto:security@ainflue.com)
+**الدعم التقني**: [support@iacherie.com](mailto:support@iacherie.com)
+**مبيعات المؤسسات**: [enterprise@iacherie.com](mailto:enterprise@iacherie.com)
+**علاقات المطورين**: [developers@iacherie.com](mailto:developers@iacherie.com)
+**قضايا الأمان**: [security@iacherie.com](mailto:security@iacherie.com)
 
 **قيادة المشروع**: [فهد مليل](mailto:mlaiel@live.de)
 

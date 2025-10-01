@@ -381,7 +381,7 @@ class BackupConfiguration:
             },
             BackupStorage.AZURE_BLOB: {
                 "container_name": "iacherie-backups",
-                "storage_account": "ainfluebackups",
+                "storage_account": "iacheriebackups",
                 "access_tier": "Cool",
                 "encryption": "MICROSOFT_MANAGED"
             }

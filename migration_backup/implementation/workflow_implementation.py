@@ -1,6 +1,6 @@
 """Workflow Implementation - Enterprise Business Process Orchestration System
 
-Advanced workflow orchestration system for Ainflue creator economy platform enabling
+Advanced workflow orchestration system for IA Chéries creator economy platform enabling
 sophisticated business process automation, task management, and workflow optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -205,7 +205,7 @@ class WorkflowTemplate:
 
 class WorkflowImplementation:
     """
-    Enterprise Workflow Implementation for Ainflue Creator Economy Platform
+    Enterprise Workflow Implementation for IA Chéries Creator Economy Platform
     
     Comprehensive business process orchestration system enabling automated workflows,
     task management, condition-based logic, and enterprise workflow optimization.

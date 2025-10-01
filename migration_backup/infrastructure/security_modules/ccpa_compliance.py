@@ -1,10 +1,10 @@
 """
-CCPA Compliance Module - Ainflue Infrastructure Enterprise
+CCPA Compliance Module - IA Chéries Infrastructure Enterprise
 =========================================================
 California Consumer Privacy Act compliance management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: IA Chéries Infrastructure Enterprise
 License: Proprietary - All rights reserved
 """
 
@@ -79,7 +79,7 @@ class CCPAConsumerRequest:
 
 
 class CCPAComplianceManager:
-    """CCPA compliance management for Ainflue platform"""
+    """CCPA compliance management for IA Chéries platform"""
     
     def __init__(self):
         self.ccpa_requirements = self._initialize_ccpa_requirements()
@@ -87,10 +87,10 @@ class CCPAComplianceManager:
         self.consumer_requests = {}
         self.opt_out_preferences = {}
         
-        # CCPA-specific configuration for Ainflue
+        # CCPA-specific configuration for IA Chéries
         self.ccpa_config = {
             'business_info': {
-                'name': 'Ainflue Inc.',
+                'name': 'IA Chéries Inc.',
                 'contact_info': 'privacy@ainflue.com',
                 'privacy_policy_url': 'https://ainflue.com/privacy',
                 'ccpa_notice_url': 'https://ainflue.com/ccpa'
@@ -118,7 +118,7 @@ class CCPAComplianceManager:
         logger.info("CCPA compliance manager initialized")
     
     def _initialize_ccpa_requirements(self) -> Dict[str, CCPARequirement]:
-        """Initialize CCPA-specific compliance requirements for Ainflue"""
+        """Initialize CCPA-specific compliance requirements for IA Chéries"""
         
         requirements = {}
         
@@ -205,7 +205,7 @@ class CCPAComplianceManager:
         return requirements
     
     async def check_ccpa_compliance(self, infrastructure_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive CCPA compliance check for Ainflue infrastructure"""
+        """Comprehensive CCPA compliance check for IA Chéries infrastructure"""
         
         logger.info("Starting CCPA compliance assessment")
         
@@ -475,7 +475,7 @@ class CCPAComplianceManager:
         return result
     
     async def _perform_creator_specific_ccpa_checks(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform Ainflue creator-specific CCPA compliance checks"""
+        """Perform IA Chéries creator-specific CCPA compliance checks"""
         
         creator_checks = {
             'creator_data_transparency': {

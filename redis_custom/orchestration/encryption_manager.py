@@ -186,7 +186,7 @@ class RedisEncryptionManager:
         
         # Master key and key derivation
         self.master_key: Optional[bytes] = None
-        self.key_derivation_salt = config.get('key_derivation_salt', b'ainflue_encryption_salt')
+        self.key_derivation_salt = config.get('key_derivation_salt', b'iacherie_encryption_salt')
         
         # HSM configuration
         self.hsm_enabled = config.get('hsm_enabled', False)
@@ -1319,7 +1319,7 @@ class EncryptionManagerConfig:
     redis_password: Optional[str] = None
     ssl_enabled: bool = True
     max_connections: int = 100
-    key_derivation_salt: bytes = b'ainflue_encryption_salt'
+    key_derivation_salt: bytes = b'iacherie_encryption_salt'
     hsm_enabled: bool = False
     hsm_config: Dict[str, Any] = field(default_factory=dict)
     key_cache_ttl: int = 300

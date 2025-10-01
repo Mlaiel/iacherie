@@ -1,7 +1,7 @@
 """Backend Monitoring Module
 =========================
 
-Unified monitoring and observability system for the Ainflue platform.
+Unified monitoring and observability system for the IA Chéries platform.
 Consolidates 60+ monitoring files into 12 focused modules for enterprise-grade observability.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

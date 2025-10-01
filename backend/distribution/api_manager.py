@@ -178,7 +178,7 @@ class APIManager:
         try:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=60),
-                headers={"User-Agent": "Ainflue-API-Manager/1.0"}
+                headers={"User-Agent": "iacherie-API-Manager/1.0"}
             )
             self.logger.info("✅ API Manager session initialized")
         except Exception as e:

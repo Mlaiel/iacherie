@@ -332,7 +332,7 @@ async def initialize_all_pools(
             PoolType.POSTGRESQL: {
                 'host': 'localhost',
                 'port': 5432,
-                'database': 'ainflue',
+                'database': 'iacherie',
                 'min_connections': 5,
                 'max_connections': 50
             },
@@ -346,7 +346,7 @@ async def initialize_all_pools(
             PoolType.MONGODB: {
                 'host': 'localhost',
                 'port': 27017,
-                'database': 'ainflue',
+                'database': 'iacherie',
                 'min_connections': 3,
                 'max_connections': 30
             }

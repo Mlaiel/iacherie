@@ -31,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: ainflue_dev
+      POSTGRES_DB: iacherie_dev
       POSTGRES_USER: dev_user
       POSTGRES_PASSWORD: dev_password
     volumes:

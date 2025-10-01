@@ -1173,7 +1173,7 @@ class LegalAutomationEngine:
                 {
                     'attorney_name': 'AI Legal Assistant',
                     'attorney_title': 'Automated Legal Representative',
-                    'law_firm_name': 'Ainflue Legal Automation'
+                    'law_firm_name': 'iacherie Legal Automation'
                 }
             )
             

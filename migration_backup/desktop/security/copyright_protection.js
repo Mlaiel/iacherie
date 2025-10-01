@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Copyright Protection System
+ * IA Chéries Desktop - Copyright Protection System
  * 
  * Advanced copyright protection and intellectual property management
  * 
@@ -17,7 +17,7 @@ class CopyrightProtectionManager {
         this.ownerInfo = options.ownerInfo || {
             name: 'Fahed Mlaiel',
             email: 'mlaiel@live.de',
-            organization: 'Ainflue',
+            organization: 'IA Chéries',
             jurisdiction: 'Germany'
         };
         
@@ -483,7 +483,7 @@ class CopyrightProtectionManager {
             copyrightId: copyrightRecord.id,
             registrationDate: copyrightRecord.registrationDate,
             validUntil: this.calculateCopyrightExpiration(copyrightRecord),
-            issuer: 'Ainflue Copyright Protection System',
+            issuer: 'IA Chéries Copyright Protection System',
             digitalSignature: this.generateDigitalSignature(copyrightRecord),
             verificationUrl: `https://copyright.ainflue.com/verify/${copyrightRecord.id}`,
             qrCode: this.generateQRCode(copyrightRecord.id)

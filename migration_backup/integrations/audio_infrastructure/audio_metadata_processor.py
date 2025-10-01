@@ -2,7 +2,7 @@
 ==============================================================
 
 Processeur de métadonnées audio enterprise avec gestion avancée des tags,
-extraction automatique et enrichissement IA pour Ainflue.
+extraction automatique et enrichissement IA pour IA Chéries.
 
 Expert Roles Implementation:
 🎵 Audio Engineer: Standards métadonnées + formats audio + tag preservation
@@ -116,7 +116,7 @@ class TagType(Enum):
     LABEL = "label"
     LICENSE = "license"
     
-    # Tags Ainflue spécifiques
+    # Tags IA Chéries spécifiques
     CREATOR_ID = "ainflue_creator_id"
     CONTENT_TYPE = "ainflue_content_type"
     PROTECTION_LEVEL = "ainflue_protection"

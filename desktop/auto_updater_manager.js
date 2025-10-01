@@ -84,7 +84,7 @@ class AutoUpdaterManager extends EventEmitter {
     
     // Configure request headers for authentication
     autoUpdater.requestHeaders = {
-      'User-Agent': `AinflueSudio/${app.getVersion()} (${process.platform}; ${process.arch})`,
+      'User-Agent': `iacherieSudio/${app.getVersion()} (${process.platform}; ${process.arch})`,
       'X-Client-ID': 'iacherie-desktop',
       'X-Client-Version': app.getVersion()
     };

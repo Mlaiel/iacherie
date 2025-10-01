@@ -750,7 +750,7 @@ class APIIntegrationEngine:
     async def _prepare_headers(self, config: IntegrationConfig) -> Dict[str, str]:
         """Prepare request headers with authentication"""
         headers = {
-            "User-Agent": "Ainflue-Analytics/1.0",
+            "User-Agent": "IA Chéries-Analytics/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }

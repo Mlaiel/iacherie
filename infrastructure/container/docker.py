@@ -379,7 +379,7 @@ class AIEnginesDockerConfig:
         """AI processing container configuration"""
         return ContainerConfig(
             name="ai-processing-engine",
-            image="ainflue/ai-processing:latest",
+            image="iacherie/ai-processing:latest",
             ports={"8080": "8080", "9090": "9090"},
             environment={
                 "AI_MODEL_PATH": "/models",
@@ -439,8 +439,8 @@ class DatabaseClusterDockerConfig:
             image="postgres:15-alpine",
             ports={"5432": "5432"},
             environment={
-                "POSTGRES_DB": "ainflue",
-                "POSTGRES_USER": "ainflue_user",
+                "POSTGRES_DB": "iacherie",
+                "POSTGRES_USER": "iacherie_user",
                 "POSTGRES_PASSWORD": "secure_password",
                 "POSTGRES_INITDB_ARGS": "--encoding=UTF-8"
             },

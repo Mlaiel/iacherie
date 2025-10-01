@@ -1,12 +1,12 @@
 """
-Timeout Cost Optimizer Module - Ainflue Enterprise
+Timeout Cost Optimizer Module - IA Chéries Enterprise
 ==================================================
 Optimiseur coûts timeout avec resource efficiency et business value optimization.
 Cost analysis + resource optimization + budget management + ROI maximization.
 
 Author: Expert Team (Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer)
 IP Owner: Fahed Mlaiel <mlaiel@live.de>
-Project: Ainflue Timeout Handling Enterprise
+Project: IA Chéries Timeout Handling Enterprise
 Version: 1.0 Production
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 

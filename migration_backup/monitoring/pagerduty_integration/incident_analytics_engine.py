@@ -1,5 +1,5 @@
 """
-Incident Analytics Engine for Ainflue Platform
+Incident Analytics Engine for IA Chéries Platform
 Advanced analytics and insights for incident management
 
 Author: Fahed Mlaiel <mlaiel@live.de>

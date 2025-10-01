@@ -1,7 +1,7 @@
 """
 Mobile SEO Performance Monitor - Enterprise Mobile Optimization Tracking
 
-This module implements comprehensive mobile SEO performance monitoring for the Ainflue platform,
+This module implements comprehensive mobile SEO performance monitoring for the IA Chéries platform,
 tracking mobile-first indexing, responsive design, and mobile user experience optimization.
 
 Author: Fahed Mlaiel
@@ -112,7 +112,7 @@ class MobileSEOAnalysis:
 
 class MobileSEOPerformanceMonitor:
     """
-    Enterprise mobile SEO performance monitoring system for Ainflue platform.
+    Enterprise mobile SEO performance monitoring system for IA Chéries platform.
     
     Features:
     - Mobile-first indexing optimization

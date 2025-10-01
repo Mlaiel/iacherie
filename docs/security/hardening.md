@@ -568,19 +568,19 @@ class UserRegistrationSchema(Schema):
 -- postgresql-security.sql - PostgreSQL security hardening
 
 -- Create restricted users
-CREATE ROLE ainflue_app_user WITH LOGIN PASSWORD 'strong_random_password';
-CREATE ROLE ainflue_readonly WITH LOGIN PASSWORD 'strong_random_password';
+CREATE ROLE iacherie_app_user WITH LOGIN PASSWORD 'strong_random_password';
+CREATE ROLE iacherie_readonly WITH LOGIN PASSWORD 'strong_random_password';
 
 -- Grant minimal privileges
-GRANT CONNECT ON DATABASE iacherie TO ainflue_app_user;
-GRANT USAGE ON SCHEMA public TO ainflue_app_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ainflue_app_user;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO ainflue_app_user;
+GRANT CONNECT ON DATABASE iacherie TO iacherie_app_user;
+GRANT USAGE ON SCHEMA public TO iacherie_app_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO iacherie_app_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO iacherie_app_user;
 
 -- Read-only access for analytics
-GRANT CONNECT ON DATABASE iacherie TO ainflue_readonly;
-GRANT USAGE ON SCHEMA public TO ainflue_readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO ainflue_readonly;
+GRANT CONNECT ON DATABASE iacherie TO iacherie_readonly;
+GRANT USAGE ON SCHEMA public TO iacherie_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO iacherie_readonly;
 
 -- Revoke public access
 REVOKE ALL ON DATABASE iacherie FROM PUBLIC;
@@ -592,11 +592,11 @@ ALTER TABLE content ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies
 CREATE POLICY user_isolation ON users
-    FOR ALL TO ainflue_app_user
+    FOR ALL TO iacherie_app_user
     USING (id = current_setting('app.current_user_id')::uuid);
 
 CREATE POLICY content_isolation ON content
-    FOR ALL TO ainflue_app_user
+    FOR ALL TO iacherie_app_user
     USING (user_id = current_setting('app.current_user_id')::uuid);
 
 -- Enable logging
@@ -664,8 +664,8 @@ host    all             all             127.0.0.1/32            scram-sha-256
 host    all             all             ::1/128                 scram-sha-256
 
 # Application connections
-hostssl iacherie         ainflue_app_user 10.0.0.0/16           scram-sha-256
-hostssl iacherie         ainflue_readonly 10.0.0.0/16           scram-sha-256
+hostssl iacherie         iacherie_app_user 10.0.0.0/16           scram-sha-256
+hostssl iacherie         iacherie_readonly 10.0.0.0/16           scram-sha-256
 
 # Deny all other connections
 host    all             all             0.0.0.0/0               reject
@@ -692,7 +692,7 @@ db.createUser({
 // Create application user
 use iacherie
 db.createUser({
-  user: "ainflue_app",
+  user: "iacherie_app",
   pwd: "strong_app_password",
   roles: [
     { role: "readWrite", db: "iacherie" }
@@ -701,7 +701,7 @@ db.createUser({
 
 // Create read-only user
 db.createUser({
-  user: "ainflue_readonly",
+  user: "iacherie_readonly",
   pwd: "strong_readonly_password",
   roles: [
     { role: "read", db: "iacherie" }

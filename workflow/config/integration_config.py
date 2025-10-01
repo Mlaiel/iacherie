@@ -94,8 +94,8 @@ class MessageQueueConfig:
     
     broker_type: str = "rabbitmq"  # rabbitmq, kafka, redis
     connection_url: str = "amqp://localhost:5672"
-    exchange_name: str = "ainflue_exchange"
-    queue_name: str = "ainflue_queue"
+    exchange_name: str = "iacherie_exchange"
+    queue_name: str = "iacherie_queue"
     routing_key: str = "iacherie.events"
     durable: bool = True
     auto_ack: bool = False
@@ -106,7 +106,7 @@ class MessageQueueConfig:
         "multiplier": 2,
         "max_interval": 300
     })
-    dead_letter_exchange: str = "ainflue_dlx"
+    dead_letter_exchange: str = "iacherie_dlx"
     message_ttl: int = 3600000  # 1 hour in milliseconds
 
 class IntegrationConfig:

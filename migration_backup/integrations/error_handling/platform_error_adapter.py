@@ -1,5 +1,5 @@
 """
-Platform Error Adapter - Ainflue Platform
+Platform Error Adapter - IA Chéries Platform
 Platform-Specific Error Handling for 65+ Platforms Integration
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer

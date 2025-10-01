@@ -509,7 +509,7 @@ class CreatorImplementationEngine:
             (CreatorType.COMEDIAN, ContentFormat.VIDEO): ["youtube", "tiktok", "instagram"]
         }
         
-        return platform_matrix.get((creator_type, content_format), ["ainflue_platform"])
+        return platform_matrix.get((creator_type, content_format), ["iacherie_platform"])
     
     async def _calculate_business_metrics(
         self,

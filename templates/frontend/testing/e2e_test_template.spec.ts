@@ -1,5 +1,5 @@
 /**
- * 🎭 E2E Test Template - Ainflue Creator Economy
+ * 🎭 E2E Test Template - iacherie Creator Economy
  * 
  * @fileoverview Template enterprise pour tests end-to-end frontend
  * @version 1.0.0
@@ -18,7 +18,7 @@ import { devices } from '@playwright/test';
 // ============================================================================
 
 const BASE_URL = process.env.E2E_BASE_URL || 'http://localhost:3000';
-const TEST_USER_EMAIL = 'test-creator@ainflue.com';
+const TEST_USER_EMAIL = 'test-creator@iacherie.com';
 const TEST_USER_PASSWORD = 'TestPassword123!';
 
 // Données de test

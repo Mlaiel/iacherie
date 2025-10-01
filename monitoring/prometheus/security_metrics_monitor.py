@@ -76,21 +76,21 @@ class SecurityMetricsMonitor:
         
         # Métriques de protection IP
         self.ip_protection_violations = Counter(
-            'ainflue_security_ip_violations_total',
+            'iacherie_security_ip_violations_total',
             'Total IP protection violations detected',
             labelnames=['creator_id', 'violation_type', 'detection_method'],
             registry=self.registry
         )
         
         self.ip_protection_accuracy = Gauge(
-            'ainflue_security_ip_protection_accuracy',
+            'iacherie_security_ip_protection_accuracy',
             'IP protection system accuracy rate',
             labelnames=['protection_type', 'content_format'],
             registry=self.registry
         )
         
         self.ip_false_positive_rate = Gauge(
-            'ainflue_security_ip_false_positive_rate',
+            'iacherie_security_ip_false_positive_rate',
             'IP protection false positive rate',
             labelnames=['detection_method', 'content_type'],
             registry=self.registry
@@ -98,21 +98,21 @@ class SecurityMetricsMonitor:
         
         # Métriques d'incidents sécurité
         self.security_incidents = Counter(
-            'ainflue_security_incidents_total',
+            'iacherie_security_incidents_total',
             'Total security incidents',
             labelnames=['incident_type', 'threat_level', 'resolution_status'],
             registry=self.registry
         )
         
         self.incident_response_time = Histogram(
-            'ainflue_security_incident_response_time_seconds',
+            'iacherie_security_incident_response_time_seconds',
             'Security incident response time in seconds',
             labelnames=['incident_type', 'threat_level'],
             registry=self.registry
         )
         
         self.incident_resolution_time = Histogram(
-            'ainflue_security_incident_resolution_time_seconds',
+            'iacherie_security_incident_resolution_time_seconds',
             'Security incident resolution time in seconds',
             labelnames=['incident_type', 'severity'],
             registry=self.registry
@@ -120,21 +120,21 @@ class SecurityMetricsMonitor:
         
         # Métriques d'authentification
         self.authentication_failures = Counter(
-            'ainflue_security_auth_failures_total',
+            'iacherie_security_auth_failures_total',
             'Total authentication failures',
             labelnames=['failure_type', 'user_type', 'client_type'],
             registry=self.registry
         )
         
         self.authentication_success_rate = Gauge(
-            'ainflue_security_auth_success_rate',
+            'iacherie_security_auth_success_rate',
             'Authentication success rate',
             labelnames=['auth_method', 'user_type'],
             registry=self.registry
         )
         
         self.suspicious_login_attempts = Counter(
-            'ainflue_security_suspicious_logins_total',
+            'iacherie_security_suspicious_logins_total',
             'Total suspicious login attempts',
             labelnames=['creator_id', 'source_country', 'risk_level'],
             registry=self.registry
@@ -142,21 +142,21 @@ class SecurityMetricsMonitor:
         
         # Métriques de compliance
         self.compliance_violations = Counter(
-            'ainflue_security_compliance_violations_total',
+            'iacherie_security_compliance_violations_total',
             'Total compliance violations',
             labelnames=['regulation', 'violation_type', 'severity'],
             registry=self.registry
         )
         
         self.gdpr_data_requests = Counter(
-            'ainflue_security_gdpr_requests_total',
+            'iacherie_security_gdpr_requests_total',
             'Total GDPR data requests',
             labelnames=['request_type', 'processing_status'],
             registry=self.registry
         )
         
         self.audit_trail_completeness = Gauge(
-            'ainflue_security_audit_trail_completeness',
+            'iacherie_security_audit_trail_completeness',
             'Audit trail completeness percentage',
             labelnames=['system_component', 'audit_type'],
             registry=self.registry
@@ -164,21 +164,21 @@ class SecurityMetricsMonitor:
         
         # Métriques de takedown de contenu
         self.content_takedowns = Counter(
-            'ainflue_security_content_takedowns_total',
+            'iacherie_security_content_takedowns_total',
             'Total content takedowns',
             labelnames=['takedown_reason', 'content_type', 'automated'],
             registry=self.registry
         )
         
         self.takedown_processing_time = Histogram(
-            'ainflue_security_takedown_processing_time_seconds',
+            'iacherie_security_takedown_processing_time_seconds',
             'Content takedown processing time in seconds',
             labelnames=['takedown_type', 'priority'],
             registry=self.registry
         )
         
         self.copyright_claims = Counter(
-            'ainflue_security_copyright_claims_total',
+            'iacherie_security_copyright_claims_total',
             'Total copyright claims',
             labelnames=['claim_type', 'creator_id', 'claim_status'],
             registry=self.registry
@@ -186,21 +186,21 @@ class SecurityMetricsMonitor:
         
         # Métriques de surveillance avancée
         self.anomaly_detection_alerts = Counter(
-            'ainflue_security_anomaly_alerts_total',
+            'iacherie_security_anomaly_alerts_total',
             'Total anomaly detection alerts',
             labelnames=['anomaly_type', 'confidence_level'],
             registry=self.registry
         )
         
         self.security_scan_results = Gauge(
-            'ainflue_security_scan_vulnerability_count',
+            'iacherie_security_scan_vulnerability_count',
             'Number of vulnerabilities found in security scans',
             labelnames=['scan_type', 'severity', 'component'],
             registry=self.registry
         )
         
         self.data_encryption_coverage = Gauge(
-            'ainflue_security_encryption_coverage_percentage',
+            'iacherie_security_encryption_coverage_percentage',
             'Data encryption coverage percentage',
             labelnames=['data_type', 'encryption_method'],
             registry=self.registry

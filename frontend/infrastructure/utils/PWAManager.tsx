@@ -37,7 +37,7 @@ export default function PWAManager() {
       setDeferredPrompt(event);
       setIsInstallable(true);
       
-      toast.success('📱 Ainflue can be installed as an app!', {
+      toast.success('📱 iacherie can be installed as an app!', {
         duration: 5000,
         position: 'bottom-right',
       });
@@ -127,10 +127,10 @@ export default function PWAManager() {
       const choiceResult = await deferredPrompt.userChoice;
       
       if (choiceResult.outcome === 'accepted') {
-        toast.success('🎉 Ainflue installed successfully!');
+        toast.success('🎉 iacherie installed successfully!');
         console.log('✅ PWA installation accepted');
       } else {
-        toast('📱 You can install Ainflue later from the browser menu');
+        toast('📱 You can install iacherie later from the browser menu');
         console.log('❌ PWA installation dismissed');
       }
       
@@ -199,7 +199,7 @@ export default function PWAManager() {
     return (
       <div className="fixed bottom-4 right-4 z-50">
         <div className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-3">
-          <span className="text-sm">Install Ainflue as an app</span>
+          <span className="text-sm">Install iacherie as an app</span>
           <button
             onClick={installPWA}
             className="bg-white text-blue-600 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100 transition-colors"

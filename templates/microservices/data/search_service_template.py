@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Search Service Template for Ainflue Creator Economy Platform
+Search Service Template for iacherie Creator Economy Platform
 Enterprise search service with Elasticsearch, advanced analytics and AI-powered recommendations
 """
 
@@ -173,7 +173,7 @@ class SearchAnalytics(BaseModel):
 
 class SearchServiceTemplate:
     """
-    Template de service de recherche enterprise pour Ainflue
+    Template de service de recherche enterprise pour iacherie
     
     Fonctionnalités:
     - Multi-provider search (Elasticsearch, OpenSearch, etc.)
@@ -190,7 +190,7 @@ class SearchServiceTemplate:
     def __init__(self, config: SearchConfig = None):
         self.config = config or SearchConfig()
         self.app = FastAPI(
-            title="Ainflue Search Service",
+            title="iacherie Search Service",
             description="Enterprise search service with AI-powered capabilities",
             version="1.0.0"
         )
@@ -325,7 +325,7 @@ class SearchServiceTemplate:
     async def _ensure_indices_exist(self):
         """S'assurer que tous les indices existent"""
         for index_type, mapping in self.index_mappings.items():
-            index_name = f"ainflue_{index_type}"
+            index_name = f"iacherie_{index_type}"
             
             try:
                 exists = await self.es_client.indices.exists(index=index_name)
@@ -410,7 +410,7 @@ class SearchServiceTemplate:
                     es_query = await self._build_elasticsearch_query(query)
                     
                     # Exécuter recherche
-                    index_name = f"ainflue_{query.index_type.value}"
+                    index_name = f"iacherie_{query.index_type.value}"
                     response = await self.es_client.search(
                         index=index_name,
                         body=es_query,
@@ -460,7 +460,7 @@ class SearchServiceTemplate:
         async def index_document(document: IndexDocument, background_tasks: BackgroundTasks):
             """Indexer un document"""
             try:
-                index_name = f"ainflue_{document.index_type.value}"
+                index_name = f"iacherie_{document.index_type.value}"
                 
                 # Préparer document pour indexation
                 doc_body = {
@@ -506,7 +506,7 @@ class SearchServiceTemplate:
         async def delete_document(index_type: IndexType, document_id: str):
             """Supprimer un document de l'index"""
             try:
-                index_name = f"ainflue_{index_type.value}"
+                index_name = f"iacherie_{index_type.value}"
                 
                 response = await self.es_client.delete(
                     index=index_name,
@@ -607,7 +607,7 @@ class SearchServiceTemplate:
                 # Collect index stats
                 index_stats = {}
                 for index_type in IndexType:
-                    index_name = f"ainflue_{index_type.value}"
+                    index_name = f"iacherie_{index_type.value}"
                     try:
                         stats = await self.es_client.indices.stats(index=index_name)
                         index_stats[index_type.value] = {
@@ -811,7 +811,7 @@ class SearchServiceTemplate:
     ) -> List[str]:
         """Générer suggestions d'autocomplétion"""
         try:
-            index_name = f"ainflue_{index_type.value}"
+            index_name = f"iacherie_{index_type.value}"
             
             es_query = {
                 "size": 0,

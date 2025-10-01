@@ -17,7 +17,7 @@ TOUS DROITS RÉSERVÉS
 - Maintenance et mises à jour assurées
 - Formation équipe technique fournie
 
-Microservices Templates Module for Ainflue Platform
+Microservices Templates Module for IA Chéries Platform
 ==================================================
 
 Enterprise-grade microservices templates providing comprehensive patterns for:

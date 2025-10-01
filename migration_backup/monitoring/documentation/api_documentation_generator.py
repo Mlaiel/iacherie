@@ -112,7 +112,7 @@ class APIDocumentationGenerator:
     with Creator Economy specific enhancements and multi-format output.
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root: str = "/home/runner/work/IA Chéries/IA Chéries"):
         self.project_root = Path(project_root)
         self.logger = logging.getLogger(f"{__name__}.APIDocumentationGenerator")
         
@@ -200,7 +200,7 @@ class APIDocumentationGenerator:
             
             # Create documentation package
             package = APIDocumentationPackage(
-                title="Ainflue Creator Economy API",
+                title="IA Chéries Creator Economy API",
                 version="4.0.0",
                 description="Enterprise API for Creator Economy platform with advanced content processing, monetization, and collaboration features",
                 base_url="https://api.ainflue.com/v4",
@@ -264,7 +264,7 @@ class APIDocumentationGenerator:
             creator_doc = {
                 'creator_type': creator_type,
                 'language': language,
-                'title': f'Ainflue API for {creator_type.replace("_", " ").title()} Creators',
+                'title': f'IA Chéries API for {creator_type.replace("_", " ").title()} Creators',
                 'description': f'Specialized API endpoints and features for {creator_type.replace("_", " ")} creators',
                 'endpoints': [asdict(endpoint) for endpoint in creator_endpoints],
                 'endpoint_count': len(creator_endpoints),

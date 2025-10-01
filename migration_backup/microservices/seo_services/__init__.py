@@ -1,5 +1,5 @@
 """
-Ainflue SEO Services Module
+IA Chéries SEO Services Module
 Search Engine Optimization & Content Discovery
 
 This module provides comprehensive SEO services for content optimization,

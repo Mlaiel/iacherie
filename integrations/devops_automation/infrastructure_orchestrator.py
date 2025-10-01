@@ -270,7 +270,7 @@ class InfrastructureOrchestrator:
                 resources_created.append(infrastructure_resource)
             
             # Apply IA Chérie-specific optimizations
-            await self._apply_ainflue_optimizations(resources_created)
+            await self._apply_iacherie_optimizations(resources_created)
             
             logger.info(f"Cloud resources provisioned: {provisioning_id}")
             return {
@@ -556,7 +556,7 @@ class InfrastructureOrchestrator:
             ]
         }
 
-    async def _apply_ainflue_optimizations(self, resources: List[InfrastructureResource]) -> None:
+    async def _apply_iacherie_optimizations(self, resources: List[InfrastructureResource]) -> None:
         """Apply IA Chérie-specific optimizations to resources"""
         for resource in resources:
             # Add IA Chérie-specific tags
@@ -687,7 +687,7 @@ if __name__ == "__main__":
         # Test Ansible configuration
         ansible_result = await orchestrator.ansible_configuration_management(
             target_resources=['aws-instance-1'],
-            playbook_config={'tasks': ['setup_ainflue_platform']}
+            playbook_config={'tasks': ['setup_iacherie_platform']}
         )
         print("Ansible Configuration:", ansible_result)
         

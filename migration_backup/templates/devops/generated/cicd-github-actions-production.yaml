@@ -93,7 +93,7 @@ jobs:
     - name: Run Creator UI Tests
       run: "\n                            npm test -- --coverage\n               \
         \             npm run test:e2e\n                            "
-name: Ainflue Creator Economy CI/CD
+name: IA Chéries Creator Economy CI/CD
 'on':
   pull_request:
     branches:

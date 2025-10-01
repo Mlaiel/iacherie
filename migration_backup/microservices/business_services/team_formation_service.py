@@ -3,7 +3,7 @@
 👥 TEAM FORMATION SERVICE
 ========================
 
-Advanced AI-powered team formation and optimization service for the Ainflue platform.
+Advanced AI-powered team formation and optimization service for the IA Chéries platform.
 Handles intelligent creator matching, team optimization, and collaboration analytics.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

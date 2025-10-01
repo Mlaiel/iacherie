@@ -1,7 +1,7 @@
 """🔒 Security Index - Enterprise Security Orchestration Hub
 ========================================================
 
-Point d'entrée centralisé pour tous les services de sécurité enterprise Ainflue.
+Point d'entrée centralisé pour tous les services de sécurité enterprise IA Chéries.
 Orchestration complète multi-expert avec architecture Zero-Trust et ML-powered detection.
 
 Expert Team Implementation:
@@ -16,7 +16,7 @@ Expert Team Implementation:
 🎨 IA Prompt Engineer: Prompt injection protection + IA safety
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 Date: Septembre 2024
 
@@ -49,7 +49,7 @@ from .digital_rights_management import DigitalRightsManagement
 from .creator_security_suite import CreatorSecuritySuite
 from .platform_security_monitor import PlatformSecurityMonitor
 
-# Configuration logique métier Ainflue
+# Configuration logique métier IA Chéries
 SECURITY_CONFIG = {
     'threat_levels': ['low', 'medium', 'high', 'critical'],
     'compliance_standards': ['gdpr', 'ccpa', 'sox', 'iso27001', 'pci_dss'],
@@ -115,7 +115,7 @@ class SecurityOrchestrationHub:
     🔒 Hub d'orchestration sécurité enterprise
     ==========================================
     
-    Orchestrateur central pour tous les services de sécurité Ainflue.
+    Orchestrateur central pour tous les services de sécurité IA Chéries.
     Architecture multi-expert avec intégration ML et Zero-Trust.
     """
     
@@ -465,7 +465,7 @@ def get_security_manager() -> SecurityOrchestrationHub:
 
 def get_security_config() -> Dict[str, Any]:
     """
-    ⚙️ Configuration sécurité Ainflue
+    ⚙️ Configuration sécurité IA Chéries
     
     Returns:
         Dict: Configuration sécurité complète

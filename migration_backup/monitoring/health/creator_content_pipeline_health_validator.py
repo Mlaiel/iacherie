@@ -1,4 +1,4 @@
-"""🎬 Creator Content Pipeline Health Validator | Ainflue Enterprise
+"""🎬 Creator Content Pipeline Health Validator | IA Chéries Enterprise
 ==============================================================================
 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 

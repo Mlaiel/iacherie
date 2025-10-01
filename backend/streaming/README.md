@@ -33,11 +33,11 @@ This advanced streaming architecture, its AI technological innovations, propriet
 
 ## 📋 Streaming Module Overview
 
-The **Backend Streaming** module constitutes the technological heart of Ainflue's intelligent live streaming system, offering advanced streaming capabilities with integrated artificial intelligence, secure content protection, real-time monetization and multi-platform distribution.
+The **Backend Streaming** module constitutes the technological heart of iacherie's intelligent live streaming system, offering advanced streaming capabilities with integrated artificial intelligence, secure content protection, real-time monetization and multi-platform distribution.
 
 ### 🎯 Mission and Objectives
 
-**Main Mission**: Provide a complete enterprise streaming infrastructure that enables Ainflue creators to stream high-quality live content with integrated artificial intelligence, optimized monetization and maximum security.
+**Main Mission**: Provide a complete enterprise streaming infrastructure that enables iacherie creators to stream high-quality live content with integrated artificial intelligence, optimized monetization and maximum security.
 
 **Streaming Objectives**:
 - **Professional Live Streaming**: RTMP/WebRTC, 4K quality, ultra-low latency
@@ -236,7 +236,7 @@ POST /api/streaming/live/create
 POST /api/streaming/live/{stream_id}/start
 {
     "stream_key": "sk_live_abc123",
-    "rtmp_url": "rtmp://ingest.ainflue.com/live/",
+    "rtmp_url": "rtmp://ingest.iacherie.com/live/",
     "auto_record": true,
     "ai_enhancement": true
 }
@@ -245,7 +245,7 @@ POST /api/streaming/live/{stream_id}/start
 #### Real-Time Metrics
 ```python
 GET /api/streaming/live/{stream_id}/metrics
-WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
+WebSocket: ws://stream.iacherie.com/metrics/{stream_id}
 ```
 
 ### Streaming Integrations
@@ -259,7 +259,7 @@ WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
 - **LinkedIn Live**: Professional streaming
 
 #### Third-Party Services
-- **OBS Studio**: Official Ainflue plugin
+- **OBS Studio**: Official iacherie plugin
 - **Streamlabs**: Widgets and overlays
 - **Donation Services**: PayPal, Stripe, crypto
 - **Chat Services**: Integrated AI moderation
@@ -288,13 +288,13 @@ WebSocket: ws://stream.ainflue.com/metrics/{stream_id}
 
 ### Support Contacts
 - **Technical Lead**: Fahed Mlaiel (mlaiel@live.de)
-- **Streaming Support**: streaming-support@ainflue.com
+- **Streaming Support**: streaming-support@iacherie.com
 - **Emergency**: +49-xxx-xxx-xxxx (24/7)
 
 ### Development Resources
-- **API Documentation**: [docs.ainflue.com/streaming](https://docs.ainflue.com/streaming)
-- **Streaming SDK**: [github.com/ainflue/streaming-sdk](https://github.com/ainflue/streaming-sdk)
-- **Community**: [community.ainflue.com/streaming](https://community.ainflue.com/streaming)
+- **API Documentation**: [docs.iacherie.com/streaming](https://docs.iacherie.com/streaming)
+- **Streaming SDK**: [github.com/iacherie/streaming-sdk](https://github.com/iacherie/streaming-sdk)
+- **Community**: [community.iacherie.com/streaming](https://community.iacherie.com/streaming)
 
 ---
 

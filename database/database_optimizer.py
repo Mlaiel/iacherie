@@ -204,7 +204,7 @@ class EnterpriseDatabaseOptimizer:
             database_type=DatabaseType.MONGODB,
             primary_nodes=["mongodb-primary-1", "mongodb-primary-2"],
             secondary_nodes=["mongodb-secondary-1", "mongodb-secondary-2", "mongodb-secondary-3"],
-            connection_string="mongodb://mongodb-cluster:27017/ainflue_content",
+            connection_string="mongodb://mongodb-cluster:27017/iacherie_content",
             max_connections=200,
             sharding_enabled=True,
             sharding_strategy=ShardingStrategy.PLATFORM_BASED,
@@ -229,7 +229,7 @@ class EnterpriseDatabaseOptimizer:
             database_type=DatabaseType.POSTGRESQL,
             primary_nodes=["postgres-analytics-1"],
             secondary_nodes=["postgres-analytics-2", "postgres-analytics-3"],
-            connection_string="postgresql://postgres:password@postgres-cluster:5432/ainflue_analytics",
+            connection_string="postgresql://postgres:password@postgres-cluster:5432/iacherie_analytics",
             max_connections=150,
             sharding_enabled=True,
             sharding_strategy=ShardingStrategy.TIME_BASED

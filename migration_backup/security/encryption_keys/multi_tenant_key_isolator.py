@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🔐 Multi Tenant Key Isolator - Enterprise Multi-Tenancy Cryptographic Isolation System
-Production-grade tenant isolation for Ainflue Creator Economy Platform
+Production-grade tenant isolation for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -161,7 +161,7 @@ class MultiTenantKeyIsolator:
     """
     🔐 Multi Tenant Key Isolator - Enterprise Cryptographic Tenant Isolation
     
-    Provides comprehensive multi-tenant key isolation for Ainflue Creator Economy:
+    Provides comprehensive multi-tenant key isolation for IA Chéries Creator Economy:
     - Cryptographic isolation between tenants
     - Creator-specific key namespaces within tenants
     - Content-type specific isolation boundaries

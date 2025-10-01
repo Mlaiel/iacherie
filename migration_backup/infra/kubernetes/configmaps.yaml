@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module
+# IA Chéries Infrastructure Module
 # =============================
 # 
-# Enterprise-grade Kubernetes ConfigMaps for Ainflue platform
+# Enterprise-grade Kubernetes ConfigMaps for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -36,7 +36,7 @@ data:
   redis-db: "0"
   
   # Application Configuration
-  app-name: "Ainflue Platform"
+  app-name: "IA Chéries Platform"
   app-version: "v1.0.0"
   api-version: "v1"
   max-upload-size: "500MB"
@@ -295,7 +295,7 @@ data:
   grafana-dashboard.json: |
     {
       "dashboard": {
-        "title": "Ainflue Platform Monitoring",
+        "title": "IA Chéries Platform Monitoring",
         "panels": [
           {
             "title": "API Response Time",

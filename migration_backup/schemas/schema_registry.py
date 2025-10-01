@@ -121,7 +121,7 @@ class SchemaDiscovery(BaseSchema):
 
 
 class SchemaRegistry:
-    """Centralized schema registry for the Ainflue platform."""
+    """Centralized schema registry for the IA Chéries platform."""
     
     def __init__(self):
         self._schemas: Dict[str, Dict[str, SchemaInfo]] = {}

@@ -83,7 +83,7 @@ class MLOpsConfig:
     
     # Model Registry
     mlflow_tracking_uri: str = "file://./mlflow_runs"
-    experiment_name: str = "ainflue_models"
+    experiment_name: str = "iacherie_models"
     
     # Feature Store
     feature_store_db_path: str = "feature_store.db"
@@ -605,7 +605,7 @@ class MLOpsPlatform:
         admin_user = User(
             user_id="admin",
             name="Platform Admin",
-            email="admin@ainflue.com",
+            email="admin@iacherie.com",
             roles=[UserRole.ADMIN, UserRole.MODEL_REVIEWER],
             department="Engineering"
         )

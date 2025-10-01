@@ -137,7 +137,7 @@ class InfrastructureMonitoring:
         self.retention_days = self.config.get('retention_days', 30)
         
         # IA Chérie-specific monitoring configurations
-        self.ainflue_metrics = {
+        self.iacherie_metrics = {
             'content_processing': {
                 'ai_model_inference_time': {
                     'type': MetricType.HISTOGRAM,
@@ -278,7 +278,7 @@ class InfrastructureMonitoring:
             application_metrics = await self._collect_application_metrics(resource_filter)
             
             # Collect IA Chérie-specific metrics
-            ainflue_metrics = await self._collect_ainflue_metrics(resource_filter)
+            iacherie_metrics = await self._collect_iacherie_metrics(resource_filter)
             
             # Calculate utilization trends
             utilization_trends = await self._calculate_utilization_trends(
@@ -305,7 +305,7 @@ class InfrastructureMonitoring:
                 'tracking_id': tracking_id,
                 'infrastructure_metrics': infrastructure_metrics,
                 'application_metrics': application_metrics,
-                'ainflue_metrics': ainflue_metrics,
+                'iacherie_metrics': iacherie_metrics,
                 'utilization_trends': utilization_trends,
                 'bottlenecks': bottlenecks,
                 'recommendations': recommendations,
@@ -403,7 +403,7 @@ class InfrastructureMonitoring:
             runbook_setup = await self._setup_alert_automation(alert_config)
             
             # Apply IA Chérie-specific alert logic
-            ainflue_alert_logic = await self._apply_ainflue_alert_logic(alert_config)
+            iacherie_alert_logic = await self._apply_iacherie_alert_logic(alert_config)
             
             # Store alert configuration
             self.alerts[alert_config.id] = alert_config
@@ -417,7 +417,7 @@ class InfrastructureMonitoring:
                 'correlation_setup': correlation_setup,
                 'escalation_setup': escalation_setup,
                 'runbook_setup': runbook_setup,
-                'ainflue_logic': ainflue_alert_logic,
+                'iacherie_logic': iacherie_alert_logic,
                 'status': 'configured'
             }
             
@@ -466,7 +466,7 @@ class InfrastructureMonitoring:
             )
             
             # Apply IA Chérie-specific capacity planning
-            ainflue_capacity_planning = await self._apply_ainflue_capacity_planning(
+            iacherie_capacity_planning = await self._apply_iacherie_capacity_planning(
                 capacity_predictions, scaling_recommendations
             )
             
@@ -481,7 +481,7 @@ class InfrastructureMonitoring:
                 'cost_projections': cost_projections,
                 'optimization_opportunities': optimization_opportunities,
                 'planning_report': planning_report,
-                'ainflue_planning': ainflue_capacity_planning,
+                'iacherie_planning': iacherie_capacity_planning,
                 'status': 'completed'
             }
             
@@ -529,7 +529,7 @@ class InfrastructureMonitoring:
             )
             
             # Apply IA Chérie-specific scaling logic
-            ainflue_scaling_logic = await self._apply_ainflue_scaling_logic(
+            iacherie_scaling_logic = await self._apply_iacherie_scaling_logic(
                 service_name, ml_predictions, scaling_schedule
             )
             
@@ -556,7 +556,7 @@ class InfrastructureMonitoring:
                 'scaling_parameters': scaling_parameters,
                 'scaling_schedule': scaling_schedule,
                 'validation_result': validation_result,
-                'ainflue_scaling': ainflue_scaling_logic,
+                'iacherie_scaling': iacherie_scaling_logic,
                 'prediction': prediction,
                 'status': 'completed'
             }
@@ -630,7 +630,7 @@ class InfrastructureMonitoring:
             }
         }
 
-    async def _collect_ainflue_metrics(self, resource_filter: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    async def _collect_iacherie_metrics(self, resource_filter: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Collect IA Chérie-specific metrics"""
         return {
             'content_processing': {
@@ -1065,9 +1065,9 @@ class InfrastructureMonitoring:
             'status': 'configured'
         }
 
-    async def _apply_ainflue_alert_logic(self, alert_config: Alert) -> Dict[str, Any]:
+    async def _apply_iacherie_alert_logic(self, alert_config: Alert) -> Dict[str, Any]:
         """Apply IA Chérie-specific alert logic"""
-        ainflue_logic = {
+        iacherie_logic = {
             'creator_impact_assessment': True,
             'revenue_impact_calculation': True,
             'sla_breach_detection': True,
@@ -1076,13 +1076,13 @@ class InfrastructureMonitoring:
         
         # Add service-specific logic
         if 'content-processing' in alert_config.name:
-            ainflue_logic['ai_model_health_check'] = True
-            ainflue_logic['gpu_optimization_check'] = True
+            iacherie_logic['ai_model_health_check'] = True
+            iacherie_logic['gpu_optimization_check'] = True
         elif 'distribution-api' in alert_config.name:
-            ainflue_logic['platform_connectivity_check'] = True
-            ainflue_logic['rate_limit_analysis'] = True
+            iacherie_logic['platform_connectivity_check'] = True
+            iacherie_logic['rate_limit_analysis'] = True
         
-        return ainflue_logic
+        return iacherie_logic
 
     # Capacity planning methods
     async def _collect_historical_utilization_data(self, horizon: timedelta) -> Dict[str, Any]:
@@ -1281,7 +1281,7 @@ class InfrastructureMonitoring:
             }
         }
 
-    async def _apply_ainflue_capacity_planning(self, predictions: Dict[str, CapacityPrediction],
+    async def _apply_iacherie_capacity_planning(self, predictions: Dict[str, CapacityPrediction],
                                              recommendations: Dict[str, Any]) -> Dict[str, Any]:
         """Apply IA Chérie-specific capacity planning"""
         return {
@@ -1438,36 +1438,36 @@ class InfrastructureMonitoring:
             'performance_improvement': '15-25%'
         }
 
-    async def _apply_ainflue_scaling_logic(self, service_name: str,
+    async def _apply_iacherie_scaling_logic(self, service_name: str,
                                          predictions: Dict[str, Any],
                                          schedule: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply IA Chérie-specific scaling logic"""
-        ainflue_logic = {
+        iacherie_logic = {
             'creator_priority_scaling': True,
             'revenue_impact_consideration': True,
             'content_type_optimization': True
         }
         
         if service_name == 'content-processing':
-            ainflue_logic.update({
+            iacherie_logic.update({
                 'ai_model_warm_up': True,
                 'gpu_optimization': True,
                 'batch_processing_priority': True
             })
         elif service_name == 'distribution-api':
-            ainflue_logic.update({
+            iacherie_logic.update({
                 'platform_priority_routing': True,
                 'geographic_scaling': True,
                 'rate_limit_optimization': True
             })
         elif service_name == 'creator-protection':
-            ainflue_logic.update({
+            iacherie_logic.update({
                 'security_priority_scaling': True,
                 'threat_response_optimization': True,
                 'compliance_maintenance': True
             })
         
-        return ainflue_logic
+        return iacherie_logic
 
 
 # Factory function for easy initialization

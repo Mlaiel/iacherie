@@ -1,4 +1,4 @@
-"""GraphQL Caching Template for Ainflue Platform
+"""GraphQL Caching Template for IA Chéries Platform
 Enterprise-grade GraphQL caching with Redis and in-memory optimization
 
 ⚠️  AVERTISSEMENT LÉGAL:

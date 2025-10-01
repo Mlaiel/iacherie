@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Ainflue Platform - Automatic Installation Script
+# iacherie Platform - Automatic Installation Script
 # =============================================================================
 # Production-ready installation and configuration script for the 
 # AI-powered content protection and monetization platform.
@@ -324,7 +324,7 @@ generate_security_keys() {
 main() {
     print_banner
     
-    log_info "Starting Ainflue Platform installation..."
+    log_info "Starting iacherie Platform installation..."
     log_info "Environment: ${ENVIRONMENT:-auto-detect}"
     echo ""
     

@@ -1,6 +1,6 @@
 """
 Predictive Scaler - AI-Powered Infrastructure Scaling
-Machine learning-based predictive scaling for Ainflue creator platform
+Machine learning-based predictive scaling for IA Chéries creator platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -141,7 +141,7 @@ class CreatorActivityPattern:
 
 class PredictiveScaler:
     """
-    AI-powered predictive scaling system for Ainflue creator platform
+    AI-powered predictive scaling system for IA Chéries creator platform
     
     Lead Dev AI Role Enhancement - Advanced Features:
     - Machine learning algorithms for workload prediction based on creator patterns
@@ -188,7 +188,7 @@ class PredictiveScaler:
         # Initialize AI models
         self._initialize_workload_models()
         
-        logger.info("AI-powered predictive scaler initialized for Ainflue creator platform")
+        logger.info("AI-powered predictive scaler initialized for IA Chéries creator platform")
         
     def _initialize_workload_models(self):
         """Initialize machine learning models for workload prediction"""

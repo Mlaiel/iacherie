@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Ainfluencer Platform - Enterprise Compliance Validator
+IA Chéries Platform - Enterprise Compliance Validator
 Comprehensive compliance validation for security standards
-Author: Ainfluencer Team
+Author: IA Chéries Team
 Version: 2.0.0
 Date: 2024
 """

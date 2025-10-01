@@ -8,7 +8,7 @@ Regulatory compliance + privacy impact assessment + data governance + audit prep
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Compliance Validator
+Project: IA Chéries ML Security - Compliance Validator
 Version: 1.0 Production
 =======================================================================
 """
@@ -80,7 +80,7 @@ class ComplianceConfig:
     consent_management: bool = True
     data_minimization: bool = True
     purpose_limitation: bool = True
-    creator_rights_protection: bool = True  # Ainflue-specific
+    creator_rights_protection: bool = True  # IA Chéries-specific
     intellectual_property_compliance: bool = True  # Fahed Mlaiel IP
 
 @dataclass
@@ -95,7 +95,7 @@ class DataProcessingContext:
     automated_decision_making: bool
     profiling: bool
     consent_obtained: bool
-    creator_data: bool = False  # Ainflue-specific
+    creator_data: bool = False  # IA Chéries-specific
 
 @dataclass
 class ComplianceViolation:
@@ -235,7 +235,7 @@ class ComplianceValidator:
         - Data subject rights implementation verification
         - Automated compliance reporting et documentation
         - Regulatory change monitoring avec policy updates
-        - Creator rights protection pour Ainflue ecosystem
+        - Creator rights protection pour IA Chéries ecosystem
         """
         start_time = time.time()
         

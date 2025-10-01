@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 Content Processing Performance Monitor - Enterprise Performance Monitoring
 Advanced performance monitoring for AI content processing and multimedia workflows

@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Protection Dashboard Component
+ * IA Chéries Desktop - Protection Dashboard Component
  * 
  * Advanced rights protection interface for intellectual property management
  * Implements DMCA compliance, copyright detection, and legal protection tools

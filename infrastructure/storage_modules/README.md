@@ -1,11 +1,11 @@
-# 💾 Storage Modules Infrastructure - Ainflue Enterprise
+# 💾 Storage Modules Infrastructure - iacherie Enterprise
 **Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
 
 ## ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 > **AVERTISSEMENT FORT ET CLAIR:** Cette architecture est la propriété intellectuelle EXCLUSIVE de **Fahed Mlaiel** (mlaiel@live.de). Toute reproduction, modification, distribution ou vol d'idée/concept/code sans autorisation écrite PERSONNELLE est **STRICTEMENT INTERDITE** et sera poursuivie en justice.
 
 ## 🎯 Module Purpose
-Enterprise-grade storage infrastructure providing distributed storage, multi-cloud storage management, encrypted storage, and specialized media storage for the Ainflue creator platform serving 65+ social media and streaming platforms with 53 AI agents.
+Enterprise-grade storage infrastructure providing distributed storage, multi-cloud storage management, encrypted storage, and specialized media storage for the iacherie creator platform serving 65+ social media and streaming platforms with 53 AI agents.
 
 ## 🏗️ Architecture Components
 - **Distributed Storage**: High-performance distributed file systems

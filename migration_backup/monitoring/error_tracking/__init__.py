@@ -1,5 +1,5 @@
 """
-Error Tracking Module for Ainflue Creator Economy Platform
+Error Tracking Module for IA Chéries Creator Economy Platform
 Enterprise-grade error tracking and reporting system with Creator Economy intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>

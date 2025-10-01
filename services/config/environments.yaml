@@ -19,8 +19,8 @@ development:
     postgresql:
       host: "localhost"
       port: 5432
-      database: "ainflue_creator_dev"
-      username: "ainflue_dev"
+      database: "iacherie_creator_dev"
+      username: "iacherie_dev"
       password: "dev_password_123"
       pool_size: 5
       max_overflow: 10
@@ -34,7 +34,7 @@ development:
       max_connections: 10
       
     mongodb:
-      uri: "mongodb://localhost:27017/ainflue_content_dev"
+      uri: "mongodb://localhost:27017/iacherie_content_dev"
       max_pool_size: 10
       
   external_services:
@@ -55,7 +55,7 @@ development:
       max_tokens: 1000
       
   storage:
-    local_path: "/tmp/ainflue_dev"
+    local_path: "/tmp/iacherie_dev"
     max_storage_gb: 10
     cleanup_days: 7
     
@@ -85,7 +85,7 @@ staging:
     postgresql:
       host: "${STAGING_DB_HOST}"
       port: 5432
-      database: "ainflue_creator_staging"
+      database: "iacherie_creator_staging"
       username: "${STAGING_DB_USER}"
       password: "${STAGING_DB_PASSWORD}"
       pool_size: 15
@@ -167,7 +167,7 @@ production:
     postgresql:
       host: "${PROD_DB_HOST}"
       port: 5432
-      database: "ainflue_creator_prod"
+      database: "iacherie_creator_prod"
       username: "${PROD_DB_USER}"
       password: "${PROD_DB_PASSWORD}"
       pool_size: 50
@@ -271,8 +271,8 @@ testing:
     postgresql:
       host: "localhost"
       port: 5433
-      database: "ainflue_creator_test"
-      username: "ainflue_test"
+      database: "iacherie_creator_test"
+      username: "iacherie_test"
       password: "test_password"
       pool_size: 2
       
@@ -282,7 +282,7 @@ testing:
       db: 15
       
     mongodb:
-      uri: "mongodb://localhost:27018/ainflue_content_test"
+      uri: "mongodb://localhost:27018/iacherie_content_test"
       max_pool_size: 5
       
   security:

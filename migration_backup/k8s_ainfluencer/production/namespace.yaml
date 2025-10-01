@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   annotations:
     contact: mlaiel@live.de
-    description: Ainflue microservices - production
+    description: IA Chéries microservices - production
   labels:
     environment: production
     managed-by: enterprise-orchestrator

@@ -1,7 +1,7 @@
 """MongoDB Indexing Management
 ===========================
 
-Advanced indexing utilities for optimal query performance in the Ainflue platform.
+Advanced indexing utilities for optimal query performance in the IA Chéries platform.
 Provides index creation, monitoring, optimization, and performance analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -380,7 +380,7 @@ def get_index_manager(connection: Optional[MongoDBConnection] = None) -> MongoDB
         _default_manager = MongoDBIndexManager(connection)
     return _default_manager
 
-# Common index patterns for Ainflue platform
+# Common index patterns for IA Chéries platform
 COMMON_INDEX_PATTERNS = {
     "user_lookup": IndexDefinition(
         name="idx_user_lookup",

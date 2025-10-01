@@ -1,4 +1,4 @@
-"""{{api_name}} REST API Template for Ainflue Platform
+"""{{api_name}} REST API Template for IA Chéries Platform
 {{api_description}}
 
 Author: {{author_name}} ({{author_email}})

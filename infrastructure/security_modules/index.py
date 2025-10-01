@@ -1,10 +1,10 @@
 """
-Security Modules - Ainflue Infrastructure Enterprise
+Security Modules - iacherie Infrastructure Enterprise
 ===================================================
 Point d'entrée principal pour tous les services de sécurité
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure Enterprise
+Project: iacherie Infrastructure Enterprise
 Version: 2.0 Production
 """
 
@@ -27,10 +27,10 @@ __all__ = [
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Enterprise security infrastructure for Ainflue platform"
+__description__ = "Enterprise security infrastructure for iacherie platform"
 
-# Configuration sécurité métier Ainflue
-AINFLUE_SECURITY_WORKFLOW = {
+# Configuration sécurité métier iacherie
+IACHERIE_SECURITY_WORKFLOW = {
     'upload': 'Content security scanning and validation',
     'ai_processing': 'AI model security and privacy protection', 
     'protection': 'IP rights enforcement and watermarking security',

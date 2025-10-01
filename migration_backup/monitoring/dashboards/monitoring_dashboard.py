@@ -2,7 +2,7 @@
 📊 Enterprise Monitoring Dashboard - Multi-Role Expert Implementation
 ====================================================================
 
-Advanced monitoring and observability system for Ainflue platform combining
+Advanced monitoring and observability system for IA Chéries platform combining
 all expert roles (Lead Dev IA + Backend + ML + DBA + Security + Microservices + Audio + DevOps)
 providing comprehensive real-time monitoring across all enterprise components.
 

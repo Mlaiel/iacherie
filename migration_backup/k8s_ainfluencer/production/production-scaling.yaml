@@ -1,4 +1,4 @@
-# Production Auto-Scaling Configuration for Ainflue Platform
+# Production Auto-Scaling Configuration for IA Chéries Platform
 # Implements: CPU 70%, Memory 80%, Custom metrics, Multi-AZ, Spot instances, 99.99% SLA
 
 ---

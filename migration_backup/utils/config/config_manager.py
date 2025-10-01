@@ -81,7 +81,7 @@ class ConfigurationManager(BaseConfigurationManager):
     def __init__(self, base_path: Optional[str] = None):
         super().__init__()
         self.base_path = Path(base_path) if base_path else Path(__file__).parent
-        self.environment = os.getenv('AINFLUE_ENV', 'development')
+        self.environment = os.getenv('IA CHÉRIES_ENV', 'development')
         self._cache = {}
         self._cache_ttl = 300  # 5 minutes
         self._cache_timestamps = {}

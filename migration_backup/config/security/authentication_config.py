@@ -4,10 +4,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Authentication Configuration Module
+"""IA Chéries Authentication Configuration Module
 =============================================
 
-Enterprise-grade authentication configuration for the Ainflue platform.
+Enterprise-grade authentication configuration for the IA Chéries platform.
 Handles multi-factor authentication, OAuth, SSO, biometric authentication,
 passwordless authentication, and comprehensive identity management.
 
@@ -138,7 +138,7 @@ class MultiFactorAuthConfig:
     # TOTP (Time-based One-Time Password)
     totp_config: Dict[str, Any] = field(default_factory=lambda: {
         "enabled": True,
-        "issuer": "Ainflue",
+        "issuer": "IA Chéries",
         "algorithm": "SHA256",
         "digits": 6,
         "period": 30,
@@ -176,7 +176,7 @@ class MultiFactorAuthConfig:
     # WebAuthn (FIDO2)
     webauthn_config: Dict[str, Any] = field(default_factory=lambda: {
         "enabled": True,
-        "rp_name": "Ainflue Platform",
+        "rp_name": "IA Chéries Platform",
         "rp_id": "ainflue.com",
         "require_resident_key": False,
         "user_verification": "preferred",

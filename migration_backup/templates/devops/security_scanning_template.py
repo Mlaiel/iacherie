@@ -1,7 +1,7 @@
 
 # Security headers enforcement - Added by Security Expert
 # X-Content-Type-Options: nosniff, X-Frame-Options: DENY, X-XSS-Protection: 1; mode=block
-"""Security Scanning Template for Ainflue Platform
+"""Security Scanning Template for IA Chéries Platform
 Enterprise-grade security vulnerability scanning and assessment templates.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -88,7 +88,7 @@ class SecurityScanConfig:
 
 
 class SecurityScanningTemplate:
-    """Enterprise Security Scanning Template for Ainflue Platform"""
+    """Enterprise Security Scanning Template for IA Chéries Platform"""
     
     def __init__(self, config: SecurityScanConfig):
         self.config = config
@@ -680,7 +680,7 @@ if __name__ == "__main__":
     config = create_production_security_config()
     template = SecurityScanningTemplate(config)
     
-    print("Security Scanning Template for Ainflue Platform")
+    print("Security Scanning Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Scan Types: {[scan.value for scan in config.scan_types]}")
     print(f"- SAST Tools: SonarQube, Semgrep, Bandit")

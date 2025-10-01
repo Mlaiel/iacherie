@@ -2,7 +2,7 @@
 =========================================================================
 
 Automation DevOps enterprise avec CI/CD avancé, Infrastructure as Code,
-monitoring distribué et deployment automation pour la plateforme Ainflue.
+monitoring distribué et deployment automation pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 ⚙️ DevOps Senior: CI/CD pipelines + Infrastructure as Code + automation complète
@@ -176,7 +176,7 @@ class MonitoringAlert:
     notification_sent: bool = False
 
 class EnterpriseDevOpsAutomation:
-    """⚙️ DevOps Automation Enterprise pour Ainflue
+    """⚙️ DevOps Automation Enterprise pour IA Chéries
     
     Implémentation multi-expert pour DevOps production:
     - CI/CD pipelines avec déploiement automatisé multi-environnements
@@ -337,11 +337,11 @@ class EnterpriseDevOpsAutomation:
         ⚙️ DevOps Senior: CI/CD pipeline configuration
         """
         try:
-            # Pipeline principal Ainflue
+            # Pipeline principal IA Chéries
             main_pipeline = PipelineConfiguration(
                 id="ainflue_main_pipeline",
-                name="Ainflue Main Application Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue.git",
+                name="IA Chéries Main Application Pipeline",
+                repository="https://github.com/Mlaiel/IA Chéries.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -359,7 +359,7 @@ class EnterpriseDevOpsAutomation:
             microservices_pipeline = PipelineConfiguration(
                 id="microservices_pipeline",
                 name="Microservices Deployment Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-Services.git",
+                repository="https://github.com/Mlaiel/IA Chéries-Services.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -377,7 +377,7 @@ class EnterpriseDevOpsAutomation:
             ml_pipeline = PipelineConfiguration(
                 id="ml_models_pipeline",
                 name="ML Models Deployment Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-AI.git",
+                repository="https://github.com/Mlaiel/IA Chéries-AI.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -395,7 +395,7 @@ class EnterpriseDevOpsAutomation:
             infrastructure_pipeline = PipelineConfiguration(
                 id="infrastructure_pipeline",
                 name="Infrastructure as Code Pipeline",
-                repository="https://github.com/Mlaiel/Ainflue-Infrastructure.git",
+                repository="https://github.com/Mlaiel/IA Chéries-Infrastructure.git",
                 branch="main",
                 stages=[
                     DeploymentStage.BUILD,
@@ -439,7 +439,7 @@ class EnterpriseDevOpsAutomation:
         🏗️ Backend Senior: Infrastructure resource management
         """
         try:
-            # Ressources d'infrastructure Ainflue
+            # Ressources d'infrastructure IA Chéries
             resources = [
                 InfrastructureResource(
                     id="k8s_cluster_prod",

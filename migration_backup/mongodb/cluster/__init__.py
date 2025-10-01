@@ -2,7 +2,7 @@
 ========================================
 
 Advanced MongoDB clustering, replica set management, and high availability
-for the Ainflue platform enterprise architecture.
+for the IA Chéries platform enterprise architecture.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

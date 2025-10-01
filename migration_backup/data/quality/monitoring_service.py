@@ -117,7 +117,7 @@ class PerformanceMonitor:
         # Prometheus metrics
         self.response_time_histogram = Histogram(
             'ainflue_response_time_seconds',
-            'Response time of Ainflue operations',
+            'Response time of IA Chéries operations',
             ['operation', 'status']
         )
         

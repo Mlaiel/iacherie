@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Localization analytics enterprise avec cultural performance insights,
 localization effectiveness measurement et ROI analysis.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Cultural performance analysis pour créateurs globaux
 - Localization effectiveness measurement par région
 - Regional engagement analytics avec données temps réel

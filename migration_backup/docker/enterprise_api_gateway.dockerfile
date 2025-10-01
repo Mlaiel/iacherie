@@ -4,7 +4,7 @@
 
 FROM node:20-alpine AS base
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Enterprise API Gateway - Advanced routing and security"
+LABEL description="IA Chéries Enterprise API Gateway - Advanced routing and security"
 LABEL version="1.0.0"
 
 # Install system dependencies

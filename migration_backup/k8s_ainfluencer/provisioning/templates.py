@@ -732,7 +732,7 @@ output "s3_buckets" {
             'postgresql_instance_class': self.config.variables.get('postgresql_instance_class', 'db.t3.large'),
             'postgresql_storage_size': self.config.variables.get('postgresql_storage_size', 100),
             'database_name': self.config.variables.get('database_name', 'ia_influencer_platform'),
-            'database_username': self.config.variables.get('database_username', 'iainfluencer'),
+            'database_username': self.config.variables.get('database_username', 'iiacheries'),
             'backup_retention_days': self.config.variables.get('backup_retention_days', 7),
             'skip_final_snapshot': str(self.config.deployment_target != DeploymentTarget.PRODUCTION).lower(),
             'deletion_protection': str(self.config.deployment_target == DeploymentTarget.PRODUCTION).lower(),
@@ -1035,7 +1035,7 @@ Get main Ansible playbook template"""
             'database_host': self.config.variables.get('database_host', 'localhost'),
             'database_port': 5432,
             'database_name': self.config.variables.get('database_name', 'ia_influencer_platform'),
-            'database_user': self.config.variables.get('database_user', 'iainfluencer'),
+            'database_user': self.config.variables.get('database_user', 'iiacheries'),
             'redis_host': self.config.variables.get('redis_host', 'localhost'),
             'redis_port': 6379,
             'redis_ssl': str(self.config.deployment_target == DeploymentTarget.PRODUCTION).lower(),
@@ -1245,7 +1245,7 @@ postgresql:
   enabled: {str(self.config.deployment_target != DeploymentTarget.PRODUCTION).lower()}
   auth:
     postgresPassword: "secure-password-123"
-    username: "iainfluencer"
+    username: "iiacheries"
     password: "secure-password-123"
     database: "ia_influencer_platform"
   primary:
@@ -1348,7 +1348,7 @@ externalServices:
     host: "{self.config.variables.get('database_host', 'localhost')}"
     port: 5432
     database: "ia_influencer_platform"
-    username: "iainfluencer"
+    username: "iiacheries"
     passwordSecret: "postgresql-credentials"
   
   redis:
@@ -1622,7 +1622,7 @@ def create_default_config(name: str, template_type: TemplateType,
             'max_nodes': 10,
             'desired_nodes': 3,
             'database_name': 'ia_influencer_platform',
-            'database_username': 'iainfluencer'
+            'database_username': 'iiacheries'
         },
         secrets={
             'database_password': 'auto-generated',

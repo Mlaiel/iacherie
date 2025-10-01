@@ -1,11 +1,11 @@
 """
-Advanced Gamification Engine - Ainflue Integrations
+Advanced Gamification Engine - IA Chéries Integrations
 =================================================
 Comprehensive engagement and motivation system for creator collaborations.
 Features 200+ badges, leaderboards, XP system, and community building.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Enterprise Collaboration Platform
+Project: IA Chéries Enterprise Collaboration Platform
 Version: 1.0 Enterprise
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """

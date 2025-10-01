@@ -731,7 +731,7 @@ export class PerformanceOptimizer {
     // Setup DNS prefetch, preconnect, etc.
     const hints = [
       { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://api.ainflue.com' }
+      { rel: 'preconnect', href: 'https://api.iacherie.com' }
     ];
 
     hints.forEach(hint => {

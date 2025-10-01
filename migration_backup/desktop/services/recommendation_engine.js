@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Recommendation Engine Service
+ * IA Chéries Desktop - Recommendation Engine Service
  * 
  * AI-powered content and collaboration recommendation system
  * Provides personalized suggestions for content optimization and partner matching

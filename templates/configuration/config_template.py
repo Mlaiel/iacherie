@@ -1,4 +1,4 @@
-"""{{config_name}} Configuration Template for Ainflue Platform
+"""{{config_name}} Configuration Template for iacherie Platform
 {{config_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -75,7 +75,7 @@ class {{config_name}}Config(BaseSettings):
     # ============================================================================
     
     # Basic application info
-    app_name: str = Field(default="Ainflue Platform", env="APP_NAME")
+    app_name: str = Field(default="iacherie Platform", env="APP_NAME")
     app_version: str = Field(default="1.0.0", env="APP_VERSION")
     environment: Environment = Field(default=Environment.DEVELOPMENT, env="ENVIRONMENT")
     debug: bool = Field(default=False, env="DEBUG")
@@ -106,7 +106,7 @@ class {{config_name}}Config(BaseSettings):
     database_driver: DatabaseDriver = Field(default=DatabaseDriver.POSTGRESQL, env="DATABASE_DRIVER")
     database_host: str = Field(default="localhost", env="DATABASE_HOST")
     database_port: int = Field(default=5432, env="DATABASE_PORT")
-    database_name: str = Field(default="ainflue", env="DATABASE_NAME")
+    database_name: str = Field(default="iacherie", env="DATABASE_NAME")
     database_user: str = Field(default="postgres", env="DATABASE_USER")
     database_password: str = Field("", env="DATABASE_PASSWORD")
     database_echo: bool = Field(default=False, env="DATABASE_ECHO")
@@ -134,7 +134,7 @@ class {{config_name}}Config(BaseSettings):
     # Cache settings
     cache_backend: CacheBackend = Field(default=CacheBackend.REDIS, env="CACHE_BACKEND")
     cache_ttl: int = Field(default=300, env="CACHE_TTL")
-    cache_key_prefix: str = Field(default="ainflue", env="CACHE_KEY_PREFIX")
+    cache_key_prefix: str = Field(default="iacherie", env="CACHE_KEY_PREFIX")
     
     # Message queue settings
     celery_broker_url: str = Field(default="redis://localhost:6379/1", env="CELERY_BROKER_URL")

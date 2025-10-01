@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 🏆 INTEGRATION TESTING SUITE - ENTERPRISE VALIDATION FINALE
-Ainflue Platform - Tests d'Intégration End-to-End Multi-Expertise
+IA Chéries Platform - Tests d'Intégration End-to-End Multi-Expertise
 
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Expertise Multi-Rôles: Lead Dev IA + Backend Senior + ML Engineer + DBA + 

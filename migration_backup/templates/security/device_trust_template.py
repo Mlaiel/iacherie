@@ -1,4 +1,4 @@
-"""Device Trust Template for Ainflue Platform
+"""Device Trust Template for IA Chéries Platform
 Advanced device trust and management system with fingerprinting, risk assessment,
 device registration, and behavioral analysis for creator security enhancement.
 
@@ -173,7 +173,7 @@ class BehavioralMetrics(BaseModel):
 
 
 class DeviceTrustService:
-    """Comprehensive device trust and management service for Ainflue platform
+    """Comprehensive device trust and management service for IA Chéries platform
     
     Provides enterprise-grade device trust assessment with:
     - Advanced device fingerprinting and recognition

@@ -1,5 +1,5 @@
 """
-Format Conversion Monitor Module - Ainflue Platform
+Format Conversion Monitor Module - IA Chéries Platform
 ==================================================
 
 Monitor multi-format audio conversion for enterprise workflows including

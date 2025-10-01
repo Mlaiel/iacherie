@@ -1,8 +1,8 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Ainflue Platform Monitoring Dashboard",
-    "tags": ["ainflue", "monitoring", "platform", "performance"],
+    "title": "iacherie Platform Monitoring Dashboard",
+    "tags": ["iacherie", "monitoring", "platform", "performance"],
     "timezone": "browser",
     "panels": [
       {
@@ -11,11 +11,11 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "up{job=\"ainflue-api\"}",
+            "expr": "up{job=\"iacherie-api\"}",
             "legendFormat": "API Status"
           },
           {
-            "expr": "up{job=\"ainflue-web\"}",
+            "expr": "up{job=\"iacherie-web\"}",
             "legendFormat": "Web Status"
           }
         ],
@@ -51,7 +51,7 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api\"}[5m])",
+            "expr": "rate(http_requests_total{job=\"iacherie-api\"}[5m])",
             "legendFormat": "{{method}} {{status}}"
           }
         ],
@@ -73,11 +73,11 @@
         "type": "graph",
         "targets": [
           {
-            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
             "legendFormat": "95th percentile"
           },
           {
-            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"ainflue-api\"}[5m]))",
+            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket{job=\"iacherie-api\"}[5m]))",
             "legendFormat": "50th percentile"
           }
         ],
@@ -120,15 +120,15 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "total_creators{platform=\"ainflue\"}",
+            "expr": "total_creators{platform=\"iacherie\"}",
             "legendFormat": "Total Creators"
           },
           {
-            "expr": "active_campaigns{platform=\"ainflue\"}",
+            "expr": "active_campaigns{platform=\"iacherie\"}",
             "legendFormat": "Active Campaigns"
           },
           {
-            "expr": "revenue_total{platform=\"ainflue\"}",
+            "expr": "revenue_total{platform=\"iacherie\"}",
             "legendFormat": "Total Revenue"
           }
         ],
@@ -190,7 +190,7 @@
         "type": "stat",
         "targets": [
           {
-            "expr": "rate(http_requests_total{job=\"ainflue-api\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"ainflue-api\"}[5m]) * 100",
+            "expr": "rate(http_requests_total{job=\"iacherie-api\",status=~\"5..\"}[5m]) / rate(http_requests_total{job=\"iacherie-api\"}[5m]) * 100",
             "legendFormat": "Error Rate %"
           }
         ],
@@ -256,7 +256,7 @@
         "type": "table",
         "targets": [
           {
-            "expr": "topk(10, avg by (endpoint) (rate(http_request_duration_seconds_sum{job=\"ainflue-api\"}[5m]) / rate(http_request_duration_seconds_count{job=\"ainflue-api\"}[5m])))",
+            "expr": "topk(10, avg by (endpoint) (rate(http_request_duration_seconds_sum{job=\"iacherie-api\"}[5m]) / rate(http_request_duration_seconds_count{job=\"iacherie-api\"}[5m])))",
             "format": "table",
             "legendFormat": ""
           }
@@ -322,8 +322,8 @@
     "version": 1,
     "links": [
       {
-        "title": "Ainflue Documentation",
-        "url": "https://docs.ainflue.com",
+        "title": "iacherie Documentation",
+        "url": "https://docs.iacherie.com",
         "type": "link"
       },
       {

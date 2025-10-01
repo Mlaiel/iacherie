@@ -1,4 +1,4 @@
-# Compliance Infrastructure - Ainflue Enterprise
+# Compliance Infrastructure - iacherie Enterprise
 
 Enterprise regulatory compliance system for global creator platform operations.
 

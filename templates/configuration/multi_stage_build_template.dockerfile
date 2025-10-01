@@ -1,5 +1,5 @@
 # =====================================================================================
-# Multi-Stage Build Template - Ainflue Configuration Module
+# Multi-Stage Build Template - iacherie Configuration Module
 # =====================================================================================
 # © 2025 Fahed Mlaiel <mlaiel@live.de>
 # TOUS DROITS RÉSERVÉS - Code propriétaire de Fahed Mlaiel
@@ -7,7 +7,7 @@
 # =====================================================================================
 
 # =====================================================================================
-# MULTI-STAGE DOCKERFILE FOR AINFLUE CREATOR ECONOMY PLATFORM
+# MULTI-STAGE DOCKERFILE FOR IACHERIE CREATOR ECONOMY PLATFORM
 # =====================================================================================
 
 # Build arguments for multi-stage configuration
@@ -25,10 +25,10 @@ ARG TARGET_ARCH=amd64
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS base
 
 # Security: Create non-root user early
-RUN addgroup -g 1001 -S ainflue && \
-    adduser -S ainflue -u 1001 -G ainflue && \
-    mkdir -p /home/ainflue && \
-    chown -R ainflue:ainflue /home/ainflue
+RUN addgroup -g 1001 -S iacherie && \
+    adduser -S iacherie -u 1001 -G iacherie && \
+    mkdir -p /home/iacherie && \
+    chown -R iacherie:iacherie /home/iacherie
 
 # Install security updates and essential packages
 RUN apk update && \
@@ -50,7 +50,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Security labels
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>" \
       version="1.0.0" \
-      description="Ainflue Creator Economy Platform - Multi-Stage Build" \
+      description="iacherie Creator Economy Platform - Multi-Stage Build" \
       security.scan="required" \
       security.level="high" \
       compliance.pci-dss="enabled" \
@@ -319,11 +319,11 @@ COPY --from=ai-builder /app/ai ./ai
 COPY --from=ai-builder /app/models ./models
 
 # Create non-root user
-RUN groupadd -r -g 1001 ainflue && \
-    useradd -r -u 1001 -g ainflue -d /app -s /bin/bash ainflue && \
-    chown -R ainflue:ainflue /app
+RUN groupadd -r -g 1001 iacherie && \
+    useradd -r -u 1001 -g iacherie -d /app -s /bin/bash iacherie && \
+    chown -R iacherie:iacherie /app
 
-USER ainflue:ainflue
+USER iacherie:iacherie
 
 # Environment for GPU acceleration
 ENV CUDA_VISIBLE_DEVICES=all
@@ -473,11 +473,11 @@ COPY analytics/ ./analytics/
 COPY data/ ./data/
 
 # Create non-root user
-RUN groupadd -r -g 1001 ainflue && \
-    useradd -r -u 1001 -g ainflue -d /app ainflue && \
-    chown -R ainflue:ainflue /app
+RUN groupadd -r -g 1001 iacherie && \
+    useradd -r -u 1001 -g iacherie -d /app iacherie && \
+    chown -R iacherie:iacherie /app
 
-USER ainflue:ainflue
+USER iacherie:iacherie
 
 # Analytics-optimized environment
 ENV PYTHONPATH=/app
@@ -568,7 +568,7 @@ RUN npm install && \
 
 # Development environment
 ENV NODE_ENV=development
-ENV DEBUG=ainflue:*
+ENV DEBUG=iacherie:*
 ENV HOT_RELOAD=enabled
 
 EXPOSE 3000 3001 3002 3003 8000 8001
@@ -597,9 +597,9 @@ LABEL service.name="development" \
 # - development: Full development environment
 
 # Build examples:
-# docker build --target content-processor -t ainflue/content-processor:latest .
-# docker build --target ai-enhancement -t ainflue/ai-enhancement:latest .
-# docker build --target protection-engine -t ainflue/protection-engine:latest .
+# docker build --target content-processor -t iacherie/content-processor:latest .
+# docker build --target ai-enhancement -t iacherie/ai-enhancement:latest .
+# docker build --target protection-engine -t iacherie/protection-engine:latest .
 
 # =====================================================================================
 # SECURITY AND COMPLIANCE METADATA

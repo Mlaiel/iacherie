@@ -385,7 +385,7 @@ class RobotsTxtAnalyzer:
 
 
 # Example usage and configuration
-def create_ainflue_robots_txt(creator_type: str = "general", 
+def create_iacherie_robots_txt(creator_type: str = "general", 
                              platforms: List[str] = None,
                              base_url: str = "https://iacherie.com") -> str:
     """Create optimized robots.txt for IA Chérie creators"""
@@ -412,7 +412,7 @@ def create_ainflue_robots_txt(creator_type: str = "general",
 
 if __name__ == "__main__":
     # Example: Generate robots.txt for a musician
-    robots_content = create_ainflue_robots_txt(
+    robots_content = create_iacherie_robots_txt(
         creator_type="musician",
         platforms=["spotify", "youtube"],
         base_url="https://iacherie.com"

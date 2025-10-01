@@ -147,15 +147,15 @@ tier_monitoring:
     
     # Métriques Monitoring Premium
     monitoring_metrics:
-      - metric: "ainflue_premium_creator_sla_compliance"
+      - metric: "iacherie_premium_creator_sla_compliance"
         description: "Conformité SLA créateurs premium"
         labels: ["creator_id", "sla_type", "feature"]
         
-      - metric: "ainflue_premium_creator_response_time_ms"
+      - metric: "iacherie_premium_creator_response_time_ms"
         description: "Temps réponse créateurs premium"
         labels: ["creator_id", "request_type"]
         
-      - metric: "ainflue_premium_creator_satisfaction_score"
+      - metric: "iacherie_premium_creator_satisfaction_score"
         description: "Score satisfaction créateurs premium"
         labels: ["creator_id", "satisfaction_category"]
 
@@ -247,11 +247,11 @@ tier_monitoring:
     
     # Métriques Monitoring Standard
     monitoring_metrics:
-      - metric: "ainflue_standard_creator_sla_compliance"
+      - metric: "iacherie_standard_creator_sla_compliance"
         description: "Conformité SLA créateurs standard"
         labels: ["creator_id", "sla_type"]
         
-      - metric: "ainflue_standard_creator_performance_score"
+      - metric: "iacherie_standard_creator_performance_score"
         description: "Score performance créateurs standard"
         labels: ["creator_id", "performance_category"]
 
@@ -331,11 +331,11 @@ tier_monitoring:
     
     # Métriques Monitoring Basic
     monitoring_metrics:
-      - metric: "ainflue_basic_creator_sla_compliance"
+      - metric: "iacherie_basic_creator_sla_compliance"
         description: "Conformité SLA créateurs basic"
         labels: ["creator_id"]
         
-      - metric: "ainflue_basic_creator_activity_score"
+      - metric: "iacherie_basic_creator_activity_score"
         description: "Score activité créateurs basic"
         labels: ["creator_id"]
 
@@ -457,15 +457,15 @@ tier_monitoring:
     
     # Métriques Monitoring Enterprise
     monitoring_metrics:
-      - metric: "ainflue_enterprise_creator_sla_compliance"
+      - metric: "iacherie_enterprise_creator_sla_compliance"
         description: "Conformité SLA créateurs enterprise"
         labels: ["creator_id", "sla_category", "service_component"]
         
-      - metric: "ainflue_enterprise_creator_business_kpis"
+      - metric: "iacherie_enterprise_creator_business_kpis"
         description: "KPIs business créateurs enterprise"
         labels: ["creator_id", "kpi_type", "time_period"]
         
-      - metric: "ainflue_enterprise_creator_roi"
+      - metric: "iacherie_enterprise_creator_roi"
         description: "ROI créateurs enterprise"
         labels: ["creator_id", "revenue_stream", "campaign_type"]
 

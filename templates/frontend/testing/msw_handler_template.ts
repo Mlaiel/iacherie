@@ -126,14 +126,14 @@ const authHandlers = [
       );
     }
 
-    if (email === 'admin@ainflue.com' && password === 'admin123') {
+    if (email === 'admin@iacherie.com' && password === 'admin123') {
       return res(
         ctx.delay(1000), // Simulate network delay
         ctx.json<ApiResponse<{ user: User; token: string }>>({
           success: true,
           data: {
             user: generateUser({
-              email: 'admin@ainflue.com',
+              email: 'admin@iacherie.com',
               username: 'admin',
               displayName: 'Admin User',
               verified: true

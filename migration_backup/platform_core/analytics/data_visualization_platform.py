@@ -1,10 +1,10 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 🔒 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Fahed Mlaiel (mlaiel@live.de)
 
 Ce module contient des algorithmes propriétaires ultra-confidentiels pour la visualisation 
-de données et l'intelligence visuelle de la plateforme Ainflue Creator Economy.
+de données et l'intelligence visuelle de la plateforme IA Chéries Creator Economy.
 
 Data Visualization Platform - Enterprise-grade visual intelligence
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>

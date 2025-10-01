@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Ainflue Revenue Optimization Configuration Module
+"""IA Chéries Revenue Optimization Configuration Module
 ===================================================
 
-Advanced revenue optimization configuration for the Ainflue platform.
+Advanced revenue optimization configuration for the IA Chéries platform.
 Handles dynamic pricing, revenue stream optimization, monetization strategies,
 AI-powered revenue predictions, and comprehensive revenue analytics.
 

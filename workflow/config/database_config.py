@@ -44,7 +44,7 @@ class PostgreSQLConfig:
     host: str = "localhost"
     port: int = 5432
     database: str = "iacherie"
-    username: str = "ainflue_user"
+    username: str = "iacherie_user"
     password: str = ""
     ssl_mode: str = "prefer"
     pool_config: ConnectionPoolConfig = field(default_factory=ConnectionPoolConfig)
@@ -568,9 +568,9 @@ class DatabaseConfig:
                     "acl_enabled": True,
                     "protected_mode": True,
                     "rename_commands": {
-                        "CONFIG": "AINFLUE_CONFIG",
-                        "FLUSHALL": "AINFLUE_FLUSHALL",
-                        "FLUSHDB": "AINFLUE_FLUSHDB"
+                        "CONFIG": "IACHERIE_CONFIG",
+                        "FLUSHALL": "IACHERIE_FLUSHALL",
+                        "FLUSHDB": "IACHERIE_FLUSHDB"
                     }
                 },
                 "mongodb": {

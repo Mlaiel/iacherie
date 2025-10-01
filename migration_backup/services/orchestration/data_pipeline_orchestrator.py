@@ -1,5 +1,5 @@
 """
-🔄 DATA PIPELINE ORCHESTRATOR - AINFLUE ENTERPRISE
+🔄 DATA PIPELINE ORCHESTRATOR - IA CHÉRIES ENTERPRISE
 ==================================================
 
 ETL/ELT workflow and data quality automation for creator economy platform.

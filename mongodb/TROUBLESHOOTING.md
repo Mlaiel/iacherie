@@ -139,7 +139,7 @@ db.createUser({
 // Create database user
 use iacherie
 db.createUser({
-  user: "ainflue_user",
+  user: "iacherie_user",
   pwd: "user_password",
   roles: [{role: "readWrite", db: "iacherie"}]
 })

@@ -5,7 +5,7 @@ Access Control - Security Utilities Level 2
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-Enterprise-grade access control system for Ainflue creator economy platform.
+Enterprise-grade access control system for IA Chéries creator economy platform.
 RBAC and ABAC implementation with < 5ms access control decisions.
 
 Performance: < 5ms access control decisions

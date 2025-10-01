@@ -1,4 +1,4 @@
-"""Asynchronous HTTP Client for Ainflue SDK
+"""Asynchronous HTTP Client for IA Chéries SDK
 
 Enterprise-grade async client with multi-expert design:
 - Backend Senior: High-performance async architecture 
@@ -21,7 +21,7 @@ import certifi
 
 from .exceptions import (
     APIError, NetworkError, TimeoutError, RateLimitError,
-    AuthenticationError, ValidationError, AinflueSdkException,
+    AuthenticationError, ValidationError, IA ChériesSdkException,
     handle_api_response_error, is_retryable_error
 )
 
@@ -99,8 +99,8 @@ class RequestMetrics:
         }
 
 
-class AsyncAinflueClient:
-    """High-performance asynchronous HTTP client for Ainflue API
+class AsyncIA ChériesClient:
+    """High-performance asynchronous HTTP client for IA Chéries API
     
     Features:
     - Connection pooling and keep-alive
@@ -170,7 +170,7 @@ class AsyncAinflueClient:
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default request headers"""
         headers = {
-            'User-Agent': 'Ainflue-Python-SDK/1.0.0',
+            'User-Agent': 'IA Chéries-Python-SDK/1.0.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'X-SDK-Version': '1.0.0',
@@ -321,7 +321,7 @@ class AsyncAinflueClient:
             self.circuit_breaker.on_failure()
             
             # Raise the last exception
-            if isinstance(last_exception, AinflueSdkException):
+            if isinstance(last_exception, IA ChériesSdkException):
                 raise last_exception
             else:
                 raise NetworkError(f"Request failed after {self.max_retries + 1} attempts") from last_exception
@@ -355,7 +355,7 @@ class AsyncAinflueClient:
             
             return result
             
-        except AinflueSdkException:
+        except IA ChériesSdkException:
             # Re-raise SDK exceptions
             response_time = asyncio.get_event_loop().time() - start_time
             self.metrics.record_request(response_time, False)
@@ -378,7 +378,7 @@ class AsyncAinflueClient:
                 
                 yield stream
                 
-        except AinflueSdkException:
+        except IA ChériesSdkException:
             raise
         except Exception as e:
             raise NetworkError(f"Streaming error: {str(e)}") from e
@@ -502,4 +502,4 @@ class AsyncAinflueClient:
 
 
 # Export the client
-__all__ = ['AsyncAinflueClient', 'CircuitBreakerState', 'RequestMetrics']
+__all__ = ['AsyncIA ChériesClient', 'CircuitBreakerState', 'RequestMetrics']

@@ -93,13 +93,13 @@ class APIGateway:
         self.service_registry = {}
         self.health_checks = {}
         
-        # Initialize Ainflue-specific configurations
+        # Initialize IA Chéries-specific configurations
         self._initialize_ainflue_gateway()
         
         logger.info("API Gateway initialized for creator platform")
     
     def _initialize_ainflue_gateway(self):
-        """Initialize Ainflue creator platform specific gateway configuration"""
+        """Initialize IA Chéries creator platform specific gateway configuration"""
         
         # Creator-specific middleware
         self.creator_middleware_config = {
@@ -377,7 +377,7 @@ class APIGateway:
                 'error': True,
                 'message': 'Authentication required',
                 'headers': {
-                    'WWW-Authenticate': 'Bearer realm="Ainflue API"'
+                    'WWW-Authenticate': 'Bearer realm="IA Chéries API"'
                 }
             }
         
@@ -493,7 +493,7 @@ class APIGateway:
         })
         
         # Add gateway identification
-        response['headers']['X-Powered-By'] = 'Ainflue-API-Gateway'
+        response['headers']['X-Powered-By'] = 'IA Chéries-API-Gateway'
         response['headers']['X-Request-ID'] = request_context['request_id']
         
         # Apply compression if enabled

@@ -2,7 +2,7 @@
 ===============================================================================
 
 Orchestrateur de récupération après sinistre enterprise avec RTO/RPO optimisé,
-failover automatique et coordination multi-région pour la plateforme Ainflue.
+failover automatique et coordination multi-région pour la plateforme IA Chéries.
 
 Expert Roles Implementation:
 ⚙️ DevOps Engineer: Infrastructure automation + disaster recovery + multi-cloud orchestration

@@ -230,7 +230,7 @@ class HealthCheckOrchestrator:
             check_id="creator_dashboard_health",
             name="Creator Dashboard Health",
             check_type=CheckType.HTTP_ENDPOINT,
-            endpoint_url="https://dashboard.ainflue.com/health",
+            endpoint_url="https://dashboard.iacherie.com/health",
             timeout_seconds=5,
             interval_seconds=30,
             warning_threshold=1000.0,  # ms
@@ -247,7 +247,7 @@ class HealthCheckOrchestrator:
             check_id="payment_system_health",
             name="Payment System Health",
             check_type=CheckType.HTTP_ENDPOINT,
-            endpoint_url="https://payments.ainflue.com/health",
+            endpoint_url="https://payments.iacherie.com/health",
             timeout_seconds=3,
             interval_seconds=15,  # More frequent for payments
             warning_threshold=500.0,
@@ -306,7 +306,7 @@ class HealthCheckOrchestrator:
             check_id="analytics_api_health",
             name="Analytics API Health",
             check_type=CheckType.HTTP_ENDPOINT,
-            endpoint_url="https://analytics.ainflue.com/health",
+            endpoint_url="https://analytics.iacherie.com/health",
             timeout_seconds=8,
             interval_seconds=60,
             warning_threshold=2000.0,

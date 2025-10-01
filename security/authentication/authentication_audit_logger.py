@@ -271,7 +271,7 @@ class AuthenticationAuditLogger:
                 risk_score=risk_score,
                 threat_detected=risk_score is not None and risk_score > 3.0,
                 security_controls=context.get("security_controls", []),
-                application="Ainflue",
+                application="iacherie",
                 component="Authentication",
                 method=context.get("method"),
                 request_id=context.get("request_id"),

@@ -136,7 +136,7 @@ class AuditLogger:
     def _generate_audit_key(self) -> str:
         """Generate key for audit log integrity."""
         # In production, this should come from secure key management
-        return hashlib.sha256(b"ainflue_audit_key_v1").hexdigest()
+        return hashlib.sha256(b"iacherie_audit_key_v1").hexdigest()
     
     def start(self):
         """Start audit logging worker."""

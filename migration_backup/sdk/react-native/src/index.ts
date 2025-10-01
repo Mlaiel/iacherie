@@ -1,5 +1,5 @@
 /**
- * Ainflue React Native SDK - Main Entry Point
+ * IA Chéries React Native SDK - Main Entry Point
  * 
  * Enterprise mobile SDK with multi-expert design:
  * - Lead Dev IA: AI-powered mobile content processing
@@ -14,8 +14,8 @@
  */
 
 // Core client exports
-export { AinflueClient } from './client';
-export { AinflueProvider, useAinflue } from './provider';
+export { IA ChériesClient } from './client';
+export { IA ChériesProvider, useIA Chéries } from './provider';
 
 // Platform-specific clients
 export { AndroidClient } from './android-client';
@@ -37,11 +37,11 @@ export {
 
 // React components
 export {
-  AinflueUploader,
-  AinfluePlayer,
-  AinflueAnalytics,
-  AinflueProtection,
-  AinflueAuth
+  IA ChériesUploader,
+  IA ChériesPlayer,
+  IA ChériesAnalytics,
+  IA ChériesProtection,
+  IA ChériesAuth
 } from './components';
 
 // Storage and caching
@@ -62,12 +62,12 @@ export { DeviceInfo } from './utils/device-info';
 export * from './constants';
 
 // Configuration
-export type { AinflueConfig } from './config';
+export type { IA ChériesConfig } from './config';
 export { createDefaultConfig } from './config';
 
 // Error handling
 export {
-  AinflueError,
+  IA ChériesError,
   NetworkError,
   PermissionError,
   StorageError,

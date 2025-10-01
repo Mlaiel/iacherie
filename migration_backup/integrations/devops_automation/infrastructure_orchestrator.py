@@ -4,7 +4,7 @@
 Backend Senior Expert: Infrastructure orchestration enterprise avec
 Terraform/Ansible automation, disaster recovery et multi-cloud management.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Orchestration infrastructure pour 65+ plateformes de distribution
 - Auto-scaling pour traitement IA de contenu créateur
 - Disaster recovery pour protection propriété intellectuelle
@@ -110,7 +110,7 @@ class InfrastructureOrchestrator:
     """🏗️ Backend Senior: Infrastructure orchestration enterprise
     
     Orchestration infrastructure multi-cloud avec Terraform/Ansible automation,
-    state management, disaster recovery et cost optimization pour Ainflue.
+    state management, disaster recovery et cost optimization pour IA Chéries.
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -120,7 +120,7 @@ class InfrastructureOrchestrator:
         self.state_backend = self.config.get('state_backend', 'local')
         self.executor = ThreadPoolExecutor(max_workers=10)
         
-        # Ainflue-specific configuration
+        # IA Chéries-specific configuration
         self.platform_configs = {
             'content_processing': {
                 'min_nodes': 3,
@@ -193,7 +193,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Ansible configuration automation
         
         Automated Ansible configuration management avec inventory génération
-        et playbook execution pour infrastructure Ainflue.
+        et playbook execution pour infrastructure IA Chéries.
         """
         try:
             execution_id = f"ansible-{int(datetime.now().timestamp())}"
@@ -237,7 +237,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Multi-cloud resource provisioning
         
         Provisioning automatisé de ressources cloud avec optimization
-        pour workloads IA et distribution Ainflue.
+        pour workloads IA et distribution IA Chéries.
         """
         try:
             provisioning_id = f"provision-{provider.value}-{int(datetime.now().timestamp())}"
@@ -269,7 +269,7 @@ class InfrastructureOrchestrator:
                 self.resources[resource['id']] = infrastructure_resource
                 resources_created.append(infrastructure_resource)
             
-            # Apply Ainflue-specific optimizations
+            # Apply IA Chéries-specific optimizations
             await self._apply_ainflue_optimizations(resources_created)
             
             logger.info(f"Cloud resources provisioned: {provisioning_id}")
@@ -341,7 +341,7 @@ class InfrastructureOrchestrator:
         """🏗️ Backend Senior: Disaster recovery automation
         
         Automation complète disaster recovery avec backup, replication
-        et failover pour protection des créateurs Ainflue.
+        et failover pour protection des créateurs IA Chéries.
         """
         try:
             recovery_id = f"dr-{strategy.value}-{int(datetime.now().timestamp())}"
@@ -397,7 +397,7 @@ class InfrastructureOrchestrator:
             'resource': {}
         }
         
-        # Add Ainflue-specific resources
+        # Add IA Chéries-specific resources
         for platform, platform_config in self.platform_configs.items():
             if platform in config.resources:
                 tf_config['resource'][f'{config.provider.value}_{platform}'] = platform_config
@@ -557,9 +557,9 @@ class InfrastructureOrchestrator:
         }
 
     async def _apply_ainflue_optimizations(self, resources: List[InfrastructureResource]) -> None:
-        """Apply Ainflue-specific optimizations to resources"""
+        """Apply IA Chéries-specific optimizations to resources"""
         for resource in resources:
-            # Add Ainflue-specific tags
+            # Add IA Chéries-specific tags
             resource.metadata.update({
                 'platform': 'ainflue',
                 'owner': 'fahed_mlaiel',

@@ -162,8 +162,8 @@ class ThirdPartyComplianceMonitor:
 
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for sensitive data"""
-        password = b"ainflue_third_party_compliance_2025"
-        salt = b"ainflue_vendor_salt"
+        password = b"iacherie_third_party_compliance_2025"
+        salt = b"iacherie_vendor_salt"
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

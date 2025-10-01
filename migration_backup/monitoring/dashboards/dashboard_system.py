@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Enterprise Dashboard System
+IA Chéries Platform - Enterprise Dashboard System
 ==============================================
 
 Real-time enterprise dashboards with interactive visualizations for
@@ -121,7 +121,7 @@ class DashboardMetrics:
 
 class EnterpriseDashboardSystem:
     """
-    Enterprise dashboard system for Ainflue platform monitoring.
+    Enterprise dashboard system for IA Chéries platform monitoring.
     
     Features:
     - Real-time interactive dashboards for all monitoring aspects

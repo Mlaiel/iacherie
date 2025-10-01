@@ -41,7 +41,7 @@ from mlops.ai_infrastructure import create_ai_infrastructure, InfrastructureConf
 config = InfrastructureConfig(
     cloud_providers=["aws", "azure", "gcp"],
     kubernetes_config={
-        "cluster_name": "ainflue-ai-cluster",
+        "cluster_name": "iacherie-ai-cluster",
         "gpu_enabled": True,
         "auto_scaling": True
     },
@@ -58,7 +58,7 @@ await infrastructure.initialize_infrastructure()
 # Deploy AI workload
 workload_config = {
     "name": "ml-inference-service",
-    "image": "ainflue/ml-model:latest",
+    "image": "iacherie/ml-model:latest",
     "resources": {"cpu": "2", "memory": "4Gi", "gpu": 1},
     "replicas": 3
 }
@@ -119,7 +119,7 @@ result = await infrastructure.deploy_ai_workload(workload_config)
 infrastructure:
   cloud_providers: ["aws", "azure", "gcp"]
   kubernetes:
-    cluster_name: "ainflue-ai-cluster"
+    cluster_name: "iacherie-ai-cluster"
     gpu_enabled: true
     auto_scaling: true
     node_pools:
@@ -300,4 +300,4 @@ For technical support and questions:
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This module is part of the Ainflue MLOps platform and is proprietary software.
+This module is part of the iacherie MLOps platform and is proprietary software.

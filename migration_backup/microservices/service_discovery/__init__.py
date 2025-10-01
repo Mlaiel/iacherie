@@ -1,16 +1,16 @@
 """
-🚀 SERVICE DISCOVERY ENTERPRISE MODULE - Ainflue Platform
+🚀 SERVICE DISCOVERY ENTERPRISE MODULE - IA Chéries Platform
 ========================================================
 
 **Expert Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 **IP Owner**: Fahed Mlaiel (mlaiel@live.de)
-**Copyright**: ©2025 Ainflue Platform - Tous droits réservés
+**Copyright**: ©2025 IA Chéries Platform - Tous droits réservés
 
 AVERTISSEMENT PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
 ====================================================
 Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 - Email: mlaiel@live.de  
-- Projet: Ainflue Platform
+- Projet: IA Chéries Platform
 - Licence: Propriétaire - Usage commercial interdit sans autorisation
 - Protection: Code source confidentiel
 
@@ -43,7 +43,7 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class AinfluServiceDiscoveryOrchestrator:
-    """Orchestrateur principal Service Discovery Enterprise Ainflue."""
+    """Orchestrateur principal Service Discovery Enterprise IA Chéries."""
     
     def __init__(self, redis_client: aioredis.Redis, config: Dict[str, Any] = None):
         self.redis_client = redis_client
@@ -69,7 +69,7 @@ class AinfluServiceDiscoveryOrchestrator:
     async def start(self) -> bool:
         """Démarre l'orchestrateur service discovery."""
         try:
-            logger.info("🚀 Démarrage Service Discovery Enterprise Ainflue...")
+            logger.info("🚀 Démarrage Service Discovery Enterprise IA Chéries...")
             
             # Simulation initialisation composants
             for component_name in self.initialization_order:
@@ -163,7 +163,7 @@ async def create_ainflue_service_discovery_orchestrator(
     redis_client: aioredis.Redis, 
     config: Dict[str, Any] = None
 ) -> AinfluServiceDiscoveryOrchestrator:
-    """Crée orchestrateur service discovery Ainflue."""
+    """Crée orchestrateur service discovery IA Chéries."""
     orchestrator = AinfluServiceDiscoveryOrchestrator(redis_client, config)
     await orchestrator.start()
     return orchestrator

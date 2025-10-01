@@ -60,7 +60,7 @@ All 10 main platform crawlers have been successfully implemented according to th
 - `crawlers/main_platform_crawlers.py` - All 10 platform crawlers (39,470 lines)
 
 ### 2. Integration & Management
-- `ainflue_crawler_integration.py` - Full IA Chérie system integration
+- `iacherie_crawler_integration.py` - Full IA Chérie system integration
 - Content protection workflows and violation reporting
 
 ### 3. Documentation

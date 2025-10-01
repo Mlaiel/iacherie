@@ -1,6 +1,6 @@
 """
 Core Monitoring Package
-Package de surveillance et monitoring pour Ainfluencer
+Package de surveillance et monitoring pour IA Chéries
 MODULE MANQUANT POUR 100% VICTOIRE!
 """
 

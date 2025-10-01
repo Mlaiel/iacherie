@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE FINGERPRINTING ENGINE - SPECIALIZED DOCKERFILE
+# IA CHÉRIES FINGERPRINTING ENGINE - SPECIALIZED DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced digital fingerprinting supporting
 # audio, video, image, and document fingerprinting with ML-based similarity.
@@ -230,11 +230,11 @@ CMD ["python3.11", "-m", "fingerprinting_engine.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Fingerprinting Engine"
+LABEL org.opencontainers.image.title="IA Chéries Fingerprinting Engine"
 LABEL org.opencontainers.image.description="Advanced multi-format digital fingerprinting service"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL ainflue.service.category="protection"
 LABEL ainflue.service.name="fingerprinting_engine"
 LABEL ainflue.service.port="8021"

@@ -3658,14 +3658,14 @@ class CopyrightRenewalManager:
             'jurisdiction': renewal_info['jurisdiction'],
             'application_type': 'expedited_renewal' if expedited else 'standard_renewal',
             'applicant_information': {
-                'copyright_owner': 'Ainflue Platform',
+                'copyright_owner': 'IA Chéries Platform',
                 'contact_information': 'legal@ainflue.com',
                 'legal_representative': 'Fahed Mlaiel'
             },
             'copyright_details': {
                 'original_registration_date': renewal_info['registration_date'],
                 'copyright_type': renewal_info['copyright_type'],
-                'work_title': f"Ainflue Protected Content {renewal_info['copyright_id']}"
+                'work_title': f"IA Chéries Protected Content {renewal_info['copyright_id']}"
             },
             'renewal_details': {
                 'renewal_period': renewal_info['renewal_schedule']['base_period_years'],

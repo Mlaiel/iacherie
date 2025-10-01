@@ -113,9 +113,9 @@ class DatabaseSettings(BaseSettings):
     # Primary Database Cluster
     primary_db_host: str = "localhost"
     primary_db_port: int = 5432
-    primary_db_name: str = "ainflue_primary"
-    primary_db_user: str = "ainflue_admin"
-    primary_db_password: str = os.getenv("DB_PASSWORD", "ainflue_enterprise_secure_2025")
+    primary_db_name: str = "iacherie_primary"
+    primary_db_user: str = "iacherie_admin"
+    primary_db_password: str = os.getenv("DB_PASSWORD", "iacherie_enterprise_secure_2025")
     
     # Read Replica Cluster
     replica_db_hosts: List[str] = ["replica1.iacherie.local", "replica2.iacherie.local"]
@@ -125,13 +125,13 @@ class DatabaseSettings(BaseSettings):
     # Analytics Database (TimescaleDB)
     analytics_db_host: str = "analytics.iacherie.local"
     analytics_db_port: int = 5432
-    analytics_db_name: str = "ainflue_analytics"
+    analytics_db_name: str = "iacherie_analytics"
     analytics_retention_days: int = 365
     
     # MongoDB for Content Storage
     mongodb_host: str = "mongodb.iacherie.local"
     mongodb_port: int = 27017
-    mongodb_database: str = "ainflue_content"
+    mongodb_database: str = "iacherie_content"
     mongodb_replica_set: str = "iacherie-rs0"
     
     # Redis for Caching & Sessions

@@ -1,7 +1,7 @@
 """AI Services Integration Module
 =============================
 
-Enterprise AI services integration for Ainflue platform providing comprehensive
+Enterprise AI services integration for IA Chéries platform providing comprehensive
 artificial intelligence capabilities across 53+ AI agents and models for
 content generation, analysis, optimization, and multi-provider orchestration.
 
@@ -49,8 +49,8 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Enterprise AI services for multi-provider content generation and optimization"
 
-# Configuration logique métier Ainflue
-AINFLUE_AI_SERVICES = {
+# Configuration logique métier IA Chéries
+IA CHÉRIES_AI_SERVICES = {
     'platforms': 65,
     'ai_agents': 53,
     'ai_providers': 15,

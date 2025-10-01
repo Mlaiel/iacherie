@@ -1,7 +1,7 @@
-# Ainflue Infrastructure Module - DNS Management
+# IA Chéries Infrastructure Module - DNS Management
 # =============================================
 # 
-# Enterprise-grade DNS management for Ainflue platform
+# Enterprise-grade DNS management for IA Chéries platform
 # Supports multi-cloud deployment and enterprise security
 #
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -139,7 +139,7 @@ class DNSManager:
     
     def __init__(self, config_path: Optional[str] = None):
         """Initialize DNS manager"""
-        self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/networking"
+        self.config_path = config_path or "/home/runner/work/IA Chéries/IA Chéries/infra/networking"
         self.zones: Dict[str, DNSZone] = {}
         self.health_checks: Dict[str, HealthCheck] = {}
         self.provider_clients: Dict[DNSProvider, Any] = {}
@@ -152,7 +152,7 @@ class DNSManager:
         self.enable_health_checks = True
         self.default_ttl = 300
         
-        # Ainflue domain configuration
+        # IA Chéries domain configuration
         self.primary_domain = "ainflue.com"
         self.subdomains = [
             "api.ainflue.com",
@@ -177,7 +177,7 @@ class DNSManager:
             # Initialize provider clients
             self._initialize_provider_clients()
             
-            # Setup Ainflue DNS infrastructure
+            # Setup IA Chéries DNS infrastructure
             self._setup_ainflue_dns()
             
             logger.info("DNS manager initialized")
@@ -300,7 +300,7 @@ class DNSManager:
         return endpoints.get(provider, {})
     
     def _setup_ainflue_dns(self) -> None:
-        """Setup Ainflue DNS infrastructure"""
+        """Setup IA Chéries DNS infrastructure"""
         try:
             # Create primary zone if not exists
             if self.primary_domain not in self.zones:
@@ -318,18 +318,18 @@ class DNSManager:
             if self.enable_health_checks:
                 self._setup_health_checks()
             
-            logger.info("Ainflue DNS infrastructure setup completed")
+            logger.info("IA Chéries DNS infrastructure setup completed")
             
         except Exception as e:
-            logger.error(f"Failed to setup Ainflue DNS: {e}")
+            logger.error(f"Failed to setup IA Chéries DNS: {e}")
             raise
     
     def _setup_essential_records(self) -> None:
-        """Setup essential DNS records for Ainflue"""
+        """Setup essential DNS records for IA Chéries"""
         try:
             primary_zone = self.zones[self.primary_domain]
             
-            # Essential records for Ainflue platform
+            # Essential records for IA Chéries platform
             essential_records = [
                 # Main domain
                 DNSRecord(

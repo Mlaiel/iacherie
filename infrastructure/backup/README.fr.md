@@ -8,7 +8,7 @@
 
 ## 🏗️ Vue d'ensemble de l'Architecture Enterprise
 
-Cette infrastructure de sauvegarde enterprise fournit une protection complète des données pour la plateforme d'économie créative Ainflue, protégeant le contenu des créateurs, les modèles IA et les données de plateforme avec une sécurité militaire et une garantie de disponibilité de 99,9%.
+Cette infrastructure de sauvegarde enterprise fournit une protection complète des données pour la plateforme d'économie créative iacherie, protégeant le contenu des créateurs, les modèles IA et les données de plateforme avec une sécurité militaire et une garantie de disponibilité de 99,9%.
 
 ### 🎯 Caractéristiques Principales
 
@@ -55,8 +55,8 @@ Cette infrastructure de sauvegarde enterprise fournit une protection complète d
 pip install -r requirements.txt
 
 # Configurer les variables d'environnement
-export AINFLUE_BACKUP_CONFIG="/chemin/vers/backup/config.json"
-export AINFLUE_ENCRYPTION_KEY_PATH="/chemin/sécurisé/vers/clés/"
+export IACHERIE_BACKUP_CONFIG="/chemin/vers/backup/config.json"
+export IACHERIE_ENCRYPTION_KEY_PATH="/chemin/sécurisé/vers/clés/"
 ```
 
 ### Utilisation de Base

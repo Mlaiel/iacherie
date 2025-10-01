@@ -5,7 +5,7 @@ Système avancé de fingerprinting d'images avec hashing perceptuel,
 extraction de caractéristiques et détection de similarité.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

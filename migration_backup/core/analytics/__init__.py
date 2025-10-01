@@ -1,6 +1,6 @@
 """
 Core Analytics Package
-Package d'analytics core pour Ainfluencer
+Package d'analytics core pour IA Chéries
 PACKAGE FINAL POUR 100% VICTOIRE!
 """
 

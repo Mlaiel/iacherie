@@ -1,6 +1,6 @@
 # 📊 MONITORING ENTERPRISE - REQUIREMENTS
 # ========================================
-# Dependencies for Ainflue Monitoring Enterprise Architecture
+# Dependencies for IA Chéries Monitoring Enterprise Architecture
 # © 2025 Fahed Mlaiel - Enterprise Production Requirements
 
 # Core async and HTTP

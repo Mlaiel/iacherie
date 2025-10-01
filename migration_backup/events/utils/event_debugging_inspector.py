@@ -1,4 +1,4 @@
-"""Event Debugging Inspector - Advanced for Ainflue Events
+"""Event Debugging Inspector - Advanced for IA Chéries Events
 
 Advanced debugging and inspection toolkit for event processing
 with detailed tracing, performance analysis, and error diagnostics.
@@ -56,7 +56,7 @@ class InspectionReport:
 
 class EventDebuggingInspector:
     """
-    Advanced event debugging inspector for Ainflue platform
+    Advanced event debugging inspector for IA Chéries platform
     Provides detailed tracing, performance analysis, and error diagnostics
     """
     

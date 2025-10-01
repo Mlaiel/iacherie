@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Professional Text Processor
+ * IA Chéries Desktop - Professional Text Processor
  * 
  * Advanced text editing and processing tools for content creators
  * 

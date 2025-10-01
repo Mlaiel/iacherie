@@ -1,7 +1,7 @@
 # Creator Economy RBAC Manifests
 # Type: pod_security_policies
 # Author: Fahed Mlaiel <mlaiel@live.de>
-# Generated for Ainflue Creator Economy Platform
+# Generated for IA Chéries Creator Economy Platform
 
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy

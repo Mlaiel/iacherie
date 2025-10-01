@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-📊 Grafana Dashboard Template - Ainflue Creator Economy Platform
+📊 Grafana Dashboard Template - iacherie Creator Economy Platform
 ================================================================
 
 Advanced Grafana Dashboard Templates for Creator Economy Monitoring
@@ -79,7 +79,7 @@ class GrafanaDashboardTemplate:
             "dashboard": {
                 "id": None,
                 "title": config.title,
-                "tags": config.tags + ["ainflue", "creator-economy"],
+                "tags": config.tags + ["iacherie", "creator-economy"],
                 "style": "dark",
                 "timezone": "UTC",
                 "refresh": config.refresh_rate,
@@ -549,7 +549,7 @@ class GrafanaDashboardTemplate:
         
         # Creator Overview Dashboard
         creator_config = DashboardConfig(
-            title="Ainflue Creator Economy - Overview",
+            title="iacherie Creator Economy - Overview",
             dashboard_type=DashboardType.CREATOR_OVERVIEW,
             environment=environment,
             tags=["creator", "overview", "main"]
@@ -558,7 +558,7 @@ class GrafanaDashboardTemplate:
         
         # AI Processing Dashboard
         ai_config = DashboardConfig(
-            title="Ainflue AI Processing - Performance",
+            title="iacherie AI Processing - Performance",
             dashboard_type=DashboardType.AI_PROCESSING,
             environment=environment,
             tags=["ai", "processing", "performance"]
@@ -567,7 +567,7 @@ class GrafanaDashboardTemplate:
         
         # Monetization Dashboard
         monetization_config = DashboardConfig(
-            title="Ainflue Monetization - Revenue Analytics",
+            title="iacherie Monetization - Revenue Analytics",
             dashboard_type=DashboardType.MONETIZATION,
             environment=environment,
             tags=["monetization", "revenue", "analytics"]

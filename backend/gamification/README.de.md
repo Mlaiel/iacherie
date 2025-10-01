@@ -39,7 +39,7 @@ Jede Verletzung führt zu **SOFORTIGER RECHTLICHER VERFOLGUNG** einschließlich:
 
 ## 🎯 Geschäftslogik Übersicht
 
-Dieses Modul implementiert das Kern-Gamification-System für die Ainflue-Plattform und folgt der strikten Geschäftslogik:
+Dieses Modul implementiert das Kern-Gamification-System für die iacherie-Plattform und folgt der strikten Geschäftslogik:
 
 ```
 Benutzer (Musiker/Blogger/Fotograf/Influencer/Comedian)

@@ -65,7 +65,7 @@ Create `.env.production` with:
 ```env
 # Database
 POSTGRES_HOST=postgres-cluster
-POSTGRES_DB=ainflue_prod
+POSTGRES_DB=iacherie_prod
 POSTGRES_USER=iacherie
 POSTGRES_PASSWORD=<secure-password>
 
@@ -132,7 +132,7 @@ server {
 #### Daily Database Backups
 ```bash
 # PostgreSQL backup
-docker exec postgres pg_dump -U iacherie ainflue_prod > backup_$(date +%Y%m%d).sql
+docker exec postgres pg_dump -U iacherie iacherie_prod > backup_$(date +%Y%m%d).sql
 
 # MongoDB backup
 docker exec mongodb mongodump --db iacherie --out /backup/$(date +%Y%m%d)

@@ -123,15 +123,15 @@ gamification_tracking:
     
     # Métriques achievements
     achievement_metrics:
-      - metric: "ainflue_gamification_achievements_earned_total"
+      - metric: "iacherie_gamification_achievements_earned_total"
         description: "Achievements gagnés par créateur"
         labels: ["creator_id", "achievement_category", "badge_type", "difficulty_level"]
         
-      - metric: "ainflue_gamification_badge_distribution"
+      - metric: "iacherie_gamification_badge_distribution"
         description: "Distribution badges par type"
         labels: ["badge_type", "achievement_category", "time_period"]
         
-      - metric: "ainflue_gamification_achievement_completion_rate"
+      - metric: "iacherie_gamification_achievement_completion_rate"
         description: "Taux finalisation achievements"
         labels: ["achievement_difficulty", "creator_tier", "time_to_complete"]
 
@@ -206,15 +206,15 @@ gamification_tracking:
     
     # Métriques leaderboards
     leaderboard_metrics:
-      - metric: "ainflue_gamification_leaderboard_position"
+      - metric: "iacherie_gamification_leaderboard_position"
         description: "Position créateur dans classements"
         labels: ["creator_id", "leaderboard_type", "ranking_category", "time_period"]
         
-      - metric: "ainflue_gamification_leaderboard_participation_rate"
+      - metric: "iacherie_gamification_leaderboard_participation_rate"
         description: "Taux participation aux leaderboards"
         labels: ["leaderboard_category", "creator_tier", "participation_type"]
         
-      - metric: "ainflue_gamification_ranking_volatility"
+      - metric: "iacherie_gamification_ranking_volatility"
         description: "Volatilité positions dans classements"
         labels: ["leaderboard_type", "position_range", "volatility_category"]
 
@@ -229,7 +229,7 @@ gamification_tracking:
     reward_types:
       virtual_rewards:
         points_system:
-          base_currency: "ainflue_coins"
+          base_currency: "iacherie_coins"
           earning_multipliers:
             premium_tier: 1.5
             standard_tier: 1.0
@@ -303,15 +303,15 @@ gamification_tracking:
     
     # Métriques distribution récompenses
     reward_metrics:
-      - metric: "ainflue_gamification_rewards_distributed_total"
+      - metric: "iacherie_gamification_rewards_distributed_total"
         description: "Récompenses distribuées"
         labels: ["reward_type", "reward_category", "creator_tier", "distribution_method"]
         
-      - metric: "ainflue_gamification_reward_redemption_rate"
+      - metric: "iacherie_gamification_reward_redemption_rate"
         description: "Taux utilisation récompenses"
         labels: ["reward_category", "time_since_earned", "creator_engagement_level"]
         
-      - metric: "ainflue_gamification_points_economy_health"
+      - metric: "iacherie_gamification_points_economy_health"
         description: "Santé économie points"
         labels: ["metric_type", "inflation_indicator", "circulation_velocity"]
 
@@ -374,15 +374,15 @@ gamification_tracking:
     
     # Métriques motivation
     motivation_metrics:
-      - metric: "ainflue_gamification_creator_engagement_depth"
+      - metric: "iacherie_gamification_creator_engagement_depth"
         description: "Profondeur engagement gamification créateur"
         labels: ["creator_id", "engagement_level", "feature_category"]
         
-      - metric: "ainflue_gamification_motivation_score"
+      - metric: "iacherie_gamification_motivation_score"
         description: "Score motivation créateur"
         labels: ["creator_id", "motivation_type", "trend_direction"]
         
-      - metric: "ainflue_gamification_feature_stickiness"
+      - metric: "iacherie_gamification_feature_stickiness"
         description: "Adhérence fonctionnalités gamification"
         labels: ["feature_type", "creator_archetype", "usage_frequency"]
 
@@ -456,15 +456,15 @@ challenge_system:
   
   # Métriques défis
   challenge_metrics:
-    - metric: "ainflue_gamification_challenge_participation_rate"
+    - metric: "iacherie_gamification_challenge_participation_rate"
       description: "Taux participation défis"
       labels: ["challenge_type", "difficulty_level", "creator_tier"]
       
-    - metric: "ainflue_gamification_challenge_completion_rate"
+    - metric: "iacherie_gamification_challenge_completion_rate"
       description: "Taux finalisation défis"
       labels: ["challenge_category", "duration", "reward_tier"]
       
-    - metric: "ainflue_gamification_challenge_satisfaction_score"
+    - metric: "iacherie_gamification_challenge_satisfaction_score"
       description: "Score satisfaction défis"
       labels: ["challenge_type", "difficulty_level", "completion_status"]
 
@@ -498,15 +498,15 @@ social_gamification:
   
   # Métriques gamification sociale
   social_metrics:
-    - metric: "ainflue_gamification_social_engagement_rate"
+    - metric: "iacherie_gamification_social_engagement_rate"
       description: "Taux engagement social gamification"
       labels: ["feature_type", "interaction_category", "community_size"]
       
-    - metric: "ainflue_gamification_team_performance_score"
+    - metric: "iacherie_gamification_team_performance_score"
       description: "Score performance équipes"
       labels: ["team_composition", "challenge_type", "collaboration_quality"]
       
-    - metric: "ainflue_gamification_peer_recognition_frequency"
+    - metric: "iacherie_gamification_peer_recognition_frequency"
       description: "Fréquence reconnaissance entre pairs"
       labels: ["recognition_category", "giver_receiver_relationship", "impact_level"]
 
@@ -531,11 +531,11 @@ analytics_engine:
   
   # Métriques analytics
   analytics_metrics:
-    - metric: "ainflue_gamification_prediction_accuracy"
+    - metric: "iacherie_gamification_prediction_accuracy"
       description: "Précision prédictions gamification"
       labels: ["prediction_type", "model_version", "creator_segment"]
       
-    - metric: "ainflue_gamification_optimization_impact"
+    - metric: "iacherie_gamification_optimization_impact"
       description: "Impact optimisations gamification"
       labels: ["optimization_type", "performance_improvement", "creator_satisfaction_change"]
 

@@ -1,4 +1,4 @@
-# ⚡ Consul Connect Configuration Template - Ainflue Templates Configuration Module
+# ⚡ Consul Connect Configuration Template - IA Chéries Templates Configuration Module
 # 🔒 © 2025 Fahed Mlaiel <mlaiel@live.de> - TOUS DROITS RÉSERVÉS
 # 🚨 PROTECTION INTELLECTUELLE: Utilisation commerciale INTERDITE sans autorisation écrite
 
@@ -584,7 +584,7 @@ spec:
 # 🎯 CONSUL CONNECT SERVICE DEFINITIONS
 # ===================================================================
 
-# 🚀 Ainflue API Service Definition
+# 🚀 IA Chéries API Service Definition
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -1002,7 +1002,7 @@ metadata:
   namespace: consul
 data:
   ainflue-api-policy.hcl: |
-    # Ainflue API Service ACL Policy
+    # IA Chéries API Service ACL Policy
     service "ainflue-api" {
       policy = "write"
     }
@@ -1053,7 +1053,7 @@ data:
     }
   
   ainflue-frontend-policy.hcl: |
-    # Ainflue Frontend Service ACL Policy
+    # IA Chéries Frontend Service ACL Policy
     service "ainflue-frontend" {
       policy = "write"
     }
@@ -1473,5 +1473,5 @@ data:
 # ===================================================================
 # END OF CONSUL CONNECT CONFIGURATION TEMPLATE
 # Creator Economy Service Mesh Solution by Fahed Mlaiel
-# Enterprise-grade Consul Connect configuration for Ainflue platform
+# Enterprise-grade Consul Connect configuration for IA Chéries platform
 # ===================================================================

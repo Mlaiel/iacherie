@@ -1,5 +1,5 @@
 """
-Creator Incident Classifier for Ainflue Platform
+Creator Incident Classifier for IA Chéries Platform
 ML-powered incident categorization for Creator Economy workflow
 
 Author: Fahed Mlaiel <mlaiel@live.de>

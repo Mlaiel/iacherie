@@ -1,4 +1,4 @@
-# 🔗 Backend-Integrationen-Modul - Ainflue-Plattform
+# 🔗 Backend-Integrationen-Modul - iacherie-Plattform
 
 ## Enterprise-Grade Drittanbieter-API-Integrationssystem
 
@@ -116,7 +116,7 @@ await social_hub.connect_platform("youtube", {
 # Plattformübergreifende Content-Distribution
 content_data = {
     "title": "Erstaunlicher KI-generierter Inhalt",
-    "description": "Erstellt mit Ainflue-Plattform",
+    "description": "Erstellt mit iacherie-Plattform",
     "file_path": "/path/to/video.mp4",
     "platforms": ["youtube", "tiktok", "instagram"]
 }
@@ -412,9 +412,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ## 📞 Support & Kontakt
 
 **Technischer Support:** 
-- E-Mail: support@ainflue.com
-- Dokumentation: https://docs.ainflue.com/integrations
-- GitHub Issues: https://github.com/Mlaiel/Ainflue/issues
+- E-Mail: support@iacherie.com
+- Dokumentation: https://docs.iacherie.com/integrations
+- GitHub Issues: https://github.com/Mlaiel/iacherie/issues
 
 **Autor-Kontakt:**
 - Fahed Mlaiel: mlaiel@live.de

@@ -1,4 +1,4 @@
-// Frontend API Client - Ainflue Platform
+// Frontend API Client - IA Chéries Platform
 // Author: Fahed Mlaiel (mlaiel@live.de)
 // Role: Backend Senior + Lead Dev IA 
 // Purpose: Enterprise API client with authentication and WebSocket support

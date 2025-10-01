@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AINFLUE INTEGRATIONS MODULE - ENTERPRISE MONITORING DASHBOARD
+IA CHÉRIES INTEGRATIONS MODULE - ENTERPRISE MONITORING DASHBOARD
 =============================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Module: Real-time Integration Health Monitoring
@@ -46,7 +46,7 @@ class MonitoringMetrics:
     services: List[IntegrationHealth]
 
 class IntegrationsMonitor:
-    """Enterprise monitoring for all Ainflue integrations"""
+    """Enterprise monitoring for all IA Chéries integrations"""
     
     def __init__(self):
         self.services = {}
@@ -319,7 +319,7 @@ class IntegrationsMonitor:
         }
         
         report = f"""
-# 🚀 AINFLUE INTEGRATIONS - REAL-TIME MONITORING DASHBOARD
+# 🚀 IA CHÉRIES INTEGRATIONS - REAL-TIME MONITORING DASHBOARD
 ================================================================
 Generated: {metrics.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
 Monitoring Session: SESSION 5 - FEBRUARY 2025
@@ -412,7 +412,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
         
         return report
     
-    async def save_monitoring_data(self, metrics: MonitoringMetrics, base_path: str = "/home/runner/work/Ainflue/Ainflue/integrations"):
+    async def save_monitoring_data(self, metrics: MonitoringMetrics, base_path: str = "/home/runner/work/IA Chéries/IA Chéries/integrations"):
         """Save monitoring data to files"""
         base_path = Path(base_path)
         
@@ -442,7 +442,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
 
 async def main():
     """Main monitoring execution"""
-    print("🚀 AINFLUE INTEGRATIONS - ENTERPRISE MONITORING")
+    print("🚀 IA CHÉRIES INTEGRATIONS - ENTERPRISE MONITORING")
     print("=" * 60)
     print("Real-time health monitoring for all integration services")
     print("Expert Roles: All 9 roles monitoring their respective domains")

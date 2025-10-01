@@ -159,14 +159,14 @@ class GrafanaIntegration:
                 {
                     "id": 1,
                     "uid": "ainflue-main",
-                    "title": "Ainflue Main Dashboard",
+                    "title": "IA Chéries Main Dashboard",
                     "tags": ["ainflue", "production"],
                     "url": f"{self.endpoint}/d/ainflue-main"
                 },
                 {
                     "id": 2,
                     "uid": "ainflue-business",
-                    "title": "Ainflue Business Metrics",
+                    "title": "IA Chéries Business Metrics",
                     "tags": ["ainflue", "business"],
                     "url": f"{self.endpoint}/d/ainflue-business"
                 }
@@ -453,7 +453,7 @@ class EnterpriseOrchestrator:
         """Collect events for Datadog"""
         return [
             {
-                "title": "Ainflue Deployment",
+                "title": "IA Chéries Deployment",
                 "text": "New version deployed successfully",
                 "date_happened": int(datetime.now().timestamp()),
                 "priority": "normal",
@@ -503,14 +503,14 @@ class EnterpriseOrchestrator:
         return status
     
     async def create_grafana_dashboards(self):
-        """Create Grafana dashboards for Ainflue"""
+        """Create Grafana dashboards for IA Chéries"""
         if not self.grafana or not self.grafana.enabled:
             return False
         
         # Main dashboard
         main_dashboard = {
             "dashboard": {
-                "title": "Ainflue Production Overview",
+                "title": "IA Chéries Production Overview",
                 "tags": ["ainflue", "production"],
                 "timezone": "UTC",
                 "panels": [
@@ -545,7 +545,7 @@ class EnterpriseOrchestrator:
         # Business dashboard
         business_dashboard = {
             "dashboard": {
-                "title": "Ainflue Business Metrics",
+                "title": "IA Chéries Business Metrics",
                 "tags": ["ainflue", "business"],
                 "timezone": "UTC",
                 "panels": [

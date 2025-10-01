@@ -214,7 +214,7 @@ async def get_public_documentation():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Ainflue Public API Documentation</title>
+        <title>iacherie Public API Documentation</title>
         <style>
             body { font-family: Arial, sans-serif; margin: 40px; }
             .endpoint { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 5px; }
@@ -225,33 +225,33 @@ async def get_public_documentation():
         </style>
     </head>
     <body>
-        <h1>🚀 Ainflue Public API Documentation</h1>
-        <p>Welcome to the Ainflue AI-powered content protection platform public API.</p>
+        <h1>🚀 iacherie Public API Documentation</h1>
+        <p>Welcome to the iacherie AI-powered content protection platform public API.</p>
         
         <h2>📋 Available Endpoints</h2>
         
         <div class="endpoint">
             <h3><span class="method get">GET</span> /public/health</h3>
             <p>Get API health status and service availability.</p>
-            <code>curl -X GET "https://api.ainflue.com/public/health"</code>
+            <code>curl -X GET "https://api.iacherie.com/public/health"</code>
         </div>
         
         <div class="endpoint">
             <h3><span class="method get">GET</span> /public/info</h3>
             <p>Get SDK information, supported languages, and rate limits.</p>
-            <code>curl -X GET "https://api.ainflue.com/public/info"</code>
+            <code>curl -X GET "https://api.iacherie.com/public/info"</code>
         </div>
         
         <div class="endpoint">
             <h3><span class="method post">POST</span> /public/sandbox/test</h3>
             <p>Test API endpoints in a safe sandbox environment.</p>
-            <code>curl -X POST "https://api.ainflue.com/public/sandbox/test" -H "Authorization: Bearer YOUR_API_KEY"</code>
+            <code>curl -X POST "https://api.iacherie.com/public/sandbox/test" -H "Authorization: Bearer YOUR_API_KEY"</code>
         </div>
         
         <div class="endpoint">
             <h3><span class="method post">POST</span> /public/content/analyze</h3>
             <p>Analyze content for protection and insights.</p>
-            <code>curl -X POST "https://api.ainflue.com/public/content/analyze" -H "Authorization: Bearer YOUR_API_KEY"</code>
+            <code>curl -X POST "https://api.iacherie.com/public/content/analyze" -H "Authorization: Bearer YOUR_API_KEY"</code>
         </div>
         
         <h2>🔑 Authentication</h2>
@@ -400,7 +400,7 @@ async def generate_content_fingerprint(
         fingerprint_result = {
             "fingerprint_id": fingerprint_id,
             "content_hash": f"fp_{fingerprint_id[:16]}",
-            "algorithm": "ainflue-v1",
+            "algorithm": "iacherie-v1",
             "confidence_score": 0.95,
             "processing_time": 2.1,
             "created_at": datetime.utcnow(),
@@ -433,15 +433,15 @@ async def download_python_sdk():
     """Download Python SDK"""
     try:
         # Read SDK file
-        with open("/home/runner/work/Ainflue/Ainflue/sdk/python/ainflue_sdk.py", "r") as f:
+        with open("/home/runner/work/iacherie/iacherie/sdk/python/iacherie_sdk.py", "r") as f:
             sdk_content = f.read()
         
         return JSONResponse(
             content={
-                "filename": "ainflue_sdk.py",
+                "filename": "iacherie_sdk.py",
                 "content": sdk_content,
                 "version": "1.0.0",
-                "installation": "pip install ainflue-sdk",
+                "installation": "pip install iacherie-sdk",
                 "documentation": "/public/docs"
             }
         )
@@ -458,8 +458,8 @@ async def get_postman_collection():
     """Get Postman collection for API testing"""
     postman_collection = {
         "info": {
-            "name": "Ainflue Public API",
-            "description": "Ainflue AI-powered content protection platform public API",
+            "name": "iacherie Public API",
+            "description": "iacherie AI-powered content protection platform public API",
             "version": "1.0.0"
         },
         "auth": {
@@ -475,7 +475,7 @@ async def get_postman_collection():
         "variable": [
             {
                 "key": "base_url",
-                "value": "https://api.ainflue.com",
+                "value": "https://api.iacherie.com",
                 "type": "string"
             },
             {
@@ -620,7 +620,7 @@ async def discover_creators(
                     title=f"Creator {i + offset} - Professional Content Creator",
                     description=f"Discover amazing content from Creator {i + offset}. Specializing in {category or 'diverse content'} with {1000 + (i * 500)} followers.",
                     keywords=[category or "content", "creator", "artist", "professional"],
-                    canonical_url=f"https://ainflue.com/creators/creator{i + offset}"
+                    canonical_url=f"https://iacherie.com/creators/creator{i + offset}"
                 )
             )
             creators.append(creator)
@@ -658,16 +658,16 @@ async def get_creator_profile(creator_id: str):
                 "youtube": f"/{creator_id}"
             },
             seo_metadata=SEOMetadata(
-                title=f"{creator_id} - Professional Content Creator | Ainflue",
-                description=f"Discover {creator_id}'s amazing content on Ainflue. Professional creator with 15K followers specializing in music, video, and art.",
+                title=f"{creator_id} - Professional Content Creator | iacherie",
+                description=f"Discover {creator_id}'s amazing content on iacherie. Professional creator with 15K followers specializing in music, video, and art.",
                 keywords=["content creator", "artist", "music", "video", "professional", creator_id],
-                canonical_url=f"https://ainflue.com/creators/{creator_id}",
+                canonical_url=f"https://iacherie.com/creators/{creator_id}",
                 og_image=f"https://example.com/og/{creator_id}.jpg",
                 schema_markup={
                     "@context": "https://schema.org",
                     "@type": "Person",
                     "name": f"Creator {creator_id}",
-                    "url": f"https://ainflue.com/creators/{creator_id}",
+                    "url": f"https://iacherie.com/creators/{creator_id}",
                     "image": f"https://example.com/avatars/{creator_id}.jpg",
                     "sameAs": [
                         f"https://instagram.com/{creator_id}",
@@ -694,19 +694,19 @@ async def generate_sitemap():
         sitemap_content = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://ainflue.com/</loc>
+        <loc>https://iacherie.com/</loc>
         <lastmod>{}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://ainflue.com/discover</loc>
+        <loc>https://iacherie.com/discover</loc>
         <lastmod>{}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://ainflue.com/creators</loc>
+        <loc>https://iacherie.com/creators</loc>
         <lastmod>{}</lastmod>
         <changefreq>hourly</changefreq>
         <priority>0.9</priority>
@@ -1081,15 +1081,15 @@ class SEOOptimizationEngine:
         bio = creator_data.get("bio", "Content creator")
         
         return {
-            "title": f"{name} - Content Creator | Ainflue Platform",
-            "description": f"{bio}. Follow {name} on Ainflue for amazing content. {', '.join(keywords[:5])}",
+            "title": f"{name} - Content Creator | iacherie Platform",
+            "description": f"{bio}. Follow {name} on iacherie for amazing content. {', '.join(keywords[:5])}",
             "keywords": ", ".join(keywords),
-            "og:title": f"{name} on Ainflue",
+            "og:title": f"{name} on iacherie",
             "og:description": bio,
             "og:image": creator_data.get("profile_image", ""),
             "og:type": "profile",
             "twitter:card": "summary_large_image",
-            "twitter:title": f"{name} | Ainflue Creator",
+            "twitter:title": f"{name} | iacherie Creator",
             "twitter:description": bio,
             "twitter:image": creator_data.get("profile_image", "")
         }
@@ -1178,7 +1178,7 @@ class StructuredDataGenerator:
             ],
             "worksFor": {
                 "@type": "Organization",
-                "name": "Ainflue Platform"
+                "name": "iacherie Platform"
             },
             "knowsAbout": creator_data.get("categories", []),
             "interactionStatistic": [
@@ -1198,13 +1198,13 @@ class SocialMediaOptimizer:
         """Generate social media optimization"""
         return {
             "open_graph": {
-                "og:site_name": "Ainflue",
+                "og:site_name": "iacherie",
                 "og:locale": "en_US",
                 "og:url": f"/creators/{creator_data.get('username', creator_data['id'])}",
                 "fb:app_id": "123456789"  # Would be actual app ID
             },
             "twitter_card": {
-                "twitter:site": "@ainflue",
+                "twitter:site": "@iacherie",
                 "twitter:creator": f"@{creator_data.get('username', 'creator')}"
             },
             "pinterest": {

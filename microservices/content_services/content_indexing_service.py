@@ -25,7 +25,7 @@ class ContentIndexingService:
     
     def __init__(self):
         self.elasticsearch_client = None
-        self.index_name = "ainflue_content"
+        self.index_name = "iacherie_content"
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
         
         # Types de contenu supportés

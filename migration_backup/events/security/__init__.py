@@ -1,6 +1,6 @@
 """Events Security Module
 
-Advanced security utilities for the Ainflue events system.
+Advanced security utilities for the IA Chéries events system.
 Ultra-sophisticated threat detection, access control, and compliance management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

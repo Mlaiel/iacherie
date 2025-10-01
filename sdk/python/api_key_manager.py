@@ -164,7 +164,7 @@ class KeyEncryption:
         if isinstance(self.encryption_key, str):
             # Derive key from password
             password = self.encryption_key.encode()
-            salt = b'ainflue_salt_key'  # In production, use random salt
+            salt = b'iacherie_salt_key'  # In production, use random salt
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
                 length=32,

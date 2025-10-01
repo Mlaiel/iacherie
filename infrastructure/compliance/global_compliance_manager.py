@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌍 GLOBAL COMPLIANCE MANAGER - AINFLUE ENTERPRISE
+🌍 GLOBAL COMPLIANCE MANAGER - IACHERIE ENTERPRISE
 Orchestration compliance multi-juridictions et multi-réglementations mondiale
 
 🏛️ EXPERTISE MULTI-RÔLES:
@@ -55,7 +55,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/global_compliance.log'),
+        logging.FileHandler('/var/log/iacherie/global_compliance.log'),
         logging.StreamHandler()
     ]
 )
@@ -1185,7 +1185,7 @@ if __name__ == "__main__":
     async def test_global_compliance():
         config = {
             'redis_url': 'redis://localhost:6379',
-            'database_url': 'postgresql://user:pass@localhost/ainflue'
+            'database_url': 'postgresql://user:pass@localhost/iacherie'
         }
         
         manager = GlobalComplianceManager(config)

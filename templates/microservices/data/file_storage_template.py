@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-File Storage Template for Ainflue Creator Economy Platform
+File Storage Template for iacherie Creator Economy Platform
 Enterprise file storage service with multi-cloud support, CDN integration and intelligent optimization
 """
 
@@ -82,19 +82,19 @@ class StorageConfig:
     aws_access_key_id: Optional[str] = None
     aws_secret_access_key: Optional[str] = None
     aws_region: str = "us-east-1"
-    aws_bucket_name: str = "ainflue-storage"
+    aws_bucket_name: str = "iacherie-storage"
     
     # Azure Blob configuration
     azure_connection_string: Optional[str] = None
-    azure_container_name: str = "ainflue-storage"
+    azure_container_name: str = "iacherie-storage"
     
     # Google Cloud configuration
     gcp_project_id: Optional[str] = None
-    gcp_bucket_name: str = "ainflue-storage"
+    gcp_bucket_name: str = "iacherie-storage"
     gcp_credentials_path: Optional[str] = None
     
     # Local storage configuration
-    local_storage_path: str = "/var/lib/ainflue/storage"
+    local_storage_path: str = "/var/lib/iacherie/storage"
     
     # File handling
     max_file_size_mb: int = 1000  # 1GB
@@ -199,7 +199,7 @@ class UploadResponse(BaseModel):
 
 class FileStorageTemplate:
     """
-    Template de service de stockage de fichiers enterprise pour Ainflue
+    Template de service de stockage de fichiers enterprise pour iacherie
     
     Fonctionnalités:
     - Multi-cloud storage (AWS S3, Azure Blob, Google Cloud)
@@ -216,7 +216,7 @@ class FileStorageTemplate:
     def __init__(self, config: StorageConfig = None):
         self.config = config or StorageConfig()
         self.app = FastAPI(
-            title="Ainflue File Storage Service",
+            title="iacherie File Storage Service",
             description="Enterprise file storage with multi-cloud support",
             version="1.0.0"
         )

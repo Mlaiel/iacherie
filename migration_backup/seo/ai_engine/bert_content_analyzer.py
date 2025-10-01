@@ -1,5 +1,5 @@
 """
-BERT Content Analyzer for Ainflue Platform
+BERT Content Analyzer for IA Chéries Platform
 ==========================================
 
 Advanced BERT-based content analysis for semantic SEO optimization.

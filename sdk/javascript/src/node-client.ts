@@ -8,8 +8,8 @@
  * Expert Implementation by: Backend Senior + DevOps + Security + Audio Engineer + DBA
  */
 
-import { AinflueClient } from './iacherie-client';
-import { AinflueConfig } from './config';
+import { iacherieClient } from './iacherie-client';
+import { iacherieConfig } from './config';
 import { AxiosAdapter } from './axios-adapter';
 import { ApiResponse } from './interfaces';
 import { SecurityError, ConfigurationError, NetworkError } from './errors';
@@ -22,13 +22,13 @@ import { performance } from 'perf_hooks';
 /**
  * Node.js-optimized IA Chérie SDK Client
  */
-export class NodeClient extends AinflueClient {
+export class NodeClient extends iacherieClient {
   private fileSystemWatcher?: fs.FSWatcher;
   private processMonitor: ProcessMonitor;
   private storageManager: NodeStorageManager;
   private networkMonitor: NetworkMonitor;
 
-  constructor(config: AinflueConfig) {
+  constructor(config: iacherieConfig) {
     // Use AxiosAdapter for Node.js with better HTTP/2 support
     super({
       ...config,

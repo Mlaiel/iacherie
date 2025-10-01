@@ -202,7 +202,7 @@ class APIIntegrator:
             self._session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=60),
                 headers={
-                    "User-Agent": "Ainflue-API-Integrator/1.0",
+                    "User-Agent": "IA Chéries-API-Integrator/1.0",
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }

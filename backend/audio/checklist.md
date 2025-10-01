@@ -1,9 +1,9 @@
-# 📋 CHECKLIST ARCHITECTURE BACKEND AUDIO - AINFLUE PLATFORM
+# 📋 CHECKLIST ARCHITECTURE BACKEND AUDIO - IACHERIE PLATFORM
 
 **Auteur :** Fahed Mlaiel (mlaiel@live.de)  
-**Projet :** Ainflue - Plateforme IA Multi-Format pour Créateurs  
+**Projet :** iacherie - Plateforme IA Multi-Format pour Créateurs  
 **Date :** 5 Septembre 2025  
-**Dossier :** `/workspaces/Ainflue/backend/audio/`
+**Dossier :** `/workspaces/iacherie/backend/audio/`
 
 ⚠️ **AVERTISSEMENT LÉGAL STRICT :** Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel. Toute utilisation, copie, vol ou reproduction sans autorisation écrite expresse de Fahed Mlaiel (mlaiel@live.de) est strictement interdite et passible de poursuites judiciaires.
 
@@ -334,7 +334,7 @@
 - ✅ Audio intelligence système orchestré ✓
 
 ### 🎊 **MISSION ACCOMPLIE - 100% RÉUSSIE**
-**Architecture Backend Audio Enterprise Ainflue Platform**
+**Architecture Backend Audio Enterprise iacherie Platform**
 - **ÉTAT :** 🟢 **COMPLÉTÉ À 100%**
 - **QUALITÉ :** 🏆 **ENTERPRISE GRADE**
 - **INNOVATION :** 🌟 **WORLD-CLASS BREAKTHROUGH**
@@ -345,5 +345,5 @@
 
 **© 2025 Fahed Mlaiel - Tous droits réservés**  
 **Contact :** mlaiel@live.de  
-**Projet :** Ainflue Platform Enterprise Backend Audio
+**Projet :** iacherie Platform Enterprise Backend Audio
 

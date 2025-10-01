@@ -1,7 +1,7 @@
 # WARNING: Potential SQL injection risk - use parameterized queries
 #!/usr/bin/env python3
 """
-Database Integration Testing Module - Ainflue Quality Platform
+Database Integration Testing Module - IA Chéries Quality Platform
 ============================================================
 
 Enterprise-grade database integration testing system.

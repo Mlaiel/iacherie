@@ -8,8 +8,8 @@ postgresql:
   primary:
     host: "${POSTGRES_HOST:-localhost}"
     port: "${POSTGRES_PORT:-5432}"
-    database: "${POSTGRES_DB:-ainflue_creator}"
-    username: "${POSTGRES_USER:-ainflue_user}"
+    database: "${POSTGRES_DB:-iacherie_creator}"
+    username: "${POSTGRES_USER:-iacherie_user}"
     password: "${POSTGRES_PASSWORD}"
     
   connection_pool:
@@ -116,7 +116,7 @@ redis:
 mongodb:
   primary:
     uri: "${MONGODB_URI}"
-    database: "${MONGODB_DATABASE:-ainflue_content}"
+    database: "${MONGODB_DATABASE:-iacherie_content}"
     
   connection:
     max_pool_size: 100
@@ -238,13 +238,13 @@ clickhouse:
   connection:
     host: "${CLICKHOUSE_HOST:-localhost}"
     port: "${CLICKHOUSE_PORT:-9000}"
-    database: "${CLICKHOUSE_DATABASE:-ainflue_analytics}"
+    database: "${CLICKHOUSE_DATABASE:-iacherie_analytics}"
     username: "${CLICKHOUSE_USERNAME}"
     password: "${CLICKHOUSE_PASSWORD}"
     
   cluster:
     enabled: true
-    cluster_name: "ainflue_cluster"
+    cluster_name: "iacherie_cluster"
     shards:
       - host: "${CLICKHOUSE_SHARD_1}"
         replicas: ["${CLICKHOUSE_REPLICA_1_1}", "${CLICKHOUSE_REPLICA_1_2}"]

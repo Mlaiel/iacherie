@@ -428,7 +428,7 @@ class AccessControlManager {
      */
     getTokenSecret() {
         // In production, this should be stored securely
-        return 'ainflue_desktop_token_secret_' + process.env.NODE_ENV || 'development';
+        return 'iacherie_desktop_token_secret_' + process.env.NODE_ENV || 'development';
     }
 
     /**

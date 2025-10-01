@@ -5,7 +5,7 @@ Système avancé de détection de plagiat avec analyse ML-powered,
 cross-format similarity detection et automated infringement reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Integrations
+Project: IA Chéries Integrations
 Version: 1.0 Production
 """
 

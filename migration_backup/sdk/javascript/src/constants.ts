@@ -1,5 +1,5 @@
 /**
- * SDK Constants and Enums for Ainflue SDK
+ * SDK Constants and Enums for IA Chéries SDK
  * 
  * Multi-expert implementation:
  * - Lead Dev IA: Intelligent constant organization and optimization
@@ -14,7 +14,7 @@
  * SDK Version and Metadata
  */
 export const SDK_VERSION = '1.0.0';
-export const SDK_NAME = 'Ainflue TypeScript SDK';
+export const SDK_NAME = 'IA Chéries TypeScript SDK';
 export const SDK_USER_AGENT = `${SDK_NAME}/${SDK_VERSION}`;
 
 /**

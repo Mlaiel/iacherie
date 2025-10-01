@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 """
-🚀 Ainflue - Redis Orchestration Platform
+🚀 IA Chéries - Redis Orchestration Platform
 📊 Data Pipeline Orchestrator Module
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED ⚠️
-🔐 Copyright (c) 2024 Ainflue Technologies. All rights reserved.
+🔐 Copyright (c) 2024 IA Chéries Technologies. All rights reserved.
 
 This module implements comprehensive data pipeline orchestration for streaming
 and batch data processing in the Redis orchestration platform.

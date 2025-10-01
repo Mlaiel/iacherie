@@ -171,7 +171,7 @@ class IndexPerformanceOptimizer:
         # Content events optimization patterns
         self._business_patterns = {
             'content_lifecycle_queries': {
-                'table_patterns': ['ainflue_events', 'content_analytics_events'],
+                'table_patterns': ['iacherie_events', 'content_analytics_events'],
                 'common_filters': ['creator_id', 'content_id', 'content_type', 'occurred_at'],
                 'suggested_indexes': [
                     {
@@ -188,7 +188,7 @@ class IndexPerformanceOptimizer:
             },
             
             'revenue_queries': {
-                'table_patterns': ['revenue_analytics_events', 'ainflue_events'],
+                'table_patterns': ['revenue_analytics_events', 'iacherie_events'],
                 'common_filters': ['creator_id', 'revenue_amount', 'currency', 'occurred_at'],
                 'suggested_indexes': [
                     {
@@ -296,7 +296,7 @@ class IndexPerformanceOptimizer:
             mock_indexes = [
                 {
                     'index_name': 'idx_content_lifecycle_events',
-                    'table_name': 'ainflue_events',
+                    'table_name': 'iacherie_events',
                     'columns': ['creator_id', 'content_type', 'occurred_at'],
                     'index_type': IndexType.COMPOSITE,
                     'size_bytes': 50 * 1024 * 1024,  # 50MB
@@ -304,7 +304,7 @@ class IndexPerformanceOptimizer:
                 },
                 {
                     'index_name': 'idx_revenue_events',
-                    'table_name': 'ainflue_events',
+                    'table_name': 'iacherie_events',
                     'columns': ['creator_id', 'revenue_amount', 'occurred_at'],
                     'index_type': IndexType.COMPOSITE,
                     'size_bytes': 25 * 1024 * 1024,  # 25MB
@@ -312,7 +312,7 @@ class IndexPerformanceOptimizer:
                 },
                 {
                     'index_name': 'idx_unused_old_index',
-                    'table_name': 'ainflue_events',
+                    'table_name': 'iacherie_events',
                     'columns': ['old_column'],
                     'index_type': IndexType.BTREE,
                     'size_bytes': 100 * 1024 * 1024,  # 100MB
@@ -441,18 +441,18 @@ class IndexPerformanceOptimizer:
             mock_patterns = [
                 {
                     'pattern_id': 'content_creator_lookup',
-                    'query_template': 'SELECT * FROM ainflue_events WHERE creator_id = ? AND content_type = ? ORDER BY occurred_at DESC',
+                    'query_template': 'SELECT * FROM iacherie_events WHERE creator_id = ? AND content_type = ? ORDER BY occurred_at DESC',
                     'frequency': 2500,
                     'avg_execution_time': 45.2,
-                    'tables': ['ainflue_events'],
+                    'tables': ['iacherie_events'],
                     'columns': ['creator_id', 'content_type', 'occurred_at']
                 },
                 {
                     'pattern_id': 'revenue_analytics',
-                    'query_template': 'SELECT SUM(revenue_amount) FROM ainflue_events WHERE creator_id = ? AND occurred_at >= ?',
+                    'query_template': 'SELECT SUM(revenue_amount) FROM iacherie_events WHERE creator_id = ? AND occurred_at >= ?',
                     'frequency': 1800,
                     'avg_execution_time': 62.1,
-                    'tables': ['ainflue_events'],
+                    'tables': ['iacherie_events'],
                     'columns': ['creator_id', 'revenue_amount', 'occurred_at']
                 },
                 {

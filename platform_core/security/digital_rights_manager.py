@@ -212,7 +212,7 @@ class DigitalRightsManager:
     def _generate_encryption_key(self) -> bytes:
         """Génération clé de chiffrement pour DRM"""
         master_key = self.config.get('master_key', secrets.token_bytes(32))
-        salt = self.config.get('salt', b'ainflue_drm_salt_2025')
+        salt = self.config.get('salt', b'iacherie_drm_salt_2025')
         
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -699,7 +699,7 @@ class DigitalRightsManager:
             # Dans une implémentation réelle, utiliser librosa et techniques FFT
             
             # Ajout de métadonnées watermark dans header
-            watermark_header = f"AINFLUE_WM:{payload}".encode()
+            watermark_header = f"IACHERIE_WM:{payload}".encode()
             watermarked_audio = watermark_header + b'\x00' * 100 + audio_bytes
             
             return watermarked_audio
@@ -720,7 +720,7 @@ class DigitalRightsManager:
             # Simulation watermarking vidéo
             # Dans une implémentation réelle, traiter frame par frame
             
-            watermark_header = f"AINFLUE_VIDEO_WM:{payload}".encode()
+            watermark_header = f"IACHERIE_VIDEO_WM:{payload}".encode()
             watermarked_video = watermark_header + b'\x00' * 200 + video_bytes
             
             return watermarked_video
@@ -742,7 +742,7 @@ class DigitalRightsManager:
             encrypted_payload = self.cipher_suite.encrypt(payload.encode())
             
             # Injection watermark dans métadonnées
-            watermark_data = b'AINFLUE_GENERIC_WM:' + encrypted_payload + b':END_WM'
+            watermark_data = b'IACHERIE_GENERIC_WM:' + encrypted_payload + b':END_WM'
             
             # Insertion dans le contenu
             insertion_point = len(content_bytes) // 2
@@ -871,8 +871,8 @@ class DigitalRightsManager:
         """Extraction watermark depuis audio"""
         try:
             # Recherche header watermark
-            if b'AINFLUE_WM:' in audio_bytes:
-                start_idx = audio_bytes.find(b'AINFLUE_WM:') + len(b'AINFLUE_WM:')
+            if b'IACHERIE_WM:' in audio_bytes:
+                start_idx = audio_bytes.find(b'IACHERIE_WM:') + len(b'IACHERIE_WM:')
                 end_idx = audio_bytes.find(b'\x00', start_idx)
                 if end_idx > start_idx:
                     return audio_bytes[start_idx:end_idx].decode()
@@ -887,8 +887,8 @@ class DigitalRightsManager:
         """Extraction watermark depuis vidéo"""
         try:
             # Recherche header watermark vidéo
-            if b'AINFLUE_VIDEO_WM:' in video_bytes:
-                start_idx = video_bytes.find(b'AINFLUE_VIDEO_WM:') + len(b'AINFLUE_VIDEO_WM:')
+            if b'IACHERIE_VIDEO_WM:' in video_bytes:
+                start_idx = video_bytes.find(b'IACHERIE_VIDEO_WM:') + len(b'IACHERIE_VIDEO_WM:')
                 end_idx = video_bytes.find(b'\x00', start_idx)
                 if end_idx > start_idx:
                     return video_bytes[start_idx:end_idx].decode()
@@ -903,8 +903,8 @@ class DigitalRightsManager:
         """Extraction watermark générique"""
         try:
             # Recherche pattern watermark générique
-            if b'AINFLUE_GENERIC_WM:' in content_bytes:
-                start_marker = b'AINFLUE_GENERIC_WM:'
+            if b'IACHERIE_GENERIC_WM:' in content_bytes:
+                start_marker = b'IACHERIE_GENERIC_WM:'
                 end_marker = b':END_WM'
                 
                 start_idx = content_bytes.find(start_marker) + len(start_marker)
@@ -1425,7 +1425,7 @@ if __name__ == "__main__":
             'user_id': 'user_123',
             'usage_type': 'commercial_use',
             'required_rights': ['copyright', 'distribution'],
-            'platform': 'ainflue_web'
+            'platform': 'iacherie_web'
         }
         
         compliant, compliance_result = await drm.verify_license_compliance(

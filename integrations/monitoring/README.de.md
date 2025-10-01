@@ -36,14 +36,14 @@ Production-ready Monitoring-Suite mit umfassender Observability, Performance-Üb
 ### Distributed Tracing Intelligence
 ```python
 # Beispiel: IA Chérie Pipeline Tracing
-trace_analysis = await distributed_tracing.trace_ainflue_pipeline(
+trace_analysis = await distributed_tracing.trace_iacherie_pipeline(
     creator_content={
         'creator_id': 'creator_123',
         'content_type': 'music_video',
         'platforms': ['youtube', 'tiktok', 'instagram']
     },
     pipeline_context={
-        'pipeline_id': 'ainflue_pipeline_v2.1',
+        'pipeline_id': 'iacherie_pipeline_v2.1',
         'version': '2.1.3'
     }
 )
@@ -188,7 +188,7 @@ from integrations.monitoring import (
 )
 
 # Initialisierung
-monitoring_suite = await initialize_ainflue_monitoring()
+monitoring_suite = await initialize_iacherie_monitoring()
 ```
 
 ### Dashboard Konfiguration

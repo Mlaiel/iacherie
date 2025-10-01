@@ -1,4 +1,4 @@
-# Disaster Recovery Automation for Ainflue Platform
+# Disaster Recovery Automation for IA Chéries Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Enterprise-grade disaster recovery with automated failover and backup restoration
 
@@ -401,7 +401,7 @@ metadata:
   labels:
     app.kubernetes.io/name: disaster-recovery
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/AinflueDRRole
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/IA ChériesDRRole
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1

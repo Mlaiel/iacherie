@@ -4,7 +4,7 @@ Enterprise model development and training orchestration
 
 This module provides comprehensive model development capabilities including
 distributed training, AutoML, hyperparameter tuning, model validation,
-and support for the 53 AI agents in the Ainflue ecosystem.
+and support for the 53 AI agents in the iacherie ecosystem.
 
 Components:
 - Model Training Orchestration
@@ -328,13 +328,13 @@ class ModelDevelopmentOrchestrator:
             self.logger.error(f"Model validation failed: {str(e)}")
             raise
     
-    async def deploy_ainflue_ai_agents(
+    async def deploy_iacherie_ai_agents(
         self,
         agent_configs: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Deploy the 53 AI agents for Ainflue platform"""
+        """Deploy the 53 AI agents for iacherie platform"""
         try:
-            deployment_id = f"ainflue_agents_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            deployment_id = f"iacherie_agents_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             deployment_result = {
                 "deployment_id": deployment_id,
@@ -373,7 +373,7 @@ class ModelDevelopmentOrchestrator:
                 "completed_at": datetime.now().isoformat()
             })
             
-            self.logger.info(f"Ainflue AI agents deployed: {deployment_id}")
+            self.logger.info(f"iacherie AI agents deployed: {deployment_id}")
             return deployment_result
             
         except Exception as e:

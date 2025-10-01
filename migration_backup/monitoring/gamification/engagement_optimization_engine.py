@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Engagement Optimization Engine
+IA Chéries Platform - Engagement Optimization Engine
 ===============================================
 
 Enterprise-grade engagement optimization with AI-powered analytics,

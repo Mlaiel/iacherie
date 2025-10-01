@@ -1,12 +1,12 @@
 """
-Network Optimizer - Intelligent Network Performance Optimization for Ainflue
+Network Optimizer - Intelligent Network Performance Optimization for IA Chéries
 ============================================================================
 
 Advanced network optimization for creator platform with global CDN optimization,
 traffic shaping, and creator-focused network performance improvements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -46,7 +46,7 @@ class NetworkMetrics:
 
 class NetworkOptimizer:
     """
-    Intelligent Network Optimizer for Ainflue Creator Platform
+    Intelligent Network Optimizer for IA Chéries Creator Platform
     
     Optimizes network performance for global creator access, content delivery,
     and 65+ platform integrations with focus on creator experience.

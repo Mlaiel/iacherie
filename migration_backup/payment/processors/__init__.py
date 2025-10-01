@@ -599,4 +599,4 @@ __all__ = [
 # Version information
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
-__description__ = "Enterprise payment processing suite for Ainflue platform"
+__description__ = "Enterprise payment processing suite for IA Chéries platform"

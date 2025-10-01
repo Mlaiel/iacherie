@@ -1,4 +1,4 @@
-# 🔗 وحدة التكاملات الخارجية - البنية التحتية المؤسسية لـ Ainflue
+# 🔗 وحدة التكاملات الخارجية - البنية التحتية المؤسسية لـ iacherie
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + الأمان + Microservices + الصوت + DevOps + IA Prompt Engineer**
 

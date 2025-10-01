@@ -1,10 +1,10 @@
 """
-Ainflue Platform - Collaboration ROI Calculator
+IA Chéries Platform - Collaboration ROI Calculator
 ==============================================
 
 Advanced ROI calculation system for measuring collaboration return on investment
 with multi-dimensional analysis, predictive modeling, and optimization
-recommendations for the Ainflue platform.
+recommendations for the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

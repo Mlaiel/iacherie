@@ -1,5 +1,5 @@
 /**
- * Ainflue Platform TypeScript SDK - Main Entry Point
+ * IA Chéries Platform TypeScript SDK - Main Entry Point
  * 
  * Enterprise-grade TypeScript SDK with multi-expert design:
  * - Lead Dev IA: AI orchestration and intelligent API design
@@ -17,8 +17,8 @@
  */
 
 // Core client exports
-export { AinflueClient } from './ainflue-client';
-export { AinflueConfig, createDefaultConfig } from './config';
+export { IA ChériesClient } from './ainflue-client';
+export { IA ChériesConfig, createDefaultConfig } from './config';
 
 // Type definitions
 export * from './types';
@@ -48,7 +48,7 @@ export { AIAnalyzer } from './content/ai-analyzer';
 
 // Error handling
 export { 
-  AinflueError,
+  IA ChériesError,
   AuthenticationError,
   ValidationError,
   NetworkError,
@@ -121,7 +121,7 @@ export const DEFAULT_CONFIG = {
 // Re-export types for convenience
 export type {
   // Core types
-  AinflueClientOptions,
+  IA ChériesClientOptions,
   RequestOptions,
   ApiEndpoint,
   HttpMethod,
@@ -155,11 +155,11 @@ const isNode = typeof process !== 'undefined' && process.versions && process.ver
 // Environment-specific optimizations
 if (isBrowser) {
   // Browser-specific initialization
-  console.log(`%c🚀 Ainflue SDK v${SDK_VERSION} (Browser)`, 'color: #4CAF50; font-weight: bold');
+  console.log(`%c🚀 IA Chéries SDK v${SDK_VERSION} (Browser)`, 'color: #4CAF50; font-weight: bold');
 } else if (isNode) {
   // Node.js-specific initialization
   process.env.NODE_ENV !== 'production' && 
-    console.log(`🚀 Ainflue SDK v${SDK_VERSION} (Node.js)`);
+    console.log(`🚀 IA Chéries SDK v${SDK_VERSION} (Node.js)`);
 }
 
 // SDK health check function

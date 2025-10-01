@@ -306,7 +306,7 @@ class WebhookDeliveryManager:
             "X-Webhook-Signature": signature,
             "X-Webhook-Event": event_data.get("event_type", ""),
             "X-Webhook-ID": event_id,
-            "User-Agent": "Ainflue-Webhooks/1.0"
+            "User-Agent": "IA Chéries-Webhooks/1.0"
         }
         
         delivery = WebhookDelivery(

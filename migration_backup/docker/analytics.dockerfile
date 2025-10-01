@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE ANALYTICS SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
+# IA CHÉRIES ANALYTICS SERVICE - OPTIMIZED PRODUCTION DOCKERFILE
 # =============================================================================
 # Specialized container for high-performance data analytics, reporting,
 # and business intelligence with enterprise security features.
@@ -142,7 +142,7 @@ FROM analytics-base AS production
 
 LABEL stage=production
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Analytics Service - Production Runtime"
+LABEL description="IA Chéries Analytics Service - Production Runtime"
 LABEL service="analytics-service"
 LABEL capabilities="data-analysis,reporting,business-intelligence"
 

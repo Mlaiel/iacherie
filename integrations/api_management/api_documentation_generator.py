@@ -763,12 +763,12 @@ class APIDocumentationGenerator:
         self.generated_docs: Dict[str, Any] = {}
         
         # IA Chérie-specific configurations
-        self.ainflue_endpoints: List[APIEndpoint] = []
+        self.iacherie_endpoints: List[APIEndpoint] = []
         
         # Initialize IA Chérie business logic documentation
-        self._initialize_ainflue_documentation()
+        self._initialize_iacherie_documentation()
     
-    def _initialize_ainflue_documentation(self) -> None:
+    def _initialize_iacherie_documentation(self) -> None:
         """Initialize IA Chérie business logic API documentation"""
         
         # Creator Content APIs
@@ -1074,10 +1074,10 @@ class APIDocumentationGenerator:
         ]
         
         # Combine all endpoints
-        self.ainflue_endpoints.extend(creator_content_endpoints)
-        self.ainflue_endpoints.extend(platform_integration_endpoints)
-        self.ainflue_endpoints.extend(ai_model_endpoints)
-        self.ainflue_endpoints.extend(monetization_endpoints)
+        self.iacherie_endpoints.extend(creator_content_endpoints)
+        self.iacherie_endpoints.extend(platform_integration_endpoints)
+        self.iacherie_endpoints.extend(ai_model_endpoints)
+        self.iacherie_endpoints.extend(monetization_endpoints)
     
     async def generate_documentation(self, spec: APIDocumentationSpec,
                                    format: DocumentationFormat = DocumentationFormat.OPENAPI_JSON,
@@ -1089,7 +1089,7 @@ class APIDocumentationGenerator:
         try:
             # Add IA Chérie endpoints to spec if not already present
             if not spec.endpoints:
-                spec.endpoints = self.ainflue_endpoints.copy()
+                spec.endpoints = self.iacherie_endpoints.copy()
             
             # Generate code examples for all endpoints
             for endpoint in spec.endpoints:
@@ -1480,7 +1480,7 @@ class APIDocumentationGenerator:
                     "generated_endpoints": result["metadata"].total_endpoints
                 },
                 "cached_docs": len(self.generated_docs),
-                "ainflue_endpoints": len(self.ainflue_endpoints),
+                "iacherie_endpoints": len(self.iacherie_endpoints),
                 "supported_formats": [f.value for f in DocumentationFormat],
                 "supported_languages": [l.value for l in DocumentationLanguage],
                 "timestamp": datetime.now(timezone.utc).isoformat()

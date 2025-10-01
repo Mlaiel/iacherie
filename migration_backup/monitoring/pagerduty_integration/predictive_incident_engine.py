@@ -1,5 +1,5 @@
 """
-Predictive Incident Engine for Ainflue Platform
+Predictive Incident Engine for IA Chéries Platform
 ML-powered incident prediction and proactive alerting for Creator Economy
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -2,11 +2,11 @@
 AI Quality Assurance - Automated AI Model Quality Control
 =========================================================
 
-Comprehensive AI quality assurance system for the Ainflue platform.
+Comprehensive AI quality assurance system for the IA Chéries platform.
 Ensures AI model reliability, performance, and output quality across 53 AI agents.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure - AI Optimization Module
+Project: IA Chéries Infrastructure - AI Optimization Module
 Expert Role: Lead Dev IA + ML Engineer + Quality Assurance
 Version: 1.0 Production Enterprise
 
@@ -100,7 +100,7 @@ class AIQualityAssurance:
     """
     AI Quality Assurance Engine
     
-    Comprehensive testing and validation system for AI models used in the Ainflue platform.
+    Comprehensive testing and validation system for AI models used in the IA Chéries platform.
     Ensures 53 AI agents meet enterprise quality standards for creator content processing.
     """
     

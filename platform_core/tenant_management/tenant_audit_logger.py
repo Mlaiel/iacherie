@@ -43,7 +43,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('/var/log/ainflue/tenant_audit.log'),
+        logging.FileHandler('/var/log/iacherie/tenant_audit.log'),
         logging.StreamHandler()
     ]
 )
@@ -143,7 +143,7 @@ class TenantAuditLogger:
     - Monitoring et alerting temps réel
     """
     
-    def __init__(self, config_path: str = '/etc/ainflue/audit_config.yaml'):
+    def __init__(self, config_path: str = '/etc/iacherie/audit_config.yaml'):
         """Initialisation du système d'audit"""
         self.config = self._load_config(config_path)
         self.event_queue = queue.Queue(maxsize=self.config.get('queue_size', 10000))
@@ -197,14 +197,14 @@ class TenantAuditLogger:
                 'index_pattern': 'audit-{tenant_id}-{date}'
             },
             's3': {
-                'bucket': 'ainflue-audit-archive',
+                'bucket': 'iacherie-audit-archive',
                 'region': 'eu-west-1'
             }
         }
     
     def _get_encryption_key(self) -> bytes:
         """Récupération de la clé de chiffrement"""
-        key_path = self.config.get('encryption_key_path', '/etc/ainflue/audit.key')
+        key_path = self.config.get('encryption_key_path', '/etc/iacherie/audit.key')
         try:
             with open(key_path, 'rb') as f:
                 return f.read()
@@ -242,7 +242,7 @@ class TenantAuditLogger:
             's3',
             region_name=s3_config.get('region', 'eu-west-1')
         )
-        self.audit_bucket = s3_config.get('bucket', 'ainflue-audit-archive')
+        self.audit_bucket = s3_config.get('bucket', 'iacherie-audit-archive')
         
         logger.info("Backends de stockage initialisés")
     
@@ -1183,7 +1183,7 @@ def create_tenant_audit_logger(config_path: Optional[str] = None) -> TenantAudit
     Returns:
         Instance configurée du TenantAuditLogger
     """
-    return TenantAuditLogger(config_path or '/etc/ainflue/audit_config.yaml')
+    return TenantAuditLogger(config_path or '/etc/iacherie/audit_config.yaml')
 
 
 # Exemple d'utilisation

@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Alert Manager Template for Ainflue Platform
+Alert Manager Template for iacherie Platform
 ==========================================
 
 Production-ready alert management with:
@@ -281,7 +281,7 @@ class AlertManager:
             smtp_port = config.get("smtp_port", 587)
             username = config.get("username")
             password = config.get("password")
-            from_addr = config.get("from_addr", "alerts@ainflue.com")
+            from_addr = config.get("from_addr", "alerts@iacherie.com")
             to_addrs = config.get("to_addrs", [])
             
             if not to_addrs:
@@ -333,7 +333,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
             
             payload = {
                 "channel": channel,
-                "username": "Ainflue Alerts",
+                "username": "iacherie Alerts",
                 "icon_emoji": ":warning:",
                 "attachments": [{
                     "color": color,
@@ -345,7 +345,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
                         {"title": "Current Value", "value": alert.annotations.get("current_value", "N/A"), "short": True},
                         {"title": "Threshold", "value": str(alert.threshold), "short": True}
                     ],
-                    "footer": "Ainflue Alert Manager",
+                    "footer": "iacherie Alert Manager",
                     "ts": int(alert.created_at.timestamp())
                 }]
             }
@@ -455,7 +455,7 @@ Labels: {json.dumps(alert.labels, indent=2)}
 
 class AlertManagerTemplate:
     """
-    Alert Manager Template for Ainflue Platform
+    Alert Manager Template for iacherie Platform
     
     A comprehensive alert management system that provides:
     - Multi-channel alerting

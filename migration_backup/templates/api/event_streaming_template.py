@@ -1,4 +1,4 @@
-"""Event Streaming Template for Ainflue Platform
+"""Event Streaming Template for IA Chéries Platform
 Enterprise-grade event streaming and real-time data processing
 
 ⚠️  AVERTISSEMENT LÉGAL:

@@ -44,7 +44,7 @@ __email__ = "mlaiel@live.de"
 __description__ = "Enterprise data processing and transformation for IA Chérie platform"
 
 # Configuration logique métier IA Chérie
-AINFLUE_DATA_PROCESSING = {
+IACHERIE_DATA_PROCESSING = {
     'platforms': 65,
     'processing_features': [
         'transformation', 'caching', 'synchronization', 'validation',

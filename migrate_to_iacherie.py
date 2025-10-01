@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-def migrate_ainfluencer_to_iacherie():
+def migrate_iacheries_to_iacherie():
     """Migration directe et professionnelle."""
     
     print("🌟" * 60)
@@ -158,4 +158,4 @@ def migrate_ainfluencer_to_iacherie():
     return True
 
 if __name__ == "__main__":
-    migrate_ainfluencer_to_iacherie()
+    migrate_iacheries_to_iacherie()

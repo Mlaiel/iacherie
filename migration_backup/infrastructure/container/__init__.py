@@ -1,7 +1,7 @@
 """
 Container Infrastructure Management - Complete Module
 ====================================================
-Enterprise container orchestration for Ainflue platform
+Enterprise container orchestration for IA Chéries platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -123,5 +123,5 @@ __all__ = [
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
-__description__ = "Container infrastructure module for Ainflue creator platform"
+__description__ = "Container infrastructure module for IA Chéries creator platform"
 

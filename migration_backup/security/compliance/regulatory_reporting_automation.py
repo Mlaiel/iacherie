@@ -798,7 +798,7 @@ class RegulatoryReportingAutomation:
         """Generate report content based on template"""
         content = {
             "metadata": {
-                "organization_name": "Ainflue Platform",
+                "organization_name": "IA Chéries Platform",
                 "reporting_period": reporting_period,
                 "generation_date": datetime.now(timezone.utc).isoformat(),
                 "framework": template.framework.value,

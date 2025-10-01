@@ -1,4 +1,4 @@
-# Development Configuration for Ainflue Docker Platform
+# Development Configuration for IA Chéries Docker Platform
 version: '3.8'
 
 # Development environment variables

@@ -1,4 +1,4 @@
-"""GraphQL Error Handling Template for Ainflue Platform
+"""GraphQL Error Handling Template for iacherie Platform
 Enterprise-grade GraphQL error handling with comprehensive monitoring
 
 ⚠️  AVERTISSEMENT LÉGAL:

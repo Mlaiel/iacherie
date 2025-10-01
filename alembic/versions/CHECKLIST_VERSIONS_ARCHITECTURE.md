@@ -26,7 +26,7 @@
 ```
 /workspaces/IA Chérie/alembic/versions/
 ├── __init__.py ✅ (EXISTANT)
-└── d21b3c27ee2c_initial_database_schema_for_ainflue_.py ✅ (EXISTANT - SCHEMA INITIAL)
+└── d21b3c27ee2c_initial_database_schema_for_iacherie_.py ✅ (EXISTANT - SCHEMA INITIAL)
 ```
 
 ---

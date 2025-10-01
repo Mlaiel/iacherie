@@ -23,7 +23,7 @@ Contact: mlaiel@live.de
 - Smart quality assessment and improvement
 - Content-aware enhancement strategies
 - Real-time quality monitoring and optimization
-- Business-grade enhancement workflows for Ainflue creators
+- Business-grade enhancement workflows for IA Chéries creators
 """
 
 import asyncio

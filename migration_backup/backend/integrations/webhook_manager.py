@@ -231,7 +231,7 @@ class WebhookManagerIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Webhook Manager",
+                "User-Agent": "IA Chéries/1.0 Webhook Manager",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }

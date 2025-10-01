@@ -1,5 +1,5 @@
 """IA Influencer Agent - Redis Streams Coordinator
-High-Frequency Event Coordination using Redis Streams for Ainflue Platform
+High-Frequency Event Coordination using Redis Streams for IA Chéries Platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -46,8 +46,8 @@ class ConsumerGroupState(Enum):
     ERROR = "error"
 
 
-class AinflueBusinesRedisStreams:
-    """Redis streams for Ainflue high-frequency events"""
+class IA ChériesBusinesRedisStreams:
+    """Redis streams for IA Chéries high-frequency events"""
     
     # High-frequency events
     USER_INTERACTIONS = "ainflue:user:interactions"
@@ -447,7 +447,7 @@ class RedisStreamConsumer:
 
 
 class RedisStreamsCoordinator:
-    """Coordinates Redis Streams for high-frequency Ainflue events"""
+    """Coordinates Redis Streams for high-frequency IA Chéries events"""
     
     def __init__(self, redis_client: Any, metrics_collector=None):
         self.redis = redis_client
@@ -466,7 +466,7 @@ class RedisStreamsCoordinator:
             # Start coordinator monitoring task
             self._coordinator_task = asyncio.create_task(self._coordinator_loop())
             
-            # Setup default streams for Ainflue
+            # Setup default streams for IA Chéries
             await self._setup_default_streams()
             
             logger.info("Redis Streams Coordinator started successfully")
@@ -498,19 +498,19 @@ class RedisStreamsCoordinator:
             raise
     
     async def _setup_default_streams(self):
-        """Setup default Redis streams for Ainflue"""
+        """Setup default Redis streams for IA Chéries"""
         try:
             # Create default streams
             default_streams = [
-                AinflueBusinesRedisStreams.USER_INTERACTIONS,
-                AinflueBusinesRedisStreams.REAL_TIME_ANALYTICS,
-                AinflueBusinesRedisStreams.ENGAGEMENT_TRACKING,
-                AinflueBusinesRedisStreams.CONTENT_UPLOAD_QUEUE,
-                AinflueBusinesRedisStreams.AI_PROCESSING_QUEUE,
-                AinflueBusinesRedisStreams.COLLABORATION_NOTIFICATIONS,
-                AinflueBusinesRedisStreams.MATCHING_UPDATES,
-                AinflueBusinesRedisStreams.REVENUE_EVENTS,
-                AinflueBusinesRedisStreams.PAYMENT_NOTIFICATIONS
+                IA ChériesBusinesRedisStreams.USER_INTERACTIONS,
+                IA ChériesBusinesRedisStreams.REAL_TIME_ANALYTICS,
+                IA ChériesBusinesRedisStreams.ENGAGEMENT_TRACKING,
+                IA ChériesBusinesRedisStreams.CONTENT_UPLOAD_QUEUE,
+                IA ChériesBusinesRedisStreams.AI_PROCESSING_QUEUE,
+                IA ChériesBusinesRedisStreams.COLLABORATION_NOTIFICATIONS,
+                IA ChériesBusinesRedisStreams.MATCHING_UPDATES,
+                IA ChériesBusinesRedisStreams.REVENUE_EVENTS,
+                IA ChériesBusinesRedisStreams.PAYMENT_NOTIFICATIONS
             ]
             
             for stream_name in default_streams:
@@ -768,6 +768,6 @@ class RedisStreamsCoordinator:
 # Export public API
 __all__ = [
     "RedisStreamsCoordinator", "RedisStreamConsumer", "ConsumerGroupConfig",
-    "RedisStreamMessage", "AinflueBusinesRedisStreams", "StreamMetrics",
+    "RedisStreamMessage", "IA ChériesBusinesRedisStreams", "StreamMetrics",
     "ConsumerGroupMetrics", "StreamReadMode", "ConsumerGroupState"
 ]

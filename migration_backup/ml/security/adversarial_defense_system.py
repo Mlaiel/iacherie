@@ -8,7 +8,7 @@ Adversarial training + input sanitization + model hardening + attack mitigation.
 Contact: mlaiel@live.de
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue ML Security - Adversarial Defense
+Project: IA Chéries ML Security - Adversarial Defense
 Version: 1.0 Production
 =======================================================================
 """

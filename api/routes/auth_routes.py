@@ -38,7 +38,7 @@ router = APIRouter(
 # CONSTANTS & CONFIGURATION
 # ========================================
 
-SECRET_KEY = "ainflue_enterprise_secret_key_2025"  # In production, use environment variable
+SECRET_KEY = "iacherie_enterprise_secret_key_2025"  # In production, use environment variable
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRE_DAYS = 7
@@ -373,7 +373,7 @@ async def login_user(
     # In production, verify credentials against database
     # For demo, use mock verification
     
-    if login_data.email == "demo@ainflue.com" and login_data.password == "DemoPassword123!":
+    if login_data.email == "demo@iacherie.com" and login_data.password == "DemoPassword123!":
         # Mock user data
         user_id = "user_demo_123"
         session_id = str(uuid.uuid4())
@@ -491,7 +491,7 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
         last_name="User",
         display_name="Demo Creator",
         avatar_url="https://example.com/avatar.jpg",
-        company="Ainflue Demo Corp",
+        company="iacherie Demo Corp",
         country="US",
         preferred_language="en",
         role=UserRole(current_user["role"]),
@@ -613,7 +613,7 @@ async def setup_two_factor(
     if setup_data.method == TwoFactorMethod.TOTP:
         # Generate TOTP secret
         secret = secrets.token_hex(20)
-        qr_code_url = f"otpauth://totp/Ainflue:{current_user['email']}?secret={secret}&issuer=Ainflue"
+        qr_code_url = f"otpauth://totp/iacherie:{current_user['email']}?secret={secret}&issuer=iacherie"
         
         background_tasks.add_task(log_2fa_setup, current_user["id"], setup_data.method)
         

@@ -292,7 +292,7 @@ export const SettingsScreen: React.FC = () => {
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Ainflue v1.0.0</Text>
+          <Text style={styles.footerText}>IA Chéries v1.0.0</Text>
           <Text style={styles.footerText}>© 2025 Fahed Mlaiel</Text>
         </View>
       </ScrollView>

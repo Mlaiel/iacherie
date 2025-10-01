@@ -498,7 +498,7 @@ from mongodb.connection import MongoDBConnection
 # Production connection configuration
 connection_config = {
     "connection_string": "mongodb+srv://cluster.mongodb.net",
-    "database_name": "ainflue_prod",
+    "database_name": "iacherie_prod",
     "connection_options": {
         # Connection pool settings
         "maxPoolSize": 100,           # Maximum connections

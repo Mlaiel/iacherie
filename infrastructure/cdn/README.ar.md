@@ -1,4 +1,4 @@
-# 🌍 بنية Ainflue CDN التحتية - شبكة توصيل المحتوى للمؤسسات
+# 🌍 بنية iacherie CDN التحتية - شبكة توصيل المحتوى للمؤسسات
 
 ## 📋 نظرة عامة
 
@@ -10,7 +10,7 @@
 
 ## 🏗️ هندسة CDN للمؤسسات
 
-توفر البنية التحتية لـ Ainflue CDN تحسين توصيل المحتوى العالمي المصمم خصيصاً للمبدعين، مع 180+ موقع حافة حول العالم، والتحسين المدعوم بالذكاء الاصطناعي، وتوصيل المحتوى متعدد المنصات.
+توفر البنية التحتية لـ iacherie CDN تحسين توصيل المحتوى العالمي المصمم خصيصاً للمبدعين، مع 180+ موقع حافة حول العالم، والتحسين المدعوم بالذكاء الاصطناعي، وتوصيل المحتوى متعدد المنصات.
 
 ### 🎯 الميزات الأساسية
 
@@ -53,8 +53,8 @@
 
 ```bash
 # نسخ المستودع
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/infrastructure/cdn
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/infrastructure/cdn
 
 # تثبيت التبعيات
 pip install -r requirements.txt
@@ -139,30 +139,30 @@ audio_result = await audio_specialist.deliver_audio(audio_request)
 
 ```bash
 # تكوين CDN
-AINFLUE_CDN_EDGE_LOCATIONS=180
-AINFLUE_CDN_CACHE_TTL=86400
-AINFLUE_CDN_COMPRESSION_LEVEL=6
+IACHERIE_CDN_EDGE_LOCATIONS=180
+IACHERIE_CDN_CACHE_TTL=86400
+IACHERIE_CDN_COMPRESSION_LEVEL=6
 
 # تكوين الفيديو
-AINFLUE_VIDEO_MAX_QUALITY=8k
-AINFLUE_VIDEO_ABR_ENABLED=true
-AINFLUE_VIDEO_TRANSCODING_GPU=true
+IACHERIE_VIDEO_MAX_QUALITY=8k
+IACHERIE_VIDEO_ABR_ENABLED=true
+IACHERIE_VIDEO_TRANSCODING_GPU=true
 
 # تكوين الصوت
-AINFLUE_AUDIO_LOSSLESS_ENABLED=true
-AINFLUE_AUDIO_SPATIAL_ENABLED=true
-AINFLUE_AUDIO_MAX_BITRATE=1411
+IACHERIE_AUDIO_LOSSLESS_ENABLED=true
+IACHERIE_AUDIO_SPATIAL_ENABLED=true
+IACHERIE_AUDIO_MAX_BITRATE=1411
 
 # تكوين الأمان
-AINFLUE_CDN_DDOS_PROTECTION=true
-AINFLUE_CDN_WAF_ENABLED=true
-AINFLUE_CDN_SSL_AUTO=true
+IACHERIE_CDN_DDOS_PROTECTION=true
+IACHERIE_CDN_WAF_ENABLED=true
+IACHERIE_CDN_SSL_AUTO=true
 ```
 
 ### التكوين المتقدم
 
 ```python
-AINFLUE_CDN_CONFIG = {
+IACHERIE_CDN_CONFIG = {
     'edge_locations': 180,
     'supported_protocols': ['http/1.1', 'http/2', 'http/3', 'websocket'],
     'cache_tiers': ['edge', 'regional', 'origin'],
@@ -259,7 +259,7 @@ AINFLUE_CDN_CONFIG = {
 
 **المهندس الرئيسي**: فاهد مليل  
 **البريد الإلكتروني**: mlaiel@live.de  
-**المستودع**: Ainflue Infrastructure CDN  
+**المستودع**: iacherie Infrastructure CDN  
 
 ### أدوار فريق الخبراء
 - **Lead AI Dev**: ذكاء CDN مدعوم بالذكاء الاصطناعي

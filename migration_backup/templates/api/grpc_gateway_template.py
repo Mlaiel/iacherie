@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise gRPC Gateway Template - Ainflue API Templates
+⚡ Enterprise gRPC Gateway Template - IA Chéries API Templates
 Advanced production-ready gRPC-HTTP gateway with intelligent routing
 
 ⚠️ PROTECTION INTELLECTUELLE:

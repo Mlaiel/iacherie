@@ -35,7 +35,7 @@ def fix_min_items_warnings(file_path):
 
 def main():
     """Main function to fix all Python files"""
-    workspace_dir = '/workspaces/Ainfluencer'
+    workspace_dir = '/workspaces/iaCherie'
     files_fixed = 0
     
     # Files that contain min_items

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Postman Collection Generator for Ainflue API
+Postman Collection Generator for IA Chéries API
 
 This script generates comprehensive Postman collections from the OpenAPI specification
-to enable easy testing and development with the Ainflue API.
+to enable easy testing and development with the IA Chéries API.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved.

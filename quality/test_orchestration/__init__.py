@@ -11,7 +11,7 @@ Contact: mlaiel@live.de
 
 from .index import (
     master_orchestrator,
-    run_ainflue_quality_tests,
+    run_iacherie_quality_tests,
     MasterTestOrchestrator,
     TestLevel,
     TestEnvironment,
@@ -20,7 +20,7 @@ from .index import (
 
 __all__ = [
     "master_orchestrator",
-    "run_ainflue_quality_tests", 
+    "run_iacherie_quality_tests", 
     "MasterTestOrchestrator",
     "TestLevel",
     "TestEnvironment",

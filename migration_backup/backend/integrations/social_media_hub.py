@@ -184,7 +184,7 @@ class SocialMediaHubIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Social Media Hub",
+                "User-Agent": "IA Chéries/1.0 Social Media Hub",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }

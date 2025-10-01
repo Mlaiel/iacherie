@@ -1,6 +1,6 @@
 """Content Upload Implementation - AI-Powered Multi-Format Upload System
 
-Advanced content upload implementation with AI processing pipeline for the Ainflue platform.
+Advanced content upload implementation with AI processing pipeline for the IA Chéries platform.
 Supports real-time content processing, validation, optimization, and preparation for creator workflows.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -131,7 +131,7 @@ class UploadResult:
 
 class ContentUploadImplementation:
     """
-    Advanced Content Upload Implementation for Ainflue Platform
+    Advanced Content Upload Implementation for IA Chéries Platform
     
     Provides comprehensive upload processing pipeline with AI analysis,
     content optimization, and platform-specific preparation.

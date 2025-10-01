@@ -102,7 +102,7 @@ class InfluencerEngagementResearcher:
                  redis_port: int = 6379,
                  db_host: str = "localhost",
                  db_port: int = 5432,
-                 db_name: str = "ainflue_analytics"):
+                 db_name: str = "iacherie_analytics"):
         self.logger = logging.getLogger(__name__)
         
         # Initialize Redis for caching

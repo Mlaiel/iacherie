@@ -1,5 +1,5 @@
 /**
- * Ainflue Desktop - Offline Manager Service
+ * IA Chéries Desktop - Offline Manager Service
  * 
  * Comprehensive offline functionality manager with intelligent caching,
  * queue management, conflict resolution, and seamless online/offline transitions.

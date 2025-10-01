@@ -769,14 +769,14 @@ class ImageSEOOptimizer:
 
 
 # Integration utilities
-def create_ainflue_image_seo_optimizer() -> ImageSEOOptimizer:
+def create_iacherie_image_seo_optimizer() -> ImageSEOOptimizer:
     """Create configured image SEO optimizer for IA Chérie"""
     return ImageSEOOptimizer()
 
 
 if __name__ == "__main__":
     # Example usage
-    optimizer = create_ainflue_image_seo_optimizer()
+    optimizer = create_iacherie_image_seo_optimizer()
     
     # Sample image metadata
     image_metadata = ImageMetadata(

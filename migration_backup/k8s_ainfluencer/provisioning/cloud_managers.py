@@ -360,7 +360,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
                 DBInstanceClass='db.t3.large',
                 Engine='postgres',
                 EngineVersion='15.4',
-                MasterUsername='iainfluencer',
+                MasterUsername='iiacheries',
                 MasterUserPassword='SecurePassword123!',
                 AllocatedStorage=100,
                 StorageType='gp3',
@@ -645,7 +645,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
                 ]
             }
             
-            role_name = f'IAInfluencerAppRole-{self.config.environment}'
+            role_name = f'IIA ChériesAppRole-{self.config.environment}'
             
             try:
                 iam.create_role(
@@ -686,7 +686,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
     async def _get_or_create_eks_role(self) -> str:
         """Get or create EKS service role"""
         iam = self.session.client('iam')
-        role_name = f'IAInfluencerEKSRole-{self.config.environment}'
+        role_name = f'IIA ChériesEKSRole-{self.config.environment}'
         
         try:
             response = iam.get_role(RoleName=role_name)
@@ -722,7 +722,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
     async def _get_or_create_node_role(self) -> str:
         """Get or create EKS node group role"""
         iam = self.session.client('iam')
-        role_name = f'IAInfluencerNodeRole-{self.config.environment}'
+        role_name = f'IIA ChériesNodeRole-{self.config.environment}'
         
         try:
             response = iam.get_role(RoleName=role_name)

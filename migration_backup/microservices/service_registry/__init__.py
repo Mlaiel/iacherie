@@ -1,5 +1,5 @@
 """
-Service_registry Module for Ainflue Microservices
+Service_registry Module for IA Chéries Microservices
 Implements service_registry functionality for distributed systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>

@@ -93,13 +93,13 @@ class APIGateway:
         self.service_registry = {}
         self.health_checks = {}
         
-        # Initialize Ainflue-specific configurations
-        self._initialize_ainflue_gateway()
+        # Initialize iacherie-specific configurations
+        self._initialize_iacherie_gateway()
         
         logger.info("API Gateway initialized for creator platform")
     
-    def _initialize_ainflue_gateway(self):
-        """Initialize Ainflue creator platform specific gateway configuration"""
+    def _initialize_iacherie_gateway(self):
+        """Initialize iacherie creator platform specific gateway configuration"""
         
         # Creator-specific middleware
         self.creator_middleware_config = {
@@ -154,22 +154,22 @@ class APIGateway:
         # Service endpoints for load balancing
         self.service_registry = {
             'content_processing_service': [
-                {'url': 'https://content-proc-1.ainflue.com', 'weight': 1, 'health': 'healthy'},
-                {'url': 'https://content-proc-2.ainflue.com', 'weight': 1, 'health': 'healthy'},
-                {'url': 'https://content-proc-3.ainflue.com', 'weight': 2, 'health': 'healthy'}
+                {'url': 'https://content-proc-1.iacherie.com', 'weight': 1, 'health': 'healthy'},
+                {'url': 'https://content-proc-2.iacherie.com', 'weight': 1, 'health': 'healthy'},
+                {'url': 'https://content-proc-3.iacherie.com', 'weight': 2, 'health': 'healthy'}
             ],
             'ai_processing_service': [
-                {'url': 'https://ai-proc-1.ainflue.com', 'weight': 2, 'health': 'healthy'},
-                {'url': 'https://ai-proc-2.ainflue.com', 'weight': 2, 'health': 'healthy'},
-                {'url': 'https://ai-proc-3.ainflue.com', 'weight': 1, 'health': 'healthy'}
+                {'url': 'https://ai-proc-1.iacherie.com', 'weight': 2, 'health': 'healthy'},
+                {'url': 'https://ai-proc-2.iacherie.com', 'weight': 2, 'health': 'healthy'},
+                {'url': 'https://ai-proc-3.iacherie.com', 'weight': 1, 'health': 'healthy'}
             ],
             'platform_integration_service': [
-                {'url': 'https://platform-1.ainflue.com', 'weight': 1, 'health': 'healthy'},
-                {'url': 'https://platform-2.ainflue.com', 'weight': 1, 'health': 'healthy'}
+                {'url': 'https://platform-1.iacherie.com', 'weight': 1, 'health': 'healthy'},
+                {'url': 'https://platform-2.iacherie.com', 'weight': 1, 'health': 'healthy'}
             ],
             'analytics_service': [
-                {'url': 'https://analytics-1.ainflue.com', 'weight': 1, 'health': 'healthy'},
-                {'url': 'https://analytics-2.ainflue.com', 'weight': 1, 'health': 'healthy'}
+                {'url': 'https://analytics-1.iacherie.com', 'weight': 1, 'health': 'healthy'},
+                {'url': 'https://analytics-2.iacherie.com', 'weight': 1, 'health': 'healthy'}
             ]
         }
     
@@ -377,7 +377,7 @@ class APIGateway:
                 'error': True,
                 'message': 'Authentication required',
                 'headers': {
-                    'WWW-Authenticate': 'Bearer realm="Ainflue API"'
+                    'WWW-Authenticate': 'Bearer realm="iacherie API"'
                 }
             }
         
@@ -493,7 +493,7 @@ class APIGateway:
         })
         
         # Add gateway identification
-        response['headers']['X-Powered-By'] = 'Ainflue-API-Gateway'
+        response['headers']['X-Powered-By'] = 'iacherie-API-Gateway'
         response['headers']['X-Request-ID'] = request_context['request_id']
         
         # Apply compression if enabled

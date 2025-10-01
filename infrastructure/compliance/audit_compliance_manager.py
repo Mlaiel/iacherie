@@ -7,7 +7,7 @@ economy platform. Provides multi-regulation audit orchestration, automated evide
 collection, and regulatory-ready audit reporting.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -192,7 +192,7 @@ class AuditComplianceManager:
         self.creator_audit_scopes = self._initialize_creator_audit_scopes()
         self.platform_audit_integrations = self._initialize_platform_integrations()
         
-        logger.info("Audit Compliance Manager initialized for Ainflue creator platform")
+        logger.info("Audit Compliance Manager initialized for iacherie creator platform")
     
     def _initialize_compliance_frameworks(self) -> Dict[ComplianceFramework, Dict[str, Any]]:
         """Initialize compliance frameworks for audit assessment."""

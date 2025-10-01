@@ -4,7 +4,7 @@
 """Security Guardian Service - Enterprise Security & Compliance Engine
 ====================================================================
 
-Comprehensive security management system for the Ainflue platform, providing
+Comprehensive security management system for the iacherie platform, providing
 advanced threat detection, compliance monitoring, security auditing, and
 enterprise-grade protection across all platform components.
 

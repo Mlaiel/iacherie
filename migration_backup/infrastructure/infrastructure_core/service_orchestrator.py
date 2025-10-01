@@ -1,12 +1,12 @@
 """
-Service Orchestrator - Microservices Orchestration for Ainflue
+Service Orchestrator - Microservices Orchestration for IA Chéries
 ==============================================================
 
 Advanced service orchestration for creator platform microservices.
 Manages service mesh, inter-service communication, and business logic coordination.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 """
 
@@ -77,7 +77,7 @@ class ServiceMesh:
 
 class ServiceOrchestrator:
     """
-    Service Orchestrator for Ainflue Creator Platform
+    Service Orchestrator for IA Chéries Creator Platform
     
     Manages microservices deployment, service mesh configuration, and 
     inter-service communication for optimal creator experience.

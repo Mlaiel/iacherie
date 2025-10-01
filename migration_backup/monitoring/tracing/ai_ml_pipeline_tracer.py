@@ -1,5 +1,5 @@
 """
-Ainflue Platform - AI/ML Pipeline Tracer Enterprise
+IA Chéries Platform - AI/ML Pipeline Tracer Enterprise
 ================================================
 
 Advanced AI/ML pipeline tracing system for monitoring ML model inference,

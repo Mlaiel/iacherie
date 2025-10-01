@@ -1,5 +1,5 @@
 /**
- * Error Classes for Ainflue JavaScript SDK
+ * Error Classes for IA Chéries JavaScript SDK
  * Comprehensive error handling with enterprise security considerations
  * 
  * @author Fahed Mlaiel (mlaiel@live.de)
@@ -12,7 +12,7 @@
  * Base SDK Error Class
  * Implementation: Security + Backend Senior
  */
-export class AinflueSdkError extends Error {
+export class IA ChériesSdkError extends Error {
   public readonly timestamp: Date;
   public readonly errorId: string;
 
@@ -47,7 +47,7 @@ export class AinflueSdkError extends Error {
  * API Error - HTTP API related errors
  * Implementation: Backend Senior + Security
  */
-export class ApiError extends AinflueSdkError {
+export class ApiError extends IA ChériesSdkError {
   constructor(
     message: string,
     public readonly status: number,
@@ -76,7 +76,7 @@ export class ApiError extends AinflueSdkError {
  * Authentication Error - Auth related failures
  * Implementation: Security + Backend Senior
  */
-export class AuthenticationError extends AinflueSdkError {
+export class AuthenticationError extends IA ChériesSdkError {
   constructor(message: string, public readonly authType?: string) {
     super(message, 'AUTHENTICATION_ERROR');
     this.name = 'AuthenticationError';
@@ -87,7 +87,7 @@ export class AuthenticationError extends AinflueSdkError {
  * Authorization Error - Permission related failures
  * Implementation: Security
  */
-export class AuthorizationError extends AinflueSdkError {
+export class AuthorizationError extends IA ChériesSdkError {
   constructor(message: string, public readonly resource?: string) {
     super(message, 'AUTHORIZATION_ERROR');
     this.name = 'AuthorizationError';
@@ -98,7 +98,7 @@ export class AuthorizationError extends AinflueSdkError {
  * Network Error - Network connectivity issues
  * Implementation: DevOps + Backend Senior
  */
-export class NetworkError extends AinflueSdkError {
+export class NetworkError extends IA ChériesSdkError {
   constructor(message: string, public readonly originalError?: Error) {
     super(message, 'NETWORK_ERROR');
     this.name = 'NetworkError';
@@ -109,7 +109,7 @@ export class NetworkError extends AinflueSdkError {
  * Timeout Error - Request timeout failures
  * Implementation: DevOps + Backend Senior
  */
-export class TimeoutError extends AinflueSdkError {
+export class TimeoutError extends IA ChériesSdkError {
   constructor(message: string, public readonly timeoutMs?: number) {
     super(message, 'TIMEOUT_ERROR');
     this.name = 'TimeoutError';
@@ -136,7 +136,7 @@ export class RateLimitError extends ApiError {
  * Validation Error - Input validation failures
  * Implementation: Security + Backend Senior
  */
-export class ValidationError extends AinflueSdkError {
+export class ValidationError extends IA ChériesSdkError {
   constructor(
     message: string,
     public readonly field?: string,
@@ -151,7 +151,7 @@ export class ValidationError extends AinflueSdkError {
  * Configuration Error - SDK configuration issues
  * Implementation: DevOps + Security
  */
-export class ConfigurationError extends AinflueSdkError {
+export class ConfigurationError extends IA ChériesSdkError {
   constructor(message: string, public readonly configKey?: string) {
     super(message, 'CONFIGURATION_ERROR');
     this.name = 'ConfigurationError';
@@ -162,7 +162,7 @@ export class ConfigurationError extends AinflueSdkError {
  * Streaming Error - Real-time streaming failures
  * Implementation: Audio Engineer + Backend Senior + DevOps
  */
-export class StreamingError extends AinflueSdkError {
+export class StreamingError extends IA ChériesSdkError {
   constructor(
     message: string,
     public readonly streamType?: string,
@@ -177,7 +177,7 @@ export class StreamingError extends AinflueSdkError {
  * AI Processing Error - AI/ML related failures
  * Implementation: ML Engineer + Lead Dev IA
  */
-export class AIProcessingError extends AinflueSdkError {
+export class AIProcessingError extends IA ChériesSdkError {
   constructor(
     message: string,
     public readonly modelType?: string,
@@ -192,7 +192,7 @@ export class AIProcessingError extends AinflueSdkError {
  * Security Error - Security violation detection
  * Implementation: Security + DevOps
  */
-export class SecurityError extends AinflueSdkError {
+export class SecurityError extends IA ChériesSdkError {
   constructor(message: string, public readonly securityType?: string) {
     super(message, 'SECURITY_ERROR');
     this.name = 'SecurityError';
@@ -222,8 +222,8 @@ export class ErrorHandler {
   /**
    * Parse and classify errors from various sources
    */
-  static parseError(error: any): AinflueSdkError {
-    if (error instanceof AinflueSdkError) {
+  static parseError(error: any): IA ChériesSdkError {
+    if (error instanceof IA ChériesSdkError) {
       return error;
     }
 
@@ -264,13 +264,13 @@ export class ErrorHandler {
     }
 
     // Default to generic SDK error
-    return new AinflueSdkError(error.message || 'Unknown error occurred');
+    return new IA ChériesSdkError(error.message || 'Unknown error occurred');
   }
 
   /**
    * Check if error is retryable
    */
-  static isRetryable(error: AinflueSdkError): boolean {
+  static isRetryable(error: IA ChériesSdkError): boolean {
     if (error instanceof ApiError) {
       return error.isRetryable;
     }
@@ -283,7 +283,7 @@ export class ErrorHandler {
   /**
    * Get retry delay for error (exponential backoff)
    */
-  static getRetryDelay(error: AinflueSdkError, attempt: number): number {
+  static getRetryDelay(error: IA ChériesSdkError, attempt: number): number {
     if (error instanceof RateLimitError && error.retryAfter) {
       return error.retryAfter * 1000; // Convert to milliseconds
     }
@@ -298,7 +298,7 @@ export class ErrorHandler {
    * Log error with appropriate level and security filtering
    * Implementation: Security + DevOps
    */
-  static logError(error: AinflueSdkError, context?: Record<string, any>): void {
+  static logError(error: IA ChériesSdkError, context?: Record<string, any>): void {
     // Filter sensitive information before logging
     const safeContext = this.sanitizeContext(context);
     

@@ -1,5 +1,5 @@
 """
-mTLS Manager for Ainflue Microservices
+mTLS Manager for IA Chéries Microservices
 Mutual TLS certificate management and rotation
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -109,9 +109,9 @@ class MTLSManager:
                 x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                 x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "California"),
                 x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue"),
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chéries"),
                 x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Microservices"),
-                x509.NameAttribute(NameOID.COMMON_NAME, "Ainflue Root CA"),
+                x509.NameAttribute(NameOID.COMMON_NAME, "IA Chéries Root CA"),
             ])
             
             self.ca_certificate = x509.CertificateBuilder().subject_name(
@@ -217,7 +217,7 @@ class MTLSManager:
                 x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
                 x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "California"),
                 x509.NameAttribute(NameOID.LOCALITY_NAME, "San Francisco"),
-                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Ainflue"),
+                x509.NameAttribute(NameOID.ORGANIZATION_NAME, "IA Chéries"),
                 x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Microservices"),
                 x509.NameAttribute(NameOID.COMMON_NAME, f"{service_name}.{namespace}"),
             ])

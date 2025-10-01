@@ -6,7 +6,7 @@ Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + 
 Point d'entrée localization avec factory pattern pour gestion enterprise
 de 644 langues, adaptation culturelle et compliance régionale.
 
-Intégration métier Ainflue:
+Intégration métier IA Chéries:
 - Factory pattern pour création gestionnaires localization
 - Support 644 langues avec traduction IA neuronale
 - Adaptation culturelle psychologie comportementale

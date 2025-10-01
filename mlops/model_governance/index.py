@@ -161,7 +161,7 @@ class ModelGovernanceOrchestrator:
         """Get default orchestrator configuration"""
         return {
             "tracking_uri": "file://./mlflow_runs",
-            "experiment_name": "ainflue_governance",
+            "experiment_name": "iacherie_governance",
             "governance_level": GovernanceLevel.ENTERPRISE.value,
             "creator_economy": {
                 "enabled": True,

@@ -1,7 +1,7 @@
 """MongoDB Leaderboard Manager
 ============================
 
-Dynamic leaderboards and ranking system for gamification in the Ainflue platform.
+Dynamic leaderboards and ranking system for gamification in the IA Chéries platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved

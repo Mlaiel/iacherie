@@ -7,7 +7,7 @@
 ⚠️ ARCHITECTURE CONFIDENTIELLE - NIVEAU ENTERPRISE UNIQUEMENT
 🚀 CONFORMITÉ 100% CAHIER DES CHARGES - PRODUCTION-READY
 
-Global entry point for Ainflue Enterprise Microservices Architecture.
+Global entry point for IA Chéries Enterprise Microservices Architecture.
 Provides centralized access to all 15 microservices modules and 280+ services.
 
 Architecture Overview:
@@ -392,7 +392,7 @@ microservices_system = MicroservicesSystem()
 
 async def main():
     """Main entry point for microservices system."""
-    print("🏗️ AINFLUE ENTERPRISE MICROSERVICES ARCHITECTURE")
+    print("🏗️ IA CHÉRIES ENTERPRISE MICROSERVICES ARCHITECTURE")
     print("=" * 55)
     print("© FAHED MLAIEL 2024-2025 - ENTERPRISE SYSTEM")
     print()

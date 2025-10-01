@@ -1,7 +1,7 @@
 """Platform Sync Service - Cross-Platform Synchronization Engine
 =============================================================
 
-Advanced cross-platform synchronization system for the Ainflue platform,
+Advanced cross-platform synchronization system for the iacherie platform,
 managing real-time data synchronization, platform API integration,
 content state management, and multi-directional sync workflows.
 

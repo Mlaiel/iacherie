@@ -180,50 +180,50 @@
       loop:
         - name: api-gateway
           port: 8080
-          database: ainflue_main
-          mongo_db: ainflue_sessions
+          database: iacherie_main
+          mongo_db: iacherie_sessions
           ai_features: false
           payment_features: false
         - name: ai-engine
           port: 8081
-          database: ainflue_ai_models
-          mongo_db: ainflue_ai_data
+          database: iacherie_ai_models
+          mongo_db: iacherie_ai_data
           ai_features: true
           payment_features: false
         - name: content-processor
           port: 8082
-          database: ainflue_content
-          mongo_db: ainflue_media
+          database: iacherie_content
+          mongo_db: iacherie_media
           ai_features: true
           payment_features: false
         - name: user-service
           port: 8083
-          database: ainflue_users
-          mongo_db: ainflue_profiles
+          database: iacherie_users
+          mongo_db: iacherie_profiles
           ai_features: false
           payment_features: false
         - name: payment-service
           port: 8084
-          database: ainflue_payments
-          mongo_db: ainflue_transactions
+          database: iacherie_payments
+          mongo_db: iacherie_transactions
           ai_features: false
           payment_features: true
         - name: notification-service
           port: 8085
-          database: ainflue_notifications
-          mongo_db: ainflue_messages
+          database: iacherie_notifications
+          mongo_db: iacherie_messages
           ai_features: false
           payment_features: false
         - name: analytics-service
           port: 8086
-          database: ainflue_analytics
-          mongo_db: ainflue_events
+          database: iacherie_analytics
+          mongo_db: iacherie_events
           ai_features: true
           payment_features: false
         - name: mobile-api
           port: 8087
-          database: ainflue_mobile
-          mongo_db: ainflue_mobile_sessions
+          database: iacherie_mobile
+          mongo_db: iacherie_mobile_sessions
           ai_features: false
           payment_features: false
       tags: ["config", "setup"]
@@ -786,7 +786,7 @@
     - name: "Generate application deployment report"
       template:
         src: application_report.j2
-        dest: "/tmp/ainflue_application_deployment_report.json"
+        dest: "/tmp/iacherie_application_deployment_report.json"
       vars:
         deployment_timestamp: "{{ ansible_date_time.iso8601 }}"
         deployment_status: "{{ deployment_status.results }}"

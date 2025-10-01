@@ -7,7 +7,7 @@ economy platform. Provides comprehensive compliance reporting, dashboard analyti
 and automated submission to regulatory authorities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: IA Chéries Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL
@@ -169,7 +169,7 @@ class ComplianceReporting:
         self.creator_reporting_profiles = {}
         self.platform_reporting_configs = self._initialize_platform_configs()
         
-        logger.info("Compliance Reporting System initialized for Ainflue creator platform")
+        logger.info("Compliance Reporting System initialized for IA Chéries creator platform")
     
     def _initialize_report_templates(self) -> Dict[str, ReportTemplate]:
         """Initialize comprehensive report templates."""

@@ -1,5 +1,5 @@
 """
-Health Metrics Aggregator - Ainflue Health Checks Module
+Health Metrics Aggregator - IA Chéries Health Checks Module
 Agrégateur métriques santé avec time-series aggregation, statistical analysis,
 business intelligence et real-time metrics processing.
 

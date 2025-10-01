@@ -265,8 +265,8 @@ python scripts/health_check.py
 
 **Technical Support:** mlaiel@live.de  
 **License Inquiries:** mlaiel@live.de  
-**Security Issues:** security@ainflue.com  
-**Performance Issues:** performance@ainflue.com
+**Security Issues:** security@iacherie.com  
+**Performance Issues:** performance@iacherie.com
 
 ---
 

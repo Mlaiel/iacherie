@@ -109,7 +109,7 @@ class ModelMetadataEngine:
     """🔧 Moteur de gestion des métadonnées de modèles"""
     
     def __init__(self, 
-                 db_url: str = "postgresql://user:pass@localhost:5432/ainflue_ml",
+                 db_url: str = "postgresql://user:pass@localhost:5432/iacherie_ml",
                  redis_url: str = "redis://localhost:6379/0"):
         self.db_url = db_url
         self.redis_url = redis_url

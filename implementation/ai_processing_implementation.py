@@ -120,17 +120,17 @@ class AIProcessingImplementation:
         # Model configurations
         self.model_configs = {
             AIModelType.NEURAL_NETWORK: {
-                "version": "ainflue_nn_v2.1",
+                "version": "iacherie_nn_v2.1",
                 "accuracy": 0.94,
                 "processing_speed": "fast"
             },
             AIModelType.TRANSFORMER: {
-                "version": "ainflue_transformer_v1.8",
+                "version": "iacherie_transformer_v1.8",
                 "accuracy": 0.97,
                 "processing_speed": "medium"
             },
             AIModelType.CUSTOM_ENSEMBLE: {
-                "version": "ainflue_ensemble_v3.0",
+                "version": "iacherie_ensemble_v3.0",
                 "accuracy": 0.98,
                 "processing_speed": "slow"
             }
@@ -601,14 +601,14 @@ class AIProcessingImplementation:
     def _get_model_version(self, processing_type: AIProcessingType) -> str:
         """Get model version for processing type"""
         version_mapping = {
-            AIProcessingType.CONTENT_ANALYSIS: "ainflue_content_analyzer_v2.3",
-            AIProcessingType.ENHANCEMENT: "ainflue_enhancer_v1.9",
-            AIProcessingType.OPTIMIZATION: "ainflue_optimizer_v2.1",
-            AIProcessingType.CLASSIFICATION: "ainflue_classifier_v1.7",
-            AIProcessingType.GENERATION: "ainflue_generator_v2.0",
-            AIProcessingType.MONETIZATION_ANALYSIS: "ainflue_monetization_v1.5"
+            AIProcessingType.CONTENT_ANALYSIS: "iacherie_content_analyzer_v2.3",
+            AIProcessingType.ENHANCEMENT: "iacherie_enhancer_v1.9",
+            AIProcessingType.OPTIMIZATION: "iacherie_optimizer_v2.1",
+            AIProcessingType.CLASSIFICATION: "iacherie_classifier_v1.7",
+            AIProcessingType.GENERATION: "iacherie_generator_v2.0",
+            AIProcessingType.MONETIZATION_ANALYSIS: "iacherie_monetization_v1.5"
         }
-        return version_mapping.get(processing_type, "ainflue_generic_v1.0")
+        return version_mapping.get(processing_type, "iacherie_generic_v1.0")
     
     # Business intelligence helper methods
     

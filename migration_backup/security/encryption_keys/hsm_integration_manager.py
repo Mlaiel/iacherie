@@ -2,7 +2,7 @@ import os
 #!/usr/bin/env python3
 """
 🔐 HSM Integration Manager - Hardware Security Module Enterprise Integration
-Production-grade HSM management for Ainflue Creator Economy Platform
+Production-grade HSM management for IA Chéries Creator Economy Platform
 
 ⚠️  AVERTISSEMENT LÉGAL OBLIGATOIRE:
 ==========================================
@@ -130,7 +130,7 @@ class HSMIntegrationManager:
     """
     🔐 HSM Integration Manager - Enterprise Hardware Security Module Management
     
-    Provides comprehensive HSM integration for Ainflue Creator Economy Platform:
+    Provides comprehensive HSM integration for IA Chéries Creator Economy Platform:
     - Network-attached and PCIe HSM support
     - Multi-vendor HSM compatibility (Thales, AWS, Azure, Google)
     - High availability clustering with automatic failover

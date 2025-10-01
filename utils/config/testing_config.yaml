@@ -68,7 +68,7 @@ security:
 # Database Settings (Testing)
 database:
   # In-memory database for testing
-  url: "${AINFLUE_TEST_DATABASE_URL:-sqlite:///:memory:}"
+  url: "${IACHERIE_TEST_DATABASE_URL:-sqlite:///:memory:}"
   pool_size: 1              # Single connection for tests
   max_overflow: 0
   pool_timeout: 1
@@ -103,7 +103,7 @@ logging:
 # File Management (Testing)
 file_management:
   max_file_size_mb: 1       # Small files for testing
-  temp_directory: "/tmp/ainflue_test"
+  temp_directory: "/tmp/iacherie_test"
   scan_for_malware: false   # Disabled for speed
   enable_optimization: false
   

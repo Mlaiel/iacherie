@@ -10,7 +10,7 @@ The Backend Core Module represents the foundational architecture of the IA Influ
 
 #### 1. **Three-Level Compliance**
 ```
-/workspaces/Ainflue/           ← Level 1 (Root)
+/workspaces/iacherie/           ← Level 1 (Root)
 └── backend/                   ← Level 2  
     └── core/                  ← Level 3 (FINAL - No subdirectories)
 ```

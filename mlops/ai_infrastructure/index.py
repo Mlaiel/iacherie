@@ -183,7 +183,7 @@ def create_ai_infrastructure(config: InfrastructureConfig) -> AIInfrastructureOr
 DEFAULT_CONFIG = InfrastructureConfig(
     cloud_providers=["aws", "azure", "gcp"],
     kubernetes_config={
-        "cluster_name": "ainflue-ai-cluster",
+        "cluster_name": "iacherie-ai-cluster",
         "gpu_enabled": True,
         "auto_scaling": True
     },

@@ -3,7 +3,7 @@
 🛡️ Payment Security Validator - Enterprise Transaction Security
 ===============================================================
 
-Advanced payment validation system for Ainflue creator economy.
+Advanced payment validation system for IA Chéries creator economy.
 Real-time transaction validation, risk assessment, and automated blocking.
 
 Author: Expert Team (Security + Backend Senior + ML Engineer)
@@ -938,7 +938,7 @@ async def get_payment_validator() -> PaymentSecurityValidator:
     return payment_validator
 
 
-# Fonctions utilitaires pour intégration Ainflue
+# Fonctions utilitaires pour intégration IA Chéries
 async def validate_creator_payout(creator_id: str, 
                                 amount: Decimal,
                                 currency: str = 'USD',
@@ -953,7 +953,7 @@ async def validate_creator_payout(creator_id: str,
         payment_method="platform_payout",
         timestamp=datetime.utcnow(),
         ip_address="platform_internal",
-        user_agent="Ainflue Platform",
+        user_agent="IA Chéries Platform",
         country_code="US",  # Default platform country
         metadata=metadata or {}
     )
@@ -977,7 +977,7 @@ async def validate_revenue_share(creator_id: str,
         payment_method="platform_revenue_share",
         timestamp=datetime.utcnow(),
         ip_address="platform_internal",
-        user_agent="Ainflue Revenue System",
+        user_agent="IA Chéries Revenue System",
         country_code="US",
         metadata={
             'creator_revenue': float(revenue_amount),
@@ -1049,7 +1049,7 @@ if __name__ == "__main__":
         print(f"Suspicious transaction result: {result2.status.value} (risk: {result2.risk_score:.3f})")
         print(f"Alerts: {result2.alerts}")
         
-        # Test fonctions utilitaires Ainflue
+        # Test fonctions utilitaires IA Chéries
         payout_result = await validate_creator_payout("creator_test", Decimal("500.00"))
         print(f"Creator payout validation: {payout_result.status.value}")
         

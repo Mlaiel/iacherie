@@ -1,6 +1,6 @@
 """
 MongoDB Cluster Management - Enterprise Grade
-High-performance MongoDB cluster management for Ainflue creator content and metadata
+High-performance MongoDB cluster management for iacherie creator content and metadata
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -88,7 +88,7 @@ class PerformanceMetrics:
 
 class MongoDBCluster:
     """
-    Enterprise MongoDB cluster management for Ainflue creator platform
+    Enterprise MongoDB cluster management for iacherie creator platform
     
     ML Engineer + DBA Role Implementation - Enhanced Features:
     - Multi-modal vector storage for AI-powered content analysis
@@ -104,7 +104,7 @@ class MongoDBCluster:
         """Initialize MongoDB cluster manager"""
         self.clusters: Dict[str, Dict[str, Any]] = {}
         self.performance_cache: Dict[str, PerformanceMetrics] = {}
-        logger.info("MongoDB cluster manager initialized for Ainflue creator content")
+        logger.info("MongoDB cluster manager initialized for iacherie creator content")
         
     async def create_cluster(self, config: MongoClusterConfig) -> Dict[str, Any]:
         """
@@ -122,13 +122,13 @@ class MongoDBCluster:
             'config': config,
             'created_at': datetime.utcnow(),
             'endpoints': {
-                'primary': f"mongo-primary-{config.name}.ainflue.com:27017",
+                'primary': f"mongo-primary-{config.name}.iacherie.com:27017",
                 'secondaries': [
-                    f"mongo-secondary-{i}-{config.name}.ainflue.com:27017" 
+                    f"mongo-secondary-{i}-{config.name}.iacherie.com:27017" 
                     for i in range(1, config.replica_set_members)
                 ],
                 'mongos': [
-                    f"mongos-{i}-{config.name}.ainflue.com:27017" 
+                    f"mongos-{i}-{config.name}.iacherie.com:27017" 
                     for i in range(config.mongos_instances)
                 ]
             },
@@ -159,8 +159,8 @@ class MongoDBCluster:
         if config.shards > 1:
             await self._setup_sharding(cluster_info, config)
             
-        # Configure collections for Ainflue business logic
-        cluster_info['collections'] = await self._setup_ainflue_collections(config)
+        # Configure collections for iacherie business logic
+        cluster_info['collections'] = await self._setup_iacherie_collections(config)
         
         self.clusters[cluster_info['cluster_id']] = cluster_info
         cluster_info['state'] = ClusterState.ACTIVE.value
@@ -196,9 +196,9 @@ class MongoDBCluster:
         cluster_info['sharding']['collections'] = sharding_config
         logger.info(f"Sharding configured for {len(sharding_config)} collections")
         
-    async def _setup_ainflue_collections(self, config: MongoClusterConfig) -> Dict[str, Any]:
+    async def _setup_iacherie_collections(self, config: MongoClusterConfig) -> Dict[str, Any]:
         """
-        Setup collections optimized for Ainflue creator economy
+        Setup collections optimized for iacherie creator economy
         
         ML Engineer + DBA Enhancement:
         - Vector embeddings for content similarity
@@ -534,7 +534,7 @@ class MongoDBCluster:
         return cluster['replication']
         
     async def monitor_performance(self, cluster_id: str) -> PerformanceMetrics:
-        """Monitor MongoDB cluster performance for Ainflue workloads"""
+        """Monitor MongoDB cluster performance for iacherie workloads"""
         # Simulate performance monitoring (in real implementation, would connect to MongoDB)
         metrics = PerformanceMetrics(
             operations_per_second=5000.0,  # High throughput for creator uploads
@@ -612,7 +612,7 @@ class MongoDBCluster:
             Dict containing replica set configuration status
         """
         try:
-            replica_set_name = replica_config.get('replica_set_name', 'ainflue-rs')
+            replica_set_name = replica_config.get('replica_set_name', 'iacherie-rs')
             members = replica_config.get('members', [])
             arbiter = replica_config.get('arbiter')
             

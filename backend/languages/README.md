@@ -135,8 +135,8 @@ Following the AI-Influencer-Agent platform logic:
 
 ```bash
 # Clone repository
-git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/backend/languages
+git clone https://github.com/Mlaiel/iacherie.git
+cd iacherie/backend/languages
 
 # Install dependencies
 pip install -r requirements.txt

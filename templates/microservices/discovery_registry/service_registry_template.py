@@ -11,7 +11,7 @@ TOUS DROITS RÉSERVÉS
 - Distribution INTERDITE sans licence explicite
 - Violation = Poursuites judiciaires automatiques
 
-Service Registry Template for Ainflue Platform
+Service Registry Template for iacherie Platform
 =============================================
 
 Production-ready service registry with:
@@ -290,7 +290,7 @@ class RedisRegistryBackend(ServiceRegistryBackend):
 
 class ServiceRegistry:
     """
-    Production-ready service registry for Ainflue Platform
+    Production-ready service registry for iacherie Platform
     
     Features:
     - Multi-backend support (Redis, Consul, etcd, Kubernetes)
@@ -454,7 +454,7 @@ class ServiceRegistry:
 
 class ServiceRegistryTemplate:
     """
-    Service Registry Template for Ainflue Platform
+    Service Registry Template for iacherie Platform
     
     A comprehensive service registry that provides:
     - Distributed service registration and discovery

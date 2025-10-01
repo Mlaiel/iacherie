@@ -1,11 +1,11 @@
 # Deepfake Detector Service
-# Advanced deepfake detection for Ainflue Platform
+# Advanced deepfake detection for IA Chéries Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
 FROM python:3.11-slim AS base
 
 LABEL maintainer="Fahed Mlaiel <mlaiel@live.de>"
-LABEL description="Ainflue Deepfake Detector - Advanced deepfake detection"
+LABEL description="IA Chéries Deepfake Detector - Advanced deepfake detection"
 LABEL version="1.0.0"
 
 # Set working directory

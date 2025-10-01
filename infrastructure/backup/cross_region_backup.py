@@ -6,7 +6,7 @@ Advanced cross-region backup system with geographic redundancy, disaster recover
 orchestration, and global creator content distribution backup.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

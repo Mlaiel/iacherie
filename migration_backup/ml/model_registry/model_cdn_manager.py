@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Model CDN Manager for Ainflue ML Platform
+Model CDN Manager for IA Chéries ML Platform
 Content Delivery Network integration for global model distribution
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.

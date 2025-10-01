@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⚡ Enterprise SAML Authentication Template - Ainflue API Templates
+⚡ Enterprise SAML Authentication Template - IA Chéries API Templates
 Advanced production-ready SAML 2.0 authentication and federation system
 
 ⚠️ PROTECTION INTELLECTUELLE:

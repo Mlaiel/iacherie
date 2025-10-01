@@ -1,5 +1,5 @@
 # =============================================================================
-# AINFLUE CODEC OPTIMIZATION ENGINE - PROFESSIONAL DOCKERFILE
+# IA CHÉRIES CODEC OPTIMIZATION ENGINE - PROFESSIONAL DOCKERFILE
 # =============================================================================
 # Multi-stage Docker build for advanced codec optimization including
 # MP3, FLAC, OPUS, AAC, OGG and modern codecs with quality optimization.
@@ -231,11 +231,11 @@ CMD ["python3.11", "-m", "codec_optimization.main", "--reload"]
 # =============================================================================
 # METADATA
 # =============================================================================
-LABEL org.opencontainers.image.title="Ainflue Codec Optimization Engine"
+LABEL org.opencontainers.image.title="IA Chéries Codec Optimization Engine"
 LABEL org.opencontainers.image.description="Advanced codec optimization for MP3, FLAC, OPUS, AAC, OGG"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.authors="Fahed Mlaiel <mlaiel@live.de>"
-LABEL org.opencontainers.image.source="https://github.com/Mlaiel/Ainflue"
+LABEL org.opencontainers.image.source="https://github.com/Mlaiel/IA Chéries"
 LABEL ainflue.service.category="audio"
 LABEL ainflue.service.name="codec_optimization"
 LABEL ainflue.service.port="8013"

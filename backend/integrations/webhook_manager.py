@@ -231,7 +231,7 @@ class WebhookManagerIntegration:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
-                "User-Agent": "Ainflue/1.0 Webhook Manager",
+                "User-Agent": "iacherie/1.0 Webhook Manager",
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
@@ -935,7 +935,7 @@ if __name__ == "__main__":
         async with WebhookManagerIntegration(max_workers=5) as webhook_manager:
             # Register webhook endpoints
             stripe_endpoint = await webhook_manager.register_webhook_endpoint(
-                url="https://api.ainflue.com/webhooks/stripe",
+                url="https://api.iacherie.com/webhooks/stripe",
                 source=WebhookSource.STRIPE,
                 secret= os.getenv("SECRET", "CHANGE_ME"),
                 event_types=[EventType.PAYMENT_COMPLETED, EventType.PAYMENT_FAILED]

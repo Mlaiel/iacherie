@@ -1029,7 +1029,7 @@ async def demo_kubernetes_orchestrator():
     inference_workload = MLWorkload(
         name="sentiment-analyzer",
         workload_type=WorkloadType.INFERENCE,
-        image="ainflue/sentiment-analyzer:v1.0.0",
+        image="iacherie/sentiment-analyzer:v1.0.0",
         command=["python", "app.py"],
         environment_variables={
             "MODEL_PATH": "/models/sentiment",
@@ -1064,7 +1064,7 @@ async def demo_kubernetes_orchestrator():
     training_workload = MLWorkload(
         name="model-training-job",
         workload_type=WorkloadType.TRAINING,
-        image="ainflue/trainer:v1.0.0",
+        image="iacherie/trainer:v1.0.0",
         command=["python", "train.py"],
         args=["--epochs=100", "--batch-size=32"],
         environment_variables={

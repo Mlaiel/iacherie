@@ -32,7 +32,7 @@ class CompressionType(Enum):
     ZSTD = "zstd"
 
 
-class AinflueBusinesEventTypes:
+class iacherieBusinesEventTypes:
     """Business event types for IA Chérie platform"""
     
     # Content Lifecycle Events
@@ -111,7 +111,7 @@ class ProducerMetrics:
     last_updated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class AinflueBusinesPartitioner:
+class iacherieBusinesPartitioner:
     """Custom partitioner for IA Chérie business logic"""
     
     def __init__(self, partition_count: int):
@@ -155,7 +155,7 @@ class KafkaEnterpriseProducer:
         self.metrics_collector = metrics_collector
         self.metrics = ProducerMetrics()
         self._producer = None
-        self._partitioner_cache: Dict[str, AinflueBusinesPartitioner] = {}
+        self._partitioner_cache: Dict[str, iacherieBusinesPartitioner] = {}
         self._retry_queue: asyncio.Queue = asyncio.Queue()
         self._shutdown_event = asyncio.Event()
         self._retry_task: Optional[asyncio.Task] = None
@@ -360,7 +360,7 @@ class KafkaEnterpriseProducer:
             if topic not in self._partitioner_cache:
                 # In real implementation, we'd get partition count from Kafka metadata
                 partition_count = 3  # Default partition count
-                self._partitioner_cache[topic] = AinflueBusinesPartitioner(partition_count)
+                self._partitioner_cache[topic] = iacherieBusinesPartitioner(partition_count)
             
             partitioner = self._partitioner_cache[topic]
             return partitioner.partition(topic, key, message)
@@ -482,6 +482,6 @@ class KafkaEnterpriseProducer:
 
 # Export public API
 __all__ = [
-    "KafkaEnterpriseProducer", "KafkaProducerConfig", "AinflueBusinesEventTypes",
-    "CompressionType", "ProducerMetrics", "AinflueBusinesPartitioner"
+    "KafkaEnterpriseProducer", "KafkaProducerConfig", "iacherieBusinesEventTypes",
+    "CompressionType", "ProducerMetrics", "iacherieBusinesPartitioner"
 ]

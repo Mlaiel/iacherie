@@ -1327,7 +1327,7 @@ if __name__ == "__main__":
             action='post_content',
             payload={
                 'media_url': 'https://example.com/image.jpg',
-                'caption': 'Hello from Ainflue!',
+                'caption': 'Hello from IA Chéries!',
                 'hashtags': ['ainflue', 'socialmedia']
             }
         )

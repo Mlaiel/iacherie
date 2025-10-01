@@ -461,7 +461,7 @@ class ObservabilityManager:
             "pagerduty": {
                 "type": "pagerduty",
                 "integration_key": "pd_integration_key",
-                "service_id": "ainflue_service"
+                "service_id": "iacherie_service"
             }
         }
 

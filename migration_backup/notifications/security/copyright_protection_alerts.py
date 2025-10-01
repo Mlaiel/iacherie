@@ -1,11 +1,11 @@
 """
 🛡️ COPYRIGHT PROTECTION ALERTS
-Ainflue Platform - Copyright Protection Notification System
+IA Chéries Platform - Copyright Protection Notification System
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-This module handles copyright protection alerts and notifications for the Ainflue Platform,
+This module handles copyright protection alerts and notifications for the IA Chéries Platform,
 providing real-time alerts when content protection is activated or when infringement is detected.
 """
 

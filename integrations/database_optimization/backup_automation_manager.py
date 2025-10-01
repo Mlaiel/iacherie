@@ -1231,7 +1231,7 @@ DEFAULT_BACKUP_CONFIG = {
     'max_workers': 8,
     'encryption_key': None,  # Sera généré automatiquement
     'databases': {
-        'ainflue_main': {
+        'iacherie_main': {
             'type': 'postgresql',
             'host': 'localhost',
             'port': 5432,
@@ -1249,7 +1249,7 @@ if __name__ == "__main__":
         # Configuration de test
         config = BackupConfiguration(
             name="Test Backup",
-            databases=["ainflue_main"],
+            databases=["iacherie_main"],
             backup_type=BackupType.FULL,
             retention_days=7
         )

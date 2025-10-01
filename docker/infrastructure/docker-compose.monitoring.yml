@@ -219,7 +219,7 @@ services:
     ports:
       - "9187:9187"
     environment:
-      - DATA_SOURCE_NAME=postgresql://iacherie:ainflue123@host.docker.internal:5432/ainflue_platform?sslmode=disable
+      - DATA_SOURCE_NAME=postgresql://iacherie:iacherie123@host.docker.internal:5432/iacherie_platform?sslmode=disable
     networks:
       - monitoring
     healthcheck:

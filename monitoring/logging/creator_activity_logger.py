@@ -149,7 +149,7 @@ class CreatorActivity:
     roi: float = 0.0
     
     # Technical context
-    platform: str = "ainflue"
+    platform: str = "iacherie"
     device_type: Optional[str] = None
     browser: Optional[str] = None
     os: Optional[str] = None

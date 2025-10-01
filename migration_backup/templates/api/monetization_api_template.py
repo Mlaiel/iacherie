@@ -1,4 +1,4 @@
-"""Monetization API Template for Ainflue Platform
+"""Monetization API Template for IA Chéries Platform
 
 ⚠️  AVERTISSEMENT LÉGAL:
 ==========================================

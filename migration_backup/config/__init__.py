@@ -1,7 +1,7 @@
-"""Ainflue Configuration Management - Enterprise Orchestrator
+"""IA Chéries Configuration Management - Enterprise Orchestrator
 ===========================================================
 
-Master configuration orchestrator for the Ainflue platform providing
+Master configuration orchestrator for the IA Chéries platform providing
 centralized configuration management, environment handling, and enterprise
 integration across all subsystems and business logic components.
 
@@ -47,7 +47,7 @@ class ConfigurationLevel(str, Enum):
     QUANTUM = "quantum"
 
 class BusinessLogicFlow(str, Enum):
-    """Ainflue business logic flow stages"""
+    """IA Chéries business logic flow stages"""
     CREATOR_ONBOARDING = "creator_onboarding"
     CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
@@ -59,8 +59,8 @@ class BusinessLogicFlow(str, Enum):
     ANALYTICS_TRACKING = "analytics_tracking"
     GAMIFICATION_ENGAGEMENT = "gamification_engagement"
 
-class AinflueMasterConfiguration:
-    """Master configuration orchestrator for Ainflue platform"""
+class IA ChériesMasterConfiguration:
+    """Master configuration orchestrator for IA Chéries platform"""
     
     def __init__(self, level: ConfigurationLevel = ConfigurationLevel.ENTERPRISE):
         """Initialize master configuration"""
@@ -243,7 +243,7 @@ class AinflueMasterConfiguration:
         }
 
 # Global configuration instances
-master_config = AinflueMasterConfiguration(ConfigurationLevel.ENTERPRISE)
+master_config = IA ChériesMasterConfiguration(ConfigurationLevel.ENTERPRISE)
 
 # Convenience functions
 def get_config(config_name: str) -> Optional[Any]:
@@ -265,7 +265,7 @@ async def initialize_platform_config():
 
 # Module exports
 __all__ = [
-    "AinflueMasterConfiguration", "ConfigurationLevel", "BusinessLogicFlow",
+    "IA ChériesMasterConfiguration", "ConfigurationLevel", "BusinessLogicFlow",
     "master_config", "get_config", "validate_flow", "get_business_flow_config",
     "initialize_platform_config",
     "ApplicationSettings", "app_settings"
@@ -280,7 +280,7 @@ if core_imports_success:
     ])
 
 # Initialize logging
-logger.info(f"🔧 Ainflue Master Configuration initialized - Level: {master_config.level.value}")
+logger.info(f"🔧 IA Chéries Master Configuration initialized - Level: {master_config.level.value}")
 logger.info(f"📊 Total configurations: {len(master_config.configurations)}")
 logger.info(f"🔄 Business logic flows: {len(master_config.business_flow_configs)}")
 logger.info(f"✅ Core imports successful: {core_imports_success}")

@@ -6,7 +6,7 @@ Advanced configuration backup system for application settings, environment confi
 secrets, infrastructure as code, and creator platform configurations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
-Project: Ainflue Infrastructure
+Project: iacherie Infrastructure
 Version: 1.0 Production
 
 ⚠️ PROPRIÉTÉ INTELLECTUELLE - FAHED MLAIEL

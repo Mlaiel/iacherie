@@ -2,7 +2,7 @@
 🎵 AUDIO INTEGRATIONS MODULE
 ============================
 
-Module d'intégrations audio pour la plateforme Ainfluencer
+Module d'intégrations audio pour la plateforme IA Chéries
 - TTSEngine: Moteur de synthèse vocale
 - FreesoundAPI: Intégration API Freesound
 """

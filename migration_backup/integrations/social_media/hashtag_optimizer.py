@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Ainflue Platform - Advanced Hashtag Optimization Engine
+IA Chéries Platform - Advanced Hashtag Optimization Engine
 ========================================================
 
 Enterprise-grade hashtag optimization with AI-powered trending analysis and strategic
@@ -42,7 +42,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
-# Ainflue imports
+# IA Chéries imports
 from ..authentication_handler import AuthenticationHandler
 from ..rate_limiter import RateLimiter
 from ..error_handler import IntegrationError, ErrorHandler

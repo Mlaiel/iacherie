@@ -1,5 +1,5 @@
 """
-Error Analytics Engine - Ainflue Platform
+Error Analytics Engine - IA Chéries Platform
 ML-Powered Error Pattern Detection & Predictive Analytics
 
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -114,7 +114,7 @@ class ErrorAnalyticsEngine:
     - Détection de patterns d'erreur avancés
     - Analyse prédictive des pannes
     - Corrélation intelligente d'erreurs
-    - Insights automatisés pour Ainflue
+    - Insights automatisés pour IA Chéries
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -134,7 +134,7 @@ class ErrorAnalyticsEngine:
         # 📊 DBA: Configuration base de données analytics
         self.analytics_db_config = self.config.get('analytics_db', {})
         
-        # 🎵 Audio + Platform: Configuration spécifique Ainflue
+        # 🎵 Audio + Platform: Configuration spécifique IA Chéries
         self.platform_configs = self._initialize_platform_configs()
         
         logger.info("ErrorAnalyticsEngine initialized with ML capabilities")
@@ -211,7 +211,7 @@ class ErrorAnalyticsEngine:
             # Détection des patterns par clustering
             patterns = await self._detect_patterns_ml(features_matrix, error_events)
             
-            # Enrichissement avec analyse business Ainflue
+            # Enrichissement avec analyse business IA Chéries
             enriched_patterns = await self._enrich_patterns_ainflue(patterns, error_events)
             
             # Calcul des scores de confiance
@@ -408,7 +408,7 @@ class ErrorAnalyticsEngine:
         avg_severity = sum(severity_weights.get(s, 2) for s in severities) / len(severities)
         features['average_severity'] = avg_severity
         
-        # Features business Ainflue
+        # Features business IA Chéries
         content_sizes = [event.get('content_size_mb', 0) for event in events]
         features['avg_content_size'] = sum(content_sizes) / len(content_sizes) if content_sizes else 0
         
@@ -458,7 +458,7 @@ class ErrorAnalyticsEngine:
                 "Scale resources horizontally"
             ])
         
-        # Suggestions spécifiques Ainflue
+        # Suggestions spécifiques IA Chéries
         platforms = [event.get('platform', 'unknown') for event in events]
         unique_platforms = set(platforms)
         

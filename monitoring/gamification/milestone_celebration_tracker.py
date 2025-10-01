@@ -161,7 +161,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.3,
                 "reward_points": 500,
                 "badge_design": "first_hundred_badge",
-                "social_share_template": "🎉 Just hit 100 followers! Thank you for joining my journey! #AinflueMilestone #CreatorLife"
+                "social_share_template": "🎉 Just hit 100 followers! Thank you for joining my journey! #iacherieMilestone #CreatorLife"
             },
             {
                 "milestone_type": MilestoneType.FOLLOWER_MILESTONE,
@@ -172,7 +172,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.6,
                 "reward_points": 2000,
                 "badge_design": "thousand_club_badge",
-                "social_share_template": "🚀 1K followers! This community is amazing! #ThousandClub #AinflueMilestone"
+                "social_share_template": "🚀 1K followers! This community is amazing! #ThousandClub #iacherieMilestone"
             },
             {
                 "milestone_type": MilestoneType.FOLLOWER_MILESTONE,
@@ -183,7 +183,7 @@ class MilestoneCelebrationTracker:
                 "rarity_score": 0.85,
                 "reward_points": 10000,
                 "badge_design": "ten_k_badge",
-                "social_share_template": "🎊 10K FOLLOWERS! You all are incredible! This is just the beginning! #10KStrong #AinflueMilestone"
+                "social_share_template": "🎊 10K FOLLOWERS! You all are incredible! This is just the beginning! #10KStrong #iacherieMilestone"
             },
             # Content milestones
             {

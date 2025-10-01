@@ -1254,9 +1254,9 @@ async def get_creator_workspace_manager() -> CreatorWorkspaceManager:
     """Factory pour l'instance CreatorWorkspaceManager"""
     global creator_workspace_manager
     if not creator_workspace_manager:
-        database_url = "postgresql+asyncpg://localhost/ainflue_workspaces"
+        database_url = "postgresql+asyncpg://localhost/iacherie_workspaces"
         redis_url = "redis://localhost:6379/3"
-        storage_path = "/tmp/ainflue_workspaces"
+        storage_path = "/tmp/iacherie_workspaces"
         
         creator_workspace_manager = CreatorWorkspaceManager(
             database_url=database_url,

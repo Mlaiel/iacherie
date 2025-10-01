@@ -1,4 +1,4 @@
-"""Docker Compose Template for Ainflue Platform
+"""Docker Compose Template for IA Chéries Platform
 Enterprise-grade container orchestration template for development and testing.
 
 ⚠️ PROTECTION PROPRIÉTÉ INTELLECTUELLE
@@ -50,7 +50,7 @@ class DockerComposeConfig:
 
 
 class DockerComposeTemplate:
-    """Enterprise Docker Compose Template for Ainflue Platform"""
+    """Enterprise Docker Compose Template for IA Chéries Platform"""
     
     def __init__(self, config: DockerComposeConfig):
         self.config = config
@@ -556,7 +556,7 @@ if __name__ == "__main__":
     dev_config = create_development_config()
     template = DockerComposeTemplate(dev_config)
     
-    print("Docker Compose Template for Ainflue Platform")
+    print("Docker Compose Template for IA Chéries Platform")
     print("Configuration:")
     print(f"- Environment: {dev_config.environment.value}")
     print(f"- AI Services: {dev_config.enable_ai_services}")

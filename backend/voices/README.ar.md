@@ -33,11 +33,11 @@
 
 ## 📋 نظرة عامة على وحدة الأصوات
 
-تشكل وحدة **Backend Voices** القلب التقني لنظام التركيب الصوتي الذكي في Ainflue، وتقدم قدرات صوتية متقدمة مع الذكاء الاصطناعي المدمج، حماية آمنة للمحتوى الصوتي، تحقيق الدخل الفوري والتوزيع متعدد المنصات.
+تشكل وحدة **Backend Voices** القلب التقني لنظام التركيب الصوتي الذكي في iacherie، وتقدم قدرات صوتية متقدمة مع الذكاء الاصطناعي المدمج، حماية آمنة للمحتوى الصوتي، تحقيق الدخل الفوري والتوزيع متعدد المنصات.
 
 ### 🎯 المهمة والأهداف
 
-**المهمة الأساسية**: توفير بنية تحتية صوتية شاملة على مستوى المؤسسات تمكن منشئي المحتوى في Ainflue من إنتاج ومعالجة وتوزيع محتوى صوتي عالي الجودة مع الذكاء الاصطناعي المدمج، تحقيق الدخل المحسن والأمان الأقصى.
+**المهمة الأساسية**: توفير بنية تحتية صوتية شاملة على مستوى المؤسسات تمكن منشئي المحتوى في iacherie من إنتاج ومعالجة وتوزيع محتوى صوتي عالي الجودة مع الذكاء الاصطناعي المدمج، تحقيق الدخل المحسن والأمان الأقصى.
 
 **أهداف صوتية**:
 - **التركيب الصوتي المهني**: ذكي اصطناعي توليدي، مشاعر، لهجات، استنساخ المشاهير
@@ -263,7 +263,7 @@ POST /api/voice/clone
 ```python
 GET /api/voice/analyze/{voice_id}
 POST /api/voice/fingerprint
-WebSocket: ws://voice.ainflue.com/analysis/{voice_id}
+WebSocket: ws://voice.iacherie.com/analysis/{voice_id}
 ```
 
 ### التكاملات الصوتية
@@ -310,13 +310,13 @@ WebSocket: ws://voice.ainflue.com/analysis/{voice_id}
 
 ### جهات اتصال الدعم
 - **القائد التقني**: فاهد ملائيل (mlaiel@live.de)
-- **دعم الصوت**: voice-support@ainflue.com
+- **دعم الصوت**: voice-support@iacherie.com
 - **الطوارئ**: +49-xxx-xxx-xxxx (24/7)
 
 ### موارد التطوير
-- **وثائق API**: [docs.ainflue.com/voice](https://docs.ainflue.com/voice)
-- **SDK الصوتي**: [github.com/ainflue/voice-sdk](https://github.com/ainflue/voice-sdk)
-- **المجتمع**: [community.ainflue.com/voice](https://community.ainflue.com/voice)
+- **وثائق API**: [docs.iacherie.com/voice](https://docs.iacherie.com/voice)
+- **SDK الصوتي**: [github.com/iacherie/voice-sdk](https://github.com/iacherie/voice-sdk)
+- **المجتمع**: [community.iacherie.com/voice](https://community.iacherie.com/voice)
 
 ---
 

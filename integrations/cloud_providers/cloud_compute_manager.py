@@ -519,7 +519,7 @@ class MultiCloudComputeManager:
                     'Tags': [
                         {'Key': 'Name', 'Value': name},
                         {'Key': 'WorkloadType', 'Value': workload_type.value},
-                        {'Key': 'CreatedBy', 'Value': 'AinfluePlatform'},
+                        {'Key': 'CreatedBy', 'Value': 'iacheriePlatform'},
                         {'Key': 'Environment', 'Value': kwargs.get('environment', 'production')}
                     ]
                 }],
@@ -540,7 +540,7 @@ class MultiCloudComputeManager:
                 tags={
                     'Name': name,
                     'WorkloadType': workload_type.value,
-                    'CreatedBy': 'AinfluePlatform'
+                    'CreatedBy': 'iacheriePlatform'
                 }
             )
             

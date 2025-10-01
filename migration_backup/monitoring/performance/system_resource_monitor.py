@@ -1,5 +1,5 @@
 """
-⚠️ CONFIDENTIEL - Ainflue Creator Platform ⚠️
+⚠️ CONFIDENTIEL - IA Chéries Creator Platform ⚠️
 
 System Resource Monitor - Enterprise Performance Monitoring
 Advanced system resource monitoring for Creator Economy infrastructure

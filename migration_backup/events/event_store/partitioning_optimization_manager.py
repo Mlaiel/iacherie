@@ -89,7 +89,7 @@ class OptimizationRecommendation:
 
 class PartitioningOptimizationManager:
     """
-    Manages intelligent partitioning strategies for Ainflue event storage
+    Manages intelligent partitioning strategies for IA Chéries event storage
     
     Features:
     - Automatic partition creation based on business logic
@@ -116,11 +116,11 @@ class PartitioningOptimizationManager:
             'auto_archive_old_partitions': True
         }
         
-        # Initialize Ainflue business partitioning rules
+        # Initialize IA Chéries business partitioning rules
         self._initialize_business_rules()
     
     def _initialize_business_rules(self):
-        """Initialize Ainflue-specific partitioning rules"""
+        """Initialize IA Chéries-specific partitioning rules"""
         
         # Content events - partition by time and content type
         content_rule = PartitioningRule(

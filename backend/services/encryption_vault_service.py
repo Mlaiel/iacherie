@@ -1,7 +1,7 @@
 """Encryption Vault Service - Enterprise Data Protection & Key Management
 ======================================================================
 
-Advanced encryption and key management system for the Ainflue platform, providing
+Advanced encryption and key management system for the iacherie platform, providing
 enterprise-grade data protection, secure key storage, cryptographic operations,
 and compliance with international security standards.
 

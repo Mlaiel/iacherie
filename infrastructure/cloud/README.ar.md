@@ -1,4 +1,4 @@
-# ☁️ البنية التحتية السحابية - منصة Ainflue
+# ☁️ البنية التحتية السحابية - منصة iacherie
 
 **فريق الخبراء: Lead Dev IA + Backend Senior + ML Engineer + DBA + أمن + Microservices + صوت + DevOps + IA Prompt Engineer**
 
@@ -8,7 +8,7 @@
 
 ## 🎯 غرض الوحدة
 
-إدارة البنية التحتية متعددة السحابات على مستوى المؤسسات لمنصة Ainflue للمبدعين. توفر واجهة موحدة لإدارة نشر AWS وAzure وGCP والسحابة الهجين مع تحسين ذكي للتكاليف ومراقبة الأداء والتوسع التلقائي.
+إدارة البنية التحتية متعددة السحابات على مستوى المؤسسات لمنصة iacherie للمبدعين. توفر واجهة موحدة لإدارة نشر AWS وAzure وGCP والسحابة الهجين مع تحسين ذكي للتكاليف ومراقبة الأداء والتوسع التلقائي.
 
 ## 🏗️ البنية التحتية
 
@@ -33,9 +33,9 @@ from infrastructure.cloud import MultiCloudManager, CostOptimizer
 
 # تهيئة مدير السحابة المتعددة
 cloud_manager = MultiCloudManager({
-    'aws': {'region': 'us-east-1', 'profile': 'ainflue-prod'},
-    'azure': {'subscription_id': 'xxx', 'resource_group': 'ainflue-rg'},
-    'gcp': {'project_id': 'ainflue-prod', 'zone': 'us-central1-a'}
+    'aws': {'region': 'us-east-1', 'profile': 'iacherie-prod'},
+    'azure': {'subscription_id': 'xxx', 'resource_group': 'iacherie-rg'},
+    'gcp': {'project_id': 'iacherie-prod', 'zone': 'us-central1-a'}
 })
 
 # النشر عبر سحابات متعددة

@@ -1,4 +1,4 @@
-"""Ainflue API Gateway Configuration
+"""IA Chéries API Gateway Configuration
 ==================================
 
 API Gateway configurations for routing, load balancing, rate limiting,
@@ -398,5 +398,5 @@ __all__ = [
     "api_gateway_config"
 ]
 
-logger.info("🌐 Ainflue API Gateway Configuration loaded")
+logger.info("🌐 IA Chéries API Gateway Configuration loaded")
 logger.info("⚠️ Protected by copyright - All Rights Reserved")

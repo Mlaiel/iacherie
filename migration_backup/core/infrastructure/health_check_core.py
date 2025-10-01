@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ainflue Core Infrastructure - Advanced Health Check Engine
+IA Chéries Core Infrastructure - Advanced Health Check Engine
 =========================================================
 
 Enterprise-grade health checking system for distributed microservices

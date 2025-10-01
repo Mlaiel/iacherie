@@ -1,5 +1,5 @@
 """
-Ainflue Platform - Creator Tier Progression Dashboard
+IA Chéries Platform - Creator Tier Progression Dashboard
 ====================================================
 
 Enterprise dashboard for creator tier progression with AI-powered advancement
