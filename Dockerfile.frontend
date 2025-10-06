@@ -22,11 +22,24 @@ COPY frontend/ ./
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
-# Variables Supabase nécessaires pour le build Next.js
+# Variables Supabase
 ENV NEXT_PUBLIC_SUPABASE_URL=https://xebzzrabmseuegzckypi.supabase.co
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlYnp6cmFibXNldWVnemNreXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MTc0MTYsImV4cCI6MjA3NDI5MzQxNn0.ae87xApCjZCl_Zkj_NGkJioVifd4Mn_BWPJgpc6zb-M
+ENV SUPABASE_URL=https://xebzzrabmseuegzckypi.supabase.co
+ENV SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlYnp6cmFibXNldWVnemNreXBpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1ODcxNzQxNiwiZXhwIjoyMDc0MjkzNDE2fQ.HeAdETv3ERKFsw1JWXPRTU80YPp2EzPZ0O6ZQ6kaI8k
 
-# Build Next.js
+# API Keys principales (pour éviter les erreurs de build)
+ENV OPENAI_API_KEY=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
+ENV GOOGLE_GEMINI_API_KEY=AIzaSyB7uD-W_h7jMnVErySX1bBXpaq9IBKUScw
+ENV COHERE_API_KEY=3jzgTIpHY3Mhq5yZGMnjh0p4ztB4a1zgOxfT7j1a
+ENV ANTHROPIC_API_KEY=placeholder
+ENV ELEVENLABS_API_KEY=placeholder
+ENV LEONARDO_API_KEY=placeholder
+ENV REPLICATE_API_KEY=placeholder
+ENV STABILITY_API_KEY=placeholder
+ENV RUNWAYML_API_KEY=placeholder
+
+# Build Next.js (avec --no-lint pour ignorer les warnings)
 RUN npm run build
 
 # Stage 3: Runner
