@@ -22,6 +22,10 @@ COPY frontend/ ./
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
+# Variables Supabase nécessaires pour le build Next.js
+ENV NEXT_PUBLIC_SUPABASE_URL=https://xebzzrabmseuegzckypi.supabase.co
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlYnp6cmFibXNldWVnemNreXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MTc0MTYsImV4cCI6MjA3NDI5MzQxNn0.ae87xApCjZCl_Zkj_NGkJioVifd4Mn_BWPJgpc6zb-M
+
 # Build Next.js
 RUN npm run build
 
